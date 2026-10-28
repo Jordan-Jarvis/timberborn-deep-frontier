@@ -133,7 +133,8 @@ def main():
     args = parser.parse_args()
     dev = {key: dev_environment.get(key) for key in ('gameRoot', 'workshopContent', 'timberbornDocuments')}
     items = required_items(dev['workshopContent'])
-    parent = parent_item(args, dev) if args.apply or args.item else None
+    uploaded = (Path(dev['timberbornDocuments']) / 'Mods' / 'DeepFrontier' / 'workshop_data.json').is_file()
+    parent = parent_item(args, dev) if args.apply or args.item or uploaded else None
     print(f'Deep Frontier item: {parent or "(not uploaded yet)"}; {len(items)} required items:')
     for mod, child in items:
         print(f'  {mod:32} https://steamcommunity.com/sharedfiles/filedetails/?id={child}')
