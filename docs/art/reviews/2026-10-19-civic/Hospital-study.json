@@ -1,0 +1,28 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -10.53499984741211,
+    -7.602499961853027,
+    -0.029999999329447746
+  ],
+  "boundsMax": [
+    -0.22499999403953552,
+    -0.7245000004768372,
+    8.664999961853027
+  ],
+  "sourceReference": "docs/art/concepts/Hospital.png",
+  "selectedReferenceViews": [
+    "Front Left",
+    "Front Right",
+    "Back Left",
+    "Back Right"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "Hospital.Banner2.95",
+    "Hospital.Banner6.05"
+  ],
+  "animationFrames": 61,
+  "animationFps": 30,
+  "tileDimensions": null
+}

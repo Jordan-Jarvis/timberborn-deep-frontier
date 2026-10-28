@@ -1,0 +1,27 @@
+{
+  "scope": "Blender source checks; native placement, gathering and animation remain to test",
+  "models": [
+    {
+      "model": "SandstonePit",
+      "doorClearanceSamples": 50,
+      "headroom": 1.1,
+      "bodyRadius": 0.2,
+      "nativeAtlasUvCornersChecked": 101464,
+      "animationFramesInspected": 121,
+      "basketLift": 0.35000014305114746,
+      "basketStaticIntersections": 0,
+      "failures": []
+    },
+    {
+      "model": "LimestonePit",
+      "doorClearanceSamples": 50,
+      "headroom": 1.1,
+      "bodyRadius": 0.2,
+      "nativeAtlasUvCornersChecked": 129592,
+      "animationFramesInspected": 121,
+      "basketLift": 0.35000014305114746,
+      "basketStaticIntersections": 0,
+      "failures": []
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 7124,
+  "spatialCandidatePairs": 0,
+  "nearPlanePairs": 0,
+  "identicalMaterialAndUvPairs": 0,
+  "visibleConflicts": 0,
+  "occludedConflicts": 0,
+  "conflicts": [],
+  "seconds": 0.5,
+  "model": "ReinforcedDamBlock",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\ReinforcedDamBlock-ReferenceStudy.blend",
+  "sourceSha256": "0dbdb77d64f1b40ddbd07619da7e516d346435eeaabae9368e8f211095affef5",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

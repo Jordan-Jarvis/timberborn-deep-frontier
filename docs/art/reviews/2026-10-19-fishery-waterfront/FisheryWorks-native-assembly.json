@@ -1,0 +1,193 @@
+{
+  "scope": "Local preview copies; game references the original shipped resources",
+  "props": [
+    {
+      "name": "FisheryNativeWheel",
+      "model": "CompactWaterWheel.IronTeeth",
+      "resource": "Buildings/Power/CompactWaterWheel/CompactWaterWheel.IronTeeth.Model",
+      "position": [
+        8.15,
+        6.5,
+        0.03
+      ],
+      "scale": 1,
+      "yaw": 90
+    },
+    {
+      "name": "FisheryWaterBarrel0",
+      "model": "SmallTank.IronTeeth",
+      "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
+      "position": [
+        1.9899999999999998,
+        8.24,
+        0
+      ],
+      "scale": 0.62,
+      "yaw": 0
+    },
+    {
+      "name": "FisheryWaterBarrel1",
+      "model": "SmallTank.IronTeeth",
+      "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
+      "position": [
+        2.69,
+        8.24,
+        0
+      ],
+      "scale": 0.62,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel3",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        5.7,
+        8.5,
+        0.43139408
+      ],
+      "scale": 2.6,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel4",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        6.45,
+        4.2,
+        2.2488812
+      ],
+      "scale": 1.5,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel5",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        6.45,
+        6.4,
+        2.2488812
+      ],
+      "scale": 1.5,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel6",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        -1.0,
+        6.779999999999999,
+        2.1659208
+      ],
+      "scale": 1.0,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel7",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        1.0999999999999999,
+        6.779999999999999,
+        2.1659208
+      ],
+      "scale": 1.0,
+      "yaw": 0
+    }
+  ],
+  "liquids": [
+    {
+      "name": "FisheryBasin0",
+      "shape": "Rectangle",
+      "center": [
+        8.825,
+        4.915
+      ],
+      "bottom": 0.1,
+      "top": 0.44,
+      "scale": [
+        1.3200000000000012,
+        3.2
+      ],
+      "flowOnly": false
+    },
+    {
+      "name": "FisheryBasin1",
+      "shape": "Rectangle",
+      "center": [
+        8.825,
+        2.2
+      ],
+      "bottom": 0.1,
+      "top": 0.44,
+      "scale": [
+        1.3200000000000012,
+        1.67
+      ],
+      "flowOnly": false
+    },
+    {
+      "name": "FisheryBasin2",
+      "shape": "Rectangle",
+      "center": [
+        6.074999999999999,
+        0.44
+      ],
+      "bottom": 0.1,
+      "top": 0.44,
+      "scale": [
+        0.9199999999999998,
+        0.55
+      ],
+      "flowOnly": false
+    },
+    {
+      "name": "FisheryBasin3",
+      "shape": "Rectangle",
+      "center": [
+        8.649999999999999,
+        5.875
+      ],
+      "bottom": 2.73,
+      "top": 3.07,
+      "scale": [
+        0.6100000000000002,
+        1.3199999999999994
+      ],
+      "flowOnly": false
+    },
+    {
+      "name": "FisheryWaterBarrel0.Water",
+      "shape": "SmallLiquidPlane",
+      "center": [
+        2.3,
+        8.55
+      ],
+      "bottom": 0.33852000000000004,
+      "top": 0.8804,
+      "scale": [
+        0.62,
+        0.62
+      ],
+      "flowOnly": false
+    },
+    {
+      "name": "FisheryWaterBarrel1.Water",
+      "shape": "SmallLiquidPlane",
+      "center": [
+        3.0,
+        8.55
+      ],
+      "bottom": 0.33852000000000004,
+      "top": 0.8804,
+      "scale": [
+        0.62,
+        0.62
+      ],
+      "flowOnly": false
+    }
+  ]
+}

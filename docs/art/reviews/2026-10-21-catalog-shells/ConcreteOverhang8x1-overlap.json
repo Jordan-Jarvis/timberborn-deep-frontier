@@ -1,0 +1,1588 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 34260,
+  "spatialCandidatePairs": 320,
+  "nearPlanePairs": 320,
+  "identicalMaterialAndUvPairs": 0,
+  "visibleConflicts": 0,
+  "occludedConflicts": 32,
+  "conflicts": [
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16352,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16552,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395915785674407,
+      "visible": false,
+      "center": [
+        -0.8323261141777039,
+        -4.500880718231201,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.8616306781768799,
+          -4.4569878578186035,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -4.515478610992432,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -4.543011665344238,
+          0.8799999952316284
+        ],
+        [
+          -0.77698814868927,
+          -4.531939506530762,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -4.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16876,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17076,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395915785674407,
+      "visible": false,
+      "center": [
+        -0.8323261141777039,
+        -5.500880718231201,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.8616306781768799,
+          -5.4569878578186035,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -5.515478610992432,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -5.543011665344238,
+          0.8799999952316284
+        ],
+        [
+          -0.77698814868927,
+          -5.531939506530762,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -5.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17400,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17600,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395915785674407,
+      "visible": false,
+      "center": [
+        -0.8323261141777039,
+        -6.500881195068359,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.8616306781768799,
+          -6.4569878578186035,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -6.515478610992432,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -6.543011665344238,
+          0.8799999952316284
+        ],
+        [
+          -0.77698814868927,
+          -6.531939506530762,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -6.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17924,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 18124,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395915785674407,
+      "visible": false,
+      "center": [
+        -0.8323261141777039,
+        -7.500881195068359,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.8616306781768799,
+          -7.4569878578186035,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -7.515478610992432,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -7.543011665344238,
+          0.8799999952316284
+        ],
+        [
+          -0.77698814868927,
+          -7.531939506530762,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -7.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16140,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16552,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395915722692714,
+      "visible": false,
+      "center": [
+        -0.16767387092113495,
+        -4.499118328094482,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -4.468060493469238,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -4.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.1383693367242813,
+          -4.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -4.48452091217041,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -4.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16664,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17076,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395915722692714,
+      "visible": false,
+      "center": [
+        -0.16767387092113495,
+        -5.499118328094482,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -5.468060493469238,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -5.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.1383693367242813,
+          -5.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -5.48452091217041,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -5.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17188,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17600,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395915722692714,
+      "visible": false,
+      "center": [
+        -0.16767387092113495,
+        -6.499118804931641,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -6.468060493469238,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -6.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.1383693367242813,
+          -6.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -6.48452091217041,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -6.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17712,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 18124,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395915722692714,
+      "visible": false,
+      "center": [
+        -0.16767387092113495,
+        -7.499118804931641,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -7.468060493469238,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -7.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.1383693367242813,
+          -7.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -7.48452091217041,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -7.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14256,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14456,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395878169291225,
+      "visible": false,
+      "center": [
+        -0.8323261141777039,
+        -0.5008811950683594,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.8616306781768799,
+          -0.45698800683021545,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -0.515478789806366,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -0.5430117845535278,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -0.5319393873214722,
+          0.8799999952316284
+        ],
+        [
+          -0.77698814868927,
+          -0.45698797702789307,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15304,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15504,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395875435308737,
+      "visible": false,
+      "center": [
+        -0.8323261141777039,
+        -2.5008814334869385,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.8616307377815247,
+          -2.4569880962371826,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -2.5154788494110107,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -2.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -2.5319395065307617,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -2.4569880962371826,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15828,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16028,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395875435308737,
+      "visible": false,
+      "center": [
+        -0.8323261141777039,
+        -3.5008811950683594,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.8616307377815247,
+          -3.4569880962371826,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -3.5154788494110107,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -3.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -3.5319395065307617,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -3.4569880962371826,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14044,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14456,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.00739587458705393,
+      "visible": false,
+      "center": [
+        -0.16767385601997375,
+        -0.49911877512931824,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -0.46806058287620544,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -0.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.13836929202079773,
+          -0.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -0.48452118039131165,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -0.456988126039505,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15092,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15504,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395873156188171,
+      "visible": false,
+      "center": [
+        -0.16767385601997375,
+        -2.4991185665130615,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -2.4680604934692383,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -2.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.13836929202079773,
+          -2.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -2.4845211505889893,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -2.4569880962371826,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15616,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16028,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395873156188171,
+      "visible": false,
+      "center": [
+        -0.16767385601997375,
+        -3.4991185665130615,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -3.4680604934692383,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -3.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.13836929202079773,
+          -3.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -3.4845211505889893,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -3.4569880962371826,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14780,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14980,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0073958531045912185,
+      "visible": false,
+      "center": [
+        -0.8323261141777039,
+        -1.5008814334869385,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.8616307377815247,
+          -1.4569882154464722,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -1.5154788494110107,
+          0.8799999952316284
+        ],
+        [
+          -0.8730118870735168,
+          -1.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -1.5319392681121826,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -1.4569882154464722,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14568,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14980,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.007395853025256249,
+      "visible": false,
+      "center": [
+        -0.16767385601997375,
+        -1.4991188049316406,
+        0.8800000548362732
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -1.4680607318878174,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -1.5430117845535278,
+          0.8799999952316284
+        ],
+        [
+          -0.13836926221847534,
+          -1.5430117845535278,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -1.4845211505889893,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -1.4569882154464722,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16352,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16552,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316139757312044,
+      "visible": false,
+      "center": [
+        -0.8089962005615234,
+        -4.539320945739746,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.7769880890846252,
+          -4.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.77698814868927,
+          -4.531939506530762,
+          0.8799999952316284
+        ],
+        [
+          -0.8730121850967407,
+          -4.543011665344238,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16876,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17076,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316139757312044,
+      "visible": false,
+      "center": [
+        -0.8089962005615234,
+        -5.539320945739746,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.7769880890846252,
+          -5.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.77698814868927,
+          -5.531939506530762,
+          0.8799999952316284
+        ],
+        [
+          -0.8730121850967407,
+          -5.543011665344238,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17400,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17600,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316139757312044,
+      "visible": false,
+      "center": [
+        -0.8089962005615234,
+        -6.539320945739746,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.7769880890846252,
+          -6.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.77698814868927,
+          -6.531939506530762,
+          0.8799999952316284
+        ],
+        [
+          -0.8730121850967407,
+          -6.543011665344238,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17924,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 18124,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316139757312044,
+      "visible": false,
+      "center": [
+        -0.8089962005615234,
+        -7.539320945739746,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.7769880890846252,
+          -7.5430121421813965,
+          0.8799999952316284
+        ],
+        [
+          -0.77698814868927,
+          -7.531939506530762,
+          0.8799999952316284
+        ],
+        [
+          -0.8730121850967407,
+          -7.543011665344238,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16140,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16552,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316138481169519,
+      "visible": false,
+      "center": [
+        -0.1910039633512497,
+        -4.460679054260254,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -4.4569878578186035,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -4.468060493469238,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -4.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16664,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17076,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316138481169519,
+      "visible": false,
+      "center": [
+        -0.1910039633512497,
+        -5.460679054260254,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -5.4569878578186035,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -5.468060493469238,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -5.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17188,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17600,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316138481169519,
+      "visible": false,
+      "center": [
+        -0.1910039633512497,
+        -6.460679054260254,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -6.4569878578186035,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -6.468060493469238,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -6.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 17712,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 18124,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316138481169519,
+      "visible": false,
+      "center": [
+        -0.1910039633512497,
+        -7.460679054260254,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -7.4569878578186035,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -7.468060493469238,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -7.4569878578186035,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14044,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14456,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316124713216075,
+      "visible": false,
+      "center": [
+        -0.19100388884544373,
+        -0.46067893505096436,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -0.4569880962371826,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -0.46806058287620544,
+          0.8799999952316284
+        ],
+        [
+          -0.12698784470558167,
+          -0.45698806643486023,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15092,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15504,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316110688818876,
+      "visible": false,
+      "center": [
+        -0.1910039633512497,
+        -2.460679054260254,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -2.4569880962371826,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -2.4680604934692383,
+          0.8799999952316284
+        ],
+        [
+          -0.12698809802532196,
+          -2.4569880962371826,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15616,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16028,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316110688818876,
+      "visible": false,
+      "center": [
+        -0.1910039633512497,
+        -3.460679054260254,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -3.4569880962371826,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -3.4680604934692383,
+          0.8799999952316284
+        ],
+        [
+          -0.12698809802532196,
+          -3.4569880962371826,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14568,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14980,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316095142715582,
+      "visible": false,
+      "center": [
+        -0.1910039633512497,
+        -1.460679054260254,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.22301188111305237,
+          -1.4569882154464722,
+          0.8799999952316284
+        ],
+        [
+          -0.22301188111305237,
+          -1.4680607318878174,
+          0.8799999952316284
+        ],
+        [
+          -0.12698811292648315,
+          -1.4569882154464722,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15304,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15504,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316077331984914,
+      "visible": false,
+      "center": [
+        -0.8089959025382996,
+        -2.539320945739746,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.7769880890846252,
+          -2.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -2.5319395065307617,
+          0.8799999952316284
+        ],
+        [
+          -0.873011589050293,
+          -2.5430119037628174,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 15828,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 16028,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316077331984914,
+      "visible": false,
+      "center": [
+        -0.8089959025382996,
+        -3.539320945739746,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.7769880890846252,
+          -3.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -3.5319395065307617,
+          0.8799999952316284
+        ],
+        [
+          -0.873011589050293,
+          -3.5430119037628174,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14256,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14456,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316076927097679,
+      "visible": false,
+      "center": [
+        -0.8089959025382996,
+        -0.5393210053443909,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.7769880890846252,
+          -0.5430118441581726,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -0.5319393873214722,
+          0.8799999952316284
+        ],
+        [
+          -0.873011589050293,
+          -0.5430117845535278,
+          0.8799999952316284
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14780,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:87:girder_y > structural_geometry.py:100:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteOverhang8x1.Architecture",
+        "face": 14980,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:102:concrete_overhang > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005316073814543021,
+      "visible": false,
+      "center": [
+        -0.8089959025382996,
+        -1.539320945739746,
+        0.8799999952316284
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.7769880890846252,
+          -1.5430119037628174,
+          0.8799999952316284
+        ],
+        [
+          -0.7769880890846252,
+          -1.5319392681121826,
+          0.8799999952316284
+        ],
+        [
+          -0.8730115294456482,
+          -1.5430117845535278,
+          0.8799999952316284
+        ]
+      ]
+    }
+  ],
+  "seconds": 2.12,
+  "model": "ConcreteOverhang8x1",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\ConcreteOverhang8x1-ReferenceStudy.blend",
+  "sourceSha256": "b71db6392960ec9a9a3f2c7a6a6aa34b1d3e3db163be6ef6ca9d47e061b32db5",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

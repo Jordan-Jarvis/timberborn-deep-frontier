@@ -1,0 +1,19 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 1496,
+  "spatialCandidatePairs": 288,
+  "nearPlanePairs": 144,
+  "identicalMaterialAndUvPairs": 0,
+  "visibleConflicts": 0,
+  "occludedConflicts": 0,
+  "conflicts": [],
+  "seconds": 0.06,
+  "model": "LimestoneMasonryBlock",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\LimestoneMasonryBlock-ReferenceStudy.blend",
+  "sourceSha256": "9f7062008b97928dac84f620d58f1f01cfb96dd3c76676e446765e9060f83ef6",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 1264,
+  "spatialCandidatePairs": 16,
+  "nearPlanePairs": 0,
+  "identicalMaterialAndUvPairs": 0,
+  "visibleConflicts": 0,
+  "occludedConflicts": 0,
+  "conflicts": [],
+  "seconds": 0.03,
+  "model": "ConcreteOverflowDam",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\ConcreteOverflowDam-ReferenceStudy.blend",
+  "sourceSha256": "691c0554cddf7249415116d7e54d7bd4fee782d1b3bb995432a7ef73d0e65c0b",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

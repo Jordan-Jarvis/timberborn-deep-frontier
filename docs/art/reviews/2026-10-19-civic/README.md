@@ -1,0 +1,38 @@
+# Civic building Blender review — 2026-10-19
+
+Four new source models follow the individual sheets supplied by the user. Architecture follows the front/rear isometric illustrations; no top-down views or printed dimensions were used. The user then requested larger, grander buildings with more levels, small windows and roof sections. This revision adds a third occupied storey, upper galleries, additional small windows, dormers and roof pavilions. The previous small civic drafts are superseded; no height or footprint cap is imposed.
+
+These images are Blender renders. Native occupancy, entrance slots, staircase connections, adaptive railing bindings, platform support, power ports and gameplay have not yet been integrated for these civic models. See `tools/STATUS.md` for the separately installed industrial build. The latest pass uses original Iron Teeth wood, blue painted roofing, metal panels and concrete-colored plaster, with additional pipes, vents and fittings. The user accepted the blue roofing and explicitly retained the oversized wood grain.
+
+The rejected solid blob foliage has been removed from every civic planter. Window boxes now contain original native dandelion leaf/stem/flower meshes; selected boxes use sunflowers, coffee or blueberry foliage. Clear rooftop terraces have original Iron Teeth potted shrubs at their edges. Original UVs, cutout transparency and vertex colors are preserved. [Native plant comparison](NativePlants-original.png) shows the source plant forms. The user accepted these plants and requested moving on to functionality. Custom flowers are also permitted if their geometry and material quality match this native approach.
+
+The plant comparison reads left to right: Iron Teeth shrub, dandelion, coffee bush, blueberry bush and sunflower. Close views: [hospital flower box](Hospital-planter-detail.png), [roof terrace and its door](Hospital-terrace-detail.png).
+
+| Building | Isometric renders | Source reference | Distinctive construction |
+| --- | --- | --- | --- |
+| Fishery Works | [Front](FisheryWorks-front.png), [wheel side](FisheryWorks-front-right.png), [rear](FisheryWorks-rear.png) | [Fishery](../../concepts/Fishery.png) | Stepped roof, exterior fish workstations, suspended fish and nets, rotating wheel, connected header/waterfall/basins, net crane, stock and barrels |
+| Restaurant | [Front](Restaurant-front.png), [dining side](Restaurant-front-right.png), [rear kitchen](Restaurant-rear.png) | [Restaurant](../../concepts/Resturaunt.png) | Broad pitched roof and dormers, dining terraces, furnished exterior tables, prepared-food counters, enclosed kitchen, oven, chimney, pipework and bowl sign |
+| Grocery Store | [Front](GroceryStore-front.png), [side](GroceryStore-front-right.png), [rear](GroceryStore-rear.png) | [Grocery Store](../../concepts/Grocery%20Store.png) | Long clerestory, striped storefront awning, produce bins, jars, sacks, loading stock, flower boxes and basket sign |
+| Hospital | [Front](Hospital-front.png), [side](Hospital-front-right.png), [rear](Hospital-rear.png) | [Hospital](../../concepts/Hospital.png) | Central entrance pavilion, lower wings, crossing roof masses, medical cross and banners, flower-lined galleries, medical crates and rooftop services |
+
+## Sources and motion
+
+Editable scenes are in `src/DeepFrontier/Art/Source/<Building>-ReferenceStudy.blend`. Authoring code: `tools/asset-pipeline/civic_isometric_geometry.py`. Civic architecture uses an explicit 30-slot palette; the industrial palette remains unchanged. Native prop instances preserve their own original material slots and UVs. The shipped compact Iron Teeth waterwheel replaces the custom wheel. Barrels reuse native props. Original extracted resources remain local preview inputs; the intended runtime assembly references the installed assets.
+
+Motion previews: [fishery](FisheryWorks-motion.mp4), [restaurant](Restaurant-motion.mp4), [grocery](GroceryStore-motion.mp4), [hospital](Hospital-motion.mp4). Hospital banners and hanging shop signs sway; the fishery uses the native wheel clip and a suspended crane net. These are Blender playback checks, not in-game civic tests.
+
+Fishery water-state close-ups: [full](FisheryWorks-water-full.png), [half](FisheryWorks-water-half.png), [empty](FisheryWorks-water-empty.png). Separate reservoir surfaces use the native stored-water appearance. These images demonstrate authored height ranges; they do not simulate hauling or production. The reusable runtime adapter is being integrated first into the existing quarry water barrels. Fishery inventory-driven flow/wheel binding remains part of its upcoming game integration. Closed roof/service or cargo barrels remain decorative unless their building receives an actual liquid inventory.
+
+## Access contract and checks
+
+Ground entrance thresholds are at layer 0; gallery floors are at layers 2 and 4, and the clear roof terraces are at layer 6. Each level has an authored arched doorway, including an enclosed rooftop access house. All doors must connect through the building interior in the final native graph. Door meshes and `visitor-manifest` positions do not implement that graph. There are no integral staircase meshes; explicit outer bays reserve space for native stairs. Every perimeter rail panel/post is a separate node for the reusable connection adapter. No artificial platform-stack limit is authored.
+
+Each roof terrace has an explicitly recorded clear rectangle, with floor-contact and two-unit overhead-clearance checks. Native support cells for player-placed shrubs, decor and platforms remain integration work. The restaurant has seven exterior dining tables and fourteen authored sitting positions. Its final behavior must be a native attraction visit with reserved seats and food consumption; the old factory-produced DiningService good is not the final dining implementation. See [civic integration](../../../civic-building-integration.md).
+
+The source check samples intended gallery routes with a 0.20-unit body radius and 1.10-unit headroom, testing floor contact and actual mesh intersections. It caught pitched roofs across hospital galleries, projecting window boxes, low support caps, the restaurant porch roof, and fishery props intruding into lanes; the producing geometry was corrected. Outward-facing facade construction also prevents rear/right opaque window backings from hiding their panes.
+
+Per-model `*-motion-check.json`, `*-video-check.json`, rail/access/height manifests and [review-manifest.json](review-manifest.json) record evidence. The current motion reports include source geometry, atlas/material and clearance checks; older standalone geometry reports are deliberately excluded. All four videos decoded successfully at 640×640. Hospital, Restaurant and Grocery previews are two seconds; Fishery is 12.5 seconds. Animation checks require the exact authored node set, actual movement and loop closure. Seventy-five review files have matching source/copy hashes, alongside saved-scene and concept-image hashes. These checks establish source geometry and preview behavior; native beaver movement and building functionality remain separate acceptance work.
+
+## Next integration work
+
+Bind explicit game cells to each reviewed model without automatic fitting, scaling or rounding. Preserve clear under-gallery space, add native entrances and appropriate service/production components, and use `BuildingWalkwaySpec` for per-cell openings. Final dimensions, costs and recipes must be updated together in generated content and the workbook after that binding. Hospital care, restaurant visits, grocery distribution and fish production each need their own native behavior and save/reload tests.

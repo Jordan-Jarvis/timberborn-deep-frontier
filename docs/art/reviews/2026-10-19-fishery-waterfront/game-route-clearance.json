@@ -1,0 +1,15 @@
+{
+  "scope": "Source mesh against authored game-route waypoints; native movement still requires playtesting",
+  "size": [
+    12,
+    10,
+    7
+  ],
+  "origin": [
+    1.25,
+    0.7,
+    0
+  ],
+  "exteriorSamples": 186,
+  "failures": []
+}

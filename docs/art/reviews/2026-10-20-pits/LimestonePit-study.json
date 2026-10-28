@@ -1,0 +1,27 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -4.855500221252441,
+    -4.125,
+    -0.20999999344348907
+  ],
+  "boundsMax": [
+    -0.0044999998062849045,
+    -0.0949999988079071,
+    3.869999885559082
+  ],
+  "sourceReference": "docs/art/concepts/01-mining-and-sources-concept-v1.png",
+  "selectedReferenceViews": [
+    "limestone pit front isometric",
+    "limestone pit rear isometric"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "Pit.Winch",
+    "Pit.HoistedBasket",
+    "Pit.HoistCable"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "tileDimensions": null
+}

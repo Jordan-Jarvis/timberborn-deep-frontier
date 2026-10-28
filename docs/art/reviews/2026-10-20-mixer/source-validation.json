@@ -1,0 +1,15 @@
+{
+  "scope": "Source geometry only; native placement and walking remain to test",
+  "routeCells": 19,
+  "railPorts": 23,
+  "floorAndHeadroomSamples": 198,
+  "bodyRadius": 0.2,
+  "headroom": 1.1,
+  "nativeAtlasUvCornersChecked": 262306,
+  "loopingAnimatedParts": [
+    "Mixer.Drum",
+    "Mixer.Drive"
+  ],
+  "animationFrames": 121,
+  "failures": []
+}

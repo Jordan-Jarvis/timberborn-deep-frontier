@@ -1,0 +1,29 @@
+{
+  "scope": "Blender source review; installed native verification recorded separately in STATUS",
+  "renders": [
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "a0021c583e3e504127c3718a1f8d38922ecc801a598a7b91ca0280c8e6814175",
+      "images": [
+        "Restaurant-front.png",
+        "Restaurant-front-right.png",
+        "Restaurant-rear.png",
+        "Restaurant-back-left.png"
+      ],
+      "imageSha256": {
+        "Restaurant-front.png": "e235a939472903d909f74ae5fea9e1cfe645a091efbb32cdf8d7356e74f13bca",
+        "Restaurant-front-right.png": "d30e4ee2de4af75522740d665630a9e2244daac133550c0d8251439543e1496d",
+        "Restaurant-rear.png": "aaa2c8e33f6c2ddeeb74532460bc49dba9b1020ba57dbbb1c05b24edb5918280",
+        "Restaurant-back-left.png": "f3326747930c850da3a9894f89427ee27e083a080295806100915cf51eaedcfc"
+      }
+    }
+  ],
+  "changes": [
+    "Two chimneys",
+    "Original white deck dimensions; nine clear construction cells",
+    "Rear balcony covers kitchen roof",
+    "Metal kitchen vents and gallery straps",
+    "Closed and decorated stairhead facade"
+  ]
+}

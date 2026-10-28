@@ -1,0 +1,38 @@
+{
+  "status": "Final source render and checked official export; native gameplay verification pending",
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\Hospital-ReferenceStudy.blend",
+  "sourceSha256": "0acb68b9dc85e672b8fd0ab84161f49a3c3b3f08c3a12eb0fedc98219919280c",
+  "images": {
+    "Hospital-front.png": "826cc1ef3c27bb297aa1c2b3af0e0679d70e1fb46af101f4ca092197fc4343cb",
+    "Hospital-front-right.png": "2caf6e9e405a3776b91f79944ca64cb8fb2d9f18fe2590b2f40747925f7d3058",
+    "Hospital-rear.png": "06a7529e06bf98ede32fd8e26df7470ce14643224f2019132dc6965bf0233583",
+    "Hospital-back-left.png": "ae3f9bbac76a8d95a423639098884049a921f5c93ef6a26f60cc5f25a382e98e"
+  },
+  "authoringSha256": {
+    "hospital_geometry.py": "1c10e0a14b1b3cfe85de7f2509c91d35a9649e66c0dedce9c6fd93fe58c8d7bc",
+    "hospital_layout.py": "57039e399337bfb15bb9ff4c821fefb05c62f74afde03187d2192b4b4a3db8df",
+    "hospital_structure.py": "6d96d021761f0e4a5c6e10edbdcef2ca8df9266a154b3592f7fac9f178936ba1",
+    "grid_structure.py": "ee78672294651e03c42aed75063f3536dc905e0cba1ab0ca1c1f1046abcee828",
+    "architectural_windows.py": "5c86365013c177f57b073ad29cf60adbdaa2e20049091985921fddf3bc5abff0",
+    "civic_isometric_geometry.py": "a977b777ad6c19bfa5a8923111523c743119f1d5f09958127305b0efd336f9cc",
+    "frontier_architecture.py": "1259b572a95647d4a1d71d975b4a3ac88b32c7932198bbf25eb66ff7625c6f8f"
+  },
+  "sourceChecks": {
+    "status": "Source shell and suggested-road geometry checks passed; native gameplay is separate",
+    "sourceSha256": "0acb68b9dc85e672b8fd0ab84161f49a3c3b3f08c3a12eb0fedc98219919280c",
+    "mountedWindows": 72,
+    "windowContactProbes": 2290,
+    "evaluatedWallProbes": 342352,
+    "rooms": 8,
+    "roofShellProbes": 140800,
+    "opaqueWallSamples": 345600,
+    "bodyClearanceProbes": 280,
+    "doors": 4,
+    "roofClearCells": 12
+  },
+  "visibleOverlapCandidates": 0,
+  "evaluatedTriangles": 214762,
+  "export": "outputs/civic-integration/Data/Buildings/Wellbeing/Hospital/Hospital.IronTeeth.Model.timbermesh",
+  "exportSha256": "1e1a41456d4f38973dd4fdad1cfb63b35097235fdf669c94cee488ce3bca3181",
+  "nativeRuntimeStatus": "Updated HospitalAcceptance.cs fixture requires a new installed game run; prior Hospital results do not validate this geometry."
+}

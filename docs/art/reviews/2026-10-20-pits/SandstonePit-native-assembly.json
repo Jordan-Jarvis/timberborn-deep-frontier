@@ -1,0 +1,18 @@
+{
+  "scope": "Local preview copies; game references the original shipped resources",
+  "props": [
+    {
+      "name": "NativeBarrel0",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        0.46,
+        0.48,
+        0.25717724000000003
+      ],
+      "scale": 1.55,
+      "yaw": 0
+    }
+  ],
+  "liquids": []
+}

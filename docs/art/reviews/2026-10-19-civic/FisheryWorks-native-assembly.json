@@ -1,0 +1,193 @@
+{
+  "scope": "Local preview copies; game references the original shipped resources",
+  "props": [
+    {
+      "name": "FisheryNativeWheel",
+      "model": "CompactWaterWheel.IronTeeth",
+      "resource": "Buildings/Power/CompactWaterWheel/CompactWaterWheel.IronTeeth.Model",
+      "position": [
+        7.55,
+        5.9,
+        0.03
+      ],
+      "scale": 1,
+      "yaw": 90
+    },
+    {
+      "name": "FisheryWaterBarrel0",
+      "model": "SmallTank.IronTeeth",
+      "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
+      "position": [
+        1.9899999999999998,
+        6.99,
+        0
+      ],
+      "scale": 0.62,
+      "yaw": 0
+    },
+    {
+      "name": "FisheryWaterBarrel1",
+      "model": "SmallTank.IronTeeth",
+      "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
+      "position": [
+        2.69,
+        6.99,
+        0
+      ],
+      "scale": 0.62,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel3",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        5.7,
+        7.3,
+        0.43139408
+      ],
+      "scale": 2.6,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel4",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        6.37,
+        3.4,
+        2.28206536
+      ],
+      "scale": 1.7,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel5",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        6.37,
+        5.4,
+        2.28206536
+      ],
+      "scale": 1.7,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant6",
+      "model": "Shrub.IronTeeth",
+      "resource": "Buildings/Decoration/Shrub/Shrub.IronTeeth.Model",
+      "position": [
+        -2.42,
+        5.639999999999999,
+        6
+      ],
+      "scale": 0.46,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant7",
+      "model": "Shrub.IronTeeth",
+      "resource": "Buildings/Decoration/Shrub/Shrub.IronTeeth.Model",
+      "position": [
+        0.9900000000000002,
+        5.639999999999999,
+        6
+      ],
+      "scale": 0.46,
+      "yaw": 0
+    }
+  ],
+  "liquids": [
+    {
+      "name": "FisheryBasin0",
+      "shape": "Rectangle",
+      "center": [
+        8.075,
+        4.315
+      ],
+      "bottom": 0.1,
+      "top": 0.44,
+      "scale": [
+        1.0200000000000005,
+        3.2000000000000006
+      ],
+      "flowOnly": false
+    },
+    {
+      "name": "FisheryBasin1",
+      "shape": "Rectangle",
+      "center": [
+        8.075,
+        1.94
+      ],
+      "bottom": 0.1,
+      "top": 0.44,
+      "scale": [
+        1.0200000000000005,
+        1.15
+      ],
+      "flowOnly": false
+    },
+    {
+      "name": "FisheryBasin2",
+      "shape": "Rectangle",
+      "center": [
+        5.949999999999999,
+        0.44
+      ],
+      "bottom": 0.1,
+      "top": 0.44,
+      "scale": [
+        1.0700000000000003,
+        0.55
+      ],
+      "flowOnly": false
+    },
+    {
+      "name": "FisheryBasin3",
+      "shape": "Rectangle",
+      "center": [
+        8.05,
+        5.275
+      ],
+      "bottom": 2.73,
+      "top": 3.07,
+      "scale": [
+        0.6100000000000002,
+        1.3200000000000003
+      ],
+      "flowOnly": false
+    },
+    {
+      "name": "FisheryWaterBarrel0.Water",
+      "shape": "SmallLiquidPlane",
+      "center": [
+        2.3,
+        7.3
+      ],
+      "bottom": 0.33852000000000004,
+      "top": 0.8804,
+      "scale": [
+        0.62,
+        0.62
+      ],
+      "flowOnly": false
+    },
+    {
+      "name": "FisheryWaterBarrel1.Water",
+      "shape": "SmallLiquidPlane",
+      "center": [
+        3.0,
+        7.3
+      ],
+      "bottom": 0.33852000000000004,
+      "top": 0.8804,
+      "scale": [
+        0.62,
+        0.62
+      ],
+      "flowOnly": false
+    }
+  ]
+}

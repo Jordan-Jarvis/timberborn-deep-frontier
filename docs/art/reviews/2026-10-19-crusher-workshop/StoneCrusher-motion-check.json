@@ -1,0 +1,39 @@
+{
+  "scope": "Blender scene only; no game playback verification",
+  "parts": [
+    {
+      "name": "ReferenceCrusherRoller1",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 1.0
+    },
+    {
+      "name": "ReferenceCrusherRoller2",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0000001343588565
+    },
+    {
+      "name": "ReferenceCrusherFlywheel",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 1.0
+    },
+    {
+      "name": "ReferenceCrusherDriveSprocket0.61",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 1.0
+    },
+    {
+      "name": "ReferenceCrusherDriveSprocket1.96",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 1.0
+    }
+  ],
+  "sourceTimelineFrames": 61,
+  "sourceFps": 30,
+  "sourceVertices": 90180,
+  "sourcePolygons": 60930,
+  "separateRailNodes": 56,
+  "railRuns": 5,
+  "navigationStatus": "Rail nodes checked in Blender; native pathing and adaptive connections not implemented",
+  "previewFps": 15.0,
+  "previewFrames": 30
+}

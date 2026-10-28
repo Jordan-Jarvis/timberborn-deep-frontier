@@ -1,0 +1,24 @@
+{
+  "scope": "Blender review only; no game package installed",
+  "scene": "src\\DeepFrontier\\Art\\Source\\MineralQuarry-ReferenceStudy.blend",
+  "sceneSha256": "5aff2fa2530a1656c59293f6e31e7e5e5edbd6b2bc8ef2dff8ce40e43afb5ece",
+  "artifactsSha256": {
+    "MineralQuarry-front.png": "e8c42006f82af1772770c92f90c3d002fabbee189c5d3b93bc7d9515e5cbf35f",
+    "MineralQuarry-front-right.png": "37becf45808d84b332101201175da8c1e7c7d88fd09cb3c28c82ada68fbe917c",
+    "MineralQuarry-back-left.png": "f4220e1b227eaf7925047dbc4a6015843e370a7e46af520f7ef1fbc0a9239d45",
+    "MineralQuarry-process.png": "1b68e1e2eeabe202f5698675b3f0b2be95b736a286e6055cc117ec520a760cc1",
+    "MineralQuarry-motion.mp4": "ef6288ced26567f2e4a8b7a77b9f2bcb70646afb8a2a8e52431bf0a77e26aa6a",
+    "MineralQuarry-study.json": "386d7508145da904388722594a0578cd75b14ac51d09e8cb199cd6a33c8432f3",
+    "MineralQuarry-height-manifest.json": "9531fc84f8d82fe785e86fa5957b995af4ee2b7bfdaeb3de53a9b75daea69c92",
+    "MineralQuarry-rail-manifest.json": "77da68898408b3976bb5ddcbdd1b9cd64c2055c47df5031a7777760a2140aa16",
+    "MineralQuarry-geometry-check.json": "f978cf4453e2b8eaca4d9d65fc2118e59f8c92d64817563c5c1bf9a60afa3319",
+    "MineralQuarry-motion-check.json": "4346ad8bad527039ef78eb4572ab2098f8f2f14c346a254a9d42547e6a4770bb",
+    "MineralQuarry-video-check.json": "28a83110d8daa03d3341e47e4d22e0410c52a3b95b7274dd43b8f9e209b365f0",
+    "MineralQuarry-video-frame-001.png": "4e0c3c6bbde5020f78cbb0492163d4b94234308c9d9b4db74aa1ea0dc73b6974",
+    "MineralQuarry-video-frame-055.png": "8d1d11a99d08b57a6ce21552d843d9b7dd3a4e2e47c0ddf02ea6fd72701caf95",
+    "MineralQuarry-video-frame-084.png": "a2790151c768063255a2db210d419a277105e34a9a758b3d393e30b26ff7f0d2",
+    "MineralQuarry-access-manifest.json": "d607c36f7981c546c9bcbb3342b1b67038199fac1073fefff6ff8268f5c38257",
+    "MineralQuarry-process-manifest.json": "3846afa632513e1ee7ed27dafb235544fe4737c3d9298216b2e8c10aeb44bff8",
+    "MineralQuarry-height-only-check.json": "74bfedc05c08f3a18a0d26558fc6fb331938fb2fe098960f8519c448cfb63d2a"
+  }
+}

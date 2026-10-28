@@ -1,0 +1,60 @@
+{
+  "scope": "Report explicit native window mounts whose rear plane lacks nearby wall.\n\nAll window faces are excluded from backing rays. This diagnoses source mount\npositions; it never moves, snaps, fills or normalizes an assembly.\n",
+  "models": [
+    {
+      "model": "GroceryStore",
+      "windows": 71,
+      "mountFindings": []
+    },
+    {
+      "model": "FisheryWorks",
+      "windows": 15,
+      "mountFindings": []
+    },
+    {
+      "model": "FishHatchery",
+      "windows": 7,
+      "mountFindings": []
+    },
+    {
+      "model": "ReinforcedHydroTurbine",
+      "windows": 7,
+      "mountFindings": []
+    },
+    {
+      "model": "MaterialsLaboratory",
+      "windows": 40,
+      "mountFindings": []
+    },
+    {
+      "model": "StoneCrusher",
+      "windows": 5,
+      "mountFindings": []
+    },
+    {
+      "model": "CementKiln",
+      "windows": 5,
+      "mountFindings": []
+    },
+    {
+      "model": "MineralQuarry",
+      "windows": 12,
+      "mountFindings": []
+    },
+    {
+      "model": "ConcreteMixer",
+      "windows": 6,
+      "mountFindings": []
+    },
+    {
+      "model": "SandstonePit",
+      "windows": 4,
+      "mountFindings": []
+    },
+    {
+      "model": "LimestonePit",
+      "windows": 4,
+      "mountFindings": []
+    }
+  ]
+}

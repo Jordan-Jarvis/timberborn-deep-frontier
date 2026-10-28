@@ -1,0 +1,1431 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 203684,
+  "spatialCandidatePairs": 1472,
+  "nearPlanePairs": 1351,
+  "identicalMaterialAndUvPairs": 0,
+  "visibleConflicts": 0,
+  "occludedConflicts": 29,
+  "conflicts": [
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 69862,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 69874,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.027608017700733845,
+      "visible": false,
+      "center": [
+        -1.5693334341049194,
+        -1.0700000524520874,
+        0.22066664695739746
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4919999837875366,
+          -1.0700000524520874,
+          0.061999958008527756
+        ],
+        [
+          -1.6080000400543213,
+          -1.0700000524520874,
+          0.06199995428323746
+        ],
+        [
+          -1.6080000400543213,
+          -1.0700000524520874,
+          0.5380000472068787
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 69856,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 69868,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.02757322136433854,
+      "visible": false,
+      "center": [
+        -0.30279895663261414,
+        -1.0700000524520874,
+        0.19063133001327515
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.2513884902000427,
+          -1.0700000524520874,
+          0.10052535682916641
+        ],
+        [
+          -0.24380719661712646,
+          -1.0700000524520874,
+          0.061999958008527756
+        ],
+        [
+          -0.3580000698566437,
+          -1.0700000524520874,
+          0.06199995428323746
+        ],
+        [
+          -0.3580000698566437,
+          -1.0700000524520874,
+          0.5380000472068787
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 69856,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 69868,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.023119073388641134,
+      "visible": false,
+      "center": [
+        -0.2682165801525116,
+        -1.0700000524520874,
+        0.3096313178539276
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -0.2513884902000427,
+          -1.0700000524520874,
+          0.10052531957626343
+        ],
+        [
+          -0.3374779224395752,
+          -1.0700000524520874,
+          0.5379999876022339
+        ],
+        [
+          -0.24199995398521423,
+          -1.0700000524520874,
+          0.5380000472068787
+        ],
+        [
+          -0.24199993908405304,
+          -1.0700000524520874,
+          0.06199995055794716
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 69862,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 69874,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.022353000883315044,
+      "visible": false,
+      "center": [
+        -1.5323694944381714,
+        -1.0700000524520874,
+        0.36122453212738037
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4919999837875366,
+          -1.0700000524520874,
+          0.061999958008527756
+        ],
+        [
+          -1.6080000400543213,
+          -1.0700000524520874,
+          0.5380000472068787
+        ],
+        [
+          -1.5374778509140015,
+          -1.0700000524520874,
+          0.5380000472068787
+        ],
+        [
+          -1.4919999837875366,
+          -1.0700000524520874,
+          0.3068980872631073
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 69862,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 69874,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.005255015819278014,
+      "visible": false,
+      "center": [
+        -1.5071592330932617,
+        -1.0700000524520874,
+        0.4609660506248474
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4919999837875366,
+          -1.0700000524520874,
+          0.3068980574607849
+        ],
+        [
+          -1.5374778509140015,
+          -1.0700000524520874,
+          0.5379999876022339
+        ],
+        [
+          -1.4919999837875366,
+          -1.0700000524520874,
+          0.5380000472068787
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 69856,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 69868,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.004488956554790757,
+      "visible": false,
+      "center": [
+        -0.3156221807003021,
+        -1.0700000524520874,
+        0.39217516779899597
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.3374779224395752,
+          -1.0700000524520874,
+          0.5380000472068787
+        ],
+        [
+          -0.2513884902000427,
+          -1.0700000524520874,
+          0.10052535682916641
+        ],
+        [
+          -0.3580000698566437,
+          -1.0700000524520874,
+          0.5380000472068787
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 74055,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 74615,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.9802322387695312e-08,
+      "overlapArea": 0.0024929509079690006,
+      "visible": false,
+      "center": [
+        -0.1300000250339508,
+        -1.0317444801330566,
+        2.2586419582366943
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.1300000250339508,
+          -0.9972037672996521,
+          2.270406484603882
+        ],
+        [
+          -0.1300000250339508,
+          -1.0088310241699219,
+          2.2730000019073486
+        ],
+        [
+          -0.1300000250339508,
+          -1.0730000734329224,
+          2.2730000019073486
+        ],
+        [
+          -0.1300000250339508,
+          -1.0730000734329224,
+          2.2462852001190186
+        ],
+        [
+          -0.1300000250339508,
+          -1.0066876411437988,
+          2.2305185794830322
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 74552,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 74619,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.002492946936439644,
+      "visible": false,
+      "center": [
+        -3.049999952316284,
+        -1.0317447185516357,
+        2.2586419582366943
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.049999952316284,
+          -1.0088310241699219,
+          2.2730000019073486
+        ],
+        [
+          -3.049999952316284,
+          -0.9972038269042969,
+          2.270406484603882
+        ],
+        [
+          -3.049999952316284,
+          -1.0066877603530884,
+          2.2305185794830322
+        ],
+        [
+          -3.049999952316284,
+          -1.073000192642212,
+          2.2462852001190186
+        ],
+        [
+          -3.049999952316284,
+          -1.0730003118515015,
+          2.2730000019073486
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 69883,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 70193,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "planeSeparation": 1.6056096532185427e-08,
+      "overlapArea": 0.002289985254216509,
+      "visible": false,
+      "center": [
+        -0.15999998152256012,
+        -0.911168098449707,
+        1.5699387788772583
+      ],
+      "normal": [
+        1.0,
+        -1.7101067228963984e-08,
+        5.62818902594131e-09
+      ],
+      "polygon": [
+        [
+          -0.15999998152256012,
+          -0.8754910230636597,
+          1.5800977945327759
+        ],
+        [
+          -0.15999998152256012,
+          -0.8860411643981934,
+          1.5830000638961792
+        ],
+        [
+          -0.15999998152256012,
+          -0.953000009059906,
+          1.5830000638961792
+        ],
+        [
+          -0.15999998152256012,
+          -0.953000009059906,
+          1.562443494796753
+        ],
+        [
+          -0.15999998152256012,
+          -0.8883084058761597,
+          1.5411525964736938
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 70130,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 70197,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "planeSeparation": 3.5762786865234375e-07,
+      "overlapArea": 0.0022899838372383097,
+      "visible": false,
+      "center": [
+        -1.720000147819519,
+        -0.911168098449707,
+        1.5699388980865479
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.7200000286102295,
+          -0.8860411047935486,
+          1.5830000638961792
+        ],
+        [
+          -1.7200000286102295,
+          -0.8754910826683044,
+          1.5800977945327759
+        ],
+        [
+          -1.7200000286102295,
+          -0.8883084654808044,
+          1.5411525964736938
+        ],
+        [
+          -1.7200000286102295,
+          -0.953000009059906,
+          1.562443494796753
+        ],
+        [
+          -1.7200000286102295,
+          -0.953000009059906,
+          1.5830000638961792
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 80075,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:89:hoist > pit_isometric_geometry.py:148:mineral_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 82013,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > pit_isometric_geometry.py:111:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0019554050379068134,
+      "visible": false,
+      "center": [
+        -3.54957914352417,
+        -3.48357892036438,
+        0.3400000035762787
+      ],
+      "normal": [
+        -0.0,
+        0.0,
+        -1.0
+      ],
+      "polygon": [
+        [
+          -3.5359997749328613,
+          -3.435999870300293,
+          0.3400000035762787
+        ],
+        [
+          -3.542315721511841,
+          -3.522315740585327,
+          0.3400000035762787
+        ],
+        [
+          -3.56000018119812,
+          -3.5400002002716064,
+          0.3400000035762787
+        ],
+        [
+          -3.56000018119812,
+          -3.435999870300293,
+          0.3400000035762787
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 80069,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > pit_isometric_geometry.py:89:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 82113,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:111:hoist > pit_isometric_geometry.py:148:mineral_pit"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0017906222790671222,
+      "visible": false,
+      "center": [
+        -3.5793912410736084,
+        -3.5253915786743164,
+        0.3400000035762787
+      ],
+      "normal": [
+        0.0,
+        -0.0,
+        -1.0
+      ],
+      "polygon": [
+        [
+          -3.5835652351379395,
+          -3.483565330505371,
+          0.3400000035762787
+        ],
+        [
+          -3.569999933242798,
+          -3.4700000286102295,
+          0.3400000035762787
+        ],
+        [
+          -3.569999933242798,
+          -3.574000120162964,
+          0.3400000035762787
+        ],
+        [
+          -3.5940001010894775,
+          -3.574000120162964,
+          0.3400000035762787
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 74055,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 75429,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.9802322387695312e-08,
+      "overlapArea": 0.001686256884115167,
+      "visible": false,
+      "center": [
+        -0.1300000250339508,
+        -3.8378922939300537,
+        2.9248507022857666
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.1300000250339508,
+          -3.8017635345458984,
+          2.937225103378296
+        ],
+        [
+          -0.1300000250339508,
+          -3.853311777114868,
+          2.949481248855591
+        ],
+        [
+          -0.1300000250339508,
+          -3.86279559135437,
+          2.909593343734741
+        ],
+        [
+          -0.1300000250339508,
+          -3.833698272705078,
+          2.9031031131744385
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 74552,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 75433,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0016862561672075643,
+      "visible": false,
+      "center": [
+        -3.049999952316284,
+        -3.8378922939300537,
+        2.9248507022857666
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.049999952316284,
+          -3.86279559135437,
+          2.909593343734741
+        ],
+        [
+          -3.049999952316284,
+          -3.853311777114868,
+          2.949481248855591
+        ],
+        [
+          -3.049999952316284,
+          -3.8017635345458984,
+          2.937225103378296
+        ],
+        [
+          -3.049999952316284,
+          -3.833698272705078,
+          2.9031031131744385
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 69883,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 71007,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "planeSeparation": 1.413834271879466e-09,
+      "overlapArea": 0.0015939227563639413,
+      "visible": false,
+      "center": [
+        -0.1599999964237213,
+        -1.649087905883789,
+        1.8135169744491577
+      ],
+      "normal": [
+        1.0,
+        -1.71010814398187e-08,
+        5.628157939696621e-09
+      ],
+      "polygon": [
+        [
+          -0.1599999964237213,
+          -1.6152050495147705,
+          1.8235479593276978
+        ],
+        [
+          -0.1599999964237213,
+          -1.661691665649414,
+          1.8388473987579346
+        ],
+        [
+          -0.1599999964237213,
+          -1.674509048461914,
+          1.799902319908142
+        ],
+        [
+          -0.1599999964237213,
+          -1.6449462175369263,
+          1.7917698621749878
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 70130,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 71011,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "planeSeparation": 3.5762786865234375e-07,
+      "overlapArea": 0.0015939190789088942,
+      "visible": false,
+      "center": [
+        -1.7200000286102295,
+        -1.649087905883789,
+        1.8135167360305786
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.7200000286102295,
+          -1.6745089292526245,
+          1.7999022006988525
+        ],
+        [
+          -1.7200000286102295,
+          -1.6616915464401245,
+          1.838847279548645
+        ],
+        [
+          -1.7200000286102295,
+          -1.6152050495147705,
+          1.8235479593276978
+        ],
+        [
+          -1.7200000286102295,
+          -1.6449462175369263,
+          1.7917696237564087
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 83106,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:161:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 86412,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:174:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0004999935626983643,
+      "overlapArea": 0.0014905531660536764,
+      "visible": false,
+      "center": [
+        -1.7318357229232788,
+        -0.28299999237060547,
+        0.2150000035762787
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.7605000734329224,
+          -0.28299999237060547,
+          0.22800002992153168
+        ],
+        [
+          -1.7068426609039307,
+          -0.28299999237060547,
+          0.22800004482269287
+        ],
+        [
+          -1.6994999647140503,
+          -0.28299999237060547,
+          0.2019999623298645
+        ],
+        [
+          -1.7605000734329224,
+          -0.28299999237060547,
+          0.2019999623298645
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 70130,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 71011,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0013127474902783626,
+      "visible": false,
+      "center": [
+        -1.7200000286102295,
+        -1.6135377883911133,
+        1.8028634786605835
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.7200000286102295,
+          -1.6152050495147705,
+          1.8235479593276978
+        ],
+        [
+          -1.7200000286102295,
+          -1.5969998836517334,
+          1.817556381225586
+        ],
+        [
+          -1.7200000286102295,
+          -1.597000002861023,
+          1.7785799503326416
+        ],
+        [
+          -1.7200000286102295,
+          -1.6449462175369263,
+          1.7917696237564087
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 69883,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 71007,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "planeSeparation": 1.960915652077233e-09,
+      "overlapArea": 0.0013127421052054888,
+      "visible": false,
+      "center": [
+        -0.1599999964237213,
+        -1.6135377883911133,
+        1.802863597869873
+      ],
+      "normal": [
+        1.0,
+        -1.71010814398187e-08,
+        5.628157939696621e-09
+      ],
+      "polygon": [
+        [
+          -0.1599999964237213,
+          -1.597000002861023,
+          1.8175565004348755
+        ],
+        [
+          -0.1599999964237213,
+          -1.6152050495147705,
+          1.8235479593276978
+        ],
+        [
+          -0.1599999964237213,
+          -1.6449462175369263,
+          1.7917698621749878
+        ],
+        [
+          -0.1599999964237213,
+          -1.597000002861023,
+          1.7785800695419312
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 74055,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 75429,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.9802322387695312e-08,
+      "overlapArea": 0.0012659181444640843,
+      "visible": false,
+      "center": [
+        -0.1300000250339508,
+        -3.802365303039551,
+        2.916682481765747
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.1300000250339508,
+          -3.7869997024536133,
+          2.9337148666381836
+        ],
+        [
+          -0.1300000250339508,
+          -3.8017635345458984,
+          2.937225103378296
+        ],
+        [
+          -0.1300000250339508,
+          -3.833698272705078,
+          2.9031031131744385
+        ],
+        [
+          -0.1300000250339508,
+          -3.7869997024536133,
+          2.892686605453491
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 74552,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 75433,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0012659135754523598,
+      "visible": false,
+      "center": [
+        -3.049999952316284,
+        -3.802365303039551,
+        2.916682481765747
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.049999952316284,
+          -3.8017635345458984,
+          2.937225103378296
+        ],
+        [
+          -3.049999952316284,
+          -3.7869997024536133,
+          2.9337148666381836
+        ],
+        [
+          -3.049999952316284,
+          -3.7869997024536133,
+          2.892686605453491
+        ],
+        [
+          -3.049999952316284,
+          -3.833698272705078,
+          2.9031031131744385
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 68442,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:48:enclosure > pit_isometric_geometry.py:137:mineral_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 83611,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:161:mineral_pit"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008073269511045533,
+      "visible": false,
+      "center": [
+        -1.6579999923706055,
+        -1.1690000295639038,
+        0.18300002813339233
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.6579999923706055,
+          -1.156535267829895,
+          0.16141043603420258
+        ],
+        [
+          -1.6579999923706055,
+          -1.156535267829895,
+          0.2045896053314209
+        ],
+        [
+          -1.6579999923706055,
+          -1.1939295530319214,
+          0.18300002813339233
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 68503,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:48:enclosure"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 83585,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:161:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007138799314394826,
+      "visible": false,
+      "center": [
+        -1.6970000267028809,
+        -1.185564398765564,
+        0.09663619101047516
+      ],
+      "normal": [
+        -0.9999999403953552,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.6970000267028809,
+          -1.1859999895095825,
+          0.12192949652671814
+        ],
+        [
+          -1.6970000267028809,
+          -1.1644103527069092,
+          0.08453527837991714
+        ],
+        [
+          -1.6970000267028809,
+          -1.1906137466430664,
+          0.08453528583049774
+        ],
+        [
+          -1.6970000267028809,
+          -1.2012332677841187,
+          0.09554468095302582
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 80640,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:89:hoist > pit_isometric_geometry.py:148:mineral_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 80834,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:42:beam_joint > pit_isometric_geometry.py:90:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "planeSeparation": 0.0004999637603759766,
+      "overlapArea": 0.0005881158748916237,
+      "visible": false,
+      "center": [
+        -3.562000036239624,
+        -3.448690176010132,
+        3.504999876022339
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.562000036239624,
+          -3.438760995864868,
+          3.491999864578247
+        ],
+        [
+          -3.562000036239624,
+          -3.435999870300293,
+          3.5180001258850098
+        ],
+        [
+          -3.562000036239624,
+          -3.4600000381469727,
+          3.5180001258850098
+        ],
+        [
+          -3.562000036239624,
+          -3.4600000381469727,
+          3.491999864578247
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 83108,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:161:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 86414,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:174:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0004999637603759766,
+      "overlapArea": 0.000588110818113996,
+      "visible": false,
+      "center": [
+        -1.6970000267028809,
+        -0.2976902425289154,
+        0.21500003337860107
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.6970000267028809,
+          -0.28776103258132935,
+          0.2019999921321869
+        ],
+        [
+          -1.6970000267028809,
+          -0.28499993681907654,
+          0.22800008952617645
+        ],
+        [
+          -1.6970000267028809,
+          -0.30900004506111145,
+          0.22800008952617645
+        ],
+        [
+          -1.6970000267028809,
+          -0.30900004506111145,
+          0.2019999921321869
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 84622,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:161:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 86418,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:174:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0004999935626983643,
+      "overlapArea": 0.0005590047365057194,
+      "visible": false,
+      "center": [
+        -2.8697500228881836,
+        -0.28299999237060547,
+        0.21500001847743988
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -2.880500078201294,
+          -0.28299999237060547,
+          0.22800005972385406
+        ],
+        [
+          -2.8589999675750732,
+          -0.28299999237060547,
+          0.22800005972385406
+        ],
+        [
+          -2.8589999675750732,
+          -0.28299999237060547,
+          0.2019999772310257
+        ],
+        [
+          -2.880500078201294,
+          -0.28299999237060547,
+          0.2019999772310257
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 81253,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > pit_isometric_geometry.py:111:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "Pit.Winch",
+        "face": 3789,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:106:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005444997337920032,
+      "visible": false,
+      "center": [
+        -2.684500217437744,
+        -3.4755001068115234,
+        1.399999976158142
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -2.7065000534057617,
+          -3.4865000247955322,
+          1.399999976158142
+        ],
+        [
+          -2.6735000610351562,
+          -3.4865000247955322,
+          1.399999976158142
+        ],
+        [
+          -2.6735000610351562,
+          -3.4535000324249268,
+          1.399999976158142
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 81253,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > pit_isometric_geometry.py:111:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "Pit.Winch",
+        "face": 3789,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:106:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005444996903280694,
+      "visible": false,
+      "center": [
+        -2.695500135421753,
+        -3.4645001888275146,
+        1.399999976158142
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -2.7065000534057617,
+          -3.4865000247955322,
+          1.399999976158142
+        ],
+        [
+          -2.6735000610351562,
+          -3.4535000324249268,
+          1.399999976158142
+        ],
+        [
+          -2.7065000534057617,
+          -3.4535000324249268,
+          1.399999976158142
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "SandstonePit.Architecture",
+        "face": 83772,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:161:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit"
+      },
+      "b": {
+        "object": "SandstonePit.Architecture",
+        "face": 86414,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:174:mineral_pit > pit_isometric_geometry.py:187:sandstone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0004999637603759766,
+      "overlapArea": 0.0005265038250332338,
+      "visible": false,
+      "center": [
+        -1.6970000267028809,
+        -1.123539686203003,
+        0.21644942462444305
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.6970000267028809,
+          -1.1131588220596313,
+          0.20767061412334442
+        ],
+        [
+          -1.6970000267028809,
+          -1.1109999418258667,
+          0.22800007462501526
+        ],
+        [
+          -1.6970000267028809,
+          -1.1349999904632568,
+          0.22800007462501526
+        ],
+        [
+          -1.6970000267028809,
+          -1.1349999904632568,
+          0.20212692022323608
+        ]
+      ]
+    }
+  ],
+  "seconds": 4.67,
+  "model": "SandstonePit",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\SandstonePit-ReferenceStudy.blend",
+  "sourceSha256": "c47cb5d0879734d4ca883702812db8af067d4e419905a0a6c6e462b397394390",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

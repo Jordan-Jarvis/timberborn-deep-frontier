@@ -1,0 +1,420 @@
+{
+  "scope": "Local preview copies; game references the original shipped resources",
+  "props": [
+    {
+      "name": "NativePlant0",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        2.095,
+        1.305,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant1",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        2.335,
+        1.595,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant2",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        2.8649999999999998,
+        1.595,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant3",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        6.095000000000001,
+        1.305,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant4",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        6.335000000000001,
+        1.595,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant5",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        6.865,
+        1.595,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant6",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        0.855,
+        1.085,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 270
+    },
+    {
+      "name": "NativePlant7",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        0.8049999999999999,
+        1.085,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant8",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        1.045,
+        1.375,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 90
+    },
+    {
+      "name": "NativePlant9",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        2.265,
+        1.085,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant10",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        2.505,
+        1.375,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 90
+    },
+    {
+      "name": "NativePlant11",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        3.0349999999999997,
+        1.375,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 180
+    },
+    {
+      "name": "NativePlant12",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        5.965,
+        1.375,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 90
+    },
+    {
+      "name": "NativePlant13",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        6.494999999999999,
+        1.375,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 180
+    },
+    {
+      "name": "NativePlant14",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        6.734999999999999,
+        1.085,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 270
+    },
+    {
+      "name": "NativePlant15",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        7.955,
+        1.375,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 180
+    },
+    {
+      "name": "NativePlant16",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        8.195,
+        1.085,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 270
+    },
+    {
+      "name": "NativePlant17",
+      "model": "SunflowerMature",
+      "resource": "NaturalResources/Crops/Sunflower/SunflowerMature",
+      "position": [
+        8.145000000000001,
+        1.085,
+        0.245
+      ],
+      "scale": 0.29,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant18",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        0.645,
+        3.675,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant19",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        0.645,
+        3.625,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant20",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        8.645,
+        3.675,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant21",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        8.645,
+        3.625,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant22",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        0.645,
+        4.635000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant23",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        0.355,
+        4.875000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant24",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        8.645,
+        4.635000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant25",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        8.355,
+        4.875000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant26",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        0.355,
+        6.374999999999999,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant27",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        0.645,
+        6.615,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant28",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        8.355,
+        6.374999999999999,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant29",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        8.645,
+        6.615,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativeBarrel30",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        6.92,
+        5.25,
+        7.1307228
+      ],
+      "scale": 3.5,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant31",
+      "model": "Shrub.IronTeeth",
+      "resource": "Buildings/Decoration/Shrub/Shrub.IronTeeth.Model",
+      "position": [
+        7.33,
+        5.589999999999999,
+        6
+      ],
+      "scale": 0.46,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant32",
+      "model": "Shrub.IronTeeth",
+      "resource": "Buildings/Decoration/Shrub/Shrub.IronTeeth.Model",
+      "position": [
+        9.81,
+        5.589999999999999,
+        6
+      ],
+      "scale": 0.46,
+      "yaw": 0
+    }
+  ],
+  "liquids": []
+}

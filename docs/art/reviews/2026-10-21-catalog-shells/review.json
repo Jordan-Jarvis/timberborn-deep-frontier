@@ -1,0 +1,373 @@
+{
+  "scope": "18 exact detailed source scenes; 11 front/rear architectural render pairs manually reviewed. Source rays test declared opaque patches and window backing, not every possible building surface. Seven structural models have fresh strict reports but no new render pair here. Native placement, hitboxes, power and shader acceptance remain separate.",
+  "rendersAndChecks": [
+    {
+      "model": "GroceryStore",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\GroceryStore-ReferenceStudy.blend",
+      "sourceSha256": "9ae917bffefaf68a007219d685570e3488cb9a304f73a4628ad2158102379510",
+      "strictOverlapReport": "GroceryStore-overlap.json",
+      "strictOverlapReportSha256": "0fc1f8aae1edf1441701f6b74f9e1e9771b522abd252b89c3437d553beea017a",
+      "visibleConflicts": 0,
+      "occludedConflicts": 170,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "GroceryStore-front.png",
+          "sha256": "338dae11755e2f4a0aed43653a96484cde3155f646365f45dfc7593c0cf67e57"
+        },
+        {
+          "view": "rear",
+          "image": "GroceryStore-rear.png",
+          "sha256": "605a40b0c428946794470abaf947bd061864303358fba672406d9d4630ef2527"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed walls and attached windows. Terrace has wall-mounted cantilevers instead of dangling outer posts; terrace footprint preserved."
+    },
+    {
+      "model": "FisheryWorks",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\FisheryWorks-ReferenceStudy.blend",
+      "sourceSha256": "6415b76a65150389ad758fc9d2f55dd216ad39f643fc2809a7360a18e7a46d50",
+      "strictOverlapReport": "FisheryWorks-overlap.json",
+      "strictOverlapReportSha256": "71967727bd6ebb77a2fe7402b574f90c20643bf1608a0f985b65eacfbdfbdff1",
+      "visibleConflicts": 0,
+      "occludedConflicts": 88,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "FisheryWorks-front.png",
+          "sha256": "82b0c0d15a4c04b59bdf774ff2dba713981e641412e5e74bce612638892f9578"
+        },
+        {
+          "view": "rear",
+          "image": "FisheryWorks-rear.png",
+          "sha256": "53f779e973986bac2ca23e9de2e1cfa8d9a9f1aae8cb69a05172ef19f6899b74"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed hall and warehouse shells; rear net drapes and open water equipment are intentional."
+    },
+    {
+      "model": "FishHatchery",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\FishHatchery-ReferenceStudy.blend",
+      "sourceSha256": "044536ca43040f1cc620b6f15446875961245743452ef46c641d5eda88229a0b",
+      "strictOverlapReport": "FishHatchery-overlap.json",
+      "strictOverlapReportSha256": "0aed08ac9570866256ffd11c2ffd9432e6adc574d9fe1bf236b2d34ed3d4bdd2",
+      "visibleConflicts": 0,
+      "occludedConflicts": 40,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "FishHatchery-front.png",
+          "sha256": "88556183bc7fd39f3dae1a179be2cbb5484a1c48528d0bfc94de0104fa0aaded"
+        },
+        {
+          "view": "rear",
+          "image": "FishHatchery-rear.png",
+          "sha256": "d7fc93f47fbea5207997db512fc5f141118c4867cf1fd1e94102fb4dfce63cd7"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed nursery cabin; side windows fit the forward wall bays below collars. Water baskets and channels remain open."
+    },
+    {
+      "model": "ReinforcedHydroTurbine",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\ReinforcedHydroTurbine-ReferenceStudy.blend",
+      "sourceSha256": "4718c0432e6eed480b9b2629e0bce14fd23a200889291b383c613097a869b02e",
+      "strictOverlapReport": "ReinforcedHydroTurbine-overlap.json",
+      "strictOverlapReportSha256": "ee4cff63ebc9832c69a0551835458e7a0e9f0d832a39790ca3f4638830f5589d",
+      "visibleConflicts": 0,
+      "occludedConflicts": 862,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "ReinforcedHydroTurbine-front.png",
+          "sha256": "9c2e264f5b602095f1ffadced0827b5943afd23df6d7a803a7a368ee359df327"
+        },
+        {
+          "view": "rear",
+          "image": "ReinforcedHydroTurbine-rear.png",
+          "sha256": "7c7e707d09f57051a701a5d7935cd7e8e54a439bb2d0f1cb1903010e1a69736c"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed dam/conduit shell and attached workshop windows. Both conduit mouths remain intentionally open; rear review uses temporary fill lighting."
+    },
+    {
+      "model": "MaterialsLaboratory",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\MaterialsLaboratory-ReferenceStudy.blend",
+      "sourceSha256": "014f8c4834d234357666c858358c7c16ac5b838d5ea8a5c3f141f87b30c7ef8d",
+      "strictOverlapReport": "MaterialsLaboratory-overlap.json",
+      "strictOverlapReportSha256": "af61084e88764fadda79fb0a4ef50e02d707d1122d29d33d1d8a5099710394ea",
+      "visibleConflicts": 0,
+      "occludedConflicts": 476,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "MaterialsLaboratory-front.png",
+          "sha256": "4b98aa5c6bbd15b000485be424b904f4d625b1fd289035288b2b98f731223def"
+        },
+        {
+          "view": "rear",
+          "image": "MaterialsLaboratory-rear.png",
+          "sha256": "e64bd7675eec03c1c56e225b941100d3c432ce4b6b80a8ad27dc59dd30af0a38"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed asymmetrical laboratory shells, attached windows and roof bearings. Heavy external bracing across window fields is retained."
+    },
+    {
+      "model": "StoneCrusher",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\StoneCrusher-ReferenceStudy.blend",
+      "sourceSha256": "003203e20997e0db1865f19f3b759b9193ee737244fd92e550740f2231105aac",
+      "strictOverlapReport": "StoneCrusher-overlap.json",
+      "strictOverlapReportSha256": "7d231de97484e57fde88449ee4f8852e5a965cfa0ad0133526736fc7abd637e7",
+      "visibleConflicts": 0,
+      "occludedConflicts": 80,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "StoneCrusher-front.png",
+          "sha256": "d66c7cbe9b85ed98d9a5e22e73ddd30062a7a5fc2b14e81fc742e9755476e023"
+        },
+        {
+          "view": "rear",
+          "image": "StoneCrusher-rear.png",
+          "sha256": "6d233fbe4f8135edff4328bd22fa1b7c3adf3045a14ab090ec3c07cee085cd6d"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed operator workshop and entry porch; open upper crusher machinery is intentional."
+    },
+    {
+      "model": "CementKiln",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\CementKiln-ReferenceStudy.blend",
+      "sourceSha256": "4b2d4c1ef3b18406d7c171ceb1c2049ee486aec8ec9469e04de807224e9532cf",
+      "strictOverlapReport": "CementKiln-overlap.json",
+      "strictOverlapReportSha256": "59a8367257780d5a24888edd51a50c0fd8689652d66b46929f28adf0a7eed250",
+      "visibleConflicts": 0,
+      "occludedConflicts": 119,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "CementKiln-front.png",
+          "sha256": "5cdb858d377dfa23c446b6395cd379f52d45ffec907cd69a0a835fb69d59b7a8"
+        },
+        {
+          "view": "rear",
+          "image": "CementKiln-rear.png",
+          "sha256": "71424782fbceefe9786a2b46df649d262b594383ed63a034f9bbb7fe98eaf4eb"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed operator walls and porch beneath the kiln canopy; rotary processing equipment remains visible."
+    },
+    {
+      "model": "MineralQuarry",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\MineralQuarry-ReferenceStudy.blend",
+      "sourceSha256": "65ffed7c943c3e81ad39908664497e50ae5fd52b50df3c414e5968473e8a34c9",
+      "strictOverlapReport": "MineralQuarry-overlap.json",
+      "strictOverlapReportSha256": "83db3b9871df8aa9c084ba39133ccab4352337d9b0a29a3919c6cbcda865b703",
+      "visibleConflicts": 0,
+      "occludedConflicts": 395,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "MineralQuarry-front.png",
+          "sha256": "69fdcb633a2cbd202c4c18231404ed80e10fa4d675989f716246ac765c611340"
+        },
+        {
+          "view": "rear",
+          "image": "MineralQuarry-rear.png",
+          "sha256": "7a47b0a1d2a6d5476b7c891a40a957b3f089e94a1dc83b49aa2ddd37902f1a0f"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed workshops, ground cabin and rear control room; open hoist frame and transfer equipment are intentional."
+    },
+    {
+      "model": "ConcreteMixer",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\ConcreteMixer-ReferenceStudy.blend",
+      "sourceSha256": "cab2d11a5e8d4e431602bd9f8f6fb16fc16a68ae573876b1d47bbb1decbde90c",
+      "strictOverlapReport": "ConcreteMixer-overlap.json",
+      "strictOverlapReportSha256": "f60fbdcef9ad4974ea44f389d3435c75ec6300d003f665803ad862f92bf07925",
+      "visibleConflicts": 0,
+      "occludedConflicts": 82,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "ConcreteMixer-front.png",
+          "sha256": "0d3d6e1791760564cf6a9c36cb9b6943cbe416dbad7bbd638e0db99f18a6ee8b"
+        },
+        {
+          "view": "rear",
+          "image": "ConcreteMixer-rear.png",
+          "sha256": "9a346685b3671cb28a2c35e477f6afcdd282b17260fe3d63236c8e4f10f2db62"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed operator room and porch; exposed mixing machinery and underside structure are intentional."
+    },
+    {
+      "model": "SandstonePit",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\SandstonePit-ReferenceStudy.blend",
+      "sourceSha256": "c47cb5d0879734d4ca883702812db8af067d4e419905a0a6c6e462b397394390",
+      "strictOverlapReport": "SandstonePit-overlap.json",
+      "strictOverlapReportSha256": "699c97818ad883f67010ecb57c2babd09f605fd012fceb7c781708c727aa8ca2",
+      "visibleConflicts": 0,
+      "occludedConflicts": 29,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "SandstonePit-front.png",
+          "sha256": "0c80cda23ce2e17bd7ecbabf175a08a350eac92344793bb62cead9a63072fe81"
+        },
+        {
+          "view": "rear",
+          "image": "SandstonePit-rear.png",
+          "sha256": "9f928b73d1f564dba554e59ec56f95c4332b51c7a537f92e40f209e430aebade"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed sloping cabin walls, front header and roof bearing; attached native windows."
+    },
+    {
+      "model": "LimestonePit",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\LimestonePit-ReferenceStudy.blend",
+      "sourceSha256": "2954a7c918e591ec69ac69e73f4d5b1e677c66d1c365dde3a3b3693a4cb7b249",
+      "strictOverlapReport": "LimestonePit-overlap.json",
+      "strictOverlapReportSha256": "c78e6a8c2d592f00330a77b350e512fc1549a403560a61f5c393f047d55d2188",
+      "visibleConflicts": 0,
+      "occludedConflicts": 61,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "views": [
+        {
+          "view": "front",
+          "image": "LimestonePit-front.png",
+          "sha256": "8266e8baca7ef3fc4b1075bedd1aa0d1db9f43124b1b1ac3ecc1bf40c4e84768"
+        },
+        {
+          "view": "rear",
+          "image": "LimestonePit-rear.png",
+          "sha256": "a29ad6899e99786467733d27228e9e76406b54c793be0a9ddf8c3cd0d510fa05"
+        }
+      ],
+      "visualReview": "reviewed front and rear source renders",
+      "reviewNotes": "Closed sloping cabin walls, front header and roof bearing; attached native windows."
+    },
+    {
+      "model": "SandstoneMasonryBlock",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\SandstoneMasonryBlock-ReferenceStudy.blend",
+      "sourceSha256": "8c854d057911f2b44332497f50cacc099f87226832fa01bf314bc1baedeed4a1",
+      "strictOverlapReport": "SandstoneMasonryBlock-overlap.json",
+      "strictOverlapReportSha256": "3dab0d26c584805aaddc9b3243062b81e830f65982ba535a8ce1abd3029ba65a",
+      "visibleConflicts": 0,
+      "occludedConflicts": 0,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "visualReview": "no new render pair in this review; strict source report only"
+    },
+    {
+      "model": "LimestoneMasonryBlock",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\LimestoneMasonryBlock-ReferenceStudy.blend",
+      "sourceSha256": "9f7062008b97928dac84f620d58f1f01cfb96dd3c76676e446765e9060f83ef6",
+      "strictOverlapReport": "LimestoneMasonryBlock-overlap.json",
+      "strictOverlapReportSha256": "b214f2113bc4d64431c1438050c794d30041f4015194a2d5737e9fe18f4a1f94",
+      "visibleConflicts": 0,
+      "occludedConflicts": 0,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "visualReview": "no new render pair in this review; strict source report only"
+    },
+    {
+      "model": "ConcreteBlock",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\ConcreteBlock-ReferenceStudy.blend",
+      "sourceSha256": "bad6d920860126a0ba3ba157c13139fa14ca0566bf9803c7dbf29b0c974e3474",
+      "strictOverlapReport": "ConcreteBlock-overlap.json",
+      "strictOverlapReportSha256": "9adf870d2f2bcc0f1b877f6e4d3ede436d463192a24d9b97fa99d9ce5c73a15a",
+      "visibleConflicts": 0,
+      "occludedConflicts": 0,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "visualReview": "no new render pair in this review; strict source report only"
+    },
+    {
+      "model": "ConcreteOverhang8x1",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\ConcreteOverhang8x1-ReferenceStudy.blend",
+      "sourceSha256": "b71db6392960ec9a9a3f2c7a6a6aa34b1d3e3db163be6ef6ca9d47e061b32db5",
+      "strictOverlapReport": "ConcreteOverhang8x1-overlap.json",
+      "strictOverlapReportSha256": "66008eded905dfc9b380ffe4e9853f1b999a08f84c672ca88341112aef45964b",
+      "visibleConflicts": 0,
+      "occludedConflicts": 32,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "visualReview": "no new render pair in this review; strict source report only"
+    },
+    {
+      "model": "ConcreteScaffold3x3",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\ConcreteScaffold3x3-ReferenceStudy.blend",
+      "sourceSha256": "aedcf82ee6e47e8ad845903f1a1f9d7c6721a2eb49bd5a8f4d1c3e9e6e690a73",
+      "strictOverlapReport": "ConcreteScaffold3x3-overlap.json",
+      "strictOverlapReportSha256": "05c1602dd730299ab4570582b869489f6898ac180c15a66f7f881c6b77a92b3c",
+      "visibleConflicts": 0,
+      "occludedConflicts": 8,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "visualReview": "no new render pair in this review; strict source report only"
+    },
+    {
+      "model": "ReinforcedDamBlock",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\ReinforcedDamBlock-ReferenceStudy.blend",
+      "sourceSha256": "0dbdb77d64f1b40ddbd07619da7e516d346435eeaabae9368e8f211095affef5",
+      "strictOverlapReport": "ReinforcedDamBlock-overlap.json",
+      "strictOverlapReportSha256": "ea989db918a4d056022bc069e70ddab880188d57e3eb74f9d2f71f6b377ee681",
+      "visibleConflicts": 0,
+      "occludedConflicts": 0,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "visualReview": "no new render pair in this review; strict source report only"
+    },
+    {
+      "model": "ConcreteOverflowDam",
+      "sourceScene": "src\\DeepFrontier\\Art\\Source\\ConcreteOverflowDam-ReferenceStudy.blend",
+      "sourceSha256": "691c0554cddf7249415116d7e54d7bd4fee782d1b3bb995432a7ef73d0e65c0b",
+      "strictOverlapReport": "ConcreteOverflowDam-overlap.json",
+      "strictOverlapReportSha256": "4f1ed121eeee9e54901d59a26a808cacd486642a3e3e01b34fbe9bf2fcb89771",
+      "visibleConflicts": 0,
+      "occludedConflicts": 0,
+      "nativeAcceptance": "pending separate native scene, placement and power checks",
+      "visualReview": "no new render pair in this review; strict source report only"
+    }
+  ],
+  "surfaceContracts": 26,
+  "surfaceSamples": 1088252,
+  "surfaceMissingOrBackfacing": 0,
+  "windowMounts": 176,
+  "windowBackingSamples": 880,
+  "windowMountFindings": 0,
+  "sourceAndAuditCodeSha256": {
+    "frontier_architecture.py": "1259b572a95647d4a1d71d975b4a3ac88b32c7932198bbf25eb66ff7625c6f8f",
+    "industrial_geometry.py": "fda9a14184405bed5da0337c49af728f2280eb828ba16c76ffc042675a666ce2",
+    "opaque_shell_geometry.py": "b7c844345510601e8c853b37a0f18cc940b77d01bdea7fecda9154d26c4e2d12",
+    "civic_isometric_geometry.py": "a9035e84817198c29f20eba12dc4fb6305cec1129784bdd10df2ebf859747a88",
+    "architectural_windows.py": "5c86365013c177f57b073ad29cf60adbdaa2e20049091985921fddf3bc5abff0",
+    "factory_facade_details.py": "52b19a405747b105464a73cfc05c7c7e0f1c25730d92fd83f8eac959e2b0cc21",
+    "crusher_sheet_geometry.py": "090250c24a85dc7f7dd1043c22eaded81c75982f9ef77bac6eda3955e5517050",
+    "kiln_isometric_geometry.py": "8064e7b16c1695a9c5834e8addbb593a4e235908eaedca1ec451b16ce4339306",
+    "quarry_isometric_geometry.py": "42224a16b9e6409b09255aa8c991ff7857520736991ee9db221f0118a7b019dc",
+    "quarry_process_details.py": "5dcf59f04da417a42a7f4d5416a08162a92125f6896467d0292638bbd9b74624",
+    "mixer_isometric_geometry.py": "6f06fc519ec4014850a13d4dc10fb4cb40bb52c970275b779c83122b76c3a316",
+    "pit_isometric_geometry.py": "05dac231060f1f27fc3355e01242d91b0ea327728a180d0db988a55d12d1e7e0",
+    "materials_laboratory_geometry.py": "d7601c5ad71308d8db23bb0ab8e48dbc88acf68d9096c526a04de0f9283fcfe2",
+    "hydro_isometric_geometry.py": "3f240eb907c176c09cbe1e5c6b61ef2cfd7e9550488366e644c38ff278e28404",
+    "hatchery_isometric_geometry.py": "f0f3e500e359afc3a4dbbd79661ab4d688a1f59c5afe7b5b0547c269a5895d2b",
+    "structural_geometry.py": "9035567ab332f7a82dccacc376298be9e4e0b141045e3168daee3950126647bb",
+    "test_catalog_surfaces.py": "a8199a794fef0e83780aeec0e88bb2d29a5ab43cee57b5047ef0689ef9c92e67",
+    "audit_window_mounts.py": "7876c26e06ab2f7401255bac3ef50f79bb035837f76233e8a5dd81e39d8c3cf1",
+    "render_catalog_shell_views.py": "585492da277e13f67934927dc18035bb236b3c8717bbc0b067722570ec0db457"
+  }
+}

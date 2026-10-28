@@ -1,0 +1,14 @@
+{
+  "source": "MineralQuarry-motion.mp4",
+  "dimensions": [
+    640,
+    640
+  ],
+  "frames": 120,
+  "fps": 7.5,
+  "decodedReviewFrames": [
+    1,
+    55,
+    84
+  ]
+}

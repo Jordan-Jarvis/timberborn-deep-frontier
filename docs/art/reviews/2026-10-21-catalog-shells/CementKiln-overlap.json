@@ -1,0 +1,5776 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 633940,
+  "spatialCandidatePairs": 14475,
+  "nearPlanePairs": 7798,
+  "identicalMaterialAndUvPairs": 14,
+  "visibleConflicts": 0,
+  "occludedConflicts": 119,
+  "conflicts": [
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 225895,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230475,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.023451137548763157,
+      "visible": false,
+      "center": [
+        -3.148319721221924,
+        -3.1500000953674316,
+        4.062018871307373
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -3.242302656173706,
+          -3.1500000953674316,
+          4.001499652862549
+        ],
+        [
+          -3.247976779937744,
+          -3.1500000953674316,
+          4.117778778076172
+        ],
+        [
+          -3.051499843597412,
+          -3.1500000953674316,
+          4.127295970916748
+        ],
+        [
+          -3.051499843597412,
+          -3.1500000953674316,
+          4.001500606536865
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 225899,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230478,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.02344827529769944,
+      "visible": false,
+      "center": [
+        -3.151563882827759,
+        -3.3499999046325684,
+        4.06201171875
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.057697296142578,
+          -3.3499999046325684,
+          4.001500129699707
+        ],
+        [
+          -3.05155873298645,
+          -3.3499999046325684,
+          4.127292633056641
+        ],
+        [
+          -3.248500347137451,
+          -3.3499999046325684,
+          4.117753028869629
+        ],
+        [
+          -3.248500108718872,
+          -3.3499999046325684,
+          4.001500606536865
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 225137,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230263,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.023405674779245544,
+      "visible": false,
+      "center": [
+        -3.1481246948242188,
+        -1.2000000476837158,
+        3.642019271850586
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -3.2415831089019775,
+          -1.2000000476837158,
+          3.581500291824341
+        ],
+        [
+          -3.2479162216186523,
+          -1.2000000476837158,
+          3.6977813243865967
+        ],
+        [
+          -3.051499843597412,
+          -1.2000000476837158,
+          3.7072954177856445
+        ],
+        [
+          -3.051499843597412,
+          -1.2000000476837158,
+          3.581500291824341
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 225141,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230266,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.02340256851346223,
+      "visible": false,
+      "center": [
+        -3.151745557785034,
+        -1.399999976158142,
+        3.6420114040374756
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.0584168434143066,
+          -1.399999976158142,
+          3.581500291824341
+        ],
+        [
+          -3.051565647125244,
+          -1.399999976158142,
+          3.707292318344116
+        ],
+        [
+          -3.248500108718872,
+          -1.399999976158142,
+          3.6977529525756836
+        ],
+        [
+          -3.248500108718872,
+          -1.399999976158142,
+          3.581500291824341
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 227415,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230478,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.014889088888892843,
+      "visible": false,
+      "center": [
+        -4.6008734703063965,
+        -3.3499999046325684,
+        4.0903520584106445
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.504993915557861,
+          -3.3499999046325684,
+          4.056890487670898
+        ],
+        [
+          -4.501499652862549,
+          -3.3499999046325684,
+          4.128500938415527
+        ],
+        [
+          -4.698500156402588,
+          -3.3499999046325684,
+          4.128500938415527
+        ],
+        [
+          -4.698500156402588,
+          -3.3499999046325684,
+          4.047516822814941
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 226657,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230266,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.014874450322004407,
+      "visible": false,
+      "center": [
+        -4.600975036621094,
+        -1.399999976158142,
+        3.670346736907959
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.505401134490967,
+          -1.399999976158142,
+          3.6368703842163086
+        ],
+        [
+          -4.501499652862549,
+          -1.399999976158142,
+          3.7085001468658447
+        ],
+        [
+          -4.698500156402588,
+          -1.399999976158142,
+          3.7085001468658447
+        ],
+        [
+          -4.698500156402588,
+          -1.399999976158142,
+          3.627516984939575
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 227411,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230475,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.014854285600364392,
+      "visible": false,
+      "center": [
+        -4.5990142822265625,
+        -3.1500000953674316,
+        4.090442180633545
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -4.6945576667785645,
+          -3.1500000953674316,
+          4.047708034515381
+        ],
+        [
+          -4.698500156402588,
+          -3.1500000953674316,
+          4.128500938415527
+        ],
+        [
+          -4.501499652862549,
+          -3.1500000953674316,
+          4.128500938415527
+        ],
+        [
+          -4.501499652862549,
+          -3.1500000953674316,
+          4.057059288024902
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 226653,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230263,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.014835686054102126,
+      "visible": false,
+      "center": [
+        -4.598899841308594,
+        -1.2000000476837158,
+        3.67044734954834
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -4.694100856781006,
+          -1.2000000476837158,
+          3.627729892730713
+        ],
+        [
+          -4.698500156402588,
+          -1.2000000476837158,
+          3.7085001468658447
+        ],
+        [
+          -4.501499652862549,
+          -1.2000000476837158,
+          3.7085001468658447
+        ],
+        [
+          -4.501499652862549,
+          -1.2000000476837158,
+          3.637059211730957
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 224383,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230478,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.012319104609904485,
+      "visible": false,
+      "center": [
+        -1.630000114440918,
+        -3.3499999046325684,
+        4.065000534057617
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.5814998149871826,
+          -3.3499999046325684,
+          4.128500938415527
+        ],
+        [
+          -1.6785001754760742,
+          -3.3499999046325684,
+          4.128500938415527
+        ],
+        [
+          -1.6785001754760742,
+          -3.3499999046325684,
+          4.001500606536865
+        ],
+        [
+          -1.5814998149871826,
+          -3.3499999046325684,
+          4.001500129699707
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 223625,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230266,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.012319038824996298,
+      "visible": false,
+      "center": [
+        -1.630000114440918,
+        -1.399999976158142,
+        3.6450002193450928
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.5814998149871826,
+          -1.399999976158142,
+          3.7085001468658447
+        ],
+        [
+          -1.6785001754760742,
+          -1.399999976158142,
+          3.7085001468658447
+        ],
+        [
+          -1.6785001754760742,
+          -1.399999976158142,
+          3.581500291824341
+        ],
+        [
+          -1.5814998149871826,
+          -1.399999976158142,
+          3.5815000534057617
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 228927,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230475,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.012091132419271844,
+      "visible": false,
+      "center": [
+        -5.599999904632568,
+        -3.1500000953674316,
+        4.06617546081543
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -5.648499488830566,
+          -3.1500000953674316,
+          4.001500129699707
+        ],
+        [
+          -5.648499488830566,
+          -3.1500000953674316,
+          4.128500938415527
+        ],
+        [
+          -5.551499843597412,
+          -3.1500000953674316,
+          4.128500938415527
+        ],
+        [
+          -5.551499843597412,
+          -3.1500000953674316,
+          4.006198883056641
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 228169,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230263,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.012091071598057113,
+      "visible": false,
+      "center": [
+        -5.599999904632568,
+        -1.2000000476837158,
+        3.646174669265747
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -5.648499488830566,
+          -1.2000000476837158,
+          3.5815000534057617
+        ],
+        [
+          -5.648499488830566,
+          -1.2000000476837158,
+          3.7085001468658447
+        ],
+        [
+          -5.551499843597412,
+          -1.2000000476837158,
+          3.7085001468658447
+        ],
+        [
+          -5.551499843597412,
+          -1.2000000476837158,
+          3.5861988067626953
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 224379,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230475,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.011925584153801516,
+      "visible": false,
+      "center": [
+        -1.628450632095337,
+        -3.1500000953674316,
+        4.065000534057617
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.6723027229309082,
+          -3.1500000953674316,
+          4.001500129699707
+        ],
+        [
+          -1.6785001754760742,
+          -3.1500000953674316,
+          4.128500938415527
+        ],
+        [
+          -1.5814998149871826,
+          -3.1500000953674316,
+          4.128500938415527
+        ],
+        [
+          -1.5814998149871826,
+          -3.1500000953674316,
+          4.001500129699707
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 223621,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230263,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.011879806488663852,
+      "visible": false,
+      "center": [
+        -1.6282708644866943,
+        -1.2000000476837158,
+        3.6450002193450928
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.6715830564498901,
+          -1.2000000476837158,
+          3.581500291824341
+        ],
+        [
+          -1.6785001754760742,
+          -1.2000000476837158,
+          3.7085001468658447
+        ],
+        [
+          -1.5814998149871826,
+          -1.2000000476837158,
+          3.708500385284424
+        ],
+        [
+          -1.5814998149871826,
+          -1.2000000476837158,
+          3.581500291824341
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 228931,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230478,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.011725303679190446,
+      "visible": false,
+      "center": [
+        -5.601494789123535,
+        -3.3499999046325684,
+        4.066102981567383
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.5574822425842285,
+          -3.3499999046325684,
+          4.005908966064453
+        ],
+        [
+          -5.551499843597412,
+          -3.3499999046325684,
+          4.128500938415527
+        ],
+        [
+          -5.648499488830566,
+          -3.3499999046325684,
+          4.128500938415527
+        ],
+        [
+          -5.648499488830566,
+          -3.3499999046325684,
+          4.001500129699707
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 228173,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230266,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.011682650460819843,
+      "visible": false,
+      "center": [
+        -5.6016693115234375,
+        -1.399999976158142,
+        3.6460938453674316
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.558178424835205,
+          -1.399999976158142,
+          3.5858752727508545
+        ],
+        [
+          -5.551499843597412,
+          -1.399999976158142,
+          3.7085001468658447
+        ],
+        [
+          -5.648499488830566,
+          -1.399999976158142,
+          3.7085001468658447
+        ],
+        [
+          -5.648499488830566,
+          -1.399999976158142,
+          3.581500291824341
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 227411,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230475,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.009771357918658907,
+      "visible": false,
+      "center": [
+        -4.597464561462402,
+        -3.1500000953674316,
+        4.026941776275635
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -4.692302703857422,
+          -3.1500000953674316,
+          4.001500129699707
+        ],
+        [
+          -4.6945576667785645,
+          -3.1500000953674316,
+          4.047708034515381
+        ],
+        [
+          -4.501499652862549,
+          -3.1500000953674316,
+          4.057059288024902
+        ],
+        [
+          -4.501499652862549,
+          -3.1500000953674316,
+          4.001500606536865
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 226653,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230263,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.009744136598506259,
+      "visible": false,
+      "center": [
+        -4.597170829772949,
+        -1.2000000476837158,
+        3.606947422027588
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -4.691583156585693,
+          -1.2000000476837158,
+          3.581500291824341
+        ],
+        [
+          -4.694100856781006,
+          -1.2000000476837158,
+          3.627729892730713
+        ],
+        [
+          -4.501499652862549,
+          -1.2000000476837158,
+          3.637059211730957
+        ],
+        [
+          -4.501499652862549,
+          -1.2000000476837158,
+          3.581500291824341
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 227415,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230478,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.009736576848260015,
+      "visible": false,
+      "center": [
+        -4.602422714233398,
+        -3.3499999046325684,
+        4.026852130889893
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.507697105407715,
+          -3.3499999046325684,
+          4.001500129699707
+        ],
+        [
+          -4.504993915557861,
+          -3.3499999046325684,
+          4.056890487670898
+        ],
+        [
+          -4.698500156402588,
+          -3.3499999046325684,
+          4.047516822814941
+        ],
+        [
+          -4.698500156402588,
+          -3.3499999046325684,
+          4.001500606536865
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 226657,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230266,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.00970537200706545,
+      "visible": false,
+      "center": [
+        -4.6027045249938965,
+        -1.399999976158142,
+        3.606846809387207
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.508416652679443,
+          -1.399999976158142,
+          3.581500291824341
+        ],
+        [
+          -4.505401134490967,
+          -1.399999976158142,
+          3.6368703842163086
+        ],
+        [
+          -4.698500156402588,
+          -1.399999976158142,
+          3.627516984939575
+        ],
+        [
+          -4.698500156402588,
+          -1.399999976158142,
+          3.581500291824341
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 208976,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:257:deck > kiln_isometric_geometry.py:229:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 215014,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:199:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 9.5367431640625e-07,
+      "overlapArea": 0.005252034482475989,
+      "visible": false,
+      "center": [
+        -5.679999828338623,
+        -4.925993919372559,
+        1.8184013366699219
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.679999828338623,
+          -4.872316837310791,
+          1.7914997339248657
+        ],
+        [
+          -5.679999828338623,
+          -4.9785003662109375,
+          1.7914997339248657
+        ],
+        [
+          -5.679999828338623,
+          -4.9785003662109375,
+          1.8585002422332764
+        ],
+        [
+          -5.679999828338623,
+          -4.9287190437316895,
+          1.8585002422332764
+        ],
+        [
+          -5.679999828338623,
+          -4.871932506561279,
+          1.792006492614746
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 233388,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 233598,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0027314339255629792,
+      "visible": false,
+      "center": [
+        -2.630000114440918,
+        -2.0740387439727783,
+        4.367833614349365
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.630000114440918,
+          -2.037827491760254,
+          4.380941867828369
+        ],
+        [
+          -2.630000114440918,
+          -2.06023907661438,
+          4.383500099182129
+        ],
+        [
+          -2.630000114440918,
+          -2.1135001182556152,
+          4.383500099182129
+        ],
+        [
+          -2.630000114440918,
+          -2.1135001182556152,
+          4.3516459465026855
+        ],
+        [
+          -2.630000114440918,
+          -2.045126438140869,
+          4.339580059051514
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 233535,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 233602,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.002731432716220672,
+      "visible": false,
+      "center": [
+        -3.5299999713897705,
+        -2.0740392208099365,
+        4.367833614349365
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.5299999713897705,
+          -2.060239315032959,
+          4.383500099182129
+        ],
+        [
+          -3.5299999713897705,
+          -2.037827730178833,
+          4.380941867828369
+        ],
+        [
+          -3.5299999713897705,
+          -2.0451266765594482,
+          4.339580059051514
+        ],
+        [
+          -3.5299999713897705,
+          -2.1135001182556152,
+          4.3516459465026855
+        ],
+        [
+          -3.5299999713897705,
+          -2.1135001182556152,
+          4.383500099182129
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 231409,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 231476,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 4.76837158203125e-07,
+      "overlapArea": 0.002695662433456869,
+      "visible": false,
+      "center": [
+        -5.800000190734863,
+        -1.1824252605438232,
+        3.7781102657318115
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.800000190734863,
+          -1.1621818542480469,
+          3.7935001850128174
+        ],
+        [
+          -5.800000190734863,
+          -1.1474416255950928,
+          3.7908973693847656
+        ],
+        [
+          -5.800000190734863,
+          -1.155502200126648,
+          3.749677896499634
+        ],
+        [
+          -5.800000190734863,
+          -1.223500370979309,
+          3.7629752159118652
+        ],
+        [
+          -5.800000190734863,
+          -1.223500370979309,
+          3.7935001850128174
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 230662,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 231472,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.002695643927847799,
+      "visible": false,
+      "center": [
+        -1.4399999380111694,
+        -1.1824249029159546,
+        3.7781105041503906
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4399999380111694,
+          -1.1474415063858032,
+          3.7908976078033447
+        ],
+        [
+          -1.4399999380111694,
+          -1.1621804237365723,
+          3.7935001850128174
+        ],
+        [
+          -1.4399999380111694,
+          -1.2235002517700195,
+          3.7935001850128174
+        ],
+        [
+          -1.4399999380111694,
+          -1.2235002517700195,
+          3.7629754543304443
+        ],
+        [
+          -1.4399999380111694,
+          -1.155502200126648,
+          3.749678134918213
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253206,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 253516,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0026678112983239835,
+      "visible": false,
+      "center": [
+        -2.680000066757202,
+        0.8474752306938171,
+        1.143274188041687
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.680000066757202,
+          0.8827860951423645,
+          1.1558685302734375
+        ],
+        [
+          -2.680000066757202,
+          0.8673140406608582,
+          1.15850031375885
+        ],
+        [
+          -2.680000066757202,
+          0.8064997792243958,
+          1.15850031375885
+        ],
+        [
+          -2.680000066757202,
+          0.8064997792243958,
+          1.1287620067596436
+        ],
+        [
+          -2.680000066757202,
+          0.8742765784263611,
+          1.114739179611206
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253453,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 253520,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 4.76837158203125e-07,
+      "overlapArea": 0.002667807077274542,
+      "visible": false,
+      "center": [
+        -4.21999979019165,
+        0.8474754691123962,
+        1.1432740688323975
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.21999979019165,
+          0.8673145771026611,
+          1.1585001945495605
+        ],
+        [
+          -4.21999979019165,
+          0.8827862739562988,
+          1.1558685302734375
+        ],
+        [
+          -4.21999979019165,
+          0.8742765784263611,
+          1.114739179611206
+        ],
+        [
+          -4.21999979019165,
+          0.8064997792243958,
+          1.1287620067596436
+        ],
+        [
+          -4.21999979019165,
+          0.8064998984336853,
+          1.158500075340271
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238930,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:151:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 239140,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > kiln_isometric_geometry.py:131:feed_bin > kiln_isometric_geometry.py:152:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.00241602041438016,
+      "visible": false,
+      "center": [
+        -1.4599997997283936,
+        -1.349583387374878,
+        3.4665706157684326
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4599997997283936,
+          -1.3685002326965332,
+          3.471949577331543
+        ],
+        [
+          -1.4599997997283936,
+          -1.3685002326965332,
+          3.498500108718872
+        ],
+        [
+          -1.4599997997283936,
+          -1.330666422843933,
+          3.498500108718872
+        ],
+        [
+          -1.4599997997283936,
+          -1.330666422843933,
+          3.3973331451416016
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253197,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:184:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 255370,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:187:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.002109045515169883,
+      "visible": false,
+      "center": [
+        -3.9800004959106445,
+        0.7799999713897705,
+        1.0600001811981201
+      ],
+      "normal": [
+        0.0,
+        0.9999999403953552,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -4.008500576019287,
+          0.7799999713897705,
+          1.0785002708435059
+        ],
+        [
+          -3.9514999389648438,
+          0.7799999713897705,
+          1.0785002708435059
+        ],
+        [
+          -3.9514999389648438,
+          0.7799999713897705,
+          1.0414999723434448
+        ],
+        [
+          -4.008500576019287,
+          0.7799999713897705,
+          1.0414998531341553
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 213403,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 213434,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.8063056291371733e-08,
+      "overlapArea": 0.0020764350005686334,
+      "visible": false,
+      "center": [
+        -4.600000381469727,
+        -0.30149999260902405,
+        1.394030213356018
+      ],
+      "normal": [
+        -3.2537680993982576e-08,
+        -1.0,
+        -3.3260693754755266e-08
+      ],
+      "polygon": [
+        [
+          -4.599999904632568,
+          -0.30149999260902405,
+          1.4219491481781006
+        ],
+        [
+          -4.634693145751953,
+          -0.30149999260902405,
+          1.3960368633270264
+        ],
+        [
+          -4.599999904632568,
+          -0.30149999260902405,
+          1.3620978593826294
+        ],
+        [
+          -4.565306663513184,
+          -0.30149999260902405,
+          1.396036982536316
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 219433,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 219464,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.002076434963731777,
+      "visible": false,
+      "center": [
+        -4.600000381469727,
+        -4.951499938964844,
+        1.394030213356018
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.599999904632568,
+          -4.951499938964844,
+          1.4219491481781006
+        ],
+        [
+          -4.634693145751953,
+          -4.951499938964844,
+          1.3960368633270264
+        ],
+        [
+          -4.599999904632568,
+          -4.951499938964844,
+          1.3620978593826294
+        ],
+        [
+          -4.565306663513184,
+          -4.951499938964844,
+          1.396036982536316
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 219436,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 219461,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0020764343359037166,
+      "visible": false,
+      "center": [
+        -4.599999904632568,
+        -4.8485002517700195,
+        1.3940300941467285
+      ],
+      "normal": [
+        -0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.634693145751953,
+          -4.8485002517700195,
+          1.3960368633270264
+        ],
+        [
+          -4.599999904632568,
+          -4.8485002517700195,
+          1.421949028968811
+        ],
+        [
+          -4.565306663513184,
+          -4.8485002517700195,
+          1.3960368633270264
+        ],
+        [
+          -4.599999904632568,
+          -4.8485002517700195,
+          1.3620977401733398
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 213406,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 213431,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 4.2964216184770976e-08,
+      "overlapArea": 0.0020764341692459253,
+      "visible": false,
+      "center": [
+        -4.599999904632568,
+        -0.19850000739097595,
+        1.3940300941467285
+      ],
+      "normal": [
+        3.2537684546696255e-08,
+        1.0,
+        3.3260697307468945e-08
+      ],
+      "polygon": [
+        [
+          -4.634693145751953,
+          -0.19850000739097595,
+          1.3960368633270264
+        ],
+        [
+          -4.599999904632568,
+          -0.19850000739097595,
+          1.421949028968811
+        ],
+        [
+          -4.565306663513184,
+          -0.19850000739097595,
+          1.3960368633270264
+        ],
+        [
+          -4.599999904632568,
+          -0.19850000739097595,
+          1.3620977401733398
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 211011,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 211042,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.806308785352485e-08,
+      "overlapArea": 0.0020764185039125922,
+      "visible": false,
+      "center": [
+        -1.5800001621246338,
+        -0.30149999260902405,
+        1.3940303325653076
+      ],
+      "normal": [
+        -3.253766323041418e-08,
+        -1.0,
+        -3.326073283460573e-08
+      ],
+      "polygon": [
+        [
+          -1.5800001621246338,
+          -0.30149999260902405,
+          1.421949028968811
+        ],
+        [
+          -1.6146931648254395,
+          -0.30149999260902405,
+          1.396036982536316
+        ],
+        [
+          -1.5800001621246338,
+          -0.30149999260902405,
+          1.362097978591919
+        ],
+        [
+          -1.5453070402145386,
+          -0.30149999260902405,
+          1.396036982536316
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 217041,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 217072,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0020764173331973,
+      "visible": false,
+      "center": [
+        -1.5800001621246338,
+        -4.951499938964844,
+        1.3940303325653076
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.5800001621246338,
+          -4.951499938964844,
+          1.421949028968811
+        ],
+        [
+          -1.6146931648254395,
+          -4.951499938964844,
+          1.396036982536316
+        ],
+        [
+          -1.5800000429153442,
+          -4.951499938964844,
+          1.362097978591919
+        ],
+        [
+          -1.5453070402145386,
+          -4.951499938964844,
+          1.396036982536316
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 211014,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 211039,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.806308696534643e-08,
+      "overlapArea": 0.002076417314319797,
+      "visible": false,
+      "center": [
+        -1.5799999237060547,
+        -0.19850000739097595,
+        1.3940303325653076
+      ],
+      "normal": [
+        3.253766323041418e-08,
+        1.0,
+        3.326073283460573e-08
+      ],
+      "polygon": [
+        [
+          -1.6146931648254395,
+          -0.19850000739097595,
+          1.396036982536316
+        ],
+        [
+          -1.5800000429153442,
+          -0.19850000739097595,
+          1.421949028968811
+        ],
+        [
+          -1.545306921005249,
+          -0.19850000739097595,
+          1.396036982536316
+        ],
+        [
+          -1.5800000429153442,
+          -0.19850000739097595,
+          1.362097978591919
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 217044,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 217069,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0020764173143197964,
+      "visible": false,
+      "center": [
+        -1.5799999237060547,
+        -4.8485002517700195,
+        1.3940303325653076
+      ],
+      "normal": [
+        -0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.6146931648254395,
+          -4.8485002517700195,
+          1.396036982536316
+        ],
+        [
+          -1.5800000429153442,
+          -4.8485002517700195,
+          1.421949028968811
+        ],
+        [
+          -1.545306921005249,
+          -4.8485002517700195,
+          1.396036982536316
+        ],
+        [
+          -1.5800000429153442,
+          -4.8485002517700195,
+          1.362097978591919
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 218237,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 218268,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.002076404548663646,
+      "visible": false,
+      "center": [
+        -3.1500000953674316,
+        -4.951499938964844,
+        1.3940300941467285
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.1500000953674316,
+          -4.951499938964844,
+          1.4219489097595215
+        ],
+        [
+          -3.1846930980682373,
+          -4.951499938964844,
+          1.3960368633270264
+        ],
+        [
+          -3.1500000953674316,
+          -4.951499938964844,
+          1.3620980978012085
+        ],
+        [
+          -3.115307092666626,
+          -4.951499938964844,
+          1.3960368633270264
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 212207,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 212238,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 3.1541553781426327e-08,
+      "overlapArea": 0.002076404548663636,
+      "visible": false,
+      "center": [
+        -3.1500000953674316,
+        -0.30149999260902405,
+        1.3940300941467285
+      ],
+      "normal": [
+        -3.253766323041418e-08,
+        -1.0,
+        -3.3260729281892054e-08
+      ],
+      "polygon": [
+        [
+          -3.1500000953674316,
+          -0.30149999260902405,
+          1.4219489097595215
+        ],
+        [
+          -3.1846930980682373,
+          -0.30149999260902405,
+          1.3960368633270264
+        ],
+        [
+          -3.1500000953674316,
+          -0.30149999260902405,
+          1.3620980978012085
+        ],
+        [
+          -3.115307092666626,
+          -0.30149999260902405,
+          1.3960368633270264
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 212210,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 212235,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 3.154155425733052e-08,
+      "overlapArea": 0.0020764037950274463,
+      "visible": false,
+      "center": [
+        -3.1500000953674316,
+        -0.19850000739097595,
+        1.3940300941467285
+      ],
+      "normal": [
+        3.253767033584154e-08,
+        1.0,
+        3.326073994003309e-08
+      ],
+      "polygon": [
+        [
+          -3.1846930980682373,
+          -0.19850000739097595,
+          1.3960368633270264
+        ],
+        [
+          -3.1500000953674316,
+          -0.19850000739097595,
+          1.4219489097595215
+        ],
+        [
+          -3.115307092666626,
+          -0.19850000739097595,
+          1.3960368633270264
+        ],
+        [
+          -3.1500000953674316,
+          -0.19850000739097595,
+          1.362097978591919
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 218240,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 218265,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:204:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.002076403795027446,
+      "visible": false,
+      "center": [
+        -3.1500000953674316,
+        -4.8485002517700195,
+        1.3940300941467285
+      ],
+      "normal": [
+        -0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.1846930980682373,
+          -4.8485002517700195,
+          1.3960368633270264
+        ],
+        [
+          -3.1500000953674316,
+          -4.8485002517700195,
+          1.4219489097595215
+        ],
+        [
+          -3.115307092666626,
+          -4.8485002517700195,
+          1.3960368633270264
+        ],
+        [
+          -3.1500000953674316,
+          -4.8485002517700195,
+          1.362097978591919
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 208976,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:257:deck > kiln_isometric_geometry.py:229:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 215014,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:199:platform_frame > kiln_isometric_geometry.py:230:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 9.5367431640625e-07,
+      "overlapArea": 0.0019166353739411242,
+      "visible": false,
+      "center": [
+        -5.679999828338623,
+        -4.885912895202637,
+        1.8253960609436035
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.679999828338623,
+          -4.871932506561279,
+          1.792006492614746
+        ],
+        [
+          -5.679999828338623,
+          -4.9287190437316895,
+          1.8585002422332764
+        ],
+        [
+          -5.679999828338623,
+          -4.871499538421631,
+          1.8585002422332764
+        ],
+        [
+          -5.679999828338623,
+          -4.871499538421631,
+          1.7925771474838257
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 273632,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "factory_facade_details.py:68:kiln_facades > kiln_isometric_geometry.py:548:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 274166,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:297:wall > factory_facade_details.py:77:kiln_facades > kiln_isometric_geometry.py:548:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0018252560956214317,
+      "visible": false,
+      "center": [
+        -2.898750066757202,
+        -0.2870473265647888,
+        0.20000000298023224
+      ],
+      "normal": [
+        -0.0,
+        0.0,
+        -0.9999999403953552
+      ],
+      "polygon": [
+        [
+          -2.9160001277923584,
+          -0.31350022554397583,
+          0.20000000298023224
+        ],
+        [
+          -2.9160001277923584,
+          -0.27468907833099365,
+          0.20000000298023224
+        ],
+        [
+          -2.881500005722046,
+          -0.24649977684020996,
+          0.20000000298023224
+        ],
+        [
+          -2.881500005722046,
+          -0.31350019574165344,
+          0.20000000298023224
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 233388,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 234412,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0017938671572423903,
+      "visible": false,
+      "center": [
+        -2.630000114440918,
+        -2.6967787742614746,
+        4.476381301879883
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.630000114440918,
+          -2.658669948577881,
+          4.490501880645752
+        ],
+        [
+          -2.630000114440918,
+          -2.7148733139038086,
+          4.500420093536377
+        ],
+        [
+          -2.630000114440918,
+          -2.722172498703003,
+          4.4590582847595215
+        ],
+        [
+          -2.630000114440918,
+          -2.6913998126983643,
+          4.455545425415039
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 233535,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 234416,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0017938664321666131,
+      "visible": false,
+      "center": [
+        -3.5299999713897705,
+        -2.6967790126800537,
+        4.476381301879883
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.5299999713897705,
+          -2.722172498703003,
+          4.4590582847595215
+        ],
+        [
+          -3.5299999713897705,
+          -2.7148733139038086,
+          4.500420093536377
+        ],
+        [
+          -3.5299999713897705,
+          -2.658669948577881,
+          4.490501880645752
+        ],
+        [
+          -3.5299999713897705,
+          -2.691399574279785,
+          4.455545902252197
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 230662,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 232286,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.0017916048383846278,
+      "visible": false,
+      "center": [
+        -1.4399999380111694,
+        -3.377389430999756,
+        4.205718517303467
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4399999380111694,
+          -3.33953857421875,
+          4.219574451446533
+        ],
+        [
+          -1.4399999380111694,
+          -3.394497871398926,
+          4.230321884155273
+        ],
+        [
+          -1.4399999380111694,
+          -3.4025585651397705,
+          4.1891021728515625
+        ],
+        [
+          -1.4399999380111694,
+          -3.3729634284973145,
+          4.183876037597656
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 231409,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 232290,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 4.76837158203125e-07,
+      "overlapArea": 0.0017916017634973386,
+      "visible": false,
+      "center": [
+        -5.800000190734863,
+        -3.377389430999756,
+        4.205718517303467
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.800000190734863,
+          -3.4025585651397705,
+          4.1891021728515625
+        ],
+        [
+          -5.800000190734863,
+          -3.3944976329803467,
+          4.230321884155273
+        ],
+        [
+          -5.800000190734863,
+          -3.339538812637329,
+          4.219574451446533
+        ],
+        [
+          -5.800000190734863,
+          -3.3729629516601562,
+          4.1838765144348145
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253453,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 254334,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 4.76837158203125e-07,
+      "overlapArea": 0.00177121460994778,
+      "visible": false,
+      "center": [
+        -4.21999979019165,
+        -0.25747936964035034,
+        1.3706161975860596
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.21999979019165,
+          -0.2827857732772827,
+          1.3541313409805298
+        ],
+        [
+          -4.21999979019165,
+          -0.2742762565612793,
+          1.3952608108520508
+        ],
+        [
+          -4.21999979019165,
+          -0.22003954648971558,
+          1.3840394020080566
+        ],
+        [
+          -4.21999979019165,
+          -0.252815842628479,
+          1.3490334749221802
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253206,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 254330,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0017712126112154891,
+      "visible": false,
+      "center": [
+        -2.680000066757202,
+        -0.25747931003570557,
+        1.3706161975860596
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.680000066757202,
+          -0.22003954648971558,
+          1.3840394020080566
+        ],
+        [
+          -2.680000066757202,
+          -0.27427607774734497,
+          1.3952608108520508
+        ],
+        [
+          -2.680000066757202,
+          -0.2827857434749603,
+          1.3541313409805298
+        ],
+        [
+          -2.680000066757202,
+          -0.2528158724308014,
+          1.3490334749221802
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 225906,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230634,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:301:wall > kiln_isometric_geometry.py:245:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0015085703327766798,
+      "visible": false,
+      "center": [
+        -3.0328850746154785,
+        -3.272338390350342,
+        0.3199999928474426
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -3.035161256790161,
+          -3.221727132797241,
+          0.3199999928474426
+        ],
+        [
+          -3.045379638671875,
+          -3.323500156402588,
+          0.3199999928474426
+        ],
+        [
+          -3.0254998207092285,
+          -3.323500156402588,
+          0.3199999928474426
+        ],
+        [
+          -3.0254998207092285,
+          -3.2206263542175293,
+          0.3199999928474426
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238930,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:151:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 239140,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > kiln_isometric_geometry.py:131:feed_bin > kiln_isometric_geometry.py:152:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0014115111080252873,
+      "visible": false,
+      "center": [
+        -1.4599997997283936,
+        -1.355889081954956,
+        3.4222054481506348
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4599997997283936,
+          -1.3685002326965332,
+          3.3973331451416016
+        ],
+        [
+          -1.4599997997283936,
+          -1.3685002326965332,
+          3.471949577331543
+        ],
+        [
+          -1.4599997997283936,
+          -1.330666422843933,
+          3.3973331451416016
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 251656,
+        "material": "BaseMetal.IronTeeth",
+        "source": "kiln_isometric_geometry.py:176:fuel_logs > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 251674,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:177:fuel_logs > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.001399344809771108,
+      "visible": false,
+      "center": [
+        -0.29249998927116394,
+        -1.2501964569091797,
+        0.25
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.2985002398490906,
+          -1.1922855377197266,
+          0.25
+        ],
+        [
+          -0.2985002398490906,
+          -1.3085001707077026,
+          0.25
+        ],
+        [
+          -0.2864997684955597,
+          -1.3085001707077026,
+          0.25
+        ],
+        [
+          -0.2864997684955597,
+          -1.1914998292922974,
+          0.25
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253191,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:184:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 255364,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:187:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.001351048951053719,
+      "visible": false,
+      "center": [
+        -2.928257465362549,
+        0.7799999713897705,
+        1.0600001811981201
+      ],
+      "normal": [
+        0.0,
+        0.9999999403953552,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -2.9445292949676514,
+          0.7799999713897705,
+          1.0414999723434448
+        ],
+        [
+          -2.948500156402588,
+          0.7799999713897705,
+          1.0785002708435059
+        ],
+        [
+          -2.9285004138946533,
+          0.7799999713897705,
+          1.0785001516342163
+        ],
+        [
+          -2.8914999961853027,
+          0.7799999713897705,
+          1.0414999723434448
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253356,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 274227,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:297:wall > factory_facade_details.py:78:kiln_facades > kiln_isometric_geometry.py:548:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0013495995776486858,
+      "visible": false,
+      "center": [
+        -3.450000047683716,
+        -0.2625153064727783,
+        1.3717162609100342
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.450000047683716,
+          -0.24649959802627563,
+          1.3895139694213867
+        ],
+        [
+          -3.450000047683716,
+          -0.27427607774734497,
+          1.3952608108520508
+        ],
+        [
+          -3.450000047683716,
+          -0.2827857434749603,
+          1.3541313409805298
+        ],
+        [
+          -3.450000047683716,
+          -0.24649971723556519,
+          1.3479591608047485
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238820,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:43:beam_joint > kiln_isometric_geometry.py:148:feed_tower"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 239157,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > kiln_isometric_geometry.py:132:feed_bin > kiln_isometric_geometry.py:152:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0004999637603759766,
+      "overlapArea": 0.0012846585767647412,
+      "visible": false,
+      "center": [
+        -1.3930000066757202,
+        -1.4510000944137573,
+        3.430000066757202
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.3930000066757202,
+          -1.4352763891220093,
+          3.402765989303589
+        ],
+        [
+          -1.3930000066757202,
+          -1.4352763891220093,
+          3.4572341442108154
+        ],
+        [
+          -1.3930000066757202,
+          -1.4824473857879639,
+          3.430000066757202
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238842,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:43:beam_joint > kiln_isometric_geometry.py:148:feed_tower"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 239157,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > kiln_isometric_geometry.py:132:feed_bin > kiln_isometric_geometry.py:152:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0004999637603759766,
+      "overlapArea": 0.0012846585767647412,
+      "visible": false,
+      "center": [
+        -1.3930000066757202,
+        -1.6010000705718994,
+        3.430000066757202
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.3930000066757202,
+          -1.5852763652801514,
+          3.402765989303589
+        ],
+        [
+          -1.3930000066757202,
+          -1.5852763652801514,
+          3.4572341442108154
+        ],
+        [
+          -1.3930000066757202,
+          -1.632447361946106,
+          3.430000066757202
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 231409,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 232290,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 4.76837158203125e-07,
+      "overlapArea": 0.0012360216885739378,
+      "visible": false,
+      "center": [
+        -5.800000190734863,
+        -3.3413753509521484,
+        4.199037075042725
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.800000190734863,
+          -3.339538812637329,
+          4.219574451446533
+        ],
+        [
+          -5.800000190734863,
+          -3.326500177383423,
+          4.217024803161621
+        ],
+        [
+          -5.800000190734863,
+          -3.3264999389648438,
+          4.175671577453613
+        ],
+        [
+          -5.800000190734863,
+          -3.3729629516601562,
+          4.1838765144348145
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 230662,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 232286,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:255:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.0012360183489990018,
+      "visible": false,
+      "center": [
+        -1.4399999380111694,
+        -3.3413755893707275,
+        4.199036598205566
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4399999380111694,
+          -3.326500415802002,
+          4.217024803161621
+        ],
+        [
+          -1.4399999380111694,
+          -3.33953857421875,
+          4.219574451446533
+        ],
+        [
+          -1.4399999380111694,
+          -3.3729634284973145,
+          4.183876037597656
+        ],
+        [
+          -1.4399999380111694,
+          -3.326500177383423,
+          4.175671577453613
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 226000,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230634,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:301:wall > kiln_isometric_geometry.py:245:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.001228947898412817,
+      "visible": false,
+      "center": [
+        -3.257533073425293,
+        -3.2851717472076416,
+        0.3199999928474426
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -3.2617530822753906,
+          -3.2475414276123047,
+          0.3199999928474426
+        ],
+        [
+          -3.2693796157836914,
+          -3.323500156402588,
+          0.3199999928474426
+        ],
+        [
+          -3.249499797821045,
+          -3.323500156402588,
+          0.3199999928474426
+        ],
+        [
+          -3.249499797821045,
+          -3.246145486831665,
+          0.3199999928474426
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253206,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 254330,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0012111383670032616,
+      "visible": false,
+      "center": [
+        -2.680000066757202,
+        -0.22146371006965637,
+        1.3638664484024048
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.680000066757202,
+          -0.20649975538253784,
+          1.3812381029129028
+        ],
+        [
+          -2.680000066757202,
+          -0.22003954648971558,
+          1.3840394020080566
+        ],
+        [
+          -2.680000066757202,
+          -0.2528158724308014,
+          1.3490334749221802
+        ],
+        [
+          -2.680000066757202,
+          -0.20649966597557068,
+          1.3411550521850586
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253453,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 254334,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 4.76837158203125e-07,
+      "overlapArea": 0.001211136876993521,
+      "visible": false,
+      "center": [
+        -4.21999979019165,
+        -0.22146373987197876,
+        1.3638664484024048
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.21999979019165,
+          -0.22003954648971558,
+          1.3840394020080566
+        ],
+        [
+          -4.21999979019165,
+          -0.20649972558021545,
+          1.3812381029129028
+        ],
+        [
+          -4.21999979019165,
+          -0.20649981498718262,
+          1.3411551713943481
+        ],
+        [
+          -4.21999979019165,
+          -0.252815842628479,
+          1.3490334749221802
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 225899,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230478,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.001177361374971042,
+      "visible": false,
+      "center": [
+        -3.150014877319336,
+        -3.3499999046325684,
+        4.12551212310791
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.05155873298645,
+          -3.3499999046325684,
+          4.127292633056641
+        ],
+        [
+          -3.051499843597412,
+          -3.3499999046325684,
+          4.128500938415527
+        ],
+        [
+          -3.248500108718872,
+          -3.3499999046325684,
+          4.128500938415527
+        ],
+        [
+          -3.248500347137451,
+          -3.3499999046325684,
+          4.117753028869629
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 225141,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230266,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.0011772226070368985,
+      "visible": false,
+      "center": [
+        -3.1500163078308105,
+        -1.399999976158142,
+        3.7055113315582275
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.051565647125244,
+          -1.399999976158142,
+          3.707292318344116
+        ],
+        [
+          -3.051499843597412,
+          -1.399999976158142,
+          3.7085001468658447
+        ],
+        [
+          -3.248500108718872,
+          -1.399999976158142,
+          3.7085001468658447
+        ],
+        [
+          -3.248500108718872,
+          -1.399999976158142,
+          3.6977529525756836
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 225895,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230475,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0011745200710038262,
+      "visible": false,
+      "center": [
+        -3.149869441986084,
+        -3.1500000953674316,
+        4.125519275665283
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -3.247976779937744,
+          -3.1500000953674316,
+          4.117778778076172
+        ],
+        [
+          -3.248500108718872,
+          -3.1500000953674316,
+          4.128500938415527
+        ],
+        [
+          -3.051499843597412,
+          -3.1500000953674316,
+          4.128500938415527
+        ],
+        [
+          -3.051499843597412,
+          -3.1500000953674316,
+          4.127295970916748
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 225137,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230263,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:31:beam_joint > kiln_isometric_geometry.py:244:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 1.1920928955078125e-07,
+      "overlapArea": 0.0011741161391503607,
+      "visible": false,
+      "center": [
+        -3.1498541831970215,
+        -1.2000000476837158,
+        3.705519199371338
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -3.2479162216186523,
+          -1.2000000476837158,
+          3.6977813243865967
+        ],
+        [
+          -3.248500108718872,
+          -1.2000000476837158,
+          3.7085001468658447
+        ],
+        [
+          -3.051499843597412,
+          -1.2000000476837158,
+          3.7085001468658447
+        ],
+        [
+          -3.051499843597412,
+          -1.2000000476837158,
+          3.7072954177856445
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 273896,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "factory_facade_details.py:68:kiln_facades > kiln_isometric_geometry.py:548:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 274190,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:297:wall > factory_facade_details.py:77:kiln_facades > kiln_isometric_geometry.py:548:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0011353058571747605,
+      "visible": false,
+      "center": [
+        -3.9398436546325684,
+        -0.2796197235584259,
+        0.20000000298023224
+      ],
+      "normal": [
+        -0.0,
+        0.0,
+        -0.9999999403953552
+      ],
+      "polygon": [
+        [
+          -3.91607666015625,
+          -0.24649977684020996,
+          0.20000000298023224
+        ],
+        [
+          -3.9462978839874268,
+          -0.31197911500930786,
+          0.20000000298023224
+        ],
+        [
+          -3.948500156402588,
+          -0.31350022554397583,
+          0.20000000298023224
+        ],
+        [
+          -3.948500156402588,
+          -0.24649977684020996,
+          0.20000000298023224
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253303,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:185:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 274222,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:297:wall > factory_facade_details.py:78:kiln_facades > kiln_isometric_geometry.py:548:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.001116083182534689,
+      "visible": false,
+      "center": [
+        -3.450000047683716,
+        -0.26263508200645447,
+        1.3755258321762085
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.450000047683716,
+          -0.2747955024242401,
+          1.3927510976791382
+        ],
+        [
+          -3.450000047683716,
+          -0.2742762565612793,
+          1.3952608108520508
+        ],
+        [
+          -3.450000047683716,
+          -0.24649976193904877,
+          1.3895139694213867
+        ],
+        [
+          -3.450000047683716,
+          -0.24649980664253235,
+          1.3479591608047485
+        ],
+        [
+          -3.450000047683716,
+          -0.27110394835472107,
+          1.3521442413330078
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 233388,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 234412,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.001099469521096852,
+      "visible": false,
+      "center": [
+        -2.630000114440918,
+        -2.6607673168182373,
+        4.471205711364746
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.630000114440918,
+          -2.6464998722076416,
+          4.488354206085205
+        ],
+        [
+          -2.630000114440918,
+          -2.658669948577881,
+          4.490501880645752
+        ],
+        [
+          -2.630000114440918,
+          -2.6913998126983643,
+          4.455545425415039
+        ],
+        [
+          -2.630000114440918,
+          -2.6464998722076416,
+          4.450420379638672
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 233535,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:60:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 234416,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:64:sheet_roof > kiln_isometric_geometry.py:263:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0010994689847615424,
+      "visible": false,
+      "center": [
+        -3.5299999713897705,
+        -2.6607673168182373,
+        4.471205711364746
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.5299999713897705,
+          -2.658669948577881,
+          4.490501880645752
+        ],
+        [
+          -3.5299999713897705,
+          -2.6464998722076416,
+          4.488354206085205
+        ],
+        [
+          -3.5299999713897705,
+          -2.6464998722076416,
+          4.450420379638672
+        ],
+        [
+          -3.5299999713897705,
+          -2.691399574279785,
+          4.455545902252197
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 243720,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > kiln_isometric_geometry.py:79:axle_bearing > kiln_isometric_geometry.py:96:mechanics > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "ReferenceKilnPinion",
+        "face": 507,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:113:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0010352126055214184,
+      "visible": false,
+      "center": [
+        -1.067120909690857,
+        -1.4538276195526123,
+        2.180000066757202
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -1.087999939918518,
+          -1.4794999361038208,
+          2.180000066757202
+        ],
+        [
+          -1.0525476932525635,
+          -1.4548101425170898,
+          2.180000066757202
+        ],
+        [
+          -1.0399361848831177,
+          -1.4405001401901245,
+          2.180000066757202
+        ],
+        [
+          -1.087999939918518,
+          -1.440500020980835,
+          2.180000066757202
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 225906,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230634,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:301:wall > kiln_isometric_geometry.py:245:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0010277051028205891,
+      "visible": false,
+      "center": [
+        -3.0453851222991943,
+        -3.273050546646118,
+        0.3199999928474426
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -3.0505001544952393,
+          -3.2234745025634766,
+          0.3199999928474426
+        ],
+        [
+          -3.0505001544952393,
+          -3.323500156402588,
+          0.3199999928474426
+        ],
+        [
+          -3.045379638671875,
+          -3.323500156402588,
+          0.3199999928474426
+        ],
+        [
+          -3.035161256790161,
+          -3.221727132797241,
+          0.3199999928474426
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 243720,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > kiln_isometric_geometry.py:79:axle_bearing > kiln_isometric_geometry.py:96:mechanics > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "ReferenceKilnPinion",
+        "face": 507,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:113:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0009229595425489036,
+      "visible": false,
+      "center": [
+        -1.0477137565612793,
+        -1.4635775089263916,
+        2.180000066757202
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -1.052547812461853,
+          -1.4548101425170898,
+          2.180000066757202
+        ],
+        [
+          -1.0743070840835571,
+          -1.4794999361038208,
+          2.180000066757202
+        ],
+        [
+          -1.031999945640564,
+          -1.4795000553131104,
+          2.180000066757202
+        ],
+        [
+          -1.031999945640564,
+          -1.4405001401901245,
+          2.180000066757202
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238607,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 243606,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000841223124392193,
+      "visible": false,
+      "center": [
+        -1.5720000267028809,
+        -3.4230000972747803,
+        3.952000141143799
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.5720000267028809,
+          -3.4230000972747803,
+          3.977447509765625
+        ],
+        [
+          -1.5499619245529175,
+          -3.4230000972747803,
+          3.9392762184143066
+        ],
+        [
+          -1.5940381288528442,
+          -3.4230000972747803,
+          3.9392762184143066
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 208549,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:257:deck > kiln_isometric_geometry.py:225:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 223206,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:232:structure"
+      },
+      "planeSeparation": 0.0004999637603759766,
+      "overlapArea": 0.0008412229142865518,
+      "visible": false,
+      "center": [
+        0.949999988079071,
+        -4.94950008392334,
+        1.9030001163482666
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          0.949999988079071,
+          -4.936776161193848,
+          1.8809618949890137
+        ],
+        [
+          0.949999988079071,
+          -4.936776161193848,
+          1.9250380992889404
+        ],
+        [
+          0.949999988079071,
+          -4.974947452545166,
+          1.902999997138977
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 224044,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237570,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412228486280315,
+      "visible": false,
+      "center": [
+        -1.4570001363754272,
+        -1.2400001287460327,
+        3.6630001068115234
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4570000171661377,
+          -1.2400000095367432,
+          3.6884474754333496
+        ],
+        [
+          -1.4570000171661377,
+          -1.2179619073867798,
+          3.6502761840820312
+        ],
+        [
+          -1.4570000171661377,
+          -1.2620381116867065,
+          3.6502761840820312
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 224088,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237570,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412228486280315,
+      "visible": false,
+      "center": [
+        -1.4570001363754272,
+        -1.3600000143051147,
+        3.6630001068115234
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4570000171661377,
+          -1.3600000143051147,
+          3.6884474754333496
+        ],
+        [
+          -1.4570000171661377,
+          -1.3379619121551514,
+          3.6502761840820312
+        ],
+        [
+          -1.4570000171661377,
+          -1.3820381164550781,
+          3.6502761840820312
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 236867,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 242798,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412198318143993,
+      "visible": false,
+      "center": [
+        -0.18200001120567322,
+        -3.4230000972747803,
+        3.952000141143799
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.18199999630451202,
+          -3.4230000972747803,
+          3.977447509765625
+        ],
+        [
+          -0.1599619835615158,
+          -3.4230000972747803,
+          3.9392762184143066
+        ],
+        [
+          -0.20403802394866943,
+          -3.4230000972747803,
+          3.9392762184143066
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 224846,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 238328,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412181207034797,
+      "visible": false,
+      "center": [
+        -1.4570001363754272,
+        -3.31000018119812,
+        4.083000183105469
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4570000171661377,
+          -3.309999942779541,
+          4.108447551727295
+        ],
+        [
+          -1.4570000171661377,
+          -3.287961959838867,
+          4.070276260375977
+        ],
+        [
+          -1.4570000171661377,
+          -3.332037925720215,
+          4.070276260375977
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 224285,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237900,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000841217610755729,
+      "visible": false,
+      "center": [
+        -1.6070001125335693,
+        -1.3980001211166382,
+        3.6669998168945312
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.6069999933242798,
+          -1.3980000019073486,
+          3.6924474239349365
+        ],
+        [
+          -1.5849618911743164,
+          -1.3980000019073486,
+          3.6542763710021973
+        ],
+        [
+          -1.6290382146835327,
+          -1.3980000019073486,
+          3.6542763710021973
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 223668,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237194,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412162297128933,
+      "visible": false,
+      "center": [
+        -1.4570001363754272,
+        -1.2400001287460327,
+        0.27300000190734863
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4570000171661377,
+          -1.2400000095367432,
+          0.2984473407268524
+        ],
+        [
+          -1.4570000171661377,
+          -1.2179619073867798,
+          0.26027634739875793
+        ],
+        [
+          -1.4570000171661377,
+          -1.2620381116867065,
+          0.26027634739875793
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 223712,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237194,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412162297128933,
+      "visible": false,
+      "center": [
+        -1.4570001363754272,
+        -1.3600000143051147,
+        0.27300000190734863
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4570000171661377,
+          -1.3600000143051147,
+          0.2984473407268524
+        ],
+        [
+          -1.4570000171661377,
+          -1.3379619121551514,
+          0.26027634739875793
+        ],
+        [
+          -1.4570000171661377,
+          -1.3820381164550781,
+          0.26027634739875793
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 223646,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237194,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000841215272426879,
+      "visible": false,
+      "center": [
+        -1.4570001363754272,
+        -1.2400001287460327,
+        0.13700002431869507
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4570000171661377,
+          -1.2400000095367432,
+          0.16244731843471527
+        ],
+        [
+          -1.4570000171661377,
+          -1.2179619073867798,
+          0.12427636981010437
+        ],
+        [
+          -1.4570000171661377,
+          -1.2620381116867065,
+          0.12427636981010437
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 223690,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237194,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000841215272426879,
+      "visible": false,
+      "center": [
+        -1.4570001363754272,
+        -1.3600000143051147,
+        0.13700002431869507
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4570000171661377,
+          -1.3600000143051147,
+          0.16244731843471527
+        ],
+        [
+          -1.4570000171661377,
+          -1.3379619121551514,
+          0.12427636981010437
+        ],
+        [
+          -1.4570000171661377,
+          -1.3820381164550781,
+          0.12427636981010437
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 223909,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237524,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412152429513597,
+      "visible": false,
+      "center": [
+        -1.6070001125335693,
+        -1.3980001211166382,
+        0.16700004041194916
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.6069999933242798,
+          -1.3980000019073486,
+          0.19244733452796936
+        ],
+        [
+          -1.5849618911743164,
+          -1.3980000019073486,
+          0.15427638590335846
+        ],
+        [
+          -1.6290380954742432,
+          -1.3980000019073486,
+          0.15427638590335846
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238517,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 243502,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412130133592655,
+      "visible": false,
+      "center": [
+        -1.4880001544952393,
+        -3.2370002269744873,
+        4.088000297546387
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4752763509750366,
+          -3.236999988555908,
+          4.065961837768555
+        ],
+        [
+          -1.4752763509750366,
+          -3.236999988555908,
+          4.110037803649902
+        ],
+        [
+          -1.5134474039077759,
+          -3.236999988555908,
+          4.0879998207092285
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 224824,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 238328,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412129677859703,
+      "visible": false,
+      "center": [
+        -1.4570001363754272,
+        -3.31000018119812,
+        3.94700026512146
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4570000171661377,
+          -3.309999942779541,
+          3.972447395324707
+        ],
+        [
+          -1.4570000171661377,
+          -3.287961959838867,
+          3.9342763423919678
+        ],
+        [
+          -1.4570000171661377,
+          -3.332037925720215,
+          3.9342763423919678
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 213854,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:201:platform_frame"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 258931,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:306:bin > kiln_isometric_geometry.py:360:output > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.000499725341796875,
+      "overlapArea": 0.000841212640184337,
+      "visible": false,
+      "center": [
+        -5.5304999351501465,
+        -0.2005000114440918,
+        0.1469999998807907
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -5.5304999351501465,
+          -0.1877763420343399,
+          0.1249619722366333
+        ],
+        [
+          -5.5304999351501465,
+          -0.1877763420343399,
+          0.16903799772262573
+        ],
+        [
+          -5.5304999351501465,
+          -0.2259473204612732,
+          0.1469999998807907
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238607,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 243584,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412122285725299,
+      "visible": false,
+      "center": [
+        -1.4880001544952393,
+        -3.4230000972747803,
+        4.088000297546387
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4880001544952393,
+          -3.4230000972747803,
+          4.113447189331055
+        ],
+        [
+          -1.4659619331359863,
+          -3.4230000972747803,
+          4.0752763748168945
+        ],
+        [
+          -1.510038137435913,
+          -3.4230000972747803,
+          4.0752763748168945
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 224470,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237952,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412116234844461,
+      "visible": false,
+      "center": [
+        -1.4570001363754272,
+        -3.31000018119812,
+        0.27300000190734863
+      ],
+      "normal": [
+        -0.9999999403953552,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4570000171661377,
+          -3.309999942779541,
+          0.2984473407268524
+        ],
+        [
+          -1.4570000171661377,
+          -3.287961959838867,
+          0.26027634739875793
+        ],
+        [
+          -1.4570000171661377,
+          -3.332037925720215,
+          0.26027634739875793
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 224448,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237952,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412106156273844,
+      "visible": false,
+      "center": [
+        -1.4570001363754272,
+        -3.31000018119812,
+        0.13700002431869507
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4570000171661377,
+          -3.309999942779541,
+          0.16244731843471527
+        ],
+        [
+          -1.4570000171661377,
+          -3.287961959838867,
+          0.12427636981010437
+        ],
+        [
+          -1.4570000171661377,
+          -3.332037925720215,
+          0.12427636981010437
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238517,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 243546,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412105744664417,
+      "visible": false,
+      "center": [
+        -1.5720000267028809,
+        -3.2370002269744873,
+        4.088000297546387
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.5592764616012573,
+          -3.236999988555908,
+          4.065961837768555
+        ],
+        [
+          -1.5592763423919678,
+          -3.236999988555908,
+          4.110037803649902
+        ],
+        [
+          -1.597447395324707,
+          -3.236999988555908,
+          4.0879998207092285
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 236867,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 242820,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008412101661969262,
+      "visible": false,
+      "center": [
+        -0.18200001120567322,
+        -3.4230000972747803,
+        4.088000297546387
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -0.18199999630451202,
+          -3.4230000972747803,
+          4.113447189331055
+        ],
+        [
+          -0.15996195375919342,
+          -3.4230000972747803,
+          4.0752763748168945
+        ],
+        [
+          -0.20403805375099182,
+          -3.4230000972747803,
+          4.0752763748168945
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238517,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 243480,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008391689247559952,
+      "visible": false,
+      "center": [
+        -1.4854850769042969,
+        -3.236999988555908,
+        3.9472594261169434
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.477940320968628,
+          -3.236999988555908,
+          3.93149995803833
+        ],
+        [
+          -1.4752763509750366,
+          -3.236999988555908,
+          3.93149995803833
+        ],
+        [
+          -1.4752763509750366,
+          -3.236999988555908,
+          3.9740381240844727
+        ],
+        [
+          -1.5134474039077759,
+          -3.236999988555908,
+          3.952000141143799
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 236777,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 242716,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008391667797976732,
+      "visible": false,
+      "center": [
+        -0.17948511242866516,
+        -3.236999988555908,
+        3.9472594261169434
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.17194032669067383,
+          -3.236999988555908,
+          3.93149995803833
+        ],
+        [
+          -0.1692763864994049,
+          -3.236999988555908,
+          3.93149995803833
+        ],
+        [
+          -0.1692763864994049,
+          -3.236999988555908,
+          3.9740381240844727
+        ],
+        [
+          -0.2074473351240158,
+          -3.236999988555908,
+          3.952000141143799
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238517,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 243524,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0008391662336810768,
+      "visible": false,
+      "center": [
+        -1.5694851875305176,
+        -3.236999988555908,
+        3.9472594261169434
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.5619404315948486,
+          -3.236999988555908,
+          3.93149995803833
+        ],
+        [
+          -1.5592764616012573,
+          -3.236999988555908,
+          3.93149995803833
+        ],
+        [
+          -1.5592764616012573,
+          -3.236999988555908,
+          3.9740381240844727
+        ],
+        [
+          -1.597447395324707,
+          -3.236999988555908,
+          3.952000141143799
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 223909,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237546,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007840903066896887,
+      "visible": false,
+      "center": [
+        -1.6070001125335693,
+        -1.3980000019073486,
+        0.30438828468322754
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.6127430200576782,
+          -1.3980000019073486,
+          0.31850022077560425
+        ],
+        [
+          -1.601257085800171,
+          -1.3980000019073486,
+          0.31850022077560425
+        ],
+        [
+          -1.5849618911743164,
+          -1.3980000019073486,
+          0.29027634859085083
+        ],
+        [
+          -1.6290380954742432,
+          -1.3980000019073486,
+          0.29027634859085083
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 213898,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:201:platform_frame"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 258931,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:306:bin > kiln_isometric_geometry.py:360:output > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.000499725341796875,
+      "overlapArea": 0.0007740274797043787,
+      "visible": false,
+      "center": [
+        -5.5304999351501465,
+        -0.30054232478141785,
+        0.1480826586484909
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -5.5304999351501465,
+          -0.2867763340473175,
+          0.1249619796872139
+        ],
+        [
+          -5.5304999351501465,
+          -0.2867763340473175,
+          0.16108375787734985
+        ],
+        [
+          -5.5304999351501465,
+          -0.3036692440509796,
+          0.15928487479686737
+        ],
+        [
+          -5.5304999351501465,
+          -0.324947327375412,
+          0.1469999998807907
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 273896,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "factory_facade_details.py:68:kiln_facades > kiln_isometric_geometry.py:548:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 274190,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:297:wall > factory_facade_details.py:77:kiln_facades > kiln_isometric_geometry.py:548:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007651578691092939,
+      "visible": false,
+      "center": [
+        -3.922593593597412,
+        -0.27366214990615845,
+        0.20000000298023224
+      ],
+      "normal": [
+        0.0,
+        -0.0,
+        -0.9999999403953552
+      ],
+      "polygon": [
+        [
+          -3.9139997959136963,
+          -0.24649977684020996,
+          0.20000000298023224
+        ],
+        [
+          -3.9139997959136963,
+          -0.28967002034187317,
+          0.20000000298023224
+        ],
+        [
+          -3.9462978839874268,
+          -0.31197911500930786,
+          0.20000000298023224
+        ],
+        [
+          -3.91607666015625,
+          -0.24649977684020996,
+          0.20000000298023224
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 236777,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 242738,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007603199462286252,
+      "visible": false,
+      "center": [
+        -0.18117761611938477,
+        -3.236999988555908,
+        4.088139057159424
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.17871034145355225,
+          -3.236999988555908,
+          4.071408271789551
+        ],
+        [
+          -0.1692764014005661,
+          -3.236999988555908,
+          4.083110809326172
+        ],
+        [
+          -0.16927635669708252,
+          -3.236999988555908,
+          4.110037803649902
+        ],
+        [
+          -0.2074473351240158,
+          -3.236999988555908,
+          4.08799934387207
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238607,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 243562,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007375078631386145,
+      "visible": false,
+      "center": [
+        -1.48403000831604,
+        -3.4230000972747803,
+        3.9487600326538086
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4911470413208008,
+          -3.4230000972747803,
+          3.971996784210205
+        ],
+        [
+          -1.4689724445343018,
+          -3.4230000972747803,
+          3.944490671157837
+        ],
+        [
+          -1.4659619331359863,
+          -3.4230000972747803,
+          3.9392762184143066
+        ],
+        [
+          -1.510038137435913,
+          -3.4230000972747803,
+          3.9392762184143066
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 224285,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237856,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000705080898479038,
+      "visible": false,
+      "center": [
+        -1.4937593936920166,
+        -1.3980000019073486,
+        3.669248104095459
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4930000305175781,
+          -1.3980000019073486,
+          3.6924474239349365
+        ],
+        [
+          -1.4834997653961182,
+          -1.3980000019073486,
+          3.675992488861084
+        ],
+        [
+          -1.4834997653961182,
+          -1.3980000019073486,
+          3.6542766094207764
+        ],
+        [
+          -1.5150381326675415,
+          -1.3980000019073486,
+          3.6542763710021973
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 223909,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237480,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007050789205700625,
+      "visible": false,
+      "center": [
+        -1.4937593936920166,
+        -1.3980000019073486,
+        0.16924813389778137
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4930000305175781,
+          -1.3980000019073486,
+          0.19244733452796936
+        ],
+        [
+          -1.4834997653961182,
+          -1.3980000019073486,
+          0.1759924590587616
+        ],
+        [
+          -1.4834997653961182,
+          -1.3980000019073486,
+          0.15427638590335846
+        ],
+        [
+          -1.5150381326675415,
+          -1.3980000019073486,
+          0.15427637100219727
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 238607,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 243628,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > kiln_isometric_geometry.py:142:feed_bin"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007019484692651345,
+      "visible": false,
+      "center": [
+        -1.5705540180206299,
+        -3.4230000972747803,
+        4.088366508483887
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.5744078159332275,
+          -3.4230000972747803,
+          4.0752763748168945
+        ],
+        [
+          -1.585846185684204,
+          -3.4230000972747803,
+          4.089465141296387
+        ],
+        [
+          -1.5720000267028809,
+          -3.4230000972747803,
+          4.113447189331055
+        ],
+        [
+          -1.5499619245529175,
+          -3.4230000972747803,
+          4.0752763748168945
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 253191,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:184:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 255364,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "kiln_isometric_geometry.py:187:porch > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006845135320517337,
+      "visible": false,
+      "center": [
+        -2.9038333892822266,
+        0.7799999713897705,
+        1.066166877746582
+      ],
+      "normal": [
+        0.0,
+        0.9999999403953552,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -2.9285004138946533,
+          0.7799999713897705,
+          1.0785001516342163
+        ],
+        [
+          -2.8914999961853027,
+          0.7799999713897705,
+          1.0785002708435059
+        ],
+        [
+          -2.8914999961853027,
+          0.7799999713897705,
+          1.0414999723434448
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 226000,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230634,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:301:wall > kiln_isometric_geometry.py:245:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006693428294904519,
+      "visible": false,
+      "center": [
+        -3.270033359527588,
+        -3.285883903503418,
+        0.3199999928474426
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -3.2745001316070557,
+          -3.2489936351776123,
+          0.3199999928474426
+        ],
+        [
+          -3.2745001316070557,
+          -3.323500156402588,
+          0.3199999928474426
+        ],
+        [
+          -3.2693796157836914,
+          -3.323500156402588,
+          0.3199999928474426
+        ],
+        [
+          -3.2617530822753906,
+          -3.2475414276123047,
+          0.3199999928474426
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 208477,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:257:deck > kiln_isometric_geometry.py:225:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 221634,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:18:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:232:structure"
+      },
+      "planeSeparation": 0.0004999637603759766,
+      "overlapArea": 0.0006654675290962003,
+      "visible": false,
+      "center": [
+        0.949999988079071,
+        -0.1981383115053177,
+        1.9029998779296875
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          0.949999988079071,
+          -0.18777640163898468,
+          1.8809617757797241
+        ],
+        [
+          0.949999988079071,
+          -0.18777640163898468,
+          1.9250380992889404
+        ],
+        [
+          0.949999988079071,
+          -0.2085002213716507,
+          1.9130730628967285
+        ],
+        [
+          0.949999988079071,
+          -0.2085002213716507,
+          1.8929269313812256
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 223909,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 237502,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:9:steel_bolt > industrial_geometry.py:23:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:147:feed_tower"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006479540202073419,
+      "visible": false,
+      "center": [
+        -1.4936074018478394,
+        -1.3980000019073486,
+        0.305909126996994
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4987430572509766,
+          -1.3980000019073486,
+          0.31850022077560425
+        ],
+        [
+          -1.4872571229934692,
+          -1.3980000019073486,
+          0.31850022077560425
+        ],
+        [
+          -1.4834997653961182,
+          -1.3980000019073486,
+          0.3119924068450928
+        ],
+        [
+          -1.4834997653961182,
+          -1.3980000019073486,
+          0.29027634859085083
+        ],
+        [
+          -1.5150381326675415,
+          -1.3980000019073486,
+          0.29027634859085083
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 846,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 855,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 1.4901160305669237e-08,
+      "overlapArea": 0.0006276355918500842,
+      "visible": false,
+      "center": [
+        -0.21149998903274536,
+        -1.4600000381469727,
+        2.3087947368621826
+      ],
+      "normal": [
+        0.9999999403953552,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.21149998903274536,
+          -1.4600000381469727,
+          2.3230717182159424
+        ],
+        [
+          -0.21149998903274536,
+          -1.4764856100082397,
+          2.313553810119629
+        ],
+        [
+          -0.21149998903274536,
+          -1.4600000381469727,
+          2.2849998474121094
+        ],
+        [
+          -0.21149998903274536,
+          -1.4435144662857056,
+          2.313553810119629
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 849,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 852,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006276355323974765,
+      "visible": false,
+      "center": [
+        -0.2685000002384186,
+        -1.4600000381469727,
+        2.3087947368621826
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -0.2685000002384186,
+          -1.4600000381469727,
+          2.2849998474121094
+        ],
+        [
+          -0.2685000002384186,
+          -1.4764856100082397,
+          2.313553810119629
+        ],
+        [
+          -0.2685000002384186,
+          -1.4600000381469727,
+          2.3230717182159424
+        ],
+        [
+          -0.2685000002384186,
+          -1.4435144662857056,
+          2.313553810119629
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 226000,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > kiln_isometric_geometry.py:236:structure > kiln_isometric_geometry.py:539:kiln"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 230634,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:301:wall > kiln_isometric_geometry.py:245:structure > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006169736179855584,
+      "visible": false,
+      "center": [
+        -3.2670962810516357,
+        -3.227383852005005,
+        0.3199999928474426
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -3.2745001316070557,
+          -3.2064998149871826,
+          0.3199999928474426
+        ],
+        [
+          -3.2745001316070557,
+          -3.2489936351776123,
+          0.3199999928474426
+        ],
+        [
+          -3.2617530822753906,
+          -3.2475414276123047,
+          0.3199999928474426
+        ],
+        [
+          -3.2576324939727783,
+          -3.2064998149871826,
+          0.3199999928474426
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 837,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 843,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005444357562717247,
+      "visible": false,
+      "center": [
+        -0.2685000002384186,
+        -1.4423643350601196,
+        2.3393406867980957
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.2685000002384186,
+          -1.4539999961853027,
+          2.3524999618530273
+        ],
+        [
+          -0.2685000002384186,
+          -1.4239426851272583,
+          2.3474531173706055
+        ],
+        [
+          -0.2685000002384186,
+          -1.4375145435333252,
+          2.323945999145508
+        ],
+        [
+          -0.2685000002384186,
+          -1.4539999961853027,
+          2.3334639072418213
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 825,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 831,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 1.4901161193847656e-08,
+      "overlapArea": 0.0005444354791748329,
+      "visible": false,
+      "center": [
+        -0.21149998903274536,
+        -1.4776357412338257,
+        2.3393406867980957
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.21149998903274536,
+          -1.4660000801086426,
+          2.3524999618530273
+        ],
+        [
+          -0.21149998903274536,
+          -1.4960572719573975,
+          2.3474531173706055
+        ],
+        [
+          -0.21149998903274536,
+          -1.4824855327606201,
+          2.323945999145508
+        ],
+        [
+          -0.21149998903274536,
+          -1.4660000801086426,
+          2.3334639072418213
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 822,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 828,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005444354049216615,
+      "visible": false,
+      "center": [
+        -0.2685000002384186,
+        -1.4776358604431152,
+        2.3393406867980957
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.2685000002384186,
+          -1.496057391166687,
+          2.3474531173706055
+        ],
+        [
+          -0.2685000002384186,
+          -1.4660000801086426,
+          2.3524999618530273
+        ],
+        [
+          -0.2685000002384186,
+          -1.4660000801086426,
+          2.3334639072418213
+        ],
+        [
+          -0.2685000002384186,
+          -1.4824855327606201,
+          2.323945999145508
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 834,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 840,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005444347445881376,
+      "visible": false,
+      "center": [
+        -0.21149998903274536,
+        -1.4423643350601196,
+        2.339340925216675
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.21149998903274536,
+          -1.4539998769760132,
+          2.3334641456604004
+        ],
+        [
+          -0.21149998903274536,
+          -1.4375145435333252,
+          2.323946237564087
+        ],
+        [
+          -0.21149998903274536,
+          -1.4239428043365479,
+          2.3474531173706055
+        ],
+        [
+          -0.21149998903274536,
+          -1.4539999961853027,
+          2.3524999618530273
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 822,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 852,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005444280297906418,
+      "visible": false,
+      "center": [
+        -0.2685000002384186,
+        -1.4769072532653809,
+        2.319397449493408
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.2685000002384186,
+          -1.4660000801086426,
+          2.326535940170288
+        ],
+        [
+          -0.2685000002384186,
+          -1.4660000801086426,
+          2.307500123977661
+        ],
+        [
+          -0.2685000002384186,
+          -1.4931434392929077,
+          2.307500123977661
+        ],
+        [
+          -0.2685000002384186,
+          -1.4824855327606201,
+          2.3360538482666016
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 843,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 849,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005444279072626249,
+      "visible": false,
+      "center": [
+        -0.2685000002384186,
+        -1.4430928230285645,
+        2.319397449493408
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.2685000002384186,
+          -1.4375145435333252,
+          2.3360538482666016
+        ],
+        [
+          -0.2685000002384186,
+          -1.4268567562103271,
+          2.307500123977661
+        ],
+        [
+          -0.2685000002384186,
+          -1.4539999961853027,
+          2.307500123977661
+        ],
+        [
+          -0.2685000002384186,
+          -1.4539999961853027,
+          2.326535940170288
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 840,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 846,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005444278855490092,
+      "visible": false,
+      "center": [
+        -0.21149998903274536,
+        -1.4430928230285645,
+        2.319397449493408
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.21149998903274536,
+          -1.4539999961853027,
+          2.326535940170288
+        ],
+        [
+          -0.21149998903274536,
+          -1.4539999961853027,
+          2.307500123977661
+        ],
+        [
+          -0.21149998903274536,
+          -1.4268567562103271,
+          2.307500123977661
+        ],
+        [
+          -0.21149998903274536,
+          -1.4375145435333252,
+          2.3360538482666016
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 825,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ReferenceKilnDriveWheel",
+        "face": 855,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:49:add > kiln_isometric_geometry.py:124:mechanics > kiln_isometric_geometry.py:539:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 1.4901161193847656e-08,
+      "overlapArea": 0.0005444277659710155,
+      "visible": false,
+      "center": [
+        -0.21149998903274536,
+        -1.4769072532653809,
+        2.319397449493408
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.21149998903274536,
+          -1.4824855327606201,
+          2.3360538482666016
+        ],
+        [
+          -0.21149998903274536,
+          -1.4931433200836182,
+          2.307500123977661
+        ],
+        [
+          -0.21149998903274536,
+          -1.4660000801086426,
+          2.307500123977661
+        ],
+        [
+          -0.21149998903274536,
+          -1.4660000801086426,
+          2.326535940170288
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "CementKiln.Architecture",
+        "face": 264810,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > kiln_isometric_geometry.py:432:details > kiln_isometric_geometry.py:540:kiln > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "CementKiln.Architecture",
+        "face": 274467,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_levels.py:40:add > factory_facade_details.py:85:kiln_facades > kiln_isometric_geometry.py:548:kiln > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005088846554657015,
+      "visible": false,
+      "center": [
+        -1.5812500715255737,
+        -3.25,
+        3.6226251125335693
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.59600031375885,
+          -3.25,
+          3.6460001468658447
+        ],
+        [
+          -1.5664998292922974,
+          -3.25,
+          3.61650013923645
+        ],
+        [
+          -1.5664998292922974,
+          -3.25,
+          3.614000082015991
+        ],
+        [
+          -1.59600031375885,
+          -3.25,
+          3.614000082015991
+        ]
+      ]
+    }
+  ],
+  "seconds": 17.66,
+  "model": "CementKiln",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\CementKiln-ReferenceStudy.blend",
+  "sourceSha256": "4b2d4c1ef3b18406d7c171ceb1c2049ee486aec8ec9469e04de807224e9532cf",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

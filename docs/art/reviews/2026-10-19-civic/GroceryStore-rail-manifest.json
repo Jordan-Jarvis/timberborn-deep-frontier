@@ -1,0 +1,1580 @@
+{
+  "status": "Separate Blender nodes; game connection bindings are not authored yet",
+  "coordinateSpace": "Authored artwork X/across Y/back Z/up; no grid conversion",
+  "runs": [
+    {
+      "id": "ShopFrontfront",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontfront.Panel00",
+          "start": [
+            0.800000011920929,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            1.3700000047683716,
+            1.5499999523162842,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post000",
+          "endPost": "WalkwayRail.GroceryStore.Post001"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontfront.Panel01",
+          "start": [
+            1.3700000047683716,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            1.940000057220459,
+            1.5499999523162842,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post001",
+          "endPost": "WalkwayRail.GroceryStore.Post002"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontfront.Panel02",
+          "start": [
+            1.940000057220459,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            2.509999990463257,
+            1.5499999523162842,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post002",
+          "endPost": "WalkwayRail.GroceryStore.Post003"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontfront.Panel03",
+          "start": [
+            2.509999990463257,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            3.0799999237060547,
+            1.5499999523162842,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post003",
+          "endPost": "WalkwayRail.GroceryStore.Post004"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontfront.Panel04",
+          "start": [
+            3.0799999237060547,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            3.6500000953674316,
+            1.5499999523162842,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post004",
+          "endPost": "WalkwayRail.GroceryStore.Post005"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontfront.Panel05",
+          "start": [
+            3.6500000953674316,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            4.21999979019165,
+            1.5499999523162842,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post005",
+          "endPost": "WalkwayRail.GroceryStore.Post006"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontfront.Panel06",
+          "start": [
+            4.21999979019165,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            4.789999961853027,
+            1.5499999523162842,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post006",
+          "endPost": "WalkwayRail.GroceryStore.Post007"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontfront.Panel07",
+          "start": [
+            4.789999961853027,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            5.360000133514404,
+            1.5499999523162842,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post007",
+          "endPost": "WalkwayRail.GroceryStore.Post008"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontfront.Panel08",
+          "start": [
+            5.360000133514404,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            5.930000305175781,
+            1.5499999523162842,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post008",
+          "endPost": "WalkwayRail.GroceryStore.Post009"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontfront.Panel09",
+          "start": [
+            5.930000305175781,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            6.5,
+            1.5499999523162842,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post009",
+          "endPost": "WalkwayRail.GroceryStore.Post010"
+        }
+      ]
+    },
+    {
+      "id": "ShopFrontleft",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontleft.Panel00",
+          "start": [
+            0.800000011920929,
+            1.5499999523162842,
+            2
+          ],
+          "end": [
+            0.800000011920929,
+            2.0199999809265137,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post000",
+          "endPost": "WalkwayRail.GroceryStore.Post011"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontleft.Panel01",
+          "start": [
+            0.800000011920929,
+            2.0199999809265137,
+            2
+          ],
+          "end": [
+            0.800000011920929,
+            2.490000009536743,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post011",
+          "endPost": "WalkwayRail.GroceryStore.Post012"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopFrontleft.Panel02",
+          "start": [
+            0.800000011920929,
+            2.490000009536743,
+            2
+          ],
+          "end": [
+            0.800000011920929,
+            2.9600000381469727,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post012",
+          "endPost": "WalkwayRail.GroceryStore.Post013"
+        }
+      ]
+    },
+    {
+      "id": "ShopSidefront",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSidefront.Panel00",
+          "start": [
+            6.480000019073486,
+            2.049999952316284,
+            2
+          ],
+          "end": [
+            7.015000343322754,
+            2.049999952316284,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post014",
+          "endPost": "WalkwayRail.GroceryStore.Post015"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSidefront.Panel01",
+          "start": [
+            7.015000343322754,
+            2.049999952316284,
+            2
+          ],
+          "end": [
+            7.550000190734863,
+            2.049999952316284,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post015",
+          "endPost": "WalkwayRail.GroceryStore.Post016"
+        }
+      ]
+    },
+    {
+      "id": "ShopSideright",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSideright.Panel00",
+          "start": [
+            7.550000190734863,
+            2.049999952316284,
+            2
+          ],
+          "end": [
+            7.550000190734863,
+            2.5999999046325684,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post016",
+          "endPost": "WalkwayRail.GroceryStore.Post017"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSideright.Panel01",
+          "start": [
+            7.550000190734863,
+            2.5999999046325684,
+            2
+          ],
+          "end": [
+            7.550000190734863,
+            3.1500000953674316,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post017",
+          "endPost": "WalkwayRail.GroceryStore.Post018"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSideright.Panel02",
+          "start": [
+            7.550000190734863,
+            3.1500000953674316,
+            2
+          ],
+          "end": [
+            7.550000190734863,
+            3.6999998092651367,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post018",
+          "endPost": "WalkwayRail.GroceryStore.Post019"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSideright.Panel03",
+          "start": [
+            7.550000190734863,
+            3.6999998092651367,
+            2
+          ],
+          "end": [
+            7.550000190734863,
+            4.25,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post019",
+          "endPost": "WalkwayRail.GroceryStore.Post020"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSideright.Panel04",
+          "start": [
+            7.550000190734863,
+            4.25,
+            2
+          ],
+          "end": [
+            7.550000190734863,
+            4.800000190734863,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post020",
+          "endPost": "WalkwayRail.GroceryStore.Post021"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSideright.Panel05",
+          "start": [
+            7.550000190734863,
+            4.800000190734863,
+            2
+          ],
+          "end": [
+            7.550000190734863,
+            5.349999904632568,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post021",
+          "endPost": "WalkwayRail.GroceryStore.Post022"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSideright.Panel06",
+          "start": [
+            7.550000190734863,
+            5.349999904632568,
+            2
+          ],
+          "end": [
+            7.550000190734863,
+            5.899999618530273,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post022",
+          "endPost": "WalkwayRail.GroceryStore.Post023"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSideright.Panel07",
+          "start": [
+            7.550000190734863,
+            5.899999618530273,
+            2
+          ],
+          "end": [
+            7.550000190734863,
+            6.449999809265137,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post023",
+          "endPost": "WalkwayRail.GroceryStore.Post024"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopSideright.Panel08",
+          "start": [
+            7.550000190734863,
+            6.449999809265137,
+            2
+          ],
+          "end": [
+            7.550000190734863,
+            7.0,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post024",
+          "endPost": "WalkwayRail.GroceryStore.Post025"
+        }
+      ]
+    },
+    {
+      "id": "ShopRearback",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.ShopRearback.Panel00",
+          "start": [
+            1.5499999523162842,
+            7.0,
+            2
+          ],
+          "end": [
+            2.097777843475342,
+            7.0,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post026",
+          "endPost": "WalkwayRail.GroceryStore.Post027"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopRearback.Panel01",
+          "start": [
+            2.097777843475342,
+            7.0,
+            2
+          ],
+          "end": [
+            2.6455554962158203,
+            7.0,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post027",
+          "endPost": "WalkwayRail.GroceryStore.Post028"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopRearback.Panel02",
+          "start": [
+            2.6455554962158203,
+            7.0,
+            2
+          ],
+          "end": [
+            3.193333387374878,
+            7.0,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post028",
+          "endPost": "WalkwayRail.GroceryStore.Post029"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopRearback.Panel03",
+          "start": [
+            3.193333387374878,
+            7.0,
+            2
+          ],
+          "end": [
+            3.7411112785339355,
+            7.0,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post029",
+          "endPost": "WalkwayRail.GroceryStore.Post030"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopRearback.Panel04",
+          "start": [
+            3.7411112785339355,
+            7.0,
+            2
+          ],
+          "end": [
+            4.288888931274414,
+            7.0,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post030",
+          "endPost": "WalkwayRail.GroceryStore.Post031"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopRearback.Panel05",
+          "start": [
+            4.288888931274414,
+            7.0,
+            2
+          ],
+          "end": [
+            4.836667060852051,
+            7.0,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post031",
+          "endPost": "WalkwayRail.GroceryStore.Post032"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopRearback.Panel06",
+          "start": [
+            4.836667060852051,
+            7.0,
+            2
+          ],
+          "end": [
+            5.384444713592529,
+            7.0,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post032",
+          "endPost": "WalkwayRail.GroceryStore.Post033"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopRearback.Panel07",
+          "start": [
+            5.384444713592529,
+            7.0,
+            2
+          ],
+          "end": [
+            5.932222366333008,
+            7.0,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post033",
+          "endPost": "WalkwayRail.GroceryStore.Post034"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.ShopRearback.Panel08",
+          "start": [
+            5.932222366333008,
+            7.0,
+            2
+          ],
+          "end": [
+            6.480000019073486,
+            7.0,
+            2
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post034",
+          "endPost": "WalkwayRail.GroceryStore.Post035"
+        }
+      ]
+    },
+    {
+      "id": "UpperShopFrontfront",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel00",
+          "start": [
+            0.800000011920929,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            1.3700000047683716,
+            1.5499999523162842,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post036",
+          "endPost": "WalkwayRail.GroceryStore.Post037"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel01",
+          "start": [
+            1.3700000047683716,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            1.940000057220459,
+            1.5499999523162842,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post037",
+          "endPost": "WalkwayRail.GroceryStore.Post038"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel02",
+          "start": [
+            1.940000057220459,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            2.509999990463257,
+            1.5499999523162842,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post038",
+          "endPost": "WalkwayRail.GroceryStore.Post039"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel03",
+          "start": [
+            2.509999990463257,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            3.0799999237060547,
+            1.5499999523162842,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post039",
+          "endPost": "WalkwayRail.GroceryStore.Post040"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel04",
+          "start": [
+            3.0799999237060547,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            3.6500000953674316,
+            1.5499999523162842,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post040",
+          "endPost": "WalkwayRail.GroceryStore.Post041"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel05",
+          "start": [
+            3.6500000953674316,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            4.21999979019165,
+            1.5499999523162842,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post041",
+          "endPost": "WalkwayRail.GroceryStore.Post042"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel06",
+          "start": [
+            4.21999979019165,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            4.789999961853027,
+            1.5499999523162842,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post042",
+          "endPost": "WalkwayRail.GroceryStore.Post043"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel07",
+          "start": [
+            4.789999961853027,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            5.360000133514404,
+            1.5499999523162842,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post043",
+          "endPost": "WalkwayRail.GroceryStore.Post044"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel08",
+          "start": [
+            5.360000133514404,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            5.930000305175781,
+            1.5499999523162842,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post044",
+          "endPost": "WalkwayRail.GroceryStore.Post045"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel09",
+          "start": [
+            5.930000305175781,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            6.5,
+            1.5499999523162842,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post045",
+          "endPost": "WalkwayRail.GroceryStore.Post046"
+        }
+      ]
+    },
+    {
+      "id": "UpperShopFrontleft",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontleft.Panel00",
+          "start": [
+            0.800000011920929,
+            1.5499999523162842,
+            4
+          ],
+          "end": [
+            0.800000011920929,
+            2.0433332920074463,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post036",
+          "endPost": "WalkwayRail.GroceryStore.Post047"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontleft.Panel01",
+          "start": [
+            0.800000011920929,
+            2.0433332920074463,
+            4
+          ],
+          "end": [
+            0.800000011920929,
+            2.5366666316986084,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post047",
+          "endPost": "WalkwayRail.GroceryStore.Post048"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopFrontleft.Panel02",
+          "start": [
+            0.800000011920929,
+            2.5366666316986084,
+            4
+          ],
+          "end": [
+            0.800000011920929,
+            3.0299999713897705,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post048",
+          "endPost": "WalkwayRail.GroceryStore.Post049"
+        }
+      ]
+    },
+    {
+      "id": "UpperShopSidefront",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSidefront.Panel00",
+          "start": [
+            6.480000019073486,
+            2.049999952316284,
+            4
+          ],
+          "end": [
+            7.015000343322754,
+            2.049999952316284,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post050",
+          "endPost": "WalkwayRail.GroceryStore.Post051"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSidefront.Panel01",
+          "start": [
+            7.015000343322754,
+            2.049999952316284,
+            4
+          ],
+          "end": [
+            7.550000190734863,
+            2.049999952316284,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post051",
+          "endPost": "WalkwayRail.GroceryStore.Post052"
+        }
+      ]
+    },
+    {
+      "id": "UpperShopSideright",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSideright.Panel00",
+          "start": [
+            7.550000190734863,
+            2.049999952316284,
+            4
+          ],
+          "end": [
+            7.550000190734863,
+            2.5999999046325684,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post052",
+          "endPost": "WalkwayRail.GroceryStore.Post053"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSideright.Panel01",
+          "start": [
+            7.550000190734863,
+            2.5999999046325684,
+            4
+          ],
+          "end": [
+            7.550000190734863,
+            3.1500000953674316,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post053",
+          "endPost": "WalkwayRail.GroceryStore.Post054"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSideright.Panel02",
+          "start": [
+            7.550000190734863,
+            3.1500000953674316,
+            4
+          ],
+          "end": [
+            7.550000190734863,
+            3.6999998092651367,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post054",
+          "endPost": "WalkwayRail.GroceryStore.Post055"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSideright.Panel03",
+          "start": [
+            7.550000190734863,
+            3.6999998092651367,
+            4
+          ],
+          "end": [
+            7.550000190734863,
+            4.25,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post055",
+          "endPost": "WalkwayRail.GroceryStore.Post056"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSideright.Panel04",
+          "start": [
+            7.550000190734863,
+            4.25,
+            4
+          ],
+          "end": [
+            7.550000190734863,
+            4.800000190734863,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post056",
+          "endPost": "WalkwayRail.GroceryStore.Post057"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSideright.Panel05",
+          "start": [
+            7.550000190734863,
+            4.800000190734863,
+            4
+          ],
+          "end": [
+            7.550000190734863,
+            5.349999904632568,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post057",
+          "endPost": "WalkwayRail.GroceryStore.Post058"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSideright.Panel06",
+          "start": [
+            7.550000190734863,
+            5.349999904632568,
+            4
+          ],
+          "end": [
+            7.550000190734863,
+            5.899999618530273,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post058",
+          "endPost": "WalkwayRail.GroceryStore.Post059"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSideright.Panel07",
+          "start": [
+            7.550000190734863,
+            5.899999618530273,
+            4
+          ],
+          "end": [
+            7.550000190734863,
+            6.449999809265137,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post059",
+          "endPost": "WalkwayRail.GroceryStore.Post060"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopSideright.Panel08",
+          "start": [
+            7.550000190734863,
+            6.449999809265137,
+            4
+          ],
+          "end": [
+            7.550000190734863,
+            7.0,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post060",
+          "endPost": "WalkwayRail.GroceryStore.Post061"
+        }
+      ]
+    },
+    {
+      "id": "UpperShopRearback",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopRearback.Panel00",
+          "start": [
+            1.5499999523162842,
+            7.0,
+            4
+          ],
+          "end": [
+            2.097777843475342,
+            7.0,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post062",
+          "endPost": "WalkwayRail.GroceryStore.Post063"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopRearback.Panel01",
+          "start": [
+            2.097777843475342,
+            7.0,
+            4
+          ],
+          "end": [
+            2.6455554962158203,
+            7.0,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post063",
+          "endPost": "WalkwayRail.GroceryStore.Post064"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopRearback.Panel02",
+          "start": [
+            2.6455554962158203,
+            7.0,
+            4
+          ],
+          "end": [
+            3.193333387374878,
+            7.0,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post064",
+          "endPost": "WalkwayRail.GroceryStore.Post065"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopRearback.Panel03",
+          "start": [
+            3.193333387374878,
+            7.0,
+            4
+          ],
+          "end": [
+            3.7411112785339355,
+            7.0,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post065",
+          "endPost": "WalkwayRail.GroceryStore.Post066"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopRearback.Panel04",
+          "start": [
+            3.7411112785339355,
+            7.0,
+            4
+          ],
+          "end": [
+            4.288888931274414,
+            7.0,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post066",
+          "endPost": "WalkwayRail.GroceryStore.Post067"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopRearback.Panel05",
+          "start": [
+            4.288888931274414,
+            7.0,
+            4
+          ],
+          "end": [
+            4.836667060852051,
+            7.0,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post067",
+          "endPost": "WalkwayRail.GroceryStore.Post068"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopRearback.Panel06",
+          "start": [
+            4.836667060852051,
+            7.0,
+            4
+          ],
+          "end": [
+            5.384444713592529,
+            7.0,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post068",
+          "endPost": "WalkwayRail.GroceryStore.Post069"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopRearback.Panel07",
+          "start": [
+            5.384444713592529,
+            7.0,
+            4
+          ],
+          "end": [
+            5.932222366333008,
+            7.0,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post069",
+          "endPost": "WalkwayRail.GroceryStore.Post070"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.UpperShopRearback.Panel08",
+          "start": [
+            5.932222366333008,
+            7.0,
+            4
+          ],
+          "end": [
+            6.480000019073486,
+            7.0,
+            4
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post070",
+          "endPost": "WalkwayRail.GroceryStore.Post071"
+        }
+      ]
+    },
+    {
+      "id": "RoofTerraceFront",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceFront.Panel00",
+          "start": [
+            6.480000019073486,
+            3.25,
+            6
+          ],
+          "end": [
+            7.013333320617676,
+            3.25,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post072",
+          "endPost": "WalkwayRail.GroceryStore.Post073"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceFront.Panel01",
+          "start": [
+            7.013333320617676,
+            3.25,
+            6
+          ],
+          "end": [
+            7.546667098999023,
+            3.25,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post073",
+          "endPost": "WalkwayRail.GroceryStore.Post074"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceFront.Panel02",
+          "start": [
+            7.546667098999023,
+            3.25,
+            6
+          ],
+          "end": [
+            8.079999923706055,
+            3.25,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post074",
+          "endPost": "WalkwayRail.GroceryStore.Post075"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceFront.Panel03",
+          "start": [
+            8.079999923706055,
+            3.25,
+            6
+          ],
+          "end": [
+            8.613333702087402,
+            3.25,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post075",
+          "endPost": "WalkwayRail.GroceryStore.Post076"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceFront.Panel04",
+          "start": [
+            8.613333702087402,
+            3.25,
+            6
+          ],
+          "end": [
+            9.14666748046875,
+            3.25,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post076",
+          "endPost": "WalkwayRail.GroceryStore.Post077"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceFront.Panel05",
+          "start": [
+            9.14666748046875,
+            3.25,
+            6
+          ],
+          "end": [
+            9.680000305175781,
+            3.25,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post077",
+          "endPost": "WalkwayRail.GroceryStore.Post078"
+        }
+      ]
+    },
+    {
+      "id": "RoofTerraceRear",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRear.Panel00",
+          "start": [
+            6.480000019073486,
+            6.150000095367432,
+            6
+          ],
+          "end": [
+            7.013333320617676,
+            6.150000095367432,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post079",
+          "endPost": "WalkwayRail.GroceryStore.Post080"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRear.Panel01",
+          "start": [
+            7.013333320617676,
+            6.150000095367432,
+            6
+          ],
+          "end": [
+            7.546667098999023,
+            6.150000095367432,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post080",
+          "endPost": "WalkwayRail.GroceryStore.Post081"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRear.Panel02",
+          "start": [
+            7.546667098999023,
+            6.150000095367432,
+            6
+          ],
+          "end": [
+            8.079999923706055,
+            6.150000095367432,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post081",
+          "endPost": "WalkwayRail.GroceryStore.Post082"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRear.Panel03",
+          "start": [
+            8.079999923706055,
+            6.150000095367432,
+            6
+          ],
+          "end": [
+            8.613333702087402,
+            6.150000095367432,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post082",
+          "endPost": "WalkwayRail.GroceryStore.Post083"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRear.Panel04",
+          "start": [
+            8.613333702087402,
+            6.150000095367432,
+            6
+          ],
+          "end": [
+            9.14666748046875,
+            6.150000095367432,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post083",
+          "endPost": "WalkwayRail.GroceryStore.Post084"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRear.Panel05",
+          "start": [
+            9.14666748046875,
+            6.150000095367432,
+            6
+          ],
+          "end": [
+            9.680000305175781,
+            6.150000095367432,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post084",
+          "endPost": "WalkwayRail.GroceryStore.Post085"
+        }
+      ]
+    },
+    {
+      "id": "RoofTerraceLeft",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceLeft.Panel00",
+          "start": [
+            6.480000019073486,
+            3.25,
+            6
+          ],
+          "end": [
+            6.480000019073486,
+            3.8299999237060547,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post072",
+          "endPost": "WalkwayRail.GroceryStore.Post086"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceLeft.Panel01",
+          "start": [
+            6.480000019073486,
+            3.8299999237060547,
+            6
+          ],
+          "end": [
+            6.480000019073486,
+            4.409999847412109,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post086",
+          "endPost": "WalkwayRail.GroceryStore.Post087"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceLeft.Panel02",
+          "start": [
+            6.480000019073486,
+            4.409999847412109,
+            6
+          ],
+          "end": [
+            6.480000019073486,
+            4.990000247955322,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post087",
+          "endPost": "WalkwayRail.GroceryStore.Post088"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceLeft.Panel03",
+          "start": [
+            6.480000019073486,
+            4.990000247955322,
+            6
+          ],
+          "end": [
+            6.480000019073486,
+            5.570000171661377,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post088",
+          "endPost": "WalkwayRail.GroceryStore.Post089"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceLeft.Panel04",
+          "start": [
+            6.480000019073486,
+            5.570000171661377,
+            6
+          ],
+          "end": [
+            6.480000019073486,
+            6.150000095367432,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post089",
+          "endPost": "WalkwayRail.GroceryStore.Post079"
+        }
+      ]
+    },
+    {
+      "id": "RoofTerraceRight",
+      "panels": [
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRight.Panel00",
+          "start": [
+            9.680000305175781,
+            3.25,
+            6
+          ],
+          "end": [
+            9.680000305175781,
+            3.8299999237060547,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post078",
+          "endPost": "WalkwayRail.GroceryStore.Post090"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRight.Panel01",
+          "start": [
+            9.680000305175781,
+            3.8299999237060547,
+            6
+          ],
+          "end": [
+            9.680000305175781,
+            4.409999847412109,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post090",
+          "endPost": "WalkwayRail.GroceryStore.Post091"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRight.Panel02",
+          "start": [
+            9.680000305175781,
+            4.409999847412109,
+            6
+          ],
+          "end": [
+            9.680000305175781,
+            4.990000247955322,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post091",
+          "endPost": "WalkwayRail.GroceryStore.Post092"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRight.Panel03",
+          "start": [
+            9.680000305175781,
+            4.990000247955322,
+            6
+          ],
+          "end": [
+            9.680000305175781,
+            5.570000171661377,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post092",
+          "endPost": "WalkwayRail.GroceryStore.Post093"
+        },
+        {
+          "node": "WalkwayRail.GroceryStore.RoofTerraceRight.Panel04",
+          "start": [
+            9.680000305175781,
+            5.570000171661377,
+            6
+          ],
+          "end": [
+            9.680000305175781,
+            6.150000095367432,
+            6
+          ],
+          "startPost": "WalkwayRail.GroceryStore.Post093",
+          "endPost": "WalkwayRail.GroceryStore.Post085"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    "WalkwayRail.GroceryStore.Post000",
+    "WalkwayRail.GroceryStore.Post001",
+    "WalkwayRail.GroceryStore.Post002",
+    "WalkwayRail.GroceryStore.Post003",
+    "WalkwayRail.GroceryStore.Post004",
+    "WalkwayRail.GroceryStore.Post005",
+    "WalkwayRail.GroceryStore.Post006",
+    "WalkwayRail.GroceryStore.Post007",
+    "WalkwayRail.GroceryStore.Post008",
+    "WalkwayRail.GroceryStore.Post009",
+    "WalkwayRail.GroceryStore.Post010",
+    "WalkwayRail.GroceryStore.ShopFrontfront.Panel00",
+    "WalkwayRail.GroceryStore.ShopFrontfront.Panel01",
+    "WalkwayRail.GroceryStore.ShopFrontfront.Panel02",
+    "WalkwayRail.GroceryStore.ShopFrontfront.Panel03",
+    "WalkwayRail.GroceryStore.ShopFrontfront.Panel04",
+    "WalkwayRail.GroceryStore.ShopFrontfront.Panel05",
+    "WalkwayRail.GroceryStore.ShopFrontfront.Panel06",
+    "WalkwayRail.GroceryStore.ShopFrontfront.Panel07",
+    "WalkwayRail.GroceryStore.ShopFrontfront.Panel08",
+    "WalkwayRail.GroceryStore.ShopFrontfront.Panel09",
+    "WalkwayRail.GroceryStore.Post011",
+    "WalkwayRail.GroceryStore.Post012",
+    "WalkwayRail.GroceryStore.Post013",
+    "WalkwayRail.GroceryStore.ShopFrontleft.Panel00",
+    "WalkwayRail.GroceryStore.ShopFrontleft.Panel01",
+    "WalkwayRail.GroceryStore.ShopFrontleft.Panel02",
+    "WalkwayRail.GroceryStore.Post014",
+    "WalkwayRail.GroceryStore.Post015",
+    "WalkwayRail.GroceryStore.Post016",
+    "WalkwayRail.GroceryStore.ShopSidefront.Panel00",
+    "WalkwayRail.GroceryStore.ShopSidefront.Panel01",
+    "WalkwayRail.GroceryStore.Post017",
+    "WalkwayRail.GroceryStore.Post018",
+    "WalkwayRail.GroceryStore.Post019",
+    "WalkwayRail.GroceryStore.Post020",
+    "WalkwayRail.GroceryStore.Post021",
+    "WalkwayRail.GroceryStore.Post022",
+    "WalkwayRail.GroceryStore.Post023",
+    "WalkwayRail.GroceryStore.Post024",
+    "WalkwayRail.GroceryStore.Post025",
+    "WalkwayRail.GroceryStore.ShopSideright.Panel00",
+    "WalkwayRail.GroceryStore.ShopSideright.Panel01",
+    "WalkwayRail.GroceryStore.ShopSideright.Panel02",
+    "WalkwayRail.GroceryStore.ShopSideright.Panel03",
+    "WalkwayRail.GroceryStore.ShopSideright.Panel04",
+    "WalkwayRail.GroceryStore.ShopSideright.Panel05",
+    "WalkwayRail.GroceryStore.ShopSideright.Panel06",
+    "WalkwayRail.GroceryStore.ShopSideright.Panel07",
+    "WalkwayRail.GroceryStore.ShopSideright.Panel08",
+    "WalkwayRail.GroceryStore.Post026",
+    "WalkwayRail.GroceryStore.Post027",
+    "WalkwayRail.GroceryStore.Post028",
+    "WalkwayRail.GroceryStore.Post029",
+    "WalkwayRail.GroceryStore.Post030",
+    "WalkwayRail.GroceryStore.Post031",
+    "WalkwayRail.GroceryStore.Post032",
+    "WalkwayRail.GroceryStore.Post033",
+    "WalkwayRail.GroceryStore.Post034",
+    "WalkwayRail.GroceryStore.Post035",
+    "WalkwayRail.GroceryStore.ShopRearback.Panel00",
+    "WalkwayRail.GroceryStore.ShopRearback.Panel01",
+    "WalkwayRail.GroceryStore.ShopRearback.Panel02",
+    "WalkwayRail.GroceryStore.ShopRearback.Panel03",
+    "WalkwayRail.GroceryStore.ShopRearback.Panel04",
+    "WalkwayRail.GroceryStore.ShopRearback.Panel05",
+    "WalkwayRail.GroceryStore.ShopRearback.Panel06",
+    "WalkwayRail.GroceryStore.ShopRearback.Panel07",
+    "WalkwayRail.GroceryStore.ShopRearback.Panel08",
+    "WalkwayRail.GroceryStore.Post036",
+    "WalkwayRail.GroceryStore.Post037",
+    "WalkwayRail.GroceryStore.Post038",
+    "WalkwayRail.GroceryStore.Post039",
+    "WalkwayRail.GroceryStore.Post040",
+    "WalkwayRail.GroceryStore.Post041",
+    "WalkwayRail.GroceryStore.Post042",
+    "WalkwayRail.GroceryStore.Post043",
+    "WalkwayRail.GroceryStore.Post044",
+    "WalkwayRail.GroceryStore.Post045",
+    "WalkwayRail.GroceryStore.Post046",
+    "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel00",
+    "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel01",
+    "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel02",
+    "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel03",
+    "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel04",
+    "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel05",
+    "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel06",
+    "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel07",
+    "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel08",
+    "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel09",
+    "WalkwayRail.GroceryStore.Post047",
+    "WalkwayRail.GroceryStore.Post048",
+    "WalkwayRail.GroceryStore.Post049",
+    "WalkwayRail.GroceryStore.UpperShopFrontleft.Panel00",
+    "WalkwayRail.GroceryStore.UpperShopFrontleft.Panel01",
+    "WalkwayRail.GroceryStore.UpperShopFrontleft.Panel02",
+    "WalkwayRail.GroceryStore.Post050",
+    "WalkwayRail.GroceryStore.Post051",
+    "WalkwayRail.GroceryStore.Post052",
+    "WalkwayRail.GroceryStore.UpperShopSidefront.Panel00",
+    "WalkwayRail.GroceryStore.UpperShopSidefront.Panel01",
+    "WalkwayRail.GroceryStore.Post053",
+    "WalkwayRail.GroceryStore.Post054",
+    "WalkwayRail.GroceryStore.Post055",
+    "WalkwayRail.GroceryStore.Post056",
+    "WalkwayRail.GroceryStore.Post057",
+    "WalkwayRail.GroceryStore.Post058",
+    "WalkwayRail.GroceryStore.Post059",
+    "WalkwayRail.GroceryStore.Post060",
+    "WalkwayRail.GroceryStore.Post061",
+    "WalkwayRail.GroceryStore.UpperShopSideright.Panel00",
+    "WalkwayRail.GroceryStore.UpperShopSideright.Panel01",
+    "WalkwayRail.GroceryStore.UpperShopSideright.Panel02",
+    "WalkwayRail.GroceryStore.UpperShopSideright.Panel03",
+    "WalkwayRail.GroceryStore.UpperShopSideright.Panel04",
+    "WalkwayRail.GroceryStore.UpperShopSideright.Panel05",
+    "WalkwayRail.GroceryStore.UpperShopSideright.Panel06",
+    "WalkwayRail.GroceryStore.UpperShopSideright.Panel07",
+    "WalkwayRail.GroceryStore.UpperShopSideright.Panel08",
+    "WalkwayRail.GroceryStore.Post062",
+    "WalkwayRail.GroceryStore.Post063",
+    "WalkwayRail.GroceryStore.Post064",
+    "WalkwayRail.GroceryStore.Post065",
+    "WalkwayRail.GroceryStore.Post066",
+    "WalkwayRail.GroceryStore.Post067",
+    "WalkwayRail.GroceryStore.Post068",
+    "WalkwayRail.GroceryStore.Post069",
+    "WalkwayRail.GroceryStore.Post070",
+    "WalkwayRail.GroceryStore.Post071",
+    "WalkwayRail.GroceryStore.UpperShopRearback.Panel00",
+    "WalkwayRail.GroceryStore.UpperShopRearback.Panel01",
+    "WalkwayRail.GroceryStore.UpperShopRearback.Panel02",
+    "WalkwayRail.GroceryStore.UpperShopRearback.Panel03",
+    "WalkwayRail.GroceryStore.UpperShopRearback.Panel04",
+    "WalkwayRail.GroceryStore.UpperShopRearback.Panel05",
+    "WalkwayRail.GroceryStore.UpperShopRearback.Panel06",
+    "WalkwayRail.GroceryStore.UpperShopRearback.Panel07",
+    "WalkwayRail.GroceryStore.UpperShopRearback.Panel08",
+    "WalkwayRail.GroceryStore.Post072",
+    "WalkwayRail.GroceryStore.Post073",
+    "WalkwayRail.GroceryStore.Post074",
+    "WalkwayRail.GroceryStore.Post075",
+    "WalkwayRail.GroceryStore.Post076",
+    "WalkwayRail.GroceryStore.Post077",
+    "WalkwayRail.GroceryStore.Post078",
+    "WalkwayRail.GroceryStore.RoofTerraceFront.Panel00",
+    "WalkwayRail.GroceryStore.RoofTerraceFront.Panel01",
+    "WalkwayRail.GroceryStore.RoofTerraceFront.Panel02",
+    "WalkwayRail.GroceryStore.RoofTerraceFront.Panel03",
+    "WalkwayRail.GroceryStore.RoofTerraceFront.Panel04",
+    "WalkwayRail.GroceryStore.RoofTerraceFront.Panel05",
+    "WalkwayRail.GroceryStore.Post079",
+    "WalkwayRail.GroceryStore.Post080",
+    "WalkwayRail.GroceryStore.Post081",
+    "WalkwayRail.GroceryStore.Post082",
+    "WalkwayRail.GroceryStore.Post083",
+    "WalkwayRail.GroceryStore.Post084",
+    "WalkwayRail.GroceryStore.Post085",
+    "WalkwayRail.GroceryStore.RoofTerraceRear.Panel00",
+    "WalkwayRail.GroceryStore.RoofTerraceRear.Panel01",
+    "WalkwayRail.GroceryStore.RoofTerraceRear.Panel02",
+    "WalkwayRail.GroceryStore.RoofTerraceRear.Panel03",
+    "WalkwayRail.GroceryStore.RoofTerraceRear.Panel04",
+    "WalkwayRail.GroceryStore.RoofTerraceRear.Panel05",
+    "WalkwayRail.GroceryStore.Post086",
+    "WalkwayRail.GroceryStore.Post087",
+    "WalkwayRail.GroceryStore.Post088",
+    "WalkwayRail.GroceryStore.Post089",
+    "WalkwayRail.GroceryStore.RoofTerraceLeft.Panel00",
+    "WalkwayRail.GroceryStore.RoofTerraceLeft.Panel01",
+    "WalkwayRail.GroceryStore.RoofTerraceLeft.Panel02",
+    "WalkwayRail.GroceryStore.RoofTerraceLeft.Panel03",
+    "WalkwayRail.GroceryStore.RoofTerraceLeft.Panel04",
+    "WalkwayRail.GroceryStore.Post090",
+    "WalkwayRail.GroceryStore.Post091",
+    "WalkwayRail.GroceryStore.Post092",
+    "WalkwayRail.GroceryStore.Post093",
+    "WalkwayRail.GroceryStore.RoofTerraceRight.Panel00",
+    "WalkwayRail.GroceryStore.RoofTerraceRight.Panel01",
+    "WalkwayRail.GroceryStore.RoofTerraceRight.Panel02",
+    "WalkwayRail.GroceryStore.RoofTerraceRight.Panel03",
+    "WalkwayRail.GroceryStore.RoofTerraceRight.Panel04"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "scope": "Authored door and seating positions; native visitor behavior not integrated",
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        3.9,
+        2.84,
+        2
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 0.8,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "Door1",
+      "position": [
+        3.9,
+        2.84,
+        4
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 0.8,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "Door2",
+      "position": [
+        2.0,
+        1.71,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 0.86,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "RoofTerraceDoor",
+      "position": [
+        1.4000000000000001,
+        4.65,
+        6
+      ],
+      "outward": [
+        -1,
+        0
+      ],
+      "width": 0.8,
+      "internalConnection": "BuildingInterior"
+    }
+  ],
+  "internalDoorNetwork": "BuildingInterior",
+  "requireAllDoorsConnectedInternally": true,
+  "visitorSeats": [],
+  "restaurantBehavior": "Native attraction visit, reserved Sitting slot, meal consumption during visit"
+}

@@ -1,0 +1,14 @@
+{
+  "source": "FisheryWorks-motion.mp4",
+  "dimensions": [
+    640,
+    640
+  ],
+  "frames": 150,
+  "fps": 12.0,
+  "decodedReviewFrames": [
+    1,
+    69,
+    105
+  ]
+}

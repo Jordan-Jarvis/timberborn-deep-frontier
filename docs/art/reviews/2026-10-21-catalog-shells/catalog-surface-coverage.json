@@ -1,0 +1,161 @@
+{
+  "scope": "Explicit CPU source surface coverage, not native/render or whole-building closure acceptance",
+  "checks": [
+    {
+      "name": "shared plank wall",
+      "samples": 12341,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "shared pitched roof",
+      "samples": 9331,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "shared industrial sheet roof",
+      "samples": 12341,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "civic framed room height 1.55",
+      "samples": 121604,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "civic framed room height 1.84",
+      "samples": 121604,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "civic framed room height 2.0",
+      "samples": 121604,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "civic framed room height 2.82",
+      "samples": 121604,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "civic framed room height 6.24",
+      "samples": 121604,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "civic roof sheets and gables",
+      "samples": 77624,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "laboratory concrete courses",
+      "samples": 60802,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "laboratory sloped facade",
+      "samples": 20451,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "laboratory shed roof",
+      "samples": 12341,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "pit storeroom",
+      "samples": 35283,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "mixer operator room",
+      "samples": 69536,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "crusher right wall",
+      "samples": 15351,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "kiln operator side walls",
+      "samples": 15351,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "quarry workshop side infill",
+      "samples": 15522,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "quarry ground cabin",
+      "samples": 18382,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "crusher porch header and side curb",
+      "samples": 9362,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "kiln porch header and side curb",
+      "samples": 9362,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "hydro concrete conduit joints",
+      "samples": 25242,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "SandstoneMasonryBlock",
+      "samples": 12322,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "LimestoneMasonryBlock",
+      "samples": 12322,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "ConcreteBlock",
+      "samples": 12322,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "ReinforcedDamBlock",
+      "samples": 12322,
+      "missingOrBackfacing": 0,
+      "examples": []
+    },
+    {
+      "name": "ConcreteOverflowDam",
+      "samples": 12322,
+      "missingOrBackfacing": 0,
+      "examples": []
+    }
+  ]
+}

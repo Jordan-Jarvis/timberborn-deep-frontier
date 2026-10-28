@@ -1,0 +1,3014 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 259182,
+  "spatialCandidatePairs": 2384,
+  "nearPlanePairs": 2167,
+  "identicalMaterialAndUvPairs": 0,
+  "visibleConflicts": 0,
+  "occludedConflicts": 61,
+  "conflicts": [
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 91837,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 91849,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.02760802660418185,
+      "visible": false,
+      "center": [
+        -1.5693334341049194,
+        -1.0700000524520874,
+        0.22066664695739746
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4919999837875366,
+          -1.0700000524520874,
+          0.06199989095330238
+        ],
+        [
+          -1.6080000400543213,
+          -1.0700000524520874,
+          0.06199992820620537
+        ],
+        [
+          -1.6080000400543213,
+          -1.0700000524520874,
+          0.5380001068115234
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 91831,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 91843,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.027573235650418138,
+      "visible": false,
+      "center": [
+        -0.30279895663261414,
+        -1.0700000524520874,
+        0.19063135981559753
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.2513885200023651,
+          -1.0700000524520874,
+          0.10052552074193954
+        ],
+        [
+          -0.24380716681480408,
+          -1.0700000524520874,
+          0.06199987605214119
+        ],
+        [
+          -0.3580000698566437,
+          -1.0700000524520874,
+          0.061999913305044174
+        ],
+        [
+          -0.3580000698566437,
+          -1.0700000524520874,
+          0.5380001068115234
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 91831,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 91843,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.023119086361785102,
+      "visible": false,
+      "center": [
+        -0.2682165503501892,
+        -1.0700000524520874,
+        0.3096313774585724
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -0.25138846039772034,
+          -1.0700000524520874,
+          0.10052531212568283
+        ],
+        [
+          -0.3374779224395752,
+          -1.0700000524520874,
+          0.5380001068115234
+        ],
+        [
+          -0.24199990928173065,
+          -1.0700000524520874,
+          0.5380001068115234
+        ],
+        [
+          -0.24199992418289185,
+          -1.0700000524520874,
+          0.061999935656785965
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 91837,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 91849,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.02235300358098491,
+      "visible": false,
+      "center": [
+        -1.5323694944381714,
+        -1.0700000524520874,
+        0.36122456192970276
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.4919999837875366,
+          -1.0700000524520874,
+          0.061999931931495667
+        ],
+        [
+          -1.6080000400543213,
+          -1.0700000524520874,
+          0.5380001068115234
+        ],
+        [
+          -1.537477970123291,
+          -1.0700000524520874,
+          0.5380001068115234
+        ],
+        [
+          -1.4919999837875366,
+          -1.0700000524520874,
+          0.3068980872631073
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 91837,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 91849,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.005255018465270487,
+      "visible": false,
+      "center": [
+        -1.5071594715118408,
+        -1.0700000524520874,
+        0.4609661102294922
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -1.4919999837875366,
+          -1.0700000524520874,
+          0.3068981468677521
+        ],
+        [
+          -1.537477970123291,
+          -1.0700000524520874,
+          0.5380001068115234
+        ],
+        [
+          -1.4919999837875366,
+          -1.0700000524520874,
+          0.5380001068115234
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 91831,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "pit_isometric_geometry.py:62:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 91843,
+        "material": "IrregularPlanks_MetalForged.IronTeeth",
+        "source": "pit_isometric_geometry.py:71:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0044889619733914365,
+      "visible": false,
+      "center": [
+        -0.3156221807003021,
+        -1.0700000524520874,
+        0.39217516779899597
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.3374779224395752,
+          -1.0700000524520874,
+          0.5380001068115234
+        ],
+        [
+          -0.2513884902000427,
+          -1.0700000524520874,
+          0.10052534192800522
+        ],
+        [
+          -0.3580000698566437,
+          -1.0700000524520874,
+          0.5380000472068787
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 97110,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 97420,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 1.191644907055922e-08,
+      "overlapArea": 0.002641374210570564,
+      "visible": false,
+      "center": [
+        -3.2900002002716064,
+        -0.35313114523887634,
+        1.9176753759384155
+      ],
+      "normal": [
+        1.0,
+        -1.590782545690672e-07,
+        2.723945335958433e-08
+      ],
+      "polygon": [
+        [
+          -3.2899999618530273,
+          -0.31851130723953247,
+          1.9305435419082642
+        ],
+        [
+          -3.2899999618530273,
+          -0.3357131779193878,
+          1.9329999685287476
+        ],
+        [
+          -3.2899999618530273,
+          -0.3930000364780426,
+          1.9329999685287476
+        ],
+        [
+          -3.2899999618530273,
+          -0.393000066280365,
+          1.90170156955719
+        ],
+        [
+          -3.2899999618530273,
+          -0.3254311680793762,
+          1.8901315927505493
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 97357,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 97424,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 4.76837158203125e-07,
+      "overlapArea": 0.0026413741527416823,
+      "visible": false,
+      "center": [
+        -4.730000019073486,
+        -0.3531309962272644,
+        1.917675256729126
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.730000019073486,
+          -0.335713267326355,
+          1.9329999685287476
+        ],
+        [
+          -4.730000019073486,
+          -0.31851112842559814,
+          1.9305435419082642
+        ],
+        [
+          -4.730000019073486,
+          -0.3254309594631195,
+          1.8901315927505493
+        ],
+        [
+          -4.730000019073486,
+          -0.3929998278617859,
+          1.90170156955719
+        ],
+        [
+          -4.730000019073486,
+          -0.3929997384548187,
+          1.9329999685287476
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 103241,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 103308,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.002492955938462771,
+      "visible": false,
+      "center": [
+        -3.049999952316284,
+        -1.0317447185516357,
+        2.2586419582366943
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.049999952316284,
+          -1.0088310241699219,
+          2.2730000019073486
+        ],
+        [
+          -3.049999952316284,
+          -0.9972035884857178,
+          2.270406484603882
+        ],
+        [
+          -3.049999952316284,
+          -1.0066877603530884,
+          2.2305185794830322
+        ],
+        [
+          -3.049999952316284,
+          -1.073000192642212,
+          2.2462854385375977
+        ],
+        [
+          -3.049999952316284,
+          -1.0730003118515015,
+          2.2730000019073486
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 102744,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 103304,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.9802322387695312e-08,
+      "overlapArea": 0.0024929519423337095,
+      "visible": false,
+      "center": [
+        -0.1300000250339508,
+        -1.0317444801330566,
+        2.2586419582366943
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.1300000250339508,
+          -0.9972037076950073,
+          2.270406484603882
+        ],
+        [
+          -0.1300000250339508,
+          -1.0088309049606323,
+          2.2730000019073486
+        ],
+        [
+          -0.1300000250339508,
+          -1.0730000734329224,
+          2.2730000019073486
+        ],
+        [
+          -0.1300000250339508,
+          -1.0730000734329224,
+          2.2462852001190186
+        ],
+        [
+          -0.1300000250339508,
+          -1.0066876411437988,
+          2.2305185794830322
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 91858,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 92168,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 1.605609764240845e-08,
+      "overlapArea": 0.002289986574451851,
+      "visible": false,
+      "center": [
+        -0.15999998152256012,
+        -0.9111682176589966,
+        1.5699387788772583
+      ],
+      "normal": [
+        1.0,
+        -1.7101067228963984e-08,
+        5.62818902594131e-09
+      ],
+      "polygon": [
+        [
+          -0.15999998152256012,
+          -0.8754910230636597,
+          1.5800977945327759
+        ],
+        [
+          -0.15999998152256012,
+          -0.8860411643981934,
+          1.5830000638961792
+        ],
+        [
+          -0.15999998152256012,
+          -0.9530000686645508,
+          1.5830000638961792
+        ],
+        [
+          -0.15999998152256012,
+          -0.9530000686645508,
+          1.562443494796753
+        ],
+        [
+          -0.15999998152256012,
+          -0.8883084058761597,
+          1.5411525964736938
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 92105,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 92172,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 3.5762786865234375e-07,
+      "overlapArea": 0.002289985042796124,
+      "visible": false,
+      "center": [
+        -1.720000147819519,
+        -0.911168098449707,
+        1.5699388980865479
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.7200000286102295,
+          -0.8860411047935486,
+          1.5830000638961792
+        ],
+        [
+          -1.7200000286102295,
+          -0.8754910826683044,
+          1.5800977945327759
+        ],
+        [
+          -1.7200000286102295,
+          -0.8883084654808044,
+          1.5411525964736938
+        ],
+        [
+          -1.7200000286102295,
+          -0.9530000686645508,
+          1.562443494796753
+        ],
+        [
+          -1.7200000286102295,
+          -0.9530000686645508,
+          1.5830000638961792
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 108764,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:89:hoist > pit_isometric_geometry.py:148:mineral_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 110702,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > pit_isometric_geometry.py:111:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0019554050379068134,
+      "visible": false,
+      "center": [
+        -3.54957914352417,
+        -3.48357892036438,
+        0.3400000035762787
+      ],
+      "normal": [
+        -0.0,
+        0.0,
+        -1.0
+      ],
+      "polygon": [
+        [
+          -3.5359997749328613,
+          -3.435999870300293,
+          0.3400000035762787
+        ],
+        [
+          -3.542315721511841,
+          -3.522315740585327,
+          0.3400000035762787
+        ],
+        [
+          -3.56000018119812,
+          -3.5400002002716064,
+          0.3400000035762787
+        ],
+        [
+          -3.56000018119812,
+          -3.435999870300293,
+          0.3400000035762787
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 108758,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > pit_isometric_geometry.py:89:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 110802,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:16:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:111:hoist > pit_isometric_geometry.py:148:mineral_pit"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0017906222790671222,
+      "visible": false,
+      "center": [
+        -3.5793912410736084,
+        -3.5253915786743164,
+        0.3400000035762787
+      ],
+      "normal": [
+        0.0,
+        -0.0,
+        -1.0
+      ],
+      "polygon": [
+        [
+          -3.5835652351379395,
+          -3.483565330505371,
+          0.3400000035762787
+        ],
+        [
+          -3.569999933242798,
+          -3.4700000286102295,
+          0.3400000035762787
+        ],
+        [
+          -3.569999933242798,
+          -3.574000120162964,
+          0.3400000035762787
+        ],
+        [
+          -3.5940001010894775,
+          -3.574000120162964,
+          0.3400000035762787
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 97110,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 98234,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 2.5098050482341705e-07,
+      "overlapArea": 0.0017511283376672841,
+      "visible": false,
+      "center": [
+        -3.2900002002716064,
+        -1.756661295890808,
+        2.1562154293060303
+      ],
+      "normal": [
+        0.9999999403953552,
+        -1.5907819772564835e-07,
+        2.723960434991568e-08
+      ],
+      "polygon": [
+        [
+          -3.2900002002716064,
+          -1.7188587188720703,
+          2.1703290939331055
+        ],
+        [
+          -3.2900002002716064,
+          -1.774568796157837,
+          2.179868459701538
+        ],
+        [
+          -3.2900002002716064,
+          -1.7814886569976807,
+          2.1394567489624023
+        ],
+        [
+          -3.2900002002716064,
+          -1.751729130744934,
+          2.135207176208496
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 97357,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 98238,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 4.76837158203125e-07,
+      "overlapArea": 0.0017511274089762607,
+      "visible": false,
+      "center": [
+        -4.730000019073486,
+        -1.756661295890808,
+        2.1562154293060303
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.730000019073486,
+          -1.7814886569976807,
+          2.1394567489624023
+        ],
+        [
+          -4.730000019073486,
+          -1.7745689153671265,
+          2.179868459701538
+        ],
+        [
+          -4.730000019073486,
+          -1.7188587188720703,
+          2.1703290939331055
+        ],
+        [
+          -4.730000019073486,
+          -1.751729130744934,
+          2.135207176208496
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 102744,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 104118,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.9802322387695312e-08,
+      "overlapArea": 0.0016862665109291797,
+      "visible": false,
+      "center": [
+        -0.1300000250339508,
+        -3.837892532348633,
+        2.9248507022857666
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.1300000250339508,
+          -3.8017635345458984,
+          2.937224864959717
+        ],
+        [
+          -0.1300000250339508,
+          -3.8533120155334473,
+          2.949481248855591
+        ],
+        [
+          -0.1300000250339508,
+          -3.862795829772949,
+          2.909593343734741
+        ],
+        [
+          -0.1300000250339508,
+          -3.833698272705078,
+          2.9031031131744385
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 103241,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 104122,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.00168625614713927,
+      "visible": false,
+      "center": [
+        -3.049999952316284,
+        -3.8378922939300537,
+        2.9248507022857666
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.049999952316284,
+          -3.86279559135437,
+          2.909593343734741
+        ],
+        [
+          -3.049999952316284,
+          -3.853311777114868,
+          2.949481248855591
+        ],
+        [
+          -3.049999952316284,
+          -3.8017635345458984,
+          2.937225103378296
+        ],
+        [
+          -3.049999952316284,
+          -3.833698272705078,
+          2.9031031131744385
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 91858,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 92982,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 1.413834271879466e-09,
+      "overlapArea": 0.0015939227563639413,
+      "visible": false,
+      "center": [
+        -0.1599999964237213,
+        -1.649087905883789,
+        1.8135169744491577
+      ],
+      "normal": [
+        1.0,
+        -1.71010814398187e-08,
+        5.628157939696621e-09
+      ],
+      "polygon": [
+        [
+          -0.1599999964237213,
+          -1.6152050495147705,
+          1.8235479593276978
+        ],
+        [
+          -0.1599999964237213,
+          -1.661691665649414,
+          1.8388473987579346
+        ],
+        [
+          -0.1599999964237213,
+          -1.674509048461914,
+          1.799902319908142
+        ],
+        [
+          -0.1599999964237213,
+          -1.6449462175369263,
+          1.7917698621749878
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 92105,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 92986,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 3.5762786865234375e-07,
+      "overlapArea": 0.0015939190789088942,
+      "visible": false,
+      "center": [
+        -1.7200000286102295,
+        -1.649087905883789,
+        1.8135167360305786
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.7200000286102295,
+          -1.6745089292526245,
+          1.7999022006988525
+        ],
+        [
+          -1.7200000286102295,
+          -1.6616915464401245,
+          1.838847279548645
+        ],
+        [
+          -1.7200000286102295,
+          -1.6152050495147705,
+          1.8235479593276978
+        ],
+        [
+          -1.7200000286102295,
+          -1.6449462175369263,
+          1.7917696237564087
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 92105,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 92986,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0013127474902783626,
+      "visible": false,
+      "center": [
+        -1.7200000286102295,
+        -1.6135377883911133,
+        1.8028634786605835
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.7200000286102295,
+          -1.6152050495147705,
+          1.8235479593276978
+        ],
+        [
+          -1.7200000286102295,
+          -1.5969998836517334,
+          1.817556381225586
+        ],
+        [
+          -1.7200000286102295,
+          -1.597000002861023,
+          1.7785799503326416
+        ],
+        [
+          -1.7200000286102295,
+          -1.6449462175369263,
+          1.7917696237564087
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 91858,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 92982,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:73:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 1.960915652077233e-09,
+      "overlapArea": 0.0013127421052054888,
+      "visible": false,
+      "center": [
+        -0.1599999964237213,
+        -1.6135377883911133,
+        1.802863597869873
+      ],
+      "normal": [
+        1.0,
+        -1.71010814398187e-08,
+        5.628157939696621e-09
+      ],
+      "polygon": [
+        [
+          -0.1599999964237213,
+          -1.597000002861023,
+          1.8175565004348755
+        ],
+        [
+          -0.1599999964237213,
+          -1.6152050495147705,
+          1.8235479593276978
+        ],
+        [
+          -0.1599999964237213,
+          -1.6449462175369263,
+          1.7917698621749878
+        ],
+        [
+          -0.1599999964237213,
+          -1.597000002861023,
+          1.7785800695419312
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 102744,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 104118,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.9802322387695312e-08,
+      "overlapArea": 0.001265918027085533,
+      "visible": false,
+      "center": [
+        -0.1300000250339508,
+        -3.802365303039551,
+        2.916682243347168
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.1300000250339508,
+          -3.7869997024536133,
+          2.9337146282196045
+        ],
+        [
+          -0.1300000250339508,
+          -3.8017635345458984,
+          2.937224864959717
+        ],
+        [
+          -0.1300000250339508,
+          -3.833698272705078,
+          2.9031031131744385
+        ],
+        [
+          -0.1300000250339508,
+          -3.7869997024536133,
+          2.892686605453491
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 103241,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 104122,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:146:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0012659138143669146,
+      "visible": false,
+      "center": [
+        -3.049999952316284,
+        -3.802365303039551,
+        2.916682481765747
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.049999952316284,
+          -3.8017635345458984,
+          2.937225103378296
+        ],
+        [
+          -3.049999952316284,
+          -3.7869997024536133,
+          2.9337148666381836
+        ],
+        [
+          -3.049999952316284,
+          -3.7869997024536133,
+          2.892686605453491
+        ],
+        [
+          -3.049999952316284,
+          -3.833698272705078,
+          2.9031031131744385
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 97110,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 98234,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 2.467311228659952e-07,
+      "overlapArea": 0.0011245559647263467,
+      "visible": false,
+      "center": [
+        -3.2900002002716064,
+        -1.721146821975708,
+        2.1506636142730713
+      ],
+      "normal": [
+        0.9999999403953552,
+        -1.5907819772564835e-07,
+        2.723960434991568e-08
+      ],
+      "polygon": [
+        [
+          -3.2900002002716064,
+          -1.7069997787475586,
+          2.1682984828948975
+        ],
+        [
+          -3.2900002002716064,
+          -1.7188587188720703,
+          2.1703290939331055
+        ],
+        [
+          -3.2900002002716064,
+          -1.751729130744934,
+          2.135207176208496
+        ],
+        [
+          -3.2900002002716064,
+          -1.7069997787475586,
+          2.128819704055786
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 97357,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 98238,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > pit_isometric_geometry.py:80:enclosure > pit_isometric_geometry.py:137:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 4.76837158203125e-07,
+      "overlapArea": 0.001124552428761083,
+      "visible": false,
+      "center": [
+        -4.730000019073486,
+        -1.721146821975708,
+        2.1506638526916504
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -4.730000019073486,
+          -1.7188587188720703,
+          2.1703290939331055
+        ],
+        [
+          -4.730000019073486,
+          -1.7069998979568481,
+          2.1682984828948975
+        ],
+        [
+          -4.730000019073486,
+          -1.7069998979568481,
+          2.1288199424743652
+        ],
+        [
+          -4.730000019073486,
+          -1.751729130744934,
+          2.135207176208496
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115350,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115353,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0009342383531226175,
+      "visible": false,
+      "center": [
+        -2.012500047683716,
+        -0.5728132128715515,
+        0.32264965772628784
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -2.012500047683716,
+          -0.5594999194145203,
+          0.2905084788799286
+        ],
+        [
+          -2.012500047683716,
+          -0.593081533908844,
+          0.3240900933742523
+        ],
+        [
+          -2.012500047683716,
+          -0.5791715383529663,
+          0.3380000591278076
+        ],
+        [
+          -2.012500047683716,
+          -0.5594999194145203,
+          0.3380000591278076
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115608,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115611,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0009342383531226175,
+      "visible": false,
+      "center": [
+        -3.012500047683716,
+        -0.5728132128715515,
+        0.32264965772628784
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -3.012500047683716,
+          -0.5594999194145203,
+          0.2905084788799286
+        ],
+        [
+          -3.012500047683716,
+          -0.593081533908844,
+          0.3240900933742523
+        ],
+        [
+          -3.012500047683716,
+          -0.5791715383529663,
+          0.3380000591278076
+        ],
+        [
+          -3.012500047683716,
+          -0.5594999194145203,
+          0.3380000591278076
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115347,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115356,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0009342382895177886,
+      "visible": false,
+      "center": [
+        -1.9674999713897705,
+        -0.5728132724761963,
+        0.32264968752861023
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9674999713897705,
+          -0.5791715383529663,
+          0.3380000591278076
+        ],
+        [
+          -1.9674999713897705,
+          -0.593081533908844,
+          0.3240900933742523
+        ],
+        [
+          -1.9674999713897705,
+          -0.5594999194145203,
+          0.2905084788799286
+        ],
+        [
+          -1.9674999713897705,
+          -0.5594999194145203,
+          0.33800002932548523
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115605,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115614,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0009342382895177886,
+      "visible": false,
+      "center": [
+        -2.9674999713897705,
+        -0.5728132724761963,
+        0.32264968752861023
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.9674999713897705,
+          -0.5791715383529663,
+          0.3380000591278076
+        ],
+        [
+          -2.9674999713897705,
+          -0.593081533908844,
+          0.3240900933742523
+        ],
+        [
+          -2.9674999713897705,
+          -0.5594999194145203,
+          0.2905084788799286
+        ],
+        [
+          -2.9674999713897705,
+          -0.5594999194145203,
+          0.33800002932548523
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115341,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115347,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657986354578789,
+      "visible": false,
+      "center": [
+        -1.9674999713897705,
+        -0.5651575922966003,
+        0.3328132629394531
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9674999713897705,
+          -0.5780000686645508,
+          0.33917155861854553
+        ],
+        [
+          -1.9674999713897705,
+          -0.5780000686645508,
+          0.3194999396800995
+        ],
+        [
+          -1.9674999713897705,
+          -0.5405400991439819,
+          0.3194999396800995
+        ],
+        [
+          -1.9674999713897705,
+          -0.5640900731086731,
+          0.3530815541744232
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115599,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115605,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657986354578789,
+      "visible": false,
+      "center": [
+        -2.9674999713897705,
+        -0.5651575922966003,
+        0.3328132629394531
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.9674999713897705,
+          -0.5780000686645508,
+          0.33917155861854553
+        ],
+        [
+          -2.9674999713897705,
+          -0.5780000686645508,
+          0.3194999396800995
+        ],
+        [
+          -2.9674999713897705,
+          -0.5405400991439819,
+          0.3194999396800995
+        ],
+        [
+          -2.9674999713897705,
+          -0.5640900731086731,
+          0.3530815541744232
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115320,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115326,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657984160244428,
+      "visible": false,
+      "center": [
+        -1.9674999713897705,
+        -0.5955768823623657,
+        0.3454133868217468
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9674999713897705,
+          -0.5819998979568481,
+          0.3605000674724579
+        ],
+        [
+          -1.9674999713897705,
+          -0.6223980188369751,
+          0.3534065783023834
+        ],
+        [
+          -1.9674999713897705,
+          -0.5959098935127258,
+          0.32691845297813416
+        ],
+        [
+          -1.9674999713897705,
+          -0.5819998979568481,
+          0.34082844853401184
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115578,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115584,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657984160244428,
+      "visible": false,
+      "center": [
+        -2.9674999713897705,
+        -0.5955768823623657,
+        0.3454133868217468
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.9674999713897705,
+          -0.5819998979568481,
+          0.3605000674724579
+        ],
+        [
+          -2.9674999713897705,
+          -0.6223980188369751,
+          0.3534065783023834
+        ],
+        [
+          -2.9674999713897705,
+          -0.5959098935127258,
+          0.32691845297813416
+        ],
+        [
+          -2.9674999713897705,
+          -0.5819998979568481,
+          0.34082844853401184
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115320,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115362,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657983898191276,
+      "visible": false,
+      "center": [
+        -1.9674999713897705,
+        -0.5948423743247986,
+        0.3328132629394531
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9674999713897705,
+          -0.5959098935127258,
+          0.3530815541744232
+        ],
+        [
+          -1.9674999713897705,
+          -0.619459867477417,
+          0.3194999396800995
+        ],
+        [
+          -1.9674999713897705,
+          -0.5819998979568481,
+          0.3194999694824219
+        ],
+        [
+          -1.9674999713897705,
+          -0.5819998979568481,
+          0.33917155861854553
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115578,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115620,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657983898191276,
+      "visible": false,
+      "center": [
+        -2.9674999713897705,
+        -0.5948423743247986,
+        0.3328132629394531
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.9674999713897705,
+          -0.5959098935127258,
+          0.3530815541744232
+        ],
+        [
+          -2.9674999713897705,
+          -0.619459867477417,
+          0.3194999396800995
+        ],
+        [
+          -2.9674999713897705,
+          -0.5819998979568481,
+          0.3194999694824219
+        ],
+        [
+          -2.9674999713897705,
+          -0.5819998979568481,
+          0.33917155861854553
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115317,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115359,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657983327951506,
+      "visible": false,
+      "center": [
+        -2.012500047683716,
+        -0.5948423743247986,
+        0.3328132629394531
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.012500047683716,
+          -0.5819999575614929,
+          0.33917155861854553
+        ],
+        [
+          -2.012500047683716,
+          -0.5819998979568481,
+          0.3194999396800995
+        ],
+        [
+          -2.012500047683716,
+          -0.619459867477417,
+          0.3194999396800995
+        ],
+        [
+          -2.012500047683716,
+          -0.5959098935127258,
+          0.3530815541744232
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115575,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115617,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657983327951506,
+      "visible": false,
+      "center": [
+        -3.012500047683716,
+        -0.5948423743247986,
+        0.3328132629394531
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.012500047683716,
+          -0.5819999575614929,
+          0.33917155861854553
+        ],
+        [
+          -3.012500047683716,
+          -0.5819998979568481,
+          0.3194999396800995
+        ],
+        [
+          -3.012500047683716,
+          -0.619459867477417,
+          0.3194999396800995
+        ],
+        [
+          -3.012500047683716,
+          -0.5959098935127258,
+          0.3530815541744232
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115344,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115350,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657981955002194,
+      "visible": false,
+      "center": [
+        -2.012500047683716,
+        -0.5651575922966003,
+        0.3328132629394531
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.012500047683716,
+          -0.5640900731086731,
+          0.3530815541744232
+        ],
+        [
+          -2.012500047683716,
+          -0.5405401587486267,
+          0.3194999694824219
+        ],
+        [
+          -2.012500047683716,
+          -0.5780000686645508,
+          0.3194999396800995
+        ],
+        [
+          -2.012500047683716,
+          -0.5780000686645508,
+          0.33917155861854553
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115602,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115608,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657981955002194,
+      "visible": false,
+      "center": [
+        -3.012500047683716,
+        -0.5651575922966003,
+        0.3328132629394531
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.012500047683716,
+          -0.5640900731086731,
+          0.3530815541744232
+        ],
+        [
+          -3.012500047683716,
+          -0.5405401587486267,
+          0.3194999694824219
+        ],
+        [
+          -3.012500047683716,
+          -0.5780000686645508,
+          0.3194999396800995
+        ],
+        [
+          -3.012500047683716,
+          -0.5780000686645508,
+          0.33917155861854553
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115335,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115341,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657981620274867,
+      "visible": false,
+      "center": [
+        -1.9674999713897705,
+        -0.5644230842590332,
+        0.3454133868217468
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9674999713897705,
+          -0.5780001282691956,
+          0.34082841873168945
+        ],
+        [
+          -1.9674999713897705,
+          -0.5640900731086731,
+          0.32691842317581177
+        ],
+        [
+          -1.9674999713897705,
+          -0.5376019477844238,
+          0.3534065783023834
+        ],
+        [
+          -1.9674999713897705,
+          -0.5780001282691956,
+          0.3605000376701355
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115593,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115599,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657981620274867,
+      "visible": false,
+      "center": [
+        -2.9674999713897705,
+        -0.5644230842590332,
+        0.3454133868217468
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.9674999713897705,
+          -0.5780001282691956,
+          0.34082841873168945
+        ],
+        [
+          -2.9674999713897705,
+          -0.5640900731086731,
+          0.32691842317581177
+        ],
+        [
+          -2.9674999713897705,
+          -0.5376019477844238,
+          0.3534065783023834
+        ],
+        [
+          -2.9674999713897705,
+          -0.5780001282691956,
+          0.3605000376701355
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115338,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115344,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657981001679376,
+      "visible": false,
+      "center": [
+        -2.012500047683716,
+        -0.5644230246543884,
+        0.3454133868217468
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.012500047683716,
+          -0.5780000686645508,
+          0.3605000674724579
+        ],
+        [
+          -2.012500047683716,
+          -0.5376019477844238,
+          0.3534065783023834
+        ],
+        [
+          -2.012500047683716,
+          -0.5640900731086731,
+          0.32691842317581177
+        ],
+        [
+          -2.012500047683716,
+          -0.578000009059906,
+          0.34082844853401184
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115596,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115602,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657981001679376,
+      "visible": false,
+      "center": [
+        -3.012500047683716,
+        -0.5644230246543884,
+        0.3454133868217468
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.012500047683716,
+          -0.5780000686645508,
+          0.3605000674724579
+        ],
+        [
+          -3.012500047683716,
+          -0.5376019477844238,
+          0.3534065783023834
+        ],
+        [
+          -3.012500047683716,
+          -0.5640900731086731,
+          0.32691842317581177
+        ],
+        [
+          -3.012500047683716,
+          -0.578000009059906,
+          0.34082844853401184
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115317,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115323,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657979809388427,
+      "visible": false,
+      "center": [
+        -2.012500047683716,
+        -0.5955769419670105,
+        0.3454133868217468
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.012500047683716,
+          -0.6223980188369751,
+          0.3534065783023834
+        ],
+        [
+          -2.012500047683716,
+          -0.5819998979568481,
+          0.3605000674724579
+        ],
+        [
+          -2.012500047683716,
+          -0.5819999575614929,
+          0.34082841873168945
+        ],
+        [
+          -2.012500047683716,
+          -0.5959098935127258,
+          0.32691845297813416
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115575,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115581,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657979809388427,
+      "visible": false,
+      "center": [
+        -3.012500047683716,
+        -0.5955769419670105,
+        0.3454133868217468
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.012500047683716,
+          -0.6223980188369751,
+          0.3534065783023834
+        ],
+        [
+          -3.012500047683716,
+          -0.5819998979568481,
+          0.3605000674724579
+        ],
+        [
+          -3.012500047683716,
+          -0.5819999575614929,
+          0.34082841873168945
+        ],
+        [
+          -3.012500047683716,
+          -0.5959098935127258,
+          0.32691845297813416
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115353,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115359,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657977988151481,
+      "visible": false,
+      "center": [
+        -2.012500047683716,
+        -0.5854133367538452,
+        0.32442307472229004
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.012500047683716,
+          -0.5934065580368042,
+          0.29760199785232544
+        ],
+        [
+          -2.012500047683716,
+          -0.6005000472068787,
+          0.33800008893013
+        ],
+        [
+          -2.012500047683716,
+          -0.5808284282684326,
+          0.33800008893013
+        ],
+        [
+          -2.012500047683716,
+          -0.5669184327125549,
+          0.3240901231765747
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115611,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115617,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657977988151481,
+      "visible": false,
+      "center": [
+        -3.012500047683716,
+        -0.5854133367538452,
+        0.32442307472229004
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.012500047683716,
+          -0.5934065580368042,
+          0.29760199785232544
+        ],
+        [
+          -3.012500047683716,
+          -0.6005000472068787,
+          0.33800008893013
+        ],
+        [
+          -3.012500047683716,
+          -0.5808284282684326,
+          0.33800008893013
+        ],
+        [
+          -3.012500047683716,
+          -0.5669184327125549,
+          0.3240901231765747
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115323,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115329,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657977853117838,
+      "visible": false,
+      "center": [
+        -2.012500047683716,
+        -0.5871867537498474,
+        0.3548424243927002
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.012500047683716,
+          -0.6005000472068787,
+          0.37945982813835144
+        ],
+        [
+          -2.012500047683716,
+          -0.5669184327125549,
+          0.35590988397598267
+        ],
+        [
+          -2.012500047683716,
+          -0.5808283686637878,
+          0.34199994802474976
+        ],
+        [
+          -2.012500047683716,
+          -0.6005000472068787,
+          0.34199994802474976
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115581,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115587,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657977853117838,
+      "visible": false,
+      "center": [
+        -3.012500047683716,
+        -0.5871867537498474,
+        0.3548424243927002
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.012500047683716,
+          -0.6005000472068787,
+          0.37945982813835144
+        ],
+        [
+          -3.012500047683716,
+          -0.5669184327125549,
+          0.35590988397598267
+        ],
+        [
+          -3.012500047683716,
+          -0.5808283686637878,
+          0.34199994802474976
+        ],
+        [
+          -3.012500047683716,
+          -0.6005000472068787,
+          0.34199994802474976
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115356,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115362,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657975928560321,
+      "visible": false,
+      "center": [
+        -1.9674999713897705,
+        -0.5854133367538452,
+        0.32442304491996765
+      ],
+      "normal": [
+        1.0,
+        -0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9674999713897705,
+          -0.6005000472068787,
+          0.3380000591278076
+        ],
+        [
+          -1.9674999713897705,
+          -0.5934065580368042,
+          0.29760196805000305
+        ],
+        [
+          -1.9674999713897705,
+          -0.5669184327125549,
+          0.3240900933742523
+        ],
+        [
+          -1.9674999713897705,
+          -0.5808284282684326,
+          0.3380000591278076
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115614,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115620,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657975928560321,
+      "visible": false,
+      "center": [
+        -2.9674999713897705,
+        -0.5854133367538452,
+        0.32442304491996765
+      ],
+      "normal": [
+        1.0,
+        -0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.9674999713897705,
+          -0.6005000472068787,
+          0.3380000591278076
+        ],
+        [
+          -2.9674999713897705,
+          -0.5934065580368042,
+          0.29760196805000305
+        ],
+        [
+          -2.9674999713897705,
+          -0.5669184327125549,
+          0.3240900933742523
+        ],
+        [
+          -2.9674999713897705,
+          -0.5808284282684326,
+          0.3380000591278076
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115326,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115332,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657974200711426,
+      "visible": false,
+      "center": [
+        -1.9674999713897705,
+        -0.5871867537498474,
+        0.3548424243927002
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9674999713897705,
+          -0.5669184327125549,
+          0.35590991377830505
+        ],
+        [
+          -1.9674999713897705,
+          -0.6005000472068787,
+          0.37945982813835144
+        ],
+        [
+          -1.9674999713897705,
+          -0.6005000472068787,
+          0.34199994802474976
+        ],
+        [
+          -1.9674999713897705,
+          -0.5808284282684326,
+          0.34199994802474976
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115584,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115590,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007657974200711426,
+      "visible": false,
+      "center": [
+        -2.9674999713897705,
+        -0.5871867537498474,
+        0.3548424243927002
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.9674999713897705,
+          -0.5669184327125549,
+          0.35590991377830505
+        ],
+        [
+          -2.9674999713897705,
+          -0.6005000472068787,
+          0.37945982813835144
+        ],
+        [
+          -2.9674999713897705,
+          -0.6005000472068787,
+          0.34199994802474976
+        ],
+        [
+          -2.9674999713897705,
+          -0.5808284282684326,
+          0.34199994802474976
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115332,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115335,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006561074680764317,
+      "visible": false,
+      "center": [
+        -1.9674999713897705,
+        -0.5742772817611694,
+        0.3538156747817993
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9674999713897705,
+          -0.5594999194145203,
+          0.34199994802474976
+        ],
+        [
+          -1.9674999713897705,
+          -0.5653563141822815,
+          0.3753528892993927
+        ],
+        [
+          -1.9674999713897705,
+          -0.593081533908844,
+          0.35590991377830505
+        ],
+        [
+          -1.9674999713897705,
+          -0.5791715383529663,
+          0.34199994802474976
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115590,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115593,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006561074680764317,
+      "visible": false,
+      "center": [
+        -2.9674999713897705,
+        -0.5742772817611694,
+        0.3538156747817993
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.9674999713897705,
+          -0.5594999194145203,
+          0.34199994802474976
+        ],
+        [
+          -2.9674999713897705,
+          -0.5653563141822815,
+          0.3753528892993927
+        ],
+        [
+          -2.9674999713897705,
+          -0.593081533908844,
+          0.35590991377830505
+        ],
+        [
+          -2.9674999713897705,
+          -0.5791715383529663,
+          0.34199994802474976
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115329,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115338,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006561071848566746,
+      "visible": false,
+      "center": [
+        -2.012500047683716,
+        -0.5742773413658142,
+        0.3538156747817993
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.012500047683716,
+          -0.5653563141822815,
+          0.3753528594970703
+        ],
+        [
+          -2.012500047683716,
+          -0.5594999194145203,
+          0.34199994802474976
+        ],
+        [
+          -2.012500047683716,
+          -0.5791715383529663,
+          0.34199991822242737
+        ],
+        [
+          -2.012500047683716,
+          -0.593081533908844,
+          0.35590991377830505
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 115587,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 115596,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:153:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006561071848566746,
+      "visible": false,
+      "center": [
+        -3.012500047683716,
+        -0.5742773413658142,
+        0.3538156747817993
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.012500047683716,
+          -0.5653563141822815,
+          0.3753528594970703
+        ],
+        [
+          -3.012500047683716,
+          -0.5594999194145203,
+          0.34199994802474976
+        ],
+        [
+          -3.012500047683716,
+          -0.5791715383529663,
+          0.34199991822242737
+        ],
+        [
+          -3.012500047683716,
+          -0.593081533908844,
+          0.35590991377830505
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 109423,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:21:bracket > industrial_geometry.py:28:timber_column > pit_isometric_geometry.py:89:hoist > pit_isometric_geometry.py:148:mineral_pit"
+      },
+      "b": {
+        "object": "LimestonePit.Architecture",
+        "face": 109523,
+        "material": "BaseMetal.IronTeeth",
+        "source": "industrial_geometry.py:42:beam_joint > pit_isometric_geometry.py:90:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "planeSeparation": 0.0004999637603759766,
+      "overlapArea": 0.0005881219053554543,
+      "visible": false,
+      "center": [
+        -3.562000036239624,
+        -3.752690076828003,
+        3.504999876022339
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.562000036239624,
+          -3.7427608966827393,
+          3.491999864578247
+        ],
+        [
+          -3.562000036239624,
+          -3.739999771118164,
+          3.5180001258850098
+        ],
+        [
+          -3.562000036239624,
+          -3.764000177383423,
+          3.5180001258850098
+        ],
+        [
+          -3.562000036239624,
+          -3.764000177383423,
+          3.491999864578247
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 109942,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > pit_isometric_geometry.py:111:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "Pit.Winch",
+        "face": 3789,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:106:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005444997337920032,
+      "visible": false,
+      "center": [
+        -2.684500217437744,
+        -3.4755001068115234,
+        1.399999976158142
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -2.7065000534057617,
+          -3.4865000247955322,
+          1.399999976158142
+        ],
+        [
+          -2.6735000610351562,
+          -3.4865000247955322,
+          1.399999976158142
+        ],
+        [
+          -2.6735000610351562,
+          -3.4535000324249268,
+          1.399999976158142
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "LimestonePit.Architecture",
+        "face": 109942,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > pit_isometric_geometry.py:111:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:191:limestone_pit"
+      },
+      "b": {
+        "object": "Pit.Winch",
+        "face": 3789,
+        "material": "BaseMetal.IronTeeth",
+        "source": "pit_isometric_geometry.py:106:hoist > pit_isometric_geometry.py:148:mineral_pit > pit_isometric_geometry.py:191:limestone_pit > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005444996903280694,
+      "visible": false,
+      "center": [
+        -2.695500135421753,
+        -3.4645001888275146,
+        1.399999976158142
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -2.7065000534057617,
+          -3.4865000247955322,
+          1.399999976158142
+        ],
+        [
+          -2.6735000610351562,
+          -3.4535000324249268,
+          1.399999976158142
+        ],
+        [
+          -2.7065000534057617,
+          -3.4535000324249268,
+          1.399999976158142
+        ]
+      ]
+    }
+  ],
+  "seconds": 6.17,
+  "model": "LimestonePit",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\LimestonePit-ReferenceStudy.blend",
+  "sourceSha256": "2954a7c918e591ec69ac69e73f4d5b1e677c66d1c365dde3a3b3693a4cb7b249",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

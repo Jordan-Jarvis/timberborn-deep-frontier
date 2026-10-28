@@ -1,0 +1,22 @@
+{
+  "scope": "Blender review only; no game package installed",
+  "scene": "src\\DeepFrontier\\Art\\Source\\CementKiln-ReferenceStudy.blend",
+  "sceneSha256": "ec0dfff33b97e8e296d0d788236a6809a217ccea942706367e7526a72a4ed97f",
+  "artifactsSha256": {
+    "CementKiln-front.png": "3f623746c92adedb31963291a0bf99d928a6fdabf942a840bf15ab02187bcc18",
+    "CementKiln-front-right.png": "dc4a305de874487fabc8b50c385b44782ad49fba2234a8f6922869b5916df990",
+    "CementKiln-back-left.png": "ed3325c86bf8e8a6ec4bb43ea5330c9a5d8893f8e165c72076c925c9ff73cb1e",
+    "CementKiln-detail.png": "4892a64e8921beab622e00247d27c9955e2586005bf02ae1fd57056aec523e63",
+    "CementKiln-facade.png": "3e28018f18c48324628d1af0f39610906d12e36a92d50358e1b003920aef0df7",
+    "CementKiln-motion.mp4": "4d2c8afe5e641442b9cd61f5ddb76b73263adda012dc8b953a1548d2a9c71e58",
+    "CementKiln-study.json": "d7205ab5fee292cb49dcddb305593187ce208703505e619a1f0c534d1e0f254b",
+    "CementKiln-height-manifest.json": "d301479d162e66bd475439126c4e54068b953b1b14b70d68c0ed3107afbdf1c5",
+    "CementKiln-rail-manifest.json": "4344326f3206c0769d810dbb797ddd569fe59fd1bbaca7d27e1d3a5984af50e2",
+    "CementKiln-geometry-check.json": "fdbc4516e2258e5a84eb9ec8d1231f6411c18e12058a5a95008d8cb4723d4b2c",
+    "CementKiln-motion-check.json": "2e84f91b98fa6466cb5405672a62eba10539f230a5f366040556606d36088ca9",
+    "CementKiln-video-check.json": "2ee14fec9d7869b0bdc744644ac0d65ff5c7e4be98298a45795ab746e4b0e6e3",
+    "CementKiln-video-frame-001.png": "fde33f3a7d9533a748571d60f9f7337048026d8d5cb5d0f46778549b58f6422b",
+    "CementKiln-video-frame-028.png": "4e9f9cd42c3fac4cf9cdc9c9ee80e01af9dc31c1d912f892664b9f4ed6075696",
+    "CementKiln-video-frame-042.png": "5bc5ff361bc1bf059a99b68b6146dff480839de8282a015bd8b6e425957e2b06"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "Blender fill-state demonstration; runtime fishery integration pending",
+  "states": [
+    {
+      "label": "full",
+      "fill": 1,
+      "heights": {
+        "FisheryBasin0": 0.4399999976158142,
+        "FisheryBasin1": 0.4399999976158142,
+        "FisheryBasin2": 0.4399999976158142,
+        "FisheryBasin3": 3.069999933242798,
+        "FisheryWaterBarrel0.Water": 0.8804000020027161,
+        "FisheryWaterBarrel1.Water": 0.8804000020027161
+      }
+    },
+    {
+      "label": "half",
+      "fill": 0.5,
+      "heights": {
+        "FisheryBasin0": 0.27000001072883606,
+        "FisheryBasin1": 0.27000001072883606,
+        "FisheryBasin2": 0.27000001072883606,
+        "FisheryBasin3": 2.9000000953674316,
+        "FisheryWaterBarrel0.Water": 0.6094599962234497,
+        "FisheryWaterBarrel1.Water": 0.6094599962234497
+      }
+    },
+    {
+      "label": "empty",
+      "fill": 0,
+      "heights": {
+        "FisheryBasin0": 0.10000000149011612,
+        "FisheryBasin1": 0.10000000149011612,
+        "FisheryBasin2": 0.10000000149011612,
+        "FisheryBasin3": 2.7300000190734863,
+        "FisheryWaterBarrel0.Water": 0.33851999044418335,
+        "FisheryWaterBarrel1.Water": 0.33851999044418335
+      }
+    }
+  ]
+}

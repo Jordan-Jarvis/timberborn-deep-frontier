@@ -1,0 +1,494 @@
+{
+  "status": "Separate Blender nodes; game connection bindings are not authored yet",
+  "coordinateSpace": "Authored artwork X/across Y/back Z/up; no grid conversion",
+  "runs": [
+    {
+      "id": "OuterRight",
+      "panels": [
+        {
+          "node": "WalkwayRail.OuterRight.Panel00",
+          "start": [
+            4.579999923706055,
+            0.3799999952316284,
+            1.5
+          ],
+          "end": [
+            4.579999923706055,
+            0.9174999594688416,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post000",
+          "endPost": "WalkwayRail.Post001"
+        },
+        {
+          "node": "WalkwayRail.OuterRight.Panel01",
+          "start": [
+            4.579999923706055,
+            0.9174999594688416,
+            1.5
+          ],
+          "end": [
+            4.579999923706055,
+            1.4549999237060547,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post001",
+          "endPost": "WalkwayRail.Post002"
+        },
+        {
+          "node": "WalkwayRail.OuterRight.Panel02",
+          "start": [
+            4.579999923706055,
+            1.4549999237060547,
+            1.5
+          ],
+          "end": [
+            4.579999923706055,
+            1.9924999475479126,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post002",
+          "endPost": "WalkwayRail.Post003"
+        },
+        {
+          "node": "WalkwayRail.OuterRight.Panel03",
+          "start": [
+            4.579999923706055,
+            1.9924999475479126,
+            1.5
+          ],
+          "end": [
+            4.579999923706055,
+            2.5299997329711914,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post003",
+          "endPost": "WalkwayRail.Post004"
+        },
+        {
+          "node": "WalkwayRail.OuterRight.Panel04",
+          "start": [
+            4.579999923706055,
+            2.5299997329711914,
+            1.5
+          ],
+          "end": [
+            4.579999923706055,
+            3.0674996376037598,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post004",
+          "endPost": "WalkwayRail.Post005"
+        },
+        {
+          "node": "WalkwayRail.OuterRight.Panel05",
+          "start": [
+            4.579999923706055,
+            3.0674996376037598,
+            1.5
+          ],
+          "end": [
+            4.579999923706055,
+            3.6050000190734863,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post005",
+          "endPost": "WalkwayRail.Post006"
+        },
+        {
+          "node": "WalkwayRail.OuterRight.Panel06",
+          "start": [
+            4.579999923706055,
+            3.6050000190734863,
+            1.5
+          ],
+          "end": [
+            4.579999923706055,
+            4.142499923706055,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post006",
+          "endPost": "WalkwayRail.Post007"
+        },
+        {
+          "node": "WalkwayRail.OuterRight.Panel07",
+          "start": [
+            4.579999923706055,
+            4.142499923706055,
+            1.5
+          ],
+          "end": [
+            4.579999923706055,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post007",
+          "endPost": "WalkwayRail.Post008"
+        }
+      ]
+    },
+    {
+      "id": "Rear",
+      "panels": [
+        {
+          "node": "WalkwayRail.Rear.Panel00",
+          "start": [
+            -0.8500000238418579,
+            4.679999828338623,
+            1.5
+          ],
+          "end": [
+            -0.3070000410079956,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post009",
+          "endPost": "WalkwayRail.Post010"
+        },
+        {
+          "node": "WalkwayRail.Rear.Panel01",
+          "start": [
+            -0.3070000410079956,
+            4.679999828338623,
+            1.5
+          ],
+          "end": [
+            0.2359999418258667,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post010",
+          "endPost": "WalkwayRail.Post011"
+        },
+        {
+          "node": "WalkwayRail.Rear.Panel02",
+          "start": [
+            0.2359999418258667,
+            4.679999828338623,
+            1.5
+          ],
+          "end": [
+            0.778999924659729,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post011",
+          "endPost": "WalkwayRail.Post012"
+        },
+        {
+          "node": "WalkwayRail.Rear.Panel03",
+          "start": [
+            0.778999924659729,
+            4.679999828338623,
+            1.5
+          ],
+          "end": [
+            1.3219999074935913,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post012",
+          "endPost": "WalkwayRail.Post013"
+        },
+        {
+          "node": "WalkwayRail.Rear.Panel04",
+          "start": [
+            1.3219999074935913,
+            4.679999828338623,
+            1.5
+          ],
+          "end": [
+            1.8649998903274536,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post013",
+          "endPost": "WalkwayRail.Post014"
+        },
+        {
+          "node": "WalkwayRail.Rear.Panel05",
+          "start": [
+            1.8649998903274536,
+            4.679999828338623,
+            1.5
+          ],
+          "end": [
+            2.4079999923706055,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post014",
+          "endPost": "WalkwayRail.Post015"
+        },
+        {
+          "node": "WalkwayRail.Rear.Panel06",
+          "start": [
+            2.4079999923706055,
+            4.679999828338623,
+            1.5
+          ],
+          "end": [
+            2.9509997367858887,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post015",
+          "endPost": "WalkwayRail.Post016"
+        },
+        {
+          "node": "WalkwayRail.Rear.Panel07",
+          "start": [
+            2.9509997367858887,
+            4.679999828338623,
+            1.5
+          ],
+          "end": [
+            3.49399995803833,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post016",
+          "endPost": "WalkwayRail.Post017"
+        },
+        {
+          "node": "WalkwayRail.Rear.Panel08",
+          "start": [
+            3.49399995803833,
+            4.679999828338623,
+            1.5
+          ],
+          "end": [
+            4.0370001792907715,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post017",
+          "endPost": "WalkwayRail.Post018"
+        },
+        {
+          "node": "WalkwayRail.Rear.Panel09",
+          "start": [
+            4.0370001792907715,
+            4.679999828338623,
+            1.5
+          ],
+          "end": [
+            4.579999923706055,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post018",
+          "endPost": "WalkwayRail.Post008"
+        }
+      ]
+    },
+    {
+      "id": "OuterLeft",
+      "panels": [
+        {
+          "node": "WalkwayRail.OuterLeft.Panel00",
+          "start": [
+            -0.8500000238418579,
+            1.9299999475479126,
+            1.5
+          ],
+          "end": [
+            -0.8500000238418579,
+            2.4800000190734863,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post019",
+          "endPost": "WalkwayRail.Post020"
+        },
+        {
+          "node": "WalkwayRail.OuterLeft.Panel01",
+          "start": [
+            -0.8500000238418579,
+            2.4800000190734863,
+            1.5
+          ],
+          "end": [
+            -0.8500000238418579,
+            3.0299999713897705,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post020",
+          "endPost": "WalkwayRail.Post021"
+        },
+        {
+          "node": "WalkwayRail.OuterLeft.Panel02",
+          "start": [
+            -0.8500000238418579,
+            3.0299999713897705,
+            1.5
+          ],
+          "end": [
+            -0.8500000238418579,
+            3.5799999237060547,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post021",
+          "endPost": "WalkwayRail.Post022"
+        },
+        {
+          "node": "WalkwayRail.OuterLeft.Panel03",
+          "start": [
+            -0.8500000238418579,
+            3.5799999237060547,
+            1.5
+          ],
+          "end": [
+            -0.8500000238418579,
+            4.130000114440918,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post022",
+          "endPost": "WalkwayRail.Post023"
+        },
+        {
+          "node": "WalkwayRail.OuterLeft.Panel04",
+          "start": [
+            -0.8500000238418579,
+            4.130000114440918,
+            1.5
+          ],
+          "end": [
+            -0.8500000238418579,
+            4.679999828338623,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post023",
+          "endPost": "WalkwayRail.Post009"
+        }
+      ]
+    },
+    {
+      "id": "FeedLanding",
+      "panels": [
+        {
+          "node": "WalkwayRail.FeedLanding.Panel00",
+          "start": [
+            -0.8500000238418579,
+            1.9299999475479126,
+            1.5
+          ],
+          "end": [
+            -0.45000001788139343,
+            1.9299999475479126,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post019",
+          "endPost": "WalkwayRail.Post024"
+        },
+        {
+          "node": "WalkwayRail.FeedLanding.Panel01",
+          "start": [
+            -0.45000001788139343,
+            1.9299999475479126,
+            1.5
+          ],
+          "end": [
+            -0.05000000074505806,
+            1.9299999475479126,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post024",
+          "endPost": "WalkwayRail.Post025"
+        }
+      ]
+    },
+    {
+      "id": "StairLanding",
+      "panels": [
+        {
+          "node": "WalkwayRail.StairLanding.Panel00",
+          "start": [
+            3.819999933242798,
+            0.3799999952316284,
+            1.5
+          ],
+          "end": [
+            3.819999933242798,
+            0.7300000190734863,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post026",
+          "endPost": "WalkwayRail.Post027"
+        },
+        {
+          "node": "WalkwayRail.StairLanding.Panel01",
+          "start": [
+            3.819999933242798,
+            0.7300000190734863,
+            1.5
+          ],
+          "end": [
+            3.819999933242798,
+            1.0800000429153442,
+            1.5
+          ],
+          "startPost": "WalkwayRail.Post027",
+          "endPost": "WalkwayRail.Post028"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    "WalkwayRail.Post000",
+    "WalkwayRail.Post001",
+    "WalkwayRail.Post002",
+    "WalkwayRail.Post003",
+    "WalkwayRail.Post004",
+    "WalkwayRail.Post005",
+    "WalkwayRail.Post006",
+    "WalkwayRail.Post007",
+    "WalkwayRail.Post008",
+    "WalkwayRail.OuterRight.Panel00",
+    "WalkwayRail.OuterRight.Panel01",
+    "WalkwayRail.OuterRight.Panel02",
+    "WalkwayRail.OuterRight.Panel03",
+    "WalkwayRail.OuterRight.Panel04",
+    "WalkwayRail.OuterRight.Panel05",
+    "WalkwayRail.OuterRight.Panel06",
+    "WalkwayRail.OuterRight.Panel07",
+    "WalkwayRail.Post009",
+    "WalkwayRail.Post010",
+    "WalkwayRail.Post011",
+    "WalkwayRail.Post012",
+    "WalkwayRail.Post013",
+    "WalkwayRail.Post014",
+    "WalkwayRail.Post015",
+    "WalkwayRail.Post016",
+    "WalkwayRail.Post017",
+    "WalkwayRail.Post018",
+    "WalkwayRail.Rear.Panel00",
+    "WalkwayRail.Rear.Panel01",
+    "WalkwayRail.Rear.Panel02",
+    "WalkwayRail.Rear.Panel03",
+    "WalkwayRail.Rear.Panel04",
+    "WalkwayRail.Rear.Panel05",
+    "WalkwayRail.Rear.Panel06",
+    "WalkwayRail.Rear.Panel07",
+    "WalkwayRail.Rear.Panel08",
+    "WalkwayRail.Rear.Panel09",
+    "WalkwayRail.Post019",
+    "WalkwayRail.Post020",
+    "WalkwayRail.Post021",
+    "WalkwayRail.Post022",
+    "WalkwayRail.Post023",
+    "WalkwayRail.OuterLeft.Panel00",
+    "WalkwayRail.OuterLeft.Panel01",
+    "WalkwayRail.OuterLeft.Panel02",
+    "WalkwayRail.OuterLeft.Panel03",
+    "WalkwayRail.OuterLeft.Panel04",
+    "WalkwayRail.Post024",
+    "WalkwayRail.Post025",
+    "WalkwayRail.FeedLanding.Panel00",
+    "WalkwayRail.FeedLanding.Panel01",
+    "WalkwayRail.Post026",
+    "WalkwayRail.Post027",
+    "WalkwayRail.Post028",
+    "WalkwayRail.StairLanding.Panel00",
+    "WalkwayRail.StairLanding.Panel01"
+  ]
+}

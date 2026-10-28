@@ -1,0 +1,22 @@
+{
+  "status": "Source seating correction; in-game seated character verification required",
+  "scene": "src/DeepFrontier/Art/Source/Restaurant-ReferenceStudy.blend",
+  "sceneSha256": "20988f745b52c204cea4f5c2e1d3e8ca80145082d20ccc913cf66c17b7482ba8",
+  "previousReview": "docs/art/reviews/2026-10-19-civic/review-manifest.json",
+  "previousSceneSha256": "acc828711c917da0d12d2bfacdf9a59da63aed9084dc082b37ebecf83a45bc53",
+  "changes": [
+    "Seat markers at chair surfaces",
+    "Front chairs face across the balcony",
+    "More table clearance",
+    "Tabletop lowered to 0.58 above deck",
+    "Animated sign outside the front deck with extended brackets"
+  ],
+  "preserved": [
+    "Building envelope",
+    "Doors",
+    "Roof terraces",
+    "Native materials",
+    "Native plants",
+    "Gallery route centerlines"
+  ]
+}

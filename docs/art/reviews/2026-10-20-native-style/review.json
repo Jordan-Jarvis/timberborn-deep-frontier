@@ -1,0 +1,339 @@
+{
+  "scope": "Authored source renders; in-game screenshots recorded separately",
+  "dependency": "Redic.NewStyles >= 0.1",
+  "railSource": "DoubleLodge.Folktails.Model",
+  "renders": [
+    {
+      "model": "StoneCrusher",
+      "render": "StoneCrusher-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\StoneCrusher-ReferenceStudy.blend",
+      "sourceSha256": "d29ab71f034ecebf4c1cf9a58780cb8a0e7c0bdf62ea8604699f7d1551599257"
+    },
+    {
+      "model": "CementKiln",
+      "render": "CementKiln-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\CementKiln-ReferenceStudy.blend",
+      "sourceSha256": "b844a010922205a9001ff5112388dad31b91eecdffa7cbe7d8150de45289fdfd"
+    },
+    {
+      "model": "MineralQuarry",
+      "render": "MineralQuarry-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\MineralQuarry-ReferenceStudy.blend",
+      "sourceSha256": "cade2fe079f03893c32671dfc5964ffe2ec4c3bd38165e4636992b45a349b25c"
+    },
+    {
+      "model": "ConcreteMixer",
+      "render": "ConcreteMixer-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\ConcreteMixer-ReferenceStudy.blend",
+      "sourceSha256": "bbf322a54f29cb74c993276bdf97e4140b6088f4ece4e2108291ff0d79a09cc0"
+    },
+    {
+      "model": "ReinforcedHydroTurbine",
+      "render": "ReinforcedHydroTurbine-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\ReinforcedHydroTurbine-ReferenceStudy.blend",
+      "sourceSha256": "78a2f4036414712221da3a2cfa32558fb137a36ea45b0661204ecbd0374711f8"
+    },
+    {
+      "model": "MaterialsLaboratory",
+      "render": "MaterialsLaboratory-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\MaterialsLaboratory-ReferenceStudy.blend",
+      "sourceSha256": "e47bf1c60ca6335ba2645d9accfe178593ceba14b035656c36bd217afbad8985"
+    },
+    {
+      "model": "Hospital",
+      "render": "Hospital-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\Hospital-ReferenceStudy.blend",
+      "sourceSha256": "18f08c6504912f413e4342932ab083cbe396bba153bdbd57042a25de024badb1"
+    },
+    {
+      "model": "Restaurant",
+      "render": "Restaurant-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "c67e423b30c4d8ad81fa5213746b66ad44147a3b048c637884f51c78a1402ab5"
+    },
+    {
+      "model": "GroceryStore",
+      "render": "GroceryStore-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\GroceryStore-ReferenceStudy.blend",
+      "sourceSha256": "159f4efc4799007204793302cfa99c82e3a8d9f61bb609ce719851e24d500637"
+    },
+    {
+      "model": "FisheryWorks",
+      "render": "FisheryWorks-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\FisheryWorks-ReferenceStudy.blend",
+      "sourceSha256": "3a893fde3a232e032bb54c375a8489ff465768a8d57103e8a029e7d697e1aa4f"
+    },
+    {
+      "model": "FishHatchery",
+      "render": "FishHatchery-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\FishHatchery-ReferenceStudy.blend",
+      "sourceSha256": "f653053ecfa985676892314c11d1f70bcd1c0dee28f59953cf3ca2e3b801cb5f"
+    },
+    {
+      "model": "SandstonePit",
+      "render": "SandstonePit-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\SandstonePit-ReferenceStudy.blend",
+      "sourceSha256": "7810add884896836a4686aa8bf052864f583642f8cc42e413cc6478cab9c6de3"
+    },
+    {
+      "model": "LimestonePit",
+      "render": "LimestonePit-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\LimestonePit-ReferenceStudy.blend",
+      "sourceSha256": "198365399869c4c4a019ec5c8510a1768eb70bcba0e27c6a7a55464ea4e5acfc"
+    },
+    {
+      "model": "SandstoneMasonryBlock",
+      "render": "SandstoneMasonryBlock-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\SandstoneMasonryBlock-ReferenceStudy.blend",
+      "sourceSha256": "6dd22cee035b53eea9a8efd41f651d281061eb8293d398be324fe7536c8a21a4"
+    },
+    {
+      "model": "LimestoneMasonryBlock",
+      "render": "LimestoneMasonryBlock-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\LimestoneMasonryBlock-ReferenceStudy.blend",
+      "sourceSha256": "8e2a3e6cc57d139149e879cf4294db3edf0dce89047ba4b0215deaa899d66a30"
+    },
+    {
+      "model": "ConcreteBlock",
+      "render": "ConcreteBlock-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\ConcreteBlock-ReferenceStudy.blend",
+      "sourceSha256": "032ab54fd978b5e9a6c1589bad723ea94dfbbb756a56366a6ead75750e79c570"
+    },
+    {
+      "model": "ReinforcedDamBlock",
+      "render": "ReinforcedDamBlock-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\ReinforcedDamBlock-ReferenceStudy.blend",
+      "sourceSha256": "37d7de961e623b087a288f33b43c8271ce23a11d5224fd8183426f5ce4ed4fa9"
+    },
+    {
+      "model": "ConcreteOverflowDam",
+      "render": "ConcreteOverflowDam-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\ConcreteOverflowDam-ReferenceStudy.blend",
+      "sourceSha256": "d6c4ed7e5d913274d90d17c5b67b1893cea1fdc1b19da9a8c0b16cf93ee4d6d2"
+    },
+    {
+      "model": "ConcreteOverhang8x1",
+      "render": "ConcreteOverhang8x1-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\ConcreteOverhang8x1-ReferenceStudy.blend",
+      "sourceSha256": "1cb58fce1c9e09b46cd7c7e97b675c0c1779de52f76975b69e741dcc9b1eec6b"
+    },
+    {
+      "model": "ConcreteScaffold3x3",
+      "render": "ConcreteScaffold3x3-front.png",
+      "source": "src\\DeepFrontier\\Art\\Source\\ConcreteScaffold3x3-ReferenceStudy.blend",
+      "sourceSha256": "35155fb1773bf18bba2a9b0a7bd578e3c6c254d1f48239c2bdff932d80abbfa4"
+    }
+  ],
+  "buildingAudit": [
+    {
+      "id": "FertilizerWorks",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Food\\FertilizerWorks\\FertilizerWorks.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "FisheryWorks",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Food\\FisheryWorks\\FisheryWorks.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "FishHatchery",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Food\\FishHatchery\\FishHatchery.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "FoodPackagingWorks",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Food\\FoodPackagingWorks\\FoodPackagingWorks.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "GathererFlag",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Food\\GathererFlag\\GathererFlag.IronTeeth.blueprint.json",
+      "artStage": "Original vanilla gatherer flag; behavior-only patch, no custom building art"
+    },
+    {
+      "id": "Greenhouse",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Food\\Greenhouse\\Greenhouse.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "GroceryStore",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Food\\GroceryStore\\GroceryStore.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "Restaurant",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Food\\Restaurant\\Restaurant.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "CementKiln",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\CementKiln\\CementKiln.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "ChemicalWorks",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\ChemicalWorks\\ChemicalWorks.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "ConcreteMixer",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\ConcreteMixer\\ConcreteMixer.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "CryogenicLiquefactionPlant",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\CryogenicLiquefactionPlant\\CryogenicLiquefactionPlant.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "DeepDrill",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\DeepDrill\\DeepDrill.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "DeepMine",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\DeepMine\\DeepMine.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "DeepProcessor",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\DeepProcessor\\DeepProcessor.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "ElectrolysisPlant",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\ElectrolysisPlant\\ElectrolysisPlant.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "LaunchPad",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\LaunchPad\\LaunchPad.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "LimestonePit",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\LimestonePit\\LimestonePit.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "LimestoneQuarry",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\LimestoneQuarry\\LimestoneQuarry.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "PrecisionMachineWorks",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\PrecisionMachineWorks\\PrecisionMachineWorks.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "RadioactiveWasteRefinery",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\RadioactiveWasteRefinery\\RadioactiveWasteRefinery.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "RocketAssemblyHangar",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\RocketAssemblyHangar\\RocketAssemblyHangar.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "SandstonePit",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\SandstonePit\\SandstonePit.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "SandstoneQuarry",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\SandstoneQuarry\\SandstoneQuarry.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "StoneCrusher",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\StoneCrusher\\StoneCrusher.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "UraniumProcessingPlant",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Metal\\UraniumProcessingPlant\\UraniumProcessingPlant.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "ConcreteBlock",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Platforms\\ConcreteBlock\\ConcreteBlock.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "ConcreteOverflowDam",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Platforms\\ConcreteOverflowDam\\ConcreteOverflowDam.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "ConcreteOverhang8x1",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Platforms\\ConcreteOverhang8x1\\ConcreteOverhang8x1.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "ConcreteScaffold3x3",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Platforms\\ConcreteScaffold3x3\\ConcreteScaffold3x3.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "LimestoneMasonryBlock",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Platforms\\LimestoneMasonryBlock\\LimestoneMasonryBlock.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "ReinforcedDamBlock",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Platforms\\ReinforcedDamBlock\\ReinforcedDamBlock.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "SandstoneMasonryBlock",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Platforms\\SandstoneMasonryBlock\\SandstoneMasonryBlock.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "NuclearReactor",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Power\\NuclearReactor\\NuclearReactor.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "ReinforcedHydroTurbine",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Power\\ReinforcedHydroTurbine\\ReinforcedHydroTurbine.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "MaterialsLaboratory",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Science\\MaterialsLaboratory\\MaterialsLaboratory.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "MissionControl",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Science\\MissionControl\\MissionControl.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "TechnicalSchool",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Science\\TechnicalSchool\\TechnicalSchool.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "RadioactiveWasteVault",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Storage\\RadioactiveWasteVault\\RadioactiveWasteVault.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "WaterTreatmentPlant",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Water\\WaterTreatmentPlant\\WaterTreatmentPlant.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    },
+    {
+      "id": "Hospital",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Wellbeing\\Hospital\\Hospital.IronTeeth.blueprint.json",
+      "artStage": "Detailed source restyled; native validation tracked in STATUS"
+    },
+    {
+      "id": "PublicHealthLab",
+      "path": "src\\DeepFrontier\\Data\\Buildings\\Wellbeing\\PublicHealthLab\\PublicHealthLab.IronTeeth.blueprint.json",
+      "artStage": "Older prototype; full concept-art replacement still required"
+    }
+  ]
+}

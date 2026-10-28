@@ -1,0 +1,412 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 21688,
+  "spatialCandidatePairs": 32,
+  "nearPlanePairs": 32,
+  "identicalMaterialAndUvPairs": 0,
+  "visibleConflicts": 0,
+  "occludedConflicts": 8,
+  "conflicts": [
+    {
+      "a": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11239,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:85:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11257,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:89:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006792503383847778,
+      "visible": false,
+      "center": [
+        -2.8201236724853516,
+        -0.10925398021936417,
+        3.8299999237060547
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -2.8385000228881836,
+          -0.10271625220775604,
+          3.8299999237060547
+        ],
+        [
+          -2.8385000228881836,
+          -0.11849993467330933,
+          3.8299999237060547
+        ],
+        [
+          -2.801886558532715,
+          -0.11850007623434067,
+          3.8299999237060547
+        ],
+        [
+          -2.8016085624694824,
+          -0.09729965776205063,
+          3.8299999237060547
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11235,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:85:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11253,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:89:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006792501701639992,
+      "visible": false,
+      "center": [
+        -2.8201239109039307,
+        -0.10925398766994476,
+        3.630000114440918
+      ],
+      "normal": [
+        -0.0,
+        0.0,
+        -1.0
+      ],
+      "polygon": [
+        [
+          -2.8016085624694824,
+          -0.09729968756437302,
+          3.630000114440918
+        ],
+        [
+          -2.801886558532715,
+          -0.11849993467330933,
+          3.630000114440918
+        ],
+        [
+          -2.8385000228881836,
+          -0.11850009113550186,
+          3.630000114440918
+        ],
+        [
+          -2.8385000228881836,
+          -0.10271625220775604,
+          3.630000114440918
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11239,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:85:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11351,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:89:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006792481266006678,
+      "visible": false,
+      "center": [
+        -2.819876194000244,
+        -2.8907461166381836,
+        3.8299999237060547
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -2.838113307952881,
+          -2.881500005722046,
+          3.8299999237060547
+        ],
+        [
+          -2.8383913040161133,
+          -2.902700424194336,
+          3.8299999237060547
+        ],
+        [
+          -2.801499843597412,
+          -2.8972837924957275,
+          3.8299999237060547
+        ],
+        [
+          -2.801499843597412,
+          -2.881499767303467,
+          3.8299999237060547
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11021,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:85:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11039,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:89:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006792446084391644,
+      "visible": false,
+      "center": [
+        -0.18012389540672302,
+        -0.10925398021936417,
+        3.8299999237060547
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.19849993288516998,
+          -0.10271625220775604,
+          3.8299999237060547
+        ],
+        [
+          -0.19849993288516998,
+          -0.11849993467330933,
+          3.8299999237060547
+        ],
+        [
+          -0.16188684105873108,
+          -0.11850007623434067,
+          3.8299999237060547
+        ],
+        [
+          -0.16160888969898224,
+          -0.09729965776205063,
+          3.8299999237060547
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11017,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:85:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11035,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:89:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006792437768768943,
+      "visible": false,
+      "center": [
+        -0.18012389540672302,
+        -0.10925400257110596,
+        3.630000114440918
+      ],
+      "normal": [
+        -0.0,
+        0.0,
+        -1.0
+      ],
+      "polygon": [
+        [
+          -0.16160888969898224,
+          -0.0972997322678566,
+          3.630000114440918
+        ],
+        [
+          -0.16188684105873108,
+          -0.11849993467330933,
+          3.630000114440918
+        ],
+        [
+          -0.19849993288516998,
+          -0.11850009858608246,
+          3.630000114440918
+        ],
+        [
+          -0.19849993288516998,
+          -0.10271625965833664,
+          3.630000114440918
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11235,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:85:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11347,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:89:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006792435884990233,
+      "visible": false,
+      "center": [
+        -2.819876194000244,
+        -2.8907461166381836,
+        3.630000114440918
+      ],
+      "normal": [
+        0.0,
+        -0.0,
+        -1.0
+      ],
+      "polygon": [
+        [
+          -2.801499843597412,
+          -2.881500005722046,
+          3.630000114440918
+        ],
+        [
+          -2.801499843597412,
+          -2.8972835540771484,
+          3.630000114440918
+        ],
+        [
+          -2.8383913040161133,
+          -2.902700185775757,
+          3.630000114440918
+        ],
+        [
+          -2.838113307952881,
+          -2.881500005722046,
+          3.630000114440918
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11021,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:85:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11133,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:89:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000679242368436056,
+      "visible": false,
+      "center": [
+        -0.17987611889839172,
+        -2.8907461166381836,
+        3.8299999237060547
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polygon": [
+        [
+          -0.19811315834522247,
+          -2.881500005722046,
+          3.8299999237060547
+        ],
+        [
+          -0.1983911097049713,
+          -2.902700424194336,
+          3.8299999237060547
+        ],
+        [
+          -0.16150006651878357,
+          -2.8972835540771484,
+          3.8299999237060547
+        ],
+        [
+          -0.16150006651878357,
+          -2.881499767303467,
+          3.8299999237060547
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11017,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:85:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteScaffold3x3.Architecture",
+        "face": 11129,
+        "material": "BaseMetal.IronTeeth",
+        "source": "structural_geometry.py:89:girder_y > structural_geometry.py:131:scaffold > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000679242239187694,
+      "visible": false,
+      "center": [
+        -0.17987610399723053,
+        -2.8907461166381836,
+        3.630000114440918
+      ],
+      "normal": [
+        0.0,
+        -0.0,
+        -1.0
+      ],
+      "polygon": [
+        [
+          -0.16150006651878357,
+          -2.881500005722046,
+          3.630000114440918
+        ],
+        [
+          -0.16150006651878357,
+          -2.8972837924957275,
+          3.630000114440918
+        ],
+        [
+          -0.1983911097049713,
+          -2.902700185775757,
+          3.630000114440918
+        ],
+        [
+          -0.19811315834522247,
+          -2.881500005722046,
+          3.630000114440918
+        ]
+      ]
+    }
+  ],
+  "seconds": 1.84,
+  "model": "ConcreteScaffold3x3",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\ConcreteScaffold3x3-ReferenceStudy.blend",
+  "sourceSha256": "aedcf82ee6e47e8ad845903f1a1f9d7c6721a2eb49bd5a8f4d1c3e9e6e690a73",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

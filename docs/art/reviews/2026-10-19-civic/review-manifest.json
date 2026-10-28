@@ -1,0 +1,358 @@
+{
+  "date": "2026-10-19",
+  "scope": "Blender source and previews; civic game integration pending",
+  "foliageStatus": "User accepted; no further plant design change in this archive pass",
+  "models": [
+    {
+      "model": "Hospital",
+      "scene": "src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend",
+      "sceneSha256": "fdca4cbe99e5937470c0843b067ac7fd13ef2e9fa2a9303b19cf73f3d910b602",
+      "concept": "docs/art/concepts/Hospital.png",
+      "conceptSha256": "3bd63d134761493ceb9dfd4b2d7554db64b8d0750737497309cf764a7240ec92",
+      "animatedParts": 2,
+      "vertices": 537839,
+      "polygons": 218310,
+      "railNodes": 210,
+      "previewSeconds": 2.0
+    },
+    {
+      "model": "Restaurant",
+      "scene": "src/DeepFrontier/Art/Source/Restaurant-ReferenceStudy.blend",
+      "sceneSha256": "acc828711c917da0d12d2bfacdf9a59da63aed9084dc082b37ebecf83a45bc53",
+      "concept": "docs/art/concepts/Resturaunt.png",
+      "conceptSha256": "777f570c5a7c47c294918eb67f8b4b626537cdbdabae58cf82b9f4fd5dca8ca1",
+      "animatedParts": 1,
+      "vertices": 474898,
+      "polygons": 179753,
+      "railNodes": 179,
+      "previewSeconds": 2.0
+    },
+    {
+      "model": "GroceryStore",
+      "scene": "src/DeepFrontier/Art/Source/GroceryStore-ReferenceStudy.blend",
+      "sceneSha256": "4ab1583f204e597dd82504a4d30a09269108208e63c61c60084e7a0f3c8a1e7c",
+      "concept": "docs/art/concepts/Grocery Store.png",
+      "conceptSha256": "34f7f737aaee8f39f198170afa5acb40bf8e0d3fcc03bd114a4e57e66d7e799d",
+      "animatedParts": 1,
+      "vertices": 460947,
+      "polygons": 170517,
+      "railNodes": 182,
+      "previewSeconds": 2.0
+    },
+    {
+      "model": "FisheryWorks",
+      "scene": "src/DeepFrontier/Art/Source/FisheryWorks-ReferenceStudy.blend",
+      "sceneSha256": "8cadc8ac99f550383614b8bddaaf5c0152e8cff2611990227c522c9df585f9ff",
+      "concept": "docs/art/concepts/Fishery.png",
+      "conceptSha256": "18d710a459db4894fa8edc0e5fa369496439ba9f2825d736c047342d8da1dba0",
+      "animatedParts": 3,
+      "vertices": 499981,
+      "polygons": 194671,
+      "railNodes": 218,
+      "previewSeconds": 12.5
+    }
+  ],
+  "files": [
+    {
+      "path": "Hospital-front.png",
+      "sha256": "a00c4ae39b5315fc46ad45a1abe30fe4788fcc7691fdaf9e3d8f7523ccbb6763"
+    },
+    {
+      "path": "Hospital-front-right.png",
+      "sha256": "1fcc47f9b46e7181aa756ab30152ca8c3f22d2bed86c3bb17a30bf92962f4b59"
+    },
+    {
+      "path": "Hospital-rear.png",
+      "sha256": "102c63093d920bacc6c186a343b1e0e19d620d1d50819c3bc662be668af1c618"
+    },
+    {
+      "path": "Hospital-motion.mp4",
+      "sha256": "bf65499a6efa8cb1b01c60a3a68678d697180d8a1eb22b3a29380de1af5eb8e2"
+    },
+    {
+      "path": "Hospital-motion-check.json",
+      "sha256": "ae18c8c518873d7e28a8a6abac94fb60d5f5736768a8a502077f69c01694f43e"
+    },
+    {
+      "path": "Hospital-video-check.json",
+      "sha256": "b80394bd86306ffba8cc17ced5149c8f1ff7c2354ded2020634650ce6e55ef92"
+    },
+    {
+      "path": "Hospital-clearance-check.json",
+      "sha256": "b7ceb22a9662539df375387423cf1eb4c0e54fa15ed1ef8f8bd823ad0026ce7c"
+    },
+    {
+      "path": "Hospital-access-manifest.json",
+      "sha256": "94fa635ed34e6ead07a29c18290cf4ec6df951431728fec30f6067de4b2a78eb"
+    },
+    {
+      "path": "Hospital-height-manifest.json",
+      "sha256": "277cca658760748791232de46f72df7a60e7063d6d71df270a8a76be4b8d2b3c"
+    },
+    {
+      "path": "Hospital-native-assembly.json",
+      "sha256": "d1f037a3d4c2e89b047c9d005e3e9e5faf78b5c7a154d406f2c9a2a4a9bb4bca"
+    },
+    {
+      "path": "Hospital-rail-manifest.json",
+      "sha256": "7777cda6e8dcce47203de59e2cdb4f1e54b9ef233472483ec1c47a2ad4b70028"
+    },
+    {
+      "path": "Hospital-study.json",
+      "sha256": "c39ea34f97245c74224567d62f44556c974bbe0203c78cdb435293d65a5713e2"
+    },
+    {
+      "path": "Hospital-terrace-manifest.json",
+      "sha256": "e09f2a2fc737a935618b10345dad0a8d916687ae15712f674c7ae70795b9d409"
+    },
+    {
+      "path": "Hospital-visitor-manifest.json",
+      "sha256": "4721a7bec05502729e9c29a86f321f4c206dd9417a5cab9e1c1c0d7c579c1076"
+    },
+    {
+      "path": "Hospital-video-frame-001.png",
+      "sha256": "6472f00801f422c3ac86b62b7bd074ad994ceedb059c70b405f68b3405b5e59d"
+    },
+    {
+      "path": "Hospital-video-frame-014.png",
+      "sha256": "eaccf31b4ea3582f6c781ef1476da43aae096de69ad7226829a6143f10c5c652"
+    },
+    {
+      "path": "Hospital-video-frame-021.png",
+      "sha256": "01906f758714adfe1ffdefd66f86141bd80b5a63bcef7081d96d6eb71d66d0af"
+    },
+    {
+      "path": "Restaurant-front.png",
+      "sha256": "c65548f5b704554dd3bac70de579a4c12c5ba51e231f44b7adad6bc550b36207"
+    },
+    {
+      "path": "Restaurant-front-right.png",
+      "sha256": "766f21d220bc82394c158ba0dcd90c82f9ffeb91a66f9e7edca2ae1e62b0d3e9"
+    },
+    {
+      "path": "Restaurant-rear.png",
+      "sha256": "a9ad1794207c7013afa8fc89def0da4e7f968a67dfbb9bda85a08b05b8ca873f"
+    },
+    {
+      "path": "Restaurant-motion.mp4",
+      "sha256": "be95b9e51d54f272f0d21e1d48b104c6f39ab42b3802bd970f3b7aa73d79048b"
+    },
+    {
+      "path": "Restaurant-motion-check.json",
+      "sha256": "0e110644fc96cd876aa77ec291f222a2fe788922145dfbcbe80a79aa6032919e"
+    },
+    {
+      "path": "Restaurant-video-check.json",
+      "sha256": "00249c1775dc653f620715fcde10f84ccd1ec9e7eae4c60eb6a8232487e07889"
+    },
+    {
+      "path": "Restaurant-clearance-check.json",
+      "sha256": "733d380b05f8f2fa36ebf8c72cb7c1b4910c6c126afed051129b8dd4daba0249"
+    },
+    {
+      "path": "Restaurant-access-manifest.json",
+      "sha256": "376cd2ef0c4eaef773af9fce093503544a0b992f79534f3322d8e41fd5790d9a"
+    },
+    {
+      "path": "Restaurant-height-manifest.json",
+      "sha256": "370fbedd45ca067f37cf18ad903ac53431e98f5970316a33007f0efde2c4e491"
+    },
+    {
+      "path": "Restaurant-native-assembly.json",
+      "sha256": "acae13860eba99a5bffb33a35ce0f1100f05d2c455a7eac8eb865d397d766478"
+    },
+    {
+      "path": "Restaurant-rail-manifest.json",
+      "sha256": "cc2b9397fe714f417b15ac2098adb64eb6fca9cf4f7a6231b7f0b1fd93583500"
+    },
+    {
+      "path": "Restaurant-study.json",
+      "sha256": "bc18ce1dbb1fcfa783f5173ea47727b3cfab798a4c091da7ed5a5caa021d01ed"
+    },
+    {
+      "path": "Restaurant-terrace-manifest.json",
+      "sha256": "f51ba54ad8870acba4e529cdd12351306624e0d14a5bbdfc10adab9b87465219"
+    },
+    {
+      "path": "Restaurant-visitor-manifest.json",
+      "sha256": "6a1254818e2bf189de717b5fe3b1e50a6840e98c57768d486a4dc4d2f92c3144"
+    },
+    {
+      "path": "Restaurant-video-frame-001.png",
+      "sha256": "e47e6e98351fdd736c7ec4742764125e1988de930ed3c251430db8cbcec15331"
+    },
+    {
+      "path": "Restaurant-video-frame-014.png",
+      "sha256": "094d964ed751a7c862d79bea56850783c3a148735ce13803737709627b101dc6"
+    },
+    {
+      "path": "Restaurant-video-frame-021.png",
+      "sha256": "76eba67d2f19b0b319cdc7890c9b4961448127c10084d5689fadfaf8fac65224"
+    },
+    {
+      "path": "GroceryStore-front.png",
+      "sha256": "e562b75077d31d51123378dbc85c6a788ec8ead6f0d9b98d638d90fa8634b7b6"
+    },
+    {
+      "path": "GroceryStore-front-right.png",
+      "sha256": "bd29c76178306af5908385b4fda4e8cb11bf71b72229faaf615b1a71171f0c5a"
+    },
+    {
+      "path": "GroceryStore-rear.png",
+      "sha256": "27808dc3ac125deca6a0dc9feaa984d62625021d87d715b08adae8819ebeb968"
+    },
+    {
+      "path": "GroceryStore-motion.mp4",
+      "sha256": "d4772bc569e7a408bee647ae6ab740cd1ac4052beaa173b32c13ecbfd8cb5b89"
+    },
+    {
+      "path": "GroceryStore-motion-check.json",
+      "sha256": "c7a3079b915ac92c852aa938a1dd7506cc5a723ea84c7620b29fca82dc434e42"
+    },
+    {
+      "path": "GroceryStore-video-check.json",
+      "sha256": "c64f992d6493428a8aa3f727c19a3e2b7f0a1d4f34aaa59e949901530aa0ae36"
+    },
+    {
+      "path": "GroceryStore-clearance-check.json",
+      "sha256": "da9d9a4bd9b974c5cf2153f29a35fdc4b078b4112401067374e4200bf58f70c8"
+    },
+    {
+      "path": "GroceryStore-access-manifest.json",
+      "sha256": "773d02ff6376831601916618be880340fad7b15e913b83262519dfb1024a07be"
+    },
+    {
+      "path": "GroceryStore-height-manifest.json",
+      "sha256": "7b5653e4130ca12f6e24920ebc2cb23bd2c73e698effde1d179261444ab80138"
+    },
+    {
+      "path": "GroceryStore-native-assembly.json",
+      "sha256": "95e4ab854e287e570301d65ed1fbca0bc987bc69ecdd39bfb6567f5efee2942d"
+    },
+    {
+      "path": "GroceryStore-rail-manifest.json",
+      "sha256": "84852283c8b7565e2dbb503eacb5b371ff665d68d464629fc49fbb456bc99d76"
+    },
+    {
+      "path": "GroceryStore-study.json",
+      "sha256": "11398a6625fc84f0f3d3f8c29ecad7e5b08c871158e8abbcfa22431200e8f9d1"
+    },
+    {
+      "path": "GroceryStore-terrace-manifest.json",
+      "sha256": "24c6661c7a32fc1e5a11de6ffc9b9aa7503cd475a0669cae8da7bd12000baf46"
+    },
+    {
+      "path": "GroceryStore-visitor-manifest.json",
+      "sha256": "8c7984fd0de862762e2c10c9dbdce8235cce468334593f363c0eaffe6dc007e2"
+    },
+    {
+      "path": "GroceryStore-video-frame-001.png",
+      "sha256": "ed372a339317e6e1814c95cb604012e0d3d160d6f82abf61d057dbf6d962fe6e"
+    },
+    {
+      "path": "GroceryStore-video-frame-014.png",
+      "sha256": "2132cb8657a6fd7af056322d8aa1b99b29c6db19ff45bbfbb94abf54a99dbe1b"
+    },
+    {
+      "path": "GroceryStore-video-frame-021.png",
+      "sha256": "b7a7738efe01b958d8202dc77cf1a6dedeb1b6d8d78493cad0aaef2616f88b5f"
+    },
+    {
+      "path": "FisheryWorks-front.png",
+      "sha256": "d8c4f5b8ec3b30f6433445677544fececa62dd8b87f1ea4e9dc126192c33206a"
+    },
+    {
+      "path": "FisheryWorks-front-right.png",
+      "sha256": "a103fe6e8ea6dcfc3b53af61ca8f352696841ca01d4af6e4b1f396a3430c3888"
+    },
+    {
+      "path": "FisheryWorks-rear.png",
+      "sha256": "1cfff9ff9a35d4ec1b40a1d9413d0610ac7c9d82c5e455432e69d40bb5c0643e"
+    },
+    {
+      "path": "FisheryWorks-motion.mp4",
+      "sha256": "dd970c2d8e3dd408cfa0b4b63d43e16f03ee80895c7397a62e3607af5d805352"
+    },
+    {
+      "path": "FisheryWorks-motion-check.json",
+      "sha256": "f1e144dba3d51544086ab7f078a1179f678169fe8836ad8852539460045add63"
+    },
+    {
+      "path": "FisheryWorks-video-check.json",
+      "sha256": "1c83d84987b0b1dbcbd7bf5cfcf68ac32c22ff753bff29f5fb0b7e90913f30ab"
+    },
+    {
+      "path": "FisheryWorks-clearance-check.json",
+      "sha256": "fe9e4a7bbc216a54ad879baad2749fa98fd9854649bb22fa27a23c480c40d960"
+    },
+    {
+      "path": "FisheryWorks-access-manifest.json",
+      "sha256": "ce0b1b80fc514ac042260de2be6aa6351af0b64cd83a22539a87f359d2033bdb"
+    },
+    {
+      "path": "FisheryWorks-height-manifest.json",
+      "sha256": "3ccbee86aa2c284d84b10ac97c0f320eb4c4728ace8d11014a96f3aeb524658c"
+    },
+    {
+      "path": "FisheryWorks-native-assembly.json",
+      "sha256": "91edf7def81b599e8ff2ee007c7a44a130b222d171dc69cc92890bd2590d9ce0"
+    },
+    {
+      "path": "FisheryWorks-rail-manifest.json",
+      "sha256": "364b649a2974a9b74f8545b03c86d5e3753f93431ad4163640ae304494320d40"
+    },
+    {
+      "path": "FisheryWorks-study.json",
+      "sha256": "2d547500135e96e1899657bc0baa84c5583b6a21ab23fbbcc18c22956a45df20"
+    },
+    {
+      "path": "FisheryWorks-terrace-manifest.json",
+      "sha256": "918f3afc9795908051792e2a8b364a0ebaf53c1da034cd40552068a7884903b3"
+    },
+    {
+      "path": "FisheryWorks-visitor-manifest.json",
+      "sha256": "c4ac4e3e4189c7e35c2c8408c4cc27dffabfc3372803f4039d61b3c587864f4d"
+    },
+    {
+      "path": "FisheryWorks-video-frame-001.png",
+      "sha256": "00af65098141174f2a01ef3538d53e8b033fbe0ddc450bedd516d009b43dad69"
+    },
+    {
+      "path": "FisheryWorks-video-frame-069.png",
+      "sha256": "16c14f3fca18e095655653c0c16884f1494e0bd5b2424dbff81f8a2b412080d4"
+    },
+    {
+      "path": "FisheryWorks-video-frame-105.png",
+      "sha256": "58fdac49e068dc140186d2ea83be4938f2634748958687d601eb12100b9d6635"
+    },
+    {
+      "path": "Hospital-planter-detail.png",
+      "sha256": "bacf9da7a545fa73e83f9aeb35bf2499a78e5bd8ac06f0a0e0f8287a38ccfbaa"
+    },
+    {
+      "path": "Hospital-terrace-detail.png",
+      "sha256": "eae0bf0310c11db6273a72135dfc925355472ddd6974fbf60ec22c29cadbbc07"
+    },
+    {
+      "path": "NativePlants-original.png",
+      "sha256": "567a4be6aecc801010d49c60111eb92e7340fe0dc448325f42da04f2a05a5019"
+    },
+    {
+      "path": "FisheryWorks-water-full.png",
+      "sha256": "98064602c9c2b35323863a69af524d1bf47eee5112a05ef9a1966d49643b23ff"
+    },
+    {
+      "path": "FisheryWorks-water-half.png",
+      "sha256": "bfe53ce31dc40f69f8c541d4590150d5ce7de0034f6b629d95a01cb012563ac1"
+    },
+    {
+      "path": "FisheryWorks-water-empty.png",
+      "sha256": "e8ed48849afd8e066a0cda5f4f08a168edfe4bac32025e71f140e28ed5aa1cd2"
+    },
+    {
+      "path": "FisheryWorks-water-preview.json",
+      "sha256": "b12f1025d7ba0f7a5ad451f2eef5d11c782b3c9188d87e51dcdf8fd3e2e8deca"
+    }
+  ],
+  "geometryEvidence": "Current motion-check reports include geometry, material and clearance checks; older standalone geometry-check reports are excluded."
+}

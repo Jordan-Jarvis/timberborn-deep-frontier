@@ -1,0 +1,98 @@
+{
+  "mainDeckTop": 1.0,
+  "towerLandings": [
+    3.0,
+    5.0,
+    7.0
+  ],
+  "ladderCellCenter": [
+    2.5,
+    7.5
+  ],
+  "ladderClearOpening": [
+    2.12,
+    7.12,
+    2.88,
+    7.88
+  ],
+  "ladderFlights": [
+    [
+      1,
+      3
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      5,
+      7
+    ]
+  ],
+  "mainStair": {
+    "x": 4.5,
+    "lowerY": -0.36,
+    "upperY": 0.64,
+    "bottom": 0,
+    "top": 1,
+    "width": 1.04
+  },
+  "headroomAboveLandings": 1.85,
+  "groundDeckRoute": [
+    [
+      4.5,
+      1.75
+    ],
+    [
+      4.5,
+      2.2
+    ],
+    [
+      2.45,
+      2.2
+    ],
+    [
+      2.45,
+      6.6
+    ],
+    [
+      2.5,
+      7.35
+    ]
+  ],
+  "apronLadder": {
+    "center": [
+      6.1,
+      0.83
+    ],
+    "bottom": 0.0,
+    "top": 1.0,
+    "landing": [
+      6.1,
+      1.45
+    ]
+  },
+  "galleryRoute": [
+    [
+      3.05,
+      7.5
+    ],
+    [
+      6.1,
+      7.5
+    ]
+  ],
+  "bodyCheckRadius": 0.2,
+  "hoistExclusion": [
+    4.25,
+    3.4,
+    5.95,
+    5.0
+  ],
+  "ladderNodes": [
+    "Quarry.AccessLadder01",
+    "Quarry.AccessLadder02",
+    "Quarry.AccessLadder03"
+  ],
+  "status": "Authored clearance and motion contract; not native navigation or gameplay verification"
+}

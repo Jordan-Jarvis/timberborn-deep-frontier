@@ -1,0 +1,64 @@
+{
+  "status": "Reference nursery installed: 8x8x5, BaseZ 1, 31 route cells, 20 adaptive rail openings and one clear dock construction tile. Native appearance checked after production; bank apron no longer flickers.",
+  "scene": "src/DeepFrontier/Art/Source/FishHatchery-ReferenceStudy.blend",
+  "sceneSha256": "b98f3265fd3cb368ce4ce3c9b94763de12ed67115566a473f2d30b244fcd8fe4",
+  "concept": "docs/art/concepts/Fishery.png",
+  "conceptSha256": "18d710a459db4894fa8edc0e5fa369496439ba9f2825d736c047342d8da1dba0",
+  "referenceViews": "Fishery front-left/front-right isometric waterfront details only; no top views or printed tile counts",
+  "relationship": "Original smaller nursery companion, not an exact copy of the large Fishery building",
+  "water": "Open pens expose real world water. Studio water plane is a preview outside the export collection.",
+  "files": [
+    {
+      "path": "FishHatchery-front.png",
+      "sha256": "3db27cd07d322e50bcb8a07292bb3a3204aa1d4547ba92c1d7d00dfc9d55dfe9"
+    },
+    {
+      "path": "FishHatchery-front-right.png",
+      "sha256": "34299e14d3df8689b3d745ccb66a5a1be3d1c913f758ea1a26ea3d4e1d06ae55"
+    },
+    {
+      "path": "FishHatchery-rear.png",
+      "sha256": "45eb74df909b9a224005c8de2d26e25497f30cf6c7e86e90e8a2f8b064f18fe9"
+    },
+    {
+      "path": "FishHatchery-study.json",
+      "sha256": "7800e19edc9e5c2ede35b6fae8004b8a300e4b46cdc5a9d9dabc3fb9193589b8"
+    },
+    {
+      "path": "FishHatchery-access-manifest.json",
+      "sha256": "4fb76238a2d74f16e30793895542e9bc9f017b23cad0c932e0dc8b61585761d3"
+    },
+    {
+      "path": "FishHatchery-height-manifest.json",
+      "sha256": "392321eb5a6cf8571477bafbcaf43a7725726f1d7ef072770f236c3a8ad869ec"
+    },
+    {
+      "path": "FishHatchery-native-assembly.json",
+      "sha256": "aad202f468c0b6139154cd601a00e518836f209be1ef1b2ae0e32768136ddb53"
+    },
+    {
+      "path": "FishHatchery-rail-manifest.json",
+      "sha256": "94ced1ff839eb16a66a4ce784531b2f6ebd35135acad35b2353f0bb9a8464ec3"
+    },
+    {
+      "path": "FishHatchery-terrace-manifest.json",
+      "sha256": "dab59bc29228387f35b64c861b20f039716ae17289760ca14db8bf8d942af97b"
+    },
+    {
+      "path": "FishHatchery-visitor-manifest.json",
+      "sha256": "69acb3a17bf4085f2b249c1996f0d9f63ac3408daafab2201a7f5bc7cb44d00a"
+    },
+    {
+      "path": "FishHatchery-clearance-check.json",
+      "sha256": "1b2b8bc4da78aea8445c2b0e7d0e814dc9edddf512b951e4e2f2ab2cac2c4265"
+    },
+    {
+      "path": "FishHatchery-registration-candidate.json",
+      "sha256": "a6c7ea6ced9d8cc112eb2ab06ddb4aa931640086714db4cfa2da26a28da93141"
+    },
+    {
+      "path": "FishHatchery-route-clearance.json",
+      "sha256": "8f72542e59323f2941836926ee2ba78e1fb24f5245776e79b913a580176a17e1"
+    }
+  ]
+}

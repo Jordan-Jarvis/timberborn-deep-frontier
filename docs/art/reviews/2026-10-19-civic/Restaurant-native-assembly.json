@@ -1,0 +1,204 @@
+{
+  "scope": "Local preview copies; game references the original shipped resources",
+  "props": [
+    {
+      "name": "NativePlant0",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        1.8150000000000002,
+        0.515,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant1",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        2.055,
+        0.8049999999999999,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant2",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        2.5850000000000004,
+        0.805,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant3",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        4.305,
+        0.805,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant4",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        4.545,
+        0.5150000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant5",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        4.495000000000001,
+        0.515,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant6",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        7.895,
+        2.335,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant7",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        7.895,
+        2.865,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90
+    },
+    {
+      "name": "NativePlant8",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        7.895,
+        4.374999999999999,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90
+    },
+    {
+      "name": "NativePlant9",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        8.184999999999999,
+        4.615,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180
+    },
+    {
+      "name": "NativePlant10",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        7.895,
+        6.324999999999999,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90
+    },
+    {
+      "name": "NativePlant11",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        8.184999999999999,
+        6.5649999999999995,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180
+    },
+    {
+      "name": "NativeBarrel12",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        1.3,
+        6.95,
+        0.43139408
+      ],
+      "scale": 2.6,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel13",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        2.0,
+        6.95,
+        0.43139408
+      ],
+      "scale": 2.6,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant14",
+      "model": "Shrub.IronTeeth",
+      "resource": "Buildings/Decoration/Shrub/Shrub.IronTeeth.Model",
+      "position": [
+        6.2299999999999995,
+        5.4399999999999995,
+        6
+      ],
+      "scale": 0.46,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant15",
+      "model": "Shrub.IronTeeth",
+      "resource": "Buildings/Decoration/Shrub/Shrub.IronTeeth.Model",
+      "position": [
+        8.71,
+        5.4399999999999995,
+        6
+      ],
+      "scale": 0.46,
+      "yaw": 0
+    }
+  ],
+  "liquids": []
+}

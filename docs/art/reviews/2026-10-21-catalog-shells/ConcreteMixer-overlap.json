@@ -1,0 +1,4063 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 553105,
+  "spatialCandidatePairs": 5937,
+  "nearPlanePairs": 4711,
+  "identicalMaterialAndUvPairs": 0,
+  "visibleConflicts": 0,
+  "occludedConflicts": 82,
+  "conflicts": [
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 0,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:37:facade_panel > mixer_isometric_geometry.py:97:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 89,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:37:facade_panel > mixer_isometric_geometry.py:114:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.021277591356925862,
+      "visible": false,
+      "center": [
+        -0.45249995589256287,
+        -1.162000060081482,
+        0.4384479522705078
+      ],
+      "normal": [
+        0.9999999403953552,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.45249998569488525,
+          -1.1699999570846558,
+          2.0302832126617432e-07
+        ],
+        [
+          -0.45249998569488525,
+          -1.1699999570846558,
+          2.0116567611694336e-07
+        ],
+        [
+          -0.45249998569488525,
+          -1.149999976158142,
+          0.03223900496959686
+        ],
+        [
+          -0.45249998569488525,
+          -1.149999976158142,
+          1.0800002813339233
+        ],
+        [
+          -0.45249998569488525,
+          -1.1699999570846558,
+          1.0800001621246338
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 16,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:37:facade_panel > mixer_isometric_geometry.py:97:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 90,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:37:facade_panel > mixer_isometric_geometry.py:114:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.018959392224534244,
+      "visible": false,
+      "center": [
+        -2.827500104904175,
+        -1.1579999923706055,
+        0.4719163477420807
+      ],
+      "normal": [
+        -0.9999999403953552,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.827500104904175,
+          -1.149999976158142,
+          7.983226302243907e-10
+        ],
+        [
+          -2.827500104904175,
+          -1.1699999570846558,
+          0.2318205088376999
+        ],
+        [
+          -2.827500104904175,
+          -1.1699999570846558,
+          1.0800000429153442
+        ],
+        [
+          -2.827500104904175,
+          -1.149999976158142,
+          1.0477612018585205
+        ],
+        [
+          -2.827500104904175,
+          -1.149999976158142,
+          0.0
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 210352,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > mixer_isometric_geometry.py:34:pier > mixer_isometric_geometry.py:92:operator_room > mixer_isometric_geometry.py:195:mixer"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 216303,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.009094387200710763,
+      "visible": false,
+      "center": [
+        -0.36000001430511475,
+        -1.1171225309371948,
+        1.0750411748886108
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.36000001430511475,
+          -1.0770000219345093,
+          1.1729999780654907
+        ],
+        [
+          -0.36000001430511475,
+          -1.1517177820205688,
+          1.0931645631790161
+        ],
+        [
+          -0.36000001430511475,
+          -1.1627724170684814,
+          1.0170000791549683
+        ],
+        [
+          -0.36000001430511475,
+          -1.0770000219345093,
+          1.0170000791549683
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 210352,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > mixer_isometric_geometry.py:34:pier > mixer_isometric_geometry.py:92:operator_room > mixer_isometric_geometry.py:195:mixer"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 216303,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.008867960925039053,
+      "visible": false,
+      "center": [
+        -0.36000001430511475,
+        -1.184462070465088,
+        1.1140412092208862
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.36000001430511475,
+          -1.1517177820205688,
+          1.0931646823883057
+        ],
+        [
+          -0.36000001430511475,
+          -1.1401304006576538,
+          1.1729999780654907
+        ],
+        [
+          -0.36000001430511475,
+          -1.222999930381775,
+          1.1729999780654907
+        ],
+        [
+          -0.36000001430511475,
+          -1.222999930381775,
+          1.0170000791549683
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 230128,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:31:beam_joint > mixer_isometric_geometry.py:204:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 230340,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:31:beam_joint > mixer_isometric_geometry.py:206:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.6579245640187272e-06,
+      "overlapArea": 0.006431961437762368,
+      "visible": false,
+      "center": [
+        -7.794999122619629,
+        -5.800604820251465,
+        1.6800000667572021
+      ],
+      "normal": [
+        3.428399057703313e-14,
+        5.518946863958263e-07,
+        -1.0
+      ],
+      "polygon": [
+        [
+          -7.83799934387207,
+          -5.838000297546387,
+          1.6800000667572021
+        ],
+        [
+          -7.83799934387207,
+          -5.761999607086182,
+          1.6800000667572021
+        ],
+        [
+          -7.751999855041504,
+          -5.7644195556640625,
+          1.6800000667572021
+        ],
+        [
+          -7.751999855041504,
+          -5.838000297546387,
+          1.6800000667572021
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 230130,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:31:beam_joint > mixer_isometric_geometry.py:204:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 230342,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:31:beam_joint > mixer_isometric_geometry.py:206:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 5.1979759423392835e-06,
+      "overlapArea": 0.006431919194783697,
+      "visible": false,
+      "center": [
+        -7.794999122619629,
+        -5.800604820251465,
+        1.9200000762939453
+      ],
+      "normal": [
+        -1.5530131847185658e-08,
+        -1.1037892591048148e-06,
+        1.0
+      ],
+      "polygon": [
+        [
+          -7.83799934387207,
+          -5.76200008392334,
+          1.9200000762939453
+        ],
+        [
+          -7.83799934387207,
+          -5.838000297546387,
+          1.9199999570846558
+        ],
+        [
+          -7.751999855041504,
+          -5.838000297546387,
+          1.9199999570846558
+        ],
+        [
+          -7.751999855041504,
+          -5.764420032501221,
+          1.9200000762939453
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 230130,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:31:beam_joint > mixer_isometric_geometry.py:204:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 230236,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:31:beam_joint > mixer_isometric_geometry.py:206:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.2054488962576215e-07,
+      "overlapArea": 0.006402706775610056,
+      "visible": false,
+      "center": [
+        -0.2041218876838684,
+        -5.799999713897705,
+        1.9199999570846558
+      ],
+      "normal": [
+        1.5530130070828818e-08,
+        0.0,
+        0.9999999403953552
+      ],
+      "polygon": [
+        [
+          -0.2479998618364334,
+          -5.838000297546387,
+          1.9199999570846558
+        ],
+        [
+          -0.16199907660484314,
+          -5.838000297546387,
+          1.9199999570846558
+        ],
+        [
+          -0.16199932992458344,
+          -5.761999607086182,
+          1.9199999570846558
+        ],
+        [
+          -0.24448923766613007,
+          -5.761999607086182,
+          1.9199999570846558
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 230128,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:31:beam_joint > mixer_isometric_geometry.py:204:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 230234,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:31:beam_joint > mixer_isometric_geometry.py:206:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.2122820658433398e-07,
+      "overlapArea": 0.006402676048352436,
+      "visible": false,
+      "center": [
+        -0.2041224092245102,
+        -5.800000190734863,
+        1.6799999475479126
+      ],
+      "normal": [
+        -1.5530131847185658e-08,
+        0.0,
+        -1.0
+      ],
+      "polygon": [
+        [
+          -0.24448969960212708,
+          -5.761999130249023,
+          1.6799999475479126
+        ],
+        [
+          -0.16199991106987,
+          -5.761999607086182,
+          1.6799999475479126
+        ],
+        [
+          -0.16199991106987,
+          -5.838000297546387,
+          1.6799999475479126
+        ],
+        [
+          -0.24800008535385132,
+          -5.838000297546387,
+          1.6799999475479126
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 210352,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > mixer_isometric_geometry.py:34:pier > mixer_isometric_geometry.py:92:operator_room > mixer_isometric_geometry.py:195:mixer"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 214979,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.00438077536921333,
+      "visible": false,
+      "center": [
+        -0.36000001430511475,
+        -1.087820291519165,
+        1.1385936737060547
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.36000001430511475,
+          -1.031999945640564,
+          1.1098800897598267
+        ],
+        [
+          -0.36000001430511475,
+          -1.031999945640564,
+          1.146863341331482
+        ],
+        [
+          -0.36000001430511475,
+          -1.140707015991211,
+          1.1690269708633423
+        ],
+        [
+          -0.36000001430511475,
+          -1.1465740203857422,
+          1.128604531288147
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 275822,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:259:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 275840,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "mixer_isometric_geometry.py:263:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0028060262793890567,
+      "visible": false,
+      "center": [
+        -5.532500267028809,
+        -0.14000000059604645,
+        0.7400000095367432
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -5.563000202178955,
+          -0.14000000059604645,
+          0.7630000710487366
+        ],
+        [
+          -5.501999855041504,
+          -0.14000000059604645,
+          0.7630000710487366
+        ],
+        [
+          -5.501999855041504,
+          -0.14000000059604645,
+          0.716999888420105
+        ],
+        [
+          -5.563000202178955,
+          -0.14000000059604645,
+          0.716999888420105
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 275826,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:259:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 275850,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "mixer_isometric_geometry.py:263:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0028060262793890567,
+      "visible": false,
+      "center": [
+        -6.867500305175781,
+        -1.440000057220459,
+        0.7400000095367432
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -6.836999893188477,
+          -1.440000057220459,
+          0.7630000710487366
+        ],
+        [
+          -6.898000240325928,
+          -1.440000057220459,
+          0.7630000710487366
+        ],
+        [
+          -6.898000240325928,
+          -1.440000057220459,
+          0.716999888420105
+        ],
+        [
+          -6.836999893188477,
+          -1.440000057220459,
+          0.716999888420105
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 214979,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 215489,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.002566625992806538,
+      "visible": false,
+      "center": [
+        -0.36000001430511475,
+        -0.15263298153877258,
+        0.9481521844863892
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.36000001430511475,
+          -0.11786423623561859,
+          0.9604863524436951
+        ],
+        [
+          -0.36000001430511475,
+          -0.1332455277442932,
+          0.9630000591278076
+        ],
+        [
+          -0.36000001430511475,
+          -0.19300009310245514,
+          0.9630000591278076
+        ],
+        [
+          -0.36000001430511475,
+          -0.19300009310245514,
+          0.9339616894721985
+        ],
+        [
+          -0.36000001430511475,
+          -0.12605497241020203,
+          0.9203127026557922
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 215426,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 215493,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.3841856489070778e-07,
+      "overlapArea": 0.002566622148174935,
+      "visible": false,
+      "center": [
+        -2.930000066757202,
+        -0.152632936835289,
+        0.9481521844863892
+      ],
+      "normal": [
+        -0.9999999403953552,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.930000066757202,
+          -0.13324511051177979,
+          0.9629999995231628
+        ],
+        [
+          -2.930000066757202,
+          -0.11786425113677979,
+          0.9604863524436951
+        ],
+        [
+          -2.930000066757202,
+          -0.1260550618171692,
+          0.920312762260437
+        ],
+        [
+          -2.930000066757202,
+          -0.19300015270709991,
+          0.9339616894721985
+        ],
+        [
+          -2.930000066757202,
+          -0.19300013780593872,
+          0.9629999399185181
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 210352,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > mixer_isometric_geometry.py:34:pier > mixer_isometric_geometry.py:92:operator_room > mixer_isometric_geometry.py:195:mixer"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 216303,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.002520016765062305,
+      "visible": false,
+      "center": [
+        -0.36000001430511475,
+        -1.1229493618011475,
+        1.146388053894043
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.36000001430511475,
+          -1.0770000219345093,
+          1.1729998588562012
+        ],
+        [
+          -0.36000001430511475,
+          -1.1401302814483643,
+          1.1729999780654907
+        ],
+        [
+          -0.36000001430511475,
+          -1.1517177820205688,
+          1.0931645631790161
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 240302,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 240369,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0024297228896413836,
+      "visible": false,
+      "center": [
+        -3.1999998092651367,
+        -3.9816060066223145,
+        5.479041576385498
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.1999998092651367,
+          -3.9581642150878906,
+          5.493000030517578
+        ],
+        [
+          -3.1999998092651367,
+          -3.9466700553894043,
+          5.490325927734375
+        ],
+        [
+          -3.1999998092651367,
+          -3.957195520401001,
+          5.450700283050537
+        ],
+        [
+          -3.1999998092651367,
+          -4.0229997634887695,
+          5.468179702758789
+        ],
+        [
+          -3.1999998092651367,
+          -4.023000240325928,
+          5.493000030517578
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 239955,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 240365,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.002429691674945191,
+      "visible": false,
+      "center": [
+        -1.0299999713897705,
+        -3.9816055297851562,
+        5.479041576385498
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.0299999713897705,
+          -3.9466702938079834,
+          5.490326404571533
+        ],
+        [
+          -1.0299999713897705,
+          -3.9581620693206787,
+          5.493000030517578
+        ],
+        [
+          -1.0299999713897705,
+          -4.023000240325928,
+          5.493000030517578
+        ],
+        [
+          -1.0299999713897705,
+          -4.023000240325928,
+          5.468180179595947
+        ],
+        [
+          -1.0299999713897705,
+          -3.95719575881958,
+          5.450700759887695
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 16,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:37:facade_panel > mixer_isometric_geometry.py:97:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 90,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "frontier_architecture.py:37:facade_panel > mixer_isometric_geometry.py:114:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0023182024305299365,
+      "visible": false,
+      "center": [
+        -2.827500104904175,
+        -1.1633332967758179,
+        0.07727348804473877
+      ],
+      "normal": [
+        -0.9999999403953552,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.827500104904175,
+          -1.149999976158142,
+          0.0
+        ],
+        [
+          -2.827500104904175,
+          -1.1699999570846558,
+          0.0
+        ],
+        [
+          -2.827500104904175,
+          -1.1699999570846558,
+          0.23182044923305511
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 275822,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:259:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 275846,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "mixer_isometric_geometry.py:263:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.00231429875141842,
+      "visible": false,
+      "center": [
+        -6.871249675750732,
+        -0.14000000059604645,
+        0.7387973070144653
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -6.898000240325928,
+          -0.14000000059604645,
+          0.716999888420105
+        ],
+        [
+          -6.898000240325928,
+          -0.14000000059604645,
+          0.7630000710487366
+        ],
+        [
+          -6.851999282836914,
+          -0.14000000059604645,
+          0.7581890821456909
+        ],
+        [
+          -6.836999893188477,
+          -0.14000000059604645,
+          0.716999888420105
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 275826,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:259:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 275844,
+        "material": "IrregularPlanks_DarkBrown.IronTeeth",
+        "source": "mixer_isometric_geometry.py:263:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.00231429875141842,
+      "visible": false,
+      "center": [
+        -5.528749942779541,
+        -1.440000057220459,
+        0.7387973070144653
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.501999855041504,
+          -1.440000057220459,
+          0.716999888420105
+        ],
+        [
+          -5.501999855041504,
+          -1.440000057220459,
+          0.7630000710487366
+        ],
+        [
+          -5.548000335693359,
+          -1.440000057220459,
+          0.7581890821456909
+        ],
+        [
+          -5.563000202178955,
+          -1.440000057220459,
+          0.716999888420105
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 210352,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:26:timber_column > mixer_isometric_geometry.py:34:pier > mixer_isometric_geometry.py:92:operator_room > mixer_isometric_geometry.py:195:mixer"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 216303,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0022935984999752357,
+      "visible": false,
+      "center": [
+        -0.36000001430511475,
+        -1.1791634559631348,
+        1.0423883199691772
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.36000001430511475,
+          -1.1627724170684814,
+          1.0170001983642578
+        ],
+        [
+          -0.36000001430511475,
+          -1.1517177820205688,
+          1.0931646823883057
+        ],
+        [
+          -0.36000001430511475,
+          -1.222999930381775,
+          1.0170000791549683
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 242215,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 242425,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.002073657202966709,
+      "visible": false,
+      "center": [
+        -1.0299999713897705,
+        -3.210634708404541,
+        5.111349582672119
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.0299999713897705,
+          -3.1737163066864014,
+          5.11961555480957
+        ],
+        [
+          -1.0299999713897705,
+          -3.1835005283355713,
+          5.123000144958496
+        ],
+        [
+          -1.0299999713897705,
+          -3.253000259399414,
+          5.123000144958496
+        ],
+        [
+          -1.0299999713897705,
+          -3.253000259399414,
+          5.109163761138916
+        ],
+        [
+          -1.0299999713897705,
+          -3.1899561882019043,
+          5.081968307495117
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 242362,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 242429,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0020736563745340497,
+      "visible": false,
+      "center": [
+        -1.9200000762939453,
+        -3.210634708404541,
+        5.111349582672119
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9200000762939453,
+          -3.183500289916992,
+          5.123000144958496
+        ],
+        [
+          -1.9200000762939453,
+          -3.1737163066864014,
+          5.11961555480957
+        ],
+        [
+          -1.9200000762939453,
+          -3.1899561882019043,
+          5.081968307495117
+        ],
+        [
+          -1.9200000762939453,
+          -3.253000259399414,
+          5.109163761138916
+        ],
+        [
+          -1.9200000762939453,
+          -3.253000020980835,
+          5.122999668121338
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 215426,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 216307,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.001709265687472969,
+      "visible": false,
+      "center": [
+        -2.930000066757202,
+        -1.1271696090698242,
+        1.1456472873687744
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.930000066757202,
+          -1.1521357297897339,
+          1.1295135021209717
+        ],
+        [
+          -2.930000066757202,
+          -1.1439449787139893,
+          1.1696871519088745
+        ],
+        [
+          -2.930000066757202,
+          -1.090330719947815,
+          1.158756136894226
+        ],
+        [
+          -2.930000066757202,
+          -1.1222673654556274,
+          1.1246322393417358
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 214979,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 216303,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0017092625133923178,
+      "visible": false,
+      "center": [
+        -0.36000001430511475,
+        -1.1271697282791138,
+        1.1456472873687744
+      ],
+      "normal": [
+        0.9999999403953552,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.36000001430511475,
+          -1.0903308391571045,
+          1.158756136894226
+        ],
+        [
+          -0.36000001430511475,
+          -1.1439449787139893,
+          1.1696871519088745
+        ],
+        [
+          -0.36000001430511475,
+          -1.1521357297897339,
+          1.1295135021209717
+        ],
+        [
+          -0.36000001430511475,
+          -1.122267246246338,
+          1.1246322393417358
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 240302,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 241183,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.001652983665613117,
+      "visible": false,
+      "center": [
+        -3.1999998092651367,
+        -5.2082390785217285,
+        5.804461479187012
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.1999998092651367,
+          -5.233329772949219,
+          5.789673805236816
+        ],
+        [
+          -3.1999998092651367,
+          -5.222804546356201,
+          5.829299449920654
+        ],
+        [
+          -3.1999998092651367,
+          -5.17287540435791,
+          5.816037178039551
+        ],
+        [
+          -3.1999998092651367,
+          -5.203946590423584,
+          5.782837390899658
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 239955,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 241179,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0016529746998794614,
+      "visible": false,
+      "center": [
+        -1.0299999713897705,
+        -5.208239555358887,
+        5.804461479187012
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.0299999713897705,
+          -5.172875881195068,
+          5.816037178039551
+        ],
+        [
+          -1.0299999713897705,
+          -5.222804546356201,
+          5.829299449920654
+        ],
+        [
+          -1.0299999713897705,
+          -5.233329772949219,
+          5.789673805236816
+        ],
+        [
+          -1.0299999713897705,
+          -5.203947067260742,
+          5.782837867736816
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 242215,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 243239,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0015197402506498259,
+      "visible": false,
+      "center": [
+        -1.0299999713897705,
+        -3.670322895050049,
+        5.312148094177246
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.0299999713897705,
+          -3.638444185256958,
+          5.32008695602417
+        ],
+        [
+          -1.0299999713897705,
+          -3.680043935775757,
+          5.338031768798828
+        ],
+        [
+          -1.0299999713897705,
+          -3.6962835788726807,
+          5.300384521484375
+        ],
+        [
+          -1.0299999713897705,
+          -3.6665196418762207,
+          5.290088176727295
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 242362,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 243243,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0015197199429068473,
+      "visible": false,
+      "center": [
+        -1.9200000762939453,
+        -3.670322895050049,
+        5.312147617340088
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9200000762939453,
+          -3.6962838172912598,
+          5.300384521484375
+        ],
+        [
+          -1.9200000762939453,
+          -3.680043935775757,
+          5.33803129196167
+        ],
+        [
+          -1.9200000762939453,
+          -3.638444662094116,
+          5.320086479187012
+        ],
+        [
+          -1.9200000762939453,
+          -3.6665196418762207,
+          5.290088176727295
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 242215,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 243239,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0013893631922483607,
+      "visible": false,
+      "center": [
+        -1.0299999713897705,
+        -3.6347408294677734,
+        5.298492431640625
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.0299999713897705,
+          -3.616999864578247,
+          5.310836315155029
+        ],
+        [
+          -1.0299999713897705,
+          -3.638444185256958,
+          5.32008695602417
+        ],
+        [
+          -1.0299999713897705,
+          -3.6665196418762207,
+          5.290088176727295
+        ],
+        [
+          -1.0299999713897705,
+          -3.616999864578247,
+          5.272958278656006
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 242362,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 243243,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:228:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0013893501116514217,
+      "visible": false,
+      "center": [
+        -1.9200000762939453,
+        -3.6347408294677734,
+        5.298492431640625
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.9200000762939453,
+          -3.638444662094116,
+          5.320086479187012
+        ],
+        [
+          -1.9200000762939453,
+          -3.616999864578247,
+          5.310835838317871
+        ],
+        [
+          -1.9200000762939453,
+          -3.616999864578247,
+          5.272958278656006
+        ],
+        [
+          -1.9200000762939453,
+          -3.6665196418762207,
+          5.290088176727295
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 240302,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 241183,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0012657550951013646,
+      "visible": false,
+      "center": [
+        -3.1999998092651367,
+        -5.172705173492432,
+        5.795652389526367
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.1999998092651367,
+          -5.17287540435791,
+          5.816037178039551
+        ],
+        [
+          -3.1999998092651367,
+          -5.156999588012695,
+          5.811820030212402
+        ],
+        [
+          -3.1999998092651367,
+          -5.156999588012695,
+          5.771915435791016
+        ],
+        [
+          -3.1999998092651367,
+          -5.203946590423584,
+          5.782837390899658
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 239955,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 241179,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:227:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0012657446645978343,
+      "visible": false,
+      "center": [
+        -1.0299999713897705,
+        -5.17270565032959,
+        5.795652389526367
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -1.0299999713897705,
+          -5.1570000648498535,
+          5.811820030212402
+        ],
+        [
+          -1.0299999713897705,
+          -5.172875881195068,
+          5.816037178039551
+        ],
+        [
+          -1.0299999713897705,
+          -5.203947067260742,
+          5.782837867736816
+        ],
+        [
+          -1.0299999713897705,
+          -5.1570000648498535,
+          5.771915435791016
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 215426,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 216307,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 2.384185791015625e-07,
+      "overlapArea": 0.0011491246732103916,
+      "visible": false,
+      "center": [
+        -2.930000066757202,
+        -1.0916495323181152,
+        1.1391652822494507
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.930000066757202,
+          -1.090330719947815,
+          1.158756136894226
+        ],
+        [
+          -2.930000066757202,
+          -1.0769999027252197,
+          1.1560381650924683
+        ],
+        [
+          -2.930000066757202,
+          -1.0769999027252197,
+          1.1172343492507935
+        ],
+        [
+          -2.930000066757202,
+          -1.1222673654556274,
+          1.1246322393417358
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 214979,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "industrial_geometry.py:60:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 216303,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "industrial_geometry.py:64:sheet_roof > mixer_isometric_geometry.py:116:operator_room > mixer_isometric_geometry.py:195:mixer > render_reference_studies.py:83:render_model"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0011491225769448832,
+      "visible": false,
+      "center": [
+        -0.36000001430511475,
+        -1.0916495323181152,
+        1.1391651630401611
+      ],
+      "normal": [
+        0.9999999403953552,
+        0.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -0.36000001430511475,
+          -1.0770000219345093,
+          1.1560381650924683
+        ],
+        [
+          -0.36000001430511475,
+          -1.0903308391571045,
+          1.158756136894226
+        ],
+        [
+          -0.36000001430511475,
+          -1.122267246246338,
+          1.1246322393417358
+        ],
+        [
+          -0.36000001430511475,
+          -1.0769999027252197,
+          1.1172343492507935
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249180,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249185,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0009342566652982137,
+      "visible": false,
+      "center": [
+        -3.8771867752075195,
+        -4.082499980926514,
+        3.932649612426758
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.870828151702881,
+          -4.082499980926514,
+          3.948000192642212
+        ],
+        [
+          -3.890500068664551,
+          -4.082499980926514,
+          3.948000192642212
+        ],
+        [
+          -3.890500068664551,
+          -4.082499980926514,
+          3.900508165359497
+        ],
+        [
+          -3.8569180965423584,
+          -4.082499980926514,
+          3.9340901374816895
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249178,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249182,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0009342566572212102,
+      "visible": false,
+      "center": [
+        -3.8771867752075195,
+        -4.037499904632568,
+        3.932649612426758
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.890500068664551,
+          -4.037499904632568,
+          3.900508165359497
+        ],
+        [
+          -3.890500068664551,
+          -4.037499904632568,
+          3.948000192642212
+        ],
+        [
+          -3.870828151702881,
+          -4.037499904632568,
+          3.948000192642212
+        ],
+        [
+          -3.8569180965423584,
+          -4.037499904632568,
+          3.9340901374816895
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247067,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247072,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000934256562625968,
+      "visible": false,
+      "center": [
+        -2.037186622619629,
+        -2.5425000190734863,
+        3.6426496505737305
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0308282375335693,
+          -2.5425000190734863,
+          3.6580002307891846
+        ],
+        [
+          -2.0505001544952393,
+          -2.5425000190734863,
+          3.6580002307891846
+        ],
+        [
+          -2.0505001544952393,
+          -2.5425000190734863,
+          3.6105082035064697
+        ],
+        [
+          -2.016918182373047,
+          -2.5425000190734863,
+          3.644090175628662
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247065,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247069,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0009342564511861558,
+      "visible": false,
+      "center": [
+        -2.037186622619629,
+        -2.497499942779541,
+        3.6426496505737305
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0505001544952393,
+          -2.497499942779541,
+          3.6105082035064697
+        ],
+        [
+          -2.0505001544952393,
+          -2.497499942779541,
+          3.6580002307891846
+        ],
+        [
+          -2.0308282375335693,
+          -2.497499942779541,
+          3.6580002307891846
+        ],
+        [
+          -2.016918182373047,
+          -2.497499942779541,
+          3.644090175628662
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272430,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272434,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0009342181273570452,
+      "visible": false,
+      "center": [
+        -5.987186908721924,
+        -3.8274998664855957,
+        4.462649822235107
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -6.000500202178955,
+          -3.8274998664855957,
+          4.430509090423584
+        ],
+        [
+          -6.000500202178955,
+          -3.8274998664855957,
+          4.478000164031982
+        ],
+        [
+          -5.980828762054443,
+          -3.8274998664855957,
+          4.478000164031982
+        ],
+        [
+          -5.9669189453125,
+          -3.8274998664855957,
+          4.464090347290039
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272432,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272437,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0009342180680417811,
+      "visible": false,
+      "center": [
+        -5.987186908721924,
+        -3.872499942779541,
+        4.462649822235107
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.980828762054443,
+          -3.872499942779541,
+          4.478000164031982
+        ],
+        [
+          -6.000500202178955,
+          -3.872499942779541,
+          4.478000164031982
+        ],
+        [
+          -6.000500202178955,
+          -3.872499942779541,
+          4.430509090423584
+        ],
+        [
+          -5.9669189453125,
+          -3.872499942779541,
+          4.464090347290039
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272392,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272434,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007119349394343333,
+      "visible": false,
+      "center": [
+        -5.994040489196777,
+        -3.8274998664855957,
+        4.472812652587891
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.98199987411499,
+          -3.8274998664855957,
+          4.479171276092529
+        ],
+        [
+          -5.98199987411499,
+          -3.8274998664855957,
+          4.459499835968018
+        ],
+        [
+          -6.016252517700195,
+          -3.8274998664855957,
+          4.459499835968018
+        ],
+        [
+          -5.995909690856934,
+          -3.8274998664855957,
+          4.493081092834473
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272416,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272422,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007119349394343333,
+      "visible": false,
+      "center": [
+        -5.965959548950195,
+        -3.872499942779541,
+        4.472812652587891
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.978000164031982,
+          -3.872499942779541,
+          4.479171276092529
+        ],
+        [
+          -5.978000164031982,
+          -3.872499942779541,
+          4.459499835968018
+        ],
+        [
+          -5.943747520446777,
+          -3.872499942779541,
+          4.459499835968018
+        ],
+        [
+          -5.964090347290039,
+          -3.872499942779541,
+          4.493081092834473
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272401,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272406,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007119348573191298,
+      "visible": false,
+      "center": [
+        -5.987186908721924,
+        -3.872499942779541,
+        4.494040489196777
+      ],
+      "normal": [
+        -0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.9669189453125,
+          -3.872499942779541,
+          4.495909690856934
+        ],
+        [
+          -6.000500202178955,
+          -3.872499942779541,
+          4.516252517700195
+        ],
+        [
+          -6.000500202178955,
+          -3.872499942779541,
+          4.48199987411499
+        ],
+        [
+          -5.980828762054443,
+          -3.872499942779541,
+          4.48199987411499
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272395,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272437,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007119348096403055,
+      "visible": false,
+      "center": [
+        -5.994040489196777,
+        -3.872499942779541,
+        4.472813129425049
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -5.995909690856934,
+          -3.872499942779541,
+          4.493081092834473
+        ],
+        [
+          -6.016252517700195,
+          -3.872499942779541,
+          4.459499835968018
+        ],
+        [
+          -5.98199987411499,
+          -3.872499942779541,
+          4.459499835968018
+        ],
+        [
+          -5.98199987411499,
+          -3.872499942779541,
+          4.479171276092529
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272419,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272425,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007119348096403055,
+      "visible": false,
+      "center": [
+        -5.965959548950195,
+        -3.8274998664855957,
+        4.472813129425049
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.964090347290039,
+          -3.8274998664855957,
+          4.493081092834473
+        ],
+        [
+          -5.943747520446777,
+          -3.8274998664855957,
+          4.459499835968018
+        ],
+        [
+          -5.978000164031982,
+          -3.8274998664855957,
+          4.459499835968018
+        ],
+        [
+          -5.978000164031982,
+          -3.8274998664855957,
+          4.479171276092529
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272398,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272408,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007119345641029978,
+      "visible": false,
+      "center": [
+        -5.987186908721924,
+        -3.8274998664855957,
+        4.494040489196777
+      ],
+      "normal": [
+        0.0,
+        0.9999999403953552,
+        0.0
+      ],
+      "polygon": [
+        [
+          -6.000500202178955,
+          -3.8274998664855957,
+          4.516252517700195
+        ],
+        [
+          -5.9669189453125,
+          -3.8274998664855957,
+          4.495909690856934
+        ],
+        [
+          -5.980828762054443,
+          -3.8274998664855957,
+          4.48199987411499
+        ],
+        [
+          -6.000500202178955,
+          -3.8274998664855957,
+          4.48199987411499
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272392,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272398,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007119299892213689,
+      "visible": false,
+      "center": [
+        -5.995009422302246,
+        -3.8274998664855957,
+        4.484846591949463
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -6.020129680633545,
+          -3.8274998664855957,
+          4.491138935089111
+        ],
+        [
+          -5.98199987411499,
+          -3.8274998664855957,
+          4.500500202178955
+        ],
+        [
+          -5.981999397277832,
+          -3.8274998664855957,
+          4.480828762054443
+        ],
+        [
+          -5.995909690856934,
+          -3.8274998664855957,
+          4.4669189453125
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272413,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272419,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000711929850979665,
+      "visible": false,
+      "center": [
+        -5.964990615844727,
+        -3.8274998664855957,
+        4.484846591949463
+      ],
+      "normal": [
+        -0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.978000164031982,
+          -3.8274998664855957,
+          4.500500202178955
+        ],
+        [
+          -5.939870357513428,
+          -3.8274998664855957,
+          4.491138935089111
+        ],
+        [
+          -5.964090347290039,
+          -3.8274998664855957,
+          4.4669189453125
+        ],
+        [
+          -5.978000164031982,
+          -3.8274998664855957,
+          4.480828762054443
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272425,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272430,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000711929850979665,
+      "visible": false,
+      "center": [
+        -5.97515344619751,
+        -3.8274998664855957,
+        4.464990139007568
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.959499835968018,
+          -3.8274998664855957,
+          4.478000164031982
+        ],
+        [
+          -5.968861103057861,
+          -3.8274998664855957,
+          4.439870357513428
+        ],
+        [
+          -5.993081092834473,
+          -3.8274998664855957,
+          4.464090347290039
+        ],
+        [
+          -5.979171276092529,
+          -3.8274998664855957,
+          4.478000164031982
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272395,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272401,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007119297141365892,
+      "visible": false,
+      "center": [
+        -5.995009899139404,
+        -3.872499942779541,
+        4.484846591949463
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -5.98199987411499,
+          -3.872499942779541,
+          4.500500202178955
+        ],
+        [
+          -6.020129680633545,
+          -3.872499942779541,
+          4.491138935089111
+        ],
+        [
+          -5.995909690856934,
+          -3.872499942779541,
+          4.4669189453125
+        ],
+        [
+          -5.98199987411499,
+          -3.872499942779541,
+          4.480828762054443
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272410,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272416,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007119294381703334,
+      "visible": false,
+      "center": [
+        -5.964990615844727,
+        -3.872499942779541,
+        4.484846591949463
+      ],
+      "normal": [
+        0.0,
+        -0.9999999403953552,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.978000164031982,
+          -3.872499942779541,
+          4.480828762054443
+        ],
+        [
+          -5.964090347290039,
+          -3.872499942779541,
+          4.4669189453125
+        ],
+        [
+          -5.939870357513428,
+          -3.872499942779541,
+          4.491138935089111
+        ],
+        [
+          -5.978000164031982,
+          -3.872499942779541,
+          4.500500202178955
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272422,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272432,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0007119294381703334,
+      "visible": false,
+      "center": [
+        -5.975152969360352,
+        -3.872499942779541,
+        4.464990615844727
+      ],
+      "normal": [
+        0.0,
+        -0.9999999403953552,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.979171276092529,
+          -3.872499942779541,
+          4.478000164031982
+        ],
+        [
+          -5.993081092834473,
+          -3.872499942779541,
+          4.464090347290039
+        ],
+        [
+          -5.968861103057861,
+          -3.872499942779541,
+          4.439870357513428
+        ],
+        [
+          -5.959499835968018,
+          -3.872499942779541,
+          4.478000164031982
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249146,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249156,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896131151634954,
+      "visible": false,
+      "center": [
+        -3.8771865367889404,
+        -4.037499904632568,
+        3.96370792388916
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.890500068664551,
+          -4.037499904632568,
+          3.984921932220459
+        ],
+        [
+          -3.8569180965423584,
+          -4.037499904632568,
+          3.965909957885742
+        ],
+        [
+          -3.870828151702881,
+          -4.037499904632568,
+          3.9519999027252197
+        ],
+        [
+          -3.890500068664551,
+          -4.037499904632568,
+          3.9519999027252197
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249149,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249154,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896129084098465,
+      "visible": false,
+      "center": [
+        -3.8771867752075195,
+        -4.082499980926514,
+        3.96370792388916
+      ],
+      "normal": [
+        -0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.8569180965423584,
+          -4.082499980926514,
+          3.965909957885742
+        ],
+        [
+          -3.890500068664551,
+          -4.082499980926514,
+          3.984921932220459
+        ],
+        [
+          -3.890500068664551,
+          -4.082499980926514,
+          3.9519999027252197
+        ],
+        [
+          -3.870828151702881,
+          -4.082499980926514,
+          3.9519999027252197
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247030,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247036,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896126124344487,
+      "visible": false,
+      "center": [
+        -2.0447747707366943,
+        -2.5425000190734863,
+        3.6646111011505127
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -2.0319998264312744,
+          -2.5425000190734863,
+          3.6805002689361572
+        ],
+        [
+          -2.0691893100738525,
+          -2.5425000190734863,
+          3.6701977252960205
+        ],
+        [
+          -2.045909881591797,
+          -2.5425000190734863,
+          3.646918296813965
+        ],
+        [
+          -2.0319998264312744,
+          -2.5425000190734863,
+          3.6608283519744873
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249173,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249178,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896125660610581,
+      "visible": false,
+      "center": [
+        -3.865388870239258,
+        -4.037499904632568,
+        3.935225248336792
+      ],
+      "normal": [
+        0.0,
+        0.9999999403953552,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.8494997024536133,
+          -4.037499904632568,
+          3.948000192642212
+        ],
+        [
+          -3.85980224609375,
+          -4.037499904632568,
+          3.910810708999634
+        ],
+        [
+          -3.8830816745758057,
+          -4.037499904632568,
+          3.9340901374816895
+        ],
+        [
+          -3.869171619415283,
+          -4.037499904632568,
+          3.948000192642212
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247027,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247033,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.000689612428047257,
+      "visible": false,
+      "center": [
+        -2.0447747707366943,
+        -2.497499942779541,
+        3.6646111011505127
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0691893100738525,
+          -2.497499942779541,
+          3.6701977252960205
+        ],
+        [
+          -2.0319998264312744,
+          -2.497499942779541,
+          3.6805002689361572
+        ],
+        [
+          -2.0320000648498535,
+          -2.497499942779541,
+          3.6608283519744873
+        ],
+        [
+          -2.045909881591797,
+          -2.497499942779541,
+          3.646918296813965
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249170,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249180,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896123096498813,
+      "visible": false,
+      "center": [
+        -3.865388870239258,
+        -4.082499980926514,
+        3.935225248336792
+      ],
+      "normal": [
+        0.0,
+        -0.9999999403953552,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.869171619415283,
+          -4.082499980926514,
+          3.948000192642212
+        ],
+        [
+          -3.8830816745758057,
+          -4.082499980926514,
+          3.9340901374816895
+        ],
+        [
+          -3.85980224609375,
+          -4.082499980926514,
+          3.910810708999634
+        ],
+        [
+          -3.8494997024536133,
+          -4.082499980926514,
+          3.948000192642212
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247057,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247067,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896118855986913,
+      "visible": false,
+      "center": [
+        -2.025388717651367,
+        -2.5425000190734863,
+        3.6452252864837646
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0291717052459717,
+          -2.5425000190734863,
+          3.6580002307891846
+        ],
+        [
+          -2.043081760406494,
+          -2.5425000190734863,
+          3.644090175628662
+        ],
+        [
+          -2.0198023319244385,
+          -2.5425000190734863,
+          3.6208107471466064
+        ],
+        [
+          -2.0094997882843018,
+          -2.5425000190734863,
+          3.6580002307891846
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247048,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247054,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896118198620473,
+      "visible": false,
+      "center": [
+        -2.0152251720428467,
+        -2.497499942779541,
+        3.6646111011505127
+      ],
+      "normal": [
+        -0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0280001163482666,
+          -2.497499942779541,
+          3.6805002689361572
+        ],
+        [
+          -1.9908106327056885,
+          -2.497499942779541,
+          3.6701977252960205
+        ],
+        [
+          -2.014090061187744,
+          -2.497499942779541,
+          3.646918296813965
+        ],
+        [
+          -2.0280001163482666,
+          -2.497499942779541,
+          3.6608283519744873
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247060,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247065,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896117135087112,
+      "visible": false,
+      "center": [
+        -2.0253889560699463,
+        -2.497499942779541,
+        3.6452252864837646
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0094997882843018,
+          -2.497499942779541,
+          3.6580002307891846
+        ],
+        [
+          -2.0198023319244385,
+          -2.497499942779541,
+          3.6208107471466064
+        ],
+        [
+          -2.043081760406494,
+          -2.497499942779541,
+          3.644090175628662
+        ],
+        [
+          -2.0291717052459717,
+          -2.497499942779541,
+          3.6580002307891846
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247051,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247057,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896116479324782,
+      "visible": false,
+      "center": [
+        -2.016292095184326,
+        -2.5425000190734863,
+        3.65281343460083
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0280001163482666,
+          -2.5425000190734863,
+          3.6591718196868896
+        ],
+        [
+          -2.0280001163482666,
+          -2.5425000190734863,
+          3.6394999027252197
+        ],
+        [
+          -1.9950780868530273,
+          -2.5425000190734863,
+          3.6394999027252197
+        ],
+        [
+          -2.014090061187744,
+          -2.5425000190734863,
+          3.673081874847412
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247045,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247051,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896115101552303,
+      "visible": false,
+      "center": [
+        -2.0152251720428467,
+        -2.5425000190734863,
+        3.6646111011505127
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0280001163482666,
+          -2.5425000190734863,
+          3.6608283519744873
+        ],
+        [
+          -2.014090061187744,
+          -2.5425000190734863,
+          3.646918296813965
+        ],
+        [
+          -1.9908106327056885,
+          -2.5425000190734863,
+          3.6701977252960205
+        ],
+        [
+          -2.0280001163482666,
+          -2.5425000190734863,
+          3.6805002689361572
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247030,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247072,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896113943360162,
+      "visible": false,
+      "center": [
+        -2.0437076091766357,
+        -2.5425000190734863,
+        3.65281343460083
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -2.045909881591797,
+          -2.5425000190734863,
+          3.673081874847412
+        ],
+        [
+          -2.0649216175079346,
+          -2.5425000190734863,
+          3.6394999027252197
+        ],
+        [
+          -2.0319998264312744,
+          -2.5425000190734863,
+          3.6394999027252197
+        ],
+        [
+          -2.0319998264312744,
+          -2.5425000190734863,
+          3.6591718196868896
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249143,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249185,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896113943360162,
+      "visible": false,
+      "center": [
+        -3.8837077617645264,
+        -4.082499980926514,
+        3.9428133964538574
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -3.8859097957611084,
+          -4.082499980926514,
+          3.9630818367004395
+        ],
+        [
+          -3.904921531677246,
+          -4.082499980926514,
+          3.929499864578247
+        ],
+        [
+          -3.871999740600586,
+          -4.082499980926514,
+          3.929499864578247
+        ],
+        [
+          -3.871999740600586,
+          -4.082499980926514,
+          3.949171781539917
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247054,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247060,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896113069871437,
+      "visible": false,
+      "center": [
+        -2.016292095184326,
+        -2.497499942779541,
+        3.65281343460083
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.014090061187744,
+          -2.497499942779541,
+          3.673081874847412
+        ],
+        [
+          -1.9950780868530273,
+          -2.497499942779541,
+          3.6394999027252197
+        ],
+        [
+          -2.0280001163482666,
+          -2.497499942779541,
+          3.6394999027252197
+        ],
+        [
+          -2.0280001163482666,
+          -2.497499942779541,
+          3.6591718196868896
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247027,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247069,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896111242993552,
+      "visible": false,
+      "center": [
+        -2.043707847595215,
+        -2.497499942779541,
+        3.65281343460083
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0319998264312744,
+          -2.497499942779541,
+          3.6591718196868896
+        ],
+        [
+          -2.0319998264312744,
+          -2.497499942779541,
+          3.6394999027252197
+        ],
+        [
+          -2.0649216175079346,
+          -2.497499942779541,
+          3.6394999027252197
+        ],
+        [
+          -2.045909881591797,
+          -2.497499942779541,
+          3.673081874847412
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249140,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249182,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896111242993552,
+      "visible": false,
+      "center": [
+        -3.8837077617645264,
+        -4.037499904632568,
+        3.9428133964538574
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.871999740600586,
+          -4.037499904632568,
+          3.949171781539917
+        ],
+        [
+          -3.871999740600586,
+          -4.037499904632568,
+          3.929499864578247
+        ],
+        [
+          -3.904921531677246,
+          -4.037499904632568,
+          3.929499864578247
+        ],
+        [
+          -3.8859097957611084,
+          -4.037499904632568,
+          3.9630818367004395
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249140,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249146,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896106136792886,
+      "visible": false,
+      "center": [
+        -3.884774684906006,
+        -4.037499904632568,
+        3.95461106300354
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.909189224243164,
+          -4.037499904632568,
+          3.960197687149048
+        ],
+        [
+          -3.871999740600586,
+          -4.037499904632568,
+          3.9705002307891846
+        ],
+        [
+          -3.871999979019165,
+          -4.037499904632568,
+          3.9508283138275146
+        ],
+        [
+          -3.8859097957611084,
+          -4.037499904632568,
+          3.936918258666992
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249143,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249149,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896104922575717,
+      "visible": false,
+      "center": [
+        -3.884774684906006,
+        -4.082499980926514,
+        3.954611301422119
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        -0.0
+      ],
+      "polygon": [
+        [
+          -3.871999740600586,
+          -4.082499980926514,
+          3.9705002307891846
+        ],
+        [
+          -3.909189224243164,
+          -4.082499980926514,
+          3.960197687149048
+        ],
+        [
+          -3.8859097957611084,
+          -4.082499980926514,
+          3.936918258666992
+        ],
+        [
+          -3.871999740600586,
+          -4.082499980926514,
+          3.9508283138275146
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247033,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247043,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896103782070145,
+      "visible": false,
+      "center": [
+        -2.037186622619629,
+        -2.497499942779541,
+        3.673707962036133
+      ],
+      "normal": [
+        0.0,
+        0.9999999403953552,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0505001544952393,
+          -2.497499942779541,
+          3.6949219703674316
+        ],
+        [
+          -2.016918182373047,
+          -2.497499942779541,
+          3.675909996032715
+        ],
+        [
+          -2.0308282375335693,
+          -2.497499942779541,
+          3.6619999408721924
+        ],
+        [
+          -2.0505001544952393,
+          -2.497499942779541,
+          3.6619999408721924
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249158,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249164,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896103710929691,
+      "visible": false,
+      "center": [
+        -3.855225086212158,
+        -4.082499980926514,
+        3.95461106300354
+      ],
+      "normal": [
+        0.0,
+        -0.9999999403953552,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.868000030517578,
+          -4.082499980926514,
+          3.9508283138275146
+        ],
+        [
+          -3.8540899753570557,
+          -4.082499980926514,
+          3.936918258666992
+        ],
+        [
+          -3.830810546875,
+          -4.082499980926514,
+          3.960197687149048
+        ],
+        [
+          -3.868000030517578,
+          -4.082499980926514,
+          3.9705002307891846
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249167,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249173,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896103311504697,
+      "visible": false,
+      "center": [
+        -3.8562920093536377,
+        -4.037499904632568,
+        3.9428133964538574
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.8540899753570557,
+          -4.037499904632568,
+          3.9630818367004395
+        ],
+        [
+          -3.835078239440918,
+          -4.037499904632568,
+          3.929499864578247
+        ],
+        [
+          -3.868000030517578,
+          -4.037499904632568,
+          3.929499864578247
+        ],
+        [
+          -3.868000030517578,
+          -4.037499904632568,
+          3.949171781539917
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247036,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247041,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896103059163541,
+      "visible": false,
+      "center": [
+        -2.037186622619629,
+        -2.5425000190734863,
+        3.673707962036133
+      ],
+      "normal": [
+        -0.0,
+        -0.9999999403953552,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.016918182373047,
+          -2.5425000190734863,
+          3.675909996032715
+        ],
+        [
+          -2.0505001544952393,
+          -2.5425000190734863,
+          3.6949219703674316
+        ],
+        [
+          -2.0505001544952393,
+          -2.5425000190734863,
+          3.6619999408721924
+        ],
+        [
+          -2.0308282375335693,
+          -2.5425000190734863,
+          3.6619999408721924
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249161,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249167,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896100230819557,
+      "visible": false,
+      "center": [
+        -3.855225086212158,
+        -4.037499904632568,
+        3.954611301422119
+      ],
+      "normal": [
+        -0.0,
+        0.9999999403953552,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.868000030517578,
+          -4.037499904632568,
+          3.9705002307891846
+        ],
+        [
+          -3.830810546875,
+          -4.037499904632568,
+          3.960197687149048
+        ],
+        [
+          -3.8540899753570557,
+          -4.037499904632568,
+          3.936918258666992
+        ],
+        [
+          -3.868000030517578,
+          -4.037499904632568,
+          3.9508283138275146
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249164,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249170,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0006896099788905596,
+      "visible": false,
+      "center": [
+        -3.8562920093536377,
+        -4.082499980926514,
+        3.9428133964538574
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.868000030517578,
+          -4.082499980926514,
+          3.949171781539917
+        ],
+        [
+          -3.868000030517578,
+          -4.082499980926514,
+          3.929499864578247
+        ],
+        [
+          -3.835078239440918,
+          -4.082499980926514,
+          3.929499864578247
+        ],
+        [
+          -3.8540899753570557,
+          -4.082499980926514,
+          3.9630818367004395
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272408,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272413,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005865602800894749,
+      "visible": false,
+      "center": [
+        -5.974642753601074,
+        -3.8274998664855957,
+        4.492931842803955
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.966820240020752,
+          -3.8274998664855957,
+          4.511817932128906
+        ],
+        [
+          -5.959499835968018,
+          -3.8274998664855957,
+          4.48199987411499
+        ],
+        [
+          -5.979171276092529,
+          -3.8274998664855957,
+          4.481999397277832
+        ],
+        [
+          -5.993081092834473,
+          -3.8274998664855957,
+          4.495909690856934
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272406,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 272410,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:250:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main > render_reference_studies.py:286:<module>"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005865602147692512,
+      "visible": false,
+      "center": [
+        -5.974643230438232,
+        -3.872499942779541,
+        4.492931842803955
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.959499835968018,
+          -3.872499942779541,
+          4.48199987411499
+        ],
+        [
+          -5.966820240020752,
+          -3.872499942779541,
+          4.511817932128906
+        ],
+        [
+          -5.993081092834473,
+          -3.872499942779541,
+          4.495909690856934
+        ],
+        [
+          -5.979171276092529,
+          -3.872499942779541,
+          4.48199987411499
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249156,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249161,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005598363462382683,
+      "visible": false,
+      "center": [
+        -3.8647842407226562,
+        -4.037499904632568,
+        3.962592124938965
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.8573834896087646,
+          -4.037499904632568,
+          3.9804587364196777
+        ],
+        [
+          -3.8494997024536133,
+          -4.037499904632568,
+          3.9519999027252197
+        ],
+        [
+          -3.869171619415283,
+          -4.037499904632568,
+          3.952000141143799
+        ],
+        [
+          -3.8830816745758057,
+          -4.037499904632568,
+          3.965909957885742
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249154,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 249158,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:230:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005598361811061901,
+      "visible": false,
+      "center": [
+        -3.8647842407226562,
+        -4.082499980926514,
+        3.962592124938965
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -3.8494997024536133,
+          -4.082499980926514,
+          3.9519999027252197
+        ],
+        [
+          -3.8573834896087646,
+          -4.082499980926514,
+          3.9804587364196777
+        ],
+        [
+          -3.8830816745758057,
+          -4.082499980926514,
+          3.965909957885742
+        ],
+        [
+          -3.869171619415283,
+          -4.082499980926514,
+          3.9519999027252197
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247041,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247045,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.00055983477640684,
+      "visible": false,
+      "center": [
+        -2.0247840881347656,
+        -2.5425000190734863,
+        3.6725919246673584
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.0094997882843018,
+          -2.5425000190734863,
+          3.6619999408721924
+        ],
+        [
+          -2.017383575439453,
+          -2.5425000190734863,
+          3.6904585361480713
+        ],
+        [
+          -2.043081760406494,
+          -2.5425000190734863,
+          3.675909996032715
+        ],
+        [
+          -2.0291717052459717,
+          -2.5425000190734863,
+          3.6619999408721924
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247043,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "ConcreteMixer.Architecture",
+        "face": 247048,
+        "material": "BaseMetal.IronTeeth",
+        "source": "mixer_isometric_geometry.py:86:hopper > mixer_isometric_geometry.py:229:mixer > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0005598345294374749,
+      "visible": false,
+      "center": [
+        -2.0247840881347656,
+        -2.497499942779541,
+        3.6725921630859375
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -2.017383575439453,
+          -2.497499942779541,
+          3.6904585361480713
+        ],
+        [
+          -2.0094997882843018,
+          -2.497499942779541,
+          3.6619999408721924
+        ],
+        [
+          -2.0291717052459717,
+          -2.497499942779541,
+          3.6620001792907715
+        ],
+        [
+          -2.043081760406494,
+          -2.497499942779541,
+          3.675909996032715
+        ]
+      ]
+    }
+  ],
+  "seconds": 13.72,
+  "model": "ConcreteMixer",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\ConcreteMixer-ReferenceStudy.blend",
+  "sourceSha256": "cab2d11a5e8d4e431602bd9f8f6fb16fc16a68ae573876b1d47bbb1decbde90c",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

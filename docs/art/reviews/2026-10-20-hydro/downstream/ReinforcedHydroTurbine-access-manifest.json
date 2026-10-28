@@ -1,0 +1,17 @@
+{
+  "scope": "Source art only; water, supports, navigation and gameplay not registered",
+  "doors": [
+    {
+      "name": "HydroWorkshopDoor",
+      "position": [
+        5.35,
+        6.16,
+        2
+      ]
+    }
+  ],
+  "deckLayer": 2,
+  "capLayer": 6,
+  "externalStairs": "Player-built native stairs",
+  "runtimeWater": "Native world water; no authored substitute water mesh"
+}

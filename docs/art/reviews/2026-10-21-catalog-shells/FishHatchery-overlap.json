@@ -1,0 +1,1980 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 357914,
+  "spatialCandidatePairs": 2787,
+  "nearPlanePairs": 1950,
+  "identicalMaterialAndUvPairs": 128,
+  "visibleConflicts": 0,
+  "occludedConflicts": 40,
+  "conflicts": [
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 175785,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 176170,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 5.79494050523266e-08,
+      "overlapArea": 0.0038268588313266033,
+      "visible": false,
+      "center": [
+        -5.34499979019165,
+        -0.4549999535083771,
+        2.3670334815979004
+      ],
+      "normal": [
+        -1.7974191024450192e-08,
+        0.9999999403953552,
+        -1.855222819813207e-07
+      ],
+      "polygon": [
+        [
+          -5.387588977813721,
+          -0.4549999535083771,
+          2.35296630859375
+        ],
+        [
+          -5.34499979019165,
+          -0.4549999535083771,
+          2.4260284900665283
+        ],
+        [
+          -5.302411079406738,
+          -0.4549999535083771,
+          2.35296630859375
+        ],
+        [
+          -5.34499979019165,
+          -0.4549999535083771,
+          2.336172580718994
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 175788,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 176167,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0038268587333214477,
+      "visible": false,
+      "center": [
+        -5.345000267028809,
+        -0.625,
+        2.3670334815979004
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.34499979019165,
+          -0.625,
+          2.4260284900665283
+        ],
+        [
+          -5.387588977813721,
+          -0.625,
+          2.35296630859375
+        ],
+        [
+          -5.345000267028809,
+          -0.625,
+          2.3361728191375732
+        ],
+        [
+          -5.302411079406738,
+          -0.625,
+          2.35296630859375
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 177118,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 177497,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0038268587333214477,
+      "visible": false,
+      "center": [
+        -5.345000267028809,
+        -2.8949999809265137,
+        2.3670334815979004
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.34499979019165,
+          -2.8949999809265137,
+          2.4260284900665283
+        ],
+        [
+          -5.387588977813721,
+          -2.8949999809265137,
+          2.35296630859375
+        ],
+        [
+          -5.345000267028809,
+          -2.8949999809265137,
+          2.3361728191375732
+        ],
+        [
+          -5.302411079406738,
+          -2.8949999809265137,
+          2.35296630859375
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 177115,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 177500,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 0.0,
+      "overlapArea": 0.0038268587057946127,
+      "visible": false,
+      "center": [
+        -5.34499979019165,
+        -2.7249999046325684,
+        2.3670334815979004
+      ],
+      "normal": [
+        -0.0,
+        0.9999999403953552,
+        0.0
+      ],
+      "polygon": [
+        [
+          -5.387588977813721,
+          -2.7249999046325684,
+          2.35296630859375
+        ],
+        [
+          -5.34499979019165,
+          -2.7249999046325684,
+          2.4260284900665283
+        ],
+        [
+          -5.302411079406738,
+          -2.7249999046325684,
+          2.35296630859375
+        ],
+        [
+          -5.34499979019165,
+          -2.7249999046325684,
+          2.336172580718994
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 154862,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 155241,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.7733605091052596e-06,
+      "overlapArea": 0.003691359010057127,
+      "visible": false,
+      "center": [
+        -2.109999895095825,
+        -0.7049996852874756,
+        3.065659523010254
+      ],
+      "normal": [
+        -4.0859950445337745e-07,
+        -1.0,
+        -5.49133346794406e-07
+      ],
+      "polygon": [
+        [
+          -2.1100001335144043,
+          -0.7049997448921204,
+          3.125791072845459
+        ],
+        [
+          -2.150048017501831,
+          -0.7049996852874756,
+          3.0516154766082764
+        ],
+        [
+          -2.109999895095825,
+          -0.7049996852874756,
+          3.0336172580718994
+        ],
+        [
+          -2.0699520111083984,
+          -0.7049996852874756,
+          3.0516152381896973
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 156282,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 156661,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 3.1699444207333727e-06,
+      "overlapArea": 0.003691359010057127,
+      "visible": false,
+      "center": [
+        -2.109999895095825,
+        -2.854999542236328,
+        3.065659523010254
+      ],
+      "normal": [
+        -7.303860343199631e-07,
+        -1.0,
+        -1.1451376167315175e-06
+      ],
+      "polygon": [
+        [
+          -2.1100001335144043,
+          -2.854999542236328,
+          3.125791072845459
+        ],
+        [
+          -2.150048017501831,
+          -2.854999542236328,
+          3.0516154766082764
+        ],
+        [
+          -2.109999895095825,
+          -2.854999542236328,
+          3.0336172580718994
+        ],
+        [
+          -2.0699520111083984,
+          -2.854999542236328,
+          3.0516152381896973
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 156279,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 156664,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 3.767766010298601e-07,
+      "overlapArea": 0.0036913459943952987,
+      "visible": false,
+      "center": [
+        -2.109999895095825,
+        -2.684999704360962,
+        3.065659523010254
+      ],
+      "normal": [
+        8.68129959030739e-08,
+        1.0,
+        -4.687089116828247e-08
+      ],
+      "polygon": [
+        [
+          -2.150047779083252,
+          -2.684999704360962,
+          3.0516152381896973
+        ],
+        [
+          -2.109999895095825,
+          -2.684999704360962,
+          3.12579083442688
+        ],
+        [
+          -2.0699520111083984,
+          -2.684999704360962,
+          3.0516152381896973
+        ],
+        [
+          -2.109999895095825,
+          -2.684999704360962,
+          3.0336174964904785
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 154859,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 155244,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.075069405942486e-06,
+      "overlapArea": 0.003691345994395248,
+      "visible": false,
+      "center": [
+        -2.109999895095825,
+        -0.5349997282028198,
+        3.065659523010254
+      ],
+      "normal": [
+        2.4770645268290536e-07,
+        1.0,
+        2.5113172341661993e-07
+      ],
+      "polygon": [
+        [
+          -2.150047779083252,
+          -0.5349997282028198,
+          3.0516152381896973
+        ],
+        [
+          -2.109999895095825,
+          -0.5349997282028198,
+          3.12579083442688
+        ],
+        [
+          -2.0699520111083984,
+          -0.5349997282028198,
+          3.0516152381896973
+        ],
+        [
+          -2.109999895095825,
+          -0.5349997282028198,
+          3.0336174964904785
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 153834,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 155246,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 3.0547380447387695e-07,
+      "overlapArea": 0.003120948287874215,
+      "visible": false,
+      "center": [
+        -2.112243890762329,
+        -0.6612100005149841,
+        3.1341559886932373
+      ],
+      "normal": [
+        0.8799379467964172,
+        0.0,
+        0.47508862614631653
+      ],
+      "polygon": [
+        [
+          -2.0978848934173584,
+          -0.6279996633529663,
+          3.1075613498687744
+        ],
+        [
+          -2.1140296459198,
+          -0.6279997229576111,
+          3.1374638080596924
+        ],
+        [
+          -2.122114658355713,
+          -0.6440508365631104,
+          3.1524386405944824
+        ],
+        [
+          -2.122114658355713,
+          -0.7029997706413269,
+          3.1524386405944824
+        ],
+        [
+          -2.105074882507324,
+          -0.7029997110366821,
+          3.120878219604492
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 153784,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 154864,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 4.446242058975258e-07,
+      "overlapArea": 0.003120943622810457,
+      "visible": false,
+      "center": [
+        -2.112244129180908,
+        -0.6612100005149841,
+        3.1258437633514404
+      ],
+      "normal": [
+        -0.879938006401062,
+        4.4815001842835045e-07,
+        0.4750886559486389
+      ],
+      "polygon": [
+        [
+          -2.105074882507324,
+          -0.7029997706413269,
+          3.1391220092773438
+        ],
+        [
+          -2.0978851318359375,
+          -0.6279997229576111,
+          3.1524386405944824
+        ],
+        [
+          -2.1140296459198,
+          -0.6279996633529663,
+          3.1225364208221436
+        ],
+        [
+          -2.122115135192871,
+          -0.644051194190979,
+          3.1075613498687744
+        ],
+        [
+          -2.122114896774292,
+          -0.7029997706413269,
+          3.1075613498687744
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 154484,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 156284,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 5.438923835754395e-07,
+      "overlapArea": 0.003120925892406881,
+      "visible": false,
+      "center": [
+        -2.1077561378479004,
+        -2.7287895679473877,
+        3.1341564655303955
+      ],
+      "normal": [
+        -0.8799368739128113,
+        0.0,
+        0.47509056329727173
+      ],
+      "polygon": [
+        [
+          -2.122114896774292,
+          -2.7619996070861816,
+          3.1075615882873535
+        ],
+        [
+          -2.1059701442718506,
+          -2.7619996070861816,
+          3.1374638080596924
+        ],
+        [
+          -2.0978851318359375,
+          -2.745948553085327,
+          3.1524386405944824
+        ],
+        [
+          -2.0978851318359375,
+          -2.686999797821045,
+          3.1524386405944824
+        ],
+        [
+          -2.1149251461029053,
+          -2.686999797821045,
+          3.120878219604492
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 154534,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 156666,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 5.797172804022921e-07,
+      "overlapArea": 0.003120925192864881,
+      "visible": false,
+      "center": [
+        -2.1077561378479004,
+        -2.7287895679473877,
+        3.1258437633514404
+      ],
+      "normal": [
+        0.8799368739128113,
+        4.4815217847826716e-07,
+        0.4750905930995941
+      ],
+      "polygon": [
+        [
+          -2.114924907684326,
+          -2.686999797821045,
+          3.1391220092773438
+        ],
+        [
+          -2.122114658355713,
+          -2.7619996070861816,
+          3.1524386405944824
+        ],
+        [
+          -2.1059701442718506,
+          -2.7619996070861816,
+          3.1225364208221436
+        ],
+        [
+          -2.0978848934173584,
+          -2.745948553085327,
+          3.1075615882873535
+        ],
+        [
+          -2.0978848934173584,
+          -2.686999797821045,
+          3.1075615882873535
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 154480,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 156280,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.0661344695961361e-07,
+      "overlapArea": 0.0031209232668380077,
+      "visible": false,
+      "center": [
+        0.022243862971663475,
+        -2.7287895679473877,
+        1.9841560125350952
+      ],
+      "normal": [
+        0.8799394369125366,
+        -1.2969435303489263e-08,
+        -0.475085973739624
+      ],
+      "polygon": [
+        [
+          0.03211469575762749,
+          -2.686999797821045,
+          2.002438545227051
+        ],
+        [
+          0.03211469575762749,
+          -2.7459487915039062,
+          2.002438545227051
+        ],
+        [
+          0.024029582738876343,
+          -2.76200008392334,
+          1.9874635934829712
+        ],
+        [
+          0.007885297760367393,
+          -2.76200008392334,
+          1.9575616121292114
+        ],
+        [
+          0.015075046569108963,
+          -2.686999797821045,
+          1.97087824344635
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 153780,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 154860,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 3.13380628114146e-08,
+      "overlapArea": 0.0031209151682482466,
+      "visible": false,
+      "center": [
+        0.017756152898073196,
+        -0.6612102389335632,
+        1.9758440256118774
+      ],
+      "normal": [
+        0.87993985414505,
+        -1.8062536355500924e-07,
+        -0.47508519887924194
+      ],
+      "polygon": [
+        [
+          0.032114699482917786,
+          -0.6279999613761902,
+          2.002438545227051
+        ],
+        [
+          0.024924959987401962,
+          -0.7030000686645508,
+          1.989121913909912
+        ],
+        [
+          0.007885340601205826,
+          -0.703000009059906,
+          1.9575616121292114
+        ],
+        [
+          0.007885351777076721,
+          -0.6440511345863342,
+          1.9575616121292114
+        ],
+        [
+          0.01597040519118309,
+          -0.6279999613761902,
+          1.9725364446640015
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 154530,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 156662,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.0913134040890782e-07,
+      "overlapArea": 0.00312090945956353,
+      "visible": false,
+      "center": [
+        -4.23775577545166,
+        -2.728789806365967,
+        1.9758442640304565
+      ],
+      "normal": [
+        -0.8799417018890381,
+        -2.1675116101960157e-07,
+        -0.4750816524028778
+      ],
+      "polygon": [
+        [
+          -4.252114295959473,
+          -2.76200008392334,
+          2.002438545227051
+        ],
+        [
+          -4.244924545288086,
+          -2.686999797821045,
+          1.989121913909912
+        ],
+        [
+          -4.2278852462768555,
+          -2.686999797821045,
+          1.957561731338501
+        ],
+        [
+          -4.2278852462768555,
+          -2.7459490299224854,
+          1.9575616121292114
+        ],
+        [
+          -4.2359700202941895,
+          -2.76200008392334,
+          1.972536563873291
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 153830,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 155242,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.1606683731079102e-07,
+      "overlapArea": 0.003120907390651795,
+      "visible": false,
+      "center": [
+        -4.242243766784668,
+        -0.6612102389335632,
+        1.9841560125350952
+      ],
+      "normal": [
+        -0.8799422979354858,
+        0.0,
+        -0.4750807285308838
+      ],
+      "polygon": [
+        [
+          -4.252114295959473,
+          -0.7030000686645508,
+          2.002438545227051
+        ],
+        [
+          -4.252114295959473,
+          -0.6440511345863342,
+          2.002438545227051
+        ],
+        [
+          -4.244029521942139,
+          -0.6279999613761902,
+          1.9874635934829712
+        ],
+        [
+          -4.2278852462768555,
+          -0.6279999613761902,
+          1.9575616121292114
+        ],
+        [
+          -4.235074996948242,
+          -0.7030000686645508,
+          1.97087824344635
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 175496,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 177116,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 6.034970283508301e-07,
+      "overlapArea": 0.0030812432252383948,
+      "visible": false,
+      "center": [
+        -4.347514629364014,
+        -2.768789768218994,
+        1.8542635440826416
+      ],
+      "normal": [
+        0.8639312386512756,
+        0.0,
+        -0.5036097168922424
+      ],
+      "polygon": [
+        [
+          -4.337157726287842,
+          -2.7269997596740723,
+          1.87203049659729
+        ],
+        [
+          -4.337157726287842,
+          -2.7859485149383545,
+          1.87203049659729
+        ],
+        [
+          -4.345728397369385,
+          -2.802000045776367,
+          1.8573276996612549
+        ],
+        [
+          -4.362842082977295,
+          -2.802000045776367,
+          1.8279695510864258
+        ],
+        [
+          -4.354687213897705,
+          -2.7269997596740723,
+          1.8419588804244995
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 175546,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 177498,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.0132789611816406e-06,
+      "overlapArea": 0.003081242618486921,
+      "visible": false,
+      "center": [
+        -6.337515354156494,
+        -2.768789768218994,
+        1.8457367420196533
+      ],
+      "normal": [
+        -0.8639312386512756,
+        0.0,
+        -0.5036097168922424
+      ],
+      "polygon": [
+        [
+          -6.352842330932617,
+          -2.802000045776367,
+          1.87203049659729
+        ],
+        [
+          -6.344687461853027,
+          -2.7269997596740723,
+          1.8580411672592163
+        ],
+        [
+          -6.327157974243164,
+          -2.7269997596740723,
+          1.8279695510864258
+        ],
+        [
+          -6.327157974243164,
+          -2.7859485149383545,
+          1.8279695510864258
+        ],
+        [
+          -6.335728645324707,
+          -2.802000045776367,
+          1.842672348022461
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 174696,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 175786,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 6.034970283508301e-07,
+      "overlapArea": 0.003081236555455822,
+      "visible": false,
+      "center": [
+        -4.352485179901123,
+        -0.5812102556228638,
+        1.8457367420196533
+      ],
+      "normal": [
+        0.8639312386512756,
+        0.0,
+        -0.5036097168922424
+      ],
+      "polygon": [
+        [
+          -4.337157726287842,
+          -0.5479999780654907,
+          1.87203049659729
+        ],
+        [
+          -4.345312595367432,
+          -0.6230000257492065,
+          1.8580412864685059
+        ],
+        [
+          -4.362842082977295,
+          -0.6230000257492065,
+          1.8279695510864258
+        ],
+        [
+          -4.362842082977295,
+          -0.5640513300895691,
+          1.8279695510864258
+        ],
+        [
+          -4.354271411895752,
+          -0.5479999780654907,
+          1.8426722288131714
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 174746,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 176168,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.0132789611816406e-06,
+      "overlapArea": 0.0030812360271066375,
+      "visible": false,
+      "center": [
+        -6.3424859046936035,
+        -0.5812103152275085,
+        1.8542635440826416
+      ],
+      "normal": [
+        -0.8639312386512756,
+        0.0,
+        -0.5036097168922424
+      ],
+      "polygon": [
+        [
+          -6.352842330932617,
+          -0.6230000257492065,
+          1.87203049659729
+        ],
+        [
+          -6.352842330932617,
+          -0.5640513896942139,
+          1.87203049659729
+        ],
+        [
+          -6.344271659851074,
+          -0.5479999780654907,
+          1.8573278188705444
+        ],
+        [
+          -6.327157974243164,
+          -0.5479999780654907,
+          1.8279695510864258
+        ],
+        [
+          -6.335312843322754,
+          -0.6230000257492065,
+          1.84195876121521
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 175550,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 177502,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 3.51950959043279e-07,
+      "overlapArea": 0.0030812257433945407,
+      "visible": false,
+      "center": [
+        -5.342514991760254,
+        -2.768789768218994,
+        2.425736665725708
+      ],
+      "normal": [
+        0.8639352917671204,
+        1.2356507568256347e-06,
+        0.5036026835441589
+      ],
+      "polygon": [
+        [
+          -5.349687099456787,
+          -2.7269997596740723,
+          2.4380412101745605
+        ],
+        [
+          -5.357841491699219,
+          -2.802000045776367,
+          2.4520304203033447
+        ],
+        [
+          -5.340728282928467,
+          -2.802000045776367,
+          2.4226725101470947
+        ],
+        [
+          -5.332157611846924,
+          -2.7859485149383545,
+          2.4079694747924805
+        ],
+        [
+          -5.332158088684082,
+          -2.7269997596740723,
+          2.4079697132110596
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 175500,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 177120,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.980232238769531e-07,
+      "overlapArea": 0.0030812181086078416,
+      "visible": false,
+      "center": [
+        -5.342514514923096,
+        -2.768789768218994,
+        2.4342634677886963
+      ],
+      "normal": [
+        -0.8639341592788696,
+        0.0,
+        0.5036047101020813
+      ],
+      "polygon": [
+        [
+          -5.357841968536377,
+          -2.802000045776367,
+          2.4079697132110596
+        ],
+        [
+          -5.340728759765625,
+          -2.802000045776367,
+          2.4373278617858887
+        ],
+        [
+          -5.332158088684082,
+          -2.7859487533569336,
+          2.4520304203033447
+        ],
+        [
+          -5.332158088684082,
+          -2.7269997596740723,
+          2.4520304203033447
+        ],
+        [
+          -5.349687576293945,
+          -2.7269997596740723,
+          2.4219589233398438
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 174700,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 175790,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 4.860530111727712e-07,
+      "overlapArea": 0.0030812023002517344,
+      "visible": false,
+      "center": [
+        -5.347485065460205,
+        -0.5812101364135742,
+        2.425736665725708
+      ],
+      "normal": [
+        -0.8639382123947144,
+        1.7439410839870106e-06,
+        0.5035977363586426
+      ],
+      "polygon": [
+        [
+          -5.340312480926514,
+          -0.6230000257492065,
+          2.4380412101745605
+        ],
+        [
+          -5.332158088684082,
+          -0.5479998588562012,
+          2.4520304203033447
+        ],
+        [
+          -5.349271297454834,
+          -0.547999918460846,
+          2.4226722717285156
+        ],
+        [
+          -5.357841491699219,
+          -0.5640509128570557,
+          2.4079697132110596
+        ],
+        [
+          -5.357841968536377,
+          -0.6230000257492065,
+          2.4079697132110596
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 174750,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 176172,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.0302832126617432e-07,
+      "overlapArea": 0.003081198497911916,
+      "visible": false,
+      "center": [
+        -5.347485065460205,
+        -0.581210196018219,
+        2.4342634677886963
+      ],
+      "normal": [
+        0.8639382123947144,
+        0.0,
+        0.5035977959632874
+      ],
+      "polygon": [
+        [
+          -5.332158088684082,
+          -0.547999918460846,
+          2.4079697132110596
+        ],
+        [
+          -5.349271297454834,
+          -0.5479999780654907,
+          2.4373278617858887
+        ],
+        [
+          -5.357841491699219,
+          -0.5640510320663452,
+          2.4520304203033447
+        ],
+        [
+          -5.357841491699219,
+          -0.6230000257492065,
+          2.4520304203033447
+        ],
+        [
+          -5.340312480926514,
+          -0.6229999661445618,
+          2.4219589233398438
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 175546,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 177498,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.0132789611816406e-06,
+      "overlapArea": 0.0006072249609827551,
+      "visible": false,
+      "center": [
+        -6.350124359130859,
+        -2.751999855041504,
+        1.8673675060272217
+      ],
+      "normal": [
+        -0.8639312386512756,
+        0.0,
+        -0.5036097168922424
+      ],
+      "polygon": [
+        [
+          -6.352842330932617,
+          -2.802000045776367,
+          1.87203049659729
+        ],
+        [
+          -6.352842330932617,
+          -2.7269997596740723,
+          1.87203049659729
+        ],
+        [
+          -6.344687461853027,
+          -2.7269997596740723,
+          1.8580411672592163
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 175496,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 177116,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 6.034970283508301e-07,
+      "overlapArea": 0.0006072249281715179,
+      "visible": false,
+      "center": [
+        -4.360124111175537,
+        -2.751999855041504,
+        1.8326327800750732
+      ],
+      "normal": [
+        0.8639312386512756,
+        0.0,
+        -0.5036097168922424
+      ],
+      "polygon": [
+        [
+          -4.354687213897705,
+          -2.7269997596740723,
+          1.8419588804244995
+        ],
+        [
+          -4.362842082977295,
+          -2.802000045776367,
+          1.8279695510864258
+        ],
+        [
+          -4.362842082977295,
+          -2.7269997596740723,
+          1.8279695510864258
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 174746,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 176168,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.0132789611816406e-06,
+      "overlapArea": 0.0006072211834125493,
+      "visible": false,
+      "center": [
+        -6.329875946044922,
+        -0.5980000495910645,
+        1.8326327800750732
+      ],
+      "normal": [
+        -0.8639312386512756,
+        0.0,
+        -0.5036097168922424
+      ],
+      "polygon": [
+        [
+          -6.335312843322754,
+          -0.6230000257492065,
+          1.84195876121521
+        ],
+        [
+          -6.327157974243164,
+          -0.5479999780654907,
+          1.8279695510864258
+        ],
+        [
+          -6.327157974243164,
+          -0.6230000853538513,
+          1.8279695510864258
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 174696,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 175786,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 6.034970283508301e-07,
+      "overlapArea": 0.0006072210748953033,
+      "visible": false,
+      "center": [
+        -4.339876174926758,
+        -0.5980000495910645,
+        1.8673675060272217
+      ],
+      "normal": [
+        0.8639312386512756,
+        0.0,
+        -0.5036097168922424
+      ],
+      "polygon": [
+        [
+          -4.337157726287842,
+          -0.5479999780654907,
+          1.87203049659729
+        ],
+        [
+          -4.337157726287842,
+          -0.6230000257492065,
+          1.87203049659729
+        ],
+        [
+          -4.345312595367432,
+          -0.6230000257492065,
+          1.8580412864685059
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 174750,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 176172,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 3.50635623647122e-07,
+      "overlapArea": 0.0006072192463031039,
+      "visible": false,
+      "center": [
+        -5.33487606048584,
+        -0.5980000495910645,
+        2.412632703781128
+      ],
+      "normal": [
+        0.8639354109764099,
+        1.2356505294519593e-06,
+        0.5036027431488037
+      ],
+      "polygon": [
+        [
+          -5.332158088684082,
+          -0.547999918460846,
+          2.4079697132110596
+        ],
+        [
+          -5.340312480926514,
+          -0.6230000257492065,
+          2.4219589233398438
+        ],
+        [
+          -5.332157611846924,
+          -0.6230000257492065,
+          2.4079697132110596
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 174700,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 175790,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 3.0174851417541504e-07,
+      "overlapArea": 0.0006072175696889281,
+      "visible": false,
+      "center": [
+        -5.334876537322998,
+        -0.5979999899864197,
+        2.4473674297332764
+      ],
+      "normal": [
+        -0.8639341592788696,
+        0.0,
+        0.5036047697067261
+      ],
+      "polygon": [
+        [
+          -5.332158088684082,
+          -0.6230000257492065,
+          2.4520304203033447
+        ],
+        [
+          -5.332158088684082,
+          -0.5479998588562012,
+          2.4520304203033447
+        ],
+        [
+          -5.340312480926514,
+          -0.6230000257492065,
+          2.4380412101745605
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 175500,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 177120,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 4.913273556894637e-07,
+      "overlapArea": 0.00060721692533725,
+      "visible": false,
+      "center": [
+        -5.355123519897461,
+        -2.751999855041504,
+        2.412632703781128
+      ],
+      "normal": [
+        -0.8639382123947144,
+        1.7439416524211993e-06,
+        0.5035977363586426
+      ],
+      "polygon": [
+        [
+          -5.357841968536377,
+          -2.802000045776367,
+          2.4079697132110596
+        ],
+        [
+          -5.349687576293945,
+          -2.7269997596740723,
+          2.4219589233398438
+        ],
+        [
+          -5.357841491699219,
+          -2.7269997596740723,
+          2.4079697132110596
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 175550,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 177502,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:91:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 2.086162567138672e-07,
+      "overlapArea": 0.0006072165981038657,
+      "visible": false,
+      "center": [
+        -5.355123519897461,
+        -2.751999855041504,
+        2.4473674297332764
+      ],
+      "normal": [
+        0.8639382123947144,
+        0.0,
+        0.5035977363586426
+      ],
+      "polygon": [
+        [
+          -5.357841491699219,
+          -2.7269997596740723,
+          2.4520304203033447
+        ],
+        [
+          -5.357841491699219,
+          -2.802000045776367,
+          2.4520304203033447
+        ],
+        [
+          -5.349687099456787,
+          -2.7269997596740723,
+          2.4380412101745605
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 153834,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 155246,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 5.251820809348828e-07,
+      "overlapArea": 0.0005675119501966462,
+      "visible": false,
+      "center": [
+        -2.1002814769744873,
+        -0.6779996752738953,
+        3.1120002269744873
+      ],
+      "normal": [
+        0.879936933517456,
+        4.481518658394634e-07,
+        0.4750905930995941
+      ],
+      "polygon": [
+        [
+          -2.0978848934173584,
+          -0.6279996633529663,
+          3.1075613498687744
+        ],
+        [
+          -2.105074644088745,
+          -0.7029997706413269,
+          3.120877981185913
+        ],
+        [
+          -2.0978848934173584,
+          -0.7029997110366821,
+          3.1075613498687744
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 153784,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 154864,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 5.457550287246704e-07,
+      "overlapArea": 0.0005675116167310479,
+      "visible": false,
+      "center": [
+        -2.1002817153930664,
+        -0.67799973487854,
+        3.1479997634887695
+      ],
+      "normal": [
+        -0.8799368739128113,
+        0.0,
+        0.4750905930995941
+      ],
+      "polygon": [
+        [
+          -2.0978851318359375,
+          -0.7029997706413269,
+          3.1524386405944824
+        ],
+        [
+          -2.0978851318359375,
+          -0.6279997229576111,
+          3.1524386405944824
+        ],
+        [
+          -2.105074882507324,
+          -0.7029997706413269,
+          3.1391220092773438
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 154480,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 156280,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 4.328200020609074e-08,
+      "overlapArea": 0.0005675109067586684,
+      "visible": false,
+      "center": [
+        0.010281885042786598,
+        -2.7119998931884766,
+        1.9620006084442139
+      ],
+      "normal": [
+        0.8799397945404053,
+        -1.8062509354876966e-07,
+        -0.47508519887924194
+      ],
+      "polygon": [
+        [
+          0.015075044706463814,
+          -2.686999797821045,
+          1.97087824344635
+        ],
+        [
+          0.007885295897722244,
+          -2.76200008392334,
+          1.9575616121292114
+        ],
+        [
+          0.007885312661528587,
+          -2.686999797821045,
+          1.9575616121292114
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 154534,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 156666,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 4.0978193283081055e-07,
+      "overlapArea": 0.0005675106508500616,
+      "visible": false,
+      "center": [
+        -2.119718074798584,
+        -2.7119998931884766,
+        3.1479997634887695
+      ],
+      "normal": [
+        0.8799379467964172,
+        0.0,
+        0.4750886559486389
+      ],
+      "polygon": [
+        [
+          -2.122114658355713,
+          -2.686999797821045,
+          3.1524386405944824
+        ],
+        [
+          -2.122114658355713,
+          -2.7619996070861816,
+          3.1524386405944824
+        ],
+        [
+          -2.114924907684326,
+          -2.686999797821045,
+          3.1391220092773438
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 154484,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 156284,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 4.4497570783619267e-07,
+      "overlapArea": 0.0005675103766504992,
+      "visible": false,
+      "center": [
+        -2.119718551635742,
+        -2.7119998931884766,
+        3.1120004653930664
+      ],
+      "normal": [
+        -0.8799379467964172,
+        4.481502742237353e-07,
+        0.47508859634399414
+      ],
+      "polygon": [
+        [
+          -2.122114896774292,
+          -2.7619996070861816,
+          3.1075615882873535
+        ],
+        [
+          -2.1149251461029053,
+          -2.686999797821045,
+          3.120878219604492
+        ],
+        [
+          -2.122115135192871,
+          -2.686999797821045,
+          3.1075615882873535
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 154530,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 156662,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.601874828338623e-07,
+      "overlapArea": 0.0005675093964763178,
+      "visible": false,
+      "center": [
+        -4.249717712402344,
+        -2.7119998931884766,
+        1.997999668121338
+      ],
+      "normal": [
+        -0.8799422383308411,
+        0.0,
+        -0.475080668926239
+      ],
+      "polygon": [
+        [
+          -4.252114295959473,
+          -2.76200008392334,
+          2.002438545227051
+        ],
+        [
+          -4.252114295959473,
+          -2.686999797821045,
+          2.002438545227051
+        ],
+        [
+          -4.244924545288086,
+          -2.686999797821045,
+          1.989121913909912
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 153780,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 154860,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 7.175322525032612e-08,
+      "overlapArea": 0.0005675089085699914,
+      "visible": false,
+      "center": [
+        0.029718121513724327,
+        -0.6780000925064087,
+        1.997999668121338
+      ],
+      "normal": [
+        0.8799394369125366,
+        -1.2969453067057657e-08,
+        -0.475085973739624
+      ],
+      "polygon": [
+        [
+          0.032114699482917786,
+          -0.6279999613761902,
+          2.002438545227051
+        ],
+        [
+          0.032114699482917786,
+          -0.7030000686645508,
+          2.002438545227051
+        ],
+        [
+          0.024924959987401962,
+          -0.7030000686645508,
+          1.989121913909912
+        ]
+      ]
+    },
+    {
+      "a": {
+        "object": "FishHatchery.Architecture",
+        "face": 153830,
+        "material": "RoofPlanks.IronTeeth",
+        "source": "civic_isometric_geometry.py:301:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "b": {
+        "object": "FishHatchery.Architecture",
+        "face": 155242,
+        "material": "BaseWood_DarkBrown.IronTeeth",
+        "source": "civic_isometric_geometry.py:310:gabled_roof > hatchery_isometric_geometry.py:56:hatchery > render_reference_studies.py:83:render_model > render_reference_studies.py:284:main"
+      },
+      "planeSeparation": 1.316598279288428e-07,
+      "overlapArea": 0.0005675055739752446,
+      "visible": false,
+      "center": [
+        -4.230281829833984,
+        -0.6780000925064087,
+        1.9620006084442139
+      ],
+      "normal": [
+        -0.8799417018890381,
+        -2.167514594475506e-07,
+        -0.4750816524028778
+      ],
+      "polygon": [
+        [
+          -4.235074996948242,
+          -0.7030000686645508,
+          1.97087824344635
+        ],
+        [
+          -4.2278852462768555,
+          -0.628000020980835,
+          1.9575616121292114
+        ],
+        [
+          -4.2278852462768555,
+          -0.703000009059906,
+          1.957561731338501
+        ]
+      ]
+    }
+  ],
+  "seconds": 13.52,
+  "model": "FishHatchery",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\FishHatchery-ReferenceStudy.blend",
+  "sourceSha256": "044536ca43040f1cc620b6f15446875961245743452ef46c641d5eda88229a0b",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

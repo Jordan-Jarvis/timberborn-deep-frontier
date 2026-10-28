@@ -1,0 +1,59 @@
+{
+  "scope": "Blender source review only; not installed or runtime verified",
+  "renders": [
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "f00d3bafebc74ba0534d88845a4f8c4f35205f3489e4ea69d334e59d6bc297f7",
+      "images": [
+        "Restaurant-front.png",
+        "Restaurant-front-right.png"
+      ],
+      "imageSha256": {
+        "Restaurant-front.png": "fac73862e60fac04d66fae3cf7de4da6badc1aae818f1ddbc0312194813bdc04",
+        "Restaurant-front-right.png": "23c94491ec33dafec3d596391e43b15ffc95de30c7a69b7dd758e24b526adfa8"
+      }
+    },
+    {
+      "model": "Hospital",
+      "source": "src\\DeepFrontier\\Art\\Source\\Hospital-ReferenceStudy.blend",
+      "sourceSha256": "6b411d76e9ed89f692959fcef8c9eadd4b0ffbe9608e2fc10a781ee55acdcff3",
+      "images": [
+        "Hospital-front.png",
+        "Hospital-front-right.png"
+      ],
+      "imageSha256": {
+        "Hospital-front.png": "f7fefe66a07fdfb83c7dd2b7d2f8edc95d50865ffbaa07a7f5931f313e2c1c99",
+        "Hospital-front-right.png": "dfe8ad672fb9472915ee22331269d1bc3bdd85a38285657beebc6903f69051f3"
+      }
+    },
+    {
+      "model": "GroceryStore",
+      "source": "src\\DeepFrontier\\Art\\Source\\GroceryStore-ReferenceStudy.blend",
+      "sourceSha256": "a348cd2c49284d24ffa57f2d537c01308a15e2b1f37d716021fe0ecdd857170b",
+      "images": [
+        "GroceryStore-front.png",
+        "GroceryStore-front-right.png"
+      ],
+      "imageSha256": {
+        "GroceryStore-front.png": "4029e8869d537b1a8fda6b9d5b3228dfe9d09cdf3e69f1eff982d1fe52bd3c1d",
+        "GroceryStore-front-right.png": "265d6cbcd77bc1de5bed709f9acbdafc57d149a5c1d7a10ed14a0931e060e87d"
+      }
+    },
+    {
+      "model": "FisheryWorks",
+      "source": "src\\DeepFrontier\\Art\\Source\\FisheryWorks-ReferenceStudy.blend",
+      "sourceSha256": "9df73cd92cba133dec378c15582b68320bde7f9cde9302f5ed5b0862d718c7ce",
+      "images": [
+        "FisheryWorks-front.png",
+        "FisheryWorks-front-right.png"
+      ],
+      "imageSha256": {
+        "FisheryWorks-front.png": "5d9bf269ed056c9358d215cc53c03e010f13d8b81a3c75d02e454744e0df3edb",
+        "FisheryWorks-front-right.png": "02c89039453ae1b13cc50175b27924f4fc03e4c6c486dfb3eb5e06d16d0267b8"
+      }
+    }
+  ],
+  "windowSource": "Redic.NewStyles 0.1 District Center; original pane, crown, sill and UVs",
+  "doorSource": "Native Large Barrack inside closed 1x1 insert"
+}

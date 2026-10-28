@@ -1,0 +1,26 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -7.045000076293945,
+    -10.045499801635742,
+    0.0
+  ],
+  "boundsMax": [
+    0.05000000074505806,
+    0.0754999965429306,
+    6.244999885559082
+  ],
+  "sourceReference": "docs/art/concepts/Reinforced Hydro Turbine v1.png",
+  "selectedReferenceViews": [
+    "front-left isometric",
+    "rear-right isometric"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "Hydro.TurbineRunner",
+    "Hydro.GeneratorCoupling"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "tileDimensions": null
+}

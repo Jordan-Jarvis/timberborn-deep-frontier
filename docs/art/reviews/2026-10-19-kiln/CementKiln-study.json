@@ -1,0 +1,36 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -7.985499858856201,
+    -5.96999979019165,
+    0.01391066424548626
+  ],
+  "boundsMax": [
+    0.9649999737739563,
+    1.5,
+    4.71999979019165
+  ],
+  "sourceReference": "docs/art/concepts/Cement Kiln 3D Reference Sheet.png",
+  "selectedReferenceViews": [
+    "Front Left",
+    "Front Right",
+    "Back Left"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "ReferenceKilnBarrel",
+    "ReferenceKilnSupport11",
+    "ReferenceKilnSupport12",
+    "ReferenceKilnSupport21",
+    "ReferenceKilnSupport22",
+    "ReferenceKilnSupport31",
+    "ReferenceKilnSupport32",
+    "ReferenceKilnPinion",
+    "ReferenceKilnDriveWheel",
+    "ReferenceKilnFire1",
+    "ReferenceKilnFire2",
+    "ReferenceKilnFire3"
+  ],
+  "animationFrames": 241,
+  "tileDimensions": null
+}

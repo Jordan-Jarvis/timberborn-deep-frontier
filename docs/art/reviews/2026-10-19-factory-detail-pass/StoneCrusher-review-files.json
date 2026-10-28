@@ -1,0 +1,22 @@
+{
+  "scope": "Blender review only; no game package installed",
+  "scene": "src\\DeepFrontier\\Art\\Source\\StoneCrusher-ReferenceStudy.blend",
+  "sceneSha256": "118eb5f013adebdeed3f7a943367094d1098349511b376ed773d023238f806f9",
+  "artifactsSha256": {
+    "StoneCrusher-front.png": "8d31fd578a4d471bf4d3df8f349554583debdc66428e5647e2626b5f6f1cb880",
+    "StoneCrusher-front-right.png": "24990f1dd89714c4b28c629e1692d4c7b848933d68f4b66800c0b923ec4ac395",
+    "StoneCrusher-back-left.png": "5d0f48e1bca8753514463c58b1209779fc99bacc7095679b0f848ee02a21f1b7",
+    "StoneCrusher-detail.png": "9df9c11cf65914f4e22e9222b173da29d35f6c286e1a2458f1f288768abbc790",
+    "StoneCrusher-facade.png": "0bdfcbf534f060369001fbf7204108b8265804f4a57f6e7da655099dd5f1715f",
+    "StoneCrusher-motion.mp4": "b416988f31c50221f893c452417992e7d9f479f450a1b46cc5ef883eca6e81e3",
+    "StoneCrusher-study.json": "6af7009428a3af06adbb1309b1b6bddc65106771a5c10f39487216f9f441fdee",
+    "StoneCrusher-height-manifest.json": "193e5eeb1589d8e73fe85169623c7d6a08404bd1714a1119553f6e41d9c3fde4",
+    "StoneCrusher-rail-manifest.json": "91727b36031685c0cc192e705c47086c962a4bc667caf892564d8dc13c385b5f",
+    "StoneCrusher-geometry-check.json": "c15d3f2f406e9c054d6497884176eae67c8b546dca0931be9b5808e4bf2bdac2",
+    "StoneCrusher-motion-check.json": "e7b1146ff56d8a17a2c552af78d89faca889224360c42399f1458ef8753c45ab",
+    "StoneCrusher-video-check.json": "0aac79a6f057f925e8135d2c5583d8949b1db0f9123b9ccb2af01f7ab4bdb92d",
+    "StoneCrusher-video-frame-001.png": "664b990e47bd6901ee6ba224885b74b3e154f72df3c664c009df4bef2789620d",
+    "StoneCrusher-video-frame-014.png": "450e6e0288f8e209097e5c98ebd918c70f5592a85f53474ab5a3037b8441e99d",
+    "StoneCrusher-video-frame-021.png": "81b50e54898618bdaa17bea7d2459aac7aad4e816d6104f37a62de1f8d36f412"
+  }
+}

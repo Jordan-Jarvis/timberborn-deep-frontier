@@ -1,0 +1,255 @@
+{
+  "scope": "Local preview copies; game references the original shipped resources",
+  "props": [
+    {
+      "name": "NativePlant0",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        2.1149999999999998,
+        1.5050000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant1",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        2.645,
+        1.5050000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant2",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        2.8850000000000002,
+        1.215,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant3",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        3.7149999999999994,
+        1.5050000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant4",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        4.244999999999999,
+        1.5050000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant5",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        4.484999999999999,
+        1.215,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant6",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        5.265000000000001,
+        1.215,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant7",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        5.505000000000001,
+        1.5050000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant8",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        6.035,
+        1.5050000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant9",
+      "model": "BlueberryBushMature",
+      "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
+      "position": [
+        7.895,
+        3.675,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180
+    },
+    {
+      "name": "NativePlant10",
+      "model": "BlueberryBushMature",
+      "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
+      "position": [
+        7.895,
+        3.625,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 270
+    },
+    {
+      "name": "NativePlant11",
+      "model": "BlueberryBushMature",
+      "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
+      "position": [
+        7.605,
+        4.735,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant12",
+      "model": "BlueberryBushMature",
+      "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
+      "position": [
+        7.605,
+        5.265,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 90
+    },
+    {
+      "name": "NativePlant13",
+      "model": "BlueberryBushMature",
+      "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
+      "position": [
+        7.895,
+        6.425000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 180
+    },
+    {
+      "name": "NativePlant14",
+      "model": "BlueberryBushMature",
+      "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
+      "position": [
+        7.895,
+        6.375000000000001,
+        2.545
+      ],
+      "scale": 0.29,
+      "yaw": 270
+    },
+    {
+      "name": "NativeBarrel15",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        6.1,
+        6.55,
+        7.1807228
+      ],
+      "scale": 3.5,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel16",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        0.6,
+        6.5,
+        0.39820992
+      ],
+      "scale": 2.4,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel17",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        1.2,
+        6.5,
+        0.39820992
+      ],
+      "scale": 2.4,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant18",
+      "model": "Shrub.IronTeeth",
+      "resource": "Buildings/Decoration/Shrub/Shrub.IronTeeth.Model",
+      "position": [
+        6.640000000000001,
+        5.72,
+        6
+      ],
+      "scale": 0.4,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant19",
+      "model": "Shrub.IronTeeth",
+      "resource": "Buildings/Decoration/Shrub/Shrub.IronTeeth.Model",
+      "position": [
+        9.120000000000001,
+        5.72,
+        6
+      ],
+      "scale": 0.4,
+      "yaw": 0
+    }
+  ],
+  "liquids": []
+}

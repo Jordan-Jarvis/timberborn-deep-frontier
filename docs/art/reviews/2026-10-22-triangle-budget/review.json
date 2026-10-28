@@ -1,0 +1,85 @@
+{
+  "scope": "Before | after | difference sheets (render_budget_views.py, compose_budget_sheet.py) of the shell build (no bevel, lean fasteners, enclosed-face cull) and the removal of forced decoration and aprons beyond the walls (2026-10-22). Blender renders, not game screenshots.",
+  "renders": [
+    {
+      "model": "FisheryWorks",
+      "source": "src\\DeepFrontier\\Art\\Source\\FisheryWorks-ReferenceStudy.blend",
+      "sourceSha256": "ba96d3cf08b58c4cee0315657b5ff145534f11167297c92eff2935858c5817c3",
+      "images": [
+        "triangle-budget-civic-FisheryWorks.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-civic-FisheryWorks.png": "ac230ea9db472bf97f79497bc0aa51b2f3cfc5dee0a12164e361e05ff5d8de44"
+      }
+    },
+    {
+      "model": "FishHatchery",
+      "source": "src\\DeepFrontier\\Art\\Source\\FishHatchery-ReferenceStudy.blend",
+      "sourceSha256": "d3b3016803187d3f4deae392a7ea03ee901924955600d6cacf5313d581dfb86a",
+      "images": [
+        "triangle-budget-civic-FishHatchery.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-civic-FishHatchery.png": "6eb0e47d39c3e24bebbe20dbdb5d7256e32e758f88fe73b2cc79f1065899aa9b"
+      }
+    },
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "6e6bc7f8e3832e6fbbb15f29750dfbad83ea8225fa6a26905da71c9c2cb78a7c",
+      "images": [
+        "triangle-budget-civic-Restaurant.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-civic-Restaurant.png": "6bdd4fd348ffb6019ca7678fe9d35eb80741b87e497cbef1fedfbff06270564d"
+      }
+    },
+    {
+      "model": "Hospital",
+      "source": "src\\DeepFrontier\\Art\\Source\\Hospital-ReferenceStudy.blend",
+      "sourceSha256": "431fb6dbc7205f77dc6286626dad13b751e08225f7175f0988ba72e79e5ade10",
+      "images": [
+        "triangle-budget-civic-Hospital.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-civic-Hospital.png": "111e3ae6d04879951fdffab4e06037e77af2cff555df7298672c3354405477fe"
+      }
+    },
+    {
+      "model": "GroceryStore",
+      "source": "src\\DeepFrontier\\Art\\Source\\GroceryMarket-ReferenceStudy.blend",
+      "sourceSha256": "946617fa48f2cc077f3d6001dd4de40881b561b28aa4f0ce69541c55fbed4991",
+      "images": [
+        "triangle-budget-grocery.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-grocery.png": "7c07e1b94453005ca28d0e535f8805835185ce80e7944784f30ff7bcb0735635"
+      }
+    },
+    {
+      "model": "MaterialsLaboratory",
+      "source": "src\\DeepFrontier\\Art\\Source\\MaterialsLaboratory-ReferenceStudy.blend",
+      "sourceSha256": "1daf2e925f12e8ba2038602f8f205a44eaf6b42b86a04e49d6d98ca1cd6c4386",
+      "images": [
+        "triangle-budget-research.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-research.png": "3d62874219680341307551bcd24f11e8965d12e37cb3861c918653172fa8a08d"
+      }
+    },
+    {
+      "model": "ReinforcedHydroTurbine",
+      "source": "src\\DeepFrontier\\Art\\Source\\ReinforcedHydroTurbine-ReferenceStudy.blend",
+      "sourceSha256": "7374a0bc85ff93f1e3a40c1f99a46d4009dabf6bd9cd612fd39fff9360811227",
+      "images": [
+        "triangle-budget-hydro.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-hydro.png": "d2be3c9c60fd9c2aa31f79dfc923979fcfe0f4bd0960bfca86e81b38ffe1f1db"
+      }
+    }
+  ],
+  "extraImages": [
+    "no-forced-decor-civic.png"
+  ]
+}

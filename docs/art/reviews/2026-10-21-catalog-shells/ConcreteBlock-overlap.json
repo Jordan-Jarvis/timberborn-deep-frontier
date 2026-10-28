@@ -1,0 +1,19 @@
+{
+  "scope": "Evaluated modifiers and posed native prop meshes. Same-facing triangles only; five exterior ray directions per sample. Potential depth conflicts, not proof of GPU flicker.",
+  "epsilon": 0.0005,
+  "minimumOverlapArea": 0.0005,
+  "parallelAngleDegrees": 0.05,
+  "triangles": 2300,
+  "spatialCandidatePairs": 0,
+  "nearPlanePairs": 0,
+  "identicalMaterialAndUvPairs": 0,
+  "visibleConflicts": 0,
+  "occludedConflicts": 0,
+  "conflicts": [],
+  "seconds": 0.06,
+  "model": "ConcreteBlock",
+  "frame": 1,
+  "sourceScene": "src\\DeepFrontier\\Art\\Source\\ConcreteBlock-ReferenceStudy.blend",
+  "sourceSha256": "bad6d920860126a0ba3ba157c13139fa14ca0566bf9803c7dbf29b0c974e3474",
+  "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05"
+}

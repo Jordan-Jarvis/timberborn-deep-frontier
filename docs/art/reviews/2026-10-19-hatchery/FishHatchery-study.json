@@ -1,0 +1,25 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -6.500500202178955,
+    -7.170499801635742,
+    -0.9200000166893005
+  ],
+  "boundsMax": [
+    0.7350000143051147,
+    0.5205000042915344,
+    3.299999952316284
+  ],
+  "sourceReference": "docs/art/concepts/Fishery.png",
+  "selectedReferenceViews": [
+    "Front Left waterfront construction details",
+    "Front Right waterfront construction details"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "FishHatchery.NurserySign"
+  ],
+  "animationFrames": 61,
+  "animationFps": 30,
+  "tileDimensions": null
+}

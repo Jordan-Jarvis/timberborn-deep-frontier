@@ -1,0 +1,16 @@
+{
+  "units": "1 Blender Z unit = 1 Timberborn grid layer",
+  "scope": "Source geometry only; native occupancy and paths not bound",
+  "walkableDeckLayers": [
+    2,
+    4,
+    6
+  ],
+  "entranceLayers": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "artHeight": 8.664999961853027
+}

@@ -1,0 +1,71 @@
+{
+  "scope": "Source review and clearance evidence; native integration verification is separate. User approval is not implied.",
+  "scene": "src/DeepFrontier/Art/Source/FisheryWorks-ReferenceStudy.blend",
+  "sceneSha256": "5112b05c83e770874c2a78f02f89aba2e909e6a8dfd2e3f4563ce5705be6fdcc",
+  "concept": "docs/art/concepts/Fishery.png",
+  "conceptSha256": "18d710a459db4894fa8edc0e5fa369496439ba9f2825d736c047342d8da1dba0",
+  "referenceViews": "Only the isometric reference views. Printed tile counts and top views excluded.",
+  "registration": [
+    12,
+    10,
+    7
+  ],
+  "doorLevels": [
+    0,
+    2
+  ],
+  "files": [
+    {
+      "path": "FisheryWorks-front.png",
+      "sha256": "a36574ca6983ea76061c9f695523bd7838a33bba2f9fbb33767fe6c8396d0283"
+    },
+    {
+      "path": "FisheryWorks-front-right.png",
+      "sha256": "6892345d8f6b1c226a8a98dffd9f875b5530425fd6792a125f6f9dafcfd3e5c0"
+    },
+    {
+      "path": "FisheryWorks-rear.png",
+      "sha256": "3e246adb84ad2a49ead7cba3a988ec0bbab90a98f51c470a34586d2a9cdbef8c"
+    },
+    {
+      "path": "FisheryWorks-study.json",
+      "sha256": "3f7543aa598af7d10ce36aeb624d225bf76420ecc5d87c55e749a301ab21d815"
+    },
+    {
+      "path": "FisheryWorks-access-manifest.json",
+      "sha256": "9cf75012da966ec6e4e93abf64e5dc996a16eaf41d97fdd21075a83ef1f08b21"
+    },
+    {
+      "path": "FisheryWorks-height-manifest.json",
+      "sha256": "c0aa370d1c2ac91650090f2eb3098c19f1beeb95765f5f06188c54242082d214"
+    },
+    {
+      "path": "FisheryWorks-native-assembly.json",
+      "sha256": "f98f7e69f9ba4445b865d42b9db3a865357a9cc8789da6140d97bfa47f1c120c"
+    },
+    {
+      "path": "FisheryWorks-rail-manifest.json",
+      "sha256": "c356fe67ee08f505968084af8df99e9b2a42f68f173482b6698cfe616b6451ce"
+    },
+    {
+      "path": "FisheryWorks-terrace-manifest.json",
+      "sha256": "738b21c4f9442bf11838cc3ed4e0b68f7e77cf5d2d30778324538e987726ef8e"
+    },
+    {
+      "path": "FisheryWorks-visitor-manifest.json",
+      "sha256": "5a77cc2b8506eb8b7d8d767c8e00974ec7b8ff1fbe313df222006b4bca0e40ca"
+    },
+    {
+      "path": "FisheryWorks-clearance-check.json",
+      "sha256": "6557efc0e595279bb487778eb550e0e112ea14fe36161ea6a0ae917169a5fafc"
+    },
+    {
+      "path": "FisheryWorks-geometry-check.json",
+      "sha256": "f07576efdea89f56eaa8fe8c4484f7bbe61a31f5bbcca836147e096d09fcd1db"
+    },
+    {
+      "path": "game-route-clearance.json",
+      "sha256": "5e109a77c66e360ec9d69dd256e4e37bd9cf43f481cecd362471ce687930fee9"
+    }
+  ]
+}

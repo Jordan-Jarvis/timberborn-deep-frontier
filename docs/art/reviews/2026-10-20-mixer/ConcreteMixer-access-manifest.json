@@ -1,0 +1,35 @@
+{
+  "groundDoor": [
+    1.65,
+    0.42,
+    0
+  ],
+  "deckLayer": 2,
+  "externalStairs": "Player-built native stairs",
+  "clearDeckStrips": [
+    [
+      0,
+      1,
+      1,
+      6
+    ],
+    [
+      0,
+      0,
+      3,
+      1
+    ],
+    [
+      0,
+      5,
+      8,
+      6
+    ],
+    [
+      7,
+      1,
+      8,
+      6
+    ]
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "scope": "Blender source review only; native build/runtime verification is separate",
+  "renders": [
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "315a71f2f5b6ed647db6b30d0b5638343ce8f57d95e788c304730b8fb0769df8",
+      "images": [
+        "Restaurant-front.png",
+        "Restaurant-front-right.png",
+        "Restaurant-rear.png",
+        "Restaurant-back-left.png",
+        "Restaurant-terrace-door.png",
+        "Restaurant-wall-junction.png"
+      ],
+      "imageSha256": {
+        "Restaurant-front.png": "ba9b3b1302a4936a9fadcf1dcf45942c77f6dc14714236d46a72309d28d43bc2",
+        "Restaurant-front-right.png": "4b453cba043047cfa3765a58194b5a43d1970c81d9425fcfc92ea8ea9326377f",
+        "Restaurant-rear.png": "c9a4832de9be8dee9116b26b73f0c5b01477770844fe5b47b344772ef635ac16",
+        "Restaurant-back-left.png": "76345ee005862110497ffbdb0104ad837dcd987a983bfe3f73652ba80e65910f",
+        "Restaurant-terrace-door.png": "c3e615de0212d375541b60acd90a4bcb5af577bcaf1610f9ca6052be62653a06",
+        "Restaurant-wall-junction.png": "4bc44a6889823cf333425de682bb3e60a5bddce5b7b8b6bdcc8c79b603ef9751"
+      }
+    }
+  ],
+  "shellProbeCount": 118893,
+  "uncoveredSamples": 0,
+  "visibleOverlapCandidates": 0
+}

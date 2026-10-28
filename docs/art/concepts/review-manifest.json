@@ -1,0 +1,20 @@
+{
+  "status": "Concepts for user review; not installed game assets",
+  "method": "Built-in image_gen",
+  "date": "2026-10-18",
+  "buildingSheets": [
+    "01-mining-and-sources-concept-v1.png",
+    "02-concrete-production-concept-v1.png",
+    "03-surface-colony-concept-v1.png"
+  ],
+  "currentIconStudy": "04-ui-icon-direction-v2.png",
+  "supersededIconStudy": "04-ui-icon-direction-v1.png",
+  "prompts": ["concept-prompts-v1.json", "icon-refinement-v2.json"],
+  "reviewNotes": [
+    "UI v2 simplifies the first icon study to match the official JamStove and BerryJam examples approved by the user.",
+    "Board backgrounds are presentation backgrounds; future individual production icons require transparency.",
+    "Concept dimensions are design targets. Drawn grids and views do not establish exact dimensions or model bounds.",
+    "The concrete board's small mixer glyph has an unwanted flame; use the separate v2 icon study as the UI direction instead.",
+    "Models, UVs, runtime footprint checks, animation pivots and final UI sprites still need implementation after design review."
+  ]
+}

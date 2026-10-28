@@ -1,0 +1,77 @@
+{
+  "sourceSha256": "315a71f2f5b6ed647db6b30d0b5638343ce8f57d95e788c304730b8fb0769df8",
+  "views": [
+    {
+      "view": "front",
+      "focus": [
+        -4.978024005889893,
+        -4.3124589920043945,
+        3.313938856124878
+      ],
+      "orthographicScale": 12.183365821838379,
+      "modelVertexSamples": 45284,
+      "shift": [
+        0,
+        0
+      ],
+      "resolution": [
+        1600,
+        1600
+      ]
+    },
+    {
+      "view": "front-right",
+      "focus": [
+        -4.7668633460998535,
+        -4.035461902618408,
+        3.8434243202209473
+      ],
+      "orthographicScale": 11.582234382629395,
+      "modelVertexSamples": 45284,
+      "shift": [
+        0,
+        0
+      ],
+      "resolution": [
+        1600,
+        1600
+      ]
+    },
+    {
+      "view": "rear",
+      "focus": [
+        -5.083241939544678,
+        -4.447740077972412,
+        3.7834930419921875
+      ],
+      "orthographicScale": 12.184557914733887,
+      "modelVertexSamples": 45284,
+      "shift": [
+        0,
+        0
+      ],
+      "resolution": [
+        1600,
+        1600
+      ]
+    },
+    {
+      "view": "back-left",
+      "focus": [
+        -4.696209907531738,
+        -4.1263017654418945,
+        3.361189842224121
+      ],
+      "orthographicScale": 11.65058708190918,
+      "modelVertexSamples": 45284,
+      "shift": [
+        0,
+        0
+      ],
+      "resolution": [
+        1600,
+        1600
+      ]
+    }
+  ]
+}

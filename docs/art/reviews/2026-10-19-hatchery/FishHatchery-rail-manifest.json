@@ -1,0 +1,568 @@
+{
+  "status": "Separate Blender nodes; game connection bindings are not authored yet",
+  "coordinateSpace": "Authored artwork X/across Y/back Z/up; no grid conversion",
+  "runs": [
+    {
+      "id": "NurseryLeft",
+      "panels": [
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel00",
+          "start": [
+            -0.6499999761581421,
+            -0.44999998807907104,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            0.1307692527770996,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post000",
+          "endPost": "WalkwayRail.FishHatchery.Post001"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel01",
+          "start": [
+            -0.6499999761581421,
+            0.1307692527770996,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            0.7115384936332703,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post001",
+          "endPost": "WalkwayRail.FishHatchery.Post002"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel02",
+          "start": [
+            -0.6499999761581421,
+            0.7115384936332703,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            1.2923078536987305,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post002",
+          "endPost": "WalkwayRail.FishHatchery.Post003"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel03",
+          "start": [
+            -0.6499999761581421,
+            1.2923078536987305,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            1.8730769157409668,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post003",
+          "endPost": "WalkwayRail.FishHatchery.Post004"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel04",
+          "start": [
+            -0.6499999761581421,
+            1.8730769157409668,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            2.4538462162017822,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post004",
+          "endPost": "WalkwayRail.FishHatchery.Post005"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel05",
+          "start": [
+            -0.6499999761581421,
+            2.4538462162017822,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            3.0346155166625977,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post005",
+          "endPost": "WalkwayRail.FishHatchery.Post006"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel06",
+          "start": [
+            -0.6499999761581421,
+            3.0346155166625977,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            3.615384817123413,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post006",
+          "endPost": "WalkwayRail.FishHatchery.Post007"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel07",
+          "start": [
+            -0.6499999761581421,
+            3.615384817123413,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            4.1961541175842285,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post007",
+          "endPost": "WalkwayRail.FishHatchery.Post008"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel08",
+          "start": [
+            -0.6499999761581421,
+            4.1961541175842285,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            4.776923179626465,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post008",
+          "endPost": "WalkwayRail.FishHatchery.Post009"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel09",
+          "start": [
+            -0.6499999761581421,
+            4.776923179626465,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            5.357692718505859,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post009",
+          "endPost": "WalkwayRail.FishHatchery.Post010"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel10",
+          "start": [
+            -0.6499999761581421,
+            5.357692718505859,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            5.938461780548096,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post010",
+          "endPost": "WalkwayRail.FishHatchery.Post011"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel11",
+          "start": [
+            -0.6499999761581421,
+            5.938461780548096,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            6.51923131942749,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post011",
+          "endPost": "WalkwayRail.FishHatchery.Post012"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel12",
+          "start": [
+            -0.6499999761581421,
+            6.51923131942749,
+            0
+          ],
+          "end": [
+            -0.6499999761581421,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post012",
+          "endPost": "WalkwayRail.FishHatchery.Post013"
+        }
+      ]
+    },
+    {
+      "id": "NurseryBack",
+      "panels": [
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel00",
+          "start": [
+            -0.6499999761581421,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            -0.07083326578140259,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post013",
+          "endPost": "WalkwayRail.FishHatchery.Post014"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel01",
+          "start": [
+            -0.07083326578140259,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            0.5083334445953369,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post014",
+          "endPost": "WalkwayRail.FishHatchery.Post015"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel02",
+          "start": [
+            0.5083334445953369,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            1.0875000953674316,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post015",
+          "endPost": "WalkwayRail.FishHatchery.Post016"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel03",
+          "start": [
+            1.0875000953674316,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            1.666666865348816,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post016",
+          "endPost": "WalkwayRail.FishHatchery.Post017"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel04",
+          "start": [
+            1.666666865348816,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            2.245833396911621,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post017",
+          "endPost": "WalkwayRail.FishHatchery.Post018"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel05",
+          "start": [
+            2.245833396911621,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            2.825000286102295,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post018",
+          "endPost": "WalkwayRail.FishHatchery.Post019"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel06",
+          "start": [
+            2.825000286102295,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            3.4041666984558105,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post019",
+          "endPost": "WalkwayRail.FishHatchery.Post020"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel07",
+          "start": [
+            3.4041666984558105,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            3.9833335876464844,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post020",
+          "endPost": "WalkwayRail.FishHatchery.Post021"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel08",
+          "start": [
+            3.9833335876464844,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            4.562500476837158,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post021",
+          "endPost": "WalkwayRail.FishHatchery.Post022"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel09",
+          "start": [
+            4.562500476837158,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            5.141666889190674,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post022",
+          "endPost": "WalkwayRail.FishHatchery.Post023"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel10",
+          "start": [
+            5.141666889190674,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            5.720833778381348,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post023",
+          "endPost": "WalkwayRail.FishHatchery.Post024"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel11",
+          "start": [
+            5.720833778381348,
+            7.099999904632568,
+            0
+          ],
+          "end": [
+            6.300000190734863,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post024",
+          "endPost": "WalkwayRail.FishHatchery.Post025"
+        }
+      ]
+    },
+    {
+      "id": "NurseryRight",
+      "panels": [
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryRight.Panel00",
+          "start": [
+            6.300000190734863,
+            3.4200000762939453,
+            0
+          ],
+          "end": [
+            6.300000190734863,
+            3.9457144737243652,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post026",
+          "endPost": "WalkwayRail.FishHatchery.Post027"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryRight.Panel01",
+          "start": [
+            6.300000190734863,
+            3.9457144737243652,
+            0
+          ],
+          "end": [
+            6.300000190734863,
+            4.471428871154785,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post027",
+          "endPost": "WalkwayRail.FishHatchery.Post028"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryRight.Panel02",
+          "start": [
+            6.300000190734863,
+            4.471428871154785,
+            0
+          ],
+          "end": [
+            6.300000190734863,
+            4.997142791748047,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post028",
+          "endPost": "WalkwayRail.FishHatchery.Post029"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryRight.Panel03",
+          "start": [
+            6.300000190734863,
+            4.997142791748047,
+            0
+          ],
+          "end": [
+            6.300000190734863,
+            5.522857189178467,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post029",
+          "endPost": "WalkwayRail.FishHatchery.Post030"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryRight.Panel04",
+          "start": [
+            6.300000190734863,
+            5.522857189178467,
+            0
+          ],
+          "end": [
+            6.300000190734863,
+            6.048571586608887,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post030",
+          "endPost": "WalkwayRail.FishHatchery.Post031"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryRight.Panel05",
+          "start": [
+            6.300000190734863,
+            6.048571586608887,
+            0
+          ],
+          "end": [
+            6.300000190734863,
+            6.574285507202148,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post031",
+          "endPost": "WalkwayRail.FishHatchery.Post032"
+        },
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryRight.Panel06",
+          "start": [
+            6.300000190734863,
+            6.574285507202148,
+            0
+          ],
+          "end": [
+            6.300000190734863,
+            7.099999904632568,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post032",
+          "endPost": "WalkwayRail.FishHatchery.Post025"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    "WalkwayRail.FishHatchery.Post000",
+    "WalkwayRail.FishHatchery.Post001",
+    "WalkwayRail.FishHatchery.Post002",
+    "WalkwayRail.FishHatchery.Post003",
+    "WalkwayRail.FishHatchery.Post004",
+    "WalkwayRail.FishHatchery.Post005",
+    "WalkwayRail.FishHatchery.Post006",
+    "WalkwayRail.FishHatchery.Post007",
+    "WalkwayRail.FishHatchery.Post008",
+    "WalkwayRail.FishHatchery.Post009",
+    "WalkwayRail.FishHatchery.Post010",
+    "WalkwayRail.FishHatchery.Post011",
+    "WalkwayRail.FishHatchery.Post012",
+    "WalkwayRail.FishHatchery.Post013",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel00",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel01",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel02",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel03",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel04",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel05",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel06",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel07",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel08",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel09",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel10",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel11",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel12",
+    "WalkwayRail.FishHatchery.Post014",
+    "WalkwayRail.FishHatchery.Post015",
+    "WalkwayRail.FishHatchery.Post016",
+    "WalkwayRail.FishHatchery.Post017",
+    "WalkwayRail.FishHatchery.Post018",
+    "WalkwayRail.FishHatchery.Post019",
+    "WalkwayRail.FishHatchery.Post020",
+    "WalkwayRail.FishHatchery.Post021",
+    "WalkwayRail.FishHatchery.Post022",
+    "WalkwayRail.FishHatchery.Post023",
+    "WalkwayRail.FishHatchery.Post024",
+    "WalkwayRail.FishHatchery.Post025",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel00",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel01",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel02",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel03",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel04",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel05",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel06",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel07",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel08",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel09",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel10",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel11",
+    "WalkwayRail.FishHatchery.Post026",
+    "WalkwayRail.FishHatchery.Post027",
+    "WalkwayRail.FishHatchery.Post028",
+    "WalkwayRail.FishHatchery.Post029",
+    "WalkwayRail.FishHatchery.Post030",
+    "WalkwayRail.FishHatchery.Post031",
+    "WalkwayRail.FishHatchery.Post032",
+    "WalkwayRail.FishHatchery.NurseryRight.Panel00",
+    "WalkwayRail.FishHatchery.NurseryRight.Panel01",
+    "WalkwayRail.FishHatchery.NurseryRight.Panel02",
+    "WalkwayRail.FishHatchery.NurseryRight.Panel03",
+    "WalkwayRail.FishHatchery.NurseryRight.Panel04",
+    "WalkwayRail.FishHatchery.NurseryRight.Panel05",
+    "WalkwayRail.FishHatchery.NurseryRight.Panel06"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -9.8149995803833,
+    -7.602499961853027,
+    -0.029999999329447746
+  ],
+  "boundsMax": [
+    0.18389999866485596,
+    -0.7074999809265137,
+    8.774999618530273
+  ],
+  "sourceReference": "docs/art/concepts/Grocery Store.png",
+  "selectedReferenceViews": [
+    "Front Left",
+    "Front Right",
+    "Back Left",
+    "Back Right"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "GroceryStore.CarvedSign"
+  ],
+  "animationFrames": 61,
+  "animationFps": 30,
+  "tileDimensions": null
+}

@@ -1,0 +1,58 @@
+{
+  "scope": "Local preview copies; game references the original shipped resources",
+  "props": [
+    {
+      "name": "MixerHeaderTank",
+      "model": "SmallTank.IronTeeth",
+      "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
+      "position": [
+        6.180000000000001,
+        3.8200000000000003,
+        4.25
+      ],
+      "scale": 1.02,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel1",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        1.37,
+        4.51,
+        2.38502576
+      ],
+      "scale": 2.2,
+      "yaw": 0
+    },
+    {
+      "name": "NativeBarrel2",
+      "model": "Barrel",
+      "resource": "Environment/Common/Barrel/Barrel",
+      "position": [
+        2.1,
+        4.66,
+        2.31865744
+      ],
+      "scale": 1.8,
+      "yaw": 0
+    }
+  ],
+  "liquids": [
+    {
+      "name": "MixerHeaderTank.Water",
+      "shape": "SmallLiquidPlane",
+      "center": [
+        6.69,
+        4.33
+      ],
+      "bottom": 4.80692,
+      "top": 5.6983999999999995,
+      "scale": [
+        1.02,
+        1.02
+      ],
+      "flowOnly": false
+    }
+  ]
+}

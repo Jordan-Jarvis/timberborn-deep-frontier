@@ -1,0 +1,23 @@
+{
+  "scope": "Authored door and seating positions; native visitor behavior not integrated",
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.45,
+        0.68,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 0.88,
+      "internalConnection": "BuildingInterior"
+    }
+  ],
+  "internalDoorNetwork": "BuildingInterior",
+  "requireAllDoorsConnectedInternally": true,
+  "visitorSeats": [],
+  "restaurantBehavior": "Native attraction visit, reserved Sitting slot, meal consumption during visit"
+}

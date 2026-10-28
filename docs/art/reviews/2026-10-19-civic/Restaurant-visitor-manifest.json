@@ -1,0 +1,262 @@
+{
+  "scope": "Authored door and seating positions; native visitor behavior not integrated",
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        3.83,
+        2.74,
+        2
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 0.8,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "Door1",
+      "position": [
+        3.85,
+        2.7399999999999998,
+        4
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 0.8,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "Door2",
+      "position": [
+        2.4,
+        1.58,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 0.94,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "RoofTerraceDoor",
+      "position": [
+        6.3999999999999995,
+        4.45,
+        6
+      ],
+      "outward": [
+        1,
+        0
+      ],
+      "width": 0.8,
+      "internalConnection": "BuildingInterior"
+    }
+  ],
+  "internalDoorNetwork": "BuildingInterior",
+  "requireAllDoorsConnectedInternally": true,
+  "visitorSeats": [
+    {
+      "id": "Seat0",
+      "position": [
+        1.27,
+        0.8300000000000001,
+        4
+      ],
+      "seatSurfaceHeight": 4.3375,
+      "facing": [
+        0,
+        1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat1",
+      "position": [
+        1.27,
+        1.77,
+        4
+      ],
+      "seatSurfaceHeight": 4.3375,
+      "facing": [
+        0,
+        -1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat2",
+      "position": [
+        5.5,
+        0.8300000000000001,
+        4
+      ],
+      "seatSurfaceHeight": 4.3375,
+      "facing": [
+        0,
+        1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat3",
+      "position": [
+        5.5,
+        1.77,
+        4
+      ],
+      "seatSurfaceHeight": 4.3375,
+      "facing": [
+        0,
+        -1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat4",
+      "position": [
+        1.27,
+        0.8300000000000001,
+        2
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "facing": [
+        0,
+        1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat5",
+      "position": [
+        1.27,
+        1.77,
+        2
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "facing": [
+        0,
+        -1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat6",
+      "position": [
+        3.45,
+        0.8300000000000001,
+        2
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "facing": [
+        0,
+        1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat7",
+      "position": [
+        3.45,
+        1.77,
+        2
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "facing": [
+        0,
+        -1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat8",
+      "position": [
+        5.5,
+        0.8300000000000001,
+        2
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "facing": [
+        0,
+        1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat9",
+      "position": [
+        5.5,
+        1.77,
+        2
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "facing": [
+        0,
+        -1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat10",
+      "position": [
+        7.29,
+        2.9299999999999997,
+        2
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "facing": [
+        0,
+        1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat11",
+      "position": [
+        7.29,
+        3.87,
+        2
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "facing": [
+        0,
+        -1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat12",
+      "position": [
+        7.29,
+        4.63,
+        2
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "facing": [
+        0,
+        1
+      ],
+      "animation": "Sitting"
+    },
+    {
+      "id": "Seat13",
+      "position": [
+        7.29,
+        5.569999999999999,
+        2
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "facing": [
+        0,
+        -1
+      ],
+      "animation": "Sitting"
+    }
+  ],
+  "restaurantBehavior": "Native attraction visit, reserved Sitting slot, meal consumption during visit"
+}
