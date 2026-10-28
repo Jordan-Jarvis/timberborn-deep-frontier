@@ -1,7 +1,7 @@
 {
  "ident": "FisheryWorks",
  "source": "src/DeepFrontier/Art/Source/FisheryWorks-ReferenceStudy.blend",
- "sourceSha256": "ba96d3cf08b58c4cee0315657b5ff145534f11167297c92eff2935858c5817c3",
+ "sourceSha256": "df2867bcdd718c107109981fe1872260689863789dd89d9bc12a96fd162670d0",
  "frame": 1,
  "layout": "tools/civic-layouts.json",
  "origin": [

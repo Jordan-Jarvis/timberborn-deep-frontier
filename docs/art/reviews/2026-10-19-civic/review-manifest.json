@@ -42,7 +42,7 @@
     {
       "model": "FisheryWorks",
       "scene": "src/DeepFrontier/Art/Source/FisheryWorks-ReferenceStudy.blend",
-      "sceneSha256": "8cadc8ac99f550383614b8bddaaf5c0152e8cff2611990227c522c9df585f9ff",
+      "sceneSha256": "c50ecc5c605cc43f1f8b1fd06ac71283ac2b1b9f587a535b518f1399027b8b84",
       "concept": "docs/art/concepts/Fishery.png",
       "conceptSha256": "18d710a459db4894fa8edc0e5fa369496439ba9f2825d736c047342d8da1dba0",
       "animatedParts": 3,

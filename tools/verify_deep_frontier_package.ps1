@@ -1,6 +1,8 @@
 param([Parameter(Mandatory=$true)][int]$Build)
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+. (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+$dev = Get-DevEnvironment 'python'
 $data = Join-Path $root 'src\DeepFrontier\Data'
 $installed = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Timberborn\Mods\DeepFrontier\version-1.1'
 $checked = [Collections.Generic.List[object]]::new()
@@ -33,7 +35,7 @@ foreach($dependency in @('TimberUi.dll','0Harmony.dll','ModdableRecipes.dll','Co
 }
 # Every GoodVisualization mesh (AssetRef<Mesh>) must be a Mesh in the built bundle;
 # build 167 shipped the pile meshes as BinaryData GameObjects and every load failed.
-& 'C:\Users\Jordan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' (Join-Path $root 'tools\asset-pipeline\validate_goodmesh_exports.py') --data $data --bundle (Join-Path $installed 'AssetBundles\deepfrontier_win')
+& $dev.python (Join-Path $root 'tools\asset-pipeline\validate_goodmesh_exports.py') --data $data --bundle (Join-Path $installed 'AssetBundles\deepfrontier_win')
 if ($LASTEXITCODE -ne 0) { throw 'A GoodVisualization mesh is not a Mesh in the installed bundle.' }
 $report = [pscustomobject]@{ build=$Build; checkedAt=(Get-Date -Format o); status='all-authored-files-match-installed-package'; count=$checked.Count; files=$checked }
 $report | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $root "outputs\restaurant-package-verification$Build.json") -Encoding utf8

@@ -1,7 +1,8 @@
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $project = Join-Path $root 'vendor\timberborn-modding'
-$unity = 'C:\Program Files\Unity\Hub\Editor\6000.5.11f1\Editor\Unity.exe'
+. (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+$unity = (Get-DevEnvironment 'unity').unity
 $log = Join-Path $root 'outputs\unity_official_build.log'
 
 if (Get-CimInstance Win32_Process -Filter "Name='Unity.exe'" | Where-Object ExecutablePath -eq $unity) {

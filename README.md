@@ -29,16 +29,23 @@ Subscribe on the Steam Workshop together with the required mods listed in [src/D
 | `workshop/` | Steam Workshop description and thumbnail. |
 
 
+## Setting up a development checkout
+
+```bash
+python tools/setup_dev.py                              # finds Timberborn in your Steam libraries
+python tools/setup_dev.py --game "D:/Games/Timberborn" # or point it at the install (or Timberborn.app on macOS)
+```
+
+It works on Windows, macOS and Linux. It records your machine's paths in `tools/dev-environment.json` (not tracked; every script reads its paths from there), installs the tool packages (UnityPy, Node's sharp), extracts the game references the Blender scenes and generators need from your own install (see "Local-only game references"), and installs a pre-commit guard that refuses commits adding game files. On Windows it also clones Mechanistry's official modding project into `vendor/timberborn-modding`, opens it once in Unity and imports the game's assemblies into it. `python tools/setup_dev.py --help` lists the options (`--blender`, `--unity`, `--node`, `--pwsh`, `--workshop`, and `--skip-*` for each step). Run it again after a game update.
+
+You need:
+
+- Timberborn 1.1.2.8 (Steam) with the required mods subscribed: the build references their DLLs from the Workshop folder.
+- Python 3, Node.js and PowerShell 7 for the generators and checks.
+- To build the mod (Windows only): Unity 6000.5.11f1 (Unity Hub) and the .NET SDK 8. The modding project is Mechanistry's [timberborn-modding](https://github.com/mechanistry/timberborn-modding) at commit `cc50d47`; it is not included here.
+- For model work: Blender 4.5.3 (portable in `tools/asset-pipeline/blender-4.5.3`, on PATH, or `--blender`) with the Timbermesh exporter in `tools/asset-pipeline/timbermesh-plugin`. The scenes open with their textures once setup has extracted the game textures. Save scenes with Blender's Compress option and textures unpacked; `tools/asset-pipeline/unpack_blend_textures.py` does both for any scene that packs images again.
+
 ## Building from source
-
-Windows only. You need:
-
-- Timberborn 1.1.2.8 (Steam) with the required mods subscribed (the build references their DLLs from the Workshop folder).
-- Unity 6000.5.11f1 and the official modding project cloned to `vendor/timberborn-modding` (from Mechanistry's [timberborn-modding](https://github.com/mechanistry/timberborn-modding) repository, last built against commit `cc50d47`; not included here).
-- .NET SDK 8, Node.js, Python 3 and PowerShell 7. The scripts currently use fixed paths for Node, Python and PowerShell 7; see `AGENTS.md`.
-- For model work only: Blender 4.5.3 portable in `tools/asset-pipeline/blender-4.5.3` with the Timbermesh exporter, and the game textures (see "Local-only game references"). Save scenes with Blender's Compress option and textures unpacked; `tools/asset-pipeline/unpack_blend_textures.py` does both for any scene that packs images again.
-
-Typical loop:
 
 ```bash
 pwsh tools/promote_style_exports.ps1          # regenerate blueprints into src/DeepFrontier/Data
@@ -49,7 +56,9 @@ powershell -File tools/build_deep_frontier.ps1   # official Mod Builder; install
 pwsh tools/verify_deep_frontier_package.ps1 -Build <n>
 ```
 
-`tools/start_memory_load.ps1 -SaveInspect` loads a save copy unattended for in-game checks, and `-Showcase` takes Workshop screenshots. Both load copies from the "Memory Test" settlement, whose autosaves they rotate.
+The C# compile checks and `tools/validate_cryogenic_content.mjs` also read the Mod Builder's `Documents/Timberborn/ModsBuild` folder, which the first `build_deep_frontier.ps1` run creates.
+
+`tools/start_memory_load.ps1 -SaveInspect` loads a save copy unattended for in-game checks, and `-Showcase` takes Workshop screenshots. Both load copies from the "Memory Test" settlement, whose autosaves they rotate. These acceptance and capture scripts (`tools/start_*.ps1`, `tools/capture_*`, the acceptance harness in `src/DeepFrontier/Scripts`) still contain the author's machine paths and settlement names; adjust them before use.
 
 ## Local-only game references
 
@@ -62,7 +71,7 @@ Some generators and validators also read references taken from your own Timberbo
 | `outputs/native-civic-assets` | native model and material previews for the civic buildings | `python tools/asset-pipeline/extract_native_models.py`, `export_native_civic_materials.py`, `export_native_civic_inspection.py`, `read_native_civic_models.py` |
 | `outputs/workforce-api-1.1.2.8/original` | optional API checks in `tools/validate_workforce_risks.mjs` (skipped when absent) | decompile the listed game assemblies with ILSpy (`ilspycmd`) |
 
-The extraction scripts read `Timberborn_Data/resources.assets` with UnityPy (`tools/asset-pipeline/unitypy`) and never ship anything: the mod references the game's own resources at runtime.
+Setup runs the first three for you. The extraction scripts read `Timberborn_Data/resources.assets` with UnityPy (`tools/asset-pipeline/unitypy`) and never ship anything: the mod references the game's own resources at runtime. `python tools/check_no_game_assets.py` (the pre-commit guard, also a `validate_all.ps1` check) fails if any of these, a game texture, a game assembly or a decompiled source is tracked.
 
 ## Working rules
 

@@ -2,10 +2,12 @@
 import json,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'tools'))
+import dev_environment as dev
 sys.path.insert(0,str(ROOT/'tools/asset-pipeline/unitypy'))
 import UnityPy
 from UnityPy.helpers.MeshHelper import MeshHandler
-env=UnityPy.load('C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data/resources.assets')
+env=UnityPy.load(str(dev.resources_assets()))
 obj=next(o for o in env.objects if o.path_id==1647)
 mesh=obj.parse_as_object()
 if obj.type.name!='Mesh' or mesh.m_Name!='SmallLiquidPlane':raise ValueError('Native resource identity changed')

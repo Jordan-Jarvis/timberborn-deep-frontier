@@ -1,7 +1,7 @@
 {
  "model": "CementKiln",
  "source": "CementKiln-ReferenceStudy.blend",
- "sourceSha256": "6d428d74791852b1b8c0690f836ac82b8608a08ce50393bc820ee4f628b5c78b",
+ "sourceSha256": "f9495b309ffb71583cd2d19bdce2a543c5adb43eb3b9ec74cf658549acf9aa1a",
  "frame": 1,
  "coordinateSystem": "Native grid XYZ; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)",
  "rule": "outward static surfaces within 0.12 behind the face plane (or up to 0.02 proud) cover >= 60% of 8x8 samples (measure_wall_faces.py)",

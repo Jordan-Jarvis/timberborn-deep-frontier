@@ -4,7 +4,7 @@
     {
       "model": "FisheryWorks",
       "source": "src\\DeepFrontier\\Art\\Source\\FisheryWorks-ReferenceStudy.blend",
-      "sourceSha256": "ba96d3cf08b58c4cee0315657b5ff145534f11167297c92eff2935858c5817c3",
+      "sourceSha256": "df2867bcdd718c107109981fe1872260689863789dd89d9bc12a96fd162670d0",
       "images": [
         "triangle-budget-civic-FisheryWorks.png"
       ],
@@ -26,7 +26,7 @@
     {
       "model": "Restaurant",
       "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
-      "sourceSha256": "6e6bc7f8e3832e6fbbb15f29750dfbad83ea8225fa6a26905da71c9c2cb78a7c",
+      "sourceSha256": "d662a99dfca54a307e483f38b5cf9d0dcf4308ce9d05a198d9b36ba447bff08f",
       "images": [
         "triangle-budget-civic-Restaurant.png"
       ],
@@ -37,7 +37,7 @@
     {
       "model": "Hospital",
       "source": "src\\DeepFrontier\\Art\\Source\\Hospital-ReferenceStudy.blend",
-      "sourceSha256": "431fb6dbc7205f77dc6286626dad13b751e08225f7175f0988ba72e79e5ade10",
+      "sourceSha256": "4b57375e2a0f0533d7f69c634a18a2a14abb415c228b35f1d295d23e636919cf",
       "images": [
         "triangle-budget-civic-Hospital.png"
       ],
@@ -48,7 +48,7 @@
     {
       "model": "GroceryStore",
       "source": "src\\DeepFrontier\\Art\\Source\\GroceryMarket-ReferenceStudy.blend",
-      "sourceSha256": "946617fa48f2cc077f3d6001dd4de40881b561b28aa4f0ce69541c55fbed4991",
+      "sourceSha256": "ca44a179ddf42635bb02aa5981c04d582a3ba2ef471052f715fcfc5da884de0b",
       "images": [
         "triangle-budget-grocery.png"
       ],
@@ -59,7 +59,7 @@
     {
       "model": "MaterialsLaboratory",
       "source": "src\\DeepFrontier\\Art\\Source\\MaterialsLaboratory-ReferenceStudy.blend",
-      "sourceSha256": "1daf2e925f12e8ba2038602f8f205a44eaf6b42b86a04e49d6d98ca1cd6c4386",
+      "sourceSha256": "62dcd1db10bcd24f8a13c8460a4f454541dc9b49b2c3642ea18df5d63e971997",
       "images": [
         "triangle-budget-research.png"
       ],
@@ -70,7 +70,7 @@
     {
       "model": "ReinforcedHydroTurbine",
       "source": "src\\DeepFrontier\\Art\\Source\\ReinforcedHydroTurbine-ReferenceStudy.blend",
-      "sourceSha256": "7374a0bc85ff93f1e3a40c1f99a46d4009dabf6bd9cd612fd39fff9360811227",
+      "sourceSha256": "8b134f6dd41d9f6a57e6c5270f8943581ca6c9029bcbfe7fa3fcea408c8406fe",
       "images": [
         "triangle-budget-hydro.png"
       ],

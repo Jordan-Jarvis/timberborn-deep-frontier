@@ -2,8 +2,8 @@
   "scope": "Twenty older prototype building models: source UV islands, frame1 overlap, closed-component boundaries, and official exports. Not detailed art/grid or native runtime acceptance.",
   "models": 20,
   "sourceScenes": {
-    "src/DeepFrontier/Art/Source/DeepFrontierModels.blend": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
-    "src/DeepFrontier/Art/Source/ApprovedBuildings.blend": "bbe4f2bf2d6a04eb64840bffdcd7746d7eb91e820bacf71eee3d4131579f35f4"
+    "src/DeepFrontier/Art/Source/DeepFrontierModels.blend": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
+    "src/DeepFrontier/Art/Source/ApprovedBuildings.blend": "1ffe98ba09c099e10756a45d9df2e47012f150e22f9ef699cdd780a06234c701"
   },
   "checks": {
     "checkedUvCorners": 50160,
@@ -377,7 +377,7 @@
       "model": "FertilizerWorks",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1944
     },
@@ -396,7 +396,7 @@
       "model": "FoodPackagingWorks",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1944
     },
@@ -415,7 +415,7 @@
       "model": "Greenhouse",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 2592
     },
@@ -434,7 +434,7 @@
       "model": "ChemicalWorks",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1800
     },
@@ -453,7 +453,7 @@
       "model": "DeepDrill",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1608
     },
@@ -472,7 +472,7 @@
       "model": "DeepMine",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1992
     },
@@ -491,7 +491,7 @@
       "model": "DeepProcessor",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1320
     },
@@ -510,7 +510,7 @@
       "model": "ElectrolysisPlant",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1800
     },
@@ -529,7 +529,7 @@
       "model": "LaunchPad",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1896
     },
@@ -548,7 +548,7 @@
       "model": "PrecisionMachineWorks",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1440
     },
@@ -567,7 +567,7 @@
       "model": "RadioactiveWasteRefinery",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1800
     },
@@ -586,7 +586,7 @@
       "model": "RocketAssemblyHangar",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1896
     },
@@ -605,7 +605,7 @@
       "model": "UraniumProcessingPlant",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 2016
     },
@@ -624,7 +624,7 @@
       "model": "MissionControl",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1896
     },
@@ -643,7 +643,7 @@
       "model": "TechnicalSchool",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1440
     },
@@ -662,7 +662,7 @@
       "model": "RadioactiveWasteVault",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1440
     },
@@ -681,7 +681,7 @@
       "model": "WaterTreatmentPlant",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1440
     },
@@ -700,7 +700,7 @@
       "model": "PublicHealthLab",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/DeepFrontierModels.blend",
-      "sourceSha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sourceSha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 1440
     },
@@ -719,7 +719,7 @@
       "model": "CryogenicLiquefactionPlant",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/ApprovedBuildings.blend",
-      "sourceSha256": "bbe4f2bf2d6a04eb64840bffdcd7746d7eb91e820bacf71eee3d4131579f35f4",
+      "sourceSha256": "1ffe98ba09c099e10756a45d9df2e47012f150e22f9ef699cdd780a06234c701",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 9984
     },
@@ -738,7 +738,7 @@
       "model": "NuclearReactor",
       "frame": 1,
       "sourceScene": "src/DeepFrontier/Art/Source/ApprovedBuildings.blend",
-      "sourceSha256": "bbe4f2bf2d6a04eb64840bffdcd7746d7eb91e820bacf71eee3d4131579f35f4",
+      "sourceSha256": "1ffe98ba09c099e10756a45d9df2e47012f150e22f9ef699cdd780a06234c701",
       "detectorSha256": "eaea9f1763bd54b19a344a91890bdc34a41a7144e6838a3d89f086188c95ed05",
       "checkedUvCorners": 8472
     }
@@ -747,7 +747,7 @@
     {
       "model": "DeepDrill",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 10,
       "polygons": 366,
       "componentDefects": [],
@@ -756,7 +756,7 @@
     {
       "model": "DeepMine",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 11,
       "polygons": 462,
       "componentDefects": [],
@@ -765,7 +765,7 @@
     {
       "model": "DeepProcessor",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 7,
       "polygons": 312,
       "componentDefects": [],
@@ -774,7 +774,7 @@
     {
       "model": "FertilizerWorks",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 11,
       "polygons": 456,
       "componentDefects": [],
@@ -783,7 +783,7 @@
     {
       "model": "FoodPackagingWorks",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 11,
       "polygons": 456,
       "componentDefects": [],
@@ -792,7 +792,7 @@
     {
       "model": "PublicHealthLab",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 10,
       "polygons": 324,
       "componentDefects": [],
@@ -801,7 +801,7 @@
     {
       "model": "Greenhouse",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 14,
       "polygons": 618,
       "componentDefects": [],
@@ -810,7 +810,7 @@
     {
       "model": "ChemicalWorks",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 12,
       "polygons": 402,
       "componentDefects": [],
@@ -819,7 +819,7 @@
     {
       "model": "PrecisionMachineWorks",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 10,
       "polygons": 324,
       "componentDefects": [],
@@ -828,7 +828,7 @@
     {
       "model": "WaterTreatmentPlant",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 10,
       "polygons": 324,
       "componentDefects": [],
@@ -837,7 +837,7 @@
     {
       "model": "TechnicalSchool",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 10,
       "polygons": 324,
       "componentDefects": [],
@@ -846,7 +846,7 @@
     {
       "model": "UraniumProcessingPlant",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 13,
       "polygons": 456,
       "componentDefects": [],
@@ -855,7 +855,7 @@
     {
       "model": "RadioactiveWasteRefinery",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 12,
       "polygons": 402,
       "componentDefects": [],
@@ -864,7 +864,7 @@
     {
       "model": "ElectrolysisPlant",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 12,
       "polygons": 402,
       "componentDefects": [],
@@ -873,7 +873,7 @@
     {
       "model": "RocketAssemblyHangar",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 13,
       "polygons": 420,
       "componentDefects": [],
@@ -882,7 +882,7 @@
     {
       "model": "MissionControl",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 13,
       "polygons": 420,
       "componentDefects": [],
@@ -891,7 +891,7 @@
     {
       "model": "LaunchPad",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 13,
       "polygons": 420,
       "componentDefects": [],
@@ -900,7 +900,7 @@
     {
       "model": "RadioactiveWasteVault",
       "source": "src\\DeepFrontier\\Art\\Source\\DeepFrontierModels.blend",
-      "sha256": "712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8",
+      "sha256": "94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928",
       "meshes": 10,
       "polygons": 324,
       "componentDefects": [],
@@ -909,7 +909,7 @@
     {
       "model": "NuclearReactor",
       "source": "src\\DeepFrontier\\Art\\Source\\ApprovedBuildings.blend",
-      "sha256": "bbe4f2bf2d6a04eb64840bffdcd7746d7eb91e820bacf71eee3d4131579f35f4",
+      "sha256": "1ffe98ba09c099e10756a45d9df2e47012f150e22f9ef699cdd780a06234c701",
       "meshes": 2,
       "polygons": 7316,
       "componentDefects": [],
@@ -918,7 +918,7 @@
     {
       "model": "CryogenicLiquefactionPlant",
       "source": "src\\DeepFrontier\\Art\\Source\\ApprovedBuildings.blend",
-      "sha256": "bbe4f2bf2d6a04eb64840bffdcd7746d7eb91e820bacf71eee3d4131579f35f4",
+      "sha256": "1ffe98ba09c099e10756a45d9df2e47012f150e22f9ef699cdd780a06234c701",
       "meshes": 2,
       "polygons": 8456,
       "componentDefects": [],

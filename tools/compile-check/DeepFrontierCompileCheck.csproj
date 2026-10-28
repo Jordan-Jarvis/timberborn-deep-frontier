@@ -19,7 +19,7 @@
     <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
     <MSBuildWarningsAsMessages>MSB3277;MSB3243</MSBuildWarningsAsMessages>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <Managed>C:/Users/Jordan/Documents/Timberborn/ModsBuild/TimberbornModExamples_Data/Managed</Managed>
+    <Managed>$(ModsBuildManaged)</Managed>
     <ScriptsRoot>$(MSBuildThisFileDirectory)../../src/DeepFrontier/Scripts</ScriptsRoot>
   </PropertyGroup>
   <ItemGroup>
@@ -36,7 +36,11 @@
          DeepFrontier assembly must compile without using it: the C# compiler emits no reference to an
          unused assembly, and moddable-weathers/ checks that the built DLL has none. -->
     <Reference Include="ModdableWeathers" Private="false">
-      <HintPath>C:/Program Files (x86)/Steam/steamapps/workshop/content/1062090/3630523180/version-1.1/ModdableWeathers.dll</HintPath>
+      <HintPath>$(Workshop)/3630523180/version-1.1/ModdableWeathers.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <!-- Paths come from Directory.Build.props, written for this machine by tools/setup_dev.py. -->
+  <Target Name="RequireDevEnvironment" BeforeTargets="ResolveAssemblyReferences" Condition="'$(Workshop)' == '' Or '$(Managed)' == ''">
+    <Error Text="Run &quot;python tools/setup_dev.py&quot; first: tools/compile-check/Directory.Build.props sets this machine's game and Workshop paths." />
+  </Target>
 </Project>

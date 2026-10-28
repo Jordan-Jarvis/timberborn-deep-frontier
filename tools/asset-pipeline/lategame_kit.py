@@ -875,7 +875,11 @@ def cable_tray(g, a, b, z, *, w=.16):
 
 # ---------------------------------------------------------------- REDIC New Building Styles
 
-REDIC_ROOT = r'C:/Program Files (x86)/Steam/steamapps/workshop/content/1062090/3723883597'
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))  # tools/: dev_environment.py
+import dev_environment as _dev
+REDIC_ROOT = str(_dev.workshop() / '3723883597')
 # Iron Teeth models in the required Redic.NewStyles 0.1 dependency. They use
 # only shipped Iron Teeth materials. Runtime references the dependency's own
 # resource; the preview imports the installed timbermesh read-only.

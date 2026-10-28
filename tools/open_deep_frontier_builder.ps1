@@ -1,6 +1,7 @@
 $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\vendor\timberborn-modding')).Path
-$unity = 'C:\Program Files\Unity\Hub\Editor\6000.5.11f1\Editor\Unity.exe'
+. (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+$unity = (Get-DevEnvironment 'unity').unity
 
 if (-not (Test-Path -LiteralPath $unity -PathType Leaf)) {
   throw "The project's Unity editor was not found at $unity."

@@ -1,7 +1,7 @@
 {
  "ident": "MaterialsLaboratory",
  "source": "src/DeepFrontier/Art/Source/MaterialsLaboratory-ReferenceStudy.blend",
- "sourceSha256": "1daf2e925f12e8ba2038602f8f205a44eaf6b42b86a04e49d6d98ca1cd6c4386",
+ "sourceSha256": "62dcd1db10bcd24f8a13c8460a4f454541dc9b49b2c3642ea18df5d63e971997",
  "frame": 1,
  "layout": "tools/research-layouts.json",
  "origin": [

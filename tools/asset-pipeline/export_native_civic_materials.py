@@ -2,9 +2,11 @@
 from pathlib import Path
 import hashlib,json,sys
 ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'tools'))
+import dev_environment as dev
 sys.path.insert(0,str(ROOT/'tools/asset-pipeline/unitypy'))
 import UnityPy
-game=Path('C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data')
+game=dev.game_data()
 env=UnityPy.load(str(game/'resources.assets'));objects={o.path_id:o for o in env.objects}
 out=ROOT/'outputs/native-civic-assets';(out/'textures').mkdir(exist_ok=True)
 names={'BaseWood_DarkBrown.IronTeeth','BaseWood_Indigo.IronTeeth','BaseWood_Grey.IronTeeth',

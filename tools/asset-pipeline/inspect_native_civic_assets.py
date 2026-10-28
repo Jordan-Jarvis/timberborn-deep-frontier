@@ -2,10 +2,12 @@
 from pathlib import Path
 import collections,json,sys
 ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'tools'))
+import dev_environment as dev
 sys.path.insert(0,str(ROOT/'tools/asset-pipeline/unitypy'))
 import UnityPy
 if UnityPy.__version__!='1.25.4':raise RuntimeError('Use the inspected UnityPy 1.25.4 API')
-game=Path('C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data')
+game=dev.game_data()
 out=ROOT/'outputs/native-civic-assets';out.mkdir(parents=True,exist_ok=True)
 env=UnityPy.load(str(game/'resources.assets'))
 types=collections.Counter(o.type.name for o in env.objects);selected=[];containers=[]

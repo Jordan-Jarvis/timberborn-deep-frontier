@@ -15,6 +15,7 @@ import {createHash} from 'node:crypto';
 import {access, readdir, readFile, writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {devEnvironment} from './dev_environment.mjs';
 import {CRYOGENIC_LOCALIZATION, IGNORED_ON_TANKS, LOCALIZATION_FILE, MODULE_SPECS, SPEC_KEYS, TANK_FARM, checkBlueprintSockets,
   checkGoods, checkRegistrationSockets, cryogenicLocalization, cryogenicTankSpec, findTemplate, readStudySockets, socketPorts,
   validateTankFarmConfig} from './cryogenic_content.mjs';
@@ -26,9 +27,10 @@ const dataRoot = opt('--data') ? resolve(opt('--data')) : resolve(root, 'src', '
 const reportPath = opt('--report');
 const config = {...TANK_FARM, status: opt('--status') ?? TANK_FARM.status};
 const automationPath = opt('--automation') ? resolve(opt('--automation')) : resolve(root, 'tools', 'automation_content.json');
-const GAME_MANAGED = 'C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data/Managed';
-const GAME_DATA = 'C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data';
-const PIPES_PACKAGE = 'C:/Program Files (x86)/Steam/steamapps/workshop/content/1062090/3801726769/version-1.1';
+const dev = await devEnvironment(root, ['gameManaged', 'gameData', 'workshopContent', 'timberbornDocuments']);
+const GAME_MANAGED = dev.gameManaged;
+const GAME_DATA = dev.gameData;
+const PIPES_PACKAGE = resolve(dev.workshopContent, '3801726769', 'version-1.1');
 const ilspy = resolve(root, 'tools', 'dotnet', 'ilspycmd.exe');
 const errors = [];
 const check = (ok, message) => { if (!ok) errors.push(message); };
@@ -115,7 +117,7 @@ const pipesAudit = JSON.stringify(audit).match(/"path":"TimberPipes\.dll","sha25
 const pipesDll = resolve(PIPES_PACKAGE, 'TimberPipes.dll');
 const pipesHash = createHash('sha256').update(await readFile(pipesDll)).digest('hex').toUpperCase();
 check(pipesAudit && pipesAudit[1] === pipesHash, `Timber Pipes: installed DLL ${pipesHash} differs from the audited 11.4.0 hash ${pipesAudit?.[1]}; re-inspect the contract`);
-const pipeRefs = 'C:/Users/Jordan/Documents/Timberborn/ModsBuild/TimberbornModExamples_Data/Managed';
+const pipeRefs = resolve(dev.timberbornDocuments, 'ModsBuild', 'TimberbornModExamples_Data', 'Managed');
 const contracts = [
   [pipesDll, pipeRefs, 'TimberPipes.Components.TankPipe', ['[AddTemplateModule2(typeof(Stockpile))]', 'component.WhitelistedGoodType == "Liquid"', 'PipePortState.Open)']],
   [pipesDll, pipeRefs, 'TimberPipes.Components.BuildingPipe', ['TryGetComponent<BuildingPipeSpec>(out var component) && component.Ports.Length > 0', 'Duplicate port definition']],

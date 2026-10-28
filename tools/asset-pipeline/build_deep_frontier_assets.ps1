@@ -13,7 +13,9 @@ $contentGenerator = Join-Path $PSScriptRoot '..\create_vertical_slice_content.mj
 $exporter = Join-Path $PSScriptRoot 'export_deep_frontier_assets.py'
 $validator = Join-Path $PSScriptRoot 'validate_deep_frontier_assets.mjs'
 $animationValidator = Join-Path $PSScriptRoot 'validate_deep_frontier_animations.py'
-$node = 'C:\Users\Jordan\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe'
+. (Join-Path $PSScriptRoot '..\DevEnvironment.ps1')
+$dev = Get-DevEnvironment 'node','python'
+$node = $dev.node
 $output = Join-Path $root 'outputs'
 
 if (-not (Test-Path $blender)) {
@@ -22,7 +24,7 @@ if (-not (Test-Path $blender)) {
 if (-not (Test-Path $node)) {
   throw "Bundled Node.js was not found at $node."
 }
-$python = 'C:\Users\Jordan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+$python = $dev.python
 if (-not (Test-Path $python)) {
   throw "Bundled Python was not found at $python."
 }

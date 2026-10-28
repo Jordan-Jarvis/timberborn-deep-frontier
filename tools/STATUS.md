@@ -4,6 +4,14 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Public-repository preparation: dev-environment setup and game-asset guard, build 206 (Claude Code session, 2026-10-28)
+
+- **Setup:** `python tools/setup_dev.py` (Windows, macOS, Linux) finds Timberborn in the Steam libraries (or `--game`), writes `tools/dev-environment.json` and `tools/compile-check/Directory.Build.props` (both untracked), installs UnityPy and sharp, clones the official modding project at cc50d47 and bootstraps it (Windows), extracts the local-only game references, and installs the pre-commit guard.
+- **No machine paths in the build and check scripts:** generators, validators, build, stage, verify, launch and the compile checks read the dev environment. The acceptance and capture scripts still hold machine paths (noted in the README).
+- **Game assets out of git:** `tools/check_no_game_assets.py` (validate_all check `no-game-assets`, pre-commit). The Blender scenes reference the extracted game textures by relative path (`Art/GameTextures`, list in `Art/GameTextures.json`); `normalize_blend_image_paths.py` made every image path relative and canonical (3,150 images; the flat DFArt*.png previews now use `Art/Textures/Packed`). Pinned scene hashes repinned by `repin_scene_hashes.py`.
+- **Build 205 had failed** (bundle name collision between `DFArt*.mat` and stray `DFArt*.png` in the bundle folder); verify passed only because the old install remained. Removed the stray PNGs.
+- **Verified:** regenerated Data identical to the commit; validate_all 50 pass + 1 report-only; 4 map variants OK; compile checks pass; build 206 "Official Mod Builder completed successfully", verify: 650 hashes match the installed package. Not run in game this pass.
+
 ## Flipped FishHatchery/FisheryWorks/Greenhouse: entrance and power reports on build 176 (generated and validated in mirror `flipentrance`; not promoted, built or run in game) (Claude Code session, 2026-10-26)
 
 - **User (b176, save `ExperimentalSaves/leg/2026-10-26 15h11m, Day 20-4`):** the FishHatchery and FisheryWorks entrances still don't work; Greenhouse and hatchery headhouse walls don't take power. All three are flipped there.
@@ -1583,7 +1591,7 @@ Official build 54 installed successfully; all 426 authored data/manifest/DLL has
 
 Builds 52/53 exposed test setup mistakes: the aggregate blocker includes Pause, and native workplace assignment requires an unblocked workplace. Build 54 resumes before checking/assigning. Its separate zero-fish-stock bootstrap PASSED: the gatherer caught/delivered fish, the hatchery bred juveniles, and native workers hauled juveniles to the Fishery and completed fresh-fish production. The exact starting save has no fish/juvenile stock, carrying or production (`outputs/aquaculture-bootstrap-source.json`). Only vanilla feed/water and fixture shaft power were supplied. `outputs/fishery-bootstrap54.log` records the run; native GameSaver wrote `Aquaculture bootstrap - verified`, preserved as `outputs/aquaculture-bootstrap-build54.timber`. This establishes reachable starting inputs and actual hauling; longer-term economy balance remains a playtest task.
 
-Before build 55, the replacement small hatchery was a separate Blender candidate, archived at `docs/art/reviews/2026-10-19-hatchery`. It follows the Fishery isometric waterfront details with a low enclosed workroom, pump canopy, two open nursery pens, native barrels/tank, metal/concrete trim and a clear entrance apron. Its source SHA256 is `4a9dc110a053f8982eeb62b284088c242c8e19a4d5e04cd7b790f353dbefd607`. An explicit 8Ã—8Ã—5/BaseZ=1 candidate has 31 connected route cells, 20 rail openings and 32 mesh-clear route segments. One full construction tile fits the checked side dock; the sign's 61-frame loop closes and stays clear of the entrance lane. That candidate has since become the active source; the current integration and remaining checks are recorded above.
+Before build 55, the replacement small hatchery was a separate Blender candidate, archived at `docs/art/reviews/2026-10-19-hatchery`. It follows the Fishery isometric waterfront details with a low enclosed workroom, pump canopy, two open nursery pens, native barrels/tank, metal/concrete trim and a clear entrance apron. Its source SHA256 is `ca4538e830e816b9fe87d4ce315de4b900daace0325b6b193ba9a8eea0099051`. An explicit 8Ã—8Ã—5/BaseZ=1 candidate has 31 connected route cells, 20 rail openings and 32 mesh-clear route segments. One full construction tile fits the checked side dock; the sign's 61-frame loop closes and stays clear of the entrance lane. That candidate has since become the active source; the current integration and remaining checks are recorded above.
 
 
 

@@ -12,7 +12,7 @@ The first Blender study has a continuous arched water conduit, intake grille, vi
 
 [Front render](ReinforcedHydroTurbine-front.png) · [Rear render](ReinforcedHydroTurbine-rear.png)
 
-That first source is preserved as `src/DeepFrontier/Art/Source/ReinforcedHydroTurbine-ReferenceStudy-v1.blend`, SHA256 `d293976bba3de084112eaa56a2ab600fd27f550826a6d6076f475e4a6fcaab53`. Authoring source: `tools/asset-pipeline/hydro_isometric_geometry.py`.
+That first source is preserved as `src/DeepFrontier/Art/Source/ReinforcedHydroTurbine-ReferenceStudy-v1.blend`, SHA256 `b62d5d021f7c8ae7ee88b2337d1578df3adbc3295f80eaee86f744b3ec1e7e5c`. Authoring source: `tools/asset-pipeline/hydro_isometric_geometry.py`.
 
 The first render exposed labels on fittings because the native `Details.IronTeeth` sheet contains crate and sack decorations, not brass. The hardware now explicitly uses `BaseMetal.IronTeeth`, including the helper-generated handwheel, gauge rims, fasteners and rail caps. No existing building was regenerated. A raised service hatch was also made flush with the walking surface.
 

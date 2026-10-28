@@ -15,7 +15,8 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $appId = '1062090'
-$game = 'C:\Program Files (x86)\Steam\steamapps\common\Timberborn'
+. (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+$game = (Get-DevEnvironment 'gameRoot').gameRoot
 $exe = Join-Path $game 'Timberborn.exe'
 if (-not (Test-Path -LiteralPath $exe)) { throw "Timberborn.exe not found at $exe" }
 if (Get-Process -Name Timberborn -ErrorAction SilentlyContinue) { throw 'The previous Timberborn process must exit first.' }

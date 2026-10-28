@@ -14,10 +14,12 @@ import json, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'tools'))
+import dev_environment as dev
 sys.path.insert(0, str(ROOT / 'tools' / 'asset-pipeline' / 'unitypy'))
 import UnityPy
 
-GAME = Path('C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data/resources.assets')
+GAME = dev.resources_assets()
 OUT = ROOT / 'src' / 'DeepFrontier' / 'Art' / 'GameTextures'
 names = json.loads((ROOT / 'src' / 'DeepFrontier' / 'Art' / 'GameTextures.json').read_text(encoding='utf-8'))
 missing = [n for n in names if not (OUT / n).is_file()]

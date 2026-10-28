@@ -20,8 +20,7 @@
     <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
     <MSBuildWarningsAsMessages>MSB3277;MSB3243</MSBuildWarningsAsMessages>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <Managed>C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data/Managed</Managed>
-    <Workshop>C:/Program Files (x86)/Steam/steamapps/workshop/content/1062090</Workshop>
+    <Managed>$(TimberbornManaged)</Managed>
     <SourceRoot>$(MSBuildThisFileDirectory)../../../src/DeepFrontier/Scripts/SluiceIsBack</SourceRoot>
   </PropertyGroup>
   <ItemGroup>
@@ -43,4 +42,8 @@
       <HintPath>$(Workshop)/3430626620/version-1.1/TimberUi.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <!-- Paths come from Directory.Build.props, written for this machine by tools/setup_dev.py. -->
+  <Target Name="RequireDevEnvironment" BeforeTargets="ResolveAssemblyReferences" Condition="'$(Workshop)' == '' Or '$(Managed)' == ''">
+    <Error Text="Run &quot;python tools/setup_dev.py&quot; first: tools/compile-check/Directory.Build.props sets this machine's game and Workshop paths." />
+  </Target>
 </Project>

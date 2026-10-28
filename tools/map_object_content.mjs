@@ -18,11 +18,12 @@
 import {readFile, writeFile, mkdir, access} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {devEnvironment} from './dev_environment.mjs';
 
 const defaultRoot = resolve(fileURLToPath(new URL('../', import.meta.url)));
 export const CONTRACT = JSON.parse(await readFile(resolve(defaultRoot, 'tools', 'map_objects.json'), 'utf8'));
 const vanillaRelative = ['vendor', 'timberborn-modding', 'Assets', 'Tools', 'ImportedAssets', 'Editor', 'Resources'];
-const EXPANDED_STORAGE = 'C:/Program Files (x86)/Steam/steamapps/workshop/content/1062090/3795292508';
+const EXPANDED_STORAGE = resolve((await devEnvironment(defaultRoot, ['workshopContent'])).workshopContent, '3795292508');
 
 const readJson = async (path) => JSON.parse((await readFile(path, 'utf8')).replace(/^\uFEFF/, ''));
 const writeJson = async (path, value) => { await mkdir(dirname(path), {recursive: true}); await writeFile(path, `${JSON.stringify(value, null, 2)}\n`, 'utf8'); };

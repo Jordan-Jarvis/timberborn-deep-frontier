@@ -19,6 +19,8 @@ import zlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'tools'))
+import dev_environment as dev
 sys.path.insert(0, str(ROOT / 'tools/asset-pipeline/unitypy'))
 sys.path.insert(0, str(ROOT / 'tools/asset-pipeline/timbermesh-plugin/timbermesh_blender_plugin'))
 import UnityPy  # noqa: E402
@@ -26,7 +28,7 @@ import model_pb2  # noqa: E402
 
 if UnityPy.__version__ != '1.25.4':
     raise RuntimeError('Use the inspected UnityPy 1.25.4 API')
-GAME = Path('C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data')
+GAME = dev.game_data()
 VANILLA = ROOT / 'vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources'
 OUT = ROOT / 'tools/asset-pipeline/vanilla-preview-baseline.json'
 

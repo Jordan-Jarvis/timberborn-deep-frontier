@@ -1,7 +1,9 @@
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-$node = 'C:\Users\Jordan\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe'
-$python = 'C:\Users\Jordan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+. (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+$dev = Get-DevEnvironment 'node','python'
+$node = $dev.node
+$python = $dev.python
 Set-Location -LiteralPath $root
 
 # Run only after the canonical source scenes, manifests and official mesh

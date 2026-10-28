@@ -37,6 +37,21 @@ obj/
 !/outputs/mapobjects-integration/
 !/outputs/connection-faces/
 
+# This machine's paths, written by tools/setup_dev.py
+/tools/dev-environment.json
+/tools/compile-check/Directory.Build.props
+
+# Game assets and other authors' files never belong here (tools/check_no_game_assets.py
+# enforces it before every commit): decompiled code, binaries, Unity game data, saves and maps.
+*.decompiled.cs
+**/decompiled/
+*.dll
+*.exe
+*.pdb
+*.assets
+*.resS
+*.timber
+
 # Local working files
 /outputs-cleanup-staging/
 /outputs-restored.txt

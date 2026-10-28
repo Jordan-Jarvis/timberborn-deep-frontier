@@ -19,11 +19,13 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'tools'))
+import dev_environment as dev
 sys.path.insert(0, str(ROOT / 'tools/asset-pipeline/unitypy'))
 import UnityPy  # noqa: E402
 from UnityPy.helpers.MeshHelper import MeshHandler  # noqa: E402
 
-GAME = Path('C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data')
+GAME = dev.game_data()
 OUT = ROOT / 'outputs/map-objects/native'
 MATERIALS = {
     # Natural terrain, cliff and source materials (MaterialCollection.Common).

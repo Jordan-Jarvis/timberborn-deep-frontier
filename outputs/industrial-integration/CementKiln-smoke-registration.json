@@ -1,7 +1,7 @@
 {
  "ident": "CementKiln",
  "source": "src/DeepFrontier/Art/Source/CementKiln-ReferenceStudy.blend",
- "sourceSha256": "6d428d74791852b1b8c0690f836ac82b8608a08ce50393bc820ee4f628b5c78b",
+ "sourceSha256": "f9495b309ffb71583cd2d19bdce2a543c5adb43eb3b9ec74cf658549acf9aa1a",
  "frame": 1,
  "layout": "tools/industrial-layouts.json",
  "origin": [

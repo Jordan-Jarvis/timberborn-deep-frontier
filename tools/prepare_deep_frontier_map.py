@@ -55,7 +55,9 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-GAME = Path('C:/Program Files (x86)/Steam/steamapps/common/Timberborn')
+sys.path.insert(0, str(ROOT / 'tools'))
+import dev_environment as dev
+GAME = dev.game_root()
 RESOURCES_ASSETS = GAME / 'Timberborn_Data/resources.assets'
 BLUEPRINTS_ZIP = GAME / 'Timberborn_Data/StreamingAssets/Modding/Blueprints.zip'
 MOD_DATA = ROOT / 'src/DeepFrontier/Data'

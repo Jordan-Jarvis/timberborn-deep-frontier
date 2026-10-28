@@ -10,10 +10,12 @@ paths these sprites are addressed by are in outputs/native-civic-assets/resource
 from pathlib import Path
 import json, sys
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'tools'))
+import dev_environment as dev
 sys.path.insert(0, str(ROOT / 'tools/asset-pipeline/unitypy'))
 import UnityPy
 
-GAME = Path('C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data')
+GAME = dev.game_data()
 OUT = ROOT / 'outputs/vanilla-icons'
 OUT.mkdir(parents=True, exist_ok=True)
 

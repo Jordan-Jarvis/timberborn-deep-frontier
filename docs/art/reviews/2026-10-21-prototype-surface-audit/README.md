@@ -6,7 +6,7 @@ The first audit found 23 visible conflicts in the reactor and 34 in the cryogeni
 
 `manifest.json` records the exact source scenes, generator/checker hashes, per-model audit results, evidence-file hashes, and all 42 output paths and hashes. Source scenes are:
 
-- `src/DeepFrontier/Art/Source/DeepFrontierModels.blend`: `712a0f44938173b9630d3e7d1246d0155e815f70babef65e357942402d5991e8`
-- `src/DeepFrontier/Art/Source/ApprovedBuildings.blend`: `bbe4f2bf2d6a04eb64840bffdcd7746d7eb91e820bacf71eee3d4131579f35f4`
+- `src/DeepFrontier/Art/Source/DeepFrontierModels.blend`: `94cb40479f2d88461d6b2f25f50d10766ccd93d2c21681b8ee661878d27d5928`
+- `src/DeepFrontier/Art/Source/ApprovedBuildings.blend`: `1ffe98ba09c099e10756a45d9df2e47012f150e22f9ef699cdd780a06234c701`
 
 These remain compact prototype designs. This pass does not establish detailed art quality, tile/hitbox alignment, runtime power or navigation, native appearance, animation playback, or save/reload. Surface overlap was tested at frame 1; the reactor/cryo source-bounds checks cover all 61 animation frames. Closed individual components do not prove watertight joins between them. Source-only generation preserved the separately owned detailed buildings and did not regenerate their icons or raster artwork.

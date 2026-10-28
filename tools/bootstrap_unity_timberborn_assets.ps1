@@ -1,5 +1,6 @@
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\vendor\timberborn-modding')).Path
-$gameRoot = 'C:\Program Files (x86)\Steam\steamapps\common\Timberborn'
+. (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+$gameRoot = (Get-DevEnvironment 'gameRoot').gameRoot
 $managedSource = Join-Path $gameRoot 'Timberborn_Data\Managed'
 $streamingSource = Join-Path $gameRoot 'Timberborn_Data\StreamingAssets\Modding'
 $dllDestination = Join-Path $projectRoot 'Assets\Plugins\Timberborn'

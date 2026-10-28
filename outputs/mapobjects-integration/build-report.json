@@ -23,7 +23,7 @@
    "DeepOreVeinGeology"
   ],
   "sourceScene": "src/DeepFrontier/Art/Source/DeepOreVein-ReferenceStudy.blend",
-  "sourceSha256": "fa6d83dd99d7cfeb7a55eb21be3200a263dc9e44202fb1da6185af5322c0fb36",
+  "sourceSha256": "4d81fa5a18392b709e4aff145247eb4751f10d3550f250cd38a436b947aaf4d9",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/DeepOreVein/DeepOreVein.Model.timbermesh",
   "exportSha256": "41b1a3adb7acf058abf944e0f353f511b9f81c33a47ffa067286c198194dabd1"
  },
@@ -51,7 +51,7 @@
    "DeepOreSourceGeology"
   ],
   "sourceScene": "src/DeepFrontier/Art/Source/DeepOreSource-ReferenceStudy.blend",
-  "sourceSha256": "9124f07a98403a5a0aeafc401f62736fcca23ede1221dd2dbed45564f1cf7e9d",
+  "sourceSha256": "ec418160e9d9f7747aecd6836851e2e18aee8027fa9ddb040847671a0a0504f5",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/DeepOreSource/DeepOreSource.Model.timbermesh",
   "exportSha256": "8201d02fe7cd943f71590a5cc1f54ba7dba1429346adef66f1fd67c81a06db34"
  },
@@ -78,7 +78,7 @@
    "SandstoneSeamGeology"
   ],
   "sourceScene": "src/DeepFrontier/Art/Source/SandstoneSeam-ReferenceStudy.blend",
-  "sourceSha256": "d4211edee249ff3d9c6b43cc7ccc77a4be67614f9e86e9483c6692d188d7a25f",
+  "sourceSha256": "b1b6f6a63b47b9013c4b0a0217a6381e8a0fa790c5c97fbed0c5155d5575260b",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/SandstoneSeam/SandstoneSeam.Model.timbermesh",
   "exportSha256": "d854160203bfa2f317076053409efd7908fd522da6d46d91d3996e2fff4a2a93"
  },
@@ -104,7 +104,7 @@
    "LimestoneSeamGeology"
   ],
   "sourceScene": "src/DeepFrontier/Art/Source/LimestoneSeam-ReferenceStudy.blend",
-  "sourceSha256": "b6079c385ee14a452156d2f176c603c327c4c70e7a8a73e52b7ca37cff185206",
+  "sourceSha256": "8efed693aebaff9c2cb113579ad9e234b21f5dab54f9f037a8b21de092b498bd",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/LimestoneSeam/LimestoneSeam.Model.timbermesh",
   "exportSha256": "be2704fcc1794e2dfe9e7d480dfbe70ba77452d565652882f0b26dbb1a8dbf2e"
  },
@@ -131,7 +131,7 @@
    "SandstoneOutcropGeology"
   ],
   "sourceScene": "src/DeepFrontier/Art/Source/SandstoneOutcrop-ReferenceStudy.blend",
-  "sourceSha256": "91758adbb045abc1663c5311b7806ccefe83826ec28b87d6d7b19e79f9d1bcaa",
+  "sourceSha256": "b9fc14a79ce5d0faa2a6d5836ac13b3b4c5f6cabfd518ad9e1799622680b0fc7",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/SandstoneOutcrop/SandstoneOutcrop.Model.timbermesh",
   "exportSha256": "49268caa386660c695ace585cf68b75d3ef1bd06e21db8dc26a64e5be2daf849"
  },
@@ -157,7 +157,7 @@
    "LimestoneOutcropGeology"
   ],
   "sourceScene": "src/DeepFrontier/Art/Source/LimestoneOutcrop-ReferenceStudy.blend",
-  "sourceSha256": "23b6f16c945fdb0258286c3d83774db72362f5850606d1c9a4308c67ce88b009",
+  "sourceSha256": "852c4377a8acd8f6c54f0a87fb0c080de68fc8ec2373e5ad471fa7746fb44395",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/LimestoneOutcrop/LimestoneOutcrop.Model.timbermesh",
   "exportSha256": "9dac26379c8c291368d05024f11ed1e7d01ea21d18069646ea01d8cd67890f2b"
  },
@@ -184,7 +184,7 @@
    "RadioactiveGlow"
   ],
   "sourceScene": "src/DeepFrontier/Art/Source/RadioactiveSpringSource-ReferenceStudy.blend",
-  "sourceSha256": "50755a0d9ea95aef435c705331d4bbb31aa05acc392b7494ff0b319cd809de0a",
+  "sourceSha256": "8bb82772cf28e8deeb6125238d74e577d7d8cd427555222ae802d734e7c0bb98",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/RadioactiveSpringSource/RadioactiveSpringSource.Model.timbermesh",
   "exportSha256": "d9de846ee502e0f17c2fe7a6dd42f0d1c69fa0bf7a027344d8cdca7b1584d058"
  },
@@ -213,7 +213,7 @@
    "HumanRecordCacheVault"
   ],
   "sourceScene": "src/DeepFrontier/Art/Source/HumanRecordCache-ReferenceStudy.blend",
-  "sourceSha256": "aa025fc779968d14de9e8810cfaacb840febd4a92efd6a5cce23a1ad7b13b676",
+  "sourceSha256": "1059a5f08b45181fe4a535c5c28fd1379d59c8444abdd0eb5c7d3638b978a0f0",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/HumanRecordCache/HumanRecordCache.Model.timbermesh",
   "exportSha256": "821c1d5828f505bde91247acfa1680926960c9b3421cd6bedad21db8ab7026a9"
  },
@@ -235,7 +235,7 @@
   "uvErrors": [],
   "uvErrorCount": 0,
   "sourceScene": "src/DeepFrontier/Art/Source/StockpileGood1DeepOre-ReferenceStudy.blend",
-  "sourceSha256": "5b3f19c278b274c813ce50d0338d9de9e9500834f6707195454ea647bc277285",
+  "sourceSha256": "b623d668ad1b79983f9b6925e331da97dbf05ea6ac098e60d0842409e88acd1e",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/1DeepOre.timbermesh",
   "exportSha256": "4b62ee92bbb1f45ea41680e61909d521b501ede0706964494af66fccb7e78b6f"
  },
@@ -257,7 +257,7 @@
   "uvErrors": [],
   "uvErrorCount": 0,
   "sourceScene": "src/DeepFrontier/Art/Source/StockpileGood4DeepOres-ReferenceStudy.blend",
-  "sourceSha256": "e124ad96ba8feaf25da2771600884d535f188075d319d69899cd7d1bf82c37e5",
+  "sourceSha256": "864c10666ce7acaeb5b2a589a4acb792ccb57fd8d29417914ef128290402da4b",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/4DeepOres.timbermesh",
   "exportSha256": "cb128aa1b1e1f43ce00bdad45a688acb608b305ace05272a51663ec3d306412d"
  },
@@ -279,7 +279,7 @@
   "uvErrors": [],
   "uvErrorCount": 0,
   "sourceScene": "src/DeepFrontier/Art/Source/StockpileGood1DeepAlloy-ReferenceStudy.blend",
-  "sourceSha256": "e463426042961a158dd97121b9470a512ff7b5b6be506ec61992325d72c3287f",
+  "sourceSha256": "e967ec867bce41bdda4ae6ef1a7f6069925151cac02e719b746a9e98d12017f1",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/1DeepAlloy.timbermesh",
   "exportSha256": "e8ecbf946d1f38b035fa77ba40bdff561d4ab2958f28491f36630f098353ef1a"
  },
@@ -301,7 +301,7 @@
   "uvErrors": [],
   "uvErrorCount": 0,
   "sourceScene": "src/DeepFrontier/Art/Source/StockpileGood4DeepAlloys-ReferenceStudy.blend",
-  "sourceSha256": "539e9159d9170c9c760e2b6d471c3a6d999a1316cd6357554a7b8e60bb113526",
+  "sourceSha256": "b448e5ec5bb9507738a020d536db175101d18ff2d2f5e8565f60b533faea5f65",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/4DeepAlloys.timbermesh",
   "exportSha256": "12eb363e10d858385ffacb41af6230e7ac19901e28067ea4dcf7a29a3ef4ba1d"
  }

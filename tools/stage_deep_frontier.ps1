@@ -2,39 +2,41 @@ $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\vendor\timberborn-modding')).Path
 $sourceRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\src\DeepFrontier')).Path
 $destinationRoot = Join-Path $projectRoot 'Assets\Mods\DeepFrontier'
+. (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+$workshop = (Get-DevEnvironment 'workshopContent').workshopContent
 
 New-Item -ItemType Directory -Force -Path $destinationRoot | Out-Null
 # The game loads its own dependency mod. Import the exact installed assembly
 # for the official builder's compiler/linker, outside this mod's package tree.
-if (-not (Test-Path -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3430626620\version-1.1\TimberUi.dll' -PathType Leaf)) {
+if (-not (Test-Path -LiteralPath (Join-Path $workshop '3430626620\version-1.1\TimberUi.dll') -PathType Leaf)) {
   throw 'The required TimberUi authoring reference is missing.'
 }
 $dependencies = Join-Path $projectRoot 'Assets\Plugins\ModDependencies'
 New-Item -ItemType Directory -Force -Path $dependencies | Out-Null
-Copy-Item -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3430626620\version-1.1\TimberUi.dll' -Destination $dependencies -Force
+Copy-Item -LiteralPath (Join-Path $workshop '3430626620\version-1.1\TimberUi.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\TimberUi.dll.meta') -Destination $dependencies -Force
-Copy-Item -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3284904751\0Harmony.dll' -Destination $dependencies -Force
+Copy-Item -LiteralPath (Join-Path $workshop '3284904751\0Harmony.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\0Harmony.dll.meta') -Destination $dependencies -Force
-Copy-Item -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3639961044\version-1.1\ModdableRecipes.dll' -Destination $dependencies -Force
+Copy-Item -LiteralPath (Join-Path $workshop '3639961044\version-1.1\ModdableRecipes.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\ModdableRecipes.dll.meta') -Destination $dependencies -Force
 foreach($name in @('ConveyorBelt.dll','ConveyorBelt.Algorithm.dll')) {
-  Copy-Item -LiteralPath (Join-Path 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3815376360\version-1.1' $name) -Destination $dependencies -Force
+  Copy-Item -LiteralPath (Join-Path (Join-Path $workshop '3815376360\version-1.1') $name) -Destination $dependencies -Force
   Copy-Item -LiteralPath (Join-Path $PSScriptRoot "unity\$name.meta") -Destination $dependencies -Force
 }
-Copy-Item -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3578009707\version-1.1\ModdableTimberborn.dll' -Destination $dependencies -Force
+Copy-Item -LiteralPath (Join-Path $workshop '3578009707\version-1.1\ModdableTimberborn.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\ModdableTimberborn.dll.meta') -Destination $dependencies -Force
-Copy-Item -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3283831040\version-1.1\Scripts\ModSettings.Core.dll' -Destination $dependencies -Force
+Copy-Item -LiteralPath (Join-Path $workshop '3283831040\version-1.1\Scripts\ModSettings.Core.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\ModSettings.Core.dll.meta') -Destination $dependencies -Force
-Copy-Item -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3283831040\version-1.1\Scripts\ModSettings.Common.dll' -Destination $dependencies -Force
+Copy-Item -LiteralPath (Join-Path $workshop '3283831040\version-1.1\Scripts\ModSettings.Common.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\ModSettings.Common.dll.meta') -Destination $dependencies -Force
-Copy-Item -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3801726769\version-1.1\TimberPipes.dll' -Destination $dependencies -Force
+Copy-Item -LiteralPath (Join-Path $workshop '3801726769\version-1.1\TimberPipes.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\TimberPipes.dll.meta') -Destination $dependencies -Force
-Copy-Item -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3766893705\version-1.1\PowerLines.dll' -Destination $dependencies -Force
+Copy-Item -LiteralPath (Join-Path $workshop '3766893705\version-1.1\PowerLines.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\PowerLines.dll.meta') -Destination $dependencies -Force
-Copy-Item -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3630523180\version-1.1\ModdableWeathers.dll' -Destination $dependencies -Force
+Copy-Item -LiteralPath (Join-Path $workshop '3630523180\version-1.1\ModdableWeathers.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\ModdableWeathers.dll.meta') -Destination $dependencies -Force
 # Sluice is Back! 11.0.0: referenced only by the optional DeepFrontier.SluiceIsBack assembly (Scripts/SluiceIsBack).
-Copy-Item -LiteralPath 'C:\Program Files (x86)\Steam\steamapps\workshop\content\1062090\3677643870\version-1.1\SluiceIsBack.dll' -Destination $dependencies -Force
+Copy-Item -LiteralPath (Join-Path $workshop '3677643870\version-1.1\SluiceIsBack.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\SluiceIsBack.dll.meta') -Destination $dependencies -Force
 foreach ($entry in @('manifest.json', 'Data', 'Scripts', 'Editor', 'AssetBundles')) {
   Copy-Item -LiteralPath (Join-Path $sourceRoot $entry) -Destination $destinationRoot -Recurse -Force

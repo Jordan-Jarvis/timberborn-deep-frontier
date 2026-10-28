@@ -3,15 +3,18 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$cecilPath = 'C:\Users\Jordan\Documents\TimberbornModding\vendor\timberborn-modding\Library\PackageCache\com.unity.nuget.mono-cecil@ecb9724e46ff\Mono.Cecil.dll'
-if (-not (Test-Path $cecilPath)) {
-  throw "Mono.Cecil was not found at $cecilPath. Run bootstrap_unity_timberborn_assets.ps1 first."
+$packageCache = Join-Path $PSScriptRoot '..\vendor\timberborn-modding\Library\PackageCache'
+$cecilPath = Get-ChildItem -Path $packageCache -Filter 'Mono.Cecil.dll' -Recurse -ErrorAction SilentlyContinue |
+  Where-Object { $_.Directory.Name -like 'com.unity.nuget.mono-cecil@*' } | Select-Object -First 1 -ExpandProperty FullName
+if (-not $cecilPath) {
+  throw "Mono.Cecil was not found in $packageCache. Open vendor/timberborn-modding in Unity once (tools/setup_dev.py does this) so it resolves its packages."
 }
 
 Add-Type -Path $cecilPath
 $resolver = New-Object Mono.Cecil.DefaultAssemblyResolver
 $resolver.AddSearchDirectory($DllDirectory)
-$gameManaged = 'C:\Program Files (x86)\Steam\steamapps\common\Timberborn\Timberborn_Data\Managed'
+. (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+$gameManaged = (Get-DevEnvironment 'gameManaged').gameManaged
 if (Test-Path $gameManaged) { $resolver.AddSearchDirectory($gameManaged) }
 $reader = New-Object Mono.Cecil.ReaderParameters
 $reader.AssemblyResolver = $resolver

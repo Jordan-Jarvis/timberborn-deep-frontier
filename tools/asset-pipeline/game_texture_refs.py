@@ -43,30 +43,35 @@ def structure():
     return h.hexdigest()
 
 
-args = sys.argv[sys.argv.index('--') + 1:]
-mode, files = args[0], [l.strip() for l in open(args[1], encoding='utf-8') if l.strip()]
-needed = set()
-for path in files:
-    bpy.ops.wm.open_mainfile(filepath=path, load_ui=False)
-    names = {n for n in (game_file(i) for i in bpy.data.images if i.users) if n}
-    needed |= names
-    if mode == 'repoint':
-        before, changed = structure(), 0
-        for img in bpy.data.images:
-            name = game_file(img)
-            if not name or os.path.isfile(bpy.path.abspath(img.filepath)):
-                continue
-            target = os.path.join(GAME, name)
-            if not os.path.isfile(target):
-                raise RuntimeError(f'{name} is not in GameTextures; run extract_game_textures.py first ({path})')
-            img.filepath = bpy.path.relpath(target)
-            changed += 1
-        if changed:
-            if structure() != before:
-                raise RuntimeError(f'Scene changed while repointing: {path}')
-            bpy.context.preferences.filepaths.save_version = 0
-            bpy.ops.wm.save_mainfile(filepath=path, compress=True, relative_remap=True)
-        print(f'REPOINTED {os.path.basename(path)} {changed}', flush=True)
-if mode == 'scan':
-    json.dump(sorted(needed), open(args[2], 'w', encoding='utf-8'), indent=1)
-    print(f'SCAN {len(needed)} game textures', flush=True)
+def main():
+    args = sys.argv[sys.argv.index('--') + 1:]
+    mode, files = args[0], [l.strip() for l in open(args[1], encoding='utf-8') if l.strip()]
+    needed = set()
+    for path in files:
+        bpy.ops.wm.open_mainfile(filepath=path, load_ui=False)
+        names = {n for n in (game_file(i) for i in bpy.data.images if i.users) if n}
+        needed |= names
+        if mode == 'repoint':
+            before, changed = structure(), 0
+            for img in bpy.data.images:
+                name = game_file(img)
+                if not name or os.path.isfile(bpy.path.abspath(img.filepath)):
+                    continue
+                target = os.path.join(GAME, name)
+                if not os.path.isfile(target):
+                    raise RuntimeError(f'{name} is not in GameTextures; run extract_game_textures.py first ({path})')
+                img.filepath = bpy.path.relpath(target)
+                changed += 1
+            if changed:
+                if structure() != before:
+                    raise RuntimeError(f'Scene changed while repointing: {path}')
+                bpy.context.preferences.filepaths.save_version = 0
+                bpy.ops.wm.save_mainfile(filepath=path, compress=True, relative_remap=True)
+            print(f'REPOINTED {os.path.basename(path)} {changed}', flush=True)
+    if mode == 'scan':
+        json.dump(sorted(needed), open(args[2], 'w', encoding='utf-8'), indent=1)
+        print(f'SCAN {len(needed)} game textures', flush=True)
+
+
+if __name__ == '__main__':
+    main()

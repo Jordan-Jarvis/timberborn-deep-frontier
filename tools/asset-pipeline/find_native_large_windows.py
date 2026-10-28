@@ -2,9 +2,11 @@
 import json,struct,sys,zlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'tools'))
+import dev_environment as dev
 sys.path[:0]=[str(ROOT/'tools/asset-pipeline/unitypy'),str(ROOT/'tools/asset-pipeline/timbermesh-plugin/timbermesh_blender_plugin')]
 import UnityPy,model_pb2
-env=UnityPy.load('C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data/resources.assets')
+env=UnityPy.load(str(dev.resources_assets()))
 objects={o.path_id:o for o in env.objects};out=ROOT/'outputs/native-civic-assets'
 paths=json.loads((out/'resource-paths.json').read_text())['m_Container'];report=[]
 for path,ref in paths:

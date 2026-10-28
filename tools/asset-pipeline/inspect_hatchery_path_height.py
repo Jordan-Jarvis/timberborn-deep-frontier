@@ -2,10 +2,12 @@
 import hashlib,json,struct,sys,zlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'tools'))
+import dev_environment as dev
 sys.path.insert(0,str(ROOT/'tools/asset-pipeline/unitypy'))
 sys.path.insert(0,str(ROOT/'tools/asset-pipeline/timbermesh-plugin/timbermesh_blender_plugin'))
 import UnityPy,model_pb2
-env=UnityPy.load('C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data/resources.assets')
+env=UnityPy.load(str(dev.resources_assets()))
 objects={o.path_id:o for o in env.objects};reports=[]
 paths=json.loads((ROOT/'outputs/native-civic-assets/resource-paths.json').read_text())['m_Container']
 expected={f'buildings/paths/path/{kind}{variant}.model' for kind in ('dirtpath','roofpath') for variant in ('0000','0010','0011','0111','1010','1111')}

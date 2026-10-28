@@ -29,6 +29,7 @@ import {execFileSync} from 'node:child_process';
 import {readFile, readdir, access} from 'node:fs/promises';
 import {resolve, relative, sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {devEnvironment} from './dev_environment.mjs';
 import {LOCALIZATION_FILE, readSensorSource} from './contamination_sensor_content.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
@@ -37,7 +38,7 @@ const scripts = resolve(root, 'src', 'DeepFrontier', 'Scripts');
 const stations = resolve(scripts, 'WeatherStations');
 const bridge = resolve(scripts, 'SluiceIsBack');
 const pluginsRoot = resolve(root, 'vendor', 'timberborn-modding', 'Assets', 'Plugins', 'Timberborn');
-const workshop = 'C:/Program Files (x86)/Steam/steamapps/workshop/content/1062090';
+const workshop = (await devEnvironment(root, ['workshopContent'])).workshopContent;
 const sluiceMod = `${workshop}/3677643870/version-1.1`;
 const ilspy = resolve(root, 'tools', 'dotnet', 'ilspycmd.exe');
 const errors = [];

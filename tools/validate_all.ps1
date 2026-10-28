@@ -17,9 +17,11 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-$node = 'C:\Users\Jordan\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe'
-$python = 'C:\Users\Jordan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
-$blender = Join-Path $root 'tools\asset-pipeline\blender-4.5.3\blender.exe'
+. (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+$dev = Get-DevEnvironment 'node','python'
+$node = $dev.node
+$python = $dev.python
+$blender = $dev.blender
 $logDir = Join-Path $root 'outputs\validate-all'
 $source = Join-Path $root 'src\DeepFrontier\Art\Source'
 
@@ -80,6 +82,8 @@ foreach ($file in Get-ChildItem -LiteralPath (Join-Path $root 'tools') -Filter '
 # 6. Audits.
 Add-Check 'audit-progression' 'node' $node @((Join-Path $root 'tools/audit_progression.mjs'))
 Add-Check 'audit-item-uses' 'node' $node @((Join-Path $root 'tools/audit_item_uses.mjs')) -ReportOnly
+# No game assets or other authors' files are tracked (the pre-commit guard, run on the whole tree).
+Add-Check 'no-game-assets' 'python' $python @((Join-Path $root 'tools/check_no_game_assets.py'))
 Add-Check 'audit-building-assets' 'python' $python @((Join-Path $root 'tools/audit_building_assets.py'), '--require-mirroring')
 
 if ($List) { $checks | ForEach-Object { '{0,-28} {1}{2}' -f $_.Id, $_.Kind, $(if ($_.ReportOnly) { ' (report only)' } else { '' }) }; return }

@@ -1,0 +1,9 @@
+{
+  "name": "deep-frontier-tools",
+  "private": true,
+  "description": "Node packages for Deep Frontier's content generators (installed by tools/setup_dev.py).",
+  "type": "module",
+  "dependencies": {
+    "sharp": "0.35.5"
+  }
+}
