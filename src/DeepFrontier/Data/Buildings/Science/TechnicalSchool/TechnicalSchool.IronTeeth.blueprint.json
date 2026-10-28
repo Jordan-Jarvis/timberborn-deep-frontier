@@ -35,8 +35,8 @@
   },
   "EnterableSpec": {
     "OperatingState": "Finished",
-    "LimitedCapacityFinished": false,
-    "CapacityFinished": 0,
+    "LimitedCapacityFinished": true,
+    "CapacityFinished": 12,
     "LimitedCapacityUnfinished": false,
     "CapacityUnfinished": 0
   },

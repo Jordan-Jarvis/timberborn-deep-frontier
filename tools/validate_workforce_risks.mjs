@@ -177,6 +177,8 @@ if (!applied) {
   for (const [key, value] of Object.entries(schoolAttractionSpecs(config)))
     if (!same(school[key], value)) errors.push(`${config.school.template}: ${key} differs from the catalog`);
   for (const key of SCHOOL_WORKSHOP_SPECS) if (school[key]) errors.push(`${config.school.template}: still has the workshop spec ${key}`);
+  if (!school.EnterableSpec?.LimitedCapacityFinished || school.EnterableSpec.CapacityFinished !== config.school.students)
+    errors.push(`${config.school.template}: EnterableSpec must seat exactly ${config.school.students} students (the native attraction panel needs a limit)`);
   const books = await readJson(resolve(vanilla, 'Needs', 'Need.Beaver.Books.blueprint.json'));
   const needCollection = (await readJson(resolve(dataRoot, NEED_COLLECTION))).NeedCollectionSpec['Needs#append'];
   for (const [index, program] of config.school.programs.entries()) {

@@ -162,6 +162,7 @@ export function checkWorkforceConfig(config) {
       || new Set(supplies.map((s) => s[0])).size !== supplies.length)
     errors.push('school.supplies must be distinct [good, positive goods per hour] pairs');
   if (!(Number.isInteger(school.fullInventoryWorkHours) && school.fullInventoryWorkHours > 0)) errors.push('school.fullInventoryWorkHours must be a positive integer');
+  if (!(Number.isInteger(school.students) && school.students > 0)) errors.push('school.students must be a positive integer (the native attraction panel needs a seat limit)');
   const programs = school.programs ?? [];
   if (!programs.length) errors.push('school.programs is empty');
   const taught = new Set();
@@ -224,6 +225,13 @@ export const SCHOOL_WORKSHOP_SPECS = ['WorkplaceSpec', 'WorkshopSpec', 'Manufact
 
 export function schoolSpec(config) {
   return {Programs: config.school.programs.map((p) => ({Discipline: p.discipline, StudyHours: p.studyHours}))};
+}
+
+// The school's student seats on its cloned EnterableSpec: the native AttractionFragment
+// draws one slot per seat (Enterable.Capacity) and indexes them by the beavers inside,
+// so an unlimited entrance (capacity 0) throws once a student enters.
+export function schoolEnterableSpec(config, enterable) {
+  return {...enterable, LimitedCapacityFinished: true, CapacityFinished: config.school.students};
 }
 
 // The specs that make the school a goods-consuming attraction (vanilla Detailer pattern).
@@ -339,7 +347,7 @@ export async function planWorkforceRisks({root = defaultRoot, dataRoot = resolve
     for (const [good] of config.school.supplies)
       if (!await exists(resolve(root, ...VANILLA, 'Goods', `Good.${good}.blueprint.json`)) && !await exists(resolve(dataRoot, 'Goods', `Good.${good}.blueprint.json`)))
         errors.push(`school supply ${good} is not a vanilla or generated good`);
-    files.push({path: schoolPath, blueprint: {...school, ...additions}});
+    files.push({path: schoolPath, blueprint: {...school, ...additions, EnterableSpec: schoolEnterableSpec(config, school.EnterableSpec)}});
   }
   const books = await readJson(resolve(root, ...VANILLA, 'Needs', 'Need.Beaver.Books.blueprint.json'));
   if (books.NeedSpec?.CharacterType !== 'Beaver') errors.push('vanilla Need.Beaver.Books is no longer a beaver need');
