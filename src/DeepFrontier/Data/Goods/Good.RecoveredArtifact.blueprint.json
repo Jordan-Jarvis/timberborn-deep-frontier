@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "RecoveredArtifact",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.62,
+      "g": 0.48,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5197,
+    "Icon": "Sprites/Goods/RecoveredArtifactIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.RecoveredArtifact.DisplayName",
+    "PluralDisplayNameLocKey": "Good.RecoveredArtifact.PluralDisplayName"
+  }
+}

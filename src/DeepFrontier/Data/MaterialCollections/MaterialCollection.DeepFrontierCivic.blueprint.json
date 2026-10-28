@@ -1,0 +1,11 @@
+{
+  "MaterialCollectionSpec": {
+    "CollectionId": "IronTeeth",
+    "Materials": [
+      "Materials/UberAtlas/Materials/Folktails/BaseWood_Brown.Folktails",
+      "NaturalResources/Bushes/Dandelion/Materials/Dandelion",
+      "NaturalResources/Crops/Sunflower/Materials/Sunflower",
+      "Materials/Goods/Water"
+    ]
+  }
+}

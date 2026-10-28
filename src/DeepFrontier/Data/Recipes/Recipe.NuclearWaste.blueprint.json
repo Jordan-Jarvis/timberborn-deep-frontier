@@ -1,0 +1,30 @@
+{
+  "RecipeSpec": {
+    "Id": "NuclearWaste",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.RadioactiveWaste.PluralDisplayName",
+    "CycleDurationInHours": 2,
+    "Ingredients": [
+      {
+        "Id": "ReactorCoolantWater",
+        "Amount": 6
+      }
+    ],
+    "Products": [
+      {
+        "Id": "RadioactiveWaste",
+        "Amount": 1
+      },
+      {
+        "Id": "RadioactiveSludge",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "EnrichedFuel",
+    "CyclesFuelLasts": 10,
+    "FuelCapacity": 2,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/RadioactiveWasteIcon"
+  }
+}

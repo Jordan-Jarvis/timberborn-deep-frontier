@@ -1,0 +1,42 @@
+{
+  "RecipeSpec": {
+    "Id": "EnrichedFuel",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.EnrichedFuel.PluralDisplayName",
+    "CycleDurationInHours": 1,
+    "Ingredients": [
+      {
+        "Id": "Yellowcake",
+        "Amount": 2
+      },
+      {
+        "Id": "MachineCore",
+        "Amount": 1
+      },
+      {
+        "Id": "PowerModule",
+        "Amount": 1
+      },
+      {
+        "Id": "HydrogenGas",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "EnrichedFuel",
+        "Amount": 1
+      },
+      {
+        "Id": "RadioactiveWaste",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/EnrichedFuelIcon"
+  }
+}

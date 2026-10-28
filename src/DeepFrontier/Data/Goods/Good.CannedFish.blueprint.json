@@ -1,0 +1,30 @@
+{
+  "GoodSpec": {
+    "Id": "CannedFish",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [
+      {
+        "NeedId": "Hunger",
+        "Points": 0.3
+      }
+    ],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.32,
+      "g": 0.58,
+      "b": 0.32,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 1,
+    "GoodGroupId": "Food",
+    "GoodOrder": 11100,
+    "Icon": "Sprites/Goods/CannedFishIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.CannedFish.DisplayName",
+    "PluralDisplayNameLocKey": "Good.CannedFish.PluralDisplayName"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "DeepOre",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Pileable",
+    "StockpileVisualization": "DeepOre",
+    "VisibleContainer": "Scrap",
+    "ContainerColor": {
+      "r": 0.16,
+      "g": 0.22,
+      "b": 0.25,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryOnArm",
+    "Weight": 12,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5070,
+    "Icon": "Sprites/Goods/DeepOreIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.DeepOre.DisplayName",
+    "PluralDisplayNameLocKey": "Good.DeepOre.PluralDisplayName"
+  }
+}

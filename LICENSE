@@ -1,0 +1,46 @@
+Deep Frontier is licensed in two parts.
+
+1. Code: MIT License
+
+The following are licensed under the MIT License below: the C# sources in
+src/DeepFrontier/Scripts and src/DeepFrontier/Editor, everything in tools/
+(except the third-party tool installs listed in .gitignore, which are not part
+of this repository), the build scripts, and the blueprint JSON and
+localization CSV files in src/DeepFrontier/Data.
+
+MIT License
+
+Copyright (c) 2026 Jordan Jarvis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+2. Art: all rights reserved
+
+Copyright (c) 2026 Jordan Jarvis. All rights reserved.
+
+The models, meshes (.timbermesh, .blend), textures, icons, sprites, concept
+art, review renders and asset bundles in this repository (including
+src/DeepFrontier/Art, the image and mesh files in src/DeepFrontier/Data,
+src/DeepFrontier/AssetBundles, docs/art and workshop/) may not be copied,
+modified, redistributed or reuploaded, in whole or in part, without written
+permission. You may view them here and use them as part of the Deep Frontier
+mod as distributed on the Steam Workshop.
+
+Timberborn and its assets belong to Mechanistry. Third-party mods that Deep
+Frontier depends on belong to their authors and are not included here.

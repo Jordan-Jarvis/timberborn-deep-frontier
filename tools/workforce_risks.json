@@ -1,0 +1,86 @@
+{
+  "$comment": [
+    "Workforce risks for Deep Frontier (Timberborn 1.1.2.8, Iron Teeth): industrial injuries, bot wear, beaver-only crews and specialist-only crews.",
+    "Applied to generated blueprints by tools/workforce_risk_content.mjs; checked by tools/validate_workforce_risks.mjs. Runtime: src/DeepFrontier/Scripts/Workforce/.",
+    "Worker condition: exhausted = wellbeing below exhaustedBelowWellbeing or the fatigue need critical (native Sleep at or below 0); otherwise strained = wellbeing below strainedBelowWellbeing or fatigue points below strainedBelowFatiguePoints (tired; native Sleep spans -0.2..0.8 and drains 0.6/day awake); otherwise fit.",
+    "Injury chance per worker-hour for a fit worker = settings.nativeChances[tier.probability] / tier.rollIntervalHours, times the game mode's native InjuryChance (Easy 0.3, Normal/Hard 1.0). Strained workers are rolled strainedRolls times, exhausted ones exhaustedRolls times.",
+    "botWear is the bot deterioration multiplier while a bot is inside that workplace (native Iron Teeth bot life: 70 days). It is required for open workplaces with a danger tier and forbidden on beaver-only crews.",
+    "workers: open = native worker types unchanged (bots allowed after their native science unlock); beavers = DisallowOtherWorkerTypes, no bot unlock; specialists = beavers trained in the named discipline only."
+  ],
+  "settings": {
+    "probabilityGroupId": "WorkshopRandomNeedApplier",
+    "nativeChances": { "Low": 0.003125, "Medium": 0.01, "High": 0.02 },
+    "injuryNeedId": "Injury",
+    "fatigueNeedId": "Sleep",
+    "strainedBelowFatiguePoints": 0.25,
+    "strainedBelowWellbeing": 15,
+    "exhaustedBelowWellbeing": 5,
+    "strainedRolls": 2,
+    "exhaustedRolls": 4
+  },
+  "dangerTiers": {
+    "Hazardous": { "probability": "Low", "rollIntervalHours": 1, "injuryPoints": -0.5, "fatalAccidentChance": 0 },
+    "Dangerous": { "probability": "Medium", "rollIntervalHours": 2, "injuryPoints": -0.8, "fatalAccidentChance": 0.01 },
+    "Extreme": { "probability": "Medium", "rollIntervalHours": 1.25, "injuryPoints": -1, "fatalAccidentChance": 0.02 }
+  },
+  "disciplines": {
+    "Metallurgy": { "displayName": "Metallurgist", "pluralDisplayName": "Metallurgists" },
+    "Nuclear": { "displayName": "Reactor operator", "pluralDisplayName": "Reactor operators" },
+    "Flight": { "displayName": "Flight engineer", "pluralDisplayName": "Flight engineers" }
+  },
+  "school": {
+    "template": "Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.blueprint",
+    "$comment": "Each programme is a native recipe without products (vanilla Recipe.Bot.IronTeeth pattern), written by tools/workforce_risk_content.mjs. hours are worker-hours (each working trainee or instructor adds progress). The icon reuses the legacy licence-certificate sprite of the retired token goods.",
+    "programs": [
+      { "recipe": "SpecialistTraining.Metallurgy", "discipline": "Metallurgy", "displayName": "Metallurgist course", "hours": 48, "cyclesCapacity": 2,
+        "ingredients": [["MetalBlock", 4], ["DeepAlloy", 2], ["CornRation", 2]], "icon": "Sprites/Goods/IndustrialLicenseIcon" },
+      { "recipe": "SpecialistTraining.Nuclear", "discipline": "Nuclear", "displayName": "Reactor operator course", "hours": 96, "cyclesCapacity": 2,
+        "ingredients": [["Electronics", 2], ["Yellowcake", 1], ["Medicine", 2]], "icon": "Sprites/Goods/SpecialistLicenseIcon" },
+      { "recipe": "SpecialistTraining.Flight", "discipline": "Flight", "displayName": "Flight engineer course", "hours": 72, "cyclesCapacity": 2,
+        "ingredients": [["Electronics", 2], ["RecoveredTelemetry", 1], ["PackagedFood", 2]], "icon": "Sprites/Goods/FlightLicenseIcon" }
+    ]
+  },
+  "botMaintenance": {
+    "$comment": "Written by tools/bot_upkeep_content.mjs as FrontierBotMaintenanceSpec on every open template with botWear (runtime: Scripts/Workforce/BotMaintenance.cs). Bots working there take one dose from the building's own maintenance inventory per serviceHours of wear; while it lasts the workplace botWear is multiplied by the good's factor (never below 1x). goods: [good, wearFactor], best first; a bot takes the first one in stock. The inventory is stocked only while a bot is assigned.",
+    "goods": [["Lubricant", 0.5], ["FishOil", 0.75]],
+    "capacityPerGood": 10,
+    "serviceHours": 24
+  },
+  "botAssembly": {
+    "$comment": "Industrial bot: a second product-less recipe at the vanilla Bot Assembler (same-path patch, tools/bot_upkeep_content.mjs). It builds the ordinary Iron Teeth bot (native BotFactory has a single BotSpec template) three times faster than the native 72 h recipe, from Precision Machine Works parts and a power module battery pack.",
+    "recipe": "IndustrialBot",
+    "displayName": "Industrial bot",
+    "hours": 24,
+    "cyclesCapacity": 2,
+    "icon": "Sprites/Goods/PowerModuleIcon",
+    "ingredients": [["BotChassis", 1], ["BotLimb", 4], ["BotHead", 1], ["PowerModule", 1]]
+  },
+  "templates": {
+    "Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.blueprint": { "danger": "Extreme", "workers": "specialists", "discipline": "Nuclear", "reason": "Reactor control: trained operators only; no bots in the control room." },
+    "Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.blueprint": { "danger": "Extreme", "workers": "specialists", "discipline": "Flight", "reason": "Launch crew: trained flight engineers only." },
+    "Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.blueprint": { "danger": "Extreme", "workers": "open", "botWear": 5, "reason": "Radioactive handling: beavers risk the worst accidents, bots burn out in 14 days." },
+    "Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.blueprint": { "danger": "Extreme", "workers": "open", "botWear": 5, "reason": "Radioactive handling, as the uranium plant." },
+    "Buildings/Metal/DeepMine/DeepMine.IronTeeth.blueprint": { "danger": "Extreme", "workers": "open", "botWear": 4, "reason": "Permanent deep shafts; mechanical rather than radiation wear on bots." },
+    "Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.blueprint": { "danger": "Dangerous", "workers": "open", "botWear": 4, "reason": "Heavy boring machinery." },
+    "Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.blueprint": { "danger": "Dangerous", "workers": "open", "botWear": 4, "reason": "Furnace refining of deep ore." },
+    "Buildings/Metal/ChemicalWorks/ChemicalWorks.IronTeeth.blueprint": { "danger": "Dangerous", "workers": "open", "botWear": 4, "reason": "Corrosive chemistry." },
+    "Buildings/Metal/CryogenicLiquefactionPlant/CryogenicLiquefactionPlant.IronTeeth.blueprint": { "danger": "Dangerous", "workers": "open", "botWear": 4, "reason": "Cryogenic embrittlement." },
+    "Buildings/Metal/ElectrolysisPlant/ElectrolysisPlant.IronTeeth.blueprint": { "danger": "Dangerous", "workers": "open", "botWear": 3, "reason": "Hydrogen and high current." },
+    "Buildings/Metal/RocketAssemblyHangar/RocketAssemblyHangar.IronTeeth.blueprint": { "danger": "Dangerous", "workers": "open", "botWear": 3, "reason": "Heavy lifting of airframes." },
+    "Buildings/Metal/CementKiln/CementKiln.IronTeeth.blueprint": { "danger": "Dangerous", "workers": "open", "botWear": 3, "reason": "Rotary kiln heat." },
+    "Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.blueprint": { "danger": "Dangerous", "workers": "open", "botWear": 3, "reason": "Quarry faces." },
+    "Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.blueprint": { "danger": "Dangerous", "workers": "open", "botWear": 3, "reason": "Quarry faces." },
+    "Buildings/Metal/StoneCrusher/StoneCrusher.IronTeeth.blueprint": { "danger": "Hazardous", "workers": "open", "botWear": 3, "reason": "Crushing machinery." },
+    "Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.blueprint": { "danger": "Hazardous", "workers": "open", "botWear": 3, "reason": "Abrasive slurry." },
+    "Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.blueprint": { "danger": "Hazardous", "workers": "open", "botWear": 3, "reason": "Machine tools." },
+    "Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.blueprint": { "danger": "Hazardous", "workers": "open", "botWear": 3, "reason": "Treatment chemicals." },
+    "Buildings/Science/MissionControl/MissionControl.IronTeeth.blueprint": { "danger": null, "workers": "beavers", "reason": "Mission controllers are beavers." },
+    "Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.blueprint": { "danger": null, "workers": "beavers", "reason": "Trainees and instructors are beavers." },
+    "Buildings/Wellbeing/Hospital/Hospital.IronTeeth.blueprint": { "danger": null, "workers": "beavers", "reason": "Care staff (already beaver-only)." },
+    "Buildings/Food/Restaurant/Restaurant.IronTeeth.blueprint": { "danger": null, "workers": "beavers", "reason": "Table service (already beaver-only)." },
+    "Buildings/Food/GroceryStore/GroceryStore.IronTeeth.blueprint": { "danger": null, "workers": "beavers", "reason": "Shop service (already beaver-only)." },
+    "Buildings/Metal/SteelMill/SteelMill.IronTeeth.blueprint": { "danger": "Extreme", "workers": "specialists", "discipline": "Metallurgy", "reason": "Electric-arc melt shop and teeming ladles: trained metallurgists only, no bots on the pouring floor." },
+    "Buildings/Science/ArchiveExcavation/ArchiveExcavation.IronTeeth.blueprint": { "danger": "Dangerous", "workers": "open", "botWear": 4, "reason": "Explosive charges and timber shoring in human ruins. Its BotPartFactory template's native injuries are replaced by this tier." }
+  },
+  "pendingTemplates": {}
+}

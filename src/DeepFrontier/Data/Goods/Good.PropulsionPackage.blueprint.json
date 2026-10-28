@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "PropulsionPackage",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.42,
+      "g": 0.52,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5240,
+    "Icon": "Sprites/Goods/PropulsionPackageIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.PropulsionPackage.DisplayName",
+    "PluralDisplayNameLocKey": "Good.PropulsionPackage.PluralDisplayName"
+  }
+}

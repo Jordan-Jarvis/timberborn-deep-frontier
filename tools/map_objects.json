@@ -1,0 +1,136 @@
+{
+  "note": "Deep Frontier map-object and stockpile-good models. One source of truth for the Blender study (tools/asset-pipeline/build_map_objects.py), its export validator (validate_mapobjects_exports.py), the triangle budget and the blueprint generators that bind these models and size their colliders. Sizes are blueprint footprints in tiles (x across, y back, z layers); maxHeight is the authored top of the model above the ground in layers, minZ how far it may sink into the ground. Changing a size here changes no blueprint: footprints stay owned by their generators and are checked against this file.",
+  "scenes": "src/DeepFrontier/Art/Source/<Id>-ReferenceStudy.blend (collection <Id>.ReferenceStudy; pile meshes StockpileGood<Mesh>)",
+  "exportRoot": "outputs/mapobjects-integration",
+  "models": {
+    "DeepOreVein": {
+      "resource": "MapEditor/Objects/DeepOreVein/DeepOreVein.Model",
+      "blueprint": "MapEditor/Objects/DeepOreVein/DeepOreVein.blueprint.json",
+      "size": [
+        5,
+        5,
+        1
+      ],
+      "maxHeight": 0.3,
+      "minZ": -0.06,
+      "triangles": 1500
+    },
+    "DeepOreSource": {
+      "resource": "MapEditor/Objects/DeepOreSource/DeepOreSource.Model",
+      "blueprint": "MapEditor/Objects/DeepOreSource/DeepOreSource.blueprint.json",
+      "size": [
+        2,
+        2,
+        2
+      ],
+      "maxHeight": 1.3,
+      "minZ": -0.06,
+      "triangles": 1000
+    },
+    "SandstoneSeam": {
+      "resource": "MapEditor/Objects/SandstoneSeam/SandstoneSeam.Model",
+      "blueprint": "MapEditor/Objects/SandstoneSeam/SandstoneSeam.blueprint.json",
+      "size": [
+        5,
+        5,
+        1
+      ],
+      "maxHeight": 0.32,
+      "minZ": -0.06,
+      "triangles": 1500
+    },
+    "LimestoneSeam": {
+      "resource": "MapEditor/Objects/LimestoneSeam/LimestoneSeam.Model",
+      "blueprint": "MapEditor/Objects/LimestoneSeam/LimestoneSeam.blueprint.json",
+      "size": [
+        5,
+        5,
+        1
+      ],
+      "maxHeight": 0.32,
+      "minZ": -0.06,
+      "triangles": 1500
+    },
+    "SandstoneOutcrop": {
+      "resource": "MapEditor/Objects/SandstoneOutcrop/SandstoneOutcrop.Model",
+      "blueprint": "MapEditor/Objects/SandstoneOutcrop/SandstoneOutcrop.blueprint.json",
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "maxHeight": 0.62,
+      "minZ": -0.06,
+      "triangles": 400
+    },
+    "LimestoneOutcrop": {
+      "resource": "MapEditor/Objects/LimestoneOutcrop/LimestoneOutcrop.Model",
+      "blueprint": "MapEditor/Objects/LimestoneOutcrop/LimestoneOutcrop.blueprint.json",
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "maxHeight": 0.66,
+      "minZ": -0.06,
+      "triangles": 400
+    },
+    "RadioactiveSpringSource": {
+      "resource": "MapEditor/Objects/RadioactiveSpringSource/RadioactiveSpringSource.Model",
+      "blueprint": "MapEditor/Objects/RadioactiveSpringSource/RadioactiveSpringSource.blueprint.json",
+      "alsoBoundBy": [
+        "Buildings/Water/RadioactiveSpring/RadioactiveSpring.blueprint.json"
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ],
+      "maxHeight": 0.45,
+      "minZ": -0.06,
+      "triangles": 600,
+      "glowNode": "RadioactiveGlow"
+    },
+    "HumanRecordCache": {
+      "resource": "MapEditor/Objects/HumanRecordCache/HumanRecordCache.Model",
+      "blueprint": "MapEditor/Objects/HumanRecordCache/HumanRecordCache.blueprint.json",
+      "size": [
+        3,
+        2,
+        1
+      ],
+      "maxHeight": 0.9,
+      "minZ": -0.06,
+      "triangles": 900
+    }
+  },
+  "goods": {
+    "note": "Stockpile pile models (GoodVisualizationSpec PrimaryMesh = one item, SecondaryMesh = one full level of LimitingAmount items), shipped as Unity meshes through the asset bundle (src/DeepFrontier/AssetBundles/Resources), as Bob Storage 1.1 ships StockpileGoodModels/18BoxColumn. Bounds follow the vanilla 1ScrapMetal/4ScrapMetals meshes: items hang below their origin by the level height.",
+    "DeepOre": {
+      "visualization": "DeepOre",
+      "primary": "StockpileGoodModels/DeepFrontier/1DeepOre",
+      "secondary": "StockpileGoodModels/DeepFrontier/4DeepOres",
+      "levelHeight": 0.17,
+      "itemSpacing": 0.2,
+      "items": 4,
+      "itemLength": 0.78,
+      "triangles": [
+        16,
+        64
+      ]
+    },
+    "DeepAlloy": {
+      "visualization": "DeepAlloy",
+      "primary": "StockpileGoodModels/DeepFrontier/1DeepAlloy",
+      "secondary": "StockpileGoodModels/DeepFrontier/4DeepAlloys",
+      "levelHeight": 0.17,
+      "itemSpacing": 0.2,
+      "items": 4,
+      "itemLength": 0.78,
+      "triangles": [
+        10,
+        40
+      ]
+    }
+  }
+}

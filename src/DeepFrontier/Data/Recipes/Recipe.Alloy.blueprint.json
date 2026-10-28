@@ -1,0 +1,30 @@
+{
+  "RecipeSpec": {
+    "Id": "Alloy",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.Alloy.PluralDisplayName",
+    "CycleDurationInHours": 1.5,
+    "Ingredients": [
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 2
+      },
+      {
+        "Id": "DeepAlloy",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "Alloy",
+        "Amount": 2
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/AlloyIcon"
+  }
+}

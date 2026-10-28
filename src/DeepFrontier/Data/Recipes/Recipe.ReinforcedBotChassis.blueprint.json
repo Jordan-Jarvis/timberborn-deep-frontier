@@ -1,0 +1,34 @@
+{
+  "RecipeSpec": {
+    "Id": "ReinforcedBotChassis",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.BotChassis.PluralDisplayName",
+    "CycleDurationInHours": 4,
+    "Ingredients": [
+      {
+        "Id": "Alloy",
+        "Amount": 1
+      },
+      {
+        "Id": "Polymer",
+        "Amount": 1
+      },
+      {
+        "Id": "Flux",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "BotChassis",
+        "Amount": 2
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/BotChassisIcon"
+  }
+}

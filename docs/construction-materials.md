@@ -1,0 +1,78 @@
+# Construction materials
+
+Target: Timberborn 1.1.2.8, Iron Teeth. The canonical authored values are in `tools/construction_materials.json`; `create_construction_material_content.mjs` generates the blueprints from that catalog. These are mod balance values, not vanilla statistics.
+
+## Player progression
+
+Build a Sandstone Pit beside sandstone outcrops and a Limestone Pit beside limestone outcrops. Workers gather these finite deposits using the game's normal range, carrying, reservation and output-inventory behavior. Each authored outcrop contains 600 stone. The resource is saved by the native Yielder and is removed when exhausted.
+
+Build a Stone Crusher, Cement Kiln and Concrete Mixer using vanilla construction materials. Crushed sandstone aggregate supplies the silica fraction of the cement feed (2026-10-21: it replaced vanilla Dirt, which only the 2,000-science Dirt Excavator produces). The kiln consumes logs as ordinary recipe fuel; there is no heat simulation.
+
+Use the first concrete to build permanent quarries on marked deep seams. Both sandstone and limestone remain available indefinitely at the cost of water, power, workers and a larger investment. A quarry cannot be placed freely on ordinary ground: the native mine understructure constraint requires its matching seam.
+
+Concrete then supplies advanced construction, including the waste vault. The vault's existing 80-concrete cost remains; this chain supplies the missing material rather than removing that requirement. Waste custody itself is still a separate unfinished mechanic.
+
+## Buildings
+
+Dimensions below are width × depth × height. Grid blueprints use X/Y/Z in that order. All buildings output 0 hp. The crusher, kiln, mixer and quarries have supported walking decks where clear cells accept native platforms. Machinery and roofs do not automatically provide support. Native support and collision determine placement, with no arbitrary layer limit. The crusher, kiln and mixer can stand on suitable stackable supports. Pits require ground, and quarries require a matching seam.
+
+| Building | Dimensions | Workers | Demand (hp) | Science / bot science | Construction cost |
+| --- | --- | ---: | ---: | --- | --- |
+| Sandstone Pit | 5 × 5 × 4 | 2 | 0 | 300 / 1,000 | 20 logs, 10 planks |
+| Limestone Pit | 6 × 5 × 4 | 2 | 0 | 300 / 1,000 | 20 logs, 10 planks |
+| Sandstone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 120 planks, 80 gears, 60 metal blocks, 60 concrete |
+| Limestone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 120 planks, 80 gears, 60 metal blocks, 60 concrete |
+| Stone Crusher | 6 × 7 × 5 | 2 | 200 | 600 / 1,600 | 30 planks, 15 gears, 10 metal blocks |
+| Cement Kiln | 9 × 9 × 6 | 2 | 300 | 900 / 1,900 | 40 planks, 20 gears, 15 metal blocks |
+| Concrete Mixer | 8 × 6 × 7 | 2 | 250 | 1,000 / 2,000 | 40 planks, 20 gears, 15 metal blocks |
+
+These dimensions describe current authored registrations. The detailed pit replacements passed source/export checks and native harvesting, hoist animation, pause and exact save/reload/depletion in build 85. Their roofed storerooms and hand hoists follow the mining sheet's isometric views. The 85 profile included global placement/power overrides; support-rule acceptance is being repeated with those disabled. The mixer reference revision passed native placement, production and fresh-process reload in build 79; its previous 3×3×3 prototype is retired. See `tools/STATUS.md` for installed build evidence. Sparse structural occupancy and the separately supported walking decks permit appropriate native paths, platforms and shafts; the table's outer dimensions do not mean every enclosed grid cell is solid.
+
+## Recipes and throughput
+
+| Machine | Cycle (game hours) | Inputs | Outputs | Fuel |
+| --- | ---: | --- | --- | --- |
+| Sandstone Quarry | 2 | 4 water | 8 sandstone | None |
+| Limestone Quarry | 2 | 4 water | 8 limestone | None |
+| Stone Crusher | 1 | 3 sandstone | 6 aggregate | None |
+| Cement Kiln | 2 | 3 limestone, 1 aggregate | 2 cement | 1 log per cycle |
+| Concrete Mixer | 1 | 3 aggregate, 1 cement, 2 water | 4 concrete | None |
+
+These are recipe durations at nominal productivity, not guaranteed observed rates. Worker productivity, working hours, power and hauling affect actual output. A fully supplied kiln produces enough binder for one continuously operating mixer. One crusher can supply two mixers, so the player should add another kiln before duplicating the crusher. The crusher/kiln/mixer line has a combined nameplate demand of 750 hp. Adding both quarries raises connected nameplate demand to 3,750 hp; idle loads follow native workshop behavior. This is deliberately below the nuclear tier.
+
+One mixer nominally needs 1.75 sandstone, 1.5 limestone, 0.5 log and 2 water per production hour, excluding quarry water. Each quarry outputs 4 stone/hour and consumes 2 water/hour while active. A 600-stone outcrop of each mineral supplies about 1,370 concrete before the sandstone runs out (limestone lasts to 1,600), provided all other inputs are available. Reserve at least 120 concrete for the two permanent quarries.
+
+## Map and transport requirements
+
+Map authors must place both finite outcrop types and both permanent seam types. The new entries are registered in the map editor's object group. Existing vanilla maps do not automatically acquire these entities. `outputs/Deep Frontier - Concrete Test.timber` is a Plains copy authored through the official map editor with all four sources near the starting plateau; it is also installed in `Documents/Timberborn/Maps`. Its outcrops serialize 600 units each. Individual production and continuity fixtures have passed as recorded below; an unseeded end-to-end colony remains to test. Sources are explicit geology; no terrain scanning or runtime map resizing is introduced.
+
+All five goods are solids stored as boxes, with normal carrying weights. Native input/output inventories are implemented. Mixer Aggregate/Cement intake, Concrete output and piped Water passed actual transfer and reload in build 81. Power Lines supplied the same circuit in builds 82/83, with measured combined demand of 312 hp for the mixer, six belts and pump. Other factory ports and rotations remain separate checks. None of the concrete recipes is conveyor-only, so the first industrial line has a normal early hauling route by design.
+
+## Foundations and water infrastructure
+
+`tools/structural_content.json` now authors sandstone/limestone masonry, a concrete levee block, an eight-tile reinforced overhang, a 3×3 four-layer scaffold, a metal-reinforced dam block and a concrete overflow dam. Their original models and ivory icons are reviewed under `docs/art/reviews/2026-10-20-structures`. The solid modules use the native one-layer Levee seal; the overflow dam uses the native 0.65-layer Dam sill. Open overhangs/scaffolds have no water obstacle. Source/export checks passed; native acceptance is recorded separately in STATUS.
+
+`tools/building_construction_costs.json` replaces generic expansion-building costs with explicit entries. Advanced production, research, restaurant and rocket facilities now require concrete: initial amounts range from 40 for Food Packaging Works to 480 for the Launch Pad; the reactor requires 300. Hospital/grocery retain their canonical 80/40 concrete costs in `frontier_progression.json`. Deep Drill, Deep Processor and permanent Deep Mine require 40/60/100 concrete in their producing generator. These are initial balance values. Both pits and the crusher/kiln/mixer require no concrete, and the finite-to-permanent construction graph still passes.
+
+Controlled dam-base generation is specified in [hydroelectric-construction.md](hydroelectric-construction.md). Its turbine art, component and in-game water/power tests remain to implement.
+
+## Implementation and verification
+
+`MineralDepositSpec` implements the native `IYielderDecorable` contract with persistent yield. A small component enables that yield and deletes the exhausted source. `MineralPitSpec` selects one mineral. Each mineral has its own native resource group, shared by its source and pit, so gathering tooltips match the selector. Native scavenger work, hauling, range, removal strategy and reservations handle extraction. The pit also registers the native `YieldStatus` and output-inventory panel components that vanilla registers in `RuinsUIConfigurator`; work depends on the former. The spec decorators follow the official ShantySpeaker configurator pattern. No Harmony patch or separate inventory/save format is needed for this chain.
+
+Permanent quarries use `EfficientMine` understructure placement and normal `ManufactorySpec` recipes. Processing buildings use audited Smelter factory components, with their inherited mesh-specific effects removed at authoring time. Native `RecipeSpec.Fuel` provides kiln fuel consumption. The official Mod Builder compiles, packages and installs all output.
+
+Original Blender models contain UV maps, material slots, construction stages and moving components. All seven construction buildings, five goods and four map sources now use ivory outline SVG icons, following the approved native UI style. Their 128px and 32px review is in `docs/art/reviews/2026-10-20-mixer/construction-ivory-icons.png`; installed build status is recorded separately. Blender source axes match the official exporter at authoring time. Exported clips require in-game animation validation.
+
+The static validator checks active-faction goods, every mod building's construction costs, collection registration, source constraints, hp direction, geometry, asset references, and concrete reachability including construction gates. It verifies that removing the cement recipe prevents concrete, and that the chain can continue with permanent sources after finite sources run out. Native crusher/kiln/quarry production, access and reload passed builds 15/17; the rebuilt mixer passed build 79. Mixer conveyor inputs/output and piped Water passed build 81, including power/valve interruptions, exact conservation and saved queues followed by further production. Both finite mineral types passed depletion and exact native continuity in build 86 using explicitly shortened 24-unit test sources; normal authored sources retain 600 units. Both global build/power overrides were disabled, and effective Ground/None support, rejection of floating pits and roof paths/platforms, and absence of power nodes passed in main and reload. Other factory layouts and wider transport coverage remain. See `tools/STATUS.md` for exact observed results.
+
+## Runtime acceptance sequence
+
+Use an isolated Iron Teeth test settlement on a copy of Plains authored with both outcrops and both seams. Native developer tools may supply baseline goods and finish test construction; they must not create the concrete used as evidence of production.
+
+1. Place and save each source in the official map editor; reload it and confirm location, model and initial yield.
+2. Connect each pit to the district. Confirm workers return only its designated stone and the matching deposit quantity falls. Reload the save and verify the remaining quantity is preserved.
+3. Operate crusher, kiln and mixer with their declared inputs and adequate power. Observe aggregate, cement and concrete in native output inventories, including log consumption at the kiln. Withhold each required input and power in turn and confirm production stops rather than generating goods freely.
+4. Place each quarry over its matching seam; reject ordinary terrain and the wrong seam. Confirm water-powered extraction continues without consuming the source entity. Save and reload with quarries operating.
+5. Confirm model alignment, entrance access, construction art and animation, then check belt transfer of the five solids and pipe transfer of factory water against the installed foundation mods.
+6. Spend produced concrete on a permanent quarry or other authored construction cost. Record observed inventories and save paths separately from static reachability results.

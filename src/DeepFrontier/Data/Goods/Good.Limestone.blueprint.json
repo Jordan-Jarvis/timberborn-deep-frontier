@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Limestone",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.73,
+      "g": 0.72,
+      "b": 0.6,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5401,
+    "Icon": "Sprites/Goods/LimestoneIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Limestone.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Limestone.PluralDisplayName"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "gameVersion": "Timberborn 1.1.2.8",
+  "checkedDate": "2026-10-19",
+  "source": "Installed Steam Workshop package manifests",
+  "packages": [
+    {"workshopId":"3723883597","path":"root","name":"New Building Styles [ModContest1]","version":"0.1","id":"Redic.NewStyles","minimumGameVersion":"1.0.0.0","requiredMods":[],"checkedDate":"2026-10-20"},
+    {"workshopId":"3284904751","path":"root","name":"Harmony","version":"2.4.1","id":"Harmony","minimumGameVersion":"0.6.0.0","requiredMods":[]},
+    {"workshopId":"3578009707","path":"version-1.1","name":"Moddable Timberborn","version":"11.1.3","id":"ModdableTimberborn","minimumGameVersion":"1.1.1","requiredMods":[{"id":"Harmony","minimumVersion":"2.4.1"},{"id":"TimberUi"}]},
+    {"workshopId":"3612110827","path":"version-1.1","name":"Moddable Tool Groups","version":"11.0.0","id":"ModdableToolGroups","minimumGameVersion":"1.0.0","requiredMods":[{"id":"Harmony","minimumVersion":"2.4.1"}]},
+    {"workshopId":"3283831040","path":"version-1.1","name":"Mod Settings","version":"1.1.1.0","id":"eMka.ModSettings","minimumGameVersion":"1.1.1.0","requiredMods":[]},
+    {"workshopId":"3430626620","path":"version-1.1","name":"TimberUi","version":"11.0.1","id":"TimberUi","minimumGameVersion":"1.1.1","requiredMods":[]},
+    {"workshopId":"3639961044","path":"version-1.1","name":"Moddable Recipes","version":"11.0.0","id":"ModdableRecipes","minimumGameVersion":"1.1.1","requiredMods":[{"id":"Harmony"},{"id":"TimberUi"}],"checkedDate":"2026-10-19"},
+    {"workshopId":"3681283725","path":"Version-1.1","name":"Pump to Tank","version":"1.0.9","id":"calloatti.pumptotank","minimumGameVersion":"1.1.2.4","requiredMods":[{"id":"Harmony","minimumVersion":"2.4.1"}]},
+    {"workshopId":"3322428023","path":"Version-1.1","name":"Flywheels","version":"4.1.1.15","id":"Battery.Flywheels","minimumGameVersion":"1.1.2.4","requiredMods":[]},
+    {"workshopId":"3813842276","path":"root","name":"Teleporter Station","version":"0.4.0","id":"othermod.TeleporterStation","minimumGameVersion":"1.1.0.0","requiredMods":[]},
+    {"workshopId":"3801726769","path":"version-1.1","name":"Timber Pipes","version":"11.4.0","id":"TimberPipes","minimumGameVersion":"1.1.1","requiredMods":[{"id":"ModdableTimberborn"},{"id":"ModdableToolGroups"},{"id":"eMka.ModSettings"}],"optionalMods":[{"id":"ExtendedOptionalModSupport"}]},
+    {"workshopId":"3801036916","path":"version-1.0","name":"Northforge - Solar Panel","version":"1.0.2","id":"northforge.solarpanel","minimumGameVersion":"1.1.0.0","requiredMods":[],"optionalMods":[{"id":"northforge.core","minimumVersion":"0.1.0"}]},
+    {"workshopId":"3795292508","path":"root","name":"Expanded Storage","version":"1.0.1","id":"MauricioBedoya.ExpandedStorage","minimumGameVersion":"1.1.0.0","requiredMods":[]},
+    {"workshopId":"3815376360","path":"version-1.1","name":"Conveyor Belts v2","version":"11.4.0","id":"ConveyorBelt","minimumGameVersion":"1.1.1","requiredMods":[{"id":"ModdableTimberborn"},{"id":"ModdableToolGroups"},{"id":"eMka.ModSettings"}],"optionalMods":[{"id":"ModdedFactionsBuildingSupport"}]},
+    {"workshopId":"3543155128","path":"version-1.1","name":"Powered Tubeway","version":"11.0.0","id":"PoweredTubeway","minimumGameVersion":"1.1.1","requiredMods":[]},
+    {"workshopId":"3766893705","path":"version-1.1","name":"Power Lines","version":"11.1.1","id":"PowerLines","minimumGameVersion":"1.1.1","requiredMods":[{"id":"TimberUi"},{"id":"Harmony"}]},
+    {"workshopId":"3798650616","path":"version-1.1","name":"Map Transformer","version":"11.0.0","id":"MapTransformer","minimumGameVersion":"1.1.1","requiredMods":[{"id":"Harmony"},{"id":"ModdableTimberborn"}]},
+    {"workshopId":"3286476486","path":"version-1.1","name":"Ladder","version":"1.0.0.4","id":"Tobbert.Ladder","minimumGameVersion":"1.0.0.0","requiredMods":[],"checkedDate":"2026-10-19","role":"Candidate vertical-access dependency; already installed; not yet required by Deep Frontier","exactCapture":"tools/ladder_dependency_1_1.json"}
+  ]
+}

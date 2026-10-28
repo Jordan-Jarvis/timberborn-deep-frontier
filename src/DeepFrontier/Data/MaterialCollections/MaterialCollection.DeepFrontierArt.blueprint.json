@@ -1,0 +1,15 @@
+{
+  "MaterialCollectionSpec": {
+    "CollectionId": "Common",
+    "Materials": [
+      "Materials/DeepFrontierArt/DFArtTimber",
+      "Materials/DeepFrontierArt/DFArtPlank",
+      "Materials/DeepFrontierArt/DFArtIron",
+      "Materials/DeepFrontierArt/DFArtRoof",
+      "Materials/DeepFrontierArt/DFArtSandstone",
+      "Materials/DeepFrontierArt/DFArtLimestone",
+      "Materials/DeepFrontierArt/DFArtAggregate",
+      "Materials/DeepFrontierArt/DFArtBronze"
+    ]
+  }
+}

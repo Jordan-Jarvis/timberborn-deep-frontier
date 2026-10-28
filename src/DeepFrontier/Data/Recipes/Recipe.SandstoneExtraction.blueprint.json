@@ -1,0 +1,26 @@
+{
+  "RecipeSpec": {
+    "Id": "SandstoneExtraction",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.SandstoneExtraction.DisplayName",
+    "CycleDurationInHours": 2,
+    "Ingredients": [
+      {
+        "Id": "Water",
+        "Amount": 4
+      }
+    ],
+    "Products": [
+      {
+        "Id": "Sandstone",
+        "Amount": 8
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 4,
+    "Icon": "Sprites/Goods/SandstoneIcon"
+  }
+}

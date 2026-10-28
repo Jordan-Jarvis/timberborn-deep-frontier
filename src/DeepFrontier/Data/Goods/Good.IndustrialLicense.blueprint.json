@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "IndustrialLicense",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.82,
+      "g": 0.55,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5280,
+    "Icon": "Sprites/Goods/IndustrialLicenseIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.IndustrialLicense.DisplayName",
+    "PluralDisplayNameLocKey": "Good.IndustrialLicense.PluralDisplayName"
+  }
+}

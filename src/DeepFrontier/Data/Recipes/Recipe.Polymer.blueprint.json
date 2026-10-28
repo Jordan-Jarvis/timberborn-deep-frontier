@@ -1,0 +1,34 @@
+{
+  "RecipeSpec": {
+    "Id": "Polymer",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.Polymer.PluralDisplayName",
+    "CycleDurationInHours": 3,
+    "Ingredients": [
+      {
+        "Id": "CrudeOil",
+        "Amount": 3
+      },
+      {
+        "Id": "Chemical",
+        "Amount": 1
+      },
+      {
+        "Id": "Water",
+        "Amount": 2
+      }
+    ],
+    "Products": [
+      {
+        "Id": "Polymer",
+        "Amount": 3
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/PolymerIcon"
+  }
+}

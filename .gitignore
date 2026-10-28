@@ -1,0 +1,51 @@
+# Third-party tools and projects, installed locally (see README "Building from source")
+/vendor/
+/node_modules
+/tools/asset-pipeline/blender-*/
+/tools/asset-pipeline/unitypy/
+/tools/dotnet/
+/tools/skill-validation-deps/
+
+# Build output
+bin/
+obj/
+**/__pycache__/
+*.pyc
+
+# Game textures the Blender scenes reference: Mechanistry's, recreated locally by
+# tools/asset-pipeline/extract_game_textures.py (list: src/DeepFrontier/Art/GameTextures.json)
+/src/DeepFrontier/Art/GameTextures/
+
+# Blender auto-backups
+*.blend1
+*.blend2
+
+# outputs/: keep only the Deep Frontier model exports and studies the content
+# generators read; logs, reports and screenshots the tools write there are not
+# tracked. Local-only references taken from the game (outputs/vanilla-icons,
+# outputs/native-civic-assets, outputs/workforce-api-1.1.2.8) stay untracked:
+# they belong to Mechanistry (see README, "Local-only game references").
+/outputs/*
+!/outputs/reference-studies/
+!/outputs/lategame-studies/
+!/outputs/lategame-integration/
+!/outputs/civic-integration/
+!/outputs/industrial-integration/
+!/outputs/hydro-integration/
+!/outputs/research-integration/
+!/outputs/structural-integration/
+!/outputs/mapobjects-integration/
+!/outputs/connection-faces/
+
+# Local working files
+/outputs-cleanup-staging/
+/outputs-restored.txt
+*.tmp
+.tmp_*
+
+# Mechanistry's Timbermesh Blender exporter (install from its official source)
+/tools/asset-pipeline/timbermesh_blender_plugin_*.zip
+
+# Other authors' content, kept locally for reference only
+/docs/art/references/new-building-styles/
+/tools/target_mod_packages_1_1.json

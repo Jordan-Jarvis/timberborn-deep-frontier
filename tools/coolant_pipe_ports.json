@@ -1,0 +1,29 @@
+{
+  "_comment": "Timber Pipes 11.4.0 BuildingPipeTargetPortsSpec for the reactor coolant chain, in local block coordinates. NuclearReactor: the 20x15 study's intake socket on cell (0,0,0), facing the front (Down = -Y); keep in step with PIPE_INLET in lategame_NuclearReactor.py. WaterTreatmentPlant: the 12x11 study's flanged outlet on the water tower's right face, cell (11,1,0) facing Right; keep in step with water_tower() in lategame_WaterTreatmentPlant.py.",
+  "NuclearReactor": {
+    "Ports": [
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      }
+    ]
+  },
+  "WaterTreatmentPlant": {
+    "Ports": [
+      {
+        "Coordinates": {
+          "X": 11,
+          "Y": 1,
+          "Z": 0
+        },
+        "Directions": "Right",
+        "State": "OpenOut"
+      }
+    ]
+  }
+}

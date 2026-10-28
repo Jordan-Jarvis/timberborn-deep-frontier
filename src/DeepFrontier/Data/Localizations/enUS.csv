@@ -1,0 +1,799 @@
+ID,Text,Comment
+Building.DeepDrill.DisplayName,Deep Drill,Deep Frontier
+Building.DeepDrill.Description,"Extracts one unit of Deep Ore from an authored source stockpile using water and 1000 hp. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.DeepDrill.FlavorDescription,The first boring machine turns a finite deposit into a surface supply chain.,Deep Frontier
+Building.DeepMine.DisplayName,Deep Mine,Deep Frontier
+Building.DeepMine.Description,"Extracts four Deep Ore every cycle from a marked vein using water and 4000 hp. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.DeepMine.FlavorDescription,The vein is endless; the power bill is not.,Deep Frontier
+Building.DeepProcessor.DisplayName,Deep Ore Processor,Deep Frontier
+Building.DeepProcessor.Description,"Refines deep ore into a dense industrial alloy. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.DeepProcessor.FlavorDescription,The ore is useless until the surface factory learns how to tame it.,Deep Frontier
+Building.DeepOreSource.DisplayName,Deep Ore Source,Deep Frontier
+Building.DeepOreSource.Description,Map editor stockpile for a finite authored Deep Ore deposit.,Deep Frontier
+Building.DeepOreSource.FlavorDescription,Fill this marker with Deep Ore while authoring the map; the drill consumes that deposit.,Deep Frontier
+Building.DeepOreVein.DisplayName,Deep Ore Vein,Deep Frontier
+Building.DeepOreVein.Description,Map editor understructure that authorizes a permanent Deep Mine.,Deep Frontier
+Building.DeepOreVein.FlavorDescription,"This geological seam is inexhaustible, but reaching it requires an industrial mine.",Deep Frontier
+Good.DeepOre.DisplayName,Deep ore,Deep Frontier
+Good.DeepOre.PluralDisplayName,Deep ore,Deep Frontier
+Good.DeepAlloy.DisplayName,Deep alloy,Deep Frontier
+Good.DeepAlloy.PluralDisplayName,Deep alloy,Deep Frontier
+Good.Compost.DisplayName,Compost,Deep Frontier
+Good.Compost.PluralDisplayName,Compost,Deep Frontier
+Good.Coal.DisplayName,Coal,Deep Frontier
+Good.Coal.PluralDisplayName,Coal,Deep Frontier
+Good.Chemical.DisplayName,Chemical,Deep Frontier
+Good.Chemical.PluralDisplayName,Chemical,Deep Frontier
+Good.RecoveredArtifact.DisplayName,Recovered Artifact,Deep Frontier
+Good.RecoveredArtifact.PluralDisplayName,Recovered Artifact,Deep Frontier
+Good.Fertilizer.DisplayName,Fertilizer,Deep Frontier
+Good.Fertilizer.PluralDisplayName,Fertilizer,Deep Frontier
+Good.FreshFish.DisplayName,Fresh Fish,Deep Frontier
+Good.FreshFish.PluralDisplayName,Fresh Fish,Deep Frontier
+Good.JuvenileFish.DisplayName,Juvenile Fish,Deep Frontier
+Good.JuvenileFish.PluralDisplayName,Juvenile Fish,Deep Frontier
+Good.FishOil.DisplayName,Fish Oil,Deep Frontier
+Good.FishOil.PluralDisplayName,Fish Oil,Deep Frontier
+Good.CannedFish.DisplayName,Canned Fish,Deep Frontier
+Good.CannedFish.PluralDisplayName,Canned Fish,Deep Frontier
+Good.EmergencyRation.DisplayName,Emergency Ration,Deep Frontier
+Good.EmergencyRation.PluralDisplayName,Emergency Ration,Deep Frontier
+Good.PackagedFood.DisplayName,Packaged Food,Deep Frontier
+Good.PackagedFood.PluralDisplayName,Packaged Food,Deep Frontier
+Good.Medicine.DisplayName,Medicine,Deep Frontier
+Good.Medicine.PluralDisplayName,Medicine,Deep Frontier
+Good.MedicalFood.DisplayName,Medical Food,Deep Frontier
+Good.MedicalFood.PluralDisplayName,Medical Food,Deep Frontier
+Good.SweetBerryCake.DisplayName,Sweet Berry Cake,Deep Frontier
+Good.SweetBerryCake.PluralDisplayName,Sweet Berry Cake,Deep Frontier
+Good.Flux.DisplayName,Flux,Deep Frontier
+Good.Flux.PluralDisplayName,Flux,Deep Frontier
+Good.HighGradeSteel.DisplayName,High Grade Steel,Deep Frontier
+Good.HighGradeSteel.PluralDisplayName,High Grade Steel,Deep Frontier
+Good.Alloy.DisplayName,Alloy,Deep Frontier
+Good.Alloy.PluralDisplayName,Alloy,Deep Frontier
+Good.Polymer.DisplayName,Polymer,Deep Frontier
+Good.Polymer.PluralDisplayName,Polymer,Deep Frontier
+Good.Lubricant.DisplayName,Lubricant,Deep Frontier
+Good.Lubricant.PluralDisplayName,Lubricant,Deep Frontier
+Good.MachineCore.DisplayName,Machine Core,Deep Frontier
+Good.MachineCore.PluralDisplayName,Machine Core,Deep Frontier
+Good.PowerModule.DisplayName,Power Module,Deep Frontier
+Good.PowerModule.PluralDisplayName,Power Module,Deep Frontier
+Good.FilterMedia.DisplayName,Filter Media,Deep Frontier
+Good.FilterMedia.PluralDisplayName,Filter Media,Deep Frontier
+Good.ConcentratedWaste.DisplayName,Concentrated Waste,Deep Frontier
+Good.ConcentratedWaste.PluralDisplayName,Concentrated Waste,Deep Frontier
+Good.CrudeOil.DisplayName,Crude Oil,Deep Frontier
+Good.CrudeOil.PluralDisplayName,Crude Oil,Deep Frontier
+Good.UraniumOre.DisplayName,Uranium Ore,Deep Frontier
+Good.UraniumOre.PluralDisplayName,Uranium Ore,Deep Frontier
+Good.Yellowcake.DisplayName,Yellowcake,Deep Frontier
+Good.Yellowcake.PluralDisplayName,Yellowcake,Deep Frontier
+Good.EnrichedFuel.DisplayName,Enriched Fuel,Deep Frontier
+Good.EnrichedFuel.PluralDisplayName,Enriched Fuel,Deep Frontier
+Good.PureWater.DisplayName,Pure Water,Deep Frontier
+Good.PureWater.PluralDisplayName,Pure Water,Deep Frontier
+Good.HydrogenGas.DisplayName,Hydrogen Gas,Deep Frontier
+Good.HydrogenGas.PluralDisplayName,Hydrogen Gas,Deep Frontier
+Good.OxygenGas.DisplayName,Oxygen Gas,Deep Frontier
+Good.OxygenGas.PluralDisplayName,Oxygen Gas,Deep Frontier
+Good.LiquidHydrogen.DisplayName,Liquid Hydrogen,Deep Frontier
+Good.LiquidHydrogen.PluralDisplayName,Liquid Hydrogen,Deep Frontier
+Good.LiquidOxygen.DisplayName,Liquid Oxygen,Deep Frontier
+Good.LiquidOxygen.PluralDisplayName,Liquid Oxygen,Deep Frontier
+Good.Cryocoolant.DisplayName,Cryocoolant,Deep Frontier
+Good.Cryocoolant.PluralDisplayName,Cryocoolant,Deep Frontier
+Good.RadioactiveWaste.DisplayName,Radioactive Waste,Deep Frontier
+Good.RadioactiveWaste.PluralDisplayName,Radioactive Waste,Deep Frontier
+Good.RocketAirframe.DisplayName,Rocket Airframe,Deep Frontier
+Good.RocketAirframe.PluralDisplayName,Rocket Airframe,Deep Frontier
+Good.PropulsionPackage.DisplayName,Propulsion Package,Deep Frontier
+Good.PropulsionPackage.PluralDisplayName,Propulsion Package,Deep Frontier
+Good.GuidanceComputer.DisplayName,Guidance Computer,Deep Frontier
+Good.GuidanceComputer.PluralDisplayName,Guidance Computer,Deep Frontier
+Good.MissionPayload.DisplayName,Mission Payload,Deep Frontier
+Good.MissionPayload.PluralDisplayName,Mission Payload,Deep Frontier
+Good.RecoveredTelemetry.DisplayName,Recovered Telemetry,Deep Frontier
+Good.RecoveredTelemetry.PluralDisplayName,Recovered Telemetry,Deep Frontier
+Good.IndustrialLicense.DisplayName,Industrial License,Deep Frontier
+Good.IndustrialLicense.PluralDisplayName,Industrial License,Deep Frontier
+Good.SpecialistLicense.DisplayName,Specialist License,Deep Frontier
+Good.SpecialistLicense.PluralDisplayName,Specialist License,Deep Frontier
+Good.FlightLicense.DisplayName,Flight License,Deep Frontier
+Good.FlightLicense.PluralDisplayName,Flight License,Deep Frontier
+Good.Electronics.DisplayName,Electronics,Deep Frontier
+Good.Electronics.PluralDisplayName,Electronics,Deep Frontier
+Good.ReactorCoolantWater.DisplayName,Reactor Coolant Water,Deep Frontier
+Good.ReactorCoolantWater.PluralDisplayName,Reactor Coolant Water,Deep Frontier
+Good.RecoveredMinerals.DisplayName,Recovered Minerals,Deep Frontier
+Good.RecoveredMinerals.PluralDisplayName,Recovered Minerals,Deep Frontier
+Good.ArchiveData.DisplayName,Archive Data,Deep Frontier
+Good.ArchiveData.PluralDisplayName,Archive Data,Deep Frontier
+Building.FertilizerWorks.DisplayName,Fertilizer works,Deep Frontier
+Building.FertilizerWorks.Description,"Deep Frontier fertilizer works production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.FertilizerWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.FishHatchery.DisplayName,Fish hatchery,Deep Frontier
+Building.FishHatchery.Description,"Breeds juvenile fish from fresh fish, algae and water. Only the front door row needs the bank; the deck stands on piles that reach the riverbed up to 6 m down, and clean water must stand at least 0.2 m up the marked pens. Stops during droughts or badwater contamination. Requires 55 hp. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.FishHatchery.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.FisheryWorks.DisplayName,Fishery works,Deep Frontier
+Building.FisheryWorks.Description,"Raises fresh fish from juveniles, algae and delivered water, or presses fish into oil. Its basins reflect stored water and its wheel runs during production. The wheel wing may stand out over water on piles up to 6 m deep. Requires 80 hp. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.FisheryWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.FoodPackagingWorks.DisplayName,Food packaging works,Deep Frontier
+Building.FoodPackagingWorks.Description,"Deep Frontier food packaging works production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.FoodPackagingWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.PublicHealthLab.DisplayName,Public health lab,Deep Frontier
+Building.PublicHealthLab.Description,"Deep Frontier public health lab production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.PublicHealthLab.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.GroceryStore.DisplayName,Grocery store,Deep Frontier
+Building.GroceryStore.Description,"Stocks canned fish, packaged food, algae and corn rations, and fermented cassava and soybeans. Two clerks restock 100 of each food. With 100 hp, an attending clerk and at least three stocked foods, nearby beavers gain up to +2 wellbeing within eight cells. Food remains available during power cuts and off-duty hours.",Deep Frontier
+Building.GroceryStore.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.Restaurant.DisplayName,Restaurant,Deep Frontier
+Building.Restaurant.Description,"A 400 hp kitchen and dining hall. Workers serve fish, berries and prepared foods at tables, with coffee when stocked and water for thirsty diners. Ferments food and bakes sweet berry cake from berries, corn and water. Cake is cooked and eaten only here. Serves whichever main foods are in stock; a full meal of fish, berries, fermented mushrooms and eggplant rations also gives Fine Dining. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.Restaurant.FlavorDescription,"A good meal deserves a table, a view and good company.",Deep Frontier
+Building.Hospital.DisplayName,Hospital,Deep Frontier
+Building.Hospital.Description,"Houses 30 patients, who stay admitted until cured and are fed and watered from its own stock. An assigned crew of six and 600 hp treat injury 80% faster than a medical bed, plus chipped teeth, badwater contamination and 10-day radiation decontamination, day and night. Uses medicine, water and extract while treating or attended. Attending, supplied staff grant neighborhood care up to +2 wellbeing within ten cells. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.Hospital.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.Greenhouse.DisplayName,Greenhouse,Deep Frontier
+Building.Greenhouse.Description,"Deep Frontier greenhouse production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.Greenhouse.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.ChemicalWorks.DisplayName,Chemical works,Deep Frontier
+Building.ChemicalWorks.Description,"Deep Frontier chemical works production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.ChemicalWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.PrecisionMachineWorks.DisplayName,Precision machine works,Deep Frontier
+Building.PrecisionMachineWorks.Description,"Deep Frontier precision machine works production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.PrecisionMachineWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.WaterTreatmentPlant.DisplayName,Water treatment plant,Deep Frontier
+Building.WaterTreatmentPlant.Description,"Deep Frontier water treatment plant production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.WaterTreatmentPlant.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.TechnicalSchool.DisplayName,Technical school,Deep Frontier
+Building.TechnicalSchool.Description,Deep Frontier technical school production building,Deep Frontier
+Building.TechnicalSchool.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.UraniumProcessingPlant.DisplayName,Uranium processing plant,Deep Frontier
+Building.UraniumProcessingPlant.Description,"Deep Frontier uranium processing plant production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.UraniumProcessingPlant.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.RadioactiveWasteRefinery.DisplayName,Radioactive waste refinery,Deep Frontier
+Building.RadioactiveWasteRefinery.Description,"Refines spent-fuel casks into radioactive sludge and recovered minerals, and cleans contaminated water. Requires 8000 hp. Haul its sludge to a Sludge Outfall or Radioactive Waste Export: when its sludge tanks are full, 6 sludge leaks every 24 hours and irradiates the soil within 3 tiles, killing crops. Pausing it seals the tanks. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.RadioactiveWasteRefinery.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.ElectrolysisPlant.DisplayName,Electrolysis plant,Deep Frontier
+Building.ElectrolysisPlant.Description,"Deep Frontier electrolysis plant production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.ElectrolysisPlant.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.CryogenicLiquefactionPlant.DisplayName,Cryogenic liquefaction plant,Deep Frontier
+Building.CryogenicLiquefactionPlant.Description,"Deep Frontier cryogenic liquefaction plant production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.CryogenicLiquefactionPlant.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.RocketAssemblyHangar.DisplayName,Rocket assembly hangar,Deep Frontier
+Building.RocketAssemblyHangar.Description,Deep Frontier rocket assembly hangar production building,Deep Frontier
+Building.RocketAssemblyHangar.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.MissionControl.DisplayName,Mission control,Deep Frontier
+Building.MissionControl.Description,Deep Frontier mission control production building,Deep Frontier
+Building.MissionControl.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.LaunchPad.DisplayName,Launch pad,Deep Frontier
+Building.LaunchPad.Description,"Launches the colony's rockets. Select a mission in the recipe list: haulers stage one complete rocket (airframes, propulsion, guidance, payload and telemetry) and its liquid hydrogen and oxygen; workers then prepare it under a 25000 hp load. Every launch consumes the whole rocket and fuel, and a launch can fail. Also produces guidance telemetry. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier rocket program
+Building.LaunchPad.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.SteelMill.DisplayName,Steel mill,Deep Frontier
+Building.SteelMill.Description,"An electric-arc melt shop and rolling mill. Makes flux from scrap metal and deep ore, high-grade steel from metal blocks, coal and flux, and alloy from high-grade steel and deep alloy. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires 2,500 hp. Its two smokestacks pollute the air nearby.",Deep Frontier
+Building.SteelMill.FlavorDescription,"Every reactor, rocket and machine core starts as a white-hot pour on this floor.",Deep Frontier
+Building.ArchiveExcavation.DisplayName,Archive excavation,Deep Frontier
+Building.ArchiveExcavation.Description,"Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts, then restores their data drives into archive data with grease and metal parts. A Human Record Cache within 4 tiles can be surveyed for extra archive data. 4 workers, dangerous work. Requires 400 hp. Its stove chimney pollutes the air nearby. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.ArchiveExcavation.FlavorDescription,The humans buried their warnings in the strata. Dig carefully.,Deep Frontier
+Building.CryogenicTankFarm.DisplayName,Cryogenic tank farm,Deep Frontier
+Building.CryogenicTankFarm.Description,"Stores up to 2,000 units of one cryogenic fuel, liquid hydrogen or liquid oxygen, delivered and drawn by pipes at its two front sockets or by haulers. Needs 1,000 hp to keep the fuel cold: without power the intake closes, and after 12 hours the stored fuel starts to vent. Pipes connect directly to its flat walls, without a valve.",Deep Frontier
+Building.CryogenicTankFarm.FlavorDescription,"The coldest place in the colony, kept that way at great expense.",Deep Frontier
+Building.SmogScrubber.DisplayName,Smog scrubber,Deep Frontier
+Building.SmogScrubber.Description,Removes 75% of the smog within 7 tiles while powered and not paused; scrubbers and trees together remove at most 90%. No workers. Requires 200 hp.,Deep Frontier
+Building.SmogScrubber.FlavorDescription,What goes up the smokestack comes down in the scrubber.,Deep Frontier
+Building.Bathhouse.DisplayName,Bathhouse,Deep Frontier
+Building.Bathhouse.Description,"Steam baths for up to 12 beavers: a warm soak, a massage and a wash in one visit (Mud Bath, Massager and Wet Fur). Uses 1 water per hour, piped in at the boiler-room socket or carried by haulers, and 300 hp. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.Bathhouse.FlavorDescription,The boilers run hot so the colony can run warm.,Deep Frontier
+Building.TownPlaza.DisplayName,Town plaza,Deep Frontier
+Building.TownPlaza.Description,"A civic square for up to 15 beavers, who dance to the bandstand and gather round the fountain (Dance Pit and Campfire). Needs no power or supplies.",Deep Frontier
+Building.TownPlaza.FlavorDescription,Every frontier town needs one place where nothing is being built.,Deep Frontier
+Building.ObservationDeck.DisplayName,Observation deck,Deep Frontier
+Building.ObservationDeck.Description,A viewing tower for up to 20 beavers on its deck: the climb up the helical stair is exercise and the view is a rooftop terrace (Exercise Plaza and Rooftop Terrace). Paths and platforms may be built on the deck.,Deep Frontier
+Building.ObservationDeck.FlavorDescription,"From up here, the whole frontier fits in one look.",Deep Frontier
+Building.NuclearReactor.DisplayName,Nuclear Reactor,Deep Frontier
+Building.NuclearReactor.Description,"A 750000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive sludge that must be shipped off the map. Its core overheats when coolant runs dry, fewer than 4 trained operators are working or maintenance is overdue (a 24-hour stop every 360 running hours). At 85% heat it trips an emergency shutdown; without coolant the core keeps heating for 72 hours after it stops, and at 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.NuclearReactor.FlavorDescription,The frontier makes power and consequences at the same scale.,Deep Frontier
+Building.RadioactiveWasteVault.DisplayName,Radioactive Waste Vault,Deep Frontier
+Building.RadioactiveWasteVault.Description,"Locked storage for radioactive waste; the contents must be processed or moved before demolition. Keep it below full: when full, 4 casks breach every 24 hours, spilling radioactive sludge and irradiating the soil within 3 tiles, which kills crops.",Deep Frontier
+Building.RadioactiveWasteVault.FlavorDescription,The frontier makes power and consequences at the same scale.,Deep Frontier
+Building.CoalPowerPlant.DisplayName,Coal power plant,Deep Frontier
+Building.CoalPowerPlant.Description,"A coal-fired steam plant. Produces 5,000 hp, day and night, burning 1 coal and 1 water per hour while the network draws power. No workers. Its chimney pollutes the air for a wide area while it runs. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.CoalPowerPlant.FlavorDescription,"Black smoke, white steam and the hum of every machine in the district.",Deep Frontier
+Building.OilPowerPlant.DisplayName,Oil power plant,Deep Frontier
+Building.OilPowerPlant.Description,"An oil-fired turbine plant. Produces 20,000 hp, day and night, burning 2 crude oil and 2 water per hour while the network draws power. No workers. Its two exhaust stacks pollute the air nearby while it runs, less than coal. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.OilPowerPlant.FlavorDescription,"The deep ore gives up its oil, and the oil gives up its fire.",Deep Frontier
+Recipe.SweetBerryCake.DisplayName,Sweet Berry Cake,Deep Frontier
+Recipe.Compost.DisplayName,Compost,Deep Frontier
+Recipe.Fertilizer.DisplayName,Fertilizer,Deep Frontier
+Recipe.JuvenileFish.DisplayName,Juvenile Fish,Deep Frontier
+Recipe.FreshFish.DisplayName,Fresh Fish,Deep Frontier
+Recipe.FishOil.DisplayName,Fish Oil,Deep Frontier
+Recipe.CannedFish.DisplayName,Canned Fish,Deep Frontier
+Recipe.EmergencyRation.DisplayName,Emergency Ration,Deep Frontier
+Recipe.PackagedFood.DisplayName,Packaged Food,Deep Frontier
+Recipe.GreenhouseEggplant.DisplayName,Greenhouse Eggplant,Deep Frontier
+Recipe.GreenhouseKohlrabi.DisplayName,Greenhouse Kohlrabi,Deep Frontier
+Recipe.GreenhouseCoffee.DisplayName,Greenhouse Coffee,Deep Frontier
+Recipe.Medicine.DisplayName,Medicine,Deep Frontier
+Recipe.MedicalFood.DisplayName,Medical Food,Deep Frontier
+Recipe.Flux.DisplayName,Flux,Deep Frontier
+Recipe.HighGradeSteel.DisplayName,High Grade Steel,Deep Frontier
+Recipe.Alloy.DisplayName,Alloy,Deep Frontier
+Recipe.Chemical.DisplayName,Chemical,Deep Frontier
+Recipe.Polymer.DisplayName,Polymer,Deep Frontier
+Recipe.Lubricant.DisplayName,Lubricant,Deep Frontier
+Recipe.MachineCore.DisplayName,Machine Core,Deep Frontier
+Recipe.Electronics.DisplayName,Electronics,Deep Frontier
+Recipe.PowerModule.DisplayName,Power Module,Deep Frontier
+Recipe.FilterMedia.DisplayName,Filter Media,Deep Frontier
+Recipe.PureWater.DisplayName,Pure Water,Deep Frontier
+Recipe.ReactorCoolantWater.DisplayName,Reactor Coolant Water,Deep Frontier
+Recipe.DeepCoal.DisplayName,Deep Coal,Deep Frontier
+Recipe.DeepOil.DisplayName,Deep Oil,Deep Frontier
+Recipe.DeepUranium.DisplayName,Deep Uranium,Deep Frontier
+Recipe.Yellowcake.DisplayName,Yellowcake,Deep Frontier
+Recipe.EnrichedFuel.DisplayName,Enriched Fuel,Deep Frontier
+Recipe.Cryocoolant.DisplayName,Cryocoolant,Deep Frontier
+Recipe.Electrolysis.DisplayName,Electrolysis,Deep Frontier
+Recipe.Liquefaction.DisplayName,Liquefaction,Deep Frontier
+Recipe.RocketAirframe.DisplayName,Rocket Airframe,Deep Frontier
+Recipe.PropulsionPackage.DisplayName,Propulsion Package,Deep Frontier
+Recipe.GuidanceComputer.DisplayName,Guidance Computer,Deep Frontier
+Recipe.MissionPayload.DisplayName,Mission Payload,Deep Frontier
+Recipe.NuclearWaste.DisplayName,Nuclear Waste,Deep Frontier
+Recipe.WasteRefining.DisplayName,Waste Refining,Deep Frontier
+Recipe.DecontaminateWater.DisplayName,Decontaminate Water,Deep Frontier
+Recipe.GuidanceTelemetry.DisplayName,Guidance Telemetry,Deep Frontier
+Recipe.RecoveredArtifact.DisplayName,Recovered Artifact,Deep Frontier
+Recipe.ArchiveData.DisplayName,Archive Data,Deep Frontier
+Recipe.CarbonFilterMedia.DisplayName,Activated carbon filters,Deep Frontier
+Recipe.BrineChemical.DisplayName,Chemical from brine,Deep Frontier
+Recipe.GreenhouseAquaponics.DisplayName,Aquaponic kohlrabi and fish,Deep Frontier
+Recipe.ReinforcedBotChassis.DisplayName,Reinforced Bot Chassis,Deep Frontier
+Recipe.ServoBotLimbs.DisplayName,Servo Bot Limbs,Deep Frontier
+Recipe.BotCortex.DisplayName,Bot Cortex,Deep Frontier
+Recipe.FuelReprocessing.DisplayName,Spent fuel reprocessing,Deep Frontier
+Recipe.ContaminatedWaterRefining.DisplayName,Waste refining with contaminated water,Deep Frontier
+Recipe.Vitrification.DisplayName,Sludge vitrification,Deep Frontier
+Recipe.SludgeMineralRecovery.DisplayName,Sludge mineral recovery,Deep Frontier
+Need.PublicHealthcare.DisplayName,Public healthcare,Deep Frontier
+DeepFrontier.Hospital.Panel.Title,Hospital,Deep Frontier
+DeepFrontier.Hospital.Panel.Patients,Patients admitted: {0} / {1} beds,Deep Frontier
+DeepFrontier.Hospital.Panel.Crew,Ward crew: {0} / {1} ({2} attending the ward),Deep Frontier
+DeepFrontier.Hospital.Panel.Meals,"Patient meals: {0} food, {1} water ({2})",Deep Frontier
+DeepFrontier.Hospital.Panel.Fed,Patients fed: {0} / {1},Deep Frontier
+DeepFrontier.Hospital.Panel.UnderConstruction,Under construction,Deep Frontier
+DeepFrontier.Hospital.Panel.Paused,Paused,Deep Frontier
+DeepFrontier.Hospital.Panel.NoPower,Care stopped: check power and building warnings,Deep Frontier
+DeepFrontier.Hospital.Panel.NoCrew,Closed: no ward crew assigned,Deep Frontier
+DeepFrontier.Hospital.Panel.NoMeals,Closed: a patient is starving or dehydrated and the food or water stock is empty,Deep Frontier
+DeepFrontier.Hospital.Panel.NoSupplies,"Waiting for medicine, water and extract",Deep Frontier
+DeepFrontier.Hospital.Panel.Treating,"Patients stay until cured of injury, chipped teeth, badwater contamination and radiation. Treatment: {0}% (crew strength)",Deep Frontier
+DeepFrontier.Hospital.Panel.AreaActive,Neighborhood care active (+2 wellbeing),Deep Frontier
+DeepFrontier.Hospital.Panel.AreaInactive,Neighborhood care inactive,Deep Frontier
+DeepFrontier.Hospital.Status.MealsLow,Patient food or water is running low.,Deep Frontier
+DeepFrontier.Hospital.Status.MealsLow.Short,Low patient meals,Deep Frontier
+DeepFrontier.Hospital.Status.MealsOut,No food or water for patients: hungry or thirsty patients will be sent out to eat.,Deep Frontier
+DeepFrontier.Hospital.Status.MealsOut.Short,No patient meals,Deep Frontier
+DeepFrontier.Need.FineDining,Fine dining,Deep Frontier
+Need.NeighborhoodGroceries.DisplayName,Neighborhood groceries,Deep Frontier
+DeepFrontier.Waterside.SupportTooDeep,A support post would need more than {0} m to reach the ground or riverbed.,Deep Frontier waterside placement error; {0} = AdaptiveSupportsSpec.MaxDepth
+DeepFrontier.Waterside.SupportOutsideMap,A support post would stand outside the map.,Deep Frontier waterside placement error: a support column lies outside the map
+DeepFrontier.Waterside.WorkCellsTooShallow,Water does not reach {0} marked working cell(s): the surface must stand at least {1} m above their floor.,Deep Frontier waterside preview warning; {0} = cell count; {1} = MinDepth
+DeepFrontier.Waterside.WorkCellsTooDeep,Too deep under {0} marked working cell(s): at most {1} m of water is allowed.,Deep Frontier waterside preview warning; {0} = cell count; {1} = MaxDepth
+DeepFrontier.Waterside.Status.WaterTooDeep,The water under the working area is too deep.,Deep Frontier waterside building status
+DeepFrontier.Waterside.Status.WaterTooDeep.Short,Water too deep,Deep Frontier waterside building status alert
+RocketProgram.Mission.OrbitalObservatory.DisplayName,Orbital Observatory,Deep Frontier rocket program
+RocketProgram.Mission.OrbitalObservatory.Description,First launch: lofts a telescope and archive receiver to read what the old orbital records saw.,Deep Frontier rocket program
+RocketProgram.Mission.OrbitalObservatory.Success,"The observatory is in orbit. Its first passes recover fragments of the old orbital records: survey images of this valley before the drought, and a faint green trail of badwater running back to a single source far upriver. The archive now knows where to look.",Deep Frontier rocket program
+RocketProgram.Mission.OrbitalObservatory.Failure,Debris rained over the flame trench; the observatory was lost with its rocket and fuel.,Deep Frontier rocket program
+RocketProgram.Mission.RecoveryProbe.DisplayName,Recovery Probe,Deep Frontier rocket program
+RocketProgram.Mission.RecoveryProbe.Description,Second launch: sends a probe to a derelict orbital station to bring back its data core.,Deep Frontier rocket program
+RocketProgram.Mission.RecoveryProbe.Success,The probe docked with a silent human station and returned its data core. Among the corrupted files are intact fabrication notes and a map of the treatment works that once held the badwater back. The industrial frontier has its next blueprint.,Deep Frontier rocket program
+RocketProgram.Mission.RecoveryProbe.Failure,The probe never reached the station; the rocket broke up on ascent.,Deep Frontier rocket program
+RocketProgram.Mission.LongRangeBeacon.DisplayName,Long-Range Beacon,Deep Frontier rocket program
+RocketProgram.Mission.LongRangeBeacon.Description,Final launch: places a long-lived beacon carrying the colony's archive and a standing signal.,Deep Frontier rocket program
+RocketProgram.Mission.LongRangeBeacon.Success,"The beacon is aloft and transmitting. It carries the colony's archive, the record of the badwater source and a simple message: beavers live here, and the land is healing. Whoever listens next will know the way.",Deep Frontier rocket program
+RocketProgram.Mission.LongRangeBeacon.Failure,The beacon was lost on ascent. The archive is safe on the ground; the colony must build and fuel another rocket.,Deep Frontier rocket program
+RocketProgram.Status.Locked,Mission locked: {0} must succeed first,Deep Frontier rocket program
+RocketProgram.Status.Completed,{0} is already complete; select another mission,Deep Frontier rocket program
+RocketProgram.Status.Refurbishing,Launch pad refurbishing after a failed launch,Deep Frontier rocket program
+RocketProgram.Notification.Scrubbed,Launch scrubbed: {0} destacked; its parts and fuel were returned to the pad,Deep Frontier rocket program
+RocketProgram.Notification.Liftoff,Liftoff: {0} ({1}% failure risk),Deep Frontier rocket program
+RocketProgram.Notification.Success,Mission success: {0},Deep Frontier rocket program
+RocketProgram.Notification.Failure,Launch failure: {0} was lost ({1}% risk). The rocket and its fuel are gone and the pad needs {2} hours of refurbishment.,Deep Frontier rocket program
+RocketProgram.Notification.Refurbished,Launch pad refurbished and ready,Deep Frontier rocket program
+RocketProgram.Reward,Success reward: {0} science and a permanent +{1} wellbeing for beavers within {2} tiles of the pad while it is on a powered grid (pausing or automation do not remove it),Deep Frontier rocket program
+RocketProgram.Panel.LegacyActive,Mission legacy: {0} completed missions give wellbeing within {1} tiles,Deep Frontier rocket program
+RocketProgram.Panel.LegacyUnpowered,Mission legacy paused: connect the pad to a powered grid to restore wellbeing from {0} completed missions within {1} tiles,Deep Frontier rocket program
+RocketProgram.Panel.Title,Rocket program,Deep Frontier rocket program
+RocketProgram.Panel.MissionCompleted,{0}: completed,Deep Frontier rocket program
+RocketProgram.Panel.MissionLocked,{0}: locked (requires {1}),Deep Frontier rocket program
+RocketProgram.Panel.MissionAvailable,{0}: available,Deep Frontier rocket program
+RocketProgram.Panel.RocketStacked,Rocket stacked and fuelled on the pad,Deep Frontier rocket program
+RocketProgram.Panel.Odds,Failure chance at liftoff: {0}% (mission base {1}%),Deep Frontier rocket program
+RocketProgram.Panel.OddsMissionControl,"Operating Mission Control (staffed, powered): -{0}% of -{1}%",Deep Frontier rocket program
+RocketProgram.Panel.OddsHeritage,Flight heritage: -{0}% after {1} launches,Deep Frontier rocket program
+RocketProgram.Panel.OddsFloor,Risk never falls below {0}%,Deep Frontier rocket program
+RocketProgram.Panel.Stakes,Parts and fuel are loaded when preparation starts; changing the mission before liftoff returns them to the pad. Liftoff holds until the grid delivers full launch power. A failed launch destroys the rocket and its fuel and closes the pad for {0} hours of refurbishment.,Deep Frontier rocket program
+RocketProgram.Panel.FinalMission,Final mission: success completes the colony's story.,Deep Frontier rocket program
+RocketProgram.Panel.NoLaunches,No launches yet,Deep Frontier rocket program
+RocketProgram.Panel.LastSuccess,Last launch: {0} succeeded ({1}% risk),Deep Frontier rocket program
+RocketProgram.Panel.LastFailure,Last launch: {0} failed ({1}% risk),Deep Frontier rocket program
+RocketProgram.Stage.UnderConstruction,Under construction,Deep Frontier rocket program
+RocketProgram.Stage.NoMission,"Select a mission, or guidance telemetry, in the recipe list",Deep Frontier rocket program
+RocketProgram.Stage.Telemetry,Producing guidance telemetry,Deep Frontier rocket program
+RocketProgram.Stage.InFlight,{0} in flight,Deep Frontier rocket program
+RocketProgram.Stage.Refurbishing,Refurbishing after a failed launch: {0} hours left,Deep Frontier rocket program
+RocketProgram.Stage.Blocked,Paused or blocked by automation: no launch work,Deep Frontier rocket program
+RocketProgram.Stage.MissionCompleted,The selected mission is already complete,Deep Frontier rocket program
+RocketProgram.Stage.MissionLocked,The selected mission is locked,Deep Frontier rocket program
+RocketProgram.Stage.MissionInFlightElsewhere,The selected mission is in flight from another pad,Deep Frontier rocket program
+RocketProgram.Stage.Staging,Staging the rocket: waiting for every part and the full fuel load,Deep Frontier rocket program
+RocketProgram.Stage.Preparing,Launch preparation: {0}%,Deep Frontier rocket program
+RocketProgram.Stage.HoldingForPower,Countdown hold at {0}%: liftoff needs full launch power,Deep Frontier rocket program
+Recipe.RocketMission.OrbitalObservatory,Launch: Orbital Observatory,Deep Frontier rocket program
+Need.OrbitalObservatoryLegacy.DisplayName,Orbital Observatory legacy,Deep Frontier rocket program
+Recipe.RocketMission.RecoveryProbe,Launch: Recovery Probe,Deep Frontier rocket program
+Need.RecoveryProbeLegacy.DisplayName,Recovery Probe legacy,Deep Frontier rocket program
+Recipe.RocketMission.LongRangeBeacon,Launch: Long-Range Beacon,Deep Frontier rocket program
+Need.LongRangeBeaconLegacy.DisplayName,Long-Range Beacon legacy,Deep Frontier rocket program
+DeepFrontier.Meltdown.Status.Overheating,Reactor overheating. It trips an emergency shutdown at {0}% core heat and melts down at 100%; open the reactor to see why.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Status.Overheating.Short,Reactor overheating,Deep Frontier meltdown
+DeepFrontier.Meltdown.Status.Scram,Emergency shutdown (SCRAM): no power until the core cools to {0}%.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Status.Scram.Short,Reactor emergency shutdown,Deep Frontier meltdown
+DeepFrontier.Meltdown.Status.CoolantDry,"Coolant dry while the core still holds decay heat: it is heating toward a meltdown. Deliver reactor coolant water, or pause the reactor for a safe cold shutdown.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Status.CoolantDry.Short,Reactor coolant dry: meltdown risk,Deep Frontier meltdown
+DeepFrontier.Meltdown.Status.CoolantLow,Coolant reserve below {0} hours of running.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Status.Crew,Fewer than {0} operators working: the core heats while it runs.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Status.MaintenanceDue,Maintenance due soon: plan a {0}-hour stop.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Status.MaintenanceOverdue,Maintenance overdue: the core heats while it runs. Stop the reactor for {0} hours.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Notification.Warning,Reactor overheating: core heat {0}% ({1}). Emergency shutdown at {2}%.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Notification.Scram,Reactor emergency shutdown (SCRAM) at {0}% core heat: no power until it cools to {1}%.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Notification.Restarted,Reactor restarted automatically at {0}% core heat.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Notification.CoolantDry,Reactor coolant dry: core heat {0}% and rising from decay heat for up to {1} more hours. Deliver reactor coolant water or pause the reactor.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Notification.Imminent,"MELTDOWN IMMINENT: core heat {0}%, meltdown in about {1} hours. Deliver reactor coolant water or pause the reactor now.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Notification.MaintenanceOverdue,"Reactor maintenance overdue: stop it for {0} hours, or its core heats while it runs.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Notification.MaintenanceDone,Reactor maintenance completed during the stop.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Notification.Meltdown,"REACTOR MELTDOWN: the Nuclear Reactor was destroyed. {0} killed, {1} irradiated.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Dialog.Title,Reactor meltdown,Deep Frontier meltdown
+DeepFrontier.Meltdown.Dialog.Casualties,"The core melted down and destroyed the Nuclear Reactor. {0} were killed and {1} beavers were irradiated; irradiated beavers need 10 days of hospital care, and untreated radiation sickness is fatal.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Dialog.Contamination,"Radioactive sludge is pouring from the ruin and will keep flowing for {0} days. Soil and water within {1} tiles are contaminated: crops there die, pumps refuse contaminated water and beavers who walk in are irradiated. Clean up with Sludge Recovery Pumps and ship the sludge off the map.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Dialog.ShowSite,Show the site,Deep Frontier meltdown
+DeepFrontier.Meltdown.DeathMessage,{0} was killed in the reactor meltdown.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Cause.Coolant,coolant dry,Deep Frontier meltdown
+DeepFrontier.Meltdown.Cause.Crew,fewer than {0} operators working,Deep Frontier meltdown
+DeepFrontier.Meltdown.Cause.Maintenance,maintenance overdue,Deep Frontier meltdown
+DeepFrontier.Meltdown.Cause.DecayHeat,decay heat without coolant,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Title,Reactor core,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Heat,Core heat: {0}% {1},Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Thresholds,"Warning {0}%, emergency shutdown {1}%, meltdown 100%",Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Rising,(rising {0}% per hour),Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Falling,(falling {0}% per hour),Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.EtaScram,Emergency shutdown after about {0} more hours of running.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.EtaMeltdown,Meltdown in about {0} hours.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.EtaPeak,Decay heat fades before a meltdown: peak about {0}% in {1} hours.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.EtaRestart,Cool enough to restart in about {0} hours.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.State.UnderConstruction,Under construction.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.State.ColdShutdown,Cold shutdown (paused or switched off by automation): cooling safely without coolant. Haulers empty a paused reactor.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.State.Running,Running.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.State.Scram,Emergency shutdown (SCRAM).,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.State.ScramManual,Shut down by the operators (SCRAM).,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.State.Idle,Idle: not producing.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.State.MeltingDown,Melting down.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.DecayHeat,Decay heat for {0} more hours: until then the core needs coolant even when stopped.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.NoDecayHeat,No decay heat: safe without coolant while stopped.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Coolant,"{0}: {1} in stock, {2} per cycle (about {3} hours of running).",Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Crew,Operators working: {0} (needs {1} while running).,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.MaintenanceDue,Maintenance due in {0} running hours; it needs a {1}-hour stop.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.MaintenanceOverdue,Maintenance overdue: stop the reactor for {0} hours ({1} so far).,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Rules,"While running, the core heats {0}% per hour for each fault: coolant dry, fewer than {1} operators working, or maintenance overdue (a {2}-hour stop every {3} running hours). At {4}% it trips an emergency shutdown. Without coolant, decay heat keeps heating it for {5} hours after it stops.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Consequences,"A meltdown destroys the reactor: beavers within {0} tiles die, beavers within {1} tiles are irradiated, sludge pours out for {2} days and soil and water within {3} tiles stay radioactive for weeks. Pausing the reactor is a safe cold shutdown.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.ScramButton,Emergency shutdown (SCRAM),Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.RestartButton,Restart reactor,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.RestartBlocked,Restart possible once core heat is at or below {0}%.,Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.AutoRestart,"Restart automatically after an emergency shutdown (once cool, maintained and with coolant)",Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Status.Warning,"Nearly full of radioactive waste: once full, casks breach every {0} hours.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Status.Leaking,Full: radioactive waste casks are breaching and leaking sludge. Refine or move the waste.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Status.Leaking.Short,Waste vault leaking,Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Notification.Warning,"Radioactive Waste Vault {0}% full: once full, its casks breach and leak.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Notification.Full,Radioactive Waste Vault full: {0} casks will breach in {1} hours unless waste is refined or moved.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Notification.Leak,"Radioactive Waste Vault leak: {0} casks breached, spilling radioactive sludge and irradiating the soil around the vault.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Panel.Rules,"When full, {0} casks breach every {1} hours: their waste spills out as radioactive sludge and irradiates the soil within {2} tiles, killing crops there.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Status.Warning,"Sludge tanks nearly full: once full, sludge leaks every {0} hours.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Status.Leaking,Sludge tanks full: radioactive sludge is leaking. Haul it to a Sludge Outfall or Radioactive Waste Export.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Status.Leaking.Short,Waste refinery leaking,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Notification.Warning,Waste refinery sludge tanks {0}% full: haul the sludge away before they leak.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Notification.Full,Waste refinery sludge tanks full: {0} sludge will leak in {1} hours.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Notification.Leak,Waste refinery leak: {0} radioactive sludge spilled around the refinery.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Panel.Rules,"When its sludge tanks are full, {0} sludge leaks every {1} hours and irradiates the soil within {2} tiles, killing crops there. Pausing it seals the tanks.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.Panel.Title,Radioactive containment,Deep Frontier meltdown
+DeepFrontier.WasteLeak.Panel.Fill,{0}: {1} / {2} ({3}%),Deep Frontier meltdown
+DeepFrontier.WasteLeak.Panel.Contained,Contained. Warnings start at {0}% full; leaks only when full.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.Panel.Warning,Nearly full: it leaks once full.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.Panel.Full,Full: next leak in about {0} hours.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.Panel.Sealed,"Paused: tanks sealed, no leaks.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.Panel.History,Leaks so far: {0} ({1} {2}).,Deep Frontier meltdown
+Narrative.Stage.NotNatural.Title,Something in the Water,Deep Frontier narrative
+Narrative.Stage.NotNatural.Objective,"Study the badwater: finish a Public Health Lab, a Water Treatment Plant, a Deep Drill or a Chemical Works.",Deep Frontier narrative
+Narrative.Stage.NotNatural.Hint,"Public Health Lab (Wellbeing, 1,000 science), Deep Drill (Metal, 1,000), Water Treatment Plant (Water, 1,800) or Chemical Works (Metal, 4,000). Any one will do.",Deep Frontier narrative
+Narrative.Stage.NotNatural.Story.1,"Every beaver knows badwater: green, sour, and best admired from a distance. The old stories call it a sickness of the land.",Deep Frontier narrative
+Narrative.Stage.NotNatural.Story.2,"The colony is no longer sure the old stories are right. Badwater behaves the same everywhere, in every spring and every badtide, as if it were made to a recipe. Somebody, it seems, wrote that recipe down.",Deep Frontier narrative
+Narrative.Stage.NotNatural.Requirement.1,Investigation building finished,Deep Frontier narrative
+Narrative.Stage.NotNatural.Variant.PublicHealthLab,The health lab's first badwater samples were meant to help the sick. The chemists came back with puzzled faces and a very long list of things that should not be in a river.,Deep Frontier narrative
+Narrative.Stage.NotNatural.Variant.WaterTreatmentPlant,"The treatment plant's first filter cakes came out of the press the wrong colour. The exact same wrong colour, every single time.",Deep Frontier narrative
+Narrative.Stage.NotNatural.Variant.DeepDrill,"The drill crew brought up a core with something round and hollow inside it: a pipe, far older than the colony and far too big for beavers.",Deep Frontier narrative
+Narrative.Stage.NotNatural.Variant.ChemicalWorks,"The chemists who turn badwater into feedstock noticed that it splits the same way, batch after batch, like a recipe someone followed carefully.",Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Title,Under the Valley,Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Objective,Reach the deep sector: refine 20 deep alloy at a Deep Processor.,Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Hint,"The Deep Drill brings up deep ore from a deep ore source; the Deep Processor turns ore and water into deep alloy, coal, crude oil and uranium ore.",Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Story.1,"The deep sector is not empty. Below the old riverbed run tunnels lined with enormous pipes, all of them stamped with the same three letters, VWA, and all of them heading upriver.",Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Story.2,"Painted on one pipe, with increasing underlining: NOT FOR DRINKING. Someone long ago took that very seriously.",Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Requirement.1,Deep alloy refined,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Title,What the Water Carries,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Objective,Trace what the water carries: purify 80 pure water and make 10 chemical from badwater.,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Hint,Water Treatment Plants make pure water from water and filter media. Chemical Works make chemical from badwater and extract.,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Story.1,"Side by side, the filter residue and the chemical feedstock tell the same story. Badwater is a mixture: fine grit from deep rock, a stubborn green dye and a dozen compounds nothing in nature bothers to make.",Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Story.2,"It is not a disease. It is runoff. Somewhere upriver, something is still leaking what the old deep pipes once carried, and the colony is going to find out what.",Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Requirement.1,Pure water purified,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Requirement.2,Chemical made from badwater,Deep Frontier narrative
+Narrative.Stage.OpenTheRuins.Title,Open the Ruins,Deep Frontier narrative
+Narrative.Stage.OpenTheRuins.Objective,Open the human ruins: recover 6 artifacts at an Archive Excavation.,Deep Frontier narrative
+Narrative.Stage.OpenTheRuins.Hint,"The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. Any Human Record Cache on the map can be surveyed by a nearby excavation for extra archive data.",Deep Frontier narrative
+Narrative.Stage.OpenTheRuins.Story.1,"The first finds are small and baffling: a hard hat big enough to bathe a kit in, a mug reading WORLD'S OKAYEST ENGINEER, and a sign that says HOLDING STATION 3 - AUTHORIZED PERSONNEL ONLY.",Deep Frontier narrative
+Narrative.Stage.OpenTheRuins.Story.2,"Underneath, in smaller letters: UNAUTHORIZED PERSONNEL ALSO ONLY. The humans, it turns out, had a sense of humour. They also had sealed data drives, which the excavation crews are now carefully drying out.",Deep Frontier narrative
+Narrative.Stage.OpenTheRuins.Requirement.1,Artifacts recovered,Deep Frontier narrative
+Narrative.Stage.TheArchiveWakes.Title,The Archive Wakes,Deep Frontier narrative
+Narrative.Stage.TheArchiveWakes.Objective,Wake the archive: restore 10 archive data.,Deep Frontier narrative
+Narrative.Stage.TheArchiveWakes.Hint,"Archive data comes from 2 recovered artifacts, grease and a metal part at the Archive Excavation.",Deep Frontier narrative
+Narrative.Stage.TheArchiveWakes.Story.1,"The first restored drive belongs to the Valley Water Authority. Its records describe the Deepworks, the humans' great wells and drills, which pulled ancient water and ore up from under this valley for their factories.",Deep Frontier narrative
+Narrative.Stage.TheArchiveWakes.Story.2,"What the factories could not use went upriver into the Holding: a chain of sealed basins kept clean by a treatment works that ran day and night. Projected containment life: indefinite, subject to maintenance.",Deep Frontier narrative
+Narrative.Stage.TheArchiveWakes.Story.3,A memo is attached. Re: containment maintenance. Postponed to next quarter. Previous note: postponed to next quarter.,Deep Frontier narrative
+Narrative.Stage.TheArchiveWakes.Requirement.1,Archive data restored,Deep Frontier narrative
+Narrative.Stage.TheLastShift.Title,The Last Shift,Deep Frontier narrative
+Narrative.Stage.TheLastShift.Objective,Read the last shift's records: restore 30 archive data in total and finish a Mission Control.,Deep Frontier narrative
+Narrative.Stage.TheLastShift.Hint,"Mission Control unlocks at 14,000 science. Guidance computers and telemetry also need archive data, so keep the drives coming.",Deep Frontier narrative
+Narrative.Stage.TheLastShift.Story.1,"The newest drives are the saddest and the tidiest. The rains failed, then the wells, then the harvests. The humans decided to leave the valley for now and follow the rain north. Nobody wrote down when now would end.",Deep Frontier narrative
+Narrative.Stage.TheLastShift.Story.2,"The last shift did its best. It set the treatment works to automatic, put the Holding's flush valves on a schedule to run until further notice, and switched off the lights. No further notice was ever given.",Deep Frontier narrative
+Narrative.Stage.TheLastShift.Story.3,Mission Control has found one more thing: an old orbital frequency. Something up there is still answering.,Deep Frontier narrative
+Narrative.Stage.TheLastShift.Requirement.1,Archive data restored,Deep Frontier narrative
+Narrative.Stage.TheLastShift.Requirement.2,Mission Control finished,Deep Frontier narrative
+Narrative.Stage.EyesAbove.Title,Eyes Above,Deep Frontier narrative
+Narrative.Stage.EyesAbove.Objective,Launch the Orbital Observatory from a Launch Pad.,Deep Frontier narrative
+Narrative.Stage.EyesAbove.Hint,"A launch needs airframes, propulsion, guidance computers, telemetry and liquid hydrogen and oxygen. A staffed Mission Control lowers the risk. Nuclear power helps but is not required.",Deep Frontier narrative
+Narrative.Stage.EyesAbove.Story.1,"Laid over the Authority's maps, the orbital images settle the question. Every badwater spring in the valley sits on the line of an old pipe, and every pipe leads back to the Holding.",Deep Frontier narrative
+Narrative.Stage.EyesAbove.Story.2,The badtides line up too: they arrive on the same schedule the last shift set for the flush valves. The humans never turned the Holding off. There was simply nobody left to give further notice.,Deep Frontier narrative
+Narrative.Stage.EyesAbove.Requirement.1,Orbital Observatory mission,Deep Frontier narrative
+Narrative.Stage.WhatTheStationKept.Title,What the Station Kept,Deep Frontier narrative
+Narrative.Stage.WhatTheStationKept.Objective,Launch the Recovery Probe.,Deep Frontier narrative
+Narrative.Stage.WhatTheStationKept.Hint,The Recovery Probe carries mission payloads: guidance computers packed with recovered artifacts.,Deep Frontier narrative
+Narrative.Stage.WhatTheStationKept.Story.1,"The station's data core holds the treatment works' full design and a final log from its crew: Turned the lights off. Left the telescope on. Someone should keep looking. Heading home, wherever that turns out to be.",Deep Frontier narrative
+Narrative.Stage.WhatTheStationKept.Story.2,"The design looks familiar. The colony's own water treatment plants already do, in beaver size, what the humans' works did before the filters ran out. The Holding still leaks, but it can be kept, as long as someone stays to keep it.",Deep Frontier narrative
+Narrative.Stage.WhatTheStationKept.Story.3,"Only one launch remains, and the colony must decide what that last rocket will say.",Deep Frontier narrative
+Narrative.Stage.WhatTheStationKept.Requirement.1,Recovery Probe mission,Deep Frontier narrative
+Narrative.Stage.TheMessage.Title,What the Beacon Says,Deep Frontier narrative
+Narrative.Stage.TheMessage.Objective,Decide what the Long-Range Beacon will carry. Choose in this journal.,Deep Frontier narrative
+Narrative.Stage.TheMessage.Hint,"The choice changes the ending's story, not the rocket or its launch.",Deep Frontier narrative
+Narrative.Stage.TheMessage.Story.1,"After three evenings of debate, two votes and one very long speech about punctuation, the colony agreed on what the beacon will carry.",Deep Frontier narrative
+Narrative.Stage.TheMessage.Requirement.1,Beacon message chosen,Deep Frontier narrative
+Narrative.Stage.TheBeacon.Title,The Long-Range Beacon,Deep Frontier narrative
+Narrative.Stage.TheBeacon.Objective,Launch the Long-Range Beacon.,Deep Frontier narrative
+Narrative.Stage.TheBeacon.Hint,The beacon is the final launch. Its success completes the colony's story.,Deep Frontier narrative
+Narrative.Stage.TheBeacon.Story.1,"The Long-Range Beacon is aloft. Far upriver the Holding still seeps, but the colony's treatment works now do what the last shift could not: they keep running, and somebody changes the filters.",Deep Frontier narrative
+Narrative.Stage.TheBeacon.Story.2,"The badwater has a source, a reason and, at last, a caretaker.",Deep Frontier narrative
+Narrative.Stage.TheBeacon.Requirement.1,Long-Range Beacon mission,Deep Frontier narrative
+Narrative.Discovery.ClinicLog.Title,The Doctors' Ledger,Deep Frontier narrative
+Narrative.Discovery.ClinicLog.Objective,Finish a Hospital.,Deep Frontier narrative
+Narrative.Discovery.ClinicLog.Story.1,"The hospital keeps a ledger of every badwater patient. After a season, the doctors notice the bad days arrive in a rhythm, like a schedule nobody remembers setting.",Deep Frontier narrative
+Narrative.Discovery.ClinicLog.Requirement.1,Hospital finished,Deep Frontier narrative
+Narrative.Discovery.CleanerThanTheRiver.Title,Cleaner Than the River,Deep Frontier narrative
+Narrative.Discovery.CleanerThanTheRiver.Objective,Purify 500 pure water.,Deep Frontier narrative
+Narrative.Discovery.CleanerThanTheRiver.Story.1,Five hundred barrels of water cleaner than the river has been in living memory. The treatment crews have started tasting it competitively.,Deep Frontier narrative
+Narrative.Discovery.CleanerThanTheRiver.Requirement.1,Pure water purified,Deep Frontier narrative
+Narrative.Discovery.HoldingOurOwn.Title,Holding Our Own,Deep Frontier narrative
+Narrative.Discovery.HoldingOurOwn.Objective,Finish a Radioactive Waste Vault.,Deep Frontier narrative
+Narrative.Discovery.HoldingOurOwn.Story.1,"The colony now keeps a holding of its own. Unlike the humans' Holding, this one has a label, a ledger and a beaver whose whole job is reading both.",Deep Frontier narrative
+Narrative.Discovery.HoldingOurOwn.Requirement.1,Radioactive Waste Vault finished,Deep Frontier narrative
+Narrative.Discovery.CleanHands.Title,Clean Hands,Deep Frontier narrative
+Narrative.Discovery.CleanHands.Objective,Decontaminate water once at a Radioactive Waste Refinery.,Deep Frontier narrative
+Narrative.Discovery.CleanHands.Story.1,"The first barrel of contaminated water made drinkable again. It is a small barrel, and the colony is very proud of it.",Deep Frontier narrative
+Narrative.Discovery.CleanHands.Requirement.1,Water decontaminated,Deep Frontier narrative
+Narrative.Discovery.CacheRoster.Title,Record Cache: Shift Roster,Deep Frontier narrative
+Narrative.Discovery.CacheRoster.Objective,Survey 1 Human Record Cache from an Archive Excavation.,Deep Frontier narrative
+Narrative.Discovery.CacheRoster.Story.1,"A shift roster from Holding Station 3. The names have faded, but one column, headed BROUGHT SNACKS, is ticked every single day by the same person.",Deep Frontier narrative
+Narrative.Discovery.CacheRoster.Requirement.1,Record caches surveyed,Deep Frontier narrative
+Narrative.Discovery.CacheDrawing.Title,Record Cache: A Child's Drawing,Deep Frontier narrative
+Narrative.Discovery.CacheDrawing.Objective,Survey 2 Human Record Caches from an Archive Excavation.,Deep Frontier narrative
+Narrative.Discovery.CacheDrawing.Story.1,"A drawing of the river, a sun, a very tall house and a small round animal with a flat tail. The label underneath says FRIEND.",Deep Frontier narrative
+Narrative.Discovery.CacheDrawing.Requirement.1,Record caches surveyed,Deep Frontier narrative
+Narrative.Discovery.CacheWeather.Title,Record Cache: Weather Log,Deep Frontier narrative
+Narrative.Discovery.CacheWeather.Objective,Survey 3 Human Record Caches from an Archive Excavation.,Deep Frontier narrative
+Narrative.Discovery.CacheWeather.Story.1,"Day 41: no rain. Day 42: no rain. Day 43: no rain, but someone has drawn a cloud in the margin to cheer everyone up.",Deep Frontier narrative
+Narrative.Discovery.CacheWeather.Requirement.1,Record caches surveyed,Deep Frontier narrative
+Narrative.Discovery.CacheMemo.Title,Record Cache: Memo 14-C,Deep Frontier narrative
+Narrative.Discovery.CacheMemo.Objective,Survey 4 Human Record Caches from an Archive Excavation.,Deep Frontier narrative
+Narrative.Discovery.CacheMemo.Story.1,Filters for the treatment works are back-ordered. Please do not drink from the river until further notice. Please do not ask when further notice is.,Deep Frontier narrative
+Narrative.Discovery.CacheMemo.Requirement.1,Record caches surveyed,Deep Frontier narrative
+Narrative.Discovery.CachePostcard.Title,Record Cache: Postcard,Deep Frontier narrative
+Narrative.Discovery.CachePostcard.Objective,Survey 5 Human Record Caches from an Archive Excavation.,Deep Frontier narrative
+Narrative.Discovery.CachePostcard.Story.1,Arrived north. It rains here. Miss the valley terribly. I think somebody left the pumps on. - M.,Deep Frontier narrative
+Narrative.Discovery.CachePostcard.Requirement.1,Record caches surveyed,Deep Frontier narrative
+Narrative.Ending.Signal.Title,We Are Here,Deep Frontier narrative
+Narrative.Ending.Signal.Description,"Transmit a standing call: where the Holding is, how to keep it, and an open invitation to anyone still listening.",Deep Frontier narrative
+Narrative.Ending.Signal.Epilogue.1,"Every few hours the beacon repeats one message in every format the archive could find: a map, a list of numbers and a drawing of a beaver waving.",Deep Frontier narrative
+Narrative.Ending.Signal.Epilogue.2,"Nobody has answered yet. The colony has decided that 'yet' is the important word, and keeps a light on at the launch pad, just in case.",Deep Frontier narrative
+Narrative.Ending.Archive.Title,The Whole Record,Deep Frontier narrative
+Narrative.Ending.Archive.Description,"Preserve everything: the humans' records, the colony's own ledgers and the story of the badwater, safe in orbit for whoever comes next.",Deep Frontier narrative
+Narrative.Ending.Archive.Epilogue.1,"The beacon carries every drive the excavations restored and every ledger the colony ever kept, including the boring ones, because the boring ones turned out to matter most.",Deep Frontier narrative
+Narrative.Ending.Archive.Epilogue.2,"If anyone ever wonders how a valley went dry and came back, the answer is up there, filed under MAINTENANCE: DO NOT POSTPONE.",Deep Frontier narrative
+Narrative.Ending.Settlement.Title,The Map Home,Deep Frontier narrative
+Narrative.Ending.Settlement.Description,"Guide future settlers: clean-water maps, treatment designs and the safe routes the colony learned, so others can build where the land has healed.",Deep Frontier narrative
+Narrative.Ending.Settlement.Epilogue.1,"The beacon does not ask anyone to come. It simply explains, very clearly, where the water is clean, how to keep it that way and which roots are the tastiest.",Deep Frontier narrative
+Narrative.Ending.Settlement.Epilogue.2,"Somewhere, someday, a small band of travellers will follow it over the ridge and find a valley already waiting for them.",Deep Frontier narrative
+Narrative.Notification.Chapter,Frontier Journal: {0},Deep Frontier narrative
+Narrative.Notification.Discovery,Discovery: {0},Deep Frontier narrative
+Narrative.Notification.Choose,The beacon is ready to carry a message: choose it in the Frontier Journal.,Deep Frontier narrative
+Narrative.Dialog.Chapter,Frontier Journal - chapter {0} of {1},Deep Frontier narrative
+Narrative.Dialog.Discovery,Frontier Journal - discovery,Deep Frontier narrative
+Narrative.Dialog.Reward,Reward: {0} science,Deep Frontier narrative
+Narrative.Dialog.Decision,The beacon will carry: {0},Deep Frontier narrative
+Narrative.Journal.Title,Frontier Journal,Deep Frontier narrative
+Narrative.Journal.Widget,Frontier Journal ({0}/{1}),Deep Frontier narrative
+Narrative.Journal.WidgetComplete,Frontier Journal: complete,Deep Frontier narrative
+Narrative.Journal.Open,Open journal,Deep Frontier narrative
+Narrative.Journal.Current,Chapter {0} of {1}: {2},Deep Frontier narrative
+Narrative.Journal.AllComplete,Every chapter is complete. The colony's story is told.,Deep Frontier narrative
+Narrative.Journal.Progress,{0}: {1} / {2},Deep Frontier narrative
+Narrative.Journal.ProgressDone,{0}: done,Deep Frontier narrative
+Narrative.Journal.Hint,Hint: {0},Deep Frontier narrative
+Narrative.Journal.ChooseIntro,Choose what the Long-Range Beacon will carry. The choice is final.,Deep Frontier narrative
+Narrative.Journal.ChooseButton,Choose: {0},Deep Frontier narrative
+Narrative.Journal.Chosen,The beacon will carry: {0},Deep Frontier narrative
+Narrative.Journal.Chronicle,Chronicle,Deep Frontier narrative
+Narrative.Journal.NoChronicle,No chapters completed yet.,Deep Frontier narrative
+Narrative.Journal.Discoveries,Discoveries: {0} of {1},Deep Frontier narrative
+Narrative.Journal.DiscoveryPending,Undiscovered: {0},Deep Frontier narrative
+Narrative.Journal.ChapterEntry,{0}. {1},Deep Frontier narrative
+Narrative.Choice.Title,What the Beacon Says,Deep Frontier narrative
+Narrative.Choice.Later,Decide later,Deep Frontier narrative
+Narrative.Cache.Title,Human Record Cache,Deep Frontier narrative
+Narrative.Cache.Surveyed,Surveyed: its records are in the Frontier Journal.,Deep Frontier narrative
+Narrative.Cache.NoSurveyor,Needs a finished Archive Excavation within {0} tiles to survey it.,Deep Frontier narrative
+Narrative.Cache.Idle,"Archive Excavation in range, but no one is working there.",Deep Frontier narrative
+Narrative.Cache.Surveying,Surveying: {0}%,Deep Frontier narrative
+Narrative.Cache.WaitingForStorage,Survey complete: handing over records as the excavation has storage space ({0} of {1}).,Deep Frontier narrative
+Narrative.Cache.Reward,Survey reward: {0} {1} and a journal record. Demolishing it before the survey loses its records.,Deep Frontier narrative
+Building.HumanRecordCache.DisplayName,Human Record Cache,Deep Frontier narrative
+Building.HumanRecordCache.Description,"A sealed human records box. A working Archive Excavation within four tiles surveys it for archive data and a Frontier Journal record. It can also be demolished like a relic, losing its records.",Deep Frontier narrative
+Building.HumanRecordCache.FlavorDescription,"Labelled, in three languages: DO NOT OPEN. Open carefully.",Deep Frontier narrative
+DeepFrontier.Weather.RadioactiveTide,Radioactive tide,Deep Frontier
+DeepFrontier.Weather.Notification.RadioactiveTideApproaching,Radioactive tide approaching,Deep Frontier
+DeepFrontier.Weather.Notification.RadioactiveTideInProgress,Radioactive tide in progress,Deep Frontier
+DeepFrontier.Weather.RadioactiveTideStartedNotification,Radioactive tide started,Deep Frontier
+DeepFrontier.Weather.RadioactiveTideEndedNotification,Radioactive tide ended,Deep Frontier
+DeepFrontier.Weather.RadioactiveTideApproachingDescription,For {0} days the water of every water source will be partly radioactive. Store clean water: pumps stop wherever radiation reaches them.,Deep Frontier
+DeepFrontier.Weather.RadioactiveTideStartedDescription,"Water sources are releasing radioactive water. It stays after the tide until it drains off the map, decays, dries into irradiated ground or is pumped out.",Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.Header,Radioactive tide,Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.Enabled,Radioactive tides,Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.Enabled.Tooltip,"A late-game hazardous season that can replace a drought or badtide: water keeps flowing, but the water of every source is partly radioactive.",Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.MinCycle,Earliest cycle,Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.MinCycle.Tooltip,No radioactive tide happens before this cycle.,Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.Chance,Chance per cycle (%),Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.Chance.Tooltip,Chance that a cycle's hazardous season is a radioactive tide. Never two cycles in a row.,Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.MinDuration,Shortest tide (days),Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.MinDuration.Tooltip,Must not be longer than the longest tide.,Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.MaxDuration,Longest tide (days),Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.MaxDuration.Tooltip,Must not be shorter than the shortest tide.,Deep Frontier
+DeepFrontier.Weather.RadioactiveTideDescription,"Hazardous weather (Deep Frontier). Water keeps flowing, but part of the water of every water source is radioactive. It stays after the tide until it drains off the map, decays, dries into irradiated ground or is pumped out. Pumps stop wherever radiation reaches them.",Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.EnabledDesc,Whether radioactive tides can happen in this save. New saves start from the Deep Frontier mod settings.,Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.MinCycleDesc,No radioactive tide happens before this cycle.,Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.ChanceDesc,"Chance that a hazardous season is a radioactive tide instead of the other hazardous weathers. A percentage, not a weight. Never two cycles in a row.",Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.MinDurationDesc,Shortest radioactive tide in days. Must not be longer than the longest tide.,Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.MaxDurationDesc,Longest radioactive tide in days. Must not be shorter than the shortest tide.,Deep Frontier
+Good.Sandstone.DisplayName,Sandstone,Deep Frontier construction materials
+Good.Sandstone.PluralDisplayName,Sandstone,Deep Frontier construction materials
+Good.Limestone.DisplayName,Limestone,Deep Frontier construction materials
+Good.Limestone.PluralDisplayName,Limestone,Deep Frontier construction materials
+Good.Aggregate.DisplayName,Aggregate,Deep Frontier construction materials
+Good.Aggregate.PluralDisplayName,Aggregate,Deep Frontier construction materials
+Good.Cement.DisplayName,Cement,Deep Frontier construction materials
+Good.Cement.PluralDisplayName,Cement,Deep Frontier construction materials
+Good.Concrete.DisplayName,Concrete,Deep Frontier construction materials
+Good.Concrete.PluralDisplayName,Concrete,Deep Frontier construction materials
+Recipe.SandstoneExtraction.DisplayName,Extract sandstone,Deep Frontier construction materials
+Recipe.LimestoneExtraction.DisplayName,Extract limestone,Deep Frontier construction materials
+Recipe.Aggregate.DisplayName,Crush sandstone,Deep Frontier construction materials
+Recipe.Cement.DisplayName,Fire cement,Deep Frontier construction materials
+Recipe.Concrete.DisplayName,Mix concrete,Deep Frontier construction materials
+Building.SandstonePit.DisplayName,Sandstone pit,Deep Frontier construction materials
+Building.SandstonePit.Description,"Workers collect finite sandstone deposits within walking range. The next step is a Stone Crusher, then a permanent Sandstone Quarry.",Deep Frontier construction materials
+Building.SandstonePit.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Building.LimestonePit.DisplayName,Limestone pit,Deep Frontier construction materials
+Building.LimestonePit.Description,Workers collect finite limestone deposits within walking range. Feed a Cement Kiln; later build a permanent Limestone Quarry.,Deep Frontier construction materials
+Building.LimestonePit.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Building.SandstoneQuarry.DisplayName,Sandstone quarry,Deep Frontier construction materials
+Building.SandstoneQuarry.Description,"Extracts sandstone indefinitely from a marked deep seam. Requires water and 1500 hp. Build over a Deep Sandstone Seam. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier construction materials
+Building.SandstoneQuarry.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Building.LimestoneQuarry.DisplayName,Limestone quarry,Deep Frontier construction materials
+Building.LimestoneQuarry.Description,"Extracts limestone indefinitely from a marked deep seam. Requires water and 1500 hp. Build over a Deep Limestone Seam. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier construction materials
+Building.LimestoneQuarry.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Building.StoneCrusher.DisplayName,Stone crusher,Deep Frontier construction materials
+Building.StoneCrusher.Description,Crushes 3 sandstone into 6 aggregate per hour at 200 hp. Supply the aggregate to a Concrete Mixer.,Deep Frontier construction materials
+Building.StoneCrusher.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Building.CementKiln.DisplayName,Cement kiln,Deep Frontier construction materials
+Building.CementKiln.Description,"Fires 3 limestone and 1 aggregate into 2 cement every 2 hours, consuming log fuel and 300 hp. No separate heat system.",Deep Frontier construction materials
+Building.CementKiln.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Building.ConcreteMixer.DisplayName,Concrete mixer,Deep Frontier construction materials
+Building.ConcreteMixer.Description,"Mixes 3 aggregate, 1 cement and 2 water into 4 concrete per hour at 250 hp. Concrete unlocks permanent quarries and advanced construction. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier construction materials
+Building.ConcreteMixer.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Building.SandstoneMasonryBlock.DisplayName,Sandstone masonry block,Deep Frontier construction materials
+Building.SandstoneMasonryBlock.Description,Mortared sandstone retaining block. Holds back water and supports construction on its top.,Deep Frontier construction materials
+Building.SandstoneMasonryBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.LimestoneMasonryBlock.DisplayName,Limestone masonry block,Deep Frontier construction materials
+Building.LimestoneMasonryBlock.Description,Dressed limestone retaining block. Holds back water and supports construction on its top.,Deep Frontier construction materials
+Building.LimestoneMasonryBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteBlock.DisplayName,Concrete levee block,Deep Frontier construction materials
+Building.ConcreteBlock.Description,Cast concrete foundation and retaining block. Holds back water and supports buildings.,Deep Frontier construction materials
+Building.ConcreteBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteOverhang8x1.DisplayName,Reinforced overhang 8×1,Deep Frontier construction materials
+Building.ConcreteOverhang8x1.Description,A reinforced deck with one supported anchor tile and seven cantilever tiles. Supports construction above; does not hold back water.,Deep Frontier construction materials
+Building.ConcreteOverhang8x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteScaffold3x3.DisplayName,Concrete platform 3×3 (3 high),Deep Frontier construction materials
+Building.ConcreteScaffold3x3.Description,"A tall, wide construction deck on four corner supports. Leaves a clear central bay for paths, power shafts and tubeways. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteScaffold3x3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ReinforcedDamBlock.DisplayName,Reinforced dam block,Deep Frontier construction materials
+Building.ReinforcedDamBlock.Description,"A solid concrete dam module with exposed steel bands. Holds back water and supports construction. Concrete side platforms can hang from its side, level with its top.",Deep Frontier construction materials
+Building.ReinforcedDamBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+DeepFrontier.AnchoredDeck.RequiresAnchor,"Must hang from the side of a reinforced dam block, level with its top. Point at the top of the dam block to place it.",Deep Frontier construction materials
+Building.ConcreteOverflowDam.DisplayName,Concrete overflow dam,Deep Frontier construction materials
+Building.ConcreteOverflowDam.Description,A concrete spill sill under a supported deck. Retains water to 0.65 of a layer; excess water flows through the upper opening.,Deep Frontier construction materials
+Building.ConcreteOverflowDam.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteScaffold3x3H1.DisplayName,Concrete platform 3×3 (1 high),Deep Frontier construction materials
+Building.ConcreteScaffold3x3H1.Description,"A 3×3 construction deck on four corner supports 1 layer high. Leaves a clear bay below for paths, power shafts and tubeways. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteScaffold3x3H1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteScaffold3x3H2.DisplayName,Concrete platform 3×3 (2 high),Deep Frontier construction materials
+Building.ConcreteScaffold3x3H2.Description,"A 3×3 construction deck on four corner supports 2 layers high. Leaves a clear bay below for paths, power shafts and tubeways. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteScaffold3x3H2.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteScaffold4x4H1.DisplayName,Concrete platform 4×4 (1 high),Deep Frontier construction materials
+Building.ConcreteScaffold4x4H1.Description,"A 4×4 construction deck on four corner supports 1 layer high. Steel joists carry the wider span. Leaves a clear bay below for paths, power shafts and tubeways. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteScaffold4x4H1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteScaffold4x4H2.DisplayName,Concrete platform 4×4 (2 high),Deep Frontier construction materials
+Building.ConcreteScaffold4x4H2.Description,"A 4×4 construction deck on four corner supports 2 layers high. Steel joists carry the wider span. Leaves a clear bay below for paths, power shafts and tubeways. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteScaffold4x4H2.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteScaffold4x4H3.DisplayName,Concrete platform 4×4 (3 high),Deep Frontier construction materials
+Building.ConcreteScaffold4x4H3.Description,"A 4×4 construction deck on four corner supports 3 layers high. Steel joists carry the wider span. Leaves a clear bay below for paths, power shafts and tubeways. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteScaffold4x4H3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteScaffold5x5H1.DisplayName,Concrete platform 5×5 (1 high),Deep Frontier construction materials
+Building.ConcreteScaffold5x5H1.Description,"A 5×5 construction deck on four corner supports 1 layer high. Steel joists carry the wider span. Leaves a clear bay below for paths, power shafts and tubeways. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteScaffold5x5H1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteScaffold5x5H2.DisplayName,Concrete platform 5×5 (2 high),Deep Frontier construction materials
+Building.ConcreteScaffold5x5H2.Description,"A 5×5 construction deck on four corner supports 2 layers high. Steel joists carry the wider span. Leaves a clear bay below for paths, power shafts and tubeways. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteScaffold5x5H2.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteScaffold5x5H3.DisplayName,Concrete platform 5×5 (3 high),Deep Frontier construction materials
+Building.ConcreteScaffold5x5H3.Description,"A 5×5 construction deck on four corner supports 3 layers high. Steel joists carry the wider span. Leaves a clear bay below for paths, power shafts and tubeways. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteScaffold5x5H3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteSidePlatform3x3.DisplayName,Concrete side platform 3×3,Deep Frontier construction materials
+Building.ConcreteSidePlatform3x3.Description,"A legless 3×3 concrete deck that hangs from the side of a reinforced dam block, level with its top. Steel cleats bear on the dam top; nothing is needed underneath. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteSidePlatform3x3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteSidePlatform4x4.DisplayName,Concrete side platform 4×4,Deep Frontier construction materials
+Building.ConcreteSidePlatform4x4.Description,"A legless 4×4 concrete deck that hangs from the side of a reinforced dam block, level with its top. Steel cleats bear on the dam top; nothing is needed underneath. Steel joists carry the wider span. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteSidePlatform4x4.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ConcreteSidePlatform5x5.DisplayName,Concrete side platform 5×5,Deep Frontier construction materials
+Building.ConcreteSidePlatform5x5.Description,"A legless 5×5 concrete deck that hangs from the side of a reinforced dam block, level with its top. Steel cleats bear on the dam top; nothing is needed underneath. Steel joists carry the wider span. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.ConcreteSidePlatform5x5.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.ReinforcedHydroTurbine.DisplayName,Reinforced hydroelectric turbine,Deep Frontier construction materials
+Building.ReinforcedHydroTurbine.Description,A reinforced outlet through a dam. Set its discharge in m³/s; actual forward flow and water head generate hp. Close it manually or with native automation. Build stairs to the service terrace and structures on the solid upper cap.,Deep Frontier construction materials
+Building.ReinforcedHydroTurbine.FlavorDescription,"A river, given a useful job.",Deep Frontier construction materials
+Building.MaterialsLaboratory.DisplayName,Materials Laboratory,Deep Frontier construction materials
+Building.MaterialsLaboratory.Description,"Consumes gears, concrete, metal samples and test water, or assays uranium ore and treatment-plant brine in high-purity water, to develop 400 science per working hour at full productivity. Requires four workers and 600 hp. Water can be piped in (Timber Pipes). Its connected upper terrace supports paths and platforms. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier construction materials
+Building.MaterialsLaboratory.FlavorDescription,Break a few samples. Build a better future.,Deep Frontier construction materials
+Recipe.MaterialsResearch.DisplayName,Materials research,Deep Frontier construction materials
+Recipe.GeochemicalAssay.DisplayName,Geochemical assays,Deep Frontier construction materials
+Building.SandstoneOutcrop.DisplayName,Sandstone outcrop,Deep Frontier construction materials
+Building.SandstoneOutcrop.Description,Finite surface deposit. A nearby Sandstone Pit removes stone; exhausted deposits disappear. Place these in the map editor before play.,Deep Frontier construction materials
+Building.SandstoneOutcrop.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Building.LimestoneOutcrop.DisplayName,Limestone outcrop,Deep Frontier construction materials
+Building.LimestoneOutcrop.Description,Finite surface deposit. A nearby Limestone Pit removes stone; exhausted deposits disappear. Place these in the map editor before play.,Deep Frontier construction materials
+Building.LimestoneOutcrop.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Building.SandstoneSeam.DisplayName,Deep sandstone seam,Deep Frontier construction materials
+Building.SandstoneSeam.Description,"Permanent geological source. Build a Sandstone Quarry over this marked site; extraction requires water, workers and 1500 hp.",Deep Frontier construction materials
+Building.SandstoneSeam.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Building.LimestoneSeam.DisplayName,Deep limestone seam,Deep Frontier construction materials
+Building.LimestoneSeam.Description,"Permanent geological source. Build a Limestone Quarry over this marked site; extraction requires water, workers and 1500 hp.",Deep Frontier construction materials
+Building.LimestoneSeam.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
+Good.RadioactiveSludge.DisplayName,Radioactive Sludge,Deep Frontier
+Good.RadioactiveSludge.PluralDisplayName,Radioactive Sludge,Deep Frontier
+Good.ContaminatedWater.DisplayName,Contaminated Water,Deep Frontier
+Good.ContaminatedWater.PluralDisplayName,Contaminated Water,Deep Frontier
+Need.Irradiation.DisplayName,Radioactive Zombie,Deep Frontier
+Status.Need.Irradiation,"Radioactive Zombie: shambles slowly, eats and drinks twice as much and cannot work. Needs 10 days of hospital care; untreated radiation sickness is fatal after 8 days.",Deep Frontier
+Status.Need.Irradiation.Short,Radioactive Zombie,Deep Frontier
+DeepFrontier.Radiation.Zombie.Subtitle,{0} · Radioactive Zombie,Deep Frontier
+DeepFrontier.Radiation.Zombie.Countdown,Dies in {0} days without hospital treatment.,Deep Frontier
+DeepFrontier.Radiation.Zombie.CountdownPaused,Hospital care has paused the radiation sickness: {0} days left untreated.,Deep Frontier
+DeepFrontier.Radiation.Zombie.Flavor,"Glows faintly, eats for two, works for nobody.",Deep Frontier
+DeepFrontier.Radiation.Zombie.Dying,Radioactive Zombie: dies in under 2 days without hospital treatment.,Deep Frontier
+DeepFrontier.Radiation.Zombie.Dying.Short,Zombie dying,Deep Frontier
+Building.RadioactiveWasteExport.DisplayName,Radioactive Waste Export,Deep Frontier
+Building.RadioactiveWasteExport.Description,"Ships barrelled radioactive sludge and contaminated water off the map for good. Must touch the map edge: place its dispatch gate on the edge. Fed by pipe at its front socket or by haulers. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.RadioactiveWasteExport.FlavorDescription,"Somewhere downstream, it is somebody else's problem.",Deep Frontier
+Building.RadioactiveSludgeOutfall.DisplayName,Sludge Outfall,Deep Frontier
+Building.RadioactiveSludgeOutfall.Description,"Pours barrelled radioactive sludge into the world as radioactive water over the lip of its spillway. It mixes with the water it meets, stops pumps, irradiates beavers, leaves irradiated ground where it dries, and only leaves through open map edges. Fed by pipe at its front socket or by haulers. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.RadioactiveSludgeOutfall.FlavorDescription,Out of sight is not out of the river.,Deep Frontier
+Building.RadioactiveSludgeRecoveryPump.DisplayName,Sludge Recovery Pump,Deep Frontier
+Building.RadioactiveSludgeRecoveryPump.Description,"Pumps radioactive water through its intake pipe and barrels its radioactivity as sludge for export; the fresh water pumped with it is used up. The intake drops from the middle of the back deck, so that cell must stand over open water, with ground under the two piers beside it. Delivers the barrels by pipe from its front socket or to haulers. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.RadioactiveSludgeRecoveryPump.FlavorDescription,The cleanup always takes longer than the spill.,Deep Frontier
+DeepFrontier.Radiation.Status.PumpBlocked,"Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.",Deep Frontier
+DeepFrontier.Radiation.Status.PumpBlocked.Short,Radiation detected,Deep Frontier
+DeepFrontier.Radiation.Status.StorageIrradiated,Stored water is irradiated and undrinkable.,Deep Frontier
+DeepFrontier.Radiation.Status.NoRadiation,No radioactive water at the intake.,Deep Frontier
+DeepFrontier.Radiation.WaterShares,"Water at the intake: {0}% fresh, {1}% bad, {2}% radioactive.",Deep Frontier
+DeepFrontier.Radiation.Status.OutletBlocked,The outlet is blocked.,Deep Frontier
+DeepFrontier.Radiation.Placement.NotAtMapEdge,Must touch the map edge.,Deep Frontier
+DeepFrontier.Radiation.DeathMessage,{0} the radioactive zombie fell apart from untreated radiation sickness.,Deep Frontier
+DeepFrontier.Radiation.Planting.Warning,"Radiation: plants on irradiated (yellow-green) ground die immediately, including anything planted there.",Deep Frontier
+Building.RadioactiveSpring.DisplayName,Radioactive Spring,Deep Frontier
+Building.RadioactiveSpring.Description,A natural spring of radioactive water. Its strength works like a water source; 0 stops it.,Deep Frontier
+Building.RadioactiveSpringSource.DisplayName,Radioactive Spring,Deep Frontier
+Building.RadioactiveSpringSource.Description,A natural spring of radioactive water. Its strength works like a water source; 0 stops it.,Deep Frontier
+DeepFrontier.ContaminationSensor.Substance,Measures,Deep Frontier
+DeepFrontier.ContaminationSensor.Substance.Badwater,Badwater,Deep Frontier
+DeepFrontier.ContaminationSensor.Substance.Radiation,Radiation,Deep Frontier
+DeepFrontier.ContaminationSensor.Substance.Any,Any contamination,Deep Frontier
+DeepFrontier.ContaminationSensor.Reading.Radiation,Radiation: {0}%,Deep Frontier
+DeepFrontier.ContaminationSensor.Reading.Any,"Badwater: {0}%, radiation: {1}%",Deep Frontier
+DeepFrontier.Workforce.Discipline.Metallurgy,Metallurgist,Deep Frontier workforce risks
+DeepFrontier.Workforce.Discipline.Metallurgy.Plural,Metallurgists,Deep Frontier workforce risks
+DeepFrontier.Workforce.Discipline.Nuclear,Reactor operator,Deep Frontier workforce risks
+DeepFrontier.Workforce.Discipline.Nuclear.Plural,Reactor operators,Deep Frontier workforce risks
+DeepFrontier.Workforce.Discipline.Flight,Flight engineer,Deep Frontier workforce risks
+DeepFrontier.Workforce.Discipline.Flight.Plural,Flight engineers,Deep Frontier workforce risks
+DeepFrontier.Workforce.Danger.Hazardous,Hazardous,Deep Frontier workforce risks
+DeepFrontier.Workforce.Danger.Dangerous,Dangerous,Deep Frontier workforce risks
+DeepFrontier.Workforce.Danger.Extreme,Extreme,Deep Frontier workforce risks
+Recipe.SpecialistTraining.Metallurgy.DisplayName,Metallurgist course,Deep Frontier workforce risks
+Recipe.SpecialistTraining.Nuclear.DisplayName,Reactor operator course,Deep Frontier workforce risks
+Recipe.SpecialistTraining.Flight.DisplayName,Flight engineer course,Deep Frontier workforce risks
+DeepFrontier.Workforce.Panel.Title,Workforce risks,Deep Frontier workforce risks
+DeepFrontier.Workforce.Panel.InjuryRisk,Injury risk: {0}. About {1}% per worker-hour while working; strained/exhausted workers face {2} times that.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Panel.InjuriesDisabled,Injury risk: {0}. Injuries are switched off in this game's settings.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Panel.InjurySeverity,An accident takes {0} days to heal without a hospital; {1}% of accidents are fatal.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Panel.Crew,"Crew at the last check: {0} fit, {1} strained (low wellbeing or tired), {2} exhausted.",Deep Frontier workforce risks
+DeepFrontier.Workforce.Panel.Record,"Accidents here: {0} injured, {1} killed.",Deep Frontier workforce risks
+DeepFrontier.Workforce.Panel.BotWear,Bots wear out {0}× faster while working here.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Panel.BotsNotAllowed,Bots are not allowed here.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Status.Exhausted,Exhausted workers: injury risk ×{0},Deep Frontier workforce risks
+DeepFrontier.Workforce.Specialists.Title,Specialist crew,Deep Frontier workforce risks
+DeepFrontier.Workforce.Specialists.Required,Only trained {0} can work here.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Specialists.Staffing,Posts filled: {0}. Unassigned {2} in this district: {1}.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Specialists.Train,Train {0} at the Technical School. A specialist's skill dies with them.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Status.NoSpecialists,No {0}: this building cannot run. Train them at the Technical School.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Status.NoSpecialists.Short,No {0},Deep Frontier workforce risks
+DeepFrontier.Workforce.Status.FewSpecialists,Not enough {0}. Train more at the Technical School.,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.Title,Specialist training,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.Program,Course: {0}. Each finished course graduates the trainee with the most training hours.,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.NoProgram,Choose a training course.,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.NextGraduate,Next graduate: {0} ({1} h of training).,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.NoTrainee,No trainee enrolled. Specialists working here teach but never retrain.,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.Pending,Finished courses waiting for a trainee: {0}.,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.Roster,Colony specialists: {0}.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Status.NoTrainee,A course finished but no trainee is enrolled. Assign beavers who are not specialists.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Status.NoTrainee.Short,No trainee,Deep Frontier workforce risks
+DeepFrontier.Workforce.Trait.Specialist,Specialist: {0},Deep Frontier workforce risks
+DeepFrontier.Workforce.Trait.Training,Technical School training: {0} h,Deep Frontier workforce risks
+DeepFrontier.Workforce.Notification.Graduated,{0} graduated as a {1}.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Notification.SkillLost,"Skill lost: {0}, a {1}, has died. {2} left.",Deep Frontier workforce risks
+DeepFrontier.Workforce.FatalAccident,{0} was killed in an industrial accident at the {1}.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Bot.Wearing,Wearing out {0}× faster at the {1}.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Bot.Assigned,Assigned to the {1}: wears out {0}× faster inside.,Deep Frontier workforce risks
+Recipe.IndustrialBot.DisplayName,Industrial bot,Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Panel.Title,Bot maintenance,Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Panel.Bots,Bots assigned: {0}. Serviced: {1}.,Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Panel.NoBots,No bots assigned: maintenance oil is only stocked while bots work here.,Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Panel.Good,{0}: {1} in stock. A bot serviced with it wears out {2}× here.,Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Panel.Dose,"One dose lasts {0} hours of work here; unserviced bots wear out {1}×. Bots take the first oil in stock, in the order listed.",Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Bot.Serviced,Serviced with {0}: wears out {1}× here for {2} more hours.,Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Bot.Unserviced,Not serviced: stock maintenance oil at the {0} to slow wear.,Deep Frontier bot upkeep
+DeepFrontier.Power.Status.NotConnected,Not connected to a power source. Connect it to a generator with shafts or power lines.,Deep Frontier
+DeepFrontier.Power.Status.NotConnected.Short,Not connected to power,Deep Frontier

@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "Electronics",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.Electronics.PluralDisplayName",
+    "CycleDurationInHours": 2,
+    "Ingredients": [
+      {
+        "Id": "MachineCore",
+        "Amount": 1
+      },
+      {
+        "Id": "MetalPart",
+        "Amount": 2
+      },
+      {
+        "Id": "Polymer",
+        "Amount": 1
+      },
+      {
+        "Id": "Flux",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "Electronics",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/ElectronicsIcon"
+  }
+}

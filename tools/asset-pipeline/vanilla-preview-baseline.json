@@ -1,0 +1,3008 @@
+{
+ "source": "Installed Timberborn resources.assets via UnityPy 1.25.4; models named by vendor blueprints",
+ "resourcesAssetsSha256": "83d67872c70c163733a79b0e1055a34f5bbd8802016de72b1fbb6cf838cd674c",
+ "max": {
+  "renderers": 26,
+  "slots": 81,
+  "triangles": 27906
+ },
+ "buildings": [
+  {
+   "building": "Chronometer.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 460
+  },
+  {
+   "building": "ContaminationSensor.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 526
+  },
+  {
+   "building": "DepthSensor.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 508
+  },
+  {
+   "building": "Detonator.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 316
+  },
+  {
+   "building": "FireworkLauncher.IronTeeth",
+   "renderers": 4,
+   "slots": 6,
+   "triangles": 322
+  },
+  {
+   "building": "FlowSensor.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 480
+  },
+  {
+   "building": "HttpAdapter.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 481
+  },
+  {
+   "building": "HttpLever.IronTeeth",
+   "renderers": 3,
+   "slots": 11,
+   "triangles": 714
+  },
+  {
+   "building": "Indicator.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 368
+  },
+  {
+   "building": "Lever.IronTeeth",
+   "renderers": 3,
+   "slots": 13,
+   "triangles": 590
+  },
+  {
+   "building": "Memory.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 392
+  },
+  {
+   "building": "PopulationCounter.IronTeeth",
+   "renderers": 2,
+   "slots": 8,
+   "triangles": 548
+  },
+  {
+   "building": "PowerMeter.IronTeeth",
+   "renderers": 3,
+   "slots": 10,
+   "triangles": 596
+  },
+  {
+   "building": "Relay.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 308
+  },
+  {
+   "building": "ResourceCounter.IronTeeth",
+   "renderers": 2,
+   "slots": 8,
+   "triangles": 498
+  },
+  {
+   "building": "ScienceCounter.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 476
+  },
+  {
+   "building": "Speaker.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 464
+  },
+  {
+   "building": "Timer.IronTeeth",
+   "renderers": 3,
+   "slots": 7,
+   "triangles": 498
+  },
+  {
+   "building": "WeatherStation.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 576
+  },
+  {
+   "building": "BeaverBust.IronTeeth",
+   "renderers": 2,
+   "slots": 4,
+   "triangles": 398
+  },
+  {
+   "building": "BeaverStatue.IronTeeth",
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 640
+  },
+  {
+   "building": "Bell.IronTeeth",
+   "renderers": 3,
+   "slots": 7,
+   "triangles": 368
+  },
+  {
+   "building": "Bench.IronTeeth",
+   "renderers": 2,
+   "slots": 4,
+   "triangles": 222
+  },
+  {
+   "building": "Brazier.IronTeeth",
+   "renderers": 2,
+   "slots": 4,
+   "triangles": 280
+  },
+  {
+   "building": "DecorativeClock.IronTeeth",
+   "renderers": 3,
+   "slots": 7,
+   "triangles": 374
+  },
+  {
+   "building": "Lantern.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 312
+  },
+  {
+   "building": "MetalFence.IronTeeth",
+   "renderers": 7,
+   "slots": 14,
+   "triangles": 1473
+  },
+  {
+   "building": "PoleBanner.IronTeeth",
+   "renderers": 3,
+   "slots": 5,
+   "triangles": 280
+  },
+  {
+   "building": "Roof1x1.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 416
+  },
+  {
+   "building": "Roof1x2.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 416
+  },
+  {
+   "building": "Roof2x2.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 448
+  },
+  {
+   "building": "Roof2x3.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 472
+  },
+  {
+   "building": "Roof3x2.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 504
+  },
+  {
+   "building": "Shrub.IronTeeth",
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 402
+  },
+  {
+   "building": "SquareBanner.IronTeeth",
+   "renderers": 3,
+   "slots": 5,
+   "triangles": 224
+  },
+  {
+   "building": "StreamGauge.IronTeeth",
+   "renderers": 3,
+   "slots": 6,
+   "triangles": 362
+  },
+  {
+   "building": "WoodFence.IronTeeth",
+   "renderers": 6,
+   "slots": 11,
+   "triangles": 715
+  },
+  {
+   "building": "BuildersHut.IronTeeth",
+   "renderers": 2,
+   "slots": 9,
+   "triangles": 1766
+  },
+  {
+   "building": "DistrictCenter.IronTeeth",
+   "renderers": 1,
+   "slots": 9,
+   "triangles": 1280
+  },
+  {
+   "building": "DistrictCrossing.IronTeeth",
+   "renderers": 2,
+   "slots": 9,
+   "triangles": 1183
+  },
+  {
+   "building": "HaulingPost.IronTeeth",
+   "renderers": 2,
+   "slots": 9,
+   "triangles": 1930
+  },
+  {
+   "building": "CoffeeBrewery.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 1912
+  },
+  {
+   "building": "FarmHouse.IronTeeth",
+   "renderers": 2,
+   "slots": 10,
+   "triangles": 1108
+  },
+  {
+   "building": "Fermenter.IronTeeth",
+   "renderers": 3,
+   "slots": 11,
+   "triangles": 1394
+  },
+  {
+   "building": "FoodFactory.IronTeeth",
+   "renderers": 3,
+   "slots": 10,
+   "triangles": 2658
+  },
+  {
+   "building": "GathererFlag.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 684
+  },
+  {
+   "building": "HydroponicGarden.IronTeeth",
+   "renderers": 14,
+   "slots": 81,
+   "triangles": 21096
+  },
+  {
+   "building": "OilPress.IronTeeth",
+   "renderers": 4,
+   "slots": 12,
+   "triangles": 1374
+  },
+  {
+   "building": "AdvancedBreedingPod.IronTeeth",
+   "renderers": 3,
+   "slots": 8,
+   "triangles": 796
+  },
+  {
+   "building": "Barrack.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1022
+  },
+  {
+   "building": "BreedingPod.IronTeeth",
+   "renderers": 4,
+   "slots": 7,
+   "triangles": 744
+  },
+  {
+   "building": "LargeBarrack.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1252
+  },
+  {
+   "building": "LargeRowhouse.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1384
+  },
+  {
+   "building": "Rowhouse.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1136
+  },
+  {
+   "building": "Dam.IronTeeth",
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 344
+  },
+  {
+   "building": "DirtExcavator.IronTeeth",
+   "renderers": 3,
+   "slots": 10,
+   "triangles": 5379
+  },
+  {
+   "building": "DoubleDynamite.IronTeeth",
+   "renderers": 3,
+   "slots": 6,
+   "triangles": 325
+  },
+  {
+   "building": "DoubleFloodgate.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 1096
+  },
+  {
+   "building": "Dynamite.IronTeeth",
+   "renderers": 3,
+   "slots": 6,
+   "triangles": 226
+  },
+  {
+   "building": "ExplosivesFactory.IronTeeth",
+   "renderers": 3,
+   "slots": 10,
+   "triangles": 2534
+  },
+  {
+   "building": "FillValve.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 388
+  },
+  {
+   "building": "Floodgate.IronTeeth",
+   "renderers": 4,
+   "slots": 9,
+   "triangles": 872
+  },
+  {
+   "building": "ImpermeableFloor.IronTeeth",
+   "renderers": 3,
+   "slots": 4,
+   "triangles": 196
+  },
+  {
+   "building": "IrrigationBarrier.IronTeeth",
+   "renderers": 8,
+   "slots": 22,
+   "triangles": 1730
+  },
+  {
+   "building": "Levee.IronTeeth",
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 252
+  },
+  {
+   "building": "TerrainBlock.IronTeeth",
+   "renderers": 3,
+   "slots": 6,
+   "triangles": 510
+  },
+  {
+   "building": "ThrottlingValve.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 500
+  },
+  {
+   "building": "TripleDynamite.IronTeeth",
+   "renderers": 3,
+   "slots": 6,
+   "triangles": 369
+  },
+  {
+   "building": "TripleFloodgate.IronTeeth",
+   "renderers": 4,
+   "slots": 9,
+   "triangles": 1312
+  },
+  {
+   "building": "Tunnel.IronTeeth",
+   "renderers": 7,
+   "slots": 14,
+   "triangles": 2001
+  },
+  {
+   "building": "EfficientMine.IronTeeth",
+   "renderers": 4,
+   "slots": 12,
+   "triangles": 3166
+  },
+  {
+   "building": "Metalsmith.IronTeeth",
+   "renderers": 3,
+   "slots": 11,
+   "triangles": 909
+  },
+  {
+   "building": "ScavengerFlag.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 718
+  },
+  {
+   "building": "Smelter.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 1562
+  },
+  {
+   "building": "ArchOfProgress.IronTeeth",
+   "renderers": 3,
+   "slots": 10,
+   "triangles": 5266
+  },
+  {
+   "building": "EarthRepopulator.IronTeeth",
+   "renderers": 13,
+   "slots": 58,
+   "triangles": 27906
+  },
+  {
+   "building": "FlameOfUnity.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 2324
+  },
+  {
+   "building": "LaborerMonument.IronTeeth",
+   "renderers": 3,
+   "slots": 8,
+   "triangles": 1676
+  },
+  {
+   "building": "TributeToIngenuity.IronTeeth",
+   "renderers": 6,
+   "slots": 16,
+   "triangles": 3404
+  },
+  {
+   "building": "Airlock.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 612
+  },
+  {
+   "building": "DoublePlatform.IronTeeth",
+   "renderers": 3,
+   "slots": 4,
+   "triangles": 518
+  },
+  {
+   "building": "Gate.IronTeeth",
+   "renderers": 9,
+   "slots": 18,
+   "triangles": 892
+  },
+  {
+   "building": "ImpermeableTubeway.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 508
+  },
+  {
+   "building": "MetalPlatform3x3.IronTeeth",
+   "renderers": 3,
+   "slots": 4,
+   "triangles": 914
+  },
+  {
+   "building": "MetalPlatform5x5.IronTeeth",
+   "renderers": 3,
+   "slots": 4,
+   "triangles": 2222
+  },
+  {
+   "building": "Overhang2x1.IronTeeth",
+   "renderers": 3,
+   "slots": 5,
+   "triangles": 378
+  },
+  {
+   "building": "Overhang3x1.IronTeeth",
+   "renderers": 3,
+   "slots": 5,
+   "triangles": 430
+  },
+  {
+   "building": "Overhang4x1.IronTeeth",
+   "renderers": 3,
+   "slots": 5,
+   "triangles": 490
+  },
+  {
+   "building": "Overhang5x1.IronTeeth",
+   "renderers": 3,
+   "slots": 5,
+   "triangles": 534
+  },
+  {
+   "building": "Overhang6x1.IronTeeth",
+   "renderers": 3,
+   "slots": 5,
+   "triangles": 562
+  },
+  {
+   "building": "Path",
+   "renderers": 12,
+   "slots": 12,
+   "triangles": 610
+  },
+  {
+   "building": "Platform.IronTeeth",
+   "renderers": 3,
+   "slots": 4,
+   "triangles": 374
+  },
+  {
+   "building": "SpiralStairs.IronTeeth",
+   "renderers": 2,
+   "slots": 4,
+   "triangles": 708
+  },
+  {
+   "building": "Stairs.IronTeeth",
+   "renderers": 2,
+   "slots": 4,
+   "triangles": 538
+  },
+  {
+   "building": "SuspensionBridge1x1.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 754
+  },
+  {
+   "building": "SuspensionBridge2x1.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 1030
+  },
+  {
+   "building": "SuspensionBridge3x1.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 1234
+  },
+  {
+   "building": "SuspensionBridge4x1.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 1450
+  },
+  {
+   "building": "SuspensionBridge5x1.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 1666
+  },
+  {
+   "building": "SuspensionBridge6x1.IronTeeth",
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 1826
+  },
+  {
+   "building": "TriplePlatform.IronTeeth",
+   "renderers": 3,
+   "slots": 4,
+   "triangles": 662
+  },
+  {
+   "building": "Tubeway.IronTeeth",
+   "renderers": 13,
+   "slots": 38,
+   "triangles": 3582
+  },
+  {
+   "building": "TubewayStation.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 1568
+  },
+  {
+   "building": "VerticalTubeway.IronTeeth",
+   "renderers": 26,
+   "slots": 75,
+   "triangles": 9368
+  },
+  {
+   "building": "Clutch.IronTeeth",
+   "renderers": 5,
+   "slots": 13,
+   "triangles": 688
+  },
+  {
+   "building": "CompactWaterWheel.IronTeeth",
+   "renderers": 4,
+   "slots": 8,
+   "triangles": 1570
+  },
+  {
+   "building": "DevPowerGenerator",
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 400
+  },
+  {
+   "building": "GeothermalEngine.IronTeeth",
+   "renderers": 4,
+   "slots": 9,
+   "triangles": 2490
+  },
+  {
+   "building": "GravityBattery.IronTeeth",
+   "renderers": 4,
+   "slots": 14,
+   "triangles": 1321
+  },
+  {
+   "building": "ImpermeablePowerShaft.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 484
+  },
+  {
+   "building": "LargePowerWheel.IronTeeth",
+   "renderers": 3,
+   "slots": 8,
+   "triangles": 3016
+  },
+  {
+   "building": "LargeWaterWheel.IronTeeth",
+   "renderers": 4,
+   "slots": 8,
+   "triangles": 4700
+  },
+  {
+   "building": "PowerShaft.IronTeeth",
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 150
+  },
+  {
+   "building": "SteamEngine.IronTeeth",
+   "renderers": 3,
+   "slots": 14,
+   "triangles": 2705
+  },
+  {
+   "building": "VerticalPowerShaft.IronTeeth",
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 286
+  },
+  {
+   "building": "BotAssembler.IronTeeth",
+   "renderers": 9,
+   "slots": 27,
+   "triangles": 6014
+  },
+  {
+   "building": "BotPartFactory.IronTeeth",
+   "renderers": 3,
+   "slots": 12,
+   "triangles": 3088
+  },
+  {
+   "building": "ChargingStation.IronTeeth",
+   "renderers": 3,
+   "slots": 6,
+   "triangles": 715
+  },
+  {
+   "building": "ControlTower.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 1238
+  },
+  {
+   "building": "GreaseFactory.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 1884
+  },
+  {
+   "building": "Inventor.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 1282
+  },
+  {
+   "building": "Numbercruncher.IronTeeth",
+   "renderers": 4,
+   "slots": 15,
+   "triangles": 2810
+  },
+  {
+   "building": "LargeIndustrialPile.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 1668
+  },
+  {
+   "building": "LargeTank.IronTeeth",
+   "renderers": 2,
+   "slots": 8,
+   "triangles": 1508
+  },
+  {
+   "building": "LargeWarehouse.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 930
+  },
+  {
+   "building": "MediumTank.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 1192
+  },
+  {
+   "building": "MediumWarehouse.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 782
+  },
+  {
+   "building": "SmallIndustrialPile.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 511
+  },
+  {
+   "building": "SmallTank.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 635
+  },
+  {
+   "building": "SmallWarehouse.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 448
+  },
+  {
+   "building": "AquiferDrill.IronTeeth",
+   "renderers": 5,
+   "slots": 10,
+   "triangles": 2306
+  },
+  {
+   "building": "BadwaterPressurizer.IronTeeth",
+   "renderers": 7,
+   "slots": 15,
+   "triangles": 4092
+  },
+  {
+   "building": "Centrifuge.IronTeeth",
+   "renderers": 3,
+   "slots": 10,
+   "triangles": 1960
+  },
+  {
+   "building": "CompactMechanicalPump.IronTeeth",
+   "renderers": 3,
+   "slots": 6,
+   "triangles": 1034
+  },
+  {
+   "building": "DeepBadwaterPump.IronTeeth",
+   "renderers": 4,
+   "slots": 10,
+   "triangles": 1407
+  },
+  {
+   "building": "DeepMechanicalPump.IronTeeth",
+   "renderers": 5,
+   "slots": 12,
+   "triangles": 2290
+  },
+  {
+   "building": "DeepWaterPump.IronTeeth",
+   "renderers": 4,
+   "slots": 15,
+   "triangles": 1718
+  },
+  {
+   "building": "DevWaterSource",
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 305
+  },
+  {
+   "building": "Discharge.IronTeeth",
+   "renderers": 2,
+   "slots": 9,
+   "triangles": 813
+  },
+  {
+   "building": "Campfire.IronTeeth",
+   "renderers": 4,
+   "slots": 9,
+   "triangles": 2711
+  },
+  {
+   "building": "DancePit.IronTeeth",
+   "renderers": 3,
+   "slots": 12,
+   "triangles": 5161
+  },
+  {
+   "building": "DecontaminationPod.IronTeeth",
+   "renderers": 4,
+   "slots": 7,
+   "triangles": 615
+  },
+  {
+   "building": "Detailer.IronTeeth",
+   "renderers": 3,
+   "slots": 11,
+   "triangles": 915
+  },
+  {
+   "building": "DoubleShower.IronTeeth",
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 656
+  },
+  {
+   "building": "ExercisePlaza.IronTeeth",
+   "renderers": 2,
+   "slots": 8,
+   "triangles": 1695
+  },
+  {
+   "building": "Massager.IronTeeth",
+   "renderers": 4,
+   "slots": 11,
+   "triangles": 538
+  },
+  {
+   "building": "MedicalBed.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 548
+  },
+  {
+   "building": "Motivatorium.IronTeeth",
+   "renderers": 12,
+   "slots": 33,
+   "triangles": 6575
+  },
+  {
+   "building": "MudBath.IronTeeth",
+   "renderers": 3,
+   "slots": 8,
+   "triangles": 954
+  },
+  {
+   "building": "RooftopTerrace.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1770
+  },
+  {
+   "building": "Scratcher.IronTeeth",
+   "renderers": 4,
+   "slots": 5,
+   "triangles": 304
+  },
+  {
+   "building": "SwimmingPool.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 2038
+  },
+  {
+   "building": "TeethGrindstone.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 562
+  },
+  {
+   "building": "WindTunnel.IronTeeth",
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 2169
+  },
+  {
+   "building": "Forester.IronTeeth",
+   "renderers": 2,
+   "slots": 10,
+   "triangles": 1254
+  },
+  {
+   "building": "GearWorkshop.IronTeeth",
+   "renderers": 3,
+   "slots": 8,
+   "triangles": 1578
+  },
+  {
+   "building": "IndustrialLumberMill.IronTeeth",
+   "renderers": 3,
+   "slots": 10,
+   "triangles": 1240
+  },
+  {
+   "building": "LumberjackFlag.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 726
+  },
+  {
+   "building": "TappersShack.IronTeeth",
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 650
+  },
+  {
+   "building": "WoodWorkshop.IronTeeth",
+   "renderers": 2,
+   "slots": 8,
+   "triangles": 1642
+  }
+ ],
+ "models": {
+  "Buildings/Automation/Chronometer/Chronometer.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 244
+  },
+  "Buildings/Automation/Chronometer/Chronometer.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 216
+  },
+  "Buildings/Automation/ContaminationSensor/ContaminationSensor.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 270
+  },
+  "Buildings/Automation/ContaminationSensor/ContaminationSensor.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 256
+  },
+  "Buildings/Automation/DepthSensor/DepthSensor.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 290
+  },
+  "Buildings/Automation/DepthSensor/DepthSensor.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 218
+  },
+  "Buildings/Automation/Detonator/Detonator.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 204
+  },
+  "Buildings/Automation/Detonator/Detonator.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 112
+  },
+  "Buildings/Automation/FireworkLauncher/FireworkLauncher.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 3,
+   "slots": 4,
+   "triangles": 280
+  },
+  "Buildings/Automation/FireworkLauncher/FireworkLauncher.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 42
+  },
+  "Buildings/Automation/FlowSensor/FlowSensor.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 268
+  },
+  "Buildings/Automation/FlowSensor/FlowSensor.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 212
+  },
+  "Buildings/Automation/HttpAdapter/HTTPAdapter.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 200
+  },
+  "Buildings/Automation/HttpAdapter/HTTPAdapter.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 281
+  },
+  "Buildings/Automation/HttpLever/HTTPLever.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 218
+  },
+  "Buildings/Automation/HttpLever/HTTPLeverOff.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 248
+  },
+  "Buildings/Automation/HttpLever/HTTPLeverOn.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 248
+  },
+  "Buildings/Automation/Indicator/Indicator.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 246
+  },
+  "Buildings/Automation/Indicator/Indicator.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 122
+  },
+  "Buildings/Automation/Lever/Lever.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 218
+  },
+  "Buildings/Automation/Lever/LeverOff.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 186
+  },
+  "Buildings/Automation/Lever/LeverOn.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 186
+  },
+  "Buildings/Automation/Memory/Memory.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 220
+  },
+  "Buildings/Automation/Memory/Memory.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 172
+  },
+  "Buildings/Automation/PopulationCounter/PopulationCounter.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 312
+  },
+  "Buildings/Automation/PopulationCounter/PopulationCounter.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 236
+  },
+  "Buildings/Automation/PowerMeter/PowerMeter.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 272
+  },
+  "Buildings/Automation/PowerMeter/PowerMeter.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 324
+  },
+  "Buildings/Automation/Relay/Relay.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 176
+  },
+  "Buildings/Automation/Relay/Relay.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 132
+  },
+  "Buildings/Automation/ResourceCounter/ResourceCounter.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 304
+  },
+  "Buildings/Automation/ResourceCounter/ResourceCounter.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 194
+  },
+  "Buildings/Automation/ScienceCounter/ScienceCounter.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 188
+  },
+  "Buildings/Automation/ScienceCounter/ScienceCounter.IronTeeth.Model.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 288
+  },
+  "Buildings/Automation/Speaker/Speaker.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 234
+  },
+  "Buildings/Automation/Speaker/Speaker.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 230
+  },
+  "Buildings/Automation/Timer/Timer.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 234
+  },
+  "Buildings/Automation/Timer/Timer.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 4,
+   "triangles": 264
+  },
+  "Buildings/Automation/WeatherStation/WeatherStation.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 256
+  },
+  "Buildings/Automation/WeatherStation/WeatherStation.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 320
+  },
+  "Buildings/Decoration/BeaverBust/BeaverBust.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 134
+  },
+  "Buildings/Decoration/BeaverBust/BeaverBust.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 264
+  },
+  "Buildings/Decoration/BeaverStatue/BeaverStatue.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 236
+  },
+  "Buildings/Decoration/BeaverStatue/BeaverStatue.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 404
+  },
+  "Buildings/Decoration/Bell/Bell.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 174
+  },
+  "Buildings/Decoration/Bell/Bell.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 194
+  },
+  "Buildings/Decoration/Bench/Bench.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 138
+  },
+  "Buildings/Decoration/Bench/Bench.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 84
+  },
+  "Buildings/Decoration/Brazier/Brazier.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 166
+  },
+  "Buildings/Decoration/Brazier/Brazier.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 114
+  },
+  "Buildings/Decoration/DecorativeClock/DecorativeClock.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 138
+  },
+  "Buildings/Decoration/DecorativeClock/DecorativeClock.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 236
+  },
+  "Buildings/Decoration/Lantern/Lantern.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 120
+  },
+  "Buildings/Decoration/Lantern/Lantern.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 192
+  },
+  "Buildings/Decoration/MetalFence/MetalFence.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 124
+  },
+  "Buildings/Decoration/MetalFence/MetalFence0000.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 180
+  },
+  "Buildings/Decoration/MetalFence/MetalFence0001.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 174
+  },
+  "Buildings/Decoration/MetalFence/MetalFence0011.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 200
+  },
+  "Buildings/Decoration/MetalFence/MetalFence0111.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 277
+  },
+  "Buildings/Decoration/MetalFence/MetalFence1010.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 168
+  },
+  "Buildings/Decoration/MetalFence/MetalFence1111.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 350
+  },
+  "Buildings/Decoration/PoleBanner/PoleBanner.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 154
+  },
+  "Buildings/Decoration/PoleBanner/PoleBanner.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 126
+  },
+  "Buildings/Decoration/Roof1x1/Roof1x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 234
+  },
+  "Buildings/Decoration/Roof1x1/Roof1x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 182
+  },
+  "Buildings/Decoration/Roof1x2/Roof1x2.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 234
+  },
+  "Buildings/Decoration/Roof1x2/Roof1x2.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 182
+  },
+  "Buildings/Decoration/Roof2x2/Roof2x2.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 234
+  },
+  "Buildings/Decoration/Roof2x2/Roof2x2.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 214
+  },
+  "Buildings/Decoration/Roof2x3/Roof2x3.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 234
+  },
+  "Buildings/Decoration/Roof2x3/Roof2x3.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 238
+  },
+  "Buildings/Decoration/Roof3x2/Roof3x2.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 246
+  },
+  "Buildings/Decoration/Roof3x2/Roof3x2.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 258
+  },
+  "Buildings/Decoration/Shrub/Shrub.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 170
+  },
+  "Buildings/Decoration/Shrub/Shrub.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 232
+  },
+  "Buildings/Decoration/SquareBanner/SquareBanner.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 154
+  },
+  "Buildings/Decoration/SquareBanner/SquareBanner.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 70
+  },
+  "Buildings/Decoration/StreamGauge/StreamGauge.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 130
+  },
+  "Buildings/Decoration/StreamGauge/StreamGauge.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 4,
+   "triangles": 232
+  },
+  "Buildings/Decoration/WoodFence/WoodFence0000.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 94
+  },
+  "Buildings/Decoration/WoodFence/WoodFence0001.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 84
+  },
+  "Buildings/Decoration/WoodFence/WoodFence0011.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 108
+  },
+  "Buildings/Decoration/WoodFence/WoodFence0111.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 155
+  },
+  "Buildings/Decoration/WoodFence/WoodFence1010.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 74
+  },
+  "Buildings/Decoration/WoodFence/WoodFence1111.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 200
+  },
+  "Buildings/DistrictManagement/BuildersHut/BuildersHut.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 960
+  },
+  "Buildings/DistrictManagement/BuildersHut/BuildersHut.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 7,
+   "triangles": 806
+  },
+  "Buildings/DistrictManagement/DistrictCenter/DistrictCenter.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 9,
+   "triangles": 1280
+  },
+  "Buildings/DistrictManagement/DistrictCrossing/DistrictCrossing.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 333
+  },
+  "Buildings/DistrictManagement/DistrictCrossing/DistrictCrossing.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 7,
+   "triangles": 850
+  },
+  "Buildings/DistrictManagement/HaulingPost/HaulingPost.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 888
+  },
+  "Buildings/DistrictManagement/HaulingPost/HaulingPost.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 7,
+   "triangles": 1042
+  },
+  "Buildings/Food/CoffeeBrewery/CoffeeBrewery.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 483
+  },
+  "Buildings/Food/CoffeeBrewery/CoffeeBrewery.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1429
+  },
+  "Buildings/Food/FarmHouse/FarmHouse.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 294
+  },
+  "Buildings/Food/FarmHouse/FarmHouse.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 8,
+   "triangles": 814
+  },
+  "Buildings/Food/Fermenter/Fermenter.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 490
+  },
+  "Buildings/Food/Fermenter/Fermenter.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 9,
+   "triangles": 904
+  },
+  "Buildings/Food/FoodFactory/FoodFactory.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 884
+  },
+  "Buildings/Food/FoodFactory/FoodFactory.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1774
+  },
+  "Buildings/Food/GathererFlag/GathererFlag.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 466
+  },
+  "Buildings/Food/GathererFlag/GathererFlag.Ironteeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 218
+  },
+  "Buildings/Food/HydroponicGarden/HydroponicGarden.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 3,
+   "slots": 5,
+   "triangles": 656
+  },
+  "Buildings/Food/HydroponicGarden/HydroponicGarden.IronTeeth.Model": {
+   "renderers": 11,
+   "slots": 76,
+   "triangles": 20440
+  },
+  "Buildings/Food/OilPress/OilPress.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 620
+  },
+  "Buildings/Food/OilPress/OilPress.IronTeeth.Model": {
+   "renderers": 3,
+   "slots": 10,
+   "triangles": 754
+  },
+  "Buildings/Housing/AdvancedBreedingPod/AdvancedBreedingPod.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 214
+  },
+  "Buildings/Housing/AdvancedBreedingPod/AdvancedBreedingPod.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 582
+  },
+  "Buildings/Housing/Barrack/Barrack.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 296
+  },
+  "Buildings/Housing/Barrack/Barrack.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 726
+  },
+  "Buildings/Housing/BreedingPod/BreedingPod.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 184
+  },
+  "Buildings/Housing/BreedingPod/BreedingPod.IronTeeth.Model": {
+   "renderers": 3,
+   "slots": 5,
+   "triangles": 560
+  },
+  "Buildings/Housing/LargeBarrack/LargeBarrack.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 288
+  },
+  "Buildings/Housing/LargeBarrack/LargeBarrack.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 964
+  },
+  "Buildings/Housing/LargeRowhouse/LargeRowhouse.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 416
+  },
+  "Buildings/Housing/LargeRowhouse/LargeRowhouse.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 968
+  },
+  "Buildings/Housing/Rowhouse/Rowhouse.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 352
+  },
+  "Buildings/Housing/Rowhouse/Rowhouse.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 784
+  },
+  "Buildings/Landscaping/Dam/Dam.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 190
+  },
+  "Buildings/Landscaping/Dam/Dam.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 154
+  },
+  "Buildings/Landscaping/DirtExcavator/DirtExcavator.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 980
+  },
+  "Buildings/Landscaping/DirtExcavator/DirtExcavator.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 4399
+  },
+  "Buildings/Landscaping/DoubleDynamite/DoubleDynamite.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 191
+  },
+  "Buildings/Landscaping/DoubleDynamite/DoubleDynamite.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 100
+  },
+  "Buildings/Landscaping/DoubleDynamite/DoubleDynamite.Underground": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 34
+  },
+  "Buildings/Landscaping/DoubleFloodgate/DoubleFloodgate.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 250
+  },
+  "Buildings/Landscaping/DoubleFloodgate/DoubleFloodgate.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 846
+  },
+  "Buildings/Landscaping/Dynamite/Dynamite.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 146
+  },
+  "Buildings/Landscaping/Dynamite/Dynamite.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 64
+  },
+  "Buildings/Landscaping/Dynamite/Dynamite.Underground": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 16
+  },
+  "Buildings/Landscaping/ExplosivesFactory/ExplosivesFactory.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 618
+  },
+  "Buildings/Landscaping/ExplosivesFactory/ExplosivesFactory.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 8,
+   "triangles": 1916
+  },
+  "Buildings/Landscaping/FillValve/FillValve.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 228
+  },
+  "Buildings/Landscaping/FillValve/FillValve.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 160
+  },
+  "Buildings/Landscaping/Floodgate/Floodgate.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 202
+  },
+  "Buildings/Landscaping/Floodgate/Floodgate.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 670
+  },
+  "Buildings/Landscaping/ImpermeableFloor/ImpermeableFloor.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 124
+  },
+  "Buildings/Landscaping/ImpermeableFloor/ImpermeableFloor.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 48
+  },
+  "Buildings/Landscaping/ImpermeableFloor/ImpermeableFloor.Uncovered.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 24
+  },
+  "Buildings/Landscaping/IrrigationBarrier/IrrigationBarrier.IroinTeeth.Underground": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 114
+  },
+  "Buildings/Landscaping/IrrigationBarrier/IrrigationBarrier.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 162
+  },
+  "Buildings/Landscaping/IrrigationBarrier/IrrigationBarrier0000.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 180
+  },
+  "Buildings/Landscaping/IrrigationBarrier/IrrigationBarrier0001.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 204
+  },
+  "Buildings/Landscaping/IrrigationBarrier/IrrigationBarrier0011.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 240
+  },
+  "Buildings/Landscaping/IrrigationBarrier/IrrigationBarrier0111.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 276
+  },
+  "Buildings/Landscaping/IrrigationBarrier/IrrigationBarrier1010.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 230
+  },
+  "Buildings/Landscaping/IrrigationBarrier/IrrigationBarrier1111.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 324
+  },
+  "Buildings/Landscaping/Levee/Levee.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 226
+  },
+  "Buildings/Landscaping/Levee/Levee.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 26
+  },
+  "Buildings/Landscaping/TerrainBlock/TerrainBlock.Finished.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 109
+  },
+  "Buildings/Landscaping/TerrainBlock/TerrainBlock.Progress.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 253
+  },
+  "Buildings/Landscaping/TerrainBlock/TerrainBlock.Unfinished.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 148
+  },
+  "Buildings/Landscaping/ThrottlingValve/ThrottlingValve.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 244
+  },
+  "Buildings/Landscaping/ThrottlingValve/ThrottlingValve.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 256
+  },
+  "Buildings/Landscaping/TripleDynamite/TripleDynamite.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 185
+  },
+  "Buildings/Landscaping/TripleDynamite/TripleDynamite.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 132
+  },
+  "Buildings/Landscaping/TripleDynamite/TripleDynamite.Underground": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 52
+  },
+  "Buildings/Landscaping/TripleFloodgate/TripleFloodgate.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 298
+  },
+  "Buildings/Landscaping/TripleFloodgate/TripleFloodgate.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 1014
+  },
+  "Buildings/Landscaping/Tunnel/Tunnel.Full.ConstructionBase.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 187
+  },
+  "Buildings/Landscaping/Tunnel/Tunnel.Full.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 363
+  },
+  "Buildings/Landscaping/Tunnel/Tunnel.Uncovered.ConstructionBase.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 164
+  },
+  "Buildings/Landscaping/Tunnel/Tunnel.Uncovered.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 308
+  },
+  "Buildings/Metal/EfficientMine/EfficientMine.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 920
+  },
+  "Buildings/Metal/EfficientMine/EfficientMine.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 9,
+   "triangles": 2018
+  },
+  "Buildings/Metal/EfficientMine/EfficientMine.IronTeeth.Underground": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 228
+  },
+  "Buildings/Metal/Metalsmith/Metalsmith.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 344
+  },
+  "Buildings/Metal/Metalsmith/Metalsmith.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 9,
+   "triangles": 565
+  },
+  "Buildings/Metal/ScavengerFlag/ScavengerFlag.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 500
+  },
+  "Buildings/Metal/ScavengerFlag/ScavengerFlag.Ironteeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 218
+  },
+  "Buildings/Metal/Smelter/Smelter.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 528
+  },
+  "Buildings/Metal/Smelter/Smelter.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1034
+  },
+  "Buildings/Monuments/ArchOfProgress/ArchOfProgress.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 1020
+  },
+  "Buildings/Monuments/ArchOfProgress/ArchOfProgress.IronTeeth.ConstructionStage1.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 2284
+  },
+  "Buildings/Monuments/ArchOfProgress/ArchOfProgress.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 1962
+  },
+  "Buildings/Monuments/EarthRepopulator/EarthRepopulator.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 6,
+   "triangles": 2910
+  },
+  "Buildings/Monuments/EarthRepopulator/EarthRepopulator.IronTeeth.ConstructionStage1.Model": {
+   "renderers": 1,
+   "slots": 6,
+   "triangles": 5836
+  },
+  "Buildings/Monuments/EarthRepopulator/EarthRepopulator.IronTeeth.ConstructionStage2.Model": {
+   "renderers": 2,
+   "slots": 12,
+   "triangles": 7994
+  },
+  "Buildings/Monuments/EarthRepopulator/EarthRepopulator.IronTeeth.ConstructionStage3.Model": {
+   "renderers": 2,
+   "slots": 10,
+   "triangles": 6432
+  },
+  "Buildings/Monuments/EarthRepopulator/EarthRepopulator.IronTeeth.ConstructionStageFinal.Model": {
+   "renderers": 7,
+   "slots": 24,
+   "triangles": 4734
+  },
+  "Buildings/Monuments/FlameOfUnity/FlameOfUnity.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 390
+  },
+  "Buildings/Monuments/FlameOfUnity/FlameOfUnity.IronTeeth.ConstructionStage1.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 846
+  },
+  "Buildings/Monuments/FlameOfUnity/FlameOfUnity.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 1088
+  },
+  "Buildings/Monuments/LaborerMonument/LaborerMonument.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 350
+  },
+  "Buildings/Monuments/LaborerMonument/LaborerMonument.IronTeeth.ConstructionStage1.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 680
+  },
+  "Buildings/Monuments/LaborerMonument/LaborerMonument.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 646
+  },
+  "Buildings/Monuments/TributeToIngenuity/TributeToIngenuity.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 422
+  },
+  "Buildings/Monuments/TributeToIngenuity/TributeToIngenuity.IronTeeth.ConstructionStage1.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 740
+  },
+  "Buildings/Monuments/TributeToIngenuity/TributeToIngenuity.IronTeeth.Model": {
+   "renderers": 4,
+   "slots": 11,
+   "triangles": 2242
+  },
+  "Buildings/Paths/Airlock/Airlock.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 342
+  },
+  "Buildings/Paths/Airlock/Airlock.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 270
+  },
+  "Buildings/Paths/DoublePlatform/DoublePlatform.Full.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 192
+  },
+  "Buildings/Paths/DoublePlatform/DoublePlatform.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 214
+  },
+  "Buildings/Paths/DoublePlatform/DoublePlatform.Uncovered.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 112
+  },
+  "Buildings/Paths/Gate/Gate.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 158
+  },
+  "Buildings/Paths/Gate/GateClosed.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 312
+  },
+  "Buildings/Paths/Gate/GateOpen.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 316
+  },
+  "Buildings/Paths/ImpermeableTubeway/ImpermeableTubeway.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 280
+  },
+  "Buildings/Paths/ImpermeableTubeway/ImpermeableTubeway.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 228
+  },
+  "Buildings/Paths/MetalPlatform3x3/MetalPlatform.Uncovered.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 120
+  },
+  "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.Full.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 416
+  },
+  "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 378
+  },
+  "Buildings/Paths/MetalPlatform5x5/MetalPlatform.Uncovered.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 120
+  },
+  "Buildings/Paths/MetalPlatform5x5/MetalPlatform5x5.Full.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 992
+  },
+  "Buildings/Paths/MetalPlatform5x5/MetalPlatform5x5.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 1110
+  },
+  "Buildings/Paths/Overhang2x1/Overhang.Uncovered.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 60
+  },
+  "Buildings/Paths/Overhang2x1/Overhang2x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 178
+  },
+  "Buildings/Paths/Overhang2x1/Overhang2x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 140
+  },
+  "Buildings/Paths/Overhang3x1/Overhang3x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 202
+  },
+  "Buildings/Paths/Overhang3x1/Overhang3x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 168
+  },
+  "Buildings/Paths/Overhang4x1/Overhang4x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 202
+  },
+  "Buildings/Paths/Overhang4x1/Overhang4x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 228
+  },
+  "Buildings/Paths/Overhang5x1/Overhang5x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 218
+  },
+  "Buildings/Paths/Overhang5x1/Overhang5x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 256
+  },
+  "Buildings/Paths/Overhang6x1/Overhang6x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 218
+  },
+  "Buildings/Paths/Overhang6x1/Overhang6x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 284
+  },
+  "Buildings/Paths/Path/DirtPath0000.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 26
+  },
+  "Buildings/Paths/Path/DirtPath0010.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 16
+  },
+  "Buildings/Paths/Path/DirtPath0011.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 16
+  },
+  "Buildings/Paths/Path/DirtPath0111.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 16
+  },
+  "Buildings/Paths/Path/DirtPath1010.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 6
+  },
+  "Buildings/Paths/Path/DirtPath1111.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 26
+  },
+  "Buildings/Paths/Path/RoofPath0000.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 80
+  },
+  "Buildings/Paths/Path/RoofPath0010.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 68
+  },
+  "Buildings/Paths/Path/RoofPath0011.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 80
+  },
+  "Buildings/Paths/Path/RoofPath0111.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 92
+  },
+  "Buildings/Paths/Path/RoofPath1010.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 56
+  },
+  "Buildings/Paths/Path/RoofPath1111.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 128
+  },
+  "Buildings/Paths/Platform/Platform.Full.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 144
+  },
+  "Buildings/Paths/Platform/Platform.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 166
+  },
+  "Buildings/Paths/Platform/Platform.Uncovered.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 64
+  },
+  "Buildings/Paths/SpiralStairs/SpiralStairs.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 278
+  },
+  "Buildings/Paths/SpiralStairs/SpiralStairs.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 430
+  },
+  "Buildings/Paths/Stairs/Stairs.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 222
+  },
+  "Buildings/Paths/Stairs/Stairs.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 316
+  },
+  "Buildings/Paths/SuspensionBridge1x1/SuspensionBridge1x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 198
+  },
+  "Buildings/Paths/SuspensionBridge1x1/SuspensionBridge1x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 556
+  },
+  "Buildings/Paths/SuspensionBridge2x1/SuspensionBridge2x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 266
+  },
+  "Buildings/Paths/SuspensionBridge2x1/SuspensionBridge2x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 764
+  },
+  "Buildings/Paths/SuspensionBridge3x1/SuspensionBridge3x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 294
+  },
+  "Buildings/Paths/SuspensionBridge3x1/SuspensionBridge3x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 940
+  },
+  "Buildings/Paths/SuspensionBridge4x1/SuspensionBridge4x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 310
+  },
+  "Buildings/Paths/SuspensionBridge4x1/SuspensionBridge4x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 1140
+  },
+  "Buildings/Paths/SuspensionBridge5x1/SuspensionBridge5x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 338
+  },
+  "Buildings/Paths/SuspensionBridge5x1/SuspensionBridge5x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 1328
+  },
+  "Buildings/Paths/SuspensionBridge6x1/SuspensionBridge6x1.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 306
+  },
+  "Buildings/Paths/SuspensionBridge6x1/SuspensionBridge6x1.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 1520
+  },
+  "Buildings/Paths/TriplePlatform/TriplePlatform.Full.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 240
+  },
+  "Buildings/Paths/TriplePlatform/TriplePlatform.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 262
+  },
+  "Buildings/Paths/TriplePlatform/TriplePlatform.Uncovered.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 160
+  },
+  "Buildings/Paths/Tubeway/Tubeway.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 210
+  },
+  "Buildings/Paths/Tubeway/Tubeway000000.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 400
+  },
+  "Buildings/Paths/Tubeway/Tubeway000001.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 160
+  },
+  "Buildings/Paths/Tubeway/Tubeway001000.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 156
+  },
+  "Buildings/Paths/Tubeway/Tubeway001001.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 258
+  },
+  "Buildings/Paths/Tubeway/Tubeway001100.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 280
+  },
+  "Buildings/Paths/Tubeway/Tubeway001101.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 357
+  },
+  "Buildings/Paths/Tubeway/Tubeway011100.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 255
+  },
+  "Buildings/Paths/Tubeway/Tubeway011101.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 336
+  },
+  "Buildings/Paths/Tubeway/Tubeway101000.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 156
+  },
+  "Buildings/Paths/Tubeway/Tubeway101001.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 232
+  },
+  "Buildings/Paths/Tubeway/Tubeway111100.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 382
+  },
+  "Buildings/Paths/Tubeway/Tubeway111101.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 400
+  },
+  "Buildings/Paths/TubewayStation/TubewayStation.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 470
+  },
+  "Buildings/Paths/TubewayStation/TubewayStation.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1098
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 286
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway000000.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 538
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway000001.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 224
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway000010.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 224
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway000011.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 236
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway001000.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 220
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway001001.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 326
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway001010.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 396
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway001011.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 330
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway001100.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 344
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway001101.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 429
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway001110.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 508
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway001111.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 402
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway011100.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 319
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway011101.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 388
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway011110.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 396
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway011111.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 470
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway101000.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 220
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway101001.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 304
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway101010.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 302
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway101011.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 404
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway111100.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 392
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway111101.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 580
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway111110.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 512
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubeway111111.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 538
+  },
+  "Buildings/Paths/VerticalTubeway/VerticalTubewayCover.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 80
+  },
+  "Buildings/Power/Clutch/Clutch.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 250
+  },
+  "Buildings/Power/Clutch/ClutchDisengaged.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 230
+  },
+  "Buildings/Power/Clutch/ClutchEngaged.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 208
+  },
+  "Buildings/Power/CompactWaterWheel/CompactWaterWheel.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 646
+  },
+  "Buildings/Power/CompactWaterWheel/CompactWaterWheel.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 924
+  },
+  "Buildings/Power/DevPowerGenerator/DevPowerGenerator.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 400
+  },
+  "Buildings/Power/GeothermalEngine/GeothermalEngine.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 696
+  },
+  "Buildings/Power/GeothermalEngine/GeothermalEngine.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 1362
+  },
+  "Buildings/Power/GeothermalEngine/GeothermalEngine.Underground.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 432
+  },
+  "Buildings/Power/GravityBattery/GravityBattery.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 288
+  },
+  "Buildings/Power/GravityBattery/GravityBattery.IronTeeth.Model": {
+   "renderers": 3,
+   "slots": 11,
+   "triangles": 1033
+  },
+  "Buildings/Power/ImpermeablePowerShaft/ImpermeablePowerShaft.IronTeeth.ConstructionStage0.Model.Folktails.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 250
+  },
+  "Buildings/Power/ImpermeablePowerShaft/ImpermeablePowerShaft.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 234
+  },
+  "Buildings/Power/LargePowerWheel/LargePowerWheel.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 670
+  },
+  "Buildings/Power/LargePowerWheel/LargePowerWheel.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 2346
+  },
+  "Buildings/Power/LargeWaterWheel/LargeWaterWheel.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 848
+  },
+  "Buildings/Power/LargeWaterWheel/LargeWaterWheel.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 3852
+  },
+  "Buildings/Power/PowerShaft/Models/ShaftCover.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 80
+  },
+  "Buildings/Power/PowerShaft/PowerShaft.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 150
+  },
+  "Buildings/Power/SteamEngine/SteamEngine.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 726
+  },
+  "Buildings/Power/SteamEngine/SteamEngine.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 12,
+   "triangles": 1979
+  },
+  "Buildings/Power/VerticalPowerShaft/VerticalPowerShaft.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 206
+  },
+  "Buildings/Science/BotAssembler/BotAssembler.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 4,
+   "slots": 4,
+   "triangles": 536
+  },
+  "Buildings/Science/BotAssembler/BotAssembler.IronTeeth.Model": {
+   "renderers": 5,
+   "slots": 23,
+   "triangles": 5478
+  },
+  "Buildings/Science/BotPartFactory/BotPartFactory.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 580
+  },
+  "Buildings/Science/BotPartFactory/BotPartFactory.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 9,
+   "triangles": 2508
+  },
+  "Buildings/Science/ChargingStation/ChargingStation.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 148
+  },
+  "Buildings/Science/ChargingStation/ChargingStation.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 4,
+   "triangles": 567
+  },
+  "Buildings/Science/ControlTower/ControlTower.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 438
+  },
+  "Buildings/Science/ControlTower/ControlTower.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 800
+  },
+  "Buildings/Science/GreaseFactory/GreaseFactory.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 580
+  },
+  "Buildings/Science/GreaseFactory/GreaseFactory.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1304
+  },
+  "Buildings/Science/Inventor/Inventor.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 408
+  },
+  "Buildings/Science/Inventor/Inventor.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 874
+  },
+  "Buildings/Science/Numbercruncher/Numbercruncher.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 910
+  },
+  "Buildings/Science/Numbercruncher/Numbercruncher.IronTeeth.Model": {
+   "renderers": 3,
+   "slots": 13,
+   "triangles": 1900
+  },
+  "Buildings/Storage/LargeIndustrialPile/LargeIndustrialPile.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 268
+  },
+  "Buildings/Storage/LargeIndustrialPile/LargeIndustrialPile.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 1400
+  },
+  "Buildings/Storage/LargeTank/LargeTank.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 332
+  },
+  "Buildings/Storage/LargeTank/LargeTank.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 1176
+  },
+  "Buildings/Storage/LargeWarehouse/LargeWarehouse.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 378
+  },
+  "Buildings/Storage/LargeWarehouse/LargeWarehouse.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 552
+  },
+  "Buildings/Storage/MediumTank/MediumTank.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 312
+  },
+  "Buildings/Storage/MediumTank/MediumTank.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 880
+  },
+  "Buildings/Storage/MediumWarehouse/MediumWarehouse.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 306
+  },
+  "Buildings/Storage/MediumWarehouse/MediumWarehouse.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 476
+  },
+  "Buildings/Storage/SmallIndustrialPile/SmallIndustrialPile.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 156
+  },
+  "Buildings/Storage/SmallIndustrialPile/SmallIndustrialPile.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 355
+  },
+  "Buildings/Storage/SmallTank/SmallTank.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 276
+  },
+  "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 359
+  },
+  "Buildings/Storage/SmallWarehouse/SmallWarehouse.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 174
+  },
+  "Buildings/Storage/SmallWarehouse/SmallWarehouse.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 274
+  },
+  "Buildings/Water/AquiferDrill/AquiferDrill.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 468
+  },
+  "Buildings/Water/AquiferDrill/AquiferDrill.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 1284
+  },
+  "Buildings/Water/AquiferDrill/AquiferDrill.Underground.Model": {
+   "renderers": 2,
+   "slots": 2,
+   "triangles": 554
+  },
+  "Buildings/Water/BadwaterPressurizer/BadwaterPressurizer.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 1716
+  },
+  "Buildings/Water/BadwaterPressurizer/BadwaterPressurizer.IronTeeth.Model": {
+   "renderers": 5,
+   "slots": 11,
+   "triangles": 1736
+  },
+  "Buildings/Water/BadwaterPressurizer/BadwaterPressurizer.IronTeeth.Underground": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 640
+  },
+  "Buildings/Water/Centrifuge/Centrifuge.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 392
+  },
+  "Buildings/Water/Centrifuge/Centrifuge.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1568
+  },
+  "Buildings/Water/CompactMechanicalPump/CompactMechanicalPump.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 450
+  },
+  "Buildings/Water/CompactMechanicalPump/CompactMechanicalPump.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 4,
+   "triangles": 584
+  },
+  "Buildings/Water/DeepBadwaterPump/DeepBadwaterPump.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 268
+  },
+  "Buildings/Water/DeepBadwaterPump/DeepBadwaterPump.IronTeeth.Model": {
+   "renderers": 3,
+   "slots": 8,
+   "triangles": 1139
+  },
+  "Buildings/Water/DeepMechanicalPump/DeepMechanicalPump.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 546
+  },
+  "Buildings/Water/DeepMechanicalPump/DeepMechanicalPump.IronTeeth.Model": {
+   "renderers": 4,
+   "slots": 10,
+   "triangles": 1744
+  },
+  "Buildings/Water/DeepWaterPump/DeepWaterPump.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 354
+  },
+  "Buildings/Water/DeepWaterPump/DeepWaterPump.IronTeeth.Model": {
+   "renderers": 3,
+   "slots": 13,
+   "triangles": 1364
+  },
+  "Buildings/Water/Discharge/Discharge.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 304
+  },
+  "Buildings/Water/Discharge/Discharge.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 7,
+   "triangles": 509
+  },
+  "Buildings/Wellbeing/Campfire/Campfire.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 517
+  },
+  "Buildings/Wellbeing/Campfire/Campfire.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 5,
+   "triangles": 1713
+  },
+  "Buildings/Wellbeing/Campfire/Campfire.IronTeeth.Underground": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 481
+  },
+  "Buildings/Wellbeing/DancePit/DancePit.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 846
+  },
+  "Buildings/Wellbeing/DancePit/DancePit.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 9,
+   "triangles": 2593
+  },
+  "Buildings/Wellbeing/DancePit/DancePit.IronTeeth.Underground": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 1722
+  },
+  "Buildings/Wellbeing/DecontaminationPod/DecontaminationPod.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 188
+  },
+  "Buildings/Wellbeing/DecontaminationPod/DecontaminationPod.IronTeeth.Model": {
+   "renderers": 3,
+   "slots": 5,
+   "triangles": 427
+  },
+  "Buildings/Wellbeing/Detailer/Deatailer.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 284
+  },
+  "Buildings/Wellbeing/Detailer/Detailer.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 9,
+   "triangles": 631
+  },
+  "Buildings/Wellbeing/DoubleShower/DoubleShower.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 194
+  },
+  "Buildings/Wellbeing/DoubleShower/DoubleShower.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 462
+  },
+  "Buildings/Wellbeing/ExercisePlaza/ExercisePlaza.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 544
+  },
+  "Buildings/Wellbeing/ExercisePlaza/ExercisePlaza.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 6,
+   "triangles": 1151
+  },
+  "Buildings/Wellbeing/Massager/Massager.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 216
+  },
+  "Buildings/Wellbeing/Massager/Massager.IronTeeth.Model": {
+   "renderers": 3,
+   "slots": 9,
+   "triangles": 322
+  },
+  "Buildings/Wellbeing/MedicalBed/MedicalBed.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 214
+  },
+  "Buildings/Wellbeing/MedicalBed/MedicalBed.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 334
+  },
+  "Buildings/Wellbeing/Motivatorium/Motivatorium.IronTeeth.ConstructionStage0": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 308
+  },
+  "Buildings/Wellbeing/Motivatorium/Motivatorium.IronTeeth.Model": {
+   "renderers": 10,
+   "slots": 30,
+   "triangles": 5775
+  },
+  "Buildings/Wellbeing/Motivatorium/Motivatorium.IronTeeth.Underground": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 492
+  },
+  "Buildings/Wellbeing/MudBath/MudBath.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 354
+  },
+  "Buildings/Wellbeing/MudBath/MudBath.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 600
+  },
+  "Buildings/Wellbeing/RooftopTerrace/RooftopTerrace.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 554
+  },
+  "Buildings/Wellbeing/RooftopTerrace/RooftopTerrace.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 1216
+  },
+  "Buildings/Wellbeing/Scratcher/Scratcher.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 2,
+   "slots": 3,
+   "triangles": 120
+  },
+  "Buildings/Wellbeing/Scratcher/Scratcher.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 2,
+   "triangles": 184
+  },
+  "Buildings/Wellbeing/SwimmingPool/SwimmingPool.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 318
+  },
+  "Buildings/Wellbeing/SwimmingPool/SwimmingPool.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 1720
+  },
+  "Buildings/Wellbeing/TeethGrindstone/TeethGrindstone.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 222
+  },
+  "Buildings/Wellbeing/TeethGrindstone/TeethGrindstone.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 340
+  },
+  "Buildings/Wellbeing/WindTunnel/WindTunnel.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 467
+  },
+  "Buildings/Wellbeing/WindTunnel/WindTunnel.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 7,
+   "triangles": 1702
+  },
+  "Buildings/Wood/Forester/Forester.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 388
+  },
+  "Buildings/Wood/Forester/Forester.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 8,
+   "triangles": 866
+  },
+  "Buildings/Wood/GearWorkshop/GearWorkshop.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 466
+  },
+  "Buildings/Wood/GearWorkshop/GearWorkshop.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 6,
+   "triangles": 1112
+  },
+  "Buildings/Wood/IndustrialLumberMill/IndustrialLumberMill.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 344
+  },
+  "Buildings/Wood/IndustrialLumberMill/IndustrialLumberMill.IronTeeth.Model": {
+   "renderers": 2,
+   "slots": 8,
+   "triangles": 896
+  },
+  "Buildings/Wood/LumberjackFlag/LumberjackFlag.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 4,
+   "triangles": 508
+  },
+  "Buildings/Wood/LumberjackFlag/LumberjackFlag.Ironteeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 3,
+   "triangles": 218
+  },
+  "Buildings/Wood/TappersShack/TappersShack.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 238
+  },
+  "Buildings/Wood/TappersShack/TappersShack.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 5,
+   "triangles": 412
+  },
+  "Buildings/Wood/WoodWorkshop/WoodWorkshop.IronTeeth.ConstructionStage0.Model": {
+   "renderers": 1,
+   "slots": 2,
+   "triangles": 612
+  },
+  "Buildings/Wood/WoodWorkshop/WoodWorkshop.IronTeeth.Model": {
+   "renderers": 1,
+   "slots": 6,
+   "triangles": 1030
+  },
+  "MapEditor/Water/WaterSource/WaterSource.Model": {
+   "renderers": 1,
+   "slots": 1,
+   "triangles": 305
+  }
+ }
+}

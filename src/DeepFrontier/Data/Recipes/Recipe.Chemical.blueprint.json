@@ -1,0 +1,30 @@
+{
+  "RecipeSpec": {
+    "Id": "Chemical",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.Chemical.PluralDisplayName",
+    "CycleDurationInHours": 2,
+    "Ingredients": [
+      {
+        "Id": "Badwater",
+        "Amount": 4
+      },
+      {
+        "Id": "Extract",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "Chemical",
+        "Amount": 2
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/ChemicalIcon"
+  }
+}

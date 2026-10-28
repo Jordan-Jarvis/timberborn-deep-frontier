@@ -1,0 +1,33 @@
+{
+  "RecipeSpec": {
+    "Id": "MaterialsResearch",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.MaterialsResearch.DisplayName",
+    "CycleDurationInHours": 2,
+    "Ingredients": [
+      {
+        "Id": "Gear",
+        "Amount": 4
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 2
+      },
+      {
+        "Id": "MetalBlock",
+        "Amount": 1
+      },
+      {
+        "Id": "Water",
+        "Amount": 1
+      }
+    ],
+    "Products": [],
+    "ProducedSciencePoints": 800,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 3,
+    "Icon": "UI/Images/Game/science-icon"
+  }
+}

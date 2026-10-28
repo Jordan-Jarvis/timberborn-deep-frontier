@@ -1,0 +1,26 @@
+{
+  "RecipeSpec": {
+    "Id": "DeepOre.Mine",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.DeepOre.PluralDisplayName",
+    "CycleDurationInHours": 0.03333333333333333,
+    "Ingredients": [
+      {
+        "Id": "Water",
+        "Amount": 12
+      }
+    ],
+    "Products": [
+      {
+        "Id": "DeepOre",
+        "Amount": 4
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/DeepOreIcon"
+  }
+}

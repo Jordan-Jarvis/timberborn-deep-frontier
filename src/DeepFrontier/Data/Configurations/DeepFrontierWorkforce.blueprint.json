@@ -1,0 +1,32 @@
+{
+  "FrontierWorkforceSettingsSpec": {
+    "ProbabilityGroupId": "WorkshopRandomNeedApplier",
+    "NativeLowChance": 0.003125,
+    "NativeMediumChance": 0.01,
+    "NativeHighChance": 0.02,
+    "InjuryNeedId": "Injury",
+    "FatigueNeedId": "Sleep",
+    "StrainedBelowFatiguePoints": 0.25,
+    "StrainedBelowWellbeing": 15,
+    "ExhaustedBelowWellbeing": 5,
+    "StrainedRolls": 2,
+    "ExhaustedRolls": 4,
+    "Disciplines": [
+      {
+        "Id": "Metallurgy",
+        "DisplayNameLocKey": "DeepFrontier.Workforce.Discipline.Metallurgy",
+        "PluralDisplayNameLocKey": "DeepFrontier.Workforce.Discipline.Metallurgy.Plural"
+      },
+      {
+        "Id": "Nuclear",
+        "DisplayNameLocKey": "DeepFrontier.Workforce.Discipline.Nuclear",
+        "PluralDisplayNameLocKey": "DeepFrontier.Workforce.Discipline.Nuclear.Plural"
+      },
+      {
+        "Id": "Flight",
+        "DisplayNameLocKey": "DeepFrontier.Workforce.Discipline.Flight",
+        "PluralDisplayNameLocKey": "DeepFrontier.Workforce.Discipline.Flight.Plural"
+      }
+    ]
+  }
+}

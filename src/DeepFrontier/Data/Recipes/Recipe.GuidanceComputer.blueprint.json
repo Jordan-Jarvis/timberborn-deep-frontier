@@ -1,0 +1,34 @@
+{
+  "RecipeSpec": {
+    "Id": "GuidanceComputer",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.GuidanceComputer.PluralDisplayName",
+    "CycleDurationInHours": 1,
+    "Ingredients": [
+      {
+        "Id": "Electronics",
+        "Amount": 4
+      },
+      {
+        "Id": "MachineCore",
+        "Amount": 2
+      },
+      {
+        "Id": "ArchiveData",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "GuidanceComputer",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/GuidanceComputerIcon"
+  }
+}

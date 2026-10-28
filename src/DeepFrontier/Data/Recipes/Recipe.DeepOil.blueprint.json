@@ -1,0 +1,30 @@
+{
+  "RecipeSpec": {
+    "Id": "DeepOil",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.CrudeOil.PluralDisplayName",
+    "CycleDurationInHours": 2,
+    "Ingredients": [
+      {
+        "Id": "DeepOre",
+        "Amount": 1
+      },
+      {
+        "Id": "Water",
+        "Amount": 3
+      }
+    ],
+    "Products": [
+      {
+        "Id": "CrudeOil",
+        "Amount": 6
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/CrudeOilIcon"
+  }
+}

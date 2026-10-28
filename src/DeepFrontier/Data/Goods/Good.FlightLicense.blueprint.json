@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "FlightLicense",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.42,
+      "g": 0.78,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5300,
+    "Icon": "Sprites/Goods/FlightLicenseIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.FlightLicense.DisplayName",
+    "PluralDisplayNameLocKey": "Good.FlightLicense.PluralDisplayName"
+  }
+}

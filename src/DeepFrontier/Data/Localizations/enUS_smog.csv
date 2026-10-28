@@ -1,0 +1,14 @@
+ID,Text,Comment
+Need.Smog.DisplayName,Smog,Deep Frontier smog
+Need.HeavySmog.DisplayName,Heavy smog,Deep Frontier smog
+DeepFrontier.Smog.Emitter.Planned,Smog: {0} smokestack(s) will pollute up to {1} tiles away while working (up to -{2} wellbeing nearby).,Deep Frontier smog
+DeepFrontier.Smog.Emitter.Idle,Smog: idle. Its {0} smokestack(s) pollute up to {1} tiles away while working.,Deep Frontier smog
+DeepFrontier.Smog.Emitter.Active,Smog: -{0} wellbeing nearby (up to {1} tiles); crops and trees there grow {2}% slower.,Deep Frontier smog
+DeepFrontier.Smog.Emitter.Mitigation,Keep homes and fields outside the tinted range. Trees and scrubbers clean the air around them.,Deep Frontier smog
+DeepFrontier.Smog.Building,Smog {0}%: beavers here lose {1} wellbeing (up to {2} in heavy smog).,Deep Frontier smog
+DeepFrontier.Smog.Building.Mitigated,"Trees remove {0}% of the smog here, scrubbers {1}%.",Deep Frontier smog
+DeepFrontier.Smog.Growth,Smog {0}%: growing {1}% slower.,Deep Frontier smog
+DeepFrontier.Smog.Greenery,Cleans the air: removes {0}% of the smog within {1} tiles.,Deep Frontier smog
+DeepFrontier.Smog.Scrubber.Planned,Smog Scrubber: will remove {0}% of the smog within {1} tiles while powered.,Deep Frontier smog
+DeepFrontier.Smog.Scrubber.Active,Smog Scrubber: removing {0}% of the smog within {1} tiles.,Deep Frontier smog
+DeepFrontier.Smog.Scrubber.Idle,Smog Scrubber: stopped (needs power and must not be paused). Removes {0}% of the smog within {1} tiles.,Deep Frontier smog

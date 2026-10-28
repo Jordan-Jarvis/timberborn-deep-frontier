@@ -1,0 +1,15 @@
+{
+  "method": "Built-in image_gen",
+  "date": "2026-10-18",
+  "styleReference": "docs/art/concepts/02-concrete-production-concept-v1.png",
+  "assets": [
+    {
+      "file": "PaintedTimber-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: production albedo texture for original Blender building models. The attached building sheet is STYLE REFERENCE only. Create one seamless square timber wood surface texture matching its warm ochre brown hand-painted wood: broad irregular longitudinal grain, occasional small knots, restrained dark fissures and softly painted wear. Grain runs VERTICALLY. Flat straight-on orthographic material swatch, all pixels covered by the same continuous wood surface. Neutral even lighting, no shadows, no perspective, no ambient occlusion from outside objects, no objects, no framing, no plank divisions or gaps, no metal, no nails, no text. Hand-painted game texture, moderately stylized broad readable marks rather than photographic tiny noise. Warm mid-brown honey wood, dark brown grooves and slightly lighter worn grain, no orange saturation. Seamless repeating edges. This is a texture for UV mapping, NOT a picture of a building."
+    },
+    {
+      "file": "WeatheredTeal-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: seamless production albedo texture for the teal roof panels of the original Blender buildings shown in the attached STYLE REFERENCE. Generate one flat, square, straight-on painted metal surface swatch filling every pixel. Muted dark desaturated teal-green paint over dull brown-grey iron, irregular worn edges to scattered patches, fine understated longitudinal scratches, subtle brush marks and small flakes of paint. Hand-painted stylized game texture, broad readable painted marks matching the weathered roof in the reference. Even neutral lighting, no cast shadows, no perspective, no dimensional lighting gradients. No corrugations, no roof structure, no individual plank divisions, no bolts, no borders, no lettering. Avoid dots or evenly repeated spots, avoid bright aqua and cyan. Seamless edges. This is only a continuous material texture for UV mapping, not a rendered building."
+    }
+  ]
+}

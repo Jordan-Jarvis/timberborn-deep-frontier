@@ -1,0 +1,30 @@
+{
+  "status": "First advanced research stage. Authored initial balance; native acceptance pending.",
+  "buildings": [{
+    "id": "MaterialsLaboratory",
+    "name": "Materials Laboratory",
+    "size": [10, 8, 9],
+    "workers": 4,
+    "powerDemandHp": 600,
+    "scienceUnlock": 12000,
+    "sciencePerWorkingHour": 400,
+    "cost": [["Plank", 80], ["Gear", 40], ["MetalBlock", 60], ["Concrete", 120]],
+    "recipes": ["MaterialsResearch", "GeochemicalAssay"],
+    "description": "Consumes gears, concrete, metal samples and test water, or assays uranium ore and treatment-plant brine in high-purity water, to develop 400 science per working hour at full productivity. Requires four workers and 600 hp. Water can be piped in (Timber Pipes). Its connected upper terrace supports paths and platforms."
+  }],
+  "recipes": [{
+    "id": "MaterialsResearch",
+    "name": "Materials research",
+    "hours": 2,
+    "science": 800,
+    "ingredients": [["Gear", 4], ["Concrete", 2], ["MetalBlock", 1], ["Water", 1]],
+    "cyclesCapacity": 3
+  }, {
+    "id": "GeochemicalAssay",
+    "name": "Geochemical assays",
+    "hours": 4,
+    "science": 1600,
+    "ingredients": [["UraniumOre", 1], ["ConcentratedWaste", 1], ["ReactorCoolantWater", 2], ["LiquidHydrogen", 1], ["LiquidOxygen", 1]],
+    "cyclesCapacity": 3
+  }]
+}

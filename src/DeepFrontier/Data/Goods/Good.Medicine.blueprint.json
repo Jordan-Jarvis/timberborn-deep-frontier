@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Medicine",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.72,
+      "g": 0.84,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Ingredients",
+    "GoodOrder": 5210,
+    "Icon": "Sprites/Goods/MedicineIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Medicine.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Medicine.PluralDisplayName"
+  }
+}

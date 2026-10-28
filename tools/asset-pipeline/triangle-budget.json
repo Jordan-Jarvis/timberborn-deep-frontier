@@ -1,0 +1,690 @@
+{
+ "models": {
+  "1DeepAlloy": {
+   "family": "mapobjects",
+   "class": "pilegood",
+   "target": 64,
+   "finished": 10,
+   "vertices": 20,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/1DeepAlloy.timbermesh"
+  },
+  "1DeepOre": {
+   "family": "mapobjects",
+   "class": "pilegood",
+   "target": 64,
+   "finished": 16,
+   "vertices": 46,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/1DeepOre.timbermesh"
+  },
+  "4DeepAlloys": {
+   "family": "mapobjects",
+   "class": "pilegood",
+   "target": 64,
+   "finished": 40,
+   "vertices": 80,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/4DeepAlloys.timbermesh"
+  },
+  "4DeepOres": {
+   "family": "mapobjects",
+   "class": "pilegood",
+   "target": 64,
+   "finished": 62,
+   "vertices": 184,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/4DeepOres.timbermesh"
+  },
+  "ArchiveExcavation": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 16658,
+   "vertices": 32270,
+   "construction": 16658,
+   "file": "outputs/lategame-integration/Data/Buildings/Science/ArchiveExcavation/ArchiveExcavation.IronTeeth.Model.timbermesh"
+  },
+  "Bathhouse": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 10534,
+   "vertices": 20230,
+   "construction": 10534,
+   "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.Model.timbermesh"
+  },
+  "CementKiln": {
+   "family": "industrial",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 34620,
+   "vertices": 71041,
+   "construction": 34620,
+   "file": "C:/Users/Jordan/dfs/industrial/src/DeepFrontier/Data/Buildings/Metal/CementKiln/CementKiln.IronTeeth.Model.timbermesh"
+  },
+  "ChemicalWorks": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 30492,
+   "vertices": 57938,
+   "construction": 30492,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/ChemicalWorks/ChemicalWorks.IronTeeth.Model.timbermesh"
+  },
+  "CoalPowerPlant": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 4812,
+   "vertices": 9146,
+   "construction": 4812,
+   "file": "outputs/lategame-integration/Data/Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteBlock": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 412,
+   "vertices": 804,
+   "construction": 412,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteBlock/ConcreteBlock.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteMixer": {
+   "family": "industrial",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 24478,
+   "vertices": 51395,
+   "construction": 24478,
+   "file": "C:/Users/Jordan/dfs/industrial/src/DeepFrontier/Data/Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteOverflowDam": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 132,
+   "vertices": 264,
+   "construction": 132,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteOverflowDam/ConcreteOverflowDam.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteOverhang8x1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 3828,
+   "vertices": 7912,
+   "construction": 3828,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteOverhang8x1/ConcreteOverhang8x1.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteScaffold3x3": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 2926,
+   "vertices": 5999,
+   "construction": 2926,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteScaffold3x3/ConcreteScaffold3x3.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteScaffold3x3H1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 2190,
+   "vertices": 4439,
+   "construction": 2190,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteScaffold3x3H1/ConcreteScaffold3x3H1.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteScaffold3x3H2": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 2558,
+   "vertices": 5218,
+   "construction": 2558,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteScaffold3x3H2/ConcreteScaffold3x3H2.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteScaffold4x4H1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 2972,
+   "vertices": 6018,
+   "construction": 2972,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteScaffold4x4H1/ConcreteScaffold4x4H1.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteScaffold4x4H2": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 3340,
+   "vertices": 6785,
+   "construction": 3340,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteScaffold4x4H2/ConcreteScaffold4x4H2.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteScaffold4x4H3": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 3708,
+   "vertices": 7558,
+   "construction": 3708,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteScaffold4x4H3/ConcreteScaffold4x4H3.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteScaffold5x5H1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 3646,
+   "vertices": 7376,
+   "construction": 3646,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteScaffold5x5H1/ConcreteScaffold5x5H1.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteScaffold5x5H2": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 4014,
+   "vertices": 8112,
+   "construction": 4014,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteScaffold5x5H2/ConcreteScaffold5x5H2.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteScaffold5x5H3": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 4382,
+   "vertices": 8855,
+   "construction": 4382,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteScaffold5x5H3/ConcreteScaffold5x5H3.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteSidePlatform3x3": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 1174,
+   "vertices": 2332,
+   "construction": 1174,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteSidePlatform3x3/ConcreteSidePlatform3x3.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteSidePlatform4x4": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 1956,
+   "vertices": 3950,
+   "construction": 1956,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteSidePlatform4x4/ConcreteSidePlatform4x4.IronTeeth.Model.timbermesh"
+  },
+  "ConcreteSidePlatform5x5": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 2630,
+   "vertices": 5284,
+   "construction": 2630,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ConcreteSidePlatform5x5/ConcreteSidePlatform5x5.IronTeeth.Model.timbermesh"
+  },
+  "CryogenicLiquefactionPlant": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 24782,
+   "vertices": 47648,
+   "construction": 24782,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/CryogenicLiquefactionPlant/CryogenicLiquefactionPlant.IronTeeth.Model.timbermesh"
+  },
+  "CryogenicTankFarm": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 16106,
+   "vertices": 30858,
+   "construction": 16106,
+   "file": "outputs/lategame-integration/Data/Buildings/Storage/CryogenicTankFarm/CryogenicTankFarm.IronTeeth.Model.timbermesh"
+  },
+  "DeepDrill": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 24128,
+   "vertices": 44940,
+   "construction": 24128,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.Model.timbermesh"
+  },
+  "DeepMine": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 23338,
+   "vertices": 44816,
+   "construction": 23338,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepMine/DeepMine.IronTeeth.Model.timbermesh"
+  },
+  "DeepOreSource": {
+   "family": "mapobjects",
+   "class": "mapobject",
+   "target": 2500,
+   "finished": 495,
+   "vertices": 1305,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/Data/MapEditor/Objects/DeepOreSource/DeepOreSource.Model.timbermesh"
+  },
+  "DeepOreVein": {
+   "family": "mapobjects",
+   "class": "mapobject",
+   "target": 2500,
+   "finished": 1265,
+   "vertices": 3246,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/Data/MapEditor/Objects/DeepOreVein/DeepOreVein.Model.timbermesh"
+  },
+  "DeepProcessor": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 18034,
+   "vertices": 33634,
+   "construction": 18034,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model.timbermesh"
+  },
+  "ElectrolysisPlant": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 27446,
+   "vertices": 52084,
+   "construction": 27446,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/ElectrolysisPlant/ElectrolysisPlant.IronTeeth.Model.timbermesh"
+  },
+  "FertilizerWorks": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 15085,
+   "vertices": 28731,
+   "construction": 15085,
+   "file": "outputs/lategame-integration/Data/Buildings/Food/FertilizerWorks/FertilizerWorks.IronTeeth.Model.timbermesh"
+  },
+  "FishHatchery": {
+   "family": "civic",
+   "class": "grand",
+   "target": 40000,
+   "finished": 18950,
+   "vertices": 39452,
+   "construction": 18950,
+   "file": "outputs/civic-integration/Data/Buildings/Food/FishHatchery/FishHatchery.IronTeeth.Model.timbermesh"
+  },
+  "FisheryWorks": {
+   "family": "civic",
+   "class": "grand",
+   "target": 40000,
+   "finished": 37467,
+   "vertices": 79084,
+   "construction": 37467,
+   "file": "outputs/civic-integration/Data/Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.Model.timbermesh"
+  },
+  "FoodPackagingWorks": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 13088,
+   "vertices": 24438,
+   "construction": 13088,
+   "file": "outputs/lategame-integration/Data/Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.Model.timbermesh"
+  },
+  "Greenhouse": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 11216,
+   "vertices": 22412,
+   "construction": 11216,
+   "file": "outputs/lategame-integration/Data/Buildings/Food/Greenhouse/Greenhouse.IronTeeth.Model.timbermesh"
+  },
+  "GroceryStore": {
+   "family": "grocery",
+   "class": "grand",
+   "target": 40000,
+   "finished": 30101,
+   "vertices": 63908,
+   "construction": 30101,
+   "file": "outputs/lategame-integration/Data/Buildings/Food/GroceryStore/GroceryStore.IronTeeth.Model.timbermesh"
+  },
+  "Hospital": {
+   "family": "civic",
+   "class": "grand",
+   "target": 40000,
+   "finished": 24176,
+   "vertices": 51526,
+   "construction": 24176,
+   "file": "outputs/civic-integration/Data/Buildings/Wellbeing/Hospital/Hospital.IronTeeth.Model.timbermesh"
+  },
+  "HumanRecordCache": {
+   "family": "mapobjects",
+   "class": "mapobject",
+   "target": 2500,
+   "finished": 440,
+   "vertices": 1057,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/Data/MapEditor/Objects/HumanRecordCache/HumanRecordCache.Model.timbermesh"
+  },
+  "LaunchPad": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 25232,
+   "vertices": 48620,
+   "construction": 25232,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.Model.timbermesh"
+  },
+  "LimestoneMasonryBlock": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 342,
+   "vertices": 684,
+   "construction": 342,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/LimestoneMasonryBlock/LimestoneMasonryBlock.IronTeeth.Model.timbermesh"
+  },
+  "LimestoneOutcrop": {
+   "family": "mapobjects",
+   "class": "mapobject",
+   "target": 2500,
+   "finished": 76,
+   "vertices": 182,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/Data/MapEditor/Objects/LimestoneOutcrop/LimestoneOutcrop.Model.timbermesh"
+  },
+  "LimestonePit": {
+   "family": "industrial",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 8944,
+   "vertices": 19206,
+   "construction": 8944,
+   "file": "C:/Users/Jordan/dfs/industrial/src/DeepFrontier/Data/Buildings/Metal/LimestonePit/LimestonePit.IronTeeth.Model.timbermesh"
+  },
+  "LimestoneQuarry": {
+   "family": "industrial",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 29953,
+   "vertices": 62748,
+   "construction": 29953,
+   "file": "C:/Users/Jordan/dfs/industrial/src/DeepFrontier/Data/Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.Model.timbermesh"
+  },
+  "LimestoneSeam": {
+   "family": "mapobjects",
+   "class": "mapobject",
+   "target": 2500,
+   "finished": 369,
+   "vertices": 875,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/Data/MapEditor/Objects/LimestoneSeam/LimestoneSeam.Model.timbermesh"
+  },
+  "MaterialsLaboratory": {
+   "family": "research",
+   "class": "grand",
+   "target": 40000,
+   "finished": 31695,
+   "vertices": 64760,
+   "construction": 31695,
+   "file": "outputs/research-integration/Data/Buildings/Science/MaterialsLaboratory/MaterialsLaboratory.IronTeeth.Model.timbermesh"
+  },
+  "MissionControl": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 12260,
+   "vertices": 23778,
+   "construction": 12260,
+   "file": "outputs/lategame-integration/Data/Buildings/Science/MissionControl/MissionControl.IronTeeth.Model.timbermesh"
+  },
+  "NuclearReactor": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 36338,
+   "vertices": 69290,
+   "construction": 36338,
+   "file": "outputs/lategame-integration/Data/Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.Model.timbermesh"
+  },
+  "ObservationDeck": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 10474,
+   "vertices": 19946,
+   "construction": 10474,
+   "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.Model.timbermesh"
+  },
+  "OilPowerPlant": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 8316,
+   "vertices": 14708,
+   "construction": 8316,
+   "file": "outputs/lategame-integration/Data/Buildings/Power/OilPowerPlant/OilPowerPlant.IronTeeth.Model.timbermesh"
+  },
+  "PrecisionMachineWorks": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 13906,
+   "vertices": 26328,
+   "construction": 13906,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.Model.timbermesh"
+  },
+  "PublicHealthLab": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 8818,
+   "vertices": 17168,
+   "construction": 8818,
+   "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.Model.timbermesh"
+  },
+  "RadioactiveSludgeOutfall": {
+   "family": "lategame",
+   "class": "small",
+   "target": 8000,
+   "finished": 2328,
+   "vertices": 4440,
+   "construction": 2328,
+   "file": "outputs/lategame-integration/Data/Buildings/Water/RadioactiveSludgeOutfall/RadioactiveSludgeOutfall.IronTeeth.Model.timbermesh"
+  },
+  "RadioactiveSludgeRecoveryPump": {
+   "family": "lategame",
+   "class": "small",
+   "target": 8000,
+   "finished": 3476,
+   "vertices": 6552,
+   "construction": 3476,
+   "file": "outputs/lategame-integration/Data/Buildings/Water/RadioactiveSludgeRecoveryPump/RadioactiveSludgeRecoveryPump.IronTeeth.Model.timbermesh"
+  },
+  "RadioactiveSpringSource": {
+   "family": "mapobjects",
+   "class": "mapobject",
+   "target": 2500,
+   "finished": 289,
+   "vertices": 710,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/Data/MapEditor/Objects/RadioactiveSpringSource/RadioactiveSpringSource.Model.timbermesh"
+  },
+  "RadioactiveWasteExport": {
+   "family": "lategame",
+   "class": "small",
+   "target": 8000,
+   "finished": 4678,
+   "vertices": 8776,
+   "construction": 4678,
+   "file": "outputs/lategame-integration/Data/Buildings/Water/RadioactiveWasteExport/RadioactiveWasteExport.IronTeeth.Model.timbermesh"
+  },
+  "RadioactiveWasteRefinery": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 24094,
+   "vertices": 46186,
+   "construction": 24094,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.Model.timbermesh"
+  },
+  "RadioactiveWasteVault": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 7620,
+   "vertices": 14516,
+   "construction": 7620,
+   "file": "outputs/lategame-integration/Data/Buildings/Storage/RadioactiveWasteVault/RadioactiveWasteVault.IronTeeth.Model.timbermesh"
+  },
+  "ReinforcedDamBlock": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 204,
+   "vertices": 408,
+   "construction": 204,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/ReinforcedDamBlock/ReinforcedDamBlock.IronTeeth.Model.timbermesh"
+  },
+  "ReinforcedHydroTurbine": {
+   "family": "hydro",
+   "class": "grand",
+   "target": 40000,
+   "finished": 22029,
+   "vertices": 46045,
+   "construction": 22029,
+   "file": "outputs/hydro-integration/Data/Buildings/Power/ReinforcedHydroTurbine/ReinforcedHydroTurbine.IronTeeth.Model.timbermesh"
+  },
+  "Restaurant": {
+   "family": "civic",
+   "class": "grand",
+   "target": 40000,
+   "finished": 25934,
+   "vertices": 54890,
+   "construction": 25934,
+   "file": "outputs/civic-integration/Data/Buildings/Food/Restaurant/Restaurant.IronTeeth.Model.timbermesh"
+  },
+  "RocketAssemblyHangar": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 11276,
+   "vertices": 20807,
+   "construction": 11276,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/RocketAssemblyHangar/RocketAssemblyHangar.IronTeeth.Model.timbermesh"
+  },
+  "SandstoneMasonryBlock": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 342,
+   "vertices": 684,
+   "construction": 342,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SandstoneMasonryBlock/SandstoneMasonryBlock.IronTeeth.Model.timbermesh"
+  },
+  "SandstoneOutcrop": {
+   "family": "mapobjects",
+   "class": "mapobject",
+   "target": 2500,
+   "finished": 145,
+   "vertices": 339,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/Data/MapEditor/Objects/SandstoneOutcrop/SandstoneOutcrop.Model.timbermesh"
+  },
+  "SandstonePit": {
+   "family": "industrial",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 10896,
+   "vertices": 23642,
+   "construction": 10896,
+   "file": "C:/Users/Jordan/dfs/industrial/src/DeepFrontier/Data/Buildings/Metal/SandstonePit/SandstonePit.IronTeeth.Model.timbermesh"
+  },
+  "SandstoneQuarry": {
+   "family": "industrial",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 29953,
+   "vertices": 62748,
+   "construction": 29953,
+   "file": "C:/Users/Jordan/dfs/industrial/src/DeepFrontier/Data/Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.Model.timbermesh"
+  },
+  "SandstoneSeam": {
+   "family": "mapobjects",
+   "class": "mapobject",
+   "target": 2500,
+   "finished": 582,
+   "vertices": 1317,
+   "construction": 0,
+   "file": "outputs/mapobjects-integration/Data/MapEditor/Objects/SandstoneSeam/SandstoneSeam.Model.timbermesh"
+  },
+  "SmogScrubber": {
+   "family": "lategame",
+   "class": "small",
+   "target": 8000,
+   "finished": 5314,
+   "vertices": 9856,
+   "construction": 5314,
+   "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.Model.timbermesh"
+  },
+  "SteelMill": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 20630,
+   "vertices": 39200,
+   "construction": 20630,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/SteelMill/SteelMill.IronTeeth.Model.timbermesh"
+  },
+  "StoneCrusher": {
+   "family": "industrial",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 23706,
+   "vertices": 49292,
+   "construction": 23706,
+   "file": "C:/Users/Jordan/dfs/industrial/src/DeepFrontier/Data/Buildings/Metal/StoneCrusher/StoneCrusher.IronTeeth.Model.timbermesh"
+  },
+  "TechnicalSchool": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 10112,
+   "vertices": 18990,
+   "construction": 10112,
+   "file": "outputs/lategame-integration/Data/Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.Model.timbermesh"
+  },
+  "TownPlaza": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 20000,
+   "finished": 6002,
+   "vertices": 11738,
+   "construction": 6002,
+   "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.Model.timbermesh"
+  },
+  "UraniumProcessingPlant": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 36042,
+   "vertices": 68288,
+   "construction": 36042,
+   "file": "outputs/lategame-integration/Data/Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.Model.timbermesh"
+  },
+  "WaterTreatmentPlant": {
+   "family": "lategame",
+   "class": "grand",
+   "target": 40000,
+   "finished": 26060,
+   "vertices": 49192,
+   "construction": 26060,
+   "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
+  }
+ },
+ "totalBlueprintTriangles": 1808495,
+ "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
+}

@@ -1,0 +1,6 @@
+{
+  "name": "DeepFrontier.ModdableWeathers",
+  "references": ["DeepFrontier"],
+  "autoReferenced": false,
+  "allowUnsafeCode": false
+}

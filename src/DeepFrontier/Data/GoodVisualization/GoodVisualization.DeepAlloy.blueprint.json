@@ -1,0 +1,16 @@
+{
+  "GoodVisualizationSpec": {
+    "Id": "DeepAlloy",
+    "Variant": "",
+    "Offset": {
+      "X": 0.2,
+      "Y": 0,
+      "Z": 0.17
+    },
+    "LimitingAmount": 4,
+    "PrimaryMesh": "StockpileGoodModels/DeepFrontier/1DeepAlloy",
+    "SecondaryMesh": "StockpileGoodModels/DeepFrontier/4DeepAlloys",
+    "Material": "Materials/Goods/BeaverCarryingModels/BeaverCarryingModels",
+    "NonLinearity": 0
+  }
+}

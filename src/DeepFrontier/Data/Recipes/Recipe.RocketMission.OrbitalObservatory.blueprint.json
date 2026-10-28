@@ -1,0 +1,41 @@
+{
+  "RecipeSpec": {
+    "Id": "RocketMission.OrbitalObservatory",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.RocketMission.OrbitalObservatory",
+    "CycleDurationInHours": 24,
+    "Ingredients": [
+      {
+        "Id": "RocketAirframe",
+        "Amount": 24
+      },
+      {
+        "Id": "PropulsionPackage",
+        "Amount": 12
+      },
+      {
+        "Id": "GuidanceComputer",
+        "Amount": 4
+      },
+      {
+        "Id": "RecoveredTelemetry",
+        "Amount": 2
+      },
+      {
+        "Id": "LiquidHydrogen",
+        "Amount": 200
+      },
+      {
+        "Id": "LiquidOxygen",
+        "Amount": 200
+      }
+    ],
+    "Products": [],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 1,
+    "Icon": "Sprites/Goods/RocketAirframeIcon"
+  }
+}

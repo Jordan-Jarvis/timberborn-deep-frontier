@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Sandstone",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.65,
+      "g": 0.43,
+      "b": 0.23,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5400,
+    "Icon": "Sprites/Goods/SandstoneIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Sandstone.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Sandstone.PluralDisplayName"
+  }
+}

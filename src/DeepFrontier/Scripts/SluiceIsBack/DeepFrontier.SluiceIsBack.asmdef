@@ -1,0 +1,6 @@
+{
+  "name": "DeepFrontier.SluiceIsBack",
+  "references": ["DeepFrontier"],
+  "autoReferenced": false,
+  "allowUnsafeCode": false
+}

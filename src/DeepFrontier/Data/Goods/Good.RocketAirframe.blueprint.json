@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "RocketAirframe",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.38,
+      "g": 0.48,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5230,
+    "Icon": "Sprites/Goods/RocketAirframeIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.RocketAirframe.DisplayName",
+    "PluralDisplayNameLocKey": "Good.RocketAirframe.PluralDisplayName"
+  }
+}

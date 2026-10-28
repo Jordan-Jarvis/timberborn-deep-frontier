@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Aggregate",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.53,
+      "g": 0.48,
+      "b": 0.39,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 6,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5402,
+    "Icon": "Sprites/Goods/AggregateIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Aggregate.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Aggregate.PluralDisplayName"
+  }
+}

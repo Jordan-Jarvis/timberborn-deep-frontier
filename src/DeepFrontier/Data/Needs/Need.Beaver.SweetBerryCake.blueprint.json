@@ -1,0 +1,20 @@
+{
+  "NeedSpec": {
+    "Id": "SweetBerryCake",
+    "BackwardCompatibleIds": [],
+    "Order": 45,
+    "NeedGroupId": "Nutrition",
+    "CharacterType": "Beaver",
+    "StartingValue": 0,
+    "MinimumValue": 0,
+    "MaximumValue": 1,
+    "DailyDelta": -0.05,
+    "ImportanceMultiplier": 1,
+    "Effectiveness": 1,
+    "Wastable": true,
+    "HoursWarningThreshold": 0,
+    "DisplayNameLocKey": "Good.SweetBerryCake.DisplayName",
+    "FavorableWellbeing": 2,
+    "UnfavorableWellbeing": 0
+  }
+}

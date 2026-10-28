@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "ConcentratedWaste",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.3,
+      "g": 0.23,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5160,
+    "Icon": "Sprites/Goods/ConcentratedWasteIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.ConcentratedWaste.DisplayName",
+    "PluralDisplayNameLocKey": "Good.ConcentratedWaste.PluralDisplayName"
+  }
+}

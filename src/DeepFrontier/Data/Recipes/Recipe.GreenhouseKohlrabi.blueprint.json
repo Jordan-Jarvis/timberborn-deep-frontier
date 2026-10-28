@@ -1,0 +1,30 @@
+{
+  "RecipeSpec": {
+    "Id": "GreenhouseKohlrabi",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.Kohlrabi.PluralDisplayName",
+    "CycleDurationInHours": 8,
+    "Ingredients": [
+      {
+        "Id": "Fertilizer",
+        "Amount": 2
+      },
+      {
+        "Id": "Water",
+        "Amount": 4
+      }
+    ],
+    "Products": [
+      {
+        "Id": "Kohlrabi",
+        "Amount": 112
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/KohlrabiIcon"
+  }
+}

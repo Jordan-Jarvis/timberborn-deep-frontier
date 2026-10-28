@@ -1,0 +1,20 @@
+{
+  "NeedSpec": {
+    "Id": "RecoveryProbeLegacy",
+    "BackwardCompatibleIds": [],
+    "Order": 53,
+    "NeedGroupId": "Awe",
+    "CharacterType": "Beaver",
+    "StartingValue": 0,
+    "MinimumValue": 0,
+    "MaximumValue": 1,
+    "DailyDelta": -0.01,
+    "ImportanceMultiplier": 1,
+    "Effectiveness": 1,
+    "Wastable": true,
+    "HoursWarningThreshold": 0,
+    "DisplayNameLocKey": "Need.RecoveryProbeLegacy.DisplayName",
+    "FavorableWellbeing": 3,
+    "UnfavorableWellbeing": 0
+  }
+}

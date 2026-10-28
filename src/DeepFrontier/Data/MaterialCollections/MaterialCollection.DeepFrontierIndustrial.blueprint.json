@@ -1,0 +1,34 @@
+{
+  "MaterialCollectionSpec": {
+    "CollectionId": "Common",
+    "Materials": [
+      "Materials/DeepFrontierIndustrial/DFIndustrial00",
+      "Materials/DeepFrontierIndustrial/DFIndustrial01",
+      "Materials/DeepFrontierIndustrial/DFIndustrial02",
+      "Materials/DeepFrontierIndustrial/DFIndustrial03",
+      "Materials/DeepFrontierIndustrial/DFIndustrial04",
+      "Materials/DeepFrontierIndustrial/DFIndustrial05",
+      "Materials/DeepFrontierIndustrial/DFIndustrial06",
+      "Materials/DeepFrontierIndustrial/DFIndustrial07",
+      "Materials/DeepFrontierIndustrial/DFIndustrial08",
+      "Materials/DeepFrontierIndustrial/DFIndustrial09",
+      "Materials/DeepFrontierIndustrial/DFIndustrial10",
+      "Materials/DeepFrontierIndustrial/DFIndustrial11",
+      "Materials/DeepFrontierIndustrial/DFIndustrial12",
+      "Materials/DeepFrontierIndustrial/DFIndustrial13",
+      "Materials/DeepFrontierIndustrial/DFIndustrial14",
+      "Materials/DeepFrontierIndustrial/DFIndustrial15",
+      "Materials/DeepFrontierIndustrial/DFIndustrial16",
+      "Materials/DeepFrontierIndustrial/DFIndustrial17",
+      "Materials/DeepFrontierIndustrial/DFIndustrial18",
+      "Materials/DeepFrontierIndustrial/DFIndustrial19",
+      "Materials/DeepFrontierIndustrial/DFIndustrial20",
+      "Materials/DeepFrontierIndustrial/DFIndustrial21",
+      "Materials/DeepFrontierIndustrial/DFIndustrial22",
+      "Materials/DeepFrontierIndustrial/DFIndustrial23",
+      "Materials/DeepFrontierIndustrial/DFIndustrial24",
+      "Materials/DeepFrontierIndustrial/DFIndustrial25",
+      "Materials/DeepFrontierIndustrial/DFIndustrial26"
+    ]
+  }
+}

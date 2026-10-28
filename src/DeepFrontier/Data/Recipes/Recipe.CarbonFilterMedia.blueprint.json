@@ -1,0 +1,30 @@
+{
+  "RecipeSpec": {
+    "Id": "CarbonFilterMedia",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.CarbonFilterMedia.DisplayName",
+    "CycleDurationInHours": 1,
+    "Ingredients": [
+      {
+        "Id": "Coal",
+        "Amount": 1
+      },
+      {
+        "Id": "Plank",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "FilterMedia",
+        "Amount": 3
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/FilterMediaIcon"
+  }
+}

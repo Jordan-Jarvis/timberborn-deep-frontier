@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Public-API proof: the optional Sluice is Back! assembly compiled against the shipped (non-publicized) game DLLs (src/DeepFrontier/Scripts/SluiceIsBack)
+       against the main compile check's DeepFrontier.dll (build ../DeepFrontierCompileCheck.csproj first), the installed
+       game DLLs and the installed Sluice is Back! 11.0.0 / TimberUi / Harmony.
+       Not part of the official Mod Builder pipeline. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>DeepFrontier.SluiceIsBack</AssemblyName>
+    <RootNamespace>DeepFrontier.SluiceIsBackContamination</RootNamespace>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <MSBuildWarningsAsMessages>MSB3277;MSB3243</MSBuildWarningsAsMessages>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Managed>C:/Program Files (x86)/Steam/steamapps/common/Timberborn/Timberborn_Data/Managed</Managed>
+    <Workshop>C:/Program Files (x86)/Steam/steamapps/workshop/content/1062090</Workshop>
+    <SourceRoot>$(MSBuildThisFileDirectory)../../../src/DeepFrontier/Scripts/SluiceIsBack</SourceRoot>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(SourceRoot)/**/*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <GameDll Include="$(Managed)/*.dll" Exclude="$(Managed)/DeepFrontier.dll;$(Managed)/DeepFrontier.ModdableWeathers.dll;$(Managed)/DeepFrontier.SluiceIsBack.dll;$(Managed)/TimberUi.dll" />
+    <Reference Include="@(GameDll)" Private="false" />
+    <Reference Include="DeepFrontier" Private="false">
+      <HintPath>$(MSBuildThisFileDirectory)../bin/Debug/netstandard2.1/DeepFrontier.dll</HintPath>
+    </Reference>
+    <Reference Include="SluiceIsBack" Private="false">
+      <HintPath>$(Workshop)/3677643870/version-1.1/SluiceIsBack.dll</HintPath>
+    </Reference>
+    <Reference Include="0Harmony" Private="false">
+      <HintPath>$(Workshop)/3284904751/0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="TimberUi" Private="false">
+      <HintPath>$(Workshop)/3430626620/version-1.1/TimberUi.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,30 @@
+{
+  "RecipeSpec": {
+    "Id": "EmergencyRation",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.EmergencyRation.PluralDisplayName",
+    "CycleDurationInHours": 0.5,
+    "Ingredients": [
+      {
+        "Id": "Corn",
+        "Amount": 1
+      },
+      {
+        "Id": "Log",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "EmergencyRation",
+        "Amount": 2
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/EmergencyRationIcon"
+  }
+}

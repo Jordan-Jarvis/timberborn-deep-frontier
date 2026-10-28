@@ -1,0 +1,26 @@
+{
+  "RecipeSpec": {
+    "Id": "Aggregate",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.Aggregate.DisplayName",
+    "CycleDurationInHours": 1,
+    "Ingredients": [
+      {
+        "Id": "Sandstone",
+        "Amount": 3
+      }
+    ],
+    "Products": [
+      {
+        "Id": "Aggregate",
+        "Amount": 6
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 4,
+    "Icon": "Sprites/Goods/AggregateIcon"
+  }
+}

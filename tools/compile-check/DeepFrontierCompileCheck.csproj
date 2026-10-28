@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Throwaway compile check (contamination and weather consumers) for Deep Frontier scripts against the installed game DLLs.
+       Not part of the official Mod Builder pipeline. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>DeepFrontier</AssemblyName>
+    <RootNamespace>DeepFrontier</RootNamespace>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <MSBuildWarningsAsMessages>MSB3277;MSB3243</MSBuildWarningsAsMessages>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Managed>C:/Users/Jordan/Documents/Timberborn/ModsBuild/TimberbornModExamples_Data/Managed</Managed>
+    <ScriptsRoot>$(MSBuildThisFileDirectory)../../src/DeepFrontier/Scripts</ScriptsRoot>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(ScriptsRoot)/**/*.cs" />
+    <!-- The optional Moddable Weathers assembly compiles separately (moddable-weathers/). -->
+    <Compile Remove="$(ScriptsRoot)/RadioactiveTide/ModdableWeathers/**" />
+    <!-- The optional Sluice is Back! assembly compiles separately (sluice-is-back/). -->
+    <Compile Remove="$(ScriptsRoot)/SluiceIsBack/**" />
+  </ItemGroup>
+  <ItemGroup>
+    <GameDll Include="$(Managed)/*.dll" Exclude="$(Managed)/DeepFrontier.dll;$(Managed)/DeepFrontier.ModdableWeathers.dll;$(Managed)/DeepFrontier.SluiceIsBack.dll" />
+    <Reference Include="@(GameDll)" Private="false" />
+    <!-- Optional dependency (not staged into this Managed folder until a build imports it). The main
+         DeepFrontier assembly must compile without using it: the C# compiler emits no reference to an
+         unused assembly, and moddable-weathers/ checks that the built DLL has none. -->
+    <Reference Include="ModdableWeathers" Private="false">
+      <HintPath>C:/Program Files (x86)/Steam/steamapps/workshop/content/1062090/3630523180/version-1.1/ModdableWeathers.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

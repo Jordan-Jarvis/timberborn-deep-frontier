@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+ <path fill="none" stroke="#f2e3bb" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" d="M128 28C112 54 62 112 62 160A66 66 0 0 0 194 160C194 112 144 54 128 28Z"/>
+ <g transform="translate(128 166) scale(0.95) translate(-128 -148)"><path fill="#f2e3bb" d="M123.5 140.2L111 118.6A34 34 0 0 1 145 118.6L132.5 140.2A9 9 0 0 0 123.5 140.2ZM137 148L162 148A34 34 0 0 1 145 177.4L132.5 155.8A9 9 0 0 0 137 148ZM123.5 155.8L111 177.4A34 34 0 0 1 94 148L119 148A9 9 0 0 0 123.5 155.8ZM123.05 148A4.95 4.95 0 1 0 132.95 148A4.95 4.95 0 1 0 123.05 148Z"/></g>
+</svg>

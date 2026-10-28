@@ -1,0 +1,9 @@
+{
+  "RemoveYieldStrategySpec": {
+    "Id": "Ruins",
+    "CompatibleResourceGroups#append": [
+      "DeepFrontierSandstone",
+      "DeepFrontierLimestone"
+    ]
+  }
+}

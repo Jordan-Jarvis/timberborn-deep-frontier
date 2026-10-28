@@ -1,0 +1,58 @@
+{
+  "status": "Build 57 reference hatchery passed water, production, traversal, platform stacking, save/reload and the complete aquaculture chain from zero fish stock.",
+  "shoreFishing": {
+    "GoodId": "FreshFish",
+    "CatchHours": 4,
+    "MinimumDepth": 0.5,
+    "MaximumContamination": 0.01,
+    "MaximumReachDown": 1.25
+  },
+  "hatchery": {
+    "waterCell": [
+      2,
+      5,
+      0
+    ],
+    "requirement": "Real water beneath the rear nursery cell; front row requires ground or stackable support. Reuses native Swimming Pool depth thresholds and contamination blocking.",
+    "status": "Build 57 passed native bank placement, 55 hp shaft supply, header levels, dry/badwater blocking, juvenile production, seven dock/door destinations, platform stacking, fresh reload and zero-stock bootstrap.",
+    "artReview": "docs/art/reviews/2026-10-19-hatchery",
+    "artStatus": "Reference nursery installed: 8x8x5, BaseZ 1, 31 route cells, 20 adaptive rail openings and one clear dock construction tile. Native appearance checked after production; bank apron no longer flickers.",
+    "sourceScene": "src/DeepFrontier/Art/Source/FishHatchery-ReferenceStudy.blend",
+    "registrationSource": "tools/asset-pipeline/hatchery_layout.py"
+  },
+  "fishery": {
+    "status": "Waterfront reference: 12x10x7, doors 0/2, 34 route cells, 19 adaptive openings. Builds 51/55 passed production, water/wheel, stairs, doors, platforms and rails; build 57 passed saved continuity, power/input stops and recovery, and zero-stock bootstrap.",
+    "artReview": "docs/art/reviews/2026-10-19-fishery-waterfront",
+    "sourceScene": "src/DeepFrontier/Art/Source/FisheryWorks-ReferenceStudy.blend",
+    "registrationSource": "tools/asset-pipeline/fishery_layout.py"
+  },
+  "progression": "Gatherer flag catches small amounts from real water; fresh fish seeds the hatchery; juveniles, algae and delivered water sustain the larger fishery.",
+  "transportStatus": "Build 76 passed real tank/pipe delivery, intake faces, capacity, valve interruption, reservoir levels, exact fresh-process reload and native pipe-fed production with conserved water",
+  "evidence": [
+    "outputs/fishery-run44.log",
+    "outputs/fishery-reload45.log",
+    "outputs/fishery-reload50.log",
+    "outputs/fishery-verified-build44.timber",
+    "outputs/fishery-regression-build45.timber",
+    "outputs/fishery-regression-build50.timber",
+    "outputs/fishery-run51.log",
+    "outputs/fishery-reload51.log",
+    "outputs/fishery-waterfront-verified-build51.timber",
+    "outputs/fishery-waterfront-regression-build51.timber",
+    "outputs/fishery-continuity54.log",
+    "outputs/fishery-bootstrap54.log",
+    "outputs/aquaculture-continuity-build54.timber",
+    "outputs/aquaculture-bootstrap-build54.timber",
+    "outputs/aquaculture-bootstrap-source.json",
+    "outputs/fishery-hatchery57.log",
+    "outputs/fishery-continuity57.log",
+    "outputs/fishery-bootstrap57.log",
+    "outputs/hatchery-verified-build57.timber",
+    "outputs/aquaculture-continuity-build57.timber",
+    "outputs/aquaculture-bootstrap-build57.timber",
+    "docs/art/reviews/2026-10-19-hatchery/hatchery-native-production-build57.png"
+  ],
+  "releaseBlockers": [
+    "JuvenileFish needs a second useful downstream consumer"
+  ]
+}

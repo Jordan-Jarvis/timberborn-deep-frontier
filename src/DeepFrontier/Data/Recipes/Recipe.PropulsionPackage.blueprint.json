@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "PropulsionPackage",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.PropulsionPackage.PluralDisplayName",
+    "CycleDurationInHours": 1,
+    "Ingredients": [
+      {
+        "Id": "Alloy",
+        "Amount": 10
+      },
+      {
+        "Id": "MachineCore",
+        "Amount": 4
+      },
+      {
+        "Id": "Polymer",
+        "Amount": 6
+      },
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 6
+      }
+    ],
+    "Products": [
+      {
+        "Id": "PropulsionPackage",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/PropulsionPackageIcon"
+  }
+}

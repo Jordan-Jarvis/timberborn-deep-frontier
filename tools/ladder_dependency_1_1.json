@@ -1,0 +1,121 @@
+{
+  "checkedDate": "2026-10-19",
+  "targetGameVersion": "1.1.2.8",
+  "workshopId": "3286476486",
+  "packagePath": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3286476486\\version-1.1",
+  "id": "Tobbert.Ladder",
+  "version": "1.0.0.4",
+  "minimumGameVersion": "1.0.0.0",
+  "requiredMods": [],
+  "deepFrontierRole": "Candidate vertical access dependency; already installed; no mandatory manifest entry yet",
+  "sourceFiles": {
+    "manifest.json": "98b08b4b54a17b3a1076fa3c15af27148829a3e44a08ce5b37b0baf094d852e5",
+    "Buildings\\Paths\\Ladder\\Ladder.IronTeeth.blueprint.json": "d9cf204e4cb9d3428c78527bf8b878521fca44fce26fa656107b9fca8331589c",
+    "Scripts\\Ladder.dll": "0a0523fc5462ad560e8b6bda5c76c8cfdda765e5196e3bad149716ac0811d371"
+  },
+  "ironTeeth": {
+    "templateName": "Ladder",
+    "size": {
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+    },
+    "blocks": [
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Bottom, Top, Corners, Middle",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      }
+    ],
+    "cost": [
+      {
+        "Id": "Log",
+        "Amount": 4
+      },
+      {
+        "Id": "Plank",
+        "Amount": 6
+      }
+    ],
+    "science": 250,
+    "workers": 0,
+    "powerDemandHp": 0,
+    "powerOutputHp": 0,
+    "recipes": [],
+    "mainPathCoordinates": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "navigation": {
+      "NoAutoWalls": false,
+      "GenerateFloorsOnStackable": true,
+      "EdgeGroups": [
+        {
+          "Cost": 1.0,
+          "Group": {
+            "UseGroup": false,
+            "GroupName": ""
+          },
+          "IsPath": true,
+          "AddedEdges": [
+            {
+              "Start": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "End": {
+                "X": 0,
+                "Y": 0,
+                "Z": 1
+              },
+              "IsTwoWay": true
+            }
+          ]
+        },
+        {
+          "Cost": 1.0,
+          "Group": {
+            "UseGroup": true,
+            "GroupName": "Blocked"
+          },
+          "IsPath": true,
+          "AddedEdges": [
+            {
+              "Start": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "End": {
+                "X": 0,
+                "Y": -1,
+                "Z": 0
+              },
+              "IsTwoWay": false
+            }
+          ]
+        }
+      ],
+      "UnblockedCoordinates": [
+        {
+          "Group": "",
+          "Coordinates": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          }
+        }
+      ]
+    }
+  },
+  "evidence": {
+    "loadedPackage": "outputs/timberborn_construction_world_13.log:59",
+    "apiInspection": "outputs/ladder-api-1.0.0.4/Ladder.decompiled.cs",
+    "runtimeTraversal": "Not tested on the reviewed quarry",
+    "redistribution": "External Workshop dependency; no third-party assets or code bundled into Deep Frontier"
+  }
+}

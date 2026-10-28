@@ -1,0 +1,12 @@
+{
+  "MaterialCollectionSpec": {
+    "CollectionId": "IronTeeth",
+    "Materials": [
+      "Buildings/Monuments/FountainOfJoy/FountainWater",
+      "Materials/UberAtlas/Materials/Folktails/BaseMetal.Folktails",
+      "Materials/UberAtlas/Materials/Folktails/BaseWood_LightBrown.Folktails",
+      "Materials/UberAtlas/Materials/Folktails/BaseWood_White.Folktails",
+      "Materials/UberAtlas/Materials/Folktails/IrregularPlanks_Brown.Folktails"
+    ]
+  }
+}

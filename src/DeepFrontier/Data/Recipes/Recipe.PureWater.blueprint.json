@@ -1,0 +1,34 @@
+{
+  "RecipeSpec": {
+    "Id": "PureWater",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.PureWater.PluralDisplayName",
+    "CycleDurationInHours": 8,
+    "Ingredients": [
+      {
+        "Id": "Water",
+        "Amount": 10
+      },
+      {
+        "Id": "FilterMedia",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "PureWater",
+        "Amount": 8
+      },
+      {
+        "Id": "ConcentratedWaste",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/PureWaterIcon"
+  }
+}

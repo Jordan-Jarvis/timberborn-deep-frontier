@@ -1,0 +1,15 @@
+{
+  "TemplateCollectionSpec": {
+    "CollectionId": "Common",
+    "Blueprints#append": [
+      "MapEditor/Objects/DeepOreSource/DeepOreSource.blueprint",
+      "MapEditor/Objects/DeepOreVein/DeepOreVein.blueprint",
+      "MapEditor/Objects/HumanRecordCache/HumanRecordCache.blueprint",
+      "MapEditor/Objects/SandstoneOutcrop/SandstoneOutcrop.blueprint",
+      "MapEditor/Objects/LimestoneOutcrop/LimestoneOutcrop.blueprint",
+      "MapEditor/Objects/SandstoneSeam/SandstoneSeam.blueprint",
+      "MapEditor/Objects/LimestoneSeam/LimestoneSeam.blueprint",
+      "MapEditor/Objects/RadioactiveSpringSource/RadioactiveSpringSource.blueprint"
+    ]
+  }
+}

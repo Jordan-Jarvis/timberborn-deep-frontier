@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "FilterMedia",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.7,
+      "g": 0.7,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5150,
+    "Icon": "Sprites/Goods/FilterMediaIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.FilterMedia.DisplayName",
+    "PluralDisplayNameLocKey": "Good.FilterMedia.PluralDisplayName"
+  }
+}

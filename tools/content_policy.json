@@ -1,0 +1,19 @@
+{
+  "minimumDistinctUses": 2,
+  "preferredDistinctUses": [3, 5],
+  "directFoodUseException": "An edible Food-group good with a positive Hunger consumption effect may have direct eating as its only use. Ingredient oils, juvenile stock, fertilizers and service tokens are not exempt.",
+  "definition": "Distinct useful downstream products, building construction, consumption or services. Storage, transport, disposal, alternate recipes for the same product and self-recycling do not add uses.",
+  "singleUseExceptions": {
+    "RocketAirframe": "Rocket-specific final-goal component, explicitly exempted by the user.",
+    "PropulsionPackage": "Rocket-specific final-goal component, explicitly exempted by the user.",
+    "MissionPayload": "Rocket-specific final-goal payload, explicitly exempted by the user."
+  },
+  "prohibitedNewInventoryConcepts": ["DiningService", "IndustrialLicense", "SpecialistLicense", "FlightLicense"],
+  "legacySaveOnlyGoods": {
+    "IndustrialLicense": "Retired 2026-10-21: Technical School courses now train persistent specialists (tools/workforce_risks.json). The good stays defined, unproduced and unused, only so existing saves that hold it still load.",
+    "SpecialistLicense": "Retired 2026-10-21 with IndustrialLicense; unproduced and unused, kept only for saves.",
+    "FlightLicense": "Retired 2026-10-21 with IndustrialLicense; Mission Control no longer makes it. Unproduced and unused, kept only for saves."
+  },
+  "prohibitedConceptDisposition": "Legacy development placeholders. Replace DiningService with worker-served native food consumption; replace license goods with persistent education/research state. Do not delete goods from existing saves without an explicit migration.",
+  "validation": "Count only authored, reachable blueprint consumers as implemented. Planned uses stay separate and never satisfy the release check. Rocket-specific goods and directly edible foods may have one real use, never zero."
+}

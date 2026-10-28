@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Concrete",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.55,
+      "g": 0.56,
+      "b": 0.53,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 10,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5404,
+    "Icon": "Sprites/Goods/ConcreteIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Concrete.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Concrete.PluralDisplayName"
+  }
+}

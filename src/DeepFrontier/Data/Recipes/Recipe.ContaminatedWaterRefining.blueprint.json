@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "ContaminatedWaterRefining",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.ContaminatedWaterRefining.DisplayName",
+    "CycleDurationInHours": 8,
+    "Ingredients": [
+      {
+        "Id": "RadioactiveWaste",
+        "Amount": 4
+      },
+      {
+        "Id": "Chemical",
+        "Amount": 2
+      },
+      {
+        "Id": "ContaminatedWater",
+        "Amount": 8
+      }
+    ],
+    "Products": [
+      {
+        "Id": "RadioactiveSludge",
+        "Amount": 6
+      },
+      {
+        "Id": "RecoveredMinerals",
+        "Amount": 2
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/RadioactiveSludgeIcon"
+  }
+}

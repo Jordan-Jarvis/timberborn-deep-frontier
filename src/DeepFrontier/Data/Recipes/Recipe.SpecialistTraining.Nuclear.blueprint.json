@@ -1,0 +1,29 @@
+{
+  "RecipeSpec": {
+    "Id": "SpecialistTraining.Nuclear",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.SpecialistTraining.Nuclear.DisplayName",
+    "CycleDurationInHours": 96,
+    "Ingredients": [
+      {
+        "Id": "Electronics",
+        "Amount": 2
+      },
+      {
+        "Id": "Yellowcake",
+        "Amount": 1
+      },
+      {
+        "Id": "Medicine",
+        "Amount": 2
+      }
+    ],
+    "Products": [],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 2,
+    "Icon": "Sprites/Goods/SpecialistLicenseIcon"
+  }
+}

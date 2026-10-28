@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "DeepAlloy",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Pileable",
+    "StockpileVisualization": "DeepAlloy",
+    "VisibleContainer": "MetalBlock",
+    "ContainerColor": {
+      "r": 0.33,
+      "g": 0.38,
+      "b": 0.42,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryOnArm",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5080,
+    "Icon": "Sprites/Goods/DeepAlloyIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.DeepAlloy.DisplayName",
+    "PluralDisplayNameLocKey": "Good.DeepAlloy.PluralDisplayName"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "UraniumOre",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.2,
+      "g": 0.28,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5170,
+    "Icon": "Sprites/Goods/UraniumOreIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.UraniumOre.DisplayName",
+    "PluralDisplayNameLocKey": "Good.UraniumOre.PluralDisplayName"
+  }
+}

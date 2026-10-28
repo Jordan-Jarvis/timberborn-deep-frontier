@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Fertilizer",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.58,
+      "g": 0.72,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Ingredients",
+    "GoodOrder": 5200,
+    "Icon": "Sprites/Goods/FertilizerIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Fertilizer.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Fertilizer.PluralDisplayName"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "StockpileGoodPileVisualizerSpec": {
+    "GoodPileVisualizations#append": [
+      "DeepOre",
+      "DeepAlloy"
+    ]
+  }
+}

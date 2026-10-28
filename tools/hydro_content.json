@@ -1,0 +1,16 @@
+{
+  "id": "ReinforcedHydroTurbine",
+  "name": "Reinforced hydroelectric turbine",
+  "status": "Installed; native high-head main 100 and fresh-process reload 101 passed. Two wet outlet cells, 3 m³/s total and 9,600 hp maximum. Extended hydraulics and pump-loop balance pending.",
+  "size": [8, 10, 7],
+  "science": 8000,
+  "cost": [["Concrete", 160], ["MetalBlock", 100], ["Gear", 60], ["TreatedPlank", 40]],
+  "maxDischarge": 3,
+  "defaultDischarge": 1,
+  "hpPerFlowAndHead": 200,
+  "maxGeneratingHead": 16,
+  "animationSpeedMultiplier": 4,
+  "loopingSound": "Gristmill",
+  "description": "A reinforced outlet through a dam. Set its discharge in m³/s; actual forward flow and water head generate hp. Close it manually or with native automation. Build stairs to the service terrace and structures on the solid upper cap.",
+  "balanceStatus": "9,000 hp at 3 m³/s combined discharge and 15 layers of upstream-to-downstream head; 9,600 hp maximum at 16 layers. Each water lane receives half the total discharge limit. The requested coefficient exceeds the idealized Timber Pipes pump energy bound; actual dependency pump-loop balance remains unresolved."
+}

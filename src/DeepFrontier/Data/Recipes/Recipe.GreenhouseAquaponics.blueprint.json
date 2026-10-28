@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "GreenhouseAquaponics",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.GreenhouseAquaponics.DisplayName",
+    "CycleDurationInHours": 8,
+    "Ingredients": [
+      {
+        "Id": "JuvenileFish",
+        "Amount": 1
+      },
+      {
+        "Id": "Fertilizer",
+        "Amount": 1
+      },
+      {
+        "Id": "Water",
+        "Amount": 4
+      }
+    ],
+    "Products": [
+      {
+        "Id": "Kohlrabi",
+        "Amount": 80
+      },
+      {
+        "Id": "FreshFish",
+        "Amount": 16
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/KohlrabiIcon"
+  }
+}

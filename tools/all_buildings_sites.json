@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "scope": "Site contract for the all-buildings acceptance (Scripts/AllBuildingsAcceptance.cs, sites batch) and its test map (tools/create_all_buildings_sites_map.py). The map provides the terrain and the map-authored understructures; the acceptance fills the water, builds the anchors and dams, and places each building here. Coordinates are grid cells. Building and anchor z is the native Placement z (layer 0, i.e. ground minus BaseZ). Rects are [x, y, width, height].",
+  "map": "Deep Frontier - All Buildings Sites Test",
+  "ground": 3,
+  "zone": [56, 40, 141, 80],
+  "understructures": [
+    {"template": "DeepOreVein", "label": "Deep Mine vein", "x": 66, "y": 61, "z": 3},
+    {"template": "SandstoneSeam", "label": "Sandstone Quarry seam", "x": 85, "y": 61, "z": 3},
+    {"template": "LimestoneSeam", "label": "Limestone Quarry seam", "x": 103, "y": 61, "z": 3}
+  ],
+  "pits": [
+    {"id": "pond", "label": "clean pond: Hatchery, Double Shower, Swimming Pool, Deep Water Pump", "rects": [[120, 81, 26, 7]], "floor": 2, "clean": 0.8, "radioactive": 0, "topUpBelow": 0.65},
+    {"id": "sludgePool", "label": "enclosed radioactive pool under the Sludge Recovery Pump intake", "rects": [[159, 83, 5, 5], [161, 82, 1, 1]], "floor": 2, "clean": 0.4, "radioactive": 0.4},
+    {"id": "controlPool", "label": "identical radioactive control pool without a pump", "rects": [[168, 83, 5, 5], [170, 82, 1, 1]], "floor": 2, "clean": 0.4, "radioactive": 0.4},
+    {"id": "step", "label": "terrain step under the side-platform decks", "rects": [[60, 93, 37, 7]], "floor": 1}
+  ],
+  "walls": [
+    {"id": "hydroBasin", "label": "sealed river reach: upper pool, turbine drop, lower pool", "ring": [173, 92, 18, 27], "height": 23}
+  ],
+  "hydro": {
+    "template": "ReinforcedHydroTurbine.IronTeeth",
+    "basin": [173, 92, 18, 27],
+    "divider": 100,
+    "dam": "ReinforcedDamBlock.IronTeeth",
+    "damTop": 22,
+    "damRaisedColumns": [176, 179],
+    "damRaisedBottom": 9,
+    "upperSurface": 20,
+    "dischargeLimit": 1.5
+  },
+  "anchors": [
+    {"template": "ReinforcedDamBlock.IronTeeth", "x": 63, "y": 100, "z": 3, "deck": "ConcreteSidePlatform3x3.IronTeeth"},
+    {"template": "ReinforcedDamBlock.IronTeeth", "x": 72, "y": 100, "z": 3, "deck": "ConcreteSidePlatform4x4.IronTeeth"},
+    {"template": "ReinforcedDamBlock.IronTeeth", "x": 82, "y": 100, "z": 3, "deck": "ConcreteSidePlatform5x5.IronTeeth"}
+  ],
+  "negativeAnchor": {"template": "Platform.IronTeeth", "x": 93, "y": 100, "z": 3, "deck": "ConcreteSidePlatform3x3.IronTeeth", "deckAt": [92, 97, 3]},
+  "buildings": [
+    {"template": "DeepMine.IronTeeth", "x": 64, "y": 60, "z": 3, "orientation": "Cw0", "understructure": "DeepOreVein", "produces": "DeepOre"},
+    {"template": "SandstoneQuarry.IronTeeth", "x": 82, "y": 60, "z": 3, "orientation": "Cw0", "understructure": "SandstoneSeam", "produces": "Sandstone"},
+    {"template": "LimestoneQuarry.IronTeeth", "x": 100, "y": 60, "z": 3, "orientation": "Cw0", "understructure": "LimestoneSeam", "produces": "Limestone"},
+    {"template": "FishHatchery.IronTeeth", "x": 120, "y": 80, "z": 2, "orientation": "Cw0", "pit": "pond", "produces": "JuvenileFish"},
+    {"template": "DoubleShower.IronTeeth", "x": 131, "y": 80, "z": 2, "orientation": "Cw0", "pit": "pond"},
+    {"template": "SwimmingPool.IronTeeth", "x": 135, "y": 80, "z": 2, "orientation": "Cw0", "pit": "pond"},
+    {"template": "DeepWaterPump.IronTeeth", "x": 141, "y": 79, "z": 2, "orientation": "Cw0", "pit": "pond", "produces": "Water"},
+    {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "x": 160, "y": 80, "z": 3, "orientation": "Cw0", "pit": "sludgePool", "control": "controlPool", "produces": "RadioactiveSludge"},
+    {"template": "ConcreteSidePlatform3x3.IronTeeth", "x": 62, "y": 97, "z": 3, "orientation": "Cw0", "pit": "step"},
+    {"template": "ConcreteSidePlatform4x4.IronTeeth", "x": 70, "y": 96, "z": 3, "orientation": "Cw0", "pit": "step"},
+    {"template": "ConcreteSidePlatform5x5.IronTeeth", "x": 80, "y": 95, "z": 3, "orientation": "Cw0", "pit": "step"},
+    {"template": "ReinforcedHydroTurbine.IronTeeth", "x": 176, "y": 98, "z": 3, "orientation": "Cw0", "basin": "hydroBasin"}
+  ]
+}

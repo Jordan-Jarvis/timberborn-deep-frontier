@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "LiquidOxygen",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Liquid",
+    "StockpileVisualization": "Liquid",
+    "VisibleContainer": "Barrel",
+    "ContainerColor": {
+      "r": 0.32,
+      "g": 0.72,
+      "b": 0.22,
+      "a": 1
+    },
+    "ContainerMaterial": "Materials/Goods/CanolaOil",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 2,
+    "GoodGroupId": "Ingredients",
+    "GoodOrder": 10160,
+    "Icon": "Sprites/Goods/LiquidOxygenIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.LiquidOxygen.DisplayName",
+    "PluralDisplayNameLocKey": "Good.LiquidOxygen.PluralDisplayName"
+  }
+}

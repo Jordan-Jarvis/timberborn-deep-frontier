@@ -1,0 +1,11 @@
+ID,Text,Comment
+DeepFrontier.Cryogenics.Status.Holding,No power: fuel intake is closed. Stored fuel starts venting {0} hours after the power fails unless power returns.,Deep Frontier cryogenic storage
+DeepFrontier.Cryogenics.Status.Venting,Venting cryogenic fuel: {0} units are lost every hour until power returns.,Deep Frontier cryogenic storage
+DeepFrontier.Cryogenics.Status.Venting.Short,Venting cryogenic fuel,Deep Frontier cryogenic storage
+DeepFrontier.Cryogenics.Status.WrongGood,Stores only one of: {0}. Select one of them; nothing else is accepted.,Deep Frontier cryogenic storage
+DeepFrontier.Cryogenics.Status.WrongNetwork,A connected pipe network carries a different fuel or is contaminated and cannot exchange fuel with this tank farm. Liquid hydrogen and liquid oxygen need separate pipe networks; flush contaminated pipes.,Deep Frontier cryogenic storage
+DeepFrontier.Cryogenics.Status.WrongNetwork.Short,Wrong fuel network,Deep Frontier cryogenic storage
+DeepFrontier.Cryogenics.Notification.Venting,{0} lost power and is venting cryogenic fuel.,Deep Frontier cryogenic storage
+DeepFrontier.Cryogenics.Describe.Rules,"Cryogenic storage: accepts fuel only while powered. Without power, intake closes at once and stored fuel vents {1} units per hour after {0} hours.",Deep Frontier cryogenic storage
+DeepFrontier.Cryogenics.Describe.Holding,No power: intake closed. Venting starts in {0} hours.,Deep Frontier cryogenic storage
+DeepFrontier.Cryogenics.Describe.Venting,Venting {0} units per hour; {1} lost since the power failed.,Deep Frontier cryogenic storage

@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Polymer",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.18,
+      "g": 0.52,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5120,
+    "Icon": "Sprites/Goods/PolymerIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Polymer.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Polymer.PluralDisplayName"
+  }
+}

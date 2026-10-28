@@ -1,0 +1,175 @@
+{
+  "comment": "Deep Frontier smog. Read by tools/smog_building_content.mjs (generation, after vanilla smoke) and tools/validate_smog_content.mjs. Intensity is 0..1 per map column. Each smoke flue of a listed template pollutes a disc of `radius` cells around its mouth (drifting downwind by up to settings.WindDriftCells): full `strength` out to CoreFraction*radius, falling linearly to EdgeFactor*strength at radius, then nothing. Flues combine as 1-prod(1-c). Only 'smoke' emitters pollute; 'steam'/'towerSteam' never do. Every template whose registration or blueprint carries a smoke emitter must be listed in templates or exempt. Decision 2026-10-21: the GroceryStore and TechnicalSchool chimneys emit steam, so they are non-polluters rather than exemptions; exempt stays available for any future smoke flue that must not pollute. `registration` names <registration>-registration.json relative to outputs/lategame-studies/: a late-game study id, or for the civic, industrial and research buildings their smoke registration from tools/asset-pipeline/register_smoke_emitters.py (../<pipeline>-integration/<Model>-smoke). The Hospital and FisheryWorks flues emit steam.",
+  "settings": {
+    "LightThreshold": 0.15,
+    "HeavyThreshold": 0.5,
+    "LightNeedId": "Smog",
+    "HeavyNeedId": "HeavySmog",
+    "ExposurePointsPerHour": 2,
+    "GrowthSlowdownAtThreshold": 0.25,
+    "GrowthSlowdownPerIntensity": 0.5,
+    "GrowthSlowdownMax": 0.5,
+    "TreeReduction": 0.08,
+    "BushReduction": 0.04,
+    "GreeneryRadius": 2.5,
+    "GreeneryMaxReduction": 0.6,
+    "ScrubberMaxReduction": 0.9,
+    "WindDriftCells": 1.5,
+    "CoreFraction": 0.5,
+    "EdgeFactor": 0.5,
+    "FieldIntervalHours": 0.25,
+    "GrowthIntervalHours": 1
+  },
+  "needs": {
+    "Smog": {
+      "order": 95,
+      "displayName": "Smog",
+      "unfavorableWellbeing": -2,
+      "dailyRecovery": 4
+    },
+    "HeavySmog": {
+      "order": 96,
+      "displayName": "Heavy smog",
+      "unfavorableWellbeing": -3,
+      "dailyRecovery": 4
+    }
+  },
+  "pollutingKind": "smoke",
+  "nonPollutingKinds": [
+    "steam",
+    "towerSteam",
+    "fountainSpray"
+  ],
+  "templates": {
+    "SteelMill": {
+      "registration": "SteelMill",
+      "smoke": {
+        "radius": 10,
+        "strength": 0.45
+      }
+    },
+    "ArchiveExcavation": {
+      "registration": "ArchiveExcavation",
+      "smoke": {
+        "radius": 4,
+        "strength": 0.3
+      }
+    },
+    "DeepProcessor": {
+      "registration": "DeepProcessor",
+      "smoke": {
+        "radius": 11,
+        "strength": 0.5
+      }
+    },
+    "ChemicalWorks": {
+      "registration": "ChemicalWorks",
+      "smoke": {
+        "radius": 10,
+        "strength": 0.4
+      }
+    },
+    "DeepMine": {
+      "registration": "DeepMine",
+      "smoke": {
+        "radius": 9,
+        "strength": 0.4
+      }
+    },
+    "DeepDrill": {
+      "registration": "DeepDrill",
+      "smoke": {
+        "radius": 8,
+        "strength": 0.35
+      }
+    },
+    "PrecisionMachineWorks": {
+      "registration": "PrecisionMachineWorks",
+      "smoke": {
+        "radius": 8,
+        "strength": 0.45
+      }
+    },
+    "FertilizerWorks": {
+      "registration": "FertilizerWorks",
+      "smoke": {
+        "radius": 8,
+        "strength": 0.4
+      }
+    },
+    "FoodPackagingWorks": {
+      "registration": "FoodPackagingWorks",
+      "smoke": {
+        "radius": 7,
+        "strength": 0.35
+      }
+    },
+    "Greenhouse": {
+      "registration": "Greenhouse",
+      "smoke": {
+        "radius": 5,
+        "strength": 0.3
+      }
+    },
+    "RocketAssemblyHangar": {
+      "registration": "RocketAssemblyHangar",
+      "smoke": {
+        "radius": 5,
+        "strength": 0.3
+      }
+    },
+    "CementKiln": {
+      "registration": "../industrial-integration/CementKiln-smoke",
+      "smoke": {
+        "radius": 6,
+        "strength": 0.35
+      }
+    },
+    "MaterialsLaboratory": {
+      "registration": "../research-integration/MaterialsLaboratory-smoke",
+      "smoke": {
+        "radius": 5,
+        "strength": 0.3
+      }
+    },
+    "Restaurant": {
+      "registration": "../civic-integration/Restaurant-smoke",
+      "smoke": {
+        "radius": 4,
+        "strength": 0.3
+      }
+    },
+    "CoalPowerPlant": {
+      "registration": "CoalPowerPlant",
+      "smoke": {
+        "radius": 12,
+        "strength": 0.55
+      }
+    },
+    "OilPowerPlant": {
+      "registration": "OilPowerPlant",
+      "smoke": {
+        "radius": 8,
+        "strength": 0.3
+      }
+    }
+  },
+  "exempt": {},
+  "scrubber": {
+    "template": "SmogScrubber",
+    "status": "ready",
+    "radius": 7,
+    "reduction": 0.75,
+    "proposed": {
+      "footprint": [
+        3,
+        3
+      ],
+      "height": 6,
+      "powerInputHp": 200,
+      "workers": 0,
+      "plumeKind": "steam",
+      "notes": "Integrated for build 122 through the late-game study pipeline (lategame_SmogScrubber.py, lategame_batches.json, makeScrubber in create_frontier_expansion_content.mjs, which checks footprint, height, power and workers against this record). Cost: late-game rule tier T2; science 2,500 in frontier_progression.json implementedBuildingScienceOverrides. Its towerSteam plume runs while powered (MechanicalNodeParticlesController); it never pollutes."
+    }
+  }
+}

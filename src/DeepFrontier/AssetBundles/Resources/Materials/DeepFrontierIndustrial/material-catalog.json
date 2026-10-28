@@ -1,0 +1,191 @@
+[
+  {
+    "name": "DFIndustrial00",
+    "source": "ReferenceTimber",
+    "metallic": 0.0,
+    "smoothness": 0.2200000286102295,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial01",
+    "source": "ReferencePlank",
+    "metallic": 0.0,
+    "smoothness": 0.23000001907348633,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial02",
+    "source": "ReferenceIron",
+    "metallic": 0.550000011920929,
+    "smoothness": 0.44999998807907104,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial03",
+    "source": "ReferenceRoof",
+    "metallic": 0.23999999463558197,
+    "smoothness": 0.30000001192092896,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial04",
+    "source": "ReferenceSandstone",
+    "metallic": 0.0,
+    "smoothness": 0.1499999761581421,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial05",
+    "source": "ReferenceLimestone",
+    "metallic": 0.0,
+    "smoothness": 0.12999999523162842,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial06",
+    "source": "ReferenceAggregate",
+    "metallic": 0.0,
+    "smoothness": 0.12999999523162842,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial07",
+    "source": "ReferenceBronze",
+    "metallic": 0.5,
+    "smoothness": 0.4399999976158142,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial08",
+    "source": "ReferenceWarmLight",
+    "metallic": 0.0,
+    "smoothness": 0.550000011920929,
+    "emission": 1.2999999523162842
+  },
+  {
+    "name": "DFIndustrial09",
+    "source": "ReferenceWindow",
+    "metallic": 0.0,
+    "smoothness": 0.6800000071525574,
+    "emission": 0.18000000715255737
+  },
+  {
+    "name": "DFIndustrial10",
+    "source": "ReferenceFoliage",
+    "metallic": 0.0,
+    "smoothness": 0.10000002384185791,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial11",
+    "source": "ReferenceWater",
+    "metallic": 0.0,
+    "smoothness": 0.7800000011920929,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial12",
+    "source": "ReferenceAwning",
+    "metallic": 0.0,
+    "smoothness": 0.07999998331069946,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial13",
+    "source": "Crusher tooth steel",
+    "metallic": 0.6499999761581421,
+    "smoothness": 0.4300000071525574,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial14",
+    "source": "Kiln grey masonry",
+    "metallic": 0.0,
+    "smoothness": 0.07999998331069946,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial15",
+    "source": "Kiln pale masonry",
+    "metallic": 0.0,
+    "smoothness": 0.0899999737739563,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial16",
+    "source": "Kiln soot and charcoal",
+    "metallic": 0.0,
+    "smoothness": 0.050000011920928955,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial17",
+    "source": "Kiln orange embers",
+    "metallic": 0.0,
+    "smoothness": 0.25999999046325684,
+    "emission": 2.0
+  },
+  {
+    "name": "DFIndustrial18",
+    "source": "Kiln yellow flame",
+    "metallic": 0.0,
+    "smoothness": 0.550000011920929,
+    "emission": 2.4000000953674316
+  },
+  {
+    "name": "DFIndustrial19",
+    "source": "Kiln cement powder",
+    "metallic": 0.0,
+    "smoothness": 0.0,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial20",
+    "source": "Kiln worn steel plate",
+    "metallic": 0.6499999761581421,
+    "smoothness": 0.42000001668930054,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial21",
+    "source": "Kiln exposed rust",
+    "metallic": 0.25,
+    "smoothness": 0.0899999737739563,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial22",
+    "source": "Kiln timber checks",
+    "metallic": 0.0,
+    "smoothness": 0.04000002145767212,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial23",
+    "source": "Kiln exposed timber grain",
+    "metallic": 0.0,
+    "smoothness": 0.11000001430511475,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial24",
+    "source": "Kiln deposited cement dust",
+    "metallic": 0.0,
+    "smoothness": 0.0,
+    "emission": 0.0
+  },
+  {
+    "name": "DFIndustrial25",
+    "source": "Frontier cyan instrument",
+    "metallic": 0.18000000715255737,
+    "smoothness": 0.6500000059604645,
+    "emission": 1.2999999523162842
+  },
+  {
+    "name": "DFIndustrial26",
+    "source": "Frontier dark belt rubber",
+    "metallic": 0.07999999821186066,
+    "smoothness": 0.12000000476837158,
+    "emission": 0.0
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "NeedCollectionSpec": {
+    "Needs#append": [
+      "RestaurantDining",
+      "SweetBerryCake",
+      "PublicHealthcare",
+      "NeighborhoodGroceries",
+      "OrbitalObservatoryLegacy",
+      "RecoveryProbeLegacy",
+      "LongRangeBeaconLegacy",
+      "Irradiation"
+    ]
+  }
+}

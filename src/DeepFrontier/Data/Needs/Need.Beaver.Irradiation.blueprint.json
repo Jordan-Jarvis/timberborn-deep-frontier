@@ -1,0 +1,38 @@
+{
+  "NeedSpec": {
+    "Id": "Irradiation",
+    "BackwardCompatibleIds": [],
+    "Order": 91,
+    "NeedGroupId": "BasicNeeds",
+    "CharacterType": "Beaver",
+    "StartingValue": 0,
+    "MinimumValue": -1,
+    "MaximumValue": 0,
+    "DailyDelta": 0,
+    "ImportanceMultiplier": 1,
+    "Effectiveness": 1,
+    "Wastable": true,
+    "HoursWarningThreshold": 0,
+    "DisplayNameLocKey": "Need.Irradiation.DisplayName",
+    "FavorableWellbeing": 0,
+    "UnfavorableWellbeing": -12
+  },
+  "NeedPreventingWorkSpec": {
+    "WorkRefusalWarningLocKey": "Work.WorkRefusalWarning"
+  },
+  "CriticalNeedSpec": {
+    "CriticalNeedType": "Alert",
+    "SpriteName": "BadwaterContamination",
+    "DescriptionLocKey": "Status.Need.Irradiation",
+    "DescriptionShortLocKey": "Status.Need.Irradiation.Short"
+  },
+  "PunitiveNeedSpec": {
+    "Penalties": [
+      {
+        "Id": "MovementSpeed",
+        "MultiplierDelta": -0.8
+      }
+    ]
+  },
+  "InactiveHiddenNeedSpec": {}
+}

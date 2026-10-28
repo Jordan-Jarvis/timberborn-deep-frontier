@@ -1,0 +1,30 @@
+{
+  "RecipeSpec": {
+    "Id": "Cement",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.Cement.DisplayName",
+    "CycleDurationInHours": 2,
+    "Ingredients": [
+      {
+        "Id": "Limestone",
+        "Amount": 3
+      },
+      {
+        "Id": "Aggregate",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "Cement",
+        "Amount": 2
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "Log",
+    "CyclesFuelLasts": 1,
+    "FuelCapacity": 10,
+    "CyclesCapacity": 4,
+    "Icon": "Sprites/Goods/CementIcon"
+  }
+}

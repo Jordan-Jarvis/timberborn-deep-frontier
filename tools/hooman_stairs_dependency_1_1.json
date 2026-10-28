@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-10-19T16:53:53.3441441-07:00",
+  "workshopId": "3682012904",
+  "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3682012904",
+  "status": "Downloaded for inspection; not installed, enabled or required by Deep Frontier",
+  "manifest": {
+    "Name": "Hooman Stairs",
+    "Version": "2.0.2",
+    "Id": "Calloatti.HoomanStairs",
+    "MinimumGameVersion": "1.1.2.4",
+    "Description": "Buildings now have hooman stairs inside",
+    "RequiredMods": [
+      {
+        "Id": "Harmony",
+        "MinVersion": "2.4.1"
+      }
+    ],
+    "OptionalMods": []
+  },
+  "workshopRequiredItems": [
+    "Harmony",
+    "Vertical Nav Mesh (3631491885)"
+  ],
+  "dependencyDifference": "Workshop additionally lists Vertical Nav Mesh. Preserve the package MinVersion field as authored; do not silently rewrite it to MinimumVersion.",
+  "downloadUrl": "https://raw.githubusercontent.com/calloatti/ModZips/main/Hooman%20Stairs_2.0.2.zip",
+  "zipSha256": "AC45597F4890BE615186E61AB87FB5453B9567CA97EFC2C2DF9A8DC4586F2696",
+  "dllSha256": "96924B8AFF7A41E1B8A0B0A637BA95279F5DDFA92D0A8BB27C19A54A132957B8",
+  "repository": "https://github.com/calloatti/Hooman-Stairs",
+  "sourceCommit": "1e686b1f48e8495e551802b57a4f5809cebd1f01",
+  "evidence": "outputs/hooman-stairs-2.0.2/hoomanstairs.decompiled.cs"
+}

@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "RadioactiveWaste",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.18,
+      "g": 0.18,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5200,
+    "Icon": "Sprites/Goods/RadioactiveWasteIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.RadioactiveWaste.DisplayName",
+    "PluralDisplayNameLocKey": "Good.RadioactiveWaste.PluralDisplayName"
+  }
+}

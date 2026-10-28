@@ -1,0 +1,45 @@
+{
+  "RecipeSpec": {
+    "Id": "RocketMission.RecoveryProbe",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.RocketMission.RecoveryProbe",
+    "CycleDurationInHours": 32,
+    "Ingredients": [
+      {
+        "Id": "RocketAirframe",
+        "Amount": 28
+      },
+      {
+        "Id": "PropulsionPackage",
+        "Amount": 14
+      },
+      {
+        "Id": "GuidanceComputer",
+        "Amount": 6
+      },
+      {
+        "Id": "MissionPayload",
+        "Amount": 2
+      },
+      {
+        "Id": "RecoveredTelemetry",
+        "Amount": 4
+      },
+      {
+        "Id": "LiquidHydrogen",
+        "Amount": 280
+      },
+      {
+        "Id": "LiquidOxygen",
+        "Amount": 280
+      }
+    ],
+    "Products": [],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 1,
+    "Icon": "Sprites/Goods/MissionPayloadIcon"
+  }
+}

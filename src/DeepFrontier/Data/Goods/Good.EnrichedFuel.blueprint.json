@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "EnrichedFuel",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.85,
+      "g": 0.44,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5190,
+    "Icon": "Sprites/Goods/EnrichedFuelIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.EnrichedFuel.DisplayName",
+    "PluralDisplayNameLocKey": "Good.EnrichedFuel.PluralDisplayName"
+  }
+}

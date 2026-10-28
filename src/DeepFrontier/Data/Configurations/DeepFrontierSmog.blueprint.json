@@ -1,0 +1,22 @@
+{
+  "SmogSettingsSpec": {
+    "LightThreshold": 0.15,
+    "HeavyThreshold": 0.5,
+    "LightNeedId": "Smog",
+    "HeavyNeedId": "HeavySmog",
+    "ExposurePointsPerHour": 2,
+    "GrowthSlowdownAtThreshold": 0.25,
+    "GrowthSlowdownPerIntensity": 0.5,
+    "GrowthSlowdownMax": 0.5,
+    "TreeReduction": 0.08,
+    "BushReduction": 0.04,
+    "GreeneryRadius": 2.5,
+    "GreeneryMaxReduction": 0.6,
+    "ScrubberMaxReduction": 0.9,
+    "WindDriftCells": 1.5,
+    "CoreFraction": 0.5,
+    "EdgeFactor": 0.5,
+    "FieldIntervalHours": 0.25,
+    "GrowthIntervalHours": 1
+  }
+}

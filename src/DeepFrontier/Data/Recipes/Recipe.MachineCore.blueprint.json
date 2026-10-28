@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "MachineCore",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.MachineCore.PluralDisplayName",
+    "CycleDurationInHours": 2,
+    "Ingredients": [
+      {
+        "Id": "Alloy",
+        "Amount": 2
+      },
+      {
+        "Id": "Polymer",
+        "Amount": 1
+      },
+      {
+        "Id": "Gear",
+        "Amount": 2
+      },
+      {
+        "Id": "DeepAlloy",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "MachineCore",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/MachineCoreIcon"
+  }
+}

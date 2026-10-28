@@ -1,0 +1,487 @@
+{
+  "NarrativeSettingsSpec": {
+    "FactionId": "IronTeeth",
+    "EndingMissionId": "LongRangeBeacon",
+    "Stages": [
+      {
+        "Id": "NotNatural",
+        "TitleLocKey": "Narrative.Stage.NotNatural.Title",
+        "ObjectiveLocKey": "Narrative.Stage.NotNatural.Objective",
+        "HintLocKey": "Narrative.Stage.NotNatural.Hint",
+        "StoryLocKeys": [
+          "Narrative.Stage.NotNatural.Story.1",
+          "Narrative.Stage.NotNatural.Story.2"
+        ],
+        "ScienceReward": 500,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "BuildingFinished",
+            "Targets": [
+              "PublicHealthLab.IronTeeth",
+              "WaterTreatmentPlant.IronTeeth",
+              "DeepDrill.IronTeeth",
+              "ChemicalWorks.IronTeeth"
+            ],
+            "Amount": 1,
+            "LabelLocKey": "Narrative.Stage.NotNatural.Requirement.1",
+            "VariantLocKeys": [
+              "Narrative.Stage.NotNatural.Variant.PublicHealthLab",
+              "Narrative.Stage.NotNatural.Variant.WaterTreatmentPlant",
+              "Narrative.Stage.NotNatural.Variant.DeepDrill",
+              "Narrative.Stage.NotNatural.Variant.ChemicalWorks"
+            ]
+          }
+        ]
+      },
+      {
+        "Id": "UnderTheValley",
+        "TitleLocKey": "Narrative.Stage.UnderTheValley.Title",
+        "ObjectiveLocKey": "Narrative.Stage.UnderTheValley.Objective",
+        "HintLocKey": "Narrative.Stage.UnderTheValley.Hint",
+        "StoryLocKeys": [
+          "Narrative.Stage.UnderTheValley.Story.1",
+          "Narrative.Stage.UnderTheValley.Story.2"
+        ],
+        "ScienceReward": 1000,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "GoodProduced",
+            "Targets": [
+              "DeepAlloy"
+            ],
+            "Amount": 20,
+            "LabelLocKey": "Narrative.Stage.UnderTheValley.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "WhatTheWaterCarries",
+        "TitleLocKey": "Narrative.Stage.WhatTheWaterCarries.Title",
+        "ObjectiveLocKey": "Narrative.Stage.WhatTheWaterCarries.Objective",
+        "HintLocKey": "Narrative.Stage.WhatTheWaterCarries.Hint",
+        "StoryLocKeys": [
+          "Narrative.Stage.WhatTheWaterCarries.Story.1",
+          "Narrative.Stage.WhatTheWaterCarries.Story.2"
+        ],
+        "ScienceReward": 1500,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "GoodProduced",
+            "Targets": [
+              "PureWater"
+            ],
+            "Amount": 80,
+            "LabelLocKey": "Narrative.Stage.WhatTheWaterCarries.Requirement.1",
+            "VariantLocKeys": []
+          },
+          {
+            "Kind": "GoodProduced",
+            "Targets": [
+              "Chemical"
+            ],
+            "Amount": 10,
+            "LabelLocKey": "Narrative.Stage.WhatTheWaterCarries.Requirement.2",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "OpenTheRuins",
+        "TitleLocKey": "Narrative.Stage.OpenTheRuins.Title",
+        "ObjectiveLocKey": "Narrative.Stage.OpenTheRuins.Objective",
+        "HintLocKey": "Narrative.Stage.OpenTheRuins.Hint",
+        "StoryLocKeys": [
+          "Narrative.Stage.OpenTheRuins.Story.1",
+          "Narrative.Stage.OpenTheRuins.Story.2"
+        ],
+        "ScienceReward": 2000,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "GoodProduced",
+            "Targets": [
+              "RecoveredArtifact"
+            ],
+            "Amount": 6,
+            "LabelLocKey": "Narrative.Stage.OpenTheRuins.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "TheArchiveWakes",
+        "TitleLocKey": "Narrative.Stage.TheArchiveWakes.Title",
+        "ObjectiveLocKey": "Narrative.Stage.TheArchiveWakes.Objective",
+        "HintLocKey": "Narrative.Stage.TheArchiveWakes.Hint",
+        "StoryLocKeys": [
+          "Narrative.Stage.TheArchiveWakes.Story.1",
+          "Narrative.Stage.TheArchiveWakes.Story.2",
+          "Narrative.Stage.TheArchiveWakes.Story.3"
+        ],
+        "ScienceReward": 3000,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "GoodProduced",
+            "Targets": [
+              "ArchiveData"
+            ],
+            "Amount": 10,
+            "LabelLocKey": "Narrative.Stage.TheArchiveWakes.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "TheLastShift",
+        "TitleLocKey": "Narrative.Stage.TheLastShift.Title",
+        "ObjectiveLocKey": "Narrative.Stage.TheLastShift.Objective",
+        "HintLocKey": "Narrative.Stage.TheLastShift.Hint",
+        "StoryLocKeys": [
+          "Narrative.Stage.TheLastShift.Story.1",
+          "Narrative.Stage.TheLastShift.Story.2",
+          "Narrative.Stage.TheLastShift.Story.3"
+        ],
+        "ScienceReward": 5000,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "GoodProduced",
+            "Targets": [
+              "ArchiveData"
+            ],
+            "Amount": 30,
+            "LabelLocKey": "Narrative.Stage.TheLastShift.Requirement.1",
+            "VariantLocKeys": []
+          },
+          {
+            "Kind": "BuildingFinished",
+            "Targets": [
+              "MissionControl.IronTeeth"
+            ],
+            "Amount": 1,
+            "LabelLocKey": "Narrative.Stage.TheLastShift.Requirement.2",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "EyesAbove",
+        "TitleLocKey": "Narrative.Stage.EyesAbove.Title",
+        "ObjectiveLocKey": "Narrative.Stage.EyesAbove.Objective",
+        "HintLocKey": "Narrative.Stage.EyesAbove.Hint",
+        "StoryLocKeys": [
+          "Narrative.Stage.EyesAbove.Story.1",
+          "Narrative.Stage.EyesAbove.Story.2"
+        ],
+        "ScienceReward": 0,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "MissionCompleted",
+            "Targets": [
+              "OrbitalObservatory"
+            ],
+            "Amount": 1,
+            "LabelLocKey": "Narrative.Stage.EyesAbove.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "WhatTheStationKept",
+        "TitleLocKey": "Narrative.Stage.WhatTheStationKept.Title",
+        "ObjectiveLocKey": "Narrative.Stage.WhatTheStationKept.Objective",
+        "HintLocKey": "Narrative.Stage.WhatTheStationKept.Hint",
+        "StoryLocKeys": [
+          "Narrative.Stage.WhatTheStationKept.Story.1",
+          "Narrative.Stage.WhatTheStationKept.Story.2",
+          "Narrative.Stage.WhatTheStationKept.Story.3"
+        ],
+        "ScienceReward": 0,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "MissionCompleted",
+            "Targets": [
+              "RecoveryProbe"
+            ],
+            "Amount": 1,
+            "LabelLocKey": "Narrative.Stage.WhatTheStationKept.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "TheMessage",
+        "TitleLocKey": "Narrative.Stage.TheMessage.Title",
+        "ObjectiveLocKey": "Narrative.Stage.TheMessage.Objective",
+        "HintLocKey": "Narrative.Stage.TheMessage.Hint",
+        "StoryLocKeys": [
+          "Narrative.Stage.TheMessage.Story.1"
+        ],
+        "ScienceReward": 0,
+        "EndingText": "Choice",
+        "Requirements": [
+          {
+            "Kind": "EndingChosen",
+            "Targets": [
+              "Signal",
+              "Archive",
+              "Settlement"
+            ],
+            "Amount": 1,
+            "LabelLocKey": "Narrative.Stage.TheMessage.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "TheBeacon",
+        "TitleLocKey": "Narrative.Stage.TheBeacon.Title",
+        "ObjectiveLocKey": "Narrative.Stage.TheBeacon.Objective",
+        "HintLocKey": "Narrative.Stage.TheBeacon.Hint",
+        "StoryLocKeys": [
+          "Narrative.Stage.TheBeacon.Story.1",
+          "Narrative.Stage.TheBeacon.Story.2"
+        ],
+        "ScienceReward": 0,
+        "EndingText": "Epilogue",
+        "Requirements": [
+          {
+            "Kind": "MissionCompleted",
+            "Targets": [
+              "LongRangeBeacon"
+            ],
+            "Amount": 1,
+            "LabelLocKey": "Narrative.Stage.TheBeacon.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      }
+    ],
+    "Discoveries": [
+      {
+        "Id": "ClinicLog",
+        "TitleLocKey": "Narrative.Discovery.ClinicLog.Title",
+        "ObjectiveLocKey": "Narrative.Discovery.ClinicLog.Objective",
+        "HintLocKey": "",
+        "StoryLocKeys": [
+          "Narrative.Discovery.ClinicLog.Story.1"
+        ],
+        "ScienceReward": 250,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "BuildingFinished",
+            "Targets": [
+              "Hospital.IronTeeth"
+            ],
+            "Amount": 1,
+            "LabelLocKey": "Narrative.Discovery.ClinicLog.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "CleanerThanTheRiver",
+        "TitleLocKey": "Narrative.Discovery.CleanerThanTheRiver.Title",
+        "ObjectiveLocKey": "Narrative.Discovery.CleanerThanTheRiver.Objective",
+        "HintLocKey": "",
+        "StoryLocKeys": [
+          "Narrative.Discovery.CleanerThanTheRiver.Story.1"
+        ],
+        "ScienceReward": 250,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "GoodProduced",
+            "Targets": [
+              "PureWater"
+            ],
+            "Amount": 500,
+            "LabelLocKey": "Narrative.Discovery.CleanerThanTheRiver.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "HoldingOurOwn",
+        "TitleLocKey": "Narrative.Discovery.HoldingOurOwn.Title",
+        "ObjectiveLocKey": "Narrative.Discovery.HoldingOurOwn.Objective",
+        "HintLocKey": "",
+        "StoryLocKeys": [
+          "Narrative.Discovery.HoldingOurOwn.Story.1"
+        ],
+        "ScienceReward": 250,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "BuildingFinished",
+            "Targets": [
+              "RadioactiveWasteVault.IronTeeth"
+            ],
+            "Amount": 1,
+            "LabelLocKey": "Narrative.Discovery.HoldingOurOwn.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "CleanHands",
+        "TitleLocKey": "Narrative.Discovery.CleanHands.Title",
+        "ObjectiveLocKey": "Narrative.Discovery.CleanHands.Objective",
+        "HintLocKey": "",
+        "StoryLocKeys": [
+          "Narrative.Discovery.CleanHands.Story.1"
+        ],
+        "ScienceReward": 250,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "RecipeCompleted",
+            "Targets": [
+              "DecontaminateWater"
+            ],
+            "Amount": 1,
+            "LabelLocKey": "Narrative.Discovery.CleanHands.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "CacheRoster",
+        "TitleLocKey": "Narrative.Discovery.CacheRoster.Title",
+        "ObjectiveLocKey": "Narrative.Discovery.CacheRoster.Objective",
+        "HintLocKey": "",
+        "StoryLocKeys": [
+          "Narrative.Discovery.CacheRoster.Story.1"
+        ],
+        "ScienceReward": 0,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "CachesSurveyed",
+            "Targets": [],
+            "Amount": 1,
+            "LabelLocKey": "Narrative.Discovery.CacheRoster.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "CacheDrawing",
+        "TitleLocKey": "Narrative.Discovery.CacheDrawing.Title",
+        "ObjectiveLocKey": "Narrative.Discovery.CacheDrawing.Objective",
+        "HintLocKey": "",
+        "StoryLocKeys": [
+          "Narrative.Discovery.CacheDrawing.Story.1"
+        ],
+        "ScienceReward": 0,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "CachesSurveyed",
+            "Targets": [],
+            "Amount": 2,
+            "LabelLocKey": "Narrative.Discovery.CacheDrawing.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "CacheWeather",
+        "TitleLocKey": "Narrative.Discovery.CacheWeather.Title",
+        "ObjectiveLocKey": "Narrative.Discovery.CacheWeather.Objective",
+        "HintLocKey": "",
+        "StoryLocKeys": [
+          "Narrative.Discovery.CacheWeather.Story.1"
+        ],
+        "ScienceReward": 0,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "CachesSurveyed",
+            "Targets": [],
+            "Amount": 3,
+            "LabelLocKey": "Narrative.Discovery.CacheWeather.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "CacheMemo",
+        "TitleLocKey": "Narrative.Discovery.CacheMemo.Title",
+        "ObjectiveLocKey": "Narrative.Discovery.CacheMemo.Objective",
+        "HintLocKey": "",
+        "StoryLocKeys": [
+          "Narrative.Discovery.CacheMemo.Story.1"
+        ],
+        "ScienceReward": 0,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "CachesSurveyed",
+            "Targets": [],
+            "Amount": 4,
+            "LabelLocKey": "Narrative.Discovery.CacheMemo.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      },
+      {
+        "Id": "CachePostcard",
+        "TitleLocKey": "Narrative.Discovery.CachePostcard.Title",
+        "ObjectiveLocKey": "Narrative.Discovery.CachePostcard.Objective",
+        "HintLocKey": "",
+        "StoryLocKeys": [
+          "Narrative.Discovery.CachePostcard.Story.1"
+        ],
+        "ScienceReward": 0,
+        "EndingText": "",
+        "Requirements": [
+          {
+            "Kind": "CachesSurveyed",
+            "Targets": [],
+            "Amount": 5,
+            "LabelLocKey": "Narrative.Discovery.CachePostcard.Requirement.1",
+            "VariantLocKeys": []
+          }
+        ]
+      }
+    ],
+    "Endings": [
+      {
+        "Id": "Signal",
+        "TitleLocKey": "Narrative.Ending.Signal.Title",
+        "DescriptionLocKey": "Narrative.Ending.Signal.Description",
+        "EpilogueLocKeys": [
+          "Narrative.Ending.Signal.Epilogue.1",
+          "Narrative.Ending.Signal.Epilogue.2"
+        ]
+      },
+      {
+        "Id": "Archive",
+        "TitleLocKey": "Narrative.Ending.Archive.Title",
+        "DescriptionLocKey": "Narrative.Ending.Archive.Description",
+        "EpilogueLocKeys": [
+          "Narrative.Ending.Archive.Epilogue.1",
+          "Narrative.Ending.Archive.Epilogue.2"
+        ]
+      },
+      {
+        "Id": "Settlement",
+        "TitleLocKey": "Narrative.Ending.Settlement.Title",
+        "DescriptionLocKey": "Narrative.Ending.Settlement.Description",
+        "EpilogueLocKeys": [
+          "Narrative.Ending.Settlement.Epilogue.1",
+          "Narrative.Ending.Settlement.Epilogue.2"
+        ]
+      }
+    ]
+  }
+}

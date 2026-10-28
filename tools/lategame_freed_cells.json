@@ -1,0 +1,469 @@
+{
+ "scope": "Ground cells freed by the no-forced-decoration pass (2026-10-22), in the new footprint frame; outside cells left the building entirely.",
+ "buildings": {
+  "FertilizerWorks": {
+   "footprintBefore": [
+    9,
+    8,
+    13
+   ],
+   "footprintAfter": [
+    9,
+    6,
+    13
+   ],
+   "gridOrigin": [
+    0,
+    1
+   ],
+   "outsideCells": 18,
+   "insideCells": []
+  },
+  "FoodPackagingWorks": {
+   "footprintBefore": [
+    10,
+    8,
+    12
+   ],
+   "footprintAfter": [
+    10,
+    7,
+    12
+   ],
+   "gridOrigin": [
+    0,
+    1
+   ],
+   "outsideCells": 10,
+   "insideCells": []
+  },
+  "PublicHealthLab": {
+   "footprintBefore": [
+    8,
+    8,
+    12
+   ],
+   "footprintAfter": [
+    8,
+    6,
+    12
+   ],
+   "gridOrigin": [
+    0,
+    2
+   ],
+   "outsideCells": 16,
+   "insideCells": []
+  },
+  "Greenhouse": {
+   "footprintBefore": [
+    9,
+    7,
+    9
+   ],
+   "footprintAfter": [
+    9,
+    5,
+    9
+   ],
+   "gridOrigin": [
+    0,
+    2
+   ],
+   "outsideCells": 18,
+   "insideCells": []
+  },
+  "PrecisionMachineWorks": {
+   "footprintBefore": [
+    11,
+    9,
+    14
+   ],
+   "footprintAfter": [
+    11,
+    9,
+    14
+   ],
+   "gridOrigin": [
+    0,
+    0
+   ],
+   "outsideCells": 0,
+   "insideCells": [
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     9,
+     4
+    ]
+   ]
+  },
+  "TechnicalSchool": {
+   "footprintBefore": [
+    11,
+    6,
+    14
+   ],
+   "footprintAfter": [
+    11,
+    5,
+    14
+   ],
+   "gridOrigin": [
+    0,
+    1
+   ],
+   "outsideCells": 11,
+   "insideCells": [
+    [
+     1,
+     0
+    ]
+   ]
+  },
+  "RocketAssemblyHangar": {
+   "footprintBefore": [
+    12,
+    12,
+    14
+   ],
+   "footprintAfter": [
+    8,
+    9,
+    14
+   ],
+   "gridOrigin": [
+    0,
+    3
+   ],
+   "outsideCells": 72,
+   "insideCells": []
+  },
+  "RadioactiveWasteVault": {
+   "footprintBefore": [
+    13,
+    12,
+    12
+   ],
+   "footprintAfter": [
+    9,
+    10,
+    12
+   ],
+   "gridOrigin": [
+    4,
+    2
+   ],
+   "outsideCells": 66,
+   "insideCells": [
+    [
+     2,
+     0
+    ],
+    [
+     6,
+     0
+    ]
+   ]
+  },
+  "DeepMine": {
+   "footprintBefore": [
+    12,
+    11,
+    16
+   ],
+   "footprintAfter": [
+    10,
+    11,
+    16
+   ],
+   "gridOrigin": [
+    0,
+    0
+   ],
+   "outsideCells": 22,
+   "insideCells": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     9,
+     0
+    ],
+    [
+     9,
+     3
+    ]
+   ]
+  },
+  "DeepProcessor": {
+   "footprintBefore": [
+    11,
+    10,
+    14
+   ],
+   "footprintAfter": [
+    11,
+    10,
+    14
+   ],
+   "gridOrigin": [
+    0,
+    0
+   ],
+   "outsideCells": 0,
+   "insideCells": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     0
+    ],
+    [
+     9,
+     1
+    ],
+    [
+     9,
+     2
+    ],
+    [
+     9,
+     3
+    ],
+    [
+     10,
+     0
+    ],
+    [
+     10,
+     1
+    ],
+    [
+     10,
+     2
+    ],
+    [
+     10,
+     3
+    ]
+   ]
+  },
+  "SteelMill": {
+   "footprintBefore": [
+    12,
+    10,
+    15
+   ],
+   "footprintAfter": [
+    12,
+    10,
+    15
+   ],
+   "gridOrigin": [
+    0,
+    0
+   ],
+   "outsideCells": 0,
+   "insideCells": [
+    [
+     0,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ]
+   ]
+  },
+  "ArchiveExcavation": {
+   "footprintBefore": [
+    10,
+    9,
+    11
+   ],
+   "footprintAfter": [
+    10,
+    9,
+    11
+   ],
+   "gridOrigin": [
+    0,
+    0
+   ],
+   "outsideCells": 0,
+   "insideCells": [
+    [
+     1,
+     0
+    ],
+    [
+     3,
+     0
+    ]
+   ]
+  },
+  "Bathhouse": {
+   "footprintBefore": [
+    9,
+    7,
+    11
+   ],
+   "footprintAfter": [
+    9,
+    7,
+    11
+   ],
+   "gridOrigin": [
+    0,
+    0
+   ],
+   "outsideCells": 0,
+   "insideCells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  "TownPlaza": {
+   "footprintBefore": [
+    9,
+    9,
+    6
+   ],
+   "footprintAfter": [
+    9,
+    9,
+    6
+   ],
+   "gridOrigin": [
+    0,
+    0
+   ],
+   "outsideCells": 0,
+   "insideCells": [
+    [
+     0,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     8
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     7
+    ]
+   ]
+  },
+  "ObservationDeck": {
+   "footprintBefore": [
+    6,
+    6,
+    16
+   ],
+   "footprintAfter": [
+    6,
+    6,
+    16
+   ],
+   "gridOrigin": [
+    0,
+    0
+   ],
+   "outsideCells": 0,
+   "insideCells": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5,
+     5
+    ]
+   ]
+  }
+ }
+}

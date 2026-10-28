@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Electronics",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.15,
+      "g": 0.74,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5310,
+    "Icon": "Sprites/Goods/ElectronicsIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Electronics.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Electronics.PluralDisplayName"
+  }
+}

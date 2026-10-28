@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "RocketAirframe",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.RocketAirframe.PluralDisplayName",
+    "CycleDurationInHours": 1,
+    "Ingredients": [
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 12
+      },
+      {
+        "Id": "Alloy",
+        "Amount": 8
+      },
+      {
+        "Id": "TreatedPlank",
+        "Amount": 4
+      },
+      {
+        "Id": "Polymer",
+        "Amount": 4
+      }
+    ],
+    "Products": [
+      {
+        "Id": "RocketAirframe",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/RocketAirframeIcon"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "PowerModule",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.28,
+      "g": 0.45,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5140,
+    "Icon": "Sprites/Goods/PowerModuleIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.PowerModule.DisplayName",
+    "PluralDisplayNameLocKey": "Good.PowerModule.PluralDisplayName"
+  }
+}

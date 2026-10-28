@@ -1,0 +1,119 @@
+{
+  "SandstonePit": {
+    "origin": [
+      0.57,
+      0,
+      0
+    ],
+    "size": [
+      5,
+      4,
+      4
+    ],
+    "baseZ": 0,
+    "entrance": [
+      1,
+      -1,
+      0
+    ],
+    "idle": [
+      [
+        0.93,
+        0.98,
+        0
+      ]
+    ],
+    "approachFloor": [
+      1,
+      0,
+      0
+    ],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "columnHeights": [
+      [
+        2,
+        2,
+        2,
+        2,
+        4
+      ],
+      [
+        3,
+        3,
+        3,
+        3,
+        4
+      ],
+      [
+        3,
+        3,
+        3,
+        3,
+        4
+      ],
+      [
+        3,
+        3,
+        3,
+        3,
+        4
+      ]
+    ]
+  },
+  "LimestonePit": {
+    "origin": [
+      0.57,
+      -1,
+      0
+    ],
+    "size": [
+      5,
+      3,
+      4
+    ],
+    "baseZ": 0,
+    "entrance": [
+      1,
+      -1,
+      0
+    ],
+    "idle": [
+      [
+        0.93,
+        0.98,
+        0
+      ]
+    ],
+    "approachFloor": null,
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "columnHeights": [
+      [
+        3,
+        3,
+        3,
+        3,
+        0
+      ],
+      [
+        3,
+        3,
+        3,
+        3,
+        4
+      ],
+      [
+        3,
+        3,
+        3,
+        3,
+        4
+      ]
+    ]
+  }
+}

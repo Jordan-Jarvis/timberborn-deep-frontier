@@ -1,0 +1,157 @@
+{
+  "revision": "2026-10-25-item-use-completion",
+  "implementedBuildingScienceOverrides": {"NuclearReactor": 1000000, "UraniumProcessingPlant": 100000, "RadioactiveWasteVault": 100000, "RadioactiveWasteRefinery": 120000, "SmogScrubber": 2500},
+  "nuclearScienceRule": "Nuclear support (uranium processing, waste vault, waste refinery) unlocks beside the reactor, above every non-nuclear building (max 25,000) and below the 1,000,000 reactor, so it is bought in the run-up rather than as a mid-game dead end.",
+  "restaurant": {
+    "requirementStatus": "Build 41 native cooking, cake/coffee meals and conditional water verified; wider acceptance tracked in tools/STATUS.md",
+    "powerDemandHp": 400,
+    "seats": 14,
+    "workers": 4,
+    "mealFoods": ["FreshFish", "Berries", "FermentedMushroom", "EggplantRation"],
+    "optionalServedGoods": ["FermentedCassava", "FermentedSoybean", "SweetBerryCake", "Coffee"],
+    "drinkingWater": "Water",
+    "kitchenRecipes": ["FermentedCassava", "FermentedSoybean", "FermentedMushroom", "SweetBerryCake"],
+    "sweetBerryCake": {"ingredients":[{"Id":"Berries","Amount":2},{"Id":"Corn","Amount":2},{"Id":"Water","Amount":1}],"products":4,"cycleHours":2,"tableOnly":true,"needPoints":0.4,"wellbeing":2},
+    "mealFoodStatus": "First proposed menu; user requires fish, berries and other real foods",
+    "flow": "Reserve seat, sit, worker serves meal and one water if the diner can use its native thirst effect, deduct actual goods atomically, apply each served good's native consumption effects; a full meal (one of each main food) also applies Fine dining (RestaurantDining) once, while out-of-stock main foods are left off a partial meal without it; leave.",
+    "serviceItem": false,
+    "requirements": ["No food or bonus before service", "No service without an attending worker", "No duplicate meals after save/reload", "No single-use restaurant ration"]
+  },
+  "hospital": {
+    "requirementStatus": "Builds 63/66 passed native treatment, 30-patient capacity, staff, supplies, power, access, save/reload and neighborhood care; economic balance pending",
+    "balanceStatus": "Initial playtest values; costs, staffing, supplies and neighborhood radius require economy review",
+    "workers": 6,
+    "powerDemandHp": 600,
+    "scienceUnlock": 25000,
+    "buildingCost": [{"Id":"Plank","Amount":120},{"Id":"Concrete","Amount":80},{"Id":"MetalBlock","Amount":60},{"Id":"Gear","Amount":30},{"Id":"TreatedPlank","Amount":20}],
+    "suppliesPerHour": [{"GoodId":"Medicine","GoodPerHour":2},{"GoodId":"Water","GoodPerHour":12},{"GoodId":"Extract","GoodPerHour":1}],
+    "supplyBufferHours": 24,
+    "patientStay": "Admitted until cured: every treatment effect has SatisfyToMaxValue, so native AttractionNeedBehavior returns to the stay until all four conditions are at their maximum. The ward stays open while a crew is assigned (on call day and night) and treats at crew strength; it closes, releasing patients, only without power, crew or patient meals.",
+    "patientMeals": {"foodUnitsPerGood": 30, "waterGood": "Water", "zombieNeedMultiplier": 2, "waterDays": 1, "lowStockUnits": 30,
+      "policy": "Admitted patients cannot leave to eat, so the Hospital stocks every faction food (carried Box goods with a Hunger effect, chosen at runtime) and water, delivered by native haulers, and feeds patients the stocked good native InventoryNeedBehavior would choose. Water covers waterDays for every bed at the zombie rate (zombieNeedMultiplier x native Thirst)."},
+    "supplyPolicy": "Fixed supplies per staffed, powered operating hour cover the ward and preventive neighborhood care; native fractional supply buffers persist through saves. Staff use none of the thirty patient places.",
+    "areaRadius": 10,
+    "areaPointsPerHour": 0.15,
+    "areaWellbeingPoints": 2,
+    "patientCapacity": 30,
+    "injuryRecoveryRateMultiplier": 1.8,
+    "rateInterpretation": "80 percent faster recovery means 1.8 times the native Medical Bed healing rate, or 5/9 of its treatment time. It does not mean 80 percent shorter treatment time.",
+    "nativeTreatmentEvidence": {
+      "version": "1.1.2.8",
+      "medicalBedInjuryPerHour": 0.015,
+      "passiveInjuryPerDay": 0.1,
+      "observedRepeatVisitTreatmentFraction": 0.5,
+      "hospitalTreatmentFormula": "(multiplier * (duty * medicalBedInjuryPerHour + (1-duty) * passiveInjuryPerDay/24) - (1-duty) * passiveInjuryPerDay/24) / duty",
+      "teethPerHour": 0.5,
+      "contaminationPerHour": 0.068,
+      "status": "Build 63 measured Medical Bed 0.009583455/hour and Hospital 0.01672733/hour in a short 1.03125-hour sample: ratio 1.745439, within 0.08 of the 1.8 steady target. Build 66 passed exact reload, neighborhood gain/decay, medicine exhaustion/replenishment and three-staff injury recovery at 0.009666424/hour.",
+      "sources": ["Buildings/Wellbeing/MedicalBed/MedicalBed.IronTeeth.blueprint.json", "Buildings/Wellbeing/TeethGrindstone/TeethGrindstone.IronTeeth.blueprint.json", "Buildings/Wellbeing/DecontaminationPod/DecontaminationPod.IronTeeth.blueprint.json", "Needs/Need.Beaver.Injury.blueprint.json"]
+    },
+    "treatments": ["Injury", "ChippedTeeth", "BadwaterContamination"],
+    "areaWellbeing": true,
+    "areaRadiusStatus": "Ten-cell native rectangular radius; two wellbeing points, shared need across hospitals. Build 66 verified actual inside gain and outside decay, with medicine gating. Economic balance pending.",
+    "requirements": ["Use native condition recovery", "Separate effects for the three conditions", "Shared capacity of 30 patients", "No immunity to continued badwater exposure"]
+  },
+  "groceryStore": {
+    "requirementStatus": "Native services and access passed builds 68/69; physical belt intake, limits, power and saved-queue continuity passed 73/75; economic balance pending",
+    "workers": 2,
+    "powerDemandHp": 100,
+    "scienceUnlock": 6000,
+    "buildingCost": [{"Id":"Plank","Amount":80},{"Id":"Concrete","Amount":40},{"Id":"MetalBlock","Amount":35},{"Id":"Gear","Amount":20}],
+    "capacityPerFood": 100,
+    "areaRadius": 8,
+    "areaPointsPerHour": 0.15,
+    "areaWellbeingPoints": 2,
+    "minimumStockedFoodTypes": 3,
+    "balanceStatus": "Initial authored balance; economic playtesting pending",
+    "areaWellbeing": true,
+    "stock": ["CannedFish", "PackagedFood", "AlgaeRation", "CornRation", "FermentedCassava", "FermentedSoybean"],
+    "stockStatus": "Six existing edible goods, 100 each; PackagedFood is the existing general preserved food",
+    "flow": "Stock existing foods, provide ordinary native consumer access to their food effects, provide a stocked neighborhood wellbeing effect.",
+    "servicePolicy": "Native shoppers may collect food even off duty or without power. Two clerks haul stock. The neighborhood bonus needs at least one attending clerk, power and three stocked food types; it consumes no service tokens. Public inputs receive food, while takeable goods are reserved for native shoppers rather than exported to factories.",
+    "requirements": ["No production of a grocery-service token", "Haulers and belts feed the same inventory", "One store offers several food types", "Stocking/radius values require balancing"]
+  },
+  "plannedBuildings": [
+    {"id":"SteelMill","name":"Steel mill","status":"Integrated for build 122: generated from this entry by create_frontier_expansion_content.mjs from its late-game study (tools/lategame_batches.json); not built or tested in game","template":"Smelter","toolGroup":"Metal","toolOrder":40,"recipes":["Flux","HighGradeSteel","Alloy"],"footprintTarget":[12,10,16],"workers":6,"powerDemandHp":2500,"scienceUnlock":4500,"costTier":"T3","purpose":"Flux from scrap and deep ore, high-grade steel from metal blocks, coal and flux, alloy from steel and deep alloy. Feeds machine cores, power modules, rocket parts and T5 construction."},
+    {"id":"ArchiveExcavation","name":"Archive excavation","status":"Integrated for build 122: generated from this entry by create_frontier_expansion_content.mjs from its late-game study (tools/lategame_batches.json); not built or tested in game","template":"BotPartFactory (powered workshop with native injuries, Science menu; free placement, no understructure)","toolGroup":"Science","toolOrder":46,"recipes":["RecoveredArtifact","ArchiveData"],"footprintTarget":[10,9,10],"workers":4,"powerDemandHp":400,"scienceUnlock":9000,"costTier":"T4","placement":"Free placement; no understructure requirement, so it never competes with the vanilla Efficient Mine for ruins","purpose":"Charges (Explosives) and timber shoring (Treated Plank) open human ruins for recovered artifacts; grease and metal parts restore their data drives as archive data for guidance computers and telemetry."},
+    {"id":"CryogenicTankFarm","name":"Cryogenic tank farm","status":"Integrated for build 122: generated from this entry by create_frontier_expansion_content.mjs from its late-game study (tools/lategame_batches.json); behaviour from cryogenic_content.mjs; not built or tested in game","template":"LargeTank","toolGroup":"Storage","toolOrder":90,"recipes":[],"storage":{"goods":["LiquidHydrogen","LiquidOxygen"],"goodType":"Liquid","capacity":2000,"selection":"One selected good per tank farm; hydrogen and oxygen never share a tank or pipe network","transport":"Timber Pipes in/out ports"},"footprintTarget":[10,10,8],"workers":0,"powerDemandHp":1000,"powerNote":"Holding power: intake closes without it and stored fuel vents after 12 h (src/DeepFrontier/Scripts/Cryogenics, tools/cryogenic_content.mjs).","scienceUnlock":12000,"costTier":"T4","purpose":"Launch-ready cryogenic fuel storage between the liquefaction plant and the launch pad."}
+  ],
+  "lategameWellbeing": {
+    "status": "Integrated for build 122 by create_frontier_expansion_content.mjs from the late-game studies; native Iron Teeth needs only (vanilla NeedSpec wellbeing values); not built or tested in game. Unlocks follow the Steel Mill (4,500).",
+    "buildings": [
+      {"id":"Bathhouse","name":"Bathhouse","template":"MudBath","toolOrder":155,"scienceUnlock":6000,"powerDemandHp":300,"capacity":12,"effects":[["MudBath",0.6],["Massager",0.6],["WetFur",1.0]],"consumes":[["Water",1.0]],"fullInventoryWorkHours":20,"visitorSlots":"6 seats in the outdoor plunge pool (filled first), 6 inside the closed hall (export_lategame_models.py bathhouse_slots); native MudBath Sitting","slotAnimation":"Sitting","purpose":"Steam baths: warm soak, massage and a wash in one visit; uses pipe-fed or hauled water and power."},
+      {"id":"TownPlaza","name":"Town plaza","template":"ExercisePlaza","toolOrder":105,"scienceUnlock":5000,"powerDemandHp":0,"capacity":15,"effects":[["DancePit",0.6],["Campfire",0.6]],"consumes":[],"visitorSlots":"15 paving spots round the fountain (export_lategame_models.py)","slotAnimation":"Jumping","purpose":"Civic square: music at the bandstand and company round the fountain."},
+      {"id":"ObservationDeck","name":"Observation deck","template":"ExercisePlaza","toolOrder":115,"scienceUnlock":9500,"powerDemandHp":0,"capacity":20,"effects":[["ExercisePlaza",0.6],["RooftopTerrace",0.6]],"consumes":[],"visitorSlots":"20 spots on the layer-12 deck rim (export_lategame_models.py)","slotAnimation":"Sitting","purpose":"Viewing tower: the 48-step helical climb and the view from the deck."}
+    ]
+  },
+  "powerPlants": {
+    "status": "Designed 2026-10-22: generated by create_frontier_expansion_content.mjs (makePowerPlant) from their late-game studies (tools/lategame_batches.json); workerless since 2026-10-27 (the native Steam Engine generator replaced the staffed Smelter workshop and its CoalFiring/OilFiring recipes); not built or tested in game.",
+    "generator": "Native Iron Teeth Steam Engine pattern (generator GoodPoweredGenerator), no workers: GoodConsumingBuilding consumes fuelPerHour of fuel and waterPerHour of Water (inventory for fullInventoryWorkHours hours), GoodPoweredGenerator gives full output while it consumes and none without supplies or while paused, with the Steam Engine's PowerGeneratorSounds, PowerGeneratorParticleController smoke, GoodPoweredGeneratorAnimator and MechanicalNodeIlluminator. Native GoodPoweredGenerator pauses consumption while the power graph does not require power, so fuel burns only while the network draws power, day and night.",
+    "sizing": "Demand measured from the generated Iron Teeth blueprints (MechanicalNodeSpec.PowerInput) on 2026-10-22; scenarios and plant counts in docs/progression.md (Power plants).",
+    "buildings": [
+      {"id":"CoalPowerPlant","name":"Coal power plant","template":"SteamEngine","generator":"GoodPoweredGenerator","toolGroup":"Power","toolOrder":244,"fuel":"Coal","fuelPerHour":1,"waterPerHour":1,"fullInventoryWorkHours":50,"footprintTarget":[5,5,10],"workers":0,"powerOutputHp":5000,"scienceUnlock":4500,"costTier":"T3","purpose":"Mid-game steam power from Coal (Deep Ore Processor DeepCoal) and water: one plant runs a steel mill line, three run a mid-game industrial district."},
+      {"id":"OilPowerPlant","name":"Oil power plant","template":"SteamEngine","generator":"GoodPoweredGenerator","toolGroup":"Power","toolOrder":247,"fuel":"CrudeOil","fuelPerHour":2,"waterPerHour":2,"fullInventoryWorkHours":50,"footprintTarget":[6,6,9],"workers":0,"powerOutputHp":20000,"scienceUnlock":11000,"costTier":"T4","purpose":"Late industrial turbine power from Crude Oil (Deep Ore Processor DeepOil) and water: one plant runs the cryogenic fuel line, three run the whole launch program without nuclear."}
+    ]
+  },
+  "proposedWorkerReadiness": {
+    "status": "Design proposal, not enabled",
+    "scope": "Individual workers at difficult endgame machines; training and wellbeing both matter",
+    "exemptions": ["Food production and delivery", "Water supply", "Civic care", "Basic research and training", "Basic power", "Nuclear cooling and shutdown safety"],
+    "rules": ["Recheck at safe work boundaries", "Do not abandon a dangerous reactor instantly", "Show the actual required/current wellbeing", "Never erase education when wellbeing falls", "Test drought recovery before enabling thresholds"]
+  },
+  "proposedScienceStations": [
+    {"id":"MaterialsLaboratory","sciencePerWorkingHour":400,"powerDemandHp":600,"workers":4,"scienceUnlock":12000,"catalog":"tools/research_content.json","status":"Authored model and native recipe; integration and native acceptance in progress"},
+    {"id":"AppliedResearchInstitute","sciencePerWorkingHour":2000,"powerDemandHp":3000,"workers":6,"status":"Proposed, not implemented"},
+    {"id":"AdvancedScienceCenter","sciencePerWorkingHour":8000,"powerDemandHp":12000,"workers":8,"status":"Proposed, not implemented"}
+  ],
+  "advancedWarehouses": {
+    "status": "User requested; implementation pending",
+    "multipleGoodTypes": true,
+    "limitMode": "Per-good maxima, not reserved shelves; their sum may exceed shared capacity, which is enforced separately with incoming reservations",
+    "selectionRemoval": "Explicit drain action stops new intake and preserves collection; remove the selection only after stock and incoming reservations are empty",
+    "nativeApi": "InventoryInitializer.AddAllowedGoods, HasPublicInput/Output, Inventory.Capacity and UnreservedCapacity; custom IGoodDisallower, not SingleGoodAllower",
+    "requirements": ["Player selects several stored goods", "Per-item stock limits within one shared capacity", "Haulers and conveyor belts use the same native inventory", "Explicit capacity validation without silently changing the player's limits", "Shielded variant blocks radiation from stored goods", "Any nuclear waste inside prevents demolition until transferred or refined"],
+    "capacityAndDimensions": "Not yet balanced or authored"
+  },
+  "oilAndProtection": {
+    "status": "User requested; recipes, assets and gameplay integration pending",
+    "chain": ["CrudeOil", "PolymerResin", "Plastic", "HazmatSuit and other industrial goods"],
+    "legacyPolymer": "Replace the generic Polymer draft with PolymerResin and Plastic at the producing source. Do not silently rename goods in saves or alias old IDs.",
+    "proposedUses": {
+      "CrudeOil": ["Polymer resin", "Lubricants", "Oil generators"],
+      "PolymerResin": ["Plastic", "Composite structures", "Protective coatings", "Filter media"],
+      "Plastic": ["Hazmat suits", "Pipe liners", "Food packaging", "Electronics insulation", "Medical equipment"],
+      "HazmatSuit": ["Reactor work", "Waste handling", "Contamination treatment", "Emergency cleanup"]
+    },
+    "equipment": "Reusable suits with no durability or routine maintenance loop. Exact ingredients and equipping/return rules require implementation.",
+    "radiationTransport": "Shielded pipe pieces for explicitly radioactive liquid goods; solid waste uses appropriate inventories/conveyors. Do not assume ordinary Badwater is radioactive.",
+    "radiationStorage": "Purpose-built shielded warehouses/tanks block stored-material radiation when intact. Persistent waste remains non-deletable and blocks demolition until emptied.",
+    "protectionBoundary": "Equipment and shielding reduce exposure; neither replaces reactor cooling or emergency shutdown."
+  },
+  "advancedConstruction": {
+    "status": "User requested; geometry and native support validation pending",
+    "requirements": ["New materials build blocks, improved overhangs, bridges and scaffolds", "Useful construction capabilities, not cosmetic duplicate recipes", "No arbitrary vertical stacking limit", "Validate vanilla support/occupation rules and actual path/shaft/tubeway clearance"],
+    "proposedUses": {
+      "Sandstone": ["Crushing into aggregate", "Masonry blocks and retaining structures"],
+      "Limestone": ["Cement production", "Metallurgical flux"],
+      "Aggregate": ["Concrete production", "Bridge foundations and structural ballast"],
+      "Cement": ["Concrete production", "Reinforced structural blocks and overhang foundations"],
+      "Concrete": ["Industrial blocks", "Reinforced overhangs", "Bridge piers", "Machine foundations"],
+      "HighGradeSteel": ["Long bridge trusses", "Heavy overhang frames", "Modular scaffold frames", "Machine and rocket manufacturing"],
+      "Aluminum": ["Light bridge decks", "Modular scaffolds", "Elevated logistics frames", "Electrical equipment", "Rocket airframes"]
+    },
+    "spanAndLoadValues": "Not assigned before checking native construction APIs and placement behavior"
+  },
+  "aluminum": {
+    "status": "Design proposal, not implemented",
+    "chain": ["Finite surface bauxite deposit / permanent deep bauxite mine", "Alumina refinery", "High-power aluminum electrolysis", "General industry and rocket manufacturing"],
+    "proposedUses": {
+      "Bauxite": ["Alumina refining", "Specialist cement feedstock"],
+      "Alumina": ["Aluminum electrolysis", "Precision-machining abrasive input", "Industrial filter media"],
+      "Aluminum": ["Electrical equipment", "General alloys", "Advanced research buildings", "Lightweight logistics structures", "Rocket airframes"]
+    },
+    "powerDemandHpDraft": {"DeepBauxiteMine":6000,"AluminaRefinery":8000,"AluminumSmelter":40000},
+    "byproduct": "Refinery badwater; use existing storage/pipes rather than a one-use sludge item",
+    "heatOrMaintenanceSystem": false
+  }
+}

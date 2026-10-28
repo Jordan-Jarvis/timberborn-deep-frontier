@@ -1,0 +1,30 @@
+{
+  "RecipeSpec": {
+    "Id": "FilterMedia",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.FilterMedia.PluralDisplayName",
+    "CycleDurationInHours": 1,
+    "Ingredients": [
+      {
+        "Id": "Plank",
+        "Amount": 2
+      },
+      {
+        "Id": "Algae",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "FilterMedia",
+        "Amount": 2
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/FilterMediaIcon"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "Liquefaction",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.LiquidHydrogen.PluralDisplayName",
+    "CycleDurationInHours": 2,
+    "Ingredients": [
+      {
+        "Id": "HydrogenGas",
+        "Amount": 4
+      },
+      {
+        "Id": "OxygenGas",
+        "Amount": 4
+      },
+      {
+        "Id": "Cryocoolant",
+        "Amount": 2
+      }
+    ],
+    "Products": [
+      {
+        "Id": "LiquidHydrogen",
+        "Amount": 2
+      },
+      {
+        "Id": "LiquidOxygen",
+        "Amount": 2
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/LiquidHydrogenIcon"
+  }
+}

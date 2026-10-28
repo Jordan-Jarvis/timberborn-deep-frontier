@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Alloy",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.38,
+      "g": 0.44,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5110,
+    "Icon": "Sprites/Goods/AlloyIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Alloy.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Alloy.PluralDisplayName"
+  }
+}

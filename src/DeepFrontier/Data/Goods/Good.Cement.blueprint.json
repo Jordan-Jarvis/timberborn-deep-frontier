@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Cement",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.65,
+      "g": 0.64,
+      "b": 0.58,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 4,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5403,
+    "Icon": "Sprites/Goods/CementIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Cement.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Cement.PluralDisplayName"
+  }
+}

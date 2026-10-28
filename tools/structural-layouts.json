@@ -1,0 +1,344 @@
+{
+  "SandstoneMasonryBlock": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "LimestoneMasonryBlock": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "ConcreteBlock": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "ConcreteOverhang8x1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      8,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "ConcreteScaffold3x3": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      3,
+      3,
+      4
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 4
+  },
+  "ReinforcedDamBlock": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "ConcreteOverflowDam": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "ConcreteScaffold3x3H1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      3,
+      3,
+      2
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 2
+  },
+  "ConcreteScaffold3x3H2": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      3,
+      3,
+      3
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 3
+  },
+  "ConcreteScaffold4x4H1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      4,
+      4,
+      2
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 2
+  },
+  "ConcreteScaffold4x4H2": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      4,
+      4,
+      3
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 3
+  },
+  "ConcreteScaffold4x4H3": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      4,
+      4,
+      4
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 4
+  },
+  "ConcreteScaffold5x5H1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      5,
+      5,
+      2
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 2
+  },
+  "ConcreteScaffold5x5H2": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      5,
+      5,
+      3
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 3
+  },
+  "ConcreteScaffold5x5H3": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      5,
+      5,
+      4
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 4
+  },
+  "ConcreteSidePlatform3x3": {
+    "origin": [
+      0,
+      0,
+      -1
+    ],
+    "size": [
+      3,
+      4,
+      2
+    ],
+    "baseZ": 1,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "ConcreteSidePlatform4x4": {
+    "origin": [
+      0,
+      0,
+      -1
+    ],
+    "size": [
+      5,
+      5,
+      2
+    ],
+    "baseZ": 1,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "ConcreteSidePlatform5x5": {
+    "origin": [
+      0,
+      0,
+      -1
+    ],
+    "size": [
+      5,
+      6,
+      2
+    ],
+    "baseZ": 1,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  }
+}

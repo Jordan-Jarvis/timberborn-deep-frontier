@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Coal",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.12,
+      "g": 0.14,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5196,
+    "Icon": "Sprites/Goods/CoalIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Coal.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Coal.PluralDisplayName"
+  }
+}

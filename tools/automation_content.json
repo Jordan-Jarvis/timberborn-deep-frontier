@@ -1,0 +1,1060 @@
+{
+  "_comment": [
+    "Native automation role of every Deep Frontier building template. Read by tools/automation_building_content.mjs (last step of canonical generation) and tools/validate_automation_content.mjs.",
+    "Timberborn 1.1.2.8 automation is decorator-driven, not blueprint-driven: no vanilla workshop, generator, pump or house carries an automation spec.",
+    "Timberborn.AutomationBuildings.AutomationBuildingsConfigurator decorates every IFinishedPausable component with PausableBuildingTerminal, which is decorated with AutoAutomatableNeeder; Timberborn.Automation.AutomationConfigurator decorates IAutomatableNeeder with Automatable and every ITerminal with Automator.",
+    "PausableBuildingTerminal blocks the native BlockableObject while its connected signal is Off. Native Workplace then reports Overstaffed and releases workers; native MechanicalNode.Active follows BlockableObject.IsUnblocked.",
+    "Automator.ValidateAwake throws if one entity is both a transmitter and a terminal, so an automatable building cannot also be a sensor. Signals about Deep Frontier buildings come from the native sensor buildings listed in nativeSignalSources.",
+    "Roles: 'pausable' = native PausableBuildingTerminal from the listed IFinishedPausable sources; 'pausable+terminal' = that plus a component that itself implements IAutomatableNeeder; 'none' = not automatable, matching the named vanilla precedent (vanilla platforms, levees, dams, overhangs and warehouses are not automatable).",
+    "Every spec on an automatable template that no vanilla blueprint uses must be declared in customSpecs, so new runtime behaviour is reviewed for its response to an Off signal."
+  ],
+  "gameVersion": "1.1.2.8",
+  "templateCollection": "TemplateCollections/TemplateCollection.Buildings.IronTeeth.blueprint.json",
+  "nativeContract": {
+    "requiredForAutomation": [
+      "BuildingSpec",
+      "LabeledEntitySpec"
+    ],
+    "pausableSources": {
+      "WorkplaceSpec": "Timberborn.WorkSystem.Workplace : IFinishedPausable",
+      "MechanicalBuildingSpec": "Timberborn.MechanicalSystem.MechanicalBuilding : IFinishedPausable",
+      "DwellingSpec": "Timberborn.DwellingSystem.AutoAssignableDwelling (decorates Dwelling) : IFinishedPausable",
+      "GoodConsumingBuildingSpec": "Timberborn.GoodConsumingBuildingSystem.GoodConsumingBuilding : IFinishedPausable",
+      "ScienceNeedingBuildingSpec": "Timberborn.ScienceSystem.ScienceNeedingBuilding : IFinishedPausable",
+      "BreedingPodSpec": "Timberborn.Reproduction.BreedingPod : IFinishedPausable"
+    },
+    "terminalSpecs": {
+      "FloodgateSpec": "Timberborn.WaterBuildings.Floodgate (+AutoAutomatableNeeder)",
+      "ThrottlingValveSpec": "Timberborn.WaterBuildings.ThrottlingValve (+AutoAutomatableNeeder)",
+      "FillValveSpec": "Timberborn.WaterBuildings.FillValve (+AutoAutomatableNeeder)",
+      "ClutchSpec": "Timberborn.PowerManagement.Clutch : IAutomatableNeeder",
+      "FireworkLauncherSpec": "Timberborn.FireworkSystem.FireworkLauncher : IAutomatableNeeder",
+      "WaterSourceRegulatorSpec": "Timberborn.WaterSourceSystem.WaterSourceRegulator : IAutomatableNeeder",
+      "GateSpec": "Timberborn.AutomationBuildings.Gate : IAutomatableNeeder",
+      "DetonatorSpec": "Timberborn.AutomationBuildings.Detonator : IAutomatableNeeder",
+      "IndicatorSpec": "Timberborn.AutomationBuildings.Indicator : IAutomatableNeeder",
+      "SpeakerSpec": "Timberborn.AutomationBuildings.Speaker : IAutomatableNeeder",
+      "HydroTurbineSpec": "DeepFrontier.Scripts.HydroTurbine : IAutomatableNeeder (src/DeepFrontier/Scripts/HydroTurbine.cs)"
+    },
+    "decoratorEvidence": [
+      {
+        "dll": "Timberborn.AutomationBuildings.dll",
+        "type": "Timberborn.AutomationBuildings.AutomationBuildingsConfigurator",
+        "contains": [
+          "AddDecorator<IFinishedPausable, PausableBuildingTerminal>()",
+          "AddDecorator<PausableBuildingTerminal, AutoAutomatableNeeder>()"
+        ]
+      },
+      {
+        "dll": "Timberborn.Automation.dll",
+        "type": "Timberborn.Automation.AutomationConfigurator",
+        "contains": [
+          "AddDecorator<IAutomatableNeeder, Automatable>()",
+          "AddDecorator<ITerminal, Automator>()"
+        ]
+      },
+      {
+        "dll": "Timberborn.AutomationBuildings.dll",
+        "type": "Timberborn.AutomationBuildings.PausableBuildingTerminal",
+        "contains": [
+          "_blockableObject.Block(this)",
+          "_automatable.State == ConnectionState.Off"
+        ]
+      },
+      {
+        "dll": "Timberborn.Buildings.dll",
+        "type": "Timberborn.Buildings.BuildingsConfigurator",
+        "contains": [
+          "AddDecorator<BuildingSpec, BlockableObject>()",
+          "AddDecorator<BuildingSpec, PausableBuilding>()"
+        ]
+      },
+      {
+        "dll": "Timberborn.WorkSystem.dll",
+        "type": "Timberborn.WorkSystem.WorkSystemConfigurator",
+        "contains": [
+          "AddDecorator<WorkplaceSpec, Workplace>()"
+        ]
+      },
+      {
+        "dll": "Timberborn.WorkSystem.dll",
+        "type": "Timberborn.WorkSystem.Workplace",
+        "contains": [
+          "IFinishedPausable"
+        ]
+      },
+      {
+        "dll": "Timberborn.MechanicalSystem.dll",
+        "type": "Timberborn.MechanicalSystem.MechanicalSystemConfigurator",
+        "contains": [
+          "AddDecorator<MechanicalBuildingSpec, MechanicalBuilding>()"
+        ]
+      },
+      {
+        "dll": "Timberborn.MechanicalSystem.dll",
+        "type": "Timberborn.MechanicalSystem.MechanicalBuilding",
+        "contains": [
+          "IFinishedPausable"
+        ]
+      },
+      {
+        "dll": "Timberborn.GoodConsumingBuildingSystem.dll",
+        "type": "Timberborn.GoodConsumingBuildingSystem.GoodConsumingBuildingSystemConfigurator",
+        "contains": [
+          "AddDecorator<GoodConsumingBuildingSpec, GoodConsumingBuilding>()"
+        ]
+      },
+      {
+        "dll": "Timberborn.GoodConsumingBuildingSystem.dll",
+        "type": "Timberborn.GoodConsumingBuildingSystem.GoodConsumingBuilding",
+        "contains": [
+          "IFinishedPausable"
+        ]
+      }
+    ],
+    "transmitterSpecs": [
+      "LeverSpec",
+      "HttpLeverSpec",
+      "RelaySpec",
+      "MemorySpec",
+      "TimerSpec",
+      "ChronometerSpec",
+      "DepthSensorSpec",
+      "FlowSensorSpec",
+      "ContaminationSensorSpec",
+      "ResourceCounterSpec",
+      "PopulationCounterSpec",
+      "ScienceCounterSpec",
+      "PowerMeterSpec",
+      "WeatherStationSpec"
+    ]
+  },
+  "templates": {
+    "Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/DeepMine/DeepMine.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Food/FertilizerWorks/FertilizerWorks.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Food/FishHatchery/FishHatchery.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Food/GroceryStore/GroceryStore.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Food/Restaurant/Restaurant.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Wellbeing/Hospital/Hospital.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec",
+        "GoodConsumingBuildingSpec"
+      ]
+    },
+    "Buildings/Food/Greenhouse/Greenhouse.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/ChemicalWorks/ChemicalWorks.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/ElectrolysisPlant/ElectrolysisPlant.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/CryogenicLiquefactionPlant/CryogenicLiquefactionPlant.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/RocketAssemblyHangar/RocketAssemblyHangar.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Science/MissionControl/MissionControl.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/SandstonePit/SandstonePit.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec"
+      ]
+    },
+    "Buildings/Metal/LimestonePit/LimestonePit.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec"
+      ]
+    },
+    "Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/StoneCrusher/StoneCrusher.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/CementKiln/CementKiln.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Science/MaterialsLaboratory/MaterialsLaboratory.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Power/ReinforcedHydroTurbine/ReinforcedHydroTurbine.IronTeeth.blueprint": {
+      "role": "pausable+terminal",
+      "sources": [
+        "MechanicalBuildingSpec"
+      ],
+      "terminals": [
+        "HydroTurbineSpec"
+      ]
+    },
+    "Buildings/Storage/RadioactiveWasteVault/RadioactiveWasteVault.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Storage/LargeWarehouse/LargeWarehouse.IronTeeth.blueprint"
+    },
+    "Buildings/Water/RadioactiveWasteExport/RadioactiveWasteExport.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec"
+      ]
+    },
+    "Buildings/Water/RadioactiveSludgeOutfall/RadioactiveSludgeOutfall.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec"
+      ]
+    },
+    "Buildings/Water/RadioactiveSludgeRecoveryPump/RadioactiveSludgeRecoveryPump.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec"
+      ]
+    },
+    "Buildings/Water/RadioactiveSpring/RadioactiveSpring.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Water/DevWaterSource/DevWaterSource.blueprint"
+    },
+    "Buildings/Platforms/SandstoneMasonryBlock/SandstoneMasonryBlock.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Landscaping/Levee/Levee.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/LimestoneMasonryBlock/LimestoneMasonryBlock.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Landscaping/Levee/Levee.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteBlock/ConcreteBlock.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Landscaping/Levee/Levee.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ReinforcedDamBlock/ReinforcedDamBlock.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Landscaping/Levee/Levee.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteOverflowDam/ConcreteOverflowDam.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Landscaping/Dam/Dam.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteOverhang8x1/ConcreteOverhang8x1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/Overhang6x1/Overhang6x1.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteScaffold3x3/ConcreteScaffold3x3.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteScaffold3x3H1/ConcreteScaffold3x3H1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteScaffold3x3H2/ConcreteScaffold3x3H2.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteScaffold4x4H1/ConcreteScaffold4x4H1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteScaffold4x4H2/ConcreteScaffold4x4H2.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteScaffold4x4H3/ConcreteScaffold4x4H3.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteScaffold5x5H1/ConcreteScaffold5x5H1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteScaffold5x5H2/ConcreteScaffold5x5H2.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteScaffold5x5H3/ConcreteScaffold5x5H3.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteSidePlatform3x3/ConcreteSidePlatform3x3.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteSidePlatform4x4/ConcreteSidePlatform4x4.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/ConcreteSidePlatform5x5/ConcreteSidePlatform5x5.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Metal/SteelMill/SteelMill.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "MechanicalBuildingSpec",
+        "GoodConsumingBuildingSpec"
+      ]
+    },
+    "Buildings/Power/OilPowerPlant/OilPowerPlant.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "MechanicalBuildingSpec",
+        "GoodConsumingBuildingSpec"
+      ]
+    },
+    "Buildings/Science/ArchiveExcavation/ArchiveExcavation.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Storage/CryogenicTankFarm/CryogenicTankFarm.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "MechanicalBuildingSpec",
+        "GoodConsumingBuildingSpec"
+      ]
+    },
+    "Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Wellbeing/ExercisePlaza/ExercisePlaza.IronTeeth.blueprint"
+    },
+    "Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Wellbeing/ExercisePlaza/ExercisePlaza.IronTeeth.blueprint"
+    }
+  },
+  "mapObjects": {
+    "MapEditor/Objects/DeepOreSource/DeepOreSource.blueprint": {
+      "role": "none",
+      "precedent": "MapEditor/Objects/ReservePile/ReservePile.blueprint"
+    }
+  },
+  "vanillaPatches": {
+    "Buildings/Science/BotAssembler/BotAssembler.IronTeeth.blueprint": {
+      "nativeRole": "pausable",
+      "nativeSources": [
+        "WorkplaceSpec",
+        "MechanicalBuildingSpec"
+      ],
+      "producer": "tools/bot_upkeep_content.mjs"
+    },
+    "Buildings/Food/GathererFlag/GathererFlag.IronTeeth.blueprint": {
+      "nativeRole": "pausable",
+      "nativeSources": [
+        "WorkplaceSpec"
+      ],
+      "producer": "tools/fishery_building_content.mjs"
+    },
+    "Buildings/Power/PowerShaft/PowerShaft.IronTeeth.blueprint": {
+      "nativeRole": "none",
+      "nativeSources": [],
+      "producer": "tools/vanilla_tool_overrides.mjs"
+    },
+    "Buildings/Power/PowerShaft/PowerShaft.Folktails.blueprint": {
+      "nativeRole": "none",
+      "nativeSources": [],
+      "producer": "tools/vanilla_tool_overrides.mjs"
+    },
+    "Buildings/Power/VerticalPowerShaft/VerticalPowerShaft.IronTeeth.blueprint": {
+      "nativeRole": "none",
+      "nativeSources": [],
+      "producer": "tools/vanilla_tool_overrides.mjs"
+    },
+    "Buildings/Power/VerticalPowerShaft/VerticalPowerShaft.Folktails.blueprint": {
+      "nativeRole": "none",
+      "nativeSources": [],
+      "producer": "tools/vanilla_tool_overrides.mjs"
+    },
+    "Buildings/Power/ImpermeablePowerShaft/ImpermeablePowerShaft.IronTeeth.blueprint": {
+      "nativeRole": "none",
+      "nativeSources": [],
+      "producer": "tools/vanilla_tool_overrides.mjs"
+    },
+    "Buildings/Power/ImpermeablePowerShaft/ImpermeablePowerShaft.Folktails.blueprint": {
+      "nativeRole": "none",
+      "nativeSources": [],
+      "producer": "tools/vanilla_tool_overrides.mjs"
+    },
+    "Buildings/Storage/SmallIndustrialPile/SmallIndustrialPile.IronTeeth.blueprint": {
+      "nativeRole": "none",
+      "nativeSources": [],
+      "producer": "tools/map_object_content.mjs"
+    },
+    "Buildings/Storage/LargeIndustrialPile/LargeIndustrialPile.IronTeeth.blueprint": {
+      "nativeRole": "none",
+      "nativeSources": [],
+      "producer": "tools/map_object_content.mjs"
+    },
+    "Buildings/Storage/PileModule/PileModule.IronTeeth.blueprint": {
+      "nativeRole": "none",
+      "nativeSources": [],
+      "producer": "tools/map_object_content.mjs",
+      "baseRoot": "C:/Program Files (x86)/Steam/steamapps/workshop/content/1062090/3795292508"
+    }
+  },
+  "customSpecs": {
+    "FrontierBotMaintenanceSpec": {
+      "kind": "operational",
+      "response": "Doses are taken only by bots standing inside the building, and the blocked workplace releases its workers on Off, so servicing and wear stop; the maintenance oils in the production inventory are stocked only by the native fill behaviours, which stop while BlockableObject is blocked.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Workforce/BotMaintenance.cs",
+          "contains": "if(wear.Wearing&&wear.Risk==Risk)"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Workforce/BotWear.cs",
+          "contains": "_enterer.CurrentBuilding==Risk.Enterable"
+        }
+      ]
+    },
+    "PowerConnectionStatusSpec": {
+      "kind": "cosmetic",
+      "response": "Status only: shows 'Not connected to a power source' while the building's mechanical graph has no generator or battery (Scripts/PowerConnectionStatus.cs). It takes no part in operation, so the native Off response of the building is unchanged."
+    },
+    "StatusIconAnchorSpec": {
+      "kind": "display",
+      "response": "Display only: caps the height of the native status icon (Scripts/StatusIconAnchor.cs). It takes no part in operation, so the native Off response of the building is unchanged."
+    },
+    "MapEdgeSiteSpec": {
+      "kind": "passive",
+      "response": "Placement rule only (the Radioactive Waste Export must touch the map edge). Off stops intake: the export's consumption is its native Manufactory, which stops when PausableBuildingTerminal blocks the workplace."
+    },
+    "RadioactiveSludgeOutfallSpec": {
+      "kind": "operational",
+      "response": "Off stops release: sludge is released only on native recipe progress, and ProductionEfficiency returns 0 while BlockableObject is blocked.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Radiation/RadiationBuildings.cs",
+          "contains": "if (!_blockable.IsUnblocked) return 0f;"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Radiation/RadiationBuildings.cs",
+          "contains": "_manufactory.ProductionProgressed += OnProductionProgressed"
+        }
+      ]
+    },
+    "RadioactiveSludgeIntakeSpec": {
+      "kind": "operational",
+      "response": "Off stops pumping: ProductionEfficiency returns 0 while BlockableObject is blocked, so there is no recipe progress and no water is demanded; radioactive water leaves the world only through the native intake demand made for progress, its radioactive part credited to the pump buffer in the simulation late tick.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Radiation/RadiationBuildings.cs",
+          "contains": "if (!_blockable.IsUnblocked) return 0f;"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Radiation/RadiationBuildings.cs",
+          "contains": "if (share > 0f) _intake.DemandCleanWaterAmount("
+        }
+      ]
+    },
+    "RestaurantSpec": {
+      "kind": "operational",
+      "response": "Restaurant.IsOperating requires BlockableObject.IsUnblocked; service and serve executors stop on Off.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Restaurant.cs",
+          "contains": "_blockable.IsUnblocked"
+        }
+      ]
+    },
+    "GroceryStoreSpec": {
+      "kind": "operational",
+      "response": "GroceryStore.IsOperating requires BlockableObject.IsUnblocked; the neighborhood effect is removed on Off.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/GroceryStore.cs",
+          "contains": "_blockable.IsUnblocked"
+        }
+      ]
+    },
+    "HospitalSpec": {
+      "kind": "operational",
+      "response": "Hospital.IsOperating requires BlockableObject.IsUnblocked; staff consumption pauses and neighborhood care is removed on Off.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Hospital.cs",
+          "contains": "_blockable.IsUnblocked"
+        }
+      ]
+    },
+    "HospitalPantrySpec": {
+      "kind": "operational",
+      "response": "Patient meals follow the ward: Hospital.CanUse requires IsOperating (BlockableObject.IsUnblocked), so Off closes the ward and native AttractionNeedBehavior releases the patients; the pantry is stocked only by the native fill behaviours, which stop while BlockableObject is blocked.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Hospital.cs",
+          "contains": "public bool CanUse => IsOperating && CrewAssigned>0 && _pantry.Enabled && !_pantry.MealsShort;"
+        }
+      ]
+    },
+    "WorkshopPoweredGeneratorSpec": {
+      "kind": "operational",
+      "response": "Output multiplier follows Workshop.CurrentlyWorking; native MechanicalNode.Active also follows BlockableObject.IsUnblocked, so Off gives 0 hp.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/WorkshopPoweredGenerator.cs",
+          "contains": "_workshop.CurrentlyWorking"
+        }
+      ]
+    },
+    "WorkshopReservoirSpec": {
+      "kind": "operational",
+      "response": "Visible flow follows Workshop.CurrentlyWorking, which stops once the blocked workplace releases its workers.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/WorkshopReservoir.cs",
+          "contains": "_workshop.CurrentlyWorking"
+        }
+      ]
+    },
+    "HydroTurbineSpec": {
+      "kind": "operational",
+      "response": "Gate closes when automated and the input is not On, in addition to native PausableBuildingTerminal blocking.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/HydroTurbine.cs",
+          "contains": "_automatable.IsAutomated&&_automatable.State!=ConnectionState.On"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/HydroTurbine.cs",
+          "contains": "IAutomatableNeeder"
+        }
+      ]
+    },
+    "ShoreFishingSpec": {
+      "kind": "operational",
+      "response": "ShoreFishing.CanWork requires BlockableObject.IsUnblocked.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/ShoreFishing.cs",
+          "contains": "GetComponent<BlockableObject>().IsUnblocked"
+        }
+      ]
+    },
+    "MineralPitSpec": {
+      "kind": "native",
+      "response": "Decorates native yield retrieval, emptying and hauling; gathering is a native Workplace job and stops when the blocked workplace releases its workers."
+    },
+    "MineralPitAnimationSpec": {
+      "kind": "cosmetic",
+      "response": "Plays one hoist cycle per stone delivery; no deliveries occur while blocked. Gates on PausableBuilding.Paused only, so a cycle already started finishes."
+    },
+    "NativeBuildingPropsSpec": {
+      "kind": "cosmetic",
+      "response": "Static native prop placement."
+    },
+    "BuildingWalkwaySpec": {
+      "kind": "passive",
+      "response": "Navigation geometry only."
+    },
+    "PlatformDeckSpec": {
+      "kind": "passive",
+      "response": "Walkable deck geometry only."
+    },
+    "PowerLineSpec": {
+      "kind": "dependency",
+      "response": "Power Lines 11.1.1 connection point; carries native shaft power, no production behaviour."
+    },
+    "BuildingPipeTargetPortsSpec": {
+      "kind": "dependency",
+      "response": "Timber Pipes port registration; fluid transfer is the dependency's, the consuming recipe stays native."
+    },
+    "RestaurantTableServiceSpec": {
+      "kind": "operational",
+      "response": "Table service is part of Restaurant work: orders are only taken while Restaurant.IsOperating (BlockableObject.IsUnblocked); on Off, open orders release their reservations and carried dishes are returned to the kitchen.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Restaurant.cs",
+          "contains": "_blockable.IsUnblocked"
+        }
+      ]
+    },
+    "GroceryStockDisplaySpec": {
+      "kind": "cosmetic",
+      "response": "Shows stock stages from the native inventory; no production behaviour.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/GroceryStockDisplay.cs",
+          "contains": "GroceryStockDisplaySpec"
+        }
+      ]
+    },
+    "AdaptiveSupportsSpec": {
+      "kind": "passive",
+      "response": "Visual support posts stacked to the bed; placement validation only.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Waterside/AdaptiveSupports.cs",
+          "contains": "AdaptiveSupportsSpec"
+        }
+      ]
+    },
+    "WaterDepthWorkCellsSpec": {
+      "kind": "operational",
+      "response": "Water gate blocks the building through BlockableObject when work cells are out of range; the native Off signal blocks the same BlockableObject, so the workplace stops either way.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Waterside/WaterDepthWorkCells.cs",
+          "contains": "BlockableObject"
+        }
+      ]
+    },
+    "RocketLaunchPadSpec": {
+      "kind": "operational",
+      "response": "RocketLaunchPad (IManufactoryLimiter) returns 0 production efficiency while BlockableObject is blocked (pause/automation Off): no preparation progress, no ingredient consumption, no liftoff. A rocket already in flight finishes its flight.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/RocketProgram/RocketLaunchPad.cs",
+          "contains": "!_blockable.IsUnblocked)return 0f"
+        }
+      ]
+    },
+    "RocketMissionControlSpec": {
+      "kind": "operational",
+      "response": "RocketMissionControl.IsOperating requires MechanicalNode.ActiveAndPowered, which is false while blocked; an Off Mission Control gives no launch-risk reduction.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/RocketProgram/RocketMissionControl.cs",
+          "contains": "_power.ActiveAndPowered"
+        }
+      ]
+    },
+    "SmogEmitterSpec": {
+      "kind": "operational",
+      "response": "Pollutes only while SmogEmitterSpec.Activity holds, the same condition that runs its smoke particles: Workshop => Workshop.CurrentlyWorking, Generator => MechanicalNode.ActiveAndPowered && OutputMultiplier > 0 (native PowerGeneratorParticleController), Occupied => anyone inside. An Off signal blocks the building; the blocked workplace releases its workers and production stops, and a blocked generator's MechanicalNode is inactive and its GoodConsumingBuilding stops consuming, so smog stops too (gone at the next field update, at most FieldIntervalHours = 0.25 h). SmogScrubberSpec is not declared yet: no building carries it until the scrubber art is integrated; add it then (its cleaning requires BlockableObject.IsUnblocked).",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Smog/SmogEmitter.cs",
+          "contains": "_workshop?_workshop.CurrentlyWorking"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Smog/SmogEmitter.cs",
+          "contains": ":_generator?_generator.ActiveAndPowered&&_generator.OutputMultiplier>0f"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Smog/SmogService.cs",
+          "contains": "if(!emitter.IsPolluting)continue;"
+        }
+      ]
+    },
+    "RocketLaunchVisualSpec": {
+      "kind": "cosmetic",
+      "response": "Shows and flies the rocket from RocketLaunchPad state only; no production behaviour.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/RocketProgram/RocketLaunchVisual.cs",
+          "contains": "RocketLaunchVisualSpec"
+        }
+      ]
+    },
+    "FrontierWorkforceRiskSpec": {
+      "kind": "operational",
+      "response": "Injury rolls only while Workshop.CurrentlyWorking and only for workers inside; the blocked workplace releases its workers on Off, so rolls and bot wear stop.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Workforce/IndustrialRisk.cs",
+          "contains": "_workshop.CurrentlyWorking"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Workforce/BotWear.cs",
+          "contains": "_enterer.CurrentBuilding==Risk.Enterable"
+        }
+      ]
+    },
+    "FrontierSpecialistWorkplaceSpec": {
+      "kind": "operational",
+      "response": "SpecialistStaffing fills only while native Workplace.Understaffed, which is false while BlockableObject is blocked; the native Workplace releases its crew on Off.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Workforce/SpecialistWorkplace.cs",
+          "contains": "while(workplace.Workplace.Understaffed)"
+        }
+      ]
+    },
+    "FrontierSpecialistSchoolSpec": {
+      "kind": "operational",
+      "response": "Training hours accrue only while Workshop.CurrentlyWorking; graduations follow native Manufactory.ProductionFinished, which cannot happen once the blocked workplace releases its workers.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Workforce/SpecialistSchool.cs",
+          "contains": "_workshop.CurrentlyWorking&&_manufactory.HasCurrentRecipe"
+        }
+      ]
+    },
+    "ReactorMeltdownSpec": {
+      "kind": "operational",
+      "response": "Off (PausableBuildingTerminal blocks the BlockableObject) is a cold shutdown: no production, so no running-fault heat, and the core cools at ShutdownCoolingPerHour whatever its coolant; native AutoEmptiable empties a blocked manufactory and hauling to it stops, so decay-heat rules apply only while unblocked. An automation-Off reactor therefore cools and never melts down. SCRAM is separate: an IManufactoryLimiter returning 0, which keeps the crew and coolant deliveries.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Meltdown/ReactorCore.cs",
+          "contains": "bool blocked = !_blockable.IsUnblocked;"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Meltdown/ReactorCore.cs",
+          "contains": "Mode = ReactorMode.ColdShutdown;"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Meltdown/ReactorCore.cs",
+          "contains": "public float ProductionEfficiency() => _scram != ReactorScram.None || _meltdownRequested ? 0f : 1f;"
+        }
+      ]
+    },
+    "WasteLeakSpec": {
+      "kind": "operational",
+      "response": "Waste Refinery (OutputBlocked): Off seals its tanks; the leak condition requires an unblocked BlockableObject and native AutoEmptiable then hauls the stock out. The Radioactive Waste Vault carries the same spec with StorageFull but has no automation role (role none); it leaks by fill level only.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Meltdown/WasteLeak.cs",
+          "contains": "full = perCycle > 0 && _blockable.IsUnblocked && !inventory.HasUnreservedCapacity("
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Meltdown/WasteLeak.cs",
+          "contains": "bool sealedTanks = !StorageTrigger && !_blockable.IsUnblocked;"
+        }
+      ]
+    },
+    "CryogenicTankSpec": {
+      "kind": "operational",
+      "response": "Off (or Pause) blocks the BlockableObject, so MechanicalBuilding.ActiveAndPowered is false and the tank behaves exactly as in a power cut: CryogenicIntakeGate closes intake at once (no hauler, pipe or valve deliveries; withdrawal continues), and after BufferHours it vents VentPerHourOnPowerLoss units per hour until the signal is On and power is present.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Cryogenics/CryogenicTank.cs",
+          "contains": "bool powered = _power.ActiveAndPowered;"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Cryogenics/CryogenicTank.cs",
+          "contains": "_gate.SetAccepting(powered);"
+        }
+      ]
+    },
+    "BuildingPipeSpec": {
+      "kind": "dependency",
+      "response": "Timber Pipes 11.4.0 sockets of an in-network PipeTank (Liquid stockpile); transfer is the dependency's and is bounded by the native inventory capacity, which CryogenicTankSpec closes on Off."
+    },
+    "SmogScrubberSpec": {
+      "kind": "operational",
+      "response": "Off (or Pause) blocks the BlockableObject, so the scrubber stops cleaning at once: IsCleaning needs the building finished, unblocked and powered, and the smog field is recomputed without it.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Smog/SmogScrubber.cs",
+          "contains": "public bool IsCleaning=>_finished&&_blockable.IsUnblocked&&_power.ActiveAndPowered;"
+        }
+      ]
+    },
+    "AmbientAnimationSpec": {
+      "kind": "cosmetic",
+      "response": "Plays the finished model's one animator loop while the building is finished (storage, the scrubber and attractions without a workshop controller); an Off signal changes nothing it controls."
+    }
+  },
+  "nativeSignalSources": {
+    "_comment": "Not asserted per building. Native sensors that observe Deep Frontier state without a custom transmitter.",
+    "PowerMeterSpec": "Supply / Demand / Surplus / BatteryChargeLevel of the shaft network: NuclearReactor and ReinforcedHydroTurbine output, factory demand.",
+    "ResourceCounterSpec": "District StockLevel / FillRate per good via ResourceCountingService: RadioactiveWaste in the vault, Concrete, DeepAlloy, foods.",
+    "FlowSensorSpec": "Water flow at the hydro turbine outlet or treatment-plant intake.",
+    "DepthSensorSpec": "Reservoir or dam head upstream of the hydro turbine.",
+    "ContaminationSensorSpec": "Badwater (default), radiation or any contamination (badwater + radioactive share) of the water below the arm, chosen per sensor: badwater near the WaterTreatmentPlant or shore fishing flags, radioactive water near outfalls, springs, spills and pump intakes. See nativeTransmitterExtensions.",
+    "PopulationCounterSpec": "Population / worker counts for Hospital and Restaurant scheduling."
+  },
+  "nativeTransmitterExtensions": {
+    "_comment": "Native transmitters whose measured value or output mode Deep Frontier extends without changing their native output semantics. Checked by tools/validate_contamination_sensor.mjs (ContaminationSensorSpec) and tools/validate_contamination_consumers.mjs (WeatherStationSpec): the native evidence below must still decompile from the project Timberborn plugin assemblies, and the Deep Frontier evidence must be present in the scripts.",
+    "ContaminationSensorSpec": {
+      "component": "Timberborn.AutomationBuildings.ContaminationSensor",
+      "decorator": "DeepFrontier.Scripts.Sensors.ContaminationSensorSubstance",
+      "substituted": "ContaminationSensor.GetContamination(floor), postfix: the selected substance's share, rounded to ContaminationSensor.Precision like the native value.",
+      "output": "Unchanged native ISamplingTransmitter: Automator.SetState(SampledContamination.HasValue && Mode.Evaluate(SampledContamination.Value, rounded Threshold)) once per tick from AutomationRunner sampling; Off when no water is below the arm. Changing the substance re-samples at once, as native SetThreshold/SetMode update the output at once.",
+      "nativeEvidence": [
+        {
+          "dll": "Timberborn.AutomationBuildings.dll",
+          "type": "Timberborn.AutomationBuildings.ContaminationSensor",
+          "contains": [
+            "ISamplingTransmitter",
+            "SampledContamination = (HasWaterBelow(out var floor) ? new float?(GetContamination(floor)) : ((float?)null));",
+            "public float GetContamination(int floor)",
+            "return Numbers.RoundToPrecision(_threadSafeWaterMap.ColumnContamination(new Vector3Int(",
+            ", floor)), Precision);",
+            "_automator.SetState(SampledContamination.HasValue && Mode.Evaluate(SampledContamination.Value, Numbers.RoundToPrecision(Threshold, Precision)));",
+            "new ComponentKey(\"ContaminationSensor\")"
+          ]
+        },
+        {
+          "dll": "Timberborn.AutomationBuildingsUI.dll",
+          "type": "Timberborn.AutomationBuildingsUI.ContaminationSensorFragment",
+          "contains": [
+            "float? sampledContamination = _contaminationSensor.SampledContamination;",
+            "_thresholdSlider.SetMarker(_contaminationSensor.SampledContamination.Value);"
+          ]
+        },
+        {
+          "dll": "Timberborn.AutomationBuildingsUI.dll",
+          "type": "Timberborn.AutomationBuildingsUI.AutomationBuildingsUIConfigurator",
+          "contains": [
+            "builder.AddTopFragment(_contaminationSensorFragment);"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Sensors/ContaminationSensorSubstance.cs",
+          "contains": "builder.AddDecorator<ContaminationSensor, ContaminationSensorSubstance>();"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Sensors/ContaminationSensorSubstance.cs",
+          "contains": "if (Substance == SensedSubstance.Badwater) return nativeBadwater;"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Sensors/ContaminationSensorSubstance.cs",
+          "contains": "return Numbers.RoundToPrecision(value, ContaminationSensor.Precision);"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Sensors/ContaminationSensorPatches.cs",
+          "contains": "__result = substance.Measure(new Vector3Int(____sensorCoordinates.x, ____sensorCoordinates.y, floor), __result);"
+        }
+      ]
+    },
+    "WeatherStationSpec": {
+      "component": "Timberborn.AutomationBuildings.WeatherStation",
+      "decorator": "DeepFrontier.Scripts.WeatherStations.WeatherStationRadioactiveTide",
+      "substituted": "WeatherStation.UpdateOutputState(), prefix only while the decorator's Radioactive Tide mode is on: Automator.SetState(sampled tide && native WithinActivationTimeHazardous); WeatherStation.Sample(), prefix that samples the tide (CurrentCycleHazardousWeather.Id == RadioactiveTideTuning.WeatherId) and never skips.",
+      "output": "Unchanged native ISamplingTransmitter for Temperate, Drought and Badtide. Radioactive Tide mode: On from the hazardous stage start minus the native early activation until the stage ends, in cycles whose hazardous weather is the tide (vanilla RadioactiveTideWeather or the Moddable Weathers RadioactiveTideModdableWeather). One SetState per update, as native.",
+      "nativeEvidence": [
+        {
+          "dll": "Timberborn.AutomationBuildings.dll",
+          "type": "Timberborn.AutomationBuildings.WeatherStation",
+          "contains": [
+            "ISamplingTransmitter",
+            "_sampledIsBadtide = _hazardousWeatherService.CurrentCycleHazardousWeather is BadtideWeather;",
+            "WeatherStationMode.Badtide => _sampledIsBadtide && WithinActivationTimeHazardous, ",
+            "_ => throw new ArgumentOutOfRangeException(), ",
+            "new ComponentKey(\"WeatherStation\")",
+            "new PropertyKey<WeatherStationMode>(\"Mode\")"
+          ]
+        },
+        {
+          "dll": "Timberborn.AutomationBuildings.dll",
+          "type": "Timberborn.AutomationBuildings.WeatherStationMode",
+          "contains": [
+            "Temperate,",
+            "Drought,",
+            "Badtide"
+          ]
+        },
+        {
+          "dll": "Timberborn.AutomationBuildingsUI.dll",
+          "type": "Timberborn.AutomationBuildingsUI.WeatherStationFragment",
+          "contains": [
+            "_modeRadioToggle = _radioToggleFactory.CreateLocalizable<WeatherStationMode>(ModeLocKeyPrefix, UQueryExtensions.Q<VisualElement>(_root, \"ModeRadioToggleContainer\", (string)null));",
+            "_modeRadioToggle.RadioButtonSelected += OnModeChanged;",
+            "_modeRadioToggle.Update((int)_weatherStation.Mode);"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/WeatherStations/WeatherStationRadioactiveTide.cs",
+          "contains": "builder.AddDecorator<WeatherStation, WeatherStationRadioactiveTide>();"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/WeatherStations/WeatherStationRadioactiveTide.cs",
+          "contains": "currentCycleHazardousWeather.Id == RadioactiveTideTuning.WeatherId"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/WeatherStations/WeatherStationPatches.cs",
+          "contains": "____automator.SetState(tide.SampledIsRadioactiveTide && WeatherStationNative.WithinActivationTimeHazardous(__instance));"
+        }
+      ]
+    }
+  }
+}

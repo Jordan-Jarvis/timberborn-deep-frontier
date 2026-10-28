@@ -1,0 +1,434 @@
+{
+  "capturedAt": "2026-10-19T16:53:53.1658227-07:00",
+  "gameVersion": "1.1.2.8",
+  "scope": "Installed files and declared manifests; installation does not imply enabled or integration-tested.",
+  "downloadedSource": {
+    "repository": "https://github.com/datvm/TimberbornMods",
+    "commit": "d62e595621d41895114199ad691e51548ef6ef3e",
+    "path": "C:\\Users\\Jordan\\Documents\\TimberbornModding\\vendor\\datvm-timberborn-mods",
+    "license": "MIT; retained in source checkout",
+    "authority": "Author documentation/examples. Installed DLLs are the authority for exact callable signatures."
+  },
+  "packages": [
+    {
+      "workshopId": "3578009707",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3578009707",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3578009707\\version-1.1",
+      "manifest": {
+        "Name": "Moddable Timberborn",
+        "Version": "11.1.3",
+        "Id": "ModdableTimberborn",
+        "MinimumGameVersion": "1.1.1",
+        "Description": "Provide various APIs to mod Timberborn",
+        "RequiredMods": [
+          {
+            "Id": "Harmony"
+          },
+          {
+            "Id": "TimberUi",
+            "MinimumVersion": "11.0.0"
+          }
+        ]
+      },
+      "manifestSha256": "265BD7E1726DD5C0D168BF03976964494EF3BFF505EB088D8384C4515EB4B4A7",
+      "dlls": [
+        {
+          "path": "ModdableTimberborn.dll",
+          "sha256": "22932A41F59EF519E18E24F0AAD95AF93267A214C00BCFF76AECCA0A3D66CA07"
+        }
+      ]
+    },
+    {
+      "workshopId": "3430626620",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3430626620",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3430626620\\version-1.1",
+      "manifest": {
+        "Name": "TimberUi",
+        "Version": "11.0.1",
+        "Id": "TimberUi",
+        "MinimumGameVersion": "1.1.1",
+        "Description": "(Yet another) UI Library for Timberborn. Docs incoming. This is for developers only. This mod itself does nothing."
+      },
+      "manifestSha256": "7E2B5866BCA4E1A11569D77B036CDBB62E9F39F64A93F870254D5D101DC75317",
+      "dlls": [
+        {
+          "path": "TimberUi.dll",
+          "sha256": "6B829016C398AE69A241DC7B1FD77333CA8DADCAE85A68AF67C0812044DCB355"
+        }
+      ]
+    },
+    {
+      "workshopId": "3612110827",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3612110827",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3612110827\\version-1.1",
+      "manifest": {
+        "Name": "Moddable Tool Groups",
+        "Version": "11.0.0",
+        "Id": "ModdableToolGroups",
+        "MinimumGameVersion": "1.0.0",
+        "Description": "Configure Tool groups to your liking.",
+        "RequiredMods": [
+          {
+            "Id": "Harmony"
+          }
+        ]
+      },
+      "manifestSha256": "656B9224B9297284B221B38C294BAFB040BE890045B01AA910748A84ABB0DA1D",
+      "dlls": [
+        {
+          "path": "ConfigurableToolGroups.dll",
+          "sha256": "74AF992EAEFA3D4F7384F6F3EBB4427E33CF1A47E44F4A12E24E2AC4718211C7"
+        }
+      ]
+    },
+    {
+      "workshopId": "3283831040",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3283831040",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3283831040\\version-1.1",
+      "manifest": {
+        "Name": "Mod Settings",
+        "Version": "1.1.1.0",
+        "Id": "eMka.ModSettings",
+        "MinimumGameVersion": "1.1.1.0",
+        "Description": "Helper mod that allows other mods to provide settings for the player. It doesn't do anything on its own, but may be required by some mods.\n\nIf you are a modder, check out source code and examples on GitHub: https://github.com/eMkaQQ/timberborn-modding\n\nDisclaimer: although I work for Mechanistry and I'm one of the developers of Timberborn, this mod is my personal creation, made independently of my job. It shouldn't be considered official game content nor associated with Mechanistry in any way.\n\nSpecial thanks to:\n@juf0816 for the German localization\n@ikalpro for the Spanish localization\n@Igor for the Russian localization\n@filslav for the Ukrainian localization",
+        "RequiredMods": []
+      },
+      "manifestSha256": "29979528822F724E1E4C37DF91EB06DC832690AEEB891A2F7675A374B09E271F",
+      "dlls": [
+        {
+          "path": "Scripts\\ModSettings.ColorPicker.dll",
+          "sha256": "38103E249B64A99ED8C1EDB1AD0026E17B780177D6BAB0B04954155491EF1399"
+        },
+        {
+          "path": "Scripts\\ModSettings.Common.dll",
+          "sha256": "754DEA7C31BB2F136F2201FD15DA3CAF6EB621180C0BC4C958EB83902F2109A6"
+        },
+        {
+          "path": "Scripts\\ModSettings.CommonUI.dll",
+          "sha256": "F53358E811F92106EC997AF6655AC9AED651A6CADFD44B74C2990B62AE2EDA55"
+        },
+        {
+          "path": "Scripts\\ModSettings.Core.dll",
+          "sha256": "5D672D1A5FCED5D509E900A3F2BD721E3B771CF20F0A5306DF7BA0FE43ADCBD5"
+        },
+        {
+          "path": "Scripts\\ModSettings.CoreUI.dll",
+          "sha256": "7296AD55C5E2D4ABFCD24AD2BB185F31331B68587A54BBE36EF8EE1534D80D4D"
+        },
+        {
+          "path": "Scripts\\ModSettings.GameUI.dll",
+          "sha256": "147053F809DCA26DC1C9AAA6CE88C5DFEDF3EC7E209AD897E21FB038DD0CD880"
+        },
+        {
+          "path": "Scripts\\ModSettings.MainMenuUI.dll",
+          "sha256": "91A1906C319AC9A344965D97F8683C16E1CF5F6D062749D12D620F84D3365F1B"
+        },
+        {
+          "path": "Scripts\\ModSettings.MapEditorUI.dll",
+          "sha256": "07B6D0E58522C6D1AB4CAE9EBDE7976F6BBC848957D050529301792575418A93"
+        },
+        {
+          "path": "Scripts\\ModSettings.ModManager.dll",
+          "sha256": "997179D7A131C06B6989DC2A45A8D1388A4F9B61B7DE58D27271622A2EEA4A68"
+        }
+      ]
+    },
+    {
+      "workshopId": "3639961044",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3639961044",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3639961044\\version-1.1",
+      "manifest": {
+        "Name": "Moddable Recipes",
+        "Version": "11.0.0",
+        "Id": "ModdableRecipes",
+        "MinimumGameVersion": "1.1.1",
+        "Description": "Mod support for recipes",
+        "RequiredMods": [
+          {
+            "Id": "Harmony"
+          },
+          {
+            "Id": "TimberUi"
+          }
+        ]
+      },
+      "manifestSha256": "FF83BCBB67DF441E1D7D0EFA6B927A021448B1AA369A9AE4AEC4E08487B7860B",
+      "dlls": [
+        {
+          "path": "ModdableRecipes.dll",
+          "sha256": "1AB6098F2B34CC804822617B970FE98E6A856436B2B80CE0DAE78A91E1AE58E0"
+        }
+      ]
+    },
+    {
+      "workshopId": "3442389397",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3442389397",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3442389397\\version-1.1",
+      "manifest": {
+        "Name": "Scientific Projects",
+        "Version": "11.0.0",
+        "Id": "ScientificProjects",
+        "MinimumGameVersion": "1.1.0",
+        "Description": "Scientific ways to spend your Science!",
+        "RequiredMods": [
+          {
+            "Id": "ModdableTimberborn"
+          }
+        ]
+      },
+      "manifestSha256": "68C025C06461EA09D9B8450F5FDA0AC8BB902DB2F043E2042DE8D1C6D22BE235",
+      "dlls": [
+        {
+          "path": "ScientificProjects.dll",
+          "sha256": "CBC9F8BD628BB4B8FBDB78528939207B44A929D092ADBA67FE37ABF33D869BE1"
+        }
+      ]
+    },
+    {
+      "workshopId": "3337906807",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3337906807",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3337906807\\version-1.1",
+      "manifest": {
+        "Name": "TimberCommons",
+        "Version": "1.23.0",
+        "Id": "Timberborn.IgorZ.TimberCommons",
+        "MinimumGameVersion": "1.1.0.2",
+        "Description": "Various tweaks and modules for making buildings.",
+        "RequiredMods": [
+          {
+            "Id": "Harmony",
+            "MinimumVersion": "2.3.3"
+          },
+          {
+            "Id": "eMka.ModSettings",
+            "MinimumVersion": "1.0.1.0"
+          }
+        ]
+      },
+      "manifestSha256": "130556C46170A8E6DEC836F4DBDA93CDE1CFEB104DA6E0FA9082209DAE2CD035",
+      "dlls": [
+        {
+          "path": "Scripts\\TimberCommons.dll",
+          "sha256": "99181176A3FA4B6687090BCA978D9CDA101DBB0E6252C12DE7D41FE03554F8D6"
+        }
+      ]
+    },
+    {
+      "workshopId": "3434034047",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3434034047",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3434034047\\version-1.1",
+      "manifest": {
+        "Name": "TimberApi UIBuilder",
+        "Version": "1.0.2.3",
+        "Id": "TimberApi.UIBuilder",
+        "MinimumGameVersion": "1.1.0.0",
+        "Description": "A advanced unity UI builder at runtime with many Timberborn presets."
+      },
+      "manifestSha256": "9E43D68DE9E5CD373538AB0A005D44DD233AB056EC9591AABE922FB5A786B759",
+      "dlls": [
+        {
+          "path": "TimberApi.UIBuilderSystem.dll",
+          "sha256": "4FEF3E277781C13A2CBAAFCC2256C5735ADA1617694919B65141E7A2FACA54F7"
+        },
+        {
+          "path": "TimberApi.UIPresets.dll",
+          "sha256": "9C27B8AE574402015F992A4553FFFAEBACC0FC26F8F17FCD085AB49C09B20FC0"
+        }
+      ]
+    },
+    {
+      "workshopId": "3416879061",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3416879061",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3416879061\\version-1.1",
+      "manifest": {
+        "AuthorName": "Bobingabout",
+        "Name": "Bobingabout Script Pack",
+        "Version": "1.1.2.3",
+        "Id": "BobingaboutScriptPack",
+        "MinimumGameVersion": "1.1.0.0",
+        "Description": "A collection of scripts to allow modders to use the code I've written. Featuring the Texture Patcher.",
+        "RequiredMods": []
+      },
+      "manifestSha256": "83D7AA3CC9F211E53B3F6B97A2B53F5C5B72AAD12223F0A4367E96810ABF9255",
+      "dlls": [
+        {
+          "path": "Scripts\\Bobingabout.AutomatedManufactory.dll",
+          "sha256": "522B256BBE6F72F178C833B48DE12F1EAD4EF7F59D8BFAA7CE80A3489B96321A"
+        },
+        {
+          "path": "Scripts\\Bobingabout.CharacterCustomizer.dll",
+          "sha256": "6E3CB1DDE238E64C52075364466C3804B2CBD21ACBA3CC4874B01854E0279D93"
+        },
+        {
+          "path": "Scripts\\Bobingabout.DynamicConstructionStages.dll",
+          "sha256": "CB363DD33114E6D09F868850B5AC42239450B3DE740FDC0AC5B7480A20BCD64C"
+        },
+        {
+          "path": "Scripts\\Bobingabout.GatherablePollination.dll",
+          "sha256": "92F44BE10A0463B31358E7A77205B17033442DF634839F08B347912DCC66DD1C"
+        },
+        {
+          "path": "Scripts\\Bobingabout.MaterialPatcher.dll",
+          "sha256": "1E360356B8D155E0D3D1C024A173798D335E99201802227356EC74CDE70A016F"
+        },
+        {
+          "path": "Scripts\\Bobingabout.MergeableObject.dll",
+          "sha256": "3AC4A8CC0D8D3D4383E5114EBF9AFA1C0589E2D92B0F43F479A6408679ACF8F7"
+        },
+        {
+          "path": "Scripts\\Bobingabout.Misc.dll",
+          "sha256": "7611DC9DA258B270F090CD920B6280B252002E9D9D80AF3A2600EF2D86936260"
+        },
+        {
+          "path": "Scripts\\Bobingabout.Needs.dll",
+          "sha256": "B8F4BF04AE5E6465A35038326C3C97B0A1E13F67142CC4ED6D68577FA88AECA4"
+        },
+        {
+          "path": "Scripts\\Bobingabout.PneumaticTubes.dll",
+          "sha256": "A20673CB238E32597846C1D6232A04B590492D355F795E304DEDAEBB212466E9"
+        },
+        {
+          "path": "Scripts\\Bobingabout.RandomVariant.dll",
+          "sha256": "7E304D013B650C253B635A0F1BF250EBD02886E5F24E8B71935CD523A358EA93"
+        },
+        {
+          "path": "Scripts\\Bobingabout.StockpileVisualizer.dll",
+          "sha256": "C6F535243A6B2E71159865B93BC6D81844F934E6E724C71EEA95DB892406D7EA"
+        },
+        {
+          "path": "Scripts\\Bobingabout.ToggleableProcreationHouse.dll",
+          "sha256": "2FABB373693DCC0D31E2BB284F54EF4C62C093B7CAD2A42A1DA77B332F0B44E1"
+        },
+        {
+          "path": "Scripts\\Bobingabout.Tubeway.dll",
+          "sha256": "8454AEC09CF7E0DA4129553218FE977B050D5ABD894561979F1CF39380133FAB"
+        },
+        {
+          "path": "Scripts\\Bobingabout.Wonder.dll",
+          "sha256": "BD8735BD37F6DB83AFD39D9F27E588A82820FCF7768847CF1A9276487F652C32"
+        }
+      ]
+    },
+    {
+      "workshopId": "3801726769",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3801726769",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3801726769\\version-1.1",
+      "manifest": {
+        "Name": "Timber Pipes",
+        "Version": "11.4.0",
+        "Id": "TimberPipes",
+        "MinimumGameVersion": "1.1.1",
+        "Description": "Pipes!",
+        "RequiredMods": [
+          {
+            "Id": "ModdableTimberborn"
+          },
+          {
+            "Id": "ModdableToolGroups"
+          },
+          {
+            "Id": "eMka.ModSettings"
+          }
+        ],
+        "OptionalMods": [
+          {
+            "Id": "ExtendedOptionalModSupport"
+          }
+        ]
+      },
+      "manifestSha256": "89F84D2D38FFA6E4E392C5A7284810744607F12F1B0B11BFEE2D8BEE786F3886",
+      "dlls": [
+        {
+          "path": "TimberPipes.dll",
+          "sha256": "9C67C8D44002CF3E09F4ED66F20184B081578030FF7075B520C49EFCC92BF52F"
+        }
+      ]
+    },
+    {
+      "workshopId": "3815376360",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3815376360",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3815376360\\version-1.1",
+      "manifest": {
+        "Name": "Conveyor Belts v2",
+        "Version": "11.4.0",
+        "Id": "ConveyorBelt",
+        "MinimumGameVersion": "1.1.1",
+        "Description": "Add conveyor belts",
+        "RequiredMods": [
+          {
+            "Id": "ModdableTimberborn"
+          },
+          {
+            "Id": "ModdableToolGroups"
+          },
+          {
+            "Id": "eMka.ModSettings"
+          }
+        ],
+        "OptionalMods": [
+          {
+            "Id": "ModdedFactionsBuildingSupport"
+          }
+        ]
+      },
+      "manifestSha256": "817D1C2A3C4BF1486C9A5C08EA1C6D50619086F0CB3A0DFD2293DE5996ACA7E4",
+      "dlls": [
+        {
+          "path": "ConveyorBelt.Algorithm.dll",
+          "sha256": "E93273FFF9AAC0D40C873CF44121E24FF8CDC4F7384C87C5CC725B104A49CCE7"
+        },
+        {
+          "path": "ConveyorBelt.dll",
+          "sha256": "F31618E524A8D52D3F81A3196AB69CF065BFAB732726C14F049D61E512D8A209"
+        }
+      ]
+    },
+    {
+      "workshopId": "3766893705",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3766893705",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3766893705\\version-1.1",
+      "manifest": {
+        "Name": "Power Lines",
+        "Version": "11.1.1",
+        "Id": "PowerLines",
+        "MinimumGameVersion": "1.1.1",
+        "Description": "Power Lines",
+        "RequiredMods": [
+          {
+            "Id": "TimberUi"
+          },
+          {
+            "Id": "Harmony"
+          }
+        ]
+      },
+      "manifestSha256": "24B84FC68496A1AA357A12B224420FA310145F3E69414555BA2765A3571E4480",
+      "dlls": [
+        {
+          "path": "PowerLines.dll",
+          "sha256": "3A0CABFEAABCBE7D67D792DA62C7869CC16801EB47A0F3DE8B5F47AF9BB51837"
+        }
+      ]
+    },
+    {
+      "workshopId": "3286476486",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3286476486",
+      "packageDirectory": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\1062090\\3286476486\\version-1.1",
+      "manifest": {
+        "Name": "Ladder",
+        "Version": "1.0.0.4",
+        "Id": "Tobbert.Ladder",
+        "MinimumGameVersion": "1.0.0.0",
+        "Description": "The current upload is unauthorized by the original author. Distribution, reproduction, or use of this material is prohibited without permission from the author, who retains all rights to the content. Please contact the author directly to obtain the necessary authorization for access or distribution.",
+        "RequiredMods": []
+      },
+      "manifestSha256": "98B08B4B54A17B3A1076FA3C15AF27148829A3E44A08CE5B37B0BAF094D852E5",
+      "dlls": [
+        {
+          "path": "Scripts\\Ladder.dll",
+          "sha256": "0A0523FC5462AD560E8B6BDA5C76C8CFDDA765E5196E3BAD149716AC0811D371"
+        }
+      ]
+    }
+  ]
+}

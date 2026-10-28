@@ -1,0 +1,7 @@
+# Text files keep their line endings as authored.
+* -text
+
+# Blender scenes are saved compressed with their textures unpacked
+# (tools/asset-pipeline/unpack_blend_textures.py), so they stay small and
+# live in normal git: the repository uses no Git LFS storage.
+*.blend binary

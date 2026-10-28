@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "Flux",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.25,
+      "g": 0.27,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5090,
+    "Icon": "Sprites/Goods/FluxIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.Flux.DisplayName",
+    "PluralDisplayNameLocKey": "Good.Flux.PluralDisplayName"
+  }
+}

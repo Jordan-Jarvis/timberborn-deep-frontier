@@ -1,0 +1,345 @@
+{
+  "status": "Canonical native sound choice for every Deep Frontier building template under src/DeepFrontier/Data/Buildings. Applied by tools/building_sounds_content.mjs during canonical generation (after radiation and workforce risks, before the automation audit) and checked by tools/validate_building_sounds.mjs. Contract, registry evidence and sound descriptions: docs/sounds.md. Not yet built or heard in game.",
+  "game": "1.1.2.8-ffc2de0-xsw",
+  "registry": {
+    "source": "AudioClip m_Name values under Resources/Sounds in Timberborn_Data/resources.assets (UnityPy 1.25.4), cross-checked against the lowercase Resources container paths in globalgamemanagers. AudioClipService keys clips by exact name; a name with no clip throws ArgumentException('No sound files for: ...') when played.",
+    "selection": ["AdvancedBreedingPod", "Agora", "AquaticFarmhouse", "AquiferDrill", "Automation", "BadwaterDome", "BadwaterPressurizer", "BadwaterRig", "Bakery", "Beehive", "Bell", "BotAssembler", "BotPartFactory", "Brazier", "BreedingPod", "BuilderFlag", "BuildersHut", "Campfire", "Carousel", "Centrifuge", "ChargingStation", "CoffeeBrewery", "ContemplationSpot", "ControlTower", "DanceHall", "DecontaminationPod", "DecorativeClock", "Default", "Detailer.Folktails", "Detailer.IronTeeth", "DirtExcavator", "DirtPile", "Discharge", "DistrictCenter", "DistrictCrossing", "Dynamite", "EarthRecultivator", "EarthRepopulator", "Engine", "ExercisePlaza", "ExplosivesFactory", "Farmhouse", "Fermenter", "FlameOfProgress", "Floodgate", "FoodFactory", "Forester", "GathererFlag", "GearWorkshop", "GeothermalEngine", "GravityBattery", "GreaseFactory", "Grill", "Gristmill", "HallOfAbundance", "HaulingPost", "Herbalist", "HydroponicGarden", "Inventor", "LaborerMonument", "Lido", "Lodge", "LumberMill", "LumberjackFlag", "MechanicalPump", "MedicalBed", "Mine", "Motivatorium", "MudBath", "MudPit", "Numbercruncher", "Observatory", "OilPress", "PaperMill", "Pile", "PowerWheel", "PrintingPress", "Refinery", "ScavengerFlag", "Scratcher", "Shaft", "Shower", "Smelter", "StreamGauge", "Tank", "TappersShack", "TeethGrindstone", "TerraformingStation", "TributeToIngenuity", "Tubeway", "TubewayStation", "Warehouse", "WaterPump", "WaterWheel", "WateringPlace", "WindTunnel", "WindTurbine", "WoodWorkshop", "ZiplinePylon", "ZiplineStation"],
+    "looping": ["Agora", "Bakery", "Carousel", "DanceHall", "GearWorkshop", "Grill", "Gristmill", "Inventor", "LumberMill", "PaperMill", "PrintingPress", "TributeToIngenuity", "WaterPump", "WaterWheel", "WateringPlace"],
+    "basicSelection": ["Aquifer", "BadwaterSource", "Blockage", "Bush", "Default", "GeothermalField", "Relic", "Ruin", "Thorns", "Tree", "UndergroundRuin", "UnstableCore", "WaterCrop.AltSound", "WaterSource"]
+  },
+  "buildings": {
+    "NuclearReactor": {
+      "template": "Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.blueprint",
+      "selection": "Engine", "looping": "PrintingPress", "loopDriver": "workshop", "family": "steam/generator",
+      "comment": "A reactor is a steam plant, so it takes the native Steam Engine pair (Engine selection, PrintingPress loop). PrintingPress is the heaviest loop in the registry: about 80% of its energy is below 150 Hz, with a slow 1.65 s throb. The reactor is a workshop, and WorkshopPoweredGenerator sets its output from the same CurrentlyWorking state, so WorkshopSounds already runs the loop while it generates. PowerGeneratorSoundsSpec is deliberately absent: it would add a second ticking driver on the same BuildingSounds, and the two would toggle against each other whenever IsReadyToProduce and CurrentlyWorking disagree."
+    },
+    "CoalPowerPlant": {
+      "template": "Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.blueprint",
+      "selection": "Engine", "looping": "PrintingPress", "loopDriver": "powerGenerator", "family": "steam/generator",
+      "comment": "A coal-fired steam engine plant takes the native Steam Engine pair (Engine selection, PrintingPress loop: the heaviest, low 1.65 s piston throb), matching its open horizontal engine and flywheel. It is a workerless native Steam Engine generator (GoodConsumingBuilding + GoodPoweredGenerator, no workshop), so the Steam Engine's own PowerGeneratorSoundsSpec runs the loop exactly while it generates (MechanicalNode.ActiveAndPowered && OutputMultiplier > 0)."
+    },
+    "OilPowerPlant": {
+      "template": "Buildings/Power/OilPowerPlant/OilPowerPlant.IronTeeth.blueprint",
+      "selection": "Engine", "looping": "PaperMill", "loopDriver": "powerGenerator", "family": "steam/generator",
+      "comment": "An oil-fired turbine plant keeps the native Engine selection; its loop is PaperMill, the steady high whir of the native Geothermal Engine and Centrifuge, standing for the turbines and cooler fans rather than the coal plant's piston throb. Like the coal plant it is a workerless native Steam Engine generator, so PowerGeneratorSoundsSpec drives the loop while it generates."
+    },
+    "ReinforcedHydroTurbine": {
+      "template": "Buildings/Power/ReinforcedHydroTurbine/ReinforcedHydroTurbine.IronTeeth.blueprint",
+      "selection": "WaterWheel", "looping": "Gristmill", "loopDriver": "powerGenerator", "family": "steam/generator",
+      "comment": "Unchanged deliberate choice (tools/hydro_content.json loopingSound; verified in native reload 103). It uses the Water Wheel selection with the Wind Turbine's mechanical Gristmill loop. PowerGeneratorSoundsSpec starts the loop from MechanicalNode.ActiveAndPowered && OutputMultiplier > 0. The validator fails if hydro_content.json disagrees."
+    },
+    "DeepDrill": {
+      "template": "Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.blueprint",
+      "selection": "AquiferDrill", "looping": "GearWorkshop", "loopDriver": "workshop", "family": "mining",
+      "comment": "A water-fed drill rig, so it takes the native Aquifer Drill selection, a drilling thump with 0.83 periodicity. The loop is the native mine machinery loop (GearWorkshop, as on the Mine and Efficient Mine). It plays while the workshop extracts."
+    },
+    "DeepMine": {
+      "template": "Buildings/Metal/DeepMine/DeepMine.IronTeeth.blueprint",
+      "selection": "Mine", "looping": "GearWorkshop", "loopDriver": "workshop", "family": "mining",
+      "comment": "A permanent vein mine with the native Efficient Mine pair (Mine selection, GearWorkshop loop), unchanged. The loop plays while the workshop extracts."
+    },
+    "SandstoneQuarry": {
+      "template": "Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.blueprint",
+      "selection": "Mine", "looping": "GearWorkshop", "loopDriver": "workshop", "family": "mining",
+      "comment": "Powered extraction from a deep seam over an understructure, like the Efficient Mine. It keeps the native mine pair (Mine selection, GearWorkshop loop) while working."
+    },
+    "LimestoneQuarry": {
+      "template": "Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.blueprint",
+      "selection": "Mine", "looping": "GearWorkshop", "loopDriver": "workshop", "family": "mining",
+      "comment": "Same role and native mine pair as the Sandstone Quarry."
+    },
+    "SandstonePit": {
+      "template": "Buildings/Metal/SandstonePit/SandstonePit.IronTeeth.blueprint",
+      "selection": "DirtExcavator", "looping": "", "loopDriver": "none", "family": "mining",
+      "comment": "Workers dig finite surface deposits by hand, so it takes the Dirt Excavator digging selection. That replaces ScavengerFlag, which is scrap scavenging. The pit has no loop driver: it is a yield-removing flag building like the native gatherer and scavenger flags, which have no loop either."
+    },
+    "LimestonePit": {
+      "template": "Buildings/Metal/LimestonePit/LimestonePit.IronTeeth.blueprint",
+      "selection": "DirtExcavator", "looping": "", "loopDriver": "none", "family": "mining",
+      "comment": "Same role as the Sandstone Pit: digging selection, no loop driver."
+    },
+    "DeepProcessor": {
+      "template": "Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.blueprint",
+      "selection": "Smelter", "looping": "Grill", "loopDriver": "workshop", "family": "furnace/smelter",
+      "comment": "An ore-refining furnace with the native Smelter selection. The native Smelter has no loop, so the working loop is Grill: a low fire roar with crackle (about 73% of its energy below 150 Hz, 3 onsets/s), the closest registered furnace sound. It replaces the previous silent ('Smelter', '')."
+    },
+    "CementKiln": {
+      "template": "Buildings/Metal/CementKiln/CementKiln.IronTeeth.blueprint",
+      "selection": "Smelter", "looping": "Grill", "loopDriver": "workshop", "family": "furnace/smelter",
+      "comment": "A log-fired lime kiln: Smelter furnace selection and the Grill fire roar with crackle while it fires cement."
+    },
+    "ChemicalWorks": {
+      "template": "Buildings/Metal/ChemicalWorks/ChemicalWorks.IronTeeth.blueprint",
+      "selection": "GreaseFactory", "looping": "Bakery", "loopDriver": "workshop", "family": "furnace/smelter",
+      "comment": "Its recipes include Lubricant, so it takes the native Grease Factory selection, the Iron Teeth plant that makes grease. The furnace-family loop is Bakery: a steady oven-burner roar (63% of its energy below 150 Hz, few onsets) for heated reaction vessels. It replaces the silent ('Smelter', '')."
+    },
+    "UraniumProcessingPlant": {
+      "template": "Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.blueprint",
+      "selection": "Smelter", "looping": "PaperMill", "loopDriver": "workshop", "family": "furnace/smelter",
+      "comment": "Furnace-family selection (Smelter) for yellowcake calcining and fuel sintering. The loop is PaperMill, the native Centrifuge's steady mid/high whir, which stands for the enrichment centrifuges behind EnrichedFuel."
+    },
+    "StoneCrusher": {
+      "template": "Buildings/Metal/StoneCrusher/StoneCrusher.IronTeeth.blueprint",
+      "selection": "Mine", "looping": "Gristmill", "loopDriver": "workshop", "family": "mining",
+      "comment": "Rock handling takes the Mine selection. Crushing stone into aggregate takes the Gristmill millstone-grinding loop, a broadband grind at 3.2 onsets/s. It replaces the silent ('Smelter', ''); a crusher is not a furnace."
+    },
+    "ConcreteMixer": {
+      "template": "Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.blueprint",
+      "selection": "Centrifuge", "looping": "PaperMill", "loopDriver": "workshop", "family": "pump/water",
+      "comment": "A rotating drum mixing a wet batch takes the native Centrifuge pair: Centrifuge selection and the PaperMill churning whir while it mixes. It replaces the silent ('Smelter', '')."
+    },
+    "PrecisionMachineWorks": {
+      "template": "Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.blueprint",
+      "selection": "BotPartFactory", "looping": "GearWorkshop", "loopDriver": "workshop", "family": "gear/workshop",
+      "comment": "Precision parts (machine cores, electronics, power modules) keep the Bot Part Factory selection. The loop is the native gear-cutting GearWorkshop clatter (high-band, 4.6 onsets/s), replacing the previous empty loop."
+    },
+    "RocketAssemblyHangar": {
+      "template": "Buildings/Metal/RocketAssemblyHangar/RocketAssemblyHangar.IronTeeth.blueprint",
+      "selection": "BotAssembler", "looping": "GearWorkshop", "loopDriver": "workshop", "family": "gear/workshop",
+      "comment": "Large mechanical assembly of airframes and propulsion takes the Bot Assembler selection and the GearWorkshop metalworking loop. It replaces FoodFactory/Grill, a cooking pair inherited from its template."
+    },
+    "WaterTreatmentPlant": {
+      "template": "Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.blueprint",
+      "selection": "MechanicalPump", "looping": "WaterPump", "loopDriver": "workshop", "family": "pump/water",
+      "comment": "Pumps and filter beds for pure water and pipe-fed reactor coolant. It takes the Mechanical Pump selection and the native WaterPump stroke loop (0.78 periodicity) while treating."
+    },
+    "ElectrolysisPlant": {
+      "template": "Buildings/Metal/ElectrolysisPlant/ElectrolysisPlant.IronTeeth.blueprint",
+      "selection": "ChargingStation", "looping": "WaterPump", "loopDriver": "workshop", "family": "pump/water",
+      "comment": "Electrolysis is current through water. The selection is the electrical Charging Station sound, and the loop is the WaterPump circulation loop while the cells run."
+    },
+    "CryogenicLiquefactionPlant": {
+      "template": "Buildings/Metal/CryogenicLiquefactionPlant/CryogenicLiquefactionPlant.IronTeeth.blueprint",
+      "selection": "Tank", "looping": "PaperMill", "loopDriver": "workshop", "family": "pump/water",
+      "comment": "It liquefies gases into insulated vessels, so it takes the native Tank liquid-vessel selection. The loop is PaperMill, the steady compressor and expander whir also used by the native Centrifuge and Geothermal Engine."
+    },
+    "RadioactiveWasteRefinery": {
+      "template": "Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.blueprint",
+      "selection": "DecontaminationPod", "looping": "WaterPump", "loopDriver": "workshop", "family": "pump/water",
+      "comment": "It refines waste and runs DecontaminateWater, so it takes the native Decontamination Pod selection. The WaterPump loop is for the pumped sludge and contaminated water it handles."
+    },
+    "RadioactiveWasteExport": {
+      "template": "Buildings/Water/RadioactiveWasteExport/RadioactiveWasteExport.IronTeeth.blueprint",
+      "selection": "Discharge", "looping": "WaterPump", "loopDriver": "workshop", "family": "pump/water",
+      "comment": "An edge outlet shipping sludge and contaminated water off the map. It keeps the native Discharge selection and adds the WaterPump loop while it pumps a batch out."
+    },
+    "RadioactiveSludgeOutfall": {
+      "template": "Buildings/Water/RadioactiveSludgeOutfall/RadioactiveSludgeOutfall.IronTeeth.blueprint",
+      "selection": "Discharge", "looping": "WaterPump", "loopDriver": "workshop", "family": "pump/water",
+      "comment": "Releases sludge into the world, like the native Discharge whose selection it keeps. The WaterPump loop gives audible feedback that hazardous sludge is being pumped out."
+    },
+    "RadioactiveSludgeRecoveryPump": {
+      "template": "Buildings/Water/RadioactiveSludgeRecoveryPump/RadioactiveSludgeRecoveryPump.IronTeeth.blueprint",
+      "selection": "WaterPump", "looping": "WaterPump", "loopDriver": "workshop", "family": "pump/water",
+      "comment": "A pump with a native WaterInput intake keeps the native water pump pair, unchanged."
+    },
+    "RadioactiveWasteVault": {
+      "template": "Buildings/Storage/RadioactiveWasteVault/RadioactiveWasteVault.IronTeeth.blueprint",
+      "selection": "Warehouse", "looping": "", "loopDriver": "none", "family": "storage",
+      "comment": "Locked storage for solid spent-fuel casks keeps the native Warehouse storage selection. Tank would wrongly suggest liquid. The vault has no loop driver: no workshop, attraction or generator."
+    },
+    "LaunchPad": {
+      "template": "Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.blueprint",
+      "selection": "GeothermalEngine", "looping": "PaperMill", "loopDriver": "workshop", "family": "steam/generator",
+      "comment": "The selection is the Geothermal Engine's deep pressurised rumble (87% of its energy below 200 Hz), the closest native sound to venting propellant. The loop is PaperMill, the steady whir and hiss of the Geothermal Engine and Centrifuge, standing for turbopumps and cryogenic venting. It plays while the workshop works a mission (crew preparation). The launch itself keeps its own native wonder-launch and explosion sounds (RocketLaunchPad.cs). The workshop is the only driver: rocket_program_content.mjs removes RangedEffectBuildingSpec. If that spec returns, the second driver makes this entry fail. It replaces FoodFactory/Grill."
+    },
+    "MissionControl": {
+      "template": "Buildings/Science/MissionControl/MissionControl.IronTeeth.blueprint",
+      "selection": "ControlTower", "looping": "Inventor", "loopDriver": "workshop", "family": "civic/service",
+      "comment": "A civic control room. It takes the native Control Tower selection (Iron Teeth bot command tower) and the quiet Inventor bench-tinkering loop, not an industrial loop, while it builds guidance computers and telemetry."
+    },
+    "TechnicalSchool": {
+      "template": "Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.blueprint",
+      "selection": "Numbercruncher", "looping": "Inventor", "loopDriver": "workshop", "family": "civic/service",
+      "comment": "A civic learning building. It takes the Iron Teeth Numbercruncher science selection and the quiet Inventor bench loop, not an industrial loop, while classes train specialists."
+    },
+    "MaterialsLaboratory": {
+      "template": "Buildings/Science/MaterialsLaboratory/MaterialsLaboratory.IronTeeth.blueprint",
+      "selection": "Inventor", "looping": "Inventor", "loopDriver": "workshop", "family": "civic/service",
+      "comment": "A science producer like the native Inventor, so it takes the native Inventor pair while researching. It replaces the inherited silent ('Smelter', '')."
+    },
+    "PublicHealthLab": {
+      "template": "Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.blueprint",
+      "selection": "Herbalist", "looping": "Inventor", "loopDriver": "workshop", "family": "civic/service",
+      "comment": "Makes medicine, so it takes the native Herbalist medicine-maker selection. The loop is the quiet Inventor lab-bench loop while working. It replaces the inherited OilPress selection."
+    },
+    "Hospital": {
+      "template": "Buildings/Wellbeing/Hospital/Hospital.IronTeeth.blueprint",
+      "selection": "MedicalBed", "looping": "", "loopDriver": "none", "family": "civic/service",
+      "comment": "Native Medical Bed selection and no loop, matching the native Medical Bed. The hospital has two loop drivers with different meanings: AttractionSpec (EnterableSounds while patients are inside) and RangedEffectBuildingSpec (while powered). A loop would follow whichever changed last."
+    },
+    "GroceryStore": {
+      "template": "Buildings/Food/GroceryStore/GroceryStore.IronTeeth.blueprint",
+      "selection": "Agora", "looping": "", "loopDriver": "none", "family": "civic/service",
+      "comment": "A neighbourhood market. It takes the Agora selection, a social gathering murmur, which sets it clearly apart from the Restaurant's Grill selection and the vault's Warehouse storage. It has no loop: its only driver, RangedEffectBuilding, follows unpaused and powered, not clerk attendance or stock, so shoppers' chatter would play in an empty shop."
+    },
+    "Restaurant": {
+      "template": "Buildings/Food/Restaurant/Restaurant.IronTeeth.blueprint",
+      "selection": "Grill", "looping": "Bakery", "loopDriver": "workshop", "family": "civic/service",
+      "comment": "A kitchen and dining hall. It takes the Folktails Grill cooking selection and the Bakery oven loop, not an industrial loop, while the kitchen ferments and bakes sweet berry cake. The only driver is the workshop: there is no AttractionSpec, so no EnterableSounds."
+    },
+    "FertilizerWorks": {
+      "template": "Buildings/Food/FertilizerWorks/FertilizerWorks.IronTeeth.blueprint",
+      "selection": "Fermenter", "looping": "Gristmill", "loopDriver": "workshop", "family": "food/agri",
+      "comment": "Composting and fertilizer mixing are fermentation and grinding, so it takes the native Iron Teeth Fermenter pair (Fermenter selection, Gristmill loop). It replaces the inherited OilPress/Inventor."
+    },
+    "FishHatchery": {
+      "template": "Buildings/Food/FishHatchery/FishHatchery.IronTeeth.blueprint",
+      "selection": "BreedingPod", "looping": "WaterWheel", "loopDriver": "workshop", "family": "food/agri",
+      "comment": "Breeding pens in river water. It takes the Breeding Pod selection, a gurgling breeding-vat sound (72% of its energy below 200 Hz), and the steady WaterWheel water-flow loop while the pens produce."
+    },
+    "FisheryWorks": {
+      "template": "Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.blueprint",
+      "selection": "AquaticFarmhouse", "looping": "WaterWheel", "loopDriver": "workshop", "family": "food/agri",
+      "comment": "Aquaculture basins with a wheel that turns during production. It takes the Aquatic Farmhouse selection and the native WaterWheel loop, replacing the FoodFactory/Grill cooking pair."
+    },
+    "FoodPackagingWorks": {
+      "template": "Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.blueprint",
+      "selection": "FoodFactory", "looping": "Grill", "loopDriver": "workshop", "family": "food/agri",
+      "comment": "Processed and canned rations are exactly what the native Iron Teeth Food Factory makes, so it keeps that pair (FoodFactory selection, Grill cooking loop), unchanged."
+    },
+    "Greenhouse": {
+      "template": "Buildings/Food/Greenhouse/Greenhouse.IronTeeth.blueprint",
+      "selection": "HydroponicGarden", "looping": "WaterWheel", "loopDriver": "workshop", "family": "food/agri",
+      "comment": "Indoor irrigated growing keeps the native Hydroponic Garden pair, unchanged."
+    },
+    "SandstoneMasonryBlock": {
+      "template": "Buildings/Platforms/SandstoneMasonryBlock/SandstoneMasonryBlock.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A retaining block that behaves like the native Levee and Terrain Block, both of which use the Default selection with no loop. There is no loop driver."
+    },
+    "LimestoneMasonryBlock": {
+      "template": "Buildings/Platforms/LimestoneMasonryBlock/LimestoneMasonryBlock.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "Same as the Sandstone Masonry Block: native Levee/Terrain Block Default selection, no loop driver."
+    },
+    "ConcreteBlock": {
+      "template": "Buildings/Platforms/ConcreteBlock/ConcreteBlock.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A foundation and retaining block: native Levee/Terrain Block Default selection, no loop driver."
+    },
+    "ReinforcedDamBlock": {
+      "template": "Buildings/Platforms/ReinforcedDamBlock/ReinforcedDamBlock.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A solid dam module: native Levee Default selection, no loop driver."
+    },
+    "ConcreteOverflowDam": {
+      "template": "Buildings/Platforms/ConcreteOverflowDam/ConcreteOverflowDam.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "Retains water to 0.65 of a layer, which is the native Dam's behaviour, and the native Dam uses the Default selection. Floodgate would suggest an adjustable gate it does not have. No loop driver."
+    },
+    "ConcreteOverhang8x1": {
+      "template": "Buildings/Platforms/ConcreteOverhang8x1/ConcreteOverhang8x1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A cantilever deck: the native Overhang selection is Default. No loop driver."
+    },
+    "ConcreteScaffold3x3": {
+      "template": "Buildings/Platforms/ConcreteScaffold3x3/ConcreteScaffold3x3.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A stackable platform: the native Platform and Metal Platform selection is Default. No loop driver."
+    },
+    "ConcreteScaffold3x3H1": {
+      "template": "Buildings/Platforms/ConcreteScaffold3x3H1/ConcreteScaffold3x3H1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "Platform variant: native Platform Default selection, no loop driver."
+    },
+    "ConcreteScaffold3x3H2": {
+      "template": "Buildings/Platforms/ConcreteScaffold3x3H2/ConcreteScaffold3x3H2.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "Platform variant: native Platform Default selection, no loop driver."
+    },
+    "ConcreteScaffold4x4H1": {
+      "template": "Buildings/Platforms/ConcreteScaffold4x4H1/ConcreteScaffold4x4H1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "Platform variant: native Platform Default selection, no loop driver."
+    },
+    "ConcreteScaffold4x4H2": {
+      "template": "Buildings/Platforms/ConcreteScaffold4x4H2/ConcreteScaffold4x4H2.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "Platform variant: native Platform Default selection, no loop driver."
+    },
+    "ConcreteScaffold4x4H3": {
+      "template": "Buildings/Platforms/ConcreteScaffold4x4H3/ConcreteScaffold4x4H3.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "Platform variant: native Platform Default selection, no loop driver."
+    },
+    "ConcreteScaffold5x5H1": {
+      "template": "Buildings/Platforms/ConcreteScaffold5x5H1/ConcreteScaffold5x5H1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "Platform variant: native Platform Default selection, no loop driver."
+    },
+    "ConcreteScaffold5x5H2": {
+      "template": "Buildings/Platforms/ConcreteScaffold5x5H2/ConcreteScaffold5x5H2.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "Platform variant: native Platform Default selection, no loop driver."
+    },
+    "ConcreteScaffold5x5H3": {
+      "template": "Buildings/Platforms/ConcreteScaffold5x5H3/ConcreteScaffold5x5H3.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "Platform variant: native Platform Default selection, no loop driver."
+    },
+    "ConcreteSidePlatform3x3": {
+      "template": "Buildings/Platforms/ConcreteSidePlatform3x3/ConcreteSidePlatform3x3.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A side-hung deck: native Platform/Overhang Default selection, no loop driver."
+    },
+    "ConcreteSidePlatform4x4": {
+      "template": "Buildings/Platforms/ConcreteSidePlatform4x4/ConcreteSidePlatform4x4.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A side-hung deck: native Platform/Overhang Default selection, no loop driver."
+    },
+    "ConcreteSidePlatform5x5": {
+      "template": "Buildings/Platforms/ConcreteSidePlatform5x5/ConcreteSidePlatform5x5.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A side-hung deck: native Platform/Overhang Default selection, no loop driver."
+    },
+    "SteelMill": {
+      "template": "Buildings/Metal/SteelMill/SteelMill.IronTeeth.blueprint",
+      "selection": "Smelter", "looping": "PrintingPress", "loopDriver": "workshop", "family": "furnace/smelter",
+      "comment": "Smelter template, workshop (integrated build 122). Smelter furnace selection with the heavy PrintingPress rolling-mill and forge throb, played by the workshop while it melts and rolls."
+    },
+    "ArchiveExcavation": {
+      "template": "Buildings/Science/ArchiveExcavation/ArchiveExcavation.IronTeeth.blueprint",
+      "selection": "DirtExcavator", "looping": "GearWorkshop", "loopDriver": "workshop", "family": "mining",
+      "comment": "BotPartFactory template, workshop (integrated build 122). Digging selection for opening ruins and the native mine machinery loop (winch and sieves) while the workshop works."
+    },
+    "CryogenicTankFarm": {
+      "template": "Buildings/Storage/CryogenicTankFarm/CryogenicTankFarm.IronTeeth.blueprint",
+      "selection": "Tank", "looping": "", "loopDriver": "none", "family": "storage",
+      "comment": "LargeTank template, storage without a workshop (integrated build 122). Native Tank selection. No native loop driver tracks its powered holding state, so it has no loop."
+    },
+    "SmogScrubber": {
+      "template": "Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.blueprint",
+      "selection": "WindTunnel", "looping": "", "loopDriver": "none", "family": "pump/water",
+      "comment": "AquiferDrill-derived powered building without workers (integrated build 122). The fan selection is the Iron Teeth Wind Tunnel. It is not a workshop, attraction or generator, and RangedEffectBuildingSpec would add a second IBuildingWithRange, so no native driver can play a loop: the planned WaterPump loop is dropped."
+    },
+    "Bathhouse": {
+      "template": "Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.blueprint",
+      "selection": "Shower", "looping": "WateringPlace", "loopDriver": "attraction", "family": "civic/service",
+      "comment": "MudBath attraction template. Steam baths take the native Shower selection; the WateringPlace water loop plays through the native attraction's EnterableSounds while bathers are inside."
+    },
+    "TownPlaza": {
+      "template": "Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.blueprint",
+      "selection": "ExercisePlaza", "looping": "Agora", "loopDriver": "attraction", "family": "civic/service",
+      "comment": "ExercisePlaza attraction template. The native Exercise Plaza selection for an open square, and the Agora crowd loop while visitors gather (attraction EnterableSounds)."
+    },
+    "ObservationDeck": {
+      "template": "Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.blueprint",
+      "selection": "Observatory", "looping": "", "loopDriver": "none", "family": "civic/service",
+      "comment": "ExercisePlaza attraction template. A viewing tower takes the native Observatory selection; no registered loop suits a quiet deck, so it has none."
+    }
+  },
+  "basicSelection": {
+    "RadioactiveSpring": {
+      "template": "Buildings/Water/RadioactiveSpring/RadioactiveSpring.blueprint",
+      "sound": "BadwaterSource", "alternative": "",
+      "comment": "A dev-mode natural object (no BuildingSpec) that plays UI.BasicSelection.<SoundName>. A seep of toxic sludge takes the native Badwater Source selection, shared by the native badwater source, seep and badtide drain, instead of the clean WaterSource it inherited from DevWaterSource."
+    },
+    "RadioactiveSpringSource": {
+      "template": "MapEditor/Objects/RadioactiveSpringSource/RadioactiveSpringSource.blueprint",
+      "sound": "BadwaterSource", "alternative": "",
+      "comment": "The map-editor placement of the same spring (tools/radiation_content.mjs RADIATION_SPRINGS). It is kept identical to the dev-mode spring so both placements sound alike."
+    }
+  },
+  "planned": {}
+}

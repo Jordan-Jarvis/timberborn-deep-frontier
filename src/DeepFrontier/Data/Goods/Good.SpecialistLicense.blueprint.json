@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "SpecialistLicense",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.9,
+      "g": 0.35,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5290,
+    "Icon": "Sprites/Goods/SpecialistLicenseIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.SpecialistLicense.DisplayName",
+    "PluralDisplayNameLocKey": "Good.SpecialistLicense.PluralDisplayName"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "RecoveredTelemetry",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.2,
+      "g": 0.8,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5270,
+    "Icon": "Sprites/Goods/RecoveredTelemetryIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.RecoveredTelemetry.DisplayName",
+    "PluralDisplayNameLocKey": "Good.RecoveredTelemetry.PluralDisplayName"
+  }
+}

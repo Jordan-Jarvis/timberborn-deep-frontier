@@ -1,0 +1,21 @@
+{
+  "NeedSpec": {
+    "Id": "HeavySmog",
+    "BackwardCompatibleIds": [],
+    "Order": 96,
+    "NeedGroupId": "BasicNeeds",
+    "CharacterType": "Beaver",
+    "StartingValue": 0,
+    "MinimumValue": -1,
+    "MaximumValue": 0,
+    "DailyDelta": 4,
+    "ImportanceMultiplier": 1,
+    "Effectiveness": 1,
+    "Wastable": true,
+    "HoursWarningThreshold": 0,
+    "DisplayNameLocKey": "Need.HeavySmog.DisplayName",
+    "FavorableWellbeing": 0,
+    "UnfavorableWellbeing": -3
+  },
+  "InactiveHiddenNeedSpec": {}
+}

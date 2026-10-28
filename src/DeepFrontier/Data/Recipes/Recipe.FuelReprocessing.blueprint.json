@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "FuelReprocessing",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.FuelReprocessing.DisplayName",
+    "CycleDurationInHours": 4,
+    "Ingredients": [
+      {
+        "Id": "RadioactiveWaste",
+        "Amount": 4
+      },
+      {
+        "Id": "Chemical",
+        "Amount": 2
+      },
+      {
+        "Id": "Yellowcake",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "EnrichedFuel",
+        "Amount": 1
+      },
+      {
+        "Id": "RadioactiveWaste",
+        "Amount": 2
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/EnrichedFuelIcon"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "MissionPayload",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.36,
+      "g": 0.65,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5260,
+    "Icon": "Sprites/Goods/MissionPayloadIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.MissionPayload.DisplayName",
+    "PluralDisplayNameLocKey": "Good.MissionPayload.PluralDisplayName"
+  }
+}

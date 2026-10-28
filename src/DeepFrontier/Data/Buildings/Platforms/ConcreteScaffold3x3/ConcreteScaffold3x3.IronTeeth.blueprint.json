@@ -1,0 +1,1741 @@
+{
+  "BuildingSpec": {
+    "SelectionSoundName": "Default",
+    "LoopingSoundName": "",
+    "BuildingCost": [
+      {
+        "Id": "Concrete",
+        "Amount": 36
+      },
+      {
+        "Id": "MetalBlock",
+        "Amount": 24
+      },
+      {
+        "Id": "Gear",
+        "Amount": 12
+      }
+    ],
+    "ScienceCost": 6000,
+    "PlaceFinished": false,
+    "FinishableWithBeaversOnSite": true,
+    "DrawRangeBoundsOnIt": true
+  },
+  "BuildingModelSpec": {
+    "FinishedModelName": "#Finished",
+    "UnfinishedModelName": "#Unfinished",
+    "FinishedUncoveredModelName": "",
+    "UndergroundModelName": "",
+    "ConstructionModeModel": "Finished",
+    "UndergroundModelDepth": 0
+  },
+  "TemplateSpec": {
+    "TemplateName": "ConcreteScaffold3x3.IronTeeth",
+    "BackwardCompatibleTemplateNames": [],
+    "RequiredFeatureToggle": "",
+    "DisablingFeatureToggle": ""
+  },
+  "BlockObjectSpec": {
+    "Size": {
+      "X": 3,
+      "Y": 3,
+      "Z": 4
+    },
+    "Blocks": [
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      }
+    ],
+    "Entrance": {
+      "HasEntrance": false,
+      "Coordinates": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    "BaseZ": 0,
+    "Overridable": false,
+    "Flippable": true
+  },
+  "BlockObjectNavMeshSettingsSpec": {
+    "NoAutoWalls": false,
+    "GenerateFloorsOnStackable": true,
+    "EdgeGroups": [],
+    "UnblockedCoordinates": [],
+    "BlockedEdges": []
+  },
+  "PlaceableBlockObjectSpec": {
+    "ToolGroupId": "Paths",
+    "ToolOrder": 204,
+    "ToolShape": "Square",
+    "Layout": "Single",
+    "CustomPivot": {
+      "HasCustomPivot": false,
+      "Coordinates": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    "CanBeAttachedToTerrainSide": false,
+    "DevModeTool": false
+  },
+  "LabeledEntitySpec": {
+    "DisplayNameLocKey": "Building.ConcreteScaffold3x3.DisplayName",
+    "DescriptionLocKey": "Building.ConcreteScaffold3x3.Description",
+    "FlavorDescriptionLocKey": "Building.ConcreteScaffold3x3.FlavorDescription",
+    "Icon": "Buildings/Platforms/ConcreteScaffold3x3/Icon"
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": []
+  },
+  "Children": {
+    "#Finished": {
+      "TimbermeshSpec": {
+        "Model": "Buildings/Platforms/ConcreteScaffold3x3/ConcreteScaffold3x3.IronTeeth.Model"
+      },
+      "CollidersSpec": {
+        "BoxColliders": [
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 0.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 0.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 0.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 0.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 0.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 0.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 0.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 0.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 1.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 1.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 1.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 1.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 1.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 1.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 1.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 1.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 1.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 1.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 1.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 1.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 1.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 1.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 1.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 1.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 2.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 2.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 2.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 2.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 2.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 2.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 2.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 2.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 2.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 2.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 2.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 2.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 2.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.09,
+              "Y": 2.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 2.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 2.91,
+              "Y": 2.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 3.5,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 1.5,
+              "Y": 3.94,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 2.5,
+              "Y": 3.5,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 3.94,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 1.5,
+              "Y": 3.94,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 2.5,
+              "Y": 3.94,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 3.5,
+              "Z": 2.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 1.5,
+              "Y": 3.94,
+              "Z": 2.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 2.5,
+              "Y": 3.5,
+              "Z": 2.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          }
+        ],
+        "SphereColliders": [],
+        "CapsuleColliders": []
+      }
+    },
+    "#Unfinished": {
+      "Children": {
+        "ConstructionStage0": {
+          "TimbermeshSpec": {
+            "Model": "Buildings/Platforms/ConcreteScaffold3x3/ConcreteScaffold3x3.IronTeeth.ConstructionStage0.Model"
+          },
+          "CollidersSpec": {
+            "BoxColliders": [
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 0.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 0.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 0.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 0.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 0.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 0.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 0.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 0.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 1.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 1.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 1.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 1.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 1.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 1.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 1.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 1.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 1.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 1.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 1.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 1.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 1.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 1.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 1.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 1.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 2.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 2.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 2.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 2.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 2.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 2.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 2.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 2.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 2.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 2.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 2.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 2.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 2.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.09,
+                  "Y": 2.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 2.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.91,
+                  "Y": 2.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 3.5,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 3.94,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.5,
+                  "Y": 3.5,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 3.94,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 3.94,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.5,
+                  "Y": 3.94,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 3.5,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 3.94,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.5,
+                  "Y": 3.5,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              }
+            ],
+            "SphereColliders": [],
+            "CapsuleColliders": []
+          }
+        }
+      }
+    }
+  },
+  "StatusIconAnchorSpec": {
+    "Height": 4.7
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "PowerModule",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.PowerModule.PluralDisplayName",
+    "CycleDurationInHours": 2,
+    "Ingredients": [
+      {
+        "Id": "Electronics",
+        "Amount": 1
+      },
+      {
+        "Id": "Alloy",
+        "Amount": 1
+      },
+      {
+        "Id": "MetalPart",
+        "Amount": 2
+      },
+      {
+        "Id": "Coal",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "PowerModule",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/PowerModuleIcon"
+  }
+}

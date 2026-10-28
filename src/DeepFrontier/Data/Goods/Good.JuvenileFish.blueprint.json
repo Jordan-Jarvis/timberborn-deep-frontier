@@ -1,0 +1,25 @@
+{
+  "GoodSpec": {
+    "Id": "JuvenileFish",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.2,
+      "g": 0.55,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 8,
+    "GoodGroupId": "Ingredients",
+    "GoodOrder": 5205,
+    "Icon": "Sprites/Goods/JuvenileFishIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.JuvenileFish.DisplayName",
+    "PluralDisplayNameLocKey": "Good.JuvenileFish.PluralDisplayName"
+  }
+}

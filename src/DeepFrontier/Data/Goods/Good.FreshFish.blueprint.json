@@ -1,0 +1,30 @@
+{
+  "GoodSpec": {
+    "Id": "FreshFish",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [
+      {
+        "NeedId": "Hunger",
+        "Points": 0.3
+      }
+    ],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.2,
+      "g": 0.55,
+      "b": 0.32,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 1,
+    "GoodGroupId": "Food",
+    "GoodOrder": 11090,
+    "Icon": "Sprites/Goods/FreshFishIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.FreshFish.DisplayName",
+    "PluralDisplayNameLocKey": "Good.FreshFish.PluralDisplayName"
+  }
+}

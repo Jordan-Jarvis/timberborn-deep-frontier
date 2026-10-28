@@ -1,0 +1,31 @@
+{
+  "goods": [
+    {"id":"Sandstone","name":"Sandstone","weight":8,"color":[0.65,0.43,0.23],"use":"Aggregate recipe; sandstone masonry construction."},
+    {"id":"Limestone","name":"Limestone","weight":8,"color":[0.73,0.72,0.60],"use":"Cement recipe; limestone masonry construction."},
+    {"id":"Aggregate","name":"Aggregate","weight":6,"color":[0.53,0.48,0.39],"use":"Concrete and cement recipes; concrete levee foundation ballast."},
+    {"id":"Cement","name":"Cement","weight":4,"color":[0.65,0.64,0.58],"use":"Concrete recipe; binder for sandstone and limestone masonry."},
+    {"id":"Concrete","name":"Concrete","weight":10,"color":[0.55,0.56,0.53],"use":"Permanent quarries; advanced factory, civic, science and rocket foundations; levees; reinforced dam blocks; overflow dams; overhangs; scaffolds."}
+  ],
+  "sources": [
+    {"id":"SandstoneOutcrop","name":"Sandstone outcrop","good":"Sandstone","kind":"finite","size":[1,1,1],"yield":600,"removalHours":0.35,"description":"Finite surface deposit. A nearby Sandstone Pit removes stone; exhausted deposits disappear. Place these in the map editor before play."},
+    {"id":"LimestoneOutcrop","name":"Limestone outcrop","good":"Limestone","kind":"finite","size":[1,1,1],"yield":600,"removalHours":0.35,"description":"Finite surface deposit. A nearby Limestone Pit removes stone; exhausted deposits disappear. Place these in the map editor before play."},
+    {"id":"SandstoneSeam","name":"Deep sandstone seam","good":"Sandstone","kind":"permanent","size":[5,5,1],"description":"Permanent geological source. Build a Sandstone Quarry over this marked site; extraction requires water, workers and 1500 hp."},
+    {"id":"LimestoneSeam","name":"Deep limestone seam","good":"Limestone","kind":"permanent","size":[5,5,1],"description":"Permanent geological source. Build a Limestone Quarry over this marked site; extraction requires water, workers and 1500 hp."}
+  ],
+  "recipes": [
+    {"id":"SandstoneExtraction","name":"Extract sandstone","hours":2,"inputs":[["Water",4]],"outputs":[["Sandstone",8]],"fuel":"","fuelCycles":0,"fuelCapacity":0},
+    {"id":"LimestoneExtraction","name":"Extract limestone","hours":2,"inputs":[["Water",4]],"outputs":[["Limestone",8]],"fuel":"","fuelCycles":0,"fuelCapacity":0},
+    {"id":"Aggregate","name":"Crush sandstone","hours":1,"inputs":[["Sandstone",3]],"outputs":[["Aggregate",6]],"fuel":"","fuelCycles":0,"fuelCapacity":0},
+    {"id":"Cement","name":"Fire cement","hours":2,"inputs":[["Limestone",3],["Aggregate",1]],"outputs":[["Cement",2]],"fuel":"Log","fuelCycles":1,"fuelCapacity":10},
+    {"id":"Concrete","name":"Mix concrete","hours":1,"inputs":[["Aggregate",3],["Cement",1],["Water",2]],"outputs":[["Concrete",4]],"fuel":"","fuelCycles":0,"fuelCapacity":0}
+  ],
+  "buildings": [
+    {"id":"SandstonePit","name":"Sandstone pit","kind":"pit","size":[5,4,4],"hp":0,"workers":2,"science":300,"botScience":1000,"cost":[["Log",20],["Plank",10]],"recipes":[],"source":"SandstoneOutcrop","good":"Sandstone","description":"Workers collect finite sandstone deposits within walking range. The next step is a Stone Crusher, then a permanent Sandstone Quarry."},
+    {"id":"LimestonePit","name":"Limestone pit","kind":"pit","size":[5,3,4],"hp":0,"workers":2,"science":300,"botScience":1000,"cost":[["Log",20],["Plank",10]],"recipes":[],"source":"LimestoneOutcrop","good":"Limestone","description":"Workers collect finite limestone deposits within walking range. Feed a Cement Kiln; later build a permanent Limestone Quarry."},
+    {"id":"SandstoneQuarry","name":"Sandstone quarry","kind":"quarry","size":[11,7,9],"hp":1500,"workers":4,"science":4000,"botScience":5000,"cost":[["Plank",120],["Gear",80],["MetalBlock",60],["Concrete",60]],"recipes":["SandstoneExtraction"],"source":"SandstoneSeam","good":"Sandstone","description":"Extracts sandstone indefinitely from a marked deep seam. Requires water and 1500 hp. Build over a Deep Sandstone Seam."},
+    {"id":"LimestoneQuarry","name":"Limestone quarry","kind":"quarry","size":[11,7,9],"hp":1500,"workers":4,"science":4000,"botScience":5000,"cost":[["Plank",120],["Gear",80],["MetalBlock",60],["Concrete",60]],"recipes":["LimestoneExtraction"],"source":"LimestoneSeam","good":"Limestone","description":"Extracts limestone indefinitely from a marked deep seam. Requires water and 1500 hp. Build over a Deep Limestone Seam."},
+    {"id":"StoneCrusher","name":"Stone crusher","kind":"crusher","size":[4,4,5],"hp":200,"workers":2,"science":600,"botScience":1600,"cost":[["Plank",30],["Gear",15],["MetalBlock",10]],"recipes":["Aggregate"],"source":"","good":"Aggregate","description":"Crushes 3 sandstone into 6 aggregate per hour at 200 hp. Supply the aggregate to a Concrete Mixer."},
+    {"id":"CementKiln","name":"Cement kiln","kind":"kiln","size":[7,5,6],"hp":300,"workers":2,"science":900,"botScience":1900,"cost":[["Plank",40],["Gear",20],["MetalBlock",15]],"recipes":["Cement"],"source":"","good":"Cement","description":"Fires 3 limestone and 1 aggregate into 2 cement every 2 hours, consuming log fuel and 300 hp. No separate heat system."},
+    {"id":"ConcreteMixer","name":"Concrete mixer","kind":"mixer","size":[7,5,7],"hp":250,"workers":2,"science":1000,"botScience":2000,"cost":[["Plank",40],["Gear",20],["MetalBlock",15]],"recipes":["Concrete"],"source":"","good":"Concrete","description":"Mixes 3 aggregate, 1 cement and 2 water into 4 concrete per hour at 250 hp. Concrete unlocks permanent quarries and advanced construction."}
+  ]
+}

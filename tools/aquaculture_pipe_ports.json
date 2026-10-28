@@ -1,0 +1,28 @@
+{
+  "FisheryWorks": {
+    "Ports": [
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 7,
+          "Z": 0
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      }
+    ]
+  },
+  "FishHatchery": {
+    "Ports": [
+      {
+        "Coordinates": {
+          "X": 6,
+          "Y": 2,
+          "Z": 1
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      }
+    ]
+  }
+}

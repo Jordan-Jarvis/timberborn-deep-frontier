@@ -1,0 +1,26 @@
+{
+  "Name": "Deep Frontier",
+  "Version": "0.5.0.0",
+  "Id": "DeepFrontier",
+  "MinimumGameVersion": "1.1.2.8",
+  "Description": "An industrial frontier expansion for the Iron Teeth: deep ore mining, concrete and steel, coal, oil and nuclear power, radiation and smog, restaurants, hospitals and groceries, and a rocket program. 64 buildings, 55 goods, 75 recipes.",
+  "RequiredMods": [
+    { "Id": "Redic.NewStyles", "MinimumVersion": "0.1" },
+    { "Id": "Harmony", "MinimumVersion": "2.4.1" },
+    { "Id": "ModdableTimberborn", "MinimumVersion": "11.1.3" },
+    { "Id": "ModdableToolGroups", "MinimumVersion": "11.0.0" },
+    { "Id": "eMka.ModSettings", "MinimumVersion": "1.1.1.0" },
+    { "Id": "TimberUi", "MinimumVersion": "11.0.1" },
+    { "Id": "ModdableRecipes", "MinimumVersion": "11.0.0" },
+    { "Id": "calloatti.pumptotank", "MinimumVersion": "1.0.9" },
+    { "Id": "Battery.Flywheels", "MinimumVersion": "4.1.1.15" },
+    { "Id": "othermod.TeleporterStation", "MinimumVersion": "0.4.0" },
+    { "Id": "TimberPipes", "MinimumVersion": "11.4.0" },
+    { "Id": "northforge.solarpanel", "MinimumVersion": "1.0.2" },
+    { "Id": "MauricioBedoya.ExpandedStorage", "MinimumVersion": "1.0.1" },
+    { "Id": "ConveyorBelt", "MinimumVersion": "11.4.0" },
+    { "Id": "PoweredTubeway", "MinimumVersion": "11.0.0" },
+    { "Id": "PowerLines", "MinimumVersion": "11.1.1" },
+    { "Id": "MapTransformer", "MinimumVersion": "11.0.0" }
+  ]
+}

@@ -1,0 +1,40 @@
+param([Parameter(Mandatory=$true)][int]$Build)
+$ErrorActionPreference = 'Stop'
+$root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+$data = Join-Path $root 'src\DeepFrontier\Data'
+$installed = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Timberborn\Mods\DeepFrontier\version-1.1'
+$checked = [Collections.Generic.List[object]]::new()
+function Compare-Artifact([string]$Source,[string]$Target,[string]$Label) {
+  $sourceHash = (Get-FileHash -LiteralPath $Source -Algorithm SHA256).Hash
+  $targetHash = (Get-FileHash -LiteralPath $Target -Algorithm SHA256).Hash
+  if ($sourceHash -ne $targetHash) { throw "Installed artifact differs: $Label" }
+  $checked.Add([pscustomobject]@{ file=$Label; sha256=$sourceHash })
+}
+foreach ($file in Get-ChildItem -LiteralPath $data -File -Recurse | Where-Object Extension -ne '.meta') {
+  $relative = [IO.Path]::GetRelativePath($data,$file.FullName)
+  Compare-Artifact $file.FullName (Join-Path $installed $relative) $relative
+}
+Compare-Artifact (Join-Path $root 'src\DeepFrontier\manifest.json') (Join-Path $installed 'manifest.json') 'manifest.json'
+# Match DllFilesCopier's final player-build artifact, not Unity's transient Bee cache.
+$officialDll = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Timberborn\ModsBuild\TimberbornModExamples_Data\Managed\DeepFrontier.dll'
+Compare-Artifact $officialDll (Join-Path $installed 'Scripts\DeepFrontier.dll') 'Scripts\DeepFrontier.dll'
+# The Moddable Weathers bridge ships only in Moddable Timberborn's optional form
+# (tools/unity/DeepFrontierBatchBuild.cs PackageOptionalAssembly); a plain .dll
+# would break loading whenever Moddable Weathers is absent.
+$bridgeDll = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Timberborn\ModsBuild\TimberbornModExamples_Data\Managed\DeepFrontier.ModdableWeathers.dll'
+Compare-Artifact $bridgeDll (Join-Path $installed 'Scripts\DeepFrontier.ModdableWeathers.dll.ModdableWeathers.optional') 'Scripts\DeepFrontier.ModdableWeathers.dll.ModdableWeathers.optional'
+if (Test-Path -LiteralPath (Join-Path $installed 'Scripts\DeepFrontier.ModdableWeathers.dll')) { throw 'The Moddable Weathers bridge must not be installed as a plain DLL.' }
+# The Sluice is Back! bridge likewise (Scripts/SluiceIsBack): optional form only.
+$sluiceDll = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Timberborn\ModsBuild\TimberbornModExamples_Data\Managed\DeepFrontier.SluiceIsBack.dll'
+Compare-Artifact $sluiceDll (Join-Path $installed 'Scripts\DeepFrontier.SluiceIsBack.dll.SluiceIsBack.optional') 'Scripts\DeepFrontier.SluiceIsBack.dll.SluiceIsBack.optional'
+if (Test-Path -LiteralPath (Join-Path $installed 'Scripts\DeepFrontier.SluiceIsBack.dll')) { throw 'The Sluice is Back! bridge must not be installed as a plain DLL.' }
+foreach($dependency in @('TimberUi.dll','0Harmony.dll','ModdableRecipes.dll','ConveyorBelt.dll','ConveyorBelt.Algorithm.dll','ModdableTimberborn.dll','ModSettings.Core.dll','ModSettings.Common.dll','TimberPipes.dll','PowerLines.dll','ModdableWeathers.dll','SluiceIsBack.dll')) {
+  if (Test-Path -LiteralPath (Join-Path $installed "Scripts\$dependency")) { throw 'Dependency DLLs must remain in their own mod packages.' }
+}
+# Every GoodVisualization mesh (AssetRef<Mesh>) must be a Mesh in the built bundle;
+# build 167 shipped the pile meshes as BinaryData GameObjects and every load failed.
+& 'C:\Users\Jordan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' (Join-Path $root 'tools\asset-pipeline\validate_goodmesh_exports.py') --data $data --bundle (Join-Path $installed 'AssetBundles\deepfrontier_win')
+if ($LASTEXITCODE -ne 0) { throw 'A GoodVisualization mesh is not a Mesh in the installed bundle.' }
+$report = [pscustomobject]@{ build=$Build; checkedAt=(Get-Date -Format o); status='all-authored-files-match-installed-package'; count=$checked.Count; files=$checked }
+$report | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $root "outputs\restaurant-package-verification$Build.json") -Encoding utf8
+Write-Output "Build ${Build}: $($checked.Count) authored data/manifest/DLL hashes match the official installed package."
