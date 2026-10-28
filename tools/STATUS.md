@@ -4,6 +4,20 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Fresh-clone setup verified; Workshop required items; user screenshots (Claude Code session, 2026-10-28)
+
+- **Fresh clone** (`git clone` of the commit into `%USERPROFILE%\dfs\freshclone`, then `python tools/setup_dev.py`): setup, content generation (Data identical to the commit), all 51 checks (50 pass + 1 report-only) and the Blender scenes (116 scenes, 3,188 images, none missing or outside the clone) pass. Fixed on the way:
+  - setup found npm only on PATH (now beside the chosen node first);
+  - Unity's first open of the modding project fails its script compile until the game assemblies are imported; setup now checks the resolved Mono.Cecil package instead of the exit code, then runs the bootstrap (whose Mono.Cecil path was fixed to this machine's package hash);
+  - setup installs ILSpy's ilspycmd 9.1.0.7988 into `tools/dotnet` (API validators);
+  - setup extracts the native preview models (`read_native_civic_models.py`, `extract_native_models.py --registered`) and the extraction scripts create their output folders;
+  - three vanilla blueprints (`Good.MetalPart`, `RuinColumnH1`, `UndergroundRuins`) start with a UTF-8 BOM as the game ships them (the old vendor copies had lost it); their readers now decode it;
+  - `validate_cryogenic_content.mjs` reads the ModsBuild folder from the dev environment;
+  - Windows PowerShell scripts need `-ExecutionPolicy Bypass` (README).
+- **Fresh-clone Unity build:** the first build of a new project spends a long time in Unity's single-threaded API updater over the 518 imported game assemblies (see the next entry for the result).
+- **Workshop required items:** `tools/workshop_dependencies.py` maps manifest `RequiredMods` to Workshop items through the subscribed copies (17/17) and, with `--apply`, adds them to the uploaded item with ISteamUGC::AddDependency through the game's Steam library. Steam API init and interface lookup verified; AddDependency not yet run (the mod is not uploaded).
+- **Screenshots:** `workshop/screenshots` now holds the user's 11 named in-game screenshots (JPEG); the README shows them.
+
 ## Public-repository preparation: dev-environment setup and game-asset guard, build 206 (Claude Code session, 2026-10-28)
 
 - **Setup:** `python tools/setup_dev.py` (Windows, macOS, Linux) finds Timberborn in the Steam libraries (or `--game`), writes `tools/dev-environment.json` and `tools/compile-check/Directory.Build.props` (both untracked), installs UnityPy and sharp, clones the official modding project at cc50d47 and bootstraps it (Windows), extracts the local-only game references, and installs the pre-commit guard.

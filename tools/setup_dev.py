@@ -13,7 +13,8 @@ Steps:
    documents folder, and Node, Python, PowerShell 7 and Blender.
    tools/compile-check/Directory.Build.props (not tracked) gets the same paths
    for the C# compile checks.
-3. Install the tool packages: UnityPy into tools/asset-pipeline/unitypy and
+3. Install the tool packages: UnityPy into tools/asset-pipeline/unitypy, ILSpy's
+   ilspycmd into tools/dotnet (for the API validators) and
    Node's sharp (package.json).
 4. Clone Mechanistry's official modding project into vendor/timberborn-modding
    at the commit the build was verified with (Windows builds only).
@@ -35,6 +36,7 @@ CONFIG = ROOT / 'tools' / 'dev-environment.json'
 PROPS = ROOT / 'tools' / 'compile-check' / 'Directory.Build.props'
 UNITYPY = ROOT / 'tools' / 'asset-pipeline' / 'unitypy'
 UNITYPY_VERSION = '1.25.4'
+ILSPY_VERSION = '9.1.0.7988'
 MODDING_REPO = 'https://github.com/mechanistry/timberborn-modding.git'
 MODDING_COMMIT = 'cc50d47'
 UNITY_VERSION = '6000.5.11f1'  # matches the official modding project
@@ -208,12 +210,21 @@ def main():
         if (ROOT / 'node_modules' / 'sharp').exists():
             print('   sharp present')
         elif config['node']:
-            npm = shutil.which('npm')
+            # npm ships beside node (npm.cmd on Windows); a --node outside PATH brings its own.
+            npm = shutil.which('npm', path=str(Path(config['node']).parent)) or shutil.which('npm')
             if not npm:
                 raise SystemExit('npm not found: install Node.js (with npm) and run setup again.')
             run([npm, 'install', '--no-audit', '--no-fund'], cwd=ROOT)
         else:
             print('   Node.js not found: install it for the content generators, then run setup again.')
+        # The API-contract validators decompile installed mod and game DLLs with ILSpy.
+        ilspy = ROOT / 'tools' / 'dotnet' / f'ilspycmd{".exe" if SYSTEM == "Windows" else ""}'
+        if ilspy.is_file():
+            print(f'   ilspycmd {ILSPY_VERSION} present')
+        elif shutil.which('dotnet'):
+            run(['dotnet', 'tool', 'install', 'ilspycmd', '--version', ILSPY_VERSION, '--tool-path', ROOT / 'tools' / 'dotnet'])
+        else:
+            print('   .NET SDK not found: install it (the C# checks and the API validators need it), then run setup again.')
 
     print('4. Official modding project')
     vendor = ROOT / 'vendor' / 'timberborn-modding'
@@ -230,10 +241,17 @@ def main():
         if not config['unity']:
             print(f'   Unity {UNITY_VERSION} not found: install it with Unity Hub (or pass --unity), then run setup again.')
         else:
-            if not (vendor / 'Library' / 'PackageCache').is_dir():
+            cache = vendor / 'Library' / 'PackageCache'
+            if not any(cache.glob('com.unity.nuget.mono-cecil@*')):
                 # First open: Unity resolves the project's packages (Mono.Cecil for the bootstrap).
-                run([config['unity'], '-batchmode', '-nographics', '-quit', '-projectPath', vendor,
-                     '-logFile', ROOT / 'outputs' / 'unity_first_import.log'])
+                # Its script compile fails until the bootstrap below imports the game's
+                # assemblies, so the exit code is not the result; the package is.
+                log = ROOT / 'outputs' / 'unity_first_import.log'
+                print(f'  $ {config["unity"]} -batchmode -quit -projectPath {vendor}  (log: {log})', flush=True)
+                subprocess.run([config['unity'], '-batchmode', '-nographics', '-quit', '-projectPath', str(vendor),
+                                '-logFile', str(log)])
+                if not any(cache.glob('com.unity.nuget.mono-cecil@*')):
+                    raise SystemExit(f'Unity did not resolve the project packages; see {log}')
             if not any((vendor / 'Assets' / 'Plugins' / 'Timberborn').glob('Timberborn.*.dll')):
                 # The official importer's step: the game's assemblies and modding archives, publicized.
                 run(['powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File',
@@ -248,6 +266,8 @@ def main():
         for script in ('extract_game_textures.py', 'export_vanilla_icon_references.py',
                        'export_native_civic_materials.py', 'export_native_civic_inspection.py'):
             run([sys.executable, ROOT / 'tools' / 'asset-pipeline' / script], cwd=ROOT)
+        run([sys.executable, ROOT / 'tools' / 'asset-pipeline' / 'read_native_civic_models.py'], cwd=ROOT)
+        run([sys.executable, ROOT / 'tools' / 'asset-pipeline' / 'extract_native_models.py', '--registered'], cwd=ROOT)
 
     print('6. Pre-commit guard')
     hooks = ROOT / '.git' / 'hooks'

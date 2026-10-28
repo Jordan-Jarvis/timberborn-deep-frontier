@@ -8,6 +8,8 @@ The cached copies are review inputs, never mod payload: blueprints reference
 the original resources.
 
 Run: python extract_native_models.py BeaverBust.IronTeeth BeaverStatue.IronTeeth
+     python extract_native_models.py --registered   # every native prop model the
+         outputs/reference-studies/*-native-assembly.json manifests record (setup_dev.py)
 """
 import json
 import struct
@@ -19,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'tools'))
 import dev_environment as dev
 sys.path.insert(0, str(ROOT / 'tools/asset-pipeline/unitypy'))
+sys.path.insert(0, str(ROOT / 'tools/asset-pipeline'))
 sys.path.insert(0, str(ROOT / 'tools/asset-pipeline/timbermesh-plugin/timbermesh_blender_plugin'))
 import UnityPy  # noqa: E402
 import model_pb2  # noqa: E402
@@ -27,7 +30,17 @@ BINARY_DATA_SCRIPT = {'m_FileID': 1, 'm_PathID': 4746}
 OUT = ROOT / 'outputs/native-civic-assets'
 
 
+def registered():
+    names = set()
+    for manifest in (ROOT / 'outputs/reference-studies').glob('*-native-assembly.json'):
+        names |= {p['model'] for p in json.loads(manifest.read_text(encoding='utf-8'))['props'] if 'dependency' not in p}
+    # Prefab roots without a '<name>.Model' object are decoded by path id in read_native_civic_models.py.
+    from read_native_civic_models import models as by_path_id
+    return sorted(names - set(by_path_id))
+
+
 def main(names):
+    OUT.mkdir(parents=True, exist_ok=True)
     env = UnityPy.load(str(dev.resources_assets()))
     objects = {o.path_id: o for o in env.objects}
     wanted = {n + '.Model': n for n in names}
@@ -70,4 +83,4 @@ def main(names):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    main(registered() if sys.argv[1:] == ['--registered'] else sys.argv[1:])

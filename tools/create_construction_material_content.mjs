@@ -12,7 +12,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const dataRoot = resolve(root, 'src/DeepFrontier/Data');
 const vanillaRoot = resolve(root, 'vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources');
 const catalog = JSON.parse(await readFile(new URL('./construction_materials.json', import.meta.url), 'utf8'));
-const read = async (base, path) => JSON.parse(await readFile(resolve(base, path), 'utf8'));
+const read = async (base, path) => JSON.parse((await readFile(resolve(base, path), 'utf8')).replace(/^﻿/, '')); // vanilla blueprints may start with a BOM
 const write = async (path, value) => {
   const target = resolve(dataRoot, path);
   await mkdir(dirname(target), { recursive: true });

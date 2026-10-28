@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const data = resolve(root, 'src/DeepFrontier/Data');
 const vanilla = resolve(root, 'vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources');
-const read = async (base, path) => JSON.parse(await readFile(resolve(base, path), 'utf8'));
+const read = async (base, path) => JSON.parse((await readFile(resolve(base, path), 'utf8')).replace(/^﻿/, '')); // vanilla blueprints may start with a BOM
 const catalog = await read(root, 'tools/construction_materials.json');
 const goodsCollection = (await read(data, 'GoodCollections/GoodCollection.IronTeeth.blueprint.json')).GoodCollectionSpec['Goods#append'];
 const buildingsCollection = (await read(data, 'TemplateCollections/TemplateCollection.Buildings.IronTeeth.blueprint.json')).TemplateCollectionSpec['Blueprints#append'];

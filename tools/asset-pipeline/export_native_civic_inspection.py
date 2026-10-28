@@ -8,7 +8,7 @@ sys.path.insert(0,str(ROOT/'tools/asset-pipeline/unitypy'))
 import UnityPy
 env=UnityPy.load(str(dev.resources_assets()))
 objects={o.path_id:o for o in env.objects}
-out=ROOT/'outputs/native-civic-assets'
+out=ROOT/'outputs/native-civic-assets';out.mkdir(parents=True,exist_ok=True)
 for ident in (4227,4293,4390,4151,4677,4421,3742,4370,4516,4393):
     obj=objects[ident];root=obj.parse_as_dict();result={'root':root,'components':[]}
     for c in root['m_Component']:

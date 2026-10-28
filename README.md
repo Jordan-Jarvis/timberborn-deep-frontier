@@ -12,6 +12,17 @@ An industrial frontier expansion for the **Iron Teeth** in [Timberborn](https://
 
 The player-facing Workshop description is in [workshop/description.bbcode](workshop/description.bbcode).
 
+## Screenshots
+
+| | |
+| --- | --- |
+| ![Restaurant with table service](workshop/screenshots/01-restaurant.jpg)<br>Restaurant with table service | ![Heavy industry](workshop/screenshots/02-industry.jpg)<br>Heavy industry |
+| ![Radioactive Tide](workshop/screenshots/03-radioactive-tide.jpg)<br>Radioactive Tide | ![Nuclear reactor](workshop/screenshots/04-nuclear-reactor.jpg)<br>Nuclear reactor |
+| ![Hospital](workshop/screenshots/05-hospital.jpg)<br>Hospital | ![Greenhouses](workshop/screenshots/06-greenhouse.jpg)<br>Greenhouses |
+| ![Concrete production](workshop/screenshots/07-concrete-production.jpg)<br>Concrete production | ![Fishery and fertilizer works](workshop/screenshots/08-fishery-and-fertilizer.jpg)<br>Fishery and fertilizer works |
+| ![Reinforced hydroelectric turbine](workshop/screenshots/09-hydroelectric-turbine.jpg)<br>Reinforced hydroelectric turbine | ![High consumption rates: some buildings need pipes and conveyors](workshop/screenshots/10-pipes-and-conveyors.jpg)<br>High consumption rates: some buildings need pipes and conveyors |
+| ![Reinforced concrete platforms](workshop/screenshots/11-reinforced-concrete-platforms.jpg)<br>Reinforced concrete platforms |  |
+
 ## Playing
 
 Subscribe on the Steam Workshop together with the required mods listed in [src/DeepFrontier/manifest.json](src/DeepFrontier/manifest.json). Iron Teeth only.
@@ -52,7 +63,7 @@ pwsh tools/promote_style_exports.ps1          # regenerate blueprints into src/D
 node tools/aquaculture_workbook.mjs
 pwsh tools/validate_all.ps1 -SkipBlender      # static checks (logs in outputs/validate-all)
 dotnet build tools/compile-check/DeepFrontierCompileCheck.csproj
-powershell -File tools/build_deep_frontier.ps1   # official Mod Builder; installs to Documents\Timberborn\Mods\DeepFrontier
+powershell -ExecutionPolicy Bypass -File tools/build_deep_frontier.ps1   # official Mod Builder; installs to Documents\Timberborn\Mods\DeepFrontier
 pwsh tools/verify_deep_frontier_package.ps1 -Build <n>
 ```
 

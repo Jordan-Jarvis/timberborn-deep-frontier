@@ -12,7 +12,7 @@ const sourceRoot = resolve(root, 'src', 'DeepFrontier');
 const vanillaRoot = resolve(root, 'vendor', 'timberborn-modding', 'Assets', 'Tools', 'ImportedAssets', 'Editor', 'Resources');
 
 async function readJson(path) {
-  return JSON.parse(await readFile(path, 'utf8'));
+  return JSON.parse((await readFile(path, 'utf8')).replace(/^﻿/, '')); // vanilla blueprints may start with a BOM
 }
 
 async function writeJson(path, value) {
