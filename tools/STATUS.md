@@ -4,6 +4,13 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Dependency-only test profile; toolbar sub-groups; build 208 (Claude Code session, 2026-10-28)
+
+- **Dependencies (user request: run with only the manifest's mods):** the game's mod switches are Unity PlayerPrefs `ModEnabled.<DisplaySource>.<OriginName>.<Id>` (native ModPlayerPrefsHelper; a missing key means enabled; value names end in Unity's `_h<djb2-xor>` hash). Set Deep Frontier + its 17 RequiredMods on and the other 67 installed mods off (registry backup kept). Static closure: every required mod's own RequiredMods are in our list. In game (build 207, Memory Test save): loaded in 78 s, every Deep Frontier patch applied; the only errors were 201 skipped buildings of disabled mods (TubewayLevee 178, Bob's/More Platforms side platforms 23, a Bob Storage warehouse).
+- **Log noise found (open):** the six retired goods kept for old saves (Gas, Methane, Radon, SulfurGas, ToxicFumes, DiningService) have no localization; `ModdableWeatherSpecs/RadioactiveTideWeather.blueprint.json` logs "No type found for key ModdableWeatherSpec" when the optional Moddable Weathers is off. Others' noise: Expanded Storage's enUS.csv columns, Redic.NewStyles names.
+- **Toolbar sub-groups (user: group our buildings better):** `tools/tool_groups.json` + `tool_group_content.mjs` (end of generation) + `validate_tool_groups.mjs`: nine Moddable Tool Groups sub-groups (BlockObjectToolGroupSpec + ParentToolGroupSpec, icon from a member building) inside Metal (deep mining, quarries and cement, heavy industry, nuclear fuel, rocketry incl. Mission Control), Paths (concrete scaffolds, concrete side platforms), Water (radioactive waste) and Wellbeing (civic services); 41 buildings moved. `validate_radiation_content.mjs` checks tool-order uniqueness per group.
+- **Build 208** (school rework + sub-groups): Official Mod Builder in 142 s, verify 659 hashes match. In-game check of the groups and the school pending.
+
 ## Technical School: free-time study for every beaver, several professions each (generated, compiled and statically checked; not built or run in game) (Claude Code session, 2026-10-28)
 
 - **User:** beavers should enrol and learn by themselves, every beaver should try to become educated, and a beaver can learn every profession (e.g. with three schools). Chosen with the user: free-time study, goods per study hour, one profession per school picked by the player.
