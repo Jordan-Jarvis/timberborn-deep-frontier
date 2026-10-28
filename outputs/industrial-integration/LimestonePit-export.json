@@ -1,0 +1,19 @@
+{
+  "source": "LimestonePit",
+  "targets": [
+    "LimestonePit"
+  ],
+  "origin": [
+    0.57,
+    -1,
+    0
+  ],
+  "size": [
+    5,
+    3,
+    4
+  ],
+  "openings": 0,
+  "objects": 8,
+  "animationFrames": 121
+}

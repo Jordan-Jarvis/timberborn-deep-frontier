@@ -1,0 +1,81 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Centrifuge cascade hall: an open-fronted steel gallery on a two-storey concrete podium with two rows of tall spinning centrifuges under a long monitor roof.",
+  "footprint": [
+    12,
+    11
+  ],
+  "heightLayers": 14,
+  "boundsMin": [
+    -0.0885,
+    -0.105,
+    0.0
+  ],
+  "boundsMax": [
+    12.04,
+    11.22,
+    13.34
+  ],
+  "doors": [
+    {
+      "id": "Main",
+      "position": [
+        3.5,
+        0.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "MonitorBeacon",
+    "Centrifuge00",
+    "Centrifuge01",
+    "Centrifuge02",
+    "Centrifuge03",
+    "Centrifuge04",
+    "Centrifuge05",
+    "Centrifuge10",
+    "Centrifuge11",
+    "Centrifuge12",
+    "Centrifuge13",
+    "Centrifuge14",
+    "Centrifuge15",
+    "Centrifuge20",
+    "Centrifuge21",
+    "Centrifuge22",
+    "Centrifuge23",
+    "Centrifuge24",
+    "Centrifuge25",
+    "ThickenerRake",
+    "HoistCable",
+    "HoistHook",
+    "ColumnBeacon",
+    "StackBeacon",
+    "ScrubberFan"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 14999,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 1568,
+    "IrregularPlanks_DarkBrown.IronTeeth": 180,
+    "BaseMetal.IronTeeth": 8378,
+    "RoofPlanks.IronTeeth": 638,
+    "Details.IronTeeth": 3398,
+    "accent8": 100,
+    "accent25": 186,
+    "Plaster_White.IronTeeth": 1533,
+    "Plaster_Orange.IronTeeth": 223,
+    "IrregularPlanks_MetalForged.IronTeeth": 162,
+    "WindowsAtlas.IronTeeth": 706,
+    "PaintedMetal.IronTeeth": 419
+  },
+  "sourceHash": "05335dff5734eca6e039c99ed1e87fc06dcfd4f5aa1918d3b2843f7e2c3537e7",
+  "artHash": "7172e561e1753cad0ffe09d79e7f20c6ccd28d76d9420f2c896610efa371c49b"
+}

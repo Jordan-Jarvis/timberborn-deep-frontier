@@ -1,0 +1,13 @@
+{
+  "status": "Source shell and suggested-road geometry checks passed; native gameplay is separate",
+  "sourceSha256": "0acb68b9dc85e672b8fd0ab84161f49a3c3b3f08c3a12eb0fedc98219919280c",
+  "mountedWindows": 72,
+  "windowContactProbes": 2290,
+  "evaluatedWallProbes": 342352,
+  "rooms": 8,
+  "roofShellProbes": 140800,
+  "opaqueWallSamples": 345600,
+  "bodyClearanceProbes": 280,
+  "doors": 4,
+  "roofClearCells": 12
+}

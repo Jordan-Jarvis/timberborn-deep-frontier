@@ -1,0 +1,45 @@
+{
+  "scope": "Exported assets and authored graph; runtime tests required",
+  "buildings": [
+    {
+      "building": "StoneCrusher",
+      "nodes": 12,
+      "animationTracks": 5,
+      "frames": 61,
+      "walkways": "none",
+      "nativeUvVerticesChecked": 4520
+    },
+    {
+      "building": "CementKiln",
+      "nodes": 18,
+      "animationTracks": 12,
+      "frames": 241,
+      "walkways": "none",
+      "nativeUvVerticesChecked": 8504
+    },
+    {
+      "building": "SandstoneQuarry",
+      "nodes": 60,
+      "animationTracks": 53,
+      "frames": 481,
+      "walkways": "none",
+      "nativeUvVerticesChecked": 12690
+    },
+    {
+      "building": "LimestoneQuarry",
+      "nodes": 60,
+      "animationTracks": 53,
+      "frames": 481,
+      "walkways": "none",
+      "nativeUvVerticesChecked": 12690
+    },
+    {
+      "building": "ConcreteMixer",
+      "nodes": 9,
+      "animationTracks": 2,
+      "frames": 121,
+      "walkways": "none",
+      "nativeUvVerticesChecked": 3826
+    }
+  ]
+}

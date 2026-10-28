@@ -1,0 +1,26 @@
+{
+  "scope": "Saved Blender geometry; native placement and traversal require separate tests",
+  "models": [
+    {
+      "model": "ConcreteSidePlatform3x3",
+      "vertices": 1440,
+      "supportSamples": 225,
+      "clearPassageSamples": 72,
+      "nativeAtlasUvCorners": 3456
+    },
+    {
+      "model": "ConcreteSidePlatform4x4",
+      "vertices": 2328,
+      "supportSamples": 400,
+      "clearPassageSamples": 135,
+      "nativeAtlasUvCorners": 5688
+    },
+    {
+      "model": "ConcreteSidePlatform5x5",
+      "vertices": 2944,
+      "supportSamples": 625,
+      "clearPassageSamples": 216,
+      "nativeAtlasUvCorners": 7392
+    }
+  ]
+}

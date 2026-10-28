@@ -1,0 +1,633 @@
+{
+  "status": "Separate Blender nodes; game connection bindings are not authored yet",
+  "coordinateSpace": "Authored artwork X/across Y/back Z/up; no grid conversion",
+  "runs": [
+    {
+      "id": "Front3",
+      "panels": [
+        {
+          "node": "HydroRails.Front3.Panel00",
+          "start": [
+            4.071000099182129,
+            4.081000000238419,
+            2
+          ],
+          "end": [
+            4.5355000495910645,
+            4.081000000238419,
+            2
+          ],
+          "startPost": "HydroRails.Post000",
+          "endPost": "HydroRails.Post001"
+        },
+        {
+          "node": "HydroRails.Front3.Panel01",
+          "start": [
+            4.5355000495910645,
+            4.081000000238419,
+            2
+          ],
+          "end": [
+            5.0,
+            4.081000000238419,
+            2
+          ],
+          "startPost": "HydroRails.Post001",
+          "endPost": "HydroRails.Post002"
+        }
+      ]
+    },
+    {
+      "id": "Rear3",
+      "panels": [
+        {
+          "node": "HydroRails.Rear3.Panel00",
+          "start": [
+            4.071000099182129,
+            9.919000148773193,
+            2
+          ],
+          "end": [
+            4.5355000495910645,
+            9.919000148773193,
+            2
+          ],
+          "startPost": "HydroRails.Post003",
+          "endPost": "HydroRails.Post004"
+        },
+        {
+          "node": "HydroRails.Rear3.Panel01",
+          "start": [
+            4.5355000495910645,
+            9.919000148773193,
+            2
+          ],
+          "end": [
+            5.0,
+            9.919000148773193,
+            2
+          ],
+          "startPost": "HydroRails.Post004",
+          "endPost": "HydroRails.Post005"
+        }
+      ]
+    },
+    {
+      "id": "Front4",
+      "panels": [
+        {
+          "node": "HydroRails.Front4.Panel00",
+          "start": [
+            5.0,
+            4.081000000238419,
+            2
+          ],
+          "end": [
+            5.5,
+            4.081000000238419,
+            2
+          ],
+          "startPost": "HydroRails.Post002",
+          "endPost": "HydroRails.Post006"
+        },
+        {
+          "node": "HydroRails.Front4.Panel01",
+          "start": [
+            5.5,
+            4.081000000238419,
+            2
+          ],
+          "end": [
+            6.0,
+            4.081000000238419,
+            2
+          ],
+          "startPost": "HydroRails.Post006",
+          "endPost": "HydroRails.Post007"
+        }
+      ]
+    },
+    {
+      "id": "Rear4",
+      "panels": [
+        {
+          "node": "HydroRails.Rear4.Panel00",
+          "start": [
+            5.0,
+            9.919000148773193,
+            2
+          ],
+          "end": [
+            5.5,
+            9.919000148773193,
+            2
+          ],
+          "startPost": "HydroRails.Post005",
+          "endPost": "HydroRails.Post008"
+        },
+        {
+          "node": "HydroRails.Rear4.Panel01",
+          "start": [
+            5.5,
+            9.919000148773193,
+            2
+          ],
+          "end": [
+            6.0,
+            9.919000148773193,
+            2
+          ],
+          "startPost": "HydroRails.Post008",
+          "endPost": "HydroRails.Post009"
+        }
+      ]
+    },
+    {
+      "id": "Front5",
+      "panels": [
+        {
+          "node": "HydroRails.Front5.Panel00",
+          "start": [
+            6.0,
+            4.081000000238419,
+            2
+          ],
+          "end": [
+            6.5,
+            4.081000000238419,
+            2
+          ],
+          "startPost": "HydroRails.Post007",
+          "endPost": "HydroRails.Post010"
+        },
+        {
+          "node": "HydroRails.Front5.Panel01",
+          "start": [
+            6.5,
+            4.081000000238419,
+            2
+          ],
+          "end": [
+            7.0,
+            4.081000000238419,
+            2
+          ],
+          "startPost": "HydroRails.Post010",
+          "endPost": "HydroRails.Post011"
+        }
+      ]
+    },
+    {
+      "id": "Rear5",
+      "panels": [
+        {
+          "node": "HydroRails.Rear5.Panel00",
+          "start": [
+            6.0,
+            9.919000148773193,
+            2
+          ],
+          "end": [
+            6.5,
+            9.919000148773193,
+            2
+          ],
+          "startPost": "HydroRails.Post009",
+          "endPost": "HydroRails.Post012"
+        },
+        {
+          "node": "HydroRails.Rear5.Panel01",
+          "start": [
+            6.5,
+            9.919000148773193,
+            2
+          ],
+          "end": [
+            7.0,
+            9.919000148773193,
+            2
+          ],
+          "startPost": "HydroRails.Post012",
+          "endPost": "HydroRails.Post013"
+        }
+      ]
+    },
+    {
+      "id": "Front6",
+      "panels": [
+        {
+          "node": "HydroRails.Front6.Panel00",
+          "start": [
+            7.0,
+            4.081000000238419,
+            2
+          ],
+          "end": [
+            7.4644999504089355,
+            4.081000000238419,
+            2
+          ],
+          "startPost": "HydroRails.Post011",
+          "endPost": "HydroRails.Post014"
+        },
+        {
+          "node": "HydroRails.Front6.Panel01",
+          "start": [
+            7.4644999504089355,
+            4.081000000238419,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            4.081000000238419,
+            2
+          ],
+          "startPost": "HydroRails.Post014",
+          "endPost": "HydroRails.Post015"
+        }
+      ]
+    },
+    {
+      "id": "Rear6",
+      "panels": [
+        {
+          "node": "HydroRails.Rear6.Panel00",
+          "start": [
+            7.0,
+            9.919000148773193,
+            2
+          ],
+          "end": [
+            7.4644999504089355,
+            9.919000148773193,
+            2
+          ],
+          "startPost": "HydroRails.Post013",
+          "endPost": "HydroRails.Post016"
+        },
+        {
+          "node": "HydroRails.Rear6.Panel01",
+          "start": [
+            7.4644999504089355,
+            9.919000148773193,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            9.919000148773193,
+            2
+          ],
+          "startPost": "HydroRails.Post016",
+          "endPost": "HydroRails.Post017"
+        }
+      ]
+    },
+    {
+      "id": "Right0",
+      "panels": [
+        {
+          "node": "HydroRails.Right0.Panel00",
+          "start": [
+            7.928999900817871,
+            4.081000000238419,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            4.540500044822693,
+            2
+          ],
+          "startPost": "HydroRails.Post015",
+          "endPost": "HydroRails.Post018"
+        },
+        {
+          "node": "HydroRails.Right0.Panel01",
+          "start": [
+            7.928999900817871,
+            4.540500044822693,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            5.0,
+            2
+          ],
+          "startPost": "HydroRails.Post018",
+          "endPost": "HydroRails.Post019"
+        }
+      ]
+    },
+    {
+      "id": "Right1",
+      "panels": [
+        {
+          "node": "HydroRails.Right1.Panel00",
+          "start": [
+            7.928999900817871,
+            5.0,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            5.5,
+            2
+          ],
+          "startPost": "HydroRails.Post019",
+          "endPost": "HydroRails.Post020"
+        },
+        {
+          "node": "HydroRails.Right1.Panel01",
+          "start": [
+            7.928999900817871,
+            5.5,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            6.0,
+            2
+          ],
+          "startPost": "HydroRails.Post020",
+          "endPost": "HydroRails.Post021"
+        }
+      ]
+    },
+    {
+      "id": "Right2",
+      "panels": [
+        {
+          "node": "HydroRails.Right2.Panel00",
+          "start": [
+            7.928999900817871,
+            6.0,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            6.5,
+            2
+          ],
+          "startPost": "HydroRails.Post021",
+          "endPost": "HydroRails.Post022"
+        },
+        {
+          "node": "HydroRails.Right2.Panel01",
+          "start": [
+            7.928999900817871,
+            6.5,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            7.0,
+            2
+          ],
+          "startPost": "HydroRails.Post022",
+          "endPost": "HydroRails.Post023"
+        }
+      ]
+    },
+    {
+      "id": "Right3",
+      "panels": [
+        {
+          "node": "HydroRails.Right3.Panel00",
+          "start": [
+            7.928999900817871,
+            7.0,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            7.5,
+            2
+          ],
+          "startPost": "HydroRails.Post023",
+          "endPost": "HydroRails.Post024"
+        },
+        {
+          "node": "HydroRails.Right3.Panel01",
+          "start": [
+            7.928999900817871,
+            7.5,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            8.0,
+            2
+          ],
+          "startPost": "HydroRails.Post024",
+          "endPost": "HydroRails.Post025"
+        }
+      ]
+    },
+    {
+      "id": "Right4",
+      "panels": [
+        {
+          "node": "HydroRails.Right4.Panel00",
+          "start": [
+            7.928999900817871,
+            8.0,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            8.5,
+            2
+          ],
+          "startPost": "HydroRails.Post025",
+          "endPost": "HydroRails.Post026"
+        },
+        {
+          "node": "HydroRails.Right4.Panel01",
+          "start": [
+            7.928999900817871,
+            8.5,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            9.0,
+            2
+          ],
+          "startPost": "HydroRails.Post026",
+          "endPost": "HydroRails.Post027"
+        }
+      ]
+    },
+    {
+      "id": "Right5",
+      "panels": [
+        {
+          "node": "HydroRails.Right5.Panel00",
+          "start": [
+            7.928999900817871,
+            9.0,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            9.459500312805176,
+            2
+          ],
+          "startPost": "HydroRails.Post027",
+          "endPost": "HydroRails.Post028"
+        },
+        {
+          "node": "HydroRails.Right5.Panel01",
+          "start": [
+            7.928999900817871,
+            9.459500312805176,
+            2
+          ],
+          "end": [
+            7.928999900817871,
+            9.919000148773193,
+            2
+          ],
+          "startPost": "HydroRails.Post028",
+          "endPost": "HydroRails.Post017"
+        }
+      ]
+    },
+    {
+      "id": "ConduitSide0",
+      "panels": [
+        {
+          "node": "HydroRails.ConduitSide0.Panel00",
+          "start": [
+            4.071000099182129,
+            4.081000000238419,
+            2
+          ],
+          "end": [
+            4.071000099182129,
+            4.465500026941299,
+            2
+          ],
+          "startPost": "HydroRails.Post000",
+          "endPost": "HydroRails.Post029"
+        },
+        {
+          "node": "HydroRails.ConduitSide0.Panel01",
+          "start": [
+            4.071000099182129,
+            4.465500026941299,
+            2
+          ],
+          "end": [
+            4.071000099182129,
+            4.850000023841858,
+            2
+          ],
+          "startPost": "HydroRails.Post029",
+          "endPost": "HydroRails.Post030"
+        }
+      ]
+    },
+    {
+      "id": "ConduitSide5",
+      "panels": [
+        {
+          "node": "HydroRails.ConduitSide5.Panel00",
+          "start": [
+            4.071000099182129,
+            9.0,
+            2
+          ],
+          "end": [
+            4.071000099182129,
+            9.459500312805176,
+            2
+          ],
+          "startPost": "HydroRails.Post031",
+          "endPost": "HydroRails.Post032"
+        },
+        {
+          "node": "HydroRails.ConduitSide5.Panel01",
+          "start": [
+            4.071000099182129,
+            9.459500312805176,
+            2
+          ],
+          "end": [
+            4.071000099182129,
+            9.919000148773193,
+            2
+          ],
+          "startPost": "HydroRails.Post032",
+          "endPost": "HydroRails.Post003"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    "HydroRails.Post000",
+    "HydroRails.Post001",
+    "HydroRails.Post002",
+    "HydroRails.Front3.Panel00",
+    "HydroRails.Front3.Panel01",
+    "HydroRails.Post003",
+    "HydroRails.Post004",
+    "HydroRails.Post005",
+    "HydroRails.Rear3.Panel00",
+    "HydroRails.Rear3.Panel01",
+    "HydroRails.Post006",
+    "HydroRails.Post007",
+    "HydroRails.Front4.Panel00",
+    "HydroRails.Front4.Panel01",
+    "HydroRails.Post008",
+    "HydroRails.Post009",
+    "HydroRails.Rear4.Panel00",
+    "HydroRails.Rear4.Panel01",
+    "HydroRails.Post010",
+    "HydroRails.Post011",
+    "HydroRails.Front5.Panel00",
+    "HydroRails.Front5.Panel01",
+    "HydroRails.Post012",
+    "HydroRails.Post013",
+    "HydroRails.Rear5.Panel00",
+    "HydroRails.Rear5.Panel01",
+    "HydroRails.Post014",
+    "HydroRails.Post015",
+    "HydroRails.Front6.Panel00",
+    "HydroRails.Front6.Panel01",
+    "HydroRails.Post016",
+    "HydroRails.Post017",
+    "HydroRails.Rear6.Panel00",
+    "HydroRails.Rear6.Panel01",
+    "HydroRails.Post018",
+    "HydroRails.Post019",
+    "HydroRails.Right0.Panel00",
+    "HydroRails.Right0.Panel01",
+    "HydroRails.Post020",
+    "HydroRails.Post021",
+    "HydroRails.Right1.Panel00",
+    "HydroRails.Right1.Panel01",
+    "HydroRails.Post022",
+    "HydroRails.Post023",
+    "HydroRails.Right2.Panel00",
+    "HydroRails.Right2.Panel01",
+    "HydroRails.Post024",
+    "HydroRails.Post025",
+    "HydroRails.Right3.Panel00",
+    "HydroRails.Right3.Panel01",
+    "HydroRails.Post026",
+    "HydroRails.Post027",
+    "HydroRails.Right4.Panel00",
+    "HydroRails.Right4.Panel01",
+    "HydroRails.Post028",
+    "HydroRails.Right5.Panel00",
+    "HydroRails.Right5.Panel01",
+    "HydroRails.Post029",
+    "HydroRails.Post030",
+    "HydroRails.ConduitSide0.Panel00",
+    "HydroRails.ConduitSide0.Panel01",
+    "HydroRails.Post031",
+    "HydroRails.Post032",
+    "HydroRails.ConduitSide5.Panel00",
+    "HydroRails.ConduitSide5.Panel01"
+  ]
+}

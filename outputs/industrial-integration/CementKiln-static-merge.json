@@ -1,0 +1,54 @@
+{
+  "source": "CementKiln",
+  "targets": [
+    "CementKiln"
+  ],
+  "joinedObjects": 2,
+  "objects": [
+    "CementKiln.Architecture",
+    "CementKiln.Door.GroundDoor"
+  ],
+  "nodes": [
+    {
+      "node": "StaticMerged",
+      "parts": 2,
+      "triangles": 23842,
+      "materials": {
+        "Plaster_White.IronTeeth": 10,
+        "BaseWood_DarkBrown.IronTeeth": 2094,
+        "BaseMetal.IronTeeth": 6576,
+        "DFIndustrial13": 6042,
+        "IrregularPlanks_DarkBrown.IronTeeth": 1948,
+        "RoofPlanks.IronTeeth": 116,
+        "DFIndustrial16": 87,
+        "DFIndustrial05": 856,
+        "Details.IronTeeth": 1292,
+        "DFIndustrial15": 550,
+        "DFIndustrial14": 2932,
+        "DFIndustrial17": 658,
+        "DFIndustrial20": 12,
+        "DFIndustrial19": 204,
+        "DFIndustrial21": 433,
+        "DFIndustrial25": 10,
+        "Plaster_Orange.IronTeeth": 22
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial08",
+      "parts": 1,
+      "triangles": 100,
+      "materials": {
+        "DFIndustrial08": 100
+      }
+    },
+    {
+      "node": "StaticMerged.WindowsAtlas.IronTeeth",
+      "parts": 2,
+      "triangles": 22,
+      "materials": {
+        "WindowsAtlas.IronTeeth": 22
+      }
+    }
+  ],
+  "railGroups": {}
+}

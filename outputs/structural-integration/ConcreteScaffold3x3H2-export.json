@@ -1,0 +1,19 @@
+{
+  "source": "ConcreteScaffold3x3H2",
+  "targets": [
+    "ConcreteScaffold3x3H2"
+  ],
+  "origin": [
+    0,
+    0,
+    0
+  ],
+  "size": [
+    3,
+    3,
+    3
+  ],
+  "openings": 0,
+  "objects": 2,
+  "animationFrames": 1
+}

@@ -1,0 +1,96 @@
+{
+  "scope": "Visual process choreography; no item creation or dependency belt entities",
+  "route": [
+    "lift bucket",
+    "side tipping receiver",
+    "enclosed gravity chute",
+    "short powered slat conveyor",
+    "vibrating screen",
+    "discharge chute",
+    "stone bin"
+  ],
+  "receiver": [
+    6.15,
+    4.18,
+    5.65
+  ],
+  "beltStart": [
+    7.900000095367432,
+    4.820000171661377,
+    2.3499999046325684
+  ],
+  "beltEnd": [
+    7.900000095367432,
+    3.75,
+    2.0199999809265137
+  ],
+  "collectionBin": [
+    8.0,
+    1.91,
+    1.0
+  ],
+  "cycleSeconds": 16,
+  "maximumBucketTipDegrees": 40,
+  "enclosedSections": [
+    "left repair workshop",
+    "right engine room",
+    "rear control room"
+  ],
+  "interiors": "Closed opaque facades; no visible interiors or character props",
+  "doorwayIdleAnchors": [
+    {
+      "section": "repair workshop",
+      "position": [
+        0.685,
+        4.175,
+        1.0
+      ],
+      "facing": [
+        0,
+        -1,
+        0
+      ]
+    },
+    {
+      "section": "engine room",
+      "position": [
+        8.915,
+        4.975,
+        1.0
+      ],
+      "facing": [
+        0,
+        -1,
+        0
+      ]
+    },
+    {
+      "section": "rear control room",
+      "position": [
+        3.37,
+        7.34,
+        1.0
+      ],
+      "facing": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "section": "front operator cabin",
+      "position": [
+        1.5,
+        1.06,
+        0
+      ],
+      "facing": [
+        0,
+        -1,
+        0
+      ]
+    }
+  ],
+  "doorwayStatus": "Artwork anchors only; native transform slots and navigation not exported",
+  "artDirection": "Worn timber and teal metal with restrained cyan instrumentation, flanged pipes and cable runs"
+}

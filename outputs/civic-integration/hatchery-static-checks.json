@@ -1,0 +1,23 @@
+{
+  "scope": "Source/export only; native results recorded separately",
+  "modelSha256": "98a5a85904790d4119ba01dfed2fe8bdc3c2be65d62578b93ba7de38dde5ee8b",
+  "nodes": 14,
+  "nativeUvVertices": 29071,
+  "suggestedPathCells": 14,
+  "openings": 3,
+  "baseZ": 1,
+  "size": [
+    7,
+    7,
+    5
+  ],
+  "cursorPickChecks": 72,
+  "nativeProps": 1,
+  "tankCapacity": 60,
+  "animationTracks": [
+    [
+      "#FishHatchery.NurserySign",
+      61
+    ]
+  ]
+}

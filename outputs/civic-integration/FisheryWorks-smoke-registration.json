@@ -1,0 +1,45 @@
+{
+ "ident": "FisheryWorks",
+ "source": "src/DeepFrontier/Art/Source/FisheryWorks-ReferenceStudy.blend",
+ "sourceSha256": "ba96d3cf08b58c4cee0315657b5ff145534f11167297c92eff2935858c5817c3",
+ "frame": 1,
+ "layout": "tools/civic-layouts.json",
+ "origin": [
+  1.25,
+  -1.3,
+  0
+ ],
+ "baseZ": 0,
+ "footprint": [
+  11,
+  8
+ ],
+ "height": 7,
+ "coordinateSystem": "Native grid XYZ, Z up: authored artwork + registration origin (the late-game registration frame)",
+ "smokeEmitters": [
+  {
+   "kind": "steam",
+   "position": [
+    6.97,
+    5.35,
+    6.2
+   ],
+   "radius": 0.2
+  }
+ ],
+ "sceneCheck": {
+  "rule": "highest static surface within radius + 0.2 at the mouth height (+/-0.002), at least 0.5 above the lowest",
+  "mouths": [
+   {
+    "position": [
+     6.97,
+     5.35,
+     6.2
+    ],
+    "stackTop": 6.2,
+    "lowestNearby": 1.99,
+    "vertices": 212
+   }
+  ]
+ }
+}

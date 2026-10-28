@@ -1,0 +1,37 @@
+{
+  "RecipeSpec": {
+    "Id": "GeochemicalAssay",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.GeochemicalAssay.DisplayName",
+    "CycleDurationInHours": 4,
+    "Ingredients": [
+      {
+        "Id": "UraniumOre",
+        "Amount": 1
+      },
+      {
+        "Id": "ConcentratedWaste",
+        "Amount": 1
+      },
+      {
+        "Id": "ReactorCoolantWater",
+        "Amount": 2
+      },
+      {
+        "Id": "LiquidHydrogen",
+        "Amount": 1
+      },
+      {
+        "Id": "LiquidOxygen",
+        "Amount": 1
+      }
+    ],
+    "Products": [],
+    "ProducedSciencePoints": 1600,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 3,
+    "Icon": "UI/Images/Game/science-icon"
+  }
+}

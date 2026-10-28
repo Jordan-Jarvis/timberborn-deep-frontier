@@ -1,0 +1,1090 @@
+{
+  "status": "Separate Blender nodes; game connection bindings are not authored yet",
+  "coordinateSpace": "Authored artwork X/across Y/back Z/up; no grid conversion",
+  "runs": [
+    {
+      "id": "DiningFrontfront",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.DiningFrontfront.Panel00",
+          "start": [
+            0.9,
+            0.9499999999999998,
+            2
+          ],
+          "end": [
+            1.8,
+            0.9499999999999998,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post000",
+          "endPost": "WalkwayRail.Restaurant.Post001"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningFrontfront.Panel01",
+          "start": [
+            1.8,
+            0.9499999999999998,
+            2
+          ],
+          "end": [
+            2.8000000000000003,
+            0.9499999999999998,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post001",
+          "endPost": "WalkwayRail.Restaurant.Post002"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningFrontfront.Panel02",
+          "start": [
+            2.8000000000000003,
+            0.9499999999999998,
+            2
+          ],
+          "end": [
+            3.8,
+            0.9499999999999998,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post002",
+          "endPost": "WalkwayRail.Restaurant.Post003"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningFrontfront.Panel03",
+          "start": [
+            3.8,
+            0.9499999999999998,
+            2
+          ],
+          "end": [
+            4.8,
+            0.9499999999999998,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post003",
+          "endPost": "WalkwayRail.Restaurant.Post004"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningFrontfront.Panel04",
+          "start": [
+            4.8,
+            0.9499999999999998,
+            2
+          ],
+          "end": [
+            5.8,
+            0.9499999999999998,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post004",
+          "endPost": "WalkwayRail.Restaurant.Post005"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningFrontfront.Panel05",
+          "start": [
+            5.8,
+            0.9499999999999998,
+            2
+          ],
+          "end": [
+            6.7,
+            0.9499999999999998,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post005",
+          "endPost": "WalkwayRail.Restaurant.Post006"
+        }
+      ]
+    },
+    {
+      "id": "DiningFrontleft",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.DiningFrontleft.Panel00",
+          "start": [
+            0.9,
+            0.9499999999999998,
+            2
+          ],
+          "end": [
+            0.9,
+            1.8499999999999999,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post000",
+          "endPost": "WalkwayRail.Restaurant.Post007"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningFrontleft.Panel01",
+          "start": [
+            0.9,
+            1.8499999999999999,
+            2
+          ],
+          "end": [
+            0.9,
+            2.75,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post007",
+          "endPost": "WalkwayRail.Restaurant.Post008"
+        }
+      ]
+    },
+    {
+      "id": "DiningSideright",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.DiningSideright.Panel00",
+          "start": [
+            7.7,
+            1.95,
+            2
+          ],
+          "end": [
+            7.7,
+            2.85,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post009",
+          "endPost": "WalkwayRail.Restaurant.Post010"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningSideright.Panel01",
+          "start": [
+            7.7,
+            2.85,
+            2
+          ],
+          "end": [
+            7.7,
+            3.8499999999999996,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post010",
+          "endPost": "WalkwayRail.Restaurant.Post011"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningSideright.Panel02",
+          "start": [
+            7.7,
+            3.8499999999999996,
+            2
+          ],
+          "end": [
+            7.7,
+            4.85,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post011",
+          "endPost": "WalkwayRail.Restaurant.Post012"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningSideright.Panel03",
+          "start": [
+            7.7,
+            4.85,
+            2
+          ],
+          "end": [
+            7.7,
+            5.85,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post012",
+          "endPost": "WalkwayRail.Restaurant.Post013"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningSideright.Panel04",
+          "start": [
+            7.7,
+            5.85,
+            2
+          ],
+          "end": [
+            7.7,
+            6.85,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post013",
+          "endPost": "WalkwayRail.Restaurant.Post014"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningSideright.Panel05",
+          "start": [
+            7.7,
+            6.85,
+            2
+          ],
+          "end": [
+            7.7,
+            7.75,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post014",
+          "endPost": "WalkwayRail.Restaurant.Post015"
+        }
+      ]
+    },
+    {
+      "id": "DiningRearback",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.DiningRearback.Panel00",
+          "start": [
+            1.9,
+            7.75,
+            2
+          ],
+          "end": [
+            2.8000000000000003,
+            7.75,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post016",
+          "endPost": "WalkwayRail.Restaurant.Post017"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningRearback.Panel01",
+          "start": [
+            2.8000000000000003,
+            7.75,
+            2
+          ],
+          "end": [
+            3.8,
+            7.75,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post017",
+          "endPost": "WalkwayRail.Restaurant.Post018"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningRearback.Panel02",
+          "start": [
+            3.8,
+            7.75,
+            2
+          ],
+          "end": [
+            4.8,
+            7.75,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post018",
+          "endPost": "WalkwayRail.Restaurant.Post019"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningRearback.Panel03",
+          "start": [
+            4.8,
+            7.75,
+            2
+          ],
+          "end": [
+            5.8,
+            7.75,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post019",
+          "endPost": "WalkwayRail.Restaurant.Post020"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningRearback.Panel04",
+          "start": [
+            5.8,
+            7.75,
+            2
+          ],
+          "end": [
+            6.8,
+            7.75,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post020",
+          "endPost": "WalkwayRail.Restaurant.Post021"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningRearback.Panel05",
+          "start": [
+            6.8,
+            7.75,
+            2
+          ],
+          "end": [
+            7.7,
+            7.75,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post021",
+          "endPost": "WalkwayRail.Restaurant.Post015"
+        }
+      ]
+    },
+    {
+      "id": "DiningRearleft",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.DiningRearleft.Panel00",
+          "start": [
+            1.9,
+            5.95,
+            2
+          ],
+          "end": [
+            1.9,
+            6.85,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post022",
+          "endPost": "WalkwayRail.Restaurant.Post023"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.DiningRearleft.Panel01",
+          "start": [
+            1.9,
+            6.85,
+            2
+          ],
+          "end": [
+            1.9,
+            7.75,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post023",
+          "endPost": "WalkwayRail.Restaurant.Post016"
+        }
+      ]
+    },
+    {
+      "id": "UpperDiningFrontfront",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel00",
+          "start": [
+            0.9,
+            0.9499999999999998,
+            4
+          ],
+          "end": [
+            1.8,
+            0.9499999999999998,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post024",
+          "endPost": "WalkwayRail.Restaurant.Post025"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel01",
+          "start": [
+            1.8,
+            0.9499999999999998,
+            4
+          ],
+          "end": [
+            2.8000000000000003,
+            0.9499999999999998,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post025",
+          "endPost": "WalkwayRail.Restaurant.Post026"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel02",
+          "start": [
+            2.8000000000000003,
+            0.9499999999999998,
+            4
+          ],
+          "end": [
+            3.8,
+            0.9499999999999998,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post026",
+          "endPost": "WalkwayRail.Restaurant.Post027"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel03",
+          "start": [
+            3.8,
+            0.9499999999999998,
+            4
+          ],
+          "end": [
+            4.8,
+            0.9499999999999998,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post027",
+          "endPost": "WalkwayRail.Restaurant.Post028"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel04",
+          "start": [
+            4.8,
+            0.9499999999999998,
+            4
+          ],
+          "end": [
+            5.8,
+            0.9499999999999998,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post028",
+          "endPost": "WalkwayRail.Restaurant.Post029"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel05",
+          "start": [
+            5.8,
+            0.9499999999999998,
+            4
+          ],
+          "end": [
+            6.7,
+            0.9499999999999998,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post029",
+          "endPost": "WalkwayRail.Restaurant.Post030"
+        }
+      ]
+    },
+    {
+      "id": "UpperDiningFrontleft",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningFrontleft.Panel00",
+          "start": [
+            0.9,
+            0.9499999999999998,
+            4
+          ],
+          "end": [
+            0.9,
+            1.8499999999999999,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post024",
+          "endPost": "WalkwayRail.Restaurant.Post031"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningFrontleft.Panel01",
+          "start": [
+            0.9,
+            1.8499999999999999,
+            4
+          ],
+          "end": [
+            0.9,
+            2.75,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post031",
+          "endPost": "WalkwayRail.Restaurant.Post032"
+        }
+      ]
+    },
+    {
+      "id": "UpperDiningSideright",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningSideright.Panel00",
+          "start": [
+            7.7,
+            1.95,
+            4
+          ],
+          "end": [
+            7.7,
+            2.85,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post033",
+          "endPost": "WalkwayRail.Restaurant.Post034"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningSideright.Panel01",
+          "start": [
+            7.7,
+            2.85,
+            4
+          ],
+          "end": [
+            7.7,
+            3.8499999999999996,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post034",
+          "endPost": "WalkwayRail.Restaurant.Post035"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningSideright.Panel02",
+          "start": [
+            7.7,
+            3.8499999999999996,
+            4
+          ],
+          "end": [
+            7.7,
+            4.85,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post035",
+          "endPost": "WalkwayRail.Restaurant.Post036"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningSideright.Panel03",
+          "start": [
+            7.7,
+            4.85,
+            4
+          ],
+          "end": [
+            7.7,
+            5.85,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post036",
+          "endPost": "WalkwayRail.Restaurant.Post037"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningSideright.Panel04",
+          "start": [
+            7.7,
+            5.85,
+            4
+          ],
+          "end": [
+            7.7,
+            6.85,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post037",
+          "endPost": "WalkwayRail.Restaurant.Post038"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningSideright.Panel05",
+          "start": [
+            7.7,
+            6.85,
+            4
+          ],
+          "end": [
+            7.7,
+            7.75,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post038",
+          "endPost": "WalkwayRail.Restaurant.Post039"
+        }
+      ]
+    },
+    {
+      "id": "UpperDiningRearback",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningRearback.Panel00",
+          "start": [
+            1.9,
+            7.75,
+            4
+          ],
+          "end": [
+            2.8000000000000003,
+            7.75,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post040",
+          "endPost": "WalkwayRail.Restaurant.Post041"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningRearback.Panel01",
+          "start": [
+            2.8000000000000003,
+            7.75,
+            4
+          ],
+          "end": [
+            3.8,
+            7.75,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post041",
+          "endPost": "WalkwayRail.Restaurant.Post042"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningRearback.Panel02",
+          "start": [
+            3.8,
+            7.75,
+            4
+          ],
+          "end": [
+            4.8,
+            7.75,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post042",
+          "endPost": "WalkwayRail.Restaurant.Post043"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningRearback.Panel03",
+          "start": [
+            4.8,
+            7.75,
+            4
+          ],
+          "end": [
+            5.8,
+            7.75,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post043",
+          "endPost": "WalkwayRail.Restaurant.Post044"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningRearback.Panel04",
+          "start": [
+            5.8,
+            7.75,
+            4
+          ],
+          "end": [
+            6.8,
+            7.75,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post044",
+          "endPost": "WalkwayRail.Restaurant.Post045"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningRearback.Panel05",
+          "start": [
+            6.8,
+            7.75,
+            4
+          ],
+          "end": [
+            7.7,
+            7.75,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post045",
+          "endPost": "WalkwayRail.Restaurant.Post039"
+        }
+      ]
+    },
+    {
+      "id": "UpperDiningRearleft",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningRearleft.Panel00",
+          "start": [
+            1.9,
+            5.95,
+            4
+          ],
+          "end": [
+            1.9,
+            6.85,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post046",
+          "endPost": "WalkwayRail.Restaurant.Post047"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.UpperDiningRearleft.Panel01",
+          "start": [
+            1.9,
+            6.85,
+            4
+          ],
+          "end": [
+            1.9,
+            7.75,
+            4
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post047",
+          "endPost": "WalkwayRail.Restaurant.Post040"
+        }
+      ]
+    },
+    {
+      "id": "StairAccess",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.StairAccess.Panel00",
+          "start": [
+            6.8,
+            1.95,
+            2
+          ],
+          "end": [
+            7.7,
+            1.95,
+            2
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post048",
+          "endPost": "WalkwayRail.Restaurant.Post009"
+        }
+      ]
+    },
+    {
+      "id": "RoofTerraceFront",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceFront.Panel00",
+          "start": [
+            5.8999999999999995,
+            2.95,
+            6
+          ],
+          "end": [
+            6.8,
+            2.95,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post049",
+          "endPost": "WalkwayRail.Restaurant.Post050"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceFront.Panel01",
+          "start": [
+            6.8,
+            2.95,
+            6
+          ],
+          "end": [
+            7.8,
+            2.95,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post050",
+          "endPost": "WalkwayRail.Restaurant.Post051"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceFront.Panel02",
+          "start": [
+            7.8,
+            2.95,
+            6
+          ],
+          "end": [
+            8.8,
+            2.95,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post051",
+          "endPost": "WalkwayRail.Restaurant.Post052"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceFront.Panel03",
+          "start": [
+            8.8,
+            2.95,
+            6
+          ],
+          "end": [
+            9.700000000000001,
+            2.95,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post052",
+          "endPost": "WalkwayRail.Restaurant.Post053"
+        }
+      ]
+    },
+    {
+      "id": "RoofTerraceRear",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceRear.Panel00",
+          "start": [
+            5.8999999999999995,
+            5.75,
+            6
+          ],
+          "end": [
+            6.8,
+            5.75,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post054",
+          "endPost": "WalkwayRail.Restaurant.Post055"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceRear.Panel01",
+          "start": [
+            6.8,
+            5.75,
+            6
+          ],
+          "end": [
+            7.8,
+            5.75,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post055",
+          "endPost": "WalkwayRail.Restaurant.Post056"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceRear.Panel02",
+          "start": [
+            7.8,
+            5.75,
+            6
+          ],
+          "end": [
+            8.8,
+            5.75,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post056",
+          "endPost": "WalkwayRail.Restaurant.Post057"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceRear.Panel03",
+          "start": [
+            8.8,
+            5.75,
+            6
+          ],
+          "end": [
+            9.700000000000001,
+            5.75,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post057",
+          "endPost": "WalkwayRail.Restaurant.Post058"
+        }
+      ]
+    },
+    {
+      "id": "RoofTerraceLeft",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceLeft.Panel00",
+          "start": [
+            5.8999999999999995,
+            2.95,
+            6
+          ],
+          "end": [
+            5.8999999999999995,
+            3.8499999999999996,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post049",
+          "endPost": "WalkwayRail.Restaurant.Post059"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceLeft.Panel01",
+          "start": [
+            5.8999999999999995,
+            3.8499999999999996,
+            6
+          ],
+          "end": [
+            5.8999999999999995,
+            4.85,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post059",
+          "endPost": "WalkwayRail.Restaurant.Post060"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceLeft.Panel02",
+          "start": [
+            5.8999999999999995,
+            4.85,
+            6
+          ],
+          "end": [
+            5.8999999999999995,
+            5.75,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post060",
+          "endPost": "WalkwayRail.Restaurant.Post054"
+        }
+      ]
+    },
+    {
+      "id": "RoofTerraceRight",
+      "panels": [
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceRight.Panel00",
+          "start": [
+            9.700000000000001,
+            2.95,
+            6
+          ],
+          "end": [
+            9.700000000000001,
+            3.8499999999999996,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post053",
+          "endPost": "WalkwayRail.Restaurant.Post061"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceRight.Panel01",
+          "start": [
+            9.700000000000001,
+            3.8499999999999996,
+            6
+          ],
+          "end": [
+            9.700000000000001,
+            4.85,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post061",
+          "endPost": "WalkwayRail.Restaurant.Post062"
+        },
+        {
+          "node": "WalkwayRail.Restaurant.RoofTerraceRight.Panel02",
+          "start": [
+            9.700000000000001,
+            4.85,
+            6
+          ],
+          "end": [
+            9.700000000000001,
+            5.75,
+            6
+          ],
+          "startPost": "WalkwayRail.Restaurant.Post062",
+          "endPost": "WalkwayRail.Restaurant.Post058"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    "WalkwayRail.Restaurant.Post000",
+    "WalkwayRail.Restaurant.Post001",
+    "WalkwayRail.Restaurant.Post002",
+    "WalkwayRail.Restaurant.Post003",
+    "WalkwayRail.Restaurant.Post004",
+    "WalkwayRail.Restaurant.Post005",
+    "WalkwayRail.Restaurant.Post006",
+    "WalkwayRail.Restaurant.DiningFrontfront.Panel00",
+    "WalkwayRail.Restaurant.DiningFrontfront.Panel01",
+    "WalkwayRail.Restaurant.DiningFrontfront.Panel02",
+    "WalkwayRail.Restaurant.DiningFrontfront.Panel03",
+    "WalkwayRail.Restaurant.DiningFrontfront.Panel04",
+    "WalkwayRail.Restaurant.DiningFrontfront.Panel05",
+    "WalkwayRail.Restaurant.Post007",
+    "WalkwayRail.Restaurant.Post008",
+    "WalkwayRail.Restaurant.DiningFrontleft.Panel00",
+    "WalkwayRail.Restaurant.DiningFrontleft.Panel01",
+    "WalkwayRail.Restaurant.Post009",
+    "WalkwayRail.Restaurant.Post010",
+    "WalkwayRail.Restaurant.Post011",
+    "WalkwayRail.Restaurant.Post012",
+    "WalkwayRail.Restaurant.Post013",
+    "WalkwayRail.Restaurant.Post014",
+    "WalkwayRail.Restaurant.Post015",
+    "WalkwayRail.Restaurant.DiningSideright.Panel00",
+    "WalkwayRail.Restaurant.DiningSideright.Panel01",
+    "WalkwayRail.Restaurant.DiningSideright.Panel02",
+    "WalkwayRail.Restaurant.DiningSideright.Panel03",
+    "WalkwayRail.Restaurant.DiningSideright.Panel04",
+    "WalkwayRail.Restaurant.DiningSideright.Panel05",
+    "WalkwayRail.Restaurant.Post016",
+    "WalkwayRail.Restaurant.Post017",
+    "WalkwayRail.Restaurant.Post018",
+    "WalkwayRail.Restaurant.Post019",
+    "WalkwayRail.Restaurant.Post020",
+    "WalkwayRail.Restaurant.Post021",
+    "WalkwayRail.Restaurant.DiningRearback.Panel00",
+    "WalkwayRail.Restaurant.DiningRearback.Panel01",
+    "WalkwayRail.Restaurant.DiningRearback.Panel02",
+    "WalkwayRail.Restaurant.DiningRearback.Panel03",
+    "WalkwayRail.Restaurant.DiningRearback.Panel04",
+    "WalkwayRail.Restaurant.DiningRearback.Panel05",
+    "WalkwayRail.Restaurant.Post022",
+    "WalkwayRail.Restaurant.Post023",
+    "WalkwayRail.Restaurant.DiningRearleft.Panel00",
+    "WalkwayRail.Restaurant.DiningRearleft.Panel01",
+    "WalkwayRail.Restaurant.Post024",
+    "WalkwayRail.Restaurant.Post025",
+    "WalkwayRail.Restaurant.Post026",
+    "WalkwayRail.Restaurant.Post027",
+    "WalkwayRail.Restaurant.Post028",
+    "WalkwayRail.Restaurant.Post029",
+    "WalkwayRail.Restaurant.Post030",
+    "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel00",
+    "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel01",
+    "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel02",
+    "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel03",
+    "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel04",
+    "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel05",
+    "WalkwayRail.Restaurant.Post031",
+    "WalkwayRail.Restaurant.Post032",
+    "WalkwayRail.Restaurant.UpperDiningFrontleft.Panel00",
+    "WalkwayRail.Restaurant.UpperDiningFrontleft.Panel01",
+    "WalkwayRail.Restaurant.Post033",
+    "WalkwayRail.Restaurant.Post034",
+    "WalkwayRail.Restaurant.Post035",
+    "WalkwayRail.Restaurant.Post036",
+    "WalkwayRail.Restaurant.Post037",
+    "WalkwayRail.Restaurant.Post038",
+    "WalkwayRail.Restaurant.Post039",
+    "WalkwayRail.Restaurant.UpperDiningSideright.Panel00",
+    "WalkwayRail.Restaurant.UpperDiningSideright.Panel01",
+    "WalkwayRail.Restaurant.UpperDiningSideright.Panel02",
+    "WalkwayRail.Restaurant.UpperDiningSideright.Panel03",
+    "WalkwayRail.Restaurant.UpperDiningSideright.Panel04",
+    "WalkwayRail.Restaurant.UpperDiningSideright.Panel05",
+    "WalkwayRail.Restaurant.Post040",
+    "WalkwayRail.Restaurant.Post041",
+    "WalkwayRail.Restaurant.Post042",
+    "WalkwayRail.Restaurant.Post043",
+    "WalkwayRail.Restaurant.Post044",
+    "WalkwayRail.Restaurant.Post045",
+    "WalkwayRail.Restaurant.UpperDiningRearback.Panel00",
+    "WalkwayRail.Restaurant.UpperDiningRearback.Panel01",
+    "WalkwayRail.Restaurant.UpperDiningRearback.Panel02",
+    "WalkwayRail.Restaurant.UpperDiningRearback.Panel03",
+    "WalkwayRail.Restaurant.UpperDiningRearback.Panel04",
+    "WalkwayRail.Restaurant.UpperDiningRearback.Panel05",
+    "WalkwayRail.Restaurant.Post046",
+    "WalkwayRail.Restaurant.Post047",
+    "WalkwayRail.Restaurant.UpperDiningRearleft.Panel00",
+    "WalkwayRail.Restaurant.UpperDiningRearleft.Panel01",
+    "WalkwayRail.Restaurant.Post048",
+    "WalkwayRail.Restaurant.StairAccess.Panel00",
+    "WalkwayRail.Restaurant.Post049",
+    "WalkwayRail.Restaurant.Post050",
+    "WalkwayRail.Restaurant.Post051",
+    "WalkwayRail.Restaurant.Post052",
+    "WalkwayRail.Restaurant.Post053",
+    "WalkwayRail.Restaurant.RoofTerraceFront.Panel00",
+    "WalkwayRail.Restaurant.RoofTerraceFront.Panel01",
+    "WalkwayRail.Restaurant.RoofTerraceFront.Panel02",
+    "WalkwayRail.Restaurant.RoofTerraceFront.Panel03",
+    "WalkwayRail.Restaurant.Post054",
+    "WalkwayRail.Restaurant.Post055",
+    "WalkwayRail.Restaurant.Post056",
+    "WalkwayRail.Restaurant.Post057",
+    "WalkwayRail.Restaurant.Post058",
+    "WalkwayRail.Restaurant.RoofTerraceRear.Panel00",
+    "WalkwayRail.Restaurant.RoofTerraceRear.Panel01",
+    "WalkwayRail.Restaurant.RoofTerraceRear.Panel02",
+    "WalkwayRail.Restaurant.RoofTerraceRear.Panel03",
+    "WalkwayRail.Restaurant.Post059",
+    "WalkwayRail.Restaurant.Post060",
+    "WalkwayRail.Restaurant.RoofTerraceLeft.Panel00",
+    "WalkwayRail.Restaurant.RoofTerraceLeft.Panel01",
+    "WalkwayRail.Restaurant.RoofTerraceLeft.Panel02",
+    "WalkwayRail.Restaurant.Post061",
+    "WalkwayRail.Restaurant.Post062",
+    "WalkwayRail.Restaurant.RoofTerraceRight.Panel00",
+    "WalkwayRail.Restaurant.RoofTerraceRight.Panel01",
+    "WalkwayRail.Restaurant.RoofTerraceRight.Panel02"
+  ]
+}

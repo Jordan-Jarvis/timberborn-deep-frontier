@@ -1,0 +1,9 @@
+{
+  "gameVersion": "1.1.2.8",
+  "officialBuild": 17,
+  "evidence": "outputs/industrial-game-run17-reload.log",
+  "railAssertions": 17,
+  "routeQueries": 6,
+  "completed": true,
+  "failures": 0
+}

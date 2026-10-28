@@ -1,0 +1,846 @@
+{
+  "Openings": [
+    {
+      "Id": "FishFront5",
+      "Inside": {
+        "X": 5,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.007"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishFront5"
+      ]
+    },
+    {
+      "Id": "FishFront6",
+      "Inside": {
+        "X": 6,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.008"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishFront6"
+      ]
+    },
+    {
+      "Id": "FishFront7",
+      "Inside": {
+        "X": 7,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.009"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishFront7"
+      ]
+    },
+    {
+      "Id": "FishFront8",
+      "Inside": {
+        "X": 8,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.010"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishFront8"
+      ]
+    },
+    {
+      "Id": "FishRight3",
+      "Inside": {
+        "X": 8,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.011"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRight3"
+      ]
+    },
+    {
+      "Id": "FishRight4",
+      "Inside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 2,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.012"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRight4"
+      ]
+    },
+    {
+      "Id": "FishRight5",
+      "Inside": {
+        "X": 8,
+        "Y": 3,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 3,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.013"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRight5"
+      ]
+    },
+    {
+      "Id": "FishRight6",
+      "Inside": {
+        "X": 8,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 4,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.014"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRight6"
+      ]
+    },
+    {
+      "Id": "FishRight7",
+      "Inside": {
+        "X": 8,
+        "Y": 5,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 5,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.015"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRight7"
+      ]
+    },
+    {
+      "Id": "FishRight8",
+      "Inside": {
+        "X": 8,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 6,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.016"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRight8"
+      ]
+    },
+    {
+      "Id": "FishRear2",
+      "Inside": {
+        "X": 2,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.000"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRear2"
+      ]
+    },
+    {
+      "Id": "FishRear3",
+      "Inside": {
+        "X": 3,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.001"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRear3"
+      ]
+    },
+    {
+      "Id": "FishRear4",
+      "Inside": {
+        "X": 4,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.002"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRear4"
+      ]
+    },
+    {
+      "Id": "FishRear5",
+      "Inside": {
+        "X": 5,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.003"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRear5"
+      ]
+    },
+    {
+      "Id": "FishRear6",
+      "Inside": {
+        "X": 6,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.004"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRear6"
+      ]
+    },
+    {
+      "Id": "FishRear7",
+      "Inside": {
+        "X": 7,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.005"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRear7"
+      ]
+    },
+    {
+      "Id": "FishRear8",
+      "Inside": {
+        "X": 8,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.006"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRear8"
+      ]
+    },
+    {
+      "Id": "FishRoofLeft5",
+      "Inside": {
+        "X": 0,
+        "Y": 3,
+        "Z": 2
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 3,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.017"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRoofLeft5"
+      ]
+    },
+    {
+      "Id": "FishRoofLeft6",
+      "Inside": {
+        "X": 0,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 4,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.018"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.FishRoofLeft6"
+      ]
+    }
+  ],
+  "Waypoints": [
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 0,
+        "Z": 0
+      },
+      "Position": {
+        "X": 3.25,
+        "Y": 0,
+        "Z": 0.25
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 1,
+        "Z": 0
+      },
+      "Position": {
+        "X": 3.25,
+        "Y": 0,
+        "Z": 1.4999999999999998
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 1,
+        "Z": 0
+      },
+      "Position": {
+        "X": 4.25,
+        "Y": 0,
+        "Z": 1.4999999999999998
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 1,
+        "Z": 0
+      },
+      "Position": {
+        "X": 5.15,
+        "Y": 0,
+        "Z": 1.4999999999999998
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 2,
+        "Z": 0
+      },
+      "Position": {
+        "X": 5.15,
+        "Y": 0,
+        "Z": 2.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 3,
+        "Z": 0
+      },
+      "Position": {
+        "X": 5.15,
+        "Y": 0,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 3,
+        "Z": 1
+      },
+      "Position": {
+        "X": 5.15,
+        "Y": 1,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.15,
+        "Y": 2,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.15,
+        "Y": 2,
+        "Z": 2.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.15,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 2.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 5,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 5.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 4.15,
+        "Y": 2,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 3.15,
+        "Y": 2,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 3.15,
+        "Y": 2,
+        "Z": 4.25
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 2.4699999999999998,
+        "Y": 2,
+        "Z": 4.25
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 0,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 0,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 3.5
+      }
+    }
+  ]
+}

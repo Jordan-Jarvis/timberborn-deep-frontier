@@ -1,0 +1,19 @@
+{
+  "source": "ConcreteMixer",
+  "targets": [
+    "ConcreteMixer"
+  ],
+  "origin": [
+    0,
+    0,
+    0
+  ],
+  "size": [
+    7,
+    5,
+    7
+  ],
+  "openings": 0,
+  "objects": 6,
+  "animationFrames": 121
+}

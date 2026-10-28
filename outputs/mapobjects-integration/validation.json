@@ -1,0 +1,202 @@
+{
+ "models": {
+  "DeepOreVein": {
+   "triangles": 1265,
+   "materials": [
+    "BaseMetal.IronTeeth",
+    "BeaverCarryingModels",
+    "UndergroundRuinsCliff",
+    "WaterSource"
+   ],
+   "boundsMin": [
+    0.08,
+    -0.05,
+    0.08
+   ],
+   "boundsMax": [
+    4.92,
+    0.277,
+    4.92
+   ]
+  },
+  "DeepOreSource": {
+   "triangles": 495,
+   "materials": [
+    "BaseMetal.IronTeeth",
+    "BeaverCarryingModels",
+    "UndergroundRuinsCliff",
+    "WaterSource"
+   ],
+   "boundsMin": [
+    0.139,
+    -0.02,
+    0.127
+   ],
+   "boundsMax": [
+    1.947,
+    1.23,
+    1.868
+   ]
+  },
+  "SandstoneSeam": {
+   "triangles": 582,
+   "materials": [
+    "Plaster_Orange.IronTeeth",
+    "UndergroundRuinsCliff",
+    "WaterSource"
+   ],
+   "boundsMin": [
+    0.1,
+    -0.05,
+    0.1
+   ],
+   "boundsMax": [
+    4.9,
+    0.299,
+    4.9
+   ]
+  },
+  "LimestoneSeam": {
+   "triangles": 369,
+   "materials": [
+    "Plaster_White.IronTeeth",
+    "UndergroundRuinsCliff"
+   ],
+   "boundsMin": [
+    0.12,
+    -0.05,
+    0.12
+   ],
+   "boundsMax": [
+    4.88,
+    0.294,
+    4.88
+   ]
+  },
+  "SandstoneOutcrop": {
+   "triangles": 145,
+   "materials": [
+    "Plaster_Orange.IronTeeth",
+    "UndergroundRuinsCliff",
+    "WaterSource"
+   ],
+   "boundsMin": [
+    0.1,
+    -0.05,
+    0.155
+   ],
+   "boundsMax": [
+    0.906,
+    0.57,
+    0.874
+   ]
+  },
+  "LimestoneOutcrop": {
+   "triangles": 76,
+   "materials": [
+    "Plaster_White.IronTeeth",
+    "UndergroundRuinsCliff"
+   ],
+   "boundsMin": [
+    0.102,
+    -0.05,
+    0.147
+   ],
+   "boundsMax": [
+    0.906,
+    0.65,
+    0.854
+   ]
+  },
+  "RadioactiveSpringSource": {
+   "triangles": 289,
+   "materials": [
+    "UndergroundRuinsCliff",
+    "WaterSource"
+   ],
+   "boundsMin": [
+    0.068,
+    -0.05,
+    0.026
+   ],
+   "boundsMax": [
+    0.914,
+    0.389,
+    0.888
+   ]
+  },
+  "HumanRecordCache": {
+   "triangles": 440,
+   "materials": [
+    "Plaster_White.IronTeeth",
+    "Ruins",
+    "UndergroundRuinsCliff",
+    "UnstableCore",
+    "WaterSource"
+   ],
+   "boundsMin": [
+    0.14,
+    -0.04,
+    0.1
+   ],
+   "boundsMax": [
+    2.87,
+    0.9,
+    1.956
+   ]
+  },
+  "StockpileGoodModels/DeepFrontier/1DeepOre": {
+   "triangles": 16,
+   "boundsMin": [
+    -0.348,
+    -0.17,
+    -0.079
+   ],
+   "boundsMax": [
+    0.362,
+    -0.07,
+    0.066
+   ]
+  },
+  "StockpileGoodModels/DeepFrontier/4DeepOres": {
+   "triangles": 62,
+   "boundsMin": [
+    -0.364,
+    -0.17,
+    -0.361
+   ],
+   "boundsMax": [
+    0.379,
+    -0.038,
+    0.362
+   ]
+  },
+  "StockpileGoodModels/DeepFrontier/1DeepAlloy": {
+   "triangles": 10,
+   "boundsMin": [
+    -0.39,
+    -0.17,
+    -0.075
+   ],
+   "boundsMax": [
+    0.39,
+    -0.02,
+    0.075
+   ]
+  },
+  "StockpileGoodModels/DeepFrontier/4DeepAlloys": {
+   "triangles": 40,
+   "boundsMin": [
+    -0.39,
+    -0.17,
+    -0.375
+   ],
+   "boundsMax": [
+    0.39,
+    -0.02,
+    0.375
+   ]
+  }
+ },
+ "failures": []
+}

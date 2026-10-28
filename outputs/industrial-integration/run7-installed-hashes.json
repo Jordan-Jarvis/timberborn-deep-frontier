@@ -1,0 +1,22 @@
+[
+  {
+    "path": "Scripts/DeepFrontier.dll",
+    "sha256": "8276df46a828479f56b367e7baf53ab3a968d3888d6d0141a5080475fbab824e"
+  },
+  {
+    "path": "Buildings/Metal/StoneCrusher/StoneCrusher.IronTeeth.Model.timbermesh",
+    "sha256": "fb26850d96621e9b10d74235e5b5e59a91a4120c1d843cebafae0f08b83d082a"
+  },
+  {
+    "path": "Buildings/Metal/CementKiln/CementKiln.IronTeeth.Model.timbermesh",
+    "sha256": "ea7c6fb0ca24bd36d746f89ca44ae5b1dfaba9920d86c8cd845122e992a5fae7"
+  },
+  {
+    "path": "Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.Model.timbermesh",
+    "sha256": "9d7a000b0d4b90eb473d9e844d722e63deef3fa5ac06e8ed321f9ff4f9a13e73"
+  },
+  {
+    "path": "Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.Model.timbermesh",
+    "sha256": "9d7a000b0d4b90eb473d9e844d722e63deef3fa5ac06e8ed321f9ff4f9a13e73"
+  }
+]

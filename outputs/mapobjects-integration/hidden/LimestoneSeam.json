@@ -1,0 +1,47 @@
+{
+ "culledFacesChecked": 0,
+ "culledFacesExposed": 0,
+ "exposedExamples": [],
+ "model": "LimestoneSeam",
+ "study": "LimestoneSeam",
+ "source": "C:/Users/Jordan/Documents/TimberbornModding/src/DeepFrontier/Art/Source/LimestoneSeam-ReferenceStudy.blend",
+ "method": "orbit ray visibility, elevations [12, 30, 48, 66, 84] deg x 16 azimuths, back faces culled, animated/water/native props never occlude, terrain plane 0.0",
+ "shippedTriangles": 369,
+ "hiddenTriangles": 23,
+ "hiddenShare": 0.0623,
+ "nativePreviewTriangles": 0,
+ "seconds": 0.0,
+ "objects": [
+  {
+   "name": "LimestoneSeamGeology",
+   "animated": false,
+   "triangles": 369,
+   "hidden": 23,
+   "hiddenByMaterial": {
+    "UndergroundRuinsCliff": 23
+   }
+  }
+ ],
+ "sources": [
+  {
+   "source": "map_objects_geometry.py:512:limestone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 36,
+   "hidden": 15
+  },
+  {
+   "source": "map_objects_geometry.py:503:limestone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 22,
+   "hidden": 8
+  },
+  {
+   "source": "map_objects_geometry.py:516:limestone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 291,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:511:limestone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 20,
+   "hidden": 0
+  }
+ ]
+}

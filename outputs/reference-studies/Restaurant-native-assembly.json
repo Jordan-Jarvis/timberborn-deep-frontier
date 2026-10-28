@@ -1,0 +1,234 @@
+{
+  "scope": "Local preview copies; game references the original shipped resources",
+  "props": [
+    {
+      "name": "NativePlant0",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        1.975,
+        0.9849999999999999,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant1",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        1.9249999999999998,
+        0.9849999999999999,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant2",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        3.335,
+        0.9849999999999999,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant3",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        3.575,
+        1.275,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant4",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        4.9350000000000005,
+        0.9849999999999999,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant5",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        5.175000000000001,
+        1.275,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant6",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        1.685,
+        1.275,
+        4.245
+      ],
+      "scale": 0.29,
+      "yaw": 90,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant7",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        2.215,
+        1.275,
+        4.245
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant8",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        3.625,
+        1.275,
+        4.245
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant9",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        3.865,
+        0.9849999999999999,
+        4.245
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant10",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        5.225,
+        1.275,
+        4.245
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant11",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        5.465,
+        0.9849999999999999,
+        4.245
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant12",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        7.415,
+        2.375,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 90
+    },
+    {
+      "name": "NativePlant13",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        7.704999999999999,
+        2.615,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 180
+    },
+    {
+      "name": "NativePlant14",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        7.415,
+        3.585,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant15",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        7.415,
+        4.115,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 90
+    },
+    {
+      "name": "NativePlant16",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        7.415,
+        5.585,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 0
+    },
+    {
+      "name": "NativePlant17",
+      "model": "CoffeeBushMature",
+      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
+      "position": [
+        7.415,
+        6.114999999999999,
+        2.245
+      ],
+      "scale": 0.29,
+      "yaw": 90
+    }
+  ],
+  "liquids": []
+}

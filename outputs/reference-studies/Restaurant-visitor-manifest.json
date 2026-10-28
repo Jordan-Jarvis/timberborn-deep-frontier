@@ -1,0 +1,486 @@
+{
+  "scope": "Authored door and seating positions; native visitor behavior not integrated",
+  "doors": [
+    {
+      "id": "MiddleDoor",
+      "position": [
+        4.3,
+        2.8499999999999996,
+        2
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "UpperDoor",
+      "position": [
+        4.3,
+        2.8499999999999996,
+        4
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "GroundDoor",
+      "position": [
+        2.3,
+        1.8499999999999999,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "RoofTerraceDoor",
+      "position": [
+        6.8,
+        4.35,
+        6
+      ],
+      "outward": [
+        1,
+        0
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    }
+  ],
+  "internalDoorNetwork": "BuildingInterior",
+  "requireAllDoorsConnectedInternally": true,
+  "visitorSeats": [
+    {
+      "id": "Seat0",
+      "position": [
+        1.2999999999999998,
+        1.55,
+        4.3375
+      ],
+      "seatSurfaceHeight": 4.3375,
+      "deckHeight": 4,
+      "facing": [
+        1,
+        0
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          1.1549999999999998,
+          1.385
+        ],
+        [
+          1.4449999999999998,
+          1.715
+        ]
+      ],
+      "tableCenter": [
+        1.95,
+        1.55,
+        4.58
+      ]
+    },
+    {
+      "id": "Seat1",
+      "position": [
+        2.6,
+        1.55,
+        4.3375
+      ],
+      "seatSurfaceHeight": 4.3375,
+      "deckHeight": 4,
+      "facing": [
+        -1,
+        0
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          2.455,
+          1.385
+        ],
+        [
+          2.745,
+          1.715
+        ]
+      ],
+      "tableCenter": [
+        1.95,
+        1.55,
+        4.58
+      ]
+    },
+    {
+      "id": "Seat2",
+      "position": [
+        4.55,
+        1.55,
+        4.3375
+      ],
+      "seatSurfaceHeight": 4.3375,
+      "deckHeight": 4,
+      "facing": [
+        1,
+        0
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          4.405,
+          1.385
+        ],
+        [
+          4.694999999999999,
+          1.715
+        ]
+      ],
+      "tableCenter": [
+        5.2,
+        1.55,
+        4.58
+      ]
+    },
+    {
+      "id": "Seat3",
+      "position": [
+        5.8500000000000005,
+        1.55,
+        4.3375
+      ],
+      "seatSurfaceHeight": 4.3375,
+      "deckHeight": 4,
+      "facing": [
+        -1,
+        0
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          5.705000000000001,
+          1.385
+        ],
+        [
+          5.995,
+          1.715
+        ]
+      ],
+      "tableCenter": [
+        5.2,
+        1.55,
+        4.58
+      ]
+    },
+    {
+      "id": "Seat4",
+      "position": [
+        1.2999999999999998,
+        1.55,
+        2.3375
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "deckHeight": 2,
+      "facing": [
+        1,
+        0
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          1.1549999999999998,
+          1.385
+        ],
+        [
+          1.4449999999999998,
+          1.715
+        ]
+      ],
+      "tableCenter": [
+        1.95,
+        1.55,
+        2.58
+      ]
+    },
+    {
+      "id": "Seat5",
+      "position": [
+        2.6,
+        1.55,
+        2.3375
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "deckHeight": 2,
+      "facing": [
+        -1,
+        0
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          2.455,
+          1.385
+        ],
+        [
+          2.745,
+          1.715
+        ]
+      ],
+      "tableCenter": [
+        1.95,
+        1.55,
+        2.58
+      ]
+    },
+    {
+      "id": "Seat6",
+      "position": [
+        2.95,
+        1.55,
+        2.3375
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "deckHeight": 2,
+      "facing": [
+        1,
+        0
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          2.805,
+          1.385
+        ],
+        [
+          3.095,
+          1.715
+        ]
+      ],
+      "tableCenter": [
+        3.6,
+        1.55,
+        2.58
+      ]
+    },
+    {
+      "id": "Seat7",
+      "position": [
+        4.25,
+        1.55,
+        2.3375
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "deckHeight": 2,
+      "facing": [
+        -1,
+        0
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          4.105,
+          1.385
+        ],
+        [
+          4.395,
+          1.715
+        ]
+      ],
+      "tableCenter": [
+        3.6,
+        1.55,
+        2.58
+      ]
+    },
+    {
+      "id": "Seat8",
+      "position": [
+        4.55,
+        1.55,
+        2.3375
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "deckHeight": 2,
+      "facing": [
+        1,
+        0
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          4.405,
+          1.385
+        ],
+        [
+          4.694999999999999,
+          1.715
+        ]
+      ],
+      "tableCenter": [
+        5.2,
+        1.55,
+        2.58
+      ]
+    },
+    {
+      "id": "Seat9",
+      "position": [
+        5.8500000000000005,
+        1.55,
+        2.3375
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "deckHeight": 2,
+      "facing": [
+        -1,
+        0
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          5.705000000000001,
+          1.385
+        ],
+        [
+          5.995,
+          1.715
+        ]
+      ],
+      "tableCenter": [
+        5.2,
+        1.55,
+        2.58
+      ]
+    },
+    {
+      "id": "Seat10",
+      "position": [
+        7.04,
+        2.75,
+        2.3375
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "deckHeight": 2,
+      "facing": [
+        0,
+        1
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          6.875,
+          2.605
+        ],
+        [
+          7.205,
+          2.895
+        ]
+      ],
+      "tableCenter": [
+        7.04,
+        3.4,
+        2.58
+      ]
+    },
+    {
+      "id": "Seat11",
+      "position": [
+        7.04,
+        4.05,
+        2.3375
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "deckHeight": 2,
+      "facing": [
+        0,
+        -1
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          6.875,
+          3.905
+        ],
+        [
+          7.205,
+          4.194999999999999
+        ]
+      ],
+      "tableCenter": [
+        7.04,
+        3.4,
+        2.58
+      ]
+    },
+    {
+      "id": "Seat12",
+      "position": [
+        7.04,
+        4.449999999999999,
+        2.3375
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "deckHeight": 2,
+      "facing": [
+        0,
+        1
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          6.875,
+          4.305
+        ],
+        [
+          7.205,
+          4.594999999999999
+        ]
+      ],
+      "tableCenter": [
+        7.04,
+        5.1,
+        2.58
+      ]
+    },
+    {
+      "id": "Seat13",
+      "position": [
+        7.04,
+        5.75,
+        2.3375
+      ],
+      "seatSurfaceHeight": 2.3375,
+      "deckHeight": 2,
+      "facing": [
+        0,
+        -1
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          6.875,
+          5.605
+        ],
+        [
+          7.205,
+          5.895
+        ]
+      ],
+      "tableCenter": [
+        7.04,
+        5.1,
+        2.58
+      ]
+    }
+  ],
+  "restaurantBehavior": "Native attraction visit, reserved Sitting slot, meal consumption during visit"
+}

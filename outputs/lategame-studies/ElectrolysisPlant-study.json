@@ -1,0 +1,63 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Twin telescoping gas holders in round steel guide frames: a two-lift hydrogen holder and a smaller oxygen holder whose riveted bells slowly rise and fall.",
+  "footprint": [
+    12,
+    9
+  ],
+  "heightLayers": 12,
+  "boundsMin": [
+    -0.0616,
+    -0.04,
+    -0.03
+  ],
+  "boundsMax": [
+    11.9625,
+    9.16,
+    11.12
+  ],
+  "doors": [
+    {
+      "id": "Entrance",
+      "position": [
+        6.5,
+        4.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "ElectrolysisPlant.TransformerFan1",
+    "ElectrolysisPlant.TransformerFan2",
+    "ElectrolysisPlant.PumpFlywheel",
+    "ElectrolysisPlant.HydrogenLift",
+    "ElectrolysisPlant.HydrogenBell",
+    "ElectrolysisPlant.Beacon",
+    "ElectrolysisPlant.OxygenBell"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 10948,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 452,
+    "IrregularPlanks_DarkBrown.IronTeeth": 10,
+    "BaseMetal.IronTeeth": 4777,
+    "RoofPlanks.IronTeeth": 600,
+    "Details.IronTeeth": 1876,
+    "accent8": 20,
+    "accent25": 70,
+    "Plaster_White.IronTeeth": 2788,
+    "Plaster_Orange.IronTeeth": 139,
+    "IrregularPlanks_MetalForged.IronTeeth": 168,
+    "WindowsAtlas.IronTeeth": 386,
+    "PaintedMetal.IronTeeth": 1402
+  },
+  "sourceHash": "ff2f2c6e7f7a37112384665c1d29b0068bcf0d3b752a9b14f781581ee7217fe5",
+  "artHash": "30d75bb43ef205295c0f661aad2aceb503bc69362e7b5fb88216851189364323"
+}

@@ -1,0 +1,19 @@
+{
+  "source": "SandstonePit",
+  "targets": [
+    "SandstonePit"
+  ],
+  "origin": [
+    0.57,
+    0,
+    0
+  ],
+  "size": [
+    5,
+    4,
+    4
+  ],
+  "openings": 0,
+  "objects": 8,
+  "animationFrames": 121
+}

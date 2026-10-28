@@ -1,0 +1,84 @@
+{
+  "scope": "Blender scene only; no game playback verification",
+  "parts": [
+    {
+      "name": "ReferenceKilnBarrel",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "ReferenceKilnSupport11",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "ReferenceKilnSupport12",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "ReferenceKilnSupport21",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "ReferenceKilnSupport22",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "ReferenceKilnSupport31",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "ReferenceKilnSupport32",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "ReferenceKilnPinion",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "ReferenceKilnDriveWheel",
+      "loopMatrixError": 2.384185791015625e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "ReferenceKilnFire1",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 0.1899999976158142
+    },
+    {
+      "name": "ReferenceKilnFire2",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 0.3100000023841858
+    },
+    {
+      "name": "ReferenceKilnFire3",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 0.19999998807907104
+    }
+  ],
+  "sourceTimelineFrames": 241,
+  "sourceFps": 30,
+  "sourceVertices": 27142,
+  "sourcePolygons": 17629,
+  "separateRailNodes": 0,
+  "railRuns": 0,
+  "navigationStatus": "Rail nodes checked in Blender; native pathing and adaptive connections not implemented",
+  "authoredHeightLayers": {
+    "units": "1 Blender Z unit = 1 Timberborn grid layer",
+    "scope": "Authored vertical contract; horizontal grid/collision/native routes not yet bound",
+    "entranceLayer": 0,
+    "porchRoofLayer": 1,
+    "machineFloorLayer": 2,
+    "walkableDeckLayers": [],
+    "stairs": [],
+    "access": "Ground door only",
+    "heightEnvelopeLayers": 6
+  },
+  "walkways": "None (ground door only)"
+}

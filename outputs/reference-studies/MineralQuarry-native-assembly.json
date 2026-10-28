@@ -1,0 +1,34 @@
+{
+  "scope": "Local preview copies; game references the original shipped resources",
+  "props": [
+    {
+      "name": "QuarryWaterBarrel",
+      "model": "SmallTank.IronTeeth",
+      "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
+      "position": [
+        0.6299999999999999,
+        2.4899999999999998,
+        1.03
+      ],
+      "scale": 0.62,
+      "yaw": 0
+    }
+  ],
+  "liquids": [
+    {
+      "name": "QuarryWaterBarrel.Water",
+      "shape": "SmallLiquidPlane",
+      "center": [
+        0.94,
+        2.8
+      ],
+      "bottom": 1.3685200000000002,
+      "top": 1.9104,
+      "scale": [
+        0.62,
+        0.62
+      ],
+      "flowOnly": false
+    }
+  ]
+}

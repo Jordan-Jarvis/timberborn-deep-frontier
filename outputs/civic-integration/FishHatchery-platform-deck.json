@@ -1,0 +1,84 @@
+{
+  "Openings": [
+    {
+      "Id": "NurseryLeft3",
+      "Inside": {
+        "X": 0,
+        "Y": 3,
+        "Z": 1
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 3,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 0,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.FishHatchery.NurseryLeft.Panel00.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "NurseryBack2",
+      "Inside": {
+        "X": 2,
+        "Y": 6,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 7,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 0,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.FishHatchery.NurseryBack.Panel00.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "NurseryRight5",
+      "Inside": {
+        "X": 5,
+        "Y": 3,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 4,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 0,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.FishHatchery.NurseryRight.Panel00.CellPart0"
+      ],
+      "ShownNodes": []
+    }
+  ],
+  "Doors": [
+    {
+      "Interior": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "Exterior": {
+        "X": 1,
+        "Y": 0,
+        "Z": 1
+      }
+    }
+  ]
+}

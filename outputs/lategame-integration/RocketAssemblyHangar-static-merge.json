@@ -1,0 +1,44 @@
+{
+  "ident": "RocketAssemblyHangar",
+  "model": "Buildings/Metal/RocketAssemblyHangar/RocketAssemblyHangar.IronTeeth.Model",
+  "joinedObjects": 2,
+  "objects": [
+    "RocketAssemblyHangar.Architecture",
+    "RocketAssemblyHangar.DoorLeft"
+  ],
+  "nodes": [
+    {
+      "node": "StaticMerged",
+      "parts": 2,
+      "triangles": 9406,
+      "materials": {
+        "Plaster_White.IronTeeth": 476,
+        "BaseWood_DarkBrown.IronTeeth": 2182,
+        "IrregularPlanks_MetalForged.IronTeeth": 222,
+        "BaseMetal.IronTeeth": 4826,
+        "Plaster_Orange.IronTeeth": 326,
+        "RoofPlanks.IronTeeth": 208,
+        "Details.IronTeeth": 512,
+        "DFIndustrial25": 44,
+        "PaintedMetal.IronTeeth": 514,
+        "IrregularPlanks_Grey.IronTeeth": 96
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial08",
+      "parts": 1,
+      "triangles": 224,
+      "materials": {
+        "DFIndustrial08": 224
+      }
+    },
+    {
+      "node": "StaticMerged.WindowsAtlas.IronTeeth",
+      "parts": 2,
+      "triangles": 998,
+      "materials": {
+        "WindowsAtlas.IronTeeth": 998
+      }
+    }
+  ]
+}

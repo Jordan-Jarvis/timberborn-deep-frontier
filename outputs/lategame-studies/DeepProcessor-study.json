@@ -1,0 +1,60 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Riveted blast-furnace tower with gooseneck downcomer and bleeders, fed by a diagonal 60-degree skip bridge",
+  "footprint": [
+    11,
+    10
+  ],
+  "heightLayers": 14,
+  "boundsMin": [
+    -0.11,
+    -0.0,
+    0.0
+  ],
+  "boundsMax": [
+    11.0,
+    10.0,
+    13.6
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.5,
+        0.18,
+        0.0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "ChargingDistributor",
+    "SkipCar",
+    "Ladle",
+    "PourStream",
+    "GableFan"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 7126,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 566,
+    "IrregularPlanks_DarkBrown.IronTeeth": 158,
+    "BaseMetal.IronTeeth": 4626,
+    "RoofPlanks.IronTeeth": 372,
+    "Details.IronTeeth": 642,
+    "accent8": 100,
+    "Plaster_White.IronTeeth": 300,
+    "Plaster_Orange.IronTeeth": 31,
+    "IrregularPlanks_MetalForged.IronTeeth": 36,
+    "WindowsAtlas.IronTeeth": 122,
+    "PaintedMetal.IronTeeth": 682
+  },
+  "sourceHash": "f302a7cc7d751fc412ac2f4d84db3f2e0497053034865e05040e0499d4f9f4a2",
+  "artHash": "f6f45ed482051fcaa2fec10fed14f86e727073cc2606cf1425a47840e049f9e9"
+}

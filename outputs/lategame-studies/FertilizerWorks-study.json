@@ -1,0 +1,61 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Battery of three tall hooped timber-stave silos with teal cone caps, fed by a lattice bucket elevator and a roof-top gallery.",
+  "footprint": [
+    9,
+    6
+  ],
+  "heightLayers": 13,
+  "boundsMin": [
+    -0.0717,
+    -0.255,
+    -0.03
+  ],
+  "boundsMax": [
+    9.05,
+    6.05,
+    12.66
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        2.5,
+        0.0,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "BucketChain",
+    "ElevatorBeacon",
+    "HeadPulley",
+    "DraughtFan",
+    "DrierDrum"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 6224,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 856,
+    "IrregularPlanks_DarkBrown.IronTeeth": 38,
+    "BaseMetal.IronTeeth": 4661,
+    "RoofPlanks.IronTeeth": 178,
+    "Details.IronTeeth": 458,
+    "accent8": 20,
+    "accent25": 10,
+    "Plaster_White.IronTeeth": 300,
+    "Plaster_Orange.IronTeeth": 13,
+    "IrregularPlanks_MetalForged.IronTeeth": 104,
+    "WindowsAtlas.IronTeeth": 182,
+    "PaintedMetal.IronTeeth": 468
+  },
+  "sourceHash": "ed81dcd7039d37a2ec571d040dfea28b065d6963e6e3f793cab0a2de1f476bf0",
+  "artHash": "302b03bf119431c43ec757d35f76325b1476615d0d566bb076e277c0ecb2d4eb"
+}

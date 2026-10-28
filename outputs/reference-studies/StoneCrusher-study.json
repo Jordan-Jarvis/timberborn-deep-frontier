@@ -1,0 +1,28 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -5.053892612457275,
+    -6.053892612457275,
+    0.0
+  ],
+  "boundsMax": [
+    -0.9514999985694885,
+    -1.826387882232666,
+    4.019499778747559
+  ],
+  "sourceReference": "docs/art/concepts/02-concrete-production-concept-v1.png",
+  "selectedReferenceViews": [
+    "isometric building"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "ReferenceCrusherRoller1",
+    "ReferenceCrusherRoller2",
+    "ReferenceCrusherFlywheel",
+    "ReferenceCrusherDriveSprocket0.61",
+    "ReferenceCrusherDriveSprocket1.96"
+  ],
+  "animationFrames": 61,
+  "animationFps": 30,
+  "tileDimensions": null
+}

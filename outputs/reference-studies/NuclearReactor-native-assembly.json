@@ -1,0 +1,30 @@
+{
+  "scope": "Late-game study; runtime references the original shipped or dependency resources",
+  "props": [
+    {
+      "name": "RaceWheel0",
+      "model": "CompactWaterWheel.IronTeeth",
+      "resource": "Buildings/Power/CompactWaterWheel/CompactWaterWheel.IronTeeth.Model",
+      "position": [
+        5.6,
+        13.89,
+        0.03
+      ],
+      "scale": 1.0,
+      "yaw": 0
+    },
+    {
+      "name": "RaceWheel1",
+      "model": "CompactWaterWheel.IronTeeth",
+      "resource": "Buildings/Power/CompactWaterWheel/CompactWaterWheel.IronTeeth.Model",
+      "position": [
+        12.2,
+        13.89,
+        0.03
+      ],
+      "scale": 1.0,
+      "yaw": 0
+    }
+  ],
+  "liquids": []
+}

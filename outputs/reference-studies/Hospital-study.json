@@ -1,0 +1,28 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -13.029999732971191,
+    -11.0,
+    0.0
+  ],
+  "boundsMax": [
+    -0.9700000286102295,
+    -1.6399999856948853,
+    8.5649995803833
+  ],
+  "sourceReference": "docs/art/concepts/Hospital.png",
+  "selectedReferenceViews": [
+    "Front Left",
+    "Front Right",
+    "Back Left",
+    "Back Right"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "Hospital.WardBanner5.18",
+    "Hospital.WardBanner8.82"
+  ],
+  "animationFrames": 61,
+  "animationFps": 30,
+  "tileDimensions": null
+}

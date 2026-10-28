@@ -1,0 +1,62 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "An elevated riveted water tower on a braced steel trestle with a railed balcony and a teal cone roof, over two round clarifiers whose scraper bridges sweep round the water.",
+  "footprint": [
+    12,
+    11
+  ],
+  "heightLayers": 13,
+  "boundsMin": [
+    -0.03,
+    -0.1897,
+    -0.03
+  ],
+  "boundsMax": [
+    12.057,
+    11.05,
+    12.36
+  ],
+  "doors": [
+    {
+      "id": "Entrance",
+      "position": [
+        8.5,
+        4.2,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "WaterTreatmentPlant.ScraperBridge1",
+    "WaterTreatmentPlant.ScraperBridge2",
+    "WaterTreatmentPlant.AeratorRotor",
+    "WaterTreatmentPlant.PumpFlywheel1",
+    "WaterTreatmentPlant.PumpFlywheel2",
+    "WaterTreatmentPlant.Beacon"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 10993,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 1110,
+    "IrregularPlanks_DarkBrown.IronTeeth": 10,
+    "BaseMetal.IronTeeth": 5568,
+    "RoofPlanks.IronTeeth": 753,
+    "Details.IronTeeth": 1904,
+    "accent8": 40,
+    "accent25": 40,
+    "Plaster_White.IronTeeth": 1076,
+    "Plaster_Orange.IronTeeth": 149,
+    "IrregularPlanks_MetalForged.IronTeeth": 66,
+    "WindowsAtlas.IronTeeth": 134,
+    "PaintedMetal.IronTeeth": 1209
+  },
+  "sourceHash": "707d0aa8114ee7d155015d24b981f3669fd8bae20e8065bb1fffe2d66ae72e77",
+  "artHash": "8bc62445296bd03da7fa6362b13208d327d8d7809ac6347d5b7f5a2159e0eedd"
+}

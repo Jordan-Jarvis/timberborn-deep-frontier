@@ -1,0 +1,19 @@
+{
+  "source": "GroceryStore",
+  "targets": [
+    "GroceryStore"
+  ],
+  "origin": [
+    0.4,
+    0,
+    0
+  ],
+  "size": [
+    11,
+    9,
+    9
+  ],
+  "openings": 38,
+  "objects": 274,
+  "animationFrames": 61
+}

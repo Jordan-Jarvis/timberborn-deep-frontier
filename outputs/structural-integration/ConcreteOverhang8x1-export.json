@@ -1,0 +1,19 @@
+{
+  "source": "ConcreteOverhang8x1",
+  "targets": [
+    "ConcreteOverhang8x1"
+  ],
+  "origin": [
+    0,
+    0,
+    0
+  ],
+  "size": [
+    1,
+    8,
+    1
+  ],
+  "openings": 0,
+  "objects": 2,
+  "animationFrames": 1
+}

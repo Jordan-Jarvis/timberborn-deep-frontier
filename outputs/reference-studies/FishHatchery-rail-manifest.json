@@ -1,0 +1,128 @@
+{
+  "status": "Separate Blender nodes; game connection bindings are not authored yet",
+  "coordinateSpace": "Authored artwork X/across Y/back Z/up; no grid conversion",
+  "runs": [
+    {
+      "id": "NurseryLeft",
+      "panels": [
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryLeft.Panel00",
+          "start": [
+            -0.2,
+            2.25,
+            0
+          ],
+          "end": [
+            -0.2,
+            3.25,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post000",
+          "endPost": "WalkwayRail.FishHatchery.Post001",
+          "gridAxis": 1,
+          "gridCell": 3,
+          "gridStart": [
+            0,
+            3,
+            1
+          ],
+          "gridEnd": [
+            0,
+            4,
+            1
+          ],
+          "gridOrigin": [
+            0.2,
+            0.75,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NurseryBack",
+      "panels": [
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryBack.Panel00",
+          "start": [
+            1.8,
+            6.25,
+            0
+          ],
+          "end": [
+            2.8,
+            6.25,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post002",
+          "endPost": "WalkwayRail.FishHatchery.Post003",
+          "gridAxis": 0,
+          "gridCell": 2,
+          "gridStart": [
+            2,
+            7,
+            1
+          ],
+          "gridEnd": [
+            3,
+            7,
+            1
+          ],
+          "gridOrigin": [
+            0.2,
+            0.75,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NurseryRight",
+      "panels": [
+        {
+          "node": "WalkwayRail.FishHatchery.NurseryRight.Panel00",
+          "start": [
+            4.8,
+            3.25,
+            0
+          ],
+          "end": [
+            5.8,
+            3.25,
+            0
+          ],
+          "startPost": "WalkwayRail.FishHatchery.Post004",
+          "endPost": "WalkwayRail.FishHatchery.Post005",
+          "gridAxis": 0,
+          "gridCell": 5,
+          "gridStart": [
+            5,
+            4,
+            1
+          ],
+          "gridEnd": [
+            6,
+            4,
+            1
+          ],
+          "gridOrigin": [
+            0.2,
+            0.75,
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    "WalkwayRail.FishHatchery.Post000",
+    "WalkwayRail.FishHatchery.Post001",
+    "WalkwayRail.FishHatchery.NurseryLeft.Panel00",
+    "WalkwayRail.FishHatchery.Post002",
+    "WalkwayRail.FishHatchery.Post003",
+    "WalkwayRail.FishHatchery.NurseryBack.Panel00",
+    "WalkwayRail.FishHatchery.Post004",
+    "WalkwayRail.FishHatchery.Post005",
+    "WalkwayRail.FishHatchery.NurseryRight.Panel00"
+  ]
+}

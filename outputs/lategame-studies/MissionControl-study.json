@@ -1,0 +1,64 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Launch-control tower with a cantilevered, outward-leaning glazed cab and antenna mast, between a teal telescope dome and a big steerable radio dish",
+  "footprint": [
+    12,
+    10
+  ],
+  "heightLayers": 16,
+  "boundsMin": [
+    -0.04,
+    0.55,
+    0.0
+  ],
+  "boundsMax": [
+    12.04,
+    10.04,
+    15.77
+  ],
+  "doors": [
+    {
+      "id": "MissionControlEntrance",
+      "position": [
+        5.5,
+        1.0,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    }
+  ],
+  "animatedParts": [
+    "MissionControl.CabBeacon",
+    "MissionControl.TowerBeacon",
+    "MissionControl.ObservatoryDome",
+    "MissionControl.DishTurret",
+    "MissionControl.Dish",
+    "MissionControl.MastBeacon",
+    "MissionControl.Radar"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 5622,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 2600,
+    "BaseMetal.IronTeeth": 2000,
+    "RoofPlanks.IronTeeth": 135,
+    "Details.IronTeeth": 411,
+    "accent8": 20,
+    "accent25": 42,
+    "Plaster_White.IronTeeth": 694,
+    "Plaster_Orange.IronTeeth": 187,
+    "IrregularPlanks_MetalForged.IronTeeth": 40,
+    "WindowsAtlas.IronTeeth": 514,
+    "PaintedMetal.IronTeeth": 250
+  },
+  "sourceHash": "f16d5833bd67d3beff8994b9cfad419bcfddade8fa0f504908b6ba7ab921a379",
+  "artHash": "a2b9031875dd3943102b8bbfaefbfb87a707cd6467c43286bedb187cf4e594ea"
+}

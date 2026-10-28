@@ -1,0 +1,68 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Banded teal beaver rocket on a deluged flame trench beside a lattice service tower with swing arms",
+  "footprint": [
+    12,
+    12
+  ],
+  "heightLayers": 18,
+  "boundsMin": [
+    -0.04,
+    -0.03,
+    -0.02
+  ],
+  "boundsMax": [
+    12.04,
+    12.04,
+    17.72
+  ],
+  "doors": [
+    {
+      "id": "PadBlockhouseDoor",
+      "position": [
+        9.5,
+        1.0,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    }
+  ],
+  "animatedParts": [
+    "LaunchPad.Rocket",
+    "LaunchPad.RocketExhaust",
+    "LaunchPad.WinchSheave",
+    "LaunchPad.TowerBeacon",
+    "LaunchPad.ElevatorCar",
+    "LaunchPad.UmbilicalArmLow",
+    "LaunchPad.UmbilicalArmHigh",
+    "LaunchPad.PumpFlywheel",
+    "LaunchPad.MastBeacon"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 9747,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 446,
+    "IrregularPlanks_DarkBrown.IronTeeth": 36,
+    "BaseMetal.IronTeeth": 6717,
+    "RoofPlanks.IronTeeth": 85,
+    "Details.IronTeeth": 2616,
+    "accent8": 134,
+    "accent25": 68,
+    "Plaster_White.IronTeeth": 878,
+    "Plaster_Orange.IronTeeth": 51,
+    "IrregularPlanks_MetalForged.IronTeeth": 71,
+    "WindowsAtlas.IronTeeth": 66,
+    "PaintedMetal.IronTeeth": 992,
+    "IrregularPlanks_Grey.IronTeeth": 6
+  },
+  "sourceHash": "b5237aa2e4bb206f863996e866b950032a3ed344365cb0d246e46e02f8355b04",
+  "artHash": "b66f2e58f1a614b8c6a6db1250b2b3156d91dfa9f6c8eb137c890fc08f0424f2"
+}

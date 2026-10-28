@@ -1,0 +1,308 @@
+{
+ "DeepOreVein": {
+  "triangles": 1265,
+  "materials": {
+   "UndergroundRuinsCliff": 112,
+   "WaterSource": 183,
+   "BaseMetal.IronTeeth": 904,
+   "BeaverCarryingModels": 66
+  },
+  "boundsMin": [
+   0.08,
+   0.08,
+   -0.05
+  ],
+  "boundsMax": [
+   4.92,
+   4.92,
+   0.2772
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "objects": [
+   "DeepOreVeinGeology"
+  ],
+  "sourceScene": "src/DeepFrontier/Art/Source/DeepOreVein-ReferenceStudy.blend",
+  "sourceSha256": "fa6d83dd99d7cfeb7a55eb21be3200a263dc9e44202fb1da6185af5322c0fb36",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/DeepOreVein/DeepOreVein.Model.timbermesh",
+  "exportSha256": "41b1a3adb7acf058abf944e0f353f511b9f81c33a47ffa067286c198194dabd1"
+ },
+ "DeepOreSource": {
+  "triangles": 495,
+  "materials": {
+   "WaterSource": 52,
+   "UndergroundRuinsCliff": 48,
+   "BaseMetal.IronTeeth": 341,
+   "BeaverCarryingModels": 54
+  },
+  "boundsMin": [
+   0.1386,
+   0.1268,
+   -0.02
+  ],
+  "boundsMax": [
+   1.9473,
+   1.8679,
+   1.2296
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "objects": [
+   "DeepOreSourceGeology"
+  ],
+  "sourceScene": "src/DeepFrontier/Art/Source/DeepOreSource-ReferenceStudy.blend",
+  "sourceSha256": "9124f07a98403a5a0aeafc401f62736fcca23ede1221dd2dbed45564f1cf7e9d",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/DeepOreSource/DeepOreSource.Model.timbermesh",
+  "exportSha256": "8201d02fe7cd943f71590a5cc1f54ba7dba1429346adef66f1fd67c81a06db34"
+ },
+ "SandstoneSeam": {
+  "triangles": 582,
+  "materials": {
+   "UndergroundRuinsCliff": 115,
+   "Plaster_Orange.IronTeeth": 449,
+   "WaterSource": 18
+  },
+  "boundsMin": [
+   0.1,
+   0.1,
+   -0.05
+  ],
+  "boundsMax": [
+   4.9,
+   4.9,
+   0.2993
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "objects": [
+   "SandstoneSeamGeology"
+  ],
+  "sourceScene": "src/DeepFrontier/Art/Source/SandstoneSeam-ReferenceStudy.blend",
+  "sourceSha256": "d4211edee249ff3d9c6b43cc7ccc77a4be67614f9e86e9483c6692d188d7a25f",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/SandstoneSeam/SandstoneSeam.Model.timbermesh",
+  "exportSha256": "d854160203bfa2f317076053409efd7908fd522da6d46d91d3996e2fff4a2a93"
+ },
+ "LimestoneSeam": {
+  "triangles": 369,
+  "materials": {
+   "UndergroundRuinsCliff": 58,
+   "Plaster_White.IronTeeth": 311
+  },
+  "boundsMin": [
+   0.12,
+   0.12,
+   -0.05
+  ],
+  "boundsMax": [
+   4.88,
+   4.88,
+   0.294
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "objects": [
+   "LimestoneSeamGeology"
+  ],
+  "sourceScene": "src/DeepFrontier/Art/Source/LimestoneSeam-ReferenceStudy.blend",
+  "sourceSha256": "b6079c385ee14a452156d2f176c603c327c4c70e7a8a73e52b7ca37cff185206",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/LimestoneSeam/LimestoneSeam.Model.timbermesh",
+  "exportSha256": "be2704fcc1794e2dfe9e7d480dfbe70ba77452d565652882f0b26dbb1a8dbf2e"
+ },
+ "SandstoneOutcrop": {
+  "triangles": 145,
+  "materials": {
+   "Plaster_Orange.IronTeeth": 99,
+   "UndergroundRuinsCliff": 28,
+   "WaterSource": 18
+  },
+  "boundsMin": [
+   0.1,
+   0.1553,
+   -0.05
+  ],
+  "boundsMax": [
+   0.9061,
+   0.8735,
+   0.57
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "objects": [
+   "SandstoneOutcropGeology"
+  ],
+  "sourceScene": "src/DeepFrontier/Art/Source/SandstoneOutcrop-ReferenceStudy.blend",
+  "sourceSha256": "91758adbb045abc1663c5311b7806ccefe83826ec28b87d6d7b19e79f9d1bcaa",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/SandstoneOutcrop/SandstoneOutcrop.Model.timbermesh",
+  "exportSha256": "49268caa386660c695ace585cf68b75d3ef1bd06e21db8dc26a64e5be2daf849"
+ },
+ "LimestoneOutcrop": {
+  "triangles": 76,
+  "materials": {
+   "Plaster_White.IronTeeth": 58,
+   "UndergroundRuinsCliff": 18
+  },
+  "boundsMin": [
+   0.102,
+   0.1467,
+   -0.05
+  ],
+  "boundsMax": [
+   0.9058,
+   0.8536,
+   0.65
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "objects": [
+   "LimestoneOutcropGeology"
+  ],
+  "sourceScene": "src/DeepFrontier/Art/Source/LimestoneOutcrop-ReferenceStudy.blend",
+  "sourceSha256": "23b6f16c945fdb0258286c3d83774db72362f5850606d1c9a4308c67ce88b009",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/LimestoneOutcrop/LimestoneOutcrop.Model.timbermesh",
+  "exportSha256": "9dac26379c8c291368d05024f11ed1e7d01ea21d18069646ea01d8cd67890f2b"
+ },
+ "RadioactiveSpringSource": {
+  "triangles": 289,
+  "materials": {
+   "WaterSource": 239,
+   "UndergroundRuinsCliff": 50
+  },
+  "boundsMin": [
+   0.0678,
+   0.0263,
+   -0.05
+  ],
+  "boundsMax": [
+   0.9141,
+   0.8878,
+   0.3889
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "objects": [
+   "RadioactiveSpringRock",
+   "RadioactiveGlow"
+  ],
+  "sourceScene": "src/DeepFrontier/Art/Source/RadioactiveSpringSource-ReferenceStudy.blend",
+  "sourceSha256": "50755a0d9ea95aef435c705331d4bbb31aa05acc392b7494ff0b319cd809de0a",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/RadioactiveSpringSource/RadioactiveSpringSource.Model.timbermesh",
+  "exportSha256": "d9de846ee502e0f17c2fe7a6dd42f0d1c69fa0bf7a027344d8cdca7b1584d058"
+ },
+ "HumanRecordCache": {
+  "triangles": 440,
+  "materials": {
+   "Ruins": 50,
+   "Plaster_White.IronTeeth": 60,
+   "UnstableCore": 150,
+   "WaterSource": 110,
+   "UndergroundRuinsCliff": 70
+  },
+  "boundsMin": [
+   0.14,
+   0.1,
+   -0.04
+  ],
+  "boundsMax": [
+   2.87,
+   1.956,
+   0.9
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "objects": [
+   "HumanRecordCacheVault"
+  ],
+  "sourceScene": "src/DeepFrontier/Art/Source/HumanRecordCache-ReferenceStudy.blend",
+  "sourceSha256": "aa025fc779968d14de9e8810cfaacb840febd4a92efd6a5cce23a1ad7b13b676",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/HumanRecordCache/HumanRecordCache.Model.timbermesh",
+  "exportSha256": "821c1d5828f505bde91247acfa1680926960c9b3421cd6bedad21db8ab7026a9"
+ },
+ "StockpileGood1DeepOre": {
+  "triangles": 16,
+  "materials": {
+   "BeaverCarryingModels": 16
+  },
+  "boundsMin": [
+   -0.3477,
+   -0.0789,
+   -0.17
+  ],
+  "boundsMax": [
+   0.3618,
+   0.0657,
+   -0.0702
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "sourceScene": "src/DeepFrontier/Art/Source/StockpileGood1DeepOre-ReferenceStudy.blend",
+  "sourceSha256": "5b3f19c278b274c813ce50d0338d9de9e9500834f6707195454ea647bc277285",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/1DeepOre.timbermesh",
+  "exportSha256": "4b62ee92bbb1f45ea41680e61909d521b501ede0706964494af66fccb7e78b6f"
+ },
+ "StockpileGood4DeepOres": {
+  "triangles": 62,
+  "materials": {
+   "BeaverCarryingModels": 62
+  },
+  "boundsMin": [
+   -0.3639,
+   -0.3614,
+   -0.17
+  ],
+  "boundsMax": [
+   0.3788,
+   0.3621,
+   -0.0382
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "sourceScene": "src/DeepFrontier/Art/Source/StockpileGood4DeepOres-ReferenceStudy.blend",
+  "sourceSha256": "e124ad96ba8feaf25da2771600884d535f188075d319d69899cd7d1bf82c37e5",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/4DeepOres.timbermesh",
+  "exportSha256": "cb128aa1b1e1f43ce00bdad45a688acb608b305ace05272a51663ec3d306412d"
+ },
+ "StockpileGood1DeepAlloy": {
+  "triangles": 10,
+  "materials": {
+   "BeaverCarryingModels": 10
+  },
+  "boundsMin": [
+   -0.39,
+   -0.075,
+   -0.17
+  ],
+  "boundsMax": [
+   0.39,
+   0.075,
+   -0.02
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "sourceScene": "src/DeepFrontier/Art/Source/StockpileGood1DeepAlloy-ReferenceStudy.blend",
+  "sourceSha256": "e463426042961a158dd97121b9470a512ff7b5b6be506ec61992325d72c3287f",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/1DeepAlloy.timbermesh",
+  "exportSha256": "e8ecbf946d1f38b035fa77ba40bdff561d4ab2958f28491f36630f098353ef1a"
+ },
+ "StockpileGood4DeepAlloys": {
+  "triangles": 40,
+  "materials": {
+   "BeaverCarryingModels": 40
+  },
+  "boundsMin": [
+   -0.39,
+   -0.375,
+   -0.17
+  ],
+  "boundsMax": [
+   0.39,
+   0.375,
+   -0.02
+  ],
+  "uvErrors": [],
+  "uvErrorCount": 0,
+  "sourceScene": "src/DeepFrontier/Art/Source/StockpileGood4DeepAlloys-ReferenceStudy.blend",
+  "sourceSha256": "539e9159d9170c9c760e2b6d471c3a6d999a1316cd6357554a7b8e60bb113526",
+  "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/AssetBundles/Resources/StockpileGoodModels/DeepFrontier/4DeepAlloys.timbermesh",
+  "exportSha256": "12eb363e10d858385ffacb41af6230e7ac19901e28067ea4dcf7a29a3ef4ba1d"
+ }
+}

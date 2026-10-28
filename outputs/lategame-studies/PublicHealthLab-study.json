@@ -1,0 +1,62 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Tall square concrete ventilation tower, steel-banded and louvred, crowned by a ring of turning ventilator cowls.",
+  "footprint": [
+    8,
+    6
+  ],
+  "heightLayers": 12,
+  "boundsMin": [
+    -0.05,
+    -0.255,
+    -0.03
+  ],
+  "boundsMax": [
+    8.05,
+    6.05,
+    11.601
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        4.5,
+        0.0,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "Anemometer",
+    "TowerCowl0",
+    "TowerCowl1",
+    "TowerCowl2",
+    "TowerCowl3",
+    "TowerCowlMain"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 5091,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 1660,
+    "IrregularPlanks_DarkBrown.IronTeeth": 24,
+    "BaseMetal.IronTeeth": 1413,
+    "RoofPlanks.IronTeeth": 111,
+    "Details.IronTeeth": 208,
+    "accent8": 20,
+    "Plaster_White.IronTeeth": 264,
+    "Plaster_Orange.IronTeeth": 7,
+    "IrregularPlanks_MetalForged.IronTeeth": 314,
+    "WindowsAtlas.IronTeeth": 1286,
+    "PaintedMetal.IronTeeth": 28,
+    "BaseWood_Grey.IronTeeth": 132
+  },
+  "sourceHash": "5c3af95f813b60b5f6d78afd6a511e6b0d817df6ed1b669299555d69dd82b7db",
+  "artHash": "02a80325826cb4f21b263076c318ab625a335d604c609ab5c14fe6a6032a165b"
+}

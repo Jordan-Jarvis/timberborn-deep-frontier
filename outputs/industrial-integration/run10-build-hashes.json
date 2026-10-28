@@ -1,0 +1,27 @@
+[
+  {
+    "Algorithm": "SHA256",
+    "Hash": "93ECAC3B3A130484051EEA8D2E4C632B5CBB63957DFCE2B1BAAFB551E4D49FE4",
+    "Path": "C:\\Users\\Jordan\\Documents\\TimberbornModding\\src\\DeepFrontier\\Scripts\\BuildingWalkway.cs"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "795AB7A5798610B29184CAD1F7ED0294EE09346F7534F7DEF7B44C490799DA81",
+    "Path": "C:\\Users\\Jordan\\Documents\\TimberbornModding\\src\\DeepFrontier\\Scripts\\IndustrialAcceptance.cs"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "93ECAC3B3A130484051EEA8D2E4C632B5CBB63957DFCE2B1BAAFB551E4D49FE4",
+    "Path": "C:\\Users\\Jordan\\Documents\\TimberbornModding\\vendor\\timberborn-modding\\Assets\\Mods\\DeepFrontier\\Scripts\\BuildingWalkway.cs"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "795AB7A5798610B29184CAD1F7ED0294EE09346F7534F7DEF7B44C490799DA81",
+    "Path": "C:\\Users\\Jordan\\Documents\\TimberbornModding\\vendor\\timberborn-modding\\Assets\\Mods\\DeepFrontier\\Scripts\\IndustrialAcceptance.cs"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "1C2A694FF4C2BFD57B60025C84DF4EC3154ECC368F2909764B26958B28CBBF4F",
+    "Path": "C:\\Users\\Jordan\\Documents\\Timberborn\\Mods\\DeepFrontier\\version-1.1\\Scripts\\DeepFrontier.dll"
+  }
+]

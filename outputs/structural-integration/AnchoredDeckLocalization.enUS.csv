@@ -1,0 +1,2 @@
+ID,Text,Comment
+DeepFrontier.AnchoredDeck.RequiresAnchor,"Must hang from the side of a reinforced dam block, level with its top. Point at the top of the dam block to place it.",Deep Frontier side platform placement error (emitted by tools/structural_building_content.mjs ANCHORED_DECK_ROWS)

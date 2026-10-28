@@ -1,0 +1,19 @@
+{
+  "source": "Hospital",
+  "targets": [
+    "Hospital"
+  ],
+  "origin": [
+    -1,
+    -2,
+    0
+  ],
+  "size": [
+    12,
+    9,
+    9
+  ],
+  "openings": 42,
+  "objects": 99,
+  "animationFrames": 61
+}

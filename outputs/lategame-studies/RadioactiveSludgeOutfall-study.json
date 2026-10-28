@@ -1,0 +1,56 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Stepped concrete spillway with a lifting sluice gate, from a steel valve house to a striped cantilevered lip.",
+  "footprint": [
+    4,
+    3
+  ],
+  "heightLayers": 4,
+  "boundsMin": [
+    -0.04,
+    -0.145,
+    -0.03
+  ],
+  "boundsMax": [
+    4.03,
+    3.0,
+    3.4856
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.5,
+        0.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "RadioactiveSludgeOutfall.SluiceGate",
+    "RadioactiveSludgeOutfall.Handwheel"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 738,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 56,
+    "BaseMetal.IronTeeth": 494,
+    "RoofPlanks.IronTeeth": 60,
+    "Details.IronTeeth": 160,
+    "accent8": 10,
+    "Plaster_White.IronTeeth": 148,
+    "Plaster_Orange.IronTeeth": 45,
+    "IrregularPlanks_MetalForged.IronTeeth": 6,
+    "WindowsAtlas.IronTeeth": 35,
+    "PaintedMetal.IronTeeth": 6
+  },
+  "sourceHash": "dc64a5dc0e02110066a4ce8d4d499de0fdee50397972687f42caa629113c3f53",
+  "artHash": "ddde220cdc41b82e210a64f3118a28103a621a814c4117a12401f43b7a73d01c"
+}

@@ -1,0 +1,64 @@
+{
+ "culledFacesChecked": 0,
+ "culledFacesExposed": 0,
+ "exposedExamples": [],
+ "model": "SandstoneSeam",
+ "study": "SandstoneSeam",
+ "source": "C:/Users/Jordan/Documents/TimberbornModding/src/DeepFrontier/Art/Source/SandstoneSeam-ReferenceStudy.blend",
+ "method": "orbit ray visibility, elevations [12, 30, 48, 66, 84] deg x 16 azimuths, back faces culled, animated/water/native props never occlude, terrain plane 0.0",
+ "shippedTriangles": 582,
+ "hiddenTriangles": 80,
+ "hiddenShare": 0.1375,
+ "nativePreviewTriangles": 0,
+ "seconds": 0.1,
+ "objects": [
+  {
+   "name": "SandstoneSeamGeology",
+   "animated": false,
+   "triangles": 582,
+   "hidden": 80,
+   "hiddenByMaterial": {
+    "UndergroundRuinsCliff": 48,
+    "Plaster_Orange.IronTeeth": 26,
+    "WaterSource": 6
+   }
+  }
+ ],
+ "sources": [
+  {
+   "source": "map_objects_geometry.py:484:sandstone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 93,
+   "hidden": 35
+  },
+  {
+   "source": "map_objects_geometry.py:481:sandstone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 226,
+   "hidden": 14
+  },
+  {
+   "source": "map_objects_geometry.py:474:sandstone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 22,
+   "hidden": 13
+  },
+  {
+   "source": "map_objects_geometry.py:485:sandstone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 93,
+   "hidden": 7
+  },
+  {
+   "source": "map_objects_geometry.py:491:sandstone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 18,
+   "hidden": 6
+  },
+  {
+   "source": "map_objects_geometry.py:490:sandstone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 66,
+   "hidden": 5
+  },
+  {
+   "source": "map_objects_geometry.py:488:sandstone_seam > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 64,
+   "hidden": 0
+  }
+ ]
+}

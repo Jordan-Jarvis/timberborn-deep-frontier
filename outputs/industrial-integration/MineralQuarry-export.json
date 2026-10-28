@@ -1,0 +1,20 @@
+{
+  "source": "MineralQuarry",
+  "targets": [
+    "SandstoneQuarry",
+    "LimestoneQuarry"
+  ],
+  "origin": [
+    0,
+    -1,
+    0
+  ],
+  "size": [
+    11,
+    7,
+    9
+  ],
+  "openings": 0,
+  "objects": 63,
+  "animationFrames": 481
+}

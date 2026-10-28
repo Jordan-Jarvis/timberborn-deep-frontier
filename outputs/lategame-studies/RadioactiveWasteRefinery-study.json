@@ -1,0 +1,66 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Goliath gantry crane: twin A-frame steel legs on rail bogies carry a riveted 10-layer bridge that lifts a finned spent-fuel cask from the cooling pond into the hot-cell roof hatch.",
+  "footprint": [
+    12,
+    11
+  ],
+  "heightLayers": 12,
+  "boundsMin": [
+    -0.0,
+    -0.0,
+    -0.0385
+  ],
+  "boundsMax": [
+    12.0,
+    11.144,
+    10.97
+  ],
+  "doors": [
+    {
+      "id": "Main",
+      "position": [
+        1.5,
+        1.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "CraneBeaconW",
+    "CraneBeaconE",
+    "CraneTrolley",
+    "SpentFuelCask",
+    "HoistCables",
+    "PumpFlywheel",
+    "FurnaceGlow",
+    "CanisterTurntable",
+    "AgitatorA",
+    "AgitatorB"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 10719,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 254,
+    "IrregularPlanks_DarkBrown.IronTeeth": 108,
+    "BaseMetal.IronTeeth": 7714,
+    "RoofPlanks.IronTeeth": 246,
+    "Details.IronTeeth": 1902,
+    "accent8": 32,
+    "accent25": 38,
+    "Plaster_White.IronTeeth": 540,
+    "Plaster_Orange.IronTeeth": 139,
+    "IrregularPlanks_MetalForged.IronTeeth": 86,
+    "WindowsAtlas.IronTeeth": 290,
+    "PaintedMetal.IronTeeth": 328
+  },
+  "sourceHash": "3b402ca72bb5a9c2aa16c0d9136162c39f3c9861c0a3e721e1791863cad81eff",
+  "artHash": "21720ac4b21d1e62e29df7ce3954beca57c098b37f4ddbdb86000c9db5ab255c"
+}

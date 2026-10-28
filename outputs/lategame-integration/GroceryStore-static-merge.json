@@ -1,0 +1,62 @@
+{
+  "ident": "GroceryStore",
+  "model": "Buildings/Food/GroceryStore/GroceryStore.IronTeeth.Model",
+  "joinedObjects": 20,
+  "objects": [
+    "GroceryMarket.Architecture",
+    "WalkwayRail.GroceryMarket.BalconyFront.Panel00",
+    "WalkwayRail.GroceryMarket.BalconyFront.Panel01",
+    "WalkwayRail.GroceryMarket.BalconyFront.Panel02",
+    "WalkwayRail.GroceryMarket.BalconyFront.Panel03",
+    "WalkwayRail.GroceryMarket.BalconyFront.Panel04",
+    "WalkwayRail.GroceryMarket.BalconyLeft.Panel00",
+    "WalkwayRail.GroceryMarket.BalconyLeft.Panel01",
+    "WalkwayRail.GroceryMarket.BalconyRight.Panel00",
+    "WalkwayRail.GroceryMarket.BalconyRight.Panel01",
+    "WalkwayRail.GroceryMarket.Post000",
+    "WalkwayRail.GroceryMarket.Post001",
+    "WalkwayRail.GroceryMarket.Post002",
+    "WalkwayRail.GroceryMarket.Post003",
+    "WalkwayRail.GroceryMarket.Post004",
+    "WalkwayRail.GroceryMarket.Post005",
+    "WalkwayRail.GroceryMarket.Post006",
+    "WalkwayRail.GroceryMarket.Post007",
+    "WalkwayRail.GroceryMarket.Post008",
+    "WalkwayRail.GroceryMarket.Post009"
+  ],
+  "nodes": [
+    {
+      "node": "StaticMerged",
+      "parts": 20,
+      "triangles": 9948,
+      "materials": {
+        "IrregularPlanks_MetalForged.IronTeeth": 1181,
+        "BaseWood_DarkBrown.IronTeeth": 2319,
+        "IrregularPlanks_DarkBrown.IronTeeth": 602,
+        "BaseMetal.IronTeeth": 2206,
+        "Plaster_White.IronTeeth": 726,
+        "DFIndustrial13": 308,
+        "RoofPlanks.IronTeeth": 36,
+        "Details.IronTeeth": 1880,
+        "BaseWood_Brown.Folktails": 630,
+        "Plaster_Orange.IronTeeth": 60
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial08",
+      "parts": 1,
+      "triangles": 108,
+      "materials": {
+        "DFIndustrial08": 108
+      }
+    },
+    {
+      "node": "StaticMerged.WindowsAtlas.IronTeeth",
+      "parts": 1,
+      "triangles": 178,
+      "materials": {
+        "WindowsAtlas.IronTeeth": 178
+      }
+    }
+  ]
+}

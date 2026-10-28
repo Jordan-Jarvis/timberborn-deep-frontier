@@ -1,0 +1,2216 @@
+{
+  "Openings": [
+    {
+      "Id": "Gallery2Left2",
+      "Inside": {
+        "X": 1,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 2,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.LeftGalleryfront.Panel00.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel00.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel01.CellPart0",
+        "WalkwayRail.Hospital.Post000",
+        "WalkwayRail.Hospital.Post001",
+        "WalkwayRail.Hospital.Post003"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Left2"
+      ]
+    },
+    {
+      "Id": "Gallery2Right2",
+      "Inside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 2,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post014",
+        "WalkwayRail.Hospital.Post015",
+        "WalkwayRail.Hospital.Post016",
+        "WalkwayRail.Hospital.RightGalleryfront.Panel00.CellPart1",
+        "WalkwayRail.Hospital.RightGalleryfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.RightGalleryright.Panel00.CellPart0",
+        "WalkwayRail.Hospital.RightGalleryright.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right2"
+      ]
+    },
+    {
+      "Id": "Gallery2Left3",
+      "Inside": {
+        "X": 1,
+        "Y": 3,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 3,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel01.CellPart1",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel02.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel03.CellPart0",
+        "WalkwayRail.Hospital.Post004",
+        "WalkwayRail.Hospital.Post005"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Left3"
+      ]
+    },
+    {
+      "Id": "Gallery2Right3",
+      "Inside": {
+        "X": 8,
+        "Y": 3,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 3,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post017",
+        "WalkwayRail.Hospital.Post018",
+        "WalkwayRail.Hospital.RightGalleryright.Panel01.CellPart1",
+        "WalkwayRail.Hospital.RightGalleryright.Panel02.CellPart0",
+        "WalkwayRail.Hospital.RightGalleryright.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right3"
+      ]
+    },
+    {
+      "Id": "Gallery2Left4",
+      "Inside": {
+        "X": 1,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 4,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel03.CellPart1",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel04.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel05.CellPart0",
+        "WalkwayRail.Hospital.Post006",
+        "WalkwayRail.Hospital.Post007"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Left4"
+      ]
+    },
+    {
+      "Id": "Gallery2Right4",
+      "Inside": {
+        "X": 8,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 4,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post019",
+        "WalkwayRail.Hospital.Post020",
+        "WalkwayRail.Hospital.RightGalleryright.Panel03.CellPart1",
+        "WalkwayRail.Hospital.RightGalleryright.Panel04.CellPart0",
+        "WalkwayRail.Hospital.RightGalleryright.Panel05.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right4"
+      ]
+    },
+    {
+      "Id": "Gallery2Left5",
+      "Inside": {
+        "X": 1,
+        "Y": 5,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 5,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel05.CellPart1",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel06.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel07.CellPart0",
+        "WalkwayRail.Hospital.Post008",
+        "WalkwayRail.Hospital.Post009"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Left5"
+      ]
+    },
+    {
+      "Id": "Gallery2Right5",
+      "Inside": {
+        "X": 8,
+        "Y": 5,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 5,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post021",
+        "WalkwayRail.Hospital.Post022",
+        "WalkwayRail.Hospital.RightGalleryright.Panel05.CellPart1",
+        "WalkwayRail.Hospital.RightGalleryright.Panel06.CellPart0",
+        "WalkwayRail.Hospital.RightGalleryright.Panel07.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right5"
+      ]
+    },
+    {
+      "Id": "Gallery2Left6",
+      "Inside": {
+        "X": 1,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 6,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel07.CellPart1",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel08.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel09.CellPart0",
+        "WalkwayRail.Hospital.Post010"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Left6"
+      ]
+    },
+    {
+      "Id": "Gallery2Right6",
+      "Inside": {
+        "X": 8,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 6,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post023",
+        "WalkwayRail.Hospital.RightGalleryright.Panel07.CellPart1",
+        "WalkwayRail.Hospital.RightGalleryright.Panel08.CellPart0",
+        "WalkwayRail.Hospital.RightGalleryright.Panel09.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right6"
+      ]
+    },
+    {
+      "Id": "Gallery2Left7",
+      "Inside": {
+        "X": 1,
+        "Y": 7,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel09.CellPart1",
+        "WalkwayRail.Hospital.Post012"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Left7"
+      ]
+    },
+    {
+      "Id": "Gallery2Right7",
+      "Inside": {
+        "X": 8,
+        "Y": 7,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post025",
+        "WalkwayRail.Hospital.RightGalleryright.Panel09.CellPart1"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right7"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear2",
+      "Inside": {
+        "X": 2,
+        "Y": 7,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 8,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post026",
+        "WalkwayRail.Hospital.RearGalleryback.Panel00.CellPart0",
+        "WalkwayRail.Hospital.RearGalleryback.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear2"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear3",
+      "Inside": {
+        "X": 3,
+        "Y": 7,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 8,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post028",
+        "WalkwayRail.Hospital.RearGalleryback.Panel01.CellPart1",
+        "WalkwayRail.Hospital.RearGalleryback.Panel02.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear3"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear4",
+      "Inside": {
+        "X": 4,
+        "Y": 7,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 8,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post030",
+        "WalkwayRail.Hospital.RearGalleryback.Panel02.CellPart1",
+        "WalkwayRail.Hospital.RearGalleryback.Panel03.CellPart0",
+        "WalkwayRail.Hospital.RearGalleryback.Panel04.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear4"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear5",
+      "Inside": {
+        "X": 5,
+        "Y": 7,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 8,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post031",
+        "WalkwayRail.Hospital.Post032",
+        "WalkwayRail.Hospital.RearGalleryback.Panel04.CellPart1",
+        "WalkwayRail.Hospital.RearGalleryback.Panel05.CellPart0",
+        "WalkwayRail.Hospital.RearGalleryback.Panel06.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear5"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear6",
+      "Inside": {
+        "X": 6,
+        "Y": 7,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 8,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post033",
+        "WalkwayRail.Hospital.Post034",
+        "WalkwayRail.Hospital.RearGalleryback.Panel06.CellPart1",
+        "WalkwayRail.Hospital.RearGalleryback.Panel07.CellPart0",
+        "WalkwayRail.Hospital.RearGalleryback.Panel08.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear6"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear7",
+      "Inside": {
+        "X": 7,
+        "Y": 7,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 8,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post035",
+        "WalkwayRail.Hospital.Post036",
+        "WalkwayRail.Hospital.RearGalleryback.Panel08.CellPart1",
+        "WalkwayRail.Hospital.RearGalleryback.Panel09.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear7"
+      ]
+    },
+    {
+      "Id": "Gallery2FrontLeft",
+      "Inside": {
+        "X": 1,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 1,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.LeftGalleryfront.Panel00.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel00.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryleft.Panel01.CellPart0",
+        "WalkwayRail.Hospital.Post000",
+        "WalkwayRail.Hospital.Post001",
+        "WalkwayRail.Hospital.Post003"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2FrontLeft"
+      ]
+    },
+    {
+      "Id": "Gallery2FrontRight",
+      "Inside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post014",
+        "WalkwayRail.Hospital.Post015",
+        "WalkwayRail.Hospital.Post016",
+        "WalkwayRail.Hospital.RightGalleryfront.Panel00.CellPart1",
+        "WalkwayRail.Hospital.RightGalleryfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.RightGalleryright.Panel00.CellPart0",
+        "WalkwayRail.Hospital.RightGalleryright.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2FrontRight"
+      ]
+    },
+    {
+      "Id": "Gallery2FrontLeft2",
+      "Inside": {
+        "X": 2,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.FrontLeftfront.Panel00.CellPart0",
+        "WalkwayRail.Hospital.FrontLeftfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.LeftGalleryfront.Panel01.CellPart1",
+        "WalkwayRail.Hospital.Post002",
+        "WalkwayRail.Hospital.Post037"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2FrontLeft2"
+      ]
+    },
+    {
+      "Id": "Gallery2FrontLeft3",
+      "Inside": {
+        "X": 3,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.FrontLeftfront.Panel01.CellPart1",
+        "WalkwayRail.Hospital.FrontLeftfront.Panel02.CellPart0",
+        "WalkwayRail.Hospital.Post038",
+        "WalkwayRail.Hospital.Post039"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2FrontLeft3"
+      ]
+    },
+    {
+      "Id": "Gallery2FrontRight6",
+      "Inside": {
+        "X": 6,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.FrontRightfront.Panel00.CellPart0",
+        "WalkwayRail.Hospital.FrontRightfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.Post040",
+        "WalkwayRail.Hospital.Post041"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2FrontRight6"
+      ]
+    },
+    {
+      "Id": "Gallery2FrontRight7",
+      "Inside": {
+        "X": 7,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.FrontRightfront.Panel01.CellPart1",
+        "WalkwayRail.Hospital.FrontRightfront.Panel02.CellPart0",
+        "WalkwayRail.Hospital.Post013",
+        "WalkwayRail.Hospital.Post042",
+        "WalkwayRail.Hospital.RightGalleryfront.Panel00.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2FrontRight7"
+      ]
+    },
+    {
+      "Id": "Gallery4Left2",
+      "Inside": {
+        "X": 1,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 2,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post043",
+        "WalkwayRail.Hospital.Post044",
+        "WalkwayRail.Hospital.Post046",
+        "WalkwayRail.Hospital.UpperLeftfront.Panel00.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel00.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Left2"
+      ]
+    },
+    {
+      "Id": "Gallery4Right2",
+      "Inside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 2,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post057",
+        "WalkwayRail.Hospital.Post058",
+        "WalkwayRail.Hospital.Post059",
+        "WalkwayRail.Hospital.UpperRightfront.Panel00.CellPart1",
+        "WalkwayRail.Hospital.UpperRightfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.UpperRightright.Panel00.CellPart0",
+        "WalkwayRail.Hospital.UpperRightright.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right2"
+      ]
+    },
+    {
+      "Id": "Gallery4Left3",
+      "Inside": {
+        "X": 1,
+        "Y": 3,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 3,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post047",
+        "WalkwayRail.Hospital.Post048",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel01.CellPart1",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel02.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Left3"
+      ]
+    },
+    {
+      "Id": "Gallery4Right3",
+      "Inside": {
+        "X": 8,
+        "Y": 3,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 3,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post060",
+        "WalkwayRail.Hospital.Post061",
+        "WalkwayRail.Hospital.UpperRightright.Panel01.CellPart1",
+        "WalkwayRail.Hospital.UpperRightright.Panel02.CellPart0",
+        "WalkwayRail.Hospital.UpperRightright.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right3"
+      ]
+    },
+    {
+      "Id": "Gallery4Left4",
+      "Inside": {
+        "X": 1,
+        "Y": 4,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 4,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post049",
+        "WalkwayRail.Hospital.Post050",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel03.CellPart1",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel04.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel05.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Left4"
+      ]
+    },
+    {
+      "Id": "Gallery4Right4",
+      "Inside": {
+        "X": 8,
+        "Y": 4,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 4,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post062",
+        "WalkwayRail.Hospital.Post063",
+        "WalkwayRail.Hospital.UpperRightright.Panel03.CellPart1",
+        "WalkwayRail.Hospital.UpperRightright.Panel04.CellPart0",
+        "WalkwayRail.Hospital.UpperRightright.Panel05.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right4"
+      ]
+    },
+    {
+      "Id": "Gallery4Left5",
+      "Inside": {
+        "X": 1,
+        "Y": 5,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 5,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post051",
+        "WalkwayRail.Hospital.Post052",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel05.CellPart1",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel06.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel07.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Left5"
+      ]
+    },
+    {
+      "Id": "Gallery4Right5",
+      "Inside": {
+        "X": 8,
+        "Y": 5,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 5,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post064",
+        "WalkwayRail.Hospital.Post065",
+        "WalkwayRail.Hospital.UpperRightright.Panel05.CellPart1",
+        "WalkwayRail.Hospital.UpperRightright.Panel06.CellPart0",
+        "WalkwayRail.Hospital.UpperRightright.Panel07.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right5"
+      ]
+    },
+    {
+      "Id": "Gallery4Left6",
+      "Inside": {
+        "X": 1,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 6,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post053",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel07.CellPart1",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel08.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel09.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Left6"
+      ]
+    },
+    {
+      "Id": "Gallery4Right6",
+      "Inside": {
+        "X": 8,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 6,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post066",
+        "WalkwayRail.Hospital.UpperRightright.Panel07.CellPart1",
+        "WalkwayRail.Hospital.UpperRightright.Panel08.CellPart0",
+        "WalkwayRail.Hospital.UpperRightright.Panel09.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right6"
+      ]
+    },
+    {
+      "Id": "Gallery4Left7",
+      "Inside": {
+        "X": 1,
+        "Y": 7,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post055",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel09.CellPart1"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Left7"
+      ]
+    },
+    {
+      "Id": "Gallery4Right7",
+      "Inside": {
+        "X": 8,
+        "Y": 7,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post068",
+        "WalkwayRail.Hospital.UpperRightright.Panel09.CellPart1"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right7"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear2",
+      "Inside": {
+        "X": 2,
+        "Y": 7,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 8,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 4,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post069",
+        "WalkwayRail.Hospital.UpperRearback.Panel00.CellPart0",
+        "WalkwayRail.Hospital.UpperRearback.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear2"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear3",
+      "Inside": {
+        "X": 3,
+        "Y": 7,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 8,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post071",
+        "WalkwayRail.Hospital.UpperRearback.Panel01.CellPart1",
+        "WalkwayRail.Hospital.UpperRearback.Panel02.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear3"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear4",
+      "Inside": {
+        "X": 4,
+        "Y": 7,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 8,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post073",
+        "WalkwayRail.Hospital.UpperRearback.Panel02.CellPart1",
+        "WalkwayRail.Hospital.UpperRearback.Panel03.CellPart0",
+        "WalkwayRail.Hospital.UpperRearback.Panel04.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear4"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear5",
+      "Inside": {
+        "X": 5,
+        "Y": 7,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 8,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 4,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post074",
+        "WalkwayRail.Hospital.Post075",
+        "WalkwayRail.Hospital.UpperRearback.Panel04.CellPart1",
+        "WalkwayRail.Hospital.UpperRearback.Panel05.CellPart0",
+        "WalkwayRail.Hospital.UpperRearback.Panel06.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear5"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear6",
+      "Inside": {
+        "X": 6,
+        "Y": 7,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 8,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post076",
+        "WalkwayRail.Hospital.Post077",
+        "WalkwayRail.Hospital.UpperRearback.Panel06.CellPart1",
+        "WalkwayRail.Hospital.UpperRearback.Panel07.CellPart0",
+        "WalkwayRail.Hospital.UpperRearback.Panel08.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear6"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear7",
+      "Inside": {
+        "X": 7,
+        "Y": 7,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 8,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 4,
+        "Z": 7.0
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post078",
+        "WalkwayRail.Hospital.Post079",
+        "WalkwayRail.Hospital.UpperRearback.Panel08.CellPart1",
+        "WalkwayRail.Hospital.UpperRearback.Panel09.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear7"
+      ]
+    },
+    {
+      "Id": "Gallery4FrontLeft",
+      "Inside": {
+        "X": 1,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 1,
+        "Y": 1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.5,
+        "Y": 4,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post043",
+        "WalkwayRail.Hospital.Post044",
+        "WalkwayRail.Hospital.Post046",
+        "WalkwayRail.Hospital.UpperLeftfront.Panel00.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel00.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftleft.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4FrontLeft"
+      ]
+    },
+    {
+      "Id": "Gallery4FrontRight",
+      "Inside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 4,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post057",
+        "WalkwayRail.Hospital.Post058",
+        "WalkwayRail.Hospital.Post059",
+        "WalkwayRail.Hospital.UpperRightfront.Panel00.CellPart1",
+        "WalkwayRail.Hospital.UpperRightfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.UpperRightright.Panel00.CellPart0",
+        "WalkwayRail.Hospital.UpperRightright.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4FrontRight"
+      ]
+    },
+    {
+      "Id": "Gallery4FrontLeft2",
+      "Inside": {
+        "X": 2,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 4,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post045",
+        "WalkwayRail.Hospital.Post080",
+        "WalkwayRail.Hospital.UpperFrontLeftfront.Panel00.CellPart0",
+        "WalkwayRail.Hospital.UpperFrontLeftfront.Panel01.CellPart0",
+        "WalkwayRail.Hospital.UpperLeftfront.Panel01.CellPart1"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4FrontLeft2"
+      ]
+    },
+    {
+      "Id": "Gallery4FrontLeft3",
+      "Inside": {
+        "X": 3,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post081",
+        "WalkwayRail.Hospital.Post082",
+        "WalkwayRail.Hospital.UpperFrontLeftfront.Panel01.CellPart1",
+        "WalkwayRail.Hospital.UpperFrontLeftfront.Panel02.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4FrontLeft3"
+      ]
+    },
+    {
+      "Id": "Gallery4FrontRight6",
+      "Inside": {
+        "X": 6,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post083",
+        "WalkwayRail.Hospital.Post084",
+        "WalkwayRail.Hospital.UpperFrontRightfront.Panel00.CellPart0",
+        "WalkwayRail.Hospital.UpperFrontRightfront.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4FrontRight6"
+      ]
+    },
+    {
+      "Id": "Gallery4FrontRight7",
+      "Inside": {
+        "X": 7,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 4,
+        "Z": 2.75
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post056",
+        "WalkwayRail.Hospital.Post085",
+        "WalkwayRail.Hospital.UpperFrontRightfront.Panel01.CellPart1",
+        "WalkwayRail.Hospital.UpperFrontRightfront.Panel02.CellPart0",
+        "WalkwayRail.Hospital.UpperRightfront.Panel00.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4FrontRight7"
+      ]
+    },
+    {
+      "Id": "RoofFront",
+      "Inside": {
+        "X": 9,
+        "Y": 3,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 2,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 9.5,
+        "Y": 6,
+        "Z": 3.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post089",
+        "WalkwayRail.Hospital.RoofTerraceFront.Panel02.CellPart1",
+        "WalkwayRail.Hospital.RoofTerraceFront.Panel03.CellPart0",
+        "WalkwayRail.Hospital.RoofTerraceFront.Panel04.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.RoofFront"
+      ]
+    },
+    {
+      "Id": "RoofRight",
+      "Inside": {
+        "X": 10,
+        "Y": 5,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 11,
+        "Y": 5,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 10.4,
+        "Y": 6,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.Post106",
+        "WalkwayRail.Hospital.RoofTerraceRight.Panel02.CellPart1",
+        "WalkwayRail.Hospital.RoofTerraceRight.Panel03.CellPart0",
+        "WalkwayRail.Hospital.RoofTerraceRight.Panel04.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.RoofRight"
+      ]
+    }
+  ],
+  "Waypoints": [
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 0,
+        "Z": 0
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 0,
+        "Z": 0.85
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 1,
+        "Z": 0
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 0,
+        "Z": 1.45
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 2,
+        "Z": 0
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 0,
+        "Z": 2.02
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 3,
+        "Z": 0
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 0,
+        "Z": 3.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 4,
+        "Z": 0
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 0,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 4,
+        "Z": 1
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 1,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 2,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 4,
+        "Z": 3
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 3,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 4,
+        "Z": 4
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 4,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 4,
+        "Z": 5
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 5,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 4,
+        "Z": 6
+      },
+      "Position": {
+        "X": 5.1,
+        "Y": 6,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 5,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 5.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 7,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 2,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 5,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 5.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 7,
+        "Z": 2
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 2,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 7,
+        "Z": 2
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 7,
+        "Z": 2
+      },
+      "Position": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 7,
+        "Z": 2
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 7,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 7,
+        "Z": 2
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 7,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 3.08,
+        "Y": 2,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 3.08,
+        "Y": 2,
+        "Z": 3.55
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 6.779999999999999,
+        "Y": 2,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 3.08,
+        "Y": 2,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 3,
+        "Z": 4
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 4,
+        "Z": 4
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 5,
+        "Z": 4
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 5.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 6,
+        "Z": 4
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 7,
+        "Z": 4
+      },
+      "Position": {
+        "X": 1.7999999999999998,
+        "Y": 4,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 3,
+        "Z": 4
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 4,
+        "Z": 4
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 5,
+        "Z": 4
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 5.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 6,
+        "Z": 4
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 7,
+        "Z": 4
+      },
+      "Position": {
+        "X": 8.4,
+        "Y": 4,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 7,
+        "Z": 4
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 4,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 7,
+        "Z": 4
+      },
+      "Position": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 7,
+        "Z": 4
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 7,
+        "Z": 4
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 4,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 7,
+        "Z": 4
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 7,
+        "Z": 4
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 4,
+        "Z": 7.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 4,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 3.0500000000000003,
+        "Y": 4,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 3,
+        "Z": 4
+      },
+      "Position": {
+        "X": 3.0500000000000003,
+        "Y": 4,
+        "Z": 3.55
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 6.779999999999999,
+        "Y": 4,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 4,
+        "Z": 2.75
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 4,
+        "Z": 4
+      },
+      "Position": {
+        "X": 3.0500000000000003,
+        "Y": 4,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 4,
+        "Z": 4
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 4,
+        "Z": 6
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 6,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 4,
+        "Z": 6
+      },
+      "Position": {
+        "X": 7.1,
+        "Y": 6,
+        "Z": 4.0
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 5,
+        "Z": 6
+      },
+      "Position": {
+        "X": 7.1,
+        "Y": 6,
+        "Z": 5.085
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 5,
+        "Z": 6
+      },
+      "Position": {
+        "X": 8.1,
+        "Y": 6,
+        "Z": 5.085
+      }
+    },
+    {
+      "Cell": {
+        "X": 9,
+        "Y": 5,
+        "Z": 6
+      },
+      "Position": {
+        "X": 9.5,
+        "Y": 6,
+        "Z": 5.085
+      }
+    },
+    {
+      "Cell": {
+        "X": 10,
+        "Y": 5,
+        "Z": 6
+      },
+      "Position": {
+        "X": 10.4,
+        "Y": 6,
+        "Z": 5.085
+      }
+    },
+    {
+      "Cell": {
+        "X": 9,
+        "Y": 3,
+        "Z": 6
+      },
+      "Position": {
+        "X": 9.5,
+        "Y": 6,
+        "Z": 3.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 9,
+        "Y": 4,
+        "Z": 6
+      },
+      "Position": {
+        "X": 9.5,
+        "Y": 6,
+        "Z": 4.45
+      }
+    }
+  ]
+}

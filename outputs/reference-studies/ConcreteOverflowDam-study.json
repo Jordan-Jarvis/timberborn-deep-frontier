@@ -1,0 +1,20 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -0.9950000047683716,
+    -0.9980000257492065,
+    0.0
+  ],
+  "boundsMax": [
+    -0.004999999888241291,
+    -0.0020000000949949026,
+    1.0
+  ],
+  "sourceReference": "tools/asset-pipeline/structural_geometry.py",
+  "selectedReferenceViews": [],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [],
+  "animationFrames": 1,
+  "animationFps": 30,
+  "tileDimensions": null
+}

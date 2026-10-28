@@ -1,0 +1,508 @@
+[
+  {
+    "model": "StoneCrusher",
+    "ports": [
+      {
+        "port": "FrontAccess",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right2",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right6",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear0",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear1",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear2",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left6",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      }
+    ]
+  },
+  {
+    "model": "CementKiln",
+    "ports": [
+      {
+        "port": "FrontAccess",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "RearAccess",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left2",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left6",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right6",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear0",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear1",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear2",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear6",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear7",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear8",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Front0",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Front1",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      }
+    ]
+  },
+  {
+    "model": "MineralQuarry",
+    "ports": [
+      {
+        "port": "FrontAccess",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery3Rear3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery3Rear4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery3Rear5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery3Rear6",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery5Rear3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery5Rear4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery5Rear5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery5Rear6",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery7Rear3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery7Rear4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery7Rear5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Gallery7Rear6",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "LeftService",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right6",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right7",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right8",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Front3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      }
+    ]
+  },
+  {
+    "model": "ConcreteMixer",
+    "ports": [
+      {
+        "port": "Left0",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left1",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left2",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Left5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Front0",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Front1",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Front2",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear0",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear1",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear2",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear6",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Rear7",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right1",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right2",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right3",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right4",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "Right5",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      },
+      {
+        "port": "RightFront",
+        "samples": 8,
+        "issueCount": 0,
+        "examples": []
+      }
+    ]
+  }
+]

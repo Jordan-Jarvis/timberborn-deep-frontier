@@ -1,0 +1,113 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Giant banded containment tube and dome between twin hyperboloid cooling towers",
+  "footprint": [
+    20,
+    15
+  ],
+  "heightLayers": 22,
+  "boundsMin": [
+    -0.11,
+    -0.245,
+    -0.042
+  ],
+  "boundsMax": [
+    20.13,
+    15.01,
+    19.152
+  ],
+  "doors": [
+    {
+      "id": "TurbineHallDoor",
+      "position": [
+        10.5,
+        0.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "FuelDoor",
+      "position": [
+        17.5,
+        0.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    }
+  ],
+  "animatedParts": [
+    "NuclearReactor.BeaconShutter",
+    "NuclearReactor.CoolantPump0",
+    "NuclearReactor.CoolantPump1",
+    "NuclearReactor.CoolantPump2",
+    "NuclearReactor.CoolantPump3",
+    "NuclearReactor.TowerFan0",
+    "NuclearReactor.TowerFan1",
+    "NuclearReactor.SluiceGate0",
+    "NuclearReactor.SluiceGate1",
+    "NuclearReactor.HallVent0",
+    "NuclearReactor.HallVent1",
+    "NuclearReactor.HallVent2",
+    "NuclearReactor.ExciterFlywheel",
+    "NuclearReactor.FuelCrane",
+    "RaceWheel0.#Empty#Animated",
+    "RaceWheel1.#Empty#Animated"
+  ],
+  "animationFrames": 301,
+  "animationFps": 24,
+  "nativeProps": [
+    {
+      "name": "RaceWheel0",
+      "model": "CompactWaterWheel.IronTeeth",
+      "resource": "Buildings/Power/CompactWaterWheel/CompactWaterWheel.IronTeeth.Model",
+      "position": [
+        5.6,
+        13.89,
+        0.03
+      ],
+      "scale": 1.0,
+      "yaw": 0
+    },
+    {
+      "name": "RaceWheel1",
+      "model": "CompactWaterWheel.IronTeeth",
+      "resource": "Buildings/Power/CompactWaterWheel/CompactWaterWheel.IronTeeth.Model",
+      "position": [
+        12.2,
+        13.89,
+        0.03
+      ],
+      "scale": 1.0,
+      "yaw": 0
+    }
+  ],
+  "redicProps": [],
+  "faces": 15097,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 500,
+    "IrregularPlanks_DarkBrown.IronTeeth": 2,
+    "BaseMetal.IronTeeth": 8866,
+    "RoofPlanks.IronTeeth": 175,
+    "Details.IronTeeth": 2300,
+    "accent8": 40,
+    "accent25": 16,
+    "Plaster_White.IronTeeth": 2534,
+    "Plaster_Orange.IronTeeth": 14,
+    "IrregularPlanks_MetalForged.IronTeeth": 306,
+    "WindowsAtlas.IronTeeth": 136,
+    "PaintedMetal.IronTeeth": 884
+  },
+  "sourceHash": "345103eab7c1948e6c82643d1c3880c09134005519f4dd6cdfc4b9f6421f49d3",
+  "artHash": "74a1d16aff9a680c0415fd8d54a2be9340ec4eb4a5487efc01d0e76cd0430ba0"
+}

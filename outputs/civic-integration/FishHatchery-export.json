@@ -1,0 +1,19 @@
+{
+  "source": "FishHatchery",
+  "targets": [
+    "FishHatchery"
+  ],
+  "origin": [
+    0.2,
+    0.75,
+    0
+  ],
+  "size": [
+    7,
+    7,
+    5
+  ],
+  "openings": 3,
+  "objects": 28,
+  "animationFrames": 61
+}

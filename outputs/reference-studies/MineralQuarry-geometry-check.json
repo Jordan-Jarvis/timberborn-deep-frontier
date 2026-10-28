@@ -1,0 +1,310 @@
+{
+  "scope": "Blender scene only; no game playback verification",
+  "parts": [
+    {
+      "name": "Quarry.HoistDrum",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9999322891235352
+    },
+    {
+      "name": "Quarry.HeadSheave",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9998865127563477
+    },
+    {
+      "name": "Quarry.LiftCarriage",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 3.5999996662139893
+    },
+    {
+      "name": "Quarry.TippingBucket",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 3.5999999046325684
+    },
+    {
+      "name": "Quarry.BucketLoad",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 3.5999999046325684
+    },
+    {
+      "name": "Quarry.LiftCable",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 0.7045009732246399
+    },
+    {
+      "name": "Quarry.InputFlywheel",
+      "loopMatrixError": 7.152557373046875e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "Quarry.SortingDrive",
+      "loopMatrixError": 1.1920928955078125e-06,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "Quarry.EngineFlywheel",
+      "loopMatrixError": 7.152557373046875e-07,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "Quarry.SortingSieve",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 0.019890308380126953
+    },
+    {
+      "name": "Quarry.BeltRoller0",
+      "loopMatrixError": 1.1920928955078125e-06,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "Quarry.BeltRoller1",
+      "loopMatrixError": 1.1920928955078125e-06,
+      "sampleMatrixDifference": 2.0
+    },
+    {
+      "name": "Quarry.BeltSlat00",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9532020688056946
+    },
+    {
+      "name": "Quarry.BeltSlat01",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9539931416511536
+    },
+    {
+      "name": "Quarry.BeltSlat02",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9544271230697632
+    },
+    {
+      "name": "Quarry.BeltSlat03",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9525946974754333
+    },
+    {
+      "name": "Quarry.BeltSlat04",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9552152156829834
+    },
+    {
+      "name": "Quarry.BeltSlat05",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.950760006904602
+    },
+    {
+      "name": "Quarry.BeltSlat06",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.955565869808197
+    },
+    {
+      "name": "Quarry.BeltSlat07",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9494431614875793
+    },
+    {
+      "name": "Quarry.BeltSlat08",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9554790258407593
+    },
+    {
+      "name": "Quarry.BeltSlat09",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.8007347583770752
+    },
+    {
+      "name": "Quarry.BeltSlat10",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.8139973282814026
+    },
+    {
+      "name": "Quarry.BeltSlat11",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9532020092010498
+    },
+    {
+      "name": "Quarry.BeltSlat12",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9539930820465088
+    },
+    {
+      "name": "Quarry.BeltSlat13",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9544270634651184
+    },
+    {
+      "name": "Quarry.BeltSlat14",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9525946378707886
+    },
+    {
+      "name": "Quarry.BeltSlat15",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9552151560783386
+    },
+    {
+      "name": "Quarry.BeltSlat16",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9507599472999573
+    },
+    {
+      "name": "Quarry.BeltSlat17",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9555658102035522
+    },
+    {
+      "name": "Quarry.BeltSlat18",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9494431018829346
+    },
+    {
+      "name": "Quarry.BeltSlat19",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.9554789662361145
+    },
+    {
+      "name": "Quarry.BeltSlat20",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.8007347583770752
+    },
+    {
+      "name": "Quarry.BeltSlat21",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.8139972686767578
+    },
+    {
+      "name": "Quarry.PourStone00",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0
+    },
+    {
+      "name": "Quarry.PourStone01",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0
+    },
+    {
+      "name": "Quarry.PourStone02",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0
+    },
+    {
+      "name": "Quarry.PourStone03",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0
+    },
+    {
+      "name": "Quarry.PourStone04",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0
+    },
+    {
+      "name": "Quarry.PourStone05",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0
+    },
+    {
+      "name": "Quarry.BeltStone00",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.070000171661377
+    },
+    {
+      "name": "Quarry.BeltStone01",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0623574256896973
+    },
+    {
+      "name": "Quarry.BeltStone02",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0547144412994385
+    },
+    {
+      "name": "Quarry.BeltStone03",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0683016777038574
+    },
+    {
+      "name": "Quarry.BeltStone04",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.0606589317321777
+    },
+    {
+      "name": "Quarry.BeltStone05",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.053016185760498
+    },
+    {
+      "name": "Quarry.BeltStone06",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.066603183746338
+    },
+    {
+      "name": "Quarry.ScreenStone00",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.1807692050933838
+    },
+    {
+      "name": "Quarry.ScreenStone01",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.1938459873199463
+    },
+    {
+      "name": "Quarry.ScreenStone02",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.187692403793335
+    },
+    {
+      "name": "Quarry.ScreenStone03",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.1815383434295654
+    },
+    {
+      "name": "Quarry.ScreenStone04",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.194615364074707
+    },
+    {
+      "name": "Quarry.ScreenStone05",
+      "loopMatrixError": 0.0,
+      "sampleMatrixDifference": 1.1884615421295166
+    }
+  ],
+  "sourceTimelineFrames": 481,
+  "sourceFps": 30,
+  "sourceVertices": 25253,
+  "sourcePolygons": 16547,
+  "separateRailNodes": 0,
+  "railRuns": 0,
+  "navigationStatus": "Rail nodes checked in Blender; native pathing and adaptive connections not implemented",
+  "authoredHeightLayers": {
+    "units": "1 Blender Z unit = 1 Timberborn grid layer",
+    "scope": "Authored vertical contract; horizontal grid/collision/native routes not yet bound",
+    "entranceLayer": 0,
+    "plinthTopLayer": 1,
+    "walkableDeckLayers": [],
+    "stairs": [],
+    "access": "Ground door only; maintenance ladder mast",
+    "ladderLayers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "heightEnvelopeLayers": 9
+  },
+  "quarryKinematicsAndAccess": {
+    "scope": "Authored mesh/animation only; native route verification pending",
+    "framesChecked": 481,
+    "maximumCableAttachmentError": 4.76837158203125e-07,
+    "bucketTravel": 3.5999996662139893,
+    "minimumCableLength": 1.510000193387455,
+    "ladderHatchClearanceRays": 5,
+    "walkableDecks": "None; maintenance ladder only",
+    "ladderNodes": [
+      "Quarry.AccessLadder01",
+      "Quarry.AccessLadder02",
+      "Quarry.AccessLadder03"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "source": "Restaurant",
+  "targets": [
+    "Restaurant"
+  ],
+  "origin": [
+    -0.8,
+    -0.8499999999999999,
+    0
+  ],
+  "size": [
+    9,
+    7,
+    9
+  ],
+  "openings": 59,
+  "objects": 147,
+  "animationFrames": 61
+}

@@ -1,0 +1,72 @@
+{
+ "culledFacesChecked": 0,
+ "culledFacesExposed": 0,
+ "exposedExamples": [],
+ "model": "DeepOreSource",
+ "study": "DeepOreSource",
+ "source": "C:/Users/Jordan/Documents/TimberbornModding/src/DeepFrontier/Art/Source/DeepOreSource-ReferenceStudy.blend",
+ "method": "orbit ray visibility, elevations [12, 30, 48, 66, 84] deg x 16 azimuths, back faces culled, animated/water/native props never occlude, terrain plane 0.0",
+ "shippedTriangles": 495,
+ "hiddenTriangles": 82,
+ "hiddenShare": 0.1657,
+ "nativePreviewTriangles": 0,
+ "seconds": 0.1,
+ "objects": [
+  {
+   "name": "DeepOreSourceGeology",
+   "animated": false,
+   "triangles": 495,
+   "hidden": 82,
+   "hiddenByMaterial": {
+    "BaseMetal.IronTeeth": 82
+   }
+  }
+ ],
+ "sources": [
+  {
+   "source": "map_objects_geometry.py:407:ore_cluster > map_objects_geometry.py:556:deep_ore_source > build_map_objects.py:171:main",
+   "triangles": 90,
+   "hidden": 37
+  },
+  {
+   "source": "map_objects_geometry.py:407:ore_cluster > map_objects_geometry.py:559:deep_ore_source > build_map_objects.py:171:main",
+   "triangles": 45,
+   "hidden": 18
+  },
+  {
+   "source": "map_objects_geometry.py:407:ore_cluster > map_objects_geometry.py:557:deep_ore_source > build_map_objects.py:171:main",
+   "triangles": 60,
+   "hidden": 14
+  },
+  {
+   "source": "map_objects_geometry.py:407:ore_cluster > map_objects_geometry.py:558:deep_ore_source > build_map_objects.py:171:main",
+   "triangles": 60,
+   "hidden": 13
+  },
+  {
+   "source": "map_objects_geometry.py:552:deep_ore_source > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 26,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:553:deep_ore_source > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 24,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:554:deep_ore_source > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 26,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:555:deep_ore_source > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 24,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:562:deep_ore_source > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 140,
+   "hidden": 0
+  }
+ ]
+}

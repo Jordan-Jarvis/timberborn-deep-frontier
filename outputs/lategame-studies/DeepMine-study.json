@@ -1,0 +1,63 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Monumental riveted steel headframe with raked backstays and twin counter-rotating sheave wheels",
+  "footprint": [
+    10,
+    11
+  ],
+  "heightLayers": 16,
+  "boundsMin": [
+    -0.13,
+    0.045,
+    0.0
+  ],
+  "boundsMax": [
+    9.9372,
+    11.25,
+    15.75
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.5,
+        0.18,
+        0.0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "SheaveA",
+    "SheaveB",
+    "SkipA",
+    "SkipB",
+    "RopeA",
+    "RopeB",
+    "WindingDrum",
+    "Flywheel"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 9455,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 2118,
+    "IrregularPlanks_DarkBrown.IronTeeth": 464,
+    "BaseMetal.IronTeeth": 5974,
+    "RoofPlanks.IronTeeth": 1141,
+    "Details.IronTeeth": 632,
+    "accent8": 60,
+    "Plaster_White.IronTeeth": 306,
+    "Plaster_Orange.IronTeeth": 85,
+    "IrregularPlanks_MetalForged.IronTeeth": 260,
+    "WindowsAtlas.IronTeeth": 446,
+    "PaintedMetal.IronTeeth": 305
+  },
+  "sourceHash": "30fe0b1ca9aa91824a06332475aa368123a431a40a6afd88f3e3e5ce70abbea4",
+  "artHash": "7c8403b48c8f5e3533ba1debe8c80c9fe8606f7c6277b388a9e882284d856cca"
+}

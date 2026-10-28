@@ -1,0 +1,14 @@
+{
+  "source": "Restaurant-motion.mp4",
+  "dimensions": [
+    640,
+    640
+  ],
+  "frames": 30,
+  "fps": 15.0,
+  "decodedReviewFrames": [
+    1,
+    14,
+    21
+  ]
+}

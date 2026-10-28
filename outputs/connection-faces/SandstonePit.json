@@ -1,0 +1,6 @@
+{"template":"SandstonePit","model":"Buildings/Metal/SandstonePit/SandstonePit.IronTeeth.Model","export":"src/DeepFrontier/Data/Buildings/Metal/SandstonePit/SandstonePit.IronTeeth.Model.timbermesh","exportSha256":"9d097246e1a11b3c4e1f4ecf9ee244631adbbac8d570fc339f38d8d222259344","size":[5,4,4],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)","rule":"8x8 rays per face; covering surface = nearest opaque static surface within 0.35 behind (or 0.02 proud of) the face plane; every covering normal within 5.0 deg of the outward axis and 1.0 deg of the covering mean; one plane (depths within 0.05) covers >= 60%; glass counts as a surface; no animated geometry within 1.0 in front","excluded":"Water, WalkwayRail nodes, animated nodes; native props are not in the model; glass counts as a surface","stats":{"triangles":{"opaque":8228,"glass":18,"lamp":20,"animated":2630},"flatButAnimated":0,"oldRuleFaces":4,"oldRuleCurveExcluded":0,"oldRuleSlopeExcluded":0,"oldRuleMultiPlaneExcluded":2,"newSetBackFaces":4},"curvedFaces":[],"roof":{"blocked":[],"covered":[],"animated":[]},"faces":[[2,2,0,"Bottom"],
+[1,3,0,"Up"],
+[2,3,0,"Down"],
+[1,1,1,"Down"],
+[1,3,1,"Up"],
+[4,3,1,"Up"]]}

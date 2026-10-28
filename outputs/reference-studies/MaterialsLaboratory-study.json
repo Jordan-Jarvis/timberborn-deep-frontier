@@ -1,0 +1,27 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -10.045000076293945,
+    -8.045000076293945,
+    0.0
+  ],
+  "boundsMax": [
+    0.11550000309944153,
+    0.23861216008663177,
+    7.985000133514404
+  ],
+  "sourceReference": "docs/art/concepts/Materials Laboratory v1.png",
+  "selectedReferenceViews": [
+    "front-left isometric",
+    "rear-right isometric"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "MaterialsLaboratory.PressScrew",
+    "MaterialsLaboratory.TestRam",
+    "MaterialsLaboratory.Flywheel"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "tileDimensions": null
+}

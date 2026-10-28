@@ -1,0 +1,55 @@
+{
+ "culledFacesChecked": 0,
+ "culledFacesExposed": 0,
+ "exposedExamples": [],
+ "model": "LimestoneOutcrop",
+ "study": "LimestoneOutcrop",
+ "source": "C:/Users/Jordan/Documents/TimberbornModding/src/DeepFrontier/Art/Source/LimestoneOutcrop-ReferenceStudy.blend",
+ "method": "orbit ray visibility, elevations [12, 30, 48, 66, 84] deg x 16 azimuths, back faces culled, animated/water/native props never occlude, terrain plane 0.0",
+ "shippedTriangles": 76,
+ "hiddenTriangles": 0,
+ "hiddenShare": 0.0,
+ "nativePreviewTriangles": 0,
+ "seconds": 0.0,
+ "objects": [
+  {
+   "name": "LimestoneOutcropGeology",
+   "animated": false,
+   "triangles": 76,
+   "hidden": 0,
+   "hiddenByMaterial": {}
+  }
+ ],
+ "sources": [
+  {
+   "source": "map_objects_geometry.py:536:limestone_outcrop > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 10,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:537:limestone_outcrop > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 10,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:538:limestone_outcrop > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 10,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:539:limestone_outcrop > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 10,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:540:limestone_outcrop > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 18,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:541:limestone_outcrop > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 18,
+   "hidden": 0
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+{
+  "source": "MaterialsLaboratory",
+  "targets": [
+    "MaterialsLaboratory"
+  ],
+  "origin": [
+    0,
+    0,
+    0
+  ],
+  "size": [
+    10,
+    8,
+    9
+  ],
+  "openings": 7,
+  "objects": 47,
+  "animationFrames": 121
+}

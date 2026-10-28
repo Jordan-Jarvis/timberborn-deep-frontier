@@ -1,0 +1,219 @@
+{
+  "source": "ReinforcedHydroTurbine",
+  "targets": [
+    "ReinforcedHydroTurbine"
+  ],
+  "joinedObjects": 19,
+  "objects": [
+    "HydroRails.Post000",
+    "HydroRails.Post002",
+    "HydroRails.Post003",
+    "HydroRails.Post005",
+    "HydroRails.Post007",
+    "HydroRails.Post009",
+    "HydroRails.Post011",
+    "HydroRails.Post013",
+    "HydroRails.Post019",
+    "HydroRails.Post021",
+    "HydroRails.Post023",
+    "HydroRails.Post025",
+    "HydroRails.Post027",
+    "HydroRails.Post029",
+    "HydroRails.Post030",
+    "HydroRails.Post031",
+    "HydroRails.Post032",
+    "ReinforcedHydroTurbine.Architecture",
+    "ReinforcedHydroTurbine.Door.HydroWorkshopDoor"
+  ],
+  "nodes": [
+    {
+      "node": "StaticMerged",
+      "parts": 19,
+      "triangles": 19241,
+      "materials": {
+        "Plaster_White.IronTeeth": 1510,
+        "BaseMetal.IronTeeth": 11505,
+        "DFIndustrial13": 3738,
+        "IrregularPlanks_DarkBrown.IronTeeth": 784,
+        "IrregularPlanks_MetalForged.IronTeeth": 30,
+        "BaseWood_DarkBrown.IronTeeth": 936,
+        "RoofPlanks.IronTeeth": 392,
+        "DFIndustrial25": 34,
+        "Plaster_Orange.IronTeeth": 6,
+        "BaseWood_Brown.Folktails": 306
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial08",
+      "parts": 1,
+      "triangles": 40,
+      "materials": {
+        "DFIndustrial08": 40
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial09",
+      "parts": 1,
+      "triangles": 368,
+      "materials": {
+        "DFIndustrial09": 368
+      }
+    },
+    {
+      "node": "StaticMerged.WindowsAtlas.IronTeeth",
+      "parts": 2,
+      "triangles": 52,
+      "materials": {
+        "WindowsAtlas.IronTeeth": 52
+      }
+    }
+  ],
+  "railGroups": {
+    "WalkwayGroup.ReinforcedHydroTurbine.000": {
+      "parts": [
+        "HydroRails.ConduitSide0.Panel00.CellPart0",
+        "HydroRails.ConduitSide0.Panel01.CellPart0",
+        "HydroRails.Front3.Panel00.CellPart0",
+        "HydroRails.Front3.Panel01.CellPart0",
+        "HydroRails.Post001"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.000"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.001": {
+      "parts": [
+        "HydroRails.ConduitSide5.Panel00.CellPart0",
+        "HydroRails.ConduitSide5.Panel01.CellPart0",
+        "HydroRails.Post004",
+        "HydroRails.Rear3.Panel00.CellPart0",
+        "HydroRails.Rear3.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.001"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.002": {
+      "parts": [
+        "HydroRails.Front4.Panel00.CellPart0",
+        "HydroRails.Front4.Panel01.CellPart0",
+        "HydroRails.Post006"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.002"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.003": {
+      "parts": [
+        "HydroRails.Front5.Panel00.CellPart0",
+        "HydroRails.Front5.Panel01.CellPart0",
+        "HydroRails.Post010"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.003"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.004": {
+      "parts": [
+        "HydroRails.Front6.Panel00.CellPart0",
+        "HydroRails.Front6.Panel01.CellPart0",
+        "HydroRails.Post014",
+        "HydroRails.Right0.Panel00.CellPart0",
+        "HydroRails.Right0.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.004"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.005": {
+      "parts": [
+        "HydroRails.Post008",
+        "HydroRails.Rear4.Panel00.CellPart0",
+        "HydroRails.Rear4.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.005"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.006": {
+      "parts": [
+        "HydroRails.Post012",
+        "HydroRails.Rear5.Panel00.CellPart0",
+        "HydroRails.Rear5.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.006"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.007": {
+      "parts": [
+        "HydroRails.Post015",
+        "HydroRails.Post018"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.007"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.008": {
+      "parts": [
+        "HydroRails.Post016",
+        "HydroRails.Rear6.Panel00.CellPart0",
+        "HydroRails.Rear6.Panel01.CellPart0",
+        "HydroRails.Right5.Panel00.CellPart0",
+        "HydroRails.Right5.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.008"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.009": {
+      "parts": [
+        "HydroRails.Post017",
+        "HydroRails.Post028"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.009"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.010": {
+      "parts": [
+        "HydroRails.Post020",
+        "HydroRails.Right1.Panel00.CellPart0",
+        "HydroRails.Right1.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.010"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.011": {
+      "parts": [
+        "HydroRails.Post022",
+        "HydroRails.Right2.Panel00.CellPart0",
+        "HydroRails.Right2.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.011"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.012": {
+      "parts": [
+        "HydroRails.Post024",
+        "HydroRails.Right3.Panel00.CellPart0",
+        "HydroRails.Right3.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.012"
+      ]
+    },
+    "WalkwayGroup.ReinforcedHydroTurbine.013": {
+      "parts": [
+        "HydroRails.Post026",
+        "HydroRails.Right4.Panel00.CellPart0",
+        "HydroRails.Right4.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.013"
+      ]
+    }
+  }
+}

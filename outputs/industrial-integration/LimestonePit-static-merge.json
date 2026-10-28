@@ -1,0 +1,47 @@
+{
+  "source": "LimestonePit",
+  "targets": [
+    "LimestonePit"
+  ],
+  "joinedObjects": 3,
+  "objects": [
+    "LimestonePit.Apron",
+    "LimestonePit.Architecture",
+    "LimestonePit.Door.PitStoreDoor"
+  ],
+  "nodes": [
+    {
+      "node": "StaticMerged",
+      "parts": 3,
+      "triangles": 6276,
+      "materials": {
+        "BaseWood_DarkBrown.IronTeeth": 600,
+        "BaseMetal.IronTeeth": 1536,
+        "DFIndustrial13": 2854,
+        "IrregularPlanks_DarkBrown.IronTeeth": 524,
+        "IrregularPlanks_MetalForged.IronTeeth": 16,
+        "RoofPlanks.IronTeeth": 76,
+        "DFIndustrial05": 652,
+        "Plaster_White.IronTeeth": 12,
+        "Plaster_Orange.IronTeeth": 6
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial08",
+      "parts": 1,
+      "triangles": 20,
+      "materials": {
+        "DFIndustrial08": 20
+      }
+    },
+    {
+      "node": "StaticMerged.WindowsAtlas.IronTeeth",
+      "parts": 2,
+      "triangles": 18,
+      "materials": {
+        "WindowsAtlas.IronTeeth": 18
+      }
+    }
+  ],
+  "railGroups": {}
+}

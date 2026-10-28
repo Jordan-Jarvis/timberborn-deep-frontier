@@ -1,0 +1,78 @@
+{
+  "status": "Source/export checks passed; native shoppers, balcony paths and service pending",
+  "sourceSha256": "946617fa48f2cc077f3d6001dd4de40881b561b28aa4f0ce69541c55fbed4991",
+  "exportSha256": "f91ef15435b6f8bf73ddf8555ad75da61c49857c6eb4aa897d22f02210290cca",
+  "size": [
+    9,
+    6,
+    8
+  ],
+  "nodes": 28,
+  "animatedTracks": [
+    "#GroceryMarket.BasketSign",
+    "#GroceryMarket.HoistLoad",
+    "#GroceryMarket.HoistPulley",
+    "#GroceryMarket.HoistRope"
+  ],
+  "nativeProps": 12,
+  "entrance": [
+    4,
+    1,
+    0
+  ],
+  "balconyPathCells": [
+    [
+      6,
+      1
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      8,
+      1
+    ]
+  ],
+  "workers": 2,
+  "hpDemand": 100,
+  "hpOutput": 0,
+  "science": 6000,
+  "foods": [
+    "CannedFish",
+    "PackagedFood",
+    "AlgaeRation",
+    "CornRation",
+    "FermentedCassava",
+    "FermentedSoybean"
+  ],
+  "capacityPerFood": 100,
+  "clerkCell": [
+    4,
+    1,
+    0
+  ],
+  "stockStageNodes": [
+    "GroceryStock.CannedFish.1",
+    "GroceryStock.CannedFish.2",
+    "GroceryStock.CannedFish.3",
+    "GroceryStock.PackagedFood.1",
+    "GroceryStock.PackagedFood.2",
+    "GroceryStock.PackagedFood.3",
+    "GroceryStock.AlgaeRation.1",
+    "GroceryStock.AlgaeRation.2",
+    "GroceryStock.AlgaeRation.3",
+    "GroceryStock.CornRation.1",
+    "GroceryStock.CornRation.2",
+    "GroceryStock.CornRation.3",
+    "GroceryStock.FermentedCassava.1",
+    "GroceryStock.FermentedCassava.2",
+    "GroceryStock.FermentedCassava.3",
+    "GroceryStock.FermentedSoybean.1",
+    "GroceryStock.FermentedSoybean.2",
+    "GroceryStock.FermentedSoybean.3"
+  ],
+  "stockDisplay": {
+    "Stages": 3
+  }
+}

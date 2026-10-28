@@ -1,0 +1,14 @@
+{
+  "source": "CementKiln-motion.mp4",
+  "dimensions": [
+    640,
+    640
+  ],
+  "frames": 60,
+  "fps": 7.5,
+  "decodedReviewFrames": [
+    1,
+    28,
+    42
+  ]
+}

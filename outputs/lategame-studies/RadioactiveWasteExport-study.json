@@ -1,0 +1,57 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Lead-lined cask car on rails running from a steel filling gantry out through a hazard-striped dispatch gate on the map-edge side.",
+  "footprint": [
+    6,
+    5
+  ],
+  "heightLayers": 4,
+  "boundsMin": [
+    -0.04,
+    -0.145,
+    -0.03
+  ],
+  "boundsMax": [
+    6.0,
+    5.0,
+    3.62
+  ],
+  "doors": [
+    {
+      "id": "HaulerDoor",
+      "position": [
+        1.5,
+        0.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "RadioactiveWasteExport.Nozzle",
+    "RadioactiveWasteExport.CaskCar",
+    "RadioactiveWasteExport.Beacon"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 1690,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 138,
+    "BaseMetal.IronTeeth": 989,
+    "Details.IronTeeth": 240,
+    "accent8": 20,
+    "accent25": 16,
+    "Plaster_White.IronTeeth": 312,
+    "Plaster_Orange.IronTeeth": 207,
+    "IrregularPlanks_MetalForged.IronTeeth": 12,
+    "WindowsAtlas.IronTeeth": 22,
+    "PaintedMetal.IronTeeth": 106
+  },
+  "sourceHash": "59b6a8f0281502bf19adb3e9a8469254bf998f32c273581ffe7bf7a380a39e2b",
+  "artHash": "c9f84531bb269149ff27aeb84f85e4034ffdd4fac40c059efe2e781f7aadab3b"
+}

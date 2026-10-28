@@ -1,0 +1,57 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Hazard-banded steel pump house whose vertical pump on a pool-side deck drops a strainer intake into the pool.",
+  "footprint": [
+    3,
+    3
+  ],
+  "heightLayers": 5,
+  "boundsMin": [
+    -0.1265,
+    -0.145,
+    -0.03
+  ],
+  "boundsMax": [
+    3.1265,
+    2.95,
+    4.2769
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.5,
+        0.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "RadioactiveSludgeRecoveryPump.Cowl",
+    "RadioactiveSludgeRecoveryPump.Coupling"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 1530,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 144,
+    "IrregularPlanks_DarkBrown.IronTeeth": 10,
+    "BaseMetal.IronTeeth": 826,
+    "RoofPlanks.IronTeeth": 96,
+    "Details.IronTeeth": 136,
+    "accent8": 10,
+    "Plaster_White.IronTeeth": 54,
+    "Plaster_Orange.IronTeeth": 95,
+    "IrregularPlanks_MetalForged.IronTeeth": 62,
+    "WindowsAtlas.IronTeeth": 51,
+    "PaintedMetal.IronTeeth": 138
+  },
+  "sourceHash": "d931607c53ef82843a1a3eec5bd64f1624453979ab1ddc9316d7ffd4f6e6296e",
+  "artHash": "a87639570774334d227a6dead95b9c96f4004a888cabb45306bbcb7e5576a656"
+}

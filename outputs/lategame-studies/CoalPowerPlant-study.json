@@ -1,0 +1,58 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Tall banded riveted chimney smoking over a steel-clad boiler house, beside an open horizontal steam engine with a spoked flywheel.",
+  "footprint": [
+    5,
+    5
+  ],
+  "heightLayers": 10,
+  "boundsMin": [
+    -0.05,
+    -0.03,
+    0.0
+  ],
+  "boundsMax": [
+    5.03,
+    5.07,
+    9.9
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.5,
+        0.18,
+        0.0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "CoalPowerPlant.PistonRod",
+    "CoalPowerPlant.Flywheel"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 2123,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 152,
+    "IrregularPlanks_DarkBrown.IronTeeth": 158,
+    "BaseMetal.IronTeeth": 802,
+    "RoofPlanks.IronTeeth": 294,
+    "Details.IronTeeth": 360,
+    "accent8": 20,
+    "accent25": 6,
+    "Plaster_White.IronTeeth": 96,
+    "Plaster_Orange.IronTeeth": 7,
+    "IrregularPlanks_MetalForged.IronTeeth": 18,
+    "WindowsAtlas.IronTeeth": 114,
+    "PaintedMetal.IronTeeth": 236
+  },
+  "sourceHash": "313770801b3361b7401fc906e0318b5c2fa9ea2ff796b1959b9ae4a3f7dd07fe",
+  "artHash": "d1150962eb9ba174589a859eab93eaa3f7c9eaddca145b85c67a3f2c102e2e13"
+}

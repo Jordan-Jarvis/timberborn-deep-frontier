@@ -1,0 +1,47 @@
+{
+  "source": "SandstonePit",
+  "targets": [
+    "SandstonePit"
+  ],
+  "joinedObjects": 3,
+  "objects": [
+    "SandstonePit.Apron",
+    "SandstonePit.Architecture",
+    "SandstonePit.Door.PitStoreDoor"
+  ],
+  "nodes": [
+    {
+      "node": "StaticMerged",
+      "parts": 3,
+      "triangles": 8228,
+      "materials": {
+        "BaseWood_DarkBrown.IronTeeth": 696,
+        "BaseMetal.IronTeeth": 2046,
+        "DFIndustrial13": 3488,
+        "IrregularPlanks_DarkBrown.IronTeeth": 628,
+        "IrregularPlanks_MetalForged.IronTeeth": 16,
+        "RoofPlanks.IronTeeth": 76,
+        "DFIndustrial04": 1260,
+        "Plaster_White.IronTeeth": 12,
+        "Plaster_Orange.IronTeeth": 6
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial08",
+      "parts": 1,
+      "triangles": 20,
+      "materials": {
+        "DFIndustrial08": 20
+      }
+    },
+    {
+      "node": "StaticMerged.WindowsAtlas.IronTeeth",
+      "parts": 2,
+      "triangles": 18,
+      "materials": {
+        "WindowsAtlas.IronTeeth": 18
+      }
+    }
+  ],
+  "railGroups": {}
+}

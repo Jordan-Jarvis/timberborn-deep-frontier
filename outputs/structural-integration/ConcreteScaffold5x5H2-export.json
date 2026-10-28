@@ -1,0 +1,19 @@
+{
+  "source": "ConcreteScaffold5x5H2",
+  "targets": [
+    "ConcreteScaffold5x5H2"
+  ],
+  "origin": [
+    0,
+    0,
+    0
+  ],
+  "size": [
+    5,
+    5,
+    3
+  ],
+  "openings": 0,
+  "objects": 2,
+  "animationFrames": 1
+}

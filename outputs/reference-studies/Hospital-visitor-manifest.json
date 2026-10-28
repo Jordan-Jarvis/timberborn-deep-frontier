@@ -1,0 +1,93 @@
+{
+  "scope": "Authored door and seating positions; native visitor behavior not integrated",
+  "doors": [
+    {
+      "id": "WestWardDoor",
+      "position": [
+        3.5,
+        3,
+        2
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "EastWardDoor",
+      "position": [
+        10.5,
+        3,
+        2
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "GroundDoor",
+      "position": [
+        7.5,
+        2,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "RearDeckDoor",
+      "position": [
+        7.5,
+        10,
+        2
+      ],
+      "outward": [
+        0,
+        1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "RearWardDoor",
+      "position": [
+        7.5,
+        10,
+        4
+      ],
+      "outward": [
+        0,
+        1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    },
+    {
+      "id": "RoofTerraceDoor",
+      "position": [
+        7.5,
+        7,
+        6
+      ],
+      "outward": [
+        0,
+        1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    }
+  ],
+  "internalDoorNetwork": "BuildingInterior",
+  "requireAllDoorsConnectedInternally": true,
+  "visitorSeats": [],
+  "restaurantBehavior": "Native attraction visit, reserved Sitting slot, meal consumption during visit"
+}

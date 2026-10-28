@@ -1,0 +1,29 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -9.605500221252441,
+    -8.844783782958984,
+    -0.014999999664723873
+  ],
+  "boundsMax": [
+    1.320531964302063,
+    -1.2445000410079956,
+    6.199999809265137
+  ],
+  "sourceReference": "docs/art/concepts/Fishery.png",
+  "selectedReferenceViews": [
+    "Front Left",
+    "Front Right",
+    "Back Left",
+    "Back Right"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "FisheryWorks.CarvedSign",
+    "FisheryWorks.CraneNet",
+    "FisheryNativeWheel.#Empty#Animated"
+  ],
+  "animationFrames": 301,
+  "animationFps": 24,
+  "tileDimensions": null
+}

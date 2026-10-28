@@ -1,0 +1,114 @@
+{
+  "scope": "Candidate source/export checks, not native runtime acceptance",
+  "buildings": [
+    {
+      "building": "SandstoneMasonryBlock",
+      "nodes": 3,
+      "nativeUvVertices": 20,
+      "supportCells": 1
+    },
+    {
+      "building": "LimestoneMasonryBlock",
+      "nodes": 3,
+      "nativeUvVertices": 20,
+      "supportCells": 1
+    },
+    {
+      "building": "ConcreteBlock",
+      "nodes": 3,
+      "nativeUvVertices": 804,
+      "supportCells": 1
+    },
+    {
+      "building": "ConcreteOverhang8x1",
+      "nodes": 3,
+      "nativeUvVertices": 7912,
+      "supportCells": 8
+    },
+    {
+      "building": "ConcreteScaffold3x3",
+      "nodes": 3,
+      "nativeUvVertices": 5999,
+      "supportCells": 9
+    },
+    {
+      "building": "ReinforcedDamBlock",
+      "nodes": 3,
+      "nativeUvVertices": 408,
+      "supportCells": 1
+    },
+    {
+      "building": "ConcreteOverflowDam",
+      "nodes": 3,
+      "nativeUvVertices": 264,
+      "supportCells": 1
+    },
+    {
+      "building": "ConcreteScaffold3x3H1",
+      "nodes": 3,
+      "nativeUvVertices": 4439,
+      "supportCells": 9
+    },
+    {
+      "building": "ConcreteScaffold3x3H2",
+      "nodes": 3,
+      "nativeUvVertices": 5218,
+      "supportCells": 9
+    },
+    {
+      "building": "ConcreteScaffold4x4H1",
+      "nodes": 3,
+      "nativeUvVertices": 6018,
+      "supportCells": 16
+    },
+    {
+      "building": "ConcreteScaffold4x4H2",
+      "nodes": 3,
+      "nativeUvVertices": 6785,
+      "supportCells": 16
+    },
+    {
+      "building": "ConcreteScaffold4x4H3",
+      "nodes": 3,
+      "nativeUvVertices": 7558,
+      "supportCells": 16
+    },
+    {
+      "building": "ConcreteScaffold5x5H1",
+      "nodes": 3,
+      "nativeUvVertices": 7376,
+      "supportCells": 25
+    },
+    {
+      "building": "ConcreteScaffold5x5H2",
+      "nodes": 3,
+      "nativeUvVertices": 8112,
+      "supportCells": 25
+    },
+    {
+      "building": "ConcreteScaffold5x5H3",
+      "nodes": 3,
+      "nativeUvVertices": 8855,
+      "supportCells": 25
+    },
+    {
+      "building": "ConcreteSidePlatform3x3",
+      "nodes": 3,
+      "nativeUvVertices": 2332,
+      "supportCells": 9
+    },
+    {
+      "building": "ConcreteSidePlatform4x4",
+      "nodes": 3,
+      "nativeUvVertices": 3950,
+      "supportCells": 16
+    },
+    {
+      "building": "ConcreteSidePlatform5x5",
+      "nodes": 3,
+      "nativeUvVertices": 5284,
+      "supportCells": 25
+    }
+  ],
+  "sidePlatformPickReplays": 216
+}

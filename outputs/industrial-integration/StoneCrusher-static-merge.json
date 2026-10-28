@@ -1,0 +1,59 @@
+{
+  "source": "StoneCrusher",
+  "targets": [
+    "StoneCrusher"
+  ],
+  "joinedObjects": 2,
+  "objects": [
+    "StoneCrusher.Architecture",
+    "StoneCrusher.Door.GroundDoor"
+  ],
+  "nodes": [
+    {
+      "node": "StaticMerged",
+      "parts": 2,
+      "triangles": 16230,
+      "materials": {
+        "BaseWood_DarkBrown.IronTeeth": 1212,
+        "BaseMetal.IronTeeth": 4456,
+        "DFIndustrial13": 6188,
+        "IrregularPlanks_DarkBrown.IronTeeth": 882,
+        "Details.IronTeeth": 994,
+        "RoofPlanks.IronTeeth": 84,
+        "Plaster_White.IronTeeth": 54,
+        "DFIndustrial05": 1162,
+        "DFIndustrial23": 72,
+        "DFIndustrial16": 8,
+        "DFIndustrial25": 22,
+        "DFIndustrial21": 314,
+        "DFIndustrial24": 768,
+        "Plaster_Orange.IronTeeth": 14
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial08",
+      "parts": 1,
+      "triangles": 60,
+      "materials": {
+        "DFIndustrial08": 60
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial09",
+      "parts": 1,
+      "triangles": 34,
+      "materials": {
+        "DFIndustrial09": 34
+      }
+    },
+    {
+      "node": "StaticMerged.WindowsAtlas.IronTeeth",
+      "parts": 2,
+      "triangles": 22,
+      "materials": {
+        "WindowsAtlas.IronTeeth": 22
+      }
+    }
+  ],
+  "railGroups": {}
+}

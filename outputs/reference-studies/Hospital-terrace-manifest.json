@@ -1,0 +1,30 @@
+{
+  "scope": "Authored clear roof area; native support cells and stairs pending integration",
+  "bounds": [
+    5,
+    6,
+    9,
+    10
+  ],
+  "layer": 6,
+  "clearArea": [
+    5.3,
+    7.3,
+    8.7,
+    9.7
+  ],
+  "accessDoor": {
+    "id": "RoofTerraceDoor",
+    "position": [
+      7.5,
+      7,
+      6
+    ],
+    "outward": [
+      0,
+      1
+    ],
+    "width": 1.0,
+    "internalConnection": "BuildingInterior"
+  }
+}

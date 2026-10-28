@@ -1,0 +1,19 @@
+{
+  "source": "CementKiln",
+  "targets": [
+    "CementKiln"
+  ],
+  "origin": [
+    0,
+    1,
+    0
+  ],
+  "size": [
+    7,
+    5,
+    6
+  ],
+  "openings": 0,
+  "objects": 16,
+  "animationFrames": 241
+}

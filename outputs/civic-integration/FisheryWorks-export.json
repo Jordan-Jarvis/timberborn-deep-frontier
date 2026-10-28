@@ -1,0 +1,19 @@
+{
+  "source": "FisheryWorks",
+  "targets": [
+    "FisheryWorks"
+  ],
+  "origin": [
+    1.25,
+    -1.3,
+    0
+  ],
+  "size": [
+    11,
+    8,
+    7
+  ],
+  "openings": 19,
+  "objects": 166,
+  "animationFrames": 301
+}

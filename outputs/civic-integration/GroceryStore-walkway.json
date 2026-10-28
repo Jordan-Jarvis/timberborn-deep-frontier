@@ -1,0 +1,1813 @@
+{
+  "Openings": [
+    {
+      "Id": "Gallery2Front1",
+      "Inside": {
+        "X": 1,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 1,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post000",
+        "WalkwayRail.GroceryStore.Post001",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel00.CellPart0",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel01.CellPart0",
+        "WalkwayRail.GroceryStore.ShopFrontleft.Panel00.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Front1"
+      ]
+    },
+    {
+      "Id": "Gallery2Front2",
+      "Inside": {
+        "X": 2,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post002",
+        "WalkwayRail.GroceryStore.Post003",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel01.CellPart1",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel02.CellPart0",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Front2"
+      ]
+    },
+    {
+      "Id": "Gallery2Front3",
+      "Inside": {
+        "X": 3,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post004",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel03.CellPart1",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel04.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Front3"
+      ]
+    },
+    {
+      "Id": "Gallery2Front4",
+      "Inside": {
+        "X": 4,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post006",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel04.CellPart1",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel05.CellPart0",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel06.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Front4"
+      ]
+    },
+    {
+      "Id": "Gallery2Front5",
+      "Inside": {
+        "X": 5,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post007",
+        "WalkwayRail.GroceryStore.Post008",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel06.CellPart1",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel07.CellPart0",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel08.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Front5"
+      ]
+    },
+    {
+      "Id": "Gallery2Front6",
+      "Inside": {
+        "X": 6,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post009",
+        "WalkwayRail.GroceryStore.Post010",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel08.CellPart1",
+        "WalkwayRail.GroceryStore.ShopFrontfront.Panel09.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Front6"
+      ]
+    },
+    {
+      "Id": "Gallery2Left",
+      "Inside": {
+        "X": 1,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 2,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.7000000000000002,
+        "Y": 2,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post012",
+        "WalkwayRail.GroceryStore.ShopFrontleft.Panel00.CellPart1",
+        "WalkwayRail.GroceryStore.ShopFrontleft.Panel01.CellPart0",
+        "WalkwayRail.GroceryStore.ShopFrontleft.Panel02.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Left"
+      ]
+    },
+    {
+      "Id": "Gallery2Stairs",
+      "Inside": {
+        "X": 7,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 2.35
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post015",
+        "WalkwayRail.GroceryStore.ShopSidefront.Panel00.CellPart1",
+        "WalkwayRail.GroceryStore.ShopSidefront.Panel01.CellPart0",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel00.CellPart0",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Stairs"
+      ]
+    },
+    {
+      "Id": "Gallery2Right2",
+      "Inside": {
+        "X": 7,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.4,
+        "Y": 2,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post017",
+        "WalkwayRail.GroceryStore.ShopSidefront.Panel00.CellPart1",
+        "WalkwayRail.GroceryStore.ShopSidefront.Panel01.CellPart0",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel00.CellPart0",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right2"
+      ]
+    },
+    {
+      "Id": "Gallery2Right3",
+      "Inside": {
+        "X": 7,
+        "Y": 3,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 3,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.4,
+        "Y": 2,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post018",
+        "WalkwayRail.GroceryStore.Post019",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel01.CellPart1",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel02.CellPart0",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right3"
+      ]
+    },
+    {
+      "Id": "Gallery2Right4",
+      "Inside": {
+        "X": 7,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 4,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.4,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post020",
+        "WalkwayRail.GroceryStore.Post021",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel03.CellPart1",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel04.CellPart0",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel05.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right4"
+      ]
+    },
+    {
+      "Id": "Gallery2Right5",
+      "Inside": {
+        "X": 7,
+        "Y": 5,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 5,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.4,
+        "Y": 2,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post022",
+        "WalkwayRail.GroceryStore.Post023",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel05.CellPart1",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel06.CellPart0",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel07.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right5"
+      ]
+    },
+    {
+      "Id": "Gallery2Right6",
+      "Inside": {
+        "X": 7,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 6,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.4,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post024",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel07.CellPart1",
+        "WalkwayRail.GroceryStore.ShopSideright.Panel08.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Right6"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear2",
+      "Inside": {
+        "X": 2,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post027",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel00.CellPart1",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear2"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear3",
+      "Inside": {
+        "X": 3,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post029",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel01.CellPart1",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel02.CellPart0",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear3"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear4",
+      "Inside": {
+        "X": 4,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post030",
+        "WalkwayRail.GroceryStore.Post031",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel03.CellPart1",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel04.CellPart0",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel05.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear4"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear5",
+      "Inside": {
+        "X": 5,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post032",
+        "WalkwayRail.GroceryStore.Post033",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel05.CellPart1",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel06.CellPart0",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel07.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear5"
+      ]
+    },
+    {
+      "Id": "Gallery2Rear6",
+      "Inside": {
+        "X": 6,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post034",
+        "WalkwayRail.GroceryStore.Post035",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel07.CellPart1",
+        "WalkwayRail.GroceryStore.ShopRearback.Panel08.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery2Rear6"
+      ]
+    },
+    {
+      "Id": "Gallery4Front1",
+      "Inside": {
+        "X": 1,
+        "Y": 1,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 1,
+        "Y": 0,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.5,
+        "Y": 4,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post036",
+        "WalkwayRail.GroceryStore.Post037",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel00.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel01.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopFrontleft.Panel00.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Front1"
+      ]
+    },
+    {
+      "Id": "Gallery4Front2",
+      "Inside": {
+        "X": 2,
+        "Y": 1,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 0,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 4,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post038",
+        "WalkwayRail.GroceryStore.Post039",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel01.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel02.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Front2"
+      ]
+    },
+    {
+      "Id": "Gallery4Front3",
+      "Inside": {
+        "X": 3,
+        "Y": 1,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 0,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post040",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel03.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel04.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Front3"
+      ]
+    },
+    {
+      "Id": "Gallery4Front4",
+      "Inside": {
+        "X": 4,
+        "Y": 1,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 0,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post042",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel04.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel05.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel06.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Front4"
+      ]
+    },
+    {
+      "Id": "Gallery4Front5",
+      "Inside": {
+        "X": 5,
+        "Y": 1,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 0,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 4,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post043",
+        "WalkwayRail.GroceryStore.Post044",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel06.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel07.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel08.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Front5"
+      ]
+    },
+    {
+      "Id": "Gallery4Front6",
+      "Inside": {
+        "X": 6,
+        "Y": 1,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 0,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 1.95
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post045",
+        "WalkwayRail.GroceryStore.Post046",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel08.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopFrontfront.Panel09.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Front6"
+      ]
+    },
+    {
+      "Id": "Gallery4Left",
+      "Inside": {
+        "X": 1,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 2,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.7000000000000002,
+        "Y": 4,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post048",
+        "WalkwayRail.GroceryStore.UpperShopFrontleft.Panel00.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopFrontleft.Panel01.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopFrontleft.Panel02.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Left"
+      ]
+    },
+    {
+      "Id": "Gallery4Stairs",
+      "Inside": {
+        "X": 7,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 4,
+        "Z": 2.35
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post051",
+        "WalkwayRail.GroceryStore.UpperShopSidefront.Panel00.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopSidefront.Panel01.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel00.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Stairs"
+      ]
+    },
+    {
+      "Id": "Gallery4Right2",
+      "Inside": {
+        "X": 7,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 7.4,
+        "Y": 4,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post053",
+        "WalkwayRail.GroceryStore.UpperShopSidefront.Panel00.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopSidefront.Panel01.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel00.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right2"
+      ]
+    },
+    {
+      "Id": "Gallery4Right3",
+      "Inside": {
+        "X": 7,
+        "Y": 3,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 3,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 7.4,
+        "Y": 4,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post054",
+        "WalkwayRail.GroceryStore.Post055",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel01.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel02.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right3"
+      ]
+    },
+    {
+      "Id": "Gallery4Right4",
+      "Inside": {
+        "X": 7,
+        "Y": 4,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 4,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 7.4,
+        "Y": 4,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post056",
+        "WalkwayRail.GroceryStore.Post057",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel03.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel04.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel05.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right4"
+      ]
+    },
+    {
+      "Id": "Gallery4Right5",
+      "Inside": {
+        "X": 7,
+        "Y": 5,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 5,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 7.4,
+        "Y": 4,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post058",
+        "WalkwayRail.GroceryStore.Post059",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel05.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel06.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel07.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right5"
+      ]
+    },
+    {
+      "Id": "Gallery4Right6",
+      "Inside": {
+        "X": 7,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 6,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 7.4,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post060",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel07.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopSideright.Panel08.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Right6"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear2",
+      "Inside": {
+        "X": 2,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post063",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel00.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel01.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear2"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear3",
+      "Inside": {
+        "X": 3,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post065",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel01.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel02.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear3"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear4",
+      "Inside": {
+        "X": 4,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post066",
+        "WalkwayRail.GroceryStore.Post067",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel03.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel04.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel05.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear4"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear5",
+      "Inside": {
+        "X": 5,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post068",
+        "WalkwayRail.GroceryStore.Post069",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel05.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel06.CellPart0",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel07.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear5"
+      ]
+    },
+    {
+      "Id": "Gallery4Rear6",
+      "Inside": {
+        "X": 6,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post070",
+        "WalkwayRail.GroceryStore.Post071",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel07.CellPart1",
+        "WalkwayRail.GroceryStore.UpperShopRearback.Panel08.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Gallery4Rear6"
+      ]
+    },
+    {
+      "Id": "RoofFront",
+      "Inside": {
+        "X": 8,
+        "Y": 3,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 6,
+        "Z": 3.6
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post075",
+        "WalkwayRail.GroceryStore.RoofTerraceFront.Panel02.CellPart1",
+        "WalkwayRail.GroceryStore.RoofTerraceFront.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.RoofFront"
+      ]
+    },
+    {
+      "Id": "RoofRight",
+      "Inside": {
+        "X": 9,
+        "Y": 4,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 10,
+        "Y": 4,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 9.5,
+        "Y": 6,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.GroceryStore.Post091",
+        "WalkwayRail.GroceryStore.RoofTerraceRight.Panel01.CellPart1",
+        "WalkwayRail.GroceryStore.RoofTerraceRight.Panel02.CellPart0",
+        "WalkwayRail.GroceryStore.RoofTerraceRight.Panel03.CellPart0"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.RoofRight"
+      ]
+    }
+  ],
+  "Waypoints": [
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 0,
+        "Z": 0
+      },
+      "Position": {
+        "X": 2.0,
+        "Y": 0,
+        "Z": 0.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 1,
+        "Z": 0
+      },
+      "Position": {
+        "X": 2.0,
+        "Y": 0,
+        "Z": 1.1
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 2,
+        "Z": 0
+      },
+      "Position": {
+        "X": 2.0,
+        "Y": 0,
+        "Z": 2.1
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 3,
+        "Z": 0
+      },
+      "Position": {
+        "X": 2.0,
+        "Y": 0,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 3,
+        "Z": 0
+      },
+      "Position": {
+        "X": 3.3,
+        "Y": 0,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 3,
+        "Z": 0
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 0,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 3,
+        "Z": 1
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 1,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 3,
+        "Z": 3
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 3,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 3,
+        "Z": 4
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 3,
+        "Z": 5
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 5,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 3,
+        "Z": 6
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 6,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.7000000000000002,
+        "Y": 2,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 4.48,
+        "Y": 2,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.4,
+        "Y": 2,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.4,
+        "Y": 2,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.4,
+        "Y": 2,
+        "Z": 4.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 5,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.4,
+        "Y": 2,
+        "Z": 5.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.4,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 2.4,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.7000000000000002,
+        "Y": 2,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 4.48,
+        "Y": 2,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 1.7000000000000002,
+        "Y": 4,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 4,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 4,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 2,
+        "Z": 4
+      },
+      "Position": {
+        "X": 7.4,
+        "Y": 4,
+        "Z": 2.35
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 3,
+        "Z": 4
+      },
+      "Position": {
+        "X": 7.4,
+        "Y": 4,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 4,
+        "Z": 4
+      },
+      "Position": {
+        "X": 7.4,
+        "Y": 4,
+        "Z": 4.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 5,
+        "Z": 4
+      },
+      "Position": {
+        "X": 7.4,
+        "Y": 4,
+        "Z": 5.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 6,
+        "Z": 4
+      },
+      "Position": {
+        "X": 7.4,
+        "Y": 4,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 6,
+        "Z": 4
+      },
+      "Position": {
+        "X": 2.4,
+        "Y": 4,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 6,
+        "Z": 4
+      },
+      "Position": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 6,
+        "Z": 4
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 6,
+        "Z": 4
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 4,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 6,
+        "Z": 4
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 1,
+        "Z": 4
+      },
+      "Position": {
+        "X": 1.7000000000000002,
+        "Y": 4,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 1,
+        "Z": 4
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 4,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 3,
+        "Y": 1,
+        "Z": 4
+      },
+      "Position": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 1,
+        "Z": 4
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 1,
+        "Z": 4
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 4,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 1,
+        "Z": 4
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 1.95
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 3,
+        "Z": 6
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 6,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 3,
+        "Z": 6
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 6,
+        "Z": 3.2
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 4,
+        "Z": 6
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 6,
+        "Z": 4.7
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 4,
+        "Z": 6
+      },
+      "Position": {
+        "X": 7.180000000000001,
+        "Y": 6,
+        "Z": 4.7
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 4,
+        "Z": 6
+      },
+      "Position": {
+        "X": 8.5,
+        "Y": 6,
+        "Z": 4.7
+      }
+    },
+    {
+      "Cell": {
+        "X": 9,
+        "Y": 4,
+        "Z": 6
+      },
+      "Position": {
+        "X": 9.5,
+        "Y": 6,
+        "Z": 4.7
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 3,
+        "Z": 6
+      },
+      "Position": {
+        "X": 8.5,
+        "Y": 6,
+        "Z": 3.6
+      }
+    },
+    {
+      "Cell": {
+        "X": 8,
+        "Y": 5,
+        "Z": 6
+      },
+      "Position": {
+        "X": 8.5,
+        "Y": 6,
+        "Z": 5.3
+      }
+    }
+  ]
+}

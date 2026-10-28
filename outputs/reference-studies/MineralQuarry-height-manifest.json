@@ -1,0 +1,19 @@
+{
+  "units": "1 Blender Z unit = 1 Timberborn grid layer",
+  "scope": "Authored vertical contract; horizontal grid/collision/native routes not yet bound",
+  "entranceLayer": 0,
+  "plinthTopLayer": 1,
+  "walkableDeckLayers": [],
+  "stairs": [],
+  "access": "Ground door only; maintenance ladder mast",
+  "ladderLayers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "heightEnvelopeLayers": 9
+}

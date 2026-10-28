@@ -1,0 +1,16 @@
+{
+  "scope": "Clear centre dock; supported native construction required",
+  "bounds": [
+    1.8,
+    3.25,
+    2.8,
+    6.25
+  ],
+  "layer": 0,
+  "clearArea": [
+    1.9,
+    3.4,
+    2.6,
+    6.1
+  ]
+}

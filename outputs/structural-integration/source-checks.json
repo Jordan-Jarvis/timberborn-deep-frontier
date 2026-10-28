@@ -1,0 +1,131 @@
+{
+  "scope": "Saved Blender geometry; native placement and traversal require separate tests",
+  "models": [
+    {
+      "model": "SandstoneMasonryBlock",
+      "vertices": 272,
+      "supportSamples": 25,
+      "clearPassageSamples": 0,
+      "nativeAtlasUvCorners": 20
+    },
+    {
+      "model": "LimestoneMasonryBlock",
+      "vertices": 272,
+      "supportSamples": 25,
+      "clearPassageSamples": 0,
+      "nativeAtlasUvCorners": 20
+    },
+    {
+      "model": "ConcreteBlock",
+      "vertices": 296,
+      "supportSamples": 25,
+      "clearPassageSamples": 0,
+      "nativeAtlasUvCorners": 792
+    },
+    {
+      "model": "ConcreteOverhang8x1",
+      "vertices": 2480,
+      "supportSamples": 200,
+      "clearPassageSamples": 21,
+      "nativeAtlasUvCorners": 7144
+    },
+    {
+      "model": "ConcreteScaffold3x3",
+      "vertices": 1984,
+      "supportSamples": 225,
+      "clearPassageSamples": 45,
+      "nativeAtlasUvCorners": 5500
+    },
+    {
+      "model": "ReinforcedDamBlock",
+      "vertices": 136,
+      "supportSamples": 25,
+      "clearPassageSamples": 0,
+      "nativeAtlasUvCorners": 408
+    },
+    {
+      "model": "ConcreteOverflowDam",
+      "vertices": 96,
+      "supportSamples": 25,
+      "clearPassageSamples": 0,
+      "nativeAtlasUvCorners": 264
+    },
+    {
+      "model": "ConcreteScaffold3x3H1",
+      "vertices": 1536,
+      "supportSamples": 225,
+      "clearPassageSamples": 45,
+      "nativeAtlasUvCorners": 4156
+    },
+    {
+      "model": "ConcreteScaffold3x3H2",
+      "vertices": 1760,
+      "supportSamples": 225,
+      "clearPassageSamples": 45,
+      "nativeAtlasUvCorners": 4828
+    },
+    {
+      "model": "ConcreteScaffold4x4H1",
+      "vertices": 2136,
+      "supportSamples": 400,
+      "clearPassageSamples": 108,
+      "nativeAtlasUvCorners": 5696
+    },
+    {
+      "model": "ConcreteScaffold4x4H2",
+      "vertices": 2360,
+      "supportSamples": 400,
+      "clearPassageSamples": 108,
+      "nativeAtlasUvCorners": 6368
+    },
+    {
+      "model": "ConcreteScaffold4x4H3",
+      "vertices": 2584,
+      "supportSamples": 400,
+      "clearPassageSamples": 108,
+      "nativeAtlasUvCorners": 7040
+    },
+    {
+      "model": "ConcreteScaffold5x5H1",
+      "vertices": 2656,
+      "supportSamples": 625,
+      "clearPassageSamples": 189,
+      "nativeAtlasUvCorners": 7036
+    },
+    {
+      "model": "ConcreteScaffold5x5H2",
+      "vertices": 2880,
+      "supportSamples": 625,
+      "clearPassageSamples": 189,
+      "nativeAtlasUvCorners": 7708
+    },
+    {
+      "model": "ConcreteScaffold5x5H3",
+      "vertices": 3104,
+      "supportSamples": 625,
+      "clearPassageSamples": 189,
+      "nativeAtlasUvCorners": 8380
+    },
+    {
+      "model": "ConcreteSidePlatform3x3",
+      "vertices": 864,
+      "supportSamples": 225,
+      "clearPassageSamples": 72,
+      "nativeAtlasUvCorners": 2284
+    },
+    {
+      "model": "ConcreteSidePlatform4x4",
+      "vertices": 1464,
+      "supportSamples": 400,
+      "clearPassageSamples": 135,
+      "nativeAtlasUvCorners": 3824
+    },
+    {
+      "model": "ConcreteSidePlatform5x5",
+      "vertices": 1984,
+      "supportSamples": 625,
+      "clearPassageSamples": 216,
+      "nativeAtlasUvCorners": 5164
+    }
+  ]
+}

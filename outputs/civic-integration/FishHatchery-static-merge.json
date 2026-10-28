@@ -1,0 +1,73 @@
+{
+  "source": "FishHatchery",
+  "targets": [
+    "FishHatchery"
+  ],
+  "joinedObjects": 19,
+  "objects": [
+    "FishHatchery.Architecture",
+    "FishHatchery.Deck.CanopyBaseApron",
+    "FishHatchery.Deck.CanopyFrontApron",
+    "FishHatchery.Deck.CentreDock",
+    "FishHatchery.Deck.MainApron",
+    "FishHatchery.Deck.MainFrontApron",
+    "FishHatchery.Door.Door0",
+    "FishHatchery.Headhouse.DoorLamps",
+    "FishHatchery.Headhouse.Roof",
+    "FishHatchery.Headhouse.RoofBearing",
+    "FishHatchery.Headhouse.RoofVent",
+    "FishHatchery.Headhouse.Shell",
+    "FishHatchery.Headhouse.Windows",
+    "WalkwayRail.FishHatchery.Post000",
+    "WalkwayRail.FishHatchery.Post001",
+    "WalkwayRail.FishHatchery.Post002",
+    "WalkwayRail.FishHatchery.Post003",
+    "WalkwayRail.FishHatchery.Post004",
+    "WalkwayRail.FishHatchery.Post005"
+  ],
+  "nodes": [
+    {
+      "node": "StaticMerged",
+      "parts": 19,
+      "triangles": 11975,
+      "materials": {
+        "BaseWood_DarkBrown.IronTeeth": 1019,
+        "BaseMetal.IronTeeth": 5818,
+        "DFIndustrial13": 2512,
+        "IrregularPlanks_DarkBrown.IronTeeth": 1566,
+        "RoofPlanks.IronTeeth": 388,
+        "Details.IronTeeth": 376,
+        "Plaster_White.IronTeeth": 50,
+        "IrregularPlanks_MetalForged.IronTeeth": 98,
+        "DFIndustrial25": 12,
+        "Plaster_Orange.IronTeeth": 28,
+        "BaseWood_Brown.Folktails": 108
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial08",
+      "parts": 2,
+      "triangles": 140,
+      "materials": {
+        "DFIndustrial08": 140
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial09",
+      "parts": 1,
+      "triangles": 92,
+      "materials": {
+        "DFIndustrial09": 92
+      }
+    },
+    {
+      "node": "StaticMerged.WindowsAtlas.IronTeeth",
+      "parts": 2,
+      "triangles": 62,
+      "materials": {
+        "WindowsAtlas.IronTeeth": 62
+      }
+    }
+  ],
+  "railGroups": {}
+}

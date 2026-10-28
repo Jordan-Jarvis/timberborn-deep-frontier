@@ -1,0 +1,40 @@
+{
+  "status": "restaurant-blueprint-static-checks-passed",
+  "registration": [
+    9,
+    7,
+    9
+  ],
+  "guestSeats": 14,
+  "staff": 4,
+  "foods": [
+    "FreshFish",
+    "Berries",
+    "FermentedMushroom",
+    "EggplantRation"
+  ],
+  "optionalGoods": [
+    "FermentedCassava",
+    "FermentedSoybean",
+    "SweetBerryCake",
+    "Coffee"
+  ],
+  "kitchenRecipes": [
+    "FermentedCassava",
+    "FermentedSoybean",
+    "FermentedMushroom",
+    "SweetBerryCake"
+  ],
+  "powerDemandHp": 400,
+  "powerOutputHp": 0,
+  "clearTerraceCells": 9,
+  "adaptiveOpenings": 59,
+  "tableDishes": 14,
+  "tableService": "kitchen pass -> native GoodCarrier hands -> table; native stock/capacity reservations",
+  "reviewFixes": [
+    "staff excluded from own diner seats",
+    "inventory enabled once by native Manufactory",
+    "lead dish recorded as native Consumed at commit"
+  ],
+  "limits": "Static authoring contracts only; native routing, actual service and persistence require game tests."
+}

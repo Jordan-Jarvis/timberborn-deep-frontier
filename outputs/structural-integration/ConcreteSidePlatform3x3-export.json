@@ -1,0 +1,19 @@
+{
+  "source": "ConcreteSidePlatform3x3",
+  "targets": [
+    "ConcreteSidePlatform3x3"
+  ],
+  "origin": [
+    0,
+    0,
+    -1
+  ],
+  "size": [
+    3,
+    4,
+    2
+  ],
+  "openings": 0,
+  "objects": 2,
+  "animationFrames": 1
+}

@@ -1,0 +1,137 @@
+{
+  "source": "MaterialsLaboratory",
+  "targets": [
+    "MaterialsLaboratory"
+  ],
+  "joinedObjects": 9,
+  "objects": [
+    "MaterialsLaboratory.Architecture",
+    "MaterialsLaboratory.Rail.Post002",
+    "MaterialsLaboratory.Rail.Post004",
+    "MaterialsLaboratory.Rail.Post008",
+    "MaterialsLaboratory.Rail.Post010",
+    "MaterialsLaboratory.Rail.Post012",
+    "MaterialsLaboratory.Rail.Post014",
+    "MaterialsLaboratory.Rail.Post015",
+    "MaterialsLaboratory.Rail.TerraceRightReturn.Panel00.CellPart0"
+  ],
+  "nodes": [
+    {
+      "node": "StaticMerged",
+      "parts": 9,
+      "triangles": 27557,
+      "materials": {
+        "Plaster_White.IronTeeth": 1942,
+        "BaseMetal.IronTeeth": 10340,
+        "DFIndustrial13": 5316,
+        "BaseWood_DarkBrown.IronTeeth": 1189,
+        "Plaster_Orange.IronTeeth": 24,
+        "IrregularPlanks_DarkBrown.IronTeeth": 1256,
+        "IrregularPlanks_MetalForged.IronTeeth": 104,
+        "RoofPlanks.IronTeeth": 520,
+        "DFIndustrial16": 1296,
+        "Details.IronTeeth": 5382,
+        "DFIndustrial25": 44,
+        "BaseWood_Brown.Folktails": 144
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial08",
+      "parts": 1,
+      "triangles": 160,
+      "materials": {
+        "DFIndustrial08": 160
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial09",
+      "parts": 1,
+      "triangles": 368,
+      "materials": {
+        "DFIndustrial09": 368
+      }
+    },
+    {
+      "node": "StaticMerged.WindowsAtlas.IronTeeth",
+      "parts": 1,
+      "triangles": 216,
+      "materials": {
+        "WindowsAtlas.IronTeeth": 216
+      }
+    }
+  ],
+  "railGroups": {
+    "WalkwayGroup.MaterialsLaboratory.000": {
+      "parts": [
+        "MaterialsLaboratory.Rail.Post000",
+        "MaterialsLaboratory.Rail.Post007"
+      ],
+      "nodes": [
+        "WalkwayGroup.MaterialsLaboratory.000"
+      ]
+    },
+    "WalkwayGroup.MaterialsLaboratory.001": {
+      "parts": [
+        "MaterialsLaboratory.Rail.Post001",
+        "MaterialsLaboratory.Rail.TerraceFront0.Panel00.CellPart0",
+        "MaterialsLaboratory.Rail.TerraceFront0.Panel01.CellPart0",
+        "MaterialsLaboratory.Rail.TerraceLeft0.Panel00.CellPart0",
+        "MaterialsLaboratory.Rail.TerraceLeft0.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.MaterialsLaboratory.001"
+      ]
+    },
+    "WalkwayGroup.MaterialsLaboratory.002": {
+      "parts": [
+        "MaterialsLaboratory.Rail.Post003",
+        "MaterialsLaboratory.Rail.TerraceFront1.Panel00.CellPart0",
+        "MaterialsLaboratory.Rail.TerraceFront1.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.MaterialsLaboratory.002"
+      ]
+    },
+    "WalkwayGroup.MaterialsLaboratory.003": {
+      "parts": [
+        "MaterialsLaboratory.Rail.Post005",
+        "MaterialsLaboratory.Rail.TerraceFront2.Panel00.CellPart0",
+        "MaterialsLaboratory.Rail.TerraceFront2.Panel01.CellPart0",
+        "MaterialsLaboratory.Rail.TerraceRight0.Panel00.CellPart0",
+        "MaterialsLaboratory.Rail.TerraceRight0.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.MaterialsLaboratory.003"
+      ]
+    },
+    "WalkwayGroup.MaterialsLaboratory.004": {
+      "parts": [
+        "MaterialsLaboratory.Rail.Post006",
+        "MaterialsLaboratory.Rail.Post013"
+      ],
+      "nodes": [
+        "WalkwayGroup.MaterialsLaboratory.004"
+      ]
+    },
+    "WalkwayGroup.MaterialsLaboratory.005": {
+      "parts": [
+        "MaterialsLaboratory.Rail.Post009",
+        "MaterialsLaboratory.Rail.TerraceLeft1.Panel00.CellPart0",
+        "MaterialsLaboratory.Rail.TerraceLeft1.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.MaterialsLaboratory.005"
+      ]
+    },
+    "WalkwayGroup.MaterialsLaboratory.006": {
+      "parts": [
+        "MaterialsLaboratory.Rail.Post011",
+        "MaterialsLaboratory.Rail.TerraceLeft2.Panel00.CellPart0",
+        "MaterialsLaboratory.Rail.TerraceLeft2.Panel01.CellPart0"
+      ],
+      "nodes": [
+        "WalkwayGroup.MaterialsLaboratory.006"
+      ]
+    }
+  }
+}

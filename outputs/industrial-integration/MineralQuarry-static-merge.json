@@ -1,0 +1,67 @@
+{
+  "source": "MineralQuarry",
+  "targets": [
+    "SandstoneQuarry",
+    "LimestoneQuarry"
+  ],
+  "joinedObjects": 8,
+  "objects": [
+    "MineralQuarry.Architecture",
+    "MineralQuarry.Door.ControlRoomDoor",
+    "MineralQuarry.Door.GroundDoor",
+    "MineralQuarry.Door.LeftWorkshopDoor",
+    "MineralQuarry.Door.RightWorkshopDoor",
+    "Quarry.AccessLadder01",
+    "Quarry.AccessLadder02",
+    "Quarry.AccessLadder03"
+  ],
+  "nodes": [
+    {
+      "node": "StaticMerged",
+      "parts": 8,
+      "triangles": 23391,
+      "materials": {
+        "DFIndustrial14": 626,
+        "DFIndustrial16": 12,
+        "DFIndustrial15": 168,
+        "BaseWood_DarkBrown.IronTeeth": 2690,
+        "BaseMetal.IronTeeth": 6271,
+        "DFIndustrial13": 8206,
+        "IrregularPlanks_DarkBrown.IronTeeth": 1764,
+        "RoofPlanks.IronTeeth": 126,
+        "Details.IronTeeth": 1736,
+        "DFIndustrial23": 400,
+        "DFIndustrial04": 1024,
+        "DFIndustrial21": 226,
+        "DFIndustrial24": 36,
+        "DFIndustrial25": 82,
+        "Plaster_Orange.IronTeeth": 24
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial08",
+      "parts": 1,
+      "triangles": 180,
+      "materials": {
+        "DFIndustrial08": 180
+      }
+    },
+    {
+      "node": "StaticMerged.DFIndustrial09",
+      "parts": 1,
+      "triangles": 276,
+      "materials": {
+        "DFIndustrial09": 276
+      }
+    },
+    {
+      "node": "StaticMerged.WindowsAtlas.IronTeeth",
+      "parts": 5,
+      "triangles": 56,
+      "materials": {
+        "WindowsAtlas.IronTeeth": 56
+      }
+    }
+  ],
+  "railGroups": {}
+}

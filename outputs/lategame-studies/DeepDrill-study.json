@@ -1,0 +1,64 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Sixteen-layer tapered steel lattice derrick on a concrete substructure, crowned by a crown block and beacon",
+  "footprint": [
+    11,
+    9
+  ],
+  "heightLayers": 16,
+  "boundsMin": [
+    -0.045,
+    -0.005,
+    0.0
+  ],
+  "boundsMax": [
+    10.66,
+    8.72,
+    15.9
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.5,
+        0.18,
+        0.0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "RotaryTable",
+    "MudPumpPistons",
+    "MudPumpBullWheel",
+    "RadiatorFan",
+    "DrawworksDrum",
+    "TravellingBlock",
+    "DrillLines",
+    "Kelly",
+    "CrownBeaconShutter"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 10016,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 1800,
+    "IrregularPlanks_DarkBrown.IronTeeth": 400,
+    "BaseMetal.IronTeeth": 5215,
+    "RoofPlanks.IronTeeth": 300,
+    "Details.IronTeeth": 1276,
+    "accent8": 40,
+    "accent25": 10,
+    "Plaster_White.IronTeeth": 480,
+    "Plaster_Orange.IronTeeth": 69,
+    "WindowsAtlas.IronTeeth": 174,
+    "PaintedMetal.IronTeeth": 1406
+  },
+  "sourceHash": "f8ebe31ec16f1b48ab7c985f521ed074798e6d32bb4cf83a58a4ec42ff946366",
+  "artHash": "73436055dc020dbd0aa1517b1124e2605e4725cc792def83b2fc3fa8841541cd"
+}

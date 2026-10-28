@@ -1,0 +1,64 @@
+{
+ "ident": "MaterialsLaboratory",
+ "source": "src/DeepFrontier/Art/Source/MaterialsLaboratory-ReferenceStudy.blend",
+ "sourceSha256": "1daf2e925f12e8ba2038602f8f205a44eaf6b42b86a04e49d6d98ca1cd6c4386",
+ "frame": 1,
+ "layout": "tools/research-layouts.json",
+ "origin": [
+  0,
+  0,
+  0
+ ],
+ "baseZ": 0,
+ "footprint": [
+  10,
+  8
+ ],
+ "height": 9,
+ "coordinateSystem": "Native grid XYZ, Z up: authored artwork + registration origin (the late-game registration frame)",
+ "smokeEmitters": [
+  {
+   "kind": "smoke",
+   "position": [
+    4.15,
+    6.8,
+    7.985
+   ],
+   "radius": 0.15
+  },
+  {
+   "kind": "smoke",
+   "position": [
+    7.3,
+    2.8,
+    5.885
+   ],
+   "radius": 0.15
+  }
+ ],
+ "sceneCheck": {
+  "rule": "highest static surface within radius + 0.2 at the mouth height (+/-0.002), at least 0.5 above the lowest",
+  "mouths": [
+   {
+    "position": [
+     4.15,
+     6.8,
+     7.985
+    ],
+    "stackTop": 7.985,
+    "lowestNearby": 7.12,
+    "vertices": 432
+   },
+   {
+    "position": [
+     7.3,
+     2.8,
+     5.885
+    ],
+    "stackTop": 5.885,
+    "lowestNearby": 1.93,
+    "vertices": 451
+   }
+  ]
+ }
+}

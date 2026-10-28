@@ -1,0 +1,58 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Riveted heat-recovery boiler tower with twin exhaust stacks behind a barrel-vaulted turbine hall, with fin-fan coolers spinning over the crude-oil day tanks.",
+  "footprint": [
+    6,
+    6
+  ],
+  "heightLayers": 9,
+  "boundsMin": [
+    -0.047,
+    0.045,
+    0.0
+  ],
+  "boundsMax": [
+    6.047,
+    6.02,
+    8.76
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.5,
+        0.18,
+        0.0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "OilPowerPlant.PumpCoupling",
+    "OilPowerPlant.CoolerFan1",
+    "OilPowerPlant.CoolerFan2"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 3151,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 132,
+    "BaseMetal.IronTeeth": 1628,
+    "RoofPlanks.IronTeeth": 504,
+    "Details.IronTeeth": 76,
+    "accent8": 20,
+    "accent25": 6,
+    "Plaster_White.IronTeeth": 138,
+    "Plaster_Orange.IronTeeth": 37,
+    "IrregularPlanks_MetalForged.IronTeeth": 126,
+    "WindowsAtlas.IronTeeth": 98,
+    "PaintedMetal.IronTeeth": 546
+  },
+  "sourceHash": "1c70e36b01dd4b9e2bde62a78f965f2c866aef393a25237914e4945b45302e8e",
+  "artHash": "88c03f2eff4f8c2c6f61e3ce7fefb91cc294a186550b209b500380206af7b9af"
+}

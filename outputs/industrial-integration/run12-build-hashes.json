@@ -1,0 +1,38 @@
+[
+  {
+    "asset": "Buildings/Metal/StoneCrusher/StoneCrusher.IronTeeth.blueprint.json",
+    "sha256": "cc9458b351d92c1f4c9fa76dd602702d51e674f74ae1c252df27b41efaac0554"
+  },
+  {
+    "asset": "Buildings/Metal/StoneCrusher/StoneCrusher.IronTeeth.Model.timbermesh",
+    "sha256": "4c3a14ff10690ae5f8d23354bd0ef8a17768581761dc03bcae356e6245220d15"
+  },
+  {
+    "asset": "Buildings/Metal/CementKiln/CementKiln.IronTeeth.blueprint.json",
+    "sha256": "830c53a401802d577414631b8d8bc05a0b69099b722262b012da2f425c2e28b4"
+  },
+  {
+    "asset": "Buildings/Metal/CementKiln/CementKiln.IronTeeth.Model.timbermesh",
+    "sha256": "83089a83e4aa9b5902941b8dfee2c73aee12c895118b6194bcea4944f8a0bc5b"
+  },
+  {
+    "asset": "Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.blueprint.json",
+    "sha256": "133c25b547933595b3e44383200287988406cfc3f8ce787fc83a9dac0f37ae41"
+  },
+  {
+    "asset": "Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.Model.timbermesh",
+    "sha256": "e9b853b65580085058a47c878c76f457ea2e4d4eb6ee030c349fd64883b53154"
+  },
+  {
+    "asset": "Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.blueprint.json",
+    "sha256": "a722d779a46e97eebdd53767c2aa579e3415161c08836f38bfa71fa9ab84f984"
+  },
+  {
+    "asset": "Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.Model.timbermesh",
+    "sha256": "e9b853b65580085058a47c878c76f457ea2e4d4eb6ee030c349fd64883b53154"
+  },
+  {
+    "asset": "Scripts/DeepFrontier.dll",
+    "sha256": "50835e9870f3c98ce25fc0369a83f3a7a3d8296bb1266f28c503307f81ab57a4"
+  }
+]

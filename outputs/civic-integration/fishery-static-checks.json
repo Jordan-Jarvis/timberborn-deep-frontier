@@ -1,0 +1,25 @@
+{
+  "scope": "Source/export and blueprint checks only; runtime results are separate",
+  "modelSha256": "be7baaf1b7a02bd12f874a296a0a82727d37626caf4dc2d44967d8cb216cabb4",
+  "nodes": 52,
+  "nativeUvVertices": 43276,
+  "connectedRouteCells": 32,
+  "openings": 19,
+  "doors": [
+    0,
+    2
+  ],
+  "waterSurfaces": 5,
+  "waterCapacity": 90,
+  "nativeProps": 3,
+  "animationTracks": [
+    [
+      "#FisheryWorks.CarvedSign",
+      301
+    ],
+    [
+      "#FisheryWorks.CraneNet",
+      301
+    ]
+  ]
+}

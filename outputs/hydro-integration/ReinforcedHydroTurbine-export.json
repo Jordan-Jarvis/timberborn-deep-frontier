@@ -1,0 +1,19 @@
+{
+  "source": "ReinforcedHydroTurbine",
+  "targets": [
+    "ReinforcedHydroTurbine"
+  ],
+  "origin": [
+    0,
+    0,
+    0
+  ],
+  "size": [
+    8,
+    10,
+    7
+  ],
+  "openings": 14,
+  "objects": 84,
+  "animationFrames": 121
+}

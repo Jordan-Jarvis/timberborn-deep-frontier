@@ -1,0 +1,60 @@
+{
+ "culledFacesChecked": 0,
+ "culledFacesExposed": 0,
+ "exposedExamples": [],
+ "model": "DeepOreVein",
+ "study": "DeepOreVein",
+ "source": "C:/Users/Jordan/Documents/TimberbornModding/src/DeepFrontier/Art/Source/DeepOreVein-ReferenceStudy.blend",
+ "method": "orbit ray visibility, elevations [12, 30, 48, 66, 84] deg x 16 azimuths, back faces culled, animated/water/native props never occlude, terrain plane 0.0",
+ "shippedTriangles": 1265,
+ "hiddenTriangles": 229,
+ "hiddenShare": 0.181,
+ "nativePreviewTriangles": 0,
+ "seconds": 0.3,
+ "objects": [
+  {
+   "name": "DeepOreVeinGeology",
+   "animated": false,
+   "triangles": 1265,
+   "hidden": 229,
+   "hiddenByMaterial": {
+    "BaseMetal.IronTeeth": 195,
+    "BeaverCarryingModels": 23,
+    "UndergroundRuinsCliff": 9,
+    "WaterSource": 2
+   }
+  }
+ ],
+ "sources": [
+  {
+   "source": "map_objects_geometry.py:407:ore_cluster > map_objects_geometry.py:446:deep_ore_vein > build_map_objects.py:171:main",
+   "triangles": 390,
+   "hidden": 85
+  },
+  {
+   "source": "map_objects_geometry.py:441:deep_ore_vein > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 318,
+   "hidden": 55
+  },
+  {
+   "source": "map_objects_geometry.py:449:deep_ore_vein > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 90,
+   "hidden": 46
+  },
+  {
+   "source": "map_objects_geometry.py:455:deep_ore_vein > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 172,
+   "hidden": 32
+  },
+  {
+   "source": "map_objects_geometry.py:424:deep_ore_vein > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 22,
+   "hidden": 9
+  },
+  {
+   "source": "map_objects_geometry.py:436:deep_ore_vein > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 273,
+   "hidden": 2
+  }
+ ]
+}

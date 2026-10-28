@@ -1,0 +1,62 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Tall riveted-steel cannery hall crowned by a glazed monitor roof with turbine ventilators, beside a 12-layer boiler stack.",
+  "footprint": [
+    10,
+    7
+  ],
+  "heightLayers": 12,
+  "boundsMin": [
+    -0.1,
+    -0.255,
+    -0.03
+  ],
+  "boundsMax": [
+    10.09,
+    7.066,
+    11.8
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        2.5,
+        0.0,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "SeamerTurret",
+    "CanningLine",
+    "TurbineVent0",
+    "TurbineVent1",
+    "RetortHook",
+    "FeedPumpRod",
+    "BridgeCrates"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 6190,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 1346,
+    "IrregularPlanks_DarkBrown.IronTeeth": 44,
+    "BaseMetal.IronTeeth": 2219,
+    "RoofPlanks.IronTeeth": 94,
+    "Details.IronTeeth": 1022,
+    "accent8": 30,
+    "Plaster_White.IronTeeth": 510,
+    "Plaster_Orange.IronTeeth": 19,
+    "IrregularPlanks_MetalForged.IronTeeth": 134,
+    "WindowsAtlas.IronTeeth": 918,
+    "PaintedMetal.IronTeeth": 348
+  },
+  "sourceHash": "8dc8c8d6a46a823d2bbe04c1bd6b3fb1a67a1c7c337dec25f19f591971428619",
+  "artHash": "6cdbd8114340685672b985981417d55b902d16823bf251f4939e86e9eb88a369"
+}

@@ -1,0 +1,500 @@
+{
+  "Openings": [
+    {
+      "Id": "Front4",
+      "Inside": {
+        "X": 4,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 3,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.000"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Front4"
+      ]
+    },
+    {
+      "Id": "Rear4",
+      "Inside": {
+        "X": 4,
+        "Y": 9,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 10,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 9.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.001"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Rear4"
+      ]
+    },
+    {
+      "Id": "Front5",
+      "Inside": {
+        "X": 5,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 3,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.002"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Front5"
+      ]
+    },
+    {
+      "Id": "Rear5",
+      "Inside": {
+        "X": 5,
+        "Y": 9,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 10,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 9.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.005"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Rear5"
+      ]
+    },
+    {
+      "Id": "Front6",
+      "Inside": {
+        "X": 6,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 3,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.003"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Front6"
+      ]
+    },
+    {
+      "Id": "Rear6",
+      "Inside": {
+        "X": 6,
+        "Y": 9,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 10,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 9.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.006"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Rear6"
+      ]
+    },
+    {
+      "Id": "Front7",
+      "Inside": {
+        "X": 7,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 3,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.004"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Front7"
+      ]
+    },
+    {
+      "Id": "Rear7",
+      "Inside": {
+        "X": 7,
+        "Y": 9,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 10,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 9.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.008"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Rear7"
+      ]
+    },
+    {
+      "Id": "Right4",
+      "Inside": {
+        "X": 7,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 4,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.004",
+        "WalkwayGroup.ReinforcedHydroTurbine.007"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Right4"
+      ]
+    },
+    {
+      "Id": "Right5",
+      "Inside": {
+        "X": 7,
+        "Y": 5,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 5,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.010"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Right5"
+      ]
+    },
+    {
+      "Id": "Right6",
+      "Inside": {
+        "X": 7,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 6,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.011"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Right6"
+      ]
+    },
+    {
+      "Id": "Right7",
+      "Inside": {
+        "X": 7,
+        "Y": 7,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.012"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Right7"
+      ]
+    },
+    {
+      "Id": "Right8",
+      "Inside": {
+        "X": 7,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 8,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.013"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Right8"
+      ]
+    },
+    {
+      "Id": "Right9",
+      "Inside": {
+        "X": 7,
+        "Y": 9,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 9.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.ReinforcedHydroTurbine.008",
+        "WalkwayGroup.ReinforcedHydroTurbine.009"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Right9"
+      ]
+    }
+  ],
+  "Waypoints": [
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 4,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 4.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 5,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 5.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 6,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 6.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 7,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 7.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 8,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 8.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 7,
+        "Y": 9,
+        "Z": 2
+      },
+      "Position": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 9.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 4,
+        "Y": 9,
+        "Z": 2
+      },
+      "Position": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 9.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 5,
+        "Y": 9,
+        "Z": 2
+      },
+      "Position": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 9.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 9,
+        "Z": 2
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 9.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 6,
+        "Y": 5,
+        "Z": 2
+      },
+      "Position": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 5.5
+      }
+    }
+  ]
+}

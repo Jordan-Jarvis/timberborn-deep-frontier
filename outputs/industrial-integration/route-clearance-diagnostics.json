@@ -1,0 +1,22 @@
+[
+  {
+    "model": "StoneCrusher",
+    "samples": 0,
+    "issues": []
+  },
+  {
+    "model": "CementKiln",
+    "samples": 0,
+    "issues": []
+  },
+  {
+    "model": "MineralQuarry",
+    "samples": 0,
+    "issues": []
+  },
+  {
+    "model": "ConcreteMixer",
+    "samples": 0,
+    "issues": []
+  }
+]

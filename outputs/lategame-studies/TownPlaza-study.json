@@ -1,0 +1,82 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "The native Fountain of Joy on the square axis, framed by a round iron bandstand under a teal bell roof and the native Iron Teeth beaver statue.",
+  "footprint": [
+    9,
+    9
+  ],
+  "heightLayers": 6,
+  "boundsMin": [
+    0.02,
+    0.02,
+    0.0
+  ],
+  "boundsMax": [
+    8.98,
+    9.05,
+    5.11
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        4.5,
+        6,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "TownPlaza.Weathervane",
+    "TownPlaza.FlagL0",
+    "TownPlaza.FlagL1",
+    "TownPlaza.FlagR0",
+    "TownPlaza.FlagR1"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [
+    {
+      "name": "PlazaFountain",
+      "model": "FountainOfJoy.Folktails",
+      "resource": "Buildings/Monuments/FountainOfJoy/FountainOfJoy.Folktails.Model",
+      "position": [
+        3.0,
+        2.0,
+        0.22
+      ],
+      "scale": 0.6,
+      "yaw": 0
+    },
+    {
+      "name": "PlazaStatue",
+      "model": "BeaverStatue.IronTeeth",
+      "resource": "Buildings/Decoration/BeaverStatue/BeaverStatue.IronTeeth.Model",
+      "position": [
+        0.30000000000000004,
+        0.30000000000000004,
+        0.34
+      ],
+      "scale": 1.4,
+      "yaw": 0
+    }
+  ],
+  "redicProps": [],
+  "faces": 2764,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 104,
+    "BaseMetal.IronTeeth": 1684,
+    "RoofPlanks.IronTeeth": 129,
+    "Details.IronTeeth": 192,
+    "accent8": 20,
+    "Plaster_White.IronTeeth": 462,
+    "Plaster_Orange.IronTeeth": 439,
+    "WindowsAtlas.IronTeeth": 98
+  },
+  "sourceHash": "a197614f9aebb7c042e6bf188a54743cd442fcb1ddbd1ef44f2893b4621418fe",
+  "artHash": "37c500aae453d449bdea9a0d4a37f8c7f9c1bb2e7bb6a93f8ffaeae3c5c1cdbe"
+}

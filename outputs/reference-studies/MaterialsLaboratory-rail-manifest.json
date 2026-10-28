@@ -1,0 +1,304 @@
+{
+  "status": "Separate Blender nodes; game connection bindings are not authored yet",
+  "coordinateSpace": "Authored artwork X/across Y/back Z/up; no grid conversion",
+  "runs": [
+    {
+      "id": "TerraceFront0",
+      "panels": [
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceFront0.Panel00",
+          "start": [
+            0.07100000232458115,
+            0.08100000023841858,
+            2
+          ],
+          "end": [
+            0.5354999899864197,
+            0.08100000023841858,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post000",
+          "endPost": "MaterialsLaboratory.Rail.Post001"
+        },
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceFront0.Panel01",
+          "start": [
+            0.5354999899864197,
+            0.08100000023841858,
+            2
+          ],
+          "end": [
+            1.0,
+            0.08100000023841858,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post001",
+          "endPost": "MaterialsLaboratory.Rail.Post002"
+        }
+      ]
+    },
+    {
+      "id": "TerraceFront1",
+      "panels": [
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceFront1.Panel00",
+          "start": [
+            1.0,
+            0.08100000023841858,
+            2
+          ],
+          "end": [
+            1.5,
+            0.08100000023841858,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post002",
+          "endPost": "MaterialsLaboratory.Rail.Post003"
+        },
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceFront1.Panel01",
+          "start": [
+            1.5,
+            0.08100000023841858,
+            2
+          ],
+          "end": [
+            2.0,
+            0.08100000023841858,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post003",
+          "endPost": "MaterialsLaboratory.Rail.Post004"
+        }
+      ]
+    },
+    {
+      "id": "TerraceFront2",
+      "panels": [
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceFront2.Panel00",
+          "start": [
+            2.0,
+            0.08100000023841858,
+            2
+          ],
+          "end": [
+            2.4644999504089355,
+            0.08100000023841858,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post004",
+          "endPost": "MaterialsLaboratory.Rail.Post005"
+        },
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceFront2.Panel01",
+          "start": [
+            2.4644999504089355,
+            0.08100000023841858,
+            2
+          ],
+          "end": [
+            2.928999900817871,
+            0.08100000023841858,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post005",
+          "endPost": "MaterialsLaboratory.Rail.Post006"
+        }
+      ]
+    },
+    {
+      "id": "TerraceLeft0",
+      "panels": [
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceLeft0.Panel00",
+          "start": [
+            0.07100000232458115,
+            0.08100000023841858,
+            2
+          ],
+          "end": [
+            0.07100000232458115,
+            0.5405000448226929,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post000",
+          "endPost": "MaterialsLaboratory.Rail.Post007"
+        },
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceLeft0.Panel01",
+          "start": [
+            0.07100000232458115,
+            0.5405000448226929,
+            2
+          ],
+          "end": [
+            0.07100000232458115,
+            1.0,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post007",
+          "endPost": "MaterialsLaboratory.Rail.Post008"
+        }
+      ]
+    },
+    {
+      "id": "TerraceLeft1",
+      "panels": [
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceLeft1.Panel00",
+          "start": [
+            0.07100000232458115,
+            1.0,
+            2
+          ],
+          "end": [
+            0.07100000232458115,
+            1.5,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post008",
+          "endPost": "MaterialsLaboratory.Rail.Post009"
+        },
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceLeft1.Panel01",
+          "start": [
+            0.07100000232458115,
+            1.5,
+            2
+          ],
+          "end": [
+            0.07100000232458115,
+            2.0,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post009",
+          "endPost": "MaterialsLaboratory.Rail.Post010"
+        }
+      ]
+    },
+    {
+      "id": "TerraceLeft2",
+      "panels": [
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceLeft2.Panel00",
+          "start": [
+            0.07100000232458115,
+            2.0,
+            2
+          ],
+          "end": [
+            0.07100000232458115,
+            2.5,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post010",
+          "endPost": "MaterialsLaboratory.Rail.Post011"
+        },
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceLeft2.Panel01",
+          "start": [
+            0.07100000232458115,
+            2.5,
+            2
+          ],
+          "end": [
+            0.07100000232458115,
+            3.0,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post011",
+          "endPost": "MaterialsLaboratory.Rail.Post012"
+        }
+      ]
+    },
+    {
+      "id": "TerraceRight0",
+      "panels": [
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceRight0.Panel00",
+          "start": [
+            2.928999900817871,
+            0.08100000023841858,
+            2
+          ],
+          "end": [
+            2.928999900817871,
+            0.5405000448226929,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post006",
+          "endPost": "MaterialsLaboratory.Rail.Post013"
+        },
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceRight0.Panel01",
+          "start": [
+            2.928999900817871,
+            0.5405000448226929,
+            2
+          ],
+          "end": [
+            2.928999900817871,
+            1.0,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post013",
+          "endPost": "MaterialsLaboratory.Rail.Post014"
+        }
+      ]
+    },
+    {
+      "id": "TerraceRightReturn",
+      "panels": [
+        {
+          "node": "MaterialsLaboratory.Rail.TerraceRightReturn.Panel00",
+          "start": [
+            2.928999900817871,
+            1.0,
+            2
+          ],
+          "end": [
+            2.928999900817871,
+            1.2699999809265137,
+            2
+          ],
+          "startPost": "MaterialsLaboratory.Rail.Post014",
+          "endPost": "MaterialsLaboratory.Rail.Post015"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    "MaterialsLaboratory.Rail.Post000",
+    "MaterialsLaboratory.Rail.Post001",
+    "MaterialsLaboratory.Rail.Post002",
+    "MaterialsLaboratory.Rail.TerraceFront0.Panel00",
+    "MaterialsLaboratory.Rail.TerraceFront0.Panel01",
+    "MaterialsLaboratory.Rail.Post003",
+    "MaterialsLaboratory.Rail.Post004",
+    "MaterialsLaboratory.Rail.TerraceFront1.Panel00",
+    "MaterialsLaboratory.Rail.TerraceFront1.Panel01",
+    "MaterialsLaboratory.Rail.Post005",
+    "MaterialsLaboratory.Rail.Post006",
+    "MaterialsLaboratory.Rail.TerraceFront2.Panel00",
+    "MaterialsLaboratory.Rail.TerraceFront2.Panel01",
+    "MaterialsLaboratory.Rail.Post007",
+    "MaterialsLaboratory.Rail.Post008",
+    "MaterialsLaboratory.Rail.TerraceLeft0.Panel00",
+    "MaterialsLaboratory.Rail.TerraceLeft0.Panel01",
+    "MaterialsLaboratory.Rail.Post009",
+    "MaterialsLaboratory.Rail.Post010",
+    "MaterialsLaboratory.Rail.TerraceLeft1.Panel00",
+    "MaterialsLaboratory.Rail.TerraceLeft1.Panel01",
+    "MaterialsLaboratory.Rail.Post011",
+    "MaterialsLaboratory.Rail.Post012",
+    "MaterialsLaboratory.Rail.TerraceLeft2.Panel00",
+    "MaterialsLaboratory.Rail.TerraceLeft2.Panel01",
+    "MaterialsLaboratory.Rail.Post013",
+    "MaterialsLaboratory.Rail.Post014",
+    "MaterialsLaboratory.Rail.TerraceRight0.Panel00",
+    "MaterialsLaboratory.Rail.TerraceRight0.Panel01",
+    "MaterialsLaboratory.Rail.Post015",
+    "MaterialsLaboratory.Rail.TerraceRightReturn.Panel00"
+  ]
+}

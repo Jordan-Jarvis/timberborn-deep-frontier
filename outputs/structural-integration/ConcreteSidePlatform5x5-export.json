@@ -1,0 +1,19 @@
+{
+  "source": "ConcreteSidePlatform5x5",
+  "targets": [
+    "ConcreteSidePlatform5x5"
+  ],
+  "origin": [
+    0,
+    0,
+    -1
+  ],
+  "size": [
+    5,
+    6,
+    2
+  ],
+  "openings": 0,
+  "objects": 2,
+  "animationFrames": 1
+}

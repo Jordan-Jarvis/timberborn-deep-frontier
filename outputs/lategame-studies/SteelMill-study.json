@@ -1,0 +1,70 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Electric-arc melt shop whose three graphite electrodes rise on mast arms through a forged roof penthouse, with a fat fume duct over the roof into a 14-layer riveted steel flue.",
+  "footprint": [
+    12,
+    10
+  ],
+  "heightLayers": 15,
+  "boundsMin": [
+    -0.185,
+    -0.145,
+    -0.03
+  ],
+  "boundsMax": [
+    12.0,
+    10.1652,
+    14.57
+  ],
+  "doors": [
+    {
+      "id": "Entrance",
+      "position": [
+        1.5,
+        0.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "SteelMill.PulpitBeacon",
+    "SteelMill.TapGlow",
+    "SteelMill.Electrodes",
+    "SteelMill.LadleCrane",
+    "SteelMill.TeemingLadle",
+    "SteelMill.PourStream",
+    "SteelMill.ReheatGlow",
+    "SteelMill.Stand1LowerRoll",
+    "SteelMill.Stand1UpperRoll",
+    "SteelMill.Stand2LowerRoll",
+    "SteelMill.Stand2UpperRoll",
+    "SteelMill.Stand3LowerRoll",
+    "SteelMill.Stand3UpperRoll",
+    "SteelMill.HotBar"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 8652,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 692,
+    "BaseMetal.IronTeeth": 5132,
+    "RoofPlanks.IronTeeth": 660,
+    "Details.IronTeeth": 1050,
+    "accent8": 140,
+    "accent25": 10,
+    "Plaster_White.IronTeeth": 540,
+    "Plaster_Orange.IronTeeth": 7,
+    "IrregularPlanks_MetalForged.IronTeeth": 380,
+    "WindowsAtlas.IronTeeth": 610,
+    "PaintedMetal.IronTeeth": 883,
+    "IrregularPlanks_Grey.IronTeeth": 132
+  },
+  "sourceHash": "436043830e35c0e43461147d1b698d6fd07357a6a572eccc9fbb8d2ea437e250",
+  "artHash": "9397a3b3adb46d75617a4dff0d440907d802acf9d4fc0090aee2a4089bbbc1d9"
+}

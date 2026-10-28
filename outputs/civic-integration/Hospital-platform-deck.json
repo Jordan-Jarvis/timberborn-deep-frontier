@@ -1,0 +1,1002 @@
+{
+  "Openings": [
+    {
+      "Id": "WestFront0",
+      "Inside": {
+        "X": 0,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.002"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "WestFront1",
+      "Inside": {
+        "X": 1,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 1,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.WestFrontOuter.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "WestFront2",
+      "Inside": {
+        "X": 2,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 2,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.WestFrontOuter.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "WestFront3",
+      "Inside": {
+        "X": 3,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 3,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.003"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "WestFrontLeft",
+      "Inside": {
+        "X": 0,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.002"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "EastFront8",
+      "Inside": {
+        "X": 8,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.000"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "EastFront9",
+      "Inside": {
+        "X": 9,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 9.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.EastFrontOuter.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "EastFront10",
+      "Inside": {
+        "X": 10,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 10,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 10.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.EastFrontOuter.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "EastFront11",
+      "Inside": {
+        "X": 11,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 11,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 11.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.001"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "EastFrontRight",
+      "Inside": {
+        "X": 11,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 12,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 11.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.001"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear0",
+      "Inside": {
+        "X": 0,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.004"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear1",
+      "Inside": {
+        "X": 1,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 1,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RearOuter.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear2",
+      "Inside": {
+        "X": 2,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RearOuter.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear3",
+      "Inside": {
+        "X": 3,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RearOuter.Panel03.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear4",
+      "Inside": {
+        "X": 4,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RearOuter.Panel04.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear5",
+      "Inside": {
+        "X": 5,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RearOuter.Panel05.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear6",
+      "Inside": {
+        "X": 6,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RearOuter.Panel06.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear7",
+      "Inside": {
+        "X": 7,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RearOuter.Panel07.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear8",
+      "Inside": {
+        "X": 8,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RearOuter.Panel08.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear9",
+      "Inside": {
+        "X": 9,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 9.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RearOuter.Panel09.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear10",
+      "Inside": {
+        "X": 10,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 10,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 10.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RearOuter.Panel10.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "Rear11",
+      "Inside": {
+        "X": 11,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 11,
+        "Y": 9,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 11.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.005"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RearLeft",
+      "Inside": {
+        "X": 0,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 8,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.004"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RearRight",
+      "Inside": {
+        "X": 11,
+        "Y": 8,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 12,
+        "Y": 8,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 11.5,
+        "Y": 2,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.005"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperRear3",
+      "Inside": {
+        "X": 3,
+        "Y": 8,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 9,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.006"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperRear4",
+      "Inside": {
+        "X": 4,
+        "Y": 8,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 9,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.UpperRearOuter.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperRear5",
+      "Inside": {
+        "X": 5,
+        "Y": 8,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 9,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 4,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.UpperRearOuter.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperRear6",
+      "Inside": {
+        "X": 6,
+        "Y": 8,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 9,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.UpperRearOuter.Panel03.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperRear7",
+      "Inside": {
+        "X": 7,
+        "Y": 8,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 9,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 4,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.UpperRearOuter.Panel04.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperRear8",
+      "Inside": {
+        "X": 8,
+        "Y": 8,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 9,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 4,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.007"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperRearWest",
+      "Inside": {
+        "X": 3,
+        "Y": 8,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 8,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.006"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperRearEast",
+      "Inside": {
+        "X": 8,
+        "Y": 8,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 8,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 4,
+        "Z": 8.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.007"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofLeft5",
+      "Inside": {
+        "X": 4,
+        "Y": 5,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 5,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 6,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.008"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRight5",
+      "Inside": {
+        "X": 7,
+        "Y": 5,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 5,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 6,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.010"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofLeft6",
+      "Inside": {
+        "X": 4,
+        "Y": 6,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 6,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 6,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RoofGardenLeft.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRight6",
+      "Inside": {
+        "X": 7,
+        "Y": 6,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 6,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 6,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RoofGardenRight.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofLeft7",
+      "Inside": {
+        "X": 4,
+        "Y": 7,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 7,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 6,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.009"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRight7",
+      "Inside": {
+        "X": 7,
+        "Y": 7,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 7,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 6,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.011"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRear4",
+      "Inside": {
+        "X": 4,
+        "Y": 7,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 8,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 6,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.009"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRear5",
+      "Inside": {
+        "X": 5,
+        "Y": 7,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 8,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 6,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RoofGardenRear.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRear6",
+      "Inside": {
+        "X": 6,
+        "Y": 7,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 8,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 6,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Hospital.RoofGardenRear.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRear7",
+      "Inside": {
+        "X": 7,
+        "Y": 7,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 8,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 6,
+        "Z": 7.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Hospital.011"
+      ],
+      "ShownNodes": []
+    }
+  ],
+  "Doors": [
+    {
+      "Interior": {
+        "X": 6,
+        "Y": 0,
+        "Z": 0
+      },
+      "Exterior": {
+        "X": 6,
+        "Y": -1,
+        "Z": 0
+      }
+    },
+    {
+      "Interior": {
+        "X": 2,
+        "Y": 1,
+        "Z": 2
+      },
+      "Exterior": {
+        "X": 2,
+        "Y": 0,
+        "Z": 2
+      }
+    },
+    {
+      "Interior": {
+        "X": 9,
+        "Y": 1,
+        "Z": 2
+      },
+      "Exterior": {
+        "X": 9,
+        "Y": 0,
+        "Z": 2
+      }
+    },
+    {
+      "Interior": {
+        "X": 6,
+        "Y": 7,
+        "Z": 2
+      },
+      "Exterior": {
+        "X": 6,
+        "Y": 8,
+        "Z": 2
+      }
+    },
+    {
+      "Interior": {
+        "X": 6,
+        "Y": 7,
+        "Z": 4
+      },
+      "Exterior": {
+        "X": 6,
+        "Y": 8,
+        "Z": 4
+      }
+    },
+    {
+      "Interior": {
+        "X": 6,
+        "Y": 4,
+        "Z": 6
+      },
+      "Exterior": {
+        "X": 6,
+        "Y": 5,
+        "Z": 6
+      }
+    }
+  ]
+}

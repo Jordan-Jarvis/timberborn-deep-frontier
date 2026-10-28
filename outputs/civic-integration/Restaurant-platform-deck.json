@@ -1,0 +1,1352 @@
+{
+  "Openings": [
+    {
+      "Id": "DiningFront1",
+      "Inside": {
+        "X": 0,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.000"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningFront2",
+      "Inside": {
+        "X": 1,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 1,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.4999999999999998,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningFrontfront.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningFront3",
+      "Inside": {
+        "X": 2,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 2,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningFrontfront.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningFront4",
+      "Inside": {
+        "X": 3,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 3,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningFrontfront.Panel03.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningFront5",
+      "Inside": {
+        "X": 4,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 4,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningFrontfront.Panel04.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningFront6",
+      "Inside": {
+        "X": 5,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 5,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.001"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningLeft1",
+      "Inside": {
+        "X": 0,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.000"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningLeft",
+      "Inside": {
+        "X": 0,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.002"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRear2",
+      "Inside": {
+        "X": 1,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 1,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.4999999999999998,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.003"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRear3",
+      "Inside": {
+        "X": 2,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningRearback.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRear4",
+      "Inside": {
+        "X": 3,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningRearback.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRear5",
+      "Inside": {
+        "X": 4,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningRearback.Panel03.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRear6",
+      "Inside": {
+        "X": 5,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningRearback.Panel04.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRear7",
+      "Inside": {
+        "X": 6,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 7,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.004"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRearLeft6",
+      "Inside": {
+        "X": 1,
+        "Y": 5,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 5,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.4999999999999998,
+        "Y": 2,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.005"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRearLeft7",
+      "Inside": {
+        "X": 1,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 6,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.4999999999999998,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.003"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRight2",
+      "Inside": {
+        "X": 6,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.006"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRight3",
+      "Inside": {
+        "X": 6,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 2,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningSideright.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRight4",
+      "Inside": {
+        "X": 6,
+        "Y": 3,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 3,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningSideright.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRight5",
+      "Inside": {
+        "X": 6,
+        "Y": 4,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 4,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningSideright.Panel03.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRight6",
+      "Inside": {
+        "X": 6,
+        "Y": 5,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 5,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.DiningSideright.Panel04.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningRight7",
+      "Inside": {
+        "X": 6,
+        "Y": 6,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 6,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.004"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningFront1",
+      "Inside": {
+        "X": 0,
+        "Y": 0,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 0,
+        "Y": -1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 4,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.007"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningFront2",
+      "Inside": {
+        "X": 1,
+        "Y": 0,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 1,
+        "Y": -1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.4999999999999998,
+        "Y": 4,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningFront3",
+      "Inside": {
+        "X": 2,
+        "Y": 0,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 2,
+        "Y": -1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 4,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningFront4",
+      "Inside": {
+        "X": 3,
+        "Y": 0,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 3,
+        "Y": -1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel03.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningFront5",
+      "Inside": {
+        "X": 4,
+        "Y": 0,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 4,
+        "Y": -1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningFrontfront.Panel04.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningFront6",
+      "Inside": {
+        "X": 5,
+        "Y": 0,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 5,
+        "Y": -1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 4,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.008"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningLeft1",
+      "Inside": {
+        "X": 0,
+        "Y": 0,
+        "Z": 4
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 0,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 4,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.007"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningLeft",
+      "Inside": {
+        "X": 0,
+        "Y": 1,
+        "Z": 4
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 4,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.009"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRear2",
+      "Inside": {
+        "X": 1,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 1,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.4999999999999998,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.012"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRear3",
+      "Inside": {
+        "X": 2,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningRearback.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRear4",
+      "Inside": {
+        "X": 3,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningRearback.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRear5",
+      "Inside": {
+        "X": 4,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningRearback.Panel03.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRear6",
+      "Inside": {
+        "X": 5,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningRearback.Panel04.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRear7",
+      "Inside": {
+        "X": 6,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 7,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.011"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRearLeft6",
+      "Inside": {
+        "X": 1,
+        "Y": 5,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 5,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.4999999999999998,
+        "Y": 4,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.013"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRearLeft7",
+      "Inside": {
+        "X": 1,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 0,
+        "Y": 6,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 1.4999999999999998,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.012"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRight2",
+      "Inside": {
+        "X": 6,
+        "Y": 1,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 1,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.010"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRight3",
+      "Inside": {
+        "X": 6,
+        "Y": 2,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 2,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningSideright.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRight4",
+      "Inside": {
+        "X": 6,
+        "Y": 3,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 3,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningSideright.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRight5",
+      "Inside": {
+        "X": 6,
+        "Y": 4,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 4,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningSideright.Panel03.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRight6",
+      "Inside": {
+        "X": 6,
+        "Y": 5,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 5,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.UpperDiningSideright.Panel04.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "UpperDiningRight7",
+      "Inside": {
+        "X": 6,
+        "Y": 6,
+        "Z": 4
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 6,
+        "Z": 4
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 4,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.011"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "DiningSideFront",
+      "Inside": {
+        "X": 6,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 2,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.006"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofFront6",
+      "Inside": {
+        "X": 5,
+        "Y": 2,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 1,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 6,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.014"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRear6",
+      "Inside": {
+        "X": 5,
+        "Y": 4,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 5,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 6,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.016"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofFront7",
+      "Inside": {
+        "X": 6,
+        "Y": 2,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 1,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 6,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.RoofTerraceFront.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRear7",
+      "Inside": {
+        "X": 6,
+        "Y": 4,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 5,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 6,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.RoofTerraceRear.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofFront8",
+      "Inside": {
+        "X": 7,
+        "Y": 2,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 1,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 7.500000000000001,
+        "Y": 6,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.RoofTerraceFront.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRear8",
+      "Inside": {
+        "X": 7,
+        "Y": 4,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 5,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 7.500000000000001,
+        "Y": 6,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.RoofTerraceRear.Panel02.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofFront9",
+      "Inside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 1,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 6,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.015"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRear9",
+      "Inside": {
+        "X": 8,
+        "Y": 4,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 5,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 6,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.017"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofLeft3",
+      "Inside": {
+        "X": 5,
+        "Y": 2,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 2,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 6,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.014"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRight3",
+      "Inside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 2,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 6,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.015"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofLeft4",
+      "Inside": {
+        "X": 5,
+        "Y": 3,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 3,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 6,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.RoofTerraceLeft.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRight4",
+      "Inside": {
+        "X": 8,
+        "Y": 3,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 3,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 6,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayRail.Restaurant.RoofTerraceRight.Panel01.CellPart0"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofLeft5",
+      "Inside": {
+        "X": 5,
+        "Y": 4,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 4,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 6,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.016"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "RoofRight5",
+      "Inside": {
+        "X": 8,
+        "Y": 4,
+        "Z": 6
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 4,
+        "Z": 6
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 6,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.Restaurant.017"
+      ],
+      "ShownNodes": []
+    }
+  ],
+  "Doors": [
+    {
+      "Interior": {
+        "X": 1,
+        "Y": 1,
+        "Z": 0
+      },
+      "Exterior": {
+        "X": 1,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "Interior": {
+        "X": 3,
+        "Y": 2,
+        "Z": 2
+      },
+      "Exterior": {
+        "X": 3,
+        "Y": 1,
+        "Z": 2
+      }
+    },
+    {
+      "Interior": {
+        "X": 3,
+        "Y": 2,
+        "Z": 4
+      },
+      "Exterior": {
+        "X": 3,
+        "Y": 1,
+        "Z": 4
+      }
+    },
+    {
+      "Interior": {
+        "X": 5,
+        "Y": 3,
+        "Z": 6
+      },
+      "Exterior": {
+        "X": 6,
+        "Y": 3,
+        "Z": 6
+      }
+    }
+  ]
+}

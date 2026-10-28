@@ -1,0 +1,67 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Frost-white cold box tower lashed to a banded distillation column above twin Horton spheres",
+  "footprint": [
+    12,
+    11
+  ],
+  "heightLayers": 16,
+  "boundsMin": [
+    -0.0,
+    -0.0,
+    -0.035
+  ],
+  "boundsMax": [
+    11.8,
+    10.6,
+    15.0354
+  ],
+  "doors": [
+    {
+      "id": "CompressorHouseDoor",
+      "position": [
+        3.5,
+        1.0,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ],
+      "width": 1.0,
+      "internalConnection": "BuildingInterior"
+    }
+  ],
+  "animatedParts": [
+    "CryogenicLiquefactionPlant.LoadingArm",
+    "CryogenicLiquefactionPlant.Flywheel0",
+    "CryogenicLiquefactionPlant.Flywheel1",
+    "CryogenicLiquefactionPlant.Piston0",
+    "CryogenicLiquefactionPlant.Piston1",
+    "CryogenicLiquefactionPlant.CoolerFan0",
+    "CryogenicLiquefactionPlant.CoolerFan1",
+    "CryogenicLiquefactionPlant.CoolerFan2",
+    "CryogenicLiquefactionPlant.VentRotor",
+    "CryogenicLiquefactionPlant.Beacon"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 11689,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 416,
+    "BaseMetal.IronTeeth": 5392,
+    "RoofPlanks.IronTeeth": 18,
+    "Details.IronTeeth": 1387,
+    "accent8": 30,
+    "accent25": 46,
+    "Plaster_White.IronTeeth": 2933,
+    "Plaster_Orange.IronTeeth": 31,
+    "IrregularPlanks_MetalForged.IronTeeth": 84,
+    "WindowsAtlas.IronTeeth": 514,
+    "PaintedMetal.IronTeeth": 1866
+  },
+  "sourceHash": "02e0d0b0db692af8ff01c0942ac6742cc25759a3f94ff45c8cb7c6a2abe9ed3e",
+  "artHash": "030517d3b2836e4039a0d5d8ebb292afc4e0b89d934d52129c5d7e98d5ff0848"
+}

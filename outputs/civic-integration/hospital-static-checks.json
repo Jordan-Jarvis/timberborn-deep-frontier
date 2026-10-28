@@ -1,0 +1,56 @@
+{
+  "status": "Source/export checks passed; native runtime acceptance pending",
+  "size": [
+    12,
+    9,
+    9
+  ],
+  "sourceSha256": "431fb6dbc7205f77dc6286626dad13b751e08225f7175f0988ba72e79e5ade10",
+  "exportSha256": "74ce7ff9ac483297901631b54abd25d5d82bd681c74cfaf1574c3b0052f9fc4b",
+  "nodes": 41,
+  "nativeUvVertices": 34605,
+  "routes": 68,
+  "openings": 42,
+  "doors": 6,
+  "doorLevels": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "nativeProps": 0,
+  "bannerTracks": 2,
+  "patients": 30,
+  "workers": 6,
+  "patientMeals": {
+    "FoodCapacityPerGood": 30,
+    "WaterGoodId": "Water",
+    "WaterCapacity": 128,
+    "LowStockUnits": 30
+  },
+  "hpDemand": 600,
+  "hpOutput": 0,
+  "science": 25000,
+  "treatmentEffects": {
+    "Injury": {
+      "NeedId": "Injury",
+      "PointsPerHour": 0.03033333333333333,
+      "SatisfyToMaxValue": true
+    },
+    "ChippedTeeth": {
+      "NeedId": "ChippedTeeth",
+      "PointsPerHour": 0.5,
+      "SatisfyToMaxValue": true
+    },
+    "BadwaterContamination": {
+      "NeedId": "BadwaterContamination",
+      "PointsPerHour": 0.068,
+      "SatisfyToMaxValue": true
+    },
+    "Irradiation": {
+      "NeedId": "Irradiation",
+      "PointsPerHour": 0.008333333333333333,
+      "SatisfyToMaxValue": true
+    }
+  }
+}

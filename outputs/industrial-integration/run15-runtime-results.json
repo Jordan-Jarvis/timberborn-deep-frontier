@@ -1,0 +1,22 @@
+{
+  "gameVersion": "1.1.2.8",
+  "faction": "IronTeeth",
+  "officialBuild": 15,
+  "evidence": "outputs/industrial-game-run15.log",
+  "shaftConnections": 4,
+  "deckStacks": 5,
+  "underDeckPlacements": 12,
+  "solidRoomRejections": 3,
+  "railAssertions": 35,
+  "routeQueries": 12,
+  "actualBeaverTargets": 8,
+  "allFourProduced": true,
+  "nativeVerifiedSave": true,
+  "failures": 0,
+  "productionStaffingNote": "Raised limestone workplace priority through normal UI after native workforce reassignment",
+  "screenshots": [
+    "crusher-native-materials.png",
+    "kiln-native-materials.png",
+    "quarry-native-materials.png"
+  ]
+}

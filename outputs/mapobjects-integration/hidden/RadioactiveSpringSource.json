@@ -1,0 +1,66 @@
+{
+ "culledFacesChecked": 0,
+ "culledFacesExposed": 0,
+ "exposedExamples": [],
+ "model": "RadioactiveSpringSource",
+ "study": "RadioactiveSpringSource",
+ "source": "C:/Users/Jordan/Documents/TimberbornModding/src/DeepFrontier/Art/Source/RadioactiveSpringSource-ReferenceStudy.blend",
+ "method": "orbit ray visibility, elevations [12, 30, 48, 66, 84] deg x 16 azimuths, back faces culled, animated/water/native props never occlude, terrain plane 0.0",
+ "shippedTriangles": 289,
+ "hiddenTriangles": 30,
+ "hiddenShare": 0.1038,
+ "nativePreviewTriangles": 0,
+ "seconds": 0.0,
+ "objects": [
+  {
+   "name": "RadioactiveGlow",
+   "animated": false,
+   "triangles": 117,
+   "hidden": 24,
+   "hiddenByMaterial": {
+    "WaterSource": 24
+   }
+  },
+  {
+   "name": "RadioactiveSpringRock",
+   "animated": false,
+   "triangles": 172,
+   "hidden": 6,
+   "hiddenByMaterial": {
+    "UndergroundRuinsCliff": 6
+   }
+  }
+ ],
+ "sources": [
+  {
+   "source": "map_objects_geometry.py:584:radioactive_spring > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 28,
+   "hidden": 12
+  },
+  {
+   "source": "map_objects_geometry.py:585:radioactive_spring > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 25,
+   "hidden": 9
+  },
+  {
+   "source": "map_objects_geometry.py:581:radioactive_spring > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 28,
+   "hidden": 6
+  },
+  {
+   "source": "map_objects_geometry.py:587:radioactive_spring > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 36,
+   "hidden": 3
+  },
+  {
+   "source": "map_objects_geometry.py:579:radioactive_spring > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 144,
+   "hidden": 0
+  },
+  {
+   "source": "map_objects_geometry.py:582:radioactive_spring > build_map_objects.py:171:main > build_map_objects.py:236:<module>",
+   "triangles": 28,
+   "hidden": 0
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Squat frost-white double-walled oxygen tank under a ribbed steel dome, wound by a riveted spiral stair to a roof-edge gallery, with a tall boil-off vent on its crown.",
+  "footprint": [
+    11,
+    10
+  ],
+  "heightLayers": 11,
+  "boundsMin": [
+    -0.1805,
+    -0.105,
+    -0.03
+  ],
+  "boundsMax": [
+    11.0,
+    10.0,
+    10.71
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.5,
+        0.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "CryogenicTankFarm.ReliefCap",
+    "CryogenicTankFarm.Beacon",
+    "CryogenicTankFarm.PistonRod",
+    "CryogenicTankFarm.Flywheel"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 7396,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 460,
+    "IrregularPlanks_DarkBrown.IronTeeth": 10,
+    "BaseMetal.IronTeeth": 4305,
+    "RoofPlanks.IronTeeth": 132,
+    "Details.IronTeeth": 666,
+    "accent8": 20,
+    "accent25": 28,
+    "Plaster_White.IronTeeth": 1376,
+    "Plaster_Orange.IronTeeth": 13,
+    "IrregularPlanks_MetalForged.IronTeeth": 24,
+    "WindowsAtlas.IronTeeth": 24,
+    "PaintedMetal.IronTeeth": 498
+  },
+  "sourceHash": "e83e642ec4f445f8a4ec1d6fc8fecbe408438a8dcf427283548448d2a73da0a3",
+  "artHash": "79f214fb1a753c1f3cdf1bcc7d5d55557aa2a8222ef79984ef903e17a2acc043"
+}

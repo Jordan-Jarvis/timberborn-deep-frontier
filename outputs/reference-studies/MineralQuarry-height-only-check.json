@@ -1,0 +1,18 @@
+{
+  "scope": "Quarry source geometry comparison only; not native navigation",
+  "comparedObjects": 284,
+  "horizontalVertexChanges": 0,
+  "topologyMaterialsAndSampledTransformsUnchanged": true,
+  "sampleFrames": [
+    1,
+    220,
+    481
+  ],
+  "heightChanges": {
+    "MineralQuarry.Architecture": {
+      "changedVertices": 2067,
+      "minZChange": -0.15500000305473804,
+      "maxZChange": -0.07999998331069946
+    }
+  }
+}

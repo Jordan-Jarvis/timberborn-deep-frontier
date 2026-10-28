@@ -1,0 +1,27 @@
+{
+  "status": "Blender art study; not exported or installed",
+  "boundsMin": [
+    -9.800000190734863,
+    -7.870500087738037,
+    0.0
+  ],
+  "boundsMax": [
+    -0.7699999809265137,
+    -0.8500000238418579,
+    8.739999771118164
+  ],
+  "sourceReference": "docs/art/concepts/Resturaunt.png",
+  "selectedReferenceViews": [
+    "Front Left",
+    "Front Right",
+    "Back Left",
+    "Back Right"
+  ],
+  "referenceProjection": "Current authoring policy: isometric concept only; top-down reference excluded",
+  "animatedParts": [
+    "Restaurant.CarvedSign"
+  ],
+  "animationFrames": 61,
+  "animationFps": 30,
+  "tileDimensions": null
+}

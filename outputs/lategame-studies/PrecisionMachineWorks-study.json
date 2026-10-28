@@ -1,0 +1,63 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Long north-light sawtooth machine hall under an overhead travelling crane, with a 13-layer square brick chimney bound in iron and a compressed-air receiver on a steel frame.",
+  "footprint": [
+    11,
+    9
+  ],
+  "heightLayers": 14,
+  "boundsMin": [
+    -0.1518,
+    -0.125,
+    -0.03
+  ],
+  "boundsMax": [
+    11.04,
+    9.045,
+    12.87
+  ],
+  "doors": [
+    {
+      "id": "Entrance",
+      "position": [
+        8.5,
+        0.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "PrecisionMachineWorks.LineShaft",
+    "PrecisionMachineWorks.Chuck1",
+    "PrecisionMachineWorks.Chuck2",
+    "PrecisionMachineWorks.Chuck3",
+    "PrecisionMachineWorks.CraneBridge",
+    "PrecisionMachineWorks.HammerRam",
+    "PrecisionMachineWorks.YardLatheRoll"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 6362,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 1508,
+    "BaseMetal.IronTeeth": 2422,
+    "RoofPlanks.IronTeeth": 444,
+    "Details.IronTeeth": 400,
+    "accent8": 56,
+    "accent25": 12,
+    "Plaster_White.IronTeeth": 442,
+    "Plaster_Orange.IronTeeth": 176,
+    "IrregularPlanks_MetalForged.IronTeeth": 138,
+    "WindowsAtlas.IronTeeth": 874,
+    "PaintedMetal.IronTeeth": 664,
+    "IrregularPlanks_Grey.IronTeeth": 12
+  },
+  "sourceHash": "39e0c9fe4bc4fc97435ff0c76f3f07a4bf101e7584747888a9a8ab4ec0c6dbac",
+  "artHash": "bec3e30a01e4243e838177f60ca0bbc151d9506fcb528e1362fab6e0668a2a12"
+}

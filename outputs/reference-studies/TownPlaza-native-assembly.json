@@ -1,0 +1,30 @@
+{
+  "scope": "Late-game study; runtime references the original shipped or dependency resources",
+  "props": [
+    {
+      "name": "PlazaFountain",
+      "model": "FountainOfJoy.Folktails",
+      "resource": "Buildings/Monuments/FountainOfJoy/FountainOfJoy.Folktails.Model",
+      "position": [
+        3.0,
+        2.0,
+        0.22
+      ],
+      "scale": 0.6,
+      "yaw": 0
+    },
+    {
+      "name": "PlazaStatue",
+      "model": "BeaverStatue.IronTeeth",
+      "resource": "Buildings/Decoration/BeaverStatue/BeaverStatue.IronTeeth.Model",
+      "position": [
+        0.30000000000000004,
+        0.30000000000000004,
+        0.34
+      ],
+      "scale": 1.4,
+      "yaw": 0
+    }
+  ],
+  "liquids": []
+}

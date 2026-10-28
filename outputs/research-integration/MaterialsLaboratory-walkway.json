@@ -1,0 +1,356 @@
+{
+  "Openings": [
+    {
+      "Id": "Front0",
+      "Inside": {
+        "X": 0,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 0,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.MaterialsLaboratory.001"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Front0"
+      ]
+    },
+    {
+      "Id": "Front1",
+      "Inside": {
+        "X": 1,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 1,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.MaterialsLaboratory.002"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Front1"
+      ]
+    },
+    {
+      "Id": "Front2",
+      "Inside": {
+        "X": 2,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 2,
+        "Y": -1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.MaterialsLaboratory.003"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Front2"
+      ]
+    },
+    {
+      "Id": "Left0",
+      "Inside": {
+        "X": 0,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.MaterialsLaboratory.000",
+        "WalkwayGroup.MaterialsLaboratory.001"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Left0"
+      ]
+    },
+    {
+      "Id": "Left1",
+      "Inside": {
+        "X": 0,
+        "Y": 1,
+        "Z": 2
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 1,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 1.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.MaterialsLaboratory.005"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Left1"
+      ]
+    },
+    {
+      "Id": "Left2",
+      "Inside": {
+        "X": 0,
+        "Y": 2,
+        "Z": 2
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 2,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.MaterialsLaboratory.006"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Left2"
+      ]
+    },
+    {
+      "Id": "Right0",
+      "Inside": {
+        "X": 2,
+        "Y": 0,
+        "Z": 2
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 0,
+        "Z": 2
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 0.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.MaterialsLaboratory.003",
+        "WalkwayGroup.MaterialsLaboratory.004"
+      ],
+      "ShownNodes": [
+        "WalkwayJoin.Right0"
+      ]
+    }
+  ],
+  "Waypoints": [
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 0,
+        "Z": 0
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 0,
+        "Z": 0.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 1,
+        "Z": 0
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 0,
+        "Z": 1.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 2,
+        "Z": 0
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 0,
+        "Z": 2.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 3,
+        "Z": 0
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 0,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 3,
+        "Z": 1
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 1,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 3,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 3.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 0,
+        "Y": 0,
+        "Z": 2
+      },
+      "Position": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 0.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 0,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 0.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 0,
+        "Z": 2
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 0.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 0,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 1.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 1.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 1,
+        "Z": 2
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 1.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 0,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 0.5,
+        "Y": 2,
+        "Z": 2.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 1,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 1.5,
+        "Y": 2,
+        "Z": 2.5
+      }
+    },
+    {
+      "Cell": {
+        "X": 2,
+        "Y": 2,
+        "Z": 2
+      },
+      "Position": {
+        "X": 2.5,
+        "Y": 2,
+        "Z": 2.5
+      }
+    }
+  ]
+}
