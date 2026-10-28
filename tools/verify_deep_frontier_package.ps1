@@ -30,6 +30,15 @@ if (Test-Path -LiteralPath (Join-Path $installed 'Scripts\DeepFrontier.ModdableW
 $sluiceDll = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Timberborn\ModsBuild\TimberbornModExamples_Data\Managed\DeepFrontier.SluiceIsBack.dll'
 Compare-Artifact $sluiceDll (Join-Path $installed 'Scripts\DeepFrontier.SluiceIsBack.dll.SluiceIsBack.optional') 'Scripts\DeepFrontier.SluiceIsBack.dll.SluiceIsBack.optional'
 if (Test-Path -LiteralPath (Join-Path $installed 'Scripts\DeepFrontier.SluiceIsBack.dll')) { throw 'The Sluice is Back! bridge must not be installed as a plain DLL.' }
+# Nothing else is installed: authored data (with the builder's .meta.json beside imported
+# assets), the manifest, Scripts and AssetBundles. Extra files are leftovers of older builds.
+$authored = [Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+foreach ($file in Get-ChildItem -LiteralPath $data -File -Recurse) { $null = $authored.Add([IO.Path]::GetRelativePath($data,$file.FullName)) }
+$stale = @(Get-ChildItem -LiteralPath $installed -File -Recurse | ForEach-Object { [IO.Path]::GetRelativePath($installed,$_.FullName) } | Where-Object {
+  $_ -ne 'manifest.json' -and -not $_.StartsWith('Scripts\') -and -not $_.StartsWith('AssetBundles\') -and
+  -not $authored.Contains($_) -and -not ($_.EndsWith('.meta.json') -and $authored.Contains($_.Substring(0, $_.Length - 10)))
+})
+if ($stale.Count) { throw "Installed files not in the authored package (left from older builds): $($stale -join ', ')" }
 foreach($dependency in @('TimberUi.dll','0Harmony.dll','ModdableRecipes.dll','ConveyorBelt.dll','ConveyorBelt.Algorithm.dll','ModdableTimberborn.dll','ModSettings.Core.dll','ModSettings.Common.dll','TimberPipes.dll','PowerLines.dll','ModdableWeathers.dll','SluiceIsBack.dll')) {
   if (Test-Path -LiteralPath (Join-Path $installed "Scripts\$dependency")) { throw 'Dependency DLLs must remain in their own mod packages.' }
 }
