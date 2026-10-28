@@ -14,6 +14,9 @@ namespace DeepFrontier.Scripts {
   // missing component means the plant was saved as a workshop: it starts with
   // empty supplies, as a newly built plant does, and haulers refill it. Every
   // other building, and every plant saved by 193+, loads natively.
+  // The Technical School (free-time study, no staff) is a goods-consuming
+  // attraction since the same change of model; a school saved as a staffed
+  // workshop loads the same way.
   [HarmonyPatch(typeof(GoodConsumingBuilding),nameof(GoodConsumingBuilding.Load))]
   internal static class PowerPlantSaveMigration {
     private static readonly ComponentKey Key=new("GoodConsumingBuilding");
@@ -24,7 +27,7 @@ namespace DeepFrontier.Scripts {
     private static bool Prefix(GoodConsumingBuilding __instance,IEntityLoader entityLoader) {
       if(entityLoader.TryGetComponent(Key,out _))return true;
       var template=__instance.GetComponent<TemplateSpec>()?.TemplateName;
-      if(template=="CoalPowerPlant.IronTeeth"||template=="OilPowerPlant.IronTeeth")return false;
+      if(template=="CoalPowerPlant.IronTeeth"||template=="OilPowerPlant.IronTeeth"||template=="TechnicalSchool.IronTeeth")return false;
       throw new InvalidOperationException("Saved "+template+" has no GoodConsumingBuilding component");
     }
   }

@@ -11,6 +11,7 @@ namespace DeepFrontier.Scripts {
       Bind<WorkforceSettings>().AsSingleton();
       Bind<SpecialistRoster>().AsSingleton();
       Bind<SpecialistStaffing>().AsSingleton();
+      Bind<SpecialistStudyNeeds>().AsSingleton();
       Bind<IndustrialRisk>().AsTransient();
       Bind<BotWear>().AsTransient();
       Bind<SpecialistTrait>().AsTransient();

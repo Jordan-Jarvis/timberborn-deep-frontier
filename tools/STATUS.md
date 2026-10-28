@@ -4,6 +4,17 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Technical School: free-time study for every beaver, several professions each (generated, compiled and statically checked; not built or run in game) (Claude Code session, 2026-10-28)
+
+- **User:** beavers should enrol and learn by themselves, every beaver should try to become educated, and a beaver can learn every profession (e.g. with three schools). Chosen with the user: free-time study, goods per study hour, one profession per school picked by the player.
+- **No staff:** staff would work the shift during which the students are at work, so a staffed class would rarely meet its students. The school is a native goods-consuming attraction (vanilla Detailer pattern): `GoodConsumingBuildingSpec` (supplies Gear 0.1/h and CornRation 0.2/h, the same for every profession, since the native spec has one supply list) + `GoodConsumingAttractionSpec` + `AttractionSpec`. The producer drops the cloned Inventor workshop specs (`SCHOOL_WORKSHOP_SPECS`); training recipes are gone.
+- **Study needs:** `StudyMetallurgy`, `StudyNuclear`, `StudyFlight` (from vanilla Need.Beaver.Books, SocialLife group, 0.5 points/h, -1/day, +1 wellbeing), appended to the Iron Teeth need collection. The school's AttractionSpec lists all three; `SpecialistSchool` keeps only the taught one in native `Attraction.Effects` (reflection; it re-registers with the district's `DistrictNeedBehaviorService`), so the native AI sends only beavers whose study need for that profession is low. `SpecialistStudyNeeds` keeps every held profession's need full, so a beaver never visits a school teaching what it knows.
+- **Learning:** each hour inside a usable school (supplies, power, not paused) adds a study hour; 16 h Metallurgy, 24 h Flight, 32 h Nuclear make a graduate. `SpecialistTrait` holds a list of disciplines and per-discipline study hours (legacy single `Discipline` saves load into the list; old course hours are dropped). Specialist workplaces accept any beaver holding their discipline.
+- **Panel:** "Teach <profession>" buttons, students inside, adults in the district still to learn it, colony specialists; the beaver panel lists held professions and study progress. Status "Choose a profession" until one is picked.
+- **Saves:** a school saved as a staffed workshop loads with empty supplies (`PowerPlantSaveMigration` covers `TechnicalSchool.IronTeeth`); its workers' references to the removed workplace are dropped natively (as for the coal and oil plants in build 193).
+- **Build:** `build_deep_frontier.ps1` now passes `-disable-assembly-updater` without names. On a fresh project, Unity's single-threaded API updater spent over 30 minutes on the 518 game assemblies; with it disabled, a fresh clone built and installed in 16 minutes and verified (650 hashes match).
+- **Verified:** content generation, validate_all 50 pass + 1 report-only, all 4 compile checks, editor guards, 4 maps. **Not verified:** the in-game AI (whether beavers visit, how fast they graduate, beavers shown inside), supply use and the save migration on a real save.
+
 ## Fresh-clone setup verified; Workshop required items; user screenshots (Claude Code session, 2026-10-28)
 
 - **Fresh clone** (`git clone` of the commit into `%USERPROFILE%\dfs\freshclone`, then `python tools/setup_dev.py`): setup, content generation (Data identical to the commit), all 51 checks (50 pass + 1 report-only) and the Blender scenes (116 scenes, 3,188 images, none missing or outside the clone) pass. Fixed on the way:

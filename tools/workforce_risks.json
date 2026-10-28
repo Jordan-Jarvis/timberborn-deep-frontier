@@ -30,14 +30,19 @@
   },
   "school": {
     "template": "Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.blueprint",
-    "$comment": "Each programme is a native recipe without products (vanilla Recipe.Bot.IronTeeth pattern), written by tools/workforce_risk_content.mjs. hours are worker-hours (each working trainee or instructor adds progress). The icon reuses the legacy licence-certificate sprite of the retired token goods.",
+    "$comment": [
+      "Every adult beaver studies in its free time; nobody staffs the school (staff would work the same shift during which students are at work). Each school teaches one profession, chosen in its panel; three schools teach all three at once.",
+      "The school is a native goods-consuming attraction (vanilla Detailer pattern: GoodConsumingBuildingSpec + GoodConsumingAttractionSpec + AttractionSpec): it uses up its supplies (goods per hour) while anyone studies inside and turns students away when they run out or it has no power. Its AttractionSpec lists every study need; the runtime keeps only the taught profession's.",
+      "Study needs (NeedSpec Study<Discipline> from vanilla Need.Beaver.Books, one per profession). A beaver who holds the profession keeps it full, so it never visits a school teaching what it knows, and its favorableWellbeing counts for every profession it holds. pointsPerHour fills the need while studying; SatisfyToMaxValue keeps a visit going until it is full.",
+      "studyHours: hours inside a school teaching the profession that make a graduate."
+    ],
+    "study": { "needGroupId": "SocialLife", "firstOrder": 37, "pointsPerHour": 0.5, "dailyDelta": -1, "favorableWellbeing": 1 },
+    "supplies": [["Gear", 0.1], ["CornRation", 0.2]],
+    "fullInventoryWorkHours": 40,
     "programs": [
-      { "recipe": "SpecialistTraining.Metallurgy", "discipline": "Metallurgy", "displayName": "Metallurgist course", "hours": 48, "cyclesCapacity": 2,
-        "ingredients": [["MetalBlock", 4], ["DeepAlloy", 2], ["CornRation", 2]], "icon": "Sprites/Goods/IndustrialLicenseIcon" },
-      { "recipe": "SpecialistTraining.Nuclear", "discipline": "Nuclear", "displayName": "Reactor operator course", "hours": 96, "cyclesCapacity": 2,
-        "ingredients": [["Electronics", 2], ["Yellowcake", 1], ["Medicine", 2]], "icon": "Sprites/Goods/SpecialistLicenseIcon" },
-      { "recipe": "SpecialistTraining.Flight", "discipline": "Flight", "displayName": "Flight engineer course", "hours": 72, "cyclesCapacity": 2,
-        "ingredients": [["Electronics", 2], ["RecoveredTelemetry", 1], ["PackagedFood", 2]], "icon": "Sprites/Goods/FlightLicenseIcon" }
+      { "discipline": "Metallurgy", "studyNeedName": "Metallurgy studies", "studyHours": 16 },
+      { "discipline": "Nuclear", "studyNeedName": "Reactor studies", "studyHours": 32 },
+      { "discipline": "Flight", "studyNeedName": "Flight studies", "studyHours": 24 }
     ]
   },
   "botMaintenance": {
@@ -75,7 +80,6 @@
     "Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.blueprint": { "danger": "Hazardous", "workers": "open", "botWear": 3, "reason": "Machine tools." },
     "Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.blueprint": { "danger": "Hazardous", "workers": "open", "botWear": 3, "reason": "Treatment chemicals." },
     "Buildings/Science/MissionControl/MissionControl.IronTeeth.blueprint": { "danger": null, "workers": "beavers", "reason": "Mission controllers are beavers." },
-    "Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.blueprint": { "danger": null, "workers": "beavers", "reason": "Trainees and instructors are beavers." },
     "Buildings/Wellbeing/Hospital/Hospital.IronTeeth.blueprint": { "danger": null, "workers": "beavers", "reason": "Care staff (already beaver-only)." },
     "Buildings/Food/Restaurant/Restaurant.IronTeeth.blueprint": { "danger": null, "workers": "beavers", "reason": "Table service (already beaver-only)." },
     "Buildings/Food/GroceryStore/GroceryStore.IronTeeth.blueprint": { "danger": null, "workers": "beavers", "reason": "Shop service (already beaver-only)." },

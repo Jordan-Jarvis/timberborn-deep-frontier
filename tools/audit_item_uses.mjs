@@ -30,7 +30,6 @@ const add=(id,key,evidence)=>{if(goods.has(id))goods.get(id).uses.set(key,eviden
 const buildingCollection=await read(resolve(data,'TemplateCollections/TemplateCollection.Buildings.IronTeeth.blueprint.json'));
 const activeRecipes=new Set();
 const launchRecipes=new Set();
-const trainingRecipes=new Set();
 const botRecipes=new Set();
 const generatorRecipes=new Set();
 const recipes=new Map();
@@ -50,8 +49,6 @@ for(const blueprint of buildingCollection.TemplateCollectionSpec['Blueprints#app
   if(Object.hasOwn(bp,'RestaurantSpec'))for(const id of [...bp.RestaurantSpec.Foods,...bp.RestaurantSpec.OptionalGoods])add(id,'Seated meal: '+target,relative(root,path));
   // A launch mission recipe consumes a whole rocket and fuel load without products.
   if(Object.hasOwn(bp,'RocketLaunchPadSpec'))for(const m of bp.RocketLaunchPadSpec.Missions)launchRecipes.add(m.RecipeId);
-  // A specialist course consumes its supplies without products and graduates a beaver.
-  if(Object.hasOwn(bp,'FrontierSpecialistSchoolSpec'))for(const p of bp.FrontierSpecialistSchoolSpec.Programs)trainingRecipes.add(p.RecipeId);
   // Bot maintenance oils (tools/bot_upkeep_content.mjs): one destination for every workplace.
   // A workshop generator's fuel recipe (the reactor) burns its fuel for hp, not for products. The coal and oil
   // plants are GoodConsumingBuilding generators and count above as Operation.
@@ -83,8 +80,6 @@ for(const id of activeRecipes){
     if(r.ProducedSciencePoints>0)add(ingredient.Id,'Research: Science',path);
     // All missions are one destination: the launch consumer.
     if(launchRecipes.has(id))add(ingredient.Id,'Launch: rocket missions',path);
-    // All courses are one destination: the specialist workforce.
-    if(trainingRecipes.has(id))add(ingredient.Id,'Training: specialists',path);
     // All bot assembly recipes are one destination: the bot workforce.
     if(botRecipes.has(id))add(ingredient.Id,'Bot assembly: bots',path);
   }

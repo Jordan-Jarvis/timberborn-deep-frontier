@@ -7,7 +7,7 @@ import {applyHospital,authorHospitalNeed,HOSPITAL_DESCRIPTION,HOSPITAL_LOCALIZAT
 import {applyGroceryStore,authorGroceryNeed} from './grocery_building_content.mjs';
 import {LATEGAME,applyLategame,studyPipePort} from './lategame_building_content.mjs';
 import {lategameCost} from './lategame_costs.mjs';
-import {loadWorkforceConfig,trainingRecipeIds} from './workforce_risk_content.mjs';
+import {SCHOOL_WORKSHOP_SPECS} from './workforce_risk_content.mjs';
 
 // Data-only expansion layer. Every template is cloned from a captured 1.1
 // Iron Teeth/Folktails blueprint so the importer gets the complete nested
@@ -41,9 +41,6 @@ function coolantPorts(id) {
 }
 const progression = await readJson(resolve(root, 'tools/frontier_progression.json'));
 const constructionCosts = await readJson(resolve(root, 'tools/building_construction_costs.json'));
-// Technical School courses are product-less training recipes owned by
-// tools/workforce_risks.json and written by workforce_risk_content.mjs.
-const trainingRecipes = trainingRecipeIds(await loadWorkforceConfig(root));
 
 const goodDefinitions = [
   ['Compost', 'solid', 'Ingredients', 5195, 0.28, 0.45, 'compost'],
@@ -301,7 +298,7 @@ const buildingDefinitions = [
   ['ChemicalWorks', 'Buildings/Metal/ChemicalWorks', 'Smelter', 'Chemical,BrineChemical,Polymer,Lubricant,Cryocoolant', 'Metal', 41, 3500, 8, 4000, 'Chemical works'],
   ['PrecisionMachineWorks', 'Buildings/Metal/PrecisionMachineWorks', 'BotPartFactory', 'MachineCore,Electronics,PowerModule,ReinforcedBotChassis,ServoBotLimbs,BotCortex', 'Metal', 42, 2200, 6, 5000, 'Precision machine works'],
   ['WaterTreatmentPlant', 'Buildings/Water/WaterTreatmentPlant', 'Centrifuge', 'PureWater,ReactorCoolantWater,FilterMedia,CarbonFilterMedia', 'Water', 43, 500, 4, 1800, 'Water treatment plant'],
-  ['TechnicalSchool', 'Buildings/Science/TechnicalSchool', 'Inventor', trainingRecipes.join(','), 'Science', 44, 300, 4, 2200, 'Technical school'],
+  ['TechnicalSchool', 'Buildings/Science/TechnicalSchool', 'Inventor', '', 'Science', 44, 300, 4, 2200, 'Technical school'],
   ['UraniumProcessingPlant', 'Buildings/Metal/UraniumProcessingPlant', 'Centrifuge', 'Yellowcake,EnrichedFuel,FuelReprocessing', 'Metal', 45, 5000, 6, progression.implementedBuildingScienceOverrides.UraniumProcessingPlant, 'Uranium processing plant'],
   ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,Vitrification,SludgeMineralRecovery', 'Metal', 46, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive waste refinery'],
   ['ElectrolysisPlant', 'Buildings/Metal/ElectrolysisPlant', 'Centrifuge', 'Electrolysis', 'Metal', 47, 6000, 5, 10000, 'Electrolysis plant'],
@@ -441,6 +438,10 @@ async function makeBuilding(definition) {
     value.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: power, IsShaft: false };
     value.MechanicalBuildingSpec = {};
   }
+  // Nobody staffs the Technical School: it takes the Inventor's building, not
+  // its workshop. workforce_risk_content.mjs makes it a goods-consuming
+  // attraction for free-time study (tools/workforce_risks.json school).
+  if (id === 'TechnicalSchool') for (const key of SCHOOL_WORKSHOP_SPECS) delete value[key];
   setModels(value, id, outputPath);
   if (id === 'CryogenicTankFarm') configureTankFarm(value);
   if(id==='Restaurant')await applyRestaurant(value);

@@ -33,13 +33,6 @@
     "ConstructionModeModel": "Finished",
     "UndergroundModelDepth": 0
   },
-  "WorkplaceSpec": {
-    "MaxWorkers": 4,
-    "DefaultWorkers": 4,
-    "DefaultWorkerType": "Beaver",
-    "DisallowOtherWorkerTypes": true,
-    "WorkerTypeUnlockCosts": []
-  },
   "EnterableSpec": {
     "OperatingState": "Finished",
     "LimitedCapacityFinished": false,
@@ -47,21 +40,12 @@
     "LimitedCapacityUnfinished": false,
     "CapacityUnfinished": 0
   },
-  "ManufactorySpec": {
-    "ProductionRecipeIds": [
-      "SpecialistTraining.Metallurgy",
-      "SpecialistTraining.Nuclear",
-      "SpecialistTraining.Flight"
-    ]
-  },
-  "WorkshopSpec": {},
   "TemplateSpec": {
     "TemplateName": "TechnicalSchool.IronTeeth",
     "BackwardCompatibleTemplateNames": [],
     "RequiredFeatureToggle": "",
     "DisablingFeatureToggle": ""
   },
-  "WorkshopAnimationControllerSpec": {},
   "BlockObjectSpec": {
     "Size": {
       "X": 11,
@@ -5496,14 +5480,12 @@
     "CanBeAttachedToTerrainSide": false,
     "DevModeTool": false
   },
-  "WorkplaceIlluminatorSpec": {},
   "LabeledEntitySpec": {
     "DisplayNameLocKey": "Building.TechnicalSchool.DisplayName",
     "DescriptionLocKey": "Building.TechnicalSchool.Description",
     "FlavorDescriptionLocKey": "Building.TechnicalSchool.FlavorDescription",
     "Icon": "Buildings/Science/TechnicalSchool/Icon"
   },
-  "SimpleManufactoryBehaviorsSpec": {},
   "ConstructionSiteProgressVisualizerSpec": {
     "ProgressThresholds": []
   },
@@ -6919,19 +6901,7 @@
     "IsShaft": false
   },
   "MechanicalBuildingSpec": {},
-  "WorkplaceSlotManagerSpec": {},
-  "WorkshopWorkerHiderSpec": {},
-  "TransformSlotInitializerSpec": {
-    "Slots": [
-      {
-        "SlotKeyword": "Entrance",
-        "Animation": "ForcedIdle",
-        "Inanimate": false,
-        "RandomizeYRotation": false,
-        "WaterSlot": false
-      }
-    ]
-  },
+  "AmbientAnimationSpec": {},
   "TemplateAttachmentsSpec": {
     "Attachments": [
       {
@@ -6999,26 +6969,59 @@
       }
     ]
   },
-  "WorkshopParticleControllerSpec": {
+  "EnterableParticleControllerSpec": {
     "AttachmentIds": [
       "Steam1",
       "Steam2",
       "Steam3"
     ]
   },
+  "AttractionSpec": {
+    "Effects": [
+      {
+        "NeedId": "StudyMetallurgy",
+        "PointsPerHour": 0.5,
+        "SatisfyToMaxValue": true
+      },
+      {
+        "NeedId": "StudyNuclear",
+        "PointsPerHour": 0.5,
+        "SatisfyToMaxValue": true
+      },
+      {
+        "NeedId": "StudyFlight",
+        "PointsPerHour": 0.5,
+        "SatisfyToMaxValue": true
+      }
+    ]
+  },
+  "GoodConsumingBuildingSpec": {
+    "FullInventoryWorkHours": 40,
+    "ConsumedGoods": [
+      {
+        "GoodId": "Gear",
+        "GoodPerHour": 0.1
+      },
+      {
+        "GoodId": "CornRation",
+        "GoodPerHour": 0.2
+      }
+    ]
+  },
+  "GoodConsumingAttractionSpec": {},
   "FrontierSpecialistSchoolSpec": {
     "Programs": [
       {
-        "RecipeId": "SpecialistTraining.Metallurgy",
-        "Discipline": "Metallurgy"
+        "Discipline": "Metallurgy",
+        "StudyHours": 16
       },
       {
-        "RecipeId": "SpecialistTraining.Nuclear",
-        "Discipline": "Nuclear"
+        "Discipline": "Nuclear",
+        "StudyHours": 32
       },
       {
-        "RecipeId": "SpecialistTraining.Flight",
-        "Discipline": "Flight"
+        "Discipline": "Flight",
+        "StudyHours": 24
       }
     ]
   },

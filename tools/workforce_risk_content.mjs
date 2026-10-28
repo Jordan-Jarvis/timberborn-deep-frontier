@@ -14,10 +14,12 @@
 //   default, no bot unlock (native Workplace.ValidateWorkplaceSpec rejects a
 //   disallowing workplace that still lists unlock costs).
 // - FrontierSpecialistWorkplaceSpec on specialist crews.
-// - The training programmes: one native product-less recipe each (vanilla
-//   Recipe.Bot.IronTeeth pattern) and FrontierSpecialistSchoolSpec on the
-//   school. The school's ProductionRecipeIds come from trainingRecipeIds(),
-//   which create_frontier_expansion_content.mjs uses; checked here.
+// - The Technical School: a staff-free native goods-consuming attraction
+//   (schoolAttractionSpecs: vanilla Detailer pattern plus
+//   FrontierSpecialistSchoolSpec), and one study need per profession (from
+//   vanilla Need.Beaver.Books) appended to the Iron Teeth need collection.
+//   Its producer (create_frontier_expansion_content.mjs) removes the cloned
+//   workshop specs (SCHOOL_WORKSHOP_SPECS); checked here.
 // - Configurations/DeepFrontierWorkforce.blueprint.json (settings and
 //   disciplines) and the Workforce localization rows.
 // It fails, without writing anything, when a listed template is missing, a
@@ -33,6 +35,7 @@ export const SETTINGS_BLUEPRINT = 'Configurations/DeepFrontierWorkforce.blueprin
 export const COLLECTION = 'TemplateCollections/TemplateCollection.Buildings.IronTeeth.blueprint.json';
 export const WORKFORCE_SPECS = ['FrontierWorkforceRiskSpec', 'FrontierSpecialistWorkplaceSpec', 'FrontierSpecialistSchoolSpec'];
 export const NATIVE_INJURY_SPEC = 'WorkshopRandomNeedApplierSpec';
+export const NEED_COLLECTION = 'NeedCollections/NeedCollection.IronTeeth.blueprint.json';
 const PROBABILITIES = ['Low', 'Medium', 'High'];
 const WORKERS = ['open', 'beavers', 'specialists'];
 const VANILLA = ['vendor', 'timberborn-modding', 'Assets', 'Tools', 'ImportedAssets', 'Editor', 'Resources'];
@@ -67,21 +70,21 @@ export const TEXTS = {
   'DeepFrontier.Workforce.Specialists.Title': 'Specialist crew',
   'DeepFrontier.Workforce.Specialists.Required': 'Only trained {0} can work here.',
   'DeepFrontier.Workforce.Specialists.Staffing': 'Posts filled: {0}. Unassigned {2} in this district: {1}.',
-  'DeepFrontier.Workforce.Specialists.Train': 'Train {0} at the Technical School. A specialist\'s skill dies with them.',
+  'DeepFrontier.Workforce.Specialists.Train': 'Beavers become {0} in their free time at a Technical School teaching it. A specialist\'s skills die with them.',
   'DeepFrontier.Workforce.Status.NoSpecialists': 'No {0}: this building cannot run. Train them at the Technical School.',
   'DeepFrontier.Workforce.Status.NoSpecialists.Short': 'No {0}',
   'DeepFrontier.Workforce.Status.FewSpecialists': 'Not enough {0}. Train more at the Technical School.',
   'DeepFrontier.Workforce.School.Title': 'Specialist training',
-  'DeepFrontier.Workforce.School.Program': 'Course: {0}. Each finished course graduates the trainee with the most training hours.',
-  'DeepFrontier.Workforce.School.NoProgram': 'Choose a training course.',
-  'DeepFrontier.Workforce.School.NextGraduate': 'Next graduate: {0} ({1} h of training).',
-  'DeepFrontier.Workforce.School.NoTrainee': 'No trainee enrolled. Specialists working here teach but never retrain.',
-  'DeepFrontier.Workforce.School.Pending': 'Finished courses waiting for a trainee: {0}.',
+  'DeepFrontier.Workforce.School.Program': 'Teaching {0}. Adults who are not yet {0} study here in their free time; {1} hours of study make a graduate. Nobody works here; the school uses up its supplies while students are inside.',
+  'DeepFrontier.Workforce.School.NoProgram': 'Choose the profession this school teaches. Build more schools to teach several professions at once.',
+  'DeepFrontier.Workforce.School.Teach': 'Teach {0}',
+  'DeepFrontier.Workforce.School.Students': 'Studying here now: {0}.',
+  'DeepFrontier.Workforce.School.Remaining': 'Adults in this district still to learn it: {0}.',
   'DeepFrontier.Workforce.School.Roster': 'Colony specialists: {0}.',
-  'DeepFrontier.Workforce.Status.NoTrainee': 'A course finished but no trainee is enrolled. Assign beavers who are not specialists.',
-  'DeepFrontier.Workforce.Status.NoTrainee.Short': 'No trainee',
+  'DeepFrontier.Workforce.Status.NoProgram': 'No profession chosen: choose what this school teaches.',
+  'DeepFrontier.Workforce.Status.NoProgram.Short': 'Choose a profession',
   'DeepFrontier.Workforce.Trait.Specialist': 'Specialist: {0}',
-  'DeepFrontier.Workforce.Trait.Training': 'Technical School training: {0} h',
+  'DeepFrontier.Workforce.Trait.Training': 'Studying: {0}',
   'DeepFrontier.Workforce.Notification.Graduated': '{0} graduated as a {1}.',
   'DeepFrontier.Workforce.Notification.SkillLost': 'Skill lost: {0}, a {1}, has died. {2} left.',
   'DeepFrontier.Workforce.FatalAccident': '{0} was killed in an industrial accident at the {1}.',
@@ -147,27 +150,27 @@ export function checkWorkforceConfig(config) {
   }
 
   const school = config.school ?? {};
-  const schoolEntry = config.templates?.[school.template];
-  if (!schoolEntry) errors.push(`school.template ${school.template} is not a declared template`);
-  else if (schoolEntry.workers !== 'beavers' || schoolEntry.danger !== null) errors.push('school.template must be a beaver-only workplace without danger');
+  if (Object.hasOwn(config.templates ?? {}, school.template)) errors.push('school.template is not a workplace (nobody staffs the school); remove it from templates');
+  const study = school.study ?? {};
+  if (!/^[A-Z][A-Za-z]+$/.test(study.needGroupId ?? '')) errors.push('school.study.needGroupId must be a native need group id');
+  if (!Number.isInteger(study.firstOrder)) errors.push('school.study.firstOrder must be an integer');
+  if (!(study.pointsPerHour > 0)) errors.push('school.study.pointsPerHour must be positive');
+  if (!(study.dailyDelta < 0)) errors.push('school.study.dailyDelta must be negative (the need empties again)');
+  if (!(Number.isInteger(study.favorableWellbeing) && study.favorableWellbeing >= 0)) errors.push('school.study.favorableWellbeing must be a non-negative integer');
+  const supplies = school.supplies ?? [];
+  if (!supplies.length || supplies.some((s) => !Array.isArray(s) || typeof s[0] !== 'string' || !(s[1] > 0))
+      || new Set(supplies.map((s) => s[0])).size !== supplies.length)
+    errors.push('school.supplies must be distinct [good, positive goods per hour] pairs');
+  if (!(Number.isInteger(school.fullInventoryWorkHours) && school.fullInventoryWorkHours > 0)) errors.push('school.fullInventoryWorkHours must be a positive integer');
   const programs = school.programs ?? [];
   if (!programs.length) errors.push('school.programs is empty');
-  const recipes = new Set();
   const taught = new Set();
   for (const p of programs) {
-    if (!/^SpecialistTraining\.[A-Z][A-Za-z]+$/.test(p.recipe ?? '')) errors.push(`school program ${p.recipe}: recipe id must be SpecialistTraining.<Name>`);
-    if (recipes.has(p.recipe)) errors.push(`school program ${p.recipe} is listed twice`);
-    recipes.add(p.recipe);
-    if (!Object.hasOwn(disciplines, p.discipline)) errors.push(`school program ${p.recipe}: unknown discipline ${p.discipline}`);
-    if (!p.displayName) errors.push(`school program ${p.recipe}: displayName is required`);
-    if (!(typeof p.hours === 'number' && p.hours > 0)) errors.push(`school program ${p.recipe}: hours must be positive worker-hours`);
-    if (!(Number.isInteger(p.cyclesCapacity) && p.cyclesCapacity >= 1)) errors.push(`school program ${p.recipe}: cyclesCapacity must be a positive integer`);
-    if (!/^Sprites\/Goods\/\w+Icon$/.test(p.icon ?? '')) errors.push(`school program ${p.recipe}: icon must be a Sprites/Goods/<Name>Icon sprite`);
-    if (!Array.isArray(p.ingredients) || !p.ingredients.length
-        || p.ingredients.some((i) => !Array.isArray(i) || typeof i[0] !== 'string' || !Number.isInteger(i[1]) || i[1] <= 0)
-        || new Set(p.ingredients.map((i) => i[0])).size !== p.ingredients.length)
-      errors.push(`school program ${p.recipe}: ingredients must be distinct [good, positive integer] pairs`);
+    if (!Object.hasOwn(disciplines, p.discipline)) errors.push(`school program ${p.discipline}: unknown discipline`);
+    if (taught.has(p.discipline)) errors.push(`school program ${p.discipline} is listed twice`);
     taught.add(p.discipline);
+    if (!p.studyNeedName) errors.push(`school program ${p.discipline}: studyNeedName is required`);
+    if (!(typeof p.studyHours === 'number' && p.studyHours > 0)) errors.push(`school program ${p.discipline}: studyHours must be positive`);
   }
   for (const id of Object.keys(disciplines)) {
     if (!usedDisciplines.has(id)) errors.push(`discipline ${id} is required by no specialist workplace`);
@@ -210,32 +213,50 @@ export function riskSpec(config, entry) {
   };
 }
 
-export const trainingRecipeIds = (config) => config.school.programs.map((p) => p.recipe);
+// A profession's study need; SpecialistTrait.StudyNeedId in the runtime.
+export const studyNeedId = (program) => `Study${program.discipline}`;
+export const studyNeedKey = (program) => `Need.${studyNeedId(program)}.DisplayName`;
+export const studyNeedPath = (program) => `Needs/Need.Beaver.${studyNeedId(program)}.blueprint.json`;
+// Workshop parts of the cloned vanilla template; create_frontier_expansion_content.mjs removes them.
+export const SCHOOL_WORKSHOP_SPECS = ['WorkplaceSpec', 'WorkshopSpec', 'ManufactorySpec', 'WorkshopAnimationControllerSpec',
+  'SimpleManufactoryBehaviorsSpec', 'WorkplaceIlluminatorSpec', 'WorkplaceSlotManagerSpec', 'WorkshopWorkerHiderSpec',
+  'WorkshopParticleControllerSpec'];
 
-// Product-less training recipe from the vanilla Bot Assembler recipe.
-export function trainingRecipe(template, program) {
+export function schoolSpec(config) {
+  return {Programs: config.school.programs.map((p) => ({Discipline: p.discipline, StudyHours: p.studyHours}))};
+}
+
+// The specs that make the school a goods-consuming attraction (vanilla Detailer pattern).
+export function schoolAttractionSpecs(config) {
   return {
-    ...template,
-    RecipeSpec: {
-      ...template.RecipeSpec,
-      Id: program.recipe,
-      BackwardCompatibleIds: [],
-      DisplayLocKey: `Recipe.${program.recipe}.DisplayName`,
-      CycleDurationInHours: program.hours,
-      Ingredients: program.ingredients.map(([Id, Amount]) => ({Id, Amount})),
-      Products: [],
-      ProducedSciencePoints: 0,
-      Fuel: '',
-      CyclesFuelLasts: 0,
-      FuelCapacity: 0,
-      CyclesCapacity: program.cyclesCapacity,
-      Icon: program.icon,
-    },
+    AttractionSpec: {Effects: config.school.programs.map((p) => ({NeedId: studyNeedId(p), PointsPerHour: config.school.study.pointsPerHour, SatisfyToMaxValue: true}))},
+    GoodConsumingBuildingSpec: {FullInventoryWorkHours: config.school.fullInventoryWorkHours,
+      ConsumedGoods: config.school.supplies.map(([GoodId, GoodPerHour]) => ({GoodId, GoodPerHour}))},
+    GoodConsumingAttractionSpec: {},
+    FrontierSpecialistSchoolSpec: schoolSpec(config),
   };
 }
 
-export function schoolSpec(config) {
-  return {Programs: config.school.programs.map((p) => ({RecipeId: p.recipe, Discipline: p.discipline}))};
+// Study need from the vanilla Books need (a beaver Fun need with wellbeing).
+export function studyNeed(template, config, program, index) {
+  const s = config.school.study;
+  return {
+    NeedSpec: {
+      ...template.NeedSpec,
+      Id: studyNeedId(program),
+      BackwardCompatibleIds: [],
+      Order: s.firstOrder + index,
+      NeedGroupId: s.needGroupId,
+      StartingValue: 0,
+      MinimumValue: 0,
+      MaximumValue: 1,
+      DailyDelta: s.dailyDelta,
+      ImportanceMultiplier: 1,
+      DisplayNameLocKey: studyNeedKey(program),
+      FavorableWellbeing: s.favorableWellbeing,
+      UnfavorableWellbeing: 0,
+    },
+  };
 }
 
 export function localizationRows(config) {
@@ -244,7 +265,7 @@ export function localizationRows(config) {
     rows.push([disciplineKey(id), d.displayName], [disciplinePluralKey(id), d.pluralDisplayName]);
   }
   for (const tier of Object.keys(config.dangerTiers)) rows.push([dangerKey(tier), tier]);
-  for (const p of config.school.programs) rows.push([`Recipe.${p.recipe}.DisplayName`, p.displayName]);
+  for (const p of config.school.programs) rows.push([studyNeedKey(p), p.studyNeedName]);
   rows.push(...Object.entries(TEXTS));
   return rows;
 }
@@ -291,38 +312,48 @@ export async function planWorkforceRisks({root = defaultRoot, dataRoot = resolve
     changed.set(id, {path, blueprint});
   }
 
-  // Every course must graduate into a generated workplace: a discipline whose
-  // only workplace is still pending would leave graduates idle in the school.
+  // Every taught profession must lead to a generated workplace: a discipline
+  // whose only workplace is still pending would leave graduates idle.
   for (const program of config.school.programs) {
-    const accepting = Object.entries(config.templates).filter(([, e]) => e.workers === 'specialists' && e.discipline === program.discipline).map(([id]) => id);
+    const accepting = Object.entries(config.templates).filter(([, e]) => e.workers === 'specialists' && e.discipline === program.discipline);
     if (!accepting.length) {
       const pending = Object.entries(config.pendingTemplates).filter(([, e]) => e.discipline === program.discipline).map(([id]) => id);
-      errors.push(`course ${program.recipe} trains ${program.discipline} but no generated template accepts that discipline`
+      errors.push(`the school teaches ${program.discipline} but no generated template accepts that discipline`
         + (pending.length ? ` (only pending: ${pending.join(', ')}; move it to templates when it is generated)` : ''));
     }
   }
 
-  // School programmes: product-less native recipes written here.
-  const recipeFiles = [];
-  const school = changed.get(config.school.template);
-  if (school) {
-    const listed = school.blueprint.ManufactorySpec?.ProductionRecipeIds;
-    const programs = trainingRecipeIds(config);
-    if (!Array.isArray(listed)) errors.push(`${config.school.template} has no ManufactorySpec.ProductionRecipeIds`);
-    else if (listed.length !== programs.length || !programs.every((r) => listed.includes(r)))
-      errors.push(`${config.school.template} recipes are [${listed.join(', ')}]; its producer must list exactly trainingRecipeIds() [${programs.join(', ')}]`);
-    const template = await readJson(resolve(root, ...VANILLA, 'Recipes', 'Recipe.Bot.IronTeeth.blueprint.json'));
-    if (template.RecipeSpec.Products.length) errors.push('vanilla Recipe.Bot.IronTeeth is no longer product-less');
-    for (const program of config.school.programs) {
-      for (const [good] of program.ingredients) {
-        if (!await exists(resolve(root, ...VANILLA, 'Goods', `Good.${good}.blueprint.json`)) && !await exists(resolve(dataRoot, 'Goods', `Good.${good}.blueprint.json`)))
-          errors.push(`training recipe ${program.recipe}: ingredient ${good} is not a vanilla or generated good`);
-      }
-      if (!await exists(resolve(dataRoot, `${program.icon}.png`))) errors.push(`training recipe ${program.recipe}: icon ${program.icon}.png is not generated`);
-      recipeFiles.push({path: resolve(dataRoot, 'Recipes', `Recipe.${program.recipe}.blueprint.json`), blueprint: trainingRecipe(template, program)});
-    }
-    school.blueprint.FrontierSpecialistSchoolSpec = schoolSpec(config);
+  // The school: a staff-free goods-consuming attraction for the study needs,
+  // which join the Iron Teeth need collection.
+  const files = [];
+  const schoolPath = resolve(dataRoot, `${config.school.template}.json`);
+  if (!collected.has(config.school.template)) errors.push(`${config.school.template} is not in the Buildings.IronTeeth template collection`);
+  else if (!await exists(schoolPath)) errors.push(`${config.school.template} was not generated (${schoolPath})`);
+  else {
+    const school = await readJson(schoolPath);
+    const additions = schoolAttractionSpecs(config);
+    for (const key of [...SCHOOL_WORKSHOP_SPECS, ...Object.keys(additions)])
+      if (school[key]) errors.push(`${config.school.template} already has ${key}; its producer must build it without workshop or school specs`);
+    if (!school.EnterableSpec) errors.push(`${config.school.template} has no EnterableSpec for its students`);
+    if (!school.MechanicalNodeSpec) errors.push(`${config.school.template} must be powered (its attraction needs power)`);
+    for (const [good] of config.school.supplies)
+      if (!await exists(resolve(root, ...VANILLA, 'Goods', `Good.${good}.blueprint.json`)) && !await exists(resolve(dataRoot, 'Goods', `Good.${good}.blueprint.json`)))
+        errors.push(`school supply ${good} is not a vanilla or generated good`);
+    files.push({path: schoolPath, blueprint: {...school, ...additions}});
   }
+  const books = await readJson(resolve(root, ...VANILLA, 'Needs', 'Need.Beaver.Books.blueprint.json'));
+  if (books.NeedSpec?.CharacterType !== 'Beaver') errors.push('vanilla Need.Beaver.Books is no longer a beaver need');
+  const collectionPath = resolve(dataRoot, NEED_COLLECTION);
+  const needs = await readJson(collectionPath);
+  const appended = needs.NeedCollectionSpec?.['Needs#append'];
+  if (!Array.isArray(appended)) errors.push(`${NEED_COLLECTION} has no Needs#append list`);
+  config.school.programs.forEach((program, index) => {
+    if (appended?.includes(studyNeedId(program))) errors.push(`study need ${studyNeedId(program)} is already in ${NEED_COLLECTION}`);
+    files.push({path: resolve(dataRoot, studyNeedPath(program)), blueprint: studyNeed(books, config, program, index)});
+  });
+  if (Array.isArray(appended))
+    files.push({path: collectionPath, blueprint: {...needs, NeedCollectionSpec: {...needs.NeedCollectionSpec,
+      'Needs#append': [...appended, ...config.school.programs.map(studyNeedId)]}}});
 
   // Every native injury on a Deep Frontier building must be declared here.
   for (const id of collection) {
@@ -338,14 +369,14 @@ export async function planWorkforceRisks({root = defaultRoot, dataRoot = resolve
   const ids = new Set(lines.map((line) => line.split(',')[0]));
   const rows = localizationRows(config);
   for (const [id] of rows) if (ids.has(id)) errors.push(`localization ${id} already exists`);
-  return {config, changed, recipeFiles, errors, lines, rows, localizationPath};
+  return {config, changed, files, errors, lines, rows, localizationPath};
 }
 
 export async function applyWorkforceRisks({root = defaultRoot, dataRoot = resolve(root, 'src', 'DeepFrontier', 'Data')} = {}) {
-  const {config, changed, recipeFiles, errors, lines, rows, localizationPath} = await planWorkforceRisks({root, dataRoot});
+  const {config, changed, files, errors, lines, rows, localizationPath} = await planWorkforceRisks({root, dataRoot});
   if (errors.length) throw new Error(`Workforce risks: generation stopped:\n  ${errors.join('\n  ')}`);
 
-  for (const {path, blueprint} of [...changed.values(), ...recipeFiles]) await writeJson(path, blueprint);
+  for (const {path, blueprint} of [...changed.values(), ...files]) await writeJson(path, blueprint);
   await writeJson(resolve(dataRoot, SETTINGS_BLUEPRINT), settingsBlueprint(config));
   lines.pop();
   for (const [id, text] of rows) lines.push(csvRow(id, text));

@@ -52,13 +52,15 @@ namespace DeepFrontier.Scripts {
     [Serialize] public string Discipline { get; init; }
   }
 
-  // School whose product-less recipes each graduate one specialist.
+  // Technical School: a staff-free goods-consuming attraction that teaches
+  // one of these disciplines, chosen in its panel (SpecialistSchool).
   internal record FrontierSpecialistSchoolSpec : ComponentSpec {
     [Serialize] public ImmutableArray<FrontierSpecialistProgramSpec> Programs { get; init; }
   }
 
   internal record FrontierSpecialistProgramSpec {
-    [Serialize] public string RecipeId { get; init; }
     [Serialize] public string Discipline { get; init; }
+    // Hours inside a school teaching the discipline that make a graduate.
+    [Serialize] public float StudyHours { get; init; }
   }
 }

@@ -14,8 +14,9 @@
 import {readFile, readdir, access} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {loadWorkforceConfig, checkWorkforceConfig, planWorkforceRisks, settingsBlueprint, riskSpec, schoolSpec, trainingRecipe,
-  localizationRows, SETTINGS_BLUEPRINT, COLLECTION, WORKFORCE_SPECS, NATIVE_INJURY_SPEC, TEXTS, dangerKey} from './workforce_risk_content.mjs';
+import {loadWorkforceConfig, checkWorkforceConfig, planWorkforceRisks, settingsBlueprint, riskSpec, schoolSpec,
+  localizationRows, SETTINGS_BLUEPRINT, COLLECTION, WORKFORCE_SPECS, NATIVE_INJURY_SPEC, TEXTS, dangerKey,
+  schoolAttractionSpecs, studyNeed, studyNeedId, studyNeedPath, NEED_COLLECTION, SCHOOL_WORKSHOP_SPECS} from './workforce_risk_content.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const args = process.argv.slice(2);
@@ -159,7 +160,6 @@ if (!applied) {
     const expected = {
       FrontierWorkforceRiskSpec: entry.danger ? riskSpec(config, entry) : undefined,
       FrontierSpecialistWorkplaceSpec: entry.workers === 'specialists' ? {Discipline: entry.discipline} : undefined,
-      FrontierSpecialistSchoolSpec: id === config.school.template ? schoolSpec(config) : undefined,
     };
     for (const key of WORKFORCE_SPECS) if (!same(blueprint[key], expected[key])) errors.push(`${id}: ${key} is ${JSON.stringify(blueprint[key])}, expected ${JSON.stringify(expected[key])}`);
     if (entry.danger && blueprint[NATIVE_INJURY_SPEC]) errors.push(`${id}: still has native ${NATIVE_INJURY_SPEC}`);
@@ -169,14 +169,21 @@ if (!applied) {
     if (!Object.hasOwn(config.templates, id) && await exists(path)) {
       const blueprint = await readJson(path);
       if (blueprint[NATIVE_INJURY_SPEC]) errors.push(`${id}: undeclared native ${NATIVE_INJURY_SPEC}`);
-      for (const key of WORKFORCE_SPECS) if (blueprint[key]) errors.push(`${id}: undeclared ${key}`);
+      for (const key of WORKFORCE_SPECS)
+        if (blueprint[key] && !(key === 'FrontierSpecialistSchoolSpec' && id === config.school.template)) errors.push(`${id}: undeclared ${key}`);
     }
   }
-  const template = await readJson(resolve(vanilla, 'Recipes', 'Recipe.Bot.IronTeeth.blueprint.json'));
-  for (const program of config.school.programs) {
-    const path = resolve(dataRoot, 'Recipes', `Recipe.${program.recipe}.blueprint.json`);
-    if (!await exists(path)) errors.push(`training recipe ${program.recipe} was not written`);
-    else if (!same(await readJson(path), trainingRecipe(template, program))) errors.push(`training recipe ${program.recipe} differs from the catalog`);
+  const school = await readJson(resolve(dataRoot, `${config.school.template}.json`));
+  for (const [key, value] of Object.entries(schoolAttractionSpecs(config)))
+    if (!same(school[key], value)) errors.push(`${config.school.template}: ${key} differs from the catalog`);
+  for (const key of SCHOOL_WORKSHOP_SPECS) if (school[key]) errors.push(`${config.school.template}: still has the workshop spec ${key}`);
+  const books = await readJson(resolve(vanilla, 'Needs', 'Need.Beaver.Books.blueprint.json'));
+  const needCollection = (await readJson(resolve(dataRoot, NEED_COLLECTION))).NeedCollectionSpec['Needs#append'];
+  for (const [index, program] of config.school.programs.entries()) {
+    const path = resolve(dataRoot, studyNeedPath(program));
+    if (!await exists(path)) errors.push(`study need ${studyNeedId(program)} was not written`);
+    else if (!same(await readJson(path), studyNeed(books, config, program, index))) errors.push(`study need ${studyNeedId(program)} differs from the catalog`);
+    if (needCollection.filter((id) => id === studyNeedId(program)).length !== 1) errors.push(`${NEED_COLLECTION} must list ${studyNeedId(program)} once`);
   }
   const csv = await readFile(resolve(dataRoot, 'Localizations', 'enUS.csv'), 'utf8');
   for (const key of rows.keys()) if (!csv.includes(`\n${key},`)) errors.push(`enUS.csv lacks ${key}`);
@@ -191,8 +198,8 @@ for (const [id, entry] of Object.entries(config.templates)) {
   if ((automation.templates[id]?.role ?? 'none') === 'none') continue;
   if (entry.danger) usedSpecs.add('FrontierWorkforceRiskSpec');
   if (entry.workers === 'specialists') usedSpecs.add('FrontierSpecialistWorkplaceSpec');
-  if (id === config.school.template) usedSpecs.add('FrontierSpecialistSchoolSpec');
 }
+if ((automation.templates[config.school.template]?.role ?? 'none') !== 'none') usedSpecs.add('FrontierSpecialistSchoolSpec');
 for (const key of usedSpecs)
   if (!automation.customSpecs[key]) errors.push(`automation: tools/automation_content.json customSpecs lacks ${key} (see the workforce report for the entry)`);
 

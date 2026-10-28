@@ -8,7 +8,10 @@
       "OrbitalObservatoryLegacy",
       "RecoveryProbeLegacy",
       "LongRangeBeaconLegacy",
-      "Irradiation"
+      "Irradiation",
+      "StudyMetallurgy",
+      "StudyNuclear",
+      "StudyFlight"
     ]
   }
 }

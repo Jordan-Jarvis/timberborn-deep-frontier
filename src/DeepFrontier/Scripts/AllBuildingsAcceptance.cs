@@ -941,7 +941,7 @@ namespace DeepFrontier.Scripts {
     private Worker CrewMember(Subject s,List<Worker> free) {
       var discipline=s.Building.GetComponent<FrontierSpecialistWorkplaceSpec>()?.Discipline;
       if(discipline==null)return free.FirstOrDefault(w=>!w.GetComponent<SpecialistTrait>().IsSpecialist)??free.FirstOrDefault();
-      var trained=free.FirstOrDefault(w=>w.GetComponent<SpecialistTrait>().Discipline==discipline);
+      var trained=free.FirstOrDefault(w=>w.GetComponent<SpecialistTrait>().Has(discipline));
       if(trained)return trained;
       var untrained=free.FirstOrDefault(w=>!w.GetComponent<SpecialistTrait>().IsSpecialist);
       if(untrained)untrained.GetComponent<SpecialistTrait>().Graduate(discipline);
@@ -1165,7 +1165,7 @@ namespace DeepFrontier.Scripts {
           " power="+(s.Node!=null?s.Node.PowerEfficiency.ToString("0.##"):"n/a")+(s.Node!=null?" graph powered="+s.Node.Powered+" demand="+s.Node.Graph?.PowerDemand:"")+
           " workplace behaviors ["+string.Join(",",w.WorkplaceBehaviors.Select(x=>x.GetType().Name+(x.Enabled?"":"(disabled)")))+"]"+
           (s.Worker?" worker "+s.Worker.GetComponent<Timberborn.Characters.Character>().FirstName+
-            (s.Worker.GetComponent<SpecialistTrait>().IsSpecialist?" ("+s.Worker.GetComponent<SpecialistTrait>().Discipline+" specialist)":"")+
+            (s.Worker.GetComponent<SpecialistTrait>().IsSpecialist?" ("+string.Join("/",s.Worker.GetComponent<SpecialistTrait>().Disciplines)+" specialist)":"")+
             " refuses="+s.Worker.GetComponent<WorkRefuser>().RefusesWork:"")+
           (s.Worker?" worker inside="+(s.Worker.GetComponent<Enterer>().CurrentBuilding==s.Building.GetComponent<Enterable>())+
            " behaviors ["+string.Join(" | ",s.Worker.GetComponent<Timberborn.BehaviorSystem.BehaviorManager>().TimestampedBehaviorLog.Reverse().Take(5))+"]":"")+

@@ -752,9 +752,9 @@ DeepFrontier.Workforce.Discipline.Flight.Plural,Flight engineers,Deep Frontier w
 DeepFrontier.Workforce.Danger.Hazardous,Hazardous,Deep Frontier workforce risks
 DeepFrontier.Workforce.Danger.Dangerous,Dangerous,Deep Frontier workforce risks
 DeepFrontier.Workforce.Danger.Extreme,Extreme,Deep Frontier workforce risks
-Recipe.SpecialistTraining.Metallurgy.DisplayName,Metallurgist course,Deep Frontier workforce risks
-Recipe.SpecialistTraining.Nuclear.DisplayName,Reactor operator course,Deep Frontier workforce risks
-Recipe.SpecialistTraining.Flight.DisplayName,Flight engineer course,Deep Frontier workforce risks
+Need.StudyMetallurgy.DisplayName,Metallurgy studies,Deep Frontier workforce risks
+Need.StudyNuclear.DisplayName,Reactor studies,Deep Frontier workforce risks
+Need.StudyFlight.DisplayName,Flight studies,Deep Frontier workforce risks
 DeepFrontier.Workforce.Panel.Title,Workforce risks,Deep Frontier workforce risks
 DeepFrontier.Workforce.Panel.InjuryRisk,Injury risk: {0}. About {1}% per worker-hour while working; strained/exhausted workers face {2} times that.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Panel.InjuriesDisabled,Injury risk: {0}. Injuries are switched off in this game's settings.,Deep Frontier workforce risks
@@ -767,21 +767,21 @@ DeepFrontier.Workforce.Status.Exhausted,Exhausted workers: injury risk ×{0},Dee
 DeepFrontier.Workforce.Specialists.Title,Specialist crew,Deep Frontier workforce risks
 DeepFrontier.Workforce.Specialists.Required,Only trained {0} can work here.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Specialists.Staffing,Posts filled: {0}. Unassigned {2} in this district: {1}.,Deep Frontier workforce risks
-DeepFrontier.Workforce.Specialists.Train,Train {0} at the Technical School. A specialist's skill dies with them.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Specialists.Train,Beavers become {0} in their free time at a Technical School teaching it. A specialist's skills die with them.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Status.NoSpecialists,No {0}: this building cannot run. Train them at the Technical School.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Status.NoSpecialists.Short,No {0},Deep Frontier workforce risks
 DeepFrontier.Workforce.Status.FewSpecialists,Not enough {0}. Train more at the Technical School.,Deep Frontier workforce risks
 DeepFrontier.Workforce.School.Title,Specialist training,Deep Frontier workforce risks
-DeepFrontier.Workforce.School.Program,Course: {0}. Each finished course graduates the trainee with the most training hours.,Deep Frontier workforce risks
-DeepFrontier.Workforce.School.NoProgram,Choose a training course.,Deep Frontier workforce risks
-DeepFrontier.Workforce.School.NextGraduate,Next graduate: {0} ({1} h of training).,Deep Frontier workforce risks
-DeepFrontier.Workforce.School.NoTrainee,No trainee enrolled. Specialists working here teach but never retrain.,Deep Frontier workforce risks
-DeepFrontier.Workforce.School.Pending,Finished courses waiting for a trainee: {0}.,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.Program,Teaching {0}. Adults who are not yet {0} study here in their free time; {1} hours of study make a graduate. Nobody works here; the school uses up its supplies while students are inside.,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.NoProgram,Choose the profession this school teaches. Build more schools to teach several professions at once.,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.Teach,Teach {0},Deep Frontier workforce risks
+DeepFrontier.Workforce.School.Students,Studying here now: {0}.,Deep Frontier workforce risks
+DeepFrontier.Workforce.School.Remaining,Adults in this district still to learn it: {0}.,Deep Frontier workforce risks
 DeepFrontier.Workforce.School.Roster,Colony specialists: {0}.,Deep Frontier workforce risks
-DeepFrontier.Workforce.Status.NoTrainee,A course finished but no trainee is enrolled. Assign beavers who are not specialists.,Deep Frontier workforce risks
-DeepFrontier.Workforce.Status.NoTrainee.Short,No trainee,Deep Frontier workforce risks
+DeepFrontier.Workforce.Status.NoProgram,No profession chosen: choose what this school teaches.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Status.NoProgram.Short,Choose a profession,Deep Frontier workforce risks
 DeepFrontier.Workforce.Trait.Specialist,Specialist: {0},Deep Frontier workforce risks
-DeepFrontier.Workforce.Trait.Training,Technical School training: {0} h,Deep Frontier workforce risks
+DeepFrontier.Workforce.Trait.Training,Studying: {0},Deep Frontier workforce risks
 DeepFrontier.Workforce.Notification.Graduated,{0} graduated as a {1}.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Notification.SkillLost,"Skill lost: {0}, a {1}, has died. {2} left.",Deep Frontier workforce risks
 DeepFrontier.Workforce.FatalAccident,{0} was killed in an industrial accident at the {1}.,Deep Frontier workforce risks

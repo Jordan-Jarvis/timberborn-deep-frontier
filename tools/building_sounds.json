@@ -150,8 +150,8 @@
     },
     "TechnicalSchool": {
       "template": "Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.blueprint",
-      "selection": "Numbercruncher", "looping": "Inventor", "loopDriver": "workshop", "family": "civic/service",
-      "comment": "A civic learning building. It takes the Iron Teeth Numbercruncher science selection and the quiet Inventor bench loop, not an industrial loop, while classes train specialists."
+      "selection": "Numbercruncher", "looping": "Inventor", "loopDriver": "attraction", "family": "civic/service",
+      "comment": "A civic learning building. It takes the Iron Teeth Numbercruncher science selection and the quiet Inventor bench loop, not an industrial loop, while students study inside (attraction loop: nobody staffs the school)."
     },
     "MaterialsLaboratory": {
       "template": "Buildings/Science/MaterialsLaboratory/MaterialsLaboratory.IronTeeth.blueprint",

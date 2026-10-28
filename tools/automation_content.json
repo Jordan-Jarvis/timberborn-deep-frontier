@@ -239,8 +239,8 @@
     "Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.blueprint": {
       "role": "pausable",
       "sources": [
-        "WorkplaceSpec",
-        "MechanicalBuildingSpec"
+        "MechanicalBuildingSpec",
+        "GoodConsumingBuildingSpec"
       ]
     },
     "Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.blueprint": {
@@ -866,11 +866,11 @@
     },
     "FrontierSpecialistSchoolSpec": {
       "kind": "operational",
-      "response": "Training hours accrue only while Workshop.CurrentlyWorking; graduations follow native Manufactory.ProductionFinished, which cannot happen once the blocked workplace releases its workers.",
+      "response": "Off blocks the BlockableObject, so native Attraction.IsUsable is false: the district need behaviour sends no students and releases those inside, and study hours accrue only while the attraction is usable.",
       "evidence": [
         {
           "file": "src/DeepFrontier/Scripts/Workforce/SpecialistSchool.cs",
-          "contains": "_workshop.CurrentlyWorking&&_manufactory.HasCurrentRecipe"
+          "contains": "if(Discipline==null||!_attraction.IsUsable)return;"
         }
       ]
     },

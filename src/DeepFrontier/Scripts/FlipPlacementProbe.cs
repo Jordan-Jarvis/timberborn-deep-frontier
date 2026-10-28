@@ -537,8 +537,8 @@ namespace DeepFrontier.Scripts {
       if(!worker) {
         worker=_workers.FirstOrDefault(w=>w&&!w.Workplace&&!w.GetComponent<SpecialistTrait>().IsSpecialist)??_workers.FirstOrDefault(w=>w&&!w.Workplace)??_workers.First(w=>w);
         var discipline=c.Building.GetComponent<FrontierSpecialistWorkplaceSpec>()?.Discipline;
-        if(discipline!=null&&worker.GetComponent<SpecialistTrait>().Discipline!=discipline) {
-          var trained=_workers.FirstOrDefault(w=>w&&w.GetComponent<SpecialistTrait>().Discipline==discipline);
+        if(discipline!=null&&!worker.GetComponent<SpecialistTrait>().Has(discipline)) {
+          var trained=_workers.FirstOrDefault(w=>w&&w.GetComponent<SpecialistTrait>().Has(discipline));
           if(trained)worker=trained;else worker.GetComponent<SpecialistTrait>().Graduate(discipline);
         }
         while(workplace.DesiredWorkers<1)workplace.IncreaseDesiredWorkers();

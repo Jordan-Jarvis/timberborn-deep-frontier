@@ -109,6 +109,6 @@ namespace DeepFrontier.Scripts {
     public IReadOnlyCollection<SpecialistTrait> All=>_specialists;
     public void Add(SpecialistTrait trait) {_specialists.Add(trait);}
     public void Remove(SpecialistTrait trait) {_specialists.Remove(trait);}
-    public int Count(string discipline)=>_specialists.Count(s=>s.Discipline==discipline);
+    public int Count(string discipline)=>_specialists.Count(s=>s.Has(discipline));
   }
 }

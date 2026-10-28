@@ -68,7 +68,7 @@ namespace DeepFrontier.Scripts {
 
     public bool Accepts(Worker worker) {
       var trait=worker.GetComponent<SpecialistTrait>();
-      return trait&&trait.Discipline==Discipline;
+      return trait&&trait.Has(Discipline);
     }
 
     internal void UpdateStatus(int available) {
@@ -123,7 +123,7 @@ namespace DeepFrontier.Scripts {
 
     // 0 = unemployed, 1 = employed at an ordinary workplace, -1 = not available.
     private static int Rank(SpecialistTrait trait, SpecialistWorkplace workplace) {
-      if(!trait.Alive||trait.Discipline!=workplace.Discipline)return -1;
+      if(!trait.Alive||!trait.Has(workplace.Discipline))return -1;
       var district=workplace.DistrictBuilding.District;
       if(!district||trait.Citizen.AssignedDistrict!=district)return -1;
       if(trait.Worker.GetComponent<WorkRefuser>().RefusesWork)return -1;

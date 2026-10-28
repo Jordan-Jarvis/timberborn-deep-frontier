@@ -998,7 +998,7 @@ namespace DeepFrontier.Scripts {
     private Worker CrewMember(Subject s,List<Worker> free) {
       var discipline=s.Building.GetComponent<FrontierSpecialistWorkplaceSpec>()?.Discipline;
       if(discipline==null)return free.FirstOrDefault(w=>!w.GetComponent<SpecialistTrait>().IsSpecialist)??free.First();
-      var trained=free.FirstOrDefault(w=>w.GetComponent<SpecialistTrait>().Discipline==discipline);
+      var trained=free.FirstOrDefault(w=>w.GetComponent<SpecialistTrait>().Has(discipline));
       if(trained)return trained;
       var untrained=free.FirstOrDefault(w=>!w.GetComponent<SpecialistTrait>().IsSpecialist);
       if(!untrained){Record(s.Id,"specialist crew",false,"no "+discipline+" specialist or untrained adult available");return null;}
@@ -1426,10 +1426,10 @@ namespace DeepFrontier.Scripts {
     private void ChooseCrew() {
       var discipline=_padBlock.GetComponent<FrontierSpecialistWorkplaceSpec>()?.Discipline;
       SpecialistTrait Trait(Worker w)=>w.GetComponent<SpecialistTrait>();
-      _controller=_workers.FirstOrDefault(w=>Trait(w).IsSpecialist&&Trait(w).Discipline!=discipline)
+      _controller=_workers.FirstOrDefault(w=>Trait(w).IsSpecialist&&!Trait(w).Has(discipline))
         ??_workers.Last();
-      var candidates=_workers.Where(w=>w!=_controller&&(discipline==null||Trait(w).Discipline==discipline||!Trait(w).IsSpecialist))
-        .OrderBy(w=>Trait(w).Discipline==discipline?0:1).ToList();
+      var candidates=_workers.Where(w=>w!=_controller&&(discipline==null||Trait(w).Has(discipline)||!Trait(w).IsSpecialist))
+        .OrderBy(w=>Trait(w).Has(discipline)?0:1).ToList();
       int count=Math.Min(PadWorkplace.MaxWorkers,candidates.Count);
       _crew.AddRange(candidates.Take(count));
       int graduated=0;

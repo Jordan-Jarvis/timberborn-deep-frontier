@@ -14,7 +14,9 @@ if (-not (Test-Path -LiteralPath $unity -PathType Leaf)) {
 & (Join-Path $PSScriptRoot 'stage_deep_frontier.ps1')
 $process = Start-Process -FilePath $unity -WindowStyle Hidden -PassThru -ArgumentList @(
   '-batchmode', '-nographics', '-quit',
-  '-disable-assembly-updater', 'TimberUi.dll', '0Harmony.dll', 'ModdableRecipes.dll', 'ConveyorBelt.dll', 'ConveyorBelt.Algorithm.dll', 'ModdableTimberborn.dll', 'ModSettings.Core.dll', 'ModSettings.Common.dll', 'TimberPipes.dll', 'PowerLines.dll', 'ModdableWeathers.dll', 'SluiceIsBack.dll',
+  # No names: Unity skips its API updater for every assembly. The game's and the mods' DLLs are built for this editor,
+  # and on a new project the single-threaded updater otherwise spends over 30 minutes on the 518 game assemblies.
+  '-disable-assembly-updater',
   '-projectPath', ('"' + $project + '"'),
   '-executeMethod', 'Timberborn.ModdingTools.ModBuilding.DeepFrontierBatchBuild.Build',
   '-logFile', ('"' + $log + '"')

@@ -222,7 +222,7 @@ const stage = await read(resolve(root, 'tools', 'stage_deep_frontier.ps1'));
 require(stage, '3677643870\\version-1.1\\SluiceIsBack.dll', 'the stage script must import SluiceIsBack.dll for the bridge compile');
 require(stage, "unity\\SluiceIsBack.dll.meta", 'the stage script must import SluiceIsBack.dll.meta');
 if (!await exists(resolve(root, 'tools', 'unity', 'SluiceIsBack.dll.meta'))) errors.push('tools/unity/SluiceIsBack.dll.meta is missing');
-require(await read(resolve(root, 'tools', 'build_deep_frontier.ps1')), "'SluiceIsBack.dll'", 'the build must pass SluiceIsBack.dll to -disable-assembly-updater');
+require(await read(resolve(root, 'tools', 'build_deep_frontier.ps1')), "  '-disable-assembly-updater',", 'the build must pass -disable-assembly-updater without names (no assembly, SluiceIsBack.dll included, is updated)');
 const verify = await read(resolve(root, 'tools', 'verify_deep_frontier_package.ps1'));
 require(verify, `Scripts\\${optional}`, `the package verification must compare Scripts\\${optional}`);
 require(await read(resolve(root, 'tools', 'validate_editor_guards.mjs')), "'SluiceIsBack'", 'tools/validate_editor_guards.mjs must treat SluiceIsBack as a dependency mod');

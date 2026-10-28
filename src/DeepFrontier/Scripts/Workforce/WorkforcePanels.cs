@@ -1,8 +1,10 @@
 #if !UNITY_EDITOR
+using System.Collections.Generic;
 using System.Linq;
 using Bindito.Core;
 using Timberborn.BaseComponentSystem;
 using Timberborn.EntityPanelSystem;
+using Timberborn.GameDistricts;
 using Timberborn.Localization;
 using Timberborn.WorkSystem;
 using TimberUi.CommonUi;
@@ -66,25 +68,43 @@ namespace DeepFrontier.Scripts {
     private readonly WorkforceSettings _settings;
     private readonly SpecialistRoster _roster;
     private readonly ILoc _loc;
-    private Label _program,_next,_pending,_roster_;
+    private readonly List<(string discipline, Button button)> _teach=new List<(string, Button)>();
+    private Label _program,_students,_remaining,_roster_;
     public SpecialistSchoolPanel(WorkforceSettings settings, SpecialistRoster roster, ILoc loc) {_settings=settings;_roster=roster;_loc=loc;}
     protected override void InitializePanel() {
       panel.AddGameLabel(_loc.T("DeepFrontier.Workforce.School.Title"),bold:true);
-      _program=Wrapped();_next=Wrapped();_pending=Wrapped();_roster_=Wrapped();
+      _program=Wrapped();_students=Wrapped();_remaining=Wrapped();
+      foreach(var discipline in _settings.Disciplines) {
+        var id=discipline.Id;
+        var button=panel.AddGameButton(_loc.T("DeepFrontier.Workforce.School.Teach",_loc.T(discipline.PluralDisplayNameLocKey)),
+          ()=>{if(component)component.Teach(id);UpdateFragment();});
+        _teach.Add((id,button));
+      }
+      _roster_=Wrapped();
     }
     private Label Wrapped() {var label=panel.AddGameLabel();label.style.whiteSpace=WhiteSpace.Normal;return label;}
     public override void ShowFragment(BaseComponent entity) {base.ShowFragment(entity);UpdateFragment();}
     public override void UpdateFragment() {
       if(!component)return;
-      var current=component.CurrentDiscipline;
-      _program.text=current==null
-        ?_loc.T("DeepFrontier.Workforce.School.NoProgram")
-        :_loc.T("DeepFrontier.Workforce.School.Program",_loc.T(_settings.Discipline(current).DisplayNameLocKey));
-      var next=component.NextGraduate();
-      _next.text=next
-        ?_loc.T("DeepFrontier.Workforce.School.NextGraduate",next.FirstName,next.TrainingHours.ToString("0.#"))
-        :_loc.T("DeepFrontier.Workforce.School.NoTrainee");
-      _pending.text=_loc.T("DeepFrontier.Workforce.School.Pending",component.PendingGraduations.Count);
+      var current=component.Discipline;
+      foreach(var (discipline,button) in _teach) {
+        var taught=component.Disciplines.Contains(discipline);
+        button.style.display=taught?DisplayStyle.Flex:DisplayStyle.None;
+        button.SetEnabled(discipline!=current);
+      }
+      if(current==null) {
+        _program.text=_loc.T("DeepFrontier.Workforce.School.NoProgram");
+        _students.text=_remaining.text="";
+      } else {
+        var spec=_settings.Discipline(current);
+        _program.text=_loc.T("DeepFrontier.Workforce.School.Program",_loc.T(spec.PluralDisplayNameLocKey),component.StudyHours.ToString("0.#"));
+        _students.text=_loc.T("DeepFrontier.Workforce.School.Students",component.Students.Count());
+        var district=component.GetComponent<DistrictBuilding>().District;
+        _remaining.text=district
+          ?_loc.T("DeepFrontier.Workforce.School.Remaining",district.GetComponent<DistrictPopulation>().Adults
+            .Select(b=>b.GetComponent<SpecialistTrait>()).Count(t=>t&&!t.Has(current)))
+          :"";
+      }
       _roster_.text=_loc.T("DeepFrontier.Workforce.School.Roster",string.Join(", ",
         _settings.Disciplines.Select(d=>$"{_loc.T(d.PluralDisplayNameLocKey)} {_roster.Count(d.Id)}")));
     }
@@ -93,19 +113,24 @@ namespace DeepFrontier.Scripts {
   internal sealed class SpecialistTraitPanel : BaseEntityPanelFragment<SpecialistTrait> {
     private readonly WorkforceSettings _settings;
     private readonly ILoc _loc;
-    private Label _line;
+    private Label _held,_studying;
     public SpecialistTraitPanel(WorkforceSettings settings, ILoc loc) {_settings=settings;_loc=loc;}
-    protected override void InitializePanel() {_line=panel.AddGameLabel();_line.style.whiteSpace=WhiteSpace.Normal;}
+    protected override void InitializePanel() {
+      _held=panel.AddGameLabel();_held.style.whiteSpace=WhiteSpace.Normal;
+      _studying=panel.AddGameLabel();_studying.style.whiteSpace=WhiteSpace.Normal;
+    }
     public override void ShowFragment(BaseComponent entity) {base.ShowFragment(entity);UpdateFragment();}
     public override void UpdateFragment() {
       if(!component)return;
-      if(component.IsSpecialist) {
-        panel.Visible=true;
-        _line.text=_loc.T("DeepFrontier.Workforce.Trait.Specialist",_loc.T(_settings.Discipline(component.Discipline).DisplayNameLocKey));
-      } else if(component.TrainingHours>0f) {
-        panel.Visible=true;
-        _line.text=_loc.T("DeepFrontier.Workforce.Trait.Training",component.TrainingHours.ToString("0.#"));
-      } else panel.Visible=false;
+      panel.Visible=component.IsSpecialist||component.StudyHours.Count>0;
+      _held.text=component.IsSpecialist
+        ?_loc.T("DeepFrontier.Workforce.Trait.Specialist",string.Join(", ",
+          component.Disciplines.Select(d=>_loc.T(_settings.Discipline(d).DisplayNameLocKey))))
+        :"";
+      _studying.text=component.StudyHours.Count>0
+        ?_loc.T("DeepFrontier.Workforce.Trait.Training",string.Join(", ",
+          component.StudyHours.Select(s=>_loc.T(_settings.Discipline(s.Key).DisplayNameLocKey)+" "+s.Value.ToString("0.#")+" h")))
+        :"";
     }
   }
 
