@@ -1,0 +1,14 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierDeepMining",
+    "Order": 100,
+    "NameLocKey": "ToolGroups.DeepFrontierDeepMining",
+    "Icon": "Buildings/Metal/DeepDrill/DeepDrillIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Metal"
+    ]
+  }
+}

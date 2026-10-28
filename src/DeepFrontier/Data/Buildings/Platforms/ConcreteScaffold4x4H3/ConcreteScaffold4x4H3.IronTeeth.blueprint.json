@@ -511,7 +511,7 @@
     "BlockedEdges": []
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Paths",
+    "ToolGroupId": "DeepFrontierConcreteScaffolds",
     "ToolOrder": 211,
     "ToolShape": "Square",
     "Layout": "Single",

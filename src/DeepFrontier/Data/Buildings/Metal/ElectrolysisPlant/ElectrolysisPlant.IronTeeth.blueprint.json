@@ -9169,7 +9169,7 @@
   },
   "MechanicalBuildingSpec": {},
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Metal",
+    "ToolGroupId": "DeepFrontierHeavyIndustry",
     "ToolOrder": 47,
     "ToolShape": "Square",
     "Layout": "Single",

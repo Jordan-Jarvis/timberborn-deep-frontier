@@ -1,0 +1,14 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierHeavyIndustry",
+    "Order": 120,
+    "NameLocKey": "ToolGroups.DeepFrontierHeavyIndustry",
+    "Icon": "Buildings/Metal/SteelMill/Icon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Metal"
+    ]
+  }
+}

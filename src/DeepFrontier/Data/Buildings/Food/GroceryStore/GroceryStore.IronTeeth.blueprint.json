@@ -3112,7 +3112,7 @@
     "IsShaft": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Wellbeing",
+    "ToolGroupId": "DeepFrontierCivicServices",
     "ToolOrder": 37,
     "ToolShape": "Square",
     "Layout": "Single",

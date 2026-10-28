@@ -7160,7 +7160,7 @@
     "IsShaft": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Metal",
+    "ToolGroupId": "DeepFrontierRocketry",
     "ToolOrder": 49,
     "ToolShape": "Square",
     "Layout": "Single",

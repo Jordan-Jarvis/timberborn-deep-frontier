@@ -13535,7 +13535,7 @@
     "ForceOneFinalAccess": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Science",
+    "ToolGroupId": "DeepFrontierRocketry",
     "ToolOrder": 110,
     "ToolShape": "Square",
     "Layout": "Single",

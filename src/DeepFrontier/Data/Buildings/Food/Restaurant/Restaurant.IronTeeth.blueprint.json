@@ -4066,7 +4066,7 @@
     "IsShaft": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Wellbeing",
+    "ToolGroupId": "DeepFrontierCivicServices",
     "ToolOrder": 38,
     "ToolShape": "Square",
     "Layout": "Single",

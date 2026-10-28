@@ -10876,7 +10876,7 @@
     "ForceOneFinalAccess": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Metal",
+    "ToolGroupId": "DeepFrontierDeepMining",
     "ToolOrder": 36,
     "ToolShape": "Square",
     "Layout": "Single",

@@ -1,0 +1,14 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierRadioactiveWaste",
+    "Order": 100,
+    "NameLocKey": "ToolGroups.DeepFrontierRadioactiveWaste",
+    "Icon": "Buildings/Water/RadioactiveWasteExport/RadioactiveWasteExportIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Water"
+    ]
+  }
+}

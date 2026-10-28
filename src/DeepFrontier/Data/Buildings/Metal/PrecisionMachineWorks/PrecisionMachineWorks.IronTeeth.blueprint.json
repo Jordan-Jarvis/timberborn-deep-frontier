@@ -9804,7 +9804,7 @@
     "ForceOneFinalAccess": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Metal",
+    "ToolGroupId": "DeepFrontierHeavyIndustry",
     "ToolOrder": 42,
     "ToolShape": "Square",
     "Layout": "Single",

@@ -795,5 +795,14 @@ DeepFrontier.BotUpkeep.Panel.Good,{0}: {1} in stock. A bot serviced with it wear
 DeepFrontier.BotUpkeep.Panel.Dose,"One dose lasts {0} hours of work here; unserviced bots wear out {1}×. Bots take the first oil in stock, in the order listed.",Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Bot.Serviced,Serviced with {0}: wears out {1}× here for {2} more hours.,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Bot.Unserviced,Not serviced: stock maintenance oil at the {0} to slow wear.,Deep Frontier bot upkeep
+ToolGroups.DeepFrontierDeepMining,Deep mining,Deep Frontier toolbar group
+ToolGroups.DeepFrontierQuarrying,Quarries and cement,Deep Frontier toolbar group
+ToolGroups.DeepFrontierHeavyIndustry,Heavy industry,Deep Frontier toolbar group
+ToolGroups.DeepFrontierNuclearFuel,Nuclear fuel,Deep Frontier toolbar group
+ToolGroups.DeepFrontierRocketry,Rocketry,Deep Frontier toolbar group
+ToolGroups.DeepFrontierConcreteScaffolds,Concrete scaffolds,Deep Frontier toolbar group
+ToolGroups.DeepFrontierConcretePlatforms,Concrete side platforms,Deep Frontier toolbar group
+ToolGroups.DeepFrontierRadioactiveWaste,Radioactive waste,Deep Frontier toolbar group
+ToolGroups.DeepFrontierCivicServices,Civic services,Deep Frontier toolbar group
 DeepFrontier.Power.Status.NotConnected,Not connected to a power source. Connect it to a generator with shafts or power lines.,Deep Frontier
 DeepFrontier.Power.Status.NotConnected.Short,Not connected to power,Deep Frontier

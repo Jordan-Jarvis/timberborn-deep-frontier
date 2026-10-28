@@ -1804,7 +1804,7 @@
     "ForceOneFinalAccess": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Metal",
+    "ToolGroupId": "DeepFrontierQuarrying",
     "ToolOrder": 76,
     "ToolShape": "Square",
     "Layout": "Single",

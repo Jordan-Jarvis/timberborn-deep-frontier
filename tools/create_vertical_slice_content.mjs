@@ -437,6 +437,9 @@ await (await import('./connection_content.mjs')).applyConnections();
 // construction-material generator; before the automation audit.
 await (await import('./smog_building_content.mjs')).applySmog();
 await (await import('./building_sounds_content.mjs')).applyBuildingSounds(); // Native sounds (tools/building_sounds.json, docs/sounds.md): needs every building template, so after radiation.
+// Toolbar sub-groups (tools/tool_groups.json, Moddable Tool Groups): moves buildings into
+// Deep Frontier sub-groups of the native groups, after every building template exists.
+await (await import('./tool_group_content.mjs')).applyToolGroups();
 // Status icon anchors (tools/status_icon_content.mjs, Scripts/StatusIconAnchor.cs): from each
 // building's final blocks, so after connections (roof decks) and every family generator.
 await (await import('./status_icon_content.mjs')).applyStatusIconAnchors();

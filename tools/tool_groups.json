@@ -1,0 +1,27 @@
+{
+  "$comment": [
+    "Deep Frontier toolbar sub-groups (Moddable Tool Groups, a required mod: a BlockObjectToolGroupSpec with ParentToolGroupSpec.ParentIds is a button inside that native group). Written by tools/tool_group_content.mjs at the end of canonical generation; checked by tools/validate_tool_groups.mjs.",
+    "Each group: parent (a native tool group), order (Moddable Tool Groups orders a group's sub-groups and buildings by one scale: native buildings use about 10-90, so sub-groups follow them at 100+), name, icon (the LabeledEntitySpec icon of the listed template), and templates (Deep Frontier building template names without the faction suffix). A listed building's PlaceableBlockObjectSpec.ToolGroupId becomes the sub-group; its ToolOrder orders it inside."
+  ],
+  "groups": {
+    "DeepFrontierDeepMining": { "parent": "Metal", "order": 100, "name": "Deep mining", "icon": "DeepDrill",
+      "templates": ["DeepDrill", "DeepMine", "DeepProcessor"] },
+    "DeepFrontierQuarrying": { "parent": "Metal", "order": 110, "name": "Quarries and cement", "icon": "LimestoneQuarry",
+      "templates": ["SandstonePit", "LimestonePit", "SandstoneQuarry", "LimestoneQuarry", "StoneCrusher", "CementKiln", "ConcreteMixer"] },
+    "DeepFrontierHeavyIndustry": { "parent": "Metal", "order": 120, "name": "Heavy industry", "icon": "SteelMill",
+      "templates": ["SteelMill", "ChemicalWorks", "PrecisionMachineWorks", "ElectrolysisPlant", "CryogenicLiquefactionPlant"] },
+    "DeepFrontierNuclearFuel": { "parent": "Metal", "order": 130, "name": "Nuclear fuel", "icon": "UraniumProcessingPlant",
+      "templates": ["UraniumProcessingPlant", "RadioactiveWasteRefinery"] },
+    "DeepFrontierRocketry": { "parent": "Metal", "order": 140, "name": "Rocketry", "icon": "LaunchPad",
+      "templates": ["RocketAssemblyHangar", "LaunchPad", "MissionControl"] },
+    "DeepFrontierConcreteScaffolds": { "parent": "Paths", "order": 100, "name": "Concrete scaffolds", "icon": "ConcreteScaffold4x4H2",
+      "templates": ["ConcreteScaffold3x3", "ConcreteScaffold3x3H1", "ConcreteScaffold3x3H2", "ConcreteScaffold4x4H1", "ConcreteScaffold4x4H2",
+        "ConcreteScaffold4x4H3", "ConcreteScaffold5x5H1", "ConcreteScaffold5x5H2", "ConcreteScaffold5x5H3", "ConcreteOverhang8x1"] },
+    "DeepFrontierConcretePlatforms": { "parent": "Paths", "order": 110, "name": "Concrete side platforms", "icon": "ConcreteSidePlatform4x4",
+      "templates": ["ConcreteSidePlatform3x3", "ConcreteSidePlatform4x4", "ConcreteSidePlatform5x5"] },
+    "DeepFrontierRadioactiveWaste": { "parent": "Water", "order": 100, "name": "Radioactive waste", "icon": "RadioactiveWasteExport",
+      "templates": ["RadioactiveSludgeRecoveryPump", "RadioactiveSludgeOutfall", "RadioactiveWasteExport"] },
+    "DeepFrontierCivicServices": { "parent": "Wellbeing", "order": 100, "name": "Civic services", "icon": "Hospital",
+      "templates": ["Restaurant", "GroceryStore", "Hospital", "PublicHealthLab", "Bathhouse"] }
+  }
+}

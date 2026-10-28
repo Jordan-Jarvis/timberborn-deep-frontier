@@ -125,10 +125,13 @@ for (const base of [resolve(vanillaRoot, 'Buildings'), resolve(dataRoot, 'Buildi
     if (base.startsWith(vanillaRoot) && !file.includes('.IronTeeth.')) continue;
     const value = JSON.parse((await readFile(file, 'utf8')).replace(/^﻿/, ''));
     const placeable = value.PlaceableBlockObjectSpec;
-    if (placeable?.ToolGroupId !== 'Water') continue;
-    const list = waterOrders.get(placeable.ToolOrder) ?? [];
+    if (!placeable) continue;
+    // Tool orders must be unique within a group (the native Water group, or the Deep
+    // Frontier sub-group tools/tool_groups.json moves a building into).
+    const key = `${placeable.ToolGroupId}:${placeable.ToolOrder}`;
+    const list = waterOrders.get(key) ?? [];
     list.push(file);
-    waterOrders.set(placeable.ToolOrder, list);
+    waterOrders.set(key, list);
   }
 }
 const blueprintKeys = [];
@@ -150,8 +153,9 @@ for (const building of RADIATION_BUILDINGS) {
   for (const forbidden of ['WaterOutputSpec', 'ManufactoryWaterProducerSpec', 'ManufactoryWaterContaminationProducerSpec',
     'ManufactoryWaterConsumerSpec', 'ManufactoryWaterContaminationConsumerSpec'])
     check(!value[forbidden], `${building.id}: must not keep native water component ${forbidden}`);
-  const orders = waterOrders.get(value.PlaceableBlockObjectSpec.ToolOrder) ?? [];
-  check(orders.length === 1, `${building.id}: Water tool order ${value.PlaceableBlockObjectSpec.ToolOrder} collides: ${orders.join(', ')}`);
+  const placeable = value.PlaceableBlockObjectSpec;
+  const orders = waterOrders.get(`${placeable.ToolGroupId}:${placeable.ToolOrder}`) ?? [];
+  check(orders.length === 1, `${building.id}: ${placeable.ToolGroupId} tool order ${placeable.ToolOrder} collides: ${orders.join(', ')}`);
   const size = value.BlockObjectSpec.Size;
   if (building.kind === 'export') {
     check(value.MapEdgeSiteSpec && Object.keys(value.MapEdgeSiteSpec).length === 0, `${building.id}: needs MapEdgeSiteSpec {}`);

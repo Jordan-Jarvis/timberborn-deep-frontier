@@ -1,0 +1,14 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierConcretePlatforms",
+    "Order": 110,
+    "NameLocKey": "ToolGroups.DeepFrontierConcretePlatforms",
+    "Icon": "Buildings/Platforms/ConcreteSidePlatform4x4/Icon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Paths"
+    ]
+  }
+}

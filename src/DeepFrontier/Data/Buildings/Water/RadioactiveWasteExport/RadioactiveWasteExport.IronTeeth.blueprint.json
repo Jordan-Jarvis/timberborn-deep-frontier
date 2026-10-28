@@ -943,7 +943,7 @@
     "ForceOneFinalAccess": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Water",
+    "ToolGroupId": "DeepFrontierRadioactiveWaste",
     "ToolOrder": 22,
     "ToolShape": "Square",
     "Layout": "Single",

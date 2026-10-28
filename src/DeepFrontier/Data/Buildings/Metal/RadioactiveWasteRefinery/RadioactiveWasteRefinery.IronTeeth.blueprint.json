@@ -11185,7 +11185,7 @@
   },
   "MechanicalBuildingSpec": {},
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Metal",
+    "ToolGroupId": "DeepFrontierNuclearFuel",
     "ToolOrder": 46,
     "ToolShape": "Square",
     "Layout": "Single",
