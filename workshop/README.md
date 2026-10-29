@@ -11,5 +11,6 @@
 3. In Timberborn, open the Mods screen, select Deep Frontier and upload it. The game writes `workshop_data.json` (the Workshop item id) into the mod folder; keep that file so later uploads update the same item.
 4. Set the required mods as Workshop dependencies: `python tools/workshop_dependencies.py` shows the 17 items it maps from `manifest.json` RequiredMods (through your subscribed copies), and `--apply` adds them to the item with Steam running. The game's uploader does not send them; with them set, Steam lists them under Required items and offers to subscribe to them with Deep Frontier. Run it again whenever `RequiredMods` gains a mod.
 5. On Steam, set the description from `description.bbcode` and add the screenshots.
+6. For an update, bump `Version` in `src/DeepFrontier/manifest.json` before building, and paste `changenotes-<version>.bbcode` into the item's Change Notes (Steam keeps them per update). `CHANGELOG.md` at the repository root holds the full notes.
 
 To retake screenshots from a save: copy the save into the "Memory Test" settlement, then run `powershell -ExecutionPolicy Bypass -File tools/start_memory_load.ps1 -Build <n> -Label showcase -Save "<copy>" -Showcase -RunSeconds 400` (images land in `outputs/showcase`).
