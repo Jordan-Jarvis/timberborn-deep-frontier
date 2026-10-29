@@ -4,6 +4,7 @@ import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {dirname,resolve} from 'node:path';
 import {industrialColliders} from './industrial_occupancy.mjs';
+import {scaledCost} from './lategame_costs.mjs';
 
 const root=new URL('../',import.meta.url);
 const catalog=JSON.parse(await readFile(new URL('tools/structural_content.json',root),'utf8'));
@@ -145,7 +146,7 @@ export async function structuralBlueprints() {
     const model=`Buildings/Platforms/${b.id}/${b.id}.IronTeeth`;
     v.TemplateSpec.TemplateName=b.id+'.IronTeeth';
     v.TemplateSpec.BackwardCompatibleTemplateNames=[];
-    v.BuildingSpec.BuildingCost=b.cost.map(([Id,Amount])=>({Id,Amount}));
+    v.BuildingSpec.BuildingCost=scaledCost(b.cost.map(([Id,Amount])=>({Id,Amount})),b.science);
     v.BuildingSpec.ScienceCost=b.science;
     v.BuildingModelSpec.FinishedUncoveredModelName='';
     const blocks=structuralBlocks(b);

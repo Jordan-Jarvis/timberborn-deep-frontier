@@ -4,6 +4,26 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Heavy construction costs: x2 to x8 by science tier (Claude Code session, 2026-10-29; generated and validated in mirror `costs`; not built or run in game)
+
+- **User:** the whole building set was far too cheap next to the vanilla wonders (Earth Repopulator 5,500 goods; the reactor was 1,620). Chosen: "Heavy x2 to x8".
+- **Rule:** each `lategameRule.tiers` entry in `building_construction_costs.json` has a `costFactor`:
+
+  | Tier | Science unlock | Factor |
+  |---|---|---|
+  | T1 | ≤600 | 2 |
+  | T2 | ≤3,000 | 3 |
+  | T3 | ≤8,000 | 4 |
+  | T4 | ≤30,000 | 6 |
+  | T5 | above | 8 |
+
+  `lategame_costs.mjs` applies it to the late-game foundation and superstructure; gates (the reactor's 20 EnrichedFuel and 100 extra HighGradeSteel) are added unscaled. Every other authored cost goes through the new `scaledCost(cost, science)` at its write site:
+  - `create_frontier_expansion_content.mjs` authoredCost (catalog rows for FishHatchery, FisheryWorks, Restaurant; Hospital; GroceryStore);
+  - the hospital, grocery, hydro, research and structural generators;
+  - construction materials.
+- **Results (goods):** NuclearReactor 1,620 -> 12,085; LaunchPad 605 -> 4,855; UraniumProcessingPlant 530 -> 4,250; RadioactiveWasteRefinery 475 -> 3,775; Hospital 310 -> 1,860; DeepDrill 315 -> 940; ConcreteBlock 5 -> 15.
+- **Checks:** mirror `costs` (the steel agent's in-progress files reset to HEAD there): generation, `validate_all -SkipBlender` 50 pass + 1 report-only (`no-game-assets` cannot run outside git). Generated Data copied into the repository. Not built.
+
 ## Simpler radioactive waste chain (Claude Code session, 2026-10-29; generated and statically checked; not built or run in game)
 
 - **User:** the waste chain was too complex to manage; casks should be mixed with water into the tide's radioactive fluid and shipped off the map. Approved plan:

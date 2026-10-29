@@ -8,11 +8,11 @@
     "gate": "lategameGates adds explicit goods that prove the previous stage on top of the rule: DeepMine DeepAlloy (finite drill phase), Greenhouse Compost (fertilizer works; bed soil), NuclearReactor EnrichedFuel (first core load) and 100 extra HighGradeSteel (containment; replaced RecoveredMinerals on 2026-10-29), OilPowerPlant MachineCore (turbine governors from the precision works, after the oil chain feeds polymer)",
     "tierBand": "tier is fixed by the science unlock: the first tier whose scienceMax is at least the building's science (null = no upper bound)",
     "tiers": {
-      "T1": {"stage":"Productive settlement","scienceMax":600,"concretePerGroundCell":0,"per100BuiltCells":{"Plank":30,"Gear":12,"MetalBlock":6}},
-      "T2": {"stage":"Industrial city","scienceMax":3000,"concretePerGroundCell":0.75,"per100BuiltCells":{"Plank":25,"Gear":10,"MetalBlock":8}},
-      "T3": {"stage":"Wonder transition","scienceMax":8000,"concretePerGroundCell":1,"per100BuiltCells":{"Plank":20,"Gear":12,"MetalBlock":12,"TreatedPlank":5}},
-      "T4": {"stage":"Frontier","scienceMax":30000,"concretePerGroundCell":1.5,"per100BuiltCells":{"MetalBlock":15,"Gear":8,"TreatedPlank":8,"DeepAlloy":3}},
-      "T5": {"stage":"Launch program and reactor","scienceMax":null,"concretePerGroundCell":3,"per100BuiltCells":{"HighGradeSteel":10,"Alloy":8,"MachineCore":2,"MetalBlock":8}}
+      "T1": {"costFactor":2,"stage":"Productive settlement","scienceMax":600,"concretePerGroundCell":0,"per100BuiltCells":{"Plank":30,"Gear":12,"MetalBlock":6}},
+      "T2": {"costFactor":3,"stage":"Industrial city","scienceMax":3000,"concretePerGroundCell":0.75,"per100BuiltCells":{"Plank":25,"Gear":10,"MetalBlock":8}},
+      "T3": {"costFactor":4,"stage":"Wonder transition","scienceMax":8000,"concretePerGroundCell":1,"per100BuiltCells":{"Plank":20,"Gear":12,"MetalBlock":12,"TreatedPlank":5}},
+      "T4": {"costFactor":6,"stage":"Frontier","scienceMax":30000,"concretePerGroundCell":1.5,"per100BuiltCells":{"MetalBlock":15,"Gear":8,"TreatedPlank":8,"DeepAlloy":3}},
+      "T5": {"costFactor":8,"stage":"Launch program and reactor","scienceMax":null,"concretePerGroundCell":3,"per100BuiltCells":{"HighGradeSteel":10,"Alloy":8,"MachineCore":2,"MetalBlock":8}}
     }
   },
   "lategameTier": {
@@ -56,29 +56,29 @@
     "OilPowerPlant": [["MachineCore",4]]
   },
   "buildings": {
-    "FertilizerWorks": [["Plank",105],["Gear",40],["MetalBlock",20]],
+    "FertilizerWorks": [["Plank",205],["Gear",80],["MetalBlock",40]],
     "FishHatchery": [["Plank",40],["Gear",20],["MetalBlock",15]],
     "FisheryWorks": [["Plank",40],["Gear",20],["MetalBlock",15]],
-    "FoodPackagingWorks": [["Plank",75],["Gear",30],["MetalBlock",25],["Concrete",40]],
-    "PublicHealthLab": [["Plank",75],["Gear",30],["MetalBlock",25],["Concrete",35]],
+    "FoodPackagingWorks": [["Plank",230],["Gear",90],["MetalBlock",75],["Concrete",120]],
+    "PublicHealthLab": [["Plank",225],["Gear",90],["MetalBlock",70],["Concrete",110]],
     "Restaurant": [["Plank",40],["Gear",20],["MetalBlock",15],["Concrete",60]],
-    "Greenhouse": [["Plank",45],["Gear",20],["MetalBlock",10],["Compost",30]],
-    "ChemicalWorks": [["Plank",85],["Gear",50],["MetalBlock",50],["TreatedPlank",20],["Concrete",75]],
-    "PrecisionMachineWorks": [["Plank",60],["Gear",35],["MetalBlock",35],["TreatedPlank",15],["Concrete",65]],
-    "WaterTreatmentPlant": [["Plank",115],["Gear",45],["MetalBlock",35],["Concrete",85]],
-    "TechnicalSchool": [["Plank",70],["Gear",30],["MetalBlock",25],["Concrete",35]],
-    "UraniumProcessingPlant": [["HighGradeSteel",65],["Alloy",50],["MachineCore",15],["MetalBlock",50],["Concrete",350]],
-    "RadioactiveWasteRefinery": [["HighGradeSteel",60],["Alloy",50],["MachineCore",10],["MetalBlock",50],["Concrete",305]],
-    "ElectrolysisPlant": [["MetalBlock",85],["Gear",45],["TreatedPlank",45],["DeepAlloy",15],["Concrete",145]],
-    "CryogenicLiquefactionPlant": [["MetalBlock",80],["Gear",45],["TreatedPlank",45],["DeepAlloy",15],["Concrete",125]],
-    "RocketAssemblyHangar": [["HighGradeSteel",80],["Alloy",65],["MachineCore",15],["MetalBlock",65],["Concrete",210]],
-    "MissionControl": [["MetalBlock",95],["Gear",50],["TreatedPlank",50],["DeepAlloy",20],["Concrete",160]],
-    "LaunchPad": [["HighGradeSteel",70],["Alloy",55],["MachineCore",15],["MetalBlock",55],["Concrete",410]],
-    "NuclearReactor": [["HighGradeSteel",355],["Alloy",205],["MachineCore",50],["MetalBlock",205],["Concrete",785],["EnrichedFuel",20]],
-    "SteelMill": [["Plank",105],["Gear",65],["MetalBlock",65],["TreatedPlank",25],["Concrete",115]],
-    "ArchiveExcavation": [["MetalBlock",85],["Gear",45],["TreatedPlank",45],["DeepAlloy",15],["Concrete",125]],
-    "CryogenicTankFarm": [["MetalBlock",70],["Gear",35],["TreatedPlank",35],["DeepAlloy",15],["Concrete",165]],
-    "CoalPowerPlant": [["Plank",30],["Gear",20],["MetalBlock",20],["TreatedPlank",10],["Concrete",25]],
-    "OilPowerPlant": [["MetalBlock",30],["Gear",15],["TreatedPlank",15],["DeepAlloy",5],["Concrete",55],["MachineCore",4]]
+    "Greenhouse": [["Plank",90],["Gear",35],["MetalBlock",20],["Compost",30]],
+    "ChemicalWorks": [["Plank",335],["Gear",200],["MetalBlock",200],["TreatedPlank",85],["Concrete",310]],
+    "PrecisionMachineWorks": [["Plank",240],["Gear",145],["MetalBlock",145],["TreatedPlank",60],["Concrete",255]],
+    "WaterTreatmentPlant": [["Plank",340],["Gear",135],["MetalBlock",110],["Concrete",255]],
+    "TechnicalSchool": [["Plank",210],["Gear",85],["MetalBlock",70],["Concrete",105]],
+    "UraniumProcessingPlant": [["HighGradeSteel",515],["Alloy",410],["MachineCore",105],["MetalBlock",410],["Concrete",2810]],
+    "RadioactiveWasteRefinery": [["HighGradeSteel",485],["Alloy",385],["MachineCore",95],["MetalBlock",385],["Concrete",2425]],
+    "ElectrolysisPlant": [["MetalBlock",505],["Gear",270],["TreatedPlank",270],["DeepAlloy",100],["Concrete",865]],
+    "CryogenicLiquefactionPlant": [["MetalBlock",480],["Gear",255],["TreatedPlank",255],["DeepAlloy",95],["Concrete",755]],
+    "RocketAssemblyHangar": [["HighGradeSteel",650],["Alloy",520],["MachineCore",130],["MetalBlock",520],["Concrete",1680]],
+    "MissionControl": [["MetalBlock",555],["Gear",295],["TreatedPlank",295],["DeepAlloy",110],["Concrete",970]],
+    "LaunchPad": [["HighGradeSteel",565],["Alloy",455],["MachineCore",115],["MetalBlock",455],["Concrete",3265]],
+    "NuclearReactor": [["HighGradeSteel",2135],["Alloy",1630],["MachineCore",405],["MetalBlock",1630],["Concrete",6265],["EnrichedFuel",20]],
+    "SteelMill": [["Plank",425],["Gear",255],["MetalBlock",255],["TreatedPlank",105],["Concrete",450]],
+    "ArchiveExcavation": [["MetalBlock",500],["Gear",265],["TreatedPlank",265],["DeepAlloy",100],["Concrete",755]],
+    "CryogenicTankFarm": [["MetalBlock",420],["Gear",225],["TreatedPlank",225],["DeepAlloy",85],["Concrete",990]],
+    "CoalPowerPlant": [["Plank",125],["Gear",75],["MetalBlock",75],["TreatedPlank",30],["Concrete",100]],
+    "OilPowerPlant": [["MetalBlock",185],["Gear",100],["TreatedPlank",100],["DeepAlloy",35],["Concrete",325],["MachineCore",4]]
   }
 }

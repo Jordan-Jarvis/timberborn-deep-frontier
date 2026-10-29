@@ -8,6 +8,12 @@
 // Foundation: Concrete = groundCells x tier.concretePerGroundCell.
 // Superstructure: each good = builtCells / 100 x tier.per100BuiltCells[good].
 // Every amount rounds to the nearest multiple of 5 (minimum 5).
+// Heavy costs (user 2026-10-29: buildings were far too cheap next to the
+// vanilla wonders; the Earth Repopulator takes 5,500 goods): each tier has a
+// costFactor (x2 .. x8) applied to the rule's foundation and superstructure.
+// Gates are added after it, unscaled. Every other Deep Frontier building's
+// authored cost goes through scaledCost(cost, science), the same factor by
+// its science unlock's tier band.
 // Gate: lategameGates[id] adds explicit goods that prove the previous stage
 // (DeepMine's DeepAlloy from the finite drill phase); a gate good that the
 // rule already uses adds to its amount (the reactor's extra containment steel).
@@ -39,6 +45,7 @@ for (const [i, name] of tierNames.entries()) {
     throw new Error(`lategameRule tier ${name}: scienceMax must rise through the tiers and be null on the last`);
   }
   if (!(tier.concretePerGroundCell >= 0)) throw new Error(`lategameRule tier ${name}: concretePerGroundCell missing`);
+  if (!(Number.isInteger(tier.costFactor) && tier.costFactor >= 1)) throw new Error(`lategameRule tier ${name}: costFactor must be a positive integer`);
   for (const [good, rate] of Object.entries(tier.per100BuiltCells ?? {})) {
     if (good === 'Concrete' || !(rate > 0)) throw new Error(`lategameRule tier ${name}: invalid superstructure rate ${good}=${rate}`);
   }
@@ -51,6 +58,14 @@ for (const id of Object.keys(catalog.lategameGates ?? {})) {
 export const PLANNED = (await read('tools/frontier_progression.json')).plannedBuildings;
 export function tierForScience(science) {
   return tierNames.find((name) => rule.tiers[name].scienceMax === null || science <= rule.tiers[name].scienceMax);
+}
+
+// An authored cost ([{Id, Amount}] or [[good, amount]]) times the costFactor
+// of the tier band its science unlock falls in; the shape is kept.
+export function scaledCost(cost, science) {
+  if (!Number.isInteger(science) || science < 0) throw new Error(`scaledCost: invalid science unlock ${science}`);
+  const factor = rule.tiers[tierForScience(science)].costFactor;
+  return cost.map((row) => Array.isArray(row) ? [row[0], row[1] * factor] : {...row, Amount: row.Amount * factor});
 }
 for (const planned of PLANNED) {
   if (catalog.lategameTier[planned.id] !== planned.costTier) throw new Error(`${planned.id}: lategameTier must equal the planned costTier ${planned.costTier}`);
@@ -77,8 +92,8 @@ export async function lategameCost(id) {
   const tier = rule.tiers[tierName];
   if (!tier) throw new Error(`${id}: unknown late-game tier ${tierName}`);
   const {builtCells, groundCells} = await lategameSize(id);
-  const rows = Object.entries(tier.per100BuiltCells).map(([good, rate]) => [good, round5(builtCells / 100 * rate)]);
-  if (tier.concretePerGroundCell > 0) rows.push(['Concrete', round5(groundCells * tier.concretePerGroundCell)]);
+  const rows = Object.entries(tier.per100BuiltCells).map(([good, rate]) => [good, round5(builtCells / 100 * rate * tier.costFactor)]);
+  if (tier.concretePerGroundCell > 0) rows.push(['Concrete', round5(groundCells * tier.concretePerGroundCell * tier.costFactor)]);
   for (const [good, amount] of catalog.lategameGates[id] ?? []) {
     if (!Number.isInteger(amount) || amount <= 0) throw new Error(`${id}: invalid gate ${good}=${amount}`);
     const row = rows.find(([g]) => g === good);

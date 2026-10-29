@@ -3,6 +3,7 @@ import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {lategameBlocks,lategameColliders,wallTransputs} from './lategame_building_content.mjs';
 import {solidPowerFaces} from './power_faces.mjs';
 import {applyVanillaSmoke} from './vanilla_smoke.mjs';
+import {scaledCost} from './lategame_costs.mjs';
 const root=new URL('../',import.meta.url);
 const data=new URL('src/DeepFrontier/Data/',root);
 const vanilla=new URL('vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources/',root);
@@ -42,7 +43,7 @@ export async function applyGroceryStore(value) {
   value.BuildingAccessibleSpec={LocalAccess:xyz([dx,dz,dy]),ForceOneFinalAccess:false};
   value.EnterableSpec={OperatingState:'Finished',LimitedCapacityFinished:false,CapacityFinished:0,LimitedCapacityUnfinished:false,CapacityUnfinished:0};
   value.WorkplaceSpec={MaxWorkers:shop.workers,DefaultWorkers:shop.workers,DefaultWorkerType:'Beaver',DisallowOtherWorkerTypes:true,WorkerTypeUnlockCosts:[]};
-  Object.assign(value.BuildingSpec,{ScienceCost:shop.scienceUnlock,BuildingCost:shop.buildingCost,SelectionSoundName:'Warehouse',LoopingSoundName:''});
+  Object.assign(value.BuildingSpec,{ScienceCost:shop.scienceUnlock,BuildingCost:scaledCost(shop.buildingCost,shop.scienceUnlock),SelectionSoundName:'Warehouse',LoopingSoundName:''});
   value.MechanicalNodeSpec={PowerInput:shop.powerDemandHp,PowerOutput:0,IsShaft:false};
   value.TransputProviderSpec={IgnoreRotation:false,Transputs:wallTransputs(solidPowerFaces(blocks,size,{exclude:[door.entrance,door.doorstep]}),reg)};
   value.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};

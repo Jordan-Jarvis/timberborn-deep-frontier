@@ -5,23 +5,23 @@
     "BuildingCost": [
       {
         "Id": "HighGradeSteel",
-        "Amount": 60
+        "Amount": 485
       },
       {
         "Id": "Alloy",
-        "Amount": 50
+        "Amount": 385
       },
       {
         "Id": "MachineCore",
-        "Amount": 10
+        "Amount": 95
       },
       {
         "Id": "MetalBlock",
-        "Amount": 50
+        "Amount": 385
       },
       {
         "Id": "Concrete",
-        "Amount": 305
+        "Amount": 2425
       }
     ],
     "ScienceCost": 500000,

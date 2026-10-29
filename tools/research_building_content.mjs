@@ -5,6 +5,7 @@ import {dirname,resolve} from 'node:path';
 import {industrialColliders} from './industrial_occupancy.mjs';
 import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {applyVanillaSmoke,sceneSmokeRegistration} from './vanilla_smoke.mjs';
+import {scaledCost} from './lategame_costs.mjs';
 const root=new URL('../',import.meta.url);
 const read=async path=>JSON.parse(await readFile(new URL(path,root),'utf8'));
 const xyz=([X,Y,Z])=>({X,Y,Z});
@@ -84,7 +85,7 @@ export async function researchContent() {
     }
     const model=`Buildings/Science/${b.id}/${b.id}.IronTeeth`;
     v.TemplateSpec={TemplateName:b.id+'.IronTeeth',BackwardCompatibleTemplateNames:[],RequiredFeatureToggle:'',DisablingFeatureToggle:''};
-    Object.assign(v.BuildingSpec,{BuildingCost:b.cost.map(([Id,Amount])=>({Id,Amount})),ScienceCost:b.scienceUnlock});
+    Object.assign(v.BuildingSpec,{BuildingCost:scaledCost(b.cost.map(([Id,Amount])=>({Id,Amount})),b.scienceUnlock),ScienceCost:b.scienceUnlock});
     Object.assign(v.BuildingModelSpec,{FinishedUncoveredModelName:'',UndergroundModelName:'',UndergroundModelDepth:0});
     v.WorkplaceSpec={MaxWorkers:b.workers,DefaultWorkers:b.workers,DefaultWorkerType:'Beaver',
       DisallowOtherWorkerTypes:false,WorkerTypeUnlockCosts:[{WorkerType:'Bot',ScienceCost:2000}]};

@@ -3,6 +3,7 @@ import {solidPowerFaces} from './power_faces.mjs';
 import {fileURLToPath} from 'node:url';
 import {dirname,resolve} from 'node:path';
 import {industrialColliders} from './industrial_occupancy.mjs';
+import {scaledCost} from './lategame_costs.mjs';
 
 const root=new URL('../',import.meta.url);
 const read=async path=>JSON.parse(await readFile(new URL(path,root),'utf8'));
@@ -63,7 +64,7 @@ export async function hydroBlueprint() {
   const model=`Buildings/Power/${b.id}/${b.id}.IronTeeth`;
   v.TemplateSpec={TemplateName:b.id+'.IronTeeth',BackwardCompatibleTemplateNames:[],
     RequiredFeatureToggle:'',DisablingFeatureToggle:''};
-  v.BuildingSpec.BuildingCost=b.cost.map(([Id,Amount])=>({Id,Amount}));
+  v.BuildingSpec.BuildingCost=scaledCost(b.cost.map(([Id,Amount])=>({Id,Amount})),b.science);
   v.BuildingSpec.ScienceCost=b.science;
   v.BuildingSpec.SelectionSoundName='WaterWheel';
   // Same mechanical loop as the native Wind Turbine; PowerGeneratorSoundsSpec

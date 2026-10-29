@@ -5,11 +5,11 @@
     "BuildingCost": [
       {
         "Id": "Limestone",
-        "Amount": 4
+        "Amount": 12
       },
       {
         "Id": "Cement",
-        "Amount": 1
+        "Amount": 3
       }
     ],
     "ScienceCost": 900,

@@ -3,6 +3,7 @@ import {structureBlocks,authoredColliders,roomPowerFaces} from './grid_structure
 import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {wallRoomPowerFaces} from './civic_wall_faces.mjs';
 import {applyVanillaSmoke,sceneSmokeRegistration} from './vanilla_smoke.mjs';
+import {scaledCost} from './lategame_costs.mjs';
 const root=new URL('../',import.meta.url);
 const data=new URL('src/DeepFrontier/Data/',root);
 const vanilla=new URL('vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources/',root);
@@ -55,7 +56,7 @@ export async function applyHospital(value) {
   // Native Enterer hides indoor patients. Staff walk to the ward work point
   // without entering this patient-capacity pool.
   value.WorkplaceSpec={MaxWorkers:care.workers,DefaultWorkers:care.workers,DefaultWorkerType:'Beaver',DisallowOtherWorkerTypes:true,WorkerTypeUnlockCosts:[]};
-  Object.assign(value.BuildingSpec,{ScienceCost:care.scienceUnlock,BuildingCost:care.buildingCost,SelectionSoundName:'MedicalBed',LoopingSoundName:''});
+  Object.assign(value.BuildingSpec,{ScienceCost:care.scienceUnlock,BuildingCost:scaledCost(care.buildingCost,care.scienceUnlock),SelectionSoundName:'MedicalBed',LoopingSoundName:''});
   value.MechanicalNodeSpec={PowerInput:care.powerDemandHp,PowerOutput:0,IsShaft:false};
   value.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
   const colliders=authoredColliders(await read(new URL('outputs/reference-studies/Hospital-structure.json',root)),layout.structure,layout.baseZ);

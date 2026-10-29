@@ -6,7 +6,7 @@ import {applyFishery,applyHatchery,authorShoreFishing,WATERSIDE_ROWS} from './fi
 import {applyHospital,authorHospitalNeed,HOSPITAL_DESCRIPTION,HOSPITAL_LOCALIZATION} from './hospital_building_content.mjs';
 import {applyGroceryStore,authorGroceryNeed} from './grocery_building_content.mjs';
 import {LATEGAME,applyLategame,studyPipePort} from './lategame_building_content.mjs';
-import {lategameCost} from './lategame_costs.mjs';
+import {lategameCost, scaledCost} from './lategame_costs.mjs';
 import {SCHOOL_WORKSHOP_SPECS} from './workforce_risk_content.mjs';
 
 // Data-only expansion layer. Every template is cloned from a captured 1.1
@@ -389,15 +389,18 @@ function setGeometry(value, id) {
   if (value.Children?.['#Unfinished']) value.Children['#Unfinished'].CollidersSpec = clone(collider);
 }
 
-function authoredCost(id) {
-  if(id==='Hospital')return clone(progression.hospital.buildingCost);
-  if(id==='GroceryStore')return clone(progression.groceryStore.buildingCost);
+// Rule-owned rows (late-game buildings) already carry their tier's costFactor;
+// every other authored cost is scaled here by its science unlock's tier.
+function authoredCost(id, science) {
+  if(id==='Hospital')return scaledCost(clone(progression.hospital.buildingCost),science);
+  if(id==='GroceryStore')return scaledCost(clone(progression.groceryStore.buildingCost),science);
   if(!Object.hasOwn(constructionCosts.buildings,id))throw new Error('Missing explicit construction cost: '+id);
   const rows=constructionCosts.buildings[id];
   if(new Set(rows.map(([good])=>good)).size!==rows.length||
      rows.some(([good,amount])=>typeof good!=='string'||!Number.isInteger(amount)||amount<=0))
     throw new Error('Invalid authored construction cost: '+id);
-  return rows.map(([Id,Amount])=>({Id,Amount}));
+  const cost=rows.map(([Id,Amount])=>({Id,Amount}));
+  return Object.hasOwn(constructionCosts.lategameTier,id)?cost:scaledCost(cost,science);
 }
 
 async function makeBuilding(definition) {
@@ -410,7 +413,7 @@ async function makeBuilding(definition) {
   const value = clone(await readJson(vanilla(templatePath)));
   value.BuildingSpec = {
     ...value.BuildingSpec,
-    BuildingCost: authoredCost(id),
+    BuildingCost: authoredCost(id, science),
     ScienceCost: science,
   };
   value.TemplateSpec = { ...value.TemplateSpec, TemplateName: `${id}.IronTeeth`, BackwardCompatibleTemplateNames: [] };
@@ -583,7 +586,7 @@ async function makeReactor() {
   // One native Manufactory owns fuel, coolant and waste. Combining it with
   // GoodConsumingBuilding adds two IGoodProcessor components and cannot load.
   const value = clone(await readJson(vanilla('Buildings/Metal/Smelter/Smelter.IronTeeth.blueprint.json')));
-  value.BuildingSpec = { ...value.BuildingSpec, BuildingCost: authoredCost('NuclearReactor'), ScienceCost: progression.implementedBuildingScienceOverrides.NuclearReactor };
+  value.BuildingSpec = { ...value.BuildingSpec, BuildingCost: authoredCost('NuclearReactor', progression.implementedBuildingScienceOverrides.NuclearReactor), ScienceCost: progression.implementedBuildingScienceOverrides.NuclearReactor };
   value.TemplateSpec = { ...value.TemplateSpec, TemplateName: 'NuclearReactor.IronTeeth', BackwardCompatibleTemplateNames: [] };
   value.PlaceableBlockObjectSpec = { ...value.PlaceableBlockObjectSpec, ToolGroupId: 'Power', ToolOrder: 250, DevModeTool: false };
   setLabels(value, 'NuclearReactor', 'Buildings/Power/NuclearReactor');
@@ -623,7 +626,7 @@ async function makePowerPlant(entry) {
   for (const key of ['GoodConsumingBuildingSpec', 'GoodPoweredGeneratorSpec', 'PowerGeneratorSoundsSpec', 'GoodPoweredGeneratorAnimatorSpec',
     'MechanicalNodeIlluminatorSpec', 'PowerGeneratorParticleControllerSpec', 'MechanicalBuildingSpec'])
     if (!Object.hasOwn(value, key)) throw new Error(`Vanilla Steam Engine no longer has ${key}`);
-  value.BuildingSpec = { ...value.BuildingSpec, BuildingCost: authoredCost(id), ScienceCost: entry.scienceUnlock };
+  value.BuildingSpec = { ...value.BuildingSpec, BuildingCost: authoredCost(id, entry.scienceUnlock), ScienceCost: entry.scienceUnlock };
   value.TemplateSpec = { ...value.TemplateSpec, TemplateName: `${id}.IronTeeth`, BackwardCompatibleTemplateNames: [] };
   value.PlaceableBlockObjectSpec = { ...value.PlaceableBlockObjectSpec, ToolGroupId: entry.toolGroup, ToolOrder: entry.toolOrder, DevModeTool: false };
   setLabels(value, id, outputPath);

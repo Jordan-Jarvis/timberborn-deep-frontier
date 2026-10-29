@@ -16,6 +16,17 @@ Changes since 0.5.0, the first Workshop release.
 - **Old saves:** a school saved as a staffed workshop loads with empty supplies.
 
 ### Balance
+- **Much heavier construction costs.** Every Deep Frontier building costs 2 to 8 times as much, by its science tier:
+
+  | Science unlock | Factor |
+  |---|---|
+  | up to 600 | ×2 |
+  | up to 3,000 | ×3 |
+  | up to 8,000 | ×4 |
+  | up to 30,000 | ×6 |
+  | above 30,000 | ×8 |
+
+  The Nuclear Reactor now takes about 12,000 goods, more than double the vanilla Earth Repopulator's 5,500. Other examples: Launch Pad about 4,900, Hospital about 1,900, Deep Drill about 940. Large concrete and steel works now pay off.
 - **Late-game science** now climbs steeply towards the reactor:
 
   | Building | Science |

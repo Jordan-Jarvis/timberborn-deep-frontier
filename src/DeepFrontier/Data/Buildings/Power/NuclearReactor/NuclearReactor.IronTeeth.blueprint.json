@@ -5,23 +5,23 @@
     "BuildingCost": [
       {
         "Id": "HighGradeSteel",
-        "Amount": 355
+        "Amount": 2135
       },
       {
         "Id": "Alloy",
-        "Amount": 205
+        "Amount": 1630
       },
       {
         "Id": "MachineCore",
-        "Amount": 50
+        "Amount": 405
       },
       {
         "Id": "MetalBlock",
-        "Amount": 205
+        "Amount": 1630
       },
       {
         "Id": "Concrete",
-        "Amount": 785
+        "Amount": 6265
       },
       {
         "Id": "EnrichedFuel",
