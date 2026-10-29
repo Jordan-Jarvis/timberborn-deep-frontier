@@ -53565,6 +53565,16 @@
     "MaintenanceIntervalHours": 360,
     "MaintenanceWarningHours": 48,
     "MaintenanceOutageHours": 24,
+    "MaintenanceGoods": [
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 20
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 40
+      }
+    ],
     "HeatPerFaultPerHour": 0.025,
     "CoolingPerHour": 0.025,
     "WarningHeat": 0.6,

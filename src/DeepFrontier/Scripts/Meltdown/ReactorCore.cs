@@ -68,12 +68,13 @@ namespace DeepFrontier.Scripts.Meltdown {
     private readonly IDayNightCycle _cycle;
     private readonly NotificationBus _notifications;
     private readonly ILoc _loc;
+    private readonly IGoodService _goods;
 
     private Manufactory _manufactory;
     private Workshop _workshop;
     private BlockableObject _blockable;
     private StatusToggle _overheatStatus, _scramStatus, _coolantDryStatus, _wasteFullStatus, _coolantLowStatus, _crewStatus,
-      _maintenanceDueStatus, _maintenanceOverdueStatus;
+      _maintenanceDueStatus, _maintenanceOverdueStatus, _maintenanceGoodsStatus;
     private readonly List<string> _productIds = new();
 
     private float _heat;
@@ -84,8 +85,8 @@ namespace DeepFrontier.Scripts.Meltdown {
     private bool _warningPosted, _coolantDryPosted, _wasteFullPosted, _imminentPosted, _maintenancePosted;
 
     public ReactorCore(MeltdownService meltdowns, RecipeSpecService recipes, IDayNightCycle cycle,
-        NotificationBus notifications, ILoc loc) {
-      _meltdowns = meltdowns; _recipes = recipes; _cycle = cycle; _notifications = notifications; _loc = loc;
+        NotificationBus notifications, ILoc loc, IGoodService goods) {
+      _meltdowns = meltdowns; _recipes = recipes; _cycle = cycle; _notifications = notifications; _loc = loc; _goods = goods;
     }
 
     public ReactorMeltdownSpec Spec { get; private set; }
@@ -106,6 +107,8 @@ namespace DeepFrontier.Scripts.Meltdown {
     public int OperatorsOnDuty { get; private set; }
     public bool CrewShort { get; private set; }
     public bool MaintenanceOverdue { get; private set; }
+    // A maintenance stop is long enough but its repair materials are missing.
+    public bool MaintenanceGoodsShort { get; private set; }
     public float IdleHours => _idleHours;
     // Every product of the reactor recipes (radioactive waste and sludge), for the panel.
     public IReadOnlyList<string> ProductIds => _productIds;
@@ -161,7 +164,8 @@ namespace DeepFrontier.Scripts.Meltdown {
       if (!(s.MeltdownIrradiationDose > 1f) || float.IsInfinity(s.MeltdownIrradiationDose)) Fail("MeltdownIrradiationDose must exceed 1");
     }
 
-    // Every reactor recipe must burn the same coolant amount per cycle.
+    // Every reactor recipe must burn the same coolant amount per cycle and
+    // take every maintenance good as an ingredient with room for its amount.
     private void ReadCoolantRecipe(ManufactorySpec manufactory) {
       if (manufactory.ProductionRecipeIds.IsDefaultOrEmpty)
         throw new InvalidOperationException($"{Name}: the reactor has no recipes");
@@ -175,6 +179,13 @@ namespace DeepFrontier.Scripts.Meltdown {
           throw new InvalidOperationException($"{Name}: reactor recipes disagree on coolant per cycle or cycle length");
         CoolantPerCycle = amount;
         CycleHours = recipe.CycleDurationInHours;
+        foreach (var good in Spec.MaintenanceGoods) {
+          int perCycle = 0;
+          foreach (var ingredient in recipe.Ingredients)
+            if (ingredient.Id == good.Id) perCycle = ingredient.Amount;
+          if (good.Amount <= 0 || perCycle <= 0 || perCycle * recipe.CyclesCapacity < good.Amount)
+            throw new InvalidOperationException($"{Name}: maintenance good {good.Id} x{good.Amount} must be an ingredient of reactor recipe {id} with room for it");
+        }
         foreach (var product in recipe.Products)
           if (!_productIds.Contains(product.Id)) _productIds.Add(product.Id);
       }
@@ -196,6 +207,8 @@ namespace DeepFrontier.Scripts.Meltdown {
         _loc.T(MeltdownLoc.StatusMaintenanceDue, Hours(Spec.MaintenanceOutageHours)));
       _maintenanceOverdueStatus = StatusToggle.CreateNormalStatusWithFloatingIcon(MeltdownSprites.Maintenance,
         _loc.T(MeltdownLoc.StatusMaintenanceOverdue, Hours(Spec.MaintenanceOutageHours)));
+      _maintenanceGoodsStatus = StatusToggle.CreateNormalStatus(MeltdownSprites.Maintenance,
+        _loc.T(MeltdownLoc.StatusMaintenanceGoods, MaintenanceGoodsText()));
       var subject = GetComponent<StatusSubject>();
       foreach (var status in Statuses()) subject.RegisterStatus(status);
     }
@@ -203,7 +216,7 @@ namespace DeepFrontier.Scripts.Meltdown {
     private IEnumerable<StatusToggle> Statuses() {
       yield return _overheatStatus; yield return _scramStatus; yield return _coolantDryStatus; yield return _wasteFullStatus;
       yield return _coolantLowStatus;
-      yield return _crewStatus; yield return _maintenanceDueStatus; yield return _maintenanceOverdueStatus;
+      yield return _crewStatus; yield return _maintenanceDueStatus; yield return _maintenanceOverdueStatus; yield return _maintenanceGoodsStatus;
     }
 
     public void OnEnterFinishedState() {
@@ -255,7 +268,9 @@ namespace DeepFrontier.Scripts.Meltdown {
         _idleHours = 0f;
       } else {
         _idleHours += hours;
-        if (_idleHours >= Spec.MaintenanceOutageHours && _runHoursSinceMaintenance > 0f) CompleteMaintenance();
+        bool stopLongEnough = _idleHours >= Spec.MaintenanceOutageHours && _runHoursSinceMaintenance > 0f;
+        MaintenanceGoodsShort = stopLongEnough && !HasMaintenanceGoods();
+        if (stopLongEnough && !MaintenanceGoodsShort) CompleteMaintenance();
       }
       MaintenanceOverdue = _runHoursSinceMaintenance >= Spec.MaintenanceIntervalHours;
       Uncooled = !blocked && (WasteFull || CoolantDry && (running || _heat > 0f));
@@ -291,7 +306,22 @@ namespace DeepFrontier.Scripts.Meltdown {
       return false;
     }
 
+    private bool HasMaintenanceGoods() {
+      foreach (var good in Spec.MaintenanceGoods)
+        if (_manufactory.Inventory.UnreservedAmountInStock(good.Id) < good.Amount) return false;
+      return true;
+    }
+
+    // "20 High-Grade Steel, 40 Concrete", for statuses and the panel.
+    internal string MaintenanceGoodsText() {
+      var parts = new List<string>();
+      foreach (var good in Spec.MaintenanceGoods) parts.Add($"{good.Amount} {_goods.GetGood(good.Id).PluralDisplayName.Value}");
+      return string.Join(", ", parts);
+    }
+
     private void CompleteMaintenance() {
+      foreach (var good in Spec.MaintenanceGoods) _manufactory.Inventory.TakeConsumed(new GoodAmount(good.Id, good.Amount));
+      MaintenanceGoodsShort = false;
       bool wasDue = _runHoursSinceMaintenance >= Spec.MaintenanceIntervalHours - Spec.MaintenanceWarningHours;
       _runHoursSinceMaintenance = 0f;
       _maintenancePosted = false;
@@ -351,6 +381,7 @@ namespace DeepFrontier.Scripts.Meltdown {
       _crewStatus.Toggle(CrewShort);
       _maintenanceOverdueStatus.Toggle(MaintenanceOverdue);
       _maintenanceDueStatus.Toggle(!MaintenanceOverdue && RunHoursUntilMaintenance <= Spec.MaintenanceWarningHours);
+      _maintenanceGoodsStatus.Toggle(MaintenanceGoodsShort);
     }
 
     internal static int Pct(float fraction) => Mathf.RoundToInt(fraction * 100f);

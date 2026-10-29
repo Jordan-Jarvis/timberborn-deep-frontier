@@ -1,4 +1,6 @@
+using System.Collections.Immutable;
 using Timberborn.BlueprintSystem;
+using Timberborn.Goods;
 
 namespace DeepFrontier.Scripts.Meltdown {
   // Reactor meltdown and radioactive waste leaks. Every value is authored in
@@ -20,6 +22,10 @@ namespace DeepFrontier.Scripts.Meltdown {
     [Serialize] public float MaintenanceIntervalHours { get; init; }
     [Serialize] public float MaintenanceWarningHours { get; init; }
     [Serialize] public float MaintenanceOutageHours { get; init; }
+    // Repair materials the maintenance stop consumes from the reactor's own
+    // inventory (each must be a reactor recipe ingredient with room for the
+    // amount); without them the stop does not complete.
+    [Serialize] public ImmutableArray<GoodAmountSpec> MaintenanceGoods { get; init; }
     // Heat balance per game hour: each heating cause (a dry core, and while
     // running a short crew or overdue maintenance) adds HeatPerFaultPerHour;
     // otherwise a core with coolant, or a paused one, cools at CoolingPerHour.

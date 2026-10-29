@@ -15,6 +15,7 @@ namespace DeepFrontier.Scripts.Meltdown {
     public const string StatusCoolantLow = "DeepFrontier.Meltdown.Status.CoolantLow";
     public const string StatusCrew = "DeepFrontier.Meltdown.Status.Crew";
     public const string StatusMaintenanceDue = "DeepFrontier.Meltdown.Status.MaintenanceDue";
+    public const string StatusMaintenanceGoods = "DeepFrontier.Meltdown.Status.MaintenanceGoods";
     public const string StatusMaintenanceOverdue = "DeepFrontier.Meltdown.Status.MaintenanceOverdue";
 
     public const string NotificationWarning = "DeepFrontier.Meltdown.Notification.Warning";
@@ -56,6 +57,7 @@ namespace DeepFrontier.Scripts.Meltdown {
     public const string PanelWaste = "DeepFrontier.Meltdown.Panel.Waste";
     public const string PanelCrew = "DeepFrontier.Meltdown.Panel.Crew";
     public const string PanelMaintenanceDue = "DeepFrontier.Meltdown.Panel.MaintenanceDue";
+    public const string PanelMaintenanceGoods = "DeepFrontier.Meltdown.Panel.MaintenanceGoods";
     public const string PanelMaintenanceOverdue = "DeepFrontier.Meltdown.Panel.MaintenanceOverdue";
     public const string PanelRules = "DeepFrontier.Meltdown.Panel.Rules";
     public const string PanelConsequences = "DeepFrontier.Meltdown.Panel.Consequences";

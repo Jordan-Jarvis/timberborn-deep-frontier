@@ -4,6 +4,14 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Reactor consumes steel and concrete: casks and maintenance repairs (Claude Code session, 2026-10-29; generated and validated in mirror `costs`; not built or run in game)
+
+- **User:** building materials need ongoing industrial uses. Chosen: reactor casks, drill bits, maintenance stops.
+- **Casks:** `NuclearWaste` now takes 6 ReactorCoolantWater + 1 HighGradeSteel + 2 Concrete per 2 h cycle.
+- **Maintenance:** `ReactorMeltdownSpec.MaintenanceGoods` (`ImmutableArray<GoodAmountSpec>`) = 20 HighGradeSteel + 40 Concrete, consumed from the reactor inventory when a 24-hour stop completes. Without them the stop waits, and a "waiting for repair materials" status shows. `ReactorCore` requires each maintenance good to be an ingredient of every reactor recipe with room for its amount; the panel lists the materials.
+- **Drill bits:** the Deep Well's High-Grade Steel bits are in that agent's work. The Deep Drill and Deep Mine run 2-minute cycles, so integer recipe ingredients cannot express a small per-hour bit use; they need an upkeep inventory like BotMaintenance. Not done.
+- **Checks:** mirror `costs` (other agents' files at HEAD): generation, `validate_meltdown_content`, `validate_all -SkipBlender` 50 pass + 1 report-only (`no-game-assets` cannot run outside git), compile.
+
 ## Heavy construction costs: x2 to x8 by science tier (Claude Code session, 2026-10-29; generated and validated in mirror `costs`; not built or run in game)
 
 - **User:** the whole building set was far too cheap next to the vanilla wonders (Earth Repopulator 5,500 goods; the reactor was 1,620). Chosen: "Heavy x2 to x8".

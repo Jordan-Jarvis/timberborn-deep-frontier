@@ -51,6 +51,7 @@ Changes since 0.5.0, the first Workshop release.
   - Pausing the reactor, or switching it off by automation, is still a safe cold shutdown. It cools at the same slow rate.
   - A short crew or overdue maintenance heats the core only up to 85%, so on its own it costs power but never causes a meltdown.
 - **Panel:** the reactor panel shows current power output, waste and sludge storage, and the time to a meltdown or to cooling down.
+- **Steel and concrete upkeep:** each reactor cycle seals its spent fuel in a cask of 1 High-Grade Steel and 2 Concrete. Each maintenance stop uses 20 High-Grade Steel and 40 Concrete from the reactor's stock; without them, maintenance waits.
 
 ### Radioactive waste
 - **Simpler disposal:** the Radioactive Waste Export now dissolves spent-fuel casks in water and ships them off the map: 2 casks and 8 Water per hour. One building now disposes of casks, Radioactive Water and Contaminated Water, and the Waste Vault is just a buffer.

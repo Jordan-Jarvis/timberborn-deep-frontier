@@ -200,7 +200,9 @@ const recipeDefinitions = [
   // RadioactiveSludge, and the refinery concentrates casks into sludge for the
   // map-edge Radioactive Waste Export. RadioactiveSludge and ContaminatedWater
   // are defined by tools/radiation_content.mjs later in the generation chain.
-  ['NuclearWaste', 'RadioactiveWaste', 2, [{ Id: 'ReactorCoolantWater', Amount: 6 }], [{ Id: 'RadioactiveWaste', Amount: 1 }, { Id: 'RadioactiveSludge', Amount: 1 }], 'RadioactiveWaste'],
+  // Each cycle's spent-fuel cask is steel and concrete (user 2026-10-29:
+  // building materials need ongoing industrial uses).
+  ['NuclearWaste', 'RadioactiveWaste', 2, [{ Id: 'ReactorCoolantWater', Amount: 6 }, { Id: 'HighGradeSteel', Amount: 1 }, { Id: 'Concrete', Amount: 2 }], [{ Id: 'RadioactiveWaste', Amount: 1 }, { Id: 'RadioactiveSludge', Amount: 1 }], 'RadioactiveWaste'],
   ['WasteRefining', 'RadioactiveSludge', 8.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'Water', Amount: 8 }], [{ Id: 'RadioactiveSludge', Amount: 6 }], 'RadioactiveSludge'],
   ['DecontaminateWater', 'Water', 4.0, [{ Id: 'ContaminatedWater', Amount: 10 }, { Id: 'Chemical', Amount: 1 }], [{ Id: 'Water', Amount: 8 }, { Id: 'RadioactiveSludge', Amount: 1 }], 'ContaminatedWater'],
   ['GuidanceTelemetry', 'RecoveredTelemetry', 1.0, [{ Id: 'GuidanceComputer', Amount: 1 }, { Id: 'ArchiveData', Amount: 1 }], [{ Id: 'RecoveredTelemetry', Amount: 1 }], 'RecoveredTelemetry'],

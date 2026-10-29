@@ -48,6 +48,9 @@ export const REACTOR_TUNING = {
   MaintenanceIntervalHours: 360,
   MaintenanceWarningHours: 48,
   MaintenanceOutageHours: 24,
+  // Repairs at each maintenance stop (user 2026-10-29: building materials need
+  // ongoing industrial uses); both are reactor recipe ingredients (the casks).
+  MaintenanceGoods: [{Id: 'HighGradeSteel', Amount: 20}, {Id: 'Concrete', Amount: 40}],
   HeatPerFaultPerHour: 0.025,
   CoolingPerHour: 0.025,
   WarningHeat: 0.6,
@@ -122,7 +125,7 @@ export function wasteLeakSpecs(batch, volumePerGood) {
 export function descriptions(reactor, leaks, refineryPowerHp) {
   const t = reactor, v = leaks.vault, r = leaks.refinery;
   return {
-    NuclearReactor: `${PRODUCER_DESCRIPTIONS.NuclearReactor} Its power output falls as its core heats. Without coolant, or with its radioactive waste or radioactive water storage full, a hot core keeps heating, running or stopped, as fast as it cools otherwise, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. Fewer than ${t.MinOperators} trained operators working or overdue maintenance (a ${t.MaintenanceOutageHours}-hour stop every ${t.MaintenanceIntervalHours} running hours) also heat it while it runs, up to ${pct(t.FaultHeatLimit)}%. At 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown.`,
+    NuclearReactor: `${PRODUCER_DESCRIPTIONS.NuclearReactor} Its power output falls as its core heats. Without coolant, or with its radioactive waste or radioactive water storage full, a hot core keeps heating, running or stopped, as fast as it cools otherwise, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. Each cycle seals its spent fuel in a cask of High-Grade Steel and Concrete. Fewer than ${t.MinOperators} trained operators working or overdue maintenance (a ${t.MaintenanceOutageHours}-hour stop every ${t.MaintenanceIntervalHours} running hours, using ${t.MaintenanceGoods.map((g) => `${g.Amount} ${g.Id === 'HighGradeSteel' ? 'High-Grade Steel' : g.Id}`).join(' and ')}) also heat it while it runs, up to ${pct(t.FaultHeatLimit)}%. At 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown.`,
     RadioactiveWasteVault: `${PRODUCER_DESCRIPTIONS.RadioactiveWasteVault} Keep it below full: when full, ${v.GoodsPerLeak} casks breach every ${v.LeakIntervalHours} hours, spilling radioactive water and irradiating the soil within ${v.SoilRadius} tiles, which kills crops.`,
     RadioactiveWasteRefinery: `Dissolves spent-fuel casks in water into radioactive water and recovered minerals, and cleans contaminated water. Requires ${refineryPowerHp} hp. Casks can also go straight to a Radioactive Waste Export. Haul its radioactive water to a Radioactive Water Outfall or Radioactive Waste Export: when its tanks are full, ${r.GoodsPerLeak} radioactive water leaks every ${r.LeakIntervalHours} hours and irradiates the soil within ${r.SoilRadius} tiles, killing crops. Pausing it seals the tanks.`,
   };
@@ -143,6 +146,7 @@ export function localizationRows(treatmentDays) {
     ['DeepFrontier.Meltdown.Status.CoolantLow', 'Coolant reserve below {0} hours of running.'],
     ['DeepFrontier.Meltdown.Status.Crew', 'Fewer than {0} operators working: the core heats while it runs, costing power.'],
     ['DeepFrontier.Meltdown.Status.MaintenanceDue', 'Maintenance due soon: plan a {0}-hour stop.'],
+    ['DeepFrontier.Meltdown.Status.MaintenanceGoods', 'Maintenance stop waiting for repair materials: {0}.'],
     ['DeepFrontier.Meltdown.Status.MaintenanceOverdue', 'Maintenance overdue: the core heats while it runs, costing power. Stop the reactor for {0} hours.'],
     ['DeepFrontier.Meltdown.Notification.Warning', 'Reactor overheating: core heat {0}% ({1}); power output down to {2}%. It melts down at 100%.'],
     ['DeepFrontier.Meltdown.Notification.CoolantDry', 'Reactor coolant dry: core heat {0}% and rising {1}% per hour. A hot core keeps heating without coolant, running or stopped, and melts down in about {2} hours. Deliver reactor coolant water, or pause the reactor for a safe cold shutdown.'],
@@ -181,6 +185,7 @@ export function localizationRows(treatmentDays) {
     ['DeepFrontier.Meltdown.Panel.Waste', '{0}: {1} of {2} stored (full storage heats the core).'],
     ['DeepFrontier.Meltdown.Panel.Crew', 'Operators working: {0} (needs {1} while running).'],
     ['DeepFrontier.Meltdown.Panel.MaintenanceDue', 'Maintenance due in {0} running hours; it needs a {1}-hour stop.'],
+    ['DeepFrontier.Meltdown.Panel.MaintenanceGoods', 'Each maintenance stop uses {0} from the reactor stock.'],
     ['DeepFrontier.Meltdown.Panel.MaintenanceOverdue', 'Maintenance overdue: stop the reactor for {0} hours ({1} so far).'],
     ['DeepFrontier.Meltdown.Panel.Rules', 'Without coolant, or with its radioactive waste or radioactive water full, a hot core heats {0}% per hour, running or stopped; otherwise it cools {1}% per hour, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. While running, fewer than {2} operators working or overdue maintenance (a {3}-hour stop every {4} running hours) also heat it, up to {5}%.'],
     ['DeepFrontier.Meltdown.Panel.Consequences', 'A meltdown destroys the reactor: beavers within {0} tiles die, beavers within {1} tiles are irradiated, radioactive water pours out for {2} days and soil and water within {3} tiles stay radioactive for weeks. Pausing the reactor is a safe cold shutdown.'],

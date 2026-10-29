@@ -59,7 +59,8 @@ namespace DeepFrontier.Scripts.Meltdown {
         + "\n" + F(MeltdownLoc.PanelCrew, core.OperatorsOnDuty, s.MinOperators)
         + "\n" + (core.MaintenanceOverdue
           ? F(MeltdownLoc.PanelMaintenanceOverdue, Hours(s.MaintenanceOutageHours), Mathf.FloorToInt(core.IdleHours))
-          : F(MeltdownLoc.PanelMaintenanceDue, Hours(core.RunHoursUntilMaintenance), Hours(s.MaintenanceOutageHours)));
+          : F(MeltdownLoc.PanelMaintenanceDue, Hours(core.RunHoursUntilMaintenance), Hours(s.MaintenanceOutageHours)))
+        + "\n" + F(MeltdownLoc.PanelMaintenanceGoods, core.MaintenanceGoodsText());
       bool tripped = core.Scram != ReactorScram.None;
       _scram.style.display = tripped ? DisplayStyle.None : DisplayStyle.Flex;
       _scram.SetEnabled(core.CanScram);

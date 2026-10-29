@@ -77,7 +77,7 @@ assert(leaks.vault.GoodId === WASTE && leaks.refinery.GoodId === SLUDGE, 'leak g
 const specs = await source('MeltdownSpecs.cs');
 const recordKeys = (record) => {
   const body = specs.match(new RegExp(`record ${record} : ComponentSpec \\{([\\s\\S]*?)\\n  \\}`))?.[1] ?? '';
-  return [...body.matchAll(/\[Serialize\] public \w+ (\w+) \{ get; init; \}/g)].map((m) => m[1]);
+  return [...body.matchAll(/\[Serialize\] public [\w<>]+ (\w+) \{ get; init; \}/g)].map((m) => m[1]);
 };
 for (const [record, keys] of Object.entries(SPEC_KEYS)) assert(same(recordKeys(record), keys), `${record}: C# [Serialize] properties differ from the authored keys`);
 assert(TRIGGERS.every((trigger) => specs.includes(`public const string ${trigger} = "${trigger}";`)), 'WasteLeakTriggers constants match TRIGGERS');

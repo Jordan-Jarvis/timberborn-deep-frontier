@@ -8,6 +8,14 @@
       {
         "Id": "ReactorCoolantWater",
         "Amount": 6
+      },
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 1
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 2
       }
     ],
     "Products": [
