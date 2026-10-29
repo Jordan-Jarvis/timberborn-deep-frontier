@@ -75,6 +75,31 @@ namespace DeepFrontier.Scripts.Radiation {
     }
   }
 
+  // Storage (warehouses, tanks, the waste vault: any native Stockpile) that
+  // holds radioactive waste, sludge or contaminated water cannot be deleted,
+  // so the byproducts cannot be thrown away with their container. Native
+  // IBlockObjectDeletionBlocker, the FixedStockpileDeletionBlocker pattern
+  // (1.1.2.8): BlockObject.CanDelete disables the panel's delete button and
+  // shows the reason, and the deconstruction tool skips the storage
+  // (IsStackedDeletionBlocked). Once the native Empty storage order (or a
+  // change of the stored good) has moved the stock out, it can be deleted.
+  // NoForcedDelete is false, as natively: the developer delete tool still works.
+  internal sealed class HazardousStorageDeletionBlocker : BaseComponent, IAwakableComponent, IBlockObjectDeletionBlocker {
+    private Stockpile _stockpile;
+
+    public bool NoForcedDelete => false;
+    public bool IsStackedDeletionBlocked => IsDeletionBlocked;
+    public bool IsDeletionBlocked {
+      get {
+        var inventory = _stockpile.Inventory;
+        return inventory.Enabled && RadiationTuning.HazardousStockGoodIds.Any(good => inventory.AmountInStock(good) > 0);
+      }
+    }
+    public string ReasonLocKey => RadiationLoc.HazardousStockDeletion;
+
+    public void Awake() => _stockpile = GetComponent<Stockpile>();
+  }
+
   // Status shown on storage that holds irradiated water.
   internal sealed class IrradiatedStorageStatus : BaseComponent, IAwakableComponent, IInitializableEntity {
     private readonly ILoc _loc;

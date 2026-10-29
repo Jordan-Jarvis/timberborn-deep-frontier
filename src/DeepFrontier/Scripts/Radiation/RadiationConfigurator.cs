@@ -23,6 +23,7 @@ namespace DeepFrontier.Scripts.Radiation {
       Bind<RadiationExposure>().AsTransient();
       Bind<RadioactiveZombie>().AsTransient();
       Bind<IrradiatedStorageStatus>().AsTransient();
+      Bind<HazardousStorageDeletionBlocker>().AsTransient();
       Bind<RadioactiveSludgeOutfall>().AsTransient();
       Bind<RadioactiveSludgeIntake>().AsTransient();
       Bind<MapEdgeSite>().AsTransient();
@@ -39,6 +40,7 @@ namespace DeepFrontier.Scripts.Radiation {
       builder.AddDecorator<BeaverSpec, RadiationExposure>();
       builder.AddDecorator<BeaverSpec, RadioactiveZombie>();
       builder.AddDecorator<Stockpile, IrradiatedStorageStatus>();
+      builder.AddDecorator<Stockpile, HazardousStorageDeletionBlocker>();
       builder.AddDecorator<RadioactiveSludgeOutfallSpec, RadioactiveSludgeOutfall>();
       builder.AddDecorator<RadioactiveSludgeIntakeSpec, RadioactiveSludgeIntake>();
       builder.AddDecorator<MapEdgeSiteSpec, MapEdgeSite>();

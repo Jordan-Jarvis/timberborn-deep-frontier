@@ -727,6 +727,7 @@ Building.RadioactiveSludgeRecoveryPump.FlavorDescription,The cleanup always take
 DeepFrontier.Radiation.Status.PumpBlocked,"Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.",Deep Frontier
 DeepFrontier.Radiation.Status.PumpBlocked.Short,Radiation detected,Deep Frontier
 DeepFrontier.Radiation.Status.StorageIrradiated,Stored water is irradiated and undrinkable.,Deep Frontier
+DeepFrontier.Radiation.DeletionBlocker.HazardousStock,"Holds radioactive waste, sludge or contaminated water. Empty it first: move the contents to other storage, or refine or export them.",Deep Frontier
 DeepFrontier.Radiation.Status.NoRadiation,No radioactive water at the intake.,Deep Frontier
 DeepFrontier.Radiation.WaterShares,"Water at the intake: {0}% fresh, {1}% bad, {2}% radioactive.",Deep Frontier
 DeepFrontier.Radiation.Status.OutletBlocked,The outlet is blocked.,Deep Frontier

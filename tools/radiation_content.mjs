@@ -121,6 +121,7 @@ const LOCALIZATION = [
   ['DeepFrontier.Radiation.Status.PumpBlocked', 'Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.'],
   ['DeepFrontier.Radiation.Status.PumpBlocked.Short', 'Radiation detected'],
   ['DeepFrontier.Radiation.Status.StorageIrradiated', 'Stored water is irradiated and undrinkable.'],
+  ['DeepFrontier.Radiation.DeletionBlocker.HazardousStock', 'Holds radioactive waste, sludge or contaminated water. Empty it first: move the contents to other storage, or refine or export them.'],
   ['DeepFrontier.Radiation.Status.NoRadiation', 'No radioactive water at the intake.'],
   ['DeepFrontier.Radiation.WaterShares', 'Water at the intake: {0}% fresh, {1}% bad, {2}% radioactive.'],
   ['DeepFrontier.Radiation.Status.OutletBlocked', 'The outlet is blocked.'],

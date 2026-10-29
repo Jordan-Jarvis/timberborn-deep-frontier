@@ -77,7 +77,10 @@ namespace DeepFrontier.Scripts.Radiation {
   public static class RadiationTuning {
     public const string SludgeGoodId = "RadioactiveSludge";
     public const string ContaminatedWaterGoodId = "ContaminatedWater";
+    public const string RadioactiveWasteGoodId = "RadioactiveWaste";
     public const string WaterGoodId = "Water";
+    // Storage holding any of these cannot be deleted (HazardousStorageDeletionBlocker).
+    public static readonly string[] HazardousStockGoodIds = { RadioactiveWasteGoodId, SludgeGoodId, ContaminatedWaterGoodId };
     public const string NeedId = "Irradiation";
     public const float VolumePerGood = 0.2f;              // radioactive volume per RadioactiveSludge good
 
@@ -140,6 +143,7 @@ namespace DeepFrontier.Scripts.Radiation {
     public const string PumpBlocked = "DeepFrontier.Radiation.Status.PumpBlocked";
     public const string PumpBlockedShort = "DeepFrontier.Radiation.Status.PumpBlocked.Short";
     public const string StorageIrradiated = "DeepFrontier.Radiation.Status.StorageIrradiated";
+    public const string HazardousStockDeletion = "DeepFrontier.Radiation.DeletionBlocker.HazardousStock";
     public const string NoRadiation = "DeepFrontier.Radiation.Status.NoRadiation";
     public const string OutletBlocked = "DeepFrontier.Radiation.Status.OutletBlocked";
     public const string NotAtMapEdge = "DeepFrontier.Radiation.Placement.NotAtMapEdge";

@@ -4,6 +4,10 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Waste storage cannot be deleted while it holds waste (Claude Code session, 2026-10-29; compiled and statically checked; not run in game)
+
+- User request: deleting a warehouse or tank full of radioactive waste, sludge or contaminated water threw the byproducts away. `HazardousStorageDeletionBlocker` (Scripts/Radiation/RadiationStorage.cs), decorated on every native Stockpile, is a native IBlockObjectDeletionBlocker (FixedStockpileDeletionBlocker pattern): while the enabled inventory holds RadioactiveWaste, RadioactiveSludge or ContaminatedWater, BlockObject.CanDelete is false (panel delete button off, reason "DeepFrontier.Radiation.DeletionBlocker.HazardousStock") and the deconstruction tool skips it. Emptying it (native Empty storage, or selecting another good) lifts the block. Production buildings are not blocked (their inputs cannot be emptied). ContaminatedWater was already selectable in tank pickers (user confirmed). In-game check pending.
+
 ## Steeper late-game science, 800,000 hp reactor, per-profession school supplies, stronger smog scrubber (Claude Code session, 2026-10-29; generated, compiled and statically checked; not built or run in game)
 
 - **Science curve (user request):** above the 12,000 Materials Laboratory the unlocks climb to the reactor: Mission Control 30,000, Rocket Assembly Hangar 50,000, Launch Pad 80,000, Uranium Processing Plant / Waste Vault / sludge export, outfall and recovery pump 200,000, Waste Refinery 500,000, reactor 1,000,000. The laboratory, its build chain and the producers of its recipe inputs are unchanged; the Hospital stays at 25,000 (needed before radioactive tides). Tier T4 widened to 30,000 so Mission Control keeps its cost. Table in docs/progression.md (Science curve).

@@ -53,6 +53,7 @@ check(constant('SludgeGoodId') === SLUDGE, `RadiationTuning.SludgeGoodId must be
 check(constant('ContaminatedWaterGoodId') === CONTAMINATED_WATER, `RadiationTuning.ContaminatedWaterGoodId must be ${CONTAMINATED_WATER}`);
 check(constant('NeedId') === NEED, `RadiationTuning.NeedId must be ${NEED}`);
 check(constant('WaterGoodId') === 'Water', 'RadiationTuning.WaterGoodId must be Water');
+check(constant('RadioactiveWasteGoodId') === 'RadioactiveWaste', 'RadiationTuning.RadioactiveWasteGoodId must be RadioactiveWaste');
 
 // --- goods
 const goodCollection = await readJson(resolve(dataRoot, 'GoodCollections', 'GoodCollection.IronTeeth.blueprint.json'));
