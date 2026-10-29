@@ -4,6 +4,15 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Reactor heat rework: power falls with heat, symmetric cooling, full waste heats the core (Claude Code session, 2026-10-29; generated, compiled and statically checked; not built or run in game)
+
+- **User direction:** output should fall as the core heats; it should cool as slowly as it heated, so a reactor short of water more than half the time (even with water 45% of the time) eventually melts down; full radioactive waste or sludge should heat it like missing coolant for as long as it stays full.
+- **Runtime (`Meltdown/ReactorCore.cs`):** an uncooled core (coolant dry while running or holding heat, or waste full: no unreserved room for one more cycle of a recipe product) heats `HeatPerFaultPerHour` 2.5%/h whether running, idle or SCRAMmed; otherwise it cools `CoolingPerHour` 2.5%/h (pause: cold shutdown at the same rate). Crew and maintenance faults heat only below `FaultHeatLimit` 85%. Automatic SCRAM and auto-restart are removed (an automatic SCRAM stopped coolant use, refilled the stock and rescued a reactor at 45% supply); manual SCRAM and restart at 40% remain. Saved automatic SCRAMs load as running; old `AutoRestart`/`LastRunDay` keys are ignored.
+- **Output:** new `IGeneratorOutputFactor` in `WorkshopPoweredGenerator.cs`; the reactor returns `1 - heat` (0 under SCRAM), multiplied into the native output multiplier. Coolant use per cycle is unchanged, so a hot reactor does not need less water.
+- **Spec:** `RunningCoolingPerHour`, `ShutdownCoolingPerHour`, `DecayHeatHours`, `DecayHeatPerHour`, `ScramHeat` replaced by `CoolingPerHour` and `FaultHeatLimit` (`meltdown_content.mjs`, `MeltdownSpecs.cs`); `validate_meltdown_content.mjs` asserts cooling equals heating and that the generator applies the factor.
+- **UI:** new waste-full priority status, notification and cause; panel shows output (% and hp), waste and sludge stock against capacity, the uncooled causes, time to meltdown, to the 85% limit or to cold. Tooltip, rules and `docs/meltdown.md` rewritten.
+- **Checks:** generation, `validate_meltdown_content`, `validate_priority_statuses`, `validate_all -SkipBlender` 51 pass + 1 report-only, compile. Not built (the game was running). **In game:** output falling with heat, waste-full heating, notifications, an old save with a SCRAMmed reactor.
+
 ## Triangle targets halved: 43 building models lighter, 906k -> 632k finished triangles (Claude Code session, 2026-10-29; build 213 installed and verified, 659 hashes; not yet looked at in game)
 
 - **Targets:** grand 40,000 -> 20,000, workshop 20,000 -> 12,000 (user approval; `validate_triangle_budget.py` TARGETS). Ceilings re-recorded for all 76 models; none is above its target and no model went up.

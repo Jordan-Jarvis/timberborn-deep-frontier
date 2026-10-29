@@ -5,7 +5,10 @@ using Timberborn.BlockingSystem;
 using Timberborn.BlockSystem;
 using Timberborn.EnterableSystem;
 using Timberborn.EntitySystem;
+using Timberborn.Goods;
+using Timberborn.InventorySystem;
 using Timberborn.Localization;
+using Timberborn.MechanicalSystem;
 using Timberborn.NotificationSystem;
 using Timberborn.Persistence;
 using Timberborn.StatusSystem;
@@ -17,42 +20,48 @@ using Timberborn.WorldPersistence;
 using UnityEngine;
 
 namespace DeepFrontier.Scripts.Meltdown {
+  // Automatic is a legacy value: saves from before 0.6.0 may hold an automatic
+  // SCRAM, which loads as None (the reactor no longer trips by itself).
   internal enum ReactorScram { None = 0, Automatic = 1, Manual = 2 }
 
   internal enum ReactorMode { UnderConstruction, ColdShutdown, Running, Scrammed, Idle, MeltingDown }
 
   // Core heat of the Nuclear Reactor (0..1 of meltdown), decorated on
   // ReactorMeltdownSpec. Production, inventory, workers and power output stay
-  // native (Manufactory, Workshop, Workplace, WorkshopPoweredGenerator).
+  // native (Manufactory, Workshop, Workplace, WorkshopPoweredGenerator); the
+  // generator scales its full output by OutputFactor, 1 - heat.
   //
-  // Heat per game hour, evaluated every tick:
+  // Heat per game hour, evaluated every tick (user direction 2026-10-29: power
+  // falls as the core heats, and it cools as slowly as it heats, so a reactor
+  // short of coolant more than half the time ends in a meltdown):
   // - Blocked (native pause or automation Off, PausableBuildingTerminal):
-  //   cold shutdown, heat falls at ShutdownCoolingPerHour whatever the
-  //   coolant. A blocked manufactory is natively auto-emptied (AutoEmptiable)
-  //   and gets no hauling (ManufactoryHaulBehaviorProvider), so a decay-heat
-  //   rule here would make pausing or automation a meltdown trap.
-  // - Running (Workshop.CurrentlyWorking && Manufactory.IsReadyToProduce, the
-  //   WorkshopPoweredGenerator output condition): each fault (coolant dry,
-  //   fewer than MinOperators working, maintenance overdue) adds
-  //   HeatPerFaultPerHour; with no fault it cools at RunningCoolingPerHour.
-  // - Otherwise (night, no fuel, output full, SCRAM): within DecayHeatHours
-  //   of the last production a dry core heats at DecayHeatPerHour; otherwise
-  //   it cools at ShutdownCoolingPerHour.
-  // Thresholds: WarningHeat warns, ScramHeat trips an automatic emergency
-  // shutdown, 1 melts down (MeltdownService destroys the reactor).
+  //   cold shutdown, heat falls at CoolingPerHour whatever the coolant. A
+  //   blocked manufactory is natively auto-emptied (AutoEmptiable) and gets no
+  //   hauling (ManufactoryHaulBehaviorProvider), so a dry-core rule here would
+  //   make pausing or automation a meltdown trap.
+  // - Otherwise, an uncooled core (coolant dry: less than one cycle in stock;
+  //   or waste full: no unreserved room for one more cycle of a product, the
+  //   radioactive waste or sludge, user direction 2026-10-29) adds
+  //   HeatPerFaultPerHour: full waste always, dry coolant while running or
+  //   while the core holds any heat. A hot core keeps heating whether it
+  //   runs, idles or is shut down by SCRAM. (Waste fills only by running, and
+  //   the cycle that fills it leaves no room for the next, so full waste never
+  //   waits for heat.)
+  //   While running, fewer than MinOperators working and overdue maintenance
+  //   each add HeatPerFaultPerHour below FaultHeatLimit, so they cost power
+  //   but never melt the core on their own. With no heating it cools at
+  //   CoolingPerHour if it has coolant (a dry, cold core stays cold).
+  // WarningHeat warns; 1 melts down (MeltdownService destroys the reactor).
   //
-  // SCRAM is this IManufactoryLimiter returning 0, not BlockableObject.Block:
-  // the crew stays and haulers keep delivering coolant to a tripped reactor.
+  // SCRAM is a player action and this IManufactoryLimiter returning 0, not
+  // BlockableObject.Block: the crew stays and haulers keep delivering coolant.
   internal sealed class ReactorCore : TickableComponent, IAwakableComponent, IInitializableEntity,
-      IFinishedStateListener, IPersistentEntity, IManufactoryLimiter {
+      IFinishedStateListener, IPersistentEntity, IManufactoryLimiter, IGeneratorOutputFactor {
     private static readonly ComponentKey Key = new("DeepFrontier.ReactorCore");
     private static readonly PropertyKey<float> HeatKey = new("Heat");
     private static readonly PropertyKey<int> ScramKey = new("Scram");
-    private static readonly PropertyKey<bool> AutoRestartKey = new("AutoRestart");
     private static readonly PropertyKey<float> RunHoursKey = new("RunHoursSinceMaintenance");
     private static readonly PropertyKey<float> IdleHoursKey = new("IdleHours");
-    private static readonly PropertyKey<float> LastRunDayKey = new("LastRunDay");
-    private const float NeverRan = -1f;
 
     private readonly MeltdownService _meltdowns;
     private readonly RecipeSpecService _recipes;
@@ -63,17 +72,16 @@ namespace DeepFrontier.Scripts.Meltdown {
     private Manufactory _manufactory;
     private Workshop _workshop;
     private BlockableObject _blockable;
-    private StatusToggle _overheatStatus, _scramStatus, _coolantDryStatus, _coolantLowStatus, _crewStatus,
+    private StatusToggle _overheatStatus, _scramStatus, _coolantDryStatus, _wasteFullStatus, _coolantLowStatus, _crewStatus,
       _maintenanceDueStatus, _maintenanceOverdueStatus;
+    private readonly List<string> _productIds = new();
 
     private float _heat;
     private ReactorScram _scram;
-    private bool _autoRestart = true;
     private float _runHoursSinceMaintenance;
     private float _idleHours;
-    private float _lastRunDay = NeverRan;
     private bool _meltdownRequested;
-    private bool _warningPosted, _coolantDryPosted, _imminentPosted, _maintenancePosted;
+    private bool _warningPosted, _coolantDryPosted, _wasteFullPosted, _imminentPosted, _maintenancePosted;
 
     public ReactorCore(MeltdownService meltdowns, RecipeSpecService recipes, IDayNightCycle cycle,
         NotificationBus notifications, ILoc loc) {
@@ -83,9 +91,9 @@ namespace DeepFrontier.Scripts.Meltdown {
     public ReactorMeltdownSpec Spec { get; private set; }
     public int CoolantPerCycle { get; private set; }
     public float CycleHours { get; private set; }
+    public int NominalPowerHp { get; private set; }
     public float Heat => _heat;
     public ReactorScram Scram => _scram;
-    public bool AutoRestart => _autoRestart;
     public bool MeltdownRequested => _meltdownRequested;
 
     // Last tick's evaluation, for the panel and statuses.
@@ -93,16 +101,23 @@ namespace DeepFrontier.Scripts.Meltdown {
     public float HeatRatePerHour { get; private set; }
     public int CoolantStock { get; private set; }
     public bool CoolantDry { get; private set; }
+    public bool WasteFull { get; private set; }
+    public bool Uncooled { get; private set; }
     public int OperatorsOnDuty { get; private set; }
     public bool CrewShort { get; private set; }
     public bool MaintenanceOverdue { get; private set; }
-    public float DecayHoursLeft { get; private set; }
     public float IdleHours => _idleHours;
+    // Every product of the reactor recipes (radioactive waste and sludge), for the panel.
+    public IReadOnlyList<string> ProductIds => _productIds;
+    public int ProductStock(string goodId) => _manufactory.Inventory.AmountInStock(goodId);
+    public int ProductCapacity(string goodId) => _manufactory.Inventory.LimitedAmount(goodId);
     public float CoolantReserveHours => CoolantStock / (float)CoolantPerCycle * CycleHours;
     public float RunHoursUntilMaintenance => Spec.MaintenanceIntervalHours - _runHoursSinceMaintenance;
-    public bool DecayDanger => (Mode is ReactorMode.Idle or ReactorMode.Scrammed) && DecayHoursLeft > 0f && CoolantDry;
     public bool CanScram => Enabled && !_meltdownRequested && _scram == ReactorScram.None;
     public bool CanRestart => Enabled && !_meltdownRequested && _scram != ReactorScram.None && _heat <= Spec.RestartHeat;
+
+    // Share of the full PowerOutput while producing: falls linearly to 0 at meltdown.
+    public float OutputFactor => _scram != ReactorScram.None || _meltdownRequested ? 0f : 1f - _heat;
 
     public void Awake() {
       Spec = GetComponent<ReactorMeltdownSpec>();
@@ -111,10 +126,12 @@ namespace DeepFrontier.Scripts.Meltdown {
       _blockable = GetComponent<BlockableObject>();
       var workplace = GetComponent<WorkplaceSpec>();
       var manufactory = GetComponent<ManufactorySpec>();
-      if (!_manufactory || !_workshop || !_blockable || workplace == null || manufactory == null
+      var node = GetComponent<MechanicalNodeSpec>();
+      if (!_manufactory || !_workshop || !_blockable || workplace == null || manufactory == null || node == null
           || !GetComponent<WorkshopPoweredGenerator>() || !GetComponent<Enterable>() || !GetComponent<BlockObject>())
-        throw new InvalidOperationException($"{Name}: ReactorMeltdownSpec needs a native powered-generator workshop building (Manufactory, Workshop, Workplace, WorkshopPoweredGenerator, Enterable, BlockObject)");
+        throw new InvalidOperationException($"{Name}: ReactorMeltdownSpec needs a native powered-generator workshop building (Manufactory, Workshop, Workplace, MechanicalNode, WorkshopPoweredGenerator, Enterable, BlockObject)");
       Validate(Spec, workplace.MaxWorkers);
+      NominalPowerHp = node.PowerOutput;
       ReadCoolantRecipe(manufactory);
       DisableComponent();
     }
@@ -128,14 +145,13 @@ namespace DeepFrontier.Scripts.Meltdown {
       foreach (var (name, value) in new[] {
           ("CoolantReserveWarningHours", s.CoolantReserveWarningHours), ("MaintenanceIntervalHours", s.MaintenanceIntervalHours),
           ("MaintenanceWarningHours", s.MaintenanceWarningHours), ("MaintenanceOutageHours", s.MaintenanceOutageHours),
-          ("HeatPerFaultPerHour", s.HeatPerFaultPerHour), ("RunningCoolingPerHour", s.RunningCoolingPerHour),
-          ("ShutdownCoolingPerHour", s.ShutdownCoolingPerHour), ("DecayHeatHours", s.DecayHeatHours),
-          ("DecayHeatPerHour", s.DecayHeatPerHour), ("MeltdownInstantSludge", s.MeltdownInstantSludge),
+          ("HeatPerFaultPerHour", s.HeatPerFaultPerHour), ("CoolingPerHour", s.CoolingPerHour),
+          ("MeltdownInstantSludge", s.MeltdownInstantSludge),
           ("MeltdownSourceSludgePerHour", s.MeltdownSourceSludgePerHour), ("MeltdownSourceHours", s.MeltdownSourceHours),
           ("MeltdownFootprintWaterRadiation", s.MeltdownFootprintWaterRadiation), ("MeltdownEdgeWaterRadiation", s.MeltdownEdgeWaterRadiation) })
         if (!Positive(value)) Fail($"{name} must be positive");
-      if (!(Fraction(s.RestartHeat) && s.RestartHeat < s.WarningHeat && s.WarningHeat < s.ScramHeat && Fraction(s.ScramHeat)))
-        Fail("thresholds must satisfy 0 < RestartHeat < WarningHeat < ScramHeat < 1");
+      if (!(Fraction(s.RestartHeat) && s.RestartHeat < s.WarningHeat && s.WarningHeat < s.FaultHeatLimit && Fraction(s.FaultHeatLimit)))
+        Fail("thresholds must satisfy 0 < RestartHeat < WarningHeat < FaultHeatLimit < 1");
       if (s.MaintenanceWarningHours >= s.MaintenanceIntervalHours) Fail("MaintenanceWarningHours must be shorter than the interval");
       if (!(s.MeltdownFootprintSoilRadiation <= 1f && s.MeltdownEdgeSoilRadiation > 0f && s.MeltdownEdgeSoilRadiation <= s.MeltdownFootprintSoilRadiation))
         Fail("soil radiation must satisfy 0 < edge <= footprint <= 1");
@@ -159,16 +175,20 @@ namespace DeepFrontier.Scripts.Meltdown {
           throw new InvalidOperationException($"{Name}: reactor recipes disagree on coolant per cycle or cycle length");
         CoolantPerCycle = amount;
         CycleHours = recipe.CycleDurationInHours;
+        foreach (var product in recipe.Products)
+          if (!_productIds.Contains(product.Id)) _productIds.Add(product.Id);
       }
     }
 
     public void InitializeEntity() {
       _overheatStatus = StatusToggle.CreatePriorityStatusWithAlertAndFloatingIcon(MeltdownSprites.Overheating,
-        _loc.T(MeltdownLoc.StatusOverheating, Pct(Spec.ScramHeat)), _loc.T(MeltdownLoc.StatusOverheatingShort));
+        _loc.T(MeltdownLoc.StatusOverheating), _loc.T(MeltdownLoc.StatusOverheatingShort));
       _scramStatus = StatusToggle.CreatePriorityStatusWithAlertAndFloatingIcon(MeltdownSprites.Scram,
         _loc.T(MeltdownLoc.StatusScram, Pct(Spec.RestartHeat)), _loc.T(MeltdownLoc.StatusScramShort));
       _coolantDryStatus = StatusToggle.CreatePriorityStatusWithAlertAndFloatingIcon(MeltdownSprites.CoolantDry,
         _loc.T(MeltdownLoc.StatusCoolantDry), _loc.T(MeltdownLoc.StatusCoolantDryShort));
+      _wasteFullStatus = StatusToggle.CreatePriorityStatusWithAlertAndFloatingIcon(MeltdownSprites.WasteFull,
+        _loc.T(MeltdownLoc.StatusWasteFull), _loc.T(MeltdownLoc.StatusWasteFullShort));
       _coolantLowStatus = StatusToggle.CreateNormalStatus(MeltdownSprites.CoolantLow,
         _loc.T(MeltdownLoc.StatusCoolantLow, Hours(Spec.CoolantReserveWarningHours)));
       _crewStatus = StatusToggle.CreateNormalStatus(MeltdownSprites.Crew, _loc.T(MeltdownLoc.StatusCrew, Spec.MinOperators));
@@ -181,16 +201,17 @@ namespace DeepFrontier.Scripts.Meltdown {
     }
 
     private IEnumerable<StatusToggle> Statuses() {
-      yield return _overheatStatus; yield return _scramStatus; yield return _coolantDryStatus; yield return _coolantLowStatus;
+      yield return _overheatStatus; yield return _scramStatus; yield return _coolantDryStatus; yield return _wasteFullStatus;
+      yield return _coolantLowStatus;
       yield return _crewStatus; yield return _maintenanceDueStatus; yield return _maintenanceOverdueStatus;
     }
 
     public void OnEnterFinishedState() {
       // Latches start from the loaded state so a reload does not repeat alerts.
       _warningPosted = _heat >= Spec.WarningHeat;
-      _imminentPosted = _heat >= Spec.ScramHeat;
+      _imminentPosted = _heat >= Spec.FaultHeatLimit;
+      _coolantDryPosted = _wasteFullPosted = _heat > 0f;
       _maintenancePosted = _runHoursSinceMaintenance >= Spec.MaintenanceIntervalHours;
-      _coolantDryPosted = false;
       EnableComponent();
     }
 
@@ -217,41 +238,37 @@ namespace DeepFrontier.Scripts.Meltdown {
       UpdateStatuses();
     }
 
-    public void SetAutoRestart(bool value) => _autoRestart = value;
-
     public override void Tick() {
       if (_meltdownRequested) return;
       float hours = _cycle.FixedDeltaTimeInHours;
-      float day = _cycle.PartialDayNumber;
       bool blocked = !_blockable.IsUnblocked;
       bool running = !blocked && _scram == ReactorScram.None && _workshop.CurrentlyWorking && _manufactory.IsReadyToProduce;
 
       CoolantStock = _manufactory.Inventory.UnreservedAmountInStock(Spec.CoolantGoodId);
       CoolantDry = CoolantStock < CoolantPerCycle;
+      WasteFull = OutputFull();
       OperatorsOnDuty = _workshop.NumberOfWorkersWorking;
       CrewShort = running && OperatorsOnDuty < Spec.MinOperators;
 
       if (running) {
         _runHoursSinceMaintenance += hours;
         _idleHours = 0f;
-        _lastRunDay = day;
       } else {
         _idleHours += hours;
         if (_idleHours >= Spec.MaintenanceOutageHours && _runHoursSinceMaintenance > 0f) CompleteMaintenance();
       }
       MaintenanceOverdue = _runHoursSinceMaintenance >= Spec.MaintenanceIntervalHours;
-      DecayHoursLeft = _lastRunDay < 0f ? 0f : Mathf.Max(0f, Spec.DecayHeatHours - (day - _lastRunDay) * 24f);
+      Uncooled = !blocked && (WasteFull || CoolantDry && (running || _heat > 0f));
 
       if (blocked) {
         Mode = ReactorMode.ColdShutdown;
-        HeatRatePerHour = -Spec.ShutdownCoolingPerHour;
-      } else if (running) {
-        Mode = ReactorMode.Running;
-        int faults = (CoolantDry ? 1 : 0) + (CrewShort ? 1 : 0) + (MaintenanceOverdue ? 1 : 0);
-        HeatRatePerHour = faults > 0 ? faults * Spec.HeatPerFaultPerHour : -Spec.RunningCoolingPerHour;
+        HeatRatePerHour = -Spec.CoolingPerHour;
       } else {
-        Mode = _scram != ReactorScram.None ? ReactorMode.Scrammed : ReactorMode.Idle;
-        HeatRatePerHour = DecayHoursLeft > 0f && CoolantDry ? Spec.DecayHeatPerHour : -Spec.ShutdownCoolingPerHour;
+        Mode = running ? ReactorMode.Running : _scram != ReactorScram.None ? ReactorMode.Scrammed : ReactorMode.Idle;
+        float rate = Uncooled ? Spec.HeatPerFaultPerHour : 0f;
+        if (running && _heat < Spec.FaultHeatLimit)
+          rate += ((CrewShort ? 1 : 0) + (MaintenanceOverdue ? 1 : 0)) * Spec.HeatPerFaultPerHour;
+        HeatRatePerHour = rate > 0f ? rate : CoolantDry || WasteFull ? 0f : -Spec.CoolingPerHour;
       }
       _heat = Mathf.Clamp01(_heat + HeatRatePerHour * hours);
 
@@ -261,15 +278,17 @@ namespace DeepFrontier.Scripts.Meltdown {
         _meltdowns.Request(this);
         return;
       }
-      if (_scram == ReactorScram.None && _heat >= Spec.ScramHeat) {
-        _scram = ReactorScram.Automatic;
-        _notifications.Post(_loc.T(MeltdownLoc.NotificationScram, Pct(_heat), Pct(Spec.RestartHeat)), this);
-      } else if (_scram == ReactorScram.Automatic && _autoRestart && !blocked && _heat <= Spec.RestartHeat && !MaintenanceOverdue && !CoolantDry) {
-        _scram = ReactorScram.None;
-        _notifications.Post(_loc.T(MeltdownLoc.NotificationRestarted, Pct(_heat)), this);
-      }
       PostAlerts();
       UpdateStatuses();
+    }
+
+    // No unreserved room for one more cycle of a product of the current recipe
+    // (the WasteLeak OutputBlocked test): the core cannot shed its waste heat.
+    private bool OutputFull() {
+      if (!_manufactory.HasCurrentRecipe) return false;
+      foreach (var product in _manufactory.CurrentRecipe.Products)
+        if (!_manufactory.Inventory.HasUnreservedCapacity(new GoodAmount(product.Id, product.Amount))) return true;
+      return false;
     }
 
     private void CompleteMaintenance() {
@@ -279,21 +298,30 @@ namespace DeepFrontier.Scripts.Meltdown {
       if (wasDue) _notifications.Post(_loc.T(MeltdownLoc.NotificationMaintenanceDone), this);
     }
 
+    // Escalating alerts: the first uncooled heating from dry coolant or full
+    // waste (each latched until the core is cold again, since an intermittent
+    // supply or hauler toggles them every cycle), the warning heat, then an
+    // uncooled core past FaultHeatLimit.
     private void PostAlerts() {
       if (_heat >= Spec.WarningHeat && !_warningPosted && HeatRatePerHour > 0f) {
         _warningPosted = true;
-        _notifications.Post(_loc.T(MeltdownLoc.NotificationWarning, Pct(_heat), Causes(), Pct(Spec.ScramHeat)), this);
+        _notifications.Post(_loc.T(MeltdownLoc.NotificationWarning, Pct(_heat), Causes(), Pct(OutputFactor)), this);
       } else if (_heat <= Spec.RestartHeat) _warningPosted = false;
 
-      if (DecayDanger && !_coolantDryPosted) {
+      if (Uncooled && CoolantDry && !_coolantDryPosted) {
         _coolantDryPosted = true;
-        _notifications.Post(_loc.T(MeltdownLoc.NotificationCoolantDry, Pct(_heat), Hours(DecayHoursLeft)), this);
-      } else if (!CoolantDry) _coolantDryPosted = false;
+        _notifications.Post(_loc.T(MeltdownLoc.NotificationCoolantDry, Pct(_heat), Rate(HeatRatePerHour), Hours((1f - _heat) / HeatRatePerHour)), this);
+      } else if (_heat <= 0f) _coolantDryPosted = false;
 
-      if (DecayDanger && _heat >= Spec.ScramHeat && !_imminentPosted) {
+      if (Uncooled && WasteFull && !_wasteFullPosted) {
+        _wasteFullPosted = true;
+        _notifications.Post(_loc.T(MeltdownLoc.NotificationWasteFull, Pct(_heat), Rate(HeatRatePerHour), Hours((1f - _heat) / HeatRatePerHour)), this);
+      } else if (_heat <= 0f) _wasteFullPosted = false;
+
+      if (Uncooled && _heat >= Spec.FaultHeatLimit && !_imminentPosted) {
         _imminentPosted = true;
-        _notifications.Post(_loc.T(MeltdownLoc.NotificationImminent, Pct(_heat), Hours((1f - _heat) / Spec.DecayHeatPerHour)), this);
-      } else if (!DecayDanger) _imminentPosted = false;
+        _notifications.Post(_loc.T(MeltdownLoc.NotificationImminent, Pct(_heat), Hours((1f - _heat) / HeatRatePerHour)), this);
+      } else if (_heat < Spec.FaultHeatLimit) _imminentPosted = false;
 
       if (MaintenanceOverdue && !_maintenancePosted) {
         _maintenancePosted = true;
@@ -301,15 +329,15 @@ namespace DeepFrontier.Scripts.Meltdown {
       }
     }
 
-    // Comma-separated causes of the current heating, for the warning
-    // notification: running faults while running, decay heat otherwise.
+    // Comma-separated causes of the current heating, for the warning notification.
     public string Causes() {
       var causes = new List<string>();
-      if (Mode == ReactorMode.Running) {
-        if (CoolantDry) causes.Add(_loc.T(MeltdownLoc.CauseCoolant));
+      if (Uncooled && CoolantDry) causes.Add(_loc.T(MeltdownLoc.CauseCoolant));
+      if (Uncooled && WasteFull) causes.Add(_loc.T(MeltdownLoc.CauseWaste));
+      if (Mode == ReactorMode.Running && _heat < Spec.FaultHeatLimit) {
         if (CrewShort) causes.Add(_loc.T(MeltdownLoc.CauseCrew, Spec.MinOperators));
         if (MaintenanceOverdue) causes.Add(_loc.T(MeltdownLoc.CauseMaintenance));
-      } else if (DecayDanger) causes.Add(_loc.T(MeltdownLoc.CauseDecayHeat));
+      }
       return string.Join(", ", causes);
     }
 
@@ -317,7 +345,8 @@ namespace DeepFrontier.Scripts.Meltdown {
       if (!Enabled) return;
       _overheatStatus.Toggle(_heat >= Spec.WarningHeat && _scram == ReactorScram.None);
       _scramStatus.Toggle(_scram != ReactorScram.None);
-      _coolantDryStatus.Toggle(DecayDanger || (Mode == ReactorMode.Running && CoolantDry));
+      _coolantDryStatus.Toggle(Uncooled && CoolantDry);
+      _wasteFullStatus.Toggle(Uncooled && WasteFull);
       _coolantLowStatus.Toggle(!CoolantDry && CoolantReserveHours < Spec.CoolantReserveWarningHours);
       _crewStatus.Toggle(CrewShort);
       _maintenanceOverdueStatus.Toggle(MaintenanceOverdue);
@@ -326,30 +355,28 @@ namespace DeepFrontier.Scripts.Meltdown {
 
     internal static int Pct(float fraction) => Mathf.RoundToInt(fraction * 100f);
     internal static int Hours(float hours) => Mathf.CeilToInt(hours);
+    internal static string Rate(float perHour) => (perHour * 100f).ToString("0.#");
 
     public void Save(IEntitySaver entitySaver) {
       var saver = entitySaver.GetComponent(Key);
       saver.Set(HeatKey, _heat);
       saver.Set(ScramKey, (int)_scram);
-      saver.Set(AutoRestartKey, _autoRestart);
       saver.Set(RunHoursKey, _runHoursSinceMaintenance);
       saver.Set(IdleHoursKey, _idleHours);
-      saver.Set(LastRunDayKey, _lastRunDay);
     }
 
     public void Load(IEntityLoader entityLoader) {
-      // A reactor saved before the meltdown system existed starts cold.
+      // A reactor saved before the meltdown system existed starts cold. Saves
+      // from before 0.6.0 also hold AutoRestart and LastRunDay, now unused.
       if (!entityLoader.TryGetComponent(Key, out var loader)) return;
       _heat = loader.Get(HeatKey);
       int scram = loader.Get(ScramKey);
-      _autoRestart = loader.Get(AutoRestartKey);
       _runHoursSinceMaintenance = loader.Get(RunHoursKey);
       _idleHours = loader.Get(IdleHoursKey);
-      _lastRunDay = loader.Get(LastRunDayKey);
       if (!(_heat >= 0f && _heat <= 1f) || !Enum.IsDefined(typeof(ReactorScram), scram) || !(_runHoursSinceMaintenance >= 0f)
-          || !(_idleHours >= 0f) || !(_lastRunDay >= 0f || _lastRunDay == NeverRan))
+          || !(_idleHours >= 0f))
         throw new InvalidOperationException($"{Name}: saved reactor core state is invalid");
-      _scram = (ReactorScram)scram;
+      _scram = scram == (int)ReactorScram.Automatic ? ReactorScram.None : (ReactorScram)scram;
     }
   }
 }

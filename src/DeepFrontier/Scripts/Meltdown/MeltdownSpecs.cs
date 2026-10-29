@@ -20,15 +20,17 @@ namespace DeepFrontier.Scripts.Meltdown {
     [Serialize] public float MaintenanceIntervalHours { get; init; }
     [Serialize] public float MaintenanceWarningHours { get; init; }
     [Serialize] public float MaintenanceOutageHours { get; init; }
-    // Heat balance per game hour.
+    // Heat balance per game hour: each heating cause (a dry core, and while
+    // running a short crew or overdue maintenance) adds HeatPerFaultPerHour;
+    // otherwise a core with coolant, or a paused one, cools at CoolingPerHour.
     [Serialize] public float HeatPerFaultPerHour { get; init; }
-    [Serialize] public float RunningCoolingPerHour { get; init; }
-    [Serialize] public float ShutdownCoolingPerHour { get; init; }
-    [Serialize] public float DecayHeatHours { get; init; }
-    [Serialize] public float DecayHeatPerHour { get; init; }
-    // Thresholds: RestartHeat < WarningHeat < ScramHeat < 1 (meltdown).
+    [Serialize] public float CoolingPerHour { get; init; }
+    // Thresholds: RestartHeat < WarningHeat < FaultHeatLimit < 1 (meltdown).
+    // Crew and maintenance faults heat the core only below FaultHeatLimit; a
+    // dry core past it posts the meltdown-imminent alert. RestartHeat gates
+    // the restart after a player SCRAM.
     [Serialize] public float WarningHeat { get; init; }
-    [Serialize] public float ScramHeat { get; init; }
+    [Serialize] public float FaultHeatLimit { get; init; }
     [Serialize] public float RestartHeat { get; init; }
     // Meltdown release (IRadiationService units: one sludge good = 0.2).
     [Serialize] public float MeltdownInstantSludge { get; init; }
@@ -74,6 +76,7 @@ namespace DeepFrontier.Scripts.Meltdown {
     public const string Scram = "NoPower";
     public const string CoolantDry = "LackOfResources";
     public const string CoolantLow = "LackOfResources";
+    public const string WasteFull = "NoStorage";
     public const string Crew = "NoUnemployed";
     public const string Maintenance = "NothingToDo";
     public const string LeakWarning = "NoStorage";

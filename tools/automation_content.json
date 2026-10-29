@@ -876,7 +876,7 @@
     },
     "ReactorMeltdownSpec": {
       "kind": "operational",
-      "response": "Off (PausableBuildingTerminal blocks the BlockableObject) is a cold shutdown: no production, so no running-fault heat, and the core cools at ShutdownCoolingPerHour whatever its coolant; native AutoEmptiable empties a blocked manufactory and hauling to it stops, so decay-heat rules apply only while unblocked. An automation-Off reactor therefore cools and never melts down. SCRAM is separate: an IManufactoryLimiter returning 0, which keeps the crew and coolant deliveries.",
+      "response": "Off (PausableBuildingTerminal blocks the BlockableObject) is a cold shutdown: no production, so no running-fault heat, and the core cools at CoolingPerHour whatever its coolant; native AutoEmptiable empties a blocked manufactory and hauling to it stops, so the dry-core rule applies only while unblocked. An automation-Off reactor therefore cools and never melts down. SCRAM is separate: an IManufactoryLimiter returning 0, which keeps the crew and coolant deliveries.",
       "evidence": [
         {
           "file": "src/DeepFrontier/Scripts/Meltdown/ReactorCore.cs",

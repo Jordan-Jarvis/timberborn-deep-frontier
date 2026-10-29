@@ -12,7 +12,7 @@ const root=fileURLToPath(new URL('../',import.meta.url));
 const scripts=resolve(root,'src/DeepFrontier/Scripts');
 // File (relative to Scripts, forward slashes) -> the toggle fields allowed to be priority.
 const HAZARDS={
-  'Meltdown/ReactorCore.cs':['_overheatStatus','_scramStatus','_coolantDryStatus'],
+  'Meltdown/ReactorCore.cs':['_overheatStatus','_scramStatus','_coolantDryStatus','_wasteFullStatus'],
   'Cryogenics/CryogenicTank.cs':['_ventingStatus','_wrongNetworkStatus'],
   'Meltdown/WasteLeak.cs':['_leakingStatus'],
 };

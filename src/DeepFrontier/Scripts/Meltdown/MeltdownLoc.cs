@@ -10,15 +10,16 @@ namespace DeepFrontier.Scripts.Meltdown {
     public const string StatusScramShort = "DeepFrontier.Meltdown.Status.Scram.Short";
     public const string StatusCoolantDry = "DeepFrontier.Meltdown.Status.CoolantDry";
     public const string StatusCoolantDryShort = "DeepFrontier.Meltdown.Status.CoolantDry.Short";
+    public const string StatusWasteFull = "DeepFrontier.Meltdown.Status.WasteFull";
+    public const string StatusWasteFullShort = "DeepFrontier.Meltdown.Status.WasteFull.Short";
     public const string StatusCoolantLow = "DeepFrontier.Meltdown.Status.CoolantLow";
     public const string StatusCrew = "DeepFrontier.Meltdown.Status.Crew";
     public const string StatusMaintenanceDue = "DeepFrontier.Meltdown.Status.MaintenanceDue";
     public const string StatusMaintenanceOverdue = "DeepFrontier.Meltdown.Status.MaintenanceOverdue";
 
     public const string NotificationWarning = "DeepFrontier.Meltdown.Notification.Warning";
-    public const string NotificationScram = "DeepFrontier.Meltdown.Notification.Scram";
-    public const string NotificationRestarted = "DeepFrontier.Meltdown.Notification.Restarted";
     public const string NotificationCoolantDry = "DeepFrontier.Meltdown.Notification.CoolantDry";
+    public const string NotificationWasteFull = "DeepFrontier.Meltdown.Notification.WasteFull";
     public const string NotificationImminent = "DeepFrontier.Meltdown.Notification.Imminent";
     public const string NotificationMaintenanceOverdue = "DeepFrontier.Meltdown.Notification.MaintenanceOverdue";
     public const string NotificationMaintenanceDone = "DeepFrontier.Meltdown.Notification.MaintenanceDone";
@@ -31,28 +32,28 @@ namespace DeepFrontier.Scripts.Meltdown {
 
     public const string CauseCoolant = "DeepFrontier.Meltdown.Cause.Coolant";
     public const string CauseCrew = "DeepFrontier.Meltdown.Cause.Crew";
+    public const string CauseWaste = "DeepFrontier.Meltdown.Cause.Waste";
     public const string CauseMaintenance = "DeepFrontier.Meltdown.Cause.Maintenance";
-    public const string CauseDecayHeat = "DeepFrontier.Meltdown.Cause.DecayHeat";
 
     public const string PanelTitle = "DeepFrontier.Meltdown.Panel.Title";
     public const string PanelHeat = "DeepFrontier.Meltdown.Panel.Heat";
     public const string PanelThresholds = "DeepFrontier.Meltdown.Panel.Thresholds";
     public const string PanelRising = "DeepFrontier.Meltdown.Panel.Rising";
     public const string PanelFalling = "DeepFrontier.Meltdown.Panel.Falling";
-    public const string PanelEtaScram = "DeepFrontier.Meltdown.Panel.EtaScram";
+    public const string PanelOutput = "DeepFrontier.Meltdown.Panel.Output";
     public const string PanelEtaMeltdown = "DeepFrontier.Meltdown.Panel.EtaMeltdown";
-    public const string PanelEtaPeak = "DeepFrontier.Meltdown.Panel.EtaPeak";
+    public const string PanelEtaLimit = "DeepFrontier.Meltdown.Panel.EtaLimit";
+    public const string PanelEtaCool = "DeepFrontier.Meltdown.Panel.EtaCool";
     public const string PanelEtaRestart = "DeepFrontier.Meltdown.Panel.EtaRestart";
     public const string PanelStateUnderConstruction = "DeepFrontier.Meltdown.Panel.State.UnderConstruction";
     public const string PanelStateColdShutdown = "DeepFrontier.Meltdown.Panel.State.ColdShutdown";
     public const string PanelStateRunning = "DeepFrontier.Meltdown.Panel.State.Running";
     public const string PanelStateScram = "DeepFrontier.Meltdown.Panel.State.Scram";
-    public const string PanelStateScramManual = "DeepFrontier.Meltdown.Panel.State.ScramManual";
     public const string PanelStateIdle = "DeepFrontier.Meltdown.Panel.State.Idle";
     public const string PanelStateMeltingDown = "DeepFrontier.Meltdown.Panel.State.MeltingDown";
-    public const string PanelDecayHeat = "DeepFrontier.Meltdown.Panel.DecayHeat";
-    public const string PanelNoDecayHeat = "DeepFrontier.Meltdown.Panel.NoDecayHeat";
+    public const string PanelDryCore = "DeepFrontier.Meltdown.Panel.DryCore";
     public const string PanelCoolant = "DeepFrontier.Meltdown.Panel.Coolant";
+    public const string PanelWaste = "DeepFrontier.Meltdown.Panel.Waste";
     public const string PanelCrew = "DeepFrontier.Meltdown.Panel.Crew";
     public const string PanelMaintenanceDue = "DeepFrontier.Meltdown.Panel.MaintenanceDue";
     public const string PanelMaintenanceOverdue = "DeepFrontier.Meltdown.Panel.MaintenanceOverdue";
@@ -61,7 +62,6 @@ namespace DeepFrontier.Scripts.Meltdown {
     public const string PanelScramButton = "DeepFrontier.Meltdown.Panel.ScramButton";
     public const string PanelRestartButton = "DeepFrontier.Meltdown.Panel.RestartButton";
     public const string PanelRestartBlocked = "DeepFrontier.Meltdown.Panel.RestartBlocked";
-    public const string PanelAutoRestart = "DeepFrontier.Meltdown.Panel.AutoRestart";
 
     // WasteLeak keys are "DeepFrontier.WasteLeak.<Trigger>" + suffix.
     public const string LeakStatusWarning = ".Status.Warning";

@@ -32,11 +32,15 @@ export const COOLANT = 'ReactorCoolantWater';
 export const TRIGGERS = ['StorageFull', 'OutputBlocked'];
 
 // Authored reactor tuning (heat is a 0..1 fraction of meltdown; rates per
-// game hour). Timeline at these values:
-// - one running fault: 60% warning after 24 running hours, SCRAM at 34;
-// - SCRAM 85% -> restart 40% in 5.6 hours of cooling;
-// - coolant dry after it stops: +1.5%/h for 72 h, so 0% -> meltdown in 67 h
-//   and SCRAM -> meltdown in 10 h unless coolant arrives or it is paused.
+// game hour). The core cools exactly as fast as one fault heats it (user
+// direction 2026-10-29), and power output is 1 - heat. Timeline:
+// - coolant dry, or its radioactive waste or sludge full: +2.5%/h running or
+//   stopped, so 0% -> warning 60% in 24 h and meltdown in 40 h unless coolant
+//   arrives, the waste is hauled away or the reactor is paused;
+// - coolant 45% of the time: +2.5% x 0.55 - 2.5% x 0.45 = +0.25%/h, a
+//   meltdown after about 400 h (17 days) of falling output;
+// - crew or maintenance fault alone: up to 85% (15% output) in 34 running h;
+// - cooling from 85%, with coolant or paused: 34 h to cold, 18 h to restart.
 export const REACTOR_TUNING = {
   CoolantGoodId: COOLANT,
   CoolantReserveWarningHours: 12,
@@ -45,12 +49,9 @@ export const REACTOR_TUNING = {
   MaintenanceWarningHours: 48,
   MaintenanceOutageHours: 24,
   HeatPerFaultPerHour: 0.025,
-  RunningCoolingPerHour: 0.04,
-  ShutdownCoolingPerHour: 0.08,
-  DecayHeatHours: 72,
-  DecayHeatPerHour: 0.015,
+  CoolingPerHour: 0.025,
   WarningHeat: 0.6,
-  ScramHeat: 0.85,
+  FaultHeatLimit: 0.85,
   RestartHeat: 0.4,
   MeltdownInstantSludge: 60,
   MeltdownSourceSludgePerHour: 0.5,
@@ -121,7 +122,7 @@ export function wasteLeakSpecs(batch, volumePerGood) {
 export function descriptions(reactor, leaks, refineryPowerHp) {
   const t = reactor, v = leaks.vault, r = leaks.refinery;
   return {
-    NuclearReactor: `${PRODUCER_DESCRIPTIONS.NuclearReactor} Its core overheats when coolant runs dry, fewer than ${t.MinOperators} trained operators are working or maintenance is overdue (a ${t.MaintenanceOutageHours}-hour stop every ${t.MaintenanceIntervalHours} running hours). At ${pct(t.ScramHeat)}% heat it trips an emergency shutdown; without coolant the core keeps heating for ${t.DecayHeatHours} hours after it stops, and at 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown.`,
+    NuclearReactor: `${PRODUCER_DESCRIPTIONS.NuclearReactor} Its power output falls as its core heats. Without coolant, or with its radioactive waste or sludge storage full, a hot core keeps heating, running or stopped, as fast as it cools otherwise, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. Fewer than ${t.MinOperators} trained operators working or overdue maintenance (a ${t.MaintenanceOutageHours}-hour stop every ${t.MaintenanceIntervalHours} running hours) also heat it while it runs, up to ${pct(t.FaultHeatLimit)}%. At 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown.`,
     RadioactiveWasteVault: `${PRODUCER_DESCRIPTIONS.RadioactiveWasteVault} Keep it below full: when full, ${v.GoodsPerLeak} casks breach every ${v.LeakIntervalHours} hours, spilling radioactive sludge and irradiating the soil within ${v.SoilRadius} tiles, which kills crops.`,
     RadioactiveWasteRefinery: `Refines spent-fuel casks into radioactive sludge and recovered minerals, and cleans contaminated water. Requires ${refineryPowerHp} hp. Haul its sludge to a Sludge Outfall or Radioactive Waste Export: when its sludge tanks are full, ${r.GoodsPerLeak} sludge leaks every ${r.LeakIntervalHours} hours and irradiates the soil within ${r.SoilRadius} tiles, killing crops. Pausing it seals the tanks.`,
   };
@@ -131,21 +132,22 @@ export function descriptions(reactor, leaks, refineryPowerHp) {
 export function localizationRows(treatmentDays) {
   const leak = (trigger, rows) => rows.map(([suffix, text]) => [`DeepFrontier.WasteLeak.${trigger}${suffix}`, text]);
   return [
-    ['DeepFrontier.Meltdown.Status.Overheating', 'Reactor overheating. It trips an emergency shutdown at {0}% core heat and melts down at 100%; open the reactor to see why.'],
+    ['DeepFrontier.Meltdown.Status.Overheating', 'Reactor overheating: its power output falls as the core heats and it melts down at 100%. Open the reactor to see why.'],
     ['DeepFrontier.Meltdown.Status.Overheating.Short', 'Reactor overheating'],
-    ['DeepFrontier.Meltdown.Status.Scram', 'Emergency shutdown (SCRAM): no power until the core cools to {0}%.'],
-    ['DeepFrontier.Meltdown.Status.Scram.Short', 'Reactor emergency shutdown'],
-    ['DeepFrontier.Meltdown.Status.CoolantDry', 'Coolant dry while the core still holds decay heat: it is heating toward a meltdown. Deliver reactor coolant water, or pause the reactor for a safe cold shutdown.'],
+    ['DeepFrontier.Meltdown.Status.Scram', 'Shut down by the operators (SCRAM): no power. Without coolant the core still heats. Restart possible at {0}% core heat or below.'],
+    ['DeepFrontier.Meltdown.Status.Scram.Short', 'Reactor shut down (SCRAM)'],
+    ['DeepFrontier.Meltdown.Status.CoolantDry', 'Coolant dry: the hot core is heating toward a meltdown, running or stopped. Deliver reactor coolant water, or pause the reactor for a safe cold shutdown.'],
     ['DeepFrontier.Meltdown.Status.CoolantDry.Short', 'Reactor coolant dry: meltdown risk'],
+    ['DeepFrontier.Meltdown.Status.WasteFull', 'Radioactive waste or sludge storage full: the hot core cannot shed its heat and is heating toward a meltdown, running or stopped. Haul the waste and sludge away, or pause the reactor for a safe cold shutdown.'],
+    ['DeepFrontier.Meltdown.Status.WasteFull.Short', 'Reactor waste full: meltdown risk'],
     ['DeepFrontier.Meltdown.Status.CoolantLow', 'Coolant reserve below {0} hours of running.'],
-    ['DeepFrontier.Meltdown.Status.Crew', 'Fewer than {0} operators working: the core heats while it runs.'],
+    ['DeepFrontier.Meltdown.Status.Crew', 'Fewer than {0} operators working: the core heats while it runs, costing power.'],
     ['DeepFrontier.Meltdown.Status.MaintenanceDue', 'Maintenance due soon: plan a {0}-hour stop.'],
-    ['DeepFrontier.Meltdown.Status.MaintenanceOverdue', 'Maintenance overdue: the core heats while it runs. Stop the reactor for {0} hours.'],
-    ['DeepFrontier.Meltdown.Notification.Warning', 'Reactor overheating: core heat {0}% ({1}). Emergency shutdown at {2}%.'],
-    ['DeepFrontier.Meltdown.Notification.Scram', 'Reactor emergency shutdown (SCRAM) at {0}% core heat: no power until it cools to {1}%.'],
-    ['DeepFrontier.Meltdown.Notification.Restarted', 'Reactor restarted automatically at {0}% core heat.'],
-    ['DeepFrontier.Meltdown.Notification.CoolantDry', 'Reactor coolant dry: core heat {0}% and rising from decay heat for up to {1} more hours. Deliver reactor coolant water or pause the reactor.'],
-    ['DeepFrontier.Meltdown.Notification.Imminent', 'MELTDOWN IMMINENT: core heat {0}%, meltdown in about {1} hours. Deliver reactor coolant water or pause the reactor now.'],
+    ['DeepFrontier.Meltdown.Status.MaintenanceOverdue', 'Maintenance overdue: the core heats while it runs, costing power. Stop the reactor for {0} hours.'],
+    ['DeepFrontier.Meltdown.Notification.Warning', 'Reactor overheating: core heat {0}% ({1}); power output down to {2}%. It melts down at 100%.'],
+    ['DeepFrontier.Meltdown.Notification.CoolantDry', 'Reactor coolant dry: core heat {0}% and rising {1}% per hour. A hot core keeps heating without coolant, running or stopped, and melts down in about {2} hours. Deliver reactor coolant water, or pause the reactor for a safe cold shutdown.'],
+    ['DeepFrontier.Meltdown.Notification.WasteFull', 'Reactor waste storage full: core heat {0}% and rising {1}% per hour. A hot core keeps heating while its radioactive waste or sludge is full, running or stopped, and melts down in about {2} hours. Haul the waste and sludge away, or pause the reactor for a safe cold shutdown.'],
+    ['DeepFrontier.Meltdown.Notification.Imminent', 'MELTDOWN IMMINENT: core heat {0}%, meltdown in about {1} hours. Deliver reactor coolant water, haul away its waste or pause the reactor now.'],
     ['DeepFrontier.Meltdown.Notification.MaintenanceOverdue', 'Reactor maintenance overdue: stop it for {0} hours, or its core heats while it runs.'],
     ['DeepFrontier.Meltdown.Notification.MaintenanceDone', 'Reactor maintenance completed during the stop.'],
     ['DeepFrontier.Meltdown.Notification.Meltdown', 'REACTOR MELTDOWN: the Nuclear Reactor was destroyed. {0} killed, {1} irradiated.'],
@@ -156,36 +158,35 @@ export function localizationRows(treatmentDays) {
     ['DeepFrontier.Meltdown.DeathMessage', '{0} was killed in the reactor meltdown.'],
     ['DeepFrontier.Meltdown.Cause.Coolant', 'coolant dry'],
     ['DeepFrontier.Meltdown.Cause.Crew', 'fewer than {0} operators working'],
+    ['DeepFrontier.Meltdown.Cause.Waste', 'radioactive waste or sludge full'],
     ['DeepFrontier.Meltdown.Cause.Maintenance', 'maintenance overdue'],
-    ['DeepFrontier.Meltdown.Cause.DecayHeat', 'decay heat without coolant'],
     ['DeepFrontier.Meltdown.Panel.Title', 'Reactor core'],
     ['DeepFrontier.Meltdown.Panel.Heat', 'Core heat: {0}% {1}'],
-    ['DeepFrontier.Meltdown.Panel.Thresholds', 'Warning {0}%, emergency shutdown {1}%, meltdown 100%'],
+    ['DeepFrontier.Meltdown.Panel.Thresholds', 'Warning {0}%, meltdown 100%. Crew and maintenance faults alone heat it to at most {1}%.'],
+    ['DeepFrontier.Meltdown.Panel.Output', 'Power output: {0}% of full ({1} hp). Output falls as the core heats: half power at 50%.'],
     ['DeepFrontier.Meltdown.Panel.Rising', '(rising {0}% per hour)'],
     ['DeepFrontier.Meltdown.Panel.Falling', '(falling {0}% per hour)'],
-    ['DeepFrontier.Meltdown.Panel.EtaScram', 'Emergency shutdown after about {0} more hours of running.'],
     ['DeepFrontier.Meltdown.Panel.EtaMeltdown', 'Meltdown in about {0} hours.'],
-    ['DeepFrontier.Meltdown.Panel.EtaPeak', 'Decay heat fades before a meltdown: peak about {0}% in {1} hours.'],
+    ['DeepFrontier.Meltdown.Panel.EtaLimit', 'Heats to {0}% in about {1} running hours; crew and maintenance faults alone never melt the core.'],
+    ['DeepFrontier.Meltdown.Panel.EtaCool', 'Cold in about {0} hours.'],
     ['DeepFrontier.Meltdown.Panel.EtaRestart', 'Cool enough to restart in about {0} hours.'],
     ['DeepFrontier.Meltdown.Panel.State.UnderConstruction', 'Under construction.'],
     ['DeepFrontier.Meltdown.Panel.State.ColdShutdown', 'Cold shutdown (paused or switched off by automation): cooling safely without coolant. Haulers empty a paused reactor.'],
     ['DeepFrontier.Meltdown.Panel.State.Running', 'Running.'],
-    ['DeepFrontier.Meltdown.Panel.State.Scram', 'Emergency shutdown (SCRAM).'],
-    ['DeepFrontier.Meltdown.Panel.State.ScramManual', 'Shut down by the operators (SCRAM).'],
+    ['DeepFrontier.Meltdown.Panel.State.Scram', 'Shut down by the operators (SCRAM).'],
     ['DeepFrontier.Meltdown.Panel.State.Idle', 'Idle: not producing.'],
     ['DeepFrontier.Meltdown.Panel.State.MeltingDown', 'Melting down.'],
-    ['DeepFrontier.Meltdown.Panel.DecayHeat', 'Decay heat for {0} more hours: until then the core needs coolant even when stopped.'],
-    ['DeepFrontier.Meltdown.Panel.NoDecayHeat', 'No decay heat: safe without coolant while stopped.'],
+    ['DeepFrontier.Meltdown.Panel.DryCore', 'Not cooling ({0}): the hot core heats {1}% per hour, running or stopped, until that is fixed. Pausing is a safe cold shutdown.'],
     ['DeepFrontier.Meltdown.Panel.Coolant', '{0}: {1} in stock, {2} per cycle (about {3} hours of running).'],
+    ['DeepFrontier.Meltdown.Panel.Waste', '{0}: {1} of {2} stored (full storage heats the core).'],
     ['DeepFrontier.Meltdown.Panel.Crew', 'Operators working: {0} (needs {1} while running).'],
     ['DeepFrontier.Meltdown.Panel.MaintenanceDue', 'Maintenance due in {0} running hours; it needs a {1}-hour stop.'],
     ['DeepFrontier.Meltdown.Panel.MaintenanceOverdue', 'Maintenance overdue: stop the reactor for {0} hours ({1} so far).'],
-    ['DeepFrontier.Meltdown.Panel.Rules', 'While running, the core heats {0}% per hour for each fault: coolant dry, fewer than {1} operators working, or maintenance overdue (a {2}-hour stop every {3} running hours). At {4}% it trips an emergency shutdown. Without coolant, decay heat keeps heating it for {5} hours after it stops.'],
+    ['DeepFrontier.Meltdown.Panel.Rules', 'Without coolant, or with its radioactive waste or sludge full, a hot core heats {0}% per hour, running or stopped; otherwise it cools {1}% per hour, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. While running, fewer than {2} operators working or overdue maintenance (a {3}-hour stop every {4} running hours) also heat it, up to {5}%.'],
     ['DeepFrontier.Meltdown.Panel.Consequences', 'A meltdown destroys the reactor: beavers within {0} tiles die, beavers within {1} tiles are irradiated, sludge pours out for {2} days and soil and water within {3} tiles stay radioactive for weeks. Pausing the reactor is a safe cold shutdown.'],
     ['DeepFrontier.Meltdown.Panel.ScramButton', 'Emergency shutdown (SCRAM)'],
     ['DeepFrontier.Meltdown.Panel.RestartButton', 'Restart reactor'],
     ['DeepFrontier.Meltdown.Panel.RestartBlocked', 'Restart possible once core heat is at or below {0}%.'],
-    ['DeepFrontier.Meltdown.Panel.AutoRestart', 'Restart automatically after an emergency shutdown (once cool, maintained and with coolant)'],
     ...leak('StorageFull', [
       ['.Status.Warning', 'Nearly full of radioactive waste: once full, casks breach every {0} hours.'],
       ['.Status.Leaking', 'Full: radioactive waste casks are breaching and leaking sludge. Refine or move the waste.'],

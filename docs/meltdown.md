@@ -6,34 +6,34 @@ User direction: a reactor that runs out of coolant, workers or maintenance heats
 
 ## Reactor core (`ReactorMeltdownSpec`, `ReactorCore`)
 
+Reworked 2026-10-29 (user direction): power output falls as the core heats, the core cools exactly as slowly as it heats, and full waste storage heats it like dry coolant. There is no automatic emergency shutdown any more: an automatic SCRAM let the coolant stock refill and saved a reactor that was short of coolant most of the time.
+
 Heat is 0..1 of meltdown, evaluated every tick (rates per game hour):
 
 | Reactor state | Heat |
 |---|---|
-| Blocked: native pause or automation Off | cold shutdown, −8%/h, coolant not needed |
-| Running, no fault | −4%/h |
-| Running, each fault | +2.5%/h per fault |
-| Stopped (night, no fuel, output full, SCRAM) within 72 h of its last production, coolant dry | +1.5%/h (decay heat) |
-| Stopped otherwise | −8%/h |
+| Blocked: native pause or automation Off | cold shutdown, −2.5%/h, coolant not needed |
+| Uncooled: radioactive waste or sludge full, or coolant dry while running or while the core holds any heat | +2.5%/h, running, idle or SCRAM alike |
+| Running, fewer than 4 operators working | +2.5%/h below 85% |
+| Running, maintenance overdue | +2.5%/h below 85% |
+| Otherwise, with coolant | −2.5%/h |
+| Dry and cold (0%), not running | stays cold |
 
-- **Running** is the `WorkshopPoweredGenerator` output condition: `Workshop.CurrentlyWorking && Manufactory.IsReadyToProduce`.
-- **Faults while running:**
-  - coolant dry: less than one cycle (6 `ReactorCoolantWater`) unreserved in stock, so the next cycle cannot start;
-  - fewer than 4 operators working (`Workshop.NumberOfWorkersWorking`; the crew is Nuclear specialists from the workforce system);
-  - maintenance overdue: after 360 running hours. Any 24 consecutive hours without production (pause, SCRAM or idle) is the maintenance stop. A nightly idle is shorter, so it does not count.
-- **Thresholds:**
-  - 60%: warning status and notification.
-  - 85%: automatic emergency shutdown (SCRAM). It restarts automatically at or below 40% once maintenance is not overdue and coolant covers a cycle; a per-reactor toggle turns this off.
-  - 100%: meltdown.
-- **Manual controls:** the panel's SCRAM button, and Restart (allowed at or below 40%). A manual SCRAM never restarts by itself.
-- **SCRAM is an `IManufactoryLimiter`** returning 0, not `BlockableObject.Block`, so the crew stays and coolant deliveries continue.
+- **Power output** is `1 − heat` of the full 800,000 hp: 50% heat gives half power. `ReactorCore` is the building's `IGeneratorOutputFactor`, which `WorkshopPoweredGenerator` multiplies into its native output multiplier. A SCRAM gives 0.
+- **Coolant dry:** less than one cycle (6 `ReactorCoolantWater`) unreserved in stock, so the next cycle cannot start. A running core's last cycle counts, so a cold core that runs dry starts heating.
+- **Waste full:** no unreserved room for one more cycle of a product of the current recipe, the 1 Radioactive Waste and 1 Radioactive Sludge each cycle makes (the Waste Refinery's `OutputBlocked` test). It heats from cold too: waste fills only by running.
+- **Symmetry:** heating and cooling are the same 2.5%/h, so a reactor that is uncooled more than half the time gains heat on average and eventually melts down. At coolant 45% of the time the net is +0.25%/h, about 400 hours (17 days) from cold to meltdown with falling output.
+- **Crew and maintenance faults** stop heating at 85% (15% output): they cost power but never melt the core alone. A meltdown always traces back to lost cooling or waste left in the reactor.
+- **Maintenance** falls due after 360 running hours. Any 24 consecutive hours without production (pause, SCRAM or idle) is the maintenance stop; a nightly idle is shorter, so it does not count.
+- **Thresholds:** 60% warning status and notification; 85% "meltdown imminent" notification when uncooled; 100% meltdown.
+- **Alerts:** the first dry-coolant and the first full-waste heating each post a notification, latched until the core is cold again (an intermittent supply or hauler toggles them every cycle). Priority statuses for overheating, dry coolant, full waste and SCRAM.
+- **Manual SCRAM:** the panel's button stops production and power; it does not stop uncooled heating. Restart is allowed at or below 40%. SCRAM is an `IManufactoryLimiter` returning 0, not `BlockableObject.Block`, so the crew stays and coolant deliveries continue.
+- **Saves from before 0.6.0:** an automatic SCRAM loads as running; the unused `AutoRestart` and `LastRunDay` values are ignored.
 
 Timeline at these numbers:
 
-- **One running fault:** warning after 24 running hours, SCRAM after 34. Cooling from 85% to 40% takes 5.6 h.
-- **Coolant failure:** the 180-coolant buffer covers 60 running hours. Once it is dry the reactor stops, because the recipe cannot start. Decay heat then reaches 60% after 40 h, latches a SCRAM at 57 h and melts the core at 67 h, unless coolant arrives or the reactor is paused.
-- **From a SCRAM with dry coolant:** meltdown in 10 h.
-- **Crew or maintenance faults alone** never melt the core: they cost power through repeated SCRAMs. A meltdown always traces back to lost cooling.
+- **Coolant or waste failure:** from cold, the warning comes after 24 h and the meltdown after 40 h, unless coolant arrives, the waste is hauled away or the reactor is paused.
+- **Cooling from 85%**, with coolant or paused: 34 h to cold, 18 h to the 40% restart heat.
 
 ### Why pause and automation Off are a safe cold shutdown
 
@@ -42,9 +42,9 @@ This is source-confirmed in 1.1.2.8:
 - `WorkshopsTemplateModuleProvider` decorates every `Manufactory` with `AutoEmptiable`, which marks a blocked building for emptying.
 - `ManufactoryHaulBehaviorProvider` and `FillInputHaulBehaviorProvider` deliver nothing to a blocked building.
 
-So a paused reactor is drained of coolant and cannot be refilled. If decay heat applied while blocked, pause and automation would be meltdown traps; the requirement is that automation Off cools a reactor rather than melting it.
+So a paused reactor is drained of coolant and waste and cannot be refilled. If the uncooled rule applied while blocked, pause and automation would be meltdown traps; the requirement is that automation Off cools a reactor rather than melting it.
 
-The panel says so explicitly. When decay heat is building, the coolant-dry status suggests pausing.
+The panel says so explicitly: the dry-coolant and full-waste statuses suggest pausing.
 
 ### Meltdown (`MeltdownService`)
 

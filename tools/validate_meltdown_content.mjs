@@ -54,12 +54,11 @@ assert((await good(COOLANT))?.GoodType === 'Liquid', `${COOLANT} must be an auth
 
 // ---- tuning: visible before it bites, real when ignored ----
 const t = REACTOR_TUNING;
-assert(0 < t.RestartHeat && t.RestartHeat < t.WarningHeat && t.WarningHeat < t.ScramHeat && t.ScramHeat < 1, 'thresholds: 0 < restart < warning < SCRAM < 1');
-assert((t.ScramHeat - t.WarningHeat) / t.HeatPerFaultPerHour >= 8, 'a single running fault gives at least 8 running hours between warning and SCRAM');
-assert((1 - t.ScramHeat) / t.DecayHeatPerHour <= t.DecayHeatHours, 'decay heat can melt a tripped, dry core (the meltdown risk is real)');
-assert(1 / t.DecayHeatPerHour >= 48 && 1 / t.DecayHeatPerHour <= t.DecayHeatHours, 'a cold core with dry coolant melts down only after 2+ days of decay heat');
-assert((1 - t.WarningHeat) / t.DecayHeatPerHour >= 24, 'at least a day between the warning and a decay-heat meltdown');
-assert((t.ScramHeat - t.RestartHeat) / t.ShutdownCoolingPerHour < t.MaintenanceOutageHours, 'a SCRAM cools to restart within one maintenance stop');
+assert(0 < t.RestartHeat && t.RestartHeat < t.WarningHeat && t.WarningHeat < t.FaultHeatLimit && t.FaultHeatLimit < 1, 'thresholds: 0 < restart < warning < fault limit < 1');
+assert(t.CoolingPerHour === t.HeatPerFaultPerHour, 'the core cools as slowly as a dry core heats (coolant less than half the time ends in a meltdown)');
+assert(1 / t.HeatPerFaultPerHour >= 24, 'a cold core with dry coolant melts down only after a day or more');
+assert((1 - t.WarningHeat) / t.HeatPerFaultPerHour >= 12, 'at least 12 hours between the warning and a dry-core meltdown');
+assert((t.FaultHeatLimit - t.WarningHeat) / t.HeatPerFaultPerHour >= 8, 'a single crew or maintenance fault gives at least 8 running hours between warning and its limit');
 assert(t.MaintenanceWarningHours < t.MaintenanceIntervalHours && t.MaintenanceOutageHours > 12, 'maintenance warning precedes the due date and a nightly idle does not count as maintenance');
 assert(t.MeltdownKillRadius < t.MeltdownIrradiationRadius && t.MeltdownRadius >= 1, 'radii: kill < irradiation, contamination >= 1');
 assert(t.MeltdownIrradiationDose > 1, 'meltdown dose must irradiate (RadiationExposure irradiates at dose >= 1)');
@@ -93,6 +92,9 @@ assert((await source('MeltdownPanels.cs')).includes('BindFragment<ReactorCorePan
 assert((await readFile(resolve(root, 'src', 'DeepFrontier', 'Scripts', 'Radiation', 'RadiationExposure.cs'), 'utf8')).includes('internal void AddDose(float dose)'), 'RadiationExposure.AddDose exists');
 const core = await source('ReactorCore.cs');
 assert(core.includes('IManufactoryLimiter') && !core.includes('_blockable.Block('), 'SCRAM is an IManufactoryLimiter, never BlockableObject.Block (which auto-empties the coolant)');
+assert(core.includes('IGeneratorOutputFactor') && core.includes('1f - _heat'), 'the reactor scales its generator output by 1 - heat');
+assert((await readFile(resolve(root, 'src', 'DeepFrontier', 'Scripts', 'WorkshopPoweredGenerator.cs'), 'utf8')).includes('_factor.OutputFactor'),
+  'WorkshopPoweredGenerator applies IGeneratorOutputFactor');
 
 // ---- localization ----
 const csv = await readFile(data('Localizations', 'enUS.csv'), 'utf8');
@@ -138,7 +140,7 @@ if (failures.length) {
   console.error(`Meltdown validation failed:\n  ${failures.join('\n  ')}`);
   process.exit(1);
 }
-console.log(`Meltdown validation passed: reactor warning ${Math.round(t.WarningHeat * 100)}% / SCRAM ${Math.round(t.ScramHeat * 100)}% / meltdown 100%; ` +
-  `dry-core meltdown ${Math.round(1 / t.DecayHeatPerHour)} h from cold, ${Math.round((1 - t.ScramHeat) / t.DecayHeatPerHour)} h from SCRAM; ` +
+console.log(`Meltdown validation passed: reactor warning ${Math.round(t.WarningHeat * 100)}% / fault limit ${Math.round(t.FaultHeatLimit * 100)}% / meltdown 100%; ` +
+  `dry-core meltdown ${Math.round(1 / t.HeatPerFaultPerHour)} h from cold, ${Math.round(0.9 / (t.HeatPerFaultPerHour * 0.55 - t.CoolingPerHour * 0.45))} h from 10% at 45% coolant; ` +
   `vault leak ${leaks.vault.GoodsPerLeak} casks (${leaks.vault.SludgeVolumePerGood} each) / ${leaks.vault.LeakIntervalHours} h; ` +
   `refinery leak ${leaks.refinery.GoodsPerLeak} sludge / ${leaks.refinery.LeakIntervalHours} h; ${constants.length} localization keys.`);

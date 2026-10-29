@@ -10,6 +10,12 @@ using Timberborn.Workshops;
 namespace DeepFrontier.Scripts {
   internal record WorkshopPoweredGeneratorSpec : ComponentSpec { }
 
+  // Optional component on the same building that scales the full output
+  // (0..1): the reactor's core heat (Meltdown/ReactorCore).
+  internal interface IGeneratorOutputFactor {
+    float OutputFactor { get; }
+  }
+
   // Recipe inventories and progress stay native; this component only connects
   // productive workshop activity to the native mechanical network's output.
   //
@@ -27,6 +33,7 @@ namespace DeepFrontier.Scripts {
     private Workshop _workshop;
     private Manufactory _manufactory;
     private Timberborn.WorkSystem.Workplace _workplace;
+    private IGeneratorOutputFactor _factor;
     private float _pilot;
     private const int PilotOutputHp = 1;
 
@@ -35,6 +42,7 @@ namespace DeepFrontier.Scripts {
       _workshop = GetComponent<Workshop>();
       _manufactory = GetComponent<Manufactory>();
       _workplace = GetComponent<Timberborn.WorkSystem.Workplace>();
+      _factor = GetComponent<IGeneratorOutputFactor>();
       int nominal = GetComponent<MechanicalNodeSpec>().PowerOutput;
       if (nominal <= 0 || !_workplace) throw new System.InvalidOperationException($"{Name}: WorkshopPoweredGenerator needs a positive PowerOutput and the native Workplace");
       _pilot = (float)PilotOutputHp / nominal;
@@ -53,7 +61,7 @@ namespace DeepFrontier.Scripts {
 
     public override void Tick() {
       bool ready = _manufactory.IsReadyToProduce;
-      _node.SetOutputMultiplier(_workshop.CurrentlyWorking && ready ? 1f
+      _node.SetOutputMultiplier(_workshop.CurrentlyWorking && ready ? (_factor != null ? _factor.OutputFactor : 1f)
           : ready && _workplace.NumberOfAssignedWorkers > 0 ? _pilot : 0f);
     }
   }
