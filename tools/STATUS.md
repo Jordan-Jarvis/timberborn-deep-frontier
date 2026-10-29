@@ -4,6 +4,17 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Performance on the user's big save: power-network split patch, frame profiler, measurements (Claude Code session, 2026-10-29; build 212 installed and verified, 659 hashes)
+
+- **User report:** loads of 200+ s, low frame rate, and a freeze while placing buildings on a large map (87 mods, including All Buildings Transfer Power, which makes every building a power shaft).
+- **Native O(n^2) found and patched:** `MechanicalGraphReorganizer.VisitConnectedNodes` (1.1.2.8) runs `Transputs.Select(ConnectedNode).Intersect(_oldGraphNodes)` for every node of a network being split, and LINQ Intersect copies the whole unvisited set each time. Every node leaving a network (delete, pause, block, flood, automation Off) split it in time quadratic in its size. `Scripts/Performance/PowerGraphReorganizer.cs` replaces it with the equivalent direct set lookups (type IL digest pinned; throws at mod start on a changed game). Loaded in build 212 ("Power network split patch applied"); the split itself is not yet timed in game.
+- **Tools:** `Scripts/Performance/FrameProfileProbe.cs` + `tools/start_frame_profile.ps1` (load a Memory Test save copy, speed 3, 20 s warm-up, 60 s of frames; native `-metrics` per-system tick report; frames csv). The native benchmark cannot be used: ModManagerScenePanel ignores every mod when `-benchmarkLength` is given.
+- **Measured (copy of the user's Day 30-7 autosave, build 211/212):**
+  - Placement previews (`start_preview_cost.ps1`, ms per frame, native -> shipped caches): Reactor 1,303 -> 13.7 still, 32.5 moving, hitch up to 478 when the mouse rests (deferred native preview navmesh, 224 ms); Steel Mill 217 -> 4.5 / 23 / 98; vanilla Smelter 6.9 -> 1.3.
+  - Frames at speed 3 (`start_frame_profile.ps1`): 41 fps without the two unfocused-window frames, median 20.8 ms, p95 41.7, regular ~49 ms frames. Metered ticks are 3.65 s of the 60 s (under 10% of frame time); Deep Frontier systems about a third of that (RadiationSimulation 16.7%, RadiationRenderer 9.8%, HydroTurbineSimulation 2.8%, RadiationExposure 1.3%, smog about 1%). The rest of the frame is rendering and unmetered per-frame work.
+  - Memory: 12.5-13.1 GB private, about 9 GB working set, on a 16 GB laptop (i7-8750H, RTX 2060 6 GB, rendering on the NVIDIA GPU).
+- **Test-run hazard handled:** the Memory Test folder was backed up first; the two autosaves the probes rotated out were restored with their timestamps and the probe files removed.
+
 ## Waste storage cannot be deleted while it holds waste (Claude Code session, 2026-10-29; compiled and statically checked; not run in game)
 
 - User request: deleting a warehouse or tank full of radioactive waste, sludge or contaminated water threw the byproducts away. `HazardousStorageDeletionBlocker` (Scripts/Radiation/RadiationStorage.cs), decorated on every native Stockpile, is a native IBlockObjectDeletionBlocker (FixedStockpileDeletionBlocker pattern): while the enabled inventory holds RadioactiveWaste, RadioactiveSludge or ContaminatedWater, BlockObject.CanDelete is false (panel delete button off, reason "DeepFrontier.Radiation.DeletionBlocker.HazardousStock") and the deconstruction tool skips it. Emptying it (native Empty storage, or selecting another good) lifts the block. Production buildings are not blocked (their inputs cannot be emptied). ContaminatedWater was already selectable in tank pickers (user confirmed). In-game check pending.
