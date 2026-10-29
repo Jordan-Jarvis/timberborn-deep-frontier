@@ -43,7 +43,11 @@ Changes since 0.5.0, the first Workshop release.
 
 ### Radioactive waste
 - **Simpler disposal:** the Radioactive Waste Export now dissolves spent-fuel casks in water and ships them off the map: 2 casks and 8 Water per hour. One building now disposes of casks, Radioactive Water and Contaminated Water, and the Waste Vault is just a buffer.
-- **Waste Refinery:** it no longer needs Chemical (4 casks + 8 Water → 6 Radioactive Water + 2 Recovered Minerals). Its Vitrification recipe, which turned sludge back into casks, is removed.
+- **Waste Refinery:**
+  - It no longer needs Chemical: 4 casks + 8 Water → 6 Radioactive Water.
+  - It now also filters badwater: 10 Badwater + 1 Filter Media → 8 Water.
+  - Vitrification (turning sludge back into casks) and mineral recovery are removed.
+- **Recovered Minerals are retired:** nothing makes or uses them now. The reactor's 10 minerals in its build cost became 100 extra High-Grade Steel.
 - **Renamed:** Radioactive Sludge is now **Radioactive Water**, since it is the same fluid the radioactive tide brings. The Sludge Outfall and Sludge Recovery Pump are now the Radioactive Water Outfall and Radioactive Water Recovery Pump. Existing saves keep their stock.
 
 ### Radiation

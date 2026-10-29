@@ -5,7 +5,7 @@
     "BuildingCost": [
       {
         "Id": "HighGradeSteel",
-        "Amount": 255
+        "Amount": 355
       },
       {
         "Id": "Alloy",
@@ -26,10 +26,6 @@
       {
         "Id": "EnrichedFuel",
         "Amount": 20
-      },
-      {
-        "Id": "RecoveredMinerals",
-        "Amount": 10
       }
     ],
     "ScienceCost": 1000000,

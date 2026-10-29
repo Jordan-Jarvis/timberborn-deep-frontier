@@ -7,13 +7,14 @@
     "RocketAirframe": "Rocket-specific final-goal component, explicitly exempted by the user.",
     "PropulsionPackage": "Rocket-specific final-goal component, explicitly exempted by the user.",
     "MissionPayload": "Rocket-specific final-goal payload, explicitly exempted by the user.",
-    "RadioactiveSludge": "Waste product shown as Radioactive Water: its destination is disposal (Radioactive Waste Export off the map, or the Outfall into a river), which the audit does not count as a use; mineral recovery is its one productive use. Vitrification was removed with the user's 2026-10-29 simplification of the waste chain."
+    "RadioactiveSludge": "Waste product shown as Radioactive Water: its destination is disposal (Radioactive Waste Export off the map, or the Outfall into a river). Vitrification and mineral recovery were removed with the user's 2026-10-29 simplification of the waste chain."
   },
-  "prohibitedNewInventoryConcepts": ["DiningService", "IndustrialLicense", "SpecialistLicense", "FlightLicense"],
+  "prohibitedNewInventoryConcepts": ["DiningService", "IndustrialLicense", "SpecialistLicense", "FlightLicense", "RecoveredMinerals"],
   "legacySaveOnlyGoods": {
     "IndustrialLicense": "Retired 2026-10-21: Technical School courses now train persistent specialists (tools/workforce_risks.json). The good stays defined, unproduced and unused, only so existing saves that hold it still load.",
     "SpecialistLicense": "Retired 2026-10-21 with IndustrialLicense; unproduced and unused, kept only for saves.",
-    "FlightLicense": "Retired 2026-10-21 with IndustrialLicense; Mission Control no longer makes it. Unproduced and unused, kept only for saves."
+    "FlightLicense": "Retired 2026-10-21 with IndustrialLicense; Mission Control no longer makes it. Unproduced and unused, kept only for saves.",
+    "RecoveredMinerals": "Retired 2026-10-29 (user decision): waste refining no longer yields minerals, mineral recovery is removed and the reactor's 10-mineral gate became 100 extra HighGradeSteel. The good stays defined, unproduced and unused, only so saves that hold it still load."
   },
   "prohibitedConceptDisposition": "Legacy development placeholders. Replace DiningService with worker-served native food consumption; replace license goods with persistent education/research state. Do not delete goods from existing saves without an explicit migration.",
   "validation": "Count only authored, reachable blueprint consumers as implemented. Planned uses stay separate and never satisfy the release check. Rocket-specific goods and directly edible foods may have one real use, never zero."

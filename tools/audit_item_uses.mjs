@@ -77,6 +77,9 @@ for(const id of activeRecipes){
   for(const ingredient of r.Ingredients){
     const outputs=destinations.filter(output=>output!==ingredient.Id).sort();
     if(outputs.length)add(ingredient.Id,'Products: '+outputs.join(' + '),path);
+    // A recipe with no product, no science and no launch disposes of its
+    // inputs (Radioactive Waste Export off the map, Outfall into a river).
+    if(!r.Products.length&&!(r.ProducedSciencePoints>0)&&!launchRecipes.has(id))add(ingredient.Id,'Disposal: off the map or into the river',path);
     if(r.ProducedSciencePoints>0)add(ingredient.Id,'Research: Science',path);
     // All missions are one destination: the launch consumer.
     if(launchRecipes.has(id))add(ingredient.Id,'Launch: rocket missions',path);

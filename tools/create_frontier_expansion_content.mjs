@@ -201,7 +201,7 @@ const recipeDefinitions = [
   // map-edge Radioactive Waste Export. RadioactiveSludge and ContaminatedWater
   // are defined by tools/radiation_content.mjs later in the generation chain.
   ['NuclearWaste', 'RadioactiveWaste', 2, [{ Id: 'ReactorCoolantWater', Amount: 6 }], [{ Id: 'RadioactiveWaste', Amount: 1 }, { Id: 'RadioactiveSludge', Amount: 1 }], 'RadioactiveWaste'],
-  ['WasteRefining', 'RadioactiveSludge/RecoveredMinerals', 8.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'Water', Amount: 8 }], [{ Id: 'RadioactiveSludge', Amount: 6 }, { Id: 'RecoveredMinerals', Amount: 2 }], 'RadioactiveSludge'],
+  ['WasteRefining', 'RadioactiveSludge', 8.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'Water', Amount: 8 }], [{ Id: 'RadioactiveSludge', Amount: 6 }], 'RadioactiveSludge'],
   ['DecontaminateWater', 'Water', 4.0, [{ Id: 'ContaminatedWater', Amount: 10 }, { Id: 'Chemical', Amount: 1 }], [{ Id: 'Water', Amount: 8 }, { Id: 'RadioactiveSludge', Amount: 1 }], 'ContaminatedWater'],
   ['GuidanceTelemetry', 'RecoveredTelemetry', 1.0, [{ Id: 'GuidanceComputer', Amount: 1 }, { Id: 'ArchiveData', Amount: 1 }], [{ Id: 'RecoveredTelemetry', Amount: 1 }], 'RecoveredTelemetry'],
   // Archive Excavation (planned, frontier_progression.json plannedBuildings):
@@ -230,10 +230,10 @@ const recipeDefinitions = [
   // in the radioactive water). No chemicals and no vitrification (user
   // direction 2026-10-29: the waste chain was too complex); casks can also be
   // dissolved and shipped at the Radioactive Waste Export.
-  ['ContaminatedWaterRefining', 'RadioactiveSludge/RecoveredMinerals', 8.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'ContaminatedWater', Amount: 8 }], [{ Id: 'RadioactiveSludge', Amount: 6 }, { Id: 'RecoveredMinerals', Amount: 2 }], 'RadioactiveSludge'],
-  // A second, productive sludge sink: the refinery can recover trace metals
-  // from dilute radioactive water instead of exporting all of it.
-  ['SludgeMineralRecovery', 'RecoveredMinerals/ConcentratedWaste', 6.0, [{ Id: 'RadioactiveSludge', Amount: 2 }, { Id: 'Chemical', Amount: 1 }, { Id: 'Water', Amount: 4 }], [{ Id: 'RecoveredMinerals', Amount: 2 }, { Id: 'ConcentratedWaste', Amount: 1 }], 'RecoveredMinerals'],
+  ['ContaminatedWaterRefining', 'RadioactiveSludge', 8.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'ContaminatedWater', Amount: 8 }], [{ Id: 'RadioactiveSludge', Amount: 6 }], 'RadioactiveSludge'],
+  // Badwater filtering (user direction 2026-10-29): the refinery is not a
+  // single-purpose building. Filter Media, the input with the fewest uses.
+  ['BadwaterFiltering', 'Water', 2.0, [{ Id: 'Badwater', Amount: 10 }, { Id: 'FilterMedia', Amount: 1 }], [{ Id: 'Water', Amount: 8 }], 'Badwater'],
 ];
 
 // Native recipe fuel: [good, cycles one unit lasts, fuel inventory capacity].
@@ -259,7 +259,7 @@ const RECIPE_NAMES = {
   GreenhouseAquaponics: 'Aquaponic kohlrabi and fish',
   FuelReprocessing: 'Spent fuel reprocessing',
   ContaminatedWaterRefining: 'Waste refining with contaminated water',
-  SludgeMineralRecovery: 'Radioactive water mineral recovery',
+  BadwaterFiltering: 'Badwater filtering',
 };
 for (const id of Object.keys(RECIPE_NAMES)) if (!recipeDefinitions.some(([recipe]) => recipe === id)) throw new Error(`RECIPE_NAMES names undefined recipe ${id}`);
 
@@ -298,7 +298,7 @@ const buildingDefinitions = [
   ['WaterTreatmentPlant', 'Buildings/Water/WaterTreatmentPlant', 'Centrifuge', 'PureWater,ReactorCoolantWater,FilterMedia,CarbonFilterMedia', 'Water', 43, 500, 4, 1800, 'Water treatment plant'],
   ['TechnicalSchool', 'Buildings/Science/TechnicalSchool', 'Inventor', '', 'Science', 44, 300, 4, 2200, 'Technical school'],
   ['UraniumProcessingPlant', 'Buildings/Metal/UraniumProcessingPlant', 'Centrifuge', 'Yellowcake,EnrichedFuel,FuelReprocessing', 'Metal', 45, 5000, 6, progression.implementedBuildingScienceOverrides.UraniumProcessingPlant, 'Uranium processing plant'],
-  ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,SludgeMineralRecovery', 'Metal', 46, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive waste refinery'],
+  ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,BadwaterFiltering', 'Metal', 46, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive waste refinery'],
   ['ElectrolysisPlant', 'Buildings/Metal/ElectrolysisPlant', 'Centrifuge', 'Electrolysis', 'Metal', 47, 6000, 5, 10000, 'Electrolysis plant'],
   ['CryogenicLiquefactionPlant', 'Buildings/Metal/CryogenicLiquefactionPlant', 'Centrifuge', 'Liquefaction', 'Metal', 48, 10000, 6, 12000, 'Cryogenic liquefaction plant'],
   ['RocketAssemblyHangar', 'Buildings/Metal/RocketAssemblyHangar', 'FoodFactory', 'RocketAirframe,PropulsionPackage', 'Metal', 49, 12000, 10, 50000, 'Rocket assembly hangar'],

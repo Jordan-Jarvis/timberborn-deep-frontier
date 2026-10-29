@@ -9,8 +9,8 @@
 // Superstructure: each good = builtCells / 100 x tier.per100BuiltCells[good].
 // Every amount rounds to the nearest multiple of 5 (minimum 5).
 // Gate: lategameGates[id] adds explicit goods that prove the previous stage
-// (DeepMine's DeepAlloy from the finite drill phase); a gate good must not
-// also come from the rule.
+// (DeepMine's DeepAlloy from the finite drill phase); a gate good that the
+// rule already uses adds to its amount (the reactor's extra containment steel).
 // The tier is fixed by the building's science unlock (tier.scienceMax bands);
 // tools/audit_progression.mjs checks the band against the generated blueprint.
 //
@@ -80,8 +80,10 @@ export async function lategameCost(id) {
   const rows = Object.entries(tier.per100BuiltCells).map(([good, rate]) => [good, round5(builtCells / 100 * rate)]);
   if (tier.concretePerGroundCell > 0) rows.push(['Concrete', round5(groundCells * tier.concretePerGroundCell)]);
   for (const [good, amount] of catalog.lategameGates[id] ?? []) {
-    if (rows.some(([g]) => g === good) || !Number.isInteger(amount) || amount <= 0) throw new Error(`${id}: invalid gate ${good}=${amount}`);
-    rows.push([good, amount]);
+    if (!Number.isInteger(amount) || amount <= 0) throw new Error(`${id}: invalid gate ${good}=${amount}`);
+    const row = rows.find(([g]) => g === good);
+    if (row) row[1] += amount;
+    else rows.push([good, amount]);
   }
   return rows;
 }

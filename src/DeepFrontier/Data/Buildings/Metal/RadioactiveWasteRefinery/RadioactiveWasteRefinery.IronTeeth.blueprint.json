@@ -11215,7 +11215,7 @@
       "WasteRefining",
       "ContaminatedWaterRefining",
       "DecontaminateWater",
-      "SludgeMineralRecovery"
+      "BadwaterFiltering"
     ]
   },
   "ConstructionSiteProgressVisualizerSpec": {

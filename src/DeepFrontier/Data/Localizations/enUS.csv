@@ -255,7 +255,7 @@ Recipe.ServoBotLimbs.DisplayName,Servo Bot Limbs,Deep Frontier
 Recipe.BotCortex.DisplayName,Bot Cortex,Deep Frontier
 Recipe.FuelReprocessing.DisplayName,Spent fuel reprocessing,Deep Frontier
 Recipe.ContaminatedWaterRefining.DisplayName,Waste refining with contaminated water,Deep Frontier
-Recipe.SludgeMineralRecovery.DisplayName,Radioactive water mineral recovery,Deep Frontier
+Recipe.BadwaterFiltering.DisplayName,Badwater filtering,Deep Frontier
 Need.PublicHealthcare.DisplayName,Public healthcare,Deep Frontier
 DeepFrontier.Hospital.Panel.Title,Hospital,Deep Frontier
 DeepFrontier.Hospital.Panel.Patients,Patients admitted: {0} / {1} beds,Deep Frontier

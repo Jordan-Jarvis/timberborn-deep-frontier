@@ -200,7 +200,7 @@ The first audit found the whole late game unreachable: no building ran Flux, Hig
 | RadioactiveWaste | EnrichedFuel @ UraniumProcessingPlant | 100,000 | 120,800 |
 | ReactorCoolantWater | ReactorCoolantWater @ WaterTreatmentPlant | 1,800 | 5,650 |
 | RecoveredArtifact | RecoveredArtifact @ ArchiveExcavation (planned) | 9,000 | 16,100 |
-| RecoveredMinerals | WasteRefining @ RadioactiveWasteRefinery | 120,000 | 240,800 |
+| RecoveredMinerals | retired 2026-10-29 | | |
 | RecoveredTelemetry | GuidanceTelemetry @ MissionControl | 14,000 | 46,320 |
 | RocketAirframe | RocketAirframe @ RocketAssemblyHangar | 18,000 | 38,800 |
 | Sandstone | gathered @ SandstonePit | 300 | 300 |
@@ -302,11 +302,11 @@ Sources: `create_frontier_expansion_content.mjs` (recipes and building recipe li
 | Cryocoolant | Liquefaction | Reactor coolant conditioning: 4 PureWater + 1 FilterMedia + 1 Cryocoolant → 4 ReactorCoolantWater (4 h) | Water Treatment Plant (1,800) | 4,000 | Cryogenic coolant is required to condition the reactor's high-purity water. |
 | HydrogenGas | Liquefaction | Enriched fuel: +1 HydrogenGas | Uranium Processing Plant (100,000) | 10,000 | Hydrogen reduces the oxide to fuel pellets. |
 | OxygenGas | Liquefaction | Yellowcake: +1 OxygenGas | Uranium Processing Plant (100,000) | 10,000 | Oxygen is the leaching oxidant. |
-| RadioactiveWaste | Waste refining | Spent fuel reprocessing: 4 RadioactiveWaste + 2 Chemical + 1 Yellowcake → 1 EnrichedFuel + 2 RadioactiveWaste (4 h) | Uranium Processing Plant (100,000) | 100,000 | Recovers fissile material. One fuel yields ten casks over its life, so reprocessing never reduces total waste. Disposal (2026-10-29): the Radioactive Waste Export dissolves 2 casks in 8 Water per hour and ships them off the map; waste refining no longer needs Chemical (4 RadioactiveWaste + 8 Water → 6 RadioactiveSludge + 2 RecoveredMinerals). |
+| RadioactiveWaste | Waste refining | Spent fuel reprocessing: 4 RadioactiveWaste + 2 Chemical + 1 Yellowcake → 1 EnrichedFuel + 2 RadioactiveWaste (4 h) | Uranium Processing Plant (100,000) | 100,000 | Recovers fissile material. One fuel yields ten casks over its life, so reprocessing never reduces total waste. Disposal (2026-10-29): the Radioactive Waste Export dissolves 2 casks in 8 Water per hour and ships them off the map; waste refining no longer needs Chemical (4 RadioactiveWaste + 8 Water → 6 RadioactiveSludge). |
 | EnrichedFuel | Reactor fuel | Construction gate: 20 EnrichedFuel, the first core load | Nuclear Reactor (1,000,000) | 100,000 | The plant must make fuel before the reactor is built. |
-| RecoveredMinerals | none | Construction gate: 10 RecoveredMinerals (control-rod and shielding minerals) | Nuclear Reactor (1,000,000) | 120,000 | Waste refining must work before the reactor is built. Making 20 fuel yields 20 casks; refining them yields the 10 minerals. |
-| RadioactiveSludge (shown as Radioactive Water) | none (export or outfall is disposal) | Mineral recovery: 2 RadioactiveSludge + 1 Chemical + 4 Water → 2 RecoveredMinerals + 1 ConcentratedWaste (6 h) | Radioactive Waste Refinery | 120,000 | Disposal at the Radioactive Waste Export (off the map) or the Outfall (into a river); the refinery can recover trace minerals instead. Vitrification was removed on 2026-10-29. |
-| ContaminatedWater | Decontamination | Waste refining with contaminated water: 4 RadioactiveWaste + 8 ContaminatedWater → 6 RadioactiveSludge + 2 RecoveredMinerals (8 h) | Radioactive Waste Refinery (120,000) | 120,000 | Contaminated water replaces clean process water. Its radioactivity goes into the sludge. |
+| RecoveredMinerals | none | Retired 2026-10-29: unproduced and unused, kept only for saves | | | The reactor gate is now 100 extra HighGradeSteel. |
+| RadioactiveSludge (shown as Radioactive Water) | none (export or outfall is disposal) | Disposal only | Radioactive Waste Export, Outfall | 200,000 | Disposal at the Radioactive Waste Export (off the map) or the Outfall (into a river). Vitrification and mineral recovery were removed on 2026-10-29. |
+| ContaminatedWater | Decontamination | Waste refining with contaminated water: 4 RadioactiveWaste + 8 ContaminatedWater → 6 RadioactiveSludge (8 h) | Radioactive Waste Refinery (120,000) | 120,000 | Contaminated water replaces clean process water. Its radioactivity goes into the radioactive water. The refinery also filters badwater: 10 Badwater + 1 FilterMedia → 8 Water (2 h). |
 | Lubricant | Cryocoolant | Servo bot limbs (below); bot maintenance | Precision Machine Works (5,000); 16 hazardous workplaces | 4,000 | Servos and bot upkeep. |
 | PowerModule | Enriched fuel | Industrial bot battery pack (below) | vanilla Bot Assembler (750) | 5,000 | Battery for the fast-built bot. |
 | FishOil (already two uses) | CannedFish, Lubricant | Bot maintenance, as a cheaper blend | 16 hazardous workplaces | 900 | A cheap oil for bots. |

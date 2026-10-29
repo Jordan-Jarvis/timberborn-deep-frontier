@@ -10,7 +10,11 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - **Export dissolves casks:** the Radioactive Waste Export gains `ExportRadioactiveWaste` (2 RadioactiveWaste + 8 Water per hour, no product; `radiation_content.mjs`), so one building disposes of casks, radioactive water and contaminated water.
   - **Refinery without Chemical:** `WasteRefining` and `ContaminatedWaterRefining` no longer take Chemical. `Vitrification` is removed (recipe, refinery list, stale Data file; a saved refinery on it loads with no recipe, native `Manufactory.Load`).
   - **Rename:** `RadioactiveSludge` keeps its id and is shown as "Radioactive Water"; the Outfall and Recovery Pump are renamed "Radioactive Water Outfall" and "Radioactive Water Recovery Pump"; meltdown and leak texts follow. Fuel Reprocessing is unchanged.
-- **Item-use audit (report-only):** RadioactiveSludge is now a single-use exception (disposal is its destination; `content_policy.json`). **RecoveredMinerals is flagged:** its only uses are the reactor's construction cost and mineral recovery's output; a second use awaits the user's decision.
+- **Minerals retired, badwater filtering (user, same day):**
+  - **Minerals:** waste refining no longer yields RecoveredMinerals and `SludgeMineralRecovery` is removed. The good is legacy save-only (`content_policy.json`).
+  - **Reactor gate:** 20 EnrichedFuel + 100 extra HighGradeSteel. `lategame_costs.mjs` now lets a gate add to a rule good.
+  - **Badwater:** the refinery gains `BadwaterFiltering` (10 Badwater + 1 FilterMedia → 8 Water, 2 h). Filter Media was the least-used candidate input.
+- **Item-use audit:** a recipe with no product, science or launch counts as "Disposal". RadioactiveSludge is a single-use exception. 0 of 55 goods flagged (releaseReady).
 - **Checks:** generation, `validate_all -SkipBlender` 51 pass + 1 report-only. Docs: `docs/progression.md` waste rows, CHANGELOG, Workshop change notes and description.
 
 ## Reactor heat rework: power falls with heat, symmetric cooling, full waste heats the core (Claude Code session, 2026-10-29; generated, compiled and statically checked; not built or run in game)

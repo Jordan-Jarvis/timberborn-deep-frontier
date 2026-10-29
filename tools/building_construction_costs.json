@@ -5,7 +5,7 @@
     "foundation": "Concrete = groundCells (occupied cells on layer 0) x tier.concretePerGroundCell",
     "superstructure": "each good = builtCells (all occupied cells) / 100 x tier.per100BuiltCells[good]",
     "rounding": "nearest multiple of 5, minimum 5",
-    "gate": "lategameGates adds explicit goods that prove the previous stage on top of the rule: DeepMine DeepAlloy (finite drill phase), Greenhouse Compost (fertilizer works; bed soil), NuclearReactor EnrichedFuel (first core load) and RecoveredMinerals (waste refining works before the reactor), OilPowerPlant MachineCore (turbine governors from the precision works, after the oil chain feeds polymer)",
+    "gate": "lategameGates adds explicit goods that prove the previous stage on top of the rule: DeepMine DeepAlloy (finite drill phase), Greenhouse Compost (fertilizer works; bed soil), NuclearReactor EnrichedFuel (first core load) and 100 extra HighGradeSteel (containment; replaced RecoveredMinerals on 2026-10-29), OilPowerPlant MachineCore (turbine governors from the precision works, after the oil chain feeds polymer)",
     "tierBand": "tier is fixed by the science unlock: the first tier whose scienceMax is at least the building's science (null = no upper bound)",
     "tiers": {
       "T1": {"stage":"Productive settlement","scienceMax":600,"concretePerGroundCell":0,"per100BuiltCells":{"Plank":30,"Gear":12,"MetalBlock":6}},
@@ -52,7 +52,7 @@
   "lategameGates": {
     "DeepMine": [["DeepAlloy",20]],
     "Greenhouse": [["Compost",30]],
-    "NuclearReactor": [["EnrichedFuel",20],["RecoveredMinerals",10]],
+    "NuclearReactor": [["EnrichedFuel",20],["HighGradeSteel",100]],
     "OilPowerPlant": [["MachineCore",4]]
   },
   "buildings": {
@@ -74,7 +74,7 @@
     "RocketAssemblyHangar": [["HighGradeSteel",80],["Alloy",65],["MachineCore",15],["MetalBlock",65],["Concrete",210]],
     "MissionControl": [["MetalBlock",95],["Gear",50],["TreatedPlank",50],["DeepAlloy",20],["Concrete",160]],
     "LaunchPad": [["HighGradeSteel",70],["Alloy",55],["MachineCore",15],["MetalBlock",55],["Concrete",410]],
-    "NuclearReactor": [["HighGradeSteel",255],["Alloy",205],["MachineCore",50],["MetalBlock",205],["Concrete",785],["EnrichedFuel",20],["RecoveredMinerals",10]],
+    "NuclearReactor": [["HighGradeSteel",355],["Alloy",205],["MachineCore",50],["MetalBlock",205],["Concrete",785],["EnrichedFuel",20]],
     "SteelMill": [["Plank",105],["Gear",65],["MetalBlock",65],["TreatedPlank",25],["Concrete",115]],
     "ArchiveExcavation": [["MetalBlock",85],["Gear",45],["TreatedPlank",45],["DeepAlloy",15],["Concrete",125]],
     "CryogenicTankFarm": [["MetalBlock",70],["Gear",35],["TreatedPlank",35],["DeepAlloy",15],["Concrete",165]],
