@@ -12721,7 +12721,7 @@
    0
   ]
  ],
- "partsOutsideFootprint": 29,
+ "partsOutsideFootprint": 26,
  "doors": [
   {
    "id": "TurbineHallDoor",
@@ -14319,5 +14319,5 @@
   "RaceWheel0.#Empty#Animated",
   "RaceWheel1.#Empty#Animated"
  ],
- "sourceHash": "345103eab7c1948e6c82643d1c3880c09134005519f4dd6cdfc4b9f6421f49d3"
+ "sourceHash": "dcdefed7469f856d7518db5e9bcdb4ea9a8454b314b6313112d19eb8feb7ae96"
 }

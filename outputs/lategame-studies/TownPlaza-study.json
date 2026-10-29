@@ -66,10 +66,10 @@
     }
   ],
   "redicProps": [],
-  "faces": 2764,
+  "faces": 2636,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 104,
-    "BaseMetal.IronTeeth": 1684,
+    "BaseMetal.IronTeeth": 1556,
     "RoofPlanks.IronTeeth": 129,
     "Details.IronTeeth": 192,
     "accent8": 20,
@@ -77,6 +77,6 @@
     "Plaster_Orange.IronTeeth": 439,
     "WindowsAtlas.IronTeeth": 98
   },
-  "sourceHash": "a197614f9aebb7c042e6bf188a54743cd442fcb1ddbd1ef44f2893b4621418fe",
-  "artHash": "37c500aae453d449bdea9a0d4a37f8c7f9c1bb2e7bb6a93f8ffaeae3c5c1cdbe"
+  "sourceHash": "07994389abc3e325dab294deb3ec1b5f37b03e0bbbbf5ba938ca1e3fea580330",
+  "artHash": "059587842345c6c868b3d4bd1a325d02edfb44312266826b6c7faab3ef39c322"
 }

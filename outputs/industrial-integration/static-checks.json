@@ -7,7 +7,7 @@
       "animationTracks": 5,
       "frames": 61,
       "walkways": "none",
-      "nativeUvVerticesChecked": 4520
+      "nativeUvVerticesChecked": 3384
     },
     {
       "building": "CementKiln",
@@ -15,7 +15,7 @@
       "animationTracks": 12,
       "frames": 241,
       "walkways": "none",
-      "nativeUvVerticesChecked": 8504
+      "nativeUvVerticesChecked": 5991
     },
     {
       "building": "SandstoneQuarry",
@@ -23,7 +23,7 @@
       "animationTracks": 53,
       "frames": 481,
       "walkways": "none",
-      "nativeUvVerticesChecked": 12690
+      "nativeUvVerticesChecked": 9613
     },
     {
       "building": "LimestoneQuarry",
@@ -31,7 +31,7 @@
       "animationTracks": 53,
       "frames": 481,
       "walkways": "none",
-      "nativeUvVerticesChecked": 12690
+      "nativeUvVerticesChecked": 9613
     },
     {
       "building": "ConcreteMixer",
@@ -39,7 +39,7 @@
       "animationTracks": 2,
       "frames": 121,
       "walkways": "none",
-      "nativeUvVerticesChecked": 3826
+      "nativeUvVerticesChecked": 3708
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
  "model": "Restaurant",
  "source": "C:\\Users\\Jordan\\Documents\\TimberbornModding\\src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
- "sourceSha256": "d662a99dfca54a307e483f38b5cf9d0dcf4308ce9d05a198d9b36ba447bff08f",
+ "sourceSha256": "00553560d5ed189a59f23c81fd75afe87b78ecbdbdae002cd92e6db4436d1484",
  "frame": 1,
  "coordinateSystem": "Native grid XYZ; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)",
  "rule": "outward static surfaces within 0.12 behind the face plane (or up to 0.02 proud) cover >= 60% of 8x8 samples",

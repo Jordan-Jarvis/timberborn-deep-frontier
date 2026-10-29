@@ -1,7 +1,7 @@
 {
  "ident": "MaterialsLaboratory",
  "source": "src/DeepFrontier/Art/Source/MaterialsLaboratory-ReferenceStudy.blend",
- "sourceSha256": "62dcd1db10bcd24f8a13c8460a4f454541dc9b49b2c3642ea18df5d63e971997",
+ "sourceSha256": "d61305d54192c3379763a851c3c902eff6abcf08f4c35e9aac554955f15d534a",
  "frame": 1,
  "layout": "tools/research-layouts.json",
  "origin": [
@@ -47,7 +47,7 @@
     ],
     "stackTop": 7.985,
     "lowestNearby": 7.12,
-    "vertices": 432
+    "vertices": 216
    },
    {
     "position": [
@@ -57,7 +57,7 @@
     ],
     "stackTop": 5.885,
     "lowestNearby": 1.93,
-    "vertices": 451
+    "vertices": 233
    }
   ]
  }

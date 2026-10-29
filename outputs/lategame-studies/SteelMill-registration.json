@@ -2661,7 +2661,7 @@
    1
   ]
  ],
- "partsOutsideFootprint": 39,
+ "partsOutsideFootprint": 37,
  "doors": [
   {
    "id": "Entrance",
@@ -3412,5 +3412,5 @@
   "SteelMill.Stand3UpperRoll",
   "SteelMill.HotBar"
  ],
- "sourceHash": "436043830e35c0e43461147d1b698d6fd07357a6a572eccc9fbb8d2ea437e250"
+ "sourceHash": "1346d5cc675e90601ad8978b76d432ab353a2d5d848d1c0e623bad6bd6dc313f"
 }

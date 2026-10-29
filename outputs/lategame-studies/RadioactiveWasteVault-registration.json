@@ -2011,7 +2011,7 @@
    2
   ]
  ],
- "partsOutsideFootprint": 4,
+ "partsOutsideFootprint": 2,
  "doors": [
   {
    "id": "Main",
@@ -2458,5 +2458,5 @@
   "CowlEast",
   "CowlEastBeacon"
  ],
- "sourceHash": "eda3f6acfd23bed8ecbfb3e94a3aae981ae26903bd753a0d5f03866e99e47537"
+ "sourceHash": "55617e0a4cca58401901e2f54304f6a40fead25ff0fe294dc60c0f605873afcb"
 }

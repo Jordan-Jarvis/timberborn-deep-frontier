@@ -24,6 +24,7 @@ with its cask (CUSTOM_SLEW), cask cart (SLIDE_X), four warning beacons
 import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
+import lategame_kit as K
 from lategame_kit import (CONCRETE, ORANGE, FORGED, PAINTED, CYAN, GLOW, revolve, band, dome, extrude_profile,
                           steel_rail, ladder, lamp, beacon, beacon_shutter, bolt_row, redic_prop)
 from lategame_nuclear_parts import (bx, Facer, trefoil, gauge, riveted_panel, pipe_path, frustum, obox, cask,
@@ -220,7 +221,7 @@ def cask_port(g, parts):
     f = Facer(px0, (py0 + py1) / 2, 0, 'left')
     f.box(g, 0, 1.15, .06, 1.25, 1.85, .12, IRON)
     riveted_panel(g, f, -.55, .55, .3, 2.0, .12, .2, FORGED)
-    g.wheel(f.p(0, 1.15, .27), .18, 'X', IRON, BRASS)
+    K.wheel(g, f.p(0, 1.15, .27), .18, 'X')
     hazard_stripes(g, f, -.6, .6, 2.2, .0, .03, height=.12, n=8)
 
 

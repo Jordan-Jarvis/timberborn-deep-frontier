@@ -382,12 +382,12 @@ def deck(g, x0, x1, y0, y1, z, *, t=.08, rails=('front', 'back', 'left', 'right'
     if bars:
         along_x = (x1 - x0) >= (y1 - y0)
         if along_x:
-            n = max(2, int((y1 - y0 - .08) / .14))
+            n = max(2, int((y1 - y0 - .08) / .2))
             for i in range(n):
                 y = y0 + .04 + (y1 - y0 - .08) * (i + .5) / n
                 bx(g, x0 + .04, x1 - .04, y - .015, y + .015, z, z + .012, IRON)
         else:
-            n = max(2, int((x1 - x0 - .08) / .14))
+            n = max(2, int((x1 - x0 - .08) / .2))
             for i in range(n):
                 x = x0 + .04 + (x1 - x0 - .08) * (i + .5) / n
                 bx(g, x - .015, x + .015, y0 + .04, y1 - .04, z, z + .012, IRON)
@@ -443,8 +443,8 @@ def gauge(g, x, y, z, face='front', r=.1):
     axis = 'Y' if n[1] else 'X'
     def p(d):
         return (x + n[0] * d, y + n[1] * d, z)
-    g.cylinder(p(.024), r, .04, BRASS, axis, 16)
-    g.cylinder(p(.047), r * .78, .014, CONCRETE, axis, 16)
+    g.cylinder(p(.024), r, .04, BRASS, axis, 8)
+    g.cylinder(p(.047), r * .78, .014, CONCRETE, axis, 8)
     q = p(.058)
     if axis == 'Y':
         g.beam((q[0] - r * .1, q[1], q[2] - r * .1), (q[0] + r * .5, q[1], q[2] + r * .42), .008, .022, IRON)
@@ -469,14 +469,15 @@ def spoked_wheel(name, c, r, axis='X', *, rim_t=.09, rim_w=.14, spokes=8, mat=IR
                  hub_r=.16, groove=True, accent=BRASS, double=False):
     """Separate animated spoked wheel (sheave, flywheel) centred on c."""
     w = Geometry(name, c)
-    w.ring(c, r, rim_t, rim_w, mat, axis, 32)
+    # 16 sides (22.5 degree facets, smooth-shaded) read round at game zoom.
+    w.ring(c, r, rim_t, rim_w, mat, axis, 16)
     if groove:
         # Rope-groove flanges just proud of the rim faces.
         for s in (-1, 1):
             off = s * (rim_w / 2 + .012)
             pc = _along(c, axis, off)
-            w.ring(pc, r + .05, .07, .024, accent, axis, 32)
-    w.cylinder(c, hub_r, rim_w + .1, hub_mat, axis, 16)
+            w.ring(pc, r + .05, .07, .024, accent, axis, 16)
+    w.cylinder(c, hub_r, rim_w + .1, hub_mat, axis, 12)
     w.cylinder(c, hub_r * .55, rim_w + .16, IRON, axis, 12)
     planes = (-rim_w * .22, rim_w * .22) if double else (0,)
     for k in range(spokes):

@@ -91,11 +91,9 @@ def reactors(g, parts):
         dome_top = top + (REACTOR_R + .03) * .45
         # Bolted manway on the front.
         mz = base + .95
-        g.cylinder((x, REACTOR_Y - REACTOR_R - .035, mz), .2, .07, IRON, 'Y', 16)
-        P.hoop(g, (x, REACTOR_Y - REACTOR_R - .075, mz), .22, .05, .03, BRASS, axis='Y', segments=16)
-        for k in range(8):
-            a = k * math.pi / 4
-            K.stud(g, (x + math.cos(a) * .17, REACTOR_Y - REACTOR_R - .075, mz + math.sin(a) * .17), 'Y', .02)
+        # (Its eight bolt heads were sub-pixel.)
+        g.cylinder((x, REACTOR_Y - REACTOR_R - .035, mz), .2, .07, IRON, 'Y', 12)
+        P.disc(g, (x, REACTOR_Y - REACTOR_R - .075, mz), .22, .03, BRASS, axis='Y', segments=12)
         # Bottom outlet with a valve, running to the front.
         P.pipe(g, [(x + .25, REACTOR_Y - .3, base + .45), (x + .25, ay0 - .02 + .0, base + .45)], .055, flanges=False)
         P.valve(g, (x + .25, REACTOR_Y - REACTOR_R - .12, base + .45), 'up', .1, stem=.18)
@@ -105,14 +103,12 @@ def reactors(g, parts):
         sz = dome_top - .02
         g.box((x, REACTOR_Y, sz + .05), (.62, .5, .1), IRON)
         g.box((x, REACTOR_Y, sz + .25), (.36, .36, .3), PAINTED)
-        for dx in (-.16, .16):
-            K.stud(g, (x + dx, REACTOR_Y - .181 - .01, sz + .25), 'Y', .02)
         P.motor(g, (x, REACTOR_Y, sz + .95), .16, .42, axis='Z')
         # Spinning coupling (visible between gearbox and motor).
         c = Geometry(f'ChemicalWorks.Agitator{i + 1}', (x, REACTOR_Y, sz + .55))
         P.lathe(c, (x, REACTOR_Y, sz + .55), [(.06, -.16), (.06, -.07), (.17, -.07), (.17, -.02),
                                                (.06, -.02), (.06, .02), (.17, .02), (.17, .07),
-                                               (.06, .07), (.06, .16)], IRON, segments=12)
+                                               (.06, .07), (.06, .16)], IRON, segments=8)
         for k in range(4):
             a = k * math.pi / 2
             c.box((x + math.cos(a) * .12, REACTOR_Y + math.sin(a) * .12, sz + .55), (.045, .045, .17), BRASS)
@@ -191,18 +187,18 @@ def column(g, parts):
     r = COLUMN_R
     # Octagonal concrete footing and flared steel skirt.
     K.revolve(g, (cx, cy, 0), [(1.05, 0), (1.05, .45), (.95, .55)], CONCRETE, segments=8, phase=math.pi / 8)
-    K.revolve(g, (cx, cy, .55), [(r + .14, 0), (r + .14, .5), (r, .9)], IRON, segments=16)
+    K.revolve(g, (cx, cy, .55), [(r + .14, 0), (r + .14, .5), (r, .9)], IRON, segments=12)
     top = 12.4
-    K.revolve(g, (cx, cy, 1.4), [(r, 0), (r, top - 1.4)], IRON, segments=16, cap_bottom=False, cap_top=False)
-    K.dome(g, (cx, cy, top), r + .025, IRON, segments=16, squash=.55)
+    K.revolve(g, (cx, cy, 1.4), [(r, 0), (r, top - 1.4)], IRON, segments=12, cap_bottom=False, cap_top=False)
+    K.dome(g, (cx, cy, top), r + .025, IRON, segments=12, squash=.55)
     # Painted bands at each tray section; rivet seams between.
     for z in [1.9 + 1.1 * k for k in range(10)]:
         if not 4.2 < z < 7.8:
-            K.band(g, (cx, cy, 0), r, z, .08, PAINTED, segments=16)
+            K.band(g, (cx, cy, 0), r, z, .08, PAINTED, segments=12)
     # Timber-lagged insulation jacket round the hot middle section, strapped.
-    K.revolve(g, (cx, cy, 4.25), [(r + .045, 0), (r + .045, 3.5)], FORGED, segments=16, phase=math.pi / 24)
+    K.revolve(g, (cx, cy, 4.25), [(r + .045, 0), (r + .045, 3.5)], FORGED, segments=12, phase=math.pi / 24)
     for z in (4.45, 5.6, 6.75, 7.55):
-        K.band(g, (cx, cy, 0), r + .045, z, .07, IRON, segments=16)
+        K.band(g, (cx, cy, 0), r + .045, z, .07, IRON, segments=12, phase=math.pi / 24)
     # Ring platforms at whole layers with rails and knee brackets.
     for z in (4, 8, 12):
         P.annulus(g, (cx, cy), r - .1, 1.18, z - .08, z, IRON, segments=16)
@@ -225,14 +221,9 @@ def column(g, parts):
     for z, a in ((1.7, 1.3 * math.pi), (4.75, 1.25 * math.pi), (8.75, 1.32 * math.pi)):
         ux, uy = math.cos(a), math.sin(a)
         at = lambda d: (cx + ux * d, cy + uy * d, z)
-        P.tube(g, at(r - .08), at(r + .1), .19, IRON, segments=16)
-        P.tube(g, at(r + .1), at(r + .16), .24, PAINTED, segments=16)
-        for k in range(8):
-            b = k * math.pi / 4
-            off = (-uy * math.cos(b) * .2, ux * math.cos(b) * .2, math.sin(b) * .2)
-            p = at(r + .16)
-            P.tube(g, (p[0] + off[0], p[1] + off[1], p[2] + off[2]),
-                   (p[0] + off[0] + ux * .025, p[1] + off[1] + uy * .025, p[2] + off[2]), .022, BRASS, segments=6)
+        # Eight sides; the cover's eight bolt heads were sub-pixel.
+        P.tube(g, at(r - .08), at(r + .1), .19, IRON, segments=8)
+        P.tube(g, at(r + .1), at(r + .16), .24, PAINTED, segments=8)
         p = at(r + .16)
         P.tube(g, (p[0] - uy * .1, p[1] + ux * .1, z), (p[0] - uy * .1 + ux * .06, p[1] + ux * .1 + uy * .06, z),
                .03, IRON, segments=6)

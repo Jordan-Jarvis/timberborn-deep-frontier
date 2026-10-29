@@ -14,7 +14,7 @@ import math
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 from lategame_kit import (stud, CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK, CYAN, GLOW,
                           LAYER_GAP, TRIM_PROUD, revolve, band, dome, oriented_polygon,
-                          extrude_profile, bolt_row)
+                          extrude_profile, bolt_row, valve_wheel)
 
 NORMALS = {'front': (0, -1), 'back': (0, 1), 'left': (-1, 0), 'right': (1, 0)}
 
@@ -69,13 +69,12 @@ def prism(g, f, poly, d0, d1, mat):
 
 
 def trefoil(g, x, y, z, *, face='front', r=.28):
-    """Radiation warning sign: painted plate, orange disc, dark trefoil."""
+    """Radiation warning sign: painted plate, orange disc, dark trefoil
+    (12-sided disc, three-facet blades, 8-sided hub; the plate's corner
+    bolts were sub-pixel)."""
     f = Facer(x, y, z, face)
     s = 2 * r + .12
     f.box(g, 0, 0, .02, s, s, .04, PAINTED)
-    for u in (-s / 2 + .045, s / 2 - .045):
-        for v in (-s / 2 + .045, s / 2 - .045):
-            stud(g, f.p(u, v, .04 + .004), f.axis(), .018)
     # Orange disc proud of the plate.
     segs = 12
     disc = [(math.cos(i * 2 * math.pi / segs) * r, math.sin(i * 2 * math.pi / segs) * r) for i in range(segs)]
@@ -85,20 +84,20 @@ def trefoil(g, x, y, z, *, face='front', r=.28):
     for k in range(3):
         a0 = math.pi / 2 + k * 2 * math.pi / 3 - math.pi / 6
         a1 = a0 + math.pi / 3
-        outer = [(math.cos(a0 + (a1 - a0) * i / 5) * ro, math.sin(a0 + (a1 - a0) * i / 5) * ro) for i in range(6)]
-        inner = [(math.cos(a1 - (a1 - a0) * i / 5) * ri, math.sin(a1 - (a1 - a0) * i / 5) * ri) for i in range(6)]
+        outer = [(math.cos(a0 + (a1 - a0) * i / 3) * ro, math.sin(a0 + (a1 - a0) * i / 3) * ro) for i in range(4)]
+        inner = [(math.cos(a1 - (a1 - a0) * i / 3) * ri, math.sin(a1 - (a1 - a0) * i / 3) * ri) for i in range(4)]
         prism(g, f, outer + inner, .05, .075, IRON)
-    hub = [(math.cos(i * 2 * math.pi / 10) * r * .16, math.sin(i * 2 * math.pi / 10) * r * .16) for i in range(10)]
+    hub = [(math.cos(i * 2 * math.pi / 8) * r * .16, math.sin(i * 2 * math.pi / 8) * r * .16) for i in range(8)]
     prism(g, f, hub, .05, .075, IRON)
 
 
 def gauge(g, x, y, z, *, face='front', r=.1):
-    """Pressure gauge: iron body, white dial, brass bezel, cyan needle."""
+    """Pressure gauge: iron body, white dial, cyan needle (the brass bezel
+    ring, 64 triangles, was a one-pixel line at game zoom)."""
     f = Facer(x, y, z, face)
     ax = f.axis()
     g.cylinder(f.p(0, 0, .04), r, .08, IRON, ax, 8)
     g.cylinder(f.p(0, 0, .087), r * .8, .014, CONCRETE, ax, 8)
-    g.ring(f.p(0, 0, .085), r + .015, .035, .035, BRASS, ax, 8)
     g.beam(f.p(0, 0, .1), f.p(r * .5, r * .45, .1), .018, .012, CYAN)
     # Stem back to the pipe or wall it reads.
     g.beam(f.p(0, -r - .12, .04), f.p(0, -r + .02, .04), .035, mat=BRASS)
@@ -113,7 +112,7 @@ def drum(g, x, y, z, *, r=.19, h=.46, mat=PAINTED, lid=IRON):
     g.cylinder((x + r * .45, y, z + h + .045), .03, .03, BRASS, 'Z', 8)
 
 
-def riveted_panel(g, f, u0, u1, v0, v1, d0, d1, mat=FORGED, *, rivets=True, pitch=.32):
+def riveted_panel(g, f, u0, u1, v0, v1, d0, d1, mat=FORGED, *, rivets=True, pitch=.5):
     """Proud riveted plate on Facer f from (u0, v0) to (u1, v1)."""
     f.box(g, (u0 + u1) / 2, (v0 + v1) / 2, (d0 + d1) / 2, u1 - u0, v1 - v0, d1 - d0, mat)
     if not rivets:
@@ -132,7 +131,8 @@ def hazard_stripes(g, f, u0, u1, v, d0, d1, *, height=.14, n=6):
 
 
 def pipe_flange(g, p, r, axis):
-    g.ring(p, r * 1.7, r * .9, .05, BRASS, axis, 8)
+    """Solid flange disc on the pipe (the bore inside it is never seen)."""
+    g.cylinder(p, r * 1.7, .05, BRASS, axis, 8)
 
 
 def straight_pipe(g, a, b, r=.07, *, mat=IRON, flanges=True, segments=8):
@@ -170,12 +170,13 @@ def valve(g, p, r, axis, *, wheel_face='front'):
         n = NORMALS[wheel_face]
         stem_end = (x + n[0] * (r * 1.3 + .16), y + n[1] * (r * 1.3 + .16), z)
         g.beam((x + n[0] * r * 1.3, y + n[1] * r * 1.3, z), stem_end, .04, mat=IRON)
-        g.wheel(stem_end, .13, 'Y' if wheel_face in ('front', 'back') else 'X', IRON, BRASS)
+        # Kit hand wheel (148 triangles; Geometry.wheel was 540).
+        valve_wheel(g, *stem_end, face=wheel_face, r=.13)
 
 
 def _flat_wheel(g, p, r):
     """Hand wheel lying flat (axis Z)."""
-    g.ring(p, r, .045, .05, IRON, 'Z', 16)
+    g.ring(p, r, .045, .05, IRON, 'Z', 8)
     g.cylinder(p, .05, .07, BRASS, 'Z', 8)
     for i in range(4):
         a = i * math.pi / 2
@@ -187,8 +188,8 @@ def manipulator_port(g, x, y, z, *, face='front', reach=.55):
     joint in an iron port ring, two jointed arms and tongs hanging outside."""
     f = Facer(x, y, z, face)
     ax = f.axis()
-    g.cylinder(f.p(0, 0, .03), .2, .06, IRON, ax, 16)
-    g.ring(f.p(0, 0, .065), .215, .05, .05, BRASS, ax, 16)
+    g.cylinder(f.p(0, 0, .03), .2, .06, IRON, ax, 12)
+    g.ring(f.p(0, 0, .065), .215, .05, .05, BRASS, ax, 12)
     revolve_ball = [(0, -.11), (.09, -.07), (.11, 0), (.09, .07), (0, .11)]
     # Ball joint (revolved about local outward axis approximated by Z then placed).
     c = f.p(0, 0, .1)
@@ -228,7 +229,7 @@ def battered_wall(g, axis, x0, x1, y_face, depth, z0, z1, batter, mat=CONCRETE, 
         extrude_profile(g, prof, x0, x1, mat, axis='Y')
 
 
-def plank_slope(g, prof, lo, hi, *, axis='X', pitch=.34, gap=.012, lift=.012, mat=ROOF):
+def plank_slope(g, prof, lo, hi, *, axis='X', pitch=.45, gap=.012, lift=.012, mat=ROOF):
     """Sloped roof sheet split into native-scale planks running down the slope.
 
     `prof` is the CCW (u, z) cross-section quad of the sheet, extruded along

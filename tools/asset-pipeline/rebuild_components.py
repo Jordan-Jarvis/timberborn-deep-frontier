@@ -18,6 +18,7 @@ from building_components import recipes,legacy_door,UV_PROFILES
 from blender_components import object_digest,separate_components
 from industrial_budget import MODELS as BUDGET_MODELS,BEVEL as BUDGET_BEVEL
 from enclosed_cull import SHELL_MODELS
+from industrial_kit import LEAN_MODELS
 
 
 def initialize(model,builders,architecture):
@@ -91,7 +92,7 @@ def main():
         # and are built as shells, as render_reference_studies.py builds them
         # (a component is culled only by its own volumes, so this matches).
         if args.model in BUDGET_MODELS or args.model in SHELL_MODELS:g.cull_enclosed=True
-        g.cull_small_hidden=args.model in SHELL_MODELS
+        g.cull_small_hidden=args.model in SHELL_MODELS or args.model in LEAN_MODELS
         obj=g.build(collection,materials,bevel,UV_PROFILES[args.model]);obj['df_component']=name
         if args.model=='FishHatchery':
             obj['df_structural_parts']=json.dumps(g.structural_parts)

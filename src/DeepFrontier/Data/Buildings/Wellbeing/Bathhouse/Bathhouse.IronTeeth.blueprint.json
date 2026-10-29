@@ -5636,6 +5636,24 @@
       },
       {
         "Coordinates": {
+          "X": 1,
+          "Y": 2,
+          "Z": 3
+        },
+        "Directions": "Down",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 2,
+          "Z": 3
+        },
+        "Directions": "Right, Down",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 7,
           "Y": 4,
           "Z": 3
@@ -6059,6 +6077,15 @@
       },
       {
         "Coordinates": {
+          "X": 1,
+          "Y": 6,
+          "Z": 3
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 2,
           "Y": 6,
           "Z": 3
@@ -6082,6 +6109,15 @@
           "Z": 3
         },
         "Directions": "Up, Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 6,
+          "Z": 3
+        },
+        "Directions": "Up",
         "ReverseRotation": false
       }
     ]
@@ -7163,6 +7199,15 @@
       },
       {
         "Coordinates": {
+          "X": 1,
+          "Y": 2,
+          "Z": 3
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
           "X": 2,
           "Y": 2,
           "Z": 3
@@ -7191,6 +7236,15 @@
       {
         "Coordinates": {
           "X": 5,
+          "Y": 2,
+          "Z": 3
+        },
+        "Directions": "Right, Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 5,
           "Y": 3,
           "Z": 3
         },
@@ -7204,6 +7258,15 @@
           "Z": 3
         },
         "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 6,
+          "Z": 3
+        },
+        "Directions": "Up",
         "State": "OpenIn"
       },
       {
@@ -7227,6 +7290,15 @@
       {
         "Coordinates": {
           "X": 4,
+          "Y": 6,
+          "Z": 3
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 5,
           "Y": 6,
           "Z": 3
         },

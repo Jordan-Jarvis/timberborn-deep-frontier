@@ -47,7 +47,10 @@ LAYER_GAP = .012   # Minimum separation between parallel overlapping surfaces.
 # Triangle budget (outputs/triangle-budget/, docs/art/lategame-style.md): the
 # game keeps several mesh copies of every building's placement preview, so
 # curved parts use few sides. Shapes are smooth-shaded by angle at build time
-# (render_lategame_studies.py), so 16 sides read as round at game zoom.
+# (render_lategame_studies.py): 12 sides (30 degree facets, under the 37
+# degree smoothing angle) read as round at game zoom; only big drums and
+# domes pass more. Side counts stay multiples of 4 so a part's plan extent,
+# and with it the grid registration, does not move.
 GROUND_SINK = .03  # Inner solids start this far up, buried in their footing.
 TRIM_PROUD = .02   # Minimum projection of trim, bands and plates from their host.
 
@@ -113,9 +116,12 @@ def oriented_polygon(g, points, normal, mat):
     g.add(points, [tuple(order)], mat)
 
 
-def hollow_revolve(g, center, profile, thickness, mat, *, segments=16, inner_mat=None):
+def hollow_revolve(g, center, profile, thickness, mat, *, segments=12, inner_mat=None, rims=(True, True)):
     """Open-topped shell of revolution (towers, silos, stacks) with real wall
-    thickness: outer face, inward-facing inner face and annular rims."""
+    thickness: outer face, inward-facing inner face and annular rims.
+    `rims` = (bottom, top): pass False for a rim that is buried in the part
+    it sits on or tucked under the one above (checked by
+    audit_hidden_geometry.py, not assumed)."""
     _check_positive(thickness)
     cx, cy, cz = center
     inner_mat = mat if inner_mat is None else inner_mat
@@ -136,7 +142,9 @@ def hollow_revolve(g, center, profile, thickness, mat, *, segments=16, inner_mat
                 q = (k * segments + i, k * segments + j, (k + 1) * segments + j, (k + 1) * segments + i)
                 faces.append(q if outward else tuple(reversed(q)))
         g.add(verts, faces, m)
-    for k, up in ((0, False), (len(profile) - 1, True)):
+    for (k, up), keep in zip(((0, False), (len(profile) - 1, True)), rims):
+        if not keep:
+            continue
         for i in range(segments):
             j = (i + 1) % segments
             pts = [outer[k][i], outer[k][j], inner[k][j], inner[k][i]]
@@ -155,7 +163,7 @@ def arch_infill(g, axis, plane, center, half, spring, rise, outward, mat, *, seg
     oriented_polygon(g, pts, normal, mat)
 
 
-def revolve(g, center, profile, mat, *, segments=16, cap_bottom=True, cap_top=True, phase=0.0):
+def revolve(g, center, profile, mat, *, segments=12, cap_bottom=True, cap_top=True, phase=0.0):
     """Closed surface of revolution about a vertical axis.
 
     `profile` is a list of (radius, z) pairs from bottom to top, with z rising
@@ -209,7 +217,7 @@ def _host_radius(profile, z):
     return None
 
 
-def band(g, center, r, z, height, mat=IRON, *, segments=16, proud=TRIM_PROUD, phase=0.0):
+def band(g, center, r, z, height, mat=IRON, *, segments=12, proud=TRIM_PROUD, phase=0.0):
     """Solid hoop proud of a cylinder of radius r (its inner face is buried).
 
     The hoop's flat faces must clear its host: either the host revolve has
@@ -229,7 +237,7 @@ def band(g, center, r, z, height, mat=IRON, *, segments=16, proud=TRIM_PROUD, ph
             phase=phase)
 
 
-def dome(g, center, r, mat, *, segments=16, rings=4, squash=1.0, base_z=0.0):
+def dome(g, center, r, mat, *, segments=12, rings=3, squash=1.0, base_z=0.0):
     """Hemispherical cap with its rim at center z + base_z."""
     profile = []
     for k in range(rings + 1):
@@ -272,13 +280,14 @@ def extrude_profile(g, profile, start, end, mat, *, axis='Y', close=True):
 
 
 def stud(g, p, axis='Y', r=.022):
-    """One six-sided steel bolt head, centred on its host face (half buried).
+    """One square steel bolt head set diagonally, centred on its host face
+    (half buried, so its inner cap is culled).
 
     Replaces Geometry.rivet (48 triangles) in late-game art: at game zoom a
-    bolt head is one or two pixels, so a single hexagonal prism (20
-    triangles, no bevel) reads the same.
+    bolt head is one or two pixels, so a four-sided prism (10 visible
+    triangles, no bevel) reads the same as a hexagon.
     """
-    g.cylinder(p, r * 1.2, .024, IRON, axis, 6)
+    g.cylinder(p, r * 1.2, .024, IRON, axis, 4)
 
 
 def bolt_row(g, a, b, count, *, axis='Y', r=.022):
@@ -632,7 +641,7 @@ def catwalk(g, x0, y0, x1, y1, z, *, rails=('front', 'back', 'left', 'right'), b
     g.box(((x0 + x1) / 2, (y0 + y1) / 2, z - .04), (x1 - x0, y1 - y0, .08), IRON)
     # Grating bars, proud of the deck top.
     span_x = x1 - x0 >= y1 - y0
-    count = max(2, round((x1 - x0 if span_x else y1 - y0) / .24))
+    count = max(2, round((x1 - x0 if span_x else y1 - y0) / .32))
     for i in range(count):
         if span_x:
             x = x0 + (i + .5) * (x1 - x0) / count
@@ -682,8 +691,10 @@ def ladder(g, x, y, bottom, top, *, face='front', width=.36, cage=True):
         # Stiles stop LAYER_GAP short of the top: a ladder ends at a deck,
         # whose top face the stile tops would otherwise share.
         g.box((p[0], p[1], (bottom + top - LAYER_GAP) / 2), (.04, .04, top - bottom - LAYER_GAP), IRON)
-    for k in range(int((top - bottom) / .25) + 1):
-        z = bottom + .12 + k * .25
+    # Rungs every third of a layer (a rung is under two pixels thick at
+    # game zoom; the stiles and cage carry the ladder's read).
+    for k in range(int((top - bottom) / .33) + 1):
+        z = bottom + .12 + k * .33
         if z > top - .05:
             break
         a = (x - t[0] * width / 2 + n[0] * off, y - t[1] * width / 2 + n[1] * off, z)
@@ -692,18 +703,70 @@ def ladder(g, x, y, bottom, top, *, face='front', width=.36, cage=True):
     if cage and top - bottom > 1.6:
         for k in range(int((top - bottom - 1.2) / .6) + 1):
             z = bottom + 1.2 + k * .6
-            pts = []
-            for i in range(5):
-                a = math.pi * i / 4
-                pts.append((x + n[0] * off + t[0] * math.cos(a) * width * .75 + n[0] * math.sin(a) * width * .9,
-                            y + n[1] * off + t[1] * math.cos(a) * width * .75 + n[1] * math.sin(a) * width * .9, z))
-            for p, q in zip(pts, pts[1:]):
-                g.beam(p, q, .025, mat=IRON)
+            # Squared hoop: out from both stiles' sides, across the front.
+            # Its plan extent is the round hoop's (0.75 width to each side,
+            # 0.9 width out).
+            pts = [(x + n[0] * off + t[0] * u * width + n[0] * v * width,
+                    y + n[1] * off + t[1] * u * width + n[1] * v * width, z)
+                   for u, v in ((.75, 0), (.4, .9), (-.4, .9), (-.75, 0))]
+            flat_bar(g, pts, .025, IRON)
+
+
+def flat_bar(g, points, w, mat):
+    """One thin bar bent through horizontal plan points, with mitred bends:
+    one solid of triangular section, w wide and w high (a ladder cage hoop
+    is 20 triangles, where four overlapping square beams were 48)."""
+    def perp(a, b):
+        dx, dy = b[0] - a[0], b[1] - a[1]
+        length = math.hypot(dx, dy)
+        if length < 1e-6 or abs(a[2] - b[2]) > 1e-9:
+            raise ValueError('flat_bar needs distinct points at one height')
+        return (-dy / length, dx / length), (dx / length, dy / length)
+    count = len(points)
+    offsets = []
+    for i, p in enumerate(points):
+        if i == 0:
+            m = perp(p, points[1])[0]
+        elif i == count - 1:
+            m = perp(points[i - 1], p)[0]
+        else:
+            m0, m1 = perp(points[i - 1], p)[0], perp(p, points[i + 1])[0]
+            bx, by = m0[0] + m1[0], m0[1] + m1[1]
+            length = math.hypot(bx, by)
+            cos_half = (bx * m0[0] + by * m0[1]) / length
+            m = (bx / length / cos_half, by / length / cos_half)
+        offsets.append(m)
+    h = w / 2
+    corners = ((-1, -1), (1, -1), (0, 1))
+    k = len(corners)
+    verts = [(p[0] + m[0] * su * h, p[1] + m[1] * su * h, p[2] + sv * h)
+             for p, m in zip(points, offsets) for su, sv in corners]
+    def wound(face, outward):
+        pts = [verts[i] for i in face]
+        normal = [0.0, 0.0, 0.0]
+        for (x0, y0, z0), (x1, y1, z1) in zip(pts, pts[1:] + pts[:1]):
+            normal[0] += (y0 - y1) * (z0 + z1)
+            normal[1] += (z0 - z1) * (x0 + x1)
+            normal[2] += (x0 - x1) * (y0 + y1)
+        return face if sum(a * b for a, b in zip(normal, outward)) > 0 else tuple(reversed(face))
+    faces = []
+    for i in range(count - 1):
+        axis_mid = [(points[i][a] + points[i + 1][a]) / 2 for a in range(3)]
+        for j in range(k):
+            face = (k * i + j, k * i + (j + 1) % k, k * (i + 1) + (j + 1) % k, k * (i + 1) + j)
+            c = [sum(verts[v][a] for v in face) / 4 for a in range(3)]
+            faces.append(wound(face, [c[a] - axis_mid[a] for a in range(3)]))
+    d0 = perp(points[0], points[1])[1]
+    d1 = perp(points[-2], points[-1])[1]
+    faces.append(wound(tuple(range(k)), (-d0[0], -d0[1], 0)))
+    last = k * (count - 1)
+    faces.append(wound(tuple(range(last, last + k)), (d1[0], d1[1], 0)))
+    g.add(verts, faces, mat)
 
 
 # ---------------------------------------------------------------- vessels & services
 
-def tank(g, x, y, bottom, r, height, *, mat=IRON, bands=3, roof='dome', legs=False, segments=16):
+def tank(g, x, y, bottom, r, height, *, mat=IRON, bands=3, roof='dome', legs=False, segments=12):
     """Riveted vertical tank on a concrete ring footing, banded, with a roof."""
     _check_positive(r, height)
     base = bottom
@@ -779,8 +842,12 @@ def pipe_run(g, points, r=.06, *, flanges=True, mat=IRON):
     """Orthogonal pipe with flanges near each joint and faceted elbows.
 
     Same layout as reference_details.round_pipe (open tubes between joints,
-    a faceted knuckle at each bend), with pipe_sides(r) sides.
+    a faceted knuckle at each bend), with pipe_sides(r) sides. `flanges` is
+    True (a flange at both ends of every run), 'ends' (only where the pipe
+    meets its equipment; the knuckles mark the bends) or False.
     """
+    if flanges not in (True, False, 'ends'):
+        raise ValueError(f'pipe_run flanges must be True, False or "ends", got {flanges!r}')
     n = pipe_sides(r)
     for a, b in zip(points, points[1:]):
         a, b = Vector(a), Vector(b)
@@ -792,22 +859,26 @@ def pipe_run(g, points, r=.06, *, flanges=True, mat=IRON):
         g.rock(p, (r * 2.22, r * 2.22, r * 2.22), IRON, 12)
     if not flanges:
         return
-    for a, b in zip(points, points[1:]):
+    last = len(points) - 2
+    for k, (a, b) in enumerate(zip(points, points[1:])):
         axis = 'XYZ'[max(range(3), key=lambda i: abs(b[i] - a[i]))]
         length = math.dist(a, b)
         if length < .4:
             continue
-        for f in (.18 / length, 1 - .18 / length):
+        for f, end in ((.18 / length, k == 0), (1 - .18 / length, k == last)):
+            if flanges == 'ends' and not end:
+                continue
             p = tuple(a[i] + (b[i] - a[i]) * f for i in range(3))
-            g.ring(p, r * 1.6, r * .8, .05, BRASS, axis, n)
+            # Solid flange disc on the pipe (the bore inside it is never seen).
+            g.cylinder(p, r * 1.6, .05, BRASS, axis, n)
 
 
 def valve_wheel(g, x, y, z, *, face='front', r=.14):
-    """Hand wheel: a 10-sided rim, a hub and four spokes (Geometry.wheel's
+    """Hand wheel: an 8-sided rim, a hub and four spokes (Geometry.wheel's
     two 24-sided rims and eight spokes are 540 triangles for a few pixels)."""
     axis = 'Y' if face in ('front', 'back') else 'X'
     p = (x, y, z)
-    g.ring(p, r, .045, .07, IRON, axis, 10)
+    g.ring(p, r, .045, .07, IRON, axis, 8)
     g.cylinder(p, .06, .14, BRASS, axis, 6)
     for i in range(4):
         a = i * math.pi / 2 + math.pi / 4
@@ -816,12 +887,28 @@ def valve_wheel(g, x, y, z, *, face='front', r=.14):
         g.beam(p, end, .04, mat=IRON)
 
 
+def wheel(g, p, r, axis='X', mat=IRON):
+    """Spoked flywheel or sheave: a 16-sided rim, a hub and six spokes
+    (about 230 triangles). Same rim, width and hub length as Geometry.wheel,
+    whose two 24-sided rims and eight spokes were 540 triangles."""
+    if axis not in ('X', 'Y'):
+        raise ValueError('wheel axis must be X or Y')
+    g.ring(p, r, .055, .08, mat, axis, 16)
+    g.cylinder(p, .09, .17, IRON, axis, 8)
+    for i in range(6):
+        a = i * math.pi / 3
+        end = ((p[0], p[1] + math.cos(a) * r * .95, p[2] + math.sin(a) * r * .95) if axis == 'X'
+               else (p[0] + math.cos(a) * r * .95, p[1], p[2] + math.sin(a) * r * .95))
+        g.beam(p, end, .045, mat=mat)
+
+
 def lamp(g, x, y, z, *, face='front'):
-    """Caged bulkhead lamp bracketed off a wall."""
+    """Bulkhead lamp bracketed off a wall. Its cage band (64 triangles) was
+    sub-pixel at game zoom; the bulb takes the band's 7.5 cm radius, so the
+    lamp's plan extent is unchanged."""
     n = {'front': (0, -1), 'back': (0, 1), 'left': (-1, 0), 'right': (1, 0)}[face]
     g.beam((x, y, z + .14), (x + n[0] * .18, y + n[1] * .18, z + .14), .035, mat=IRON)
-    g.cylinder((x + n[0] * .18, y + n[1] * .18, z), .065, .18, GLOW, 'Z', 8)
-    g.ring((x + n[0] * .18, y + n[1] * .18, z), .075, .02, .04, IRON, 'Z', 8)
+    g.cylinder((x + n[0] * .18, y + n[1] * .18, z), .075, .18, GLOW, 'Z', 8)
 
 
 def beacon(g, x, y, z):

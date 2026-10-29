@@ -6404,21 +6404,21 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -15407,6 +15407,33 @@
           "Z": 6
         },
         "Directions": "Left",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 5,
+          "Z": 7
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 5,
+          "Z": 7
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 6,
+          "Y": 5,
+          "Z": 7
+        },
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {

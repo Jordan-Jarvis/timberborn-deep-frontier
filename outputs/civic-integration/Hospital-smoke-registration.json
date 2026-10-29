@@ -1,7 +1,7 @@
 {
  "ident": "Hospital",
  "source": "src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend",
- "sourceSha256": "4b57375e2a0f0533d7f69c634a18a2a14abb415c228b35f1d295d23e636919cf",
+ "sourceSha256": "84a18a2520ca7fa4335cf60ed88d34209dad3d1b9f1da459df8b089710111884",
  "frame": 1,
  "layout": "tools/civic-layouts.json",
  "origin": [
@@ -47,7 +47,7 @@
     ],
     "stackTop": 6.72,
     "lowestNearby": 5.1275,
-    "vertices": 152
+    "vertices": 112
    },
    {
     "position": [
@@ -57,7 +57,7 @@
     ],
     "stackTop": 6.72,
     "lowestNearby": 5.1275,
-    "vertices": 166
+    "vertices": 120
    }
   ]
  }

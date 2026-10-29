@@ -2086,7 +2086,7 @@
    12
   ]
  ],
- "partsOutsideFootprint": 278,
+ "partsOutsideFootprint": 80,
  "doors": [
   {
    "id": "Entrance",
@@ -2791,5 +2791,5 @@
   "ChemicalWorks.CoolerFan2",
   "ChemicalWorks.FlareFlame"
  ],
- "sourceHash": "4160dfdbc7c197c13f8e5bcf32af82518b70095f3ebdb1550b4efc06f4029a17"
+ "sourceHash": "81e6fa26996815bcbf835f133d99724aabd6feec8b7f5f01168bea7f06c949fb"
 }

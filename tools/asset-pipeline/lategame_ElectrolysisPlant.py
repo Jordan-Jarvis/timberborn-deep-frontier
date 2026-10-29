@@ -151,13 +151,13 @@ def transformer(g, parts, x, y, idx, top):
         fan.beam((x + .72, y - .36, top + .58),
                  (x + .72 + math.cos(a) * .2, y - .36, top + .58 + math.sin(a) * .2), .07, .012, IRON)
     parts.append((fan, 'SPIN_Y', 4))
-    P.hoop(g, (x + .72, y - .36, top + .58), .24, .03, .05, PAINTED, axis='Y', segments=16)
+    P.hoop(g, (x + .72, y - .36, top + .58), .24, .03, .05, PAINTED, axis='Y', segments=12)
     # Conservator drum on brackets.
     zc = top + 1.62
     for dx in (-.32, .32):
         g.box((x + dx, y + .28, top + 1.42), (.06, .06, .3), IRON)
     P.lathe(g, (x, y + .28, zc), [(0, -.5), (.13, -.48), (.16, -.42), (.16, .42), (.13, .48), (0, .5)],
-            PAINTED, axis='X', segments=14)
+            PAINTED, axis='X', segments=12)
     # Three high-voltage bushings and two low-voltage (bus) bushings.
     for dx in (-.3, 0, .3):
         P.insulator(g, x + dx, y - .2, top + 1.29, height=.55, r=.08, discs=4)
@@ -267,8 +267,8 @@ def holder_tank(g, cx, cy, R, height):
     """Concrete water tank with coping and pilasters; open top."""
     K.hollow_revolve(g, (cx, cy, 0), [(R + .22, 0), (R + .22, height)], .22, CONCRETE, segments=16)
     K.hollow_revolve(g, (cx, cy, 0), [(R + .27, height - .1), (R + .27, height + .02)], .3, CONCRETE, segments=16)
-    for k in range(16):
-        a = k * 2 * math.pi / 16
+    for k in range(8):
+        a = k * 2 * math.pi / 8
         x, y = cx + math.cos(a) * (R + .235), cy + math.sin(a) * (R + .235)
         P.tube(g, (x, y, .15), (x, y, height - .12), .05, CONCRETE, segments=6)
 
@@ -277,7 +277,7 @@ def bell(name, cx, cy, r, z0, h, *, crown=.32, mat=IRON, rollers=8, guide_r=None
     """Riveted telescoping bell (closed crown) as an animated part."""
     b = Geometry(name, (cx, cy, z0))
     K.hollow_revolve(b, (cx, cy, 0), [(r, z0), (r, z0 + h)], .05, mat, segments=16)
-    K.dome(b, (cx, cy, z0 + h), r + .02, mat, segments=16, rings=5, squash=crown / r)
+    K.dome(b, (cx, cy, z0 + h), r + .02, mat, segments=16, rings=3, squash=crown / r)
     for k in range(3):
         K.band(b, (cx, cy, 0), r, z0 + .2 + (h - .4) * k / 2, .07, PAINTED, segments=16)
     # Crown inspection rail, vent and grip ring.

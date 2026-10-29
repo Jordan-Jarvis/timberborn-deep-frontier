@@ -8407,11 +8407,56 @@
       },
       {
         "Coordinates": {
+          "X": 2,
+          "Y": 8,
+          "Z": 3
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 8,
+          "Z": 3
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 8,
+          "Z": 3
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 8,
+          "Z": 3
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 6,
+          "Y": 8,
+          "Z": 3
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 7,
           "Y": 8,
           "Z": 3
         },
-        "Directions": "Right",
+        "Directions": "Right, Up",
         "ReverseRotation": false
       },
       {
@@ -9937,6 +9982,15 @@
       },
       {
         "Coordinates": {
+          "X": 2,
+          "Y": 8,
+          "Z": 11
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 3,
           "Y": 8,
           "Z": 11
@@ -9973,6 +10027,15 @@
       },
       {
         "Coordinates": {
+          "X": 7,
+          "Y": 8,
+          "Z": 11
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 4,
           "Y": 0,
           "Z": 12
@@ -9987,6 +10050,24 @@
           "Z": 12
         },
         "Directions": "Down",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 8,
+          "Z": 12
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 8,
+          "Z": 12
+        },
+        "Directions": "Up",
         "ReverseRotation": false
       },
       {

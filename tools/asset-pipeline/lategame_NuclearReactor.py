@@ -45,15 +45,14 @@ BASIN_HALF = 3.0
 # ---------------------------------------------------------------- details
 
 def gauge(g, x, y, z, r=.12, face='front'):
+    # Eight sides, no bezel ring: a gauge is a few pixels at game zoom.
     axis = 'Y' if face in ('front', 'back') else 'X'
     n = {'front': -1, 'back': 1, 'left': -1, 'right': 1}[face]
     if axis == 'Y':
-        g.cylinder((x, y, z), r, .04, IRON, 'Y', 16)
-        g.ring((x, y + n * .025, z), r + .015, .03, .03, BRASS, 'Y', 16)
+        g.cylinder((x, y, z), r, .04, IRON, 'Y', 8)
         g.beam((x, y + n * .03, z), (x + r * .55, y + n * .03, z + r * .45), .012, mat=CYAN)
     else:
-        g.cylinder((x, y, z), r, .04, IRON, 'X', 16)
-        g.ring((x + n * .025, y, z), r + .015, .03, .03, BRASS, 'X', 16)
+        g.cylinder((x, y, z), r, .04, IRON, 'X', 8)
         g.beam((x + n * .03, y, z), (x + n * .03, y + r * .55, z + r * .45), .012, mat=CYAN)
 
 
@@ -64,15 +63,21 @@ def tower_radius(z):
     return math.sqrt(TOWER_WAIST ** 2 + c * (z - zw) ** 2)
 
 
-def ring_gallery(g, cx, cy, z, r_in, r_out, *, posts=24):
-    """Circular steel walkway at a whole layer, bracketed off a cylinder."""
-    hollow_revolve(g, (cx, cy, z - .08), [(r_out, 0), (r_out, .08)], r_out - r_in, IRON, segments=24)
+def ring_gallery(g, cx, cy, z, r_in, r_out, *, posts=8):
+    """Circular steel walkway at a whole layer, bracketed off a cylinder:
+    24 sides, a top rail on 8 posts (the mid rail was sub-pixel); the 24
+    knee brackets carry the deck (and its grid occupancy) below."""
+    # Solid deck plate: its inner edge is buried in the tube, so no inner
+    # wall is needed. 24 sides, like the rail, so the deck still covers its
+    # rim cells' roof faces.
+    revolve(g, (cx, cy, z - .08), [(r_out, 0), (r_out, .08)], IRON, segments=24)
     g.ring((cx, cy, z + .62), r_out - .035, .045, .055, IRON, 'Z', 24)
-    g.ring((cx, cy, z + .31), r_out - .035, .035, .04, IRON, 'Z', 24)
     for i in range(posts):
         a = i * 2 * math.pi / posts
         x, y = cx + math.cos(a) * (r_out - .035), cy + math.sin(a) * (r_out - .035)
         g.box((x, y, z + .31), (.05, .05, .62), IRON)
+    for i in range(24):
+        a = i * 2 * math.pi / 24
         # Knee bracket back to the wall below the deck.
         g.beam((cx + math.cos(a) * (r_in + .02), cy + math.sin(a) * (r_in + .02), z - .75),
                (cx + math.cos(a) * (r_out - .12), cy + math.sin(a) * (r_out - .12), z - .1), .07, mat=IRON)
@@ -80,9 +85,8 @@ def ring_gallery(g, cx, cy, z, r_in, r_out, *, posts=24):
 
 def trefoil(g, x, y, z, r=.42):
     """Radiation emblem: brass trefoil on a dark steel roundel (front face)."""
-    g.cylinder((x, y + .03, z), r, .04, IRON, 'Y', 16)
-    g.ring((x, y - .005, z), r + .03, .05, .05, BRASS, 'Y', 16)
-    g.cylinder((x, y - .01, z), r * .17, .03, BRASS, 'Y', 16)
+    g.cylinder((x, y + .03, z), r, .04, IRON, 'Y', 12)
+    g.cylinder((x, y - .01, z), r * .17, .03, BRASS, 'Y', 8)
     for k in range(3):
         a0 = math.pi / 2 + k * 2 * math.pi / 3 - math.pi / 6
         a1 = a0 + math.pi / 3
@@ -115,23 +119,23 @@ def containment(g, parts):
         a = i * 2 * math.pi / 12
         p = (cx + math.cos(a) * (TUBE_R + .05), cy + math.sin(a) * (TUBE_R + .05))
         g.beam((p[0], p[1], DRUM_TOP + .05), (p[0], p[1], TUBE_TOP - .3), .2, mat=CONCRETE)
-    # Lead tension bands, proud of the ribs, each with a rivet line.
+    # Lead tension bands, proud of the ribs (their rivet lines were
+    # sub-pixel on a six-tile drum).
+    # The bands' end discs inside the tube are flat shaft and pipe faces
+    # of their cells (outputs/connection-faces), so all eight stay.
     for z in (3.6, 5.4, 7.2, 9.0, 10.8, 12.6, 14.4, 15.4):
         band(g, (cx, cy, 0), TUBE_R + .1, z, .2, IRON, segments=24, proud=.03)
-        for i in range(8):
-            a = (i + .5) * 2 * math.pi / 8
-            stud(g, (cx + math.cos(a) * (TUBE_R + .135), cy + math.sin(a) * (TUBE_R + .135), z), 'X', .02)
     # Crown cornice, dome and ventilating lantern.
     revolve(g, (cx, cy, TUBE_TOP - .3), [(TUBE_R + .22, 0), (TUBE_R + .22, .32)], CONCRETE, segments=24)
     revolve(g, (cx, cy, TUBE_TOP + .02), [(TUBE_R + .1, 0), (TUBE_R + .1, .14)], IRON, segments=24)
-    dome(g, (cx, cy, TUBE_TOP + .16), TUBE_R + .04, PAINTED, segments=24, rings=6, squash=.55)
+    dome(g, (cx, cy, TUBE_TOP + .16), TUBE_R + .04, PAINTED, segments=24, rings=4, squash=.55)
     dome_top = TUBE_TOP + .16 + (TUBE_R + .04) * .55
-    # Dome ribs: proud steel meridians.
-    for i in range(12):
-        a = i * 2 * math.pi / 12
+    # Dome ribs: proud steel meridians (six, four facets each).
+    for i in range(6):
+        a = i * 2 * math.pi / 6
         prev = None
-        for k in range(7):
-            t = k / 6 * math.pi / 2
+        for k in range(5):
+            t = k / 4 * math.pi / 2
             rr = (TUBE_R + .07) * math.cos(t)
             pz = TUBE_TOP + .16 + (TUBE_R + .07) * .55 * math.sin(t)
             p = (cx + math.cos(a) * rr, cy + math.sin(a) * rr, pz)
@@ -139,8 +143,8 @@ def containment(g, parts):
                 g.beam(prev, p, .07, mat=IRON)
             prev = p
     revolve(g, (cx, cy, dome_top - .25), [(.85, 0), (.85, .7)], CONCRETE, segments=16)
-    for i in range(12):
-        a = i * 2 * math.pi / 12
+    for i in range(8):
+        a = i * 2 * math.pi / 8
         g.box((cx + math.cos(a) * .87, cy + math.sin(a) * .87, dome_top + .1), (.08, .08, .5), IRON)
     revolve(g, (cx, cy, dome_top + .45), [(1.0, 0), (1.0, .06), (.2, .5), (0, .55)], ROOF, segments=16)
     pivot = beacon(g, cx, cy, dome_top + 1.0)
@@ -156,14 +160,13 @@ def containment(g, parts):
     for a in (-math.pi * .62, -math.pi * .38, math.pi * .62, math.pi * .38):
         rx, ry = cx + math.cos(a) * (TUBE_R + .42), cy + math.sin(a) * (TUBE_R + .42)
         pipe_run(g, [(rx, ry, DRUM_TOP + .1), (rx, ry, TUBE_TOP - .45)], .2)
-        for z in (4.5, 9.0, 13.5):
+        for z in (4.5, 13.5):
             g.beam((cx + math.cos(a) * (TUBE_R + .12), cy + math.sin(a) * (TUBE_R + .12), z),
                    (rx, ry, z), .1, mat=IRON)
     # Reactor coolant pumps on the drum ledge: casing, valve and moving crosshead.
     for k, a in enumerate((-math.pi * .78, -math.pi * .22, math.pi * .3, math.pi * .7)):
         px, py = cx + math.cos(a) * 3.32, cy + math.sin(a) * 3.32
-        revolve(g, (px, py, DRUM_TOP + .02), [(.26, 0), (.26, .55), (.18, .6)], PAINTED, segments=16)
-        band(g, (px, py, 0), .26, DRUM_TOP + .3, .06, IRON, segments=16)
+        revolve(g, (px, py, DRUM_TOP + .02), [(.26, 0), (.26, .55), (.18, .6)], PAINTED, segments=12)
         for dx, dy in ((-.16, 0), (.16, 0)):
             g.box((px + dx, py + dy, DRUM_TOP + 1.0), (.05, .05, .8), IRON)
         g.box((px, py, DRUM_TOP + 1.42), (.44, .12, .08), IRON)
@@ -191,8 +194,9 @@ def cooling_tower(g, parts, cx, cy, index, inlet=None):
     g.liquid_surfaces.append(dict(name=f'CoolingBasin{index}', shape='Rectangle', center=[cx, cy],
                                   bottom=.1, top=.38, scale=[2 * h - .5, 2 * h - .5], flowOnly=False))
     # Ring footing and V legs carrying the shell above an open air intake.
-    hollow_revolve(g, (cx, cy, .1), [(TOWER_BASE + .25, 0), (TOWER_BASE + .25, .3)], .5, CONCRETE, segments=24)
-    legs = 12
+    # Tower parts use 16 sides (22.5 degree facets, smooth-shaded).
+    hollow_revolve(g, (cx, cy, .1), [(TOWER_BASE + .25, 0), (TOWER_BASE + .25, .3)], .5, CONCRETE, segments=16)
+    legs = 6
     for i in range(legs):
         a = i * 2 * math.pi / legs
         top = (cx + math.cos(a) * (TOWER_BASE - .07), cy + math.sin(a) * (TOWER_BASE - .07), SHELL_START + .02)
@@ -201,16 +205,20 @@ def cooling_tower(g, parts, cx, cy, index, inlet=None):
             foot = (cx + math.cos(b) * TOWER_BASE, cy + math.sin(b) * TOWER_BASE, .4)
             g.beam(foot, top, .15, mat=CONCRETE)
     # The shell with real thickness, top cornice and stiffening bands.
-    zs = [SHELL_START + (TOWER_TOP - SHELL_START) * k / 8 for k in range(9)]
-    hollow_revolve(g, (cx, cy, 0), [(tower_radius(z), z) for z in zs], .14, CONCRETE, segments=24)
-    hollow_revolve(g, (cx, cy, SHELL_START - .1), [(TOWER_BASE + .08, 0), (TOWER_BASE + .08, .12)], .26, CONCRETE, segments=24)
+    zs = [SHELL_START + (TOWER_TOP - SHELL_START) * k / 5 for k in range(6)]
+    # Its rims sit inside the base ring and under the cornice.
+    hollow_revolve(g, (cx, cy, 0), [(tower_radius(z), z) for z in zs], .14, CONCRETE, segments=16,
+                   rims=(False, False))
+    hollow_revolve(g, (cx, cy, SHELL_START - .1), [(TOWER_BASE + .08, 0), (TOWER_BASE + .08, .12)], .26, CONCRETE, segments=16)
     rt = tower_radius(TOWER_TOP)
-    hollow_revolve(g, (cx, cy, TOWER_TOP - .08), [(rt + .1, 0), (rt + .1, .2)], .3, IRON, segments=24)
+    hollow_revolve(g, (cx, cy, TOWER_TOP - .08), [(rt + .1, 0), (rt + .1, .2)], .3, IRON, segments=16)
     # Vanilla steam plume from the mouth (top of the cornice) while generating.
     emitter(g, 'towerSteam', cx, cy, TOWER_TOP + .12, rt)
-    for z in (TOWER_TOP - .9, 4.2):
+    for z in (TOWER_TOP - .9,):
         r = tower_radius(z)
-        hollow_revolve(g, (cx, cy, z - .06), [(r + .04, 0), (r + .02, .12)], .06, IRON, segments=24)
+        # Underside never seen; the top tucks under the flaring shell.
+        hollow_revolve(g, (cx, cy, z - .06), [(r + .04, 0), (r + .02, .12)], .06, IRON, segments=16,
+                       rims=(False, False))
     # Mechanical draft fan in the throat, visible from above.
     zf = TOWER_TOP - 1.4
     rf = tower_radius(zf) - .28
@@ -218,7 +226,7 @@ def cooling_tower(g, parts, cx, cy, index, inlet=None):
         a = i * math.pi / 2 + math.pi / 4
         g.beam((cx + math.cos(a) * (tower_radius(zf) - .1), cy + math.sin(a) * (tower_radius(zf) - .1), zf - .12),
                (cx, cy, zf - .12), .1, mat=IRON)
-    g.cylinder((cx, cy, zf - .05), .22, .2, IRON, 'Z', 16)
+    g.cylinder((cx, cy, zf - .05), .22, .2, IRON, 'Z', 8)
     parts.append((fan(f'NuclearReactor.TowerFan{index}', cx, cy, zf + .08, rf, blades=6), 'SPIN_Z', 3))
     # Service ladder and lamp at the intake.
     side = 1 if cx < CORE[0] else -1
@@ -278,24 +286,25 @@ def aqueduct(g, parts):
 
 def water_tower(g, parts):
     x, y = 10.0, 13.05
-    lattice_tower(g, x - .7, y - .55, x + .7, y + .55, 0, 8.0, bays=6, w=.12)
+    lattice_tower(g, x - .7, y - .55, x + .7, y + .55, 0, 8.0, bays=2, w=.12)
     g.box((x, y, 8.05), (1.7, 1.4, .1), IRON)
     top = tank(g, x, y, 8.1, .95, 2.0, mat=PAINTED, bands=3, roof='cone')
     # Riser from the aqueduct pump to the tank.
-    pipe_run(g, [(x + .85, 13.95, .5), (x + .85, y + .3, .5), (x + .85, y + .3, 8.6), (x + .5, y + .3, 8.6)], .1)
+    pipe_run(g, [(x + .85, 13.95, .5), (x + .85, y + .3, .5), (x + .85, y + .3, 8.6), (x + .5, y + .3, 8.6)], .1,
+             flanges='ends')
     ladder(g, x - .2, y - .6, 0, 8.0, face='front')
 
 
 def feed_tanks(g):
     # Two riveted feed-water tanks with dome roofs and a connecting manifold.
     ax, ay, bx, by = 3.05, 2.3, 3.05, 5.75
-    tank(g, ax, ay, 0, 1.5, 4.4, mat=PAINTED, bands=4, roof='dome', segments=20)
-    tank(g, bx, by, 0, 1.1, 3.2, mat=IRON, bands=3, roof='cone', segments=16)
+    tank(g, ax, ay, 0, 1.5, 4.4, mat=PAINTED, bands=4, roof='dome', segments=16)
+    tank(g, bx, by, 0, 1.1, 3.2, mat=IRON, bands=3, roof='cone', segments=12)
     ladder(g, ax, ay - 1.55, 0, 4.6, face='front')
     steel_rail(g, (ax - .9, ay - 1.2), (ax + .9, ay - 1.2), 4.85)
     pipe_run(g, [(4.6, ay, .7), (HALL[0], ay, .7)], .14)
-    pipe_run(g, [(bx + 1.1, by, .55), (4.85, by, .55), (4.85, ay + 1.0, .55)], .1)
-    pipe_run(g, [(1.05, 4.2, .6), (2.2, 4.2, .6), (2.2, 4.2, 1.4), (2.6, 3.6, 1.4)], .09)
+    pipe_run(g, [(bx + 1.1, by, .55), (4.85, by, .55), (4.85, ay + 1.0, .55)], .1, flanges='ends')
+    pipe_run(g, [(1.05, 4.2, .6), (2.2, 4.2, .6), (2.2, 4.2, 1.4), (2.6, 3.6, 1.4)], .09, flanges='ends')
     valve_wheel(g, 5.2, ay - .2, 1.05)
     gauge(g, ax, ay - 1.55, 1.5)
 
@@ -317,8 +326,8 @@ def intake_canal(g, parts):
     # Coolant pipe socket: the Timber Pipes inlet face at the canal mouth.
     sx, sy, sz = PIPE_INLET['socket']
     g.box((sx, sy + .12, sz), (.5, .2, .5), PAINTED)
-    g.cylinder((sx, sy - .02, sz), .16, .12, IRON, 'Y', 16)
-    g.ring((sx, sy - .085, sz), .21, .06, .04, BRASS, 'Y', 16)
+    g.cylinder((sx, sy - .02, sz), .16, .12, IRON, 'Y', 8)
+    g.cylinder((sx, sy - .085, sz), .21, .04, BRASS, 'Y', 8)
     bolt_row(g, (sx - .17, sy - .11, sz + .14), (sx + .17, sy - .11, sz + .14), 3, r=.016)
 
 
@@ -342,7 +351,7 @@ def turbine_hall(g, parts):
     wins = [(x0 + (k + .5) * bay, 3.45) for k in (0, 1, 2, 3, 6, 7, 8)]
     frame_wall(g, 'X', y0 + .05, x0, x1, w0, top, outward=-1, bays=10, infill=FORGED,
                windows=wins, window_style='grand', window_scale=1.15)
-    frame_wall(g, 'X', y1 - .05, x0, x1, w0, top, outward=1, bays=10, infill=FORGED)
+    frame_wall(g, 'X', y1 - .05, x0, x1, w0, top, outward=1, bays=5, infill=FORGED)
     frame_wall(g, 'Y', x0 + .05, y0 + .1, y1 - .1, w0, top, outward=-1, bays=3, infill=FORGED,
                windows=[(1.9, 3.45)], window_style='lancet')
     frame_wall(g, 'Y', x1 - .05, y0 + .1, y1 - .1, w0, top, outward=1, bays=3, infill=FORGED,
@@ -350,7 +359,7 @@ def turbine_hall(g, parts):
     # Frieze closing the wall top under the vault.
     for y in (y0 + .05, y1 - .05):
         g.box(((x0 + x1) / 2, y, top + .12), (x1 - x0 - .2, .14, .24), FORGED)
-    barrel_roof(g, x0, y0, x1, y1, top + .02, rise, axis='X', segments=12, ribs=5)
+    barrel_roof(g, x0, y0, x1, y1, top + .02, rise, axis='X', segments=8, ribs=2)
     half = (y1 - y0) / 2 + .12
     for x, s in ((x0 - .02, -1), (x1 + .02, 1)):
         arch_infill(g, 'X', x, (y0 + y1) / 2, half - .08, top + .02, rise - .08, s, PLANK)
@@ -362,8 +371,8 @@ def turbine_hall(g, parts):
     # Roof ventilators along the crown.
     for k, x in enumerate((6.8, 10.0, 13.2)):
         z = top + rise + .02
-        revolve(g, (x, (y0 + y1) / 2, z - .1), [(.42, 0), (.42, .35)], IRON, segments=12)
-        g.ring((x, (y0 + y1) / 2, z + .3), .45, .05, .1, BRASS, 'Z', 12)
+        revolve(g, (x, (y0 + y1) / 2, z - .1), [(.42, 0), (.42, .35)], IRON, segments=8)
+        g.ring((x, (y0 + y1) / 2, z + .3), .45, .05, .1, BRASS, 'Z', 8)
         parts.append((fan(f'NuclearReactor.HallVent{k}', x, (y0 + y1) / 2, z + .32, .36, blades=5), 'SPIN_Z', 4))
     # Main steam lines from the containment into the hall's back wall.
     for x in (8.4, 9.4, 10.6, 11.6):
@@ -371,10 +380,15 @@ def turbine_hall(g, parts):
     # Exposed generator exciter at the west end.
     gx, gy, gz = x0 - .45, 1.9, 1.05
     g.box((gx, gy, .3), (.5, 1.1, .6), CONCRETE)
-    g.cylinder((gx + .3125, gy, gz), .1, .425, IRON, 'X', 16)   # shaft end buried in the flywheel hub
+    g.cylinder((gx + .3125, gy, gz), .1, .425, IRON, 'X', 8)   # shaft end buried in the flywheel hub
     fly = Geometry('NuclearReactor.ExciterFlywheel', (gx, gy, gz))
-    fly.wheel((gx, gy, gz), .62, 'X', IRON, BRASS)
-    fly.ring((gx, gy, gz), .66, .08, .16, IRON, 'X', 20)
+    # Heavy rim, hub and six spokes (Geometry.wheel's double 24-sided rim
+    # and eight spokes were 540 triangles inside this rim).
+    fly.ring((gx, gy, gz), .66, .12, .16, IRON, 'X', 12)
+    fly.cylinder((gx, gy, gz), .09, .17, IRON, 'X', 8)
+    for i in range(6):
+        a = i * math.pi / 3
+        fly.beam((gx, gy, gz), (gx, gy + math.cos(a) * .58, gz + math.sin(a) * .58), .045, mat=IRON)
     parts.append((fly, 'SPIN_X', 3))
     # Cable trays from the hall to the switch gear on the fuel building.
     cable_tray(g, (x1 - .3, y0 + .6), (FUEL[0] + .02, y0 + .6), top - .4)
@@ -400,7 +414,7 @@ def fuel_building(g, parts):
     # two buildings now share the x = 15 tile edge).
     frame_wall(g, 'X', y0 + .05, x0 + .16, x1, w0, top, outward=-1, bays=4, infill=FORGED,
                windows=[(16.0, 3.4), (19.0, 3.4)], window_style='factory', window_scale=.95)
-    frame_wall(g, 'X', y1 - .05, x0 + .16, x1, w0, top, outward=1, bays=4, infill=FORGED)
+    frame_wall(g, 'X', y1 - .05, x0 + .16, x1, w0, top, outward=1, bays=2, infill=FORGED)
     frame_wall(g, 'Y', x0 + .05, y0 + .1, y1 - .1, w0, top, outward=-1, bays=5, infill=FORGED)
     frame_wall(g, 'Y', x1 - .05, y0 + .1, y1 - .1, w0, top, outward=1, bays=5, infill=FORGED,
                windows=[(2.0, 3.4), (4.4, 3.4)], window_style='factory', window_scale=.95)
@@ -430,25 +444,25 @@ def fuel_building(g, parts):
     gantry.box((gx, (y0 + y1) / 2, roof + .72), (.24, .18, .12), BRASS)
     parts.append((gantry, 'SLIDE_X', 2.2))
     # Lead fuel casks on the roof deck under the crane.
-    for i, (x, y) in enumerate(((16.5, 2.0), (17.4, 2.0), (18.3, 2.0), (16.5, 4.8), (17.4, 4.8), (18.3, 4.8))):
-        revolve(g, (x, y, roof), [(.3, 0), (.3, .72), (.22, .78)], IRON, segments=16)
-        band(g, (x, y, 0), .3, roof + .15, .07, PAINTED, segments=16)
-        band(g, (x, y, 0), .3, roof + .58, .07, PAINTED, segments=16)
-        g.cylinder((x, y, roof + .8), .14, .05, BRASS, 'Z', 12)
+    for i, (x, y) in enumerate(((16.5, 2.0), (18.3, 2.0), (16.5, 4.8), (18.3, 4.8))):
+        # Plain lead casks with brass lids (their bands were a pixel wide).
+        revolve(g, (x, y, roof), [(.3, 0), (.3, .72), (.22, .78)], IRON, segments=12)
+        g.cylinder((x, y, roof + .8), .14, .05, BRASS, 'Z', 8)
     # Ventilation stack with an intake cowl.
-    stack(g, 19.0, 5.8, roof, 3.2, emits=None, r=.2)   # ventilation: no plume
+    stack(g, 19.0, 5.8, roof, 3.2, emits=None, r=.2, bands=2)   # ventilation: no plume
 
 
 # ---------------------------------------------------------------- vent stack & coolant links
 
 def vent_stack(g):
     x, y = 12.6, 12.7
-    lattice_tower(g, x - .55, y - .55, x + .55, y + .55, 0, 12.5, bays=6, w=.12)
-    stack(g, x, y, 0, 18.2, emits=None, r=.34, taper=.75, bands=7)   # ventilation: no plume
+    lattice_tower(g, x - .55, y - .55, x + .55, y + .55, 0, 12.5, bays=4, w=.12)
+    stack(g, x, y, 0, 18.2, emits=None, r=.34, taper=.75, bands=4)   # ventilation: no plume
     for z in (6.0, 12.5):
         steel_rail(g, (x - .6, y - .6), (x + .6, y - .6), z + .05)
         g.box((x, y, z + .01), (1.25, 1.25, .08), IRON)
-    pipe_run(g, [(CORE[0] + 1.9, CORE[1] + 2.1, 11.0), (x - .2, y - .4, 11.0), (x - .2, y - .2, 11.0)], .16)
+    pipe_run(g, [(CORE[0] + 1.9, CORE[1] + 2.1, 11.0), (x - .2, y - .4, 11.0), (x - .2, y - .2, 11.0)], .16,
+             flanges='ends')
 
 
 def steam_bridge(g):
@@ -456,11 +470,11 @@ def steam_bridge(g):
     cx, cy = CORE
     a = -math.pi / 7
     sx, sy = cx + math.cos(a) * (TUBE_R + .05), cy + math.sin(a) * (TUBE_R + .05)
-    lattice_tower(g, 14.3, 4.9, 14.7, 5.5, 0, 8.6, bays=6, w=.1)
+    lattice_tower(g, 14.3, 4.9, 14.7, 5.5, 0, 8.6, bays=3, w=.1)
     g.box((14.5, 5.2, 8.66), (.6, .8, .12), IRON)
     for dy, r in ((-.3, .2), (.32, .13)):
         pipe_run(g, [(sx, sy + dy, 9.0), (17.6, sy + dy, 9.0), (17.6, sy + dy, 5.6)], r)
-    revolve(g, (17.6, 5.2, 5.12), [(.36, 0), (.36, .5)], PAINTED, segments=16)
+    revolve(g, (17.6, 5.2, 5.12), [(.36, 0), (.36, .5)], PAINTED, segments=12)
     valve_wheel(g, 17.6, 4.78, 5.55)
 
 

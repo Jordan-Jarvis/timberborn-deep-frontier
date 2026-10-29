@@ -1,7 +1,7 @@
 {
  "ident": "Restaurant",
  "source": "src/DeepFrontier/Art/Source/Restaurant-ReferenceStudy.blend",
- "sourceSha256": "d662a99dfca54a307e483f38b5cf9d0dcf4308ce9d05a198d9b36ba447bff08f",
+ "sourceSha256": "00553560d5ed189a59f23c81fd75afe87b78ecbdbdae002cd92e6db4436d1484",
  "frame": 1,
  "layout": "tools/civic-layouts.json",
  "origin": [
@@ -47,7 +47,7 @@
     ],
     "stackTop": 8.58,
     "lowestNearby": 0.0,
-    "vertices": 652
+    "vertices": 596
    },
    {
     "position": [
@@ -57,7 +57,7 @@
     ],
     "stackTop": 8.58,
     "lowestNearby": 0.0,
-    "vertices": 154
+    "vertices": 114
    }
   ]
  }

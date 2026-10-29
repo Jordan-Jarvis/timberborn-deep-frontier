@@ -11,9 +11,8 @@ from reference_details import cage_lamp, cask
 
 
 from industrial_geometry import steel_bolt,bracket,timber_column,beam_joint,handrail,sheet_roof,access_stair
-from industrial_kit import open_beam, wheel, gauge
-from industrial_kit import (steel_bolt,bracket,timber_column,beam_joint,sheet_roof,cage_lamp,cask,bin,
-                               band,prism,bolt,square_nut,open_box,rock,rock_heap)
+from industrial_kit import (open_beam,lean_wheel as wheel,lean_gauge as gauge)
+from industrial_kit import (steel_bolt,lean_bracket as bracket,lean_timber_column as timber_column,lean_beam_joint as beam_joint,lean_sheet_roof as sheet_roof,lean_cage_lamp as cage_lamp,lean_cask as cask,lean_bin as bin,band,prism,bolt,square_nut,open_box,lean_rock as rock,lean_rock_heap as rock_heap,lean_wall as wall,skin_board)
 from walkway_geometry import RailAssembly
 from crusher_workshop_details import workshop_details,worn_surfaces,ROLL_ROOF,ROLL_ROOF_POST,HOPPER_ROOF
 from industrial_door_components import recipe as door_recipe
@@ -25,31 +24,29 @@ from industrial_levels import (CRUSHER_DECK as DECK_Z,CRUSHER_MACHINE_DATUM,
 
 
 def pillow_block(g,x,y,z):
-    # Split bearing housing, saddle, projecting keyed shaft and mounting bolts.
+    # Split bearing housing, saddle and projecting keyed shaft. (12k cap: no
+    # base nuts or inner brass ring; 10/8 sides.)
     g.box((x,y,z-.19),(.35,.32,.10),IRON)
     g.box((x,y,z-.075),(.26,.26,.16),IRON)
-    prism(g,(x,y,z),.143,.24,IRON,'Y',12)
-    band(g,(x,y-.132,z),.134,.025,.033,CRUSHER_STEEL,'Y',12)
-    band(g,(x,y-.153,z),.099,.023,.032,BRASS,'Y',10,inner=True)
-    prism(g,(x,y-.19,z),.071,.10,CRUSHER_STEEL,'Y',10)
+    prism(g,(x,y,z),.143,.24,IRON,'Y',10)
+    band(g,(x,y-.132,z),.134,.025,.033,CRUSHER_STEEL,'Y',10)
+    prism(g,(x,y-.19,z),.071,.10,CRUSHER_STEEL,'Y',8)
     g.box((x,y-.19,z+.069),(.035,.09,.022),IRON)
-    for dx in (-.13,.13):
-        for dy in (-.10,.10):square_nut(g,(x+dx,y+dy,z-.13),'Z',.019,1)
     # Its ends are inside the bearing cylinder and the oil cup above it.
     prism(g,(x,y,z+.157),.022,.047,BRASS,'Z',6,(False,False))
 
 def toothed_roller(g,p,phase):
     x,y,z=p;r=.315;length=1.77
-    prism(g,p,r,length,IRON,'Y',24)
+    prism(g,p,r,length,IRON,'Y',16)
     # Shaft ends stop 5 mm inside the bearing housings' faces.
-    prism(g,p,.075,length+.64,CRUSHER_STEEL,'Y',8)
+    prism(g,p,.075,length+.64,CRUSHER_STEEL,'Y',6)
     # Separate wear segments carry broad rectangular teeth. Bronze collars
-    # divide the segments as in the sheet's machinery close-up.
+    # divide the segments as in the sheet's machinery close-up. (12k cap:
+    # eight teeth per segment straight on the roll, no segment bands.)
     for row in range(7):
         yy=y-.76+row*.252
-        band(g,(x,yy,z),r+.012,.035,.17,IRON,'Y',24)
-        for i in range(12):
-            a=(i+phase+(row%2)*.5)*2*math.pi/12
+        for i in range(8):
+            a=(i+phase+(row%2)*.5)*2*math.pi/8
             radial=Vector((math.cos(a),0,math.sin(a)));tangent=Vector((-math.sin(a),0,math.cos(a)))
             center=Vector((x,yy,z));verts=[]
             for rr,ww in ((r-.007,.112),(r+.095,.090)):
@@ -57,34 +54,24 @@ def toothed_roller(g,p,phase):
                     for side in (-1,1):verts.append(center+radial*rr+tangent*ww*side/2+Vector((0,dy,0)))
             g.add(verts,[(4,5,7,6),(0,1,5,4),(2,6,7,3),(0,4,6,2),(1,3,7,5)],CRUSHER_STEEL)
     for yy in (y-.91,y-.24,y+.91):
-        band(g,(x,yy,z),r+.028,.04,.065,BRASS,'Y',24)
-        # Fasteners on the collars' -Y faces at radius .275: those of the
-        # middle and +Y collars lay wholly inside the .315 roll. Only the -Y
-        # end collar, beyond the roll, shows its ring of fasteners.
-        if abs(yy-.04-y)<length/2:continue
-        for i in range(8):
-            a=i*math.pi/4
-            square_nut(g,(x+math.cos(a)*.275,yy-.04,z+math.sin(a)*.275),'Y',.016,-1)
+        band(g,(x,yy,z),r+.028,.04,.065,BRASS,'Y',16)
     for yy in (y-.96,y+.96):
-        prism(g,(x,yy,z),.249,.065,IRON,'Y',16)
-        band(g,(x,yy,z),.265,.022,.08,CRUSHER_STEEL,'Y',16)
+        prism(g,(x,yy,z),.249,.065,IRON,'Y',12)
+        band(g,(x,yy,z),.265,.022,.08,CRUSHER_STEEL,'Y',12)
 
 def flywheel(g,p):
+    # 12k cap: one 16-sided rim (the side lips, inner ring and rim nuts went).
     x,y,z=p;r=.665
-    band(g,p,r,.105,.21,IRON,'Y',32,inner=True)
-    for yy in (y-.115,y+.115):band(g,(x,yy,z),r+.005,.028,.028,CRUSHER_STEEL,'Y',32)
-    band(g,(x,y-.134,z),r-.08,.014,.016,IRON,'Y',32)
-    prism(g,p,.14,.29,IRON,'Y',12)
+    band(g,p,r,.105,.21,IRON,'Y',16,inner=True)
+    prism(g,p,.14,.29,IRON,'Y',10)
     for i in range(6):
         a=i*math.pi/3
         for j in range(3):
             r0=.11+j*.15;r1=r0+.16;a0=a+j*.045;a1=a+(j+1)*.045
             g.beam((x+math.cos(a0)*r0,y,z+math.sin(a0)*r0),
                    (x+math.cos(a1)*r1,y,z+math.sin(a1)*r1),.135-j*.018,.12,IRON)
-    for i in range(16):
-        a=i*math.pi/8;square_nut(g,(x+math.cos(a)*.617,y-.14,z+math.sin(a)*.617),'Y',.023,-1)
-    prism(g,(x,y-.22,z),.095,.25,CRUSHER_STEEL,'Y',10)
-    band(g,(x,y-.29,z),.115,.025,.045,BRASS,'Y',10)
+    prism(g,(x,y-.22,z),.095,.25,CRUSHER_STEEL,'Y',8)
+    band(g,(x,y-.29,z),.115,.025,.045,BRASS,'Y',8)
 
 def hopper(g):
     x0,x1,y0,y1=.13,1.64,1.93,3.58
@@ -102,13 +89,13 @@ def hopper(g):
     for x,y in ((x0,y0),(x1,y0),(x0,y1),(x1,y1)):
         bracket(g,x,y,top-.11,.15)
         open_box(g,(x,y,top+.065),(.20,.20,.022),IRON,('-z',))
-        square_nut(g,(x,y,top+.083),'Z',.021,1)
     g.box((.88,2.73,2.96),(1.17,1.31,.12),LIME)
+    # 12k cap: a load of nine large stones (was twenty).
     rng=random.Random(830)
-    for j in range(5):
-        for i in range(4):
-            x=.40+i*.30+rng.uniform(-.04,.04);y=2.17+j*.26+rng.uniform(-.05,.05);s=rng.uniform(.25,.37)
-            rock(g,(x,y,3.03+rng.uniform(-.02,.12)),(s,s*.82,s*.84),LIME,i+j*5+700)
+    for j in range(3):
+        for i in range(3):
+            x=.47+i*.40+rng.uniform(-.04,.04);y=2.26+j*.42+rng.uniform(-.05,.05);s=rng.uniform(.34,.46)
+            rock(g,(x,y,3.05+rng.uniform(-.02,.10)),(s,s*.82,s*.84),LIME,i+j*5+700)
     g.add([(1.48,2.16,2.69),(1.48,3.24,2.69),(2.35,3.24,2.47),(2.35,2.16,2.47)],
           [(0,1,2,3),(3,2,1,0)],IRON)
     for yy in (2.15,3.25):g.beam((1.48,yy,2.75),(2.35,yy,2.53),.045,.13,IRON)
@@ -148,9 +135,7 @@ def room(g):
     count=16;y0,y1=ys[0]+.10,ys[1]-.10
     for j in range(count):
         y=y0+(j+.5)*(y1-y0)/count
-        g.box((ROOM_W+.0875,y,(.255+DECK_Z-.235)/2),(.075,(y1-y0)/count,DECK_Z-.49),PLANK)
-        if j%3==0:
-            for z in (.33,1.15):square_nut(g,(ROOM_W+.0405,y,z),'X',.013,-1)
+        skin_board(g,(ROOM_W+.0875,y,(.255+DECK_Z-.235)/2),(.075,(y1-y0)/count,DECK_Z-.49),'Y',j,count,PLANK,'+x')
     for a,b in (((ROOM_W+.045,3.09,.34),(ROOM_W+.045,4.35,1.28)),((ROOM_W+.045,4.50,1.28),(ROOM_W+.045,5.76,.34))):
         g.beam(a,b,.09,mat=WOOD)
     # Rear plank wall, outer face y=5.96; trim on the inside.
@@ -161,8 +146,11 @@ def room(g):
     for yy in (4.15,4.89):g.beam((ROOM_E-.05,yy,.34),(ROOM_E-.05,yy+.57,1.32),.10,mat=WOOD)
     # Wall couplings: flanges stand 0.02-0.03 proud of the plank skin.
     for x in (ROOM_W+.10,ROOM_E-.10):
-        prism(g,(x,4.58,.55),.13,.16,IRON,'X',12)
-        band(g,(x,4.58,.55),.16,.035,.06,BRASS,'X',12)
+        prism(g,(x,4.58,.55),.13,.16,IRON,'X',8)
+        band(g,(x,4.58,.55),.16,.035,.06,BRASS,'X',8)
+    # The closed workshop: its walls, ceiling boards, the porch insert and the
+    # dark output aperture seal it (ray-verified at build, enclosed_cull.py).
+    g.declare_hidden_volume((ROOM_W+.12,3.02,.10),(ROOM_E-.11,ROOM_REAR-.105,DECK_Z-.18))
 
 
 def porch(g):
@@ -208,10 +196,10 @@ def discharge(g):
     bin(g,(2.80,.69,.12),(1.46,.70,.63),None)
     g.box((2.80,.69,.64),(1.29,.51,.09),LIME)
     rng=random.Random(103)
-    for j in range(3):
-        for i in range(6):
-            s=rng.uniform(.16,.27)
-            rock(g,(2.21+i*.23+rng.uniform(-.025,.025),.45+j*.22+rng.uniform(-.035,.035),.72+rng.uniform(-.02,.07)),(s,s*.85,s*.8),LIME,2100+i+j*8)
+    for j in range(2):
+        for i in range(4):
+            s=rng.uniform(.24,.34)
+            rock(g,(2.27+i*.35+rng.uniform(-.025,.025),.52+j*.32+rng.uniform(-.035,.035),.74+rng.uniform(-.02,.06)),(s,s*.85,s*.8),LIME,2100+i+j*8)
     for xx in (2.13,3.47):
         for yy in (.40,.97):bracket(g,xx,yy,.25,.12)
     for x in (2.05,3.52):g.beam((x,.91,.23),(x,1.26,DECK_Z-.11),.14,mat=WOOD)
@@ -245,13 +233,14 @@ def crusher(g,parts):
     for x in (.61,1.96):
         p=(x,1.56,2.02);m,node=machinery.moving_part('ReferenceCrusherDriveSprocket'+str(x),p)
         prism(m,p,.205,.075,IRON,'Y',12)
-        for i in range(18):
-            a=i*2*math.pi/18
+        for i in range(12):
+            a=i*2*math.pi/12
             open_beam(m,(x+math.cos(a)*.19,1.56,2.02+math.sin(a)*.19),(x+math.cos(a)*.228,1.56,2.02+math.sin(a)*.228),.043,.07,IRON)
         parts.append((node,'Y',1))
+    # Chain runs: twelve links each (was 24 half-size links).
     for z in (1.81,2.23):
-        for i in range(24):
-            x=.64+i*.055;g.box((x,1.56,z),(.047,.078,.028),IRON)
+        for i in range(12):
+            x=.6675+i*.11;open_box(g,(x,1.56,z),(.102,.078,.028),IRON,('-z',))
     for x in (.15,1.63):
         for y in (1.94,3.60):timber_column(g,x,y,1.48,3.19,.18)
     hopper(g)
@@ -269,7 +258,6 @@ def crusher(g,parts):
     for i in range(5):art.box((2.90,3.29,.25+i*.075),(.54,.47,.065),PLANK)
     for x in (.33,1.40):
         g.box((x,3.74,2.17),(.075,.06,.55),IRON)
-        for z in (1.97,2.38):square_nut(g,(x,3.78,z),'Y',.022,1)
     workshop_details(g,art,static)
     crusher_facades(static)
     worn_surfaces(g,art)

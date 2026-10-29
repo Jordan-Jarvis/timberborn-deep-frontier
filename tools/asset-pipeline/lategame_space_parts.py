@@ -198,14 +198,14 @@ def place(dst, build_fn, rotation, offset):
 # ---------------------------------------------------------------- services
 
 def gauge(g, x, y, z, face='front', r=.11):
-    """Pressure gauge: iron case, brass bezel, white dial, tiny cyan needle."""
+    """Pressure gauge: iron case, white dial, tiny cyan needle. Eight sides;
+    the brass bezel ring (112 triangles) was a one-pixel line at game zoom."""
     n = {'front': (0, -1), 'back': (0, 1), 'left': (-1, 0), 'right': (1, 0)}[face]
     axis = 'Y' if n[0] == 0 else 'X'
     def at(d):
         return (x + n[0] * d, y + n[1] * d, z)
-    g.cylinder(at(.03), r, .06, IRON, axis, 14)
-    g.ring(at(.065), r + .012, .03, .03, BRASS, axis, 14)
-    g.cylinder(at(.065), r - .02, .01, CONCRETE, axis, 14)
+    g.cylinder(at(.03), r, .06, IRON, axis, 8)
+    g.cylinder(at(.065), r - .02, .01, CONCRETE, axis, 8)
     tip = (x + n[0] * .075 + (r * .55 if axis == 'Y' else 0), y + n[1] * .075 + (r * .55 if axis == 'X' else 0), z + r * .4)
     g.beam(at(.075), tip, .014, .008, CYAN)
 
@@ -223,6 +223,7 @@ def pipe(g, points, r=.07, mat=IRON, *, flange=BRASS, flanges=True, elbow=None):
     Segment ends stop inside the elbow balls, so no caps are exposed except
     at the two run ends (which should be buried in a wall or tank)."""
     elbow = mat if elbow is None else elbow
+    sides = 8 if r <= .1 else 12   # small pipes 8 sides, mains 12 (smooth-shaded)
     for a, b in zip(points, points[1:]):
         d = [b[i] - a[i] for i in range(3)]
         axis_i = max(range(3), key=lambda i: abs(d[i]))
@@ -230,13 +231,14 @@ def pipe(g, points, r=.07, mat=IRON, *, flange=BRASS, flanges=True, elbow=None):
             raise ValueError(f'pipe segments must be axis-aligned: {a} -> {b}')
         length = abs(d[axis_i])
         mid = tuple((a[i] + b[i]) / 2 for i in range(3))
-        g.cylinder(mid, r, length, mat, 'XYZ'[axis_i], 12)
+        g.cylinder(mid, r, length, mat, 'XYZ'[axis_i], sides)
         if flanges and length > .7:
             for f in (.25 / length, 1 - .25 / length):
                 p = tuple(a[i] + d[i] * f for i in range(3))
-                g.ring(p, r + .035, .05, .06, flange, 'XYZ'[axis_i], 12)
+                # Solid flange disc (the bore inside it is never seen).
+                g.cylinder(p, r + .035, .06, flange, 'XYZ'[axis_i], sides)
     for p in points[1:-1]:
-        ball(g, p, r * 1.22, elbow, segments=12, rings=6)
+        ball(g, p, r * 1.22, elbow, segments=sides, rings=4)
 
 
 def pipe_support(g, x, y, z_pipe, r, *, axis='X', ground=0.0):
@@ -264,7 +266,9 @@ def h_tank(g, x0, x1, y, zc, r, *, mat=CONCRETE, band_mat=IRON, bands=3, saddles
         g.cylinder(P(end + s * .23), r * .22, .06, band_mat, axis, 10)
     for k in range(bands):
         u = x0 + length * (k + .5) / bands
-        g.ring(P(u), r + .03, .06, .08, band_mat, axis, segments)
+        # Solid band (its core lies inside the shell): 44 triangles at 12
+        # sides, where a hollow ring was 96.
+        g.cylinder(P(u), r + .03, .08, band_mat, axis, segments)
     for k in range(saddles):
         u = x0 + length * (k + .5) / saddles
         if axis == 'X':
@@ -275,9 +279,9 @@ def h_tank(g, x0, x1, y, zc, r, *, mat=CONCRETE, band_mat=IRON, bands=3, saddles
             bx(g, y - r * .85, u - .06, zc - r * .7, y + r * .85, u + .06, zc - r * .35, IRON)
 
 
-def sphere_tank(g, x, y, z_center, r, *, mat=CONCRETE, legs=8, ground=0.0, equator=IRON, segments=16):
+def sphere_tank(g, x, y, z_center, r, *, mat=CONCRETE, legs=8, ground=0.0, equator=IRON, segments=12):
     """Horton sphere on a ring of steel legs with an equator girder."""
-    ball(g, (x, y, z_center), r, mat, segments=segments, rings=12)
+    ball(g, (x, y, z_center), r, mat, segments=segments, rings=8)
     band(g, (x, y, 0), r, z_center, .14, equator, segments=segments, proud=.03)
     for i in range(legs):
         a = (i + .5) * 2 * math.pi / legs
@@ -308,16 +312,17 @@ def grating_ring(g, x0, y0, x1, y1, z, hole, *, rails=('front', 'back', 'left', 
     bx(g, x0, hy1, z - t, x1, y1, z, IRON)
     bx(g, x0, hy0, z - t, hx0, hy1, z, IRON)
     bx(g, hx1, hy0, z - t, x1, hy1, z, IRON)
-    # Proud grating bars along X (front/back strips) and Y (side strips).
+    # Proud grating bars along X (front/back strips) and Y (side strips),
+    # every 20 cm.
     for (a0, b0, a1, b1, along) in ((x0, y0, x1, hy0, 'X'), (x0, hy1, x1, y1, 'X'),
                                     (x0, hy0, hx0, hy1, 'Y'), (hx1, hy0, x1, hy1, 'Y')):
         if along == 'X':
-            n = max(1, int((b1 - b0) / .14))
+            n = max(1, int((b1 - b0) / .2))
             for k in range(n):
                 yy = b0 + (k + .5) * (b1 - b0) / n
                 bx(g, a0 + .03, yy - .017, z - .004, a1 - .03, yy + .017, z + .014, IRON)   # 34 mm: faces clear of tower diagonals
         else:
-            n = max(1, int((a1 - a0) / .14))
+            n = max(1, int((a1 - a0) / .2))
             for k in range(n):
                 xx = a0 + (k + .5) * (a1 - a0) / n
                 bx(g, xx - .017, b0 + .03, z - .004, xx + .017, b1 - .03, z + .014, IRON)

@@ -1721,7 +1721,7 @@
    9
   ]
  ],
- "partsOutsideFootprint": 34,
+ "partsOutsideFootprint": 32,
  "doors": [
   {
    "id": "Door0",
@@ -2613,5 +2613,5 @@
   "DraughtFan",
   "DrierDrum"
  ],
- "sourceHash": "ed81dcd7039d37a2ec571d040dfea28b065d6963e6e3f793cab0a2de1f476bf0"
+ "sourceHash": "fa819e7bade66148c428d01244894bc0eef9ebd5997da07b74feb5f13896efaf"
 }

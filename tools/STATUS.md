@@ -4,6 +4,17 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Triangle targets halved: 43 building models lighter, 906k -> 632k finished triangles (Claude Code session, 2026-10-29; build 213 installed and verified, 659 hashes; not yet looked at in game)
+
+- **Targets:** grand 40,000 -> 20,000, workshop 20,000 -> 12,000 (user approval; `validate_triangle_budget.py` TARGETS). Ceilings re-recorded for all 76 models; none is above its target and no model went up.
+- **Late-game (32 models, shared `lategame_kit.py`):** NuclearReactor 36,338 -> 19,536, UraniumProcessingPlant 36,042 -> 19,684, ChemicalWorks 30,492 -> 19,004, ElectrolysisPlant 27,446 -> 18,978, WaterTreatmentPlant 26,060 -> 18,502, LaunchPad 25,232 -> 18,269; every other late-game model also lighter. 12-sided default in multiples of 4, solid flange discs, four-sided bolt heads, sparser grating and rungs, single-bar ladder hoops; the uranium acid tanks and scrubber ladders lost their cages. Bevels now only on edges at least 1.0 long between faces at least 0.25 deep (`render_lategame_studies.py`).
+- **Industrial (`industrial_kit.py` `lean_*`, `LEAN_MODELS`):** CementKiln 34,620 -> 11,930, Sandstone/LimestoneQuarry 29,953 -> 11,784, ConcreteMixer 24,478 -> 9,857, StoneCrusher 23,706 -> 8,817. Fewer stones in bins and hoppers, fewer rope turns, no lamp undersides.
+- **Shell-built:** FisheryWorks 37,467 -> 18,129, Restaurant 25,934 -> 19,846 (all seating kept), Hospital 24,176 -> 18,222, MaterialsLaboratory 31,695 -> 18,938, GroceryStore 30,101 -> 19,620, ReinforcedHydroTurbine 22,029 -> 12,459. No fastener heads, plain collars, wider roof sheets, half-triangle stock items. Review archive `docs/art/reviews/2026-10-29-triangle-budget-20k/`.
+- **Registrations:** occupied cells, doors, wall faces, smoke emitters, animated nodes, slots and static-merge nodes are unchanged for every model. Connection faces: none lost anywhere (removed details that had made faces non-flat or covered roof cells were restored where a face or roof cell would have changed: industrial nuts and wall courses, reactor lead bands and gallery, Fertilizer silo hoops, uranium tank bands, DeepProcessor tanks). The smaller late-game bevels make some surfaces flat, so 17 late-game models offer new shaft and pipe faces (reactor 120, 1-10 elsewhere) under the 2026-10-23 every-flat-surface rule; `roof_decks.json` gains platformable cells only (Greenhouse +1, MissionControl +3, NuclearReactor +2, SteelMill +2).
+- **Checks:** strict z-fight audits, hidden-geometry audit, door culling, motion and registration comparisons per family in scratch mirrors; canonical generation, `validate_all -SkipBlender` 51 pass + 1 report-only, compile checks, build 213 verified.
+- **Pipeline note:** the late-game regeneration saved its 32 scenes with the game textures packed (68 MB each); they were unpacked with `unpack_blend_textures.py` + `normalize_blend_image_paths.py` before commit (22 MB in all). Run both after any late-game scene regeneration.
+- **To see in game:** the 43 lighter models up close; whether load memory and frame time drop on the user's big save (`start_frame_profile.ps1`).
+
 ## Performance on the user's big save: power-network split patch, frame profiler, measurements (Claude Code session, 2026-10-29; build 212 installed and verified, 659 hashes)
 
 - **User report:** loads of 200+ s, low frame rate, and a freeze while placing buildings on a large map (87 mods, including All Buildings Transfer Power, which makes every building a power shaft).

@@ -3211,7 +3211,7 @@
    0
   ]
  ],
- "partsOutsideFootprint": 20,
+ "partsOutsideFootprint": 18,
  "doors": [
   {
    "id": "Main",
@@ -3994,5 +3994,5 @@
   "StackBeacon",
   "ScrubberFan"
  ],
- "sourceHash": "05335dff5734eca6e039c99ed1e87fc06dcfd4f5aa1918d3b2843f7e2c3537e7"
+ "sourceHash": "b346d68afc11c828e3219e33ba25547bb3908911d02bcc042b9c180753b8935e"
 }

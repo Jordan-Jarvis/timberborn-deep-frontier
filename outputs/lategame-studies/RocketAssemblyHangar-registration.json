@@ -4056,7 +4056,7 @@
    12
   ]
  ],
- "partsOutsideFootprint": 161,
+ "partsOutsideFootprint": 159,
  "doors": [
   {
    "id": "WorkshopDoor",
@@ -6319,5 +6319,5 @@
   "RocketAssemblyHangar.Beacon0",
   "RocketAssemblyHangar.Beacon1"
  ],
- "sourceHash": "a4154b37fa45df80c24cf9a2cf02f6804cf823cb5bbe2544c0d6449f316793c7"
+ "sourceHash": "cfe57b3bb003f915c4675c09610df16b99d9997c5c9b40769e87be600a9d9a4a"
 }

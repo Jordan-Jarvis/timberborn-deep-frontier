@@ -9,9 +9,9 @@ import random
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 from reference_materials import CIVIC_CONCRETE, CIVIC_FORGED_PANEL, GLASS, KILN_SOOT
-from industrial_budget import bracket, bin as budget_bin
-from civic_isometric_geometry import steel_bolt
-from industrial_facades import building_portal, window_y, side_window, gauge
+from industrial_budget import bin as budget_bin, band
+from civic_isometric_geometry import collar, gauge, handwheel
+from industrial_facades import building_portal, window_y, side_window
 from architectural_windows import window
 from native_window_atlas import atlas_window, glass_curtain
 from industrial_budget import round_pipe, cage_lamp
@@ -19,6 +19,11 @@ from civic_isometric_geometry import framed_room, gabled_roof, roof_bearing, tim
 from native_building_assets import barrel, plant
 from walkway_geometry import RailAssembly
 from lategame_kit import emitter
+
+# Triangle budget, 20k grand cap (2026-10-29): no fastener heads (the civic
+# shell family's rule, civic_isometric_geometry.collar), no sub-pixel soot
+# streaks or tower rivets, roof sheets about 40 cm wide (was 25-28), 8-side
+# pipe flanges, lean valve wheels and gauges, 12-24 sides on round parts.
 
 
 def concrete_course(g,x0,y0,x1,y1,top,door=None,cap=True,*,left_wall=True,left_straps=True,front_from=None,back_from=None):
@@ -57,7 +62,6 @@ def concrete_course(g,x0,y0,x1,y1,top,door=None,cap=True,*,left_wall=True,left_s
         for y in (y0,y1):
             for z in (.45,top-.4):
                 g.box((x,y,z),(.24,.24,.46),IRON)
-                for dz in (-.14,.14):steel_bolt(g,(x,y-.14,z+dz),r=.027)
 
 
 def girder(g,a,b,width=.22,*,plate_stations=(.12,.88)):
@@ -66,19 +70,15 @@ def girder(g,a,b,width=.22,*,plate_stations=(.12,.88)):
         p=tuple(a[i]+(b[i]-a[i])*t for i in range(3))
         if abs(b[1]-a[1])>abs(b[0]-a[0]):
             g.box((p[0]-width/2-.018,p[1],p[2]),(.035,.36,.30),IRON)
-            for dy in (-.11,.11):
-                for dz in (-.08,.08):steel_bolt(g,(p[0]-width/2-.045,p[1]+dy,p[2]+dz),'X',.025)
         else:
             front_half_depth=.09 if b[0]==a[0] else width/2
             g.box((p[0],p[1]-front_half_depth-.018,p[2]),(.36,.035,.30),IRON)
-            for dx in (-.11,.11):
-                for dz in (-.08,.08):steel_bolt(g,(p[0]+dx,p[1]-front_half_depth-.045,p[2]+dz),r=.025)
 
 
 def shed_roof(g,x0,x1,y0,y1,left,right,seed):
     """Diagonal blue roof with visible rolled seams, straps and worn edges."""
     def z(x):return left+(right-left)*(x-x0)/(x1-x0)
-    count=math.ceil((y1-y0)/.25)
+    count=math.ceil((y1-y0)/.40)
     rng=random.Random(seed)
     for i in range(count):
         ya=y0+i*(y1-y0)/count;yb=y0+(i+1)*(y1-y0)/count
@@ -86,7 +86,6 @@ def shed_roof(g,x0,x1,y0,y1,left,right,seed):
                (x0,ya,z(x0)-.065),(x1,ya,z(x1)-.065),(x1,yb,z(x1)-.065),(x0,yb,z(x0)-.065)],
               [(0,1,2,3),(7,6,5,4),(0,4,5,1),(1,5,6,2),(2,6,7,3),(3,7,4,0)],ROOF)
         g.beam((x0,ya,z(x0)+.025),(x1,ya,z(x1)+.025),.025,mat=IRON)
-        for x in (x0+.07,x1-.07):steel_bolt(g,(x,(ya+yb)/2,z(x)+.04),'Z',.018)
         # Triangle budget: no 12 mm brass wear streaks (two per sheet could
         # overlap coplanar once the bevel modifier is gone).
     for y in (y0,y1):girder(g,(x0,y,z(x0)-.07),(x1,y,z(x1)-.07),.16)
@@ -95,7 +94,6 @@ def shed_roof(g,x0,x1,y0,y1,left,right,seed):
     # The back strap stands 20 cm in, clear of the pier collars at the step.
     for y in (y0+.16,(y0+y1)/2,y1-.20):
         g.beam((x0,y,z(x0)+.05),(x1,y,z(x1)+.05),.055,.045,IRON)
-        for x in (x0+.12,(x0+x1)/2,x1-.12):steel_bolt(g,(x,y,z(x)+.08),'Z',.023)
 
 
 def slope_facade(g,x0,x1,y,bottom,left,right,seed,tall_windows,outward=-1):
@@ -112,15 +110,12 @@ def slope_facade(g,x0,x1,y,bottom,left,right,seed,tall_windows,outward=-1):
     if outward!=-1:raise ValueError('Facade must face forward or back')
     def z(x):return left+(right-left)*(x-x0)/(x1-x0)
     n=math.ceil((x1-x0)/.17)
-    rng=random.Random(seed)
+    del seed  # it placed the soot streaks, removed for the triangle budget
     for i in range(n):
         a=x0+i*(x1-x0)/n;b=x0+(i+1)*(x1-x0)/n
         g.add([(a,y-.055,bottom),(b,y-.055,bottom),(b,y-.055,z(b)),(a,y-.055,z(a)),
                (a,y+.055,bottom),(b,y+.055,bottom),(b,y+.055,z(b)),(a,y+.055,z(a))],
               [(0,1,2,3),(7,6,5,4),(0,4,5,1),(1,5,6,2),(2,6,7,3),(3,7,4,0)],PLANK)
-        for _ in range(2):
-            zz=rng.uniform(bottom+.12,z(a)-.18)
-            g.box(((a+b)/2,y-.115,zz),(.009,.008,.12),KILN_SOOT)
     # The base rail butts between the corner stiles; its end caps do not
     # occupy the same plane as the plank end caps.
     girder(g,(x0+.11,y-.12,bottom+.04),(x1-.11,y-.12,bottom+.04))
@@ -147,24 +142,25 @@ def stack(g,x,y,bottom,height,*,emits):
     """Banded flue with a flared cowl. `emits` is the vanilla effect at its
     mouth (a lategame_kit.EMITTER_KINDS entry) or None; every caller decides.
     The emitter adds no geometry."""
-    g.cylinder((x,y,bottom+height/2),.12,height,IRON,'Z',16)
+    g.cylinder((x,y,bottom+height/2),.12,height,IRON,'Z',12)
     for z in (bottom+.1,bottom+.45,bottom+height-.14):
-        g.ring((x,y,z),.17,.045,.075,IRON)
-        for dx in (-.10,.10):steel_bolt(g,(x+dx,y-.14,z),r=.015)
-    g.cylinder((x,y,bottom+height+.02),.24,.13,IRON,'Z',16,.15)
-    g.cylinder((x,y,bottom+height-.12),.14,.04,KILN_SOOT)
+        g.ring((x,y,z),.17,.045,.075,IRON,'Z',12)
+    g.cylinder((x,y,bottom+height+.02),.24,.13,IRON,'Z',12,.15)
+    g.cylinder((x,y,bottom+height-.12),.14,.04,KILN_SOOT,'Z',12)
     if emits is not None:
         # Mouth: the cowl's top face (radius 0.15).
         emitter(g,emits,x,y,bottom+height+.085,.15)
 
 
-def flanged_pipe(g,points,r=.065):
+def flanged_pipe(g,points,r=.065,segments=8):
+    # 8-side flanges (was 16) except where a flange stands on a measured
+    # connection face (measure_connection_faces.py).
     round_pipe(g,points,r)
     for a,b in zip(points,points[1:]):
         axis='XYZ'[next(i for i in range(3) if a[i]!=b[i])]
         for f in (.13,.86):
             p=tuple(a[i]+(b[i]-a[i])*f for i in range(3))
-            g.ring(p,r*1.5,.03,.065,BRASS,axis,16)
+            g.ring(p,r*1.5,.03,.065,BRASS,axis,segments)
 
 
 # Laboratory copies of the shared bin/crate/planter/sheet-roof props. Same
@@ -194,24 +190,21 @@ def lab_planter(g,x,y,z,width,seed,species='DandelionMature'):
 
 
 def lab_awning(g,x0,y0,x1,y1,z0,z1,seed=41):
-    rng=random.Random(seed);count=math.ceil((x1-x0)/.28)
+    rng=random.Random(seed);count=math.ceil((x1-x0)/.40)
     for i in range(count):
         x=x0+(i+.5)*(x1-x0)/count
         g.beam((x,y0,z0),(x,y1,z1),(x1-x0)/count,.045,ROOF)
-        for t in (.08,.92):steel_bolt(g,(x,y0+(y1-y0)*t,z0+(z1-z0)*t+.035),'Z',.015)
     for x in (x0,x1):g.beam((x,y0,z0-.035),(x,y1,z1-.035),.13,.14,WOOD)
     for y,z in ((y0,z0),(y1,z1)):
         g.beam((x0,y,z-.055),(x1,y,z-.055),.15,.16,WOOD)
         for x in (x0,x1):
             # .17 collar (was .16): its nut heads stood 0.45 mm off the
             # side beam's face, inside the strict overlap tolerance.
-            bracket(g,x,y,z-.07,.17)
+            collar(g,x,y,z-.07,.17)
             g.box((x,y,z+.050),(.23,.23,.025),IRON)
-            steel_bolt(g,(x,y,z+.071),'Z',.024)
     for t in (.35,.72):
         y=y0+(y1-y0)*t;z=z0+(z1-z0)*t+.03
         g.beam((x0,y,z),(x1,y,z),.06,.018,IRON)
-        for x in (x0+.08,x1-.08):steel_bolt(g,(x,y,z+.015),'Z',.016)
     # Triangle budget: no 6x4 mm scratch slivers (sub-pixel at game zoom).
 
 
@@ -282,17 +275,18 @@ def service_bay(g):
     for z in (.12,.84):g.box((wall+.065,3.5,z),(.08,.86,.06),CIVIC_FORGED_PANEL)
     for yy in (3.08,3.92):g.box((wall+.06,yy,.48),(.07,.06,.74),CIVIC_FORGED_PANEL)
     g.box((wall+.06,3.5,.17),(.12,.62,.035),IRON)
-    for yy in (3.16,3.84):steel_bolt(g,(wall+.104,yy,.84),'X',.02)
     # Power Lines connection: bracket arm with three insulators on the upper
     # hall wall (PowerLineSpec point at the top insulator).
     g.box((upper+.03,3.5,2.35),(.06,.30,.30),IRON)
     g.beam((upper+.05,3.5,2.35),(upper+.30,3.5,2.35),.07,mat=IRON)
-    for dz in (0,.09,.18):g.cylinder((upper+.30,3.5,2.40+dz),.045,.06,BRASS,'Z',10)
-    g.cylinder((upper+.30,3.5,2.66),.02,.06,IRON,'Z',8)
+    for dz in (0,.09,.18):g.cylinder((upper+.30,3.5,2.40+dz),.045,.06,BRASS,'Z',8)
+    g.cylinder((upper+.30,3.5,2.66),.02,.06,IRON,'Z',6)
     # Water inlet socket on the tower plinth's bay face (the y=5 tile edge),
     # at ground-pipe height. Timber Pipes accepts any face; this marks the spot.
     face,wx=5.0,9.6
     round_pipe(g,[(wx,face+.15,.2),(wx,face-.06,.2)],.08)
+    # Unchanged by the triangle budget: this socket's cell face (9,5,0 Down)
+    # is a registered connection face (measure_connection_faces.py).
     g.ring((wx,face-.03,.2),.13,.05,.05,BRASS,'Y',16)
     g.wheel((wx,face-.035,.42),.11,'Y',IRON,BRASS)
     g.beam((wx,face-.035,.28),(wx,face-.035,.36),.03,mat=IRON)
@@ -316,34 +310,33 @@ def instrument_tower(g,x,y,*,base=None):
         g.box(((cap_x0+cap_x1)/2,(by0+by1)/2,1.92),(cap_x1-cap_x0,by1-by0+.15,.16),CIVIC_CONCRETE)
         front_face=by0-.075
     # The barrel stands on the plinth cap (top z=2), not 7.5 cm above it.
-    g.cylinder((x,y,4.16),.61,4.33,IRON,'Z',32)
+    # 24 sides (was 32); the hoops lose their buried inner face and their
+    # sixteen 3 cm rivets each (sub-pixel at normal zoom).
+    g.cylinder((x,y,4.16),.61,4.33,IRON,'Z',24)
     for z in (2.20,3.15,4.40,5.55,6.27):
-        g.ring((x,y,z),.65,.06,.11,BRASS,'Z',32)
-        for i in range(16):
-            a=i*math.tau/16
-            g.cylinder((x+math.cos(a)*.657,y+math.sin(a)*.657,z),.029,.10,IRON,'Z',6)
+        band(g,(x,y,z),.65,.06,.11,BRASS,'Z',24)
     for i in range(12):
         a=i*math.tau/12
         g.beam((x+math.cos(a)*.612,y+math.sin(a)*.612,2.28),
                (x+math.cos(a)*.612,y+math.sin(a)*.612,6.22),.016,mat=BRASS)
-    g.cylinder((x,y,6.66),.91,.62,ROOF,'Z',24,.09)
-    g.ring((x,y,6.36),.92,.055,.07,IRON,'Z',24)
+    g.cylinder((x,y,6.66),.91,.62,ROOF,'Z',16,.09)
+    g.ring((x,y,6.36),.92,.055,.07,IRON,'Z',16)
     for i in range(12):
         a=i*math.tau/12
         g.beam((x+math.cos(a)*.90,y+math.sin(a)*.90,6.39),(x+math.cos(a)*.09,y+math.sin(a)*.09,6.97),.024,mat=IRON)
-    g.cylinder((x,y,7.02),.085,.16,IRON,'Z',12,.035)
+    g.cylinder((x,y,7.02),.085,.16,IRON,'Z',8,.035)
     for z,r in ((3.02,.19),(4.93,.23),(5.66,.17)):
         gauge(g,x+.32,y-.65,z,r)
     for offset in (-.72,.72):
         flanged_pipe(g,[(x+offset,y-.20,1.0),(x+offset,y-.20,5.65),(x+offset*.5,y-.20,5.65)],.055)
         for z in (1.2,2.65,4.9):g.box((x+offset,y-.2,z),(.17,.18,.06),IRON)
-        g.wheel((x+offset,y-.37,2.85),.13,'Y',IRON,BRASS)
+        handwheel(g,(x+offset,y-.37,2.85),.13,'Y',IRON,BRASS)
     # Header pipe runs onto the hall's right eave, clear of its girder.
     flanged_pipe(g,[(x-.60,y,5.88),(x-1.05,y,5.88),(x-1.05,y-1,5.88)],.11)
     front=front_face+.02   # half set into the plinth face: flanges stay within 11 cm
     # Down the plinth's bay face in the x=9 column, high enough to pass over
     # the water inlet socket.
-    flanged_pipe(g,[(x+.2,y-.60,2.3),(x+.2,front,2.3),(x+.2,front,.75),(x+.95,front,.75)],.085)
+    flanged_pipe(g,[(x+.2,y-.60,2.3),(x+.2,front,2.3),(x+.2,front,.75),(x+.95,front,.75)],.085,16)
 
 
 def testing_press(g,parts,x,y,*,base=None,flywheel_x=None):
@@ -358,35 +351,32 @@ def testing_press(g,parts,x,y,*,base=None,flywheel_x=None):
     for xx in (x-.78,x+.78):
         girder(g,(xx,y-.1,1.6),(xx,y-.1,4.56),.24)
         g.box((xx,y,1.62),(.48,.51,.14),IRON)
-        for dx in (-.16,.16):steel_bolt(g,(xx+dx,y-.2,1.74),'Z',.03)
     # Two top plates sit between the upright fasteners, not through them.
     girder(g,(x-.85,y-.1,4.56),(x+.85,y-.1,4.56),.30,plate_stations=(.30,.70))
     g.box((x,y,2.03),(1.20,.70,.28),IRON)
     g.box((x,y,2.35),(.53,.5,.38),CIVIC_CONCRETE)
     for z in (2.05,4.43):
-        g.cylinder((x,y,z),.19,.19,IRON)
-        for xx in (x-.35,x+.35):steel_bolt(g,(xx,y-.38,z),r=.032)
+        g.cylinder((x,y,z),.19,.19,IRON,'Z',12)
     screw=Geometry('MaterialsLaboratory.PressScrew',(x,y,3.68))
-    screw.cylinder((x,y,3.68),.10,1.40,IRON,'Z',20)
-    for i in range(140):
-        a=i*math.tau/10;b=(i+1)*math.tau/10
-        screw.beam((x+math.cos(a)*.14,y+math.sin(a)*.14,3.0+i*.0095),
-                   (x+math.cos(b)*.14,y+math.sin(b)*.14,3.0+(i+1)*.0095),.040,mat=BRASS)
+    screw.cylinder((x,y,3.68),.10,1.40,IRON,'Z',12)
+    # The same 14-turn thread in 8 segments per turn (was 10).
+    for i in range(112):
+        a=i*math.tau/8;b=(i+1)*math.tau/8
+        screw.beam((x+math.cos(a)*.14,y+math.sin(a)*.14,3.0+i*.011875),
+                   (x+math.cos(b)*.14,y+math.sin(b)*.14,3.0+(i+1)*.011875),.040,mat=BRASS)
     parts.append((screw,'Z',1))
     ram=Geometry('MaterialsLaboratory.TestRam',(x,y,2.98))
     ram.box((x,y,2.98),(1.12,.72,.29),IRON)
     ram.box((x,y,2.77),(.64,.54,.12),CIVIC_CONCRETE)
-    for dx in (-.39,.39):
-        for dz in (-.08,.08):steel_bolt(ram,(x+dx,y-.38,2.98+dz),r=.03)
     parts.append((ram,'LAB_PRESS',1))
     gauge(g,x-.94,y-.18,3.22,.14)
     flanged_pipe(g,[(x-.95,y+.25,1.8),(x-.95,y+.25,3.8),(x-.2,y+.25,3.8)],.05)
     fx=x-1.40 if flywheel_x is None else flywheel_x
     fly=Geometry('MaterialsLaboratory.Flywheel',(fx,y+.30,2.69))
     fly.wheel((fx,y+.30,2.69),.69,'Y',IRON,BRASS)
-    fly.ring((fx,y+.30,2.69),.73,.09,.19,IRON,'Y',40)
+    fly.ring((fx,y+.30,2.69),.73,.09,.19,IRON,'Y',24)
     parts.append((fly,'Y',-1))
-    g.cylinder((fx,y+.43,2.69),.10,.57,IRON,'Y',16)
+    g.cylinder((fx,y+.43,2.69),.10,.57,IRON,'Y',12)
     for xx in (fx-.25,fx+.25):g.box((xx,y+.48,2.23),(.15,.30,.60),IRON)
 
 
@@ -495,7 +485,6 @@ def laboratory(g,parts):
         x=bx0+.075+(bx1-bx0-.15)*i/4
         for z in (.35,1.65):
             g.box((x,by0-.025,z),(.15,.06,.38),IRON)
-            for dz in (-.10,.10):steel_bolt(g,(x,by0-.065,z+dz),r=.023)
     # 2026-10-22 (user): no forced decoration beyond the walls. The outdoor
     # specimen shelves before and behind the hall, the rear planters, the
     # barrel and the crate are gone; the footprint ends at the hall's rear
@@ -504,11 +493,11 @@ def laboratory(g,parts):
     testing_press(g,parts,9.0,2.18,base=(7.925,1.075,9.925,2.925),flywheel_x=7.02)
     # Ground-side shaft socket and a bank of valved services, in relief on
     # the x=8 face of the cast base (transput (7,4,0) Right).
-    g.cylinder((bx1-.15,4.58,.72),.18,.40,IRON,'X',20)
-    g.ring((bx1+.04,4.58,.72),.27,.07,.07,IRON,'X',20)
+    g.cylinder((bx1-.15,4.58,.72),.18,.40,IRON,'X',12)
+    g.ring((bx1+.04,4.58,.72),.27,.07,.07,IRON,'X',12)
     for y in (4.05,4.40):
         flanged_pipe(g,[(bx1+.05,y,.40),(bx1+.05,y,3.95),(HALL_X1+.05,y,3.95)],.045)
-        g.wheel((bx1+.02,y-.17,1.25),.12,'X',IRON,BRASS)
+        handwheel(g,(bx1+.02,y-.17,1.25),.12,'X',IRON,BRASS)
     for x,y,z in ((8.58,3.0,4.12),(HALL_X1+.06,6.9,3.8),(3.45,HALL_FRONT-.105,4.2),(1.5,6.75,3.8)):
         cage_lamp(g,x,y,z)
     service_bay(g)

@@ -197,6 +197,15 @@ for c, path in exports:
 
 scene.render.engine = "CYCLES"
 scene.cycles.samples = 16
+prefs = bpy.context.preferences.addons["cycles"].preferences
+prefs.compute_device_type = "OPTIX"
+prefs.get_devices()
+gpus = [d for d in prefs.devices if d.type == "OPTIX" and d.name == "NVIDIA GeForce RTX 2060"]
+if len(gpus) != 1:
+    raise RuntimeError("RTX 2060 OptiX device required")
+for d in prefs.devices:
+    d.use = d in gpus
+scene.cycles.device = "GPU"
 scene.render.film_transparent = True
 scene.render.image_settings.file_format = "PNG"
 scene.render.image_settings.color_mode = "RGBA"

@@ -1,6 +1,6 @@
 {
   "scope": "Candidate export, grid and water-seal checks; native runtime and pump balance pending",
-  "modelSha256": "8465cebfc3c53019a7e76f18e50d4d32c0466a430d0d9734baa64261b19e605b",
+  "modelSha256": "94908f181d2ea6e69bffa93c3e79e91fb19b612ac5ae1625b6ad5de655c3863b",
   "nodes": 36,
   "animationTracks": [
     [
@@ -12,7 +12,7 @@
       121
     ]
   ],
-  "nativeUvVertices": 33883,
+  "nativeUvVertices": 22529,
   "routeCells": 13,
   "adaptiveOpenings": 14,
   "supportCells": 21,

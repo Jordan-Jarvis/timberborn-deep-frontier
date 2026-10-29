@@ -12,9 +12,8 @@ from industrial_geometry import timber_column, beam_joint, bracket, steel_bolt, 
 from industrial_facades import side_window, window_y, gauge
 from industrial_door_components import recipe as door_recipe
 from reference_details import machinery_shell, round_pipe, cage_lamp
-from industrial_kit import open_beam, wheel, gauge
-from industrial_kit import (timber_column, beam_joint, bracket, steel_bolt, sheet_roof, machinery_shell, round_pipe,
-                               cage_lamp, band, prism, bolt, square_nut, open_box, rock)
+from industrial_kit import (open_beam,lean_wheel as wheel,lean_gauge as gauge,bracket as nutted_bracket,timber_column as nutted_column)
+from industrial_kit import (lean_timber_column as timber_column,lean_beam_joint as beam_joint,lean_bracket as bracket,steel_bolt,lean_sheet_roof as sheet_roof,lean_machinery_shell as machinery_shell,round_pipe,lean_cage_lamp as cage_lamp,band,prism,bolt,square_nut,open_box,lean_rock as rock)
 from reference_materials import (
     CRUSHER_STEEL, KILN_CEMENT, KILN_DUST, KILN_SOOT,
     CIVIC_CONCRETE, CIVIC_FORGED_PANEL,
@@ -35,12 +34,12 @@ ACCESS = {
 }
 
 
-def pier(g, x, y, top):
+def pier(g, x, y, top, collar=bracket, column=timber_column):
     g.box((x, y, .15), (.40, .40, .30), CIVIC_CONCRETE)
-    timber_column(g, x, y, .29, top, .24)
+    column(g, x, y, .29, top, .24)
     for z in (1.15, 2.15, 3.15, 4.15):
         if z < top - .3:
-            bracket(g, x, y, z, .24)
+            collar(g, x, y, z, .24)
 
 
 def hopper(g, x, y, bottom, width, length, material, seed, *, powder=False):
@@ -55,13 +54,13 @@ def hopper(g, x, y, bottom, width, length, material, seed, *, powder=False):
     for xx in (x-width/2, x+width/2):
         g.box((xx, y, top), (.15, length+.15, .12), WOOD)
         for yy in (y-length/2, y+length/2):
-            bracket(g, xx, yy, top-.15, .18)
+            # The full collar, nuts included: its heads count towards the
+            # tower's registered wall faces (industrial_wall_faces.py).
+            nutted_bracket(g, xx, yy, top-.15, .18)
     for yy in (y-length/2, y+length/2):
         g.box((x, yy, top), (width-.15, .15, .12), WOOD)
         for xx in (x-width*.30, x+width*.30):
             g.box((xx, yy-.05, bottom+.40), (.06, .035, .67), IRON)
-            for zz in (bottom+.12, top-.14):
-                square_nut(g, (xx, yy-.075, zz), 'Y', .020, -1)
     verts = [(x+dx*width/2, y+dy*length/2, bottom)
              for dx,dy in ((-1,-1),(1,-1),(1,1),(-1,1))]
     verts += [(x+dx*.25, y+dy*.24, bottom-.50)
@@ -71,19 +70,20 @@ def hopper(g, x, y, bottom, width, length, material, seed, *, powder=False):
     rng = random.Random(seed)
     if powder:
         vertices=[]
-        for row in range(7):
-            for col in range(9):
-                u=col/8*2-1;v=row/6*2-1
+        for row in range(4):
+            for col in range(5):
+                u=col/4*2-1;v=row/3*2-1
                 vertices.append((x+u*(width-.15)/2,y+v*(length-.15)/2,
                                  bottom+.60+.28*(1-u*u)*(1-v*v)+rng.uniform(-.015,.015)))
-        g.add(vertices,[(r*9+c,r*9+c+1,(r+1)*9+c+1,(r+1)*9+c)
-                        for r in range(6) for c in range(8)],material)
+        g.add(vertices,[(r*5+c,r*5+c+1,(r+1)*5+c+1,(r+1)*5+c)
+                        for r in range(3) for c in range(4)],material)
     else:
-        for row in range(5):
-            for col in range(6):
-                xx=x-width*.39+col*width*.15+rng.uniform(-.055,.055)
-                yy=y-length*.37+row*length*.18+rng.uniform(-.05,.05)
-                size=rng.uniform(.20,.37)
+        # 12k cap: twelve large stones (was thirty).
+        for row in range(3):
+            for col in range(4):
+                xx=x-width*.33+col*width*.22+rng.uniform(-.055,.055)
+                yy=y-length*.30+row*length*.30+rng.uniform(-.05,.05)
+                size=rng.uniform(.30,.44)
                 rock(g,(xx,yy,bottom+.66+rng.uniform(-.025,.12)),
                      (size,size*.82,size*.64),material,seed+row*6+col)
     # Screw-operated slide gate and inspection plate below the throat.
@@ -128,7 +128,8 @@ def operator_room(g):
     machine_slab(g,w,1.15,e,rear,1.96,.10)
     # Canopy eave and corner shoes stay inside the tile edges. The front
     # walk's corner piers carry it; lamps hang on the clerestory.
-    sheet_roof(g,.36,.11,2.93,1.15,.94,1.15,910)
+    # Its corner collars close the registered front connection faces.
+    sheet_roof(g,.36,.11,2.93,1.15,.94,1.15,910,corner_collars=True)
     for x in (.48,2.80):timber_column(g,x,.20,.03,.93,.16)
     for x in (.55,1.23):cage_lamp(g,x,1.195,1.62)
     # High clerestory panes sit above the entry canopy.
@@ -146,20 +147,18 @@ def operator_room(g):
 def drum(g, parts):
     p=(4.40,3.30,3.19)
     m=Geometry('Mixer.Drum',p)
+    # 12k cap: 16-sided shell; eight wear bars on its ridges (no hex heads).
     machinery_shell(m,p,[(-1.23,.27),(-1.05,.46),(-.78,.79),
-                         (-.52,1.03),(.63,1.03),(.98,.73),(1.23,.29)],'Y',24)
+                         (-.52,1.03),(.63,1.03),(.98,.73),(1.23,.29)],'Y',16)
     for yy in (2.80,3.90):
-        band(m,(4.40,yy,3.19),1.065,.055,.14,CRUSHER_STEEL,'Y',24)
-    for i in range(12):
-        a=(i+.5)*math.pi/6
+        band(m,(4.40,yy,3.19),1.065,.055,.14,CRUSHER_STEEL,'Y',16)
+    for i in range(8):
+        a=i*math.pi/4
         xx=4.40+math.cos(a)*1.043
         zz=3.19+math.sin(a)*1.043
         m.beam((xx,2.80,zz),(xx,3.91,zz),.033,.022,IRON)
-        for yy in (2.89,3.82):
-            # Radial hex heads belong to the rotating shell.
-            rock(m,(xx,yy,zz),(.06,.06,.06),BRASS,600+i)
-    prism(m,(4.40,2.02,3.19),.19,.32,IRON,'Y',12)
-    band(m,(4.40,2.00,3.19),.36,.08,.13,BRASS,'Y',16,inner=True)
+    prism(m,(4.40,2.02,3.19),.19,.32,IRON,'Y',10)
+    band(m,(4.40,2.00,3.19),.36,.08,.13,BRASS,'Y',12,inner=True)
     parts.append((m,'Y',1))
     for x in (3.48,5.57):
         for y in (2.35,4.26):
@@ -170,9 +169,7 @@ def drum(g, parts):
         beam_joint(g,(3.17,yy,2.30),(5.64,yy,2.30),.25,.25)
         for xx in (3.66,5.14):
             g.box((xx,yy,2.37),(.43,.35,.22),IRON)
-            prism(g,(xx,yy,2.57),.21,.28,CRUSHER_STEEL,'Y',12)
-            for dx in (-.15,.15):
-                square_nut(g,(xx+dx,yy,2.49),'Z',.023,1)
+            prism(g,(xx,yy,2.57),.21,.28,CRUSHER_STEEL,'Y',8)
     # Independent keyed power shaft, flywheel, motor and lower crank.
     drive=Geometry('Mixer.Drive',(4.40,1.77,3.19))
     wheel(drive,(4.40,1.77,3.19),.51,'Y')
@@ -185,8 +182,8 @@ def drum(g, parts):
     g.box((3.38,3.44,1.16),(.55,1.15,.65),CIVIC_FORGED_PANEL)
     for y in (3.03,3.15,3.27,3.39,3.51,3.63,3.75,3.87):
         g.box((3.08,y,1.15),(.04,.034,.43),IRON)
-    prism(g,(3.38,2.74,1.16),.19,.30,IRON,'Y',12)
-    band(g,(3.38,2.55,1.16),.20,.04,.07,CRUSHER_STEEL,'Y',12,inner=True)
+    prism(g,(3.38,2.74,1.16),.19,.30,IRON,'Y',8)
+    band(g,(3.38,2.55,1.16),.20,.04,.07,CRUSHER_STEEL,'Y',8,inner=True)
 
 
 def chute(g, start, end, width):
@@ -198,10 +195,6 @@ def chute(g, start, end, width):
         dx,dy=nx*side*width/2,ny*side*width/2
         g.beam((start[0]+dx,start[1]+dy,start[2]+.09),
                (end[0]+dx,end[1]+dy,end[2]+.09),.055,.21,IRON)
-    for t in (.15,.50,.85):
-        p=tuple(start[i]+(end[i]-start[i])*t for i in range(3))
-        for dx in (-width*.42,width*.42):
-            square_nut(g,(p[0]+dx,p[1],p[2]+.055),'Z',.018,1)
 
 
 def mixer(g, parts):
@@ -215,7 +208,9 @@ def mixer(g, parts):
     # walk; the roof keeps its rear overhang above that walk.
     for x in (1.23,2.97):
         for y in (2.15,4.80):
-            pier(g,x,y,5.10 if y<3 else 5.70)
+            # The front-right pier keeps its collar nuts: their heads complete
+            # the registered wall face of cell (2,2,4) (industrial_wall_faces.py).
+            pier(g,x,y,5.10 if y<3 else 5.70,nutted_bracket if (x,y)==(2.97,2.15) else bracket)
         beam_joint(g,(x,2.15,3.17),(x,4.80,3.17),.20,.22)
         g.beam((x,2.20,2.25),(x,4.70,4.70),.18,mat=WOOD)
     for y,z in ((2.15,5.10),(4.80,5.70)):
@@ -229,7 +224,9 @@ def mixer(g, parts):
     # Cement hopper legs, under the hopper's front and rear thirds.
     for x in (4.02,4.57):
         for y in (4.18,4.60):
-            pier(g,x,y,4.26)
+            # The rear right leg keeps its post-collar nuts: their heads keep
+            # cell (4,4,4)'s Right face out of the registered connection faces.
+            pier(g,x,y,4.26,column=nutted_column if (x,y)==(4.57,4.60) else timber_column)
     chute(g,(2.10,3.24,3.53),(3.38,3.24,3.25),.49)
     chute(g,(3.90,4.37,3.81),(4.40,4.20,3.54),.52)
     drum(g,parts)
@@ -247,13 +244,13 @@ def mixer(g, parts):
                   (5.78,4.10,4.70),(5.78,4.10,3.85),
                   (5.60,4.10,3.67),(5.03,4.10,3.67)],.075)
     for z in (4.02,4.58):
-        band(g,(5.78,4.10,z),.11,.035,.09,BRASS,'Z',12)
+        band(g,(5.78,4.10,z),.11,.035,.09,BRASS,'Z',8)
     gauge(g,5.80,3.98,4.16,.13)
     wheel(g,(5.78,3.85,4.48),.18,'Y')
     # The riser drops inside the tank tower (row 4), clear of the rear lane.
     round_pipe(g,[(6.49,4.83,4.45),(6.49,4.91,4.45),
                   (6.49,4.91,.40)],.078)
-    band(g,(6.49,4.91,.40),.145,.040,.10,IRON,'Z',12)
+    band(g,(6.49,4.91,.40),.145,.040,.10,IRON,'Z',8)
     # Sloped discharge and a removable wet tray (the stacked finished blocks
     # were loose props and were removed, 2026-10-22).
     chute(g,(5.25,2.73,2.70),(6.15,.69,.88),.74)
@@ -266,8 +263,8 @@ def mixer(g, parts):
     for x in (5.50,6.90):
         g.box((x,.79,.89),(.13,1.30,.35),PLANK)
     g.box((6.20,.79,.86),(1.20,1.09,.14),KILN_CEMENT)
-    for i in range(10):
-        rock(g,(5.75+(i%4)*.27,.35+(i//4)*.28,.96),(.22,.18,.05),KILN_DUST,1000+i)
+    for i in range(4):
+        rock(g,(5.82+(i%2)*.70,.42+(i//2)*.62,.96),(.26,.21,.05),KILN_DUST,1000+i)
     for x,y,z in ((1.22,2.11,3.08),(2.98,2.11,4.79)):
         cage_lamp(g,x,y,z)
     # Low-level utilities and control cabinet add detail without occupying walks.
@@ -276,5 +273,5 @@ def mixer(g, parts):
     g.box((6.02,3.63,2.48),(.44,.20,.57),CIVIC_FORGED_PANEL)
     gauge(g,6.02,3.50,2.55,.105)
     for x in (5.89,6.02,6.15):
-        g.cylinder((x,3.50,2.29),.027,.04,BRASS,'Y',12)
+        prism(g,(x,3.50,2.29),.027,.04,BRASS,'Y',6,(True,False))
     return rails

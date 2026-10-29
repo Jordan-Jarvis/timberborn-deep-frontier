@@ -1,7 +1,7 @@
 {
  "model": "Hospital",
  "source": "C:\\Users\\Jordan\\Documents\\TimberbornModding\\src\\DeepFrontier\\Art\\Source\\Hospital-ReferenceStudy.blend",
- "sourceSha256": "4b57375e2a0f0533d7f69c634a18a2a14abb415c228b35f1d295d23e636919cf",
+ "sourceSha256": "84a18a2520ca7fa4335cf60ed88d34209dad3d1b9f1da459df8b089710111884",
  "frame": 1,
  "coordinateSystem": "Native grid XYZ; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)",
  "rule": "outward static surfaces within 0.12 behind the face plane (or up to 0.02 proud) cover >= 60% of 8x8 samples",

@@ -12,7 +12,7 @@
     0.0
   ],
   "boundsMax": [
-    9.9372,
+    9.9385,
     11.25,
     15.75
   ],
@@ -44,20 +44,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 9455,
+  "faces": 8423,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 2118,
     "IrregularPlanks_DarkBrown.IronTeeth": 464,
-    "BaseMetal.IronTeeth": 5974,
-    "RoofPlanks.IronTeeth": 1141,
-    "Details.IronTeeth": 632,
+    "BaseMetal.IronTeeth": 4746,
+    "RoofPlanks.IronTeeth": 1129,
+    "Details.IronTeeth": 368,
     "accent8": 60,
-    "Plaster_White.IronTeeth": 306,
+    "Plaster_White.IronTeeth": 294,
     "Plaster_Orange.IronTeeth": 85,
     "IrregularPlanks_MetalForged.IronTeeth": 260,
     "WindowsAtlas.IronTeeth": 446,
-    "PaintedMetal.IronTeeth": 305
+    "PaintedMetal.IronTeeth": 289
   },
-  "sourceHash": "30fe0b1ca9aa91824a06332475aa368123a431a40a6afd88f3e3e5ce70abbea4",
-  "artHash": "7c8403b48c8f5e3533ba1debe8c80c9fe8606f7c6277b388a9e882284d856cca"
+  "sourceHash": "50c8dd54a9f872dbd09d043139b94f2db90f5ab5b6e0b1f766720af12a7a7b05",
+  "artHash": "183c3562d98bacfe4a0df69f3eac0f289ae78ed85f2dda2c99218e7546206419"
 }

@@ -1491,7 +1491,7 @@
    4
   ]
  ],
- "partsOutsideFootprint": 22,
+ "partsOutsideFootprint": 20,
  "doors": [
   {
    "id": "Entrance",
@@ -2370,5 +2370,5 @@
   "PrecisionMachineWorks.HammerRam",
   "PrecisionMachineWorks.YardLatheRoll"
  ],
- "sourceHash": "39e0c9fe4bc4fc97435ff0c76f3f07a4bf101e7584747888a9a8ab4ec0c6dbac"
+ "sourceHash": "132a6daa3d14a05c99455ae8b77e17812e490f58b9cff58a3180c90cc838c99b"
 }

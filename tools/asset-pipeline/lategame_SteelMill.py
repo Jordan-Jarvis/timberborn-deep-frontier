@@ -443,7 +443,7 @@ def mill_stand(g, parts, i, sx):
         blk(g, sx - .34, py - .1, .17, sx + .34, py + .1, .3, IRON)
         # Screw-down column on the crosshead.
         g.cylinder((sx, py, 1.8), .05, .24, IRON, 'Z', 8)
-    g.wheel((sx, y - .52, 1.98), .16, 'Y', IRON, BRASS)
+    K.wheel(g, (sx, y - .52, 1.98), .16, 'Y')
     blk(g, sx - .3, y - .44, 1.6, sx + .3, y + .44, 1.66, IRON)
     # Spindles back to a pinion box and motor behind the line.
     for z in (lo, hi):

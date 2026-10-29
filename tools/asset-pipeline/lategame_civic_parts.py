@@ -343,8 +343,8 @@ def gauge(g, x, y, z, face='front', r=.075):
     """Pressure gauge without glass: brass bezel, plaster dial, iron needle."""
     n = {'front': (0, -1), 'back': (0, 1), 'left': (-1, 0), 'right': (1, 0)}[face]
     axis = 'Y' if n[0] == 0 else 'X'
-    g.cylinder((x + n[0] * .03, y + n[1] * .03, z), r, .06, BRASS, axis, 16)
-    g.cylinder((x + n[0] * .065, y + n[1] * .065, z), r * .78, .012, CONCRETE, axis, 16)
+    g.cylinder((x + n[0] * .03, y + n[1] * .03, z), r, .06, BRASS, axis, 8)
+    g.cylinder((x + n[0] * .065, y + n[1] * .065, z), r * .78, .012, CONCRETE, axis, 8)
     g.beam((x + n[0] * .074, y + n[1] * .074, z), (x + n[0] * .074 + (r * .55 if axis == 'Y' else 0),
             y + n[1] * .074 + (r * .55 if axis == 'X' else 0), z + r * .35), .014, .008, IRON)
 

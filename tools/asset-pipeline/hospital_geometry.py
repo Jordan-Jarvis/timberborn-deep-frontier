@@ -10,7 +10,6 @@ from reference_materials import CIVIC_CONCRETE,CIVIC_ORANGE_PANEL,CIVIC_FORGED_P
 from grid_structure import room as grid_room,platform as grid_platform
 from hospital_structure import ORIGIN,ROOMS,EXTERIOR_WALLS,PLATFORMS,SUPPORTS,DOORS,source
 from walkway_geometry import RailAssembly
-from civic_isometric_geometry import steel_bolt
 from industrial_budget import round_pipe
 from native_building_assets import barrel
 
@@ -121,24 +120,21 @@ def transverse_roof(g,x0,y0,x1,y1,eave,ridge,seed):
 def entrance_canopy(g,x0,y0,x1,y1,z0,z1):
     """The entrance's sheet canopy (industrial sheet_roof form) with its
     corner shoes but without folded corner brackets; their plates sat 4 mm
-    from the shoes, inside the strict overlap tolerance."""
-    from civic_isometric_geometry import steel_bolt
+    from the shoes, inside the strict overlap tolerance. No fastener heads
+    (civic shell family, triangle budget 2026-10-29)."""
     rng=random.Random(41);count=math.ceil((x1-x0)/.28)
     for i in range(count):
         x=x0+(i+.5)*(x1-x0)/count
         g.beam((x,y0,z0),(x,y1,z1),(x1-x0)/count,.045,ROOF)
-        for t in (.08,.92):steel_bolt(g,(x,y0+(y1-y0)*t,z0+(z1-z0)*t+.035),'Z',.015)
     for x in (x0,x1):g.beam((x,y0,z0-.035),(x,y1,z1-.035),.13,.14,WOOD)
     for y,z in ((y0,z0),(y1,z1)):
         # Cross beams end inside the side beams, not on the outer sheet plane.
         g.beam((x0+.03,y,z-.055),(x1-.03,y,z-.055),.15,.16,WOOD)
         for x in (x0,x1):
             g.box((x,y,z+.050),(.22,.22,.025),IRON)
-            steel_bolt(g,(x,y,z+.071),'Z',.024)
     for t in (.35,.72):
         y=y0+(y1-y0)*t;z=z0+(z1-z0)*t+.03
         g.beam((x0,y,z),(x1,y,z),.06,.018,IRON)
-        for x in (x0+.08,x1-.08):steel_bolt(g,(x,y,z+.015),'Z',.016)
     # Triangle budget: no 6x4 mm scratch slivers (sub-pixel at game zoom).
     del rng
 
@@ -277,6 +273,4 @@ def hospital(g,parts):
     for x in (2.1,11.9):
         g.box((x,10.045,1.05),(.70,.06,.65),CIVIC_FORGED_PANEL)
         for z in (.84,.98,1.12,1.26):g.box((x,10.10,z),(.52,.07,.035),IRON)
-        for dx in (-.26,.26):
-            for z in (.80,1.30):steel_bolt(g,(x+dx,10.09,z),'Y',.022)
     return r

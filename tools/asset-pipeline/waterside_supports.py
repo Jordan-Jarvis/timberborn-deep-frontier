@@ -16,20 +16,29 @@ end flush against the basin bottoms (opposite-facing contact, no overlap).
 Templates are emitted by export_industrial_models.py, placed at a buried
 anchor below a land cell. AdaptiveSupports deactivates them in the finished
 model; in the copied construction-stage model they stay underground.
+
+Triangle budget, 20k grand cap (2026-10-29): the fishery style is lean. Its
+templates were about 3,300 triangles each, mostly the 12 mm bevel modifier
+and the round-bolted folded collar (industrial_geometry.bracket). They are
+now built without a bevel and with the civic shell family's plain collar
+(civic_isometric_geometry.collar), as the fishery's own timber columns are.
+The hatchery style is unchanged.
 """
 import json
 from pathlib import Path
 from frontier_architecture import Geometry,WOOD,IRON
 from reference_materials import CIVIC_CONCRETE
 from industrial_geometry import bracket
+from civic_isometric_geometry import collar
 
 ROOT=Path(__file__).resolve().parents[2]
 SEGMENT_NODE='#SupportSegment'
 FOOT_NODE='#SupportFoot'
 # Width matches each building's own timber columns; shift is explained above.
+# lean: plain collar and no bevel modifier (see above).
 STYLES={
-    'hatchery':{'width':.16,'shift':-.10,'pier':.30,'pierTop':.16},
-    'fishery':{'width':.17,'shift':0.,'pier':.32,'pierTop':.18},
+    'hatchery':{'width':.16,'shift':-.10,'pier':.30,'pierTop':.16,'lean':False},
+    'fishery':{'width':.17,'shift':0.,'pier':.32,'pierTop':.18,'lean':True},
 }
 FOOT_EMBED=.22   # The foot runs this far below the bed top, into the ground.
 
@@ -51,7 +60,7 @@ def segment(style):
     g=Geometry(SEGMENT_NODE)
     g.box((0,0,(bottom+top)/2),(w,w,top-bottom),WOOD)
     _channels(g,w,bottom,top)
-    bracket(g,0,0,bottom+.5,w)
+    (collar if s['lean'] else bracket)(g,0,0,bottom+.5,w)
     return g
 
 
@@ -64,16 +73,18 @@ def foot(style):
     # Bearing plate straddles the pier top: no coincident pier/plate faces.
     g.box((0,0,s['pierTop']+.02),(s['pier']+.02,s['pier']+.02,.06),IRON)
     _channels(g,w,s['pierTop']+.06,top)
-    bracket(g,0,0,(s['pierTop']+.06+top)/2,w)
+    (collar if s['lean'] else bracket)(g,0,0,(s['pierTop']+.06+top)/2,w)
     return g
 
 
 def templates(model):
-    """(node name, Geometry, anchor cell) for one model; unknown models fail."""
+    """(node name, Geometry, anchor cell, bevel width) for one model; unknown
+    models fail."""
     site=sites()[model]
     style=site['templates']['style']
-    return [(SEGMENT_NODE,segment(style),site['templates']['anchor']),
-            (FOOT_NODE,foot(style),site['templates']['anchor'])]
+    bevel=0 if STYLES[style]['lean'] else .012
+    return [(SEGMENT_NODE,segment(style),site['templates']['anchor'],bevel),
+            (FOOT_NODE,foot(style),site['templates']['anchor'],bevel)]
 
 
 def models():

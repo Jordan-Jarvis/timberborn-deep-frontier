@@ -156,7 +156,7 @@
    0
   ]
  ],
- "partsOutsideFootprint": 3,
+ "partsOutsideFootprint": 2,
  "doors": [
   {
    "id": "Door0",
@@ -294,5 +294,5 @@
   "RadioactiveSludgeOutfall.SluiceGate",
   "RadioactiveSludgeOutfall.Handwheel"
  ],
- "sourceHash": "dc64a5dc0e02110066a4ce8d4d499de0fdee50397972687f42caa629113c3f53"
+ "sourceHash": "35f6cd53773dfd0d940300d6fdc949607f8e380e2dbe8c5a10eaf55428a0a30b"
 }

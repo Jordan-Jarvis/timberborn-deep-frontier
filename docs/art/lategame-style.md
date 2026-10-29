@@ -63,6 +63,17 @@ Every building gets one **hero element** that no other building shares, plus a d
 - Face winding is outward (back faces are culled in game). Kit primitives guarantee this; hand-written `g.add` faces must be counter-clockwise seen from outside.
 - No visible interiors. Doors use the native one-tile `building_portal`; windows use the native `architectural_windows` assemblies seated on a real wall plane.
 
+## Triangle budget (2026-10-29)
+
+Ceilings: grand buildings 20,000 finished triangles, workshops 12,000 (`tools/asset-pipeline/triangle-budget.json`, `validate_triangle_budget.py`). Detail that is under two pixels at game zoom is not modelled.
+- **Round parts:** the kit default is 12 sides (smooth-shaded under the 37 degree angle). Small pipes, gauges and flanges use 8; only big drums, domes and towers use 16-24. Keep side counts multiples of 4: the plan extent of a part, and with it the grid registration, then does not move.
+- **Fittings:** flanges, motor fins and tank bands on horizontal tanks are solid discs whose core is buried in the pipe or shell. Gauges have no bezel ring. Use `lategame_kit.wheel` for flywheels and sheaves and `valve_wheel` for hand wheels, never `Geometry.wheel`. Bolt and rivet rows on large masses are left out; `stud()` is a four-sided head.
+- **Ladders:** rungs every third of a layer. Cage hoops are single triangular-section bars (`flat_bar`) at the same 0.6 pitch, because the hoops carry the ladder's occupied cells.
+- **Shading:** the 1.2 cm bevel stays only on edges at least 1.0 long between faces at least 0.25 deep (`render_lategame_studies.BEVEL_MIN_EDGE`, `BEVEL_MIN_FACE`).
+- **Culling:** static art builds with the exact enclosed-face cull and the ray-verified small-face cull (`CULL_SMALL_HIDDEN`). `audit_hidden_geometry.py` rechecks every removed face against the saved scene.
+- **Registration:** occupancy comes from each authored part's extent (`registration()`), so a thin part near a cell boundary can be the only thing that occupies a cell (ladder cages, tank bands, knee brackets). After any trim, compare the registration's occupied cells, wall faces, doors and emitters with the previous build before saving.
+- **Connection faces:** shafts and pipes connect to every flat cell face of the export, including the end discs of bands inside tanks and drums and the deck plates of galleries. After a trim, re-measure with `measure_connection_faces.py` and check that every face and buildable or covered roof cell of `outputs/connection-faces/<Id>.json` is still present; faces may be gained, never lost.
+
 ## Grid and access
 
 - One Blender unit is one tile horizontally and one height layer vertically.

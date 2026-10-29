@@ -1076,7 +1076,7 @@
    2
   ]
  ],
- "partsOutsideFootprint": 86,
+ "partsOutsideFootprint": 70,
  "doors": [
   {
    "id": "MainDoor",
@@ -1670,5 +1670,5 @@
    ]
   }
  },
- "artHash": "74a57559a33a92f45d375b1d1d86afe978233a2d370929a8f8e241b649664029"
+ "artHash": "9bd155d6e1d29593b12854a9365df40f7dfc7774fbce7c04d351153b7623fa32"
 }

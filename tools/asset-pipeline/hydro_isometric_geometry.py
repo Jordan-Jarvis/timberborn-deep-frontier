@@ -8,12 +8,16 @@ import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON
 from reference_materials import CIVIC_CONCRETE, CIVIC_FORGED_PANEL
-from civic_isometric_geometry import steel_bolt
-from industrial_facades import window_y, side_window, gauge
+from industrial_facades import window_y, side_window
 from industrial_door_components import hydro_workshop_door
-from industrial_budget import round_pipe, cage_lamp, machinery_shell
-from civic_isometric_geometry import framed_room, gabled_roof, roof_bearing, dormer
+from industrial_budget import round_pipe, cage_lamp, machinery_shell, band
+from civic_isometric_geometry import framed_room, gabled_roof, roof_bearing, dormer, gauge, handwheel, steel_bolt
 from walkway_geometry import RailAssembly
+
+# Triangle budget, 20k grand cap (2026-10-29): no fastener heads (the civic
+# shell family's rule, civic_isometric_geometry.collar), half as many
+# generator fins and lead-screw threads, and 12-24 sides on the large round
+# parts.
 
 
 def arch_band(g, y, width, outer, inner, material, *, center=2.0, spring=1.0, foot=.36, segments=24):
@@ -33,15 +37,15 @@ def arch_band(g, y, width, outer, inner, material, *, center=2.0, spring=1.0, fo
 def flange(g,y,outer=2.04,inner=1.00,width=.13):
     # 26 segments: its joints never share a radial plane with the casing's 24.
     arch_band(g,y,width,outer,inner,IRON,foot=.42,segments=26)
-    for i in range(19):
+    # Only the two springing bolts of each face stay (of nineteen): they stand
+    # in the cell faces over the conduit feet (native 0,3,1 and 3,3,1
+    # Bottom), which the connection-face measurement keeps unconnectable.
+    for i in (0,18):
         angle=i*math.pi/18
         x=2.0+math.cos(angle)*(outer-.14)
         z=1+math.sin(angle)*(outer-.14)
         for yy in (y-width/2-.012,y+width/2+.012):
             steel_bolt(g,(x,yy,z),'Y',.032)
-    for x in (.16,3.84):
-        for z in (.18,.56,.90):
-            steel_bolt(g,(x,y-width/2-.015,z),'Y',.031)
 
 
 def cast_conduit(g):
@@ -55,14 +59,12 @@ def cast_conduit(g):
         g.box((x,3.0,.18),(1.0,6.0,.36),CIVIC_CONCRETE)
         for y in (.35,1.55,4.05,5.75):
             g.box((x,y,.36),(.21,.44,.055),IRON)
-            steel_bolt(g,(x,y,.40),'Z',.032)
     # Long crown straps attach the casing sections to the tall dam pier.
     for angle in (.23,math.pi/2,math.pi-.23):
         x=2.0+math.cos(angle)*1.95
         z=1+math.sin(angle)*1.95
         for a,b in ((.14,1.92),(4.05,5.93)):
             g.beam((x,a,z),(x,b,z),.12,.05,IRON)
-            for y in (a+.13,b-.13):steel_bolt(g,(x,y,z+.035),'Z',.025)
     # Intake grate leaves the outlet open; both ends remain visually legible.
     for i in range(11):
         x=1.04+i*.192
@@ -71,8 +73,6 @@ def cast_conduit(g):
     for z in (.60,1.08):
         g.box((2.0,.015,z),(1.92,.08,.065),IRON)
     g.box((2.0,-.018,.82),(.31,.06,.37),IRON)
-    for x in (1.89,2.11):
-        for z in (.71,.93):steel_bolt(g,(x,-.06,z),'Y',.023)
 
 
 def dam_cap(g):
@@ -93,9 +93,6 @@ def dam_cap(g):
             g.box((x,y,4.17),(.16,.17,3.62),IRON)
             for z in (2.58,3.48,4.44,5.64):
                 g.box((x,y,z),(.28,.25,.46),IRON)
-                for dz in (-.14,.14):
-                    steel_bolt(g,(x,y-.145,z+dz),'Y',.028)
-                    steel_bolt(g,(x-.155,y,z+dz),'X',.028)
     # Cast support surface is exactly layer six. Bolts remain below its top.
     for x in range(4):
         for y in (2,3):
@@ -107,10 +104,11 @@ def dam_cap(g):
     g.cylinder((2.0,1.80,4.05),.075,2.55,IRON,'Z',16)
     for z in (3.03,4.18,5.25):
         g.box((2.0,1.83,z),(.42,.25,.19),IRON)
-        for x in (1.85,2.15):steel_bolt(g,(x,1.68,z),'Y',.025)
-    for i in range(25):
-        g.ring((2.0,1.8,3.02+i*.075),.092,.018,.028,IRON,'Z',12)
-    g.wheel((2.0,1.63,5.08),.38,'Y',IRON,accent=IRON)
+    # Thread collars every 15 cm (was 7.5), 8 sides, without the inner face
+    # (on the screw): 13 where there were 25.
+    for i in range(13):
+        band(g,(2.0,1.8,3.02+i*.15),.092,.018,.028,IRON,'Z',8)
+    handwheel(g,(2.0,1.63,5.08),.38,'Y',IRON,IRON)
     g.box((2.0,1.83,2.74),(.51,.37,.43),IRON)
     gauge(g,2.0,1.61,2.75,.14,rim_material=IRON)
     # Back pressure lines and removable inspection panels.
@@ -124,33 +122,30 @@ def dam_cap(g):
 def generator(g,parts):
     # Exposed shaft/coupler carries the motion; housing and bearings stay still.
     p=(3.82,1.36,2.78)
-    machinery_shell(g,p,[(-.76,.44),(-.61,.59),(.43,.59),(.64,.39)],'X',32,fastener_material=IRON)
+    machinery_shell(g,p,[(-.76,.44),(-.61,.59),(.43,.59),(.64,.39)],'X',24,fastener_material=IRON)
     for x in (3.13,4.27):
         g.box((x,1.36,2.17),(.40,.95,.32),CIVIC_CONCRETE)
         g.box((x,1.36,2.35),(.44,.99,.07),IRON)
-        for y in (.99,1.73):steel_bolt(g,(x,y,2.41),'Z',.033)
-    for i in range(14):
-        x=3.3+i*.064
-        g.ring((x,1.36,2.78),.615,.032,.027,IRON,'X',32)
+    # Seven cooling fins at twice the pitch (was fourteen), 24 sides like the
+    # shell, without the inner face that lies inside it.
+    for i in range(7):
+        x=3.3+i*.138
+        band(g,(x,1.36,2.78),.615,.032,.027,IRON,'X',24)
     for y in (.91,1.81):
         round_pipe(g,[(3.31,y,2.59),(3.31,y,3.30),(4.10,y,3.30)],.047)
     rotor=Geometry('Hydro.GeneratorCoupling',(4.7,1.36,2.78))
-    rotor.cylinder((4.60,1.36,2.78),.14,.72,IRON,'X',20)
+    rotor.cylinder((4.60,1.36,2.78),.14,.72,IRON,'X',12)
     for x in (4.43,4.83):
-        rotor.cylinder((x,1.36,2.78),.29,.10,IRON,'X',24)
-        for i in range(8):
-            a=i*math.pi/4
-            steel_bolt(rotor,(x+.065,1.36+math.cos(a)*.22,
-                              2.78+math.sin(a)*.22),'X',.024)
+        rotor.cylinder((x,1.36,2.78),.29,.10,IRON,'X',16)
     parts.append((rotor,'X',1))
     g.box((4.91,1.36,2.35),(.15,.63,.65),IRON)
-    g.ring((4.91,1.36,2.78),.25,.12,.12,IRON,'X',24)
+    g.ring((4.91,1.36,2.78),.25,.12,.12,IRON,'X',16)
 def runner(parts):
     # A visible turbine rotor inside the downstream mouth, mechanically linked
     # by its own authored loop. Runtime will drive both from measured operation.
     runner=Geometry('Hydro.TurbineRunner',(2.0,4.92,1.05))
-    runner.cylinder((2.0,4.92,1.05),.19,.28,IRON,'Y',24)
-    runner.ring((2.0,4.92,1.05),.85,.055,.10,IRON,'Y',32)
+    runner.cylinder((2.0,4.92,1.05),.19,.28,IRON,'Y',12)
+    runner.ring((2.0,4.92,1.05),.85,.055,.10,IRON,'Y',24)
     for i in range(8):
         a=i*math.pi/4
         verts=[]
@@ -192,9 +187,14 @@ def workshop(g):
         window_y(g,x,rear_wall,3.85,1,'back')
     roof_bearing(g,WS_X0,WS_Y0,WS_X1,WS_Y1,4.82,4.84)
     # The eave outline lies on the workshop's tile edges (x=4..7, y=6..9):
-    # 4 cm past the left/front/rear cladding, flush on the right.
+    # 4 cm past the left/front/rear cladding, 5 mm inside it on the right
+    # (flush, the gable eave beams' end caps shared the cladding plane, which
+    # the folded corner brackets had covered).
     # 1 cm past the edges so its end beams never share the frame's beam faces.
-    gabled_roof(g,WS_X0-.11,WS_Y0-.11,WS_X1+.06,WS_Y1+.11,4.84,5.80,228)
+    # 27 cm sheets, as before the 20k pass: the front wall's top cell face
+    # (native 5,6,5 Up) sits on the 60% wall-face threshold, and the wider
+    # sheets let two more of its 64 rays reach the wall (a registration change).
+    gabled_roof(g,WS_X0-.11,WS_Y0-.11,WS_X1+.055,WS_Y1+.11,4.84,5.80,228,sheet=.27)
     # Dormer window, plates and fasteners stand 1-4 cm proud of the gable
     # cladding (y 1.945), never on its plane.
     dormer(g,(WS_X0+WS_X1)/2,WS_Y0-.025,5.40,1.13)  # eave beam clear of the ridge bracket
@@ -208,8 +208,6 @@ def workshop(g):
     cage_lamp(g,WS_DOOR_X+.38,front_wall-.05,3.07)
     # Flush control cabinet under the first rear window, clear of the lane.
     g.box((front[0],rear_wall-.015,2.71),(.57,.09,1.10),CIVIC_FORGED_PANEL)
-    for x in (front[0]-.23,front[0]+.23):
-        for z in (2.24,3.18):steel_bolt(g,(x,rear_wall+.045,z),'Y',.023)
     # Cooling grille centred in the middle bay of the right wall.
     g.box((right_wall+.005,side[1],2.86),(.10,.90,.80),IRON)
     for i in range(8):
@@ -262,7 +260,7 @@ def hydro(g,parts):
         for z in (.5,1.0,1.5):
             g.box((5,y,z),(3.97,.012,.012),IRON)
         for x in (3.25,4.5,5.5,6.75):
-            for z in (.28,1.72):g.cylinder((x,y+out*.0055,z),.035,.015,IRON,'Y',12)
+            for z in (.28,1.72):g.cylinder((x,y+out*.0055,z),.035,.015,IRON,'Y',6)
     # Deck edge angles only along open deck edges; the workshop wall stands
     # on the x=4 edge between y=6 and y=9.
     for y0,y1 in ((.03,WS_Y0-.10),(WS_Y1+.10,5.97)):
@@ -288,8 +286,6 @@ def hydro(g,parts):
     # Flush service hatch does not obstruct the terrace or imply a second door:
     # 4.5 mm proud, so the walking surface stays on the whole layer.
     g.box((5.68,.58,2.00225),(.64,.64,.0045),IRON)
-    for x in (5.44,5.92):
-        for y in (.34,.82):steel_bolt(g,(x,y,2.0115),'Z',.021)
     downstream=4.0
     sideways=1.0
     append_powerhouse(architecture,g,sideways=sideways,downstream=downstream)

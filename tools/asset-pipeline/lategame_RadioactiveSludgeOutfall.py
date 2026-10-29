@@ -141,7 +141,7 @@ def spillway(g, parts):
     blk(g, wx - .08, wy - .08, 1.36, wx + .08, wy + .08, wz + .05, IRON)
     g.cylinder((wx, wy - .1, wz), .04, .2, IRON, 'Y', 8)
     wheel = Geometry('RadioactiveSludgeOutfall.Handwheel', (wx, wy - .2, wz))
-    wheel.wheel((wx, wy - .2, wz), .2, 'Y', IRON, BRASS)
+    K.wheel(wheel, (wx, wy - .2, wz), .2, 'Y')
     parts.append((wheel, 'SPIN_Y', 1))
 
 

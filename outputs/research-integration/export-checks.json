@@ -1,6 +1,6 @@
 {
   "scope": "Candidate export checks; actual native operation remains to test",
-  "modelSha256": "36e96561419278bd6c8e4211cf78d035d3166d83f97741b1cbc5b0c2e012f95b",
+  "modelSha256": "edd3f20caffd862a63686f9b0b9c6cf016b2474e3f6e18b5afc67622e32e8207",
   "nodes": 27,
   "animationTracks": [
     [
@@ -16,7 +16,7 @@
       121
     ]
   ],
-  "nativeUvVertices": 48643,
+  "nativeUvVertices": 36378,
   "connectedRouteCells": 15,
   "railOpenings": 7,
   "terraceSupportCells": 9,

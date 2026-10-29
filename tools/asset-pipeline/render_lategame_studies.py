@@ -175,8 +175,8 @@ def author_extra_native_uvs(obj):
             uv.data[loop].uv = (u0 + (u - lo[0]) / span[0] * (u1 - u0), v0 + (v - lo[1]) / span[1] * (v1 - v0))
 
 
-BEVEL_MIN_EDGE = .5               # only edges at least this long keep the softened bevel
-BEVEL_MIN_FACE = .1               # ...between faces at least this deep
+BEVEL_MIN_EDGE = 1.0              # only edges at least this long keep the softened bevel
+BEVEL_MIN_FACE = .25              # ...between faces at least this deep
 CULL_ENCLOSED = True              # drop faces enclosed by solid primitives
 SMOOTH_ANGLE = math.radians(37)   # 10+ sided round parts shade smooth (and are not
                                   # bevelled between facets); boxes stay crisp
@@ -187,11 +187,12 @@ def budget_shading(obj):
     copies of every placement-preview mesh, so geometry pays for itself only
     where it shows at game zoom.
 
-    - The authored 1.2 cm softened-edge bevel stays on long edges (building
-      masses, slabs, roof edges), where it catches light. On edges shorter
-      than BEVEL_MIN_EDGE (bolts, rungs, small pipes) or along members
-      thinner than BEVEL_MIN_FACE (beams, ribs, rails) it is under two
-      pixels at the closest zoom and only multiplied the triangles.
+    - The authored 1.2 cm softened-edge bevel stays on the long edges of
+      big masses (walls, slabs, roof edges, plinths), where it catches
+      light. On edges shorter than BEVEL_MIN_EDGE (bolts, rungs, pipes,
+      short trim) or along members thinner than BEVEL_MIN_FACE (beams,
+      columns, ribs, legs, rails) it is under two pixels at game zoom and
+      only multiplied the triangles (2026-10-29: from 0.5 / 0.1).
     - Faces are smooth-shaded with edges sharper than SMOOTH_ANGLE kept
       sharp, so round parts read as round with half the sides and boxes keep
       flat faces; the bevel marks its own edges sharp so slabs stay flat.

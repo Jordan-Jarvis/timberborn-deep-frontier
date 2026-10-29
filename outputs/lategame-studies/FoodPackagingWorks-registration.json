@@ -1531,7 +1531,7 @@
    2
   ]
  ],
- "partsOutsideFootprint": 90,
+ "partsOutsideFootprint": 89,
  "doors": [
   {
    "id": "Door0",
@@ -2614,5 +2614,5 @@
   "FeedPumpRod",
   "BridgeCrates"
  ],
- "sourceHash": "8dc8c8d6a46a823d2bbe04c1bd6b3fb1a67a1c7c337dec25f19f591971428619"
+ "sourceHash": "644595d4e280ae6edf48f4eb7706c9ef14c246136ccc507ff3731560a1be04c3"
 }

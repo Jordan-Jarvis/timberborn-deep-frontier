@@ -111,7 +111,7 @@ def elevator(g, parts):
     # Boot house.
     P.podium(g, 6.0, 5.0, 8.0, 7.0, 1.0, joints=False)   # boot house on 2 x 2 tiles
     # Lattice tower.
-    K.lattice_tower(g, 6.6, 5.6, 7.6, 6.6, 1.0, 10.6, bays=8)
+    K.lattice_tower(g, 6.6, 5.6, 7.6, 6.6, 1.0, 10.6, bays=6)
     # Down leg: closed forged casing; up leg: belt with moving buckets.
     blk(g, 7.22, 5.96, 1.0, 7.48, 6.22, 10.6, FORGED)
     for k in range(9):
@@ -134,7 +134,7 @@ def elevator(g, parts):
     parts.append((K.beacon_shutter(7.1, 6.1, 12.48, 'ElevatorBeacon'), 'SPIN_Z', 2))
     # Head pulley drive on the front of the head house.
     wheel = Geometry('HeadPulley', (6.78, 5.2, 11.1))
-    wheel.wheel((6.78, 5.2, 11.1), .3, 'Y', IRON, BRASS)
+    K.wheel(wheel, (6.78, 5.2, 11.1), .3, 'Y')
     parts.append((wheel, 'SPIN_Y', 1))
     blk(g, 6.72, 5.28, 11.05, 6.84, 5.35, 11.15, IRON)
     blk(g, 7.2, 5.15, 10.62, 7.6, 5.35, 10.95, PAINTED)
@@ -179,12 +179,10 @@ def drier(g, parts):
     P.podium(g, 8.0, 2.0, 9.0, 3.0, 2.2, joints=False, foot=False, base=.22)   # one-tile firebox on the bed
     blk(g, 7.97, 2.2, .7, 8.0, 2.8, 1.3, IRON)
     blk(g, 8.2, 1.93, .45, 8.8, 2.0, 1.0, IRON)
-    for x in (8.3, 8.5, 8.7):
-        K.stud(g, (x, 1.91, .9), 'Y', .025)
     K.stack(g, 8.5, 2.5, 2.2, 6.2, emits='smoke', r=.22)
     # Draught fan housing on the firebox side with a spinning impeller.
-    g.cylinder((8.5, 3.13, 1.3), .32, .16, IRON, 'Y', 16)
-    g.ring((8.5, 3.23, 1.3), .33, .05, .05, BRASS, 'Y', 16)
+    g.cylinder((8.5, 3.13, 1.3), .32, .16, IRON, 'Y', 12)
+    g.ring((8.5, 3.23, 1.3), .33, .05, .05, BRASS, 'Y', 12)
     fan = K.fan('DraughtFan', 8.5, 3.25, 1.3, .27, axis='Y', blades=6)
     parts.append((fan, 'SPIN_Y', 3))
     # Discharge hood at the hall end with a chute.
@@ -198,9 +196,9 @@ def drier(g, parts):
     for x in (6.35, 7.65):
         drum.ring((x, cy, cz), .72, .12, .16, PAINTED, 'X', 12)
         drum.cylinder((x, cy, cz), .62 + .0, .001 + .15, IRON, 'X', 12)
-    drum.ring((7.05, cy, cz), .74, .14, .12, BRASS, 'X', 16)
-    for i in range(24):
-        a = i * 2 * math.pi / 24
+    drum.ring((7.05, cy, cz), .74, .14, .12, BRASS, 'X', 12)
+    for i in range(12):
+        a = i * 2 * math.pi / 12
         p = (7.05, cy + math.cos(a) * .76, cz + math.sin(a) * .76)
         drum.box(p, (.1, .05, .05), IRON)
     for i in range(6):
@@ -211,7 +209,7 @@ def drier(g, parts):
             drum.beam(p0, p1, .06, .03, PAINTED)
     parts.append((drum, 'SPIN_X', .5))
     # Feed pipe from firebox into the drum mouth.
-    g.cylinder((8.0, cy, cz), .34, .14, FORGED, 'X', 16)
+    g.cylinder((8.0, cy, cz), .34, .14, FORGED, 'X', 12)
 
 
 def door_lamps(g):

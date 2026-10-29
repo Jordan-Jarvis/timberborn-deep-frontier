@@ -1376,7 +1376,7 @@
    13
   ]
  ],
- "partsOutsideFootprint": 22,
+ "partsOutsideFootprint": 21,
  "doors": [
   {
    "id": "DeckDoor",
@@ -1580,5 +1580,5 @@
   "ObservationDeck.BeaconShutter",
   "ObservationDeck.Anemometer"
  ],
- "sourceHash": "d27410ad35eb390351b5ac9e14b4e1c0253f5cb345fa101e01bf10730f057918"
+ "sourceHash": "cf5a20e13456cc90c3561f4f786300064119eebc6f01775193e563f683a35a1c"
 }

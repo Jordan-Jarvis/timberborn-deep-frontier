@@ -123,6 +123,12 @@ def _rims(g, center, ro, ri, width, mat, axis, segments):
             oriented_polygon(g, pts, tuple(nrm[k] - c[k] for k in range(3)), mat)
 
 
+def disc(g, center, r, width, mat=BRASS, *, axis='Z', segments=8):
+    """Solid flange disc on a pipe (the bore inside it is never seen): 28
+    triangles at 8 sides, where a 16-sided hollow hoop was 128."""
+    lathe(g, center, [(r, -width / 2), (r, width / 2)], mat, axis=axis, segments=segments)
+
+
 def annulus(g, center, r_in, r_out, z0, z1, mat=IRON, *, segments=12):
     """Flat ring deck (platform round a column)."""
     hollow_revolve(g, (center[0], center[1], 0), [(r_out, z0), (r_out, z1)], r_out - r_in, mat,
@@ -144,16 +150,18 @@ def ring_rail(g, center, r, z, *, height=.6, posts=12, mat=IRON, gap=None):
             _arc_bar(g, (cx, cy), r, z + h, w, gap[1], gap[0] + 2 * math.pi, mat)
         else:
             hollow_revolve(g, (cx, cy, 0), [(r + w / 2, z + h - w / 2), (r + w / 2, z + h + w / 2)], w, mat,
-                           segments=max(16, posts * 2))
+                           segments=max(12, posts))
 
 
-def _arc_bar(g, c, r, z, w, a0, a1, mat, steps=16):
+def _arc_bar(g, c, r, z, w, a0, a1, mat, steps=12):
     pts = [(c[0] + math.cos(a0 + (a1 - a0) * k / steps) * r, c[1] + math.sin(a0 + (a1 - a0) * k / steps) * r)
            for k in range(steps + 1)]
     for k, (p, q) in enumerate(zip(pts, pts[1:])):
         # Alternate a hair in height so neighbouring tops never share a plane.
+        # Square bar segments: a round 8-sided tube per segment was 28
+        # triangles for a rail two pixels thick.
         dz = .004 if k % 2 else 0
-        tube(g, (p[0], p[1], z + dz), (q[0], q[1], z + dz), w / 2, mat, segments=8)
+        g.beam((p[0], p[1], z + dz), (q[0], q[1], z + dz), w, mat=mat)
 
 
 # ---------------------------------------------------------------- pipes
@@ -181,7 +189,7 @@ def pipe(g, points, r=.07, mat=IRON, *, flanges=True, flange_mat=BRASS, segments
     for a, b in zip(points, points[1:]):
         tube(g, a, b, r, mat, segments=segments)
     for p in points[1:-1]:
-        sphere(g, p, r * 1.18, elbow_mat if elbow_mat is not None else mat, segments=segments, rings=6)
+        sphere(g, p, r * 1.18, elbow_mat if elbow_mat is not None else mat, segments=segments, rings=4)
     if not flanges:
         return
     for a, b in zip(points, points[1:]):
@@ -194,7 +202,7 @@ def pipe(g, points, r=.07, mat=IRON, *, flanges=True, flange_mat=BRASS, segments
             continue
         for f in (.28 / length, 1 - .28 / length):
             p = tuple(a[i] + delta[i] * f for i in range(3))
-            hoop(g, p, r * 1.65, r * .75, .06, flange_mat, axis='XYZ'[axis], segments=16)
+            disc(g, p, r * 1.65, .06, flange_mat, axis='XYZ'[axis], segments=segments)
 
 
 def valve(g, p, axis_dir='front', r=.12, *, stem=.14):
@@ -204,7 +212,7 @@ def valve(g, p, axis_dir='front', r=.12, *, stem=.14):
     tip = (x + nx * stem, y + ny * stem, z + nz * stem)
     tube(g, p, tip, .022, IRON, segments=8)
     ax = 'X' if nx else ('Y' if ny else 'Z')
-    hoop(g, tip, r, .03, .035, PAINTED, axis=ax, segments=16)
+    hoop(g, tip, r, .03, .035, PAINTED, axis=ax, segments=8)
     for k in range(3):
         a = k * math.pi / 3
         if ax == 'Y':
@@ -218,15 +226,15 @@ def valve(g, p, axis_dir='front', r=.12, *, stem=.14):
 
 
 def gauge(g, x, y, z, face='front', r=.1):
-    """Pressure gauge on a wall plane at (x, y, z): iron body, brass bezel,
-    white dial and a tiny cyan needle (no glass)."""
+    """Pressure gauge on a wall plane at (x, y, z): iron body, white dial
+    and a tiny cyan needle (no glass). Eight sides; the 16-sided brass
+    bezel hoop (128 triangles) was a one-pixel ring at game zoom."""
     nx, ny, _ = FACES[face]
     ax = 'Y' if ny else 'X'
     def at(d):
         return (x + nx * d, y + ny * d, z)
-    g.cylinder(at(.03), r, .06, IRON, ax, 16)
-    hoop(g, at(.065), r * 1.06, r * .2, .03, BRASS, axis=ax, segments=16)
-    g.cylinder(at(.065), r * .84, .03, CONCRETE, ax, 16)
+    g.cylinder(at(.03), r, .06, IRON, ax, 8)
+    g.cylinder(at(.065), r * .84, .03, CONCRETE, ax, 8)
     # Needle: thin bar proud of the dial.
     tx, ty = -ny, nx
     a = (x + nx * .088, y + ny * .088, z)
@@ -299,12 +307,14 @@ def louvre(g, axis, plane, start, end, bottom, top, outward, *, mat=FORGED, pitc
 
 # ---------------------------------------------------------------- electrical
 
-def insulator(g, x, y, z, height=.5, r=.09, discs=5):
-    """Porcelain disc insulator stack (white plaster discs on an iron rod)."""
+def insulator(g, x, y, z, height=.5, r=.09, discs=4):
+    """Porcelain disc insulator stack (white plaster discs on an iron rod;
+    each disc is open where the rod passes through it)."""
     g.cylinder((x, y, z + height / 2), r * .35, height, IRON, 'Z', 8)
     for k in range(discs):
         zz = z + .06 + (height - .12) * k / max(1, discs - 1)
-        revolve(g, (x, y, zz), [(r * .4, -.02), (r, 0), (r * .4, .03)], CONCRETE, segments=12)
+        revolve(g, (x, y, zz), [(r * .4, -.02), (r, 0), (r * .4, .03)], CONCRETE, segments=8,
+                cap_bottom=False, cap_top=False)
     g.cylinder((x, y, z + height + .02), r * .5, .04, BRASS, 'Z', 10)
 
 
@@ -312,11 +322,13 @@ def motor(g, p, r=.18, length=.4, *, axis='Z', mat=PAINTED):
     """Electric motor: finned painted body, end bell and terminal box."""
     x, y, z = p
     lathe(g, p, [(r * .9, -length / 2), (r, -length / 2 + .04), (r, length / 2 - .04), (r * .8, length / 2),
-                 (r * .3, length / 2 + .05)], mat, axis=axis, segments=16)
+                 (r * .3, length / 2 + .05)], mat, axis=axis, segments=12)
     for k in range(3):
         t = -length / 2 + length * (k + 1) / 4
         c = (x + t, y, z) if axis == 'X' else ((x, y + t, z) if axis == 'Y' else (x, y, z + t))
-        hoop(g, c, r + .03, .05, .035, IRON, axis=axis, segments=16)
+        # Solid cooling fin (its core lies in the body): 44 triangles, a
+        # hollow hoop was 96.
+        disc(g, c, r + .03, .035, IRON, axis=axis, segments=12)
     if axis == 'Z':
         g.box((x + r + .05, y, z), (.1, .14, .14), IRON)
     else:
@@ -333,7 +345,7 @@ def lamp_post(g, x, y, z, height=1.3):
 def flywheel(name, center, r, *, axis='X', spokes=6, mat=IRON, rim_mat=PAINTED, width=.12):
     """Spoked flywheel as an animated part (SPIN_<axis>)."""
     f = Geometry(name, center)
-    hoop(f, center, r, .07, width, rim_mat, axis=axis, segments=16)
+    hoop(f, center, r, .07, width, rim_mat, axis=axis, segments=12)
     lathe(f, center, [(r * .2, -width * .7), (r * .2, width * .7)], mat, axis=axis, segments=12)
     x, y, z = center
     for k in range(spokes):
@@ -564,7 +576,7 @@ def end_prism(g, along, plane, out, profile, mat, *, inset=.025, depth=.085):
     K.extrude_profile(g, profile, min(outer, inner), max(outer, inner), mat, axis=along)
 
 
-def plank_vault(g, x0, y0, x1, y1, spring, rise, *, overhang=.14, plank=.34, segments=12, ribs=5,
+def plank_vault(g, x0, y0, x1, y1, spring, rise, *, overhang=.14, plank=.34, segments=8, ribs=5,
                 trim=WOOD, rib_mat=IRON):
     """Barrel vault along X built from separate native roof planks (one
     profile slice each) over a dark sarking skin, with proud steel ribs

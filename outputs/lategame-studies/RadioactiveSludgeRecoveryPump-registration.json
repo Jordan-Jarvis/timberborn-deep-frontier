@@ -151,7 +151,7 @@
    1
   ]
  ],
- "partsOutsideFootprint": 23,
+ "partsOutsideFootprint": 22,
  "doors": [
   {
    "id": "Door0",
@@ -349,5 +349,5 @@
   "RadioactiveSludgeRecoveryPump.Cowl",
   "RadioactiveSludgeRecoveryPump.Coupling"
  ],
- "sourceHash": "d931607c53ef82843a1a3eec5bd64f1624453979ab1ddc9316d7ffd4f6e6296e"
+ "sourceHash": "5eed924f0dafc225f89532d72f9caa9997718c505875866486fcf07599da3be2"
 }

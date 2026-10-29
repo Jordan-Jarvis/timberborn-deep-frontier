@@ -13,7 +13,7 @@ from reference_materials import CIVIC_CONCRETE, CIVIC_ORANGE_PANEL, CIVIC_FORGED
 # Triangle budget: the civic, hydro, research and waterside families use the
 # shell-only fastener and container kit (industrial_budget.py): 2 square nuts per
 # collar plate, no buried caps or plate backs, 8-sided pipes.
-from industrial_budget import bracket, sheet_roof, bin, prism
+from industrial_budget import bin, prism, open_box
 from reference_materials import CRUSHER_STEEL
 
 
@@ -24,7 +24,77 @@ def steel_bolt(g,p,axis='Y',r=.022):
     # Turned 45 degrees (a diamond): its sides never share a plane with the
     # axis-aligned plates and boards it is bolted to.
     prism(g,p,r*1.3,.031,CRUSHER_STEEL,axis,4)
-from industrial_facades import building_portal, DOOR_OUTER_WIDTH, arched_portal, building_portal_side, gauge, CYAN
+
+
+# Triangle budget, 20k grand cap (2026-10-29): the civic shell family
+# (FisheryWorks, Restaurant, Hospital, ReinforcedHydroTurbine,
+# MaterialsLaboratory) drops its fastener heads. A 4 cm square nut is one or
+# two pixels at normal zoom, and there were hundreds per building (a quarter
+# to a third of each model's triangles). Plates, collars and straps stay.
+def collar(g,x,y,z,w):
+    """Iron collar on a timber member: one box with the outline of
+    industrial_budget.bracket's four folded plates (w+.052 square, .23 tall),
+    without its eight square nuts (80 of its 112 triangles)."""
+    g.box((x,y,z),(w+.052,w+.052,.23),IRON)
+
+
+def lean_bin(g,p,size):
+    """industrial_budget.bin for the civic shell family: the same floor, side
+    boards and corner irons, the boards in rows of up to 30 cm (was 15) and
+    no rivet heads."""
+    x,y,z=p
+    w,d,h=size
+    rows=max(1,math.ceil(h/.30))
+    g.box((x,y,z+.045),(w-.12,d-.12,.09),WOOD)
+    for j in range(rows):
+        level=z+(j+.5)*h/rows
+        for xx in (x-w/2+.03,x+w/2-.03):g.box((xx,y,level),(.06,d-.12,h/rows-.01),PLANK)
+        for yy in (y-d/2+.03,y+d/2-.03):g.box((x,yy,level),(w,.06,h/rows-.01),PLANK)
+    for xx in (x-w/2+.055,x+w/2-.055):
+        for yy in (y-d/2+.055,y+d/2-.055):g.box((xx,yy,z+h/2),(.09,.09,h+.03),IRON)
+
+
+def lean_sheet_roof(g,x0,y0,x1,y1,z0,z1):
+    """industrial_budget.sheet_roof for the civic shell family: the same side
+    and end beams, corner shoes and straps; sheets about 40 cm wide (was 28),
+    plain corner collars and no fastener heads."""
+    count=math.ceil((x1-x0)/.40)
+    for i in range(count):
+        x=x0+(i+.5)*(x1-x0)/count
+        g.beam((x,y0,z0),(x,y1,z1),(x1-x0)/count,.045,ROOF)
+    for x in (x0,x1):
+        g.beam((x,y0,z0-.035),(x,y1,z1-.035),.13,.14,WOOD)
+    for y,z in ((y0,z0),(y1,z1)):
+        g.beam((x0,y,z-.055),(x1,y,z-.055),.15,.16,WOOD)
+        for x in (x0,x1):
+            collar(g,x,y,z-.07,.16)
+            open_box(g,(x,y,z+.050),(.22,.22,.025),IRON,('-z',))
+    for t in (.35,.72):
+        y=y0+(y1-y0)*t
+        z=z0+(z1-z0)*t+.03
+        g.beam((x0,y,z),(x1,y,z),.06,.018,IRON)
+
+
+def handwheel(g,p,r,axis='Y',mat=IRON,accent=BRASS):
+    """Geometry.wheel for the civic shell family: one 12-sided rim (was two
+    24-sided rings), a hub in the accent material and four spokes (was
+    eight). A 25 cm valve wheel is about 10 px across at normal zoom."""
+    g.ring(p,r,.045,.07,mat,axis,12)
+    g.cylinder(p,.06,.12,accent,axis,8)
+    for i in range(4):
+        a=i*math.pi/2+math.pi/4
+        end=((p[0],p[1]+math.cos(a)*r*.95,p[2]+math.sin(a)*r*.95) if axis=='X'
+             else (p[0]+math.cos(a)*r*.95,p[1],p[2]+math.sin(a)*r*.95))
+        g.beam(p,end,.035,mat=mat)
+
+
+def gauge(g,x,y,z,r=.09,rim_material=BRASS):
+    """industrial_facades.gauge for the civic shell family: 12-sided case and
+    glass (was 24) and the needle, without the seven 6 mm scale ticks."""
+    g.cylinder((x,y,z),r,.045,rim_material,'Y',12)
+    g.cylinder((x,y-.03,z),r*.79,.016,GLASS,'Y',12)
+    g.beam((x,y-.046,z),(x+r*.48,y-.046,z+r*.42),.009,mat=CYAN)
+from industrial_facades import building_portal, DOOR_OUTER_WIDTH, arched_portal, building_portal_side, CYAN
 from industrial_budget import round_pipe
 from native_building_assets import barrel,water_barrel,prop,plant
 from reference_civic import side_wall, fish
@@ -214,8 +284,6 @@ def civic_service_details(g,x0,y0,x1,y1):
     g.box((cx,y1+.09,1.12),(.72,.17,.76),ROOF)
     g.box((cx,y1+.19,1.12),(.59,.035,.63),CIVIC_FORGED_PANEL)
     for i in range(5):g.box((cx,y1+.23,.94+i*.09),(.45,.065,.027),IRON)
-    for dx in (-.27,.27):
-        for dz in (-.28,.28):steel_bolt(g,(cx+dx,y1+.225,1.12+dz),'Y',.022)
     gauge(g,x1-.20,y1+.23,2.65,.10)
     # Projecting facade ventilation and small blue metal labels below windows.
     for x in (x0+.4,x1-.4):
@@ -234,8 +302,10 @@ def timber_column(g,x,y,bottom,top,w=.19,*,steel_channels=True,collars=True):
         g.box((x,y,.24),(w+.11,w+.11,.48),CIVIC_CONCRETE)
         g.box((x,y,.50),(w+.13,w+.13,.06),IRON)
     if not collars:return
-    collar_levels=((core_bottom+top)/2,) if top-core_bottom<.46 else (core_bottom+.115,top-.115)
-    for level in collar_levels:bracket(g,x,y,level,w)
+    # The collars stay 5 mm inside the column ends: a collar box face flush
+    # with an end would overlap the column's end face.
+    collar_levels=((core_bottom+top)/2,) if top-core_bottom<.46 else (core_bottom+.12,top-.12)
+    for level in collar_levels:collar(g,x,y,level,w)
 
 
 def beam_joint(g,a,b,w=.18,depth=.18,*,plates=True):
@@ -252,10 +322,8 @@ def beam_joint(g,a,b,w=.18,depth=.18,*,plates=True):
         p=tuple(a[i]+(b[i]-a[i])*t for i in range(3))
         if abs(b[0]-a[0])>=abs(b[1]-a[1]):
             g.box((p[0],p[1]-.12,p[2]),(.27,.035,depth+.06),IRON)
-            for dx in (-.075,.075):steel_bolt(g,(p[0]+dx,p[1]-.15,p[2]))
         else:
             g.box((p[0]-.12,p[1],p[2]),(.035,.27,depth+.06),IRON)
-            for dy in (-.075,.075):steel_bolt(g,(p[0]-.15,p[1]+dy,p[2]),'X')
 
 
 def facade_band(g,x0,y0,x1,y1,z,height,material,door=None):
@@ -332,7 +400,7 @@ def framed_room(g,x0,y0,x1,y1,bottom,top,bays=3,front_door=None,infill=CIVIC_ORA
     g.declare_hidden_volume((x0-.06,y0-.06,bottom),(x1+.06,y1+.06,top-.25),exposed)
 
 
-def gabled_roof(g,x0,y0,x1,y1,eave,ridge,seed,*,trim='full'):
+def gabled_roof(g,x0,y0,x1,y1,eave,ridge,seed,*,trim='full',sheet=.42):
     """Joined roof panels, separate iron straps, gable cladding and ridge cap.
 
     `trim='restrained'` keeps every sheet, strap, bargeboard and the iron ridge
@@ -341,7 +409,12 @@ def gabled_roof(g,x0,y0,x1,y1,eave,ridge,seed,*,trim='full'):
     """
     if trim not in ('full','restrained'):raise ValueError('Unknown roof trim '+str(trim))
     plates=trim=='full'
-    mid=(x0+x1)/2;n=math.ceil((y1-y0)/.27)
+    # Sheets about `sheet` wide (42 cm; was 27): triangle budget, 20k grand
+    # cap (2026-10-29). The gable boards stay 15 cm: their stepped tops set
+    # how much of each gable cell face is flat wall, and the connection-face
+    # measurement (measure_connection_faces.py) registers shaft/pipe sockets
+    # from it.
+    mid=(x0+x1)/2;n=math.ceil((y1-y0)/sheet)
     # Real under-roof sheathing closes the sheet joints. The visible sheets
     # retain their individual edges, but their 12 mm joints no longer open
     # into an empty attic. This is a distinct physical layer below their
@@ -362,7 +435,6 @@ def gabled_roof(g,x0,y0,x1,y1,eave,ridge,seed,*,trim='full'):
         y=y0+(i+.5)*(y1-y0)/n
         for x in (x0,x1):
             g.beam((x,y,eave),(mid,y,ridge),(y1-y0)/n-.012,.055,ROOF)
-            for t in (.08,.92):steel_bolt(g,(x+(mid-x)*t,y,eave+(ridge-eave)*t+.04),'Z',.019)
     for y in (y0,y1):
         count=math.ceil((x1-x0)/.15)
         for i in range(count):
@@ -370,12 +442,17 @@ def gabled_roof(g,x0,y0,x1,y1,eave,ridge,seed,*,trim='full'):
             g.box((x,y,(z+eave)/2),((x1-x0)/count-.008,.09,z-eave+.015),PLANK)
         beam_joint(g,(x0,y,eave-.05),(x1,y,eave-.05),.21,.20,plates=plates)
         for x in (x0,x1):
-            g.beam((x,y,eave),(mid,y,ridge),.17,.18,WOOD)
-            if plates:bracket(g,x,y,eave,.23)
+            # The bargeboard starts 12 mm down-slope of the eave line: its end
+            # cap was coplanar with the first and last sheets' end caps, which
+            # the folded corner brackets had covered.
+            run=math.hypot(mid-x,ridge-eave)
+            start=(x-(mid-x)*.012/run,y,eave-(ridge-eave)*.012/run)
+            g.beam(start,(mid,y,ridge),.17,.18,WOOD)
+            if plates:collar(g,x,y,eave,.23)
             # One plain timber block closes each eave joint instead of a
             # four-plate, sixteen-bolt bracket.
             else:g.box((x,y,eave),(.27,.27,.21),WOOD)
-        if plates:bracket(g,mid,y,ridge,.22)
+        if plates:collar(g,mid,y,ridge,.22)
         else:g.box((mid,y,ridge),(.24,.24,.22),WOOD)
     for x in (x0,x1):beam_joint(g,(x,y0,eave-.06),(x,y1,eave-.06),.19,.20,plates=plates)
     g.beam((mid,y0-.03,ridge+.05),(mid,y1+.03,ridge+.05),.15,.09,IRON)
@@ -414,7 +491,6 @@ def chimney(g,x,y,bottom,height,*,emits):
         g.box((x,y,z),(.46,.47,height/n-.015),KILN_STONE if i%3 else KILN_STONE_LIGHT)
         if i%2==0:
             g.box((x,y,z),(.50,.51,.06),IRON)
-            for dx in (-.16,.16):steel_bolt(g,(x+dx,y-.27,z),'Y',.024)
     for xx in (x-.24,x+.24):g.box((xx,y,bottom+height),(.08,.55,.16),IRON)
     # The cross rails end on the side rails' inner faces (x +-.20): with no
     # bevel modifier their tops would otherwise overlap coplanar by 1 cm.
@@ -439,8 +515,9 @@ def balcony(g,rails,ident,x0,y0,x1,y1,z=2,edges=('front','back','left','right'),
     for side in edges:rails.run(ident+side,*endpoints[side],z)
 
 
-def planter(g,x,y,z,width=.86,seed=1,side=False,species='DandelionMature',mount=None,depth=.32,*,proud_rivets=False):
-    bin(g,(x,y,z),(width,depth,.27) if not side else (depth,width,.27),None,proud_rivets=proud_rivets)
+def planter(g,x,y,z,width=.86,seed=1,side=False,species='DandelionMature',mount=None,depth=.32):
+    # The lean bin has no rivet heads, so no strict-mode proud rivets either.
+    lean_bin(g,(x,y,z),(width,depth,.27) if not side else (depth,width,.27))
     if mount is not None:
         nx,ny={'front':(0,1),'left':(1,0),'right':(-1,0)}[mount]
         for offset in (-width*.35,width*.35):
@@ -478,11 +555,13 @@ def supply_pile(g,x,y,z,medical=False,*,proud_rivets=False):
 
 
 def plate(g,x,y,z,meal=True):
-    # 12 sides (was 24): a 24 cm plate is about 30 px wide at the closest zoom.
-    g.cylinder((x,y,z),.115,.022,LIME,'Z',12);g.ring((x,y,z+.012),.12,.025,.024,LIME,'Z',12)
+    # 8 sides, the rim as the plate's own edge and one portion (was a 12-side
+    # plate, a 12-side rim ring and two portions, about 240 triangles): a 24 cm
+    # plate is under 10 px wide at normal zoom.
+    g.cylinder((x,y,z+.002),.12,.026,LIME,'Z',8)
     if meal:
-        g.rock((x-.025,y,z+.045),(.15,.14,.05),SAND,15)
-        g.rock((x+.07,y+.01,z+.05),(.09,.10,.06),LEAF,18)
+        # One low block portion (12 triangles; a 7-sided rock was 52).
+        g.box((x+.01,y,z+.034),(.12,.09,.04),SAND)
 
 
 def terrace_table(g,x,y,z=2,chair_axis='Y'):
@@ -510,16 +589,17 @@ def terrace_table(g,x,y,z=2,chair_axis='Y'):
         # Back posts stand 7.5 mm inside the seat edge; at .12 their faces
         # were 2.5 mm from the seat's and overlapped it.
         for dx in (-.13,.13):chair_box(dx,sign*.115,.47,.043,.045,.40,WOOD)
-        for zz in (.42,.57):chair_box(0,sign*.115,zz,.217,.045,.07,PLANK)
+        # One back rail (was two): triangle budget, 20k grand cap.
+        chair_box(0,sign*.115,.57,.217,.045,.07,PLANK)
     g.box((x,y,z+.623),(.57,.47,.009),CLOTH)
     for dx in (-.17,.17):plate(g,x+dx,y,z+.64)
-    g.cylinder((x,y+.11,z+.70),.034,.13,BRASS,'Z',8)
+    g.cylinder((x,y+.11,z+.70),.034,.13,BRASS,'Z',6)
 
 
 def sign_emblem(g,x,y,z,kind,scale=1):
     s=scale
     if kind=='Hospital':
-        g.cylinder((x,y,z),.38*s,.025,ROOF,'Y',32)
+        g.cylinder((x,y,z),.38*s,.025,ROOF,'Y',24)
         g.box((x,y-.025,z),(.17*s,.025,.56*s),LIME);g.box((x,y-.028,z),(.56*s,.025,.17*s),LIME)
     elif kind=='Restaurant':
         points=[(-.34,.04),(-.23,-.18),(0,-.25),(.23,-.18),(.34,.04)]
@@ -548,19 +628,18 @@ def hanging_board(g,parts,kind,x,y,z,w=1.1):
     beam_joint(g,(x-w*.63,y+.34,z+.63),(x+w*.63,y+.34,z+.63),.15,.15)
     for xx in (x-w*.36,x+w*.36):
         g.beam((xx,y+.36,z+.63),(xx,y-.05,z+.63),.09,mat=IRON)
-        for i in range(4):g.ring((xx,y-.05,z+.50-i*.055),.044,.013,.024,IRON,'Y' if i%2 else 'X',12)
+        for i in range(4):g.ring((xx,y-.05,z+.50-i*.055),.044,.013,.024,IRON,'Y' if i%2 else 'X',6)
     m=Geometry(kind+'.CarvedSign',(x,y,z+.52))
     for i in range(5):m.box((x,y,z-.38+i*.19),(w,.10,.185),PLANK)
     for xx in (x-w/2,x+w/2):
         m.box((xx,y-.025,z),(.07,.13,1.0),WOOD)
-        for zz in (z-.38,z+.38):steel_bolt(m,(xx,y-.105,zz),'Y',.027)
     sign_emblem(m,x,y-.09,z,kind,w*.77)
     parts.append((m,'SWAY',.018))
 
 
 def awning(g,x0,y0,x1,y1,front_z,back_z,striped=False):
     if not striped:
-        sheet_roof(g,x0,y0,x1,y1,front_z,back_z,41)
+        lean_sheet_roof(g,x0,y0,x1,y1,front_z,back_z)
         return
     n=math.ceil((x1-x0)/.24)
     for i in range(n):
@@ -598,10 +677,10 @@ def wall_lamp(g,x,y,z,face='front'):
     # lantern plane (coplanar with window frames there once the bevel
     # modifier is gone).
     g.beam((x+nx*.01,y+ny*.01,z+.16),(xx-nx*.01,yy-ny*.01,z+.16),.035,mat=IRON)
-    g.cylinder((xx,yy,z),.060,.19,GLOW,'Z',8)
-    for zz in (z-.12,z+.12):g.cylinder((xx,yy,zz),.085,.025,IRON,'Z',8)
-    for dx in (-.052,.052):
-        for dy in (-.052,.052):g.beam((xx+dx,yy+dy,z-.12),(xx+dx,yy+dy,z+.12),.012,mat=IRON)
+    # Six sides and no 12 mm cage bars (sub-pixel at normal zoom; triangle
+    # budget, 20k grand cap, 2026-10-29).
+    g.cylinder((xx,yy,z),.060,.19,GLOW,'Z',6)
+    for zz in (z-.12,z+.12):g.cylinder((xx,yy,zz),.085,.025,IRON,'Z',6)
 
 
 def deck_lamp(g,x,y,floor=2,face='right',*,collars=True,steel_channels=True):
@@ -630,8 +709,6 @@ def framed_cross(g,x,y,z):
     g.box((x,y,z),(1.02,.12,1.06),WOOD)
     g.box((x,y-.075,z),(.88,.035,.92),PLANK)
     sign_emblem(g,x,y-.105,z,'Hospital',1.05)
-    for dx in (-.43,.43):
-        for dz in (-.44,.44):steel_bolt(g,(x+dx,y-.12,z+dz),'Y',.027)
 
 
 def upper_hall(g,x0,y0,x1,y1,door_x,model,door_id):
@@ -713,13 +790,11 @@ def restaurant_gable_sign(g,parts):
         # Forged arm bolted through a plate on the gable boards.
         g.box((xx,face-.012,z+.46),(.15,.024,.18),IRON)
         g.beam((xx,face-.01,z+.46),(xx,y-.03,z+.46),.07,mat=IRON)
-        steel_bolt(g,(xx,face-.03,z+.50),'Y',.018)
         g.box((xx,y,z+.4275),(.035,.035,.065),IRON)
     m=Geometry('Restaurant.CarvedSign',(x,y,z+.46))
     for i in range(5):m.box((x,y,z-.32+i*.16),(w,.09,.155),PLANK)
     for xx in (x-w/2,x+w/2):
         m.box((xx,y-.02,z),(.07,.12,.84),WOOD)
-        for zz in (z-.30,z+.30):steel_bolt(m,(xx,y-.095,zz),'Y',.025)
     sign_emblem(m,x,y-.08,z,'Restaurant',w*.74)
     parts.append((m,'SWAY',.012))
 
@@ -743,7 +818,6 @@ def kitchen_hearth(g):
         stone(L,oL,z0,z1,i+1);stone(oR,R,z0,z1,i+2)
     stone(L,3.58,.80,.86,4);stone(4.02,R,.80,.86,5)
     g.box(((3.58+4.02)/2,(proud+back)/2,.83),(.44,proud-back,.06),IRON)
-    for xx in (3.66,3.94):steel_bolt(g,(xx,proud+.006,.83),'Y',.016)
     for i,(z0,z1,cuts) in enumerate(((.86,1.06,(3.80,)),(1.06,1.24,(3.66,3.94)),(1.24,1.40,(3.80,)))):
         edges=[L,*cuts,R]
         for j,(a,b) in enumerate(zip(edges,edges[1:])):stone(a,b,z0,z1,i+j)
@@ -820,8 +894,8 @@ def restaurant(g,parts):
     # Balcony planters stand on the deck inside the rails, in front of the
     # reserved table row, instead of hanging over neighbouring tiles.
     for z in (2,4):
-        for x in (1.95,3.60,5.20):planter(g,x,1.13,z,.70,134+int(x*10)+z,depth=.24,proud_rivets=True)
-    for y in (2.35,3.85,5.85):planter(g,7.56,y,2,.74,146+int(y*10),True,species='CoffeeBushMature',depth=.24,proud_rivets=True)
+        for x in (1.95,3.60,5.20):planter(g,x,1.13,z,.70,134+int(x*10)+z,depth=.24)
+    for y in (2.35,3.85,5.85):planter(g,7.56,y,2,.74,146+int(y*10),True,species='CoffeeBushMature',depth=.24)
     # 2026-10-22 (user): no forced decoration beyond the walls. The outdoor
     # service counters, their striped awnings and the barrel under the dining
     # balcony are gone; the ground there is open between the balcony posts.
@@ -848,22 +922,17 @@ def restaurant(g,parts):
             g.add([(a,y-.41,roof_z(a)+.045),(b,y-.41,roof_z(b)+.045),
                    (b,y+.41,roof_z(b)+.045),(a,y+.41,roof_z(a)+.045)],
                   [(0,1,2,3) if side>0 else (3,2,1,0)],IRON)
-        for yy in (y-.31,y+.31):
-            for xx in (x-.32,x+.32):steel_bolt(g,(xx,yy,roof_z(xx)+.065),'Z',.023)
     # Replace two exposed kitchen infill panels with flush forged steel.
     # The rear wall's orange face is recessed, so these real projecting plates
     # have thickness and do not share its depth plane.
     for x in (2.80,4.80):
         g.box((x,7.825,.99),(.65,.035,.80),CIVIC_FORGED_PANEL)
-        for xx in (x-.25,x+.25):
-            for z in (.69,1.29):steel_bolt(g,(xx,7.85,z),'Y',.021)
         for z in (.84,.95,1.06,1.17):g.box((x,7.85,z),(.43,.038,.035),IRON)
     # Steel straps bridge the rear gallery beam/post junctions. Their edges
     # stay below the floor and away from player paths and adaptive handrails.
     for z in (2,4):
         for x in (2.3,5.3,7.3):
             g.box((x,7.80,z-.23),(.40,.045,.18),IRON)
-            for dx in (-.13,.13):steel_bolt(g,(x+dx,7.833,z-.23),'Y',.022)
     roof_terrace(g,r,'Restaurant');civic_service_details(g,1.8,2.85,5.8,5.85)
     return r
 
@@ -966,7 +1035,9 @@ def fishing_net(g,x,y,z,width=.85,height=.90):
         for k in range(-6,7):
             # Each strand runs between the net's side edges (u = k/10 +
             # direction*t in 0..1) in up to six segments (was 20 steps): the
-            # sag still reads at a third of the strand triangles.
+            # sag still reads at a third of the strand triangles. The density
+            # stays: the nets cover registered rear-wall connection faces
+            # (measure_connection_faces.py), which a sparser net would open.
             lo,hi=(max(0,-k/10),min(1,1-k/10)) if direction>0 else (max(0,k/10-1),min(1,k/10))
             if hi-lo<1e-9:continue
             steps=max(1,round(6*(hi-lo)))
@@ -979,7 +1050,7 @@ def fishing_net(g,x,y,z,width=.85,height=.90):
 
 
 def basin(g,x0,y0,x1,y1,z=.0):
-    bin(g,((x0+x1)/2,(y0+y1)/2,z),(x1-x0,y1-y0,.53),None)
+    lean_bin(g,((x0+x1)/2,(y0+y1)/2,z),(x1-x0,y1-y0,.53))
     g.liquid_surfaces.append(dict(name='FisheryBasin'+str(len(g.liquid_surfaces)),shape='Rectangle',
         center=[(x0+x1)/2,(y0+y1)/2],bottom=z+.10,top=z+.44,
         scale=[x1-x0-.13,y1-y0-.13],flowOnly=False))
@@ -1011,8 +1082,6 @@ def fishery(g,parts):
     g.box((4.05,5.63,5.52),(.77,1.24,.08),ROOF)
     for x in (3.72,4.38):
         for y in (5.23,5.46,5.69,5.92):g.box((x,y,5.40),(.035,.13,.08),IRON)
-    for x in (3.78,4.32):
-        for y in (5.15,6.11):steel_bolt(g,(x,y,5.57),'Z',.025)
     glazing(g,4.05,2.985,4.65,1.1,style='diamond')
     # Lower lean-to roofs keep the warehouse wider than the upper processing
     # hall. Native forged metal contrasts with the blue main roof and timber.
@@ -1037,7 +1106,6 @@ def fishery(g,parts):
     # keeps its washdown splashbacks and drains.
     for x in (3.80,5.35):
         g.box((x,2.91,.93),(1.22,.06,.61),CIVIC_FORGED_PANEL)
-        for dx in (-.48,.48):steel_bolt(g,(x+dx,2.865,.98),'Y',.022)
         round_pipe(g,[(x-.44,2.70,.73),(x-.44,2.70,1.02),(x-.25,2.70,1.02)],.027)
     hanging_board(g,parts,'FisheryWorks',.76,1.42,2.70,1.13)
     for x in (1.75,3.1,4.5,6.3):wall_lamp(g,x,3.0,1.38)

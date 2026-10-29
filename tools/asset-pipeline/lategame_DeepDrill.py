@@ -248,19 +248,18 @@ def substructure(g):
     bx(g, 4.3, 4.7, 4.0, 5.0, 0, .4, CONCRETE)
     bx(g, 5.7, 6.1, 4.0, 5.0, 0, .4, CONCRETE)
     bx(g, 4.7, 5.7, 4.0, 5.0, 0, .08, IRON)
-    g.cylinder((x, y, .38), .2, .6, IRON, 'Z', 16)
-    g.cylinder((x, y, .71), .3, .06, BRASS, 'Z', 16)
+    g.cylinder((x, y, .38), .2, .6, IRON, 'Z', 12)
+    g.cylinder((x, y, .71), .3, .06, BRASS, 'Z', 12)
     K.revolve(g, (x, y, .74), [(.42, 0), (.47, .2), (.4, .42), (.22, .52)], PAINTED, segments=12)
-    g.cylinder((x, y, 1.29), .3, .06, BRASS, 'Z', 16)
+    g.cylinder((x, y, 1.29), .3, .06, BRASS, 'Z', 12)
     for z0 in (1.32, 1.76):
         bx(g, x - .5, x + .5, y - .25, y + .25, z0, z0 + .38, PAINTED)
         for sx in (-1, 1):
-            g.cylinder((x + sx * .65, y, z0 + .19), .15, .3, IRON, 'X', 14)
+            g.cylinder((x + sx * .65, y, z0 + .19), .15, .3, IRON, 'X', 12)
             K.valve_wheel(g, x + sx * .84, y, z0 + .19, face='left', r=.13)
-        P.bolt_ring(g, (x, y - .25, z0 + .19), .14, 6, 'Y', -.008, .018)
-    g.cylinder((x, y, 1.73), .28, .06, IRON, 'Z', 16)
-    g.cylinder((x, y, 2.17), .3, .06, BRASS, 'Z', 16)
-    g.cylinder((x, y, 2.56), .18, .72, IRON, 'Z', 16)
+    g.cylinder((x, y, 1.73), .28, .06, IRON, 'Z', 12)
+    g.cylinder((x, y, 2.17), .3, .06, BRASS, 'Z', 12)
+    g.cylinder((x, y, 2.56), .18, .72, IRON, 'Z', 12)
     # Choke line to a valve block with gauge.
     K.pipe_run(g, [(x + .2, y + .2, 1.5), (x + .2, 5.7, 1.5), (6.3, 5.7, 1.5)], .07)
     bx(g, 6.2, 6.45, 5.5, 5.9, 1.2, 1.85, PAINTED)
@@ -301,9 +300,10 @@ def pipe_rack(g):
         z = .66 + r + row * r * 1.62
         for i in range(count):
             x = 8.0 + (i + shift) * .205
-            g.cylinder((x, 1.9, z), r, 3.3, IRON, 'Y', 10)
+            # 32 joints in a stack: eight-sided pipe, six-sided thread protectors.
+            g.cylinder((x, 1.9, z), r, 3.3, IRON, 'Y', 8)
             for yy in (.3 + row * .17, 3.5 - row * .17):
-                g.cylinder((x, yy, z), .1, .12, PAINTED, 'Y', 10)
+                g.cylinder((x, yy, z), .1, .12, PAINTED, 'Y', 6)
 
 
 # ------------------------------------------------------------------ houses
@@ -416,8 +416,8 @@ def drawworks(g, parts):
     for x in (4.6, 5.0, 5.4, 5.8):
         d.ring((x, c[1], c[2]), .45, .04, .14, IRON, 'X', 16)
     d.cylinder(c, .1, 2.8, IRON, 'X', 12)
-    for x, s in ((4.0, -1), (6.4, 1)):
-        P.bolt_ring(d, (x, c[1], c[2]), .48, 8, 'X', s * .008, .025)
+    for x in (4.0, 6.4):
+        # (The flange bolt circles were sub-pixel; the brass index lug shows the turn.)
         bx(d, x - .035, x + .035, c[1] - .05, c[1] + .05, c[2] + .62, c[2] + .7, BRASS)
     parts.append((d, 'SPIN_X', 2))
     # Drive motor and chain case.

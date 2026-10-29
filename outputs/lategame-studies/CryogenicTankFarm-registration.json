@@ -2336,7 +2336,7 @@
    0
   ]
  ],
- "partsOutsideFootprint": 19,
+ "partsOutsideFootprint": 17,
  "doors": [
   {
    "id": "Door0",
@@ -2540,5 +2540,5 @@
   "CryogenicTankFarm.PistonRod",
   "CryogenicTankFarm.Flywheel"
  ],
- "sourceHash": "e83e642ec4f445f8a4ec1d6fc8fecbe408438a8dcf427283548448d2a73da0a3"
+ "sourceHash": "260a563be3a428915ed0798cb3f6e03d090cd12a91c5c98218180a3d5e022296"
 }

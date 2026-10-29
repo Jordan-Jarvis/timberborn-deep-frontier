@@ -9,10 +9,10 @@ from mathutils import Vector,Quaternion
 from frontier_architecture import Geometry,WOOD,PLANK,IRON,ROOF,SAND,BRASS,deck,wall,facade_panel
 from industrial_geometry import steel_bolt,timber_column
 from reference_details import round_pipe,cage_lamp
-from industrial_kit import open_beam, wheel, gauge
-from industrial_kit import steel_bolt,timber_column,round_pipe,cage_lamp,band,prism,bolt,square_nut,open_box,rock
+from industrial_kit import (open_beam,lean_wheel as wheel,lean_gauge as gauge)
+from industrial_kit import (steel_bolt,lean_timber_column as timber_column,round_pipe,lean_cage_lamp as cage_lamp,band,prism,bolt,square_nut,open_box,lean_rock as rock,lean_wall as wall,skin_board)
 from reference_materials import GLASS,GLOW,KILN_SOOT,KILN_RUST,CRUSHER_STEEL
-from industrial_facades import extra_materials,side_window,window_y,gauge,CYAN,RUBBER
+from industrial_facades import extra_materials,side_window,window_y,CYAN,RUBBER
 from industrial_door_components import recipe as door_recipe
 from industrial_levels import QUARRY_ENTRANCE
 
@@ -81,7 +81,6 @@ def chute(g,a,b,width,height=.25,covered=False):
         for fraction in (.08,.32,.56,.80,.97):
             p=a+(b-a)*fraction
             g.beam(p-side+Vector((0,0,height+.02)),p+side+Vector((0,0,height+.02)),.055,mat=IRON)
-            for s in (-side,side):square_nut(g,p+s+Vector((0,0,height+.055)),'Z',.02,1)
 
 
 def material_flow(g,parts):
@@ -100,15 +99,14 @@ def material_flow(g,parts):
         g.beam((x,BELT_A.y,BELT_A.z),(x,BELT_B.y,BELT_B.z),.11,.18,IRON)
         for p in (BELT_A,BELT_B):
             g.box((x,p.y,(1+p.z)/2),(.09,.12,p.z-1),WOOD)
-            square_nut(g,(x-.08,p.y,p.z),'X',.024,-1)
     for i,p in enumerate((BELT_A,BELT_B)):
-        roller=Geometry(f'Quarry.BeltRoller{i}',p);prism(roller,p,BELT_R,.94,RUBBER,'X',12)
-        for dx in (-.51,.51):prism(roller,p+Vector((dx,0,0)),.13,.065,IRON,'X',10)
+        roller=Geometry(f'Quarry.BeltRoller{i}',p);prism(roller,p,BELT_R,.94,RUBBER,'X',10)
+        for dx in (-.51,.51):prism(roller,p+Vector((dx,0,0)),.13,.065,IRON,'X',8)
         parts.append((roller,'X',-8))
     for i in range(22):
         cleat=Geometry(f'Quarry.BeltSlat{i:02d}')
+        # One timber slat per cleat node (12k cap; the iron strip went).
         cleat.box((0,0,0),(.88,.085,.045),WOOD)
-        cleat.box((0,0,.035),(.84,.024,.035),IRON)
         parts.append((cleat,'BELT_SLAT',i/22))
     # Screen feed and discharge connect directly into the visible stone box.
     chute(g,(7.90,3.72,2.10),(7.90,3.58,1.92),.85,.13)
@@ -197,6 +195,8 @@ def enclosed_rooms(g):
     front,rear=6.77,7.85
     for x in (3.45,6.43):
         for y in (front,rear):timber_column(g,x,y,1.0,2.85,.14)
+    # The control-room walls keep their inner faces: the connection-face
+    # registration samples them (cells inside the room).
     for y in (front,rear):
         wall(g,3.45,y,6.43,2.85,1.04)
         for x in (3.95,4.94,5.93):window_y(g,x,y+(.035 if y==rear else -.035),2.10,1,'back' if y==rear else 'front')
@@ -211,9 +211,10 @@ def enclosed_rooms(g):
     # Corner posts flank the one-tile door; its header is authored once above.
     # Roof-mounted service manifold, compressed-air vessel, conduits and valves.
     for x,y,z in ((.63,5.60,3.60),(8.94,6.40,3.54)):
-        prism(g,(x,y,z),.20,1.05,IRON,'Y',12)
-        for yy in (y-.43,y+.43):band(g,(x,yy,z),.225,.028,.06,BRASS,'Y',12)
-        for yy in (y-.36,y+.36):g.box((x,yy,z-.18),(.43,.10,.15),WOOD)
+        prism(g,(x,y,z),.20,1.05,IRON,'Y',8)
+        # One strap band per vessel; the saddles under it were wholly
+        # hidden by the vessel and the roof (12k cap).
+        band(g,(x,y+.43,z),.225,.028,.06,BRASS,'Y',8)
         round_pipe(g,[(x,y-.54,z),(x,y-.74,z),(x,y-.74,2.70),(x+.15,y-.74,2.70)],.055)
     # Fixed pipe runs hug the building structure; the walkway corridor stays open.
     for offset in (0,.17):
@@ -223,12 +224,14 @@ def enclosed_rooms(g):
         round_pipe(g,[(9.31+offset,5.1,1.35),(9.31+offset,5.1,2.80+offset),
                       (9.31+offset,7.38,2.80+offset),(8.9,7.38,2.80+offset)],.055)
     for x,y,z in ((.13,5.0,2.3),(9.31,5.1,2.10)):
-        prism(g,(x,y,z),.11,.075,BRASS,'Z',8)
-        band(g,(x-.11,y,z),.15,.022,.035,IRON,'X',10,inner=True)
+        prism(g,(x,y,z),.11,.075,BRASS,'Z',6)
+        band(g,(x-.11,y,z),.15,.022,.035,IRON,'X',8,inner=True)
     # Exposed cable bundles on the mast, protected indicator housings, motor fins.
-    for offset in (0,.035,.07):
-        round_pipe(g,[(3.19+offset,7.86,1.1),(3.19+offset,7.86,6.65+offset),(3.85+offset,7.86,6.65+offset)],.012)
+    # One bundled conduit (12k cap; three 1.2 cm cables read as one line).
+    round_pipe(g,[(3.225,7.86,1.1),(3.225,7.86,6.685),(3.885,7.86,6.685)],.03)
     for z in (2.62,4.62,6.62):
         g.box((3.14,7.94,z),(.20,.10,.22),IRON)
         g.box((3.14,7.99,z),(.055,.015,.14),CYAN)
+    # The engine-room gauges carry the quarry's only static glass (its
+    # StaticMerged glass node), so they stay.
     for x in (7.69,8.02,8.35):gauge(g,x,5.08,2.78,.075)

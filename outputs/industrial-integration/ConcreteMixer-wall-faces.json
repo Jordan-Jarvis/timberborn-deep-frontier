@@ -1,7 +1,7 @@
 {
  "model": "ConcreteMixer",
  "source": "ConcreteMixer-ReferenceStudy.blend",
- "sourceSha256": "2f2711d30395e9bf18b20b2f410b29d022857d8fb5bcc7d2ae35b7e92b427923",
+ "sourceSha256": "12e9851bbe401e0a1095a842abd17757bd236a08137dbbf2fd4f6c5f47399b49",
  "frame": 1,
  "coordinateSystem": "Native grid XYZ; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)",
  "rule": "outward static surfaces within 0.12 behind the face plane (or up to 0.02 proud) cover >= 60% of 8x8 samples (measure_wall_faces.py)",

@@ -298,13 +298,8 @@ def free_post(g, x, y, top, w=.20, fx=0, fy=0):
     g.box((x, y, (.22 + top) / 2), (w, w, top - .22), WOOD)
 
 
-def rivets(g, points, axis='Y', r=.022):
-    # Triangle budget: one square nut per rivet (was an 8-sided washer and a
-    # 6-sided head); its buried cap is removed by the enclosed-face cull.
-    from industrial_budget import bolt
-    for p in points:
-        bolt(g, p, axis, r, None, 4)
-
+# Triangle budget, 20k grand cap (2026-10-29): no rivet heads (the civic shell
+# family's rule, civic_isometric_geometry.collar); the plates and caps stay.
 
 def corner_plates(g, x, y, z, sx, sy, h=.30):
     """Folded steel corner plate at one real frame joint (corner post, girts)."""
@@ -318,9 +313,6 @@ def corner_plates(g, x, y, z, sx, sy, h=.30):
     xc, xd = sorted((fx + sx * .02, fx - sx * .05))
     yc, yd = sorted((y + sy * (half + .005), y - sy * .42))
     g.box(((xc + xd) / 2, (yc + yd) / 2, z), (xd - xc, yd - yc, h - .03), IRON)
-    for dz in (-.08, .08):
-        rivets(g, [(x - sx * d, fy + sy * .02, z + dz) for d in (.06, .30)], 'Y')
-        rivets(g, [(fx + sx * .02, y - sy * d, z + dz) for d in (.06, .30)], 'X')
 
 
 def frame_wall(g, axis, plane, a, b, posts):
@@ -407,7 +399,9 @@ def crate(g, x, y, z, w=.46, d=.36, h=.28, kind='apple', seed=0, brace=False):
 
 
 def produce(g, x, y, z, w, d, kind, seed):
-    """A heaped layer of produce, each lump a bounded native colour island."""
+    """A heaped layer of produce, each lump a bounded native colour island.
+    Four-sided lumps (triangle budget, 20k grand cap): a fruit is 3-4 px at
+    normal zoom; baskets 8 sides, barrels 10, sacks 6."""
     rng = random.Random(seed)
     spec = {'apple': (RED, DETAILS, .085), 'tomato': (RED, DETAILS, .075),
             'orange': (WHOLE, ORANGE, .09), 'cabbage': (GREEN, DETAILS, .13),
@@ -435,7 +429,7 @@ def produce(g, x, y, z, w, d, kind, seed):
             xx = x - w / 2 + (i + .5) * w / nx + rng.uniform(-.012, .012)
             yy = y - d / 2 + (j + .5) * d / ny + rng.uniform(-.012, .012)
             lift = .016 * ((i + j) % 2)   # neighbours never share a cap plane
-            lump(g, (xx, yy, z + r * .40 + lift), r, r * .95, r * squash, mat, rect, seed * 131 + i * 17 + j)
+            lump(g, (xx, yy, z + r * .40 + lift), r, r * .95, r * squash, mat, rect, seed * 131 + i * 17 + j, seg=4)
     # Heaped courses make every crate read as overflowing from above.
     if kind != 'pumpkin':
         for i in range(max(1, nx - 1)):
@@ -443,16 +437,16 @@ def produce(g, x, y, z, w, d, kind, seed):
                 xx = x - w / 2 + (i + (1 if nx > 1 else .5)) * w / nx
                 yy = y - d / 2 + (j + (1 if ny > 1 else .5)) * d / ny
                 lift = .016 * ((i + j) % 2)
-                lump(g, (xx, yy, z + r * 1.10 + lift), r, r, r * squash, mat, rect, seed * 977 + i * 7 + j)
+                lump(g, (xx, yy, z + r * 1.10 + lift), r, r, r * squash, mat, rect, seed * 977 + i * 7 + j, seg=4)
         if nx * ny >= 4:
-            lump(g, (x, y, z + r * 1.75), r * .95, r * .95, r * squash, mat, rect, seed * 31 + 5)
+            lump(g, (x, y, z + r * 1.75), r * .95, r * .95, r * squash, mat, rect, seed * 31 + 5, seg=4)
 
 
-def lump(g, c, rx, ry, rz, mat, rect, seed):
-    """Low-poly fruit or vegetable: a jittered hexagonal ellipsoid."""
+def lump(g, c, rx, ry, rz, mat, rect, seed, seg=5):
+    """Low-poly fruit or vegetable: a jittered `seg`-sided ellipsoid
+    (pentagonal by default; was hexagonal)."""
     rng = random.Random(seed)
     x, y, z = c
-    seg = 6
     rings = [(-.78, .60), (-.05, 1.0), (.62, .72)]
     pts = []
     for k, (h, f) in enumerate(rings):
@@ -523,7 +517,7 @@ def sack_stack(g, x, y, along, seed, r=.14, h=.44):
 
 def produce_barrel(g, x, y, kind, seed, r=.21, h=.52):
     """Open banded barrel heaped with produce (Details barrel staves)."""
-    seg = 14
+    seg = 10
     rings = [(r * .88, 0), (r, h / 2), (r * .90, h)]
     pts = [[Vector((x + math.cos(2 * math.pi * i / seg) * rr, y + math.sin(2 * math.pi * i / seg) * rr, zz))
             for i in range(seg)] for rr, zz in rings]
@@ -538,14 +532,16 @@ def produce_barrel(g, x, y, kind, seed, r=.21, h=.52):
             face(g, quad, out, DETAILS, [(ua, va), (ub, va), (ub, vb), (ua, vb)])
     face(g, pts[0], (0, 0, -1), DETAILS, [((u0 + u1) / 2, v0 + .01)] * seg)
     face(g, pts[2], (0, 0, 1), DETAILS, [((u0 + u1) / 2, v1 - .01)] * seg)
-    g.ring((x, y, h - .02), r * .90 + .014, .028, .04, IRON, 'Z', seg)
+    # The hoop's top stands 5 mm under the lid: flush, it overlapped the lid
+    # wherever the (sparser, four-sided) produce leaves the lid open.
+    g.ring((x, y, h - .025), r * .90 + .014, .028, .04, IRON, 'Z', seg)
     produce(g, x, y, h - .01, r * 1.35, r * 1.35, kind, seed)
 
 
 def sack(g, x, y, z, r=.15, h=.40, seed=0, lean=0.0):
     """Tied grain sack wrapped with the shipped Details sack drawing."""
     rng = random.Random(seed)
-    seg = 10
+    seg = 6
     profile = [(r * .78, 0), (r, h * .16), (r * 1.04, h * .52), (r * .86, h * .78), (r * .40, h * .90), (r * .30, h)]
     verts = []
     for rr, zz in profile:
@@ -572,9 +568,9 @@ def sack(g, x, y, z, r=.15, h=.40, seed=0, lean=0.0):
 
 def basket(g, x, y, z, r=.17, kind='apple', seed=0):
     first = len(g.faces)
-    g.cylinder((x, y, z + .07), r, .14, LIGHTWOOD, 'Z', 12, r * 1.12)
+    g.cylinder((x, y, z + .07), r, .14, LIGHTWOOD, 'Z', 8, r * 1.12)
     paint(g, first, LIGHTWOOD, WICKER)
-    g.ring((x, y, z + .14), r * 1.12 + .012, .03, .03, IRON, 'Z', 12)
+    g.ring((x, y, z + .14), r * 1.12 + .012, .03, .03, IRON, 'Z', 8)
     produce(g, x, y, z + .12, r * 1.6, r * 1.6, kind, seed)
 
 
@@ -608,10 +604,8 @@ def herb_bunch(g, x, y, top, kind, seed):
     mat = DETAILS if kind == 'greens' else CREAM
     rng = random.Random(seed)
     for k in range(4):
-        first = len(g.faces)
-        g.rock((x + rng.uniform(-.03, .03), y + rng.uniform(-.03, .03), top - .20 - k * .07),
-               (.10 - k * .015, .09 - k * .012, .09), mat, seed * 7 + k)
-        paint(g, first, mat, rect)
+        lump(g, (x + rng.uniform(-.03, .03), y + rng.uniform(-.03, .03), top - .20 - k * .07),
+             (.10 - k * .015) / 2, (.09 - k * .012) / 2, .055, mat, rect, seed * 7 + k)
 
 
 # ------------------------------------------------------------------ building parts
@@ -761,7 +755,6 @@ def main_roof(g):
         g.box(((x0 + x1) / 2, RIDGE_Y, RIDGE_TOP - .02), (x1 - x0, .16, .14), WOOD)
     for x in (EDGE_X0 + .03, EDGE_X1 - .03):
         g.box((x, RIDGE_Y, RIDGE_TOP - .03), (.16, .30, .28), IRON)
-        rivets(g, [(x + (.08 if x > 4 else -.08), RIDGE_Y + dy, RIDGE_TOP - .03) for dy in (-.08, .08)], 'X', .025)
     # Eave fascia boards (the cross-gable covers the front middle).
     for y, x0, x1 in ((ye0 - .035, gx0, 5.2), (ye1 + .035, gx0, gx1)):
         g.box(((x0 + x1) / 2, y, e - .085), (x1 - x0, .07, .16), WOOD)
@@ -783,7 +776,6 @@ def cross_gable(g):
     for xe, off in ((5.5 - EAVE_OH, 0), (7.5 + EAVE_OH, .016)):
         member(g, (xe, ye - off, eave - SLAB / 2 + .012), (6.5, ye - off, ridge - SLAB / 2 + .012), .08, .20, WOOD)
     g.box((6.5, ye + .01, ridge - .03), (.30, .16, .28), IRON)
-    rivets(g, [(6.5 + dx, ye - .07, ridge - .03) for dx in (-.08, .08)], 'Y', .025)
     g.box((6.5, (ye + 3.02) / 2, ridge - .02), (.16, 3.02 - ye, .14), WOOD)
     # Dark timber valley boards over each roof intersection.
     for x0 in (5.5 - EAVE_OH, 7.5 + EAVE_OH):
@@ -1018,7 +1010,7 @@ def basket_sign(m, x, y, hang):
     zc = hang - .50
     for dy in (-.15, .15):
         for i in range(4):
-            m.ring((x, y + dy, hang - .040 - i * .048), .024, .008, .012, IRON, 'Y' if i % 2 else 'X', 8)
+            m.ring((x, y + dy, hang - .040 - i * .048), .024, .008, .012, IRON, 'Y' if i % 2 else 'X', 6)
     boards, width, height = 5, .72, .60
     for i in range(boards):
         yy = y - width / 2 + (i + .5) * width / boards
@@ -1092,13 +1084,19 @@ def stock(g, food, stage):
     return table[(food, stage)]
 
 
+# Triangle budget, 20k grand cap (2026-10-29): the stock items are the bulk
+# of the model (about 20k of 30k triangles, three cumulative fill stages of
+# six foods), so each item is drawn with about half its former triangles.
+
 def tin(t, x, y, z, seed=0):
-    """CannedFish: a steel tin with a red cloth label."""
-    # 6 sides (was 8): a 9 cm tin is about 12 px wide at the closest zoom.
-    t.cylinder((x, y, z + .0375), .045, .075, IRON, 'Z', 6)
+    """CannedFish: a steel tin wrapped in its red cloth label."""
+    # One 5-sided tin whose sides carry the label (was a 6-sided steel tin
+    # plus a proud label band): a 9 cm tin is about 12 px wide at the closest
+    # zoom.
     first = len(t.faces)
-    t.cylinder((x, y, z + .039), .053, .042, DETAILS, 'Z', 6)
-    paint(t, first, DETAILS, RED)
+    t.cylinder((x, y, z + .0375), .05, .075, IRON, 'Z', 5)
+    # Geometry.cylinder: the two caps come first, then the five sides.
+    paint(t, first + 2, DETAILS, RED)
 
 
 def parcel(t, x, y, z, seed=0):
@@ -1107,16 +1105,16 @@ def parcel(t, x, y, z, seed=0):
     first = len(t.faces)
     t.box((x, y, z + sz / 2), (sx, sy, sz), CREAM)
     paint(t, first, CREAM, WHOLE)
-    t.box((x, y, z + (.014 + sz + .006) / 2), (sx + .012, .022, sz - .008), WOOD)
+    # One twine band across the short side (was crossed twine).
     t.box((x, y, z + (.014 + sz + .020) / 2), (.022, sy + .040, sz + .006), WOOD)
 
 
 def algae(t, x, y, z, seed=0):
-    """AlgaeRation: a bundle of three green ration bars with a band."""
-    for dy in (-.038, 0, .038):
-        first = len(t.faces)
-        t.box((x, y + dy, z + .02), (.15, .034, .04), DETAILS)
-        paint(t, first, DETAILS, GREEN)
+    """AlgaeRation: a bundle of green ration bars with a band."""
+    # One block for the three bars (their 4 mm joints were sub-pixel).
+    first = len(t.faces)
+    t.box((x, y, z + .02), (.15, .11, .04), DETAILS)
+    paint(t, first, DETAILS, GREEN)
     t.box((x, y, z + (.004 + .046) / 2), (.024, .122, .042), WOOD)
 
 
@@ -1124,7 +1122,7 @@ def corn(t, x, y, z, seed=0):
     """CornRation: three husked cobs bound at one end."""
     for k, dy in enumerate((-.036, 0, .036)):
         lift = .022 if k == 1 else 0
-        lump(t, (x + .01, y + dy, z + .026 + lift), .085, .029, .028, ORANGE, WHOLE, seed * 7 + k)
+        lump(t, (x + .01, y + dy, z + .026 + lift), .085, .029, .028, ORANGE, WHOLE, seed * 7 + k, seg=4)
     first = len(t.faces)
     t.box((x - .055, y, z + (.004 + .078) / 2), (.034, .12, .074), LIGHTWOOD)
     paint(t, first, LIGHTWOOD, HUSK)
@@ -1132,17 +1130,16 @@ def corn(t, x, y, z, seed=0):
 
 def crock(t, x, y, z, seed=0):
     """FermentedCassava: a cream stoneware crock with an iron lid."""
-    # 8 sides (was 10) for the crock, its lid and the jar below.
-    revolve(t, (x, y, z), [(.062, 0), (.085, .05), (.088, .12), (.070, .17), (.055, .19)], CREAM, segments=8)
-    t.cylinder((x, y, z + .20), .063, .025, IRON, 'Z', 8)
-    t.cylinder((x, y, z + .226), .018, .03, IRON, 'Z', 6)
+    # 6 sides (was 10, then 8) for the crock, its lid and the jar below; no
+    # 3 cm lid knob.
+    revolve(t, (x, y, z), [(.062, 0), (.087, .07), (.070, .17), (.055, .19)], CREAM, segments=6)
+    t.cylinder((x, y, z + .20), .063, .025, IRON, 'Z', 6)
 
 
 def jar(t, x, y, z, seed=0):
-    """FermentedSoybean: a terracotta jar under a tied cloth cover."""
-    revolve(t, (x, y, z), [(.056, 0), (.076, .04), (.078, .13), (.052, .17), (.050, .19)], ORANGE, segments=8)
-    t.cylinder((x, y, z + .195), .064, .03, CREAM, 'Z', 8)
-    t.cylinder((x, y, z + .175), .057, .012, WOOD, 'Z', 8)
+    """FermentedSoybean: a terracotta jar under a cloth cover."""
+    revolve(t, (x, y, z), [(.056, 0), (.077, .07), (.052, .17), (.050, .19)], ORANGE, segments=6)
+    t.cylinder((x, y, z + .195), .064, .03, CREAM, 'Z', 6)
 
 
 def heap(t, maker, x0, x1, y0, y1, z, layer, px, py, seed):

@@ -10740,6 +10740,15 @@
       },
       {
         "Coordinates": {
+          "X": 0,
+          "Y": 8,
+          "Z": 5
+        },
+        "Directions": "Left",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 1,
           "Y": 8,
           "Z": 5
@@ -12388,6 +12397,15 @@
           "Z": 5
         },
         "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 8,
+          "Z": 5
+        },
+        "Directions": "Left",
         "State": "OpenIn"
       },
       {

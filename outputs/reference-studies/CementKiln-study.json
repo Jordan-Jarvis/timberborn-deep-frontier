@@ -1,13 +1,13 @@
 {
   "status": "Blender art study; not exported or installed",
   "boundsMin": [
-    -6.91349983215332,
+    -6.890999794006348,
     -3.609999895095825,
     0.0
   ],
   "boundsMax": [
     -0.014999999664723873,
-    1.0184999704360962,
+    1.0,
     5.429999828338623
   ],
   "sourceReference": "docs/art/concepts/Cement Kiln 3D Reference Sheet.png",

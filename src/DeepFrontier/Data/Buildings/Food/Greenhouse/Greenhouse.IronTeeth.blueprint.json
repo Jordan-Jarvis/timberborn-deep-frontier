@@ -343,7 +343,7 @@
       {
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -3207,7 +3207,7 @@
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Down, Bottom",
+        "Directions": "Left, Down, Bottom",
         "ReverseRotation": false
       },
       {
@@ -3279,7 +3279,7 @@
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Down, Bottom",
+        "Directions": "Right, Down, Bottom",
         "ReverseRotation": false
       },
       {
@@ -3776,6 +3776,15 @@
         },
         "Directions": "Right",
         "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 4,
+          "Z": 0
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
       }
     ]
   },
@@ -3836,7 +3845,7 @@
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Down",
+        "Directions": "Left, Down",
         "State": "OpenIn"
       },
       {
@@ -3899,7 +3908,7 @@
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Down",
+        "Directions": "Right, Down",
         "State": "OpenIn"
       },
       {

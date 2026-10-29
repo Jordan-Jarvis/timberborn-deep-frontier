@@ -63,7 +63,7 @@ def bake_materials(materials):
     bpy.data.objects.remove(plane,do_unlink=True)
     (ART/'material-catalog.json').write_text(json.dumps(catalog,indent=2)+'\n')
 
-def export_model(ident,bake):
+def export_model(ident,bake,data_root):
     bpy.ops.wm.open_mainfile(filepath=str(ROOT/'src/DeepFrontier/Art/Source'/(ident+'-ReferenceStudy.blend')))
     collection=bpy.data.collections[ident+'.ReferenceStudy']
     # Preview copies of shipped assets are not mod payloads. The blueprint
@@ -204,9 +204,9 @@ def export_model(ident,bake):
     # them, and the copied construction-stage model keeps them underground.
     import waterside_supports
     if ident in waterside_supports.models():
-        for node,g,anchor in waterside_supports.templates(ident):
+        for node,g,anchor,bevel in waterside_supports.templates(ident):
             if node in bpy.data.objects:raise ValueError('Support template node name already used: '+node)
-            obj=g.build(collection,materials,.012,'civic-native')
+            obj=g.build(collection,materials,bevel,'civic-native')
             if obj.name!=node:raise ValueError('Support template must export as exactly '+node)
             ax,ay,az=anchor
             obj.location=(ox-(ax+.5),oy-(ay+.5),az-base_z-oz)
@@ -244,7 +244,7 @@ def export_model(ident,bake):
                 else ROOT/'outputs/structural-integration/Data/Buildings/Platforms'/target if structural
                 else ROOT/'outputs/hydro-integration/Data/Buildings/Power'/target if hydro
                 else ROOT/'outputs/research-integration/Data/Buildings/Science'/target if research
-                else ROOT/'src/DeepFrontier/Data/Buildings/Metal'/target)
+                else data_root/'Buildings/Metal'/target)
         folder.mkdir(parents=True,exist_ok=True)
         for suffix in ['Model','ConstructionStage0.Model']:
             destination=folder/(target+'.IronTeeth.'+suffix+'.timbermesh')
@@ -269,5 +269,11 @@ def xyz(p):return dict(X=p[0],Y=p[1],Z=p[2])
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--models',default='StoneCrusher,CementKiln,MineralQuarry');parser.add_argument('--bake',action='store_true')
+    # Industrial meshes go to the active Data tree; --data-root writes them to
+    # another Data tree instead (a scratch mirror's, for review before they
+    # replace src/DeepFrontier/Data). It must be an existing absolute folder.
+    parser.add_argument('--data-root',type=Path,default=ROOT/'src/DeepFrontier/Data')
     args=parser.parse_args(sys.argv[sys.argv.index('--')+1:]);OUT.mkdir(parents=True,exist_ok=True);ART.mkdir(parents=True,exist_ok=True)
-    for i,ident in enumerate(args.models.split(',')):export_model(ident,args.bake and i==0)
+    if not args.data_root.is_absolute() or not args.data_root.is_dir():
+        raise ValueError('--data-root must be an existing absolute Data folder: '+str(args.data_root))
+    for i,ident in enumerate(args.models.split(',')):export_model(ident,args.bake and i==0,args.data_root)

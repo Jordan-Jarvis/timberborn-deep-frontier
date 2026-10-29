@@ -7,16 +7,15 @@ from frontier_architecture import WOOD,PLANK,IRON,BRASS,ROOF,wall
 from industrial_geometry import steel_bolt
 from industrial_facades import window_y,side_window,gauge,CYAN
 from reference_details import round_pipe
-from industrial_kit import steel_bolt,round_pipe,band,prism,bolt,square_nut,open_box,gauge
+from industrial_kit import (steel_bolt,round_pipe,band,prism,bolt,square_nut,open_box,lean_gauge as gauge,lean_wall as wall,skin_board)
 from reference_materials import KILN_SOOT
 from industrial_levels import (CRUSHER_DECK,KILN_DECK,KILN_MACHINE_DATUM,MountedMachinery,
                                FACTORY_PORCH_ROOF)
 
 
 def strapped_vessel(g,x,y,z,r,height):
-    prism(g,(x,y,z),r,height,IRON,'Z',12)
+    prism(g,(x,y,z),r,height,IRON,'Z',8)
     for zz in (z-height*.39,z+height*.39):
-        band(g,(x,y,zz),r+.024,.03,.06,BRASS,'Z',12)
         g.box((x,y+r+.05,zz),(r*2.3,.10,.08),WOOD)
     prism(g,(x,y,z+height/2+.035),r*.44,.07,BRASS,'Z',8,(False,False))  # ends inside vessel and cap
     prism(g,(x,y,z+height/2+.085),r*.61,.035,IRON,'Z',8)
@@ -25,7 +24,6 @@ def strapped_vessel(g,x,y,z,r,height):
 def instrument_strip(g,x,y,z,width):
     g.box((x,y,z),(width,.07,.14),IRON)
     g.box((x,y-.041,z),(width*.78,.015,.035),CYAN)
-    for dx in (-width*.44,width*.44):square_nut(g,(x+dx,y-.049,z),'Y',.014,-1)
 
 
 def crusher_facades(g):
@@ -39,7 +37,7 @@ def crusher_facades(g):
     count=16;y0,y1=3.07,5.78
     for j in range(count):
         y=y0+(j+.5)*(y1-y0)/count
-        g.box((east-.0375,y,(.26+CRUSHER_DECK-.22)/2),(.075,(y1-y0)/count,CRUSHER_DECK-.48),PLANK)
+        skin_board(g,(east-.0375,y,(.26+CRUSHER_DECK-.22)/2),(.075,(y1-y0)/count,CRUSHER_DECK-.48),'Y',j,count,PLANK,'-x')
     g.box((3.96,2.98,(.25+CRUSHER_DECK-.21)/2),(1.48,.04,CRUSHER_DECK-.46),KILN_SOOT)
     g.box((3.96,2.98,.29),(1.48,.07,.12),IRON)
     for x in (3.18,4.74):g.box((x,2.95,(.27+CRUSHER_DECK-.19)/2),(.08,.12,CRUSHER_DECK-.46),WOOD)
@@ -62,14 +60,14 @@ def kiln_facades(g):
     # Solid panes hide the room; the roofed rotary machinery stays visible.
     # One tile wide (grid x 4..5): plank outer faces on the tile edges.
     for x in (3.0375,3.9625):
+        left=x<3.5
+        # Plank skin: the boards' inner faces look into the closed room.
         for j in range(19):
             y=.32+j*.159
-            g.box((x,y,(.20+KILN_DECK-.19)/2),(.075,.159,KILN_DECK-.39),PLANK)
-        left=x<3.5
+            skin_board(g,(x,y,(.20+KILN_DECK-.19)/2),(.075,.159,KILN_DECK-.39),'Y',j,19,PLANK,'+x' if left else '-x')
         for y in (.75,2.75):side_window(g,x+(-.0375 if left else .0375),y,KILN_DECK-.58,0.75,'left' if left else 'right')
         for y in (.25,1.75,3.28):
             g.box((x,y,(.155+KILN_DECK-.145)/2),(.11,.12,KILN_DECK-.30),WOOD)
-            for z in (.29,KILN_DECK-.29):square_nut(g,(x+(-.068 if left else .068),y,z),'X',.016,-1 if left else 1)
     g.box((3.5,1.75,KILN_DECK-.16),(.925,3.10,.07),WOOD)
     window_y(g,3.5,3.335,KILN_DECK-.57,0.8,'back')
     # The porch is the room's width; one header closes the front above it.
@@ -79,7 +77,7 @@ def kiln_facades(g):
     round_pipe(machinery,[(.42,1.52,2.47),(.42,3.42,2.47),(.42,3.42,2.88),
                   (5.87,3.42,2.88),(5.87,2.70,2.88),(5.87,2.70,3.28)],.045)
     for x in (1.60,2.75,4.02,5.30):
-        band(machinery,(x,3.42,2.88),.076,.025,.055,BRASS,'X',8)
+        band(machinery,(x,3.42,2.88),.076,.025,.055,BRASS,'X',6)
         machinery.box((x,3.34,2.88),(.07,.18,.15),IRON)
     for y in (1.48,3.30):strapped_vessel(g,4.12,y,.65,.11,.60)
     round_pipe(g,[(4.12,1.48,.99),(4.12,1.48,1.10),(4.12,3.30,1.10),(4.12,3.30,.99)],.027)

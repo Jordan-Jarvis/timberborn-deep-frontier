@@ -23,7 +23,8 @@ import math
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 from lategame_kit import (stud, CONCRETE, ORANGE, FORGED, PAINTED, CYAN, GLOW, plinth, frame_wall,
                           extrude_profile, revolve, band, dome, tank, stack, hollow_revolve, catwalk,
-                          steel_rail, ladder, lamp, beacon, beacon_shutter, fan, bolt_row, redic_prop)
+                          steel_rail, ladder, lamp, beacon, beacon_shutter, fan, bolt_row, redic_prop,
+                          valve_wheel)
 from lategame_nuclear_parts import (bx, Facer, trefoil, gauge, drum, riveted_panel, straight_pipe,
                                     pipe_path, valve, plank_slope, slope_quad, plank_gable,
                                     board_gable, frustum)
@@ -83,8 +84,6 @@ def podium(g):
 def column(g, x, y, top):
     bx(g, x - .14, y - .14, DECK + .16, x + .14, y + .14, top, IRON)
     bx(g, x - .19, y - .19, DECK, x + .19, y + .19, DECK + .16, PAINTED)
-    stud(g, (x - .09, y - .19 - .006, DECK + .08))
-    stud(g, (x + .09, y - .19 - .006, DECK + .08))
 
 
 def cascade_bay(g, parts):
@@ -104,8 +103,7 @@ def cascade_bay(g, parts):
             # Alternate diagonals 12 mm thinner: consecutive ones meet at a
             # joint, where equal widths would share their side planes.
             g.beam((xa, FY, lo), (xb, FY, hi), .06 if k % 2 == 0 else .048, mat=IRON)
-        steel_rail(g, (a + .19, FY - .22), (b - .19, FY - .22), DECK, pitch=.55)
-    bolt_row(g, (HX0, FY - .086, GANTRY + .21), (HX1, FY - .086, GANTRY + .21), 24, r=.02)
+        steel_rail(g, (a + .19, FY - .22), (b - .19, FY - .22), DECK, pitch=.8)
     # Cross beams back to the hall columns, with hangers for the header.
     for x in cols:
         bx(g, x - .07, FY + .14, GANTRY, x + .07, HYF - .14, GANTRY + .14, IRON)
@@ -117,7 +115,7 @@ def cascade_bay(g, parts):
         lamp(g, x, FY - .14, GANTRY - .9, face='front')
     # Side rails on the open bay ends.
     for x in (HX0 - .1, HX1 + .1):
-        steel_rail(g, (x, FY + .2), (x, HYF - .2), DECK, pitch=.55)
+        steel_rail(g, (x, FY + .2), (x, HYF - .2), DECK, pitch=.8)
     # Maintenance catwalk behind the open row at layer 4.
     catwalk(g, .9, 1.85, 7.4, 2.44, 4, rails=('front',), brackets=None)
     for x in (1.0, 2.75, 4.5, 6.25, 7.15):
@@ -191,13 +189,12 @@ def hall(g, parts):
     # Centrifuge cascade: three rows of six.
     for row, y in enumerate(ROWS):
         for i, x in enumerate(COLS):
-            centrifuge(g, parts, f'Centrifuge{row}{i}', x, y)
+            centrifuge(g, parts, f'Centrifuge{row}{i}', x, y, dial=row == 0)
         hz = HEAD + .42
         straight_pipe(g, (HX0 + .1, y, hz), (HX1 - .1, y, hz), .075, flanges=False)
-        for i, x in enumerate(COLS):
-            g.cylinder((x, y, HEAD + .22), .045, .3, BRASS, 'Z', 8)
-            if i < 5:
-                g.ring((x + .55, y, hz), .12, .05, .06, BRASS, 'X', 8)
+        if row == 0:   # the inner rows' collars stand under the roof, unseen
+            for x in COLS:
+                g.cylinder((x, y, HEAD + .22), .045, .3, BRASS, 'Z', 8)
         hang_top = GANTRY if y < HYF else roof_under(y) + .02
         for x in ((2.4, 4.15, 5.9) if y < HYF else (HX0 + .35, HX1 - .35)):
             bx(g, x - .04, y - .04, hz + .07, x + .04, y + .04, hang_top, IRON)
@@ -209,7 +206,7 @@ def hall(g, parts):
     for x in (1.8, 3.6, 5.4, 7.0):
         y = (ROWS[1] + ROWS[2]) / 2
         g.box((x, y, (5.55 + 7.6) / 2), (.03, .03, 7.6 - 5.55), IRON)
-        revolve(g, (x, y, 5.4), [(.16, 0), (.06, .14), (.03, .16)], IRON, segments=10, cap_bottom=True)
+        revolve(g, (x, y, 5.4), [(.16, 0), (.06, .14), (.03, .16)], IRON, segments=8, cap_bottom=True)
         g.cylinder((x, y, 5.37), .07, .06, GLOW, 'Z', 8)
 
 
@@ -218,47 +215,44 @@ def beacon_part(g, parts, name, x, y, z):
     parts.append((beacon_shutter(px, py, pz, name), 'SPIN_Z', 2))
 
 
-def centrifuge(g, parts, name, x, y):
-    # Cast pedestal, iron casing with painted bands, brass collar.
+def centrifuge(g, parts, name, x, y, *, dial=False):
+    # Cast pedestal, iron casing with painted bands, brass collar. (Triangle
+    # budget: eight sides, no splayed feet, which stood hidden inside the
+    # pedestal; a gauge only on the open-air row.)
     bx(g, x - .3, y - .3, DECK, x + .3, y + .3, DECK + .16, CONCRETE)
     z0 = DECK + .16
-    revolve(g, (x, y, z0), [(.3, 0), (.26, .08), (.26, CASING), (.29, CASING + .04), (.29, CASING + .12)], CONCRETE,
-            segments=10)
-    for z in (z0 + .6, z0 + 1.9):
-        band(g, (x, y, 0), .26, z, .07, BRASS if z > z0 + 1.5 else IRON, segments=10)
-    for k in range(4):
-        a = k * math.pi / 2 + math.pi / 4
-        g.beam((x + math.cos(a) * .27, y + math.sin(a) * .27, z0), (x + math.cos(a) * .35, y + math.sin(a) * .35,
-               DECK + .02), .06, mat=IRON)
-    gauge(g, x, y - .26, z0 + .95, face='front', r=.07)
+    revolve(g, (x, y, z0), [(.26, 0), (.26, CASING), (.29, CASING + .12)], CONCRETE, segments=8)
+    if dial:   # the open-air row; the inner rows' bands and dials stand unseen under the roof
+        band(g, (x, y, 0), .26, z0 + 1.9, .07, BRASS, segments=8)
+        gauge(g, x, y - .26, z0 + .95, face='front', r=.07)
     base = z0 + CASING + .12
-    # Spinning rotor drum: strakes, an orange index strip and a domed cap.
+    # Spinning rotor drum and domed cap in one surface, three strakes and an
+    # orange index strip (the spin reads from those).
     r = Geometry(name, (x, y, base))
-    # 12 sides: a vertex under every strake (strakes every 60 degrees).
-    revolve(r, (x, y, base + .012), [(.3, 0), (.3, .5)], IRON, segments=12)
-    for k in range(6):
-        a = k * math.pi / 3
+    # 12 sides: a vertex under every strake (strakes every 120 degrees).
+    revolve(r, (x, y, base + .012), [(.3, 0), (.3, .5), (0, .62)], IRON, segments=12,
+            cap_bottom=False)   # its underside sits on the casing
+    for k in range(3):
+        a = k * 2 * math.pi / 3
         r.box((x + math.cos(a) * .315, y + math.sin(a) * .315, base + .26), (.05, .05, .46), IRON)
     a = math.pi / 6
     r.box((x + math.cos(a) * .315, y + math.sin(a) * .315, base + .26), (.04, .04, .22), ORANGE)
-    for z in (base + .1, base + .42):
-        band(r, (x, y, 0), .3, z, .05, BRASS, segments=12)
-    dome(r, (x, y, base + .512), .3, IRON, segments=12, squash=.4, rings=3)
+    band(r, (x, y, 0), .3, base + .42, .05, BRASS, segments=12)
     parts.append((r, 'SPIN_Z', 4))
 
 
 def thickener(g, parts):
     cx, cy = 10.0, 2.3
-    hollow_revolve(g, (cx, cy, 0), [(1.6, 0), (1.6, 1.4)], .24, CONCRETE, segments=16)
-    revolve(g, (cx, cy, .012), [(1.72, 0), (1.72, .21)], CONCRETE, segments=16)
+    hollow_revolve(g, (cx, cy, 0), [(1.6, 0), (1.6, 1.4)], .24, CONCRETE, segments=12)
+    revolve(g, (cx, cy, .012), [(1.72, 0), (1.72, .21)], CONCRETE, segments=12)
     # Hoop on a hollow wall: a ring, not the kit's solid band.
-    g.ring((cx, cy, 1.28), 1.63, .05, .1, IRON, 'Z', 16)
-    # Orange yellowcake slurry, its edge buried in the wall.
-    revolve(g, (cx, cy, .03), [(1.39, 0), (1.39, 1.12)], ORANGE, segments=16)
+    g.ring((cx, cy, 1.28), 1.63, .05, .1, IRON, 'Z', 12)
+    # Orange yellowcake slurry, its edge buried in the wall (only its top shows).
+    revolve(g, (cx, cy, .03), [(1.39, 0), (1.39, 1.12)], ORANGE, segments=12, cap_bottom=False)
     # Central drive pier and gear head.
     revolve(g, (cx, cy, 1.15), [(.22, 0), (.22, .45)], CONCRETE, segments=12)
     revolve(g, (cx, cy, 1.6), [(.3, 0), (.3, .22), (.2, .3), (.2, .42)], IRON, segments=12)
-    g.ring((cx, cy, 1.71), .34, .06, .1, BRASS, 'Z', 16)
+    g.ring((cx, cy, 1.71), .34, .06, .1, BRASS, 'Z', 12)
     g.box((cx + .3, cy, 1.85), (.3, .22, .2), PAINTED)
     # Fixed worker bridge from the rim to the drive head (steel grating).
     y0, y1 = cy - .28, cy + .28
@@ -335,7 +329,7 @@ def fuel_vault(g, parts):
     for u in (-.4, .4):
         riveted_panel(g, f, u - .36, u + .36, .1, 1.85, .2, .26, FORGED)
     f.box(g, 0, 1.0, .275, .04, 1.8, .03, IRON)
-    g.wheel(f.p(0, 1.05, .36), .2, 'X', IRON, BRASS)
+    valve_wheel(g, *f.p(0, 1.05, .36), face='right', r=.2)
     g.cylinder(f.p(0, 1.05, .29), .05, .08, IRON, 'X', 8)
     lamp(g, x1, 8.0, 2.35, face='right')
     # Flat roof with parapet and an exhaust vent box.
@@ -345,15 +339,15 @@ def fuel_vault(g, parts):
     bx(g, 9.6, 8.5, 3.42, 10.5, 9.4, 4.0, FORGED)
     bx(g, 9.52, 8.42, 4.0, 10.58, 9.48, 4.08, IRON)
     for vx, vy in ((8.75, 10.3), (10.4, 10.3), (10.4, 7.6)):
-        revolve(g, (vx, vy, 3.42), [(.09, 0), (.09, .45), (.26, .47), (.26, .55), (0, .66)], IRON, segments=12)
+        revolve(g, (vx, vy, 3.42), [(.09, 0), (.09, .45), (.26, .47), (.26, .55), (0, .66)], IRON, segments=8)
     trefoil(g, 10.05, 8.5, 3.7, face='front', r=.14)
 
 
 def acid_tanks(g, parts):
     for x, mat in ((1.5, IRON), (3.75, PAINTED)):
         y = 8.9
-        top = tank(g, x, y, 0, .95, 5.0, mat=mat, bands=4, roof='cone', segments=16)
-        ladder(g, x, y - .95 - .02, .22, top, face='front', width=.32)
+        top = tank(g, x, y, 0, .95, 5.0, mat=mat, bands=4, roof='cone', segments=12)
+        ladder(g, x, y - .95 - .02, .22, top, face='front', width=.32, cage=False)
         pipe_path(g, [(x, y - .9, 1.1), (x, 5.95, 1.1)], .08)
         valve(g, (x, 7.2, 1.1), .08, 'Y', wheel_face='up')
         bx(g, x - .14, 6.5, .012, x + .14, 6.8, 1.0, CONCRETE)
@@ -372,17 +366,17 @@ def scrubber(g, parts):
     # Packed scrubber column.
     cx, cy = 5.85, 8.0
     revolve(g, (cx, cy, 3.012), [(.7, 0), (.7, .2), (.55, .25), (.55, 5.6)], IRON, segments=12)
-    for z in (4.0, 5.2, 6.4, 7.6):
+    for z in (4.0, 5.8, 7.6):
         band(g, (cx, cy, 0), .55, z, .08, PAINTED, segments=12)
     dome(g, (cx, cy, 8.612), .56, IRON, segments=12, squash=.5)
-    ladder(g, cx - .55 - .01, cy, 3.012, 8.5, face='left', width=.3)
+    ladder(g, cx - .55 - .01, cy, 3.012, 8.5, face='left', width=.3, cage=False)
     for z in (4.6, 6.9):
         gauge(g, cx, cy - .55, z, face='front', r=.1)
     # Stack on a cast pedestal, joined to the column by a duct.
     sx, sy = 7.05, 9.75
     bx(g, sx - .62, sy - .62, 3.012, sx + .62, sy + .62, 3.8, CONCRETE)
     bx(g, sx - .67, sy - .67, 3.72, sx + .67, sy + .67, 3.84, CONCRETE)
-    stack(g, sx, sy, 3.84, 9.4, emits='steam', r=.42, taper=.82, bands=5)   # scrubber plume
+    stack(g, sx, sy, 3.84, 9.4, emits='steam', r=.42, taper=.82, bands=3)   # scrubber plume
     pipe_path(g, [(cx, cy, 8.0), (cx, sy, 8.0), (sx - .3, sy, 8.0)], .16, flanges=True)
     beacon_part(g, parts, 'ColumnBeacon', cx, cy, 8.612 + .27)
     # Off-gas duct from the hall to the scrubber column on a steel trestle.
@@ -399,7 +393,7 @@ def scrubber(g, parts):
         g.box((p[0], p[1], rz + .3), (.04, .04, .6), IRON)
         g.beam((sx + math.cos(a) * .4, sy + math.sin(a) * .4, rz - .5), (p[0], p[1], rz - .08), .05, mat=IRON)
     g.ring((sx, sy, rz + .6), .84, .04, .05, IRON, 'Z', 12)
-    ladder(g, sx, sy + .4, 3.84, rz, face='back', width=.3)
+    ladder(g, sx, sy + .4, 3.84, rz, face='back', width=.3, cage=False)
     beacon_part(g, parts, 'StackBeacon', sx - .62, sy, rz)
     # Induced-draught fan in a ring housing on the roof.
     fx, fy = 7.0, 7.35

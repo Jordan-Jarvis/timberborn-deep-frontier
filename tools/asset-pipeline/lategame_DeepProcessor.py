@@ -169,7 +169,7 @@ def furnace(g, parts):
 def stoves(g):
     xs = (1.2, 2.85, 4.5)
     for x in xs:
-        K.tank(g, x, 8.9, 0, .72, 8.3, mat=PAINTED, bands=6, roof='dome')
+        K.tank(g, x, 8.9, 0, .72, 8.3, mat=PAINTED, bands=6, roof='dome', segments=16)
         P.gauge(g, x - .35, 8.9 - .66, 1.5, 'front', .08)
     # Hot-blast main to the bustle pipe, with a valve per stove.
     P.tube(g, (.95, 7.9, 3.62), (5.0, 7.9, 3.62), .2, IRON, 14)

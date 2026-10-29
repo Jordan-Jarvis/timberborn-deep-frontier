@@ -97,7 +97,7 @@ def engine_bed(g, parts):
             g.cylinder((x, y, zc), .1, .2, BRASS, 'X', 10)
         g.cylinder((.5, y, zc), .06, .9, IRON, 'X', 10)
         fw = Geometry('CryogenicLiquefactionPlant.Flywheel%d' % k, (.5, y, zc))
-        fw.wheel((.5, y, zc), .66, 'X', IRON, BRASS)
+        wheel(fw, (.5, y, zc), .66, 'X')
         fw.cylinder((.5, y, zc), .16, .26, PAINTED, 'X', 12)
         fw.box((.5, y, zc - .38), (.14, .16, .14), BRASS)
         parts.append((fw, 'SPIN_X', 2 + k))

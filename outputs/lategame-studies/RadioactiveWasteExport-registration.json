@@ -381,7 +381,7 @@
    2
   ]
  ],
- "partsOutsideFootprint": 6,
+ "partsOutsideFootprint": 4,
  "doors": [
   {
    "id": "HaulerDoor",
@@ -514,5 +514,5 @@
   "RadioactiveWasteExport.CaskCar",
   "RadioactiveWasteExport.Beacon"
  ],
- "sourceHash": "59b6a8f0281502bf19adb3e9a8469254bf998f32c273581ffe7bf7a380a39e2b"
+ "sourceHash": "4cdf04685150981100c3d07870217f1164aa5cb87b7753ffee23fc28f620d950"
 }

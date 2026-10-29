@@ -12825,7 +12825,7 @@
           "Y": 7,
           "Z": 0
         },
-        "Directions": "Bottom",
+        "Directions": "Right, Bottom",
         "ReverseRotation": false
       },
       {
@@ -13190,6 +13190,15 @@
       },
       {
         "Coordinates": {
+          "X": 5,
+          "Y": 7,
+          "Z": 1
+        },
+        "Directions": "Right",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 7,
           "Y": 7,
           "Z": 1
@@ -13399,6 +13408,42 @@
         "Coordinates": {
           "X": 11,
           "Y": 5,
+          "Z": 5
+        },
+        "Directions": "Right",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 6,
+          "Z": 5
+        },
+        "Directions": "Left",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 11,
+          "Y": 6,
+          "Z": 5
+        },
+        "Directions": "Right",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 7,
+          "Z": 5
+        },
+        "Directions": "Left",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 11,
+          "Y": 7,
           "Z": 5
         },
         "Directions": "Right",
@@ -14785,6 +14830,15 @@
       },
       {
         "Coordinates": {
+          "X": 5,
+          "Y": 7,
+          "Z": 0
+        },
+        "Directions": "Right",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
           "X": 7,
           "Y": 7,
           "Z": 0
@@ -14859,6 +14913,15 @@
         "Coordinates": {
           "X": 11,
           "Y": 6,
+          "Z": 1
+        },
+        "Directions": "Right",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 7,
           "Z": 1
         },
         "Directions": "Right",
@@ -15129,6 +15192,42 @@
         "Coordinates": {
           "X": 11,
           "Y": 5,
+          "Z": 5
+        },
+        "Directions": "Right",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 6,
+          "Z": 5
+        },
+        "Directions": "Left",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 11,
+          "Y": 6,
+          "Z": 5
+        },
+        "Directions": "Right",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 7,
+          "Z": 5
+        },
+        "Directions": "Left",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 11,
+          "Y": 7,
           "Z": 5
         },
         "Directions": "Right",

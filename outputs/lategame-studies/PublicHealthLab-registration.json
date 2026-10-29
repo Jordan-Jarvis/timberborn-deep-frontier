@@ -1506,7 +1506,7 @@
    2
   ]
  ],
- "partsOutsideFootprint": 13,
+ "partsOutsideFootprint": 11,
  "doors": [
   {
    "id": "Door0",
@@ -1994,5 +1994,5 @@
   "TowerCowl3",
   "TowerCowlMain"
  ],
- "sourceHash": "5c3af95f813b60b5f6d78afd6a511e6b0d817df6ed1b669299555d69dd82b7db"
+ "sourceHash": "a5bd05edbfe4b41e136c17c9170baf53d43df8a2a78b9a81a9012a12bc8ab5ea"
 }

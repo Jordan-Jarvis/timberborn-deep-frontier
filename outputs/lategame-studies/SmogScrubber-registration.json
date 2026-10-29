@@ -271,7 +271,7 @@
    5
   ]
  ],
- "partsOutsideFootprint": 3,
+ "partsOutsideFootprint": 2,
  "doors": [
   {
    "id": "Entrance",
@@ -371,5 +371,5 @@
   "SmogScrubber.Fan",
   "SmogScrubber.PumpCoupling"
  ],
- "sourceHash": "a595b6d416d8c3c9a4dc68cb90968f6dfae9a111bf35433b3e6768b764d96940"
+ "sourceHash": "9dad70bdd0c0c27daefe6151c0575e523bb538759abffc5ebfc59c7eaa4358e5"
 }

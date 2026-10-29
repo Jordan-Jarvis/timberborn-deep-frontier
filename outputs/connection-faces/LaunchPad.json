@@ -1,4 +1,4 @@
-{"template":"LaunchPad","model":"Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.Model","export":"outputs/lategame-integration/Data/Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.Model.timbermesh","exportSha256":"99ca536ae421b275acef8dcee3281942342d651a0c7f21e1d3af7bbc9d29bd46","size":[12,12,18],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)","rule":"8x8 rays per face; covering surface = nearest opaque static surface within 0.35 behind (or 0.02 proud of) the face plane; every covering normal within 5.0 deg of the outward axis and 1.0 deg of the covering mean; one plane (depths within 0.05) covers >= 60%; glass counts as a surface; no animated geometry within 1.0 in front","excluded":"Water, WalkwayRail nodes, animated nodes; native props are not in the model; glass counts as a surface","stats":{"triangles":{"opaque":22858,"glass":66,"lamp":308,"animated":1998},"flatButAnimated":16,"oldRuleFaces":522,"oldRuleCurveExcluded":4,"oldRuleSlopeExcluded":6,"oldRuleMultiPlaneExcluded":0,"newSetBackFaces":15},"curvedFaces":[[9,1,0,"Left","slope"],
+{"template":"LaunchPad","model":"Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.Model","export":"outputs/lategame-integration/Data/Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.Model.timbermesh","exportSha256":"17b9fea416b215a240f0a4fb8203a6e6842f3f5f43d293981d3d0d3a6f16dc16","size":[12,12,18],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)","rule":"8x8 rays per face; covering surface = nearest opaque static surface within 0.35 behind (or 0.02 proud of) the face plane; every covering normal within 5.0 deg of the outward axis and 1.0 deg of the covering mean; one plane (depths within 0.05) covers >= 60%; glass counts as a surface; no animated geometry within 1.0 in front","excluded":"Water, WalkwayRail nodes, animated nodes; native props are not in the model; glass counts as a surface","stats":{"triangles":{"opaque":16479,"glass":66,"lamp":308,"animated":1414},"flatButAnimated":15,"oldRuleFaces":522,"oldRuleCurveExcluded":4,"oldRuleSlopeExcluded":6,"oldRuleMultiPlaneExcluded":0,"newSetBackFaces":16},"curvedFaces":[[9,1,0,"Left","slope"],
 [9,1,0,"Right","slope"],
 [4,5,3,"Bottom","slope"],
 [5,5,3,"Bottom","slope"],
@@ -657,6 +657,7 @@
 [2,3,2,"Top"],
 [1,2,3,"Down"],
 [1,2,3,"Bottom"],
+[2,2,3,"Right"],
 [2,2,3,"Down"],
 [2,2,3,"Bottom"],
 [1,3,3,"Bottom"],

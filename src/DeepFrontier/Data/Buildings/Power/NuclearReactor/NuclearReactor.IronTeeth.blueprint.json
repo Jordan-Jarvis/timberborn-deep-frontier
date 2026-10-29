@@ -32603,7 +32603,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -32652,7 +32652,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -34702,7 +34702,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -34751,7 +34751,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -48931,6 +48931,24 @@
       {
         "Coordinates": {
           "X": 15,
+          "Y": 1,
+          "Z": 4
+        },
+        "Directions": "Left",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 19,
+          "Y": 1,
+          "Z": 4
+        },
+        "Directions": "Right",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 15,
           "Y": 2,
           "Z": 4
         },
@@ -50070,6 +50088,24 @@
         },
         "Directions": "Top",
         "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 6,
+          "Y": 7,
+          "Z": 15
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 13,
+          "Y": 7,
+          "Z": 15
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
       }
     ]
   },
@@ -51093,24 +51129,24 @@
             "Center": {
               "X": 6.5,
               "Y": 16.5,
-              "Z": 9.5
+              "Z": 10
             },
             "Size": {
               "X": 1,
               "Y": 1,
-              "Z": 5
+              "Z": 4
             }
           },
           {
             "Center": {
               "X": 13.5,
               "Y": 16.5,
-              "Z": 9.5
+              "Z": 10
             },
             "Size": {
               "X": 1,
               "Y": 1,
-              "Z": 5
+              "Z": 4
             }
           },
           {
@@ -52246,24 +52282,24 @@
                 "Center": {
                   "X": 6.5,
                   "Y": 16.5,
-                  "Z": 9.5
+                  "Z": 10
                 },
                 "Size": {
                   "X": 1,
                   "Y": 1,
-                  "Z": 5
+                  "Z": 4
                 }
               },
               {
                 "Center": {
                   "X": 13.5,
                   "Y": 16.5,
-                  "Z": 9.5
+                  "Z": 10
                 },
                 "Size": {
                   "X": 1,
                   "Y": 1,
-                  "Z": 5
+                  "Z": 4
                 }
               },
               {
@@ -53295,6 +53331,24 @@
         "Coordinates": {
           "X": 19,
           "Y": 0,
+          "Z": 4
+        },
+        "Directions": "Right",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 15,
+          "Y": 1,
+          "Z": 4
+        },
+        "Directions": "Left",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 19,
+          "Y": 1,
           "Z": 4
         },
         "Directions": "Right",

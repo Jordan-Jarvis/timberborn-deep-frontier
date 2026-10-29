@@ -37,8 +37,10 @@ OUTPUTS = ROOT / 'outputs'
 
 # Targets (triangles of the finished model): from the installed vanilla Iron
 # Teeth buildings (largest finished model 20,440, HydroponicGarden; largest
-# blueprint 27,906, EarthRepopulator, vanilla-preview-baseline.json).
-TARGETS = {'grand': 40000, 'workshop': 20000, 'small': 8000,
+# blueprint 27,906, EarthRepopulator, vanilla-preview-baseline.json). Halved
+# on 2026-10-29 (user approval; was grand 40k, workshop 20k): a grand building
+# now stays within the largest vanilla model, an ordinary one well under it.
+TARGETS = {'grand': 20000, 'workshop': 12000, 'small': 8000,
            # Map objects: the largest vanilla map-object model (UndergroundRuins 2,466;
            # outputs/map-objects/vanilla). Pile goods: one full level of vanilla
            # 4ScrapMetals (64), the per-level cost a pile multiplies.

@@ -11182,6 +11182,15 @@
       },
       {
         "Coordinates": {
+          "X": 7,
+          "Y": 4,
+          "Z": 0
+        },
+        "Directions": "Bottom",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
           "X": 8,
           "Y": 4,
           "Z": 0
@@ -11228,6 +11237,15 @@
       {
         "Coordinates": {
           "X": 8,
+          "Y": 5,
+          "Z": 0
+        },
+        "Directions": "Bottom",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 9,
           "Y": 5,
           "Z": 0
         },
@@ -11344,6 +11362,15 @@
       },
       {
         "Coordinates": {
+          "X": 9,
+          "Y": 7,
+          "Z": 0
+        },
+        "Directions": "Bottom",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
           "X": 10,
           "Y": 7,
           "Z": 0
@@ -11358,6 +11385,15 @@
           "Z": 0
         },
         "Directions": "Left",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 8,
+          "Z": 0
+        },
+        "Directions": "Bottom",
         "State": "Open"
       },
       {

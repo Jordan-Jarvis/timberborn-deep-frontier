@@ -194,7 +194,7 @@ def boiler_house(g, parts):
     g.ring((px, py, .88), .19, .05, .05, BRASS, 'Z', 12)
     g.cylinder((px, py + .22, .62), .05, .22, IRON, 'Y', 8)
     wheel = Geometry('PumpFlywheel', (px + .32, py, .62))
-    wheel.wheel((px + .32, py, .62), .26, 'X', IRON, BRASS)
+    K.wheel(wheel, (px + .32, py, .62), .26, 'X')
     parts.append((wheel, 'SPIN_X', 1))
     g.cylinder((px + .2, py, .62), .04, .25, IRON, 'X', 8)
     P.flanged_pipe(g, [(px, py, .87), (px, py, 1.2), (x1 + .02, py, 1.2)], .05)

@@ -746,7 +746,7 @@
    3
   ]
  ],
- "partsOutsideFootprint": 33,
+ "partsOutsideFootprint": 32,
  "doors": [
   {
    "id": "Door0",
@@ -1272,5 +1272,5 @@
   "GableFanR",
   "PumpFlywheel"
  ],
- "sourceHash": "ac830ffd4bd8dcea374b436b41b437fbe4290255f9036e4fdc4b98f94a1717d6"
+ "sourceHash": "81e9bcaa229a3cb921fe8c0cc78afb7f133399b6ca074df91e0a7baa18e3d970"
 }

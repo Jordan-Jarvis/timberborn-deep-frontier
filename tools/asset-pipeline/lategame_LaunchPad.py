@@ -159,7 +159,7 @@ def tower(g, parts):
                infill=PLANK, windows=((8.4, 5.19, TOWER_TOP + .55, 'front', .55, 'factory'),))
     # Sheave wheel on the hut's right wall (animated).
     sheave = Geometry('LaunchPad.WinchSheave', (9.36, 6.0, TOWER_TOP + .55))
-    sheave.wheel((9.36, 6.0, TOWER_TOP + .55), .34, 'X', IRON, BRASS)
+    wheel(sheave, (9.36, 6.0, TOWER_TOP + .55), .34, 'X')
     parts.append((sheave, 'SPIN_X', 2))
     bx(g, 9.25 - .02, 5.9, TOWER_TOP + .45, 9.29, 6.1, TOWER_TOP + .65, IRON)
     # Lightning rod with beacon on the hut ridge.
@@ -235,7 +235,7 @@ def pump_house(g, parts):
     bx(g, x1, 2.85, DECK - BURY, x1 + .35, 3.55, DECK + .55, PAINTED)
     bx(g, x1 + .33, 2.95, DECK + .3, x1 + .45, 3.45, DECK + .5, IRON)
     fly = Geometry('LaunchPad.PumpFlywheel', (x1 + .55, 3.2, DECK + .62))
-    fly.wheel((x1 + .55, 3.2, DECK + .62), .52, 'X', IRON, BRASS)
+    wheel(fly, (x1 + .55, 3.2, DECK + .62), .52, 'X')
     fly.cylinder((x1 + .55, 3.2, DECK + .62), .12, .22, PAINTED, 'X', 12)
     parts.append((fly, 'SPIN_X', 3))
     bx(g, x1 + .5, 2.95, DECK - BURY, x1 + .6, 3.05, DECK + .62, IRON)
@@ -253,7 +253,7 @@ def pump_house(g, parts):
 def cryo_farm(g):
     """Frost-white insulated bullet tanks feeding the tower."""
     for y, r in ((1.85, .55), (3.25, .55)):
-        h_tank(g, 6.9, 11.3, y, DECK + .78, r, mat=CONCRETE, band_mat=IRON, bands=6, saddles=3, ground=DECK)
+        h_tank(g, 6.9, 11.3, y, DECK + .78, r, mat=CONCRETE, band_mat=IRON, bands=4, saddles=3, ground=DECK)
     # Header pipes rising to the tower, then up a leg.
     for x, mat in ((7.65, CONCRETE), (9.15, PAINTED)):
         pipe(g, [(x, 3.25 + .5, DECK + .78), (x, 4.7, DECK + .78), (x, 4.7, LEVELS[1] - .25),
@@ -270,7 +270,7 @@ def cryo_farm(g):
 
 
 def mast(g, parts, x, y, name):
-    lattice(g, x - .25, y - .25, x + .25, y + .25, DECK - BURY, 16.8, bays=12, w=.09, feet=False)
+    lattice(g, x - .25, y - .25, x + .25, y + .25, DECK - BURY, 16.8, bays=8, w=.09, feet=False)
     bx(g, x - .38, y - .38, DECK - BURY, x + .38, y + .38, DECK + .25, CONCRETE)
     bx(g, x - .04, y - .04, 16.8, x + .04, y + .04, 17.4, IRON)
     pivot = beacon(g, x, y, 17.4)
@@ -292,7 +292,7 @@ def water_tower(g):
     revolve(g, (cx, cy, 10.2), [(.13, 0), (.13, .2), (0, .26)], BRASS, segments=10)
     # Down-comer through the trestle into the trench roof, with a valve.
     pipe(g, [(cx, cy - .3, 7.02), (cx, cy - .3, DECK - .1)], r=.15, mat=IRON)
-    g.wheel((cx, cy - .54, 3.4), .2, 'Y', IRON, BRASS)
+    wheel(g, (cx, cy - .54, 3.4), .2, 'Y')
     bx(g, cx - .15, cy - .46, 3.25, cx + .15, cy - .36, 3.55, BRASS)
     pipe(g, [(cx, cy - .3, DECK + .3), (3.0, cy - .3, DECK + .3), (3.0, 7.9, DECK + .3), (3.0, 7.9, DECK - .1)],
          r=.11, mat=PAINTED)

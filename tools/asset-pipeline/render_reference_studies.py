@@ -30,6 +30,8 @@ from industrial_budget import MODELS as BUDGET_MODELS,BEVEL as BUDGET_BEVEL
 # do), and faces enclosed by solid parts or sealed rooms are removed at build
 # (enclosed_cull.py; verified by audit_hidden_geometry.py --culled).
 from enclosed_cull import SHELL_MODELS
+# The lean industrial models (industrial_kit.LEAN_MODELS, 12k cap) also ray-test small faces.
+from industrial_kit import LEAN_MODELS
 PITS=('SandstonePit','LimestonePit')
 
 MODELS={'StoneCrusher':crusher,'CementKiln':kiln,'MineralQuarry':quarry,'ConcreteMixer':mixer,'ReinforcedHydroTurbine':hydro,'MaterialsLaboratory':laboratory,
@@ -102,7 +104,7 @@ def render_model(ident,cli):
     # Structural pieces (structural_geometry.py) take the same no-bevel, culled build.
     # The industrial family (industrial_budget.MODELS) too.
     shell=ident in SHELL_MODELS or ident in STRUCTURAL_MODELS or ident in BUDGET_MODELS
-    static=Geometry(ident+'.Architecture');static.cull_enclosed=shell;static.cull_small_hidden=ident in SHELL_MODELS;parts=[];rail_assembly=MODELS[ident](static,parts)
+    static=Geometry(ident+'.Architecture');static.cull_enclosed=shell;static.cull_small_hidden=ident in SHELL_MODELS or ident in LEAN_MODELS;parts=[];rail_assembly=MODELS[ident](static,parts)
     materials=civic_native_materials(materials)
     uv_profile='civic-native'
     if ident=='MaterialsLaboratory':uv_profile='research-native'

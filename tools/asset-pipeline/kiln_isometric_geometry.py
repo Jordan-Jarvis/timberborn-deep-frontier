@@ -10,9 +10,8 @@ import random
 from frontier_architecture import *
 from industrial_geometry import timber_column,bracket,beam_joint,handrail,sheet_roof,steel_bolt,access_stair
 from reference_details import cage_lamp,cask,round_pipe
-from industrial_kit import open_beam, wheel, gauge
-from industrial_kit import (timber_column,bracket,beam_joint,sheet_roof,steel_bolt,cage_lamp,cask,round_pipe,bin,
-                               band,prism,bolt,square_nut,open_box,rock,rock_heap)
+from industrial_kit import (open_beam,lean_wheel as wheel,lean_gauge as gauge)
+from industrial_kit import (lean_timber_column as timber_column,lean_bracket as bracket,lean_beam_joint as beam_joint,lean_sheet_roof as sheet_roof,steel_bolt,lean_cage_lamp as cage_lamp,lean_cask as cask,round_pipe,lean_bin as bin,band,prism,bolt,square_nut,open_box,lean_rock as rock,lean_rock_heap as rock_heap,lean_wall as wall,skin_board)
 from walkway_geometry import RailAssembly
 from industrial_door_components import recipe as door_recipe
 from factory_facade_details import kiln_facades
@@ -25,71 +24,44 @@ from reference_materials import (CRUSHER_STEEL,KILN_STONE,KILN_STONE_LIGHT,KILN_
                                 KILN_RUST,KILN_WOOD_SPLIT,KILN_WOOD_WEAR,KILN_DUST)
 
 
-def radial_pin(g,x,y,z,a,r,head=.019):
-    """Rivet normal to the cylindrical steel panel: one square head and its
-    outward cap; the base lies on the plate (industrial_budget.py)."""
-    normal=Vector((0,math.cos(a),math.sin(a)));tangent=Vector((0,-math.sin(a),math.cos(a)))
-    center=Vector((x,y,z))+normal*r;n=4;radius=head*1.3
-    # (X, -tangent, normal) is right-handed, so the faces wind outward.
-    vertices=[center+normal*d+Vector((math.cos(math.pi/4+i*math.tau/n)*radius,0,0))-tangent*math.sin(math.pi/4+i*math.tau/n)*radius
-              for d in (0,.022) for i in range(n)]
-    faces=[tuple(range(n,n*2))]
-    faces.extend((i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n))
-    g.add(vertices,faces,CRUSHER_STEEL)
-
 def kiln_barrel(g,p):
     x,y,z=p
+    # 12k cap (2026-10-29): 16-sided shell, plates and hoops; one hoop band
+    # per tyre side; no rivet rows (sub-pixel heads); 24-tooth drive ring.
     # The core shows only through the plate joints and at the ends.
-    prism(g,p,.492,4.70,IRON,'X',24)
-    # Discrete curved plates, dark joints, rivet rows and broad wearing tyres.
+    prism(g,p,.492,4.70,IRON,'X',16)
+    # Discrete curved plates, dark joints and broad wearing tyres.
     # Each plate is its outer skin: its 16 mm edges sit under the hoops or
     # over the core, and its inner face is inside the core.
     for course in range(10):
         xa=x-2.35+course*.47;xb=xa+.457
         radius=(.497,.516,.523,.523,.523,.523,.523,.523,.516,.497)[course]
-        for sector in range(24):
-            a0=(sector+.025)*math.tau/24;a1=(sector+.975)*math.tau/24
+        for sector in range(16):
+            a0=(sector+.025)*math.tau/16;a1=(sector+.975)*math.tau/16
             vertices=[(xx,y+math.cos(a)*rr,z+math.sin(a)*rr)
                       for xx in (xa,xb) for rr in (radius-.016,radius) for a in (a0,a1)]
             g.add(vertices,[(2,3,7,6)],KILN_SHELL)
-        for xx in (xa+.05,xb-.05):
-            for i in range(12):radial_pin(g,xx,y,z,(i+.5)*math.tau/12,radius+.004)
-        band(g,(xa,y,z),radius+.013,.025,.034,IRON,'X',24)
     for xx in (1.31,3.48,5.13):
-        band(g,(xx,y,z),.59,.082,.17,IRON,'X',24)
-        for offset in (-.09,.09):band(g,(xx+offset,y,z),.598,.025,.035,CRUSHER_STEEL,'X',24)
-        band(g,(xx,y,z),.593,.02,.077,BRASS,'X',24)
+        band(g,(xx,y,z),.59,.082,.17,IRON,'X',16)
     for xx in (.91,5.64):
-        prism(g,(xx,y,z),.45,.065,IRON,'X',24)
-        band(g,(xx,y,z),.458,.031,.08,CRUSHER_STEEL,'X',24)
-        for i in range(12):
-            a=i*math.tau/12;bolt(g,(xx-.047,y+math.cos(a)*.39,z+math.sin(a)*.39),'X',.019,None,4)
-    # Bolted inspection covers and raised joining flanges travel with the shell.
-    for xx in (2.24,4.41):
-        band(g,(xx,y,z),.551,.028,.075,IRON,'X',24)
-        for i in range(12):radial_pin(g,xx,y,z,i*math.tau/12,.553,.021)
+        prism(g,(xx,y,z),.45,.065,IRON,'X',16)
+    # Bolted inspection covers travel with the shell.
     for xx in (2.68,4.80):
         verts=[(a,y+math.cos(b)*.548,z+math.sin(b)*.548)
                for a in (xx-.16,xx+.16) for b in (math.pi-.22,math.pi+.22)]
         g.add(verts,[(0,1,3,2),(2,3,1,0)],IRON)
-        for ax in (xx-.12,xx+.12):
-            for angle in (math.pi-.17,math.pi+.17):radial_pin(g,ax,y,z,angle,.552,.022)
-    prism(g,(.79,y,z),.14,.32,IRON,'X',12)
-    band(g,(.70,y,z),.183,.04,.12,BRASS,'X',12)
+    prism(g,(.79,y,z),.14,.32,IRON,'X',8)
+    band(g,(.70,y,z),.183,.04,.12,BRASS,'X',8)
     # A toothed drive ring near the feed end, integral with the rotating shell.
-    band(g,(1.06,y,z),.56,.07,.085,IRON,'X',32)
-    for i in range(40):
-        a=i*math.tau/40
+    band(g,(1.06,y,z),.56,.07,.085,IRON,'X',24)
+    for i in range(24):
+        a=i*math.tau/24
         open_beam(g,(1.06,y+math.cos(a)*.55,z+math.sin(a)*.55),
                   (1.06,y+math.cos(a)*.605,z+math.sin(a)*.605),.072,.055,IRON)
 
 def axle_bearing(g,x,y,z):
     g.box((x,y,z-.11),(.30,.34,.10),IRON)
-    prism(g,(x,y,z),.13,.27,IRON,'X',10)
-    band(g,(x-.15,y,z),.132,.028,.045,CRUSHER_STEEL,'X',10)
-    prism(g,(x-.20,y,z),.071,.10,BRASS,'X',8)
-    # (Its four base bolts were wholly inside the base block.)
-    prism(g,(x,y,z+.145),.023,.055,BRASS,'Z',6,(False,True))
+    prism(g,(x,y,z),.13,.27,IRON,'X',6)
 
 def mechanics(g,parts):
     p=(3.27,2.14,2.04);m,node=g.moving_part('ReferenceKilnBarrel',p)
@@ -102,31 +74,28 @@ def mechanics(g,parts):
             g.box((x,y,1.42),(.46,.38,.20),WOOD)
             for xx in (x-.20,x+.20):axle_bearing(g,xx,y,1.53)
             p=(x,y,1.53);m,node=g.moving_part(f'ReferenceKilnSupport{j+1}{k+1}',p)
-            prism(m,p,.19,.34,IRON,'X',16)
-            for xx in (x-.16,x+.16):band(m,(xx,y,1.53),.201,.03,.04,CRUSHER_STEEL,'X',16)
+            prism(m,p,.19,.34,IRON,'X',10)
             # Visible keyed wheel face makes its rotation legible.
-            for i in range(6):
-                a=i*math.pi/3;square_nut(m,(x-.19,y+math.cos(a)*.12,1.53+math.sin(a)*.12),'X',.015,-1)
+            for i in range(3):
+                a=i*math.tau/3;square_nut(m,(x-.19,y+math.cos(a)*.12,1.53+math.sin(a)*.12),'X',.015,-1)
             parts.append((node,'X',-3))
-        # Screw adjusters and locking nuts on the forward support saddle.
-        prism(g,(x,1.43,1.40),.034,.38,IRON,'Y',8)
-        for k in range(0,12,3):band(g,(x,1.26+k*.027,1.40),.040,.009,.012,CRUSHER_STEEL,'Y',8)
+        # Screw adjuster and locking nut on the forward support saddle.
+        prism(g,(x,1.43,1.40),.034,.38,IRON,'Y',6)
         g.cylinder((x,1.26,1.40),.062,.055,IRON,'Y',6)
     # Exposed small reduction gear, drive shaft and flywheel in the left bay.
     p=(1.06,1.46,1.62);m,node=g.moving_part('ReferenceKilnPinion',p)
-    prism(m,p,.164,.12,IRON,'X',16)
-    for i in range(16):
-        a=i*math.tau/16
+    prism(m,p,.164,.12,IRON,'X',12)
+    for i in range(12):
+        a=i*math.tau/12
         open_beam(m,(p[0],p[1]+math.cos(a)*.15,p[2]+math.sin(a)*.15),
                   (p[0],p[1]+math.cos(a)*.199,p[2]+math.sin(a)*.199),.068,.051,IRON)
-    prism(m,(.70,1.46,1.62),.065,.80,CRUSHER_STEEL,'X',8)
+    prism(m,(.70,1.46,1.62),.065,.80,CRUSHER_STEEL,'X',6)
     parts.append((node,'X',-3))
     g.box((.55,1.46,1.34),(.71,.49,.15),WOOD)
     for xx in (.29,.83):axle_bearing(g,xx,1.46,1.62)
     p=(.24,1.46,1.62);m,node=g.moving_part('ReferenceKilnDriveWheel',p)
-    band(m,p,.32,.07,.095,IRON,'X',24,inner=True)
-    band(m,(.18,1.46,1.62),.325,.022,.025,CRUSHER_STEEL,'X',24,inner=True)
-    prism(m,p,.095,.18,IRON,'X',10)
+    band(m,p,.32,.07,.095,IRON,'X',16,inner=True)
+    prism(m,p,.095,.18,IRON,'X',8)
     for i in range(6):
         a=i*math.pi/3;m.beam(p,(.24,1.46+math.cos(a)*.28,1.62+math.sin(a)*.28),.057,mat=IRON)
     parts.append((node,'X',-3))
@@ -135,23 +104,26 @@ def feed_bin(g,y,bottom,seed):
     x0,x1=.14,1.53;y0,y1=y-.49,y+.49;top=bottom+.47
     for row in range(3):
         t=(row+.5)/3;z=bottom+.47*t;a=x0+.12*(1-t);b=x1-.12*(1-t)
-        for yy in (y0+.08*(1-t),y1-.08*(1-t)):g.box(((a+b)/2,yy,z),(b-a+.06,.075,.145),PLANK)
-        for xx in (a,b):g.box((xx,y,z),(.075,.905-.16*(1-t),.145),PLANK)
+        # The two lower courses' inner faces lie under the stone fill.
+        under=row<2
+        for yy in (y0+.08*(1-t),y1-.08*(1-t)):
+            open_box(g,((a+b)/2,yy,z),(b-a+.06,.075,.145),PLANK,(('+y' if yy<y else '-y'),) if under else ())
+        for xx in (a,b):
+            open_box(g,(xx,y,z),(.075,.905-.16*(1-t),.145),PLANK,(('+x' if xx<.835 else '-x'),) if under else ())
     g.box((.835,y,bottom+.30),(1.08,.76,.13),LIME)
     rng=random.Random(seed)
-    for i in range(14):
-        s=rng.uniform(.17,.29)
+    for i in range(3):
+        s=rng.uniform(.34,.44)
         rock(g,(rng.uniform(.34,1.30),rng.uniform(y-.32,y+.32),bottom+.39+rng.uniform(-.035,.07)),(s,s*.80,s*.76),LIME,seed+i)
     for yy in (y0,y1):g.box((.835,yy,top),(1.26,.14,.12),WOOD)
     for xx in (x0,x1):g.box((xx,y,top),(.13,1.06,.12),WOOD)
     for xx in (x0,x1):
         for yy in (y0,y1):
-            bracket(g,xx,yy,top-.10,.14)
-            open_box(g,(xx,yy,top+.063),(.19,.19,.02),IRON,('-z',));square_nut(g,(xx,yy,top+.08),'Z',.02,1)
+            open_box(g,(xx,yy,top+.063),(.19,.19,.02),IRON,('-z',))
 
 def feed_tower(g,ground):
     for x in (.20,1.55):
-        for y,top in ((1.28,3.14),(3.33,3.45)):timber_column(ground,x,y,.12,top+DECK_Z-KILN_MACHINE_DATUM,.19)
+        for y,top in ((1.28,3.14),(3.33,3.45)):timber_column(ground,x,y,.12,top+DECK_Z-KILN_MACHINE_DATUM,.19,top_collar_only=True)
         for z in (1.25,2.72):beam_joint(g,(x,1.28,z),(x,3.33,z),.18,.18)
         g.beam((x,1.35,1.45),(x,2.33,2.68),.105,mat=WOOD)
         g.beam((x,3.30,1.45),(x,2.42,2.68),.105,mat=WOOD)
@@ -172,15 +144,17 @@ def feed_tower(g,ground):
 
 def fuel_logs(g):
     rng=random.Random(17)
+    # 12k cap: fifteen logs in three rows (was 21 slightly thinner logs).
     for row in range(3):
-        for i in range(8-row):
-            x=.37+i*.225+row*.095;z=.23+row*.192;r=rng.uniform(.093,.114)
-            prism(g,(x,1.80,z),r,1.16,WOOD,'Y',8)
-            prism(g,(x,1.206,z),r*.88,.025,PLANK,'Y',8,(True,False))
+        for i in range(6-row):
+            x=.42+i*.29+row*.145;z=.25+row*.225;r=rng.uniform(.115,.135)
+            prism(g,(x,1.80,z),r,1.16,WOOD,'Y',6,(False,True))
+            prism(g,(x,1.206,z),r*.88,.025,PLANK,'Y',6,(True,False))
     for x in (.22,2.17):
         g.box((x,1.25,.49),(.11,.11,.76),WOOD)
         g.box((x,1.25,.19),(.16,.16,.12),IRON)
-    g.box((1.18,1.25,.18),(1.79,.12,.14),WOOD)
+    # The sill's top stays 1 cm under the post feet's caps (no shared plane).
+    g.box((1.18,1.25,.175),(1.79,.12,.13),WOOD)
 
 # Kiln artwork X/Y = native grid X/Y minus the layout origin (1,2): grid x=k
 # is artwork x=k-1, grid y=k is artwork y=k-2. Outer deck edges, rails,
@@ -219,7 +193,7 @@ def structure(g,rails,machinery):
     for x in (.20,5.65):
         g.beam((x,2.16,.21),(x,3.25,DECK_Z-.20),.12,mat=WOOD)
     for x in (1.58,3.15,4.60,5.65):
-        for y,top in ((1.30,3.00),(3.25,3.42)):timber_column(g,x,y,.09,top+DECK_Z-KILN_MACHINE_DATUM,.20)
+        for y,top in ((1.30,3.00),(3.25,3.42)):timber_column(g,x,y,.09,top+DECK_Z-KILN_MACHINE_DATUM,.20,top_collar_only=True)
     g=machinery
     for x in (1.58,3.15,4.60,5.65):
         beam_joint(g,(x,1.41,1.18),(x,3.14,1.18),.19,.21)
@@ -245,7 +219,8 @@ def masonry(g,p,size,index):
     # Small authored differences keep masonry from reading as a perfect tile grid.
     rng=random.Random(round(p[0]*1000+p[1]*390+p[2]*167))
     size=tuple(v-rng.uniform(.001,.012) for v in size)
-    g.box(p,size,KILN_STONE_LIGHT if index%7==0 else KILN_STONE)
+    # Its underside lies on the course below (12k cap).
+    open_box(g,p,size,KILN_STONE_LIGHT if index%7==0 else KILN_STONE,('-z',))
 
 def arch(g,cx,y,cz,inner,outer):
     for i in range(11):
@@ -272,17 +247,19 @@ def firebox(g,parts):
     for row in range(8):
         z=.23+row*.23
         for xx in (5.61,6.71):masonry(g,(xx,y,z),(.235,.29,.214),row)
+        # Side walls: two long stretchers per course (12k cap; were four).
         for xx in (5.58,6.74):
-            for j in range(4):masonry(g,(xx,1.15+j*.23,z),(.22,.216,.214),row+j)
+            for j in range(2):masonry(g,(xx,1.265+j*.46,z),(.22,.446,.214),row+j)
     for row,z in enumerate((1.60,1.83)):
         for i in range(4):masonry(g,(5.74+i*.28,y,z),(.265,.29,.215),row+i)
     arch(g,cx,y-.03,1.03,.34,.51)
     for xx in (5.73,6.59):
         for row in range(4):masonry(g,(xx,y-.005,.34+row*.21),(.17,.29,.198),row+1)
-    for j in range(4):
-        for i in range(4):masonry(g,(5.65+i*.325,.96+j*.31,2.02),(.311,.294,.15),i+j*4)
-    for i in range(14):
-        rock(g,(5.84+(i%5)*.155,1.10+(i//5)*.16,.39),(.17,.14,.14),KILN_EMBER,1100+i)
+    # Crown: two rows of long slabs (12k cap; was a 4 x 4 grid).
+    for j in range(2):
+        for i in range(4):masonry(g,(5.65+i*.325,1.115+j*.62,2.02),(.311,.604,.15),i+j*4)
+    for i in range(3):
+        rock(g,(5.90+i*.26,1.20+(i%2)*.12,.39),(.26,.21,.15),KILN_EMBER,1100+i)
     for i,(x,yy,h) in enumerate(((5.93,1.18,.34),(6.16,1.22,.47),(6.36,1.17,.31))):
         p=(x,yy,.43);m,node=g.moving_part('ReferenceKilnFire'+str(i+1),p)
         flame(m,p,h,1200+i);parts.append((node,'FLAME',i))
@@ -291,21 +268,19 @@ def firebox(g,parts):
     for z in (.37,.77):g.box((6.16,.805,z),(.69,.055,.05),IRON)
     for x in (5.59,6.72):
         g.box((x,.762,.99),(.09,.035,1.58),IRON)
-        for z in (.30,.88,1.69):square_nut(g,(x,.735,z),'Y',.022,-1)
-    # Heavy iron register above the arch, with corner fasteners and an inset hatch.
+    # Heavy iron register above the arch, with an inset hatch.
     g.box((cx,.755,1.77),(.87,.075,.30),IRON)
     g.box((cx,.707,1.77),(.45,.028,.18),KILN_SHELL)
-    for dx in (-.35,.35):
-        for dz in (-.09,.09):square_nut(g,(cx+dx,.701,1.77+dz),'Y',.024,-1)
-    for dx in (-.17,.17):square_nut(g,(cx+dx,.682,1.77),'Y',.016,-1)
     # Higher rear combustion chamber, visibly stepping up toward the chimney.
     for row in range(7):
         z=1.46+row*.22
-        for i in range(4):masonry(g,(5.68+i*.275,2.97,z),(.262,.23,.205),row+i)
+        for i in range(3):masonry(g,(5.732+i*.362,2.97,z),(.352,.23,.205),row+i)
+        # Five blocks per course on the right side: their joints keep cell
+        # (6,3,2)'s face below the connection-face cover (registration).
         for j in range(5):masonry(g,(6.75,2.00+j*.21,z),(.23,.198,.205),row+j)
     g.box((6.16,2.70,2.10),(.93,.06,1.19),KILN_SOOT)
-    for i in range(9):
-        rock(g,(5.89+(i%3)*.21,2.48+(i//3)*.12,2.035),(.15,.13,.085),KILN_EMBER,1400+i)
+    for i in range(4):
+        rock(g,(5.95+(i%2)*.32,2.52+(i//2)*.20,2.035),(.21,.17,.09),KILN_EMBER,1400+i)
     for x in (5.85,6.00,6.15,6.30,6.45):g.box((x,2.09,2.30),(.025,.04,.37),IRON)
     for z in (2.09,2.51):g.box((6.15,2.09,z),(.69,.04,.05),IRON)
     for x in (5.64,6.67):
@@ -320,19 +295,20 @@ def chimney(g):
         r0=.255-row*.011;r1=r0-.011
         verts=[(x+dx*r,y+dy*r,z) for z,r in ((z0,r0),(z1,r1)) for dx,dy in ((-1,-1),(1,-1),(1,1),(-1,1))]
         g.add(verts,[(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)],IRON)
+        # Seam bands on alternate courses (12k cap). The lowest course keeps
+        # its two seam nuts on the -y face: their heads keep the registered
+        # connection faces of cell (6,3,3) (outputs/connection-faces).
+        if row%2:continue
         for dy in (-1,1):
             g.box((x,y+dy*r0,z0+.018),(r0*2,.024,.028),IRON)
-            for dx in (-.60,.60):square_nut(g,(x+dx*r0,y+dy*(r0+.02),z0+.09),'Y',.015,dy)
+            if row==0 and dy<0:
+                for dx in (-.60,.60):square_nut(g,(x+dx*r0,y+dy*(r0+.02),z0+.09),'Y',.015,dy)
         for dx in (-1,1):
             g.box((x+dx*r0,y,z0+.018),(.024,r0*2,.028),IRON)
-            for dy in (-.60,.60):square_nut(g,(x+dx*(r0+.02),y+dy*r0,z0+.09),'X',.015,dx)
     for dx in (-.27,.27):g.box((x+dx,y,top-.02),(.075,.61,.24),IRON)
     # The side bars end on the end bars' inner faces (no overlapping tops).
     for dy in (-.27,.27):g.box((x,y+dy,top-.02),(.465,.075,.24),IRON)
     g.box((x,y,top-.28),(.36,.36,.025),KILN_SOOT)
-    for dx in (-.18,.18):
-        square_nut(g,(x+dx,y-.312,top),'Y',.024,-1)
-        square_nut(g,(x-.312,y+dx,top),'X',.024,-1)
     for dx in (-.31,.31):g.box((x+dx,y,bottom+.02),(.09,.68,.10),IRON)
     for dy in (-.31,.31):g.box((x,y+dy,bottom+.02),(.53,.09,.10),IRON)
     # Kiln firing smoke at the top of the collar; the flue's top course is
@@ -342,7 +318,7 @@ def chimney(g):
 def output(g):
     bin(g,(6.16,.25,.12),(1.38,.94,.58),None)
     g.box((6.16,.25,.60),(1.19,.74,.13),KILN_CEMENT)
-    rng=random.Random(554);verts=[];nx,ny=13,9
+    rng=random.Random(554);verts=[];nx,ny=7,5
     for j in range(ny):
         for i in range(nx):
             x=5.58+i*1.16/(nx-1);y=-.10+j*.70/(ny-1)
@@ -359,12 +335,9 @@ def details(g,rails,ground):
     machinery=g
     # Riveted gear guard, two small gauges and lever linkages at the operator rail.
     g.box((4.89,1.42,1.92),(.63,.10,.39),IRON)
-    for x in (4.64,5.14):
-        for z in (1.79,2.05):square_nut(g,(x,1.35,z),'Y',.018,-1)
     for x in (4.76,5.04):
-        prism(g,(x,1.355,1.97),.086,.06,BRASS,'Y',12,(True,False))
-        prism(g,(x,1.317,1.97),.067,.015,LIME,'Y',12,(True,False))
-        band(g,(x,1.299,1.97),.075,.012,.02,IRON,'Y',12)
+        prism(g,(x,1.355,1.97),.086,.06,BRASS,'Y',8,(True,False))
+        prism(g,(x,1.317,1.97),.067,.015,LIME,'Y',8,(True,False))
         g.beam((x,1.286,1.97),(x-.035,1.286,2.009),.008,mat=IRON)
     for x in (4.75,5.03):
         prism(g,(x,1.36,1.76),.038,.07,BRASS,'Y',6)
@@ -378,14 +351,13 @@ def details(g,rails,ground):
     for x in (4.62,5.26):
         g.box((x,1.69,.675),(.07,.79,.025),IRON)
         prism(g,(x,2.06,.65),.04,.09,IRON,'X',6,phase=math.pi/6)
-    band(g,(4.94,1.30,.47),.07,.012,.022,IRON,'Y',8,inner=True)
     for x in (5.44,5.57):
         g.beam((x,1.93,.22),(x,1.83,.98),.025,mat=WOOD)
         g.box((x,1.93,.22),(.11,.075,.15),IRON)
     # Hand-operated chimney damper (the furnace-side walk is removed).
     g=machinery
-    prism(g,(5.88,2.70,3.65),.045,.44,IRON,'X',8)
-    band(g,(5.70,2.70,3.65),.18,.035,.05,IRON,'X',12,inner=True)
+    prism(g,(5.88,2.70,3.65),.045,.44,IRON,'X',6)
+    band(g,(5.70,2.70,3.65),.18,.035,.05,IRON,'X',8,inner=True)
     for i in range(4):
         a=i*math.pi/2;g.beam((5.70,2.70,3.65),(5.70,2.70+math.cos(a)*.155,3.65+math.sin(a)*.155),.025,mat=IRON)
     g.beam((5.90,2.70,3.65),(5.90,2.70,3.30),.035,mat=IRON)
@@ -393,7 +365,6 @@ def details(g,rails,ground):
     # Staggered flat roof repairs, with nails and folded seams instead of clutter.
     for x,y,z in ((2.30,2.83,3.417),(4.83,2.44,3.341)):
         g.box((x,y,z),(.31,.22,.016),IRON)
-        for dx in (-.11,.11):square_nut(g,(x+dx,y,z+.017),'Z',.013,1)
     # Warm caged lights hang from real brackets on the hall frame.
     for x,y,z in ((1.58,1.24,2.58),(5.65,1.24,2.56),(1.58,3.56,2.72),(5.65,3.56,2.81)):
         if y>3.5:g.beam((x,3.25,z+.20),(x,3.61,z+.20),.035,mat=IRON)
@@ -403,41 +374,21 @@ def details(g,rails,ground):
     for x in (2.49,2.65):
         g.beam((x,3.19,.20),(x,3.15,.89),.027,mat=WOOD)
         g.box((x,3.20,.25),(.12,.055,.20),IRON)
-    for x,y in ((.71,2.70),(4.22,2.98)):
-        cask(g,(x,y,.12),.21,.55)
+    cask(g,(.71,2.70,.12),.21,.55)
     bin(g,(5.23,3.08,.12),(.56,.62,.43),None)
     g.beam((4.97,2.75,.18),(5.49,2.75,.50),.065,mat=WOOD)
     g.box((5.23,3.08,.58),(.60,.65,.07),PLANK)
 
 def worn_surfaces(g,ground):
     """Wear follows exposed joints, traffic, soot and handling, not random clutter."""
-    rng=random.Random(2819)
-    # Local paint loss at sheet edges and fasteners; each patch lies on the roof.
-    for i in range(75):
-        # Narrow chips follow panel joints and rain direction, rather than spots.
-        x=1.44+(1+i%15)*4.36/16+rng.uniform(-.012,.012)
-        y=rng.choice((1.30,1.94,2.77,3.25))+rng.uniform(-.055,.055)
-        rx=rng.uniform(.005,.017);ry=rng.uniform(.025,.12);verts=[]
-        for k in range(7):
-            a=k*math.tau/7;factor=rng.uniform(.65,1.10)
-            px=x+math.cos(a)*rx*factor;py=y+math.sin(a)*ry*factor
-            zz=3.06+(py-1.15)*.44/2.25+.026
-            verts.append((px,py,zz))
-        g.add(verts,[tuple(range(7))],KILN_RUST)
-    # A repaired roof sheet has a lapped edge, folded seam and separate fasteners.
+    # (The 75 paint chips 1-3 cm wide along the roof joints, timber checks
+    # 3-7 mm wide, soot drips and rust streaks were sub-pixel at game zoom;
+    # the native atlases paint their own grain and wear.)
+    # A repaired roof sheet has a lapped edge and folded seams.
     x0,x1,y0,y1=3.92,4.45,2.11,2.76
     points=[(x,y,3.06+(y-1.15)*.44/2.25+.045) for x,y in ((x0,y0),(x1,y0),(x1,y1),(x0,y1))]
     g.add(points,[(0,1,2,3)],KILN_SHELL)
-    for p in points:square_nut(g,p,'Z',.018,1)
     for a,b in ((points[0],points[3]),(points[1],points[2])):g.beam(a,b,.025,.018,KILN_RUST)
-    # (Timber checks 3-7 mm wide on the uprights were sub-pixel at game zoom;
-    # the native wood atlas paints its own grain and wear.)
-    # Soot stains above the fire arch and streaks down the furnace register.
-    for i in range(19):
-        x=5.82+i*.038;h=rng.uniform(.025,.11)
-        g.add([(x,.784,1.60),(x+.018,.784,1.60),(x+.011,.784,1.60-h)],[(0,1,2)],KILN_SOOT)
-    for x in (5.82,6.17,6.48):
-        g.beam((x,.709,1.84),(x+.012,.709,1.65),.012,.003,KILN_RUST)
 
 def workshop_details(g,ground):
     machinery=g
@@ -447,9 +398,8 @@ def workshop_details(g,ground):
         prism(g,(x+.27,1.41,1.699),.052,.024,IRON,'Z',6)
         round_pipe(g,[(x+.27,1.41,1.60),(x+.27,1.52,1.60)],.016)
     g.box((.43,1.52,2.47),(.35,.055,.21),IRON)
-    for x in (.29,.57):steel_bolt(g,(x,1.48,2.47),'Y',.023)
-    prism(g,(.42,1.43,2.48),.048,.18,IRON,'Y',8)
-    band(g,(.42,1.32,2.48),.16,.027,.04,IRON,'Y',16,inner=True)
+    prism(g,(.42,1.43,2.48),.048,.18,IRON,'Y',6)
+    band(g,(.42,1.32,2.48),.16,.027,.04,IRON,'Y',8,inner=True)
     for a in (0,math.pi/2,math.pi,math.pi*1.5):
         g.beam((.42,1.32,2.48),(.42+math.cos(a)*.145,1.32,2.48+math.sin(a)*.145),.025,mat=IRON)
     # (2026-10-22: the side workshop bench, the rear cask and spare tyre and
@@ -463,17 +413,21 @@ def kiln(g,parts):
     porch(g);firebox(machinery,parts);chimney(machinery);output(g);details(machinery,rails,g)
     # Masonry supports the raised process chamber down to the ground datum.
     for row in range(4):
+        # Five long stretchers per course (12k cap; were ten): the ground
+        # course under the whole firebox and rear chamber.
         for x in (5.61,6.71):
-            for j in range(10):masonry(g,(x,.96+j*.22,.20+row*.20),(.235,.214,.19),row+j)
+            for j in range(5):masonry(g,(x,1.07+j*.44,.20+row*.20),(.235,.434,.19),row+j)
         for x in (5.86,6.16,6.46):masonry(g,(x,2.98,.20+row*.20),(.29,.23,.19),row)
     g.box((6.16,1.98,.87),(1.34,2.18,.12),KILN_STONE)
     worn_surfaces(machinery,g);workshop_details(machinery,g)
     kiln_facades(g)
+    # The cask in the closed control room stays: its staves keep cell
+    # (3,3,0)'s Right face out of the registered connection faces. (The plank
+    # stack beside it went with the 12k cap.)
     cask(g,(3.76,2.99,.14),.23,.56)
-    for i in range(4):g.box((3.50,2.35,.20+i*.09),(.54,.45,.075),PLANK)
     # Ground-level mechanical coupling. (The tool rack behind the rear frame
     # line was removed, 2026-10-22.)
     timber_column(g,.25,2.55,.12,1.19,.17)
-    prism(g,(.10,2.55,.57),.14,.16,IRON,'X',12)
-    band(g,(.035,2.55,.57),.16,.03,.04,BRASS,'X',12,inner=True)
+    prism(g,(.10,2.55,.57),.14,.16,IRON,'X',8)
+    band(g,(.035,2.55,.57),.16,.03,.04,BRASS,'X',8,inner=True)
     return rails

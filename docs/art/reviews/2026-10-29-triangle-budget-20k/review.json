@@ -1,0 +1,72 @@
+{
+  "scope": "Before | after | difference sheets (render_budget_views.py, compose_budget_sheet.py) of the 20k grand-cap pass (2026-10-29): no fastener heads, plain collars, undersides no orbit camera faces culled (Geometry.cull_below), fewer sides, roof sheets, boards and stock-item triangles. Blender renders, not game screenshots.",
+  "renders": [
+    {
+      "model": "FisheryWorks",
+      "source": "src\\DeepFrontier\\Art\\Source\\FisheryWorks-ReferenceStudy.blend",
+      "sourceSha256": "88c4772abf7c439fe5b02fa40325bdb858beb61941f0060493d496a43beaa693",
+      "images": [
+        "triangle-budget-20k-FisheryWorks.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-20k-FisheryWorks.png": "e6e4562be7fc7fc65438286ed460aad44376ddf5b937d34216e75f1d645e9425"
+      }
+    },
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "00553560d5ed189a59f23c81fd75afe87b78ecbdbdae002cd92e6db4436d1484",
+      "images": [
+        "triangle-budget-20k-Restaurant.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-20k-Restaurant.png": "e349f23a198bf42634ecfbc5dd4f92f7d885d21961cb8fb0ccd0de28a511ae0c"
+      }
+    },
+    {
+      "model": "Hospital",
+      "source": "src\\DeepFrontier\\Art\\Source\\Hospital-ReferenceStudy.blend",
+      "sourceSha256": "84a18a2520ca7fa4335cf60ed88d34209dad3d1b9f1da459df8b089710111884",
+      "images": [
+        "triangle-budget-20k-Hospital.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-20k-Hospital.png": "7faa207c48b5a14c0340c5f8e9803e60dcbdfb5d44886cf8fff5b53208b7ea18"
+      }
+    },
+    {
+      "model": "GroceryStore",
+      "source": "src\\DeepFrontier\\Art\\Source\\GroceryMarket-ReferenceStudy.blend",
+      "sourceSha256": "3c209e008411e0aafdfa304f32c8b2a3f6dcbb51ee7a9d8b8af085ea451446a4",
+      "images": [
+        "triangle-budget-20k-GroceryStore.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-20k-GroceryStore.png": "4d055fb0e34c6f059c85f5c7401ede7302eb43224de118215dd3877b7b49377b"
+      }
+    },
+    {
+      "model": "MaterialsLaboratory",
+      "source": "src\\DeepFrontier\\Art\\Source\\MaterialsLaboratory-ReferenceStudy.blend",
+      "sourceSha256": "d61305d54192c3379763a851c3c902eff6abcf08f4c35e9aac554955f15d534a",
+      "images": [
+        "triangle-budget-20k-MaterialsLaboratory.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-20k-MaterialsLaboratory.png": "64f50dc6e6097ee0731c4560904b4f532eed60872a2677c9667e8c9136ce7056"
+      }
+    },
+    {
+      "model": "ReinforcedHydroTurbine",
+      "source": "src\\DeepFrontier\\Art\\Source\\ReinforcedHydroTurbine-ReferenceStudy.blend",
+      "sourceSha256": "af7cf57e433c50908b18aae59858b28ef407b2e8e19ea889a385b486ed4704df",
+      "images": [
+        "triangle-budget-20k-ReinforcedHydroTurbine.png"
+      ],
+      "imageSha256": {
+        "triangle-budget-20k-ReinforcedHydroTurbine.png": "9854333057f2aac77b6608266bef5751917a60c14f2b2ce6e08f5f4899f05567"
+      }
+    }
+  ],
+  "extraImages": []
+}

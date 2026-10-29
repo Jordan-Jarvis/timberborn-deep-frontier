@@ -20,6 +20,7 @@ pond pump flywheel (SPIN_X), furnace glow (FLAME), canister turntable
 import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
+import lategame_kit as K
 from lategame_kit import (CONCRETE, ORANGE, FORGED, PAINTED, CYAN, GLOW, plinth, frame_wall, revolve, band,
                           dome, tank, stack, hollow_revolve, catwalk, steel_rail, ladder, lamp, beacon,
                           beacon_shutter, bolt_row, lattice_tower)
@@ -114,7 +115,7 @@ def hot_cells(g, parts):
     f.box(g, 0, 1.215, .08, 1.8, 2.37, .16, IRON)
     for u in (-.42, .42):
         riveted_panel(g, f, u - .38, u + .38, .15, 2.25, .16, .22, FORGED)
-    g.wheel(f.p(0, 1.2, .32), .22, 'X', IRON, BRASS)
+    K.wheel(g, f.p(0, 1.2, .32), .22, 'X')
     g.cylinder(f.p(0, 1.2, .26), .05, .08, IRON, 'X', 8)
     lamp(g, HX1, 7.6, 2.8, face='right')
     trefoil(g, HX1, 3.9, 2.0, face='right', r=.26)
@@ -249,7 +250,7 @@ def pond(g, parts):
     bx(g, px - .45, py - .18, .35, px - .08, py + .18, .72, IRON)
     g.cylinder((px + .625 - .7, py, .56), .05, .06, IRON, 'X', 8)
     wheel = Geometry('PumpFlywheel', (px - .5, py, .62))
-    wheel.wheel((px - .5, py, .62), .26, 'X', IRON, BRASS)
+    K.wheel(wheel, (px - .5, py, .62), .26, 'X')
     parts.append((wheel, 'SPIN_X', 3))
     pipe_path(g, [(px + .15, py, 1.0), (px + .15, py, 1.95), (px + .15, y0 + .5, 1.95), (px + .15, y0 + .5, .9)], .08)
     gauge(g, px + .15, py - .22, .6, face='front', r=.08)
