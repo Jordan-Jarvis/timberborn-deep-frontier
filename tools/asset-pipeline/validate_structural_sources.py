@@ -13,6 +13,9 @@ from native_uv_contract import valid_native_uv
 
 SCAFFOLD_SEAM_CROWN = .004
 from structural_geometry import SIDE_SEAM_CROWN
+from steel_structure_grid import CANTILEVERS, BRIDGES, cantilever_ident
+from steel_structure_geometry import BRIDGE_DECK_TOP, BRIDGE_UNDERSIDE, CLEAR_BELOW_DECK
+STEEL_ANCHORS = {cantilever_ident(n): a for n, a in CANTILEVERS.items()}
 
 results = []
 for ident, (w, h, height) in SIZES.items():
@@ -54,18 +57,50 @@ for ident, (w, h, height) in SIZES.items():
         assert hit is not None and abs(hit.z-1.07) < .001, (ident, 'Cleat shoe missing')
         under = tree.ray_cast(Vector((-a-.17, -n-.085, 1.034)), Vector((0, 0, -1)), 1)[0]
         assert under is not None and abs(under.z-1) < .001, (ident, 'Cleat shoe does not bear on the anchor top')
+    # Steel bridges hang their floor system into the open cell below the span
+    # (like the vanilla suspension bridge); everything else stays in its grid.
+    bridge = ident in BRIDGES
+    floor = BRIDGE_UNDERSIDE if bridge else 0
     assert vertices and all(-w-.001 <= v.x <= .001 and -h-.001 <= v.y <= .001
-                            and -.001 <= v.z <= height+crown+.001 for v in vertices), (ident, 'Mesh leaves its module')
+                            and floor-.001 <= v.z <= height+crown+.001 for v in vertices), (ident, 'Mesh leaves its module')
+    if bridge:
+        assert min(v.z for v in vertices) < floor+.001, (ident, 'Bridge floor system depth changed')
     support_samples = 0
-    deck_top = 1 if side else height
+    deck_top = BRIDGE_DECK_TOP if bridge else 1 if side else height
+    # Stackable tops (and the bridge's walking deck, which is not stackable)
+    # are flush at their exact height; on the bridge only the strip between
+    # the trusses is sampled.
     for x in range(n if side else w):
         for y in range(n if side else h):
-            for dx in (.10, .30, .50, .70, .90):
+            for dx in ((.22, .35, .50, .65, .78) if bridge else (.10, .30, .50, .70, .90)):
                 for dy in (.10, .30, .50, .70, .90):
                     hit = tree.ray_cast(Vector((-x-dx, -y-dy, deck_top+.1)), Vector((0,0,-1)), .2)[0]
                     assert hit is not None and abs(hit.z-deck_top) < max(crown, SCAFFOLD_SEAM_CROWN)+.001, (ident, x, y, 'Missing flush support')
                     support_samples += 1
     passage_samples = 0
+    # (x, y, z0, clearance): upward rays from z0 must stay clear for `clearance`.
+    rays = []
+    if ident in STEEL_ANCHORS:
+        # Open strip under every cantilever tile (not the anchors), below the
+        # floor beams: the trusses stand at the side edges.
+        rays = [(x, y+.5+dy, .01, CLEAR_BELOW_DECK-.01) for y in range(STEEL_ANCHORS[ident], h)
+                for x in (.34, .5, .66) for dy in (-.3, 0, .3)]
+    elif bridge:
+        # Walking headroom between the trusses over the whole bridge.
+        rays = [(x, y+dy, BRIDGE_DECK_TOP+.002, .95-BRIDGE_DECK_TOP) for y in range(h)
+                for x in (.22, .35, .5, .65, .78) for dy in (.15, .5, .85)]
+    elif ident.startswith('SteelColumnH'):
+        # Every layer of the trestle is open through its middle below the ties.
+        rays = [(.5+dx, .5+dy, k+.01, CLEAR_BELOW_DECK-.01) for k in range(height)
+                for dx in (-.15, 0, .15) for dy in (-.15, 0, .15)]
+    elif ident.startswith('SteelDeck'):
+        # Open below every non-corner tile, under the girders and joists.
+        rays = [(x+.5+dx, y+.5+dy, .01, CLEAR_BELOW_DECK-.01) for x in range(w) for y in range(h)
+                if not ((x in (0, w-1)) and (y in (0, h-1))) for dx in (-.2, 0, .2) for dy in (-.2, 0, .2)]
+    for x, y, z0, clearance in rays:
+        hit = tree.ray_cast(Vector((-x, -y, z0)), Vector((0, 0, 1)), clearance)[0]
+        assert hit is None, (ident, 'Obstruction in declared open passage', (x, y, z0), hit)
+        passage_samples += 1
     if ident == 'ConcreteOverhang8x1':
         # Middle strip below the overhang, excluding its supported anchor.
         samples = [(x, y+.5, .78) for y in range(1, 8) for x in (.34, .5, .66)]

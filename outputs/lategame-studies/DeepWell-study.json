@@ -1,0 +1,57 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Slim tapered steel drilling derrick hanging over the water source, crowned by a crown block and beacon.",
+  "footprint": [
+    1,
+    2
+  ],
+  "heightLayers": 5,
+  "boundsMin": [
+    -0.005,
+    0.02,
+    -0.03
+  ],
+  "boundsMax": [
+    1.005,
+    1.98,
+    4.98
+  ],
+  "doors": [
+    {
+      "id": "Entrance",
+      "position": [
+        0.5,
+        0.14,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "DeepWell.Drawworks",
+    "DeepWell.Kelly",
+    "DeepWell.Beacon"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 1281,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 44,
+    "BaseMetal.IronTeeth": 769,
+    "RoofPlanks.IronTeeth": 24,
+    "Details.IronTeeth": 126,
+    "accent25": 10,
+    "Plaster_White.IronTeeth": 66,
+    "Plaster_Orange.IronTeeth": 51,
+    "IrregularPlanks_MetalForged.IronTeeth": 48,
+    "WindowsAtlas.IronTeeth": 5,
+    "PaintedMetal.IronTeeth": 290
+  },
+  "sourceHash": "9f5d24f776c97cdc8d49ce12f11cca42eec7c1c0dbd5680f23adc7f042bcb392",
+  "artHash": "2e97ba9d7fccaf192964a7200593d33af4ffd7a8261ed4c678834d3465efc35e"
+}

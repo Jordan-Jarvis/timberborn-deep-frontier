@@ -4,6 +4,35 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Deep Well and steel structures (Claude Code session, 2026-10-29, built by two agents; integrated and validated in mirror `integ`; not built or run in game)
+
+- **Deep Well (user request: the map runs dry; boost sources, seeps flow, drought-proof, optional tide shut-off).** Files: `tools/deep_well_content.{json,mjs}`, `validate_deep_well_content.mjs`, `Scripts/DeepWell/DeepWell.cs` and `DeepWellPanel.cs`, `lategame_DeepWell.py`; design `scratchpad/deep-well-design.md`.
+  - **Footprint:** 1×2×5, a cantilever with no vanilla patch. The anchor cell stands on ground, seep or badwater-source cells; the drill cell hangs (`Any`) over the source.
+  - **Why the cantilever:** a 1×1 clean source is not stackable and fills its cell, so nothing can stand on it.
+  - **Placement:** a custom validator through the official extension point runs on previews only and gives three reasons.
+  - **Boost:** 1 + (boost − 1) × power efficiency, within the native cap of 8 per source cell. Power is 1,667 hp per boost step, 10,000 at 6×.
+  - **While running:** a seep loses its `WaterDepthStrengthModifier` limit, and the source keeps flowing through drought (vanilla and Moddable Weathers).
+  - **Tide checkbox:** blocks the source completely.
+  - **Drill bits:** 0.05 HighGradeSteel per hour per boost step, stock 15, hauler-delivered with no workplace.
+  - **Waterproof**, with the native no-flood access setting.
+  - **Cost:** T4 at 30,000 science, plus a gate (MetalBlock 200, Gear 150, HighGradeSteel 60, MachineCore 10, DeepAlloy 15, Concrete 40).
+  - **Model:** 2,912 triangles.
+  - **Not done:** it does not wake a map source that hasn't started flowing yet.
+- **Steel structures (first slice of `scratchpad/platforms-design.md`).** 15 pieces in a new "Steel structures" sub-group under Paths:
+  - `SteelCantilever10x1/12x1/15x1` (1, 2 and 3 anchors; every overhang now declares `anchors`);
+  - `SteelBridge8x1/10x1/12x1/15x1` (vanilla suspension-bridge pattern; gaps of exactly that length);
+  - `SteelColumnH1`–`H6` (stackable caps);
+  - `SteelDeck3x3/5x5` (corner support only).
+
+  Models are 340–2,724 triangles; scenes are unpacked. Base costs were halved once the ×2..×8 tier factor landed, e.g. 15-tile cantilever 360 HighGradeSteel + 486 Concrete, 5×5 deck 450 + 420.
+- **Checks:** mirror `integ` with the super-bot work excluded:
+  - promote (12 checks), canonical generation, workbooks;
+  - `validate_all -SkipBlender` 51 pass + 1 report-only (`no-game-assets` cannot run outside git; it runs at commit);
+  - compile.
+- **In game:**
+  - **Deep Well:** placement messages on and off a source, save/reload, the boost readout, seeps in deep water, drought, the tide checkbox, steel deliveries (also in deep water) and the slider's power draw.
+  - **Steel pieces:** rotations, flips, deletion when support is removed, beavers crossing 15-tile bridges, decks on uneven columns, and drag-preview cost.
+
 ## Hauling radioactive goods can irradiate beavers (Claude Code session, 2026-10-29; generated and validated in mirror `costs`; not built or run in game)
 
 - **User request:** a small chance that a beaver hauling radioactive materials is irradiated and needs the hospital.

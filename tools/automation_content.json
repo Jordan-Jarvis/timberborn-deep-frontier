@@ -460,6 +460,66 @@
       "role": "none",
       "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
     },
+    "Buildings/Platforms/SteelCantilever10x1/SteelCantilever10x1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/Overhang6x1/Overhang6x1.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelCantilever12x1/SteelCantilever12x1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/Overhang6x1/Overhang6x1.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelCantilever15x1/SteelCantilever15x1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/Overhang6x1/Overhang6x1.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelBridge8x1/SteelBridge8x1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/SuspensionBridge6x1/SuspensionBridge6x1.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelBridge10x1/SteelBridge10x1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/SuspensionBridge6x1/SuspensionBridge6x1.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelBridge12x1/SteelBridge12x1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/SuspensionBridge6x1/SuspensionBridge6x1.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelBridge15x1/SteelBridge15x1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/SuspensionBridge6x1/SuspensionBridge6x1.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelColumnH1/SteelColumnH1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/TriplePlatform/TriplePlatform.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelColumnH2/SteelColumnH2.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/TriplePlatform/TriplePlatform.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelColumnH3/SteelColumnH3.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/TriplePlatform/TriplePlatform.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelColumnH4/SteelColumnH4.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/TriplePlatform/TriplePlatform.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelColumnH5/SteelColumnH5.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/TriplePlatform/TriplePlatform.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelColumnH6/SteelColumnH6.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/TriplePlatform/TriplePlatform.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelDeck3x3/SteelDeck3x3.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform5x5/MetalPlatform5x5.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelDeck5x5/SteelDeck5x5.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform5x5/MetalPlatform5x5.IronTeeth.blueprint"
+    },
     "Buildings/Metal/SteelMill/SteelMill.IronTeeth.blueprint": {
       "role": "pausable",
       "sources": [
@@ -498,6 +558,13 @@
       "role": "pausable",
       "sources": [
         "MechanicalBuildingSpec"
+      ]
+    },
+    "Buildings/Water/DeepWell/DeepWell.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "MechanicalBuildingSpec",
+        "GoodConsumingBuildingSpec"
       ]
     },
     "Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.blueprint": {
@@ -931,6 +998,16 @@
         {
           "file": "src/DeepFrontier/Scripts/Smog/SmogScrubber.cs",
           "contains": "public bool IsCleaning=>_finished&&_blockable.IsUnblocked&&_power.ActiveAndPowered;"
+        }
+      ]
+    },
+    "DeepWellSpec": {
+      "kind": "operational",
+      "response": "Off (or Pause) blocks the BlockableObject: the well stops driving its source at once (strength modifier back to 1, the seep's depth limit and the drought modifier restored), draws no power (input multiplier 0) and pauses its drill-bit consumption; hauling to a blocked building stops too. The tide shut-off (modifier 0) still applies while blocked, as it does not depend on the well running.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/DeepWell/DeepWell.cs",
+          "contains": "bool demand = linked && _blockable.IsUnblocked && !tide && !dormant && drillBits;"
         }
       ]
     },

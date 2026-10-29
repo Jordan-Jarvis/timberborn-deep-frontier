@@ -1,0 +1,870 @@
+{
+  "BuildingSpec": {
+    "SelectionSoundName": "Default",
+    "LoopingSoundName": "",
+    "BuildingCost": [
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 360
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 486
+      }
+    ],
+    "ScienceCost": 15000,
+    "PlaceFinished": false,
+    "FinishableWithBeaversOnSite": true,
+    "DrawRangeBoundsOnIt": true
+  },
+  "BuildingModelSpec": {
+    "FinishedModelName": "#Finished",
+    "UnfinishedModelName": "#Unfinished",
+    "FinishedUncoveredModelName": "",
+    "UndergroundModelName": "",
+    "ConstructionModeModel": "Finished",
+    "UndergroundModelDepth": 0
+  },
+  "TemplateSpec": {
+    "TemplateName": "SteelCantilever15x1.IronTeeth",
+    "BackwardCompatibleTemplateNames": [],
+    "RequiredFeatureToggle": "",
+    "DisablingFeatureToggle": ""
+  },
+  "BlockObjectSpec": {
+    "Size": {
+      "X": 1,
+      "Y": 15,
+      "Z": 1
+    },
+    "Blocks": [
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Top, Corners",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Top, Corners",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Top, Corners",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      }
+    ],
+    "Entrance": {
+      "HasEntrance": false,
+      "Coordinates": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    "BaseZ": 0,
+    "Overridable": false,
+    "Flippable": true
+  },
+  "BlockObjectNavMeshSettingsSpec": {
+    "NoAutoWalls": false,
+    "GenerateFloorsOnStackable": true,
+    "EdgeGroups": [],
+    "UnblockedCoordinates": [],
+    "BlockedEdges": []
+  },
+  "PlaceableBlockObjectSpec": {
+    "ToolGroupId": "DeepFrontierSteelStructures",
+    "ToolOrder": 220,
+    "ToolShape": "Square",
+    "Layout": "SideLine",
+    "CustomPivot": {
+      "HasCustomPivot": true,
+      "Coordinates": {
+        "X": 0.5,
+        "Y": 0.5,
+        "Z": 0
+      }
+    },
+    "CanBeAttachedToTerrainSide": false,
+    "DevModeTool": false
+  },
+  "LabeledEntitySpec": {
+    "DisplayNameLocKey": "Building.SteelCantilever15x1.DisplayName",
+    "DescriptionLocKey": "Building.SteelCantilever15x1.Description",
+    "FlavorDescriptionLocKey": "Building.SteelCantilever15x1.FlavorDescription",
+    "Icon": "Buildings/Platforms/SteelCantilever15x1/Icon"
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": []
+  },
+  "Children": {
+    "#Finished": {
+      "TimbermeshSpec": {
+        "Model": "Buildings/Platforms/SteelCantilever15x1/SteelCantilever15x1.IronTeeth.Model"
+      },
+      "CollidersSpec": {
+        "BoxColliders": [
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 1.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 1.9100000000000001
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 1.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 1.9100000000000001
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 2.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 2.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 2.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 3.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 4.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 5.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 6.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 7.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 8.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 9.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 10.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 11.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 12.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 13.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 14.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          }
+        ],
+        "SphereColliders": [],
+        "CapsuleColliders": []
+      }
+    },
+    "#Unfinished": {
+      "Children": {
+        "ConstructionStage0": {
+          "TimbermeshSpec": {
+            "Model": "Buildings/Platforms/SteelCantilever15x1/SteelCantilever15x1.IronTeeth.ConstructionStage0.Model"
+          },
+          "CollidersSpec": {
+            "BoxColliders": [
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 1.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 1.9100000000000001
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 1.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 1.9100000000000001
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 2.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 2.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 4.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 5.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 6.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 7.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 8.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 9.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 10.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 11.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 12.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 13.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 14.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              }
+            ],
+            "SphereColliders": [],
+            "CapsuleColliders": []
+          }
+        }
+      }
+    }
+  },
+  "StatusIconAnchorSpec": {
+    "Height": 1.7
+  }
+}

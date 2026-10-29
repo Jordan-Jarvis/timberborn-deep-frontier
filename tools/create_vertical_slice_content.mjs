@@ -414,6 +414,10 @@ await import('./vanilla_tool_overrides.mjs');
 // after them; before workforce risks and the automation audit so both see
 // the radiation buildings.
 await (await import('./radiation_content.mjs')).applyRadiationContent();
+// Deep Well (tools/deep_well_content.json): a late-game building that boosts
+// the map water source under its drill; before workforce risks, connections,
+// sounds and the automation audit, which see every building.
+await (await import('./deep_well_content.mjs')).applyDeepWell();
 // Contamination Sensor substance choice (docs/radiation.md): localization rows
 // only; the native sensor blueprint is not patched.
 await (await import('./contamination_sensor_content.mjs')).applyContaminationSensor();

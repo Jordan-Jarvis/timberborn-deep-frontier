@@ -259,6 +259,21 @@ Reasons for each choice are in the `comment` fields of `tools/building_sounds.js
 | ConcreteSidePlatform3x3 | Default | none | never (no loop) | platform/levee |
 | ConcreteSidePlatform4x4 | Default | none | never (no loop) | platform/levee |
 | ConcreteSidePlatform5x5 | Default | none | never (no loop) | platform/levee |
+| SteelCantilever10x1 | Default | none | never (no loop) | platform/levee |
+| SteelCantilever12x1 | Default | none | never (no loop) | platform/levee |
+| SteelCantilever15x1 | Default | none | never (no loop) | platform/levee |
+| SteelBridge8x1 | Default | none | never (no loop) | platform/levee |
+| SteelBridge10x1 | Default | none | never (no loop) | platform/levee |
+| SteelBridge12x1 | Default | none | never (no loop) | platform/levee |
+| SteelBridge15x1 | Default | none | never (no loop) | platform/levee |
+| SteelColumnH1 | Default | none | never (no loop) | platform/levee |
+| SteelColumnH2 | Default | none | never (no loop) | platform/levee |
+| SteelColumnH3 | Default | none | never (no loop) | platform/levee |
+| SteelColumnH4 | Default | none | never (no loop) | platform/levee |
+| SteelColumnH5 | Default | none | never (no loop) | platform/levee |
+| SteelColumnH6 | Default | none | never (no loop) | platform/levee |
+| SteelDeck3x3 | Default | none | never (no loop) | platform/levee |
+| SteelDeck5x5 | Default | none | never (no loop) | platform/levee |
 | RadioactiveSpring (basic selection) | BadwaterSource | n/a | n/a | natural object |
 | RadioactiveSpringSource (basic selection) | BadwaterSource | n/a | n/a | natural object |
 

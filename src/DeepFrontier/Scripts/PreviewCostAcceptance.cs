@@ -45,7 +45,8 @@ namespace DeepFrontier.Scripts {
       "MaterialsLaboratory","MissionControl","NuclearReactor","ObservationDeck","PrecisionMachineWorks",
       "PublicHealthLab","RadioactiveSludgeOutfall","RadioactiveSludgeRecoveryPump","RadioactiveWasteExport",
       "RadioactiveWasteRefinery","RadioactiveWasteVault","ReinforcedDamBlock","ReinforcedHydroTurbine",
-      "Restaurant","RocketAssemblyHangar","SandstonePit","SmogScrubber","SteelMill","StoneCrusher",
+      "Restaurant","RocketAssemblyHangar","SandstonePit","SmogScrubber","SteelBridge15x1","SteelCantilever15x1",
+      "SteelColumnH6","SteelDeck5x5","SteelMill","StoneCrusher",
       "TechnicalSchool","TownPlaza","UraniumProcessingPlant","WaterTreatmentPlant"
     };
     private static readonly string[] First={

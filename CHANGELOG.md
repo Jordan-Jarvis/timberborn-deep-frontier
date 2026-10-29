@@ -66,6 +66,18 @@ Changes since 0.5.0, the first Workshop release.
 - **Hauling hazard:** a beaver carrying radioactive goods now has a small chance of being irradiated and needing hospital care. The chance is 2% per hour of carrying for Radioactive Waste or Radioactive Water (about 0.5% for a 15-minute haul) and 0.5% for Contaminated Water. Bots are immune, so they are the safe haulers for waste.
 - Warehouses, piles and tanks holding radioactive waste, radioactive sludge or contaminated water can no longer be deleted until they are emptied. Before, deleting one threw the waste away.
 
+### New buildings
+- **Deep Well** (30,000 science, Water group): a small powered drill (1×2 tiles) that straddles a water source. Its leg stands on the ground beside the source and its drill head hangs over it. It works on ordinary sources, Water Seeps and badwater sources, and needs no workers.
+  - **Boost:** a slider from 1× to 6× multiplies the source's flow, up to the game's limit of 8 per source cell. Power draw follows the slider, from 1,667 hp at 1× to 10,000 hp at 6×.
+  - **Seeps and droughts:** a boosted seep no longer stops in deep water, and a boosted source keeps flowing through droughts.
+  - **Drill bits:** it uses 0.05 High-Grade Steel per hour per boost step, delivered by haulers, and stops boosting without them.
+  - **Radioactive tide:** a per-building checkbox (on by default) shuts the source off completely during a tide.
+  - Fully waterproof.
+- **Steel structures** (new "Steel structures" toolbar group under Paths), built from High-Grade Steel and Concrete:
+  - Steel cantilevers 10, 12 and 15 tiles long, anchored on 1, 2 and 3 tiles.
+  - Steel truss bridges spanning gaps of exactly 8, 10, 12 or 15 tiles; only the near end needs support.
+  - Steel columns 1 to 6 high that stack. 3×3 and 5×5 steel decks rest on four corner columns, so the corners can stand at different ground heights.
+
 ### Interface
 - Deep Frontier's buildings sit in nine toolbar sub-groups: deep mining, quarries and cement, heavy industry, nuclear fuel, rocketry, concrete scaffolds, concrete side platforms, radioactive waste and civic services.
 

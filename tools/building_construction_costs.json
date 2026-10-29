@@ -47,13 +47,15 @@
     "TownPlaza": "T3",
     "ObservationDeck": "T4",
     "CoalPowerPlant": "T3",
-    "OilPowerPlant": "T4"
+    "OilPowerPlant": "T4",
+    "DeepWell": "T4"
   },
   "lategameGates": {
     "DeepMine": [["DeepAlloy",20]],
     "Greenhouse": [["Compost",30]],
     "NuclearReactor": [["EnrichedFuel",20],["HighGradeSteel",100]],
-    "OilPowerPlant": [["MachineCore",4]]
+    "OilPowerPlant": [["MachineCore",4]],
+    "DeepWell": [["MetalBlock",200],["Gear",150],["HighGradeSteel",60],["MachineCore",10],["DeepAlloy",15],["Concrete",40]]
   },
   "buildings": {
     "FertilizerWorks": [["Plank",205],["Gear",80],["MetalBlock",40]],

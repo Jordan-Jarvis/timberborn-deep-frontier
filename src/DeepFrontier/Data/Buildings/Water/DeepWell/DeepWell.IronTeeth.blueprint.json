@@ -1,0 +1,319 @@
+{
+  "BuildingSpec": {
+    "SelectionSoundName": "AquiferDrill",
+    "LoopingSoundName": "",
+    "BuildingCost": [
+      {
+        "Id": "MetalBlock",
+        "Amount": 205
+      },
+      {
+        "Id": "Gear",
+        "Amount": 155
+      },
+      {
+        "Id": "TreatedPlank",
+        "Amount": 5
+      },
+      {
+        "Id": "DeepAlloy",
+        "Amount": 20
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 60
+      },
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 60
+      },
+      {
+        "Id": "MachineCore",
+        "Amount": 10
+      }
+    ],
+    "ScienceCost": 30000,
+    "PlaceFinished": false,
+    "FinishableWithBeaversOnSite": false,
+    "DrawRangeBoundsOnIt": false
+  },
+  "BuildingModelSpec": {
+    "FinishedModelName": "#Finished",
+    "UnfinishedModelName": "#Unfinished",
+    "FinishedUncoveredModelName": "",
+    "UndergroundModelName": "",
+    "ConstructionModeModel": "Finished",
+    "UndergroundModelDepth": 0
+  },
+  "TemplateSpec": {
+    "TemplateName": "DeepWell.IronTeeth",
+    "BackwardCompatibleTemplateNames": [],
+    "RequiredFeatureToggle": "",
+    "DisablingFeatureToggle": ""
+  },
+  "BlockObjectSpec": {
+    "Size": {
+      "X": 1,
+      "Y": 2,
+      "Z": 5
+    },
+    "Blocks": [
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Top",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      }
+    ],
+    "Entrance": {
+      "HasEntrance": true,
+      "Coordinates": {
+        "X": 0,
+        "Y": -1,
+        "Z": 0
+      }
+    },
+    "BaseZ": 0,
+    "Overridable": false,
+    "Flippable": true
+  },
+  "PlaceableBlockObjectSpec": {
+    "ToolGroupId": "Water",
+    "ToolOrder": 90,
+    "ToolShape": "Square",
+    "Layout": "Single",
+    "CustomPivot": {
+      "HasCustomPivot": false,
+      "Coordinates": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    "CanBeAttachedToTerrainSide": false,
+    "DevModeTool": false
+  },
+  "LabeledEntitySpec": {
+    "DisplayNameLocKey": "Building.DeepWell.DisplayName",
+    "DescriptionLocKey": "Building.DeepWell.Description",
+    "FlavorDescriptionLocKey": "Building.DeepWell.FlavorDescription",
+    "Icon": "Buildings/Water/DeepWell/DeepWellIcon"
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": []
+  },
+  "TransputProviderSpec": {
+    "IgnoreRotation": false,
+    "Transputs": [
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Bottom",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 0,
+          "Z": 1
+        },
+        "Directions": "Left, Right, Down",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      }
+    ]
+  },
+  "MechanicalBuildingSpec": {},
+  "MechanicalNodeSpec": {
+    "PowerOutput": 0,
+    "PowerInput": 10000,
+    "IsShaft": false
+  },
+  "MechanicalConnectorTargetSpec": {},
+  "Children": {
+    "#Finished": {
+      "TimbermeshSpec": {
+        "Model": "Buildings/Water/DeepWell/DeepWell.IronTeeth.Model"
+      },
+      "CollidersSpec": {
+        "BoxColliders": [
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 1.5,
+              "Z": 1
+            },
+            "Size": {
+              "X": 1,
+              "Y": 3,
+              "Z": 2
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 4,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 2,
+              "Z": 1
+            }
+          }
+        ],
+        "SphereColliders": [],
+        "CapsuleColliders": []
+      },
+      "Children": {}
+    },
+    "#Unfinished": {
+      "Children": {
+        "ConstructionStage0": {
+          "TimbermeshSpec": {
+            "Model": "Buildings/Water/DeepWell/DeepWell.IronTeeth.ConstructionStage0.Model"
+          },
+          "CollidersSpec": {
+            "BoxColliders": [
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 1.5,
+                  "Z": 1
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 3,
+                  "Z": 2
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 4,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 2,
+                  "Z": 1
+                }
+              }
+            ],
+            "SphereColliders": [],
+            "CapsuleColliders": []
+          }
+        }
+      }
+    }
+  },
+  "GoodConsumingBuildingSpec": {
+    "FullInventoryWorkHours": 48,
+    "ConsumedGoods": [
+      {
+        "GoodId": "HighGradeSteel",
+        "GoodPerHour": 0.3
+      }
+    ]
+  },
+  "FloodableObjectBlockerSpec": {},
+  "DeepWellSpec": {
+    "DrillCell": {
+      "X": 0,
+      "Y": 1,
+      "Z": 0
+    },
+    "MaxBoost": 6,
+    "DefaultBoost": 1,
+    "DefaultShutOffDuringTide": true,
+    "DrillBitGoodId": "HighGradeSteel",
+    "DrillBitsPerBoostStepPerHour": 0.05
+  },
+  "BuildingAccessibleSpec": {
+    "LocalAccess": {
+      "X": 0.5,
+      "Y": 0,
+      "Z": 0.14
+    },
+    "ForceOneFinalAccess": false
+  },
+  "StatusIconAnchorSpec": {
+    "Height": 5.7
+  },
+  "PowerConnectionStatusSpec": {}
+}

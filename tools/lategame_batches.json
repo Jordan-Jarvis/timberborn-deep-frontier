@@ -31,6 +31,7 @@
     "TownPlaza",
     "ObservationDeck",
     "CoalPowerPlant",
-    "OilPowerPlant"
+    "OilPowerPlant",
+    "DeepWell"
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "$comment": [
+    "Deep Well (tools/deep_well_content.mjs, Scripts/DeepWell/DeepWell.cs): a powered, worker-free, waterproof rig whose drill cell hangs over a native map water source and boosts it. Checked by tools/validate_deep_well_content.mjs.",
+    "Cost: the late-game rule (tools/building_construction_costs.json lategameTier.DeepWell, lategameGates.DeepWell); science here, inside that tier's band.",
+    "Power: powerInputHp at maxBoost; the native MechanicalNode input multiplier is boost / maxBoost (1x = powerInputHp / maxBoost).",
+    "Drill bits: the native GoodConsumingBuilding at perBoostStepPerHour x boost; the blueprint carries the full-boost rate, which sizes its inventory (ceil(rate x fullInventoryWorkHours))."
+  ],
+  "id": "DeepWell",
+  "folder": "Buildings/Water/DeepWell",
+  "template": "Buildings/Water/AquiferDrill/AquiferDrill.IronTeeth.blueprint.json",
+  "templateSpecsRemoved": ["UnderstructureConstraintSpec", "UndergroundWaterSourceDrillSpec", "NoPowerStatusAlertDisablerSpec", "MechanicalNodeAnimatorSpec"],
+  "science": 30000,
+  "toolGroup": "Water",
+  "toolOrder": 90,
+  "powerInputHp": 10000,
+  "maxBoost": 6,
+  "defaultBoost": 1,
+  "defaultShutOffDuringTide": true,
+  "drillBits": {"good": "HighGradeSteel", "perBoostStepPerHour": 0.05, "fullInventoryWorkHours": 48},
+  "maxWaterSourceStrengthPerCell": 8
+}

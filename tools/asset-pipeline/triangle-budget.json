@@ -288,6 +288,15 @@
    "construction": 15098,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model.timbermesh"
   },
+  "DeepWell": {
+   "family": "lategame",
+   "class": "workshop",
+   "target": 12000,
+   "finished": 2912,
+   "vertices": 5612,
+   "construction": 2912,
+   "file": "outputs/lategame-integration/Data/Buildings/Water/DeepWell/DeepWell.IronTeeth.Model.timbermesh"
+  },
   "ElectrolysisPlant": {
    "family": "lategame",
    "class": "grand",
@@ -630,6 +639,141 @@
    "construction": 3914,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.Model.timbermesh"
   },
+  "SteelBridge10x1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 1860,
+   "vertices": 3718,
+   "construction": 1860,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelBridge10x1/SteelBridge10x1.IronTeeth.Model.timbermesh"
+  },
+  "SteelBridge12x1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 2164,
+   "vertices": 4310,
+   "construction": 2164,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelBridge12x1/SteelBridge12x1.IronTeeth.Model.timbermesh"
+  },
+  "SteelBridge15x1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 2620,
+   "vertices": 5198,
+   "construction": 2620,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelBridge15x1/SteelBridge15x1.IronTeeth.Model.timbermesh"
+  },
+  "SteelBridge8x1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 1556,
+   "vertices": 3126,
+   "construction": 1556,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelBridge8x1/SteelBridge8x1.IronTeeth.Model.timbermesh"
+  },
+  "SteelCantilever10x1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 1820,
+   "vertices": 3621,
+   "construction": 1820,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelCantilever10x1/SteelCantilever10x1.IronTeeth.Model.timbermesh"
+  },
+  "SteelCantilever12x1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 2192,
+   "vertices": 4380,
+   "construction": 2192,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelCantilever12x1/SteelCantilever12x1.IronTeeth.Model.timbermesh"
+  },
+  "SteelCantilever15x1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 2724,
+   "vertices": 5439,
+   "construction": 2724,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelCantilever15x1/SteelCantilever15x1.IronTeeth.Model.timbermesh"
+  },
+  "SteelColumnH1": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 340,
+   "vertices": 690,
+   "construction": 340,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelColumnH1/SteelColumnH1.IronTeeth.Model.timbermesh"
+  },
+  "SteelColumnH2": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 548,
+   "vertices": 1110,
+   "construction": 548,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelColumnH2/SteelColumnH2.IronTeeth.Model.timbermesh"
+  },
+  "SteelColumnH3": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 756,
+   "vertices": 1538,
+   "construction": 756,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelColumnH3/SteelColumnH3.IronTeeth.Model.timbermesh"
+  },
+  "SteelColumnH4": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 964,
+   "vertices": 1959,
+   "construction": 964,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelColumnH4/SteelColumnH4.IronTeeth.Model.timbermesh"
+  },
+  "SteelColumnH5": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 1172,
+   "vertices": 2379,
+   "construction": 1172,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelColumnH5/SteelColumnH5.IronTeeth.Model.timbermesh"
+  },
+  "SteelColumnH6": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 1380,
+   "vertices": 2802,
+   "construction": 1380,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelColumnH6/SteelColumnH6.IronTeeth.Model.timbermesh"
+  },
+  "SteelDeck3x3": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 1524,
+   "vertices": 3058,
+   "construction": 1524,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelDeck3x3/SteelDeck3x3.IronTeeth.Model.timbermesh"
+  },
+  "SteelDeck5x5": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 1876,
+   "vertices": 3766,
+   "construction": 1876,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/SteelDeck5x5/SteelDeck5x5.IronTeeth.Model.timbermesh"
+  },
   "SteelMill": {
    "family": "lategame",
    "class": "grand",
@@ -685,6 +829,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 1260989,
+ "totalBlueprintTriangles": 1313805,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

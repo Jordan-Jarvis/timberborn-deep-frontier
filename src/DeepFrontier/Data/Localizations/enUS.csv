@@ -683,6 +683,51 @@ Building.ConcreteSidePlatform4x4.FlavorDescription,Room for the next layer of th
 Building.ConcreteSidePlatform5x5.DisplayName,Concrete side platform 5×5,Deep Frontier construction materials
 Building.ConcreteSidePlatform5x5.Description,"A legless 5×5 concrete deck that hangs from the side of a reinforced dam block, level with its top. Steel cleats bear on the dam top; nothing is needed underneath. Steel joists carry the wider span. Supports construction above; does not hold back water.",Deep Frontier construction materials
 Building.ConcreteSidePlatform5x5.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelCantilever10x1.DisplayName,Steel cantilever 10×1,Deep Frontier construction materials
+Building.SteelCantilever10x1.Description,A riveted steel truss deck with one supported anchor tile and 9 cantilever tiles. Every anchor tile must stand on the ground or a platform. Supports construction above; does not hold back water.,Deep Frontier construction materials
+Building.SteelCantilever10x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelCantilever12x1.DisplayName,Steel cantilever 12×1,Deep Frontier construction materials
+Building.SteelCantilever12x1.Description,A riveted steel truss deck with two supported anchor tiles and 10 cantilever tiles. Every anchor tile must stand on the ground or a platform. Supports construction above; does not hold back water.,Deep Frontier construction materials
+Building.SteelCantilever12x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelCantilever15x1.DisplayName,Steel cantilever 15×1,Deep Frontier construction materials
+Building.SteelCantilever15x1.Description,A riveted steel truss deck with three supported anchor tiles and 12 cantilever tiles. Every anchor tile must stand on the ground or a platform. Supports construction above; does not hold back water.,Deep Frontier construction materials
+Building.SteelCantilever15x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelBridge8x1.DisplayName,Steel truss bridge 8×1,Deep Frontier construction materials
+Building.SteelBridge8x1.Description,"A riveted steel truss footbridge on a concrete abutment, spanning 8 tiles of open space. Like the suspension bridge, only the near end needs ground or a platform; the far end must meet a path at the same height across a gap of exactly 8 tiles.",Deep Frontier construction materials
+Building.SteelBridge8x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelBridge10x1.DisplayName,Steel truss bridge 10×1,Deep Frontier construction materials
+Building.SteelBridge10x1.Description,"A riveted steel truss footbridge on a concrete abutment, spanning 10 tiles of open space. Like the suspension bridge, only the near end needs ground or a platform; the far end must meet a path at the same height across a gap of exactly 10 tiles.",Deep Frontier construction materials
+Building.SteelBridge10x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelBridge12x1.DisplayName,Steel truss bridge 12×1,Deep Frontier construction materials
+Building.SteelBridge12x1.Description,"A riveted steel truss footbridge on a concrete abutment, spanning 12 tiles of open space. Like the suspension bridge, only the near end needs ground or a platform; the far end must meet a path at the same height across a gap of exactly 12 tiles.",Deep Frontier construction materials
+Building.SteelBridge12x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelBridge15x1.DisplayName,Steel truss bridge 15×1,Deep Frontier construction materials
+Building.SteelBridge15x1.Description,"A riveted steel truss footbridge on a concrete abutment, spanning 15 tiles of open space. Like the suspension bridge, only the near end needs ground or a platform; the far end must meet a path at the same height across a gap of exactly 15 tiles.",Deep Frontier construction materials
+Building.SteelBridge15x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelColumnH1.DisplayName,Steel column (1 high),Deep Frontier construction materials
+Building.SteelColumnH1.Description,"A riveted steel trestle column 1 layer high with a stackable cap. Stack columns, or stand them on the ground or a platform, then rest steel decks on their caps to level a deck over uneven ground.",Deep Frontier construction materials
+Building.SteelColumnH1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelColumnH2.DisplayName,Steel column (2 high),Deep Frontier construction materials
+Building.SteelColumnH2.Description,"A riveted steel trestle column 2 layers high with a stackable cap. Stack columns, or stand them on the ground or a platform, then rest steel decks on their caps to level a deck over uneven ground.",Deep Frontier construction materials
+Building.SteelColumnH2.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelColumnH3.DisplayName,Steel column (3 high),Deep Frontier construction materials
+Building.SteelColumnH3.Description,"A riveted steel trestle column 3 layers high with a stackable cap. Stack columns, or stand them on the ground or a platform, then rest steel decks on their caps to level a deck over uneven ground.",Deep Frontier construction materials
+Building.SteelColumnH3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelColumnH4.DisplayName,Steel column (4 high),Deep Frontier construction materials
+Building.SteelColumnH4.Description,"A riveted steel trestle column 4 layers high with a stackable cap. Stack columns, or stand them on the ground or a platform, then rest steel decks on their caps to level a deck over uneven ground.",Deep Frontier construction materials
+Building.SteelColumnH4.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelColumnH5.DisplayName,Steel column (5 high),Deep Frontier construction materials
+Building.SteelColumnH5.Description,"A riveted steel trestle column 5 layers high with a stackable cap. Stack columns, or stand them on the ground or a platform, then rest steel decks on their caps to level a deck over uneven ground.",Deep Frontier construction materials
+Building.SteelColumnH5.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelColumnH6.DisplayName,Steel column (6 high),Deep Frontier construction materials
+Building.SteelColumnH6.Description,"A riveted steel trestle column 6 layers high with a stackable cap. Stack columns, or stand them on the ground or a platform, then rest steel decks on their caps to level a deck over uneven ground.",Deep Frontier construction materials
+Building.SteelColumnH6.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelDeck3x3.DisplayName,Steel deck 3×3,Deep Frontier construction materials
+Building.SteelDeck3x3.Description,"A riveted steel plate deck that rests only on its four corner tiles: on the ground, platforms or steel columns of different heights. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.SteelDeck3x3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.SteelDeck5x5.DisplayName,Steel deck 5×5,Deep Frontier construction materials
+Building.SteelDeck5x5.Description,"A riveted steel plate deck that rests only on its four corner tiles: on the ground, platforms or steel columns of different heights. Supports construction above; does not hold back water.",Deep Frontier construction materials
+Building.SteelDeck5x5.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
 Building.ReinforcedHydroTurbine.DisplayName,Reinforced hydroelectric turbine,Deep Frontier construction materials
 Building.ReinforcedHydroTurbine.Description,A reinforced outlet through a dam. Set its discharge in m³/s; actual forward flow and water head generate hp. Close it manually or with native automation. Build stairs to the service terrace and structures on the solid upper cap.,Deep Frontier construction materials
 Building.ReinforcedHydroTurbine.FlavorDescription,"A river, given a useful job.",Deep Frontier construction materials
@@ -740,6 +785,33 @@ Building.RadioactiveSpring.DisplayName,Radioactive Spring,Deep Frontier
 Building.RadioactiveSpring.Description,A natural spring of radioactive water. Its strength works like a water source; 0 stops it.,Deep Frontier
 Building.RadioactiveSpringSource.DisplayName,Radioactive Spring,Deep Frontier
 Building.RadioactiveSpringSource.Description,A natural spring of radioactive water. Its strength works like a water source; 0 stops it.,Deep Frontier
+Building.DeepWell.DisplayName,Deep Well,Deep Frontier
+Building.DeepWell.Description,"Stands with its drill over a water source, water seep or badwater source and drives the source harder while powered: up to 6× its flow, at most 8 per source cell. A seep flows like a normal source, and the source keeps flowing through droughts. Draws 1,667 hp at 1×, rising with the boost to 10,000 hp at 6×, and wears out 0.05 high-grade steel drill bits per hour per step. No workers; haulers bring the steel. Waterproof.",Deep Frontier
+Building.DeepWell.FlavorDescription,"When the river runs dry, drill deeper.",Deep Frontier
+DeepFrontier.DeepWell.Placement.NoSource,"The drill must stand over a water source, water seep or badwater source.",Deep Frontier
+DeepFrontier.DeepWell.Placement.SourceTaken,Another Deep Well already drives this water source.,Deep Frontier
+DeepFrontier.DeepWell.Placement.SourceControlled,A building on this water source already controls it.,Deep Frontier
+DeepFrontier.DeepWell.Status.NoDrillBits,No drill bits: the well needs high-grade steel to drive its source.,Deep Frontier
+DeepFrontier.DeepWell.Status.NoDrillBits.Short,No drill bits,Deep Frontier
+DeepFrontier.DeepWell.Status.NoSource,The water source under the drill is gone.,Deep Frontier
+DeepFrontier.DeepWell.Status.NoSource.Short,No water source,Deep Frontier
+DeepFrontier.DeepWell.Panel.Title,Deep well,Deep Frontier
+DeepFrontier.DeepWell.Panel.Boost,Source boost,Deep Frontier
+DeepFrontier.DeepWell.Panel.BoostValue,{0}×,Deep Frontier
+DeepFrontier.DeepWell.Panel.ShutOffDuringTide,Shut the source off during the radioactive tide,Deep Frontier
+DeepFrontier.DeepWell.Panel.Demand,Power at this boost: {0} hp,Deep Frontier
+DeepFrontier.DeepWell.Panel.DrillBits,"Drill bits: {0} per hour, {1} hours in stock",Deep Frontier
+DeepFrontier.DeepWell.Panel.Source,"Source strength: {0} set, {1} now",Deep Frontier
+DeepFrontier.DeepWell.Panel.Seep,A seep: while the well runs it pours like a normal source.,Deep Frontier
+DeepFrontier.DeepWell.Panel.Capped,Limited by the source maximum of 8 per cell.,Deep Frontier
+DeepFrontier.DeepWell.State.UnderConstruction,Under construction.,Deep Frontier
+DeepFrontier.DeepWell.State.NoSource,No water source under the drill.,Deep Frontier
+DeepFrontier.DeepWell.State.Paused,Paused: the source flows as normal.,Deep Frontier
+DeepFrontier.DeepWell.State.TideShutOff,Shut off for the radioactive tide: the source is closed.,Deep Frontier
+DeepFrontier.DeepWell.State.SourceDormant,The source has not started flowing yet.,Deep Frontier
+DeepFrontier.DeepWell.State.NoDrillBits,Waiting for drill bits: the source flows as normal.,Deep Frontier
+DeepFrontier.DeepWell.State.NoPower,No power: the source flows as normal.,Deep Frontier
+DeepFrontier.DeepWell.State.Boosting,Driving the source at {0}×.,Deep Frontier
 DeepFrontier.ContaminationSensor.Substance,Measures,Deep Frontier
 DeepFrontier.ContaminationSensor.Substance.Badwater,Badwater,Deep Frontier
 DeepFrontier.ContaminationSensor.Substance.Radiation,Radiation,Deep Frontier
@@ -805,6 +877,7 @@ ToolGroups.DeepFrontierNuclearFuel,Nuclear fuel,Deep Frontier toolbar group
 ToolGroups.DeepFrontierRocketry,Rocketry,Deep Frontier toolbar group
 ToolGroups.DeepFrontierConcreteScaffolds,Concrete scaffolds,Deep Frontier toolbar group
 ToolGroups.DeepFrontierConcretePlatforms,Concrete side platforms,Deep Frontier toolbar group
+ToolGroups.DeepFrontierSteelStructures,Steel structures,Deep Frontier toolbar group
 ToolGroups.DeepFrontierRadioactiveWaste,Radioactive waste,Deep Frontier toolbar group
 ToolGroups.DeepFrontierCivicServices,Civic services,Deep Frontier toolbar group
 DeepFrontier.Power.Status.NotConnected,Not connected to a power source. Connect it to a generator with shafts or power lines.,Deep Frontier

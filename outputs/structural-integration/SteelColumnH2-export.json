@@ -1,0 +1,19 @@
+{
+  "source": "SteelColumnH2",
+  "targets": [
+    "SteelColumnH2"
+  ],
+  "origin": [
+    0,
+    0,
+    0
+  ],
+  "size": [
+    1,
+    1,
+    2
+  ],
+  "openings": 0,
+  "objects": 2,
+  "animationFrames": 1
+}

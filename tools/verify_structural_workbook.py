@@ -27,8 +27,13 @@ for item in catalog["buildings"]:
     assert row["Power role"] == "Passive / transport", ident
     assert "no artificial layer cap" in row["Stacking rule"], ident
     assert row["Status"] == row["Data status"] == catalog["status"], ident
-    assert sum(b["Stackable"] == "BlockObject" for b in blueprint["BlockObjectSpec"]["Blocks"]) == shown[0] * shown[1], ident
-    assert blueprint["BuildingSpec"]["BuildingCost"] == [{"Id": g, "Amount": a} for g, a in item["cost"]], ident
+    # Stackable tops: none on a bridge (a path span), only the cap of a column.
+    support = 0 if item["kind"] == "bridge" else 1 if item["kind"] == "column" else shown[0] * shown[1]
+    assert sum(b["Stackable"] == "BlockObject" for b in blueprint["BlockObjectSpec"]["Blocks"]) == support, ident
+    # Authored costs are multiplied by their science tier's costFactor (tools/lategame_costs.mjs scaledCost).
+    tiers = json.loads((root / "tools/building_construction_costs.json").read_text(encoding="utf-8"))["lategameRule"]["tiers"]
+    factor = next(t["costFactor"] for t in tiers.values() if t["scienceMax"] is None or item["science"] <= t["scienceMax"])
+    assert blueprint["BuildingSpec"]["BuildingCost"] == [{"Id": g, "Amount": a * factor} for g, a in item["cost"]], ident
     if item["kind"] == "scaffold":
         # Concrete platforms: k = n² + H; cost k × (3 Concrete, 2 Metal Block, 1 Gear), science 500k.
         n, depth, layers = item["size"]

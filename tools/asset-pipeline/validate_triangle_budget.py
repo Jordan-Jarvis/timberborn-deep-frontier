@@ -68,7 +68,7 @@ OWNERS = {
         'PrecisionMachineWorks', 'MissionControl')},
     **{name: ('lategame', 'workshop', LATE) for name in (
         'FertilizerWorks', 'FoodPackagingWorks', 'TownPlaza', 'ObservationDeck', 'PublicHealthLab',
-        'Bathhouse', 'Greenhouse', 'TechnicalSchool', 'CoalPowerPlant', 'OilPowerPlant')},
+        'Bathhouse', 'Greenhouse', 'TechnicalSchool', 'CoalPowerPlant', 'OilPowerPlant', 'DeepWell')},
     **{name: ('lategame', 'small', LATE) for name in (
         'SmogScrubber', 'RadioactiveWasteExport', 'RadioactiveSludgeRecoveryPump', 'RadioactiveSludgeOutfall')},
     **{name: ('industrial', 'workshop', None) for name in (
@@ -79,7 +79,11 @@ OWNERS = {
         'ConcreteScaffold3x3H1', 'ConcreteScaffold3x3H2', 'ConcreteScaffold4x4H1', 'ConcreteScaffold4x4H2',
         'ConcreteScaffold4x4H3', 'ConcreteScaffold5x5H1', 'ConcreteScaffold5x5H2', 'ConcreteScaffold5x5H3',
         'ConcreteSidePlatform3x3', 'ConcreteSidePlatform4x4', 'ConcreteSidePlatform5x5',
-        'LimestoneMasonryBlock', 'ReinforcedDamBlock', 'SandstoneMasonryBlock')},
+        'LimestoneMasonryBlock', 'ReinforcedDamBlock', 'SandstoneMasonryBlock',
+        'SteelCantilever10x1', 'SteelCantilever12x1', 'SteelCantilever15x1',
+        'SteelBridge8x1', 'SteelBridge10x1', 'SteelBridge12x1', 'SteelBridge15x1',
+        'SteelColumnH1', 'SteelColumnH2', 'SteelColumnH3', 'SteelColumnH4', 'SteelColumnH5', 'SteelColumnH6',
+        'SteelDeck3x3', 'SteelDeck5x5')},
 }
 # Map objects and pile goods (tools/map_objects.json, build_map_objects.py):
 # measured from their candidate exports, like the other families.

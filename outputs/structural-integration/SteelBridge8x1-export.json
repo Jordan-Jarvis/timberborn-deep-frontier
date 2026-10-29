@@ -1,0 +1,19 @@
+{
+  "source": "SteelBridge8x1",
+  "targets": [
+    "SteelBridge8x1"
+  ],
+  "origin": [
+    0,
+    0,
+    0
+  ],
+  "size": [
+    1,
+    9,
+    1
+  ],
+  "openings": 0,
+  "objects": 2,
+  "animationFrames": 1
+}

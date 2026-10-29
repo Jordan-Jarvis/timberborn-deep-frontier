@@ -1,0 +1,19 @@
+{
+  "source": "SteelDeck3x3",
+  "targets": [
+    "SteelDeck3x3"
+  ],
+  "origin": [
+    0,
+    0,
+    0
+  ],
+  "size": [
+    3,
+    3,
+    1
+  ],
+  "openings": 0,
+  "objects": 2,
+  "animationFrames": 1
+}

@@ -108,6 +108,96 @@
       "nodes": 3,
       "nativeUvVertices": 5284,
       "supportCells": 25
+    },
+    {
+      "building": "SteelCantilever10x1",
+      "nodes": 3,
+      "nativeUvVertices": 3621,
+      "supportCells": 10
+    },
+    {
+      "building": "SteelCantilever12x1",
+      "nodes": 3,
+      "nativeUvVertices": 4380,
+      "supportCells": 12
+    },
+    {
+      "building": "SteelCantilever15x1",
+      "nodes": 3,
+      "nativeUvVertices": 5439,
+      "supportCells": 15
+    },
+    {
+      "building": "SteelBridge8x1",
+      "nodes": 3,
+      "nativeUvVertices": 3126,
+      "supportCells": 0
+    },
+    {
+      "building": "SteelBridge10x1",
+      "nodes": 3,
+      "nativeUvVertices": 3718,
+      "supportCells": 0
+    },
+    {
+      "building": "SteelBridge12x1",
+      "nodes": 3,
+      "nativeUvVertices": 4310,
+      "supportCells": 0
+    },
+    {
+      "building": "SteelBridge15x1",
+      "nodes": 3,
+      "nativeUvVertices": 5198,
+      "supportCells": 0
+    },
+    {
+      "building": "SteelColumnH1",
+      "nodes": 3,
+      "nativeUvVertices": 690,
+      "supportCells": 1
+    },
+    {
+      "building": "SteelColumnH2",
+      "nodes": 3,
+      "nativeUvVertices": 1110,
+      "supportCells": 1
+    },
+    {
+      "building": "SteelColumnH3",
+      "nodes": 3,
+      "nativeUvVertices": 1538,
+      "supportCells": 1
+    },
+    {
+      "building": "SteelColumnH4",
+      "nodes": 3,
+      "nativeUvVertices": 1959,
+      "supportCells": 1
+    },
+    {
+      "building": "SteelColumnH5",
+      "nodes": 3,
+      "nativeUvVertices": 2379,
+      "supportCells": 1
+    },
+    {
+      "building": "SteelColumnH6",
+      "nodes": 3,
+      "nativeUvVertices": 2802,
+      "supportCells": 1
+    },
+    {
+      "building": "SteelDeck3x3",
+      "nodes": 3,
+      "nativeUvVertices": 3058,
+      "supportCells": 9
+    },
+    {
+      "building": "SteelDeck5x5",
+      "nodes": 3,
+      "nativeUvVertices": 3766,
+      "supportCells": 25
     }
   ],
   "sidePlatformPickReplays": 216

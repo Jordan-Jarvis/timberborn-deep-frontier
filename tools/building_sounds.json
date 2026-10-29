@@ -293,6 +293,81 @@
       "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
       "comment": "A side-hung deck: native Platform/Overhang Default selection, no loop driver."
     },
+    "SteelCantilever10x1": {
+      "template": "Buildings/Platforms/SteelCantilever10x1/SteelCantilever10x1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A cantilever deck: the native Overhang selection is Default. No loop driver."
+    },
+    "SteelCantilever12x1": {
+      "template": "Buildings/Platforms/SteelCantilever12x1/SteelCantilever12x1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A cantilever deck: the native Overhang selection is Default. No loop driver."
+    },
+    "SteelCantilever15x1": {
+      "template": "Buildings/Platforms/SteelCantilever15x1/SteelCantilever15x1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A cantilever deck: the native Overhang selection is Default. No loop driver."
+    },
+    "SteelBridge8x1": {
+      "template": "Buildings/Platforms/SteelBridge8x1/SteelBridge8x1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A footbridge: the native Suspension Bridge selection is Default. No loop driver."
+    },
+    "SteelBridge10x1": {
+      "template": "Buildings/Platforms/SteelBridge10x1/SteelBridge10x1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A footbridge: the native Suspension Bridge selection is Default. No loop driver."
+    },
+    "SteelBridge12x1": {
+      "template": "Buildings/Platforms/SteelBridge12x1/SteelBridge12x1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A footbridge: the native Suspension Bridge selection is Default. No loop driver."
+    },
+    "SteelBridge15x1": {
+      "template": "Buildings/Platforms/SteelBridge15x1/SteelBridge15x1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A footbridge: the native Suspension Bridge selection is Default. No loop driver."
+    },
+    "SteelColumnH1": {
+      "template": "Buildings/Platforms/SteelColumnH1/SteelColumnH1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A stackable column: the native Platform selection is Default. No loop driver."
+    },
+    "SteelColumnH2": {
+      "template": "Buildings/Platforms/SteelColumnH2/SteelColumnH2.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A stackable column: the native Platform selection is Default. No loop driver."
+    },
+    "SteelColumnH3": {
+      "template": "Buildings/Platforms/SteelColumnH3/SteelColumnH3.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A stackable column: the native Platform selection is Default. No loop driver."
+    },
+    "SteelColumnH4": {
+      "template": "Buildings/Platforms/SteelColumnH4/SteelColumnH4.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A stackable column: the native Platform selection is Default. No loop driver."
+    },
+    "SteelColumnH5": {
+      "template": "Buildings/Platforms/SteelColumnH5/SteelColumnH5.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A stackable column: the native Platform selection is Default. No loop driver."
+    },
+    "SteelColumnH6": {
+      "template": "Buildings/Platforms/SteelColumnH6/SteelColumnH6.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A stackable column: the native Platform selection is Default. No loop driver."
+    },
+    "SteelDeck3x3": {
+      "template": "Buildings/Platforms/SteelDeck3x3/SteelDeck3x3.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A stackable deck: the native Metal Platform selection is Default. No loop driver."
+    },
+    "SteelDeck5x5": {
+      "template": "Buildings/Platforms/SteelDeck5x5/SteelDeck5x5.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A stackable deck: the native Metal Platform selection is Default. No loop driver."
+    },
     "SteelMill": {
       "template": "Buildings/Metal/SteelMill/SteelMill.IronTeeth.blueprint",
       "selection": "Smelter", "looping": "PrintingPress", "loopDriver": "workshop", "family": "furnace/smelter",
@@ -312,6 +387,11 @@
       "template": "Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.blueprint",
       "selection": "WindTunnel", "looping": "", "loopDriver": "none", "family": "pump/water",
       "comment": "AquiferDrill-derived powered building without workers (integrated build 122). The fan selection is the Iron Teeth Wind Tunnel. It is not a workshop, attraction or generator, and RangedEffectBuildingSpec would add a second IBuildingWithRange, so no native driver can play a loop: the planned WaterPump loop is dropped."
+    },
+    "DeepWell": {
+      "template": "Buildings/Water/DeepWell/DeepWell.IronTeeth.blueprint",
+      "selection": "AquiferDrill", "looping": "", "loopDriver": "none", "family": "pump/water",
+      "comment": "AquiferDrill-derived powered drill over a water source, without workers. It keeps the native Aquifer Drill selection. Its UndergroundWaterSourceDrillSpec (the drill's loop driver) is removed and it is no workshop, attraction or generator, so no native driver can play a loop."
     },
     "Bathhouse": {
       "template": "Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.blueprint",

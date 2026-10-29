@@ -262,3 +262,7 @@ MODELS={
 }
 MODELS.update({scaffold_ident(n,legs):scaffold_for(n,legs) for n in SCAFFOLD_SPANS for legs in SCAFFOLD_LEGS})
 MODELS.update({anchored_deck_ident(n):anchored_deck_for(n) for n in SCAFFOLD_SPANS})
+# Steel structures (steel_structure_geometry.py): cantilevers, truss bridges,
+# stackable columns and corner-supported decks.
+from steel_structure_geometry import MODELS as STEEL_MODELS
+MODELS.update(STEEL_MODELS)

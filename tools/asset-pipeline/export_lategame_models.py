@@ -67,6 +67,7 @@ DECLARED_MODELS = {
     'ObservationDeck': 'Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.Model',
     'CoalPowerPlant': 'Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.Model',
     'OilPowerPlant': 'Buildings/Power/OilPowerPlant/OilPowerPlant.IronTeeth.Model',
+    'DeepWell': 'Buildings/Water/DeepWell/DeepWell.IronTeeth.Model',
 }
 
 # Visitor slots of the open-air wellbeing attractions: native slot empties

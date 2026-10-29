@@ -1,0 +1,447 @@
+{
+  "BuildingSpec": {
+    "SelectionSoundName": "Default",
+    "LoopingSoundName": "",
+    "BuildingCost": [
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 120
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 120
+      }
+    ],
+    "ScienceCost": 5500,
+    "PlaceFinished": false,
+    "FinishableWithBeaversOnSite": true,
+    "DrawRangeBoundsOnIt": false
+  },
+  "BuildingModelSpec": {
+    "FinishedModelName": "#Finished",
+    "UnfinishedModelName": "#Unfinished",
+    "FinishedUncoveredModelName": "",
+    "UndergroundModelName": "",
+    "ConstructionModeModel": "Finished",
+    "UndergroundModelDepth": 0
+  },
+  "TemplateSpec": {
+    "TemplateName": "SteelColumnH3.IronTeeth",
+    "BackwardCompatibleTemplateNames": [],
+    "RequiredFeatureToggle": "",
+    "DisablingFeatureToggle": ""
+  },
+  "BlockObjectSpec": {
+    "Size": {
+      "X": 1,
+      "Y": 1,
+      "Z": 3
+    },
+    "Blocks": [
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Corners",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Top, Corners",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      }
+    ],
+    "Entrance": {
+      "HasEntrance": false,
+      "Coordinates": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    "BaseZ": 0,
+    "Overridable": false,
+    "Flippable": true
+  },
+  "BlockObjectNavMeshSettingsSpec": {
+    "NoAutoWalls": true,
+    "GenerateFloorsOnStackable": true,
+    "EdgeGroups": [],
+    "UnblockedCoordinates": [],
+    "BlockedEdges": []
+  },
+  "PlaceableBlockObjectSpec": {
+    "ToolGroupId": "Paths",
+    "ToolOrder": 227,
+    "ToolShape": "Square",
+    "Layout": "Rectangle",
+    "CustomPivot": {
+      "HasCustomPivot": false,
+      "Coordinates": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    "CanBeAttachedToTerrainSide": false,
+    "DevModeTool": false
+  },
+  "LabeledEntitySpec": {
+    "DisplayNameLocKey": "Building.SteelColumnH3.DisplayName",
+    "DescriptionLocKey": "Building.SteelColumnH3.Description",
+    "FlavorDescriptionLocKey": "Building.SteelColumnH3.FlavorDescription",
+    "Icon": "Buildings/Platforms/SteelColumnH3/Icon"
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": []
+  },
+  "Children": {
+    "#Finished": {
+      "TimbermeshSpec": {
+        "Model": "Buildings/Platforms/SteelColumnH3/SteelColumnH3.IronTeeth.Model"
+      },
+      "CollidersSpec": {
+        "BoxColliders": [
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 0.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 0.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 1.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 1.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 1.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 1.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 2.94,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 2.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.09,
+              "Y": 2.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 2.5,
+              "Z": 0.09
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          },
+          {
+            "Center": {
+              "X": 0.91,
+              "Y": 2.5,
+              "Z": 0.91
+            },
+            "Size": {
+              "X": 0.18,
+              "Y": 1,
+              "Z": 0.18
+            }
+          }
+        ],
+        "SphereColliders": [],
+        "CapsuleColliders": []
+      }
+    },
+    "#Unfinished": {
+      "Children": {
+        "ConstructionStage0": {
+          "TimbermeshSpec": {
+            "Model": "Buildings/Platforms/SteelColumnH3/SteelColumnH3.IronTeeth.ConstructionStage0.Model"
+          },
+          "CollidersSpec": {
+            "BoxColliders": [
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 0.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 0.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 1.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 1.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 1.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 1.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 2.94,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 2.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.09,
+                  "Y": 2.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 2.5,
+                  "Z": 0.09
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.91,
+                  "Y": 2.5,
+                  "Z": 0.91
+                },
+                "Size": {
+                  "X": 0.18,
+                  "Y": 1,
+                  "Z": 0.18
+                }
+              }
+            ],
+            "SphereColliders": [],
+            "CapsuleColliders": []
+          }
+        }
+      }
+    }
+  }
+}

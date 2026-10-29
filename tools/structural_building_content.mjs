@@ -69,6 +69,85 @@ export function sideDeckAnchor(building) {
   return [Math.floor(n/2),n,0];
 }
 
+// Overhangs: a 1×N deck whose first A tiles are supported anchors (native
+// foundations, GroundOrStackable) and whose other tiles cantilever (Any); every
+// tile is a stackable top. Overhang6x1's SideLine layout and CustomPivot on the
+// first anchor tile are kept. A = 1 for the concrete 8×1; the steel
+// cantilevers need more anchor tiles as they grow (10×1: 1, 12×1: 2, 15×1: 3),
+// an AND of native foundations: every anchor tile must stand on ground or a
+// stackable top, and losing any one deletes the deck like any native support.
+const STEEL_CANTILEVERS={10:1,12:2,15:3};
+export function overhangContract(building) {
+  const [w,length,layers]=building.size;
+  const anchors=building.anchors;
+  if(w!==1||layers!==1||!Number.isInteger(anchors)||anchors<1||anchors>=length)
+    throw new Error('Overhang geometry contract changed: '+building.id);
+  if(building.id==='ConcreteOverhang8x1') {
+    if(length!==8||anchors!==1)throw new Error('ConcreteOverhang8x1 must stay 1×8 with one anchor tile');
+    return {length,anchors};
+  }
+  if(STEEL_CANTILEVERS[length]!==anchors||building.id!==`SteelCantilever${length}x1`)
+    throw new Error(`Overhang ${building.id} is not a steel cantilever ${Object.entries(STEEL_CANTILEVERS).map(([n,a])=>`${n}×1/${a}`).join(', ')}`);
+  steelCost(building,{steel:4*length,concrete:3*length+12*anchors,science:1000*length});
+  return {length,anchors};
+}
+
+// Steel structures (High-Grade Steel from the steel mill, plus Concrete):
+// deliberately heavy late-game costs, set per piece in structural_content.json
+// and checked here against these formulas.
+//   cantilever N×1, A anchors: 8N steel, 6N + 24A concrete, 1000N science
+//   bridge, N span tiles:      10N steel, 48 + 4N concrete, 800N science
+//   column, H layers:          10H steel, 12 + 6H concrete, 4000 + 500H science
+//   deck n×n:                  6n² steel, 4n² + 40 concrete, 600n² science
+// Base costs; scaledCost multiplies them by the science tier's costFactor
+// (halved on 2026-10-29 once the x2..x8 factors landed).
+function steelCost(building,{steel,concrete,science}) {
+  const cost=[['HighGradeSteel',steel],['Concrete',concrete]];
+  if(JSON.stringify(building.cost)!==JSON.stringify(cost)||building.science!==science)
+    throw new Error(`${building.id} cost/science must be ${JSON.stringify(cost)} / ${science}`);
+}
+
+// Steel truss bridges: a clone of the vanilla SuspensionBridge6x1 contract,
+// size [1, N+1, 1]: the near tile is the only foundation (GroundOrStackable,
+// Bottom, Corners, Path, Middle), the N span tiles need open air below (Air,
+// Floor, Bottom, Corners, Path, Middle). Like the vanilla bridge the far end
+// needs nothing: it meets a path or platform on the far bank at the same
+// height, so a span of N tiles bridges a gap of exactly N tiles.
+const STEEL_BRIDGE_SPANS=[8,10,12,15];
+export function bridgeSpan(building) {
+  const [w,depth,layers]=building.size;
+  const span=depth-1;
+  if(w!==1||layers!==1||!STEEL_BRIDGE_SPANS.includes(span)||building.id!==`SteelBridge${span}x1`)
+    throw new Error('Steel bridge geometry contract changed: '+building.id);
+  steelCost(building,{steel:5*span,concrete:24+2*span,science:800*span});
+  return span;
+}
+
+// Steel columns: stackable trestles H = 1..6 layers, size [1, 1, H], like a tall
+// vanilla TriplePlatform: foundation GroundOrStackable at z = 0, Corners all the
+// way up, the top block Top, Corners and Stackable. Columns stack on columns.
+const STEEL_COLUMN_HEIGHTS=[1,2,3,4,5,6];
+export function columnHeight(building) {
+  const [w,h,height]=building.size;
+  if(w!==1||h!==1||!STEEL_COLUMN_HEIGHTS.includes(height)||building.id!==`SteelColumnH${height}`)
+    throw new Error('Steel column geometry contract changed: '+building.id);
+  steelCost(building,{steel:5*height,concrete:6+3*height,science:4000+500*height});
+  return height;
+}
+
+// Steel decks: an n×n one-layer deck (n = 3, 5), size [n, n, 1], resting on its
+// four corner tiles: the corners are the only foundations (GroundOrStackable,
+// Top, Corners), every other tile Any/Top; all tiles are stackable tops. The
+// corners can stand on ground, platforms or steel columns of different heights.
+const STEEL_DECK_SPANS=[3,5];
+export function deckSpan(building) {
+  const [n,depth,layers]=building.size;
+  if(n!==depth||layers!==1||!STEEL_DECK_SPANS.includes(n)||building.id!==`SteelDeck${n}x${n}`)
+    throw new Error('Steel deck geometry contract changed: '+building.id);
+  steelCost(building,{steel:3*n*n,concrete:2*n*n+20,science:600*n*n});
+  return n;
+}
+
 export function structuralBlocks(building) {
   const [w,h,layers]=building.size;
   if(building.kind==='block'||building.kind==='dam') {
@@ -87,14 +166,34 @@ export function structuralBlocks(building) {
     }
     return blocks;
   }
+  const block=(MatterBelow,Occupations,Stackable)=>({MatterBelow,Occupations,Stackable,OccupyAllBelow:false,Underground:false});
+  if(building.kind==='bridge') {
+    const span=bridgeSpan(building);
+    return Array.from({length:span+1},(_,y)=>y===0?block('GroundOrStackable','Bottom, Corners, Path, Middle','None')
+      :block('Air','Floor, Bottom, Corners, Path, Middle','None'));
+  }
+  if(building.kind==='column') {
+    const height=columnHeight(building);
+    return Array.from({length:height},(_,z)=>block(z===0?'GroundOrStackable':'Any',
+      z===height-1?'Top, Corners':'Corners',z===height-1?'BlockObject':'None'));
+  }
+  if(building.kind==='deck') {
+    const n=deckSpan(building);
+    const blocks=[];
+    for(let y=0;y<n;y++)for(let x=0;x<n;x++) {
+      const corner=(x===0||x===n-1)&&(y===0||y===n-1);
+      blocks.push(block(corner?'GroundOrStackable':'Any',corner?'Top, Corners':'Top','BlockObject'));
+    }
+    return blocks;
+  }
   if(building.kind!=='overhang'&&building.kind!=='scaffold')throw new Error('Unknown structure kind');
+  const anchors=building.kind==='overhang'?overhangContract(building).anchors:0;
   const blocks=[];
   for(let z=0;z<layers;z++)for(let y=0;y<h;y++)for(let x=0;x<w;x++) {
     let occupation,below,stackable;
     if(building.kind==='overhang') {
-      if(w!==1||h!==8||layers!==1)throw new Error('Overhang geometry contract changed');
-      occupation=y===0?'Top, Corners':'Top';
-      below=y===0?'GroundOrStackable':'Any';
+      occupation=y<anchors?'Top, Corners':'Top';
+      below=y<anchors?'GroundOrStackable':'Any';
       stackable='BlockObject';
     } else {
       scaffoldLegs(building);
@@ -113,6 +212,23 @@ export function structuralBlocks(building) {
   return blocks;
 }
 
+// The vanilla SuspensionBridge6x1 path: one path edge group with a one-way edge
+// off the near end (0,0)->(0,-1), two-way edges along the bridge and a one-way
+// edge off the far end onto the bank (0,N)->(0,N+1); the PathSpec main path on
+// the abutment tile and a straight driveway in front of it. The edges are
+// rebuilt for N span tiles; any other vanilla shape is refused.
+function bridgePath(v,span) {
+  const edge=(a,b,IsTwoWay)=>({Start:{X:0,Y:a,Z:0},End:{X:0,Y:b,Z:0},IsTwoWay});
+  const vanilla=[edge(0,-1,false),...Array.from({length:6},(_,k)=>edge(k,k+1,true)),edge(6,7,false)];
+  const nav=v.BlockObjectNavMeshSettingsSpec;
+  if(nav.EdgeGroups.length!==1||!nav.EdgeGroups[0].IsPath||
+     JSON.stringify(nav.EdgeGroups[0].AddedEdges)!==JSON.stringify(vanilla)||nav.GenerateFloorsOnStackable!==false||
+     JSON.stringify(v.PathSpec)!==JSON.stringify({MainPathCoordinates:{X:0,Y:0,Z:0}})||!v.BlockObjectWithPathRangeSpec||
+     v.DrivewayModelsSpec?.Driveways?.length!==1||v.PlaceableBlockObjectSpec.Layout!=='Single')
+    throw new Error('Native suspension bridge path contract changed');
+  nav.EdgeGroups[0].AddedEdges=[edge(0,-1,false),...Array.from({length:span},(_,k)=>edge(k,k+1,true)),edge(span,span+1,false)];
+}
+
 // Localization for src/DeepFrontier/Scripts/AnchoredDecks (AnchoredDeckLoc).
 export const ANCHORED_DECK_ROWS=[
   ['DeepFrontier.AnchoredDeck.RequiresAnchor',
@@ -127,6 +243,9 @@ export async function structuralBlueprints() {
     overhang:'Buildings/Paths/Overhang6x1/Overhang6x1.IronTeeth.blueprint.json',
     scaffold:'Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint.json',
     sidedeck:'Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint.json',
+    bridge:'Buildings/Paths/SuspensionBridge6x1/SuspensionBridge6x1.IronTeeth.blueprint.json',
+    column:'Buildings/Paths/TriplePlatform/TriplePlatform.IronTeeth.blueprint.json',
+    deck:'Buildings/Paths/MetalPlatform5x5/MetalPlatform5x5.IronTeeth.blueprint.json',
   };
   const anchors=catalog.buildings.filter(b=>b.deckAnchor);
   if(catalog.buildings.some(b=>b.kind==='sidedeck')&&!anchors.length)
@@ -162,6 +281,7 @@ export async function structuralBlueprints() {
       v.AnchoredDeckSpec={Anchor:xyz(anchor)};
     }
     if(b.deckAnchor)v.AnchoredDeckAnchorSpec={};
+    if(b.kind==='bridge')bridgePath(v,bridgeSpan(b));
     v.LabeledEntitySpec={
       DisplayNameLocKey:`Building.${b.id}.DisplayName`,
       DescriptionLocKey:`Building.${b.id}.Description`,

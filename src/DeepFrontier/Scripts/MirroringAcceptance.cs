@@ -32,7 +32,9 @@ namespace DeepFrontier.Scripts {
       "RadioactiveWasteRefinery","RadioactiveWasteVault","ReinforcedDamBlock",
       "ReinforcedHydroTurbine","Restaurant","RocketAssemblyHangar","SandstoneMasonryBlock",
       "SandstonePit","SandstoneQuarry","StoneCrusher","TechnicalSchool",
-      "UraniumProcessingPlant","WaterTreatmentPlant"
+      "UraniumProcessingPlant","WaterTreatmentPlant",
+      "SteelCantilever10x1","SteelCantilever12x1","SteelCantilever15x1","SteelBridge8x1",
+      "SteelBridge15x1","SteelColumnH1","SteelColumnH6","SteelDeck3x3","SteelDeck5x5"
     };
     private static readonly Orientation[] Rotations={Orientation.Cw0,Orientation.Cw90,Orientation.Cw180,Orientation.Cw270};
     private readonly TemplateService _templates;

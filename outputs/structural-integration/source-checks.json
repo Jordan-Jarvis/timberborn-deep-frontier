@@ -126,6 +126,111 @@
       "supportSamples": 625,
       "clearPassageSamples": 216,
       "nativeAtlasUvCorners": 5164
+    },
+    {
+      "model": "SteelCantilever10x1",
+      "vertices": 1438,
+      "supportSamples": 250,
+      "clearPassageSamples": 81,
+      "nativeAtlasUvCorners": 3552
+    },
+    {
+      "model": "SteelCantilever12x1",
+      "vertices": 1734,
+      "supportSamples": 300,
+      "clearPassageSamples": 90,
+      "nativeAtlasUvCorners": 4280
+    },
+    {
+      "model": "SteelCantilever15x1",
+      "vertices": 2158,
+      "supportSamples": 375,
+      "clearPassageSamples": 108,
+      "nativeAtlasUvCorners": 5320
+    },
+    {
+      "model": "SteelBridge8x1",
+      "vertices": 1216,
+      "supportSamples": 225,
+      "clearPassageSamples": 135,
+      "nativeAtlasUvCorners": 3032
+    },
+    {
+      "model": "SteelBridge10x1",
+      "vertices": 1456,
+      "supportSamples": 275,
+      "clearPassageSamples": 165,
+      "nativeAtlasUvCorners": 3624
+    },
+    {
+      "model": "SteelBridge12x1",
+      "vertices": 1696,
+      "supportSamples": 325,
+      "clearPassageSamples": 195,
+      "nativeAtlasUvCorners": 4216
+    },
+    {
+      "model": "SteelBridge15x1",
+      "vertices": 2056,
+      "supportSamples": 400,
+      "clearPassageSamples": 240,
+      "nativeAtlasUvCorners": 5104
+    },
+    {
+      "model": "SteelColumnH1",
+      "vertices": 280,
+      "supportSamples": 25,
+      "clearPassageSamples": 9,
+      "nativeAtlasUvCorners": 672
+    },
+    {
+      "model": "SteelColumnH2",
+      "vertices": 456,
+      "supportSamples": 25,
+      "clearPassageSamples": 18,
+      "nativeAtlasUvCorners": 1080
+    },
+    {
+      "model": "SteelColumnH3",
+      "vertices": 632,
+      "supportSamples": 25,
+      "clearPassageSamples": 27,
+      "nativeAtlasUvCorners": 1488
+    },
+    {
+      "model": "SteelColumnH4",
+      "vertices": 808,
+      "supportSamples": 25,
+      "clearPassageSamples": 36,
+      "nativeAtlasUvCorners": 1896
+    },
+    {
+      "model": "SteelColumnH5",
+      "vertices": 984,
+      "supportSamples": 25,
+      "clearPassageSamples": 45,
+      "nativeAtlasUvCorners": 2304
+    },
+    {
+      "model": "SteelColumnH6",
+      "vertices": 1160,
+      "supportSamples": 25,
+      "clearPassageSamples": 54,
+      "nativeAtlasUvCorners": 2712
+    },
+    {
+      "model": "SteelDeck3x3",
+      "vertices": 1240,
+      "supportSamples": 225,
+      "clearPassageSamples": 45,
+      "nativeAtlasUvCorners": 2992
+    },
+    {
+      "model": "SteelDeck5x5",
+      "vertices": 1496,
+      "supportSamples": 625,
+      "clearPassageSamples": 189,
+      "nativeAtlasUvCorners": 3680
     }
   ]
 }

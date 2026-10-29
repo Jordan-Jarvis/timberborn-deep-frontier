@@ -5,15 +5,15 @@
     "BuildingCost": [
       {
         "Id": "Concrete",
-        "Amount": 75
+        "Amount": 450
       },
       {
         "Id": "MetalBlock",
-        "Amount": 50
+        "Amount": 300
       },
       {
         "Id": "Gear",
-        "Amount": 25
+        "Amount": 150
       }
     ],
     "ScienceCost": 12500,

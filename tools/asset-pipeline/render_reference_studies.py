@@ -52,7 +52,11 @@ STRUCTURAL_CAMERA_SCALE={'SandstoneMasonryBlock':1.9,'LimestoneMasonryBlock':1.9
                          'ConcreteScaffold4x4H3':1.7,'ConcreteScaffold5x5H1':1.7,
                          'ConcreteScaffold5x5H2':1.7,'ConcreteScaffold5x5H3':1.7,
                          'ConcreteSidePlatform3x3':1.6,'ConcreteSidePlatform4x4':1.6,
-                         'ConcreteSidePlatform5x5':1.6}
+                         'ConcreteSidePlatform5x5':1.6,
+                         'SteelCantilever10x1':1.0,'SteelCantilever12x1':1.0,'SteelCantilever15x1':1.0,
+                         'SteelBridge8x1':1.0,'SteelBridge10x1':1.0,'SteelBridge12x1':1.0,'SteelBridge15x1':1.0,
+                         'SteelColumnH1':2.2,'SteelColumnH2':1.9,'SteelColumnH3':1.7,'SteelColumnH4':1.6,
+                         'SteelColumnH5':1.5,'SteelColumnH6':1.45,'SteelDeck3x3':1.7,'SteelDeck5x5':1.6}
 if set(STRUCTURAL_CAMERA_SCALE)!=set(STRUCTURAL_MODELS):
     raise ValueError('Every structural model needs an explicit camera scale')
 REFERENCES={

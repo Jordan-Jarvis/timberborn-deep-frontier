@@ -340,5 +340,290 @@
     "ports": [],
     "deckMode": "None",
     "supportLayer": 1
+  },
+  "SteelCantilever10x1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      10,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "SteelCantilever12x1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      12,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "SteelCantilever15x1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      15,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "SteelBridge8x1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      9,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 0
+  },
+  "SteelBridge10x1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      11,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 0
+  },
+  "SteelBridge12x1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      13,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 0
+  },
+  "SteelBridge15x1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      16,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 0
+  },
+  "SteelColumnH1": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "SteelColumnH2": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      2
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 2
+  },
+  "SteelColumnH3": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      3
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 3
+  },
+  "SteelColumnH4": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      4
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 4
+  },
+  "SteelColumnH5": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      5
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 5
+  },
+  "SteelColumnH6": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      1,
+      1,
+      6
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 6
+  },
+  "SteelDeck3x3": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      3,
+      3,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
+  },
+  "SteelDeck5x5": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "size": [
+      5,
+      5,
+      1
+    ],
+    "baseZ": 0,
+    "idle": [],
+    "nodes": [],
+    "edges": [],
+    "ports": [],
+    "deckMode": "None",
+    "supportLayer": 1
   }
 }

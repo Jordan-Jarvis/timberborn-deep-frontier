@@ -33,6 +33,11 @@ SIZES = {
     'ConcreteSidePlatform4x4': [5, 5, 2],
     'ConcreteSidePlatform5x5': [5, 6, 2],
 }
+# Steel structures (steel_structure_geometry.py): cantilevers [1, N, 1],
+# bridges [1, N+1, 1] (N span tiles beyond the supported abutment tile),
+# columns [1, 1, H] and corner-supported decks [n, n, 1].
+from steel_structure_grid import SIZES as STEEL_SIZES, BRIDGES as STEEL_BRIDGES
+SIZES.update(STEEL_SIZES)
 # Side platforms use native BaseZ 1 so the placement tool picks them from the
 # anchor's top face. Their art is authored with the deck at z 0..1; the
 # export origin shifts it one layer down so the deck top is the model's z = 0.
@@ -42,7 +47,9 @@ LAYOUTS = {
         'origin': [0, 0, -1] if name in SIDE_PLATFORMS else [0, 0, 0], 'size': size,
         'baseZ': 1 if name in SIDE_PLATFORMS else 0,
         'idle': [], 'nodes': [], 'edges': [], 'ports': [], 'deckMode':'None',
-        'supportLayer': 1 if name in SIDE_PLATFORMS else size[2],
+        # Bridges carry no stackable top: their walking deck is the floor of
+        # layer 0, like the vanilla suspension bridge.
+        'supportLayer': 1 if name in SIDE_PLATFORMS else 0 if name in STEEL_BRIDGES else size[2],
     }
     for name, size in SIZES.items()
 }

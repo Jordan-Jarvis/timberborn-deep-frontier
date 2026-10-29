@@ -41,8 +41,9 @@ function Assert-Registered([string]$relative, [string]$field) {
 foreach ($name in @('research', 'hydro', 'structural')) {
   $source = (Resolve-Path "outputs/$name-integration/Data").Path
   $meshes = @(Get-ChildItem -LiteralPath $source -Filter '*.timbermesh' -File -Recurse)
-  # Structural: 18 templates (7 original structures, 8 concrete platform variants, 3 side platforms), two meshes each.
-  $expected = if ($name -eq 'structural') { 36 } else { 2 }
+  # Structural: 33 templates (7 original structures, 8 concrete platform variants, 3 side platforms,
+  # 15 steel structures), two meshes each.
+  $expected = if ($name -eq 'structural') { 66 } else { 2 }
   if ($meshes.Count -ne $expected) { throw "Unexpected candidate mesh count in $name" }
   foreach ($mesh in $meshes) {
     $relative = [IO.Path]::GetRelativePath($source, $mesh.FullName)
@@ -55,7 +56,7 @@ foreach ($name in @('research', 'hydro', 'structural')) {
 # Structural UI icons come from tools/create_structural_icons.mjs.
 $structural = (Resolve-Path 'outputs/structural-integration/Data').Path
 $icons = @(Get-ChildItem -LiteralPath $structural -Filter 'Icon.png' -File -Recurse)
-if ($icons.Count -ne 18) { throw 'Unexpected structural candidate icon count' }
+if ($icons.Count -ne 33) { throw 'Unexpected structural candidate icon count' }
 foreach ($icon in $icons) {
   $relative = [IO.Path]::GetRelativePath($structural, $icon.FullName)
   Assert-Registered $relative 'Icon'
