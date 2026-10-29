@@ -63,6 +63,7 @@ Changes since 0.5.0, the first Workshop release.
 - **Renamed:** Radioactive Sludge is now **Radioactive Water**, since it is the same fluid the radioactive tide brings. The Sludge Outfall and Sludge Recovery Pump are now the Radioactive Water Outfall and Radioactive Water Recovery Pump. Existing saves keep their stock.
 
 ### Radiation
+- **Hauling hazard:** a beaver carrying radioactive goods now has a small chance of being irradiated and needing hospital care. The chance is 2% per hour of carrying for Radioactive Waste or Radioactive Water (about 0.5% for a 15-minute haul) and 0.5% for Contaminated Water. Bots are immune, so they are the safe haulers for waste.
 - Warehouses, piles and tanks holding radioactive waste, radioactive sludge or contaminated water can no longer be deleted until they are emptied. Before, deleting one threw the waste away.
 
 ### Interface

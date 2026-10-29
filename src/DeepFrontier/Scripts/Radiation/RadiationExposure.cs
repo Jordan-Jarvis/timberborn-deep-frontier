@@ -1,11 +1,15 @@
 using Timberborn.BaseComponentSystem;
+using Timberborn.Carrying;
 using Timberborn.Characters;
+using Timberborn.Common;
 using Timberborn.Effects;
 using Timberborn.EnterableSystem;
+using Timberborn.Goods;
 using Timberborn.Localization;
 using Timberborn.MortalSystem;
 using Timberborn.Navigation;
 using Timberborn.NeedSystem;
+using Timberborn.NotificationSystem;
 using Timberborn.Persistence;
 using Timberborn.TickSystem;
 using Timberborn.TimeSystem;
@@ -14,6 +18,10 @@ using Timberborn.WorldPersistence;
 
 namespace DeepFrontier.Scripts.Radiation {
   // Beaver radiation exposure and radiation sickness.
+  //
+  // Hauling: while it carries a radioactive good, each tick may irradiate it
+  // outright (RadiationTuning.HaulingIrradiationRate per carrying hour; a
+  // notification names the beaver and the good).
   //
   // Exposure: outside buildings, a beaver accumulates dose from the cell it
   // stands in: radioactive water it wades in (scaled by the radioactive share;
@@ -49,7 +57,11 @@ namespace DeepFrontier.Scripts.Radiation {
     private readonly RadiationSimulation _radiation;
     private readonly IDayNightCycle _dayNightCycle;
     private readonly ILoc _loc;
+    private readonly IRandomNumberGenerator _random;
+    private readonly NotificationBus _notifications;
+    private readonly IGoodService _goods;
     private NeedManager _needs;
+    private GoodCarrier _carrier;
     private Enterer _enterer;
     private Mortal _mortal;
     private IWaterResistor _waterResistor;
@@ -66,8 +78,10 @@ namespace DeepFrontier.Scripts.Radiation {
     // grace period, so UpdateSickness adds no untreated time.
     public bool SicknessClockPaused => IsIrradiated && _dayNightCycle.PartialDayNumber * 24f - _lastCareHour <= RadiationTuning.CareGraceHours;
 
-    public RadiationExposure(RadiationSimulation radiation, IDayNightCycle dayNightCycle, ILoc loc) {
+    public RadiationExposure(RadiationSimulation radiation, IDayNightCycle dayNightCycle, ILoc loc,
+        IRandomNumberGenerator random, NotificationBus notifications, IGoodService goods) {
       _radiation = radiation; _dayNightCycle = dayNightCycle; _loc = loc;
+      _random = random; _notifications = notifications; _goods = goods;
     }
 
     public void Awake() {
@@ -75,8 +89,9 @@ namespace DeepFrontier.Scripts.Radiation {
       _enterer = GetComponent<Enterer>();
       _mortal = GetComponent<Mortal>();
       _waterResistor = GetComponent<IWaterResistor>();
-      if (_needs == null || _enterer == null || _mortal == null)
-        throw new System.InvalidOperationException("RadiationExposure requires NeedManager, Enterer and Mortal on beavers");
+      _carrier = GetComponent<GoodCarrier>();
+      if (_needs == null || _enterer == null || _mortal == null || _carrier == null)
+        throw new System.InvalidOperationException("RadiationExposure requires NeedManager, Enterer, Mortal and GoodCarrier on beavers");
     }
 
     // Prompt dose from a reactor meltdown (Meltdown/MeltdownService.cs). It
@@ -104,6 +119,15 @@ namespace DeepFrontier.Scripts.Radiation {
       }
       _dose -= RadiationTuning.ExposureDecayPerHour * hours;
       if (_dose < 0f) _dose = 0f;
+      if (_carrier.IsCarrying && !IsIrradiated) {
+        string goodId = _carrier.CarriedGoodId;
+        float rate = RadiationTuning.HaulingIrradiationRate(goodId);
+        if (rate > 0f && _random.CheckProbability(1f - System.MathF.Exp(-rate * hours))) {
+          _dose = 1f;
+          _notifications.Post(_loc.T(RadiationLoc.HaulingIrradiated, GetComponent<Character>().FirstName,
+            _goods.GetGood(goodId).PluralDisplayName.Value), this);
+        }
+      }
       if (_dose >= 1f) {
         _dose = 0f;
         if (!IsIrradiated) { _lastCareHour = _dayNightCycle.PartialDayNumber * 24f; _untreatedHours = 0f; }

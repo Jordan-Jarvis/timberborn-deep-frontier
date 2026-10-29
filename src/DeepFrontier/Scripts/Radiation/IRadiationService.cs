@@ -121,6 +121,15 @@ namespace DeepFrontier.Scripts.Radiation {
     public const float CareGraceHours = 12f;
     public const float TreatmentDays = 10f;               // authored into the Hospital effect by tools/radiation_content.mjs
 
+    // Hauling (user 2026-10-29): a beaver carrying radioactive goods has a
+    // small chance per carrying hour of being irradiated outright (a 15-minute
+    // haul of waste is about 0.5%). Bots are not beavers and are unaffected.
+    public const float HaulingIrradiationPerHour = 0.02f;            // waste casks, radioactive water
+    public const float ContaminatedHaulingIrradiationPerHour = 0.005f;
+    public static float HaulingIrradiationRate(string goodId) =>
+      goodId == RadioactiveWasteGoodId || goodId == SludgeGoodId ? HaulingIrradiationPerHour
+      : goodId == ContaminatedWaterGoodId ? ContaminatedHaulingIrradiationPerHour : 0f;
+
     // Radioactive zombie (the irradiated state, RadioactiveZombie.cs). Its
     // movement penalty is the Irradiation need's PunitiveNeedSpec (authored by
     // tools/radiation_content.mjs, slower than native BadwaterContamination).
@@ -143,6 +152,7 @@ namespace DeepFrontier.Scripts.Radiation {
     public const string PumpBlocked = "DeepFrontier.Radiation.Status.PumpBlocked";
     public const string PumpBlockedShort = "DeepFrontier.Radiation.Status.PumpBlocked.Short";
     public const string StorageIrradiated = "DeepFrontier.Radiation.Status.StorageIrradiated";
+    public const string HaulingIrradiated = "DeepFrontier.Radiation.Notification.HaulingIrradiated";
     public const string HazardousStockDeletion = "DeepFrontier.Radiation.DeletionBlocker.HazardousStock";
     public const string NoRadiation = "DeepFrontier.Radiation.Status.NoRadiation";
     public const string OutletBlocked = "DeepFrontier.Radiation.Status.OutletBlocked";

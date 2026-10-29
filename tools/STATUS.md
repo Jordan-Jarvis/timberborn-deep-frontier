@@ -4,6 +4,13 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Hauling radioactive goods can irradiate beavers (Claude Code session, 2026-10-29; generated and validated in mirror `costs`; not built or run in game)
+
+- **User request:** a small chance that a beaver hauling radioactive materials is irradiated and needs the hospital.
+- **Rates:** `RadiationExposure` rolls each tick, while the beaver carries a good (native `GoodCarrier`) and is not already irradiated, with `1 - exp(-rate * hours)` on the native `IRandomNumberGenerator`. Rates come from `RadiationTuning.HaulingIrradiationRate`: RadioactiveWaste and RadioactiveSludge 2% per carrying hour, ContaminatedWater 0.5%.
+- **On a hit:** the dose is set to 1, so the usual irradiation, hospital course and sickness clock follow. A notification names the beaver and the good (`DeepFrontier.Radiation.Notification.HaulingIrradiated`). Bots carry no `RadiationExposure` and are immune.
+- **Checks:** mirror (other agents' files at HEAD): generation, `validate_all -SkipBlender` 50 pass + 1 report-only (`no-game-assets` outside git), compile. **In game:** the notification and rate feel.
+
 ## Reactor consumes steel and concrete: casks and maintenance repairs (Claude Code session, 2026-10-29; generated and validated in mirror `costs`; not built or run in game)
 
 - **User:** building materials need ongoing industrial uses. Chosen: reactor casks, drill bits, maintenance stops.

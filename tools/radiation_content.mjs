@@ -130,6 +130,7 @@ const LOCALIZATION = [
   ['DeepFrontier.Radiation.Status.OutletBlocked', 'The outlet is blocked.'],
   ['DeepFrontier.Radiation.Placement.NotAtMapEdge', 'Must touch the map edge.'],
   ['DeepFrontier.Radiation.DeathMessage', '{0} the radioactive zombie fell apart from untreated radiation sickness.'],
+  ['DeepFrontier.Radiation.Notification.HaulingIrradiated', '{0} was irradiated while hauling {1} and needs hospital care.'],
   ['DeepFrontier.Radiation.Planting.Warning', 'Radiation: plants on irradiated (yellow-green) ground die immediately, including anything planted there.'],
   ['Building.RadioactiveSpring.DisplayName', 'Radioactive Spring'],
   ['Building.RadioactiveSpring.Description', 'A natural spring of radioactive water. Its strength works like a water source; 0 stops it.'],
