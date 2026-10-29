@@ -62,5 +62,12 @@ namespace DeepFrontier.Scripts {
     [Serialize] public string Discipline { get; init; }
     // Hours inside a school teaching the discipline that make a graduate.
     [Serialize] public float StudyHours { get; init; }
+    // Goods the school uses up per hour while anyone studies the discipline.
+    [Serialize] public ImmutableArray<FrontierSchoolSupplySpec> Supplies { get; init; }
+  }
+
+  internal record FrontierSchoolSupplySpec {
+    [Serialize] public string GoodId { get; init; }
+    [Serialize] public float GoodPerHour { get; init; }
   }
 }

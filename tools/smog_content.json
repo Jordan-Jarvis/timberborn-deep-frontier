@@ -13,7 +13,7 @@
     "BushReduction": 0.04,
     "GreeneryRadius": 2.5,
     "GreeneryMaxReduction": 0.6,
-    "ScrubberMaxReduction": 0.9,
+    "ScrubberMaxReduction": 1,
     "WindDriftCells": 1.5,
     "CoreFraction": 0.5,
     "EdgeFactor": 0.5,
@@ -158,8 +158,8 @@
   "scrubber": {
     "template": "SmogScrubber",
     "status": "ready",
-    "radius": 7,
-    "reduction": 0.75,
+    "radius": 20,
+    "reduction": 1,
     "proposed": {
       "footprint": [
         3,

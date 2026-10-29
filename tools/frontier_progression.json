@@ -1,7 +1,7 @@
 {
   "revision": "2026-10-25-item-use-completion",
-  "implementedBuildingScienceOverrides": {"NuclearReactor": 1000000, "UraniumProcessingPlant": 100000, "RadioactiveWasteVault": 100000, "RadioactiveWasteRefinery": 120000, "SmogScrubber": 2500},
-  "nuclearScienceRule": "Nuclear support (uranium processing, waste vault, waste refinery) unlocks beside the reactor, above every non-nuclear building (max 25,000) and below the 1,000,000 reactor, so it is bought in the run-up rather than as a mid-game dead end.",
+  "implementedBuildingScienceOverrides": {"NuclearReactor": 1000000, "UraniumProcessingPlant": 200000, "RadioactiveWasteVault": 200000, "RadioactiveWasteRefinery": 500000, "SmogScrubber": 2500},
+  "nuclearScienceRule": "Science curve (user decision 2026-10-29): everything up to the 12,000 Materials Laboratory, the 400-science-per-hour station, and every building that supplies its recipes stays as it was, so the laboratory is the stepping stone. Above it the unlocks climb steeply: Mission Control 30,000, Rocket Assembly Hangar 50,000, Launch Pad 80,000, then nuclear support, which unlocks above every non-nuclear building (the Hospital, 25,000, stays reachable before radioactive tides): Uranium Processing Plant and Waste Vault 200,000, the radioactive sludge export, outfall and recovery pump 200,000, Waste Refinery 500,000, and the 1,000,000 reactor last.",
   "restaurant": {
     "requirementStatus": "Build 41 native cooking, cake/coffee meals and conditional water verified; wider acceptance tracked in tools/STATUS.md",
     "powerDemandHp": 400,

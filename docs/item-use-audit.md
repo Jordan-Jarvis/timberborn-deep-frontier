@@ -2,7 +2,7 @@
 
 Generated from active Iron Teeth building recipes (including recipes appended to vanilla buildings), construction costs, restaurant menus, bot assembly, bot maintenance and faction-consumable goods. Planned uses do not count. The reasoning for each second use is in docs/progression.md (Second uses).
 
-**55 new goods checked; 2 require redesign or additional uses before release.**
+**55 new goods checked; 0 require redesign or additional uses before release.**
 
 Food may have direct eating as its only use. Rocket-specific parts still need one real launch consumer. Transport/storage/disposal do not count.
 
@@ -21,9 +21,9 @@ Food may have direct eating as its only use. Rocket-specific parts still need on
 | ContaminatedWater | 2 | 2 | MINIMUM MET | Products: RadioactiveSludge + RecoveredMinerals; Products: RadioactiveSludge + Water |
 | CrudeOil | 3 | 2 | PREFERRED RANGE MET | Operation: OilPowerPlant.IronTeeth; Products: Polymer; Products: Lubricant |
 | Cryocoolant | 2 | 2 | MINIMUM MET | Products: ReactorCoolantWater; Products: LiquidHydrogen + LiquidOxygen |
-| DeepAlloy | 10 | 2 | PREFERRED RANGE MET | Construction: DeepMine.IronTeeth; Construction: ElectrolysisPlant.IronTeeth; Construction: CryogenicLiquefactionPlant.IronTeeth; Construction: MissionControl.IronTeeth; Construction: ArchiveExcavation.IronTeeth; Construction: CryogenicTankFarm.IronTeeth; Construction: OilPowerPlant.IronTeeth; Construction: ObservationDeck.IronTeeth; Products: MachineCore; Products: Alloy |
+| DeepAlloy | 11 | 2 | PREFERRED RANGE MET | Construction: DeepMine.IronTeeth; Operation: TechnicalSchool.IronTeeth; Construction: ElectrolysisPlant.IronTeeth; Construction: CryogenicLiquefactionPlant.IronTeeth; Construction: MissionControl.IronTeeth; Construction: ArchiveExcavation.IronTeeth; Construction: CryogenicTankFarm.IronTeeth; Construction: OilPowerPlant.IronTeeth; Construction: ObservationDeck.IronTeeth; Products: MachineCore; Products: Alloy |
 | DeepOre | 5 | 2 | PREFERRED RANGE MET | Products: DeepAlloy; Products: Coal; Products: CrudeOil; Products: UraniumOre; Products: Flux |
-| Electronics | 3 | 2 | PREFERRED RANGE MET | Products: PowerModule; Products: BotHead; Products: GuidanceComputer |
+| Electronics | 4 | 2 | PREFERRED RANGE MET | Operation: TechnicalSchool.IronTeeth; Products: PowerModule; Products: BotHead; Products: GuidanceComputer |
 | EmergencyRation | 1 | 1 | MINIMUM MET | Direct consumption |
 | EnrichedFuel | 2 | 2 | MINIMUM MET | Construction: NuclearReactor.IronTeeth; Fuel: power generation |
 | Fertilizer | 4 | 2 | PREFERRED RANGE MET | Products: Eggplant; Products: Kohlrabi; Products: CoffeeBean; Products: FreshFish + Kohlrabi |
@@ -43,10 +43,10 @@ Food may have direct eating as its only use. Rocket-specific parts still need on
 | Lubricant | 3 | 2 | PREFERRED RANGE MET | Bot maintenance; Products: Cryocoolant; Products: BotLimb |
 | MachineCore | 15 | 2 | PREFERRED RANGE MET | Construction: UraniumProcessingPlant.IronTeeth; Construction: RadioactiveWasteRefinery.IronTeeth; Construction: RocketAssemblyHangar.IronTeeth; Construction: LaunchPad.IronTeeth; Construction: NuclearReactor.IronTeeth; Construction: OilPowerPlant.IronTeeth; Construction: RadioactiveWasteVault.IronTeeth; Construction: RadioactiveWasteExport.IronTeeth; Construction: RadioactiveSludgeOutfall.IronTeeth; Construction: RadioactiveSludgeRecoveryPump.IronTeeth; Products: Electronics; Products: BotLimb; Products: EnrichedFuel + RadioactiveWaste; Products: PropulsionPackage; Products: GuidanceComputer |
 | MedicalFood | 1 | 1 | MINIMUM MET | Direct consumption |
-| Medicine | 2 | 2 | MINIMUM MET | Operation: Hospital.IronTeeth; Products: MedicalFood |
+| Medicine | 3 | 2 | PREFERRED RANGE MET | Operation: Hospital.IronTeeth; Operation: TechnicalSchool.IronTeeth; Products: MedicalFood |
 | MissionPayload | 1 | 1 | MINIMUM MET | Launch: rocket missions |
 | OxygenGas | 2 | 2 | MINIMUM MET | Products: Yellowcake; Products: LiquidHydrogen + LiquidOxygen |
-| PackagedFood | 1 | 1 | MINIMUM MET | Direct consumption |
+| PackagedFood | 2 | 1 | MINIMUM MET | Operation: TechnicalSchool.IronTeeth; Direct consumption |
 | Polymer | 7 | 2 | PREFERRED RANGE MET | Products: Cryocoolant; Products: MachineCore; Products: Electronics; Products: BotChassis; Products: BotHead; Products: RocketAirframe; Products: PropulsionPackage |
 | PowerModule | 2 | 2 | MINIMUM MET | Products: EnrichedFuel + RadioactiveWaste; Bot assembly: bots |
 | PropulsionPackage | 1 | 1 | MINIMUM MET | Launch: rocket missions |
@@ -56,10 +56,10 @@ Food may have direct eating as its only use. Rocket-specific parts still need on
 | ReactorCoolantWater | 2 | 2 | MINIMUM MET | Products: RadioactiveSludge + RadioactiveWaste; Research: Science |
 | RecoveredArtifact | 2 | 2 | MINIMUM MET | Products: MissionPayload; Products: ArchiveData |
 | RecoveredMinerals | 2 | 2 | MINIMUM MET | Construction: NuclearReactor.IronTeeth; Products: RadioactiveWaste |
-| RecoveredTelemetry | 1 | 2 | NEEDS USES | Launch: rocket missions |
+| RecoveredTelemetry | 2 | 2 | MINIMUM MET | Operation: TechnicalSchool.IronTeeth; Launch: rocket missions |
 | RocketAirframe | 1 | 1 | MINIMUM MET | Launch: rocket missions |
 | Sandstone | 2 | 2 | MINIMUM MET | Construction: SandstoneMasonryBlock.IronTeeth; Products: Aggregate |
 | SpecialistLicense | 0 | 0 | LEGACY SAVE-ONLY (unproduced, unused) |  |
 | SweetBerryCake | 1 | 1 | MINIMUM MET | Seated meal: Restaurant.IronTeeth |
 | UraniumOre | 2 | 2 | MINIMUM MET | Products: Yellowcake; Research: Science |
-| Yellowcake | 1 | 2 | NEEDS USES | Products: EnrichedFuel + RadioactiveWaste |
+| Yellowcake | 2 | 2 | MINIMUM MET | Operation: TechnicalSchool.IronTeeth; Products: EnrichedFuel + RadioactiveWaste |

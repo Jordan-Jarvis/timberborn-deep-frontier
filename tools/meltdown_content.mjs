@@ -76,7 +76,7 @@ export const LEAK_TUNING = {
 // Exact texts written by tools/create_frontier_expansion_content.mjs; the
 // descriptions below replace them.
 export const PRODUCER_DESCRIPTIONS = {
-  NuclearReactor: 'A 750000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive sludge that must be shipped off the map.',
+  NuclearReactor: 'An 800000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive sludge that must be shipped off the map.',
   RadioactiveWasteVault: 'Locked storage for radioactive waste; the contents must be processed or moved before demolition.',
   RadioactiveWasteRefinery: 'Deep Frontier radioactive waste refinery production building',
 };

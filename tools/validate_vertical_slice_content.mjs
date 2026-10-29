@@ -126,7 +126,7 @@ for (const blueprint of expansionBuildingBlueprints) {
   assert(building.TemplateSpec.TemplateName !== 'SteamEngine.IronTeeth', `Expansion building ${blueprint} accidentally retained a vanilla template name.`);
 }
 const reactor = await readJson('Data/Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.blueprint.json');
-assert(reactor.MechanicalNodeSpec.PowerOutput === 750000 && reactor.MechanicalNodeSpec.PowerInput === 0, 'Nuclear reactor power contract is invalid.');
+assert(reactor.MechanicalNodeSpec.PowerOutput === 800000 && reactor.MechanicalNodeSpec.PowerInput === 0, 'Nuclear reactor power contract is invalid.');
 assert(!reactor.GoodConsumingBuildingSpec, 'Reactor must have only one native IGoodProcessor.');
 assert(reactor.WorkshopSpec && reactor.SimpleManufactoryBehaviorsSpec && reactor.WorkshopPoweredGeneratorSpec, 'Reactor requires a working manufactory and production-gated output.');
 assert(reactor.ManufactorySpec.ProductionRecipeIds.includes('NuclearWaste'), 'Reactor must select the fuel-to-waste recipe.');

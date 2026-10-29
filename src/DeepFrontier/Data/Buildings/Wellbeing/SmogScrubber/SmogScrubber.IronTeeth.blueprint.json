@@ -739,8 +739,8 @@
     ]
   },
   "SmogScrubberSpec": {
-    "Radius": 7,
-    "Reduction": 0.75
+    "Radius": 20,
+    "Reduction": 1
   },
   "StatusIconAnchorSpec": {
     "Height": 6.7

@@ -11,7 +11,7 @@
       "T1": {"stage":"Productive settlement","scienceMax":600,"concretePerGroundCell":0,"per100BuiltCells":{"Plank":30,"Gear":12,"MetalBlock":6}},
       "T2": {"stage":"Industrial city","scienceMax":3000,"concretePerGroundCell":0.75,"per100BuiltCells":{"Plank":25,"Gear":10,"MetalBlock":8}},
       "T3": {"stage":"Wonder transition","scienceMax":8000,"concretePerGroundCell":1,"per100BuiltCells":{"Plank":20,"Gear":12,"MetalBlock":12,"TreatedPlank":5}},
-      "T4": {"stage":"Frontier","scienceMax":15000,"concretePerGroundCell":1.5,"per100BuiltCells":{"MetalBlock":15,"Gear":8,"TreatedPlank":8,"DeepAlloy":3}},
+      "T4": {"stage":"Frontier","scienceMax":30000,"concretePerGroundCell":1.5,"per100BuiltCells":{"MetalBlock":15,"Gear":8,"TreatedPlank":8,"DeepAlloy":3}},
       "T5": {"stage":"Launch program and reactor","scienceMax":null,"concretePerGroundCell":3,"per100BuiltCells":{"HighGradeSteel":10,"Alloy":8,"MachineCore":2,"MetalBlock":8}}
     }
   },

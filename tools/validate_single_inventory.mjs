@@ -36,8 +36,10 @@ const MOD_INVENTORIES = {GroceryStore: 'GroceryStoreSpec'};
 // Specs whose goods live in another component's inventory (never a second
 // one): Hospital patient meals in the GoodConsumingBuilding inventory
 // (HospitalPantryInventory.cs), bot maintenance oils in the Manufactory
-// inventory (BotMaintenanceInventory.cs).
-const SHARED_INVENTORIES = {HospitalPantrySpec: 'GoodConsumingBuildingSpec', FrontierBotMaintenanceSpec: 'ManufactorySpec'};
+// inventory (BotMaintenanceInventory.cs), the Technical School's supplies in
+// its GoodConsumingBuilding inventory (SchoolSupplyInventory.cs).
+const SHARED_INVENTORIES = {HospitalPantrySpec: 'GoodConsumingBuildingSpec', FrontierBotMaintenanceSpec: 'ManufactorySpec',
+  FrontierSpecialistSchoolSpec: 'GoodConsumingBuildingSpec'};
 
 const failures = [];
 const fail = message => failures.push(message);

@@ -303,9 +303,9 @@ const buildingDefinitions = [
   ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,Vitrification,SludgeMineralRecovery', 'Metal', 46, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive waste refinery'],
   ['ElectrolysisPlant', 'Buildings/Metal/ElectrolysisPlant', 'Centrifuge', 'Electrolysis', 'Metal', 47, 6000, 5, 10000, 'Electrolysis plant'],
   ['CryogenicLiquefactionPlant', 'Buildings/Metal/CryogenicLiquefactionPlant', 'Centrifuge', 'Liquefaction', 'Metal', 48, 10000, 6, 12000, 'Cryogenic liquefaction plant'],
-  ['RocketAssemblyHangar', 'Buildings/Metal/RocketAssemblyHangar', 'FoodFactory', 'RocketAirframe,PropulsionPackage', 'Metal', 49, 12000, 10, 18000, 'Rocket assembly hangar'],
-  ['MissionControl', 'Buildings/Science/MissionControl', 'Inventor', 'GuidanceComputer,MissionPayload,GuidanceTelemetry', 'Science', 110, 1500, 4, 14000, 'Mission control'],
-  ['LaunchPad', 'Buildings/Metal/LaunchPad', 'FoodFactory', 'GuidanceTelemetry', 'Metal', 51, 25000, 8, 20000, 'Launch pad'],
+  ['RocketAssemblyHangar', 'Buildings/Metal/RocketAssemblyHangar', 'FoodFactory', 'RocketAirframe,PropulsionPackage', 'Metal', 49, 12000, 10, 50000, 'Rocket assembly hangar'],
+  ['MissionControl', 'Buildings/Science/MissionControl', 'Inventor', 'GuidanceComputer,MissionPayload,GuidanceTelemetry', 'Science', 110, 1500, 4, 30000, 'Mission control'],
+  ['LaunchPad', 'Buildings/Metal/LaunchPad', 'FoodFactory', 'GuidanceTelemetry', 'Metal', 51, 25000, 8, 80000, 'Launch pad'],
   // Planned buildings integrated from their late-game studies (build 122):
   // recipes, menu, power, workers and science come from their
   // frontier_progression.json plannedBuildings entry.
@@ -592,7 +592,7 @@ async function makeReactor() {
   const workerTemplate = await readJson(vanilla('Buildings/Metal/Smelter/Smelter.IronTeeth.blueprint.json'));
   value.WorkplaceSpec = { ...workerTemplate.WorkplaceSpec, MaxWorkers: 6, DefaultWorkers: 6, WorkerTypeUnlockCosts: [{ WorkerType: 'Bot', ScienceCost: 12000 }] };
   value.ManufactorySpec = { ProductionRecipeIds: ['NuclearWaste'] };
-  value.MechanicalNodeSpec = { PowerOutput: 750000, PowerInput: 0, IsShaft: false };
+  value.MechanicalNodeSpec = { PowerOutput: 800000, PowerInput: 0, IsShaft: false };
   value.WorkshopPoweredGeneratorSpec = {};
   value.BuildingPipeTargetPortsSpec = coolantPorts('NuclearReactor');
   setModels(value, 'NuclearReactor', 'Buildings/Power/NuclearReactor');
@@ -726,7 +726,9 @@ for (const definition of buildingDefinitions) {
   const smog = await readJson(resolve(root, 'tools', 'smog_content.json'));
   const pct = (v) => `${Math.round(v * 100)}%`;
   rows.push(csvRow('Building.SmogScrubber.DisplayName', 'Smog scrubber'));
-  rows.push(csvRow('Building.SmogScrubber.Description', `Removes ${pct(smog.scrubber.reduction)} of the smog within ${smog.scrubber.radius} tiles while powered and not paused; scrubbers and trees together remove at most ${pct(smog.settings.ScrubberMaxReduction)}. No workers. Requires ${smog.scrubber.proposed.powerInputHp} hp.`));
+  const removes = smog.scrubber.reduction === 1 ? 'Removes all' : `Removes ${pct(smog.scrubber.reduction)} of the`;
+  const cap = smog.settings.ScrubberMaxReduction === 1 ? '' : ` Scrubbers and trees together remove at most ${pct(smog.settings.ScrubberMaxReduction)}.`;
+  rows.push(csvRow('Building.SmogScrubber.Description', `${removes} smog within ${smog.scrubber.radius} tiles while powered and not paused.${cap} No workers. Requires ${smog.scrubber.proposed.powerInputHp} hp.`));
   rows.push(csvRow('Building.SmogScrubber.FlavorDescription', 'What goes up the smokestack comes down in the scrubber.'));
 }
 // Wellbeing attractions: names and needs from frontier_progression.json.
@@ -748,7 +750,7 @@ for (const id of ['NuclearReactor', 'RadioactiveWasteVault']) {
   const display = id === 'NuclearReactor' ? 'Nuclear Reactor' : 'Radioactive Waste Vault';
   rows.push(csvRow(`Building.${id}.DisplayName`, display));
   rows.push(csvRow(`Building.${id}.Description`, id === 'NuclearReactor'
-    ? 'A 750000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive sludge that must be shipped off the map.'
+    ? 'An 800000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive sludge that must be shipped off the map.'
     : 'Locked storage for radioactive waste; the contents must be processed or moved before demolition.'));
   rows.push(csvRow(`Building.${id}.FlavorDescription`, 'The frontier makes power and consequences at the same scale.'));
 }

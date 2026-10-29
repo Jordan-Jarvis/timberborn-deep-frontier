@@ -6999,12 +6999,36 @@
     "FullInventoryWorkHours": 40,
     "ConsumedGoods": [
       {
-        "GoodId": "Gear",
-        "GoodPerHour": 0.1
+        "GoodId": "MetalBlock",
+        "GoodPerHour": 1.5
+      },
+      {
+        "GoodId": "DeepAlloy",
+        "GoodPerHour": 0.75
       },
       {
         "GoodId": "CornRation",
+        "GoodPerHour": 0.75
+      },
+      {
+        "GoodId": "Electronics",
+        "GoodPerHour": 0.5
+      },
+      {
+        "GoodId": "Yellowcake",
         "GoodPerHour": 0.2
+      },
+      {
+        "GoodId": "Medicine",
+        "GoodPerHour": 0.4
+      },
+      {
+        "GoodId": "RecoveredTelemetry",
+        "GoodPerHour": 0.25
+      },
+      {
+        "GoodId": "PackagedFood",
+        "GoodPerHour": 0.5
       }
     ]
   },
@@ -7013,15 +7037,57 @@
     "Programs": [
       {
         "Discipline": "Metallurgy",
-        "StudyHours": 16
+        "StudyHours": 16,
+        "Supplies": [
+          {
+            "GoodId": "MetalBlock",
+            "GoodPerHour": 1.5
+          },
+          {
+            "GoodId": "DeepAlloy",
+            "GoodPerHour": 0.75
+          },
+          {
+            "GoodId": "CornRation",
+            "GoodPerHour": 0.75
+          }
+        ]
       },
       {
         "Discipline": "Nuclear",
-        "StudyHours": 32
+        "StudyHours": 32,
+        "Supplies": [
+          {
+            "GoodId": "Electronics",
+            "GoodPerHour": 0.4
+          },
+          {
+            "GoodId": "Yellowcake",
+            "GoodPerHour": 0.2
+          },
+          {
+            "GoodId": "Medicine",
+            "GoodPerHour": 0.4
+          }
+        ]
       },
       {
         "Discipline": "Flight",
-        "StudyHours": 24
+        "StudyHours": 24,
+        "Supplies": [
+          {
+            "GoodId": "Electronics",
+            "GoodPerHour": 0.5
+          },
+          {
+            "GoodId": "RecoveredTelemetry",
+            "GoodPerHour": 0.25
+          },
+          {
+            "GoodId": "PackagedFood",
+            "GoodPerHour": 0.5
+          }
+        ]
       }
     ]
   },

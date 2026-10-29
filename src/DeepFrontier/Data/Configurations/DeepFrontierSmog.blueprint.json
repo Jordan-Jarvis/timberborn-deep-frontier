@@ -12,7 +12,7 @@
     "BushReduction": 0.04,
     "GreeneryRadius": 2.5,
     "GreeneryMaxReduction": 0.6,
-    "ScrubberMaxReduction": 0.9,
+    "ScrubberMaxReduction": 1,
     "WindDriftCells": 1.5,
     "CoreFraction": 0.5,
     "EdgeFactor": 0.5,

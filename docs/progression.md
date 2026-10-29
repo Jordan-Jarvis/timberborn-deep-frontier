@@ -56,7 +56,7 @@ Applies to every building in `tools/lategame_batches.json` `integrated`. All 20 
 | T1 | ≤ 600 | Productive settlement | 0 (pre-concrete) | 30 Plank, 12 Gear, 6 Metal Block |
 | T2 | ≤ 3,000 | Industrial city | 0.75 | 25 Plank, 10 Gear, 8 Metal Block |
 | T3 | ≤ 8,000 | Wonder transition | 1 | 20 Plank, 12 Gear, 12 Metal Block, 5 Treated Plank |
-| T4 | ≤ 15,000 | Frontier | 1.5 | 15 Metal Block, 8 Gear, 8 Treated Plank, 3 Deep Alloy |
+| T4 | ≤ 30,000 | Frontier | 1.5 | 15 Metal Block, 8 Gear, 8 Treated Plank, 3 Deep Alloy |
 | T5 | above | Launch program and reactor | 3 | 10 High-grade Steel, 8 Alloy, 2 Machine Core, 8 Metal Block |
 
 Each tier uses goods the chain can already make at that stage. T4 uses the frontier's own refined metal, DeepAlloy, which also gives DeepAlloy real construction uses. T5 uses the premium metals. The nuclear reactor is the largest building at 2,543 built cells and 261 ground cells, so it comes out at 1,500 units. That is 2.4 times the next building, which makes it the endgame showpiece through size alone, with no special multiplier.
@@ -89,6 +89,23 @@ Each tier uses goods the chain can already make at that stage. T4 uses the front
 A registration changes whenever its art is re-registered. Rerun `node tools/lategame_costs.mjs --write` after any registration update. The audit fails while catalog or blueprint costs are stale.
 
 Full-size buildings outside the late-game batch keep their bespoke authored costs: Restaurant, Fishery, Hatchery, Grocery, Hospital, Materials Laboratory, the concrete chain, structures and the hydro turbine.
+
+## Science curve (2026-10-29)
+
+User decision: the late-game unlocks climb steeply towards the 1,000,000-science reactor, so players build the Materials Laboratory (400 science per working hour against the Numbercruncher's 10) as the stepping stone. The laboratory (12,000), everything below it and every building that makes the goods its recipes consume keep their science. The Materials Research recipe needs Gear, Concrete, Metal Block and Water; the Geochemical Assay needs UraniumOre, ConcentratedWaste, ReactorCoolantWater, LiquidHydrogen and LiquidOxygen; all of them are available at 12,000. Source: `frontier_progression.json` (`implementedBuildingScienceOverrides`, `nuclearScienceRule`), `create_frontier_expansion_content.mjs` (rocket rows), `radiation_content.mjs` (sludge buildings).
+
+| Building | Before | Now |
+|---|---:|---:|
+| Mission Control | 14,000 | 30,000 |
+| Rocket Assembly Hangar | 18,000 | 50,000 |
+| Launch Pad | 20,000 | 80,000 |
+| Uranium Processing Plant | 100,000 | 200,000 |
+| Radioactive Waste Vault | 100,000 | 200,000 |
+| Radioactive Waste Export, Sludge Outfall, Sludge Recovery Pump | 120,000 | 200,000 |
+| Radioactive Waste Refinery | 120,000 | 500,000 |
+| Nuclear Reactor | 1,000,000 | 1,000,000 |
+
+Unchanged on purpose: the Hospital (25,000) cures irradiated beavers and must stay reachable before radioactive tides (cycle 15 by default); the concrete platforms and scaffolds (up to 14,000) are construction pieces, not stages. The rocket missions still award 100,000 and 250,000 science, so the launch programme pays back its 160,000 of unlocks. Tier T4 now ends at 30,000 (was 15,000) so Mission Control keeps its construction cost; no other building changes tier. The reactor's output rose from 750,000 to 800,000 hp.
 
 ## Audit findings (generated data, 2026-10-21)
 
@@ -237,7 +254,7 @@ Fixed by the 8,000-science hydro turbine (9,600 hp). Before 8,000 science the be
 
 ## Power plants (2026-10-22)
 
-User request: bring back coal and oil power plants that are smaller and give less power than the 750,000 hp reactor, but still enough to run the machinery. Catalog: `frontier_progression.json` `powerPlants`; generator `makePowerPlant` in `create_frontier_expansion_content.mjs`; studies `lategame_CoalPowerPlant.py` and `lategame_OilPowerPlant.py`. Static authoring only; not built or tested in game. Since 2026-10-27 both plants are workerless native Steam Engine generators (they were staffed Smelter workshops with the `CoalFiring`/`OilFiring` recipes, now removed).
+User request: bring back coal and oil power plants that are smaller and give less power than the reactor (750,000 hp then, 800,000 since 2026-10-29), but still enough to run the machinery. Catalog: `frontier_progression.json` `powerPlants`; generator `makePowerPlant` in `create_frontier_expansion_content.mjs`; studies `lategame_CoalPowerPlant.py` and `lategame_OilPowerPlant.py`. Static authoring only; not built or tested in game. Since 2026-10-27 both plants are workerless native Steam Engine generators (they were staffed Smelter workshops with the `CoalFiring`/`OilFiring` recipes, now removed).
 
 | Plant | Output | Consumed per hour while generating | Footprint | Workers | Science | Cost tier |
 |---|---:|---|---|---:|---:|---|
@@ -255,7 +272,7 @@ Demand is the sum of `MechanicalNodeSpec.PowerInput` in the generated Iron Teeth
 | Rocket factory | Rocket Assembly Hangar 12,000, Precision Machine Works 2,200, Steel Mill 2,500, Chemical Works 3,500, Deep Mine 4,000, Deep Ore Processor 500, Mission Control 1,500 | 26,200 | 2 oil |
 | Whole launch program | cryogenic fuel line + Hangar 12,000, Mission Control 1,500, Launch Pad 25,000 | 56,000 | 3 oil |
 
-The curve keeps the planned 1:4 coal-to-oil step (the plan's 2,500/10,000 doubled, since single machines now draw up to 25,000 hp). One reactor equals 37.5 oil plants.
+The curve keeps the planned 1:4 coal-to-oil step (the plan's 2,500/10,000 doubled, since single machines now draw up to 25,000 hp). One reactor equals 40 oil plants.
 
 Fuel chains (no new producer was needed):
 - Coal: Deep Drill (1,000, finite source) or Deep Mine (6,000, permanent vein) → Deep Ore → Deep Ore Processor `DeepCoal` (1 Deep Ore + 2 Water → 3 Coal per 2 h, gate 1,200). One processor (1.5 Coal per working hour) feeds 1.5 coal plants at full load during its working hours; a plant that runs through the night as well needs more (24 Coal a day at full load). The Steel Mill and carbon filters compete for it.

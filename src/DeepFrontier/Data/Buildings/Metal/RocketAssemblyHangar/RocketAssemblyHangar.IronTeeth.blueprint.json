@@ -24,7 +24,7 @@
         "Amount": 210
       }
     ],
-    "ScienceCost": 18000,
+    "ScienceCost": 50000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -45,7 +45,7 @@
     "WorkerTypeUnlockCosts": [
       {
         "WorkerType": "Bot",
-        "ScienceCost": 19000
+        "ScienceCost": 51000
       }
     ]
   },

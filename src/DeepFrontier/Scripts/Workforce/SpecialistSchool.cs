@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using Timberborn.Attractions;
@@ -9,6 +10,8 @@ using Timberborn.Buildings;
 using Timberborn.EnterableSystem;
 using Timberborn.EntitySystem;
 using Timberborn.GameDistricts;
+using Timberborn.GoodConsumingBuildingSystem;
+using Timberborn.InventorySystem;
 using Timberborn.Localization;
 using Timberborn.NeedBehaviorSystem;
 using Timberborn.NeedSpecs;
@@ -29,8 +32,15 @@ namespace DeepFrontier.Scripts {
   // district need behaviours send only beavers whose study need for it is low.
   // A beaver holding the discipline keeps that need full (SpecialistTrait), so
   // it never comes. Each hour inside adds one study hour; StudyHours graduates.
+  // Each discipline has its own supplies. The template's native
+  // GoodConsumingBuildingSpec lists every discipline's goods; the school gives
+  // its GoodConsumingBuilding a copy listing only the taught discipline's (the
+  // native consumer reads its spec field and supply list, with no setter), and
+  // as the inventory's IGoodDisallower (SchoolSupplyInventory) it accepts only
+  // those goods. Another discipline's stock stays inside for when it is taught
+  // again.
   internal sealed class SpecialistSchool : TickableComponent, IAwakableComponent, IInitializableEntity,
-      IFinishedStateListener, IPersistentEntity, IBuildingEfficiencyProvider {
+      IFinishedStateListener, IPersistentEntity, IBuildingEfficiencyProvider, IGoodDisallower {
     private static readonly ComponentKey Key=new("DeepFrontier.SpecialistSchool");
     private static readonly PropertyKey<string> DisciplineKey=new("Discipline");
     // Native members without a public writer (Timberborn 1.1.2.8); missing ones fail at load.
@@ -38,11 +48,16 @@ namespace DeepFrontier.Scripts {
     private static readonly PropertyInfo ToMaxProperty=Require(typeof(Attraction).GetProperty(nameof(Attraction.SatisfiesAnyNeedToMaxValue)),"Attraction.SatisfiesAnyNeedToMaxValue");
     private static readonly FieldInfo DistrictServiceField=Require(typeof(AttractionNeedBehavior).GetField("_districtNeedBehaviorService",
       BindingFlags.Instance|BindingFlags.NonPublic),"AttractionNeedBehavior._districtNeedBehaviorService");
+    private static readonly FieldInfo ConsumerSpecField=RequireField(typeof(GoodConsumingBuilding),"_goodConsumingBuildingSpec",typeof(GoodConsumingBuildingSpec));
+    private static readonly FieldInfo SuppliesLeftField=RequireField(typeof(GoodConsumingBuilding),"_suppliesLeft",typeof(List<float>));
 
     private readonly WorkforceSettings _settings;
     private readonly IDayNightCycle _cycle;
     private readonly ILoc _loc;
     private readonly Dictionary<string, float> _programs=new Dictionary<string, float>();
+    private readonly Dictionary<string, ImmutableArray<ConsumedGoodSpec>> _supplies=new Dictionary<string, ImmutableArray<ConsumedGoodSpec>>();
+    private GoodConsumingBuildingSpec _allSupplies;
+    private GoodConsumingBuilding _consumer;
     private IReadOnlyList<ContinuousEffectSpec> _allEffects;
     private Attraction _attraction;
     private AttractionNeedBehavior _behavior;
@@ -55,6 +70,7 @@ namespace DeepFrontier.Scripts {
     public float StudyHours=>Discipline==null?0f:_programs[Discipline];
     public bool CanUse=>Discipline!=null;
     public float Efficiency=>1f;
+    public event EventHandler<DisallowedGoodsChangedEventArgs> DisallowedGoodsChanged;
     public IEnumerable<SpecialistTrait> Students=>_enterable.EnterersInside
       .Select(e=>e.GetComponent<SpecialistTrait>()).Where(t=>t&&!t.Has(Discipline));
 
@@ -65,15 +81,30 @@ namespace DeepFrontier.Scripts {
     private static T Require<T>(T member, string name) where T : MemberInfo=>
       member??throw new InvalidOperationException($"Technical School: native {name} was not found");
 
+    private static FieldInfo RequireField(Type type, string name, Type fieldType) {
+      var field=type.GetField(name,BindingFlags.Instance|BindingFlags.NonPublic);
+      if(field==null||field.FieldType!=fieldType)
+        throw new InvalidOperationException($"Technical School: native {type.Name}.{name} : {fieldType.Name} was not found");
+      return field;
+    }
+
     public void Awake() {
       _attraction=GetComponent<Attraction>();
       _behavior=GetComponent<AttractionNeedBehavior>();
       _enterable=GetComponent<Enterable>();
-      if(!_attraction||!_behavior||!_enterable)
-        throw new InvalidOperationException($"{Name}: a specialist school must be a native enterable attraction");
-      foreach(var program in GetComponent<FrontierSpecialistSchoolSpec>().Programs)
+      _consumer=GetComponent<GoodConsumingBuilding>();
+      _allSupplies=GetComponent<GoodConsumingBuildingSpec>();
+      if(!_attraction||!_behavior||!_enterable||!_consumer||_allSupplies==null)
+        throw new InvalidOperationException($"{Name}: a specialist school must be a native enterable goods-consuming attraction");
+      foreach(var program in GetComponent<FrontierSpecialistSchoolSpec>().Programs) {
         if(!_programs.TryAdd(program.Discipline,program.StudyHours))
           throw new InvalidOperationException($"{Name}: discipline {program.Discipline} is taught twice");
+        if(program.Supplies.IsDefaultOrEmpty)throw new InvalidOperationException($"{Name}: {program.Discipline} has no supplies");
+        foreach(var supply in program.Supplies)
+          if(!_allSupplies.ConsumedGoods.Any(g=>g.GoodId==supply.GoodId))
+            throw new InvalidOperationException($"{Name}: {program.Discipline} supply {supply.GoodId} is not in the GoodConsumingBuildingSpec");
+        _supplies.Add(program.Discipline,program.Supplies.Select(s=>new ConsumedGoodSpec{GoodId=s.GoodId,GoodPerHour=s.GoodPerHour}).ToImmutableArray());
+      }
       DisableComponent();
     }
 
@@ -97,6 +128,8 @@ namespace DeepFrontier.Scripts {
       }
       _allEffects=_attraction.Effects.ToList();
       ApplyEffects();
+      // After Load: the native consumer loaded the taught discipline's saved supply list.
+      ApplySupplies(keepSuppliesLeft:true);
       _noProgramStatus=StatusToggle.CreateNormalStatusWithAlertAndFloatingIcon("NoUnemployed",
         _loc.T("DeepFrontier.Workforce.Status.NoProgram"),_loc.T("DeepFrontier.Workforce.Status.NoProgram.Short"));
       GetComponent<StatusSubject>().RegisterStatus(_noProgramStatus);
@@ -118,6 +151,7 @@ namespace DeepFrontier.Scripts {
       if(discipline==Discipline)return;
       Discipline=discipline;
       ApplyEffects();
+      ApplySupplies(keepSuppliesLeft:false);
       UpdateStatus();
     }
 
@@ -137,6 +171,24 @@ namespace DeepFrontier.Scripts {
       EffectsProperty.SetValue(_attraction,effects);
       ToMaxProperty.SetValue(_attraction,effects.Any(e=>e.SatisfyToMaxValue));
       if(district&&effects.Count>0)district.AddNeedBehavior(_attraction.Effects,_behavior);
+    }
+
+    // IGoodDisallower: only the taught discipline's supplies are delivered.
+    public int AllowedAmount(string goodId)=>
+      Discipline!=null&&_supplies[Discipline].Any(g=>g.GoodId==goodId)?int.MaxValue:0;
+
+    // The native consumer uses up, and requires, only the taught discipline's
+    // goods; its supply list (the part of a unit already taken from stock) is
+    // kept in step. Without a discipline nobody studies and nothing is used.
+    private void ApplySupplies(bool keepSuppliesLeft) {
+      var goods=Discipline==null?ImmutableArray<ConsumedGoodSpec>.Empty:_supplies[Discipline];
+      ConsumerSpecField.SetValue(_consumer,_allSupplies with {ConsumedGoods=goods});
+      var left=(List<float>)SuppliesLeftField.GetValue(_consumer);
+      if(!keepSuppliesLeft)left.Clear();
+      if(left.Count>goods.Length)left.RemoveRange(goods.Length,left.Count-goods.Length);
+      while(left.Count<goods.Length)left.Add(0f);
+      foreach(var good in _allSupplies.ConsumedGoods)
+        DisallowedGoodsChanged?.Invoke(this,new DisallowedGoodsChangedEventArgs(good.GoodId));
     }
 
     private void UpdateStatus() {

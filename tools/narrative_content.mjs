@@ -119,7 +119,7 @@ export const STAGES = [
   {id: 'TheLastShift', science: 5000,
     title: 'The Last Shift',
     objective: "Read the last shift's records: restore 30 archive data in total and finish a Mission Control.",
-    hint: 'Mission Control unlocks at 14,000 science. Guidance computers and telemetry also need archive data, so keep the drives coming.',
+    hint: 'Mission Control unlocks at 30,000 science. Guidance computers and telemetry also need archive data, so keep the drives coming.',
     story: [
       'The newest drives are the saddest and the tidiest. The rains failed, then the wells, then the harvests. The humans decided to leave the valley for now and follow the rain north. Nobody wrote down when now would end.',
       'The last shift did its best. It set the treatment works to automatic, put the Holding\'s flush valves on a schedule to run until further notice, and switched off the lights. No further notice was ever given.',

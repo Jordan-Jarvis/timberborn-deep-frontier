@@ -75,7 +75,7 @@ export const TEXTS = {
   'DeepFrontier.Workforce.Status.NoSpecialists.Short': 'No {0}',
   'DeepFrontier.Workforce.Status.FewSpecialists': 'Not enough {0}. Train more at the Technical School.',
   'DeepFrontier.Workforce.School.Title': 'Specialist training',
-  'DeepFrontier.Workforce.School.Program': 'Teaching {0}. Adults who are not yet {0} study here in their free time; {1} hours of study make a graduate. Nobody works here; the school uses up its supplies while students are inside.',
+  'DeepFrontier.Workforce.School.Program': 'Teaching {0}. Adults who are not yet {0} study here in their free time; {1} hours of study make a graduate. Nobody works here; while students are inside, the school uses up the supplies of the profession it teaches.',
   'DeepFrontier.Workforce.School.NoProgram': 'Choose the profession this school teaches. Build more schools to teach several professions at once.',
   'DeepFrontier.Workforce.School.Teach': 'Teach {0}',
   'DeepFrontier.Workforce.School.Students': 'Studying here now: {0}.',
@@ -157,10 +157,7 @@ export function checkWorkforceConfig(config) {
   if (!(study.pointsPerHour > 0)) errors.push('school.study.pointsPerHour must be positive');
   if (!(study.dailyDelta < 0)) errors.push('school.study.dailyDelta must be negative (the need empties again)');
   if (!(Number.isInteger(study.favorableWellbeing) && study.favorableWellbeing >= 0)) errors.push('school.study.favorableWellbeing must be a non-negative integer');
-  const supplies = school.supplies ?? [];
-  if (!supplies.length || supplies.some((s) => !Array.isArray(s) || typeof s[0] !== 'string' || !(s[1] > 0))
-      || new Set(supplies.map((s) => s[0])).size !== supplies.length)
-    errors.push('school.supplies must be distinct [good, positive goods per hour] pairs');
+  if (Object.hasOwn(school, 'supplies')) errors.push('school.supplies is retired: each programme lists its own supplies');
   if (!(Number.isInteger(school.fullInventoryWorkHours) && school.fullInventoryWorkHours > 0)) errors.push('school.fullInventoryWorkHours must be a positive integer');
   if (!(Number.isInteger(school.students) && school.students > 0)) errors.push('school.students must be a positive integer (the native attraction panel needs a seat limit)');
   const programs = school.programs ?? [];
@@ -172,6 +169,10 @@ export function checkWorkforceConfig(config) {
     taught.add(p.discipline);
     if (!p.studyNeedName) errors.push(`school program ${p.discipline}: studyNeedName is required`);
     if (!(typeof p.studyHours === 'number' && p.studyHours > 0)) errors.push(`school program ${p.discipline}: studyHours must be positive`);
+    const supplies = p.supplies ?? [];
+    if (!supplies.length || supplies.some((s) => !Array.isArray(s) || typeof s[0] !== 'string' || !(s[1] > 0))
+        || new Set(supplies.map((s) => s[0])).size !== supplies.length)
+      errors.push(`school program ${p.discipline}: supplies must be distinct [good, positive goods per hour] pairs`);
   }
   for (const id of Object.keys(disciplines)) {
     if (!usedDisciplines.has(id)) errors.push(`discipline ${id} is required by no specialist workplace`);
@@ -224,7 +225,17 @@ export const SCHOOL_WORKSHOP_SPECS = ['WorkplaceSpec', 'WorkshopSpec', 'Manufact
   'WorkshopParticleControllerSpec'];
 
 export function schoolSpec(config) {
-  return {Programs: config.school.programs.map((p) => ({Discipline: p.discipline, StudyHours: p.studyHours}))};
+  return {Programs: config.school.programs.map((p) => ({Discipline: p.discipline, StudyHours: p.studyHours,
+    Supplies: p.supplies.map(([GoodId, GoodPerHour]) => ({GoodId, GoodPerHour}))}))};
+}
+
+// Every programme's supplies, in programme order; a good several programmes use
+// keeps its highest rate (the native inventory holds FullInventoryWorkHours of it).
+export function schoolSupplies(config) {
+  const rates = new Map();
+  for (const p of config.school.programs)
+    for (const [good, perHour] of p.supplies) rates.set(good, Math.max(rates.get(good) ?? 0, perHour));
+  return [...rates].map(([GoodId, GoodPerHour]) => ({GoodId, GoodPerHour}));
 }
 
 // The school's student seats on its cloned EnterableSpec: the native AttractionFragment
@@ -239,7 +250,7 @@ export function schoolAttractionSpecs(config) {
   return {
     AttractionSpec: {Effects: config.school.programs.map((p) => ({NeedId: studyNeedId(p), PointsPerHour: config.school.study.pointsPerHour, SatisfyToMaxValue: true}))},
     GoodConsumingBuildingSpec: {FullInventoryWorkHours: config.school.fullInventoryWorkHours,
-      ConsumedGoods: config.school.supplies.map(([GoodId, GoodPerHour]) => ({GoodId, GoodPerHour}))},
+      ConsumedGoods: schoolSupplies(config)},
     GoodConsumingAttractionSpec: {},
     FrontierSpecialistSchoolSpec: schoolSpec(config),
   };
@@ -344,7 +355,7 @@ export async function planWorkforceRisks({root = defaultRoot, dataRoot = resolve
       if (school[key]) errors.push(`${config.school.template} already has ${key}; its producer must build it without workshop or school specs`);
     if (!school.EnterableSpec) errors.push(`${config.school.template} has no EnterableSpec for its students`);
     if (!school.MechanicalNodeSpec) errors.push(`${config.school.template} must be powered (its attraction needs power)`);
-    for (const [good] of config.school.supplies)
+    for (const {GoodId: good} of schoolSupplies(config))
       if (!await exists(resolve(root, ...VANILLA, 'Goods', `Good.${good}.blueprint.json`)) && !await exists(resolve(dataRoot, 'Goods', `Good.${good}.blueprint.json`)))
         errors.push(`school supply ${good} is not a vanilla or generated good`);
     files.push({path: schoolPath, blueprint: {...school, ...additions, EnterableSpec: schoolEnterableSpec(config, school.EnterableSpec)}});

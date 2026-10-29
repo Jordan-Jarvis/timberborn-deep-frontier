@@ -34,16 +34,19 @@
       "Every adult beaver studies in its free time; nobody staffs the school (staff would work the same shift during which students are at work). Each school teaches one profession, chosen in its panel; three schools teach all three at once.",
       "The school is a native goods-consuming attraction (vanilla Detailer pattern: GoodConsumingBuildingSpec + GoodConsumingAttractionSpec + AttractionSpec): it uses up its supplies (goods per hour) while anyone studies inside and turns students away when they run out or it has no power. Its AttractionSpec lists every study need; the runtime keeps only the taught profession's.",
       "Study needs (NeedSpec Study<Discipline> from vanilla Need.Beaver.Books, one per profession). A beaver who holds the profession keeps it full, so it never visits a school teaching what it knows, and its favorableWellbeing counts for every profession it holds. pointsPerHour fills the need while studying; SatisfyToMaxValue keeps a visit going until it is full.",
-      "studyHours: hours inside a school teaching the profession that make a graduate. students: seats (native EnterableSpec capacity; the native attraction panel shows one slot per seat and needs a limit)."
+      "studyHours: hours inside a school teaching the profession that make a graduate. students: seats (native EnterableSpec capacity; the native attraction panel shows one slot per seat and needs a limit).",
+      "supplies: each profession's goods per hour while anyone studies it (the goods of the retired staffed courses, user decision 2026-10-29). The template's GoodConsumingBuildingSpec lists every profession's goods (shared goods at their highest rate) so the native inventory and saved supplies cover them all; the runtime consumes and accepts only the taught profession's (SpecialistSchool). Rates are the retired course's goods per graduate with six of the twelve seats in use: a fuller school costs less per graduate."
     ],
     "study": { "needGroupId": "SocialLife", "firstOrder": 37, "pointsPerHour": 0.5, "dailyDelta": -1, "favorableWellbeing": 1 },
-    "supplies": [["Gear", 0.1], ["CornRation", 0.2]],
     "fullInventoryWorkHours": 40,
     "students": 12,
     "programs": [
-      { "discipline": "Metallurgy", "studyNeedName": "Metallurgy studies", "studyHours": 16 },
-      { "discipline": "Nuclear", "studyNeedName": "Reactor studies", "studyHours": 32 },
-      { "discipline": "Flight", "studyNeedName": "Flight studies", "studyHours": 24 }
+      { "discipline": "Metallurgy", "studyNeedName": "Metallurgy studies", "studyHours": 16,
+        "supplies": [["MetalBlock", 1.5], ["DeepAlloy", 0.75], ["CornRation", 0.75]] },
+      { "discipline": "Nuclear", "studyNeedName": "Reactor studies", "studyHours": 32,
+        "supplies": [["Electronics", 0.4], ["Yellowcake", 0.2], ["Medicine", 0.4]] },
+      { "discipline": "Flight", "studyNeedName": "Flight studies", "studyHours": 24,
+        "supplies": [["Electronics", 0.5], ["RecoveredTelemetry", 0.25], ["PackagedFood", 0.5]] }
     ]
   },
   "botMaintenance": {

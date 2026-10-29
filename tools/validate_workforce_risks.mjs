@@ -125,6 +125,7 @@ const sample = {
   FrontierSpecialistWorkplaceSpec: {Discipline: ''},
   FrontierSpecialistSchoolSpec: schoolSpec(config),
   FrontierSpecialistProgramSpec: schoolSpec(config).Programs[0],
+  FrontierSchoolSupplySpec: schoolSpec(config).Programs[0].Supplies[0],
 };
 for (const [record, value] of Object.entries(sample))
   if (!same(serialized(record), keysOf(value))) errors.push(`runtime: ${record} serializes [${serialized(record)}], generator writes [${keysOf(value)}]`);
