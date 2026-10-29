@@ -52,7 +52,7 @@ export const RECOVERY_MAX_WATER_PER_CYCLE = 4;
 // pipe: the study's Timber Pipes socket constant.
 export const RADIATION_BUILDINGS = [
   {id: 'RadioactiveWasteExport', template: 'Buildings/Water/Discharge/Discharge.IronTeeth.blueprint.json',
-   recipes: ['ExportRadioactiveSludge', 'ExportContaminatedWater'], toolOrder: 22, science: 200000, kind: 'export', pipe: 'PIPE_INLET'},
+   recipes: ['ExportRadioactiveWaste', 'ExportRadioactiveSludge', 'ExportContaminatedWater'], toolOrder: 22, science: 200000, kind: 'export', pipe: 'PIPE_INLET'},
   {id: 'RadioactiveSludgeOutfall', template: 'Buildings/Water/Discharge/Discharge.IronTeeth.blueprint.json',
    recipes: ['ReleaseRadioactiveSludge'], toolOrder: 21, science: 200000, kind: 'outfall', pipe: 'PIPE_INLET'},
   {id: 'RadioactiveSludgeRecoveryPump', template: 'Buildings/Water/DeepBadwaterPump/DeepBadwaterPump.IronTeeth.blueprint.json',
@@ -83,6 +83,9 @@ export const SPRING_RADIOACTIVE_PER_HOUR = 0.5;
 export const RADIATION_RECIPES = [
   {id: 'ExportRadioactiveSludge', hours: 1, ingredients: [[SLUDGE, 5]], products: [], label: SLUDGE},
   {id: 'ExportContaminatedWater', hours: 1, ingredients: [[CONTAMINATED_WATER, 5]], products: [], label: CONTAMINATED_WATER},
+  // Spent-fuel casks dissolved in water and shipped off with it (user direction
+  // 2026-10-29: waste disposal must not need the refinery's chemical chain).
+  {id: 'ExportRadioactiveWaste', hours: 1, ingredients: [['RadioactiveWaste', 2], ['Water', 8]], products: [], label: 'RadioactiveWaste'},
   {id: 'ReleaseRadioactiveSludge', hours: 1, ingredients: [[SLUDGE, 3]], products: [], label: SLUDGE},
   {id: 'RecoverRadioactiveSludge', hours: 0.5, ingredients: [], products: [[SLUDGE, 1]], label: SLUDGE},
 ];
@@ -91,13 +94,13 @@ export const RADIATION_RECIPES = [
 // Tank surfaces: sludge uses the native yellow-green Biofuel liquid (it read as
 // golden canola oil in tanks); contaminated water keeps the canola material.
 const GOODS = [
-  {id: SLUDGE, order: 10190, color: {r: 0.80, g: 0.87, b: 0.10, a: 1}, name: 'Radioactive Sludge', material: 'Materials/Goods/BioFuel'},
+  {id: SLUDGE, order: 10190, color: {r: 0.80, g: 0.87, b: 0.10, a: 1}, name: 'Radioactive Water', material: 'Materials/Goods/BioFuel'},
   {id: CONTAMINATED_WATER, order: 10200, color: {r: 0.62, g: 0.72, b: 0.18, a: 1}, name: 'Contaminated Water', material: 'Materials/Goods/CanolaOil'},
 ];
 
 const LOCALIZATION = [
-  [`Good.${SLUDGE}.DisplayName`, 'Radioactive Sludge'],
-  [`Good.${SLUDGE}.PluralDisplayName`, 'Radioactive Sludge'],
+  [`Good.${SLUDGE}.DisplayName`, 'Radioactive Water'],
+  [`Good.${SLUDGE}.PluralDisplayName`, 'Radioactive Water'],
   [`Good.${CONTAMINATED_WATER}.DisplayName`, 'Contaminated Water'],
   [`Good.${CONTAMINATED_WATER}.PluralDisplayName`, 'Contaminated Water'],
   [`Need.${NEED}.DisplayName`, ZOMBIE_NAME],
@@ -110,18 +113,18 @@ const LOCALIZATION = [
   ['DeepFrontier.Radiation.Zombie.Dying', `${ZOMBIE_NAME}: dies in under 2 days without hospital treatment.`],
   ['DeepFrontier.Radiation.Zombie.Dying.Short', 'Zombie dying'],
   ['Building.RadioactiveWasteExport.DisplayName', 'Radioactive Waste Export'],
-  ['Building.RadioactiveWasteExport.Description', 'Ships barrelled radioactive sludge and contaminated water off the map for good. Must touch the map edge: place its dispatch gate on the edge. Fed by pipe at its front socket or by haulers.'],
+  ['Building.RadioactiveWasteExport.Description', 'Ships radioactive waste off the map for good: spent-fuel casks dissolved in water, barrelled radioactive water and contaminated water. Must touch the map edge: place its dispatch gate on the edge. Fed by pipe at its front socket or by haulers.'],
   ['Building.RadioactiveWasteExport.FlavorDescription', 'Somewhere downstream, it is somebody else\'s problem.'],
-  ['Building.RadioactiveSludgeOutfall.DisplayName', 'Sludge Outfall'],
-  ['Building.RadioactiveSludgeOutfall.Description', 'Pours barrelled radioactive sludge into the world as radioactive water over the lip of its spillway. It mixes with the water it meets, stops pumps, irradiates beavers, leaves irradiated ground where it dries, and only leaves through open map edges. Fed by pipe at its front socket or by haulers.'],
+  ['Building.RadioactiveSludgeOutfall.DisplayName', 'Radioactive Water Outfall'],
+  ['Building.RadioactiveSludgeOutfall.Description', 'Pours barrelled radioactive water into the world over the lip of its spillway. It mixes with the water it meets, stops pumps, irradiates beavers, leaves irradiated ground where it dries, and only leaves through open map edges. Fed by pipe at its front socket or by haulers.'],
   ['Building.RadioactiveSludgeOutfall.FlavorDescription', 'Out of sight is not out of the river.'],
-  ['Building.RadioactiveSludgeRecoveryPump.DisplayName', 'Sludge Recovery Pump'],
-  ['Building.RadioactiveSludgeRecoveryPump.Description', 'Pumps radioactive water through its intake pipe and barrels its radioactivity as sludge for export; the fresh water pumped with it is used up. The intake drops from the middle of the back deck, so that cell must stand over open water, with ground under the two piers beside it. Delivers the barrels by pipe from its front socket or to haulers.'],
+  ['Building.RadioactiveSludgeRecoveryPump.DisplayName', 'Radioactive Water Recovery Pump'],
+  ['Building.RadioactiveSludgeRecoveryPump.Description', 'Pumps radioactive water through its intake pipe and barrels its radioactivity as Radioactive Water for export; the fresh water pumped with it is used up. The intake drops from the middle of the back deck, so that cell must stand over open water, with ground under the two piers beside it. Delivers the barrels by pipe from its front socket or to haulers.'],
   ['Building.RadioactiveSludgeRecoveryPump.FlavorDescription', 'The cleanup always takes longer than the spill.'],
   ['DeepFrontier.Radiation.Status.PumpBlocked', 'Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.'],
   ['DeepFrontier.Radiation.Status.PumpBlocked.Short', 'Radiation detected'],
   ['DeepFrontier.Radiation.Status.StorageIrradiated', 'Stored water is irradiated and undrinkable.'],
-  ['DeepFrontier.Radiation.DeletionBlocker.HazardousStock', 'Holds radioactive waste, sludge or contaminated water. Empty it first: move the contents to other storage, or refine or export them.'],
+  ['DeepFrontier.Radiation.DeletionBlocker.HazardousStock', 'Holds radioactive waste, radioactive water or contaminated water. Empty it first: move the contents to other storage, or refine or export them.'],
   ['DeepFrontier.Radiation.Status.NoRadiation', 'No radioactive water at the intake.'],
   ['DeepFrontier.Radiation.WaterShares', 'Water at the intake: {0}% fresh, {1}% bad, {2}% radioactive.'],
   ['DeepFrontier.Radiation.Status.OutletBlocked', 'The outlet is blocked.'],

@@ -34,12 +34,17 @@ Changes since 0.5.0, the first Workshop release.
 ### Nuclear Reactor
 - **Falling power:** output now falls as the core heats instead of the reactor shutting itself down. Half the core heat means half the power, down to nothing at a meltdown. There is no automatic emergency shutdown any more; the manual SCRAM button remains.
 - **Slow cooling:** the core cools exactly as slowly as it heats, 2.5% per hour. A reactor that lacks cooling more than half the time therefore keeps gaining heat and eventually melts down, even if it gets coolant 45% of the time.
-- **Full waste heats the core:** a full store of Radioactive Waste or Radioactive Sludge in the reactor now heats the core just like running out of coolant, as long as it stays full.
+- **Full waste heats the core:** a full store of Radioactive Waste or Radioactive Water in the reactor now heats the core just like running out of coolant, as long as it stays full.
 - **Running or stopped:** a hot core with no coolant, or with full waste, keeps heating whether it is running, idle or shut down by SCRAM.
 - **Safe stops:**
   - Pausing the reactor, or switching it off by automation, is still a safe cold shutdown. It cools at the same slow rate.
   - A short crew or overdue maintenance heats the core only up to 85%, so on its own it costs power but never causes a meltdown.
 - **Panel:** the reactor panel shows current power output, waste and sludge storage, and the time to a meltdown or to cooling down.
+
+### Radioactive waste
+- **Simpler disposal:** the Radioactive Waste Export now dissolves spent-fuel casks in water and ships them off the map: 2 casks and 8 Water per hour. One building now disposes of casks, Radioactive Water and Contaminated Water, and the Waste Vault is just a buffer.
+- **Waste Refinery:** it no longer needs Chemical (4 casks + 8 Water → 6 Radioactive Water + 2 Recovered Minerals). Its Vitrification recipe, which turned sludge back into casks, is removed.
+- **Renamed:** Radioactive Sludge is now **Radioactive Water**, since it is the same fluid the radioactive tide brings. The Sludge Outfall and Sludge Recovery Pump are now the Radioactive Water Outfall and Radioactive Water Recovery Pump. Existing saves keep their stock.
 
 ### Radiation
 - Warehouses, piles and tanks holding radioactive waste, radioactive sludge or contaminated water can no longer be deleted until they are emptied. Before, deleting one threw the waste away.

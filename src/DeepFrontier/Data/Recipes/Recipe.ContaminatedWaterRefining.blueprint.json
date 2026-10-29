@@ -10,10 +10,6 @@
         "Amount": 4
       },
       {
-        "Id": "Chemical",
-        "Amount": 2
-      },
-      {
         "Id": "ContaminatedWater",
         "Amount": 8
       }

@@ -11215,7 +11215,6 @@
       "WasteRefining",
       "ContaminatedWaterRefining",
       "DecontaminateWater",
-      "Vitrification",
       "SludgeMineralRecovery"
     ]
   },

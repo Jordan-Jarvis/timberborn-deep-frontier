@@ -153,7 +153,7 @@ Building.UraniumProcessingPlant.DisplayName,Uranium processing plant,Deep Fronti
 Building.UraniumProcessingPlant.Description,"Deep Frontier uranium processing plant production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.UraniumProcessingPlant.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
 Building.RadioactiveWasteRefinery.DisplayName,Radioactive waste refinery,Deep Frontier
-Building.RadioactiveWasteRefinery.Description,"Refines spent-fuel casks into radioactive sludge and recovered minerals, and cleans contaminated water. Requires 8000 hp. Haul its sludge to a Sludge Outfall or Radioactive Waste Export: when its sludge tanks are full, 6 sludge leaks every 24 hours and irradiates the soil within 3 tiles, killing crops. Pausing it seals the tanks. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.RadioactiveWasteRefinery.Description,"Dissolves spent-fuel casks in water into radioactive water and recovered minerals, and cleans contaminated water. Requires 8000 hp. Casks can also go straight to a Radioactive Waste Export. Haul its radioactive water to a Radioactive Water Outfall or Radioactive Waste Export: when its tanks are full, 6 radioactive water leaks every 24 hours and irradiates the soil within 3 tiles, killing crops. Pausing it seals the tanks. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
 Building.RadioactiveWasteRefinery.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
 Building.ElectrolysisPlant.DisplayName,Electrolysis plant,Deep Frontier
 Building.ElectrolysisPlant.Description,"Deep Frontier electrolysis plant production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
@@ -192,10 +192,10 @@ Building.ObservationDeck.DisplayName,Observation deck,Deep Frontier
 Building.ObservationDeck.Description,A viewing tower for up to 20 beavers on its deck: the climb up the helical stair is exercise and the view is a rooftop terrace (Exercise Plaza and Rooftop Terrace). Paths and platforms may be built on the deck.,Deep Frontier
 Building.ObservationDeck.FlavorDescription,"From up here, the whole frontier fits in one look.",Deep Frontier
 Building.NuclearReactor.DisplayName,Nuclear Reactor,Deep Frontier
-Building.NuclearReactor.Description,"An 800000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive sludge that must be shipped off the map. Its power output falls as its core heats. Without coolant, or with its radioactive waste or sludge storage full, a hot core keeps heating, running or stopped, as fast as it cools otherwise, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. Fewer than 4 trained operators working or overdue maintenance (a 24-hour stop every 360 running hours) also heat it while it runs, up to 85%. At 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.NuclearReactor.Description,"An 800000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive water that must be shipped off the map. Its power output falls as its core heats. Without coolant, or with its radioactive waste or radioactive water storage full, a hot core keeps heating, running or stopped, as fast as it cools otherwise, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. Fewer than 4 trained operators working or overdue maintenance (a 24-hour stop every 360 running hours) also heat it while it runs, up to 85%. At 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
 Building.NuclearReactor.FlavorDescription,The frontier makes power and consequences at the same scale.,Deep Frontier
 Building.RadioactiveWasteVault.DisplayName,Radioactive Waste Vault,Deep Frontier
-Building.RadioactiveWasteVault.Description,"Locked storage for radioactive waste; the contents must be processed or moved before demolition. Keep it below full: when full, 4 casks breach every 24 hours, spilling radioactive sludge and irradiating the soil within 3 tiles, which kills crops.",Deep Frontier
+Building.RadioactiveWasteVault.Description,"Locked storage for radioactive waste; the contents must be processed or moved before demolition. Keep it below full: when full, 4 casks breach every 24 hours, spilling radioactive water and irradiating the soil within 3 tiles, which kills crops.",Deep Frontier
 Building.RadioactiveWasteVault.FlavorDescription,The frontier makes power and consequences at the same scale.,Deep Frontier
 Building.CoalPowerPlant.DisplayName,Coal power plant,Deep Frontier
 Building.CoalPowerPlant.Description,"A coal-fired steam plant. Produces 5,000 hp, day and night, burning 1 coal and 1 water per hour while the network draws power. No workers. Its chimney pollutes the air for a wide area while it runs. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
@@ -255,8 +255,7 @@ Recipe.ServoBotLimbs.DisplayName,Servo Bot Limbs,Deep Frontier
 Recipe.BotCortex.DisplayName,Bot Cortex,Deep Frontier
 Recipe.FuelReprocessing.DisplayName,Spent fuel reprocessing,Deep Frontier
 Recipe.ContaminatedWaterRefining.DisplayName,Waste refining with contaminated water,Deep Frontier
-Recipe.Vitrification.DisplayName,Sludge vitrification,Deep Frontier
-Recipe.SludgeMineralRecovery.DisplayName,Sludge mineral recovery,Deep Frontier
+Recipe.SludgeMineralRecovery.DisplayName,Radioactive water mineral recovery,Deep Frontier
 Need.PublicHealthcare.DisplayName,Public healthcare,Deep Frontier
 DeepFrontier.Hospital.Panel.Title,Hospital,Deep Frontier
 DeepFrontier.Hospital.Panel.Patients,Patients admitted: {0} / {1} beds,Deep Frontier
@@ -345,7 +344,7 @@ DeepFrontier.Meltdown.Status.Scram,Shut down by the operators (SCRAM): no power.
 DeepFrontier.Meltdown.Status.Scram.Short,Reactor shut down (SCRAM),Deep Frontier meltdown
 DeepFrontier.Meltdown.Status.CoolantDry,"Coolant dry: the hot core is heating toward a meltdown, running or stopped. Deliver reactor coolant water, or pause the reactor for a safe cold shutdown.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Status.CoolantDry.Short,Reactor coolant dry: meltdown risk,Deep Frontier meltdown
-DeepFrontier.Meltdown.Status.WasteFull,"Radioactive waste or sludge storage full: the hot core cannot shed its heat and is heating toward a meltdown, running or stopped. Haul the waste and sludge away, or pause the reactor for a safe cold shutdown.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Status.WasteFull,"Radioactive waste or radioactive water storage full: the hot core cannot shed its heat and is heating toward a meltdown, running or stopped. Haul the waste away, or pause the reactor for a safe cold shutdown.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Status.WasteFull.Short,Reactor waste full: meltdown risk,Deep Frontier meltdown
 DeepFrontier.Meltdown.Status.CoolantLow,Coolant reserve below {0} hours of running.,Deep Frontier meltdown
 DeepFrontier.Meltdown.Status.Crew,"Fewer than {0} operators working: the core heats while it runs, costing power.",Deep Frontier meltdown
@@ -353,19 +352,19 @@ DeepFrontier.Meltdown.Status.MaintenanceDue,Maintenance due soon: plan a {0}-hou
 DeepFrontier.Meltdown.Status.MaintenanceOverdue,"Maintenance overdue: the core heats while it runs, costing power. Stop the reactor for {0} hours.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Notification.Warning,Reactor overheating: core heat {0}% ({1}); power output down to {2}%. It melts down at 100%.,Deep Frontier meltdown
 DeepFrontier.Meltdown.Notification.CoolantDry,"Reactor coolant dry: core heat {0}% and rising {1}% per hour. A hot core keeps heating without coolant, running or stopped, and melts down in about {2} hours. Deliver reactor coolant water, or pause the reactor for a safe cold shutdown.",Deep Frontier meltdown
-DeepFrontier.Meltdown.Notification.WasteFull,"Reactor waste storage full: core heat {0}% and rising {1}% per hour. A hot core keeps heating while its radioactive waste or sludge is full, running or stopped, and melts down in about {2} hours. Haul the waste and sludge away, or pause the reactor for a safe cold shutdown.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Notification.WasteFull,"Reactor waste storage full: core heat {0}% and rising {1}% per hour. A hot core keeps heating while its radioactive waste or radioactive water is full, running or stopped, and melts down in about {2} hours. Haul the waste away, or pause the reactor for a safe cold shutdown.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Notification.Imminent,"MELTDOWN IMMINENT: core heat {0}%, meltdown in about {1} hours. Deliver reactor coolant water, haul away its waste or pause the reactor now.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Notification.MaintenanceOverdue,"Reactor maintenance overdue: stop it for {0} hours, or its core heats while it runs.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Notification.MaintenanceDone,Reactor maintenance completed during the stop.,Deep Frontier meltdown
 DeepFrontier.Meltdown.Notification.Meltdown,"REACTOR MELTDOWN: the Nuclear Reactor was destroyed. {0} killed, {1} irradiated.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Dialog.Title,Reactor meltdown,Deep Frontier meltdown
 DeepFrontier.Meltdown.Dialog.Casualties,"The core melted down and destroyed the Nuclear Reactor. {0} were killed and {1} beavers were irradiated; irradiated beavers need 10 days of hospital care, and untreated radiation sickness is fatal.",Deep Frontier meltdown
-DeepFrontier.Meltdown.Dialog.Contamination,"Radioactive sludge is pouring from the ruin and will keep flowing for {0} days. Soil and water within {1} tiles are contaminated: crops there die, pumps refuse contaminated water and beavers who walk in are irradiated. Clean up with Sludge Recovery Pumps and ship the sludge off the map.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Dialog.Contamination,"Radioactive water is pouring from the ruin and will keep flowing for {0} days. Soil and water within {1} tiles are contaminated: crops there die, pumps refuse contaminated water and beavers who walk in are irradiated. Clean up with Radioactive Water Recovery Pumps and ship it off the map.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Dialog.ShowSite,Show the site,Deep Frontier meltdown
 DeepFrontier.Meltdown.DeathMessage,{0} was killed in the reactor meltdown.,Deep Frontier meltdown
 DeepFrontier.Meltdown.Cause.Coolant,coolant dry,Deep Frontier meltdown
 DeepFrontier.Meltdown.Cause.Crew,fewer than {0} operators working,Deep Frontier meltdown
-DeepFrontier.Meltdown.Cause.Waste,radioactive waste or sludge full,Deep Frontier meltdown
+DeepFrontier.Meltdown.Cause.Waste,radioactive waste or radioactive water full,Deep Frontier meltdown
 DeepFrontier.Meltdown.Cause.Maintenance,maintenance overdue,Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.Title,Reactor core,Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.Heat,Core heat: {0}% {1},Deep Frontier meltdown
@@ -389,25 +388,25 @@ DeepFrontier.Meltdown.Panel.Waste,{0}: {1} of {2} stored (full storage heats the
 DeepFrontier.Meltdown.Panel.Crew,Operators working: {0} (needs {1} while running).,Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.MaintenanceDue,Maintenance due in {0} running hours; it needs a {1}-hour stop.,Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.MaintenanceOverdue,Maintenance overdue: stop the reactor for {0} hours ({1} so far).,Deep Frontier meltdown
-DeepFrontier.Meltdown.Panel.Rules,"Without coolant, or with its radioactive waste or sludge full, a hot core heats {0}% per hour, running or stopped; otherwise it cools {1}% per hour, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. While running, fewer than {2} operators working or overdue maintenance (a {3}-hour stop every {4} running hours) also heat it, up to {5}%.",Deep Frontier meltdown
-DeepFrontier.Meltdown.Panel.Consequences,"A meltdown destroys the reactor: beavers within {0} tiles die, beavers within {1} tiles are irradiated, sludge pours out for {2} days and soil and water within {3} tiles stay radioactive for weeks. Pausing the reactor is a safe cold shutdown.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Rules,"Without coolant, or with its radioactive waste or radioactive water full, a hot core heats {0}% per hour, running or stopped; otherwise it cools {1}% per hour, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. While running, fewer than {2} operators working or overdue maintenance (a {3}-hour stop every {4} running hours) also heat it, up to {5}%.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Consequences,"A meltdown destroys the reactor: beavers within {0} tiles die, beavers within {1} tiles are irradiated, radioactive water pours out for {2} days and soil and water within {3} tiles stay radioactive for weeks. Pausing the reactor is a safe cold shutdown.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.ScramButton,Emergency shutdown (SCRAM),Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.RestartButton,Restart reactor,Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.RestartBlocked,Restart possible once core heat is at or below {0}%.,Deep Frontier meltdown
 DeepFrontier.WasteLeak.StorageFull.Status.Warning,"Nearly full of radioactive waste: once full, casks breach every {0} hours.",Deep Frontier meltdown
-DeepFrontier.WasteLeak.StorageFull.Status.Leaking,Full: radioactive waste casks are breaching and leaking sludge. Refine or move the waste.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Status.Leaking,"Full: radioactive waste casks are breaching and leaking radioactive water. Export, refine or move the waste.",Deep Frontier meltdown
 DeepFrontier.WasteLeak.StorageFull.Status.Leaking.Short,Waste vault leaking,Deep Frontier meltdown
 DeepFrontier.WasteLeak.StorageFull.Notification.Warning,"Radioactive Waste Vault {0}% full: once full, its casks breach and leak.",Deep Frontier meltdown
 DeepFrontier.WasteLeak.StorageFull.Notification.Full,Radioactive Waste Vault full: {0} casks will breach in {1} hours unless waste is refined or moved.,Deep Frontier meltdown
-DeepFrontier.WasteLeak.StorageFull.Notification.Leak,"Radioactive Waste Vault leak: {0} casks breached, spilling radioactive sludge and irradiating the soil around the vault.",Deep Frontier meltdown
-DeepFrontier.WasteLeak.StorageFull.Panel.Rules,"When full, {0} casks breach every {1} hours: their waste spills out as radioactive sludge and irradiates the soil within {2} tiles, killing crops there.",Deep Frontier meltdown
-DeepFrontier.WasteLeak.OutputBlocked.Status.Warning,"Sludge tanks nearly full: once full, sludge leaks every {0} hours.",Deep Frontier meltdown
-DeepFrontier.WasteLeak.OutputBlocked.Status.Leaking,Sludge tanks full: radioactive sludge is leaking. Haul it to a Sludge Outfall or Radioactive Waste Export.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Notification.Leak,"Radioactive Waste Vault leak: {0} casks breached, spilling radioactive water and irradiating the soil around the vault.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Panel.Rules,"When full, {0} casks breach every {1} hours: their waste spills out as radioactive water and irradiates the soil within {2} tiles, killing crops there.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Status.Warning,"Radioactive water tanks nearly full: once full, radioactive water leaks every {0} hours.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Status.Leaking,Radioactive water tanks full: radioactive water is leaking. Haul it to a Radioactive Water Outfall or Radioactive Waste Export.,Deep Frontier meltdown
 DeepFrontier.WasteLeak.OutputBlocked.Status.Leaking.Short,Waste refinery leaking,Deep Frontier meltdown
-DeepFrontier.WasteLeak.OutputBlocked.Notification.Warning,Waste refinery sludge tanks {0}% full: haul the sludge away before they leak.,Deep Frontier meltdown
-DeepFrontier.WasteLeak.OutputBlocked.Notification.Full,Waste refinery sludge tanks full: {0} sludge will leak in {1} hours.,Deep Frontier meltdown
-DeepFrontier.WasteLeak.OutputBlocked.Notification.Leak,Waste refinery leak: {0} radioactive sludge spilled around the refinery.,Deep Frontier meltdown
-DeepFrontier.WasteLeak.OutputBlocked.Panel.Rules,"When its sludge tanks are full, {0} sludge leaks every {1} hours and irradiates the soil within {2} tiles, killing crops there. Pausing it seals the tanks.",Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Notification.Warning,Waste refinery radioactive water tanks {0}% full: haul it away before they leak.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Notification.Full,Waste refinery radioactive water tanks full: {0} radioactive water will leak in {1} hours.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Notification.Leak,Waste refinery leak: {0} radioactive water spilled around the refinery.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Panel.Rules,"When its radioactive water tanks are full, {0} radioactive water leaks every {1} hours and irradiates the soil within {2} tiles, killing crops there. Pausing it seals the tanks.",Deep Frontier meltdown
 DeepFrontier.WasteLeak.Panel.Title,Radioactive containment,Deep Frontier meltdown
 DeepFrontier.WasteLeak.Panel.Fill,{0}: {1} / {2} ({3}%),Deep Frontier meltdown
 DeepFrontier.WasteLeak.Panel.Contained,Contained. Warnings start at {0}% full; leaks only when full.,Deep Frontier meltdown
@@ -702,8 +701,8 @@ Building.SandstoneSeam.FlavorDescription,The next age begins with a solid founda
 Building.LimestoneSeam.DisplayName,Deep limestone seam,Deep Frontier construction materials
 Building.LimestoneSeam.Description,"Permanent geological source. Build a Limestone Quarry over this marked site; extraction requires water, workers and 1500 hp.",Deep Frontier construction materials
 Building.LimestoneSeam.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Good.RadioactiveSludge.DisplayName,Radioactive Sludge,Deep Frontier
-Good.RadioactiveSludge.PluralDisplayName,Radioactive Sludge,Deep Frontier
+Good.RadioactiveSludge.DisplayName,Radioactive Water,Deep Frontier
+Good.RadioactiveSludge.PluralDisplayName,Radioactive Water,Deep Frontier
 Good.ContaminatedWater.DisplayName,Contaminated Water,Deep Frontier
 Good.ContaminatedWater.PluralDisplayName,Contaminated Water,Deep Frontier
 Need.Irradiation.DisplayName,Radioactive Zombie,Deep Frontier
@@ -716,18 +715,18 @@ DeepFrontier.Radiation.Zombie.Flavor,"Glows faintly, eats for two, works for nob
 DeepFrontier.Radiation.Zombie.Dying,Radioactive Zombie: dies in under 2 days without hospital treatment.,Deep Frontier
 DeepFrontier.Radiation.Zombie.Dying.Short,Zombie dying,Deep Frontier
 Building.RadioactiveWasteExport.DisplayName,Radioactive Waste Export,Deep Frontier
-Building.RadioactiveWasteExport.Description,"Ships barrelled radioactive sludge and contaminated water off the map for good. Must touch the map edge: place its dispatch gate on the edge. Fed by pipe at its front socket or by haulers. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.RadioactiveWasteExport.Description,"Ships radioactive waste off the map for good: spent-fuel casks dissolved in water, barrelled radioactive water and contaminated water. Must touch the map edge: place its dispatch gate on the edge. Fed by pipe at its front socket or by haulers. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.RadioactiveWasteExport.FlavorDescription,"Somewhere downstream, it is somebody else's problem.",Deep Frontier
-Building.RadioactiveSludgeOutfall.DisplayName,Sludge Outfall,Deep Frontier
-Building.RadioactiveSludgeOutfall.Description,"Pours barrelled radioactive sludge into the world as radioactive water over the lip of its spillway. It mixes with the water it meets, stops pumps, irradiates beavers, leaves irradiated ground where it dries, and only leaves through open map edges. Fed by pipe at its front socket or by haulers. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.RadioactiveSludgeOutfall.DisplayName,Radioactive Water Outfall,Deep Frontier
+Building.RadioactiveSludgeOutfall.Description,"Pours barrelled radioactive water into the world over the lip of its spillway. It mixes with the water it meets, stops pumps, irradiates beavers, leaves irradiated ground where it dries, and only leaves through open map edges. Fed by pipe at its front socket or by haulers. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.RadioactiveSludgeOutfall.FlavorDescription,Out of sight is not out of the river.,Deep Frontier
-Building.RadioactiveSludgeRecoveryPump.DisplayName,Sludge Recovery Pump,Deep Frontier
-Building.RadioactiveSludgeRecoveryPump.Description,"Pumps radioactive water through its intake pipe and barrels its radioactivity as sludge for export; the fresh water pumped with it is used up. The intake drops from the middle of the back deck, so that cell must stand over open water, with ground under the two piers beside it. Delivers the barrels by pipe from its front socket or to haulers. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.RadioactiveSludgeRecoveryPump.DisplayName,Radioactive Water Recovery Pump,Deep Frontier
+Building.RadioactiveSludgeRecoveryPump.Description,"Pumps radioactive water through its intake pipe and barrels its radioactivity as Radioactive Water for export; the fresh water pumped with it is used up. The intake drops from the middle of the back deck, so that cell must stand over open water, with ground under the two piers beside it. Delivers the barrels by pipe from its front socket or to haulers. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
 Building.RadioactiveSludgeRecoveryPump.FlavorDescription,The cleanup always takes longer than the spill.,Deep Frontier
 DeepFrontier.Radiation.Status.PumpBlocked,"Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.",Deep Frontier
 DeepFrontier.Radiation.Status.PumpBlocked.Short,Radiation detected,Deep Frontier
 DeepFrontier.Radiation.Status.StorageIrradiated,Stored water is irradiated and undrinkable.,Deep Frontier
-DeepFrontier.Radiation.DeletionBlocker.HazardousStock,"Holds radioactive waste, sludge or contaminated water. Empty it first: move the contents to other storage, or refine or export them.",Deep Frontier
+DeepFrontier.Radiation.DeletionBlocker.HazardousStock,"Holds radioactive waste, radioactive water or contaminated water. Empty it first: move the contents to other storage, or refine or export them.",Deep Frontier
 DeepFrontier.Radiation.Status.NoRadiation,No radioactive water at the intake.,Deep Frontier
 DeepFrontier.Radiation.WaterShares,"Water at the intake: {0}% fresh, {1}% bad, {2}% radioactive.",Deep Frontier
 DeepFrontier.Radiation.Status.OutletBlocked,The outlet is blocked.,Deep Frontier

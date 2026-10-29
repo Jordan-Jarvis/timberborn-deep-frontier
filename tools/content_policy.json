@@ -6,7 +6,8 @@
   "singleUseExceptions": {
     "RocketAirframe": "Rocket-specific final-goal component, explicitly exempted by the user.",
     "PropulsionPackage": "Rocket-specific final-goal component, explicitly exempted by the user.",
-    "MissionPayload": "Rocket-specific final-goal payload, explicitly exempted by the user."
+    "MissionPayload": "Rocket-specific final-goal payload, explicitly exempted by the user.",
+    "RadioactiveSludge": "Waste product shown as Radioactive Water: its destination is disposal (Radioactive Waste Export off the map, or the Outfall into a river), which the audit does not count as a use; mineral recovery is its one productive use. Vitrification was removed with the user's 2026-10-29 simplification of the waste chain."
   },
   "prohibitedNewInventoryConcepts": ["DiningService", "IndustrialLicense", "SpecialistLicense", "FlightLicense"],
   "legacySaveOnlyGoods": {

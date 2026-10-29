@@ -961,6 +961,7 @@
   "WorkshopSpec": {},
   "ManufactorySpec": {
     "ProductionRecipeIds": [
+      "ExportRadioactiveWaste",
       "ExportRadioactiveSludge",
       "ExportContaminatedWater"
     ]

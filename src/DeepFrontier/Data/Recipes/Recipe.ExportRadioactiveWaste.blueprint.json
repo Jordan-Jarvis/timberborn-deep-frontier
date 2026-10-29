@@ -1,0 +1,25 @@
+{
+  "RecipeSpec": {
+    "Id": "ExportRadioactiveWaste",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.RadioactiveWaste.DisplayName",
+    "CycleDurationInHours": 1,
+    "Ingredients": [
+      {
+        "Id": "RadioactiveWaste",
+        "Amount": 2
+      },
+      {
+        "Id": "Water",
+        "Amount": 8
+      }
+    ],
+    "Products": [],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 5,
+    "Icon": "Sprites/Goods/RadioactiveWasteIcon"
+  }
+}

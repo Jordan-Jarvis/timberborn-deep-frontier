@@ -201,7 +201,7 @@ const recipeDefinitions = [
   // map-edge Radioactive Waste Export. RadioactiveSludge and ContaminatedWater
   // are defined by tools/radiation_content.mjs later in the generation chain.
   ['NuclearWaste', 'RadioactiveWaste', 2, [{ Id: 'ReactorCoolantWater', Amount: 6 }], [{ Id: 'RadioactiveWaste', Amount: 1 }, { Id: 'RadioactiveSludge', Amount: 1 }], 'RadioactiveWaste'],
-  ['WasteRefining', 'RadioactiveSludge/RecoveredMinerals', 8.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'Chemical', Amount: 2 }, { Id: 'Water', Amount: 8 }], [{ Id: 'RadioactiveSludge', Amount: 6 }, { Id: 'RecoveredMinerals', Amount: 2 }], 'RadioactiveSludge'],
+  ['WasteRefining', 'RadioactiveSludge/RecoveredMinerals', 8.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'Water', Amount: 8 }], [{ Id: 'RadioactiveSludge', Amount: 6 }, { Id: 'RecoveredMinerals', Amount: 2 }], 'RadioactiveSludge'],
   ['DecontaminateWater', 'Water', 4.0, [{ Id: 'ContaminatedWater', Amount: 10 }, { Id: 'Chemical', Amount: 1 }], [{ Id: 'Water', Amount: 8 }, { Id: 'RadioactiveSludge', Amount: 1 }], 'ContaminatedWater'],
   ['GuidanceTelemetry', 'RecoveredTelemetry', 1.0, [{ Id: 'GuidanceComputer', Amount: 1 }, { Id: 'ArchiveData', Amount: 1 }], [{ Id: 'RecoveredTelemetry', Amount: 1 }], 'RecoveredTelemetry'],
   // Archive Excavation (planned, frontier_progression.json plannedBuildings):
@@ -227,13 +227,12 @@ const recipeDefinitions = [
   // fuel's own life yields ten casks, so reprocessing never shrinks waste.
   ['FuelReprocessing', 'EnrichedFuel', 4.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'Chemical', Amount: 2 }, { Id: 'Yellowcake', Amount: 1 }], [{ Id: 'EnrichedFuel', Amount: 1 }, { Id: 'RadioactiveWaste', Amount: 2 }], 'EnrichedFuel'],
   // Waste Refinery: contaminated water as process water (radioactivity stays
-  // in the sludge), and vitrification of sludge into casks for the vault with
-  // recovered minerals as glass formers. WasteRefining followed by
-  // Vitrification returns the same four casks: no waste is destroyed.
-  ['ContaminatedWaterRefining', 'RadioactiveSludge/RecoveredMinerals', 8.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'Chemical', Amount: 2 }, { Id: 'ContaminatedWater', Amount: 8 }], [{ Id: 'RadioactiveSludge', Amount: 6 }, { Id: 'RecoveredMinerals', Amount: 2 }], 'RadioactiveSludge'],
-  ['Vitrification', 'RadioactiveWaste', 4.0, [{ Id: 'RadioactiveSludge', Amount: 3 }, { Id: 'RecoveredMinerals', Amount: 1 }], [{ Id: 'RadioactiveWaste', Amount: 2 }], 'RadioactiveWaste'],
+  // in the radioactive water). No chemicals and no vitrification (user
+  // direction 2026-10-29: the waste chain was too complex); casks can also be
+  // dissolved and shipped at the Radioactive Waste Export.
+  ['ContaminatedWaterRefining', 'RadioactiveSludge/RecoveredMinerals', 8.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'ContaminatedWater', Amount: 8 }], [{ Id: 'RadioactiveSludge', Amount: 6 }, { Id: 'RecoveredMinerals', Amount: 2 }], 'RadioactiveSludge'],
   // A second, productive sludge sink: the refinery can recover trace metals
-  // from dilute sludge instead of sending every cask to vitrification.
+  // from dilute radioactive water instead of exporting all of it.
   ['SludgeMineralRecovery', 'RecoveredMinerals/ConcentratedWaste', 6.0, [{ Id: 'RadioactiveSludge', Amount: 2 }, { Id: 'Chemical', Amount: 1 }, { Id: 'Water', Amount: 4 }], [{ Id: 'RecoveredMinerals', Amount: 2 }, { Id: 'ConcentratedWaste', Amount: 1 }], 'RecoveredMinerals'],
 ];
 
@@ -260,8 +259,7 @@ const RECIPE_NAMES = {
   GreenhouseAquaponics: 'Aquaponic kohlrabi and fish',
   FuelReprocessing: 'Spent fuel reprocessing',
   ContaminatedWaterRefining: 'Waste refining with contaminated water',
-  Vitrification: 'Sludge vitrification',
-  SludgeMineralRecovery: 'Sludge mineral recovery',
+  SludgeMineralRecovery: 'Radioactive water mineral recovery',
 };
 for (const id of Object.keys(RECIPE_NAMES)) if (!recipeDefinitions.some(([recipe]) => recipe === id)) throw new Error(`RECIPE_NAMES names undefined recipe ${id}`);
 
@@ -300,7 +298,7 @@ const buildingDefinitions = [
   ['WaterTreatmentPlant', 'Buildings/Water/WaterTreatmentPlant', 'Centrifuge', 'PureWater,ReactorCoolantWater,FilterMedia,CarbonFilterMedia', 'Water', 43, 500, 4, 1800, 'Water treatment plant'],
   ['TechnicalSchool', 'Buildings/Science/TechnicalSchool', 'Inventor', '', 'Science', 44, 300, 4, 2200, 'Technical school'],
   ['UraniumProcessingPlant', 'Buildings/Metal/UraniumProcessingPlant', 'Centrifuge', 'Yellowcake,EnrichedFuel,FuelReprocessing', 'Metal', 45, 5000, 6, progression.implementedBuildingScienceOverrides.UraniumProcessingPlant, 'Uranium processing plant'],
-  ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,Vitrification,SludgeMineralRecovery', 'Metal', 46, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive waste refinery'],
+  ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,SludgeMineralRecovery', 'Metal', 46, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive waste refinery'],
   ['ElectrolysisPlant', 'Buildings/Metal/ElectrolysisPlant', 'Centrifuge', 'Electrolysis', 'Metal', 47, 6000, 5, 10000, 'Electrolysis plant'],
   ['CryogenicLiquefactionPlant', 'Buildings/Metal/CryogenicLiquefactionPlant', 'Centrifuge', 'Liquefaction', 'Metal', 48, 10000, 6, 12000, 'Cryogenic liquefaction plant'],
   ['RocketAssemblyHangar', 'Buildings/Metal/RocketAssemblyHangar', 'FoodFactory', 'RocketAirframe,PropulsionPackage', 'Metal', 49, 12000, 10, 50000, 'Rocket assembly hangar'],
@@ -750,7 +748,7 @@ for (const id of ['NuclearReactor', 'RadioactiveWasteVault']) {
   const display = id === 'NuclearReactor' ? 'Nuclear Reactor' : 'Radioactive Waste Vault';
   rows.push(csvRow(`Building.${id}.DisplayName`, display));
   rows.push(csvRow(`Building.${id}.Description`, id === 'NuclearReactor'
-    ? 'An 800000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive sludge that must be shipped off the map.'
+    ? 'An 800000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive water that must be shipped off the map.'
     : 'Locked storage for radioactive waste; the contents must be processed or moved before demolition.'));
   rows.push(csvRow(`Building.${id}.FlavorDescription`, 'The frontier makes power and consequences at the same scale.'));
 }

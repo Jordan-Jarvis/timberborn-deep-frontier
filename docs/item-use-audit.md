@@ -2,7 +2,7 @@
 
 Generated from active Iron Teeth building recipes (including recipes appended to vanilla buildings), construction costs, restaurant menus, bot assembly, bot maintenance and faction-consumable goods. Planned uses do not count. The reasoning for each second use is in docs/progression.md (Second uses).
 
-**55 new goods checked; 0 require redesign or additional uses before release.**
+**55 new goods checked; 1 require redesign or additional uses before release.**
 
 Food may have direct eating as its only use. Rocket-specific parts still need one real launch consumer. Transport/storage/disposal do not count.
 
@@ -13,7 +13,7 @@ Food may have direct eating as its only use. Rocket-specific parts still need on
 | ArchiveData | 2 | 2 | MINIMUM MET | Products: GuidanceComputer; Products: RecoveredTelemetry |
 | CannedFish | 3 | 1 | PREFERRED RANGE MET | Products: PackagedFood; Products: MedicalFood; Direct consumption |
 | Cement | 3 | 2 | PREFERRED RANGE MET | Construction: SandstoneMasonryBlock.IronTeeth; Construction: LimestoneMasonryBlock.IronTeeth; Products: Concrete |
-| Chemical | 6 | 2 | PREFERRED RANGE MET | Products: Polymer; Products: Yellowcake; Products: EnrichedFuel + RadioactiveWaste; Products: RadioactiveSludge + RecoveredMinerals; Products: RadioactiveSludge + Water; Products: ConcentratedWaste + RecoveredMinerals |
+| Chemical | 5 | 2 | PREFERRED RANGE MET | Products: Polymer; Products: Yellowcake; Products: EnrichedFuel + RadioactiveWaste; Products: RadioactiveSludge + Water; Products: ConcentratedWaste + RecoveredMinerals |
 | Coal | 4 | 2 | PREFERRED RANGE MET | Operation: CoalPowerPlant.IronTeeth; Products: PowerModule; Products: FilterMedia; Products: HighGradeSteel |
 | Compost | 2 | 2 | MINIMUM MET | Construction: Greenhouse.IronTeeth; Products: Fertilizer |
 | ConcentratedWaste | 2 | 2 | MINIMUM MET | Products: Chemical; Research: Science |
@@ -51,11 +51,11 @@ Food may have direct eating as its only use. Rocket-specific parts still need on
 | PowerModule | 2 | 2 | MINIMUM MET | Products: EnrichedFuel + RadioactiveWaste; Bot assembly: bots |
 | PropulsionPackage | 1 | 1 | MINIMUM MET | Launch: rocket missions |
 | PureWater | 2 | 2 | MINIMUM MET | Products: ReactorCoolantWater; Products: HydrogenGas + OxygenGas |
-| RadioactiveSludge | 2 | 2 | MINIMUM MET | Products: RadioactiveWaste; Products: ConcentratedWaste + RecoveredMinerals |
+| RadioactiveSludge | 1 | 1 | MINIMUM MET | Products: ConcentratedWaste + RecoveredMinerals |
 | RadioactiveWaste | 2 | 2 | MINIMUM MET | Products: EnrichedFuel; Products: RadioactiveSludge + RecoveredMinerals |
 | ReactorCoolantWater | 2 | 2 | MINIMUM MET | Products: RadioactiveSludge + RadioactiveWaste; Research: Science |
 | RecoveredArtifact | 2 | 2 | MINIMUM MET | Products: MissionPayload; Products: ArchiveData |
-| RecoveredMinerals | 2 | 2 | MINIMUM MET | Construction: NuclearReactor.IronTeeth; Products: RadioactiveWaste |
+| RecoveredMinerals | 1 | 2 | NEEDS USES | Construction: NuclearReactor.IronTeeth |
 | RecoveredTelemetry | 2 | 2 | MINIMUM MET | Operation: TechnicalSchool.IronTeeth; Launch: rocket missions |
 | RocketAirframe | 1 | 1 | MINIMUM MET | Launch: rocket missions |
 | Sandstone | 2 | 2 | MINIMUM MET | Construction: SandstoneMasonryBlock.IronTeeth; Products: Aggregate |
