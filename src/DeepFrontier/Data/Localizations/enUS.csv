@@ -870,6 +870,29 @@ DeepFrontier.BotUpkeep.Panel.Good,{0}: {1} in stock. A bot serviced with it wear
 DeepFrontier.BotUpkeep.Panel.Dose,"One dose lasts {0} hours of work here; unserviced bots wear out {1}×. Bots take the first oil in stock, in the order listed.",Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Bot.Serviced,Serviced with {0}: wears out {1}× here for {2} more hours.,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Bot.Unserviced,Not serviced: stock maintenance oil at the {0} to slow wear.,Deep Frontier bot upkeep
+Good.ReinforcedBotFrame.DisplayName,Reinforced Bot Frame,Deep Frontier reactor bots
+Good.ReinforcedBotFrame.PluralDisplayName,Reinforced Bot Frames,Deep Frontier reactor bots
+Good.ReactorPowerCell.DisplayName,Reactor Power Cell,Deep Frontier reactor bots
+Good.ReactorPowerCell.PluralDisplayName,Reactor Power Cells,Deep Frontier reactor bots
+Need.ReactorRetrofitFrame.DisplayName,Retrofit: reinforced frame,Deep Frontier reactor bots
+Need.ReactorRetrofitCell.DisplayName,Retrofit: reactor power cell,Deep Frontier reactor bots
+Need.ReactorCharge.DisplayName,Reactor charge,Deep Frontier reactor bots
+Need.ReactorBotCoolant.DisplayName,Coolant,Deep Frontier reactor bots
+Need.ReactorBotPlating.DisplayName,Steel plating,Deep Frontier reactor bots
+Status.Need.ReactorCharge,Reactor charge depleted: needs a Reactor Charging Bay.,Deep Frontier reactor bots
+Status.Need.ReactorCharge.Short,Reactor Bot is out of charge,Deep Frontier reactor bots
+Status.Need.ReactorBotCoolant,Overheating: needs reactor coolant water or cryocoolant from storage.,Deep Frontier reactor bots
+Status.Need.ReactorBotCoolant.Short,Reactor Bot is overheating,Deep Frontier reactor bots
+Building.ReactorChargingBay.DisplayName,Reactor Charging Bay,Deep Frontier reactor bots
+Building.ReactorChargingBay.Description,"Charges two Reactor Bots at once; ordinary bots use the Charging Station. Burns 0.2 enriched fuel per hour while a bot charges and needs 5,000 hp. A full charge lasts a Reactor Bot 6.9 days. No workers.",Deep Frontier reactor bots
+Building.ReactorChargingBay.FlavorDescription,"Two hours on the cradle, a week on the job.",Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Title,Reactor retrofit,Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Ordinary,"A Reinforced Bot Frame and Reactor Power Cell retrofit makes this bot a Reactor Bot: 5× load, 4× speed, 10× lifespan, charged at a Reactor Charging Bay every 6.9 days. Upkeep: coolant (2 kinds) and steel plating from storage.",Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Queued,Retrofit queued: the bot fetches a Reinforced Bot Frame and Reactor Power Cell from storage as soon as its district stocks them.,Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Upgraded,"Reactor Bot: 5× load, 4× speed, wears out 10× slower. Charges at a Reactor Charging Bay.",Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Unplated,No steel plating: wearing out 5× faster until it takes high-grade steel or alloy.,Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Queue,Retrofit to Reactor Bot,Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Cancel,Cancel retrofit,Deep Frontier reactor bots
 ToolGroups.DeepFrontierDeepMining,Deep mining,Deep Frontier toolbar group
 ToolGroups.DeepFrontierQuarrying,Quarries and cement,Deep Frontier toolbar group
 ToolGroups.DeepFrontierHeavyIndustry,Heavy industry,Deep Frontier toolbar group

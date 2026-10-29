@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "ReinforcedBotFrame",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.ReinforcedBotFrame.PluralDisplayName",
+    "CycleDurationInHours": 8,
+    "Ingredients": [
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 8
+      },
+      {
+        "Id": "Alloy",
+        "Amount": 4
+      },
+      {
+        "Id": "MachineCore",
+        "Amount": 1
+      },
+      {
+        "Id": "BotChassis",
+        "Amount": 1
+      }
+    ],
+    "Products": [
+      {
+        "Id": "ReinforcedBotFrame",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/ReinforcedBotFrameIcon"
+  }
+}

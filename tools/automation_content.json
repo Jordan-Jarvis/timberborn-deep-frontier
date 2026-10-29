@@ -581,6 +581,13 @@
     "Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.blueprint": {
       "role": "none",
       "precedent": "Buildings/Wellbeing/ExercisePlaza/ExercisePlaza.IronTeeth.blueprint"
+    },
+    "Buildings/Science/ReactorChargingBay/ReactorChargingBay.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "MechanicalBuildingSpec",
+        "GoodConsumingBuildingSpec"
+      ]
     }
   },
   "mapObjects": {

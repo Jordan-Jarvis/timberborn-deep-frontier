@@ -8,6 +8,11 @@
     "basicSelection": ["Aquifer", "BadwaterSource", "Blockage", "Bush", "Default", "GeothermalField", "Relic", "Ruin", "Thorns", "Tree", "UndergroundRuin", "UnstableCore", "WaterCrop.AltSound", "WaterSource"]
   },
   "buildings": {
+    "ReactorChargingBay": {
+      "template": "Buildings/Science/ReactorChargingBay/ReactorChargingBay.IronTeeth.blueprint",
+      "selection": "ChargingStation", "looping": "", "loopDriver": "none", "family": "civic/service",
+      "comment": "Vanilla Charging Station template (attraction for bots); it keeps the native ChargingStation selection, which the vanilla station plays. No loop: the vanilla station has none."
+    },
     "NuclearReactor": {
       "template": "Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.blueprint",
       "selection": "Engine", "looping": "PrintingPress", "loopDriver": "workshop", "family": "steam/generator",

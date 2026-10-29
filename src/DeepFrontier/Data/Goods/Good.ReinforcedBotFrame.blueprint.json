@@ -1,0 +1,30 @@
+{
+  "GoodSpec": {
+    "Id": "ReinforcedBotFrame",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [
+      {
+        "NeedId": "ReactorRetrofitFrame",
+        "Points": 1
+      }
+    ],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.36,
+      "g": 0.4,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 11,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5145,
+    "Icon": "Sprites/Goods/ReinforcedBotFrameIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.ReinforcedBotFrame.DisplayName",
+    "PluralDisplayNameLocKey": "Good.ReinforcedBotFrame.PluralDisplayName"
+  }
+}

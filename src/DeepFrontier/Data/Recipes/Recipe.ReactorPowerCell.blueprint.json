@@ -1,0 +1,38 @@
+{
+  "RecipeSpec": {
+    "Id": "ReactorPowerCell",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.ReactorPowerCell.PluralDisplayName",
+    "CycleDurationInHours": 6,
+    "Ingredients": [
+      {
+        "Id": "EnrichedFuel",
+        "Amount": 1
+      },
+      {
+        "Id": "PowerModule",
+        "Amount": 2
+      },
+      {
+        "Id": "Electronics",
+        "Amount": 2
+      },
+      {
+        "Id": "Cryocoolant",
+        "Amount": 2
+      }
+    ],
+    "Products": [
+      {
+        "Id": "ReactorPowerCell",
+        "Amount": 1
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 30,
+    "Icon": "Sprites/Goods/ReactorPowerCellIcon"
+  }
+}

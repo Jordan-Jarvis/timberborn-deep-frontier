@@ -2,7 +2,12 @@
   "GoodSpec": {
     "Id": "HighGradeSteel",
     "BackwardCompatibleIds": [],
-    "ConsumptionEffects": [],
+    "ConsumptionEffects": [
+      {
+        "NeedId": "ReactorBotPlating",
+        "Points": 0.5
+      }
+    ],
     "GoodType": "Box",
     "StockpileVisualization": "Box",
     "VisibleContainer": "Box",

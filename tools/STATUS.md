@@ -4,6 +4,34 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Reactor Bots: in-place bot upgrade and Reactor Charging Bay (Claude Code session, 2026-10-29, built by an agent; integrated and validated in mirror `integ`; not built or run in game)
+
+- **User:** super bots as an upgrade of the ordinary bot (same name, still a bot, big buffs, a different skin). They need steel, fuel rods and coolant, plus their own 5,000 hp charging stations. Design: `scratchpad/super-bots-design.md`.
+- **Mechanism:** a saved `ReactorBot` component on every bot (Ordinary / Queued / Reactor); no second template, since the native bot factory takes one BotSpec. The panel's "Retrofit" button switches on two hidden needs, so the bot fetches 1 ReinforcedBotFrame and 1 ReactorPowerCell from storage, the way bots take Grease, then upgrades.
+- **Buffs:**
+  - **Carry ×5:** the native carry bonus.
+  - **Speed ×4:** a small patch; the native bonus caps at ×2.
+  - **Wear ÷10:** a patch, so the bot lives 700 days.
+  - **Charge:** its own `ReactorCharge` need at a quarter of Energy's rate, with Energy off on Reactor Bots and the new needs off on ordinary bots, so each kind of bot uses only its own station.
+  - **Skin:** amber illumination and a gunmetal tint, except on colour-named bots.
+- **Upkeep per day:** coolant 1 ReactorCoolantWater or 0.5 Cryocoolant (critical); plating 0.2 HighGradeSteel or 0.1 Alloy (without it, wear ×5). The bay burns about 0.2 EnrichedFuel per charging hour.
+- **Parts:**
+  - ReinforcedBotFrame at the Precision Machine Works: 8 HGS, 4 Alloy, 1 MachineCore, 1 BotChassis, 8 h.
+  - ReactorPowerCell at the Uranium Processing Plant: 1 EnrichedFuel, 2 PowerModule, 2 Electronics, 2 Cryocoolant, 6 h.
+- **ReactorChargingBay:** 3×2×3, two cradles, 5,000 hp, no workers, 250,000 science, Science tool group. T5 cost plus a gate of 2 ReinforcedBotFrame and 2 ReactorPowerCell. Model is 2,772 triangles.
+- **Files:**
+  - `tools/super_bots.json`, `super_bot_content.mjs`, `validate_super_bots.mjs`, `Scripts/SuperBots/*`, `lategame_ReactorChargingBay.py`.
+  - Shared-file entries: batches, costs, generation hook after bot upkeep, automation, sounds, exporter slots, triangle budget, roof decks, asset catalog, and the restaurant validator's need list.
+- **Saves:** ordinary bots gain five switched-off needs. Without the mod, Reactor Bots load as ordinary bots.
+- **Checks:** mirror `integ`: promote, generation, `validate_all -SkipBlender` 52 pass + 1 report-only (`no-game-assets` outside git), compile.
+- **In game:**
+  - the retrofit errand, and whether the need switches survive save/load;
+  - ×4 movement on stairs and in water, and the leg cadence (animation speed is per template, so legs run 4× fast);
+  - wear;
+  - only Reactor Bots charging at the bay, two at once, and the bay stopping without fuel;
+  - coolant and plating pick-ups;
+  - the skin.
+
 ## Deep Well and steel structures (Claude Code session, 2026-10-29, built by two agents; integrated and validated in mirror `integ`; not built or run in game)
 
 - **Deep Well (user request: the map runs dry; boost sources, seeps flow, drought-proof, optional tide shut-off).** Files: `tools/deep_well_content.{json,mjs}`, `validate_deep_well_content.mjs`, `Scripts/DeepWell/DeepWell.cs` and `DeepWellPanel.cs`, `lategame_DeepWell.py`; design `scratchpad/deep-well-design.md`.

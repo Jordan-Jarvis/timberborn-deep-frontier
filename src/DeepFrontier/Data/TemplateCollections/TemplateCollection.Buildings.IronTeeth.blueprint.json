@@ -82,7 +82,8 @@
       "Buildings/Water/RadioactiveSludgeOutfall/RadioactiveSludgeOutfall.IronTeeth.blueprint",
       "Buildings/Water/RadioactiveSludgeRecoveryPump/RadioactiveSludgeRecoveryPump.IronTeeth.blueprint",
       "Buildings/Water/RadioactiveSpring/RadioactiveSpring.blueprint",
-      "Buildings/Water/DeepWell/DeepWell.IronTeeth.blueprint"
+      "Buildings/Water/DeepWell/DeepWell.IronTeeth.blueprint",
+      "Buildings/Science/ReactorChargingBay/ReactorChargingBay.IronTeeth.blueprint"
     ]
   }
 }

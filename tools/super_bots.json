@@ -1,0 +1,60 @@
+{
+  "$comment": "Reactor Bots: an in-place upgrade of the ordinary Iron Teeth bot (user direction 2026-10-29: same bot, same template, saved per-bot flag). Written by tools/super_bot_content.mjs; runtime src/DeepFrontier/Scripts/SuperBots; checked by tools/validate_super_bots.mjs. Every value is authored here; the generator and the runtime have no defaults.",
+  "upgrade": {
+    "$comment": "Per-bot buffs. carryingCapacityBonus is a native BonusManager delta (CarryingCapacity, clamped 0.1..10): +4 gives x5. Speed cannot use the native MovementSpeed bonus (clamped at 2.0), so ReactorBotPatches multiplies WalkerSpeedManager's base speed. lifespanMultiplier divides all wear (native, workplace and unplated). unplatedWearMultiplier applies while the plating need is not favourable.",
+    "carryingCapacityBonus": 4,
+    "speedMultiplier": 4,
+    "lifespanMultiplier": 10,
+    "unplatedWearMultiplier": 5,
+    "replacedNeeds": ["Energy"],
+    "noChargeAnimation": "NoEnergy",
+    "illumination": {"id": "DeepFrontierReactorBot", "color": {"r": 1.0, "g": 0.52, "b": 0.12, "a": 1.0}},
+    "tint": {"r": 0.62, "g": 0.66, "b": 0.72, "a": 1.0}
+  },
+  "needs": {
+    "retrofit": [{"id": "ReactorRetrofitFrame", "name": "Retrofit: reinforced frame"},
+                 {"id": "ReactorRetrofitCell", "name": "Retrofit: reactor power cell"}],
+    "charge": {"id": "ReactorCharge", "name": "Reactor charge", "energyFactor": 0.25, "hoursWarningThreshold": 14,
+               "unfavorableWellbeing": -3, "sprite": "OutOfEnergy",
+               "status": "Reactor charge depleted: needs a Reactor Charging Bay.", "statusShort": "Reactor Bot is out of charge"},
+    "coolant": {"id": "ReactorBotCoolant", "name": "Coolant", "dailyDelta": -0.25, "hoursWarningThreshold": 12,
+                "unfavorableWellbeing": -3, "sprite": "OutOfEnergy",
+                "status": "Overheating: needs reactor coolant water or cryocoolant from storage.", "statusShort": "Reactor Bot is overheating"},
+    "plating": {"id": "ReactorBotPlating", "name": "Steel plating", "dailyDelta": -0.1, "hoursWarningThreshold": 24,
+                "unfavorableWellbeing": -2}
+  },
+  "$consumption": "Bot-only ConsumptionEffects added to these goods: bots take one unit from storage as beavers eat (native InventoryNeedBehavior). Beavers never take them (the needs are not theirs); ordinary bots have them disabled.",
+  "consumption": {
+    "ReinforcedBotFrame": [["ReactorRetrofitFrame", 1.0]],
+    "ReactorPowerCell": [["ReactorRetrofitCell", 1.0]],
+    "ReactorCoolantWater": [["ReactorBotCoolant", 0.25]],
+    "Cryocoolant": [["ReactorBotCoolant", 0.5]],
+    "HighGradeSteel": [["ReactorBotPlating", 0.5]],
+    "Alloy": [["ReactorBotPlating", 1.0]]
+  },
+  "$parts": "A queued bot is retrofitted by taking one Reinforced Bot Frame and one Reactor Power Cell from storage (each fills its retrofit need); the upgrade applies when every retrofit need is full. Second use of both parts: the Reactor Charging Bay construction gate (tools/building_construction_costs.json lategameGates).",
+  "parts": [
+    {"id": "ReinforcedBotFrame", "name": "Reinforced Bot Frame", "plural": "Reinforced Bot Frames",
+     "building": "Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.blueprint",
+     "hours": 8, "ingredients": [["HighGradeSteel", 8], ["Alloy", 4], ["MachineCore", 1], ["BotChassis", 1]], "products": 1,
+     "order": 5145, "color": [0.36, 0.40]},
+    {"id": "ReactorPowerCell", "name": "Reactor Power Cell", "plural": "Reactor Power Cells",
+     "building": "Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.blueprint",
+     "hours": 6, "ingredients": [["EnrichedFuel", 1], ["PowerModule", 2], ["Electronics", 2], ["Cryocoolant", 2]], "products": 1,
+     "order": 5195, "color": [0.78, 0.50]}
+  ],
+  "station": {
+    "$comment": "Native powered goods-consuming attraction (vanilla DecontaminationPod / MudBath contract) on the vanilla ChargingStation.IronTeeth template. It serves only ReactorCharge, so ordinary bots never use it, and Reactor Bots never use the vanilla station (Energy is disabled on them). Geometry, model and slots: tools/asset-pipeline/lategame_ReactorChargingBay.py.",
+    "id": "ReactorChargingBay",
+    "folder": "Buildings/Science/ReactorChargingBay",
+    "name": "Reactor Charging Bay",
+    "pointsPerHour": 0.6,
+    "powerInput": 5000,
+    "fuel": ["EnrichedFuel", 0.2],
+    "fullInventoryWorkHours": 50,
+    "science": 250000,
+    "toolGroup": "Science",
+    "toolOrder": 71,
+    "flavor": "Two hours on the cradle, a week on the job."
+  }
+}

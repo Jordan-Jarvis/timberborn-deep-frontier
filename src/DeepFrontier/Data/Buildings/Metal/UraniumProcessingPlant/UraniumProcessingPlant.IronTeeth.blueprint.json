@@ -13062,7 +13062,8 @@
     "ProductionRecipeIds": [
       "Yellowcake",
       "EnrichedFuel",
-      "FuelReprocessing"
+      "FuelReprocessing",
+      "ReactorPowerCell"
     ]
   },
   "ConstructionSiteProgressVisualizerSpec": {

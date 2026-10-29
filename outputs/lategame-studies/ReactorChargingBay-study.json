@@ -1,0 +1,56 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Riveted steel reactor core between two open charging cradles, crowned by a banded fuel-rod cask and a cooling fan.",
+  "footprint": [
+    3,
+    2
+  ],
+  "heightLayers": 3,
+  "boundsMin": [
+    -0.0,
+    0.015,
+    -0.02
+  ],
+  "boundsMax": [
+    3.0,
+    1.99,
+    3.01
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.5,
+        0.15,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "ReactorChargingBay.Fan",
+    "ReactorChargingBay.Beacon"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 1310,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 32,
+    "BaseMetal.IronTeeth": 587,
+    "Details.IronTeeth": 176,
+    "accent8": 12,
+    "accent25": 10,
+    "Plaster_White.IronTeeth": 178,
+    "Plaster_Orange.IronTeeth": 69,
+    "IrregularPlanks_MetalForged.IronTeeth": 180,
+    "WindowsAtlas.IronTeeth": 2,
+    "PaintedMetal.IronTeeth": 126
+  },
+  "sourceHash": "c4677136dc297921a909bf79600e6e852f76e2869b139518543c22b60b52c3e7",
+  "artHash": "d606021b8a8d0b8ba79dffdfe7ffd4823d2feaaa02cdf470724316a953b16be4"
+}

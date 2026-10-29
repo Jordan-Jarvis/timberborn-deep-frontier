@@ -63,7 +63,8 @@
       "PowerModule",
       "ReinforcedBotChassis",
       "ServoBotLimbs",
-      "BotCortex"
+      "BotCortex",
+      "ReinforcedBotFrame"
     ]
   },
   "WorkshopSpec": {},

@@ -132,7 +132,20 @@ def bathhouse_slots(registration):
     return slots
 
 
-VISITOR_SLOTS = {'TownPlaza': town_plaza_slots, 'ObservationDeck': observation_deck_slots,
+def reactor_charging_bay_slots(registration):
+    """The two cradle floors (lategame_ReactorChargingBay.CHARGE_SLOTS), each
+    bot facing out of its cradle."""
+    import lategame_ReactorChargingBay as M
+    w, h = registration['footprint']
+    slots = []
+    for x, y, z, fx, fy in M.CHARGE_SLOTS:
+        if not (0 < x < w and 0 < y < h):
+            raise ValueError(f'ReactorChargingBay: slot {(x, y)} lies outside the footprint')
+        slots.append(((x, y, z), (fx, fy)))
+    return slots
+
+
+VISITOR_SLOTS = {'ReactorChargingBay': reactor_charging_bay_slots, 'TownPlaza': town_plaza_slots, 'ObservationDeck': observation_deck_slots,
                  'Bathhouse': bathhouse_slots}
 
 

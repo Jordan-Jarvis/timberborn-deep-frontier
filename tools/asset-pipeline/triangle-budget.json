@@ -549,6 +549,15 @@
    "construction": 6086,
    "file": "outputs/lategame-integration/Data/Buildings/Storage/RadioactiveWasteVault/RadioactiveWasteVault.IronTeeth.Model.timbermesh"
   },
+  "ReactorChargingBay": {
+   "family": "lategame",
+   "class": "small",
+   "target": 8000,
+   "finished": 2772,
+   "vertices": 5304,
+   "construction": 2772,
+   "file": "outputs/lategame-integration/Data/Buildings/Science/ReactorChargingBay/ReactorChargingBay.IronTeeth.Model.timbermesh"
+  },
   "ReinforcedDamBlock": {
    "family": "structural",
    "class": "small",
@@ -829,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 1313805,
+ "totalBlueprintTriangles": 1319349,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

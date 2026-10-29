@@ -2,7 +2,12 @@
   "GoodSpec": {
     "Id": "ReactorCoolantWater",
     "BackwardCompatibleIds": [],
-    "ConsumptionEffects": [],
+    "ConsumptionEffects": [
+      {
+        "NeedId": "ReactorBotCoolant",
+        "Points": 0.25
+      }
+    ],
     "GoodType": "Liquid",
     "StockpileVisualization": "Liquid",
     "VisibleContainer": "Barrel",

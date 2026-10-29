@@ -11,7 +11,12 @@
       "Irradiation",
       "StudyMetallurgy",
       "StudyNuclear",
-      "StudyFlight"
+      "StudyFlight",
+      "ReactorRetrofitFrame",
+      "ReactorRetrofitCell",
+      "ReactorCharge",
+      "ReactorBotCoolant",
+      "ReactorBotPlating"
     ]
   }
 }

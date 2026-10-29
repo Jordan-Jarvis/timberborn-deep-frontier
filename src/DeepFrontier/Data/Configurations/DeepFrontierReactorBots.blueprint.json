@@ -1,0 +1,30 @@
+{
+  "FrontierReactorBotSettingsSpec": {
+    "RetrofitNeedIds": [
+      "ReactorRetrofitFrame",
+      "ReactorRetrofitCell"
+    ],
+    "ChargeNeedId": "ReactorCharge",
+    "PlatingNeedId": "ReactorBotPlating",
+    "ReactorNeedIds": [
+      "ReactorCharge",
+      "ReactorBotCoolant",
+      "ReactorBotPlating"
+    ],
+    "ReplacedNeedIds": [
+      "Energy"
+    ],
+    "NoChargeAnimation": "NoEnergy",
+    "CarryingCapacityBonus": 4,
+    "SpeedMultiplier": 4,
+    "LifespanMultiplier": 10,
+    "UnplatedWearMultiplier": 5,
+    "IlluminationColorId": "DeepFrontierReactorBot",
+    "Tint": {
+      "r": 0.62,
+      "g": 0.66,
+      "b": 0.72,
+      "a": 1
+    }
+  }
+}

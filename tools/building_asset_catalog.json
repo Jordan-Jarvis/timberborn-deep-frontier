@@ -972,6 +972,18 @@
       "generator": "tools/asset-pipeline/render_lategame_studies.py",
       "exporter": "tools/asset-pipeline/export_lategame_models.py",
       "artStage": "detailed"
+    },
+    {
+      "building": "ReactorChargingBay",
+      "template": "ReactorChargingBay.IronTeeth",
+      "blueprint": "src/DeepFrontier/Data/Buildings/Science/ReactorChargingBay/ReactorChargingBay.IronTeeth.blueprint.json",
+      "model": "ReactorChargingBay",
+      "sourceScene": "src/DeepFrontier/Art/Source/ReactorChargingBay-ReferenceStudy.blend",
+      "collection": "ReactorChargingBay.ReferenceStudy",
+      "geometry": "tools/asset-pipeline/lategame_ReactorChargingBay.py",
+      "generator": "tools/asset-pipeline/render_lategame_studies.py",
+      "exporter": "tools/asset-pipeline/export_lategame_models.py",
+      "artStage": "detailed"
     }
   ]
 }

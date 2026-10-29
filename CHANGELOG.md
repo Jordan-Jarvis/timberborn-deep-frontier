@@ -78,6 +78,15 @@ Changes since 0.5.0, the first Workshop release.
   - Steel truss bridges spanning gaps of exactly 8, 10, 12 or 15 tiles; only the near end needs support.
   - Steel columns 1 to 6 high that stack. 3×3 and 5×5 steel decks rest on four corner columns, so the corners can stand at different ground heights.
 
+### Reactor Bots
+- **Retrofit:** any bot can be upgraded in place to a **Reactor Bot**, keeping its name. Press "Retrofit to Reactor Bot" on its panel. It then fetches a Reinforced Bot Frame (Precision Machine Works) and a Reactor Power Cell (Uranium Processing Plant) from storage and is upgraded once it has both.
+- **Buffs:** a Reactor Bot carries 5× as much, moves 4× as fast, lasts 10× as long (700 days) and needs charging only a quarter as often (about every 7 days).
+- **Look:** gunmetal plating and an amber glow.
+- **Upkeep per bot:**
+  - **Coolant:** 1 Reactor Coolant Water (or 0.5 Cryocoolant) a day.
+  - **Plating:** 0.2 High-Grade Steel (or 0.1 Alloy) a day. Without it the bot wears out 5× faster.
+- **Reactor Charging Bay** (250,000 science, beside the Charging Station): charges two Reactor Bots at once, draws 5,000 hp and burns a little Enriched Fuel while charging. Ordinary bots keep using ordinary charging stations.
+
 ### Interface
 - Deep Frontier's buildings sit in nine toolbar sub-groups: deep mining, quarries and cement, heavy industry, nuclear fuel, rocketry, concrete scaffolds, concrete side platforms, radioactive waste and civic services.
 

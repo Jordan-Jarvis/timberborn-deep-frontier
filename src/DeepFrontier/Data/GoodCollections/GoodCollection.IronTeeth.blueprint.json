@@ -56,7 +56,9 @@
       "Cement",
       "Concrete",
       "RadioactiveSludge",
-      "ContaminatedWater"
+      "ContaminatedWater",
+      "ReinforcedBotFrame",
+      "ReactorPowerCell"
     ]
   }
 }

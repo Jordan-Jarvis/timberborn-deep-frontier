@@ -427,6 +427,8 @@ await (await import('./workforce_risk_content.mjs')).applyWorkforceRisks();
 // Bot upkeep (tools/workforce_risks.json botMaintenance/botAssembly): needs the
 // workforce bot-wear specs; before the automation audit checks its spec and patch.
 await (await import('./bot_upkeep_content.mjs')).applyBotUpkeep();
+// Reactor Bots (tools/super_bots.json): parts, needs, upkeep goods and the charging bay.
+await (await import('./super_bot_content.mjs')).applySuperBots();
 // Platformable flat roofs (tools/roof_decks.json, tools/roof_deck_content.mjs): a
 // design step after every building's blocks are final and before the connection
 // step, which offers roof faces only on stackable blocks.

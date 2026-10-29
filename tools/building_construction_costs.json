@@ -48,14 +48,16 @@
     "ObservationDeck": "T4",
     "CoalPowerPlant": "T3",
     "OilPowerPlant": "T4",
-    "DeepWell": "T4"
+    "DeepWell": "T4",
+    "ReactorChargingBay": "T5"
   },
   "lategameGates": {
     "DeepMine": [["DeepAlloy",20]],
     "Greenhouse": [["Compost",30]],
     "NuclearReactor": [["EnrichedFuel",20],["HighGradeSteel",100]],
     "OilPowerPlant": [["MachineCore",4]],
-    "DeepWell": [["MetalBlock",200],["Gear",150],["HighGradeSteel",60],["MachineCore",10],["DeepAlloy",15],["Concrete",40]]
+    "DeepWell": [["MetalBlock",200],["Gear",150],["HighGradeSteel",60],["MachineCore",10],["DeepAlloy",15],["Concrete",40]],
+    "ReactorChargingBay": [["ReinforcedBotFrame",2],["ReactorPowerCell",2]]
   },
   "buildings": {
     "FertilizerWorks": [["Plank",205],["Gear",80],["MetalBlock",40]],

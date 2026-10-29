@@ -1,0 +1,30 @@
+{
+  "GoodSpec": {
+    "Id": "ReactorPowerCell",
+    "BackwardCompatibleIds": [],
+    "ConsumptionEffects": [
+      {
+        "NeedId": "ReactorRetrofitCell",
+        "Points": 1
+      }
+    ],
+    "GoodType": "Box",
+    "StockpileVisualization": "Box",
+    "VisibleContainer": "Box",
+    "ContainerColor": {
+      "r": 0.78,
+      "g": 0.5,
+      "b": 0.28,
+      "a": 1
+    },
+    "ContainerMaterial": "",
+    "CarryingAnimation": "CarryInHands",
+    "Weight": 11,
+    "GoodGroupId": "Materials",
+    "GoodOrder": 5195,
+    "Icon": "Sprites/Goods/ReactorPowerCellIcon",
+    "ForceImport": true,
+    "DisplayNameLocKey": "Good.ReactorPowerCell.DisplayName",
+    "PluralDisplayNameLocKey": "Good.ReactorPowerCell.PluralDisplayName"
+  }
+}

@@ -32,6 +32,7 @@
     "ObservationDeck",
     "CoalPowerPlant",
     "OilPowerPlant",
-    "DeepWell"
+    "DeepWell",
+    "ReactorChargingBay"
   ]
 }

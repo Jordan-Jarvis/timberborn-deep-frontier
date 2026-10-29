@@ -70,7 +70,8 @@ OWNERS = {
         'FertilizerWorks', 'FoodPackagingWorks', 'TownPlaza', 'ObservationDeck', 'PublicHealthLab',
         'Bathhouse', 'Greenhouse', 'TechnicalSchool', 'CoalPowerPlant', 'OilPowerPlant', 'DeepWell')},
     **{name: ('lategame', 'small', LATE) for name in (
-        'SmogScrubber', 'RadioactiveWasteExport', 'RadioactiveSludgeRecoveryPump', 'RadioactiveSludgeOutfall')},
+        'SmogScrubber', 'RadioactiveWasteExport', 'RadioactiveSludgeRecoveryPump', 'RadioactiveSludgeOutfall',
+        'ReactorChargingBay')},
     **{name: ('industrial', 'workshop', None) for name in (
         'CementKiln', 'ConcreteMixer', 'StoneCrusher', 'SandstoneQuarry', 'LimestoneQuarry',
         'SandstonePit', 'LimestonePit')},

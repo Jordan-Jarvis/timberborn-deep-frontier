@@ -1,0 +1,20 @@
+{
+  "NeedSpec": {
+    "Id": "ReactorBotPlating",
+    "BackwardCompatibleIds": [],
+    "Order": 13,
+    "NeedGroupId": "BasicNeeds",
+    "CharacterType": "Bot",
+    "StartingValue": 1,
+    "MinimumValue": 0,
+    "MaximumValue": 1,
+    "DailyDelta": -0.1,
+    "ImportanceMultiplier": 1,
+    "Effectiveness": 1,
+    "Wastable": false,
+    "HoursWarningThreshold": 24,
+    "DisplayNameLocKey": "Need.ReactorBotPlating.DisplayName",
+    "FavorableWellbeing": 0,
+    "UnfavorableWellbeing": -2
+  }
+}

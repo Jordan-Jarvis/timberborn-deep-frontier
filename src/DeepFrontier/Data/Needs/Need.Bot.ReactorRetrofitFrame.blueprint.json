@@ -1,0 +1,20 @@
+{
+  "NeedSpec": {
+    "Id": "ReactorRetrofitFrame",
+    "BackwardCompatibleIds": [],
+    "Order": 5,
+    "NeedGroupId": "BasicNeeds",
+    "CharacterType": "Bot",
+    "StartingValue": 0,
+    "MinimumValue": 0,
+    "MaximumValue": 1,
+    "DailyDelta": 0,
+    "ImportanceMultiplier": 1,
+    "Effectiveness": 1,
+    "Wastable": false,
+    "HoursWarningThreshold": 0,
+    "DisplayNameLocKey": "Need.ReactorRetrofitFrame.DisplayName",
+    "FavorableWellbeing": 0,
+    "UnfavorableWellbeing": 0
+  }
+}

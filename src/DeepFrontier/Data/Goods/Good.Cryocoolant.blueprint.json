@@ -2,7 +2,12 @@
   "GoodSpec": {
     "Id": "Cryocoolant",
     "BackwardCompatibleIds": [],
-    "ConsumptionEffects": [],
+    "ConsumptionEffects": [
+      {
+        "NeedId": "ReactorBotCoolant",
+        "Points": 0.5
+      }
+    ],
     "GoodType": "Liquid",
     "StockpileVisualization": "Liquid",
     "VisibleContainer": "Barrel",

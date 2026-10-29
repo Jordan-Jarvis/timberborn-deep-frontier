@@ -5,11 +5,11 @@
     "BuildingCost": [
       {
         "Id": "HighGradeSteel",
-        "Amount": 400
+        "Amount": 200
       },
       {
         "Id": "Concrete",
-        "Amount": 352
+        "Amount": 176
       }
     ],
     "ScienceCost": 8000,
