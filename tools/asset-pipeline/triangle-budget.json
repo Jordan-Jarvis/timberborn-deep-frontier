@@ -355,18 +355,18 @@
    "family": "grocery",
    "class": "grand",
    "target": 20000,
-   "finished": 19620,
-   "vertices": 41702,
-   "construction": 19620,
+   "finished": 18662,
+   "vertices": 39596,
+   "construction": 18662,
    "file": "outputs/lategame-integration/Data/Buildings/Food/GroceryStore/GroceryStore.IronTeeth.Model.timbermesh"
   },
   "Hospital": {
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 18222,
-   "vertices": 39485,
-   "construction": 18222,
+   "finished": 10899,
+   "vertices": 23890,
+   "construction": 10899,
    "file": "outputs/civic-integration/Data/Buildings/Wellbeing/Hospital/Hospital.IronTeeth.Model.timbermesh"
   },
   "HumanRecordCache": {
@@ -580,9 +580,9 @@
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 19846,
-   "vertices": 42489,
-   "construction": 19846,
+   "finished": 14622,
+   "vertices": 31755,
+   "construction": 14622,
    "file": "outputs/civic-integration/Data/Buildings/Food/Restaurant/Restaurant.IronTeeth.Model.timbermesh"
   },
   "RocketAssemblyHangar": {

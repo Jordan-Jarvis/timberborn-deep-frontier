@@ -125,9 +125,13 @@ def platform(g,ident,bounds,origin,supports,floor_material=PLANK,*,slab_material
         # stay within the outer 0.18 strip of the post's own cell, high under
         # the slab, and run toward the cell centre.
         lines={0:[v for v in (y0+.14,y1-.14) if abs(v-y)<.1],1:[v for v in (x0+.14,x1-.14) if abs(v-x)<.1]}
+        # A one-layer ground post (2026-10-30) is short enough that z1-.62
+        # falls inside its cast pier; the brace then starts just above the
+        # pier's bearing plate. Taller posts keep their original brace.
+        brace_low=max(z1-.62,shaft+.06)
         for axis,found in lines.items():
             for line in found:
-                a=[x,y,z1-.62];b=[x,y,beam_bottom-.005]
+                a=[x,y,brace_low];b=[x,y,beam_bottom-.005]
                 a[1-axis]=b[1-axis]=line
                 b[axis]=(x if axis==0 else y)-corner[axis]*.34
                 g.beam(tuple(v-o for v,o in zip(a,origin)),tuple(v-o for v,o in zip(b,origin)),.07,.07,WOOD)
@@ -169,9 +173,17 @@ def gallery(g,rails,ident,bounds,origin,edges,supports,*,grid_rails=False,**plat
         else:rails.run(ident+edge,*ends[edge],z1-oz)
 
 
-def room(g,ident,bounds,origin,front_door=None,*,exterior,joined_ends=None,joined_post_inset=0.0):
-    """Opaque exterior shell; shared partitions and room interiors are not drawn."""
+def room(g,ident,bounds,origin,front_door=None,*,exterior,joined_ends=None,joined_post_inset=0.0,wall_style='banded'):
+    """Opaque exterior shell; shared partitions and room interiors are not drawn.
+
+    `wall_style='storey'` (opt-in, 2026-10-30 compaction) is the infill for a
+    one-layer storey: one plaster band between the base beam and the head
+    fascia (a concrete plinth and plank sill on the ground storey) instead of
+    the five courses of the two-layer default, which crowd a one-layer wall.
+    """
     grid_bounds(bounds)
+    if wall_style not in ('banded','storey'):raise ValueError('Unknown room wall style '+str(wall_style))
+    if wall_style=='storey' and bounds[5]-bounds[2]!=1:raise ValueError('Storey walls are for one-layer rooms: '+ident)
     if any(p['id']==ident for p in g.structural_parts):raise ValueError('Duplicate room '+ident)
     x0,y0,z0,x1,y1,z1=bounds
     ox,oy,oz=origin
@@ -193,6 +205,9 @@ def room(g,ident,bounds,origin,front_door=None,*,exterior,joined_ends=None,joine
     bands=((z0+.20,z0+.45,CIVIC_CONCRETE if z0==0 else CIVIC_ORANGE_PANEL),
            (z0+.45,z0+.53,PLANK),(z0+.53,z1-.36,CIVIC_ORANGE_PANEL),
            (z1-.36,z1-.33,PLANK),(z1-.33,z1-.28,CIVIC_FORGED_PANEL))
+    if wall_style=='storey':
+        bands=(((z0+.20,z0+.36,CIVIC_CONCRETE),(z0+.36,z0+.40,PLANK),(z0+.40,z1-.28,CIVIC_ORANGE_PANEL))
+               if z0==0 else ((z0+.20,z1-.28,CIVIC_ORANGE_PANEL),))
     for side,axis,plane,sign,start,end,door in (
             ('front','Y',y0,1,x0,x1,front_door),('back','Y',y1,-1,x0,x1,None),
             ('left','X',x0,1,y0,y1,None),('right','X',x1,-1,y0,y1,None)):

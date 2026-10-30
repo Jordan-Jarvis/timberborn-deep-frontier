@@ -3,24 +3,25 @@
   "props": [
     {
       "name": "NativePlant0",
-      "model": "BlueberryBushMature",
-      "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
       "position": [
-        2.115,
-        1.8100000000000003,
-        2.5
+        6.49,
+        1.1500000000000001,
+        1.32
       ],
       "scale": 0.3,
-      "yaw": 270
+      "yaw": 270,
+      "plantAppearance": "Flowering"
     },
     {
       "name": "NativePlant1",
       "model": "DandelionMature",
       "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
       "position": [
-        2.035,
-        1.8100000000000003,
-        2.5
+        6.409999999999999,
+        1.1500000000000001,
+        1.32
       ],
       "scale": 0.3,
       "yaw": 0,
@@ -31,9 +32,9 @@
       "model": "DandelionMature",
       "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
       "position": [
-        3.165,
-        1.8100000000000003,
-        2.5
+        7.1899999999999995,
+        1.1500000000000001,
+        1.32
       ],
       "scale": 0.3,
       "yaw": 0,
@@ -44,9 +45,9 @@
       "model": "BlueberryBushMature",
       "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
       "position": [
-        3.3850000000000002,
-        2.1100000000000003,
-        2.5
+        7.409999999999999,
+        1.45,
+        1.32
       ],
       "scale": 0.3,
       "yaw": 90
@@ -56,9 +57,9 @@
       "model": "BlueberryBushMature",
       "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
       "position": [
-        4.539999999999999,
-        2.1100000000000003,
-        2.5
+        8.19,
+        1.45,
+        1.32
       ],
       "scale": 0.3,
       "yaw": 90
@@ -68,85 +69,9 @@
       "model": "DandelionMature",
       "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
       "position": [
-        5.06,
-        2.1100000000000003,
-        2.5
-      ],
-      "scale": 0.3,
-      "yaw": 180,
-      "plantAppearance": "Flowering"
-    },
-    {
-      "name": "NativePlant6",
-      "model": "DandelionMature",
-      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
-      "position": [
-        6.49,
-        1.1500000000000001,
-        2.3200000000000003
-      ],
-      "scale": 0.3,
-      "yaw": 270,
-      "plantAppearance": "Flowering"
-    },
-    {
-      "name": "NativePlant7",
-      "model": "DandelionMature",
-      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
-      "position": [
-        6.409999999999999,
-        1.1500000000000001,
-        2.3200000000000003
-      ],
-      "scale": 0.3,
-      "yaw": 0,
-      "plantAppearance": "Flowering"
-    },
-    {
-      "name": "NativePlant8",
-      "model": "DandelionMature",
-      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
-      "position": [
-        7.1899999999999995,
-        1.1500000000000001,
-        2.3200000000000003
-      ],
-      "scale": 0.3,
-      "yaw": 0,
-      "plantAppearance": "Flowering"
-    },
-    {
-      "name": "NativePlant9",
-      "model": "BlueberryBushMature",
-      "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
-      "position": [
-        7.409999999999999,
-        1.45,
-        2.3200000000000003
-      ],
-      "scale": 0.3,
-      "yaw": 90
-    },
-    {
-      "name": "NativePlant10",
-      "model": "BlueberryBushMature",
-      "resource": "NaturalResources/Bushes/Blueberry/BlueberryBushMature",
-      "position": [
-        8.19,
-        1.45,
-        2.3200000000000003
-      ],
-      "scale": 0.3,
-      "yaw": 90
-    },
-    {
-      "name": "NativePlant11",
-      "model": "DandelionMature",
-      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
-      "position": [
         8.71,
         1.4500000000000002,
-        2.3200000000000003
+        1.32
       ],
       "scale": 0.3,
       "yaw": 180,

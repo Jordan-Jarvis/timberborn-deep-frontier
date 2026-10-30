@@ -47,7 +47,7 @@
     {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 61 cells east of the start", "x": 125, "y": 51, "z": 14, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 58 cells east of the start", "x": 121, "y": 50, "z": 14, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "FisheryWorks.IronTeeth", "label": "Fishery Works, 20 cells north-west of the start", "x": 56, "y": 84, "z": 2, "orientation": "Cw180", "margin": 1, "openSides": ["W"]},
-    {"template": "Hospital.IronTeeth", "label": "Hospital, 32 cells west of the start", "x": 25, "y": 77, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S"]},
+    {"template": "Hospital.IronTeeth", "label": "Hospital, 32 cells west of the start", "x": 25, "y": 73, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S"]},
     {"template": "LaunchPad.IronTeeth", "label": "Launch Pad, 63 cells north-east of the start", "x": 95, "y": 124, "z": 14, "orientation": "Cw180", "margin": 2, "openSides": ["E"]},
     {"template": "LimestoneQuarry.IronTeeth", "label": "Limestone Quarry, 42 cells south-east of the start", "x": 82, "y": 21, "z": 7, "orientation": "Cw270", "margin": 1, "openSides": [], "understructure": [77, 24, 7]},
     {"template": "MissionControl.IronTeeth", "label": "Mission Control, 39 cells north of the start", "x": 41, "y": 95, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": []},

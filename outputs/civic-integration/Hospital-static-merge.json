@@ -3,88 +3,72 @@
   "targets": [
     "Hospital"
   ],
-  "joinedObjects": 36,
+  "joinedObjects": 18,
   "objects": [
     "Hospital.Architecture",
-    "Hospital.Door.EastWardDoor",
     "Hospital.Door.GroundDoor",
     "Hospital.Door.RearDeckDoor",
     "Hospital.Door.RearWardDoor",
     "Hospital.Door.RoofTerraceDoor",
-    "Hospital.Door.WestWardDoor",
     "WalkwayRail.Hospital.Post001",
     "WalkwayRail.Hospital.Post002",
     "WalkwayRail.Hospital.Post003",
-    "WalkwayRail.Hospital.Post007",
     "WalkwayRail.Hospital.Post008",
     "WalkwayRail.Hospital.Post009",
-    "WalkwayRail.Hospital.Post013",
-    "WalkwayRail.Hospital.Post014",
+    "WalkwayRail.Hospital.Post010",
     "WalkwayRail.Hospital.Post015",
     "WalkwayRail.Hospital.Post016",
-    "WalkwayRail.Hospital.Post017",
-    "WalkwayRail.Hospital.Post018",
     "WalkwayRail.Hospital.Post019",
     "WalkwayRail.Hospital.Post020",
-    "WalkwayRail.Hospital.Post021",
     "WalkwayRail.Hospital.Post022",
     "WalkwayRail.Hospital.Post023",
-    "WalkwayRail.Hospital.Post028",
-    "WalkwayRail.Hospital.Post029",
-    "WalkwayRail.Hospital.Post030",
-    "WalkwayRail.Hospital.Post031",
-    "WalkwayRail.Hospital.Post032",
-    "WalkwayRail.Hospital.Post037",
-    "WalkwayRail.Hospital.Post038",
-    "WalkwayRail.Hospital.Post041",
-    "WalkwayRail.Hospital.Post042",
-    "WalkwayRail.Hospital.Post044",
-    "WalkwayRail.Hospital.Post045",
-    "WalkwayRail.Hospital.Post046"
+    "WalkwayRail.Hospital.Post024"
   ],
   "nodes": [
     {
       "node": "StaticMerged",
-      "parts": 36,
-      "triangles": 15678,
+      "parts": 18,
+      "triangles": 9107,
       "materials": {
-        "Plaster_White.IronTeeth": 410,
-        "IrregularPlanks_DarkBrown.IronTeeth": 2362,
-        "IrregularPlanks_MetalForged.IronTeeth": 80,
-        "BaseWood_DarkBrown.IronTeeth": 5214,
-        "BaseMetal.IronTeeth": 5658,
-        "Plaster_Orange.IronTeeth": 80,
-        "RoofPlanks.IronTeeth": 1154,
-        "DFIndustrial15": 48,
-        "DFIndustrial14": 96,
-        "DFIndustrial16": 8,
+        "Plaster_White.IronTeeth": 350,
+        "IrregularPlanks_DarkBrown.IronTeeth": 1070,
+        "Plaster_Orange.IronTeeth": 68,
+        "IrregularPlanks_MetalForged.IronTeeth": 32,
+        "BaseWood_DarkBrown.IronTeeth": 3150,
+        "BaseMetal.IronTeeth": 3639,
+        "RoofPlanks.IronTeeth": 442,
         "DFIndustrial05": 22,
         "Details.IronTeeth": 24,
-        "BaseWood_Brown.Folktails": 522
+        "DFIndustrial15": 24,
+        "DFIndustrial14": 48,
+        "DFIndustrial16": 4,
+        "BaseWood_Brown.Folktails": 234
       }
     },
     {
       "node": "StaticMerged.DFIndustrial08",
       "parts": 1,
-      "triangles": 400,
+      "triangles": 200,
       "materials": {
-        "DFIndustrial08": 400
+        "DFIndustrial08": 200
       }
     },
     {
       "node": "StaticMerged.WindowsAtlas.IronTeeth",
-      "parts": 7,
-      "triangles": 850,
+      "parts": 5,
+      "triangles": 766,
       "materials": {
-        "WindowsAtlas.IronTeeth": 850
+        "WindowsAtlas.IronTeeth": 766
       }
     }
   ],
   "railGroups": {
     "WalkwayGroup.Hospital.000": {
       "parts": [
-        "WalkwayRail.Hospital.EastFrontOuter.Panel00.CellPart0",
-        "WalkwayRail.Hospital.Post006"
+        "WalkwayRail.Hospital.Post000",
+        "WalkwayRail.Hospital.Post005",
+        "WalkwayRail.Hospital.RearLeft.Panel00.CellPart0",
+        "WalkwayRail.Hospital.RearOuter.Panel00.CellPart0"
       ],
       "nodes": [
         "WalkwayGroup.Hospital.000"
@@ -92,10 +76,10 @@
     },
     "WalkwayGroup.Hospital.001": {
       "parts": [
-        "WalkwayRail.Hospital.EastFrontOuter.Panel03.CellPart0",
-        "WalkwayRail.Hospital.EastFrontRight.Panel00.CellPart0",
-        "WalkwayRail.Hospital.Post010",
-        "WalkwayRail.Hospital.Post011"
+        "WalkwayRail.Hospital.Post004",
+        "WalkwayRail.Hospital.Post006",
+        "WalkwayRail.Hospital.RearOuter.Panel03.CellPart0",
+        "WalkwayRail.Hospital.RearRight.Panel00.CellPart0"
       ],
       "nodes": [
         "WalkwayGroup.Hospital.001"
@@ -103,10 +87,10 @@
     },
     "WalkwayGroup.Hospital.002": {
       "parts": [
-        "WalkwayRail.Hospital.Post000",
-        "WalkwayRail.Hospital.Post005",
-        "WalkwayRail.Hospital.WestFrontLeft.Panel00.CellPart0",
-        "WalkwayRail.Hospital.WestFrontOuter.Panel00.CellPart0"
+        "WalkwayRail.Hospital.Post007",
+        "WalkwayRail.Hospital.Post012",
+        "WalkwayRail.Hospital.UpperRearLeft.Panel00.CellPart0",
+        "WalkwayRail.Hospital.UpperRearOuter.Panel00.CellPart0"
       ],
       "nodes": [
         "WalkwayGroup.Hospital.002"
@@ -114,8 +98,10 @@
     },
     "WalkwayGroup.Hospital.003": {
       "parts": [
-        "WalkwayRail.Hospital.Post004",
-        "WalkwayRail.Hospital.WestFrontOuter.Panel03.CellPart0"
+        "WalkwayRail.Hospital.Post011",
+        "WalkwayRail.Hospital.Post013",
+        "WalkwayRail.Hospital.UpperRearOuter.Panel03.CellPart0",
+        "WalkwayRail.Hospital.UpperRearRight.Panel00.CellPart0"
       ],
       "nodes": [
         "WalkwayGroup.Hospital.003"
@@ -123,10 +109,8 @@
     },
     "WalkwayGroup.Hospital.004": {
       "parts": [
-        "WalkwayRail.Hospital.Post012",
-        "WalkwayRail.Hospital.Post025",
-        "WalkwayRail.Hospital.RearLeft.Panel00.CellPart0",
-        "WalkwayRail.Hospital.RearOuter.Panel00.CellPart0"
+        "WalkwayRail.Hospital.Post014",
+        "WalkwayRail.Hospital.RoofGardenLeft.Panel00.CellPart0"
       ],
       "nodes": [
         "WalkwayGroup.Hospital.004"
@@ -134,10 +118,9 @@
     },
     "WalkwayGroup.Hospital.005": {
       "parts": [
-        "WalkwayRail.Hospital.Post024",
-        "WalkwayRail.Hospital.Post026",
-        "WalkwayRail.Hospital.RearOuter.Panel11.CellPart0",
-        "WalkwayRail.Hospital.RearRight.Panel00.CellPart0"
+        "WalkwayRail.Hospital.Post017",
+        "WalkwayRail.Hospital.RoofGardenLeft.Panel02.CellPart0",
+        "WalkwayRail.Hospital.RoofGardenRear.Panel00.CellPart0"
       ],
       "nodes": [
         "WalkwayGroup.Hospital.005"
@@ -145,10 +128,8 @@
     },
     "WalkwayGroup.Hospital.006": {
       "parts": [
-        "WalkwayRail.Hospital.Post027",
-        "WalkwayRail.Hospital.Post034",
-        "WalkwayRail.Hospital.UpperRearLeft.Panel00.CellPart0",
-        "WalkwayRail.Hospital.UpperRearOuter.Panel00.CellPart0"
+        "WalkwayRail.Hospital.Post018",
+        "WalkwayRail.Hospital.RoofGardenRight.Panel00.CellPart0"
       ],
       "nodes": [
         "WalkwayGroup.Hospital.006"
@@ -156,51 +137,12 @@
     },
     "WalkwayGroup.Hospital.007": {
       "parts": [
-        "WalkwayRail.Hospital.Post033",
-        "WalkwayRail.Hospital.Post035",
-        "WalkwayRail.Hospital.UpperRearOuter.Panel05.CellPart0",
-        "WalkwayRail.Hospital.UpperRearRight.Panel00.CellPart0"
-      ],
-      "nodes": [
-        "WalkwayGroup.Hospital.007"
-      ]
-    },
-    "WalkwayGroup.Hospital.008": {
-      "parts": [
-        "WalkwayRail.Hospital.Post036",
-        "WalkwayRail.Hospital.RoofGardenLeft.Panel00.CellPart0"
-      ],
-      "nodes": [
-        "WalkwayGroup.Hospital.008"
-      ]
-    },
-    "WalkwayGroup.Hospital.009": {
-      "parts": [
-        "WalkwayRail.Hospital.Post039",
-        "WalkwayRail.Hospital.RoofGardenLeft.Panel02.CellPart0",
-        "WalkwayRail.Hospital.RoofGardenRear.Panel00.CellPart0"
-      ],
-      "nodes": [
-        "WalkwayGroup.Hospital.009"
-      ]
-    },
-    "WalkwayGroup.Hospital.010": {
-      "parts": [
-        "WalkwayRail.Hospital.Post040",
-        "WalkwayRail.Hospital.RoofGardenRight.Panel00.CellPart0"
-      ],
-      "nodes": [
-        "WalkwayGroup.Hospital.010"
-      ]
-    },
-    "WalkwayGroup.Hospital.011": {
-      "parts": [
-        "WalkwayRail.Hospital.Post043",
+        "WalkwayRail.Hospital.Post021",
         "WalkwayRail.Hospital.RoofGardenRear.Panel03.CellPart0",
         "WalkwayRail.Hospital.RoofGardenRight.Panel02.CellPart0"
       ],
       "nodes": [
-        "WalkwayGroup.Hospital.011"
+        "WalkwayGroup.Hospital.007"
       ]
     }
   }

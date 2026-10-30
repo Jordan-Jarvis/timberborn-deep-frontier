@@ -37,17 +37,18 @@ const supports=Object.values(d.structure.supports).flat();
 check(supports.length===16,'Restaurant must retain sixteen explicitly placed short deck posts');
 check(d.structure.supports.RoofTerraceOuter.length===0,'Cantilevered roof terrace acquired ground-reaching legs');
 for(const [id,bounds] of Object.entries(d.structure.platforms))for(const [cell,corner,bottom] of d.structure.supports[id])check(bounds[5]-bottom<=2,'Deck post extends through multiple storeys '+id);
-for(let z=0;z<5;z++)for(let y=2;y<5;y++)for(let x=7;x<9;x++)check(at([x,y,z]).Occupations==='None','Former roof leg still reserves empty construction space');
+// One layer per storey (2026-10-30): the cantilevered roof bay's slab is layer 2.
+for(let z=0;z<2;z++)for(let y=2;y<5;y++)for(let x=7;x<9;x++)check(at([x,y,z]).Occupations==='None','Former roof leg still reserves empty construction space');
 for(let y=2;y<5;y++)for(let x=6;x<9;x++) {
-  check(at([x,y,6]).Occupations==='None','Fixed furniture still consumes the 3x3 roof area');
-  check(at([x,y,5]).Stackable==='BlockObject','Roof tile does not support native construction');
+  check(at([x,y,3]).Occupations==='None','Fixed furniture still consumes the 3x3 roof area');
+  check(at([x,y,2]).Stackable==='BlockObject','Roof tile does not support native construction');
 }
-check(JSON.stringify(d.structure.platforms.RoofTerraceOuter)==='[7,2,5,9,5,6]','Roof slab was enlarged instead of clearing fixed furniture');
+check(JSON.stringify(d.structure.platforms.RoofTerraceOuter)==='[7,2,2,9,5,3]','Roof slab was enlarged instead of clearing fixed furniture');
 const levels=[...new Set(b.TransputProviderSpec.Transputs.map(t=>t.Coordinates.Z))].sort((a,b)=>a-b);
-// Shafts meet every flat exterior face (validate_connection_faces.mjs). The
-// roof stairhead (z 6) faces only the reserved roof volume and the terrace
-// door, so its storey has none; the three dining storeys and the roof deck do.
-check([0,2,4,5].every(z=>levels.includes(z)),'Missing multi-level mechanical faces');
+// Shafts meet every flat exterior face (validate_connection_faces.mjs). Since
+// the 2026-10-30 compaction the three storeys are layers 0, 1 and 2 (the roof
+// deck's slab is layer 2 too).
+check([0,1,2].every(z=>levels.includes(z)),'Missing multi-level mechanical faces');
 const report={scope:'Source and blueprint contracts only; native placement/traversal must be tested separately.',
   doors,structuralParts:m.parts.length,pickingBoxes,shortDeckPosts:supports.length,roofTerraceGroundLegs:0,playerPathCells:d.suggestedPathCells.length,
   mechanicalFaces:b.TransputProviderSpec.Transputs.length,powerLevels:levels,roadOccupationReservedByBuilding:0};

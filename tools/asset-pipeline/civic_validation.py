@@ -35,7 +35,9 @@ def validate_civic_walks(ident,model,scene):
                     if hit[0] is not None and abs(hit[0].z-z)<FLOOR_TOLERANCE:contacts+=1
                 if contacts<2:failures.append(f'missing floor at {x:.3f},{y:.3f},{z}')
                 for dx,dy in ((0,0),(.20,0),(-.20,0),(0,.20),(0,-.20)):
-                    hit=tree.ray_cast(Vector((-x-dx,-y-dy,z+.01)),Vector((0,0,1)),1.09)
+                    # Explicit per model: 1.09 for two-layer storeys, below
+                    # the deck beams one layer up for one-layer storeys.
+                    hit=tree.ray_cast(Vector((-x-dx,-y-dy,z+.01)),Vector((0,0,1)),definition['headroom'])
                     if hit[0] is not None:
                         failures.append(f'obstruction at {-hit[0].x:.3f},{-hit[0].y:.3f},{hit[0].z:.3f} in {owners[hit[2]]}')
                 samples.append([x,y,z])
@@ -72,23 +74,24 @@ def validate_civic_walks(ident,model,scene):
                     checked+=1
     sign_clearance=None
     if ident=='Restaurant':
-        # The carved sign hangs from the front gable (2026-10-21). Its whole
-        # swing must stay inside the reserved roof cells (native y >= 2,
-        # 6 <= z <= 7; source y = native y - .15) and keep the upper gallery's
-        # walking headroom (deck 4 + 1.10) clear by at least .15.
+        # 2026-10-30: the carved sign swings from a gantry on the flat roof.
+        # Its whole swing must stay inside the reserved roof cells (native
+        # 2 <= x < 4, y >= 2, 3 <= z <= 4; source = native - ORIGIN) and clear
+        # the upper gallery's walking headroom (deck 2 + headroom) by .15.
+        from restaurant_structure import ORIGIN
         sign=next(o for o in model.objects if o.name=='Restaurant.CarvedSign')
-        low=float('inf');high=float('-inf');nearest_y=float('inf')
+        low=float('inf');high=float('-inf');nearest_y=float('inf');xs=[]
         for frame in range(1,scene.frame_end+1):
             scene.frame_set(frame);scene.view_layers[0].update()
             points=[sign.matrix_world@v.co for v in sign.data.vertices]
             low=min(low,min(p.z for p in points));high=max(high,max(p.z for p in points))
-            nearest_y=min(nearest_y,min(-p.y for p in points))
-        sign_clearance=low-(4+1.10)
+            nearest_y=min(nearest_y,min(-p.y for p in points));xs+=[-p.x for p in points]
+        sign_clearance=low-(2+definition['headroom'])
         if sign_clearance<.15:raise ValueError('Restaurant sign swing enters the upper gallery headroom')
-        if low<6-.001 or high>7+.001 or nearest_y<1.85-.001:
-            raise ValueError(f'Restaurant sign swing leaves its reserved gable cells: z {low:.3f}..{high:.3f}, source y >= {nearest_y:.3f}')
+        if low<3-.001 or high>4+.001 or nearest_y<2-ORIGIN[1]-.001 or min(xs)<2-ORIGIN[0] or max(xs)>4-ORIGIN[0]:
+            raise ValueError(f'Restaurant sign swing leaves its reserved roof cells: z {low:.3f}..{high:.3f}, source y >= {nearest_y:.3f}')
         scene.frame_set(1);scene.view_layers[0].update()
     return {'scope':'Authored mesh only; native grid paths, stair and platform placement are not verified',
             'animatedSignDeckClearance':sign_clearance,
-            'sourceUnitHeadroom':1.10,'sourceUnitBodyRadius':.20,
+            'sourceUnitHeadroom':definition['headroom']+.01,'sourceUnitBodyRadius':.20,
             'floorAndClearanceSamples':samples,'terraceClearAreaSamples':terrace_samples,'nativeAtlasUvCornersChecked':checked}

@@ -57,6 +57,24 @@ REVIEWS = {
                  'culled (Geometry.cull_below), fewer sides, roof sheets, boards and stock-item triangles. Blender '
                  'renders, not game screenshots.',
     },
+    # Building compaction pass (outputs/compaction/BRIEF.md): one layer per
+    # storey, flat roofs, the Hospital's wings removed. Sheets are written by
+    # render_budget_views.py + compose_budget_sheet.py into outputs/compaction
+    # with the pre-compaction cameras. Models are added as each one lands.
+    '2026-10-30': {
+        'folder': '2026-10-30-compaction-civic',
+        'sheets': 'outputs/compaction',
+        'models': {
+            'Restaurant': ('Restaurant', 'Restaurant-before-after.png'),
+            'Hospital': ('Hospital', 'Hospital-before-after.png'),
+            'GroceryStore': ('GroceryMarket', 'GroceryStore-before-after.png'),
+        },
+        'extra': (),
+        'scope': 'Before | after | difference sheets (render_budget_views.py with the pre-compaction cameras, '
+                 'compose_budget_sheet.py) of the 2026-10-30 building compaction pass: one layer per storey, '
+                 'flat roofs where the roof is not the defining silhouette, and the Hospital reduced to its '
+                 'central pavilion. Blender renders, not game screenshots.',
+    },
 }
 
 
@@ -70,10 +88,11 @@ def main():
     review = REVIEWS[parser.parse_args().review]
     folder = ROOT / 'docs/art/reviews' / review['folder']
     folder.mkdir(parents=True, exist_ok=True)
+    sheets = ROOT / review['sheets'] if 'sheets' in review else SHEETS
     renders = []
     for model, (study, sheet) in review['models'].items():
         source = Path('src/DeepFrontier/Art/Source') / f'{study}-ReferenceStudy.blend'
-        image = SHEETS / sheet
+        image = sheets / sheet
         if not image.is_file():
             raise SystemExit(f'{model}: missing review sheet {image}')
         shutil.copyfile(image, folder / sheet)

@@ -5,16 +5,16 @@
       "Inside": {
         "X": 0,
         "Y": 0,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 0,
         "Y": -1,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 0.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -27,16 +27,16 @@
       "Inside": {
         "X": 1,
         "Y": 0,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 1,
         "Y": -1,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 1.4999999999999998,
-        "Y": 2,
+        "Y": 1,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -49,16 +49,16 @@
       "Inside": {
         "X": 2,
         "Y": 0,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 2,
         "Y": -1,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 2.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -71,16 +71,16 @@
       "Inside": {
         "X": 3,
         "Y": 0,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 3,
         "Y": -1,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 3.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -93,16 +93,16 @@
       "Inside": {
         "X": 4,
         "Y": 0,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 4,
         "Y": -1,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 4.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -115,16 +115,16 @@
       "Inside": {
         "X": 5,
         "Y": 0,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 5,
         "Y": -1,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 5.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -137,16 +137,16 @@
       "Inside": {
         "X": 0,
         "Y": 0,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": -1,
         "Y": 0,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 0.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -159,16 +159,16 @@
       "Inside": {
         "X": 0,
         "Y": 1,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": -1,
         "Y": 1,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 0.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 1.4999999999999998
       },
       "HiddenNodes": [
@@ -181,16 +181,16 @@
       "Inside": {
         "X": 1,
         "Y": 6,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 1,
         "Y": 7,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 1.4999999999999998,
-        "Y": 2,
+        "Y": 1,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -203,16 +203,16 @@
       "Inside": {
         "X": 2,
         "Y": 6,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 2,
         "Y": 7,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 2.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -225,16 +225,16 @@
       "Inside": {
         "X": 3,
         "Y": 6,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 3,
         "Y": 7,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 3.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -247,16 +247,16 @@
       "Inside": {
         "X": 4,
         "Y": 6,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 4,
         "Y": 7,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 4.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -269,16 +269,16 @@
       "Inside": {
         "X": 5,
         "Y": 6,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 5,
         "Y": 7,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 5.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -291,16 +291,16 @@
       "Inside": {
         "X": 6,
         "Y": 6,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 6,
         "Y": 7,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -313,16 +313,16 @@
       "Inside": {
         "X": 1,
         "Y": 5,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 0,
         "Y": 5,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 1.4999999999999998,
-        "Y": 2,
+        "Y": 1,
         "Z": 5.5
       },
       "HiddenNodes": [
@@ -335,16 +335,16 @@
       "Inside": {
         "X": 1,
         "Y": 6,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 0,
         "Y": 6,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 1.4999999999999998,
-        "Y": 2,
+        "Y": 1,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -357,16 +357,16 @@
       "Inside": {
         "X": 6,
         "Y": 1,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 7,
         "Y": 1,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 1.4999999999999998
       },
       "HiddenNodes": [
@@ -379,16 +379,16 @@
       "Inside": {
         "X": 6,
         "Y": 2,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 7,
         "Y": 2,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 2.5
       },
       "HiddenNodes": [
@@ -401,16 +401,16 @@
       "Inside": {
         "X": 6,
         "Y": 3,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 7,
         "Y": 3,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 3.5
       },
       "HiddenNodes": [
@@ -423,16 +423,16 @@
       "Inside": {
         "X": 6,
         "Y": 4,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 7,
         "Y": 4,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 4.5
       },
       "HiddenNodes": [
@@ -445,16 +445,16 @@
       "Inside": {
         "X": 6,
         "Y": 5,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 7,
         "Y": 5,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 5.5
       },
       "HiddenNodes": [
@@ -467,16 +467,16 @@
       "Inside": {
         "X": 6,
         "Y": 6,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 7,
         "Y": 6,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -489,16 +489,16 @@
       "Inside": {
         "X": 0,
         "Y": 0,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 0,
         "Y": -1,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 0.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -511,16 +511,16 @@
       "Inside": {
         "X": 1,
         "Y": 0,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 1,
         "Y": -1,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 1.4999999999999998,
-        "Y": 4,
+        "Y": 2,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -533,16 +533,16 @@
       "Inside": {
         "X": 2,
         "Y": 0,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 2,
         "Y": -1,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 2.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -555,16 +555,16 @@
       "Inside": {
         "X": 3,
         "Y": 0,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 3,
         "Y": -1,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 3.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -577,16 +577,16 @@
       "Inside": {
         "X": 4,
         "Y": 0,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 4,
         "Y": -1,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 4.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -599,16 +599,16 @@
       "Inside": {
         "X": 5,
         "Y": 0,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 5,
         "Y": -1,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 5.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -621,16 +621,16 @@
       "Inside": {
         "X": 0,
         "Y": 0,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": -1,
         "Y": 0,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 0.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 0.5
       },
       "HiddenNodes": [
@@ -643,16 +643,16 @@
       "Inside": {
         "X": 0,
         "Y": 1,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": -1,
         "Y": 1,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 0.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 1.4999999999999998
       },
       "HiddenNodes": [
@@ -665,16 +665,16 @@
       "Inside": {
         "X": 1,
         "Y": 6,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 1,
         "Y": 7,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 1.4999999999999998,
-        "Y": 4,
+        "Y": 2,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -687,16 +687,16 @@
       "Inside": {
         "X": 2,
         "Y": 6,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 2,
         "Y": 7,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 2.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -709,16 +709,16 @@
       "Inside": {
         "X": 3,
         "Y": 6,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 3,
         "Y": 7,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 3.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -731,16 +731,16 @@
       "Inside": {
         "X": 4,
         "Y": 6,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 4,
         "Y": 7,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 4.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -753,16 +753,16 @@
       "Inside": {
         "X": 5,
         "Y": 6,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 5,
         "Y": 7,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 5.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -775,16 +775,16 @@
       "Inside": {
         "X": 6,
         "Y": 6,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 6,
         "Y": 7,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -797,16 +797,16 @@
       "Inside": {
         "X": 1,
         "Y": 5,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 0,
         "Y": 5,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 1.4999999999999998,
-        "Y": 4,
+        "Y": 2,
         "Z": 5.5
       },
       "HiddenNodes": [
@@ -819,16 +819,16 @@
       "Inside": {
         "X": 1,
         "Y": 6,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 0,
         "Y": 6,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 1.4999999999999998,
-        "Y": 4,
+        "Y": 2,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -841,16 +841,16 @@
       "Inside": {
         "X": 6,
         "Y": 1,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 7,
         "Y": 1,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 1.4999999999999998
       },
       "HiddenNodes": [
@@ -863,16 +863,16 @@
       "Inside": {
         "X": 6,
         "Y": 2,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 7,
         "Y": 2,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 2.5
       },
       "HiddenNodes": [
@@ -885,16 +885,16 @@
       "Inside": {
         "X": 6,
         "Y": 3,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 7,
         "Y": 3,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 3.5
       },
       "HiddenNodes": [
@@ -907,16 +907,16 @@
       "Inside": {
         "X": 6,
         "Y": 4,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 7,
         "Y": 4,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 4.5
       },
       "HiddenNodes": [
@@ -929,16 +929,16 @@
       "Inside": {
         "X": 6,
         "Y": 5,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 7,
         "Y": 5,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 5.5
       },
       "HiddenNodes": [
@@ -951,16 +951,16 @@
       "Inside": {
         "X": 6,
         "Y": 6,
-        "Z": 4
+        "Z": 2
       },
       "Outside": {
         "X": 7,
         "Y": 6,
-        "Z": 4
+        "Z": 2
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 4,
+        "Y": 2,
         "Z": 6.5
       },
       "HiddenNodes": [
@@ -973,16 +973,16 @@
       "Inside": {
         "X": 6,
         "Y": 1,
-        "Z": 2
+        "Z": 1
       },
       "Outside": {
         "X": 6,
         "Y": 0,
-        "Z": 2
+        "Z": 1
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 2,
+        "Y": 1,
         "Z": 1.4999999999999998
       },
       "HiddenNodes": [
@@ -995,16 +995,16 @@
       "Inside": {
         "X": 5,
         "Y": 2,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 5,
         "Y": 1,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 5.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 2.5
       },
       "HiddenNodes": [
@@ -1017,16 +1017,16 @@
       "Inside": {
         "X": 5,
         "Y": 4,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 5,
         "Y": 5,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 5.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 4.5
       },
       "HiddenNodes": [
@@ -1039,16 +1039,16 @@
       "Inside": {
         "X": 6,
         "Y": 2,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 6,
         "Y": 1,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 2.5
       },
       "HiddenNodes": [
@@ -1061,16 +1061,16 @@
       "Inside": {
         "X": 6,
         "Y": 4,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 6,
         "Y": 5,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 6.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 4.5
       },
       "HiddenNodes": [
@@ -1083,16 +1083,16 @@
       "Inside": {
         "X": 7,
         "Y": 2,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 7,
         "Y": 1,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 7.500000000000001,
-        "Y": 6,
+        "Y": 3,
         "Z": 2.5
       },
       "HiddenNodes": [
@@ -1105,16 +1105,16 @@
       "Inside": {
         "X": 7,
         "Y": 4,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 7,
         "Y": 5,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 7.500000000000001,
-        "Y": 6,
+        "Y": 3,
         "Z": 4.5
       },
       "HiddenNodes": [
@@ -1127,16 +1127,16 @@
       "Inside": {
         "X": 8,
         "Y": 2,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 8,
         "Y": 1,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 8.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 2.5
       },
       "HiddenNodes": [
@@ -1149,16 +1149,16 @@
       "Inside": {
         "X": 8,
         "Y": 4,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 8,
         "Y": 5,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 8.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 4.5
       },
       "HiddenNodes": [
@@ -1171,16 +1171,16 @@
       "Inside": {
         "X": 5,
         "Y": 2,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 4,
         "Y": 2,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 5.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 2.5
       },
       "HiddenNodes": [
@@ -1193,16 +1193,16 @@
       "Inside": {
         "X": 8,
         "Y": 2,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 9,
         "Y": 2,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 8.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 2.5
       },
       "HiddenNodes": [
@@ -1215,16 +1215,16 @@
       "Inside": {
         "X": 5,
         "Y": 3,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 4,
         "Y": 3,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 5.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 3.5
       },
       "HiddenNodes": [
@@ -1237,16 +1237,16 @@
       "Inside": {
         "X": 8,
         "Y": 3,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 9,
         "Y": 3,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 8.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 3.5
       },
       "HiddenNodes": [
@@ -1259,16 +1259,16 @@
       "Inside": {
         "X": 5,
         "Y": 4,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 4,
         "Y": 4,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 5.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 4.5
       },
       "HiddenNodes": [
@@ -1281,16 +1281,16 @@
       "Inside": {
         "X": 8,
         "Y": 4,
-        "Z": 6
+        "Z": 3
       },
       "Outside": {
         "X": 9,
         "Y": 4,
-        "Z": 6
+        "Z": 3
       },
       "ApproachPosition": {
         "X": 8.5,
-        "Y": 6,
+        "Y": 3,
         "Z": 4.5
       },
       "HiddenNodes": [
@@ -1316,36 +1316,36 @@
       "Interior": {
         "X": 3,
         "Y": 2,
-        "Z": 2
+        "Z": 1
       },
       "Exterior": {
         "X": 3,
         "Y": 1,
-        "Z": 2
+        "Z": 1
       }
     },
     {
       "Interior": {
         "X": 3,
         "Y": 2,
-        "Z": 4
+        "Z": 2
       },
       "Exterior": {
         "X": 3,
         "Y": 1,
-        "Z": 4
+        "Z": 2
       }
     },
     {
       "Interior": {
         "X": 5,
         "Y": 3,
-        "Z": 6
+        "Z": 3
       },
       "Exterior": {
         "X": 6,
         "Y": 3,
-        "Z": 6
+        "Z": 3
       }
     }
   ]

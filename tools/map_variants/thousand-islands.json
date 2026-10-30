@@ -47,7 +47,7 @@
     {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "label": "Radioactive Sludge Recovery Pump, 11 cells east of the start", "x": 102, "y": 98, "z": 5, "orientation": "Cw90"},
     {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 96 cells south of the start", "x": 90, "y": 5, "z": 9, "orientation": "Cw90", "margin": 1, "openSides": ["N"]},
     {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 6 layers of natural drop, 122 cells north of the start", "x": 117, "y": 218, "z": 7},
-    {"template": "Hospital.IronTeeth", "label": "Hospital, 101 cells south-east of the start", "x": 188, "y": 59, "z": 4, "orientation": "Cw180", "margin": 1, "openSides": ["W"]},
+    {"template": "Hospital.IronTeeth", "label": "Hospital, 101 cells south-east of the start", "x": 184, "y": 59, "z": 4, "orientation": "Cw180", "margin": 1, "openSides": ["W"]},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 208 cells north-east of the start", "x": 229, "y": 247, "z": 16, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 72 cells south-west of the start", "x": 46, "y": 45, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "ChemicalWorks.IronTeeth", "label": "Chemical Works, 75 cells south-east of the start", "x": 123, "y": 37, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},

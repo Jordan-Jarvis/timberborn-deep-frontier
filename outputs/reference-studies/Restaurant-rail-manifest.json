@@ -10,12 +10,12 @@
           "start": [
             0.9,
             0.9499999999999998,
-            2
+            1
           ],
           "end": [
             1.8,
             0.9499999999999998,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post000",
           "endPost": "WalkwayRail.Restaurant.Post001"
@@ -25,12 +25,12 @@
           "start": [
             1.8,
             0.9499999999999998,
-            2
+            1
           ],
           "end": [
             2.8000000000000003,
             0.9499999999999998,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post001",
           "endPost": "WalkwayRail.Restaurant.Post002"
@@ -40,12 +40,12 @@
           "start": [
             2.8000000000000003,
             0.9499999999999998,
-            2
+            1
           ],
           "end": [
             3.8,
             0.9499999999999998,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post002",
           "endPost": "WalkwayRail.Restaurant.Post003"
@@ -55,12 +55,12 @@
           "start": [
             3.8,
             0.9499999999999998,
-            2
+            1
           ],
           "end": [
             4.8,
             0.9499999999999998,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post003",
           "endPost": "WalkwayRail.Restaurant.Post004"
@@ -70,12 +70,12 @@
           "start": [
             4.8,
             0.9499999999999998,
-            2
+            1
           ],
           "end": [
             5.8,
             0.9499999999999998,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post004",
           "endPost": "WalkwayRail.Restaurant.Post005"
@@ -85,12 +85,12 @@
           "start": [
             5.8,
             0.9499999999999998,
-            2
+            1
           ],
           "end": [
             6.7,
             0.9499999999999998,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post005",
           "endPost": "WalkwayRail.Restaurant.Post006"
@@ -105,12 +105,12 @@
           "start": [
             0.9,
             0.9499999999999998,
-            2
+            1
           ],
           "end": [
             0.9,
             1.8499999999999999,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post000",
           "endPost": "WalkwayRail.Restaurant.Post007"
@@ -120,12 +120,12 @@
           "start": [
             0.9,
             1.8499999999999999,
-            2
+            1
           ],
           "end": [
             0.9,
             2.75,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post007",
           "endPost": "WalkwayRail.Restaurant.Post008"
@@ -140,12 +140,12 @@
           "start": [
             7.7,
             1.95,
-            2
+            1
           ],
           "end": [
             7.7,
             2.85,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post009",
           "endPost": "WalkwayRail.Restaurant.Post010"
@@ -155,12 +155,12 @@
           "start": [
             7.7,
             2.85,
-            2
+            1
           ],
           "end": [
             7.7,
             3.8499999999999996,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post010",
           "endPost": "WalkwayRail.Restaurant.Post011"
@@ -170,12 +170,12 @@
           "start": [
             7.7,
             3.8499999999999996,
-            2
+            1
           ],
           "end": [
             7.7,
             4.85,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post011",
           "endPost": "WalkwayRail.Restaurant.Post012"
@@ -185,12 +185,12 @@
           "start": [
             7.7,
             4.85,
-            2
+            1
           ],
           "end": [
             7.7,
             5.85,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post012",
           "endPost": "WalkwayRail.Restaurant.Post013"
@@ -200,12 +200,12 @@
           "start": [
             7.7,
             5.85,
-            2
+            1
           ],
           "end": [
             7.7,
             6.85,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post013",
           "endPost": "WalkwayRail.Restaurant.Post014"
@@ -215,12 +215,12 @@
           "start": [
             7.7,
             6.85,
-            2
+            1
           ],
           "end": [
             7.7,
             7.75,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post014",
           "endPost": "WalkwayRail.Restaurant.Post015"
@@ -235,12 +235,12 @@
           "start": [
             1.9,
             7.75,
-            2
+            1
           ],
           "end": [
             2.8000000000000003,
             7.75,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post016",
           "endPost": "WalkwayRail.Restaurant.Post017"
@@ -250,12 +250,12 @@
           "start": [
             2.8000000000000003,
             7.75,
-            2
+            1
           ],
           "end": [
             3.8,
             7.75,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post017",
           "endPost": "WalkwayRail.Restaurant.Post018"
@@ -265,12 +265,12 @@
           "start": [
             3.8,
             7.75,
-            2
+            1
           ],
           "end": [
             4.8,
             7.75,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post018",
           "endPost": "WalkwayRail.Restaurant.Post019"
@@ -280,12 +280,12 @@
           "start": [
             4.8,
             7.75,
-            2
+            1
           ],
           "end": [
             5.8,
             7.75,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post019",
           "endPost": "WalkwayRail.Restaurant.Post020"
@@ -295,12 +295,12 @@
           "start": [
             5.8,
             7.75,
-            2
+            1
           ],
           "end": [
             6.8,
             7.75,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post020",
           "endPost": "WalkwayRail.Restaurant.Post021"
@@ -310,12 +310,12 @@
           "start": [
             6.8,
             7.75,
-            2
+            1
           ],
           "end": [
             7.7,
             7.75,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post021",
           "endPost": "WalkwayRail.Restaurant.Post015"
@@ -330,12 +330,12 @@
           "start": [
             1.9,
             5.95,
-            2
+            1
           ],
           "end": [
             1.9,
             6.85,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post022",
           "endPost": "WalkwayRail.Restaurant.Post023"
@@ -345,12 +345,12 @@
           "start": [
             1.9,
             6.85,
-            2
+            1
           ],
           "end": [
             1.9,
             7.75,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post023",
           "endPost": "WalkwayRail.Restaurant.Post016"
@@ -365,12 +365,12 @@
           "start": [
             0.9,
             0.9499999999999998,
-            4
+            2
           ],
           "end": [
             1.8,
             0.9499999999999998,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post024",
           "endPost": "WalkwayRail.Restaurant.Post025"
@@ -380,12 +380,12 @@
           "start": [
             1.8,
             0.9499999999999998,
-            4
+            2
           ],
           "end": [
             2.8000000000000003,
             0.9499999999999998,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post025",
           "endPost": "WalkwayRail.Restaurant.Post026"
@@ -395,12 +395,12 @@
           "start": [
             2.8000000000000003,
             0.9499999999999998,
-            4
+            2
           ],
           "end": [
             3.8,
             0.9499999999999998,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post026",
           "endPost": "WalkwayRail.Restaurant.Post027"
@@ -410,12 +410,12 @@
           "start": [
             3.8,
             0.9499999999999998,
-            4
+            2
           ],
           "end": [
             4.8,
             0.9499999999999998,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post027",
           "endPost": "WalkwayRail.Restaurant.Post028"
@@ -425,12 +425,12 @@
           "start": [
             4.8,
             0.9499999999999998,
-            4
+            2
           ],
           "end": [
             5.8,
             0.9499999999999998,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post028",
           "endPost": "WalkwayRail.Restaurant.Post029"
@@ -440,12 +440,12 @@
           "start": [
             5.8,
             0.9499999999999998,
-            4
+            2
           ],
           "end": [
             6.7,
             0.9499999999999998,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post029",
           "endPost": "WalkwayRail.Restaurant.Post030"
@@ -460,12 +460,12 @@
           "start": [
             0.9,
             0.9499999999999998,
-            4
+            2
           ],
           "end": [
             0.9,
             1.8499999999999999,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post024",
           "endPost": "WalkwayRail.Restaurant.Post031"
@@ -475,12 +475,12 @@
           "start": [
             0.9,
             1.8499999999999999,
-            4
+            2
           ],
           "end": [
             0.9,
             2.75,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post031",
           "endPost": "WalkwayRail.Restaurant.Post032"
@@ -495,12 +495,12 @@
           "start": [
             7.7,
             1.95,
-            4
+            2
           ],
           "end": [
             7.7,
             2.85,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post033",
           "endPost": "WalkwayRail.Restaurant.Post034"
@@ -510,12 +510,12 @@
           "start": [
             7.7,
             2.85,
-            4
+            2
           ],
           "end": [
             7.7,
             3.8499999999999996,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post034",
           "endPost": "WalkwayRail.Restaurant.Post035"
@@ -525,12 +525,12 @@
           "start": [
             7.7,
             3.8499999999999996,
-            4
+            2
           ],
           "end": [
             7.7,
             4.85,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post035",
           "endPost": "WalkwayRail.Restaurant.Post036"
@@ -540,12 +540,12 @@
           "start": [
             7.7,
             4.85,
-            4
+            2
           ],
           "end": [
             7.7,
             5.85,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post036",
           "endPost": "WalkwayRail.Restaurant.Post037"
@@ -555,12 +555,12 @@
           "start": [
             7.7,
             5.85,
-            4
+            2
           ],
           "end": [
             7.7,
             6.85,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post037",
           "endPost": "WalkwayRail.Restaurant.Post038"
@@ -570,12 +570,12 @@
           "start": [
             7.7,
             6.85,
-            4
+            2
           ],
           "end": [
             7.7,
             7.75,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post038",
           "endPost": "WalkwayRail.Restaurant.Post039"
@@ -590,12 +590,12 @@
           "start": [
             1.9,
             7.75,
-            4
+            2
           ],
           "end": [
             2.8000000000000003,
             7.75,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post040",
           "endPost": "WalkwayRail.Restaurant.Post041"
@@ -605,12 +605,12 @@
           "start": [
             2.8000000000000003,
             7.75,
-            4
+            2
           ],
           "end": [
             3.8,
             7.75,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post041",
           "endPost": "WalkwayRail.Restaurant.Post042"
@@ -620,12 +620,12 @@
           "start": [
             3.8,
             7.75,
-            4
+            2
           ],
           "end": [
             4.8,
             7.75,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post042",
           "endPost": "WalkwayRail.Restaurant.Post043"
@@ -635,12 +635,12 @@
           "start": [
             4.8,
             7.75,
-            4
+            2
           ],
           "end": [
             5.8,
             7.75,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post043",
           "endPost": "WalkwayRail.Restaurant.Post044"
@@ -650,12 +650,12 @@
           "start": [
             5.8,
             7.75,
-            4
+            2
           ],
           "end": [
             6.8,
             7.75,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post044",
           "endPost": "WalkwayRail.Restaurant.Post045"
@@ -665,12 +665,12 @@
           "start": [
             6.8,
             7.75,
-            4
+            2
           ],
           "end": [
             7.7,
             7.75,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post045",
           "endPost": "WalkwayRail.Restaurant.Post039"
@@ -685,12 +685,12 @@
           "start": [
             1.9,
             5.95,
-            4
+            2
           ],
           "end": [
             1.9,
             6.85,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post046",
           "endPost": "WalkwayRail.Restaurant.Post047"
@@ -700,12 +700,12 @@
           "start": [
             1.9,
             6.85,
-            4
+            2
           ],
           "end": [
             1.9,
             7.75,
-            4
+            2
           ],
           "startPost": "WalkwayRail.Restaurant.Post047",
           "endPost": "WalkwayRail.Restaurant.Post040"
@@ -720,12 +720,12 @@
           "start": [
             6.8,
             1.95,
-            2
+            1
           ],
           "end": [
             7.7,
             1.95,
-            2
+            1
           ],
           "startPost": "WalkwayRail.Restaurant.Post048",
           "endPost": "WalkwayRail.Restaurant.Post009"
@@ -740,12 +740,12 @@
           "start": [
             5.8999999999999995,
             2.95,
-            6
+            3
           ],
           "end": [
             6.8,
             2.95,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post049",
           "endPost": "WalkwayRail.Restaurant.Post050"
@@ -755,12 +755,12 @@
           "start": [
             6.8,
             2.95,
-            6
+            3
           ],
           "end": [
             7.8,
             2.95,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post050",
           "endPost": "WalkwayRail.Restaurant.Post051"
@@ -770,12 +770,12 @@
           "start": [
             7.8,
             2.95,
-            6
+            3
           ],
           "end": [
             8.8,
             2.95,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post051",
           "endPost": "WalkwayRail.Restaurant.Post052"
@@ -785,12 +785,12 @@
           "start": [
             8.8,
             2.95,
-            6
+            3
           ],
           "end": [
             9.700000000000001,
             2.95,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post052",
           "endPost": "WalkwayRail.Restaurant.Post053"
@@ -805,12 +805,12 @@
           "start": [
             5.8999999999999995,
             5.75,
-            6
+            3
           ],
           "end": [
             6.8,
             5.75,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post054",
           "endPost": "WalkwayRail.Restaurant.Post055"
@@ -820,12 +820,12 @@
           "start": [
             6.8,
             5.75,
-            6
+            3
           ],
           "end": [
             7.8,
             5.75,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post055",
           "endPost": "WalkwayRail.Restaurant.Post056"
@@ -835,12 +835,12 @@
           "start": [
             7.8,
             5.75,
-            6
+            3
           ],
           "end": [
             8.8,
             5.75,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post056",
           "endPost": "WalkwayRail.Restaurant.Post057"
@@ -850,12 +850,12 @@
           "start": [
             8.8,
             5.75,
-            6
+            3
           ],
           "end": [
             9.700000000000001,
             5.75,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post057",
           "endPost": "WalkwayRail.Restaurant.Post058"
@@ -870,12 +870,12 @@
           "start": [
             5.8999999999999995,
             2.95,
-            6
+            3
           ],
           "end": [
             5.8999999999999995,
             3.8499999999999996,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post049",
           "endPost": "WalkwayRail.Restaurant.Post059"
@@ -885,12 +885,12 @@
           "start": [
             5.8999999999999995,
             3.8499999999999996,
-            6
+            3
           ],
           "end": [
             5.8999999999999995,
             4.85,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post059",
           "endPost": "WalkwayRail.Restaurant.Post060"
@@ -900,12 +900,12 @@
           "start": [
             5.8999999999999995,
             4.85,
-            6
+            3
           ],
           "end": [
             5.8999999999999995,
             5.75,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post060",
           "endPost": "WalkwayRail.Restaurant.Post054"
@@ -920,12 +920,12 @@
           "start": [
             9.700000000000001,
             2.95,
-            6
+            3
           ],
           "end": [
             9.700000000000001,
             3.8499999999999996,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post053",
           "endPost": "WalkwayRail.Restaurant.Post061"
@@ -935,12 +935,12 @@
           "start": [
             9.700000000000001,
             3.8499999999999996,
-            6
+            3
           ],
           "end": [
             9.700000000000001,
             4.85,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post061",
           "endPost": "WalkwayRail.Restaurant.Post062"
@@ -950,12 +950,12 @@
           "start": [
             9.700000000000001,
             4.85,
-            6
+            3
           ],
           "end": [
             9.700000000000001,
             5.75,
-            6
+            3
           ],
           "startPost": "WalkwayRail.Restaurant.Post062",
           "endPost": "WalkwayRail.Restaurant.Post058"

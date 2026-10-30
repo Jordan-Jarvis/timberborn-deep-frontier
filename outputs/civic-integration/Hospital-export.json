@@ -4,16 +4,16 @@
     "Hospital"
   ],
   "origin": [
-    -1,
+    -5,
     -2,
     0
   ],
   "size": [
-    12,
+    4,
     9,
     9
   ],
-  "openings": 42,
-  "objects": 99,
+  "openings": 22,
+  "objects": 55,
   "animationFrames": 61
 }

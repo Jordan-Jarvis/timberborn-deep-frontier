@@ -24,7 +24,10 @@ function nativeEntrance(layout,blocks,index){
   if(a[2]!==b[2]||Math.abs(a[0]-b[0])+Math.abs(a[1]-b[1])!==1)throw new Error('Entrance door link is not one horizontal step: '+a+' -> '+b);
   const [w,d,h]=layout.size;
   const inside=b[0]>=0&&b[1]>=0&&b[2]>=0&&b[0]<w&&b[1]<d&&b[2]<h;
-  if(inside&&blocks[index(b)].Occupations!=='None')throw new Error('Entrance path cell is occupied: '+b);
+  // A one-layer deck's slab shares the doorstep's cell (2026-10-30: the
+  // Restaurant's ground door is under its layer-1 dining balcony). Native
+  // Top/Corners coexist with a path (vanilla Platform and Overhang blocks).
+  if(inside&&!['None','Top','Corners','Top, Corners'].includes(blocks[index(b)].Occupations))throw new Error('Entrance path cell is occupied: '+b);
   return b;
 }
 
@@ -75,7 +78,8 @@ export async function applyRestaurant(value) {
   delete value.BuildingWalkwaySpec;
   value.PlatformDeckSpec=await read(new URL('outputs/civic-integration/Restaurant-platform-deck.json',root));
   value.TransputProviderSpec={IgnoreRotation:false,Transputs:await wallRoomPowerFaces('Restaurant',layout.structure,layout.size)};
-  const serviceCells=[[0,1,4],[0,1,4],[4,1,4],[4,1,4],[0,1,2],[0,1,2],[2,1,2],[2,1,2],[4,1,2],[4,1,2],[5,2,2],[5,2,2],[5,4,2],[5,4,2]];
+  // One layer per storey since 2026-10-30: upper dining balcony at 2, lower at 1.
+  const serviceCells=[[0,1,2],[0,1,2],[4,1,2],[4,1,2],[0,1,1],[0,1,1],[2,1,1],[2,1,1],[4,1,1],[4,1,1],[5,2,1],[5,2,1],[5,4,1],[5,4,1]];
   const point=cell=>{
     const n=layout.nodes.find(n=>n.cell.every((v,i)=>v===cell[i]));
     if(!n)throw new Error(`No authored restaurant service cell: ${cell}`);

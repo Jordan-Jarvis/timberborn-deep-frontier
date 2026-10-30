@@ -27,7 +27,7 @@ import grocery_market_geometry as source
 from render_grocery_market_study import FRAMES, FPS, IDENT as STUDY
 
 IDENT = 'GroceryStore'
-HEIGHT = 8   # chimney cap at 7.2
+HEIGHT = 5   # chimney cap at 4.46 (one-layer storeys, 2026-10-30; was 8)
 
 
 def art_hash():

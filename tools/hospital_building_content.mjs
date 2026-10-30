@@ -122,7 +122,7 @@ export async function applyHospital(value) {
   delete value.StatusHidingEnterableSpec;
   value.EnterableIlluminatorSpec={};
   value.RangedEffectBuildingSpec={EffectRadius:care.areaRadius};
-  value.HospitalSpec={WardWorkPosition:xyz([6.5,0,3.5]),RequiredStaff:care.workers,
+  value.HospitalSpec={WardWorkPosition:xyz(layout.wardWorkPosition),RequiredStaff:care.workers,
     NeighborhoodEffect:{NeedId:'PublicHealthcare',PointsPerHour:care.areaPointsPerHour,SatisfyToMaxValue:false}};
   // Ward flue steam while patients are inside (EnterableParticleController:
   // the hospital is not a workshop). Steam does not pollute.

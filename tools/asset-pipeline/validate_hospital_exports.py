@@ -41,8 +41,9 @@ require(all(not any(p['name'] in n for n in names) for p in assembly['props']),'
 # barrel are gone, so the Hospital has no native props.
 require('NativeBuildingPropsSpec' not in blueprint and len(assembly['props'])==0,'Native prop binding mismatch')
 # 2026-10-21: front/back balconies only; each ward and the back balcony has its own door.
-require('BuildingWalkwaySpec' not in blueprint and len(blueprint['PlatformDeckSpec']['Doors'])==6,'Hospital must use player roads and six internal doors')
-require(len(blueprint['PlatformDeckSpec']['Openings'])==42,'Missing individual rail ports')
+# Since the wings were removed (2026-10-30): ground, rear deck, rear ward and roof garden doors.
+require('BuildingWalkwaySpec' not in blueprint and len(blueprint['PlatformDeckSpec']['Doors'])==4,'Hospital must use player roads and four internal doors')
+require(len(blueprint['PlatformDeckSpec']['Openings'])==22,'Missing individual rail ports')
 for port in blueprint['PlatformDeckSpec']['Openings']:
     require(all(names[n]==1 for n in port['HiddenNodes']+port['ShownNodes']),'Missing rail node '+port['Id'])
 cells={tuple(n['cell']) for n in layout['nodes']};graph={c:set() for c in cells}
@@ -55,7 +56,7 @@ while queue:
     c=queue.pop()
     if c in seen:continue
     seen.add(c);queue.extend(graph[c]-seen)
-require(seen==cells and len(cells)==68,'Disconnected hospital doors/galleries')
+require(seen==cells and len(cells)==37,'Disconnected hospital doors/galleries')
 require({c[2] for c in layout['doorNodes']}=={0,2,4,6},'Existing doors were moved')
 w,d,h=layout['size'];blocks=blueprint['BlockObjectSpec']['Blocks']
 require(len(blocks)==w*d*h,'Occupation extent mismatch')
@@ -97,7 +98,7 @@ require(meals=={'FoodCapacityPerGood':care['patientMeals']['foodUnitsPerGood'],'
   'LowStockUnits':care['patientMeals']['lowStockUnits']},'Admitted patients need the authored meal stock (HospitalPantrySpec)')
 require(abs((effects['Injury']['PointsPerHour']+.1/24)/(.015+.1/24)-1.8)<1e-10,'Steady native recovery is not 80 percent faster under the observed half-treatment cadence')
 require(effects['ChippedTeeth']['PointsPerHour']==.5 and effects['BadwaterContamination']['PointsPerHour']==.068,'Native tooth/contamination rates differ')
-require(blueprint['HospitalSpec']['WardWorkPosition']=={'X':6.5,'Y':0,'Z':3.5},'Staff work point differs from the enclosed central ward')
+require(blueprint['HospitalSpec']['WardWorkPosition']=={'X':2.5,'Y':0,'Z':3.5},'Staff work point differs from the enclosed central ward')
 require('MedicalFood' in read('src/DeepFrontier/Data/Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.blueprint.json')['ManufactorySpec']['ProductionRecipeIds'],'Medical food lost its producer')
 report={'status':'Source/export checks passed; native runtime acceptance pending','size':[w,d,h],
         'sourceSha256':hashlib.sha256((ROOT/'src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend').read_bytes()).hexdigest(),

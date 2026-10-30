@@ -6,7 +6,7 @@
     9.8,
     5.85
   ],
-  "layer": 6,
+  "layer": 3,
   "clearArea": [
     7.05,
     3.1,
@@ -16,14 +16,14 @@
   "stairApproach": [
     10.3,
     3.35,
-    6
+    3
   ],
   "accessDoor": {
     "id": "RoofTerraceDoor",
     "position": [
       6.8,
       4.35,
-      6
+      3
     ],
     "outward": [
       1,

@@ -42,6 +42,12 @@ def probe(label,point,outward,tangent=(0,0,0),interior_offset=(0,0,0)):
     counts[label]=counts.get(label,0)+1
     point=Vector(point);outward=Vector(outward);tangent=Vector(tangent)
     start=point+outward*.30+tangent*.20
+    # A probe starting inside another closed room (the roof stairhead stands
+    # on the upper hall's right edge since the 2026-10-30 compaction) has no
+    # exterior viewer: that room's own walls are probed separately.
+    native=[start[i]+ORIGIN[i] for i in range(3)]
+    if any(all(b[i]<native[i]<b[i+3] for i in range(3)) for b in ROOMS.values()):
+        counts[label+'/insideRoom']=counts.get(label+'/insideRoom',0)+1;return
     end=point-outward*.20+Vector(interior_offset)
     a=blend(start);b=blend(end);direction=(b-a).normalized();limit=(b-a).length
     cursor=a;remaining=limit;first=None
@@ -78,7 +84,8 @@ for ident,walls in EXTERIOR_WALLS.items():
                     probe(ident+'/'+side,p,normal,interior_offset=interior)
             # Oblique grazing views near every course and storey joint expose
             # gaps caused by recessed panels meeting bevelled beams.
-            heights=[z0+.005,z0+.20,z0+.45,z0+.53,z1-.36,z1-.33,z1-.28,z1-.005]
+            # One-layer storey walls (grid_structure wall_style='storey').
+            heights=[z0+.005,z0+.20,z0+.36,z0+.40,z1-.28,z1-.005]
             for along in samples(a+.005,b-.005,.08):
                 for z in heights:
                     p=(along,y0 if side=='front' else y1,z) if side in ('front','back') else (x0 if side=='left' else x1,along,z)
@@ -90,29 +97,25 @@ for ident,walls in EXTERIOR_WALLS.items():
                         if z0==0 and z+slope*.20<0:continue
                         probe(ident+'/'+side+'/joint',p,normal,(0,0,slope))
 
-# The rotated rooftop stairhead has a complete exterior on all four sides.
+# The rotated rooftop stairhead has a complete exterior on all four sides
+# (one layer tall since the 2026-10-30 compaction).
 for side,axis,plane,a,b,normal in [('front',1,3.85,4.8,6.8,(0,-1,0)),
         ('back',1,4.85,4.8,6.8,(0,1,0)),('left',0,4.8,3.85,4.85,(-1,0,0)),
         ('door',0,6.8,3.85,4.85,(1,0,0))]:
     for across in [a+.005,*samples(a,b),b-.005]:
         inset=.06 if across==a+.005 else -.06 if across==b-.005 else 0
         interior=(inset,0,0) if axis==1 else (0,inset,0)
-        for z in samples(6.005,8.075):
+        for z in samples(3.005,3.995):
             p=(across,plane,z) if axis==1 else (plane,across,z)
             probe('RoofStairhead/'+side,p,normal,interior_offset=interior)
 
-roofs=[('MainRoof',1.37,2.62,6.24,5.99,6.31,7.80),
-       ('StairheadRoof',4.7,3.75,6.9,4.85,8.08,8.55)]
-for label,x0,y0,x1,y1,eave,ridge in roofs:
-    mid=(x0+x1)/2
-    for x in samples(x0+.02,x1-.02):
-        height=eave+(ridge-eave)*(1-abs(x-mid)/((x1-x0)/2))
-        for y in samples(y0+.02,y1-.02,.027):
-            probe(label+'/slope',(x,y,height),(0,0,1))
-    for y,normal in ((y0,(0,-1,0)),(y1,(0,1,0))):
-        for x in samples(x0+.02,x1-.02,.019):
-            high=eave+(ridge-eave)*(1-abs(x-mid)/((x1-x0)/2))
-            for z in samples(eave+.01,high):probe(label+'/gable',(x,y,z),normal)
+# Flat roofs since 2026-10-30: the main roof is a platform (deck joints
+# below); the stairhead's cast cap closes its top and all four edges.
+for x in samples(4.82,6.78):
+    for y in samples(3.87,4.83,.027):probe('StairheadCap/top',(x,y,4.0),(0,0,1))
+for y,normal in ((3.85,(0,-1,0)),(4.85,(0,1,0))):
+    for x in samples(4.82,6.78,.019):
+        for z in samples(3.865,3.995):probe('StairheadCap/edge',(x,y,z),normal)
 
 # Explicit platform edges and board-joint lines. Testing only the center of
 # each tile missed the previous backing inset and adjoining slab bevel holes.

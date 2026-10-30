@@ -1,0 +1,39 @@
+{
+  "scope": "Before | after | difference sheets (render_budget_views.py with the pre-compaction cameras, compose_budget_sheet.py) of the 2026-10-30 building compaction pass: one layer per storey, flat roofs where the roof is not the defining silhouette, and the Hospital reduced to its central pavilion. Blender renders, not game screenshots.",
+  "renders": [
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "de764ba7bffaa69f45acfdfe35e2bbe63beb8b53dc57f9461a4d90778efd02e8",
+      "images": [
+        "Restaurant-before-after.png"
+      ],
+      "imageSha256": {
+        "Restaurant-before-after.png": "92e1be1a096a4aef157c13dd4def088ae740f2e28f68dc6727d07cdd1aec98cc"
+      }
+    },
+    {
+      "model": "Hospital",
+      "source": "src\\DeepFrontier\\Art\\Source\\Hospital-ReferenceStudy.blend",
+      "sourceSha256": "0750fb3a3e7bbee72fe5ef7dc794306cbdd7929457b569894dda93d956fe16df",
+      "images": [
+        "Hospital-before-after.png"
+      ],
+      "imageSha256": {
+        "Hospital-before-after.png": "9ea697738f621e27cc734ccf089e60ea4641ef7c53322e2e253ddaaf6aa359e6"
+      }
+    },
+    {
+      "model": "GroceryStore",
+      "source": "src\\DeepFrontier\\Art\\Source\\GroceryMarket-ReferenceStudy.blend",
+      "sourceSha256": "93e0ac4ec72a6e0e7a029784797851fd5e94cc7eed9b6a9946d7a5bc530638f2",
+      "images": [
+        "GroceryStore-before-after.png"
+      ],
+      "imageSha256": {
+        "GroceryStore-before-after.png": "f391acf900b59d0667bc1c230fe33eac83d8d413c6c4ea2a85cd2848d02237b4"
+      }
+    }
+  ],
+  "extraImages": []
+}

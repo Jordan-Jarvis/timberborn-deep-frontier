@@ -101,7 +101,7 @@ from reference_civic import side_wall, fish
 from walkway_geometry import RailAssembly
 from grid_structure import gallery as grid_gallery, platform as grid_platform, room as grid_room
 from restaurant_structure import ORIGIN as RESTAURANT_ORIGIN, PLATFORMS as RESTAURANT_PLATFORMS, SUPPORTS as RESTAURANT_SUPPORTS, ROOMS as RESTAURANT_ROOMS, DOORS as RESTAURANT_DOORS, source as restaurant_source
-from restaurant_structure import EXTERIOR_WALLS as RESTAURANT_WALLS
+from restaurant_structure import EXTERIOR_WALLS as RESTAURANT_WALLS, HEADROOM as RESTAURANT_HEADROOM
 from hatchery_structure import ACCESS as HATCHERY_ACCESS, TERRACE as HATCHERY_TERRACE
 from lategame_kit import emitter
 
@@ -110,18 +110,20 @@ from lategame_kit import emitter
 # must clear these lanes; these are geometry checks, not a native navmesh claim.
 CIVIC_ACCESS={
     'FishHatchery':HATCHERY_ACCESS,
-    'Hospital':{'entrance':[7.5,2,0], 'balconyLayers':[2,4],
+    'Hospital':{'entrance':[7.5,2,0], 'balconyLayers':[2,4], 'headroom':1.09,
                 'routes':[[(5.5,10.5),(8.5,10.5)]],
-                # Source coordinates (native + 1 in X); front balcony ends
-                # at source x 1 and 13 since the side decks were removed.
-                'stairBays':[[1,0,2,2],[12,0,13,2],[4,11,5,13]]},
-    'Restaurant':{'entrance':[2.3,1.85,0], 'balconyLayers':[2,4],
+                # Source coordinates (native + 5 in X since the wings were
+                # removed, 2026-10-30): one bay behind the rear deck.
+                'stairBays':[[5,11,6,13]]},
+    # 2026-10-30: one layer per storey; walking clearance stops under the
+    # beams of the deck one layer above (restaurant_structure.HEADROOM).
+    'Restaurant':{'entrance':[2.3,1.85,0], 'balconyLayers':[1,2], 'headroom':RESTAURANT_HEADROOM,
                   'routes':[[(1.3,2.35),(6.3,2.35),(6.3,7.35),(2.3,7.35)],[(2.3,6.35),(2.3,7.35)]],
                   'stairBays':[[6.2,0.2,7.2,2.2]]},
-    'GroceryStore':{'entrance':[1.6,1.65,0], 'balconyLayers':[2,4],
+    'GroceryStore':{'entrance':[1.6,1.65,0], 'balconyLayers':[2,4], 'headroom':1.09,
                     'routes':[[(1.3,2.35),(7.0,2.35),(7.0,6.5),(2.0,6.5)]],
                     'stairBays':[[6.5,0.35,7.5,2.35]]},
-    'FisheryWorks':{'entrance':[2.0,1.55,0], 'balconyLayers':[2],
+    'FisheryWorks':{'entrance':[2.0,1.55,0], 'balconyLayers':[2], 'headroom':1.09,
                     'routes':[[(1.66,6.90),(1.66,7.80),(7.35,7.80),(7.35,2.50)],[(3.55,2.50),(7.35,2.50)]],
                     'stairBays':[[6.85,.30,7.85,2.30]]},
 }
@@ -131,7 +133,7 @@ CIVIC_ACCESS={
 CIVIC_TERRACES={
     'FishHatchery':HATCHERY_TERRACE,
     'Hospital':{'bounds':[5,6,9,10], 'layer':6, 'clearArea':[5.3,7.3,8.7,9.7]},
-    'Restaurant':{'bounds':[5.8,2.85,9.8,5.85], 'layer':6, 'clearArea':[7.05,3.10,9.55,5.60]},
+    'Restaurant':{'bounds':[5.8,2.85,9.8,5.85], 'layer':3, 'clearArea':[7.05,3.10,9.55,5.60]},
     'GroceryStore':{'bounds':[6.48,3.25,9.68,6.15], 'layer':6, 'clearArea':[7.2,3.7,9.2,5.7]},
     'FisheryWorks':{'bounds':[-1.25,4.00,1.40,7.10], 'layer':2, 'clearArea':[-.95,4.45,.65,6.15]},
 }
@@ -200,44 +202,49 @@ def restaurant_door(g,ident):
     g.doorways.append({'id':ident,'position':list(p),'outward':d['outward'],
                       'width':d['width'],'internalConnection':'BuildingInterior'})
     x,y,z=p
-    for dx in (-.62,.62):wall_lamp(g,x+dx,y+.17,z+1.20)
+    # One-layer storeys (2026-10-30): the lamps flank the door at its own
+    # storey, below the head fascia.
+    for dx in (-.62,.62):wall_lamp(g,x+dx,y+.17,z+.50)
 
 
 def restaurant_roof_stairhead(g,terrace):
+    # 2026-10-30 compaction: one layer tall with a flat cast cap.
     part=Geometry('Restaurant roof stairhead')
-    grid_room(part,'RoofStairhead',[0,0,0,1,2,2],[0,0,0],(.5,1.0),
-              exterior={'front':[(0,1)],'back':[(0,1)],'left':[(0,2)],'right':[(0,2)]})
+    grid_room(part,'RoofStairhead',[0,0,0,1,2,1],[0,0,0],(.5,1.0),
+              exterior={'front':[(0,1)],'back':[(0,1)],'left':[(0,2)],'right':[(0,2)]},wall_style='storey')
     # The portal is a separate asset. Its adjacent lamps remain part of the
     # stairhead decoration, so repairing a door does not rebuild them.
-    for dx in (-.62,.62):wall_lamp(part,.5+dx,.17,1.20)
-    part.box((.5,-.025,1.065),(.52,.075,.10),WOOD)
-    glazing(part,.5,.04,1.45,.80,style='diamond')
+    for dx in (-.62,.62):wall_lamp(part,.5+dx,.17,.50)
     # Explicit quarter-turn: this is the right-facing face at native X=6, Y=3.5.
     # Geometry stores Blender's (-X,-Y,Z); compose in authored coordinates.
     local=[(-v[0],-v[1],v[2]) for v in part.vertices]
-    points=[restaurant_source((6-y,3+x,6+z)) for x,y,z in local]
+    points=[restaurant_source((6-y,3+x,3+z)) for x,y,z in local]
     face_offset=len(g.faces)
     for face,material,uv,source in zip(part.faces,part.materials,part.face_uvs,part.face_sources,strict=True):
         g.add([points[i] for i in face],[tuple(range(len(face)))],material)
         g.face_uvs[-1]=uv
         g.face_sources[-1]=source
     for mount in part.window_mounts:
-        transform=lambda p:restaurant_source((6-p[1],3+p[0],6+p[2]))
+        transform=lambda p:restaurant_source((6-p[1],3+p[0],3+p[2]))
         g.window_mounts.append({**mount,'anchor':transform(mount['anchor']),
             'outward':[-mount['outward'][1],mount['outward'][0],mount['outward'][2]],
             'faceRange':[v+face_offset for v in mount['faceRange']],
             'rearEdges':[[transform(p) for p in edge] for edge in mount['rearEdges']]})
     b=RESTAURANT_ROOMS['RoofStairhead']
     g.structural_parts.append({'id':'RoofStairhead','kind':'room','bounds':b,
-        'pickingBoxes':[{'center':[5,3.5,7],'size':[2,1,2]}]})
+        'pickingBoxes':[{'center':[5,3.5,3.5],'size':[2,1,1]}]})
     d=RESTAURANT_DOORS['RoofTerraceDoor']
     from building_components import recipe
     g.include_component(recipe('Restaurant','Door.RoofTerraceDoor'))
     door={'id':'RoofTerraceDoor','position':list(restaurant_source(d['position'])),
           'outward':d['outward'],'width':d['width'],'internalConnection':'BuildingInterior'}
     g.doorways.append(door);terrace['accessDoor']=door
-    roof_bearing(g,4.8,3.85,6.8,4.85,8,8.08)
-    gabled_roof(g,4.7,3.75,6.9,4.85,8.08,8.55,855,trim='restrained')
+    # Flat cap: a cast slab on the tile lines over the one-layer walls, with
+    # a forged steel drip strip set in along its edges.
+    cx,cy,_=restaurant_source((5,3.5,0))
+    g.box((cx,cy,3.93),(2,1,.14),CIVIC_CONCRETE)
+    for dy in (-.43,.43):g.box((cx,cy+dy,4.015),(1.94,.06,.03),IRON)
+    for dx in (-.97,.97):g.box((cx+dx,cy,4.015),(.06,.80,.03),IRON)
 
 
 def terrace_access_house(g,terrace,left_facing,model):
@@ -637,6 +644,23 @@ def hanging_board(g,parts,kind,x,y,z,w=1.1):
     parts.append((m,'SWAY',.018))
 
 
+def hanging_board_storey(g,parts,kind,x,y,z,w=1.1,name=None):
+    """hanging_board for a one-layer storey (2026-10-30 compaction): three
+    carved boards (.57 tall, was five, .95) on two links per ring chain, the
+    beam .40 above the board centre (was .63). Appended beside hanging_board,
+    whose buildings keep it unchanged."""
+    beam_joint(g,(x-w*.63,y+.34,z+.40),(x+w*.63,y+.34,z+.40),.15,.15)
+    for xx in (x-w*.36,x+w*.36):
+        g.beam((xx,y+.36,z+.40),(xx,y-.05,z+.40),.09,mat=IRON)
+        for i in range(2):g.ring((xx,y-.05,z+.32-i*.055),.044,.013,.024,IRON,'Y' if i%2 else 'X',6)
+    m=Geometry(name or kind+'.CarvedSign',(x,y,z+.29))
+    for i in range(3):m.box((x,y,z-.19+i*.19),(w,.10,.185),PLANK)
+    for xx in (x-w/2,x+w/2):
+        m.box((xx,y-.025,z),(.07,.13,.60),WOOD)
+    sign_emblem(m,x,y-.09,z,kind,w*.55)
+    parts.append((m,'SWAY',.018))
+
+
 def awning(g,x0,y0,x1,y1,front_z,back_z,striped=False):
     if not striped:
         lean_sheet_roof(g,x0,y0,x1,y1,front_z,back_z)
@@ -773,91 +797,113 @@ RESTAURANT_FASCIA={
     'UpperDiningSideFront':[('front',6,7),('right',1,2)],
     'UpperDiningSide':[('right',2,7),('back',5,7)],
     'UpperDiningRear':[('back',1,5),('left',5,7)],
+    # The main roof's edges carry the parapet; the room fascia closes below.
+    'MainRoof':[],
     'RoofTerraceInner':[('front',5,7),('back',5,7)],
     'RoofTerraceOuter':[('front',7,9),('back',7,9),('right',2,5)],
 }
 
 
-def restaurant_gable_sign(g,parts):
-    """Carved restaurant sign hung from the front gable of the main roof.
+def restaurant_roof_sign(g,parts):
+    """Carved restaurant sign swinging from a steel gantry on the flat roof.
 
-    It stays inside the reserved roof cells (native y >= 2, 6 <= z <= 7), well
-    above the upper dining gallery, and no longer projects past the front
-    deck where an adjoining player path or platform could meet it.
+    2026-10-30 compaction: the front gable it hung from is gone. Two forged
+    posts stand on the main roof at its front edge and carry a cross beam; the
+    board hangs between them, facing the street. The gantry and the whole
+    swing stay inside its reserved roof cells (native 2 <= x < 4, y 2, z 3-4),
+    clear of the upper gallery below and of the roof terrace.
     """
-    x=3.805;face=2.62-.045;y=face-.20;z=6.47;w=1.10
+    x=restaurant_source((3,0,0))[0];y=restaurant_source((0,2.28,0))[1];w=1.42;z=3.47
+    for xx in (x-.80,x+.80):
+        g.box((xx,y,3.0+.38),(.09,.09,.76),IRON)
+        g.box((xx,y,3.02),(.20,.20,.05),IRON)
+    g.beam((x-.86,y,3.80),(x+.86,y,3.80),.10,.10,WOOD)
     for xx in (x-w*.36,x+w*.36):
-        # Forged arm bolted through a plate on the gable boards.
-        g.box((xx,face-.012,z+.46),(.15,.024,.18),IRON)
-        g.beam((xx,face-.01,z+.46),(xx,y-.03,z+.46),.07,mat=IRON)
-        g.box((xx,y,z+.4275),(.035,.035,.065),IRON)
-    m=Geometry('Restaurant.CarvedSign',(x,y,z+.46))
-    for i in range(5):m.box((x,y,z-.32+i*.16),(w,.09,.155),PLANK)
+        g.box((xx,y,3.74),(.035,.035,.03),IRON)
+    m=Geometry('Restaurant.CarvedSign',(x,y,3.725))
+    for i in range(4):m.box((x,y,z-.20+i*.13),(w,.09,.125),PLANK)
     for xx in (x-w/2,x+w/2):
-        m.box((xx,y-.02,z),(.07,.12,.84),WOOD)
-    sign_emblem(m,x,y-.08,z,'Restaurant',w*.74)
+        m.box((xx,y-.02,z),(.07,.12,.56),WOOD)
+    for xx in (x-w*.36,x+w*.36):m.box((xx,y,3.69),(.03,.03,.07),IRON)
+    sign_emblem(m,x,y-.08,z,'Restaurant',w*.50)
     parts.append((m,'SWAY',.012))
 
 
 def kitchen_hearth(g):
-    """Stone bake oven built into the kitchen's rear wall.
+    """Stone bake oven built into the kitchen's rear wall (one-layer storey).
 
-    Native y = 8 is the footprint edge, so the oven face stays on the wall
-    plane instead of projecting past it. Depths (source y, outward +y): wall
-    infill 7.81, soot back 7.818, embers 7.824, grate 7.831..7.837, stone face
-    7.840, iron lintel and stone hood 7.849. No two parallel faces that
-    overlap are closer than 6 mm.
+    Native y = 7 is the footprint edge, so the oven face stays on the wall
+    plane. Depths (source y, outward +y) are as before: wall infill 7.81, soot
+    back 7.818, embers 7.824, grate 7.831..7.837, stone face 7.840, iron
+    lintel and stone hood 7.849. 2026-10-30: the whole oven sits below the
+    head fascia (z .72 of the one-layer kitchen), so its stone face never
+    meets the fascia plane (7.836).
     """
     back=7.70;face=7.840;proud=7.849
     L,R=3.45,4.15;oL,oR=3.62,3.98
     def stone(x0,x1,z0,z1,i,front=face):
         g.box(((x0+x1)/2,(front+back)/2,(z0+z1)/2),(x1-x0-.008,front-back,z1-z0-.008),
               KILN_STONE_LIGHT if i%3==1 else KILN_STONE)
-    stone(L,R,.22,.32,0)
-    for i,(z0,z1) in enumerate(((.32,.56),(.56,.80))):
-        stone(L,oL,z0,z1,i+1);stone(oR,R,z0,z1,i+2)
-    stone(L,3.58,.80,.86,4);stone(4.02,R,.80,.86,5)
-    g.box(((3.58+4.02)/2,(proud+back)/2,.83),(.44,proud-back,.06),IRON)
-    for i,(z0,z1,cuts) in enumerate(((.86,1.06,(3.80,)),(1.06,1.24,(3.66,3.94)),(1.24,1.40,(3.80,)))):
+    stone(L,R,.20,.27,0)
+    stone(L,oL,.27,.47,1);stone(oR,R,.27,.47,2)
+    g.box(((oL+oR)/2,(proud+back)/2,.485),(.40,proud-back,.03),IRON)
+    for i,(z0,z1,cuts) in enumerate(((.50,.58,(3.80,)),(.58,.65,(3.66,3.94)))):
         edges=[L,*cuts,R]
         for j,(a,b) in enumerate(zip(edges,edges[1:])):stone(a,b,z0,z1,i+j)
-    stone(3.42,4.18,1.40,1.50,2,front=proud)
-    g.add([(oL,7.818,.32),(oR,7.818,.32),(oR,7.818,.80),(oL,7.818,.80)],[(3,2,1,0)],KILN_SOOT)
-    g.add([(oL+.02,7.824,.33),(oR-.02,7.824,.33),(oR-.02,7.824,.52),(oL+.02,7.824,.52)],[(3,2,1,0)],GLOW)
-    for xx in (3.68,3.76,3.84,3.92):g.box((xx,7.834,.56),(.02,.006,.46),IRON)
+    stone(3.42,4.18,.65,.70,2,front=proud)
+    g.add([(oL,7.818,.27),(oR,7.818,.27),(oR,7.818,.47),(oL,7.818,.47)],[(3,2,1,0)],KILN_SOOT)
+    g.add([(oL+.02,7.824,.28),(oR-.02,7.824,.28),(oR-.02,7.824,.40),(oL+.02,7.824,.40)],[(3,2,1,0)],GLOW)
+    for xx in (3.68,3.76,3.84,3.92):g.box((xx,7.834,.375),(.02,.006,.19),IRON)
+
+
+def restaurant_parapet(g,runs,z=3):
+    """Low cast parapet on the flat main roof's exposed edges (native spans).
+
+    Its outer face is the tile line; it stands on the deck boards and stays
+    within 0.12 of the edge, so the roof cells inside it stay buildable.
+    """
+    for side,a,b,line in runs:
+        if side in ('front','back'):
+            cx,cy,_=restaurant_source(((a+b)/2,line+(.06 if side=='front' else -.06),0));size=(b-a,.12)
+        elif side=='left':
+            cx,cy,_=restaurant_source((line+.06,(a+b)/2,0));size=(.12,b-a)
+        else:raise ValueError('Restaurant parapet side '+side)
+        g.box((cx,cy,z+.10),(*size,.20),CIVIC_CONCRETE)
+        g.box((cx,cy,z+.215),(*size,.03),IRON)
 
 
 def restaurant(g,parts):
+    # 2026-10-30 compaction: one layer per storey and a flat roof (see
+    # restaurant_structure.py). Footprint, ground door, dining balconies,
+    # tables and chairs are unchanged in plan.
     r=RailAssembly('WalkwayRail.Restaurant')
-    grid_room(g,'GroundHall',RESTAURANT_ROOMS['GroundHall'],RESTAURANT_ORIGIN,exterior=RESTAURANT_WALLS['GroundHall'])
+    grid_room(g,'GroundHall',RESTAURANT_ROOMS['GroundHall'],RESTAURANT_ORIGIN,exterior=RESTAURANT_WALLS['GroundHall'],wall_style='storey')
     for name,door in (('MiddleHall','MiddleDoor'),('UpperHall','UpperDoor'),('EntranceVestibule','GroundDoor')):
         d=RESTAURANT_DOORS[door]
-        grid_room(g,name,RESTAURANT_ROOMS[name],RESTAURANT_ORIGIN,(d['position'][0],d['width']),exterior=RESTAURANT_WALLS[name])
+        grid_room(g,name,RESTAURANT_ROOMS[name],RESTAURANT_ORIGIN,(d['position'][0],d['width']),exterior=RESTAURANT_WALLS[name],wall_style='storey')
         restaurant_door(g,door)
     # This exposed one-cell corner is neither under the front gallery nor
     # inside the main hall. It needs its own roof; an open-topped vestibule
     # showed through from the left and rear even with all wall faces present.
     grid_platform(g,'EntranceVestibuleCap',RESTAURANT_PLATFORMS['EntranceVestibuleCap'],
                   RESTAURANT_ORIGIN,RESTAURANT_SUPPORTS['EntranceVestibuleCap'],ROOF,board_relief=.010)
-    # Windows follow the rooms behind them, not one template per facade.
+    # Windows follow the rooms behind them, one row per one-layer storey,
+    # inside the plaster band (z0+.20 .. z0+.72).
     from native_window_atlas import atlas_window, glass_curtain
     # Upper private dining: tall lancets toward the front balcony, framed
     # crosses on the sides, three-pane verticals over the kitchen side.
     for x in (2.3,3.3,5.3):
-        glazing(g,x,2.89,4.97,1.45,style='lancet')
-        atlas_window(g,x,5.81,4.97,.5,'back','triple')
+        glazing(g,x,2.89,2.46,.50,style='grand')
+        atlas_window(g,x,5.81,2.46,.21,'back','triple')
     for x,face in ((1.84,'left'),(5.76,'right')):
         for y in (3.35,4.35,5.35):
-            atlas_window(g,x,y,4.97,.8,face,'cross')
-    # One grand roof with restrained trim: every sheet, strap, bargeboard and
-    # the iron ridge stay; the folded plates at every eave/ridge end and on
-    # the dormer frames are gone, so the roof reads as a few bold lines.
-    roof_bearing(g,1.8,2.85,5.8,5.85,6,6.31)
-    gabled_roof(g,1.37,2.62,6.24,5.99,6.31,7.80,110,trim='restrained')
-    dormer(g,2.45,2.36,6.55,.86,trim='restrained');dormer(g,5.05,2.36,6.55,.86,trim='restrained')
-    dormer(g,2.45,4.75,6.55,.86,trim='restrained');dormer(g,5.05,4.75,6.55,.86,trim='restrained')
-    roof_lantern(g,3.82,3.63,7.20,1.44,1.6,trim='restrained')
-    restaurant_gable_sign(g,parts)
+            atlas_window(g,x,y,2.46,.40,face,'cross')
+    # Flat main roof: the cast slab and timber decking of the roof terrace,
+    # one level with it, a low parapet on its three street edges.
+    grid_platform(g,'MainRoof',RESTAURANT_PLATFORMS['MainRoof'],RESTAURANT_ORIGIN,RESTAURANT_SUPPORTS['MainRoof'],PLANK,
+                  slab_material=CIVIC_CONCRETE,fascia=RESTAURANT_FASCIA['MainRoof'],fascia_material=IRON,board_relief=.010)
+    restaurant_parapet(g,[('front',1,5,2),('back',1,5,5),('left',2.12,4.88,1)])
+    restaurant_roof_sign(g,parts)
     # Two storeys of dining balconies: every authored post stands on a cast
     # pier (ground) or bearing plate (deck) with knee braces into the beams it
     # carries, and exposed deck edges get a timber fascia on the tile line.
@@ -867,73 +913,60 @@ def restaurant(g,parts):
             name=prefix+side
             grid_gallery(g,r,name,RESTAURANT_PLATFORMS[name],RESTAURANT_ORIGIN,edges,RESTAURANT_SUPPORTS[name],
                          grid_rails=True,support_style='pier',fascia=RESTAURANT_FASCIA[name],board_relief=.010)
-        z=2 if prefix=='Dining' else 4
+        z=1 if prefix=='Dining' else 2
         r.run_grid(prefix+'Sideright',(7.70,1.95),(7.70,7.75),z,RESTAURANT_ORIGIN)
         r.run_grid(prefix+'Rearback',(1.90,7.75),(7.70,7.75),z,RESTAURANT_ORIGIN)
         r.run_grid(prefix+'Rearleft',(1.90,5.95),(1.90,7.75),z,RESTAURANT_ORIGIN)
-    for x in (1.95,5.20):terrace_table(g,x,1.55,4,chair_axis='X')
-    r.run_grid('StairAccess',(6.80,1.95),(7.70,1.95),2,RESTAURANT_ORIGIN)
+    for x in (1.95,5.20):terrace_table(g,x,1.55,2,chair_axis='X')
+    r.run_grid('StairAccess',(6.80,1.95),(7.70,1.95),1,RESTAURANT_ORIGIN)
     # Main dining room: a wide warm picture window over the dining balcony,
     # timber-mullioned like the reference's dining windows; the narrow pier
     # right of the door keeps a grand window. The sides keep grand windows.
-    glass_curtain(g,2.9,2.89,2.42,3.82,1.62,'front',cols=3,rows=2,mullion=.08,frame=WOOD)
-    wall_windows(g,[5.28],2.89,3.14,1.25)
+    glass_curtain(g,2.9,2.89,1.22,1.70,1.62,'front',cols=3,rows=1,mullion=.07,frame=WOOD)
+    wall_windows(g,[5.28],2.89,1.46,.50)
     for y in (3.55,4.83):
-        glazing(g,5.76,y,3.13,1.25,'right')
-        glazing(g,1.84,y,3.13,1.25,'left')
+        glazing(g,5.76,y,1.46,.50,'right')
+        glazing(g,1.84,y,1.46,.50,'left')
     # The lower first bay is inside the projecting entrance vestibule. It has
     # no exterior wall and must not carry a hidden/floating window assembly.
-    atlas_window(g,1.84,4.83,1.0,.78,'left','single')
-    # Kitchen-side service room: plain nine-pane grids.
-    for x in (2.4,3.83,5.2):atlas_window(g,x,5.81,3.12,.8,'back','grid9')
-    wall_windows(g,[4.28,5.28],2.89,.97,1.15,style='factory')
-    # The front gallery shelters the ground entrance; no second little roof
-    # is tucked under the deck beams.
-    for x in (1.95,3.60,5.20):terrace_table(g,x,1.55,chair_axis='X')
-    for y in (3.4,5.1):terrace_table(g,7.04,y)
+    atlas_window(g,1.84,4.83,.48,.40,'left','single')
+    # Kitchen-side service room: plain nine-pane grids, between the wall
+    # posts (tile centres) so no reveal meets a post face.
+    for x in (2.8,3.8,4.8):atlas_window(g,x,5.81,1.46,.40,'back','grid9')
+    wall_windows(g,[4.28,5.28],2.89,.48,.50,style='factory')
+    for x in (1.95,3.60,5.20):terrace_table(g,x,1.55,1,chair_axis='X')
+    for y in (3.4,5.1):terrace_table(g,7.04,y,1)
     # Balcony planters stand on the deck inside the rails, in front of the
     # reserved table row, instead of hanging over neighbouring tiles.
-    for z in (2,4):
+    for z in (1,2):
         for x in (1.95,3.60,5.20):planter(g,x,1.13,z,.70,134+int(x*10)+z,depth=.24)
-    for y in (2.35,3.85,5.85):planter(g,7.56,y,2,.74,146+int(y*10),True,species='CoffeeBushMature',depth=.24)
-    # 2026-10-22 (user): no forced decoration beyond the walls. The outdoor
-    # service counters, their striped awnings and the barrel under the dining
-    # balcony are gone; the ground there is open between the balcony posts.
-    # Upper lamps hang clear of the gallery edge beam above them (bottom 3.77).
-    for x in (1.75,3.48,5.92):
-        wall_lamp(g,x,2.90,3.55);wall_lamp(g,x,2.90,1.30)
-    for y in (2.85,4.85,6.85):deck_lamp(g,7.58,y,face='front',collars=False,steel_channels=False)
+    for y in (2.35,3.85,5.85):planter(g,7.56,y,1,.74,146+int(y*10),True,species='CoffeeBushMature',depth=.24)
+    # Lamps sit inside each storey, clear of the deck beams above (their
+    # underside is 0.77 over each floor).
+    wall_lamp(g,4.78,2.90,.44)
+    for y in (2.85,4.85,6.85):
+        timber_column(g,7.58,y,1,1.70,.10,collars=False,steel_channels=False)
+        wall_lamp(g,7.58,y,1.48,'front')
     # Enclosed kitchen annex with a stone bake oven in its rear wall.
-    grid_room(g,'Kitchen',RESTAURANT_ROOMS['Kitchen'],RESTAURANT_ORIGIN,exterior=RESTAURANT_WALLS['Kitchen'])
+    grid_room(g,'Kitchen',RESTAURANT_ROOMS['Kitchen'],RESTAURANT_ORIGIN,exterior=RESTAURANT_WALLS['Kitchen'],wall_style='storey')
     kitchen_hearth(g)
-    # Only the stack above the roof is visible; no masonry is built through
-    # the three closed storeys beneath it. The full top elevation is retained.
-    # The kitchen stack stands 3 cm back so its faces clear the rear
-    # dormer's eave joint block (they were coplanar at source y 5.735).
-    # Both stacks carry kitchen and hearth smoke while the kitchen works.
-    chimney(g,5.55,5.53,6.65,1.85,emits='smoke')
-    chimney(g,2.30,3.85,6.80,1.70,emits='smoke')
-    # Formed flashing seals the two stacks into the pitched rear roof. Each
-    # sheet follows the authored roof pitch; no horizontal floating base.
-    def roof_z(x):return 6.31+(7.80-6.31)*(1-abs(x-3.805)/2.435)
-    for x,y in ((2.30,3.85),(5.55,5.53)):
-        for side in (-1,1):
-            a=x+side*.25;b=x+side*.39
-            g.add([(a,y-.41,roof_z(a)+.045),(b,y-.41,roof_z(b)+.045),
-                   (b,y+.41,roof_z(b)+.045),(a,y+.41,roof_z(a)+.045)],
-                  [(0,1,2,3) if side>0 else (3,2,1,0)],IRON)
-    # Replace two exposed kitchen infill panels with flush forged steel.
-    # The rear wall's orange face is recessed, so these real projecting plates
-    # have thickness and do not share its depth plane.
+    # Both stacks stand on the flat roof and carry kitchen and hearth smoke
+    # while the kitchen works; their feet sink into the deck boards.
+    for native in ((4.72,4.62),(1.5,3.5)):
+        x,y,_=restaurant_source((*native,0))
+        chimney(g,x,y,2.95,1.30,emits='smoke')
+    # Forged steel plates on two exposed kitchen infill panels. The rear
+    # wall's orange face is recessed, so these real projecting plates have
+    # thickness and do not share its depth plane.
     for x in (2.80,4.80):
-        g.box((x,7.825,.99),(.65,.035,.80),CIVIC_FORGED_PANEL)
-        for z in (.84,.95,1.06,1.17):g.box((x,7.85,z),(.43,.038,.035),IRON)
+        g.box((x,7.825,.46),(.65,.035,.44),CIVIC_FORGED_PANEL)
+        for z in (.32,.42,.52,.62):g.box((x,7.85,z),(.43,.038,.035),IRON)
     # Steel straps bridge the rear gallery beam/post junctions. Their edges
     # stay below the floor and away from player paths and adaptive handrails.
-    for z in (2,4):
+    for z in (1,2):
         for x in (2.3,5.3,7.3):
             g.box((x,7.80,z-.23),(.40,.045,.18),IRON)
-    roof_terrace(g,r,'Restaurant');civic_service_details(g,1.8,2.85,5.8,5.85)
+    roof_terrace(g,r,'Restaurant')
     return r
 
 

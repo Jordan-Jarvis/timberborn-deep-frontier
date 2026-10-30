@@ -30,7 +30,7 @@
     {"template": "LimestonePit.IronTeeth", "label": "Limestone Pit, 14 cells north of the start", "x": 135, "y": 56, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "SandstonePit.IronTeeth", "label": "Sandstone Pit, 11 cells north of the start", "x": 127, "y": 56, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": ["N", "W"]},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 44 cells north-east of the start", "x": 165, "y": 72, "z": 7, "orientation": "Cw90", "margin": 1, "openSides": []},
-    {"template": "Hospital.IronTeeth", "label": "Hospital, 52 cells north-west of the start", "x": 82, "y": 73, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": []},
+    {"template": "Hospital.IronTeeth", "label": "Hospital, 52 cells north-west of the start", "x": 82, "y": 69, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 76 cells north-west of the start", "x": 81, "y": 91, "z": 4, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 113 cells west of the start", "x": 17, "y": 22, "z": 15, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "W"], "understructure": [18, 16, 15]},
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 102 cells west of the start", "x": 27, "y": 55, "z": 16, "orientation": "Cw0", "margin": 1, "openSides": ["S", "E"], "understructure": [29, 56, 16]},

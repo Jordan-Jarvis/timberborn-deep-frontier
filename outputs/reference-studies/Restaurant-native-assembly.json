@@ -7,6 +7,84 @@
       "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
       "position": [
         1.975,
+        1.275,
+        1.245
+      ],
+      "scale": 0.29,
+      "yaw": 180,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant1",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        2.215,
+        0.9849999999999999,
+        1.245
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant2",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        3.625,
+        0.9849999999999999,
+        1.245
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant3",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        3.575,
+        0.9849999999999999,
+        1.245
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant4",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        5.225,
+        0.9849999999999999,
+        1.245
+      ],
+      "scale": 0.29,
+      "yaw": 270,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant5",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        5.175000000000001,
+        0.9849999999999999,
+        1.245
+      ],
+      "scale": 0.29,
+      "yaw": 0,
+      "plantAppearance": "Flowering"
+    },
+    {
+      "name": "NativePlant6",
+      "model": "DandelionMature",
+      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
+      "position": [
+        1.975,
         0.9849999999999999,
         2.245
       ],
@@ -15,7 +93,7 @@
       "plantAppearance": "Flowering"
     },
     {
-      "name": "NativePlant1",
+      "name": "NativePlant7",
       "model": "DandelionMature",
       "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
       "position": [
@@ -28,7 +106,7 @@
       "plantAppearance": "Flowering"
     },
     {
-      "name": "NativePlant2",
+      "name": "NativePlant8",
       "model": "DandelionMature",
       "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
       "position": [
@@ -41,7 +119,7 @@
       "plantAppearance": "Flowering"
     },
     {
-      "name": "NativePlant3",
+      "name": "NativePlant9",
       "model": "DandelionMature",
       "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
       "position": [
@@ -54,7 +132,7 @@
       "plantAppearance": "Flowering"
     },
     {
-      "name": "NativePlant4",
+      "name": "NativePlant10",
       "model": "DandelionMature",
       "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
       "position": [
@@ -67,7 +145,7 @@
       "plantAppearance": "Flowering"
     },
     {
-      "name": "NativePlant5",
+      "name": "NativePlant11",
       "model": "DandelionMature",
       "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
       "position": [
@@ -80,91 +158,13 @@
       "plantAppearance": "Flowering"
     },
     {
-      "name": "NativePlant6",
-      "model": "DandelionMature",
-      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
-      "position": [
-        1.685,
-        1.275,
-        4.245
-      ],
-      "scale": 0.29,
-      "yaw": 90,
-      "plantAppearance": "Flowering"
-    },
-    {
-      "name": "NativePlant7",
-      "model": "DandelionMature",
-      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
-      "position": [
-        2.215,
-        1.275,
-        4.245
-      ],
-      "scale": 0.29,
-      "yaw": 180,
-      "plantAppearance": "Flowering"
-    },
-    {
-      "name": "NativePlant8",
-      "model": "DandelionMature",
-      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
-      "position": [
-        3.625,
-        1.275,
-        4.245
-      ],
-      "scale": 0.29,
-      "yaw": 180,
-      "plantAppearance": "Flowering"
-    },
-    {
-      "name": "NativePlant9",
-      "model": "DandelionMature",
-      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
-      "position": [
-        3.865,
-        0.9849999999999999,
-        4.245
-      ],
-      "scale": 0.29,
-      "yaw": 270,
-      "plantAppearance": "Flowering"
-    },
-    {
-      "name": "NativePlant10",
-      "model": "DandelionMature",
-      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
-      "position": [
-        5.225,
-        1.275,
-        4.245
-      ],
-      "scale": 0.29,
-      "yaw": 180,
-      "plantAppearance": "Flowering"
-    },
-    {
-      "name": "NativePlant11",
-      "model": "DandelionMature",
-      "resource": "NaturalResources/Bushes/Dandelion/DandelionMature",
-      "position": [
-        5.465,
-        0.9849999999999999,
-        4.245
-      ],
-      "scale": 0.29,
-      "yaw": 270,
-      "plantAppearance": "Flowering"
-    },
-    {
       "name": "NativePlant12",
       "model": "CoffeeBushMature",
       "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
       "position": [
         7.415,
         2.375,
-        2.245
+        1.245
       ],
       "scale": 0.29,
       "yaw": 90
@@ -176,7 +176,7 @@
       "position": [
         7.704999999999999,
         2.615,
-        2.245
+        1.245
       ],
       "scale": 0.29,
       "yaw": 180
@@ -188,7 +188,7 @@
       "position": [
         7.415,
         3.585,
-        2.245
+        1.245
       ],
       "scale": 0.29,
       "yaw": 0
@@ -200,7 +200,7 @@
       "position": [
         7.415,
         4.115,
-        2.245
+        1.245
       ],
       "scale": 0.29,
       "yaw": 90
@@ -212,7 +212,7 @@
       "position": [
         7.415,
         5.585,
-        2.245
+        1.245
       ],
       "scale": 0.29,
       "yaw": 0
@@ -224,7 +224,7 @@
       "position": [
         7.415,
         6.114999999999999,
-        2.245
+        1.245
       ],
       "scale": 0.29,
       "yaw": 90

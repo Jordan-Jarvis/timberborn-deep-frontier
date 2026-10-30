@@ -64,7 +64,7 @@ for _route in GALLERY_ROUTES:
                 raise ValueError('Hatchery gallery route crosses raised bank apron '+_name)
 ACCESS={'entrance':list(source(DOORS['Door0']['position'])),'balconyLayers':[0],
         'routes':[[list(source((x+.5,y+.5,1)))[:2] for x,y in route] for route in GALLERY_ROUTES],
-        'stairBays':[]}
+        'stairBays':[],'headroom':1.09}
 # Centre dock between the pens; the pen frames' beams sit at its long edges.
 TERRACE={'scope':'Clear centre dock; supported native construction required',
          'bounds':[1.8,3.25,2.8,6.25],'layer':0,'clearArea':[1.9,3.4,2.6,6.1]}

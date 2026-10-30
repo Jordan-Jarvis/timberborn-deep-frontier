@@ -58,7 +58,7 @@
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 78 cells west of the start", "x": 1, "y": 172, "z": 10, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 59 cells north-east of the start", "x": 130, "y": 174, "z": 15, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "CryogenicTankFarm.IronTeeth", "label": "Cryogenic Tank Farm, 79 cells north of the start", "x": 64, "y": 237, "z": 10, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "Hospital.IronTeeth", "label": "Hospital, 56 cells east of the start", "x": 130, "y": 162, "z": 13, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
+    {"template": "Hospital.IronTeeth", "label": "Hospital, 56 cells east of the start", "x": 134, "y": 162, "z": 13, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 76 cells north of the start", "x": 103, "y": 221, "z": 14, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 62 cells south of the start", "x": 86, "y": 98, "z": 7, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "ChemicalWorks.IronTeeth", "label": "Chemical Works, 77 cells north-east of the start", "x": 120, "y": 214, "z": 8, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},

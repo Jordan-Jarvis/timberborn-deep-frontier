@@ -3,357 +3,67 @@
   "coordinateSpace": "Authored artwork X/across Y/back Z/up; no grid conversion",
   "runs": [
     {
-      "id": "WestFrontOuter",
+      "id": "RearOuter",
       "panels": [
         {
-          "node": "WalkwayRail.Hospital.WestFrontOuter.Panel00",
+          "node": "WalkwayRail.Hospital.RearOuter.Panel00",
           "start": [
-            1.1,
-            2.1,
+            5.1,
+            10.9,
             2
           ],
           "end": [
-            2,
-            2.1,
+            6,
+            10.9,
             2
           ],
           "startPost": "WalkwayRail.Hospital.Post000",
           "endPost": "WalkwayRail.Hospital.Post001"
         },
         {
-          "node": "WalkwayRail.Hospital.WestFrontOuter.Panel01",
+          "node": "WalkwayRail.Hospital.RearOuter.Panel01",
           "start": [
-            2,
-            2.1,
+            6,
+            10.9,
             2
           ],
           "end": [
-            3,
-            2.1,
+            7,
+            10.9,
             2
           ],
           "startPost": "WalkwayRail.Hospital.Post001",
           "endPost": "WalkwayRail.Hospital.Post002"
         },
         {
-          "node": "WalkwayRail.Hospital.WestFrontOuter.Panel02",
+          "node": "WalkwayRail.Hospital.RearOuter.Panel02",
           "start": [
-            3,
-            2.1,
+            7,
+            10.9,
             2
           ],
           "end": [
-            4,
-            2.1,
+            8,
+            10.9,
             2
           ],
           "startPost": "WalkwayRail.Hospital.Post002",
           "endPost": "WalkwayRail.Hospital.Post003"
         },
         {
-          "node": "WalkwayRail.Hospital.WestFrontOuter.Panel03",
+          "node": "WalkwayRail.Hospital.RearOuter.Panel03",
           "start": [
-            4,
-            2.1,
+            8,
+            10.9,
             2
           ],
           "end": [
-            4.9,
-            2.1,
+            8.9,
+            10.9,
             2
           ],
           "startPost": "WalkwayRail.Hospital.Post003",
           "endPost": "WalkwayRail.Hospital.Post004"
-        }
-      ]
-    },
-    {
-      "id": "WestFrontLeft",
-      "panels": [
-        {
-          "node": "WalkwayRail.Hospital.WestFrontLeft.Panel00",
-          "start": [
-            1.1,
-            2.1,
-            2
-          ],
-          "end": [
-            1.1,
-            2.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post000",
-          "endPost": "WalkwayRail.Hospital.Post005"
-        }
-      ]
-    },
-    {
-      "id": "EastFrontOuter",
-      "panels": [
-        {
-          "node": "WalkwayRail.Hospital.EastFrontOuter.Panel00",
-          "start": [
-            9.1,
-            2.1,
-            2
-          ],
-          "end": [
-            10,
-            2.1,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post006",
-          "endPost": "WalkwayRail.Hospital.Post007"
-        },
-        {
-          "node": "WalkwayRail.Hospital.EastFrontOuter.Panel01",
-          "start": [
-            10,
-            2.1,
-            2
-          ],
-          "end": [
-            11,
-            2.1,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post007",
-          "endPost": "WalkwayRail.Hospital.Post008"
-        },
-        {
-          "node": "WalkwayRail.Hospital.EastFrontOuter.Panel02",
-          "start": [
-            11,
-            2.1,
-            2
-          ],
-          "end": [
-            12,
-            2.1,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post008",
-          "endPost": "WalkwayRail.Hospital.Post009"
-        },
-        {
-          "node": "WalkwayRail.Hospital.EastFrontOuter.Panel03",
-          "start": [
-            12,
-            2.1,
-            2
-          ],
-          "end": [
-            12.9,
-            2.1,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post009",
-          "endPost": "WalkwayRail.Hospital.Post010"
-        }
-      ]
-    },
-    {
-      "id": "EastFrontRight",
-      "panels": [
-        {
-          "node": "WalkwayRail.Hospital.EastFrontRight.Panel00",
-          "start": [
-            12.9,
-            2.1,
-            2
-          ],
-          "end": [
-            12.9,
-            2.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post010",
-          "endPost": "WalkwayRail.Hospital.Post011"
-        }
-      ]
-    },
-    {
-      "id": "RearOuter",
-      "panels": [
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel00",
-          "start": [
-            1.1,
-            10.9,
-            2
-          ],
-          "end": [
-            2,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post012",
-          "endPost": "WalkwayRail.Hospital.Post013"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel01",
-          "start": [
-            2,
-            10.9,
-            2
-          ],
-          "end": [
-            3,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post013",
-          "endPost": "WalkwayRail.Hospital.Post014"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel02",
-          "start": [
-            3,
-            10.9,
-            2
-          ],
-          "end": [
-            4,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post014",
-          "endPost": "WalkwayRail.Hospital.Post015"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel03",
-          "start": [
-            4,
-            10.9,
-            2
-          ],
-          "end": [
-            5,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post015",
-          "endPost": "WalkwayRail.Hospital.Post016"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel04",
-          "start": [
-            5,
-            10.9,
-            2
-          ],
-          "end": [
-            6,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post016",
-          "endPost": "WalkwayRail.Hospital.Post017"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel05",
-          "start": [
-            6,
-            10.9,
-            2
-          ],
-          "end": [
-            7,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post017",
-          "endPost": "WalkwayRail.Hospital.Post018"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel06",
-          "start": [
-            7,
-            10.9,
-            2
-          ],
-          "end": [
-            8,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post018",
-          "endPost": "WalkwayRail.Hospital.Post019"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel07",
-          "start": [
-            8,
-            10.9,
-            2
-          ],
-          "end": [
-            9,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post019",
-          "endPost": "WalkwayRail.Hospital.Post020"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel08",
-          "start": [
-            9,
-            10.9,
-            2
-          ],
-          "end": [
-            10,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post020",
-          "endPost": "WalkwayRail.Hospital.Post021"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel09",
-          "start": [
-            10,
-            10.9,
-            2
-          ],
-          "end": [
-            11,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post021",
-          "endPost": "WalkwayRail.Hospital.Post022"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel10",
-          "start": [
-            11,
-            10.9,
-            2
-          ],
-          "end": [
-            12,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post022",
-          "endPost": "WalkwayRail.Hospital.Post023"
-        },
-        {
-          "node": "WalkwayRail.Hospital.RearOuter.Panel11",
-          "start": [
-            12,
-            10.9,
-            2
-          ],
-          "end": [
-            12.9,
-            10.9,
-            2
-          ],
-          "startPost": "WalkwayRail.Hospital.Post023",
-          "endPost": "WalkwayRail.Hospital.Post024"
         }
       ]
     },
@@ -363,17 +73,17 @@
         {
           "node": "WalkwayRail.Hospital.RearLeft.Panel00",
           "start": [
-            1.1,
+            5.1,
             10.1,
             2
           ],
           "end": [
-            1.1,
+            5.1,
             10.9,
             2
           ],
-          "startPost": "WalkwayRail.Hospital.Post025",
-          "endPost": "WalkwayRail.Hospital.Post012"
+          "startPost": "WalkwayRail.Hospital.Post005",
+          "endPost": "WalkwayRail.Hospital.Post000"
         }
       ]
     },
@@ -383,17 +93,17 @@
         {
           "node": "WalkwayRail.Hospital.RearRight.Panel00",
           "start": [
-            12.9,
+            8.9,
             10.1,
             2
           ],
           "end": [
-            12.9,
+            8.9,
             10.9,
             2
           ],
-          "startPost": "WalkwayRail.Hospital.Post026",
-          "endPost": "WalkwayRail.Hospital.Post024"
+          "startPost": "WalkwayRail.Hospital.Post006",
+          "endPost": "WalkwayRail.Hospital.Post004"
         }
       ]
     },
@@ -403,92 +113,62 @@
         {
           "node": "WalkwayRail.Hospital.UpperRearOuter.Panel00",
           "start": [
-            4.1,
+            5.1,
             10.9,
             4
           ],
           "end": [
-            5,
+            6,
             10.9,
             4
           ],
-          "startPost": "WalkwayRail.Hospital.Post027",
-          "endPost": "WalkwayRail.Hospital.Post028"
+          "startPost": "WalkwayRail.Hospital.Post007",
+          "endPost": "WalkwayRail.Hospital.Post008"
         },
         {
           "node": "WalkwayRail.Hospital.UpperRearOuter.Panel01",
           "start": [
-            5,
-            10.9,
-            4
-          ],
-          "end": [
             6,
             10.9,
             4
           ],
-          "startPost": "WalkwayRail.Hospital.Post028",
-          "endPost": "WalkwayRail.Hospital.Post029"
+          "end": [
+            7,
+            10.9,
+            4
+          ],
+          "startPost": "WalkwayRail.Hospital.Post008",
+          "endPost": "WalkwayRail.Hospital.Post009"
         },
         {
           "node": "WalkwayRail.Hospital.UpperRearOuter.Panel02",
           "start": [
-            6,
-            10.9,
-            4
-          ],
-          "end": [
             7,
             10.9,
             4
           ],
-          "startPost": "WalkwayRail.Hospital.Post029",
-          "endPost": "WalkwayRail.Hospital.Post030"
+          "end": [
+            8,
+            10.9,
+            4
+          ],
+          "startPost": "WalkwayRail.Hospital.Post009",
+          "endPost": "WalkwayRail.Hospital.Post010"
         },
         {
           "node": "WalkwayRail.Hospital.UpperRearOuter.Panel03",
           "start": [
-            7,
-            10.9,
-            4
-          ],
-          "end": [
-            8,
-            10.9,
-            4
-          ],
-          "startPost": "WalkwayRail.Hospital.Post030",
-          "endPost": "WalkwayRail.Hospital.Post031"
-        },
-        {
-          "node": "WalkwayRail.Hospital.UpperRearOuter.Panel04",
-          "start": [
             8,
             10.9,
             4
           ],
           "end": [
-            9,
+            8.9,
             10.9,
             4
           ],
-          "startPost": "WalkwayRail.Hospital.Post031",
-          "endPost": "WalkwayRail.Hospital.Post032"
-        },
-        {
-          "node": "WalkwayRail.Hospital.UpperRearOuter.Panel05",
-          "start": [
-            9,
-            10.9,
-            4
-          ],
-          "end": [
-            9.9,
-            10.9,
-            4
-          ],
-          "startPost": "WalkwayRail.Hospital.Post032",
-          "endPost": "WalkwayRail.Hospital.Post033"
+          "startPost": "WalkwayRail.Hospital.Post010",
+          "endPost": "WalkwayRail.Hospital.Post011"
         }
       ]
     },
@@ -498,17 +178,17 @@
         {
           "node": "WalkwayRail.Hospital.UpperRearLeft.Panel00",
           "start": [
-            4.1,
+            5.1,
             10.1,
             4
           ],
           "end": [
-            4.1,
+            5.1,
             10.9,
             4
           ],
-          "startPost": "WalkwayRail.Hospital.Post034",
-          "endPost": "WalkwayRail.Hospital.Post027"
+          "startPost": "WalkwayRail.Hospital.Post012",
+          "endPost": "WalkwayRail.Hospital.Post007"
         }
       ]
     },
@@ -518,17 +198,17 @@
         {
           "node": "WalkwayRail.Hospital.UpperRearRight.Panel00",
           "start": [
-            9.9,
+            8.9,
             10.1,
             4
           ],
           "end": [
-            9.9,
+            8.9,
             10.9,
             4
           ],
-          "startPost": "WalkwayRail.Hospital.Post035",
-          "endPost": "WalkwayRail.Hospital.Post033"
+          "startPost": "WalkwayRail.Hospital.Post013",
+          "endPost": "WalkwayRail.Hospital.Post011"
         }
       ]
     },
@@ -547,8 +227,8 @@
             8,
             6
           ],
-          "startPost": "WalkwayRail.Hospital.Post036",
-          "endPost": "WalkwayRail.Hospital.Post037"
+          "startPost": "WalkwayRail.Hospital.Post014",
+          "endPost": "WalkwayRail.Hospital.Post015"
         },
         {
           "node": "WalkwayRail.Hospital.RoofGardenLeft.Panel01",
@@ -562,8 +242,8 @@
             9,
             6
           ],
-          "startPost": "WalkwayRail.Hospital.Post037",
-          "endPost": "WalkwayRail.Hospital.Post038"
+          "startPost": "WalkwayRail.Hospital.Post015",
+          "endPost": "WalkwayRail.Hospital.Post016"
         },
         {
           "node": "WalkwayRail.Hospital.RoofGardenLeft.Panel02",
@@ -577,8 +257,8 @@
             9.9,
             6
           ],
-          "startPost": "WalkwayRail.Hospital.Post038",
-          "endPost": "WalkwayRail.Hospital.Post039"
+          "startPost": "WalkwayRail.Hospital.Post016",
+          "endPost": "WalkwayRail.Hospital.Post017"
         }
       ]
     },
@@ -597,8 +277,8 @@
             8,
             6
           ],
-          "startPost": "WalkwayRail.Hospital.Post040",
-          "endPost": "WalkwayRail.Hospital.Post041"
+          "startPost": "WalkwayRail.Hospital.Post018",
+          "endPost": "WalkwayRail.Hospital.Post019"
         },
         {
           "node": "WalkwayRail.Hospital.RoofGardenRight.Panel01",
@@ -612,8 +292,8 @@
             9,
             6
           ],
-          "startPost": "WalkwayRail.Hospital.Post041",
-          "endPost": "WalkwayRail.Hospital.Post042"
+          "startPost": "WalkwayRail.Hospital.Post019",
+          "endPost": "WalkwayRail.Hospital.Post020"
         },
         {
           "node": "WalkwayRail.Hospital.RoofGardenRight.Panel02",
@@ -627,8 +307,8 @@
             9.9,
             6
           ],
-          "startPost": "WalkwayRail.Hospital.Post042",
-          "endPost": "WalkwayRail.Hospital.Post043"
+          "startPost": "WalkwayRail.Hospital.Post020",
+          "endPost": "WalkwayRail.Hospital.Post021"
         }
       ]
     },
@@ -647,8 +327,8 @@
             9.9,
             6
           ],
-          "startPost": "WalkwayRail.Hospital.Post039",
-          "endPost": "WalkwayRail.Hospital.Post044"
+          "startPost": "WalkwayRail.Hospital.Post017",
+          "endPost": "WalkwayRail.Hospital.Post022"
         },
         {
           "node": "WalkwayRail.Hospital.RoofGardenRear.Panel01",
@@ -662,8 +342,8 @@
             9.9,
             6
           ],
-          "startPost": "WalkwayRail.Hospital.Post044",
-          "endPost": "WalkwayRail.Hospital.Post045"
+          "startPost": "WalkwayRail.Hospital.Post022",
+          "endPost": "WalkwayRail.Hospital.Post023"
         },
         {
           "node": "WalkwayRail.Hospital.RoofGardenRear.Panel02",
@@ -677,8 +357,8 @@
             9.9,
             6
           ],
-          "startPost": "WalkwayRail.Hospital.Post045",
-          "endPost": "WalkwayRail.Hospital.Post046"
+          "startPost": "WalkwayRail.Hospital.Post023",
+          "endPost": "WalkwayRail.Hospital.Post024"
         },
         {
           "node": "WalkwayRail.Hospital.RoofGardenRear.Panel03",
@@ -692,8 +372,8 @@
             9.9,
             6
           ],
-          "startPost": "WalkwayRail.Hospital.Post046",
-          "endPost": "WalkwayRail.Hospital.Post043"
+          "startPost": "WalkwayRail.Hospital.Post024",
+          "endPost": "WalkwayRail.Hospital.Post021"
         }
       ]
     }
@@ -704,86 +384,44 @@
     "WalkwayRail.Hospital.Post002",
     "WalkwayRail.Hospital.Post003",
     "WalkwayRail.Hospital.Post004",
-    "WalkwayRail.Hospital.WestFrontOuter.Panel00",
-    "WalkwayRail.Hospital.WestFrontOuter.Panel01",
-    "WalkwayRail.Hospital.WestFrontOuter.Panel02",
-    "WalkwayRail.Hospital.WestFrontOuter.Panel03",
-    "WalkwayRail.Hospital.Post005",
-    "WalkwayRail.Hospital.WestFrontLeft.Panel00",
-    "WalkwayRail.Hospital.Post006",
-    "WalkwayRail.Hospital.Post007",
-    "WalkwayRail.Hospital.Post008",
-    "WalkwayRail.Hospital.Post009",
-    "WalkwayRail.Hospital.Post010",
-    "WalkwayRail.Hospital.EastFrontOuter.Panel00",
-    "WalkwayRail.Hospital.EastFrontOuter.Panel01",
-    "WalkwayRail.Hospital.EastFrontOuter.Panel02",
-    "WalkwayRail.Hospital.EastFrontOuter.Panel03",
-    "WalkwayRail.Hospital.Post011",
-    "WalkwayRail.Hospital.EastFrontRight.Panel00",
-    "WalkwayRail.Hospital.Post012",
-    "WalkwayRail.Hospital.Post013",
-    "WalkwayRail.Hospital.Post014",
-    "WalkwayRail.Hospital.Post015",
-    "WalkwayRail.Hospital.Post016",
-    "WalkwayRail.Hospital.Post017",
-    "WalkwayRail.Hospital.Post018",
-    "WalkwayRail.Hospital.Post019",
-    "WalkwayRail.Hospital.Post020",
-    "WalkwayRail.Hospital.Post021",
-    "WalkwayRail.Hospital.Post022",
-    "WalkwayRail.Hospital.Post023",
-    "WalkwayRail.Hospital.Post024",
     "WalkwayRail.Hospital.RearOuter.Panel00",
     "WalkwayRail.Hospital.RearOuter.Panel01",
     "WalkwayRail.Hospital.RearOuter.Panel02",
     "WalkwayRail.Hospital.RearOuter.Panel03",
-    "WalkwayRail.Hospital.RearOuter.Panel04",
-    "WalkwayRail.Hospital.RearOuter.Panel05",
-    "WalkwayRail.Hospital.RearOuter.Panel06",
-    "WalkwayRail.Hospital.RearOuter.Panel07",
-    "WalkwayRail.Hospital.RearOuter.Panel08",
-    "WalkwayRail.Hospital.RearOuter.Panel09",
-    "WalkwayRail.Hospital.RearOuter.Panel10",
-    "WalkwayRail.Hospital.RearOuter.Panel11",
-    "WalkwayRail.Hospital.Post025",
+    "WalkwayRail.Hospital.Post005",
     "WalkwayRail.Hospital.RearLeft.Panel00",
-    "WalkwayRail.Hospital.Post026",
+    "WalkwayRail.Hospital.Post006",
     "WalkwayRail.Hospital.RearRight.Panel00",
-    "WalkwayRail.Hospital.Post027",
-    "WalkwayRail.Hospital.Post028",
-    "WalkwayRail.Hospital.Post029",
-    "WalkwayRail.Hospital.Post030",
-    "WalkwayRail.Hospital.Post031",
-    "WalkwayRail.Hospital.Post032",
-    "WalkwayRail.Hospital.Post033",
+    "WalkwayRail.Hospital.Post007",
+    "WalkwayRail.Hospital.Post008",
+    "WalkwayRail.Hospital.Post009",
+    "WalkwayRail.Hospital.Post010",
+    "WalkwayRail.Hospital.Post011",
     "WalkwayRail.Hospital.UpperRearOuter.Panel00",
     "WalkwayRail.Hospital.UpperRearOuter.Panel01",
     "WalkwayRail.Hospital.UpperRearOuter.Panel02",
     "WalkwayRail.Hospital.UpperRearOuter.Panel03",
-    "WalkwayRail.Hospital.UpperRearOuter.Panel04",
-    "WalkwayRail.Hospital.UpperRearOuter.Panel05",
-    "WalkwayRail.Hospital.Post034",
+    "WalkwayRail.Hospital.Post012",
     "WalkwayRail.Hospital.UpperRearLeft.Panel00",
-    "WalkwayRail.Hospital.Post035",
+    "WalkwayRail.Hospital.Post013",
     "WalkwayRail.Hospital.UpperRearRight.Panel00",
-    "WalkwayRail.Hospital.Post036",
-    "WalkwayRail.Hospital.Post037",
-    "WalkwayRail.Hospital.Post038",
-    "WalkwayRail.Hospital.Post039",
+    "WalkwayRail.Hospital.Post014",
+    "WalkwayRail.Hospital.Post015",
+    "WalkwayRail.Hospital.Post016",
+    "WalkwayRail.Hospital.Post017",
     "WalkwayRail.Hospital.RoofGardenLeft.Panel00",
     "WalkwayRail.Hospital.RoofGardenLeft.Panel01",
     "WalkwayRail.Hospital.RoofGardenLeft.Panel02",
-    "WalkwayRail.Hospital.Post040",
-    "WalkwayRail.Hospital.Post041",
-    "WalkwayRail.Hospital.Post042",
-    "WalkwayRail.Hospital.Post043",
+    "WalkwayRail.Hospital.Post018",
+    "WalkwayRail.Hospital.Post019",
+    "WalkwayRail.Hospital.Post020",
+    "WalkwayRail.Hospital.Post021",
     "WalkwayRail.Hospital.RoofGardenRight.Panel00",
     "WalkwayRail.Hospital.RoofGardenRight.Panel01",
     "WalkwayRail.Hospital.RoofGardenRight.Panel02",
-    "WalkwayRail.Hospital.Post044",
-    "WalkwayRail.Hospital.Post045",
-    "WalkwayRail.Hospital.Post046",
+    "WalkwayRail.Hospital.Post022",
+    "WalkwayRail.Hospital.Post023",
+    "WalkwayRail.Hospital.Post024",
     "WalkwayRail.Hospital.RoofGardenRear.Panel00",
     "WalkwayRail.Hospital.RoofGardenRear.Panel01",
     "WalkwayRail.Hospital.RoofGardenRear.Panel02",

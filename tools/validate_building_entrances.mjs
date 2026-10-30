@@ -33,7 +33,11 @@ for(const path of await files(data)){
   const {X:w,Y:d,Z:h}=spec.Size,E=spec.Entrance.Coordinates,base=spec.BaseZ;
   const inside=(x,y,z)=>x>=0&&y>=0&&z>=0&&x<w&&y<d&&z<h;
   const block=(x,y,z)=>spec.Blocks[(z*d+y)*w+x];
-  const occupied=(x,y,z)=>inside(x,y,z)&&block(x,y,z).Occupations!=='None';
+  // A vanilla Path (Occupations 'Path') shares a cell with blocks that hold only Top and
+  // Corners, as under a vanilla Platform or Overhang; a one-layer deck's slab cell over a
+  // doorstep is such a block (the Restaurant's layer-1 dining balcony, 2026-10-30).
+  const pathFits=o=>['None','Top','Corners','Top, Corners'].includes(o);
+  const occupied=(x,y,z)=>inside(x,y,z)&&!pathFits(block(x,y,z).Occupations);
   const problems=[];
   if(E.Z!==base)problems.push(`Entrance level z=${E.Z} is not the base level BaseZ=${base}`);
   let kind='outside the footprint';
@@ -53,7 +57,7 @@ for(const path of await files(data)){
     kind='an open porch cell inside the bounds';
     if(!open)problems.push(`Entrance porch (${E.X},${E.Y},${E.Z}) is enclosed by the building at its level`);
   }
-  if(!occupied(E.X,E.Y+1,E.Z))problems.push(`the native doorstep (${E.X},${E.Y+1},${E.Z}) north of the Entrance is not an occupied building cell`);
+  if(!(inside(E.X,E.Y+1,E.Z)&&block(E.X,E.Y+1,E.Z).Occupations!=='None'))problems.push(`the native doorstep (${E.X},${E.Y+1},${E.Z}) north of the Entrance is not an occupied building cell`);
   const exception=EXCEPTIONS[name];
   if(problems.length&&!exception)failures.push(`${name}: ${problems.join('; ')}`);
   report.push(`${name}: Entrance (${E.X},${E.Y},${E.Z}) ${problems.length?'EXCEPTION '+(exception??''):kind}`);

@@ -28,15 +28,15 @@
     {
       "node": "StaticMerged",
       "parts": 20,
-      "triangles": 8597,
+      "triangles": 7731,
       "materials": {
-        "IrregularPlanks_MetalForged.IronTeeth": 1181,
-        "BaseWood_DarkBrown.IronTeeth": 2319,
-        "IrregularPlanks_DarkBrown.IronTeeth": 602,
-        "BaseMetal.IronTeeth": 2124,
-        "Plaster_White.IronTeeth": 554,
+        "IrregularPlanks_MetalForged.IronTeeth": 853,
+        "BaseWood_DarkBrown.IronTeeth": 2221,
+        "IrregularPlanks_DarkBrown.IronTeeth": 548,
+        "BaseMetal.IronTeeth": 1944,
+        "Plaster_White.IronTeeth": 450,
         "RoofPlanks.IronTeeth": 36,
-        "Details.IronTeeth": 1217,
+        "Details.IronTeeth": 1115,
         "BaseWood_Brown.Folktails": 526,
         "Plaster_Orange.IronTeeth": 38
       }
@@ -44,9 +44,9 @@
     {
       "node": "StaticMerged.DFIndustrial08",
       "parts": 1,
-      "triangles": 108,
+      "triangles": 96,
       "materials": {
-        "DFIndustrial08": 108
+        "DFIndustrial08": 96
       }
     },
     {
