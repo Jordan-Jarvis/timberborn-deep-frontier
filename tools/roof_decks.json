@@ -652,16 +652,6 @@
    ],
    "excluded": []
   },
-  "Greenhouse": {
-   "platformable": [
-    [
-     2,
-     4,
-     0
-    ]
-   ],
-   "excluded": []
-  },
   "GroceryStore": {
    "platformable": [
     [

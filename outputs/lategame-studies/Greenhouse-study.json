@@ -3,9 +3,9 @@
   "hero": "Square glazed palm pavilion crowned by a two-tier faceted octagonal glass dome, glazed lantern and weathervane.",
   "footprint": [
     9,
-    5
+    3
   ],
-  "heightLayers": 9,
+  "heightLayers": 5,
   "boundsMin": [
     -0.19,
     -0.255,
@@ -13,15 +13,15 @@
   ],
   "boundsMax": [
     9.19,
-    5.09,
-    8.3
+    3.07,
+    4.73
   ],
   "doors": [
     {
       "id": "Door0",
       "position": [
         4.5,
-        -0.0,
+        0.0,
         0
       ],
       "outward": [
@@ -44,20 +44,19 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 5363,
+  "faces": 4240,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1712,
-    "IrregularPlanks_DarkBrown.IronTeeth": 8,
-    "BaseMetal.IronTeeth": 1067,
-    "RoofPlanks.IronTeeth": 37,
-    "Details.IronTeeth": 704,
+    "BaseWood_DarkBrown.IronTeeth": 1436,
+    "BaseMetal.IronTeeth": 818,
+    "RoofPlanks.IronTeeth": 25,
+    "Details.IronTeeth": 528,
     "accent8": 10,
-    "Plaster_White.IronTeeth": 200,
+    "Plaster_White.IronTeeth": 78,
     "Plaster_Orange.IronTeeth": 13,
     "IrregularPlanks_MetalForged.IronTeeth": 78,
-    "WindowsAtlas.IronTeeth": 1346,
-    "PaintedMetal.IronTeeth": 626
+    "WindowsAtlas.IronTeeth": 1102,
+    "PaintedMetal.IronTeeth": 590
   },
-  "sourceHash": "81e9bcaa229a3cb921fe8c0cc78afb7f133399b6ca074df91e0a7baa18e3d970",
-  "artHash": "b934263d936aecc3b143ba1f8610940c8510321200e474d4cf7afc29c75724e5"
+  "sourceHash": "0d53b9b44938915143196883650791332902ad254faec766f8ac026382a31e45",
+  "artHash": "d7884566772675dda5d5a708deaec8f39b69893e53ee2c4944b75299082c0ce7"
 }

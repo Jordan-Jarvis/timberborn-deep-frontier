@@ -98,6 +98,13 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - **Maps:** 8 deep, so it keeps its flat map sites.
   - **Old saves:** a placed plaza keeps its origin, entrance and visitor places at any rotation and frees the tiles it no longer uses. A flipped plaza moves 2 tiles across its width (9 -> 7), entrance and visitor places with it.
   - **Review:** `outputs/compaction/TownPlaza-before-after.png`.
+- **Greenhouse 9x5x9 -> 9x3x5** (`lategame_Greenhouse.py`):
+  - **Art:** the glazed palm pavilion (HERO) on a low podium with the door, walls up to layer 2 and a flatter two-tier faceted glass dome, lantern and weathervane; the two glazed wings are one storey (eaves at 0.95, no floor band) under their glazed ridge roofs. The glazed ridge roofs and dome stay as the glasshouse's defining silhouette. The boiler house moved from behind the pavilion to the strip behind the right wing (one layer, flat roof, the smoke stack 4.2 high instead of 8.3), with the coal bunker beside it and the circulating pump and flywheel on its roof; the strip behind the left wing holds only the heating main on the wing wall, so its cells stay free (no clutter on buildable space). Same textures and materials; the 8 animated parts keep their names and kinds.
+  - **Checks on the art:** triangles 9,628 -> 7,478 (ceiling re-recorded); strict z-fight 0 visible (frames 1/31/61/91); hidden-geometry audit 0 culled faces exposed; grid audit: no floor or ground misses (one edge note: the boiler-house wall set 0.13 back from the pavilion's corner post).
+  - **Data:** same origin, width, door tile and Entrance (4,-1,0). Occupied cells 148 -> 69, shaft faces 87 -> 46, pipe ports 40 -> 19, box colliders 8 -> 6; the smoke and smog source moves to the new stack mouth (7.45, 2.5, 4.3). No roof deck (glass roofs; the boiler-house roof sits beside the smoke). Cost, power 35 and the worker unchanged. `lategame_freed_cells.json` footprintAfter 9x3x5.
+  - **Maps:** 9 wide, so it keeps its flat map sites.
+  - **Old saves:** a placed greenhouse keeps its origin, entrance and width at any rotation, flipped too, and frees the back tiles it no longer uses. Shafts and pipes on removed walls disconnect.
+  - **Review:** `outputs/compaction/Greenhouse-before-after.png`.
 ## Compaction: Stone Crusher one-layer workshop, 4x4x5 -> 4x4x3 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `ind-head` (HEAD + this change) and the real repo; not built or run in game)
 
 - **User:** one layer per storey, flat roofs. The crusher was already 4x4; its workshop was two layers tall under a machine deck at layer 2.
