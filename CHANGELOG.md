@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fewer required mods
+- Six mods are no longer required: Pump to Tank, Flywheels, Teleporter Station, Solar Panel (northforge), Expanded Storage and Powered Tubeway. Deep Frontier never used them directly. If you keep Expanded Storage, its Pile Module no longer shows deep ore and deep alloy piles.
+
 ### Smaller buildings (compaction pass)
 - **Cement Kiln** is 5x3, 4 high (was 7x5, 6 high): a closed feed house, the rotary drum under a lean-to roof on stone blocks, the stone firebox with its fire and chimney. The open timber trestle and raised drum deck are gone.
 - **Concrete Mixer** is 4x3, 3 high (was 7x5, 7 high): the hoppers sit on the operator room's roof, the drum stands on low concrete piers, the water tank on a concrete pedestal. The tall timber feed tower and tank tower are gone.

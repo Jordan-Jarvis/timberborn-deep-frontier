@@ -12,14 +12,8 @@
     { "Id": "eMka.ModSettings", "MinimumVersion": "1.1.1.0" },
     { "Id": "TimberUi", "MinimumVersion": "11.0.1" },
     { "Id": "ModdableRecipes", "MinimumVersion": "11.0.0" },
-    { "Id": "calloatti.pumptotank", "MinimumVersion": "1.0.9" },
-    { "Id": "Battery.Flywheels", "MinimumVersion": "4.1.1.15" },
-    { "Id": "othermod.TeleporterStation", "MinimumVersion": "0.4.0" },
     { "Id": "TimberPipes", "MinimumVersion": "11.4.0" },
-    { "Id": "northforge.solarpanel", "MinimumVersion": "1.0.2" },
-    { "Id": "MauricioBedoya.ExpandedStorage", "MinimumVersion": "1.0.1" },
     { "Id": "ConveyorBelt", "MinimumVersion": "11.4.0" },
-    { "Id": "PoweredTubeway", "MinimumVersion": "11.0.0" },
     { "Id": "PowerLines", "MinimumVersion": "11.1.1" },
     { "Id": "MapTransformer", "MinimumVersion": "11.0.0" }
   ]

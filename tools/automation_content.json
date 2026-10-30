@@ -651,12 +651,6 @@
       "nativeRole": "none",
       "nativeSources": [],
       "producer": "tools/map_object_content.mjs"
-    },
-    "Buildings/Storage/PileModule/PileModule.IronTeeth.blueprint": {
-      "nativeRole": "none",
-      "nativeSources": [],
-      "producer": "tools/map_object_content.mjs",
-      "baseRoot": "C:/Program Files (x86)/Steam/steamapps/workshop/content/1062090/3795292508"
     }
   },
   "customSpecs": {

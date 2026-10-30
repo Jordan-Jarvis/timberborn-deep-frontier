@@ -12,7 +12,7 @@
 //       Deep Frontier meshes shipped in the asset bundle;
 //     - same-path partial blueprints that append the two visualizations to
 //       every Iron Teeth pile that visualizes pileable goods (vanilla piles,
-//       the map-editor ReservePile and Expanded Storage's PileModule), so a
+//       and the map-editor ReservePile), so a
 //       pile shows ore and alloy instead of nothing.
 // Every input is checked; nothing falls back.
 import {readFile, writeFile, mkdir, access} from 'node:fs/promises';
@@ -64,7 +64,6 @@ const PILES = [
   {source: 'vanilla', path: 'Buildings/Storage/SmallIndustrialPile/SmallIndustrialPile.IronTeeth.blueprint.json'},
   {source: 'vanilla', path: 'Buildings/Storage/LargeIndustrialPile/LargeIndustrialPile.IronTeeth.blueprint.json'},
   {source: 'vanilla', path: 'MapEditor/Objects/ReservePile/ReservePile.blueprint.json'},
-  {source: 'MauricioBedoya.ExpandedStorage', path: 'Buildings/Storage/PileModule/PileModule.IronTeeth.blueprint.json'},
 ];
 const PILE_GOODS = [
   {good: 'DeepOre', template: 'ScrapMetal'},
