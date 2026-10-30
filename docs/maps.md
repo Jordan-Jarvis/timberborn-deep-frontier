@@ -163,7 +163,7 @@ Every row passes `builtin` (evidence `outputs/maps/builtin-coverage.json` and th
 
 - **No reactor site** on 11 maps (Beaverome, Canyon, Cliffside, Craters, Diorama, Hollows, Mountain Range, Oasis, Pillars, Spillage, Thousand Islands): either no dry, flat 20×15 footprint exists at any level, or none lies within 15 cells of clean water (Craters, Oasis, Spillage). The reactor never needs more height: at 66 the highest legal base is 47.
 - **Beaverome gets no deep ore at all:** shallow lakes and sloping shores; the largest dry flat square is 9×9, so no Deep Mine, Drill, Processor or quarry fits, and its two Underground Ruins lie under 6–9 of water. It is not small by area (192×192), but without a Deep Mine site it gets the EXTREMELY difficult warning (2026-10-30; before, it showed the shorter "cannot provide" notice).
-- **Diorama has no Deep Mine:** every 10×11 mine footprint has trees on the 5×5 vein cells, and a placed object may not overlap trees (the vein would have to wait for the player to cut them). It keeps two Drills with 17,000 finite DeepOre.
+- **Diorama has no Deep Mine:** every 10×11 mine footprint (the mine before the 2026-10-30 compaction) has trees on the 5×5 vein cells, and a placed object may not overlap trees (the vein would have to wait for the player to cut them). It keeps two Drills with 17,000 finite DeepOre.
 - **Cliffside**: the Deep Ore Processor (without it deep ore has no use) took priority over the Limestone Quarry; an exhaustive search found no layout with both quarries, both mines, both drills and the processor. The 1,800 limestone of its outcrops remain.
 - **Meander**: the three missing 12×11 plants are the best result of an optimising packing with the reactor on the north-west plateau, not a proof; a run with the reactor elsewhere was stopped for memory.
 - **Shore banks** (7 maps): the saved water is too shallow (or its banks too high) for `ShoreFishingSpec`; damming a river deeper creates banks in play.
@@ -348,7 +348,7 @@ At 66 layers the level limit no longer binds (see below), so the "have none" map
 
 `UnderstructureFinder.FindStrict` requires every foundation block whose occupation is exactly Top and/or Corners to stand on the same understructure. The tool reads those blocks from the blueprint, rotated with the site:
 
-- **DeepMine (10×11):** a 21-cell core at local x 2–6, y 1–5, with gaps. For Cw0, mine origin = vein origin − (2, 1).
+- **DeepMine (7×6, was 10×11):** a 25-cell core at local x 2–6, y 1–5 (every core cell is a building cell). For Cw0, mine origin = vein origin − (2, 1).
 - **Sandstone / Limestone Quarry (11×7):** a full 5×5 core at local x 3–7, y 1–5. For Cw0, quarry origin = seam origin − (3, 1).
 
 Each understructure site is checked for:

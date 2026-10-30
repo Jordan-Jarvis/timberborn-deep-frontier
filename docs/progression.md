@@ -415,7 +415,7 @@ Still open:
 | 40 | B039 | Radioactive Waste Vault | 4×4×3 → 13×12×12 | unchanged |
 | 41 | B040 | Technical School | 4×4×3 → 11×6×14 | 1,800 → 2,200 |
 | 42 | B041 | Radioactive Waste Refinery | 5×6×4 → 12×11×12 | 16,000 → 12,000 |
-| 43 | B042 | Deep Mine | 5×5×4 → 12×11×16 | unchanged |
+| 43 | B042 | Deep Mine | 5×5×4 → 12×11×16 → 7×6×7 (compaction, 2026-10-30) | unchanged |
 
 Other changes to the workbook:
 

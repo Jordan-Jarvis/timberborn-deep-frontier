@@ -257,10 +257,11 @@ deepMine.MechanicalConnectorTargetSpec = {};
 deepMine.MechanicalNodeAnimatorSpec = { MinSpeedMultiplier: 0.0 };
 deepMine.Children['#Finished'].TimbermeshSpec.Model = 'Buildings/Metal/DeepMine/DeepMine.IronTeeth.Model';
 useStudyModel(deepMine);
-// Ground core over the vein: tiles x 2-6, y 1-5, centred on the study's shaft
-// collar (lategame_DeepMine.py collar x 2.7-6.1, y 2.1-4.8; opening centre
-// 4.4, 3.45). Its four corner cells are building cells, so the vein has a
-// single valid alignment, as under vanilla EfficientMine.
+// Ground core over the vein: tiles x 2-6, y 1-5, under the study's shaft
+// house (lategame_DeepMine.py shaft house x 3-7, y 1-6; shaft at 4.5, 2.4)
+// and the lamp and bath houses' right column. Its four corner cells are
+// building cells, so the vein has a single valid alignment, as under vanilla
+// EfficientMine.
 await applyLategame(deepMine, 'DeepMine', {
   understructure: { core: [2, 1, 6, 5], size: [deepOreVein.BlockObjectSpec.Size.X, deepOreVein.BlockObjectSpec.Size.Y] },
 });

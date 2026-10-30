@@ -179,33 +179,16 @@
     16
    ],
    "footprintAfter": [
-    10,
-    11,
-    16
+    7,
+    6,
+    7
    ],
    "gridOrigin": [
     0,
     0
    ],
-   "outsideCells": 22,
-   "insideCells": [
-    [
-     7,
-     3
-    ],
-    [
-     8,
-     3
-    ],
-    [
-     9,
-     0
-    ],
-    [
-     9,
-     3
-    ]
-   ]
+   "outsideCells": 26,
+   "insideCells": []
   },
   "DeepProcessor": {
    "footprintBefore": [

@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Monumental riveted steel headframe with raked backstays and twin counter-rotating sheave wheels",
+  "hero": "Compact plated steel headframe on a low concrete shaft house, both skips in its open front, twin sheaves on top",
   "footprint": [
-    10,
-    11
+    7,
+    6
   ],
-  "heightLayers": 16,
+  "heightLayers": 7,
   "boundsMin": [
-    -0.13,
-    0.045,
+    -0.04,
+    -0.135,
     0.0
   ],
   "boundsMax": [
-    9.9385,
-    11.25,
-    15.75
+    7.01,
+    6.0,
+    6.37
   ],
   "doors": [
     {
       "id": "Door0",
       "position": [
         1.5,
-        0.18,
+        0.0,
         0.0
       ],
       "outward": [
@@ -38,26 +38,27 @@
     "RopeA",
     "RopeB",
     "WindingDrum",
-    "Flywheel"
+    "Flywheel",
+    "OreTub"
   ],
   "animationFrames": 121,
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 8423,
+  "faces": 3117,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 2118,
-    "IrregularPlanks_DarkBrown.IronTeeth": 464,
-    "BaseMetal.IronTeeth": 4746,
-    "RoofPlanks.IronTeeth": 1129,
-    "Details.IronTeeth": 368,
-    "accent8": 60,
+    "BaseWood_DarkBrown.IronTeeth": 782,
+    "IrregularPlanks_DarkBrown.IronTeeth": 78,
+    "BaseMetal.IronTeeth": 2757,
+    "RoofPlanks.IronTeeth": 37,
+    "Details.IronTeeth": 360,
+    "accent8": 30,
     "Plaster_White.IronTeeth": 294,
-    "Plaster_Orange.IronTeeth": 85,
-    "IrregularPlanks_MetalForged.IronTeeth": 260,
-    "WindowsAtlas.IronTeeth": 446,
-    "PaintedMetal.IronTeeth": 289
+    "Plaster_Orange.IronTeeth": 31,
+    "IrregularPlanks_MetalForged.IronTeeth": 24,
+    "WindowsAtlas.IronTeeth": 258,
+    "PaintedMetal.IronTeeth": 333
   },
-  "sourceHash": "50c8dd54a9f872dbd09d043139b94f2db90f5ab5b6e0b1f766720af12a7a7b05",
-  "artHash": "183c3562d98bacfe4a0df69f3eac0f289ae78ed85f2dda2c99218e7546206419"
+  "sourceHash": "c94ed3034f79831ea503746e11fbe9a46ff6a9ca84ecb30c0063acd9836224cd",
+  "artHash": "ada82e5898ce6e0b60268370566d74d347fa371bb40196c4655a171c75c49ced"
 }
