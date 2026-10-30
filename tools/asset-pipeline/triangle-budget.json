@@ -229,9 +229,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 18702,
-   "vertices": 36196,
-   "construction": 18702,
+   "finished": 7792,
+   "vertices": 14980,
+   "construction": 7792,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/CryogenicLiquefactionPlant/CryogenicLiquefactionPlant.IronTeeth.Model.timbermesh"
   },
   "CryogenicTankFarm": {

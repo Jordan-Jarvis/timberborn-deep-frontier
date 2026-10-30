@@ -2,45 +2,42 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Frost-white cold box tower lashed to a banded distillation column above twin Horton spheres",
   "footprint": [
-    12,
-    11
+    8,
+    6
   ],
-  "heightLayers": 16,
+  "heightLayers": 9,
   "boundsMin": [
     -0.0,
-    -0.0,
+    -0.265,
     -0.035
   ],
   "boundsMax": [
-    11.8,
-    10.6,
-    15.0354
+    8.04,
+    5.523,
+    8.1976
   ],
   "doors": [
     {
       "id": "CompressorHouseDoor",
       "position": [
         3.5,
-        1.0,
+        0.0,
         0
       ],
       "outward": [
         0,
         -1
-      ],
-      "width": 1.0,
-      "internalConnection": "BuildingInterior"
+      ]
     }
   ],
   "animatedParts": [
-    "CryogenicLiquefactionPlant.LoadingArm",
+    "CryogenicLiquefactionPlant.CoolerFan0",
+    "CryogenicLiquefactionPlant.CoolerFan1",
+    "CryogenicLiquefactionPlant.CoolerFan2",
     "CryogenicLiquefactionPlant.Flywheel0",
     "CryogenicLiquefactionPlant.Flywheel1",
     "CryogenicLiquefactionPlant.Piston0",
     "CryogenicLiquefactionPlant.Piston1",
-    "CryogenicLiquefactionPlant.CoolerFan0",
-    "CryogenicLiquefactionPlant.CoolerFan1",
-    "CryogenicLiquefactionPlant.CoolerFan2",
     "CryogenicLiquefactionPlant.VentRotor",
     "CryogenicLiquefactionPlant.Beacon"
   ],
@@ -48,20 +45,19 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 9279,
+  "faces": 3778,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 416,
-    "BaseMetal.IronTeeth": 4250,
-    "RoofPlanks.IronTeeth": 18,
-    "Details.IronTeeth": 479,
-    "accent8": 30,
-    "accent25": 46,
-    "Plaster_White.IronTeeth": 2377,
-    "Plaster_Orange.IronTeeth": 31,
-    "IrregularPlanks_MetalForged.IronTeeth": 84,
-    "WindowsAtlas.IronTeeth": 514,
-    "PaintedMetal.IronTeeth": 1766
+    "BaseWood_DarkBrown.IronTeeth": 200,
+    "BaseMetal.IronTeeth": 1928,
+    "Details.IronTeeth": 216,
+    "accent8": 20,
+    "accent25": 40,
+    "Plaster_White.IronTeeth": 1083,
+    "Plaster_Orange.IronTeeth": 7,
+    "IrregularPlanks_MetalForged.IronTeeth": 12,
+    "WindowsAtlas.IronTeeth": 226,
+    "PaintedMetal.IronTeeth": 516
   },
-  "sourceHash": "b54ccd86d39d3022bedb58230cb88eaa68f9c469b85a0a5d46d941c2822c318f",
-  "artHash": "f95bf4b49dc27fbf1c0e8c6a438baf12656d1d6286fc9fcb35928f761ae359fd"
+  "sourceHash": "d14b65a5550367070eddaf3971e8fc5b012148931d426881d31ce273ad32c408",
+  "artHash": "fcbc7ac4482f72a73c1ac05e8187ec074138bd97dd09ae098f5d6e97b26960ae"
 }
