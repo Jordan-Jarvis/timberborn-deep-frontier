@@ -2,6 +2,11 @@
 
 No top view or printed tile dimensions are used. Game registration follows the
 finished geometry. The enclosed store room has one ground-level arch.
+
+Compaction pass (2026-10-30): one storey. The store room and working bay
+stand under one flat roof of native roof sheets below layer 2 (the sloped
+2.9-high roof went), and the jib hoist is 1.05 lower with its basket and
+cable lowered together; footprints, doors and animations are unchanged.
 """
 import math
 import random
@@ -20,8 +25,13 @@ from reference_materials import CIVIC_CONCRETE, CIVIC_FORGED_PANEL
 from walkway_geometry import RailAssembly
 from opaque_shell_geometry import lean_roof_curb
 
-HOIST_TOP=3.67
-CABLE_BOTTOM=2.43
+HOIST_TOP=2.62
+CABLE_BOTTOM=1.73
+# One-storey frame: posts and beams at BEAM_Z, walls to WALL_TOP, the flat
+# roof sheets at ROOF_Z (their shoes stay under layer 2).
+BEAM_Z=1.78
+WALL_TOP=1.70
+ROOF_Z=1.92
 
 def stone_bin(g, p, size, stone, seed):
     x,y,z=p;w,d,h=size
@@ -50,33 +60,26 @@ def enclosure(g, *, limestone):
     front=1.12
     for x in (.30,1.55):
         for y in (front,3.70):
-            timber_column(g,x,y,.05,2.13 if y==front else 2.73,.22)
+            timber_column(g,x,y,.05,BEAM_Z,.22)
         outer=x+(-.0375 if x==.30 else .0375)
         for j in range(17):
             a=1.07+j*(3.74-1.07)/17;b=1.07+(j+1)*(3.74-1.07)/17
-            za=2.13+(a-1.07)*(.59/(3.74-1.07));zb=2.13+(b-1.07)*(.59/(3.74-1.07))
-            # Exterior boards meet the authored sloped curb edge exactly;
-            # former flat-topped boxes overlapped its surface on every plank.
-            g.add([(outer,a,0),(outer,b,0),(outer,b,zb),(outer,a,za)],
-                  [(3,2,1,0) if x==.30 else (0,1,2,3)],PLANK)
+            facade_panel(g,'X',outer,a,b,0,WALL_TOP,x!=.30,PLANK)
     for j in range(9):
         a=.2625+j*1.325/9;b=.2625+(j+1)*1.325/9
-        facade_panel(g,'Y',3.74,a,b,0,2.72,True,PLANK)
-    # Door shoulders, solid head wall and narrow framed clerestory.
+        facade_panel(g,'Y',3.74,a,b,0,WALL_TOP,True,PLANK)
+    # Door shoulders and a solid head wall to the roof beam.
     for x in (.33,1.53):
         g.box((x,front,.50),(.20,.10,1.00),PLANK)
-    facade_panel(g,'Y',1.07,.2625,1.5875,1,2.13,False,PLANK)
+    facade_panel(g,'Y',1.07,.2625,1.5875,1,WALL_TOP,False,PLANK)
     g.include_component(door_recipe('LimestonePit' if limestone else 'SandstonePit','Door.PitStoreDoor'))
     g.doorways.append({"name":"PitStoreDoor","position":[.93,front-.14,0]})
-    window_y(g,.93,front-.05,1.96,0.5)
     for y in (2.05,3.05):
-        side_window(g,.2625,y,1.65,1,'left')
-    window_y(g,.93,3.74,1.88,1,'back')
+        side_window(g,.2625,y,.95,.85,'left')
+    window_y(g,.93,3.74,.95,.85,'back')
     for x in (.30,1.55):
         g.box((x,2.42,.30),(.12,2.70,.48),CIVIC_FORGED_PANEL)
-    lean_roof_curb(g,.2625,1.07,1.5875,3.74,2.13,2.72,1.00,3.86,2.25,2.93,.0225)
-    sheet_roof(g,.16,.88,1.72,1.67,1.56,1.82,1302)
-    cage_lamp(g,1.42,front-.18,1.55)
+    cage_lamp(g,1.42,front-.18,1.30)
     # (2026-10-22: the limestone pit's side shelter and workbench stood
     # outside the wall line; removed with their footprint tiles.)
 
@@ -86,8 +89,9 @@ def hoist(g,parts,stone,*,limestone):
     g.box((x,back,.17),(.60,.62,.34),CIVIC_CONCRETE)
     timber_column(g,x,back,.34,top-.15,.28)
     beam_joint(g,(x,back+.35,top),(x,end-.18,top),.28,.30)
-    g.beam((x,back,2.10),(x,2.0,top-.12),.15,mat=WOOD)
-    g.beam((x,back,2.55),(x,back+.40,top),.12,mat=IRON)
+    # The jib brace meets the jib clear of the basket's lifted slings.
+    g.beam((x,back,1.50),(x,max(end+.45,2.0),top-.12),.15,mat=WOOD)
+    g.beam((x,back,1.70),(x,back+.40,top),.12,mat=IRON)
     for yy in (end,back):
         for xx in (x-.18,x+.18):
             g.box((xx,yy,top),(.055,.33,.40),IRON)
@@ -111,12 +115,14 @@ def hoist(g,parts,stone,*,limestone):
     g.beam((3.13,3.47,1.56),(x,back,top+.15),.028,mat=IRON)
     g.beam((x,back,top+.15),(x,end,top+.15),.028,mat=IRON)
     # Moving basket and its four sling chains; cable grows from a fixed top.
-    basket=Geometry('Pit.HoistedBasket',(x,end,1.25))
-    stone_bin(basket,(x,end,1.25),(.66,.61,.55),stone,1400)
+    # Basket and cable 0.70 lower than before (the eye stays .04 under the
+    # cable's foot).
+    basket=Geometry('Pit.HoistedBasket',(x,end,.55))
+    stone_bin(basket,(x,end,.55),(.66,.61,.55),stone,1400)
     for dx in (-.30,.30):
         for dy in (-.27,.27):
-            basket.beam((x+dx,end+dy,1.82),(x,end,2.35),.022,mat=IRON)
-    band(basket,(x,end,2.39),.08,.025,.055,IRON,'X',8,inner=True)
+            basket.beam((x+dx,end+dy,1.12),(x,end,1.65),.022,mat=IRON)
+    band(basket,(x,end,1.69),.08,.025,.055,IRON,'X',8,inner=True)
     parts.append((basket,'PIT_BASKET',1))
     rope=Geometry('Pit.HoistCable',(x,end,top-.10))
     prism(rope,(x,end,(top-.10+CABLE_BOTTOM)/2),.025,top-.10-CABLE_BOTTOM,IRON,'Z',6)
@@ -137,13 +143,14 @@ def mineral_pit(g,parts,*,limestone):
     enclosure(g,limestone=limestone)
     for x in (2.88,):
         for y in (1.12,3.70):
-            timber_column(g,x,y,.03,2.17 if y<2 else 2.79,.22)
-    for y,z in ((1.12,2.17),(3.70,2.79)):
-        beam_joint(g,(.30,y,z),(2.88,y,z),.23,.25)
+            timber_column(g,x,y,.03,BEAM_Z,.22)
+    for y in (1.12,3.70):
+        beam_joint(g,(.30,y,BEAM_Z),(2.88,y,BEAM_Z),.23,.25)
     for x in (.30,2.88):
-        beam_joint(g,(x,1.12,2.17),(x,3.70,2.79),.18,.24)
-        g.beam((x,3.68,1.33),(x,2.76,2.48),.12,mat=WOOD)
-    sheet_roof(g,.13,1.00,3.05,3.86,2.25,2.93,1501 if limestone else 1502)
+        beam_joint(g,(x,1.12,BEAM_Z),(x,3.70,BEAM_Z),.18,.24)
+        g.beam((x,3.68,.95),(x,3.05,1.70),.12,mat=WOOD)
+    # One flat roof of native roof sheets over the store and the bay.
+    sheet_roof(g,.13,1.00,3.05,3.86,ROOF_Z,ROOF_Z,1501 if limestone else 1502)
     stone_bin(g,(2.22,2.42,.08),(1.05,1.62,1.02),stone,1510)
     hoist(g,parts,stone,limestone=limestone)
     # (2026-10-22: the limestone hand cart, both pits' loose barrels and the

@@ -11,6 +11,8 @@ sys.path.insert(0,str(ROOT/'tools/asset-pipeline/timbermesh-plugin/timbermesh_bl
 import model_pb2
 from native_uv_contract import valid_native_uv
 
+# Registered sizes (tools/pit-layouts.json, written by pit_layouts.py).
+LAYOUTS=json.loads((ROOT/'tools/pit-layouts.json').read_text())
 reports=[]
 for ident in ('SandstonePit','LimestonePit'):
     folder=ROOT/'src/DeepFrontier/Data/Buildings/Metal'/ident
@@ -43,7 +45,7 @@ for ident in ('SandstonePit','LimestonePit'):
     # in front of its set-back door; the limestone pit's door is on the
     # footprint edge (doorstep (1,0,0) occupied, entrance outside).
     size=blueprint['BlockObjectSpec']['Size']
-    assert size==dict(zip(('X','Y','Z'),(5,4,4) if ident=='SandstonePit' else (5,3,4)))
+    assert size==dict(zip(('X','Y','Z'),LAYOUTS[ident]['size'])),(ident,size)
     blocks=blueprint['BlockObjectSpec']['Blocks']
     assert len(blocks)==size['X']*size['Y']*size['Z']
     assert blueprint['BlockObjectSpec']['Entrance']['Coordinates']=={'X':1,'Y':-1,'Z':0}
@@ -59,7 +61,11 @@ for ident in ('SandstonePit','LimestonePit'):
         assert all(b['Occupations']=='None' and b['MatterBelow']=='Any' for b in free),'Free cell (4,0) is blocked'
     assert blueprint['PathModelTypeEnforcerSpec']=={'PathModelType':'Roof'},'Raised apron would hide a native DirtPath'
     assert blocks[1+size['X']*size['Y']]['Occupations']=='All','Door canopy must be occupied'
-    assert all(b['Stackable']=='None' for b in blocks),'Sloped roof is not a building deck'
+    # The one-storey flat roof (2026-10-30) is a platformable roof deck: its
+    # stackable blocks are exactly the cells tools/roof_decks.json lists.
+    decks=json.loads((ROOT/'tools/roof_decks.json').read_text())['buildings'].get(ident,{}).get('platformable',[])
+    stackable={(i%size['X'],(i//size['X'])%size['Y'],i//(size['X']*size['Y'])) for i,b in enumerate(blocks) if b['Stackable']!='None'}
+    assert stackable=={tuple(c) for c in decks},(ident,'Stackable roof cells differ from the roof deck plan')
     assert 'MechanicalNodeSpec' not in blueprint,'Hand-operated pit should consume no hp'
     # No loose props: the pits' barrels were removed (2026-10-22).
     assert not blueprint.get('NativeBuildingPropsSpec',{}).get('Props'),'Pits carry no native props'

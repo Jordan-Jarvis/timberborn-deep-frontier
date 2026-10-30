@@ -4,6 +4,17 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction: Sandstone and Limestone Pit, one storey (5x4x4 -> 5x4x3, 5x3x4 -> 5x3x3) (Claude Code session, 2026-10-30, built by an agent; scenes, exports and blueprints promoted; validated in mirror `ind-head` (HEAD + this change) and the real repo; not built or run in game)
+
+- **User:** one layer per storey, flat roofs, "the mines need to have a lot of tlc". The pits were already vanilla-scale (5x4 and 5x3, like the vanilla 5x5x3 mine), so their footprints, door, apron and entrance stay; the storey goes.
+- **Changed** (`pit_isometric_geometry.py`): the store room and working bay now stand under one flat roof of native roof sheets at 1.92 (posts and beams at 1.78, walls to 1.70); the sloped roof that reached 2.93, the store room's clerestory and the door canopy went. The jib hoist is 1.05 lower (top 2.62); the basket, slings and cable foot are 0.70 lower together, so the cable still meets the basket eye and the lift stays 0.35. The jib brace meets the jib clear of the lifted basket. Height 4 -> 3 layers (only the hoist column uses layer 2).
+- **Roof deck:** the flat roof is now a platformable roof deck under the existing system (`roof_deck_content.mjs`): 8 cells on each pit (`roof_decks.json` rows); `validate_pit_exports.py` now requires the stackable blocks to equal those cells (it used to require none, for the sloped roof) and reads the sizes from `pit-layouts.json`.
+- **Kept:** footprints, origins, entrance (1,-1,0), the door and its approach floor, materials and atlas slots, the three animated parts (`Pit.Winch`, `Pit.HoistedBasket`, `Pit.HoistCable`), recipes, costs and workers (checked against HEAD).
+- **Data:** `pit_layouts.py` sizes and column heights (2 under the roof, 3 under the hoist), catalog sizes, connection faces, triangle ceilings (SandstonePit 10,896 -> 10,154, LimestonePit 8,944 -> 8,202). `MineralPitAcceptance` expects 5x4x3 and 5x3x3.
+- **Old saves:** footprint, origin and entrance unchanged; the top layer of each pit is freed.
+- **Checks:** strict z-fight 0 visible on both; `sources-pits` (door clearance, UVs, hoist loop with no basket intersections), `exports-pit`, `model-bindings`, `building_entrances`, `construction_materials`, `freed_cells`, `status_icon_anchors`, `audit-building-assets` pass; the pit rows of `roof_decks` pass (its other failures are the in-progress Hospital). Scripts compile.
+- **Review:** `outputs/compaction/SandstonePit-before-after.png`, `LimestonePit-before-after.png`.
+
 ## Compaction: Limestone and Sandstone Quarry 11x7x9 -> 8x6x5 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprints promoted; validated in mirror `ind-head` (HEAD + this change) and the real repo; not built or run in game)
 
 - **User:** smaller buildings, less scaffolding; "the mines need to have a lot of tlc". Shared model `MineralQuarry` (`quarry_isometric_geometry.py`, `quarry_process_details.py`, rewritten).

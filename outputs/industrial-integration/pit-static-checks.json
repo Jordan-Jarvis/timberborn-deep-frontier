@@ -6,26 +6,26 @@
       "size": {
         "X": 5,
         "Y": 4,
-        "Z": 4
+        "Z": 3
       },
       "nodes": 9,
       "animationTracks": 3,
       "frames": 121,
-      "nativeUvVerticesChecked": 9644,
-      "emptyCells": 20
+      "nativeUvVerticesChecked": 8952,
+      "emptyCells": 16
     },
     {
       "building": "LimestonePit",
       "size": {
         "X": 5,
         "Y": 3,
-        "Z": 4
+        "Z": 3
       },
       "nodes": 9,
       "animationTracks": 3,
       "frames": 121,
-      "nativeUvVerticesChecked": 8228,
-      "emptyCells": 16
+      "nativeUvVerticesChecked": 7536,
+      "emptyCells": 15
     }
   ]
 }

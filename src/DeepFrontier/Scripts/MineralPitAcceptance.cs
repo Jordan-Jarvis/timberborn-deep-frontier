@@ -110,7 +110,8 @@ namespace DeepFrontier.Scripts {
     // decoration (the limestone pit's former right column and rear rows, its open (4,0,0)).
     private void RequireFreedCells(int i) {
       var size=_pits[i].GetComponent<BlockObjectSpec>().Size;
-      var expected=i==0?new Vector3Int(5,4,4):new Vector3Int(5,3,4);
+      // One storey since the 2026-10-30 compaction (same footprints, 3 layers).
+      var expected=i==0?new Vector3Int(5,4,3):new Vector3Int(5,3,3);
       Require(size==expected,"Installed "+Goods[i]+"Pit is "+size+"; this fixture encodes "+expected);
       var cells=i==0?FreedCellProbe.Outside(0,4,0,4,size):
         new[]{new Vector3Int(4,0,0)}.Concat(FreedCellProbe.Outside(0,5,0,4,size));
