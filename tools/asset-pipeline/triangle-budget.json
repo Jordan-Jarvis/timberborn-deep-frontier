@@ -481,9 +481,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 11206,
-   "vertices": 21258,
-   "construction": 11206,
+   "finished": 7504,
+   "vertices": 14152,
+   "construction": 7504,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.Model.timbermesh"
   },
   "PublicHealthLab": {

@@ -4,6 +4,16 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction: Precision Machine Works 11x9x14 -> 9x5x7 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `lgi` on HEAD + this change; not built or run in game)
+
+- **Art** (`lategame_PrecisionMachineWorks.py`, saved scene unpacked): the machine shop on tiles 0-6 x 0-5, a concrete ground storey with the open belt bay (line shaft, belts and three lathes under the coping) and a steel-framed forged upper storey, one layer each, under the north-light sawtooth (three teal plank teeth with glazed north faces; kept as the building's defining silhouette, the only sawtooth among the late-game works); the two-storey gate office (tiles 6-9 x 0-2) with the door and a flat roof whose front row is open, the riveted air receiver on concrete saddles on its back row; the crane yard behind it: concrete paving, the travelling crane on a solid runway wall (tile column 8) and a bracket beam on the shop wall, the roll lathe under it, the steam hammer on its pad and the six-layer square brick chimney with iron bands on its firebox in the corner. Removed: the yard's six steel columns and knee braces, the receiver's braced frame, the forge lean-to and the 13-layer chimney. The 7 animated parts keep their names; the crane travel is 1.0 (was 3.9).
+- **Checks on the art:** triangles 11,206 -> 7,504 (ceiling re-recorded); strict z-fight audit 0 visible at frames 1/31/61/91; grid audit: one reported edge (the runway wall starts 0.15 behind the office to clear its roof curb), no floor misses, nothing floating.
+- **Data:** footprint inside the old one, same origin, door and Entrance (8,-1,0); door face on the tile edge (`LocalAccess` z 0.15 -> 0). Solid cells 297 -> 131; shaft faces 195 -> 102, pipe ports 91 -> 56; smoke at the new chimney mouth (8.5, 4.5, 6.64); platformable roof cells 36 -> 3 (the office's front row; the sawtooth is pitched). `lategame_freed_cells.json`: the three 2026-10-22 yard cells are gone (two now outside the 9x5 footprint, one under the runway wall); footprintAfter 9x5x7. Still a sited building (9 >= `largeFootprint`); its map sites stay valid for the smaller footprint. Cost held by `lategame_cost_basis.json`; power, 6 workers and recipes unchanged.
+- **Old saves:** a placed works keeps its origin and entrance and frees the tiles it no longer uses. A flipped one's entrance moves 2 tiles (local x 2 -> 0). Shafts and pipes on removed walls disconnect.
+- **Review:** `outputs/compaction/PrecisionMachineWorks-before-after.png`.
+- **Checks (mirror):** canonical generation on HEAD + this change reaches a fixed point (a second run leaves Data and `roof_decks.json` unchanged); `validate_all -Only` 23 checks as for the Chemical Works plus `cryogenic_content`: all pass except `map-setup-terrain` on `smallMap.maxArea` (re-derived after the pass).
+- **In game:** not seen yet.
+
 ## Compaction follow-up: no clutter on buildable space, Deep Drill and Deep Mine (Claude Code session, 2026-10-30, built by an agent; scenes, exports and blueprints promoted; validated in mirror `minesdrill` on HEAD + this change; not built or run in game)
 
 - **User rule:** "we don't want clutter everywhere taking buildable space"; props must not claim otherwise-open footprint or roof cells.

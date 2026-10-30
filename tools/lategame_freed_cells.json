@@ -80,29 +80,16 @@
     14
    ],
    "footprintAfter": [
-    11,
     9,
-    14
+    5,
+    7
    ],
    "gridOrigin": [
     0,
     0
    ],
-   "outsideCells": 0,
-   "insideCells": [
-    [
-     8,
-     4
-    ],
-    [
-     8,
-     6
-    ],
-    [
-     9,
-     4
-    ]
-   ]
+   "outsideCells": 2,
+   "insideCells": []
   },
   "TechnicalSchool": {
    "footprintBefore": [

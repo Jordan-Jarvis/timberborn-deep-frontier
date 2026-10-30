@@ -3,66 +3,78 @@
 Revised 2026-10-22 (no forced decoration; footprint ends at the walls):
 removed the loose yard stock and barrels.
 
-HERO: a long north-light sawtooth machine hall with an open belt bay, an
-      overhead travelling crane over its yard and a 13-layer square brick
-      chimney bound with iron bands.
-ROOF: a north-light sawtooth roof (three teal plank teeth with glazed north
-      faces) on the tall machine shop, a lean-to on the forge, a flat
-      parapeted roof on the gate office.
+Compacted 2026-10-30 (Workshop feedback: the buildings exceed Timberborn's
+scale; user: "it is the scaffolding and size", "one layer per floor", "make
+the roof flat on more of our buildings"): 11x9x14 -> 9x5x7, inside the old
+footprint with the same origin, door and native entrance (cell 8, -1).
+Removed: the crane yard's six steel columns and knee braces, the braced
+steel frame under the air receiver, the separate forge lean-to and the
+13-layer chimney. The travelling crane now runs on a solid concrete runway
+wall and a bracket beam on the shop wall; the square brick chimney is six
+layers on its firebox.
 
-Plan (11 x 9 tiles): the two-storey gate office with the door front-right,
-carrying the works' riveted compressed-air receiver on a braced steel frame;
-the machine shop behind with a big open belt bay in its front wall showing
-the line shaft, pulleys, belts and three lathes; the forge lean-to and its
-tall square brick chimney on the left; an overhead travelling crane over the
-lathe yard and steam hammer on the right.
+HERO: a long north-light sawtooth machine hall with an open belt bay, a
+      travelling crane over its yard and a square brick chimney bound with
+      iron bands.
+ROOF: the north-light sawtooth (three teal plank teeth with glazed north
+      faces) stays: it is this building's defining silhouette and the only
+      sawtooth among the late-game works. Flat concrete roof with a low curb
+      on the two-storey gate office.
+
+Plan (9 x 5 tiles): the machine shop on the left with the belt bay in its
+front wall (line shaft, belts, three lathes); the gate office front-right
+with the door, the compressed-air receiver on its roof; the crane yard
+behind it with the steam hammer, the roll lathe and the chimney.
+
+Animated (7, names unchanged): line shaft, three lathe chucks, crane bridge
+(slides along Y), steam-hammer ram, yard lathe roll.
 """
 import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
-from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK, CYAN, GLOW, LAYER_GAP
+from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYPLANK, GLOW
 import lategame_industry_parts as P
-from industrial_facades import building_portal
+import lategame_civic_parts as C
+from lategame_civic_parts import blk
+import compact_industry_parts as Q
 from architectural_windows import window
 
 IDENT = 'PrecisionMachineWorks'
-FOOTPRINT = (11, 9)
-HEIGHT = 14
+FOOTPRINT = (9, 5)
+HEIGHT = 7
 FRAME_END = 121
-HERO = ('Long north-light sawtooth machine hall under an overhead travelling crane, with a 13-layer square '
-        'brick chimney bound in iron and a compressed-air receiver on a steel frame.')
+HERO = ('Long north-light sawtooth machine hall with an open belt bay and a travelling crane over its yard, '
+        'with a square brick chimney bound in iron.')
 
-SHOP = (1.1, 2.1, 6.9, 8.9)   # plinth (walls + .1) on tiles 1..7 x 2..9
-SHOP_EAVE = 5.2
-BAY = (2.05, 6.25, 4.25)      # open belt bay: x0, x1, head height
-BAY_BACK = 3.85
-OFFICE = (7.0, .15, 10.0, 1.95)  # gate office: front (door) face .15 off the edge; back .05 short of y = 2
+SHOP = (0.0, 0.0, 6.0, 5.0)    # whole tiles
+SHOP_EAVE = 2.0
+BAY = (1.0, 5.0, .9, .95)      # open belt bay: x0, x1, head height, depth
+OFFICE = (6.0, 0.0, 9.0, 2.0)  # gate office on whole tiles; door face on y = 0
 DOOR_X = 8.5
-
-
-def frame(g, axis, plane, start, end, bottom, top, out, **kw):
-    K.frame_wall(g, axis, plane, start, end, bottom, top, outward=out, **kw)
+RUNWAY_Z = 2.2                 # crane rail top
+CRANE_Y = 2.55                 # crane bridge at frame 1; slides back by CRANE_TRAVEL
+CRANE_TRAVEL = 1.0
 
 
 # ---------------------------------------------------------------- machine shop
 
-def sawtooth(g, x0, y0, x1, y1, base, teeth=3, rise=1.1):
+def sawtooth(g, x0, y0, x1, y1, base, teeth=3, rise=.8):
     d = (y1 - y0) / teeth
     for i in range(teeth):
         ya, yb = y0 + i * d, y0 + (i + 1) * d
         last = i == teeth - 1
-        wall_back = y1 + .04 if last else yb
+        wall_back = y1 + .07 if last else yb   # clear of the back wall's posts (.055 proud)
         wall_front = y1 - .05 if last else yb - .06
         wc = (wall_back + wall_front) / 2
         P.plank_slope(g, 'X', ya - (0 if i == 0 else .03), wc, base, base + rise, x0, x1,
-                      overhang=.22 if i == 0 else .0, end_overhang=.16, plank=.32, fascia=i == 0)
+                      overhang=.2 if i == 0 else .0, end_overhang=.0, plank=.3, fascia=i == 0)
         # Glazed north-light face.
         g.box(((x0 + x1) / 2, wc, base + rise / 2 + .01), (x1 - x0 + .06, wall_back - wall_front, rise + .06), FORGED)
-        for k in range(6):
-            x = x0 + .5 + k * (x1 - x0 - 1) / 5
-            window(g, x, wall_back, base + rise / 2 + .02, .95, 'back', 'factory')
-        g.box(((x0 + x1) / 2, wc, base + rise + .13), (x1 - x0 + .34, .16, .07), IRON)
+        for k in range(5):
+            x = x0 + .6 + k * (x1 - x0 - 1.2) / 4
+            window(g, x, wall_back, base + rise / 2 + .02, .62, 'back', 'factory')
+        g.box(((x0 + x1) / 2, wc, base + rise + .12), (x1 - x0 + .3, .14, .06), IRON)
         for plane, out in ((x0, -1), (x1, 1)):
             prof = [(ya + (.0 if i == 0 else -.02), base - .01), (wall_front, base - .01),
                     (wall_front, base + rise * (wall_front - ya) / (wc - ya + 1e-9) - .07)]
@@ -71,261 +83,204 @@ def sawtooth(g, x0, y0, x1, y1, base, teeth=3, rise=1.1):
 
 def shop(g, parts):
     x0, y0, x1, y1 = SHOP
-    top = P.plinth(g, x0 - .1, y0 - .1, x1 + .1, y1 + .1, 1.0)
-    bottom, eave = top, SHOP_EAVE
-    bx0, bx1, bz = BAY
-    fw = dict(infill=FORGED, post=IRON, post_w=.16, window_style='factory', window_scale=.9)
-    # Front wall in three pieces around the open belt bay.
-    frame(g, 'X', y0, x0 - .05, bx0, bottom, eave + .03, -1, windows=[(1.6, 2.3), (1.6, 4.1)], bays=1, **fw)
-    frame(g, 'X', y0, bx1, x1 + .05, bottom, eave + .03, -1, windows=[((bx1 + x1) / 2, 2.3), ((bx1 + x1) / 2, 4.1)],
-          bays=1, **fw)
-    # Riveted plate girder over the bay, plaster infill above it.
-    g.box(((bx0 + bx1) / 2, y0, bz + .28), (bx1 - bx0 + .2, .26, .56), PAINTED)
-    for k in range(12):
-        x = bx0 + .2 + k * (bx1 - bx0 - .4) / 11
-        for z in (bz + .08, bz + .48):
-            K.stud(g, (x, y0 - .13 - .01, z), 'Y', .022)
-    g.box(((bx0 + bx1) / 2, y0, (bz + .56 + eave + .03) / 2), (bx1 - bx0 - .16, .1, eave + .03 - bz - .56), ORANGE)
-    g.box(((bx0 + bx1) / 2, y0 - .0975, eave - .04), (bx1 - bx0 - .16, .095, .11), IRON)
-    for k in range(1, 4):
-        x = bx0 + k * (bx1 - bx0) / 4
-        g.box((x, y0 - .085, (bz + .56 + eave + .03) / 2), (.14, .07, eave + .03 - bz - .56), IRON)
-    frame(g, 'X', y1, x0 - .05, x1 + .05, bottom, eave + .03, 1,
-          windows=[(x0 + .5 + k, z) for k in range(6) for z in (2.3, 4.1)], bays=6, **fw)
-    frame(g, 'Y', x0, y0 + .05, y1 - .05, bottom, eave + .03, -1,
-          windows=[(y0 + (k + .5) * (y1 - y0) / 6, 4.1) for k in range(6)], bays=6, **fw)
-    frame(g, 'Y', x1, y0 + .05, y1 - .05, bottom, eave + .03, 1,
-          windows=[(y0 + (k + .5) * (y1 - y0) / 6, z) for k in range(6) for z in (2.3, 4.1)], bays=6, **fw)
-    sawtooth(g, x0, y0, x1, y1, eave, teeth=3, rise=1.1)
+    bx0, bx1, bz, bd = BAY
+    # Concrete ground storey around the open belt bay, one coping ring over
+    # all of it (the coping is the bay head), one foot course.
+    blk(g, x0, y0, 0, bx0, y1, .97, CONCRETE)
+    blk(g, bx1, y0, 0, x1, y1, .97, CONCRETE)
+    blk(g, bx0, y0 + bd, 0, bx1, y1, .97, CONCRETE)
+    # The office's own foot and coping take over along x = 6 in front of y = 2.
+    oy = OFFICE[3]
+    blk(g, x0 - .03, y0 - .03, -.03, x1 - .03, y1 + .03, .14, CONCRETE)
+    blk(g, x1 - .03, oy + .03, -.03, x1 + .03, y1 + .03, .14, CONCRETE)
+    blk(g, x0 - .05, y0 - .05, bz, x1 - .05, y1 + .05, 1.0, CONCRETE)
+    blk(g, x1 - .05, oy + .05, bz, x1 + .05, y1 + .05, 1.0, CONCRETE)
+    for x in (.5,):
+        C.native_window(g, x, y0, .52, .55, 'front', 'factory')
+    for y in (1.5, 3.5):
+        C.native_window(g, x0, y, .52, .6, 'left', 'factory')
+    for x in (1.5, 3.0, 4.5):
+        C.native_window(g, x, y1, .52, .6, 'back', 'factory')
+    C.native_window(g, x1, 3.5, .52, .6, 'right', 'factory')
+    # Framed upper storey (one layer) under the sawtooth.
+    # The right face stands .14 in from x = 6 so its corner posts clear the
+    # gate office's (whose core starts at 6.05).
+    C.framed_block(g, x0 + .05, y0 + .05, x1 - .14, y1 - .05, 1.0, SHOP_EAVE + .03, infill=FORGED, frame=IRON,
+                   windows={'front': [(x + .5, 1.5, .55, 'factory') for x in range(6)],
+                            'left': [(y + .5, 1.5, .55, 'factory') for y in range(5)],
+                            'back': [(x + .5, 1.5, .55, 'factory') for x in range(6)],
+                            'right': [(y + .5, 1.5, .55, 'factory') for y in (2, 3, 4)]})
+    sawtooth(g, x0 + .05, y0 + .05, x1 - .14, y1 - .05, SHOP_EAVE, teeth=3, rise=.8)
     belt_bay(g, parts)
 
 
 def belt_bay(g, parts):
-    x0, y0 = SHOP[0], SHOP[1]
-    bx0, bx1, bz = BAY
-    floor = 1.012
-    # Shallow closed bay: plaster back wall, timber-lined sides, soffit.
-    g.box(((bx0 + bx1) / 2, BAY_BACK + .05, (floor + bz) / 2 + .01), (bx1 - bx0, .1, bz - floor + .02), CONCRETE)
-    for x in [bx0 + .55 + k * (bx1 - bx0 - 1.1) / 3 for k in range(4)]:
-        g.box((x, BAY_BACK - .035, (floor + bz) / 2), (.14, .07, bz - floor), WOOD)
-    for x, s in ((bx0, 1), (bx1, -1)):
-        g.box((x + s * .05, (y0 + .05 + BAY_BACK + .1) / 2, (floor + bz) / 2 + .01), (.1, BAY_BACK + .05 - y0, bz - floor + .02),
-              GREYPLANK)
-    g.box(((bx0 + bx1) / 2, (y0 + .14 + BAY_BACK + .1) / 2, bz - .03), (bx1 - bx0, BAY_BACK + .1 - y0 - .14, .1), WOOD)
-    g.box(((bx0 + bx1) / 2, y0 + .02, floor + .015), (bx1 - bx0 - .2, .3, .03), IRON)
-    # Line shaft with pulleys (one spinning part) on hangers.
-    sy, sz = 3.4, 3.75
+    bx0, bx1, bz, bd = BAY
+    floor = .14
+    back = bd
+    # Bay lining: steel back plate, timber posts, plank side cheeks.
+    blk(g, bx0 + .02, back - .03, floor, bx1 - .02, back, bz - .02, IRON)
+    for x in (bx0 + .03, bx1 - .03):
+        blk(g, x - .03, 0, floor, x + .03, back - .03, bz - .02, GREYPLANK)
+    # Line shaft with pulleys (one spinning part) on hangers from the head.
+    sy, sz = .62, .74
     for x in (bx0 + .35, (bx0 + bx1) / 2, bx1 - .35):
-        g.box((x, sy, (sz + bz - .08) / 2 + .03), (.06, .06, bz - .08 - sz), IRON)
-        g.box((x, sy, sz + .02), (.12, .14, .14), PAINTED)
+        blk(g, x - .025, sy - .025, sz + .05, x + .025, sy + .025, bz, IRON)
+        blk(g, x - .05, sy - .06, sz - .05, x + .05, sy + .06, sz + .05, PAINTED)
     shaft = Geometry('PrecisionMachineWorks.LineShaft', ((bx0 + bx1) / 2, sy, sz))
-    P.tube(shaft, (bx0 + .12, sy, sz), (bx1 - .12, sy, sz), .04, IRON, segments=10)
-    lathes = (2.75, 3.85, 4.95)
+    P.tube(shaft, (bx0 + .1, sy, sz), (bx1 - .1, sy, sz), .03, IRON, segments=10)
+    lathes = (1.85, 2.85, 3.85)
     for x in lathes:
-        P.pulley(shaft, (x - .62, sy, sz), .2, .12, 'X', PAINTED)
-        P.lathe(shaft, (x - .62, sy, sz), [(.07, -.075), (.07, .075)], IRON, axis='X', segments=10)
-    P.pulley(shaft, (5.75, sy, sz), .34, .14, 'X', IRON)
-    for k in range(6):
-        a = k * math.pi / 3
-        shaft.beam((5.75, sy, sz), (5.75, sy + math.cos(a) * .3, sz + math.sin(a) * .3), .04, mat=IRON)
+        P.pulley(shaft, (x - .4, sy, sz), .11, .08, 'X', PAINTED)
+    P.pulley(shaft, (4.55, sy, sz), .16, .1, 'X', IRON)
     parts.append((shaft, 'SPIN_X', 2))
-    # Drive engine on the bay floor, belted up to the big pulley.
-    g.box((5.75, 3.45, floor + .2), (.6, .5, .4), CONCRETE)
-    P.motor(g, (5.75, 3.45, floor + .62), .2, .5, axis='X')
-    for dy in (-.2, .2):
-        g.beam((5.75, 3.45 + dy * .5, floor + .62), (5.75, sy + dy * 1.7, sz), .1, .02, WOOD)
+    # Drive motor at the right end, belted up to the big pulley.
+    blk(g, 4.35, .45, floor, 4.75, .8, floor + .14, CONCRETE)
+    P.motor(g, (4.55, .62, floor + .3), .12, .3, axis='X')
+    for dy in (-.1, .1):
+        g.beam((4.55, .62 + dy * .5, floor + .3), (4.55, sy + dy, sz), .07, .015, WOOD)
     # Three lathes with spinning chucks, belted up to the shaft.
     for i, x in enumerate(lathes):
-        ly, lz = 3.25, floor + .78
-        for dx in (-.42, .42):
-            g.box((x + dx, ly, floor + .32), (.14, .3, .62), IRON)
-        g.box((x, ly, floor + .68), (1.1, .26, .1), IRON)
-        g.box((x - .38, ly, lz + .06), (.26, .3, .3), PAINTED)
-        g.box((x + .38, ly, lz - .01), (.16, .2, .16), IRON)
-        P.tube(g, (x + .3, ly, lz), (x + .1, ly, lz), .025, IRON, segments=8)
-        c = Geometry(f'PrecisionMachineWorks.Chuck{i + 1}', (x - .2, ly, lz))
-        P.lathe(c, (x - .2, ly, lz), [(.11, -.04), (.11, .04)], IRON, axis='X', segments=12)
+        ly, lz = .42, floor + .42
+        for dx in (-.3, .3):
+            blk(g, x + dx - .05, ly - .09, floor, x + dx + .05, ly + .09, floor + .3, IRON)
+        blk(g, x - .38, ly - .08, floor + .3, x + .38, ly + .08, floor + .36, IRON)
+        blk(g, x - .4, ly - .09, floor + .36, x - .2, ly + .09, floor + .55, PAINTED)
+        blk(g, x + .2, ly - .06, floor + .36, x + .3, ly + .06, floor + .48, IRON)
+        c = Geometry(f'PrecisionMachineWorks.Chuck{i + 1}', (x - .14, ly, lz))
+        P.lathe(c, (x - .14, ly, lz), [(.07, -.03), (.07, .03)], IRON, axis='X', segments=12)
         for k in range(3):
             a = k * 2 * math.pi / 3
-            c.box((x - .2, ly + math.cos(a) * .09, lz + math.sin(a) * .09), (.1, .05, .05), BRASS)
-        P.tube(c, (x - .16, ly, lz), (x + .05, ly, lz), .045, CONCRETE, segments=8)
-        P.pulley(c, (x - .62, ly, lz + .06), .1, .08, 'X', PAINTED)
-        P.tube(c, (x - .52, ly, lz + .06), (x - .7, ly, lz + .06), .03, IRON, segments=8)
+            c.box((x - .14, ly + math.cos(a) * .06, lz + math.sin(a) * .06), (.07, .035, .035), BRASS)
+        P.tube(c, (x - .11, ly, lz), (x + .05, ly, lz), .03, CONCRETE, segments=8)
+        P.pulley(c, (x - .4, ly, lz + .05), .07, .05, 'X', PAINTED)
         parts.append((c, 'SPIN_X', 6))
-        # Flat belt from the headstock pulley up to its shaft pulley.
         for dy in (-1, 1):
-            g.beam((x - .62, ly + dy * .1, lz + .06), (x - .62, sy + dy * .19, sz), .07, .02, WOOD)
-    for x in (2.35, 4.15, 5.95):
-        K.lamp(g, x, BAY_BACK, 3.2, face='front')
-    P.gauge(g, 5.75 - .32, 3.45 - .25, floor + .3, 'front', .07)
-
-
-# ---------------------------------------------------------------- forge
-
-def forge(g, parts):
-    x0, y0, x1, y1 = 0.0, 3.0, SHOP[0] - .05 - .02, 7.0
-    # Tiles 0..1 x 3..7; the right face stops .05 short so its foot clears the shop plinth's.
-    top = P.plinth(g, x0, y0, .95, y1, .6, pilasters=False)
-    room_x1 = x1 - .05
-    fw = dict(infill=ORANGE, post=WOOD, post_w=.15, window_style='grand', window_scale=.7)
-    frame(g, 'X', y0 + .12, x0 + .07, room_x1, top, 2.83, -1, bays=1, **fw)
-    frame(g, 'X', y1 - .12, x0 + .07, room_x1, top, 2.83, 1, bays=1, **fw)
-    frame(g, 'Y', x0 + .12, y0 + .17, y1 - .17, top, 2.83, -1, bays=4, windows=[(3.6, 1.75), (5.0, 1.75), (6.4, 1.75)],
-          **fw)
-    P.plank_slope(g, 'Y', x0 + .12, SHOP[0] - .04, 2.8, 3.55, y0 + .12, y1 - .12, overhang=.2, plank=.3)
-    # Firebox door with a glowing slot on the front.
-    g.box((.5, y0 + .12 - .09, 1.05), (.5, .06, .5), IRON)
-    g.box((.5, y0 + .12 - .125, 1.0), (.3, .02, .05), GLOW)
-    for dx in (-.2, .2):
-        K.stud(g, (.5 + dx, y0 + .12 - .125, 1.25), 'Y', .02)
-    # Tall square tapered brick chimney behind the forge (orange plaster
-    # reads as brick), on a cast base and bound with iron bands.
-    cx, cy = .45, 8.15
-    base_r = .68
-    top = 12.7
-    taper = .3
-    def r_at(z):
-        return base_r * (1 - taper * (z - 1.0) / (top - 1.0))
-    P.lathe(g, (cx, cy, 0), [(base_r * 1.05, 0), (base_r * 1.05, .9), (base_r, 1.0)], CONCRETE,
-            segments=4, phase=math.pi / 4)
-    P.lathe(g, (cx, cy, 0), [(r_at(1.0 + (top - 1.0) * k / 12), 1.0 + (top - 1.0) * k / 12) for k in range(13)],
-            ORANGE, segments=4, phase=math.pi / 4, cap_start=False)
-    for z in (2.6, 4.6, 6.6, 8.6, 10.6, 12.2):
-        P.lathe(g, (cx, cy, 0), [(r_at(z) + .035, z - .06), (r_at(z) + .035, z + .06)], IRON, segments=4,
-                phase=math.pi / 4)
-    rt = r_at(top)
-    P.lathe(g, (cx, cy, 0), [(rt + .06, top - .15), (rt + .06, top + .15)], IRON, segments=4, phase=math.pi / 4)
-    g.box((cx, cy, top + .16), (rt * .9, rt * .9, .02), IRON)
-    K.emitter(g, 'smoke', cx, cy, top + .17, rt * .45)   # forge smoke from the dark mouth plate
-    # Flue from the forge into the chimney.
-    P.pipe(g, [(.45, y1 - .12, 2.2), (.45, cy - .5, 2.2)], .12, flanges=False)
+            g.beam((x - .4, ly + dy * .06, lz + .05), (x - .4, sy + dy * .1, sz), .05, .015, WOOD)
+    for x in (1.35, 3.35):
+        K.lamp(g, x, back - .03, .62, face='front')
 
 
 # ---------------------------------------------------------------- gate office
 
 def gate_office(g, parts):
     """Two-storey works office at the gate; the compressed-air receiver for
-    the shop's pneumatic tools rides on a braced steel frame on its roof."""
+    the shop's pneumatic tools lies on saddles on its flat roof."""
     x0, y0, x1, y1 = OFFICE
-    top = P.plinth(g, x0, y0, x1, y1, 1.2, door=(DOOR_X, 1.0, 1.0))
-    building_portal(g, DOOR_X, y0 - .12, 0)
-    g.doorways.append({'id': 'Entrance', 'position': [DOOR_X, y0, 0], 'outward': [0, -1]})
-    g.box((DOOR_X, y0 - .1, 1.32), (1.3, .2, .12), CONCRETE)
-    for dx in (-.65, .65):
-        K.lamp(g, DOOR_X + dx, y0 - .02, 1.0, face='front')
-    # Timber-framed office storey with plaster infill and tall windows.
-    wx0, wy0, wx1, wy1 = x0 + .12, y0 + .12, x1 - .12, y1 - .12
-    eave = 3.2
-    fw = dict(infill=ORANGE, post=WOOD, post_w=.15, window_style='grand', window_scale=.72)
-    frame(g, 'X', wy0, wx0 - .05, wx1 + .05, top, eave, -1, bays=3,
-          windows=[(7.55, 2.2), (DOOR_X, 2.2), (9.45, 2.2)], **fw)
-    frame(g, 'X', wy1, wx0 - .05, wx1 + .05, top, eave, 1, bays=3, windows=[(7.55, 2.2), (9.45, 2.2)], **fw)
-    frame(g, 'Y', wx0, wy0 + .05, wy1 - .05, top, eave, -1, bays=1, windows=[((wy0 + wy1) / 2, 2.2)], **fw)
-    frame(g, 'Y', wx1, wy0 + .05, wy1 - .05, top, eave, 1, bays=1, windows=[((wy0 + wy1) / 2, 2.2)], **fw)
-    K.flat_roof(g, wx0, wy0, wx1, wy1, eave, overhang=.12, parapet_height=.3)
-    roof = eave + .16
-    # Braced steel frame carrying the riveted air receiver.
-    fz = roof + 1.2
-    ty, tz, tr = (wy0 + wy1) / 2, fz + .5 + .1, .5
-    for x in (7.6, 9.4):
-        for y in (ty - .3, ty + .3):
-            g.box((x, y, (roof + fz) / 2), (.12, .12, fz - roof), IRON)
-            g.box((x, y, roof + .03), (.22, .22, .06), IRON)
-        g.beam((x, ty - .3, roof + .12), (x, ty + .3, fz - .12), .06, mat=IRON)
-    for y in (ty - .3, ty + .3):
-        g.beam((7.66, y, roof + .12), (9.34, y, fz - .14), .06, mat=IRON)
-        g.box((8.5, y, fz + .05), (1.98, .14, .1), IRON)
-    for x in (7.9, 9.1):
-        g.box((x, ty, fz + .16), (.18, .78, .12), PAINTED)
-    P.lathe(g, (8.5, ty, tz), [(0, -1.15), (.3, -1.12), (.44, -1.03), (tr, -.88), (tr, .88), (.44, 1.03),
-                               (.3, 1.12), (0, 1.15)], PAINTED, axis='X', segments=16)
-    for x in (7.75, 8.5, 9.25):
-        P.hoop(g, (x, ty, tz), tr + .02, .04, .06, IRON, axis='X', segments=16)
-    g.cylinder((8.15, ty, tz + tr + .06), .12, .12, IRON, 'Z', 12)
-    g.cylinder((8.15, ty, tz + tr + .13), .15, .03, BRASS, 'Z', 12)
-    g.cylinder((8.95, ty, tz + tr + .1), .045, .2, BRASS, 'Z', 8)
-    P.gauge(g, 9.0, ty - tr - .005, tz, 'front', .09)
-    # Air main from the receiver across to the machine shop's front wall.
-    P.pipe(g, [(7.38, ty, tz), (6.7, ty, tz), (6.7, SHOP[1] - .08, tz)], .06)
-    K.ladder(g, 9.52, ty, roof, fz + .1, face='right', cage=False)
+    top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=WOOD, door=DOOR_X, door_id='Entrance',
+                         ground_windows={'front': [(6.75, .55, 'grand')], 'right': [(1.0, .55, 'grand')]},
+                         windows={'front': [(6.5, 1.5, .52, 'grand'), (7.5, 1.5, .52, 'grand'),
+                                            (8.5, 1.5, .52, 'grand')],
+                                  'right': [(.5, 1.5, .52, 'grand'), (1.5, 1.5, .52, 'grand')],
+                                  'back': [(7.5, 1.5, .52, 'grand')]})
+    K.lamp(g, DOOR_X - .66, y0 - .01, .8, face='front')
+    # Riveted air receiver along X on two concrete saddles, kept to the back
+    # row of the roof so its front row stays open (platformable).
+    ty, tz, tr = 1.55, top + .42, .26
+    for x in (6.95, 8.05):
+        blk(g, x - .1, ty - .2, top, x + .1, ty + .2, tz - .15, CONCRETE)
+    P.lathe(g, (7.5, ty, tz), [(0, -.85), (.18, -.83), (.23, -.77), (tr, -.66), (tr, .66), (.23, .77),
+                               (.18, .83), (0, .85)], PAINTED, axis='X', segments=16)
+    for x in (7.0, 7.5, 8.0):
+        P.hoop(g, (x, ty, tz), tr + .02, .03, .045, IRON, axis='X', segments=16)
+    g.cylinder((7.25, ty, tz + tr + .045), .07, .09, IRON, 'Z', 12)
+    g.cylinder((7.25, ty, tz + tr + .1), .1, .03, BRASS, 'Z', 12)
+    g.cylinder((7.8, ty, tz + tr + .07), .03, .14, BRASS, 'Z', 8)
+    P.gauge(g, 7.75, ty - tr - .005, tz, 'front', .06)
 
 
 # ---------------------------------------------------------------- crane yard
 
 def crane_yard(g, parts):
-    xa, xb = 7.9, 10.65
-    ys = (3.2, 5.9, 8.55)
-    rz = 4.4
-    for x in (xa, xb):
-        for y in ys:
-            P.pier(g, x, y, 0, .35, .32)
-            g.box((x, y, (.4 + rz) / 2), (.2, .2, rz - .4), IRON)
-        g.box((x, (ys[0] + ys[-1]) / 2, rz + .15), (.22, ys[-1] - ys[0] + .3, .3), PAINTED)
-        g.box((x, (ys[0] + ys[-1]) / 2, rz + .33), (.08, ys[-1] - ys[0] + .3, .06), IRON)
-        for y in ys:
-            for s in (-1, 1):
-                if (y == ys[0] and s < 0) or (y == ys[-1] and s > 0):
-                    continue
-                g.beam((x, y + s * .1, rz - .5), (x, y + s * .55, rz - .01), .08, mat=IRON)
+    # Solid concrete runway wall on tile column 8 (y 2..4), the chimney's
+    # firebox behind it, and a steel runway beam on corbels along the shop's
+    # right wall; low concrete yard paving under the lathe.
+    xr = 8.0
+    # Both start .15 behind the office so they clear its roof curb.
+    C.podium(g, xr, 2.15, 9.0, 4.0, RUNWAY_Z - .1, joints=False)
+    blk(g, xr - .02, 2.15, RUNWAY_Z - .1, 9.0, 4.0, RUNWAY_Z, IRON)
+    blk(g, 6.0, 2.0, -.02, 8.0, 4.0, .1, CONCRETE)
+    xl = 6.1   # clear of the sawtooth planks' end overhang
+    for y in (2.3, 4.0):
+        blk(g, 6.0, y - .08, RUNWAY_Z - .45, xl + .18, y + .08, RUNWAY_Z - .12, IRON)
+    blk(g, xl, 2.15, RUNWAY_Z - .12, xl + .18, 4.0, RUNWAY_Z, PAINTED)
     # Travelling bridge with trolley and hook block (one sliding part).
-    y = 3.75
-    bz = rz + .36
+    y = CRANE_Y
+    bz = RUNWAY_Z
+    xa, xb = xl + .1, xr + .4
     br = Geometry('PrecisionMachineWorks.CraneBridge', ((xa + xb) / 2, y, bz))
-    for dy in (-.22, .22):
-        br.box(((xa + xb) / 2, y + dy, bz + .2), (xb - xa + .1, .14, .36), PAINTED)
-    for x in (xa, xb):
-        br.box((x, y, bz + .1), (.26, .9, .2), IRON)
-        for dy in (-.3, .3):
-            br.cylinder((x, y + dy, bz + .02), .08, .1, IRON, 'X', 10)
-    tx = (xa + xb) / 2 - .3
-    br.box((tx, y, bz + .48), (.6, .62, .2), IRON)
-    P.lathe(br, (tx, y, bz + .64), [(.14, -.22), (.14, .22)], PAINTED, axis='X', segments=12)
-    for dy in (-.06, .06):
-        br.box((tx + .1, y + dy, bz - .55), (.012 + .01, .02, 1.5), IRON)
-    br.box((tx + .1, y, bz - 1.38), (.2, .22, .26), PAINTED)
-    P.hoop(br, (tx + .1, y, bz - 1.62), .1, .03, .04, IRON, axis='Y', segments=12)
-    parts.append((br, 'SLIDE_Y', 3.9))
+    for dy in (-.18, .18):
+        br.box(((xa + xb) / 2, y + dy, bz + .2), (xb - xa - .1, .12, .3), PAINTED)
+    for x in (xa + .05, xb - .05):
+        br.box((x, y, bz + .08), (.2, .7, .16), IRON)
+    tx = 7.3
+    br.box((tx, y, bz + .43), (.5, .5, .16), IRON)
+    P.lathe(br, (tx, y, bz + .57), [(.11, -.18), (.11, .18)], PAINTED, axis='X', segments=12)
+    for dy in (-.05, .05):
+        br.box((tx + .08, y + dy, bz - .3), (.02, .02, .64), IRON)
+    br.box((tx + .08, y, bz - .66), (.16, .18, .18), PAINTED)
+    P.hoop(br, (tx + .08, y, bz - .82), .08, .025, .035, IRON, axis='Y', segments=12)
+    parts.append((br, 'SLIDE_Y', CRANE_TRAVEL))
     # Steam hammer at the back of the yard.
-    hx, hy = 10.0, 7.5
-    top = P.plinth(g, hx - 1.0, hy - .5, hx + 1.0, hy + .5, .3, pilasters=False)   # tiles 9..11 x 7..8
-    for dx in (-.5, .5):
-        g.box((hx + dx, hy, top + 1.25), (.22, .4, 2.5), PAINTED)
-    g.box((hx, hy, top + 2.6), (1.3, .44, .24), PAINTED)
-    P.lathe(g, (hx, hy, top + 2.72), [(.24, 0), (.24, .7), (.2, .78)], IRON, segments=16)
-    for z in (top + 2.95, top + 3.3):
-        K.band(g, (hx, hy, 0), .24, z, .06, BRASS, segments=16)
-    g.box((hx, hy, top + .3), (.5, .5, .6), IRON)
-    g.box((hx, hy, top + .65), (.34, .3, .1), IRON)
-    ram = Geometry('PrecisionMachineWorks.HammerRam', (hx, hy, top + 1.2))
-    ram.box((hx, hy, top + .95), (.36, .3, .4), IRON)
-    P.tube(ram, (hx, hy, top + 1.15), (hx, hy, top + 2.45), .05, IRON, segments=8)
-    parts.append((ram, 'PISTON_Z', .42))
-    P.pipe(g, [(hx + .24, hy, top + 3.2), (hx + .6, hy, top + 3.2), (hx + .6, hy, top + 4.0)], .05, flanges=False)
-    P.valve(g, (hx + .6, hy, top + 3.6), 'right', .1)
-    # Big roll lathe in the yard, turning a long shaft under the crane.
-    ly, lz = 5.55, .95
-    g.box((9.3, ly, .1), (2.28, .66, .2), CONCRETE)
-    for x in (8.35, 9.3, 10.25):
-        g.box((x, ly, .45), (.22, .36, .5), IRON)
-    g.box((9.3, ly, .76), (2.2, .42, .12), IRON)
-    g.box((8.47, ly, lz + .05), (.5, .54, .56), PAINTED)
-    P.motor(g, (8.45, ly + .1, lz + .55), .15, .4, axis='X')
-    g.box((10.2, ly, lz - .02), (.3, .34, .3), PAINTED)
-    P.tube(g, (10.05, ly, lz), (9.98, ly, lz), .05, IRON, segments=8)
-    g.box((9.42, ly - .12, .9), (.3, .24, .16), IRON)
-    g.box((9.42, ly - .16, 1.02), (.12, .1, .1), BRASS)
-    roll = Geometry('PrecisionMachineWorks.YardLatheRoll', (9.3, ly, lz))
-    P.lathe(roll, (9.3, ly, lz), [(.3, -.6), (.3, -.54), (.2, -.54), (.2, .4), (.14, .4), (.14, .7)], IRON,
-            axis='X', segments=16)
+    hx, hy = 7.0, 4.5
+    top = .25
+    C.podium(g, 6.0, 4.0, 8.0, 5.0, top, joints=False, foot=False)
+    for dx in (-.42, .42):
+        blk(g, hx + dx - .1, hy - .18, top, hx + dx + .1, hy + .18, top + 1.45, PAINTED)
+    blk(g, hx - .58, hy - .2, top + 1.45, hx + .58, hy + .2, top + 1.65, PAINTED)
+    P.lathe(g, (hx, hy, top + 1.65), [(.2, 0), (.2, .5), (.16, .56)], IRON, segments=16)
+    K.band(g, (hx, hy, 0), .2, top + 1.95, .05, BRASS, segments=16)
+    blk(g, hx - .22, hy - .22, top, hx + .22, hy + .22, top + .45, IRON)
+    blk(g, hx - .15, hy - .13, top + .45, hx + .15, hy + .13, top + .52, IRON)
+    ram = Geometry('PrecisionMachineWorks.HammerRam', (hx, hy, top + .9))
+    ram.box((hx, hy, top + .72), (.3, .26, .3), IRON)
+    P.tube(ram, (hx, hy, top + .87), (hx, hy, top + 1.6), .045, IRON, segments=8)
+    parts.append((ram, 'PISTON_Z', .18))
+    P.pipe(g, [(hx + .2, hy, top + 2.0), (hx + .5, hy, top + 2.0), (hx + .5, hy, top + 2.5)], .04, flanges=False)
+    # Big roll lathe in the yard under the crane, turning a long shaft.
+    ly, lz = 2.55, .72
+    for x in (6.45, 7.05, 7.7):
+        blk(g, x - .1, ly - .16, .1, x + .1, ly + .16, .45, IRON)
+    blk(g, 6.25, ly - .19, .45, 7.9, ly + .19, .55, IRON)
+    blk(g, 6.25, ly - .24, .55, 6.7, ly + .24, 1.0, PAINTED)
+    P.motor(g, (6.47, ly + .05, 1.12), .12, .34, axis='X')
+    blk(g, 7.6, ly - .15, .55, 7.88, ly + .15, .85, PAINTED)
+    blk(g, 7.15, ly - .22, .55, 7.45, ly - .02, .68, IRON)
+    roll = Geometry('PrecisionMachineWorks.YardLatheRoll', (7.15, ly, lz))
+    P.lathe(roll, (7.15, ly, lz), [(.15, -.45), (.15, -.4), (.11, -.4), (.11, .32), (.08, .32), (.08, .45)],
+            IRON, axis='X', segments=16)
     for k in range(4):
         a = k * math.pi / 2
-        roll.box((8.735, ly + math.cos(a) * .26, lz + math.sin(a) * .26), (.09, .07, .07), BRASS)
+        roll.box((6.73, ly + math.cos(a) * .13, lz + math.sin(a) * .13), (.07, .05, .05), BRASS)
     parts.append((roll, 'SPIN_X', 2))
-    # (Loose yard stock and barrels removed: only the crane, hammer and lathe stay.)
+    chimney(g)
+
+
+def chimney(g):
+    """Square tapered brick chimney (orange plaster reads as brick) on its
+    firebox in the yard's back-right corner, bound with iron bands."""
+    cx, cy = 8.5, 4.5
+    blk(g, 8.0, 4.0, 0, 9.0, 5.0, .9, CONCRETE)
+    blk(g, 7.97, 3.97, .9, 9.03, 5.03, .98, CONCRETE)
+    # Firebox door with a glowing slot, facing the yard.
+    blk(g, 9.0, 4.3, .25, 9.04, 4.7, .6, IRON)
+    blk(g, 9.04, 4.38, .38, 9.06, 4.62, .44, GLOW)
+    base_r, top, taper = .42, 6.5, .3
+
+    def r_at(z):
+        return base_r * (1 - taper * (z - .98) / (top - .98))
+    P.lathe(g, (cx, cy, 0), [(r_at(.98 + (top - .98) * k / 8), .98 + (top - .98) * k / 8) for k in range(9)],
+            ORANGE, segments=4, phase=math.pi / 4, cap_start=False)
+    for z in (2.0, 3.4, 4.8, 6.0):
+        P.lathe(g, (cx, cy, 0), [(r_at(z) + .03, z - .05), (r_at(z) + .03, z + .05)], IRON, segments=4,
+                phase=math.pi / 4)
+    rt = r_at(top)
+    P.lathe(g, (cx, cy, 0), [(rt + .05, top - .12), (rt + .05, top + .12)], IRON, segments=4, phase=math.pi / 4)
+    g.box((cx, cy, top + .13), (rt * .9, rt * .9, .02), IRON)
+    K.emitter(g, 'smoke', cx, cy, top + .14, rt * .45)
 
 
 def build(g, parts):
     shop(g, parts)
-    forge(g, parts)
     gate_office(g, parts)
     crane_yard(g, parts)

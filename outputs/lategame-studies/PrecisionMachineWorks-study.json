@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Long north-light sawtooth machine hall under an overhead travelling crane, with a 13-layer square brick chimney bound in iron and a compressed-air receiver on a steel frame.",
+  "hero": "Long north-light sawtooth machine hall with an open belt bay and a travelling crane over its yard, with a square brick chimney bound in iron.",
   "footprint": [
-    11,
-    9
+    9,
+    5
   ],
-  "heightLayers": 14,
+  "heightLayers": 7,
   "boundsMin": [
-    -0.1518,
-    -0.125,
+    -0.1,
+    -0.265,
     -0.03
   ],
   "boundsMax": [
-    11.04,
-    9.045,
-    12.87
+    9.0771,
+    5.0644,
+    6.64
   ],
   "doors": [
     {
       "id": "Entrance",
       "position": [
         8.5,
-        0.15,
+        0.0,
         0
       ],
       "outward": [
@@ -43,21 +43,21 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 5480,
+  "faces": 3690,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1508,
-    "BaseMetal.IronTeeth": 1856,
-    "RoofPlanks.IronTeeth": 444,
-    "Details.IronTeeth": 164,
-    "accent8": 56,
-    "accent25": 12,
-    "Plaster_White.IronTeeth": 426,
-    "Plaster_Orange.IronTeeth": 176,
-    "IrregularPlanks_MetalForged.IronTeeth": 138,
-    "WindowsAtlas.IronTeeth": 874,
-    "PaintedMetal.IronTeeth": 600,
+    "BaseWood_DarkBrown.IronTeeth": 1136,
+    "BaseMetal.IronTeeth": 1080,
+    "RoofPlanks.IronTeeth": 360,
+    "Details.IronTeeth": 120,
+    "accent8": 36,
+    "accent25": 6,
+    "Plaster_White.IronTeeth": 226,
+    "Plaster_Orange.IronTeeth": 76,
+    "IrregularPlanks_MetalForged.IronTeeth": 24,
+    "WindowsAtlas.IronTeeth": 706,
+    "PaintedMetal.IronTeeth": 544,
     "IrregularPlanks_Grey.IronTeeth": 12
   },
-  "sourceHash": "132a6daa3d14a05c99455ae8b77e17812e490f58b9cff58a3180c90cc838c99b",
-  "artHash": "c09bd83bd252c39ece4506edcd05e67e170e5128c55e4dfd655dcf311fc31ff3"
+  "sourceHash": "ad993253bbc859988a44524a868c1db392294878f1578a03ccf7099d3eebacfd",
+  "artHash": "60efcaa3d5de4a3504f8d1ef3d23d297bfa4a14f487c1e79c508080ae85cd0db"
 }
