@@ -490,9 +490,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7854,
-   "vertices": 15362,
-   "construction": 7854,
+   "finished": 4116,
+   "vertices": 7670,
+   "construction": 4116,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.Model.timbermesh"
   },
   "RadioactiveSludgeOutfall": {

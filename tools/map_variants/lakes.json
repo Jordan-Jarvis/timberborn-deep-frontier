@@ -71,7 +71,6 @@
     {"template": "TechnicalSchool.IronTeeth", "label": "Technical School, 53 cells south of the start", "x": 89, "y": 75, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "FertilizerWorks.IronTeeth", "label": "Fertilizer Works, 49 cells north-east of the start", "x": 126, "y": 175, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "GroceryStore.IronTeeth", "label": "Grocery Store, 55 cells east of the start", "x": 150, "y": 153, "z": 2, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "PublicHealthLab.IronTeeth", "label": "Public Health Lab, 80 cells west of the start", "x": 22, "y": 110, "z": 3, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "Greenhouse.IronTeeth", "label": "Greenhouse, 48 cells west of the start", "x": 55, "y": 116, "z": 3, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 53 cells south-west of the start", "x": 58, "y": 93, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 20 cells south-east of the start", "x": 110, "y": 111, "z": 2, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]}

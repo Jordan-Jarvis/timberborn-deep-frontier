@@ -10,6 +10,7 @@
 - **Limestone and Sandstone Quarry** are 8x6, 5 high (was 11x7, 9 high): a boarded headframe over the shaft with its sheave, a flat-roofed winding house with the drum, and the sorting line on a stone plinth. The ladder mast and lattice tower are gone. Old quarries keep their place over the seam.
 - **Sandstone and Limestone Pit** have one storey under a flat roof (3 high, was 4); the hoist jib is lower. The flat roof can carry platforms.
 - **Stone Crusher** stays 4x4 but is 3 high (was 5): its workshop is one layer under the machine floor, and the roll and hopper roofs are flat.
+- **Public Health Lab** is 6x4, 5 high (was 8x6, 12 high): two one-layer storeys under a flat roof you can build on, with a short louvred ventilation shaft and its turning cowls on the roof. The mansard, observation lantern and tall tower are gone. Same cost, power and workers; a flipped lab's entrance moves 2 tiles.
 - **Old saves:** both keep their origin and entrance; freed tiles become empty ground. Reconnect a pipe at the mixer's water inlet (now on the tank pedestal) and its power line. A placed Deep Drill keeps its origin and entrance too (a flipped one's entrance moves 4 tiles); reconnect its shafts and pipes to the new walls.
 
 ### Smaller late-game buildings (compaction pass: power, nuclear, rocketry)

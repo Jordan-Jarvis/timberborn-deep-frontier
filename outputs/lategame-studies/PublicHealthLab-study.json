@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Tall square concrete ventilation tower, steel-banded and louvred, crowned by a ring of turning ventilator cowls.",
+  "hero": "Square concrete ventilation shaft, steel-banded and louvred, rising from the flat roof deck and crowned by a ring of turning ventilator cowls.",
   "footprint": [
-    8,
-    6
+    6,
+    4
   ],
-  "heightLayers": 12,
+  "heightLayers": 5,
   "boundsMin": [
     -0.05,
     -0.255,
     -0.03
   ],
   "boundsMax": [
-    8.05,
     6.05,
-    11.601
+    4.05,
+    4.744
   ],
   "doors": [
     {
       "id": "Door0",
       "position": [
         4.5,
-        0.0,
+        0,
         0
       ],
       "outward": [
@@ -31,32 +31,29 @@
     }
   ],
   "animatedParts": [
-    "Anemometer",
     "TowerCowl0",
     "TowerCowl1",
     "TowerCowl2",
     "TowerCowl3",
-    "TowerCowlMain"
+    "TowerCowlMain",
+    "Anemometer"
   ],
   "animationFrames": 121,
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 4785,
+  "faces": 2239,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1660,
-    "IrregularPlanks_DarkBrown.IronTeeth": 24,
-    "BaseMetal.IronTeeth": 1151,
-    "RoofPlanks.IronTeeth": 111,
-    "Details.IronTeeth": 164,
+    "BaseWood_DarkBrown.IronTeeth": 806,
+    "BaseMetal.IronTeeth": 392,
+    "Details.IronTeeth": 144,
     "accent8": 20,
-    "Plaster_White.IronTeeth": 264,
+    "Plaster_White.IronTeeth": 150,
     "Plaster_Orange.IronTeeth": 7,
-    "IrregularPlanks_MetalForged.IronTeeth": 314,
-    "WindowsAtlas.IronTeeth": 1286,
-    "PaintedMetal.IronTeeth": 28,
-    "BaseWood_Grey.IronTeeth": 132
+    "IrregularPlanks_MetalForged.IronTeeth": 212,
+    "WindowsAtlas.IronTeeth": 726,
+    "BaseWood_Grey.IronTeeth": 168
   },
-  "sourceHash": "a5bd05edbfe4b41e136c17c9170baf53d43df8a2a78b9a81a9012a12bc8ab5ea",
-  "artHash": "555466f1b59c79c1f2549a6b266322c2e971509dcfd418adb8f5cd1adffee704"
+  "sourceHash": "e6b612691b0cfc82568e3d5aae4b558b01a407a0e8fdf332a9dd7f1f10afee8f",
+  "artHash": "3e7b477ab56799596a0ef6f96b54c887003fd35b706b28d9bf3cc7ae57f7c95c"
 }

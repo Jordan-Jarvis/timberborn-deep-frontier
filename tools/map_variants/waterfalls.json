@@ -61,7 +61,6 @@
     {"template": "MissionControl.IronTeeth", "label": "Mission Control, 35 cells east of the start", "x": 111, "y": 59, "z": 8, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 18 cells north of the start", "x": 66, "y": 90, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 36 cells south-east of the start", "x": 91, "y": 47, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
-    {"template": "PublicHealthLab.IronTeeth", "label": "Public Health Lab, 22 cells south-west of the start", "x": 63, "y": 54, "z": 5, "orientation": "Cw180", "margin": 1, "openSides": ["N", "E"]},
     {"template": "RadioactiveWasteVault.IronTeeth", "label": "Radioactive Waste Vault, 59 cells south of the start", "x": 94, "y": 18, "z": 1, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "Restaurant.IronTeeth", "label": "Restaurant, 22 cells north-east of the start", "x": 92, "y": 88, "z": 1, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "RocketAssemblyHangar.IronTeeth", "label": "Rocket Assembly Hangar, 60 cells south-east of the start", "x": 116, "y": 22, "z": 6, "orientation": "Cw270", "margin": 1, "openSides": []},

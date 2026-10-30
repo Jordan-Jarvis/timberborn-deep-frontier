@@ -4,6 +4,16 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction: civic and wellbeing late-game buildings (Claude Code session, 2026-10-30, built by an agent; each building committed when promoted; validated in mirror `civicwell` on HEAD + that building; not built or run in game)
+
+- **Shared:** `lategame_kit.parapet` (and `flat_roof(..., parapet_height=)`) caps its ring with one IRON plate over the whole roof, so `measure_connection_faces.py` records the roof below as covered and blocked and it never becomes a roof deck. The compacted buildings use `parapet_ring` from the new `lategame_roofdeck_parts.py` instead (walls and cap strips only, inside the 0.15 occupancy inset). The kit helper is unchanged. Costs are held by `lategame_cost_basis.json`.
+- **Public Health Lab 8x6x12 -> 6x4x5** (`lategame_PublicHealthLab.py`; user: "public health lab needs to shrink a decent amount"):
+  - **Art:** two one-layer storeys: concrete ground floor with factory windows and the door, pale plaster lab floor in a grey timber frame with a lancet in every bay. Flat roof deck on layer 2 with a parapet ring. The ventilation tower (HERO) is now a short louvred shaft on one roof cell, crowned by the same four cowls and the main cowl; the anemometer sits on a spindle above the main cowl. Every other roof cell is clear (the fume flue and its steam emitter were dropped: an emitter bars the cells round it from the roof deck; BRIEF "no clutter on buildable space"). Removed: the two-layer podium, the second plaster storey, the mansard and dormers, the observation lantern with its rails, the eight-layer tower with floor bands, ladder, top rails and duct bridge, and the header tank. Same textures, material slots and UV authoring; the 6 animated parts keep their names and kinds.
+  - **Checks on the art:** triangles 7,854 -> 4,116 (ceiling re-recorded); strict z-fight 0 visible (frames 1/31/61/91); hidden-geometry audit 0 culled faces exposed; grid audit 0 misses.
+  - **Data:** same origin, door tile and Entrance (4,-1,0). Occupied cells 293 -> 51, box colliders 21 -> 2, shaft faces 117 -> 86, pipe ports 52 -> 31, roof deck 23 platformable cells (every roof cell but the shaft's; was 9). No smoke or steam emitter. Cost, power 100 and 3 workers unchanged. `lategame_freed_cells.json` footprintAfter 6x4x5.
+  - **Maps:** at 6x4 it is under `largeFootprint` (8), so it no longer needs a map site: its site rows leave all 20 `tools/map_variants`, Diorama's unmet item and the Diorama "No room for" text drop it, and `docs/maps.md` loses its rows.
+  - **Old saves:** a placed lab keeps its origin and entrance at any rotation and frees the tiles it no longer uses. A flipped lab's entrance moves 2 tiles (the flip mirrors across the width, 8 -> 6). Shafts and pipes on removed walls disconnect.
+  - **Review:** `outputs/compaction/PublicHealthLab-before-after.png`.
 ## Compaction: Stone Crusher one-layer workshop, 4x4x5 -> 4x4x3 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `ind-head` (HEAD + this change) and the real repo; not built or run in game)
 
 - **User:** one layer per storey, flat roofs. The crusher was already 4x4; its workshop was two layers tall under a machine deck at layer 2.
