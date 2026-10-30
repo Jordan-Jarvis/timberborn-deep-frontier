@@ -40,9 +40,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 15602,
-   "vertices": 30422,
-   "construction": 15602,
+   "finished": 8166,
+   "vertices": 15842,
+   "construction": 8166,
    "file": "outputs/lategame-integration/Data/Buildings/Science/ArchiveExcavation/ArchiveExcavation.IronTeeth.Model.timbermesh"
   },
   "Bathhouse": {

@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Terraced excavation pit exposing a giant rusted human cogwheel half-buried beside a broken fluted column, laid out with string lines and worked by a tall steel tripod derrick and hoist bucket.",
+  "hero": "Excavation pit exposing a giant rusted human cogwheel half-buried beside a broken fluted column, laid out with string lines and worked by a steel tripod derrick and hoist bucket.",
   "footprint": [
-    10,
-    9
+    7,
+    6
   ],
-  "heightLayers": 11,
+  "heightLayers": 6,
   "boundsMin": [
-    -0.2052,
-    -0.025,
+    -0.102,
+    -0.0,
     -0.03
   ],
   "boundsMax": [
-    10.0,
-    9.2,
-    10.0224
+    7.0,
+    6.056,
+    5.12
   ],
   "doors": [
     {
@@ -45,23 +45,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 7245,
+  "faces": 3431,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1444,
-    "IrregularPlanks_DarkBrown.IronTeeth": 16,
-    "BaseMetal.IronTeeth": 2159,
-    "RoofPlanks.IronTeeth": 672,
-    "Details.IronTeeth": 40,
-    "accent8": 30,
+    "BaseWood_DarkBrown.IronTeeth": 750,
+    "BaseMetal.IronTeeth": 1219,
+    "Details.IronTeeth": 12,
     "accent25": 10,
-    "Plaster_White.IronTeeth": 1034,
-    "Plaster_Orange.IronTeeth": 55,
+    "Plaster_White.IronTeeth": 655,
+    "Plaster_Orange.IronTeeth": 25,
     "IrregularPlanks_MetalForged.IronTeeth": 18,
-    "WindowsAtlas.IronTeeth": 346,
-    "PaintedMetal.IronTeeth": 386,
-    "BaseWood_Grey.IronTeeth": 186,
-    "IrregularPlanks_Grey.IronTeeth": 1684
+    "WindowsAtlas.IronTeeth": 177,
+    "PaintedMetal.IronTeeth": 332,
+    "BaseWood_Grey.IronTeeth": 126,
+    "IrregularPlanks_Grey.IronTeeth": 895
   },
-  "sourceHash": "3908781e735c31417786944e151174cf1780be47881f13045d8083d6101815d3",
-  "artHash": "c60b261c7b7b32073629d190541bdc1d47c578d4658ec52f7c2be4b8a5ee906c"
+  "sourceHash": "0dae156f9b3edd6a78408e5a9a2e36c3a9c6f019ccac30da81dc96a3ff5e6615",
+  "artHash": "a5aa48e0f8f5fb7de6002353c425ab339010e161eae766bd9cf853c6e80b6019"
 }

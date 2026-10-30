@@ -81,7 +81,7 @@ Discoveries never gate the chapters, and the colony can find them in any order.
 
 The cache is a map-editor object (`MapEditor/Objects/HumanRecordCache`, MapEditorObjects tool order 1450). It is cloned from the vanilla Medium Relic and keeps that relic's model, colliders, icon and native demolition. Demolition still gives 800 science but loses the records.
 
-A finished workshop that runs the `ArchiveData` recipe, meaning an Archive Excavation, can survey a cache. The workshop needs an occupied cell within 4 tiles horizontally and 4 layers vertically. While its workers work, the survey advances. After 24 working hours the cache hands 6 ArchiveData to that workshop's output inventory as unreserved space allows. The survey counts toward ArchiveData chapters and unlocks the next cache record. Map authors should place caches near ruins, so a colony that excavates there finds them naturally. Caches are optional, so maps without them still complete the story.
+A finished workshop that runs the `ArchiveData` recipe, meaning an Archive Excavation, can survey a cache. The workshop needs an occupied cell within 7 tiles horizontally and 7 layers vertically. While its workers work, the survey advances. After 24 working hours the cache hands 6 ArchiveData to that workshop's output inventory as unreserved space allows. The survey counts toward ArchiveData chapters and unlocks the next cache record. Map authors should place caches near ruins, so a colony that excavates there finds them naturally. Caches are optional, so maps without them still complete the story.
 
 ## Runtime contract (summary)
 

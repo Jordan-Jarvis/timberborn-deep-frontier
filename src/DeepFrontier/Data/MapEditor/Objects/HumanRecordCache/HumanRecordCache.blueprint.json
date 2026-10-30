@@ -141,7 +141,7 @@
   },
   "HumanRecordCacheSpec": {
     "SurveyRecipeId": "ArchiveData",
-    "SurveyRadius": 4,
+    "SurveyRadius": 7,
     "SurveyHours": 24,
     "RewardGoodId": "ArchiveData",
     "RewardAmount": 6

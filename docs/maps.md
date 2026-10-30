@@ -198,7 +198,7 @@ A map supports the loop when a player can reach every stage, from the start to t
     - `WaterInputSpec`: water intake;
     - `MineralPitSpec`: pit with deposits;
     - `HydroTurbineSpec`: dam site;
-  - otherwise a power generator (`WorkshopPoweredGeneratorSpec` or `GoodPoweredGeneratorSpec`), or any building with a footprint side of 8 or more (`largeFootprint`), needs a checked flat site; so do the Deep Drill and the Deep Ore Processor whatever their size (`FLAT_SITE_TEMPLATES`: the deep-industry stage counts the drill's sites and needs the processor, the only building that turns DeepOre into products);
+  - otherwise a power generator (`WorkshopPoweredGeneratorSpec` or `GoodPoweredGeneratorSpec`), or any building with a footprint side of 8 or more (`largeFootprint`), needs a checked flat site; so do the Deep Drill, the Deep Ore Processor and the Archive Excavation whatever their size (`FLAT_SITE_TEMPLATES`: the deep-industry stage counts the drill's sites and needs the processor, the only building that turns DeepOre into products; Human Record Caches are surveyed from the excavation's sites);
   - `Buildings/Platforms` pieces and the small free-standing buildings need none: the crusher, kiln, mixer, smog scrubber, observation deck and outfall place on any flat patch.
   - A new building in the collection is classified automatically, and the build fails until the variants list its site.
 - **Sizes, entrances and heights** come from the blueprint `BlockObjectSpec`. `top occupied layer < 66` replaces the old z < 33 limit (see Format and Z budget).
@@ -233,7 +233,7 @@ A map supports the loop when a player can reach every stage, from the start to t
 | 4 Power | Reinforced Hydro Turbine | a source-fed river cell with ≥ 1 layer of natural bed drop within 12 wet cells (the dam supplies the rest of the head) | `HydroTurbineSpec` | dam site |
 | 4 Power | Nuclear Reactor (3 ReactorCoolantWater/h from pumped water) | flat 20×15 site, top layer < 66, clean water within 15 cells | `ReactorMeltdownSpec`, `maxWaterDistance` | flat site |
 | 5 Narrative | chapters: an investigation building, 20 DeepAlloy, PureWater + Chemical, 6 RecoveredArtifact, 10/30 ArchiveData + Mission Control, the three launches | the sites, deep ore, clean water and badwater above, and pines | `DeepFrontierNarrative` stages | the rows they rely on |
-| 5 Narrative | the five "Record Cache" discoveries (`CachesSurveyed` 1–5) | ≥ 5 `HumanRecordCache`s, each within `SurveyRadius` 4 (Chebyshev, ±4 layers) of the occupied cells of a checked Archive Excavation site | `HumanRecordCacheSpec`, narrative settings | `caches in survey range` |
+| 5 Narrative | the five "Record Cache" discoveries (`CachesSurveyed` 1–5) | ≥ 5 `HumanRecordCache`s, each within `SurveyRadius` 7 (Chebyshev, ±7 layers) of the occupied cells of a checked Archive Excavation site | `HumanRecordCacheSpec`, narrative settings | `caches in survey range` |
 | 6 Nuclear | DeepUranium (UraniumOre from DeepOre) | deep ore (stage 3) | recipes | stage 3 rows |
 | 6 Nuclear | Uranium Processing Plant, Waste Vault, Waste Refinery | flat sites | size | flat sites |
 | 6 Nuclear | Radioactive Waste Export (sludge and contaminated water leave the map) | flat 6×5 site with an occupied block on the map edge, reachable | `MapEdgeSiteSpec`, `MapEdgeSite.TouchesMapEdge` | map-edge site |

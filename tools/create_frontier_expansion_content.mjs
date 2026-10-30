@@ -6,6 +6,7 @@ import {applyFishery,applyHatchery,authorShoreFishing,WATERSIDE_ROWS} from './fi
 import {applyHospital,authorHospitalNeed,HOSPITAL_DESCRIPTION,HOSPITAL_LOCALIZATION} from './hospital_building_content.mjs';
 import {applyGroceryStore,authorGroceryNeed} from './grocery_building_content.mjs';
 import {LATEGAME,applyLategame,studyPipePort} from './lategame_building_content.mjs';
+import {CACHE} from './narrative_content.mjs';
 import {lategameCost, scaledCost, scaledPower} from './lategame_costs.mjs';
 import {SCHOOL_WORKSHOP_SPECS} from './workforce_risk_content.mjs';
 
@@ -329,7 +330,7 @@ const hpText = (hp) => hp.toLocaleString('en-US');
 const BUILDING_TEXT = {
   SteelMill: [(hp) => `An electric-arc melt shop and rolling mill. Makes flux from scrap metal and deep ore, high-grade steel from metal blocks, coal and flux, and alloy from high-grade steel and deep alloy. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires ${hpText(hp)} hp. Its two smokestacks pollute the air nearby.`,
     'Every reactor, rocket and machine core starts as a white-hot pour on this floor.'],
-  ArchiveExcavation: [(hp) => `Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts, then restores their data drives into archive data with grease and metal parts. A Human Record Cache within 4 tiles can be surveyed for extra archive data. 4 workers, dangerous work. Requires ${hpText(hp)} hp. Its stove chimney pollutes the air nearby.`,
+  ArchiveExcavation: [(hp) => `Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts, then restores their data drives into archive data with grease and metal parts. A Human Record Cache within ${CACHE.spec.SurveyRadius} tiles can be surveyed for extra archive data. 4 workers, dangerous work. Requires ${hpText(hp)} hp. Its stove chimney pollutes the air nearby.`,
     'The humans buried their warnings in the strata. Dig carefully.'],
   CryogenicTankFarm: [(hp) => `Stores up to 2,000 units of one cryogenic fuel, liquid hydrogen or liquid oxygen, delivered and drawn by pipes at its two front sockets or by haulers. Needs ${hpText(hp)} hp to keep the fuel cold: without power the intake closes, and after 12 hours the stored fuel starts to vent.`,
     'The coldest place in the colony, kept that way at great expense.'],

@@ -53,7 +53,9 @@ export const CACHE = {
   icon: 'MapEditor/Objects/HumanRecordCache/HumanRecordCacheIcon',
   toolGroup: 'MapEditorObjects',
   toolOrder: 1450,
-  spec: {SurveyRecipeId: 'ArchiveData', SurveyRadius: 4, SurveyHours: 24, RewardGoodId: 'ArchiveData', RewardAmount: 6},
+  // Radius 7 (was 4) since the 2026-10-30 compaction trimmed the Archive Excavation from 10x9 to 7x6 inside
+  // its old footprint (at most 3 tiles per axis): every cache the old excavation reached stays in range.
+  spec: {SurveyRecipeId: 'ArchiveData', SurveyRadius: 7, SurveyHours: 24, RewardGoodId: 'ArchiveData', RewardAmount: 6},
 };
 
 const T = (name) => `${name}.IronTeeth`;
