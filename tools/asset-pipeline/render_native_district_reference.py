@@ -24,6 +24,9 @@ gpu=[d for d in prefs.devices if d.type=='OPTIX' and d.name=='NVIDIA GeForce RTX
 if len(gpu)!=1:raise RuntimeError('Required RTX 2060 OptiX device unavailable')
 for d in prefs.devices:d.use=d in gpu
 scene.cycles.device='GPU';scene.render.resolution_x=1100;scene.render.resolution_y=900;scene.render.resolution_percentage=100
+# Denoise on the GPU too: OIDN on the CPU used ~85 of the ~95 CPU-seconds of a 1200 px render.
+if not prefs.has_oidn_gpu_devices():raise RuntimeError('RTX 2060 OIDN GPU denoising unavailable')
+scene.cycles.denoising_use_gpu=True
 scene.render.image_settings.file_format='PNG';scene.render.filepath=str(ROOT/'outputs/reference-studies/NativeDistrict-facade-reference.png')
 bpy.ops.render.render(write_still=True)
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'outputs/native-civic-assets/District-reference.blend'))

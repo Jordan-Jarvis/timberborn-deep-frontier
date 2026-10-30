@@ -275,6 +275,10 @@ def main():
             for device in prefs.devices:
                 device.use = device in required
             scene.cycles.device = 'GPU'
+            # Denoise on the GPU too: OIDN on the CPU used ~85 of the ~95 CPU-seconds of a 1200 px render.
+            if not prefs.has_oidn_gpu_devices():
+                raise RuntimeError('RTX 2060 OIDN GPU denoising unavailable')
+            scene.cycles.denoising_use_gpu = True
             renders = render_views(scene, camera, low, high, cli, cli.suffix)
             bs.inputs['Emission Strength'].default_value = 0
     show_stock(static, {})   # the saved source shows every stage

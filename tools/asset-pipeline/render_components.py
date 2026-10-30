@@ -45,6 +45,9 @@ gpus=[d for d in prefs.devices if d.type=='OPTIX' and d.name=='NVIDIA GeForce RT
 if len(gpus)!=1:raise RuntimeError('RTX 2060 OptiX device required')
 for d in prefs.devices:d.use=d in gpus
 scene.cycles.device='GPU'
+# Denoise on the GPU too: OIDN on the CPU used ~85 of the ~95 CPU-seconds of a 1200 px render.
+if not prefs.has_oidn_gpu_devices():raise RuntimeError('RTX 2060 OIDN GPU denoising unavailable')
+scene.cycles.denoising_use_gpu=True
 args.output.parent.mkdir(parents=True,exist_ok=True)
 scene.render.filepath=str(args.output)
 bpy.ops.render.render(write_still=True)

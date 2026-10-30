@@ -382,6 +382,9 @@ def main():
     if len(devices)!=1:raise RuntimeError('Required local OptiX render device NVIDIA GeForce RTX 2060 is unavailable')
     for device in preferences.devices:device.use=device in devices
     scene.cycles.device='GPU'
+    # Denoise on the GPU too: OIDN on the CPU used ~85 of the ~95 CPU-seconds of a 1200 px render.
+    if not preferences.has_oidn_gpu_devices():raise RuntimeError('RTX 2060 OIDN GPU denoising unavailable')
+    scene.cycles.denoising_use_gpu=True
     scene.render.resolution_x=cli.resolution;scene.render.resolution_y=cli.resolution;scene.render.resolution_percentage=100
     scene.render.image_settings.file_format='PNG';scene.render.image_settings.color_mode='RGBA'
     scene.world.color=(.35,.35,.35);scene.view_settings.view_transform='AgX'

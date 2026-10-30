@@ -118,6 +118,10 @@ def main():
     for d in prefs.devices:
         d.use = d in gpus
     scene.cycles.device = 'GPU'
+    # Denoise on the GPU too: OIDN on the CPU used ~85 of the ~95 CPU-seconds of a 1200 px render.
+    if not prefs.has_oidn_gpu_devices():
+        raise RuntimeError('RTX 2060 OIDN GPU denoising unavailable')
+    scene.cycles.denoising_use_gpu = True
     scene.render.resolution_x = scene.render.resolution_y = cli.resolution
     scene.render.resolution_percentage = 100
     scene.render.image_settings.file_format = 'PNG'
