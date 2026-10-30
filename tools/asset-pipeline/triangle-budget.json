@@ -67,9 +67,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 19004,
-   "vertices": 36354,
-   "construction": 19004,
+   "finished": 8768,
+   "vertices": 16432,
+   "construction": 8768,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/ChemicalWorks/ChemicalWorks.IronTeeth.Model.timbermesh"
   },
   "CoalPowerPlant": {

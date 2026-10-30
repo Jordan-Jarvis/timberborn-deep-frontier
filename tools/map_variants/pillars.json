@@ -53,7 +53,6 @@
     {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 76 cells south of the start", "x": 87, "y": 4, "z": 12, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "MissionControl.IronTeeth", "label": "Mission Control, 67 cells north-west of the start", "x": 41, "y": 111, "z": 15, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "Bathhouse.IronTeeth", "label": "Bathhouse, 66 cells north of the start", "x": 92, "y": 139, "z": 15, "orientation": "Cw0", "margin": 1, "openSides": []},
-    {"template": "ChemicalWorks.IronTeeth", "label": "Chemical Works, 50 cells south-east of the start", "x": 127, "y": 41, "z": 10, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "TownPlaza.IronTeeth", "label": "Town Plaza, 85 cells west of the start", "x": 13, "y": 90, "z": 15, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 81 cells south-east of the start", "x": 143, "y": 9, "z": 15, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 43 cells east of the start", "x": 146, "y": 80, "z": 12, "orientation": "Cw270", "margin": 1, "openSides": []},

@@ -56,7 +56,6 @@
     {"template": "Hospital.IronTeeth", "label": "Hospital, 79 cells north-west of the start", "x": 79, "y": 216, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 85 cells east of the start", "x": 204, "y": 167, "z": 11, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 104 cells south-west of the start", "x": 64, "y": 64, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": []},
-    {"template": "ChemicalWorks.IronTeeth", "label": "Chemical Works, 104 cells north-west of the start", "x": 81, "y": 255, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for the record cache 99 cells north-west of the start", "x": 60, "y": 228, "z": 8, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "RadioactiveWasteVault.IronTeeth", "label": "Radioactive Waste Vault, 113 cells west of the start", "x": 13, "y": 121, "z": 9, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "FisheryWorks.IronTeeth", "label": "Fishery Works, 19 cells south-east of the start", "x": 139, "y": 151, "z": 3, "orientation": "Cw90", "margin": 1, "openSides": []},

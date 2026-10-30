@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "A 13-layer riveted fractionating column with three ring platforms and a caged ladder, its vapour line dropping into a fin-fan cooler, beside a lattice flare stack with a live flame.",
+  "hero": "A seven-layer riveted fractionating column with a ring platform and a caged ladder, its vapour line dropping to a fin-fan cooler on the flat hall roof, beside a flare stack with a live flame.",
   "footprint": [
-    10,
-    9
+    5,
+    5
   ],
-  "heightLayers": 14,
+  "heightLayers": 8,
   "boundsMin": [
-    -0.23,
-    -0.145,
+    -0.06,
+    -0.265,
     -0.03
   ],
   "boundsMax": [
-    9.915,
-    9.169,
-    13.72
+    5.12,
+    5.06,
+    7.62
   ],
   "doors": [
     {
       "id": "Entrance",
       "position": [
         1.5,
-        0.15,
+        0.0,
         0
       ],
       "outward": [
@@ -31,36 +31,34 @@
     }
   ],
   "animatedParts": [
-    "ChemicalWorks.Agitator1",
-    "ChemicalWorks.Agitator2",
-    "ChemicalWorks.Agitator3",
+    "ChemicalWorks.CoolerFan1",
+    "ChemicalWorks.CoolerFan2",
     "ChemicalWorks.RoofVent1",
     "ChemicalWorks.RoofVent2",
     "ChemicalWorks.RoofVent3",
+    "ChemicalWorks.Agitator1",
+    "ChemicalWorks.Agitator2",
+    "ChemicalWorks.Agitator3",
     "ChemicalWorks.Beacon",
-    "ChemicalWorks.CoolerFan1",
-    "ChemicalWorks.CoolerFan2",
     "ChemicalWorks.FlareFlame"
   ],
   "animationFrames": 121,
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 8651,
+  "faces": 3649,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 704,
-    "IrregularPlanks_DarkBrown.IronTeeth": 10,
-    "BaseMetal.IronTeeth": 5176,
-    "RoofPlanks.IronTeeth": 372,
-    "Details.IronTeeth": 550,
-    "accent8": 63,
-    "accent25": 78,
-    "Plaster_White.IronTeeth": 688,
-    "Plaster_Orange.IronTeeth": 77,
-    "IrregularPlanks_MetalForged.IronTeeth": 323,
-    "WindowsAtlas.IronTeeth": 262,
-    "PaintedMetal.IronTeeth": 940
+    "BaseWood_DarkBrown.IronTeeth": 236,
+    "BaseMetal.IronTeeth": 2262,
+    "Details.IronTeeth": 264,
+    "accent8": 53,
+    "accent25": 66,
+    "Plaster_White.IronTeeth": 246,
+    "Plaster_Orange.IronTeeth": 7,
+    "IrregularPlanks_MetalForged.IronTeeth": 173,
+    "WindowsAtlas.IronTeeth": 274,
+    "PaintedMetal.IronTeeth": 660
   },
-  "sourceHash": "81e6fa26996815bcbf835f133d99724aabd6feec8b7f5f01168bea7f06c949fb",
-  "artHash": "d0759c81082747cea5957c7e95ba7e25754a2c53dadf04925ce2908b0b211194"
+  "sourceHash": "53bb4124a46de5b3c44262eea5178e2f829ab80290636431e97244f48d937618",
+  "artHash": "b938108f76c3c6aa92c5c2527361c725f55e388cbe430607df5102e7fe964c46"
 }

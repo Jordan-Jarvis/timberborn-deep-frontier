@@ -4,6 +4,17 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction: Chemical Works 10x9x14 -> 5x5x8 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `lgi` on HEAD + this change; not built or run in game)
+
+- **Art** (`lategame_ChemicalWorks.py`, new own helper `compact_industry_parts.py`: one-layer storey blocks with a flat roof whose top is a whole layer and a curb under 0.15; not named `lategame_*_parts.py`, so other studies' source hashes stay put; saved scene unpacked): a solid two-storey reactor hall (concrete ground storey with the door, steel-framed forged upper storey, one layer each, floor band on every layer) under a flat concrete roof that carries the fin-fan cooler, the three turbine ventilators on the cooler housing and a short flare stack with its flame at the back corner; three agitated reactors in a row on a concrete apron along the hall's right wall; the 7-layer riveted column (insulated middle, one ring platform on layer 5, ladder) behind them, its vapour line dropping to the cooler. Removed: the lattice flare tower and knock-out drum, the pipe-rack catwalk on its bents, the cooler's piers, the spherical product tank, two of the three column platforms and both gabled roofs. Same textures, slots and UV authoring; the 9 animated parts keep their names.
+- **Checks on the art:** triangles 19,004 -> 8,768 (ceiling re-recorded); strict z-fight audit 0 visible at frames 1/31/61/91; grid audit 0 edge and floor misses (the instrument board is wall-mounted).
+- **Data:** footprint inside the old one, same origin, door and Entrance (1,-1,0); door face on the tile edge (`LocalAccess` z 0.15 -> 0). Solid cells 416 -> 89; shaft faces 137 -> 52, pipe ports 60 -> 21; one smoke emitter (the flare); 6 platformable roof cells (the front two rows of the hall roof). Cost held by `lategame_cost_basis.json`; power, 8 workers and recipes unchanged.
+- **Maps:** 5x5 is under `largeFootprint` (8), so the Chemical Works no longer needs a site: its site lines (17 variants) and unmet items (Beaverome, Cliffside, Diorama) are removed from `tools/map_variants`, with the matching `docs/maps.md` rows and the generated "No room for" lines. `map-setup-terrain` fails only on `smallMap.maxArea` (re-derived by the coordinator after the pass).
+- **Old saves:** a placed Chemical Works keeps its origin and entrance and frees the tiles it no longer uses. A flipped one's entrance moves 5 tiles (local x 8 -> 3). Shafts and pipes on removed walls disconnect.
+- **Review:** `outputs/compaction/ChemicalWorks-before-after.png`.
+- **Checks (mirror):** canonical generation; `validate_all -Only` 22 checks (exports-lategame/connection/preview_budget, model-bindings, entrances, connection faces, roof decks, smog, slice content, freed cells, sounds, status icons, power rule, automation, tool groups, workforce risks, narrative, map setup, progression, building assets): 21 pass, `map-setup-terrain` on maxArea only.
+- **In game:** not seen yet.
+
 ## Compaction follow-up: no clutter on buildable space, kiln, mixer and quarries (Claude Code session, 2026-10-30, built by an agent; scenes, exports and blueprints promoted; validated in mirror `ind-head` and the real repo; not built or run in game)
 
 - **User rule (BRIEF.md "No clutter on buildable space"):** "we can have details, but clutter that leaves most of a tile open but makes it un buildable is not great."

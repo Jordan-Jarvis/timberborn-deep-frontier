@@ -13,6 +13,7 @@
 - **Stone Crusher** stays 4x4 but is 3 high (was 5): its workshop is one layer under the machine floor, and the roll and hopper roofs are flat.
 - **Public Health Lab** is 6x4, 5 high (was 8x6, 12 high): two one-layer storeys under a flat roof you can build on, with a short louvred ventilation shaft and its turning cowls on the roof. The mansard, observation lantern and tall tower are gone. Same cost, power and workers; a flipped lab's entrance moves 2 tiles.
 - **No clutter on buildable tiles:** the kiln's front tiles beside the porch are open ground, the mixer's wet tray sits in its concrete base, and the quarry's plinth top and winding-house roof can carry platforms.
+- **Chemical Works** is 5x5, 8 high (was 10x9, 14 high): one solid two-storey reactor hall with a flat roof carrying the fin-fan cooler and the flare, three agitated reactors along its side and the fractionating column with one ring platform. The lattice flare tower, pipe-rack catwalk, cooler piers and product sphere are gone; the front of the roof can carry platforms. Same cost, power and crew.
 - **Old saves:** both keep their origin and entrance; freed tiles become empty ground. Reconnect a pipe at the mixer's water inlet (now on the tank pedestal) and its power line. A placed Deep Drill keeps its origin and entrance too (a flipped one's entrance moves 4 tiles); reconnect its shafts and pipes to the new walls.
 
 ### Smaller late-game buildings (compaction pass: power, nuclear, rocketry)
