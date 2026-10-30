@@ -27,15 +27,16 @@ assert bp['MechanicalNodeSpec']['PowerInput']==0
 assert not any(k in bp for k in ('WaterWheelSpec','WaterPoweredGeneratorSpec','ManufactorySpec','WorkplaceSpec'))
 def cell(value):
     return tuple(value[k] for k in ('X','Y','Z'))
-assert cell(bp['BlockObjectSpec']['Size'])==(8,10,7)
+# One-storey workshop since the 2026-10-30 compaction (8x10x7 -> 8x10x6).
+assert cell(bp['BlockObjectSpec']['Size'])==(8,10,6)
 blocks=bp['BlockObjectSpec']['Blocks']
-assert len(blocks)==8*10*7
+assert len(blocks)==8*10*6
 def block(c):
     x,y,z=c
     return blocks[(z*10+y)*8+x]
 for x in range(4,8):
     for y in (2,3):
-        for z in range(7):
+        for z in range(6):
             assert block((x,y,z))['Occupations']=='None','Dam continuation blocked'
 routes={tuple(n['cell']) for n in layout['nodes']}
 graph={c:set() for c in routes}
@@ -51,13 +52,19 @@ while pending:
     if c in visited:continue
     visited.add(c);pending.extend(graph[c]-visited)
 assert visited==routes
+# Player-path terrace deck since 2026-10-30 (every flat roof tile placeable):
+# the lane cells are free over stackable foundation roofs, with no door links.
+assert layout['deckMode']=='PlayerPlacedPaths' and 'BuildingWalkwaySpec' not in bp and not layout['doorLinks']
 for c in routes:
-    assert block(c)['Occupations']=='Floor, Bottom, Path'
-    assert block((c[0],c[1],c[2]-1))['Stackable']=='BlockObject'
+    assert block(c)['Occupations']=='None',c
+    assert block((c[0],c[1],c[2]-1))['Stackable']=='BlockObject',c
+assert bp['PlatformDeckSpec']['Doors']==[] and bp['BlockObjectNavMeshSettingsSpec']['EdgeGroups']==[]
 for x in range(4):
     for y in (2,3):assert block((x,y,5))['Stackable']=='BlockObject'
-for opening in bp['BuildingWalkwaySpec']['Openings']:
-    for name in opening['HiddenNodes']+opening['ShownNodes']:assert names.count(name)==1,name
+assert len(bp['PlatformDeckSpec']['Openings'])==len(layout['ports'])
+for opening in bp['PlatformDeckSpec']['Openings']:
+    assert not opening['ShownNodes'],opening['Id']
+    for name in opening['HiddenNodes']:assert names.count(name)==1,name
 hydro=bp['HydroTurbineSpec']
 solid={cell(c) for c in hydro['SolidWaterCells']}
 closed={cell(c) for c in hydro['ClosedGateCells']}
@@ -89,7 +96,7 @@ report={
     'scope':'Candidate export, grid and water-seal checks; native runtime and pump balance pending',
     'modelSha256':hashlib.sha256(payload).hexdigest(),'nodes':len(names),
     'animationTracks':tracks,'nativeUvVertices':uv_count,'routeCells':len(routes),
-    'adaptiveOpenings':len(bp['BuildingWalkwaySpec']['Openings']),
+    'adaptiveOpenings':len(bp['PlatformDeckSpec']['Openings']),
     'supportCells':sum(b['Stackable']=='BlockObject' for b in blocks),
     'solidWaterCells':len(solid),'horizontalWaterPlanes':len(planes),
     'powerConnections':len(bp['TransputProviderSpec']['Transputs']),

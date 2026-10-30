@@ -13,11 +13,14 @@ blueprint=read('src/DeepFrontier/Data/Buildings/Food/FisheryWorks/FisheryWorks.I
 payload=(ROOT/'src/DeepFrontier/Data/Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.Model.timbermesh').read_bytes()
 model=model_pb2.Model();model.ParseFromString(zlib.decompress(payload))
 names=collections.Counter(n.name for n in model.nodes)
+xyz_=lambda c:{'X':c[0],'Y':c[1],'Z':c[2]}
+blocks_=None
 require(all(n==1 for n in names.values()),'Duplicate fishery mesh nodes')
 # 11x8 since the forced front/rear decoration went (2026-10-22).
 # One layer per storey since 2026-10-30 (was 11x8x7).
 require([blueprint['BlockObjectSpec']['Size'][axis] for axis in ('X','Y','Z')]==[11,8,4],'Waterfront Fishery registration changed')
 require(len(blueprint['BlockObjectSpec']['Blocks'])==11*8*4,'Incomplete occupied-cell specification')
+blocks_=blueprint['BlockObjectSpec']['Blocks']
 cells={tuple(n['cell']) for n in layout['nodes']};graph={n:set() for n in cells}
 for a,b in layout['edges']:
     a,b=tuple(a),tuple(b)
@@ -30,9 +33,23 @@ while queue:
     visited.add(cell);queue.extend(graph[cell]-visited)
 require(visited==cells,'Disconnected fishery routes')
 require(len(layout['doorNodes'])==3 and {c[2] for c in layout['doorNodes']}=={0,1},'Waterfront doorway contract changed')
-require(len(blueprint['BuildingWalkwaySpec']['Openings'])==len(layout['ports']),'Stale fishery rail export')
-for p in blueprint['BuildingWalkwaySpec']['Openings']:
-    for name in p['HiddenNodes']+p['ShownNodes']:require(names[name]==1,'Missing rail binding '+name)
+# Player-placed-path decks since 2026-10-30 (every flat roof tile placeable):
+# no built-in walkway; the adaptive rails open on actual player paths and the
+# two upper doors are the deck door links.
+require(layout['deckMode']=='PlayerPlacedPaths' and 'BuildingWalkwaySpec' not in blueprint,'Fishery decks must be player-path decks')
+deck=blueprint['PlatformDeckSpec']
+require(len(deck['Openings'])==len(layout['ports']),'Stale fishery rail export')
+require(deck['Doors']==[{k:xyz_(v) for k,v in d.items()} for d in layout['doorLinks']],'Deck doors differ from the layout door links')
+for p in deck['Openings']:
+    require(not p['ShownNodes'],'Player-path decks need no connection-only filler planks: '+p['Id'])
+    for name in p['HiddenNodes']:require(names[name]==1,'Missing rail binding '+name)
+interior={tuple(c) for c in layout['interiorCells']}
+for n in layout['nodes']:
+    c=tuple(n['cell'])
+    if c in interior or c[2]==0:continue
+    require(blocks_[(c[2]*8+c[1])*11+c[0]]['Occupations'] in ('None','Corners'),'Deck cell is occupied: '+str(c))
+    require(blocks_[((c[2]-1)*8+c[1])*11+c[0]]['Stackable']=='BlockObject','Deck slab is not stackable: '+str(c))
+require(blueprint['BlockObjectNavMeshSettingsSpec']['GenerateFloorsOnStackable'],'Deck floors need GenerateFloorsOnStackable')
 site=read('tools/waterside_sites.json')['FisheryWorks']
 xyz=lambda c:{'X':c[0],'Y':c[1],'Z':c[2]}
 require(site['workCells'] is None and 'WaterDepthWorkCellsSpec' not in blueprint and 'TickableWaterBuildingSpec' not in blueprint,'Fishery must not gain a site water requirement')

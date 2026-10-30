@@ -40,6 +40,7 @@
   - The Deep Mine's lamp house and the Archive's hall have real plank gables. The Deep Drill, Deep Ore Processor, Steel Mill, quarry winding house and Limestone Pit get steel plate or painted sheet roofs; the Deep Mine annex and the Archive catalogue wing get timber decks.
   - Roof flues and stacks are gone from the Restaurant, Hospital, Fishery Works, Grocery and Materials Laboratory (the Restaurant and Laboratory no longer make smog). The Deep Drill, Deep Mine and Archive chimneys rise up their walls.
   - The Stone Crusher, Concrete Mixer, both pits and the Fish Hatchery no longer show concrete: stone flagstones and coursed masonry, timber and steel instead.
+- **Fishery Works galleries, Materials Laboratory terrace and Reinforced Hydro Turbine terrace are player-path decks:** every flat roof tile on them can carry paths, platforms and buildings, like the Restaurant and Hospital balconies. Lay paths over them to reach the upper doors; their rails open where your paths cross.
 
 ### Smaller late-game buildings (compaction pass: power, nuclear, rocketry)
 

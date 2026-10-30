@@ -62,11 +62,14 @@ export async function applyFishery(value) {
   region([3,6,0],[4,6,0],'All'); // Rear water tanks under the gallery: the pipe inlet.
   region([8,6,0],[8,6,1],'Corners'); // Hoist mast outside the walking lane.
   region([8,6,2],[10,6,2],'All');
+  // Player-placed-path galleries and roof terrace (2026-10-30, user: every
+  // flat roof tile placeable like a platform): the deck cells stay free and
+  // the slab under each is a stackable roof deck.
+  if(d.deckMode!=='PlayerPlacedPaths')throw new Error('Fishery galleries must be player-path decks');
   const interior=new Set(d.interiorCells.map(c=>c.join(',')));
   for(const n of d.nodes) {
     if(interior.has(n.cell.join(',')))continue;
     const [x,y,z]=n.cell;
-    blocks[index(n.cell)].Occupations='Floor, Bottom, Path';
     if(z>0) {
       const support=blocks[index([x,y,z-1])];
       if(support.Occupations==='None')throw new Error(`Fishery route lacks slab support: ${n.cell}`);
@@ -101,12 +104,15 @@ export async function applyFishery(value) {
   value.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
   value.Children['#Finished'].CollidersSpec=industrialColliders(blocks,d.size,d.baseZ);
   value.Children['#Unfinished']={Children:{ConstructionStage0:{TimbermeshSpec:{Model:'Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.ConstructionStage0.Model'},CollidersSpec:industrialColliders(blocks,d.size,d.baseZ)}}};
-  const edgeGroups=d.edges.map(([a,b])=>({Cost:1,Group:{UseGroup:a[2]!==b[2],GroupName:a[2]!==b[2]?'DeepFrontierInterior':''},IsPath:true,AddedEdges:[{Start:xyz(a),End:xyz(b),IsTwoWay:true}]}));
-  edgeGroups.push({Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,AddedEdges:d.ports.map(p=>({Start:xyz(p.inside),End:xyz(p.outside),IsTwoWay:false}))});
+  // Only the enclosed interior route is building navigation; the galleries and
+  // the terrace are native stackable floors reached through the door links.
+  const edgeGroups=d.edges.filter(([a,b])=>interior.has(a.join(','))&&interior.has(b.join(',')))
+    .map(([a,b])=>({Cost:1,Group:{UseGroup:a[2]!==b[2],GroupName:a[2]!==b[2]?'DeepFrontierInterior':''},IsPath:true,AddedEdges:[{Start:xyz(a),End:xyz(b),IsTwoWay:true}]}));
+  edgeGroups.push({Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,AddedEdges:d.doorLinks.map(l=>({Start:xyz(l.Interior),End:xyz(l.Exterior),IsTwoWay:true}))});
   // The door cell's deck route meets the player's path on the Entrance cell.
   edgeGroups.push({Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,AddedEdges:[{Start:xyz(door),End:xyz(entrance),IsTwoWay:true}]});
-  value.BlockObjectNavMeshSettingsSpec={NoAutoWalls:false,GenerateFloorsOnStackable:false,EdgeGroups:edgeGroups,UnblockedCoordinates:[],BlockedEdges:[]};
-  value.BuildingWalkwaySpec=await read('outputs/civic-integration/FisheryWorks-walkway.json');
+  value.BlockObjectNavMeshSettingsSpec={NoAutoWalls:false,GenerateFloorsOnStackable:true,EdgeGroups:edgeGroups,UnblockedCoordinates:[],BlockedEdges:[]};
+  value.PlatformDeckSpec=await read('outputs/civic-integration/FisheryWorks-platform-deck.json');
   // Shafts may meet any solid wall; the tested sockets stay first.
   {value.TransputProviderSpec={IgnoreRotation:false,Transputs:solidPowerFaces(blocks,d.size,{exclude:[door,entrance],keep:[
     {Coordinates:xyz([0,3,0]),Directions:'Left, Bottom',ReverseRotation:false},

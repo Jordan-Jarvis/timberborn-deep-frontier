@@ -384,6 +384,36 @@
   "FisheryWorks": {
    "platformable": [
     [
+     8,
+     2,
+     0
+    ],
+    [
+     0,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0
+    ],
+    [
+     8,
+     3,
+     0
+    ],
+    [
+     0,
+     4,
+     0
+    ],
+    [
+     8,
+     4,
+     0
+    ],
+    [
      0,
      5,
      0
@@ -397,6 +427,36 @@
      2,
      5,
      0
+    ],
+    [
+     8,
+     5,
+     0
+    ],
+    [
+     2,
+     6,
+     0
+    ],
+    [
+     3,
+     6,
+     0
+    ],
+    [
+     4,
+     6,
+     0
+    ],
+    [
+     5,
+     6,
+     0
+    ],
+    [
+     6,
+     6,
+     0
     ]
    ],
    "excluded": [
@@ -406,47 +466,7 @@
       1,
       0
      ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      8,
-      2,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      0,
-      3,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      1,
-      3,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      8,
-      3,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      0,
-      4,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
+     "reason": "enclosed, or a door, entrance or walkway cell above"
     },
     {
      "cell": [
@@ -454,71 +474,7 @@
       4,
       0
      ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      8,
-      4,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      8,
-      5,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      2,
-      6,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      3,
-      6,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      4,
-      6,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      5,
-      6,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      6,
-      6,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      7,
-      6,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
+     "reason": "enclosed, or a door, entrance or walkway cell above"
     }
    ]
   },
@@ -4237,6 +4193,71 @@
   "ReinforcedHydroTurbine": {
    "platformable": [
     [
+     4,
+     4,
+     1
+    ],
+    [
+     5,
+     4,
+     1
+    ],
+    [
+     6,
+     4,
+     1
+    ],
+    [
+     7,
+     4,
+     1
+    ],
+    [
+     6,
+     5,
+     1
+    ],
+    [
+     7,
+     5,
+     1
+    ],
+    [
+     7,
+     6,
+     1
+    ],
+    [
+     7,
+     7,
+     1
+    ],
+    [
+     7,
+     8,
+     1
+    ],
+    [
+     4,
+     9,
+     1
+    ],
+    [
+     5,
+     9,
+     1
+    ],
+    [
+     6,
+     9,
+     1
+    ],
+    [
+     7,
+     9,
+     1
+    ],
+    [
      0,
      2,
      5
@@ -4277,112 +4298,7 @@
      5
     ]
    ],
-   "excluded": [
-    {
-     "cell": [
-      4,
-      4,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      5,
-      4,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      6,
-      4,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      7,
-      4,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      6,
-      5,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      7,
-      5,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      7,
-      6,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      7,
-      7,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      7,
-      8,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      4,
-      9,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      5,
-      9,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      6,
-      9,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      7,
-      9,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    }
-   ]
+   "excluded": []
   },
   "ArchiveExcavation": {
    "platformable": [
@@ -4442,6 +4358,46 @@
    "platformable": [
     [
      0,
+     0,
+     0
+    ],
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     2,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     1,
+     0
+    ],
+    [
+     2,
+     1,
+     0
+    ],
+    [
+     0,
+     2,
+     0
+    ],
+    [
+     2,
+     2,
+     0
+    ],
+    [
+     0,
      3,
      1
     ],
@@ -4494,75 +4450,11 @@
    "excluded": [
     {
      "cell": [
-      0,
-      0,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      1,
-      0,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      2,
-      0,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      0,
-      1,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      1,
-      1,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      2,
-      1,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      0,
-      2,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
       1,
       2,
       0
      ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      2,
-      2,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
+     "reason": "enclosed, or a door, entrance or walkway cell above"
     }
    ]
   },

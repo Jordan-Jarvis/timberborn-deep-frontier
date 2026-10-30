@@ -73,9 +73,11 @@ export async function researchContent() {
     // No forced decoration beyond the walls (2026-10-22): the outdoor shelves,
     // planters, barrel and crate are gone; their cells are open ground.
     const interior=new Set(d.interiorCells.map(c=>c.join(',')));
+    // Player-placed-path terrace (2026-10-30): the deck cells stay free; the
+    // slab under each is a stackable roof deck (native floors, player paths).
+    if(d.deckMode!=='PlayerPlacedPaths')throw new Error('Laboratory terrace must be a player-path deck');
     for(const n of d.nodes) {
       if(interior.has(n.cell.join(',')))continue;
-      blocks[index(n.cell)].Occupations='Floor, Bottom, Path';
       if(n.cell[2]>0) {
         const support=blocks[index([n.cell[0],n.cell[1],n.cell[2]-1])];
         if(support.Occupations!=='All')throw new Error('Laboratory terrace has no solid support');
@@ -98,13 +100,16 @@ export async function researchContent() {
     v.BlockObjectSpec={Size:xyz(d.size),Blocks:blocks,Entrance:{HasEntrance:true,Coordinates:xyz(doorOutside)},BaseZ:0,Overridable:false,Flippable:true};
     // Access point on the ground door's casing face (tile edge y=0).
     v.BuildingAccessibleSpec={LocalAccess:xyz([1.5,0,0]),ForceOneFinalAccess:false};
-    v.BlockObjectNavMeshSettingsSpec={NoAutoWalls:false,GenerateFloorsOnStackable:false,
-      EdgeGroups:[...d.edges.map(([a,c])=>({Cost:1,Group:{UseGroup:a[2]!==c[2],GroupName:a[2]!==c[2]?'DeepFrontierInterior':''},IsPath:true,
+    // Only the enclosed interior route is building navigation; the terrace is
+    // walked on native stackable floors and player paths, reached through the
+    // records office door link.
+    v.BlockObjectNavMeshSettingsSpec={NoAutoWalls:false,GenerateFloorsOnStackable:true,
+      EdgeGroups:[...d.edges.filter(([a,c])=>interior.has(a.join(','))&&interior.has(c.join(','))).map(([a,c])=>({Cost:1,Group:{UseGroup:a[2]!==c[2],GroupName:a[2]!==c[2]?'DeepFrontierInterior':''},IsPath:true,
         AddedEdges:[{Start:xyz(a),End:xyz(c),IsTwoWay:true}]})),
-        {Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,AddedEdges:d.ports.map(p=>({Start:xyz(p.inside),End:xyz(p.outside),IsTwoWay:false}))},
+        {Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,AddedEdges:d.doorLinks.map(l=>({Start:xyz(l.Interior),End:xyz(l.Exterior),IsTwoWay:true}))},
         {Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,AddedEdges:[{Start:xyz(d.entrance),End:xyz(doorOutside),IsTwoWay:true}]}],
       UnblockedCoordinates:[],BlockedEdges:[]};
-    v.BuildingWalkwaySpec=await read(`outputs/research-integration/${b.id}-walkway.json`);
+    v.PlatformDeckSpec=await read(`outputs/research-integration/${b.id}-platform-deck.json`);
     // Shafts only where an authored wall closes the face (measured from the
     // saved study); the three tested service sockets stay first.
     const walls=(await read(`outputs/research-integration/${b.id}-wall-faces.json`)).walls;

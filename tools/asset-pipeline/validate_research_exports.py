@@ -54,11 +54,23 @@ while pending:
     if c in visited:continue
     visited.add(c);pending.extend(graph[c]-visited)
 assert visited==routes and {tuple(c) for c in layout['doorNodes']}<=visited
-for c in layout['buildableCells']:
-    assert block(c)['Occupations']=='Floor, Bottom, Path'
-    assert block((c[0],c[1],c[2]-1))['Stackable']=='BlockObject'
-for p in bp['BuildingWalkwaySpec']['Openings']:
-    for name in p['HiddenNodes']+p['ShownNodes']:assert names.count(name)==1,name
+# Player-path terrace deck since 2026-10-30 (every flat roof tile placeable):
+# the terrace cells are free over stackable slabs, the rails open on player
+# paths, the records office door is the deck door link.
+assert layout['deckMode']=='PlayerPlacedPaths' and 'BuildingWalkwaySpec' not in bp
+interior={tuple(c) for c in layout['interiorCells']}
+for n in layout['nodes']:
+    c=tuple(n['cell'])
+    if c in interior:continue
+    assert block(c)['Occupations']=='None',c
+    assert block((c[0],c[1],c[2]-1))['Stackable']=='BlockObject',c
+deck=bp['PlatformDeckSpec']
+assert deck['Doors']==[{k:dict(zip('XYZ',v)) for k,v in d.items()} for d in layout['doorLinks']]
+assert len(deck['Openings'])==len(layout['ports'])
+for p in deck['Openings']:
+    assert not p['ShownNodes'],p['Id']
+    for name in p['HiddenNodes']:assert names.count(name)==1,name
+assert bp['BlockObjectNavMeshSettingsSpec']['GenerateFloorsOnStackable']
 for socket in bp['TransputProviderSpec']['Transputs']:assert block(cell(socket['Coordinates']))['Occupations']=='All'
 for i in range(4):assert names.count(f'#Slot#Entrance{i}')==1
 uv_count=0
@@ -74,7 +86,7 @@ for node in model.nodes:
                 uv_count+=1
 report={'scope':'Candidate export checks; actual native operation remains to test',
     'modelSha256':hashlib.sha256(payload).hexdigest(),'nodes':len(names),'animationTracks':tracks,
-    'nativeUvVertices':uv_count,'connectedRouteCells':len(routes),'railOpenings':len(bp['BuildingWalkwaySpec']['Openings']),
+    'nativeUvVertices':uv_count,'connectedRouteCells':len(routes),'railOpenings':len(bp['PlatformDeckSpec']['Openings']),
     'terraceSupportCells':sum(b['Stackable']=='BlockObject' for b in blocks),'scienceUnlock':12000,
     'sciencePerBatch':800,'powerDemandHp':6500,'powerOutputHp':0}
 (root/'outputs/research-integration/export-checks.json').write_text(json.dumps(report,indent=2)+'\n')

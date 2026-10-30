@@ -46,9 +46,11 @@ export async function hydroBlueprint() {
   for(let y=0;y<h;y++)for(let x=0;x<w;x++)
     if(x!==1&&x!==2&&blocks[index([x,y,0])].Occupations!=='None')
       blocks[index([x,y,0])].MatterBelow='GroundOrStackable';
+  // Player-placed-path terrace deck (2026-10-30, every flat roof tile
+  // placeable): the lane cells stay free over stackable foundation roofs.
+  if(d.deckMode!=='PlayerPlacedPaths'||d.doorLinks.length)throw new Error('Turbine terrace must be a door-less player-path deck');
   for(const n of d.nodes) {
     const [x,y,z]=n.cell;
-    blocks[index(n.cell)].Occupations='Floor, Bottom, Path';
     if(blocks[index([x,y,z-1])].Occupations!=='All')
       throw new Error('Turbine route has no solid foundation');
     blocks[index([x,y,z-1])].Stackable='BlockObject';
@@ -73,14 +75,11 @@ export async function hydroBlueprint() {
   v.BuildingModelSpec.FinishedUncoveredModelName='';
   v.BlockObjectSpec={Size:xyz(b.size),Blocks:blocks,
     Entrance:{HasEntrance:false,Coordinates:xyz(d.entrance)},BaseZ:0,Overridable:false,Flippable:true};
+  // No building routes: the terrace is walked on native stackable floors and
+  // the player's own paths.
   v.BlockObjectNavMeshSettingsSpec={NoAutoWalls:false,GenerateFloorsOnStackable:true,
-    EdgeGroups:[
-      ...d.edges.map(([a,c])=>({Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,
-        AddedEdges:[{Start:xyz(a),End:xyz(c),IsTwoWay:true}]})),
-      {Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,
-        AddedEdges:d.ports.map(p=>({Start:xyz(p.inside),End:xyz(p.outside),IsTwoWay:false}))}
-    ],UnblockedCoordinates:[],BlockedEdges:[]};
-  v.BuildingWalkwaySpec=await read('outputs/hydro-integration/ReinforcedHydroTurbine-walkway.json');
+    EdgeGroups:[],UnblockedCoordinates:[],BlockedEdges:[]};
+  v.PlatformDeckSpec=await read('outputs/hydro-integration/ReinforcedHydroTurbine-platform-deck.json');
   v.HydroTurbineSpec={
     Intakes:[[1,-1,0],[2,-1,0]].map(xyz),Outlets:[[1,5,0],[2,5,0]].map(xyz),
     Gates:[[1,3,0],[2,3,0]].map(xyz),

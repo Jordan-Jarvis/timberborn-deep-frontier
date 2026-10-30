@@ -18,6 +18,7 @@ using Timberborn.Goods;
 using Timberborn.InventorySystem;
 using Timberborn.MechanicalSystem;
 using Timberborn.Navigation;
+using Timberborn.PathSystem;
 using Timberborn.ScienceSystem;
 using Timberborn.SingletonSystem;
 using Timberborn.TemplateSystem;
@@ -129,6 +130,11 @@ namespace DeepFrontier.Scripts {
         Create("DoublePlatform.IronTeeth",158,161,3);Create("Path",158,161,5);
         Create("DoublePlatform.IronTeeth",161,160,5);
         Create("Platform.IronTeeth",161,160,7);Create("Path",161,160,8);
+        // The terrace is a player-path deck (2026-10-30): the two open rails need a path on their deck cell.
+        foreach(var id in new[]{"Front0","Left1"}) {
+          var inside=_building.TransformCoordinates(_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id).Inside);
+          if(!_blocks.GetPathObjectAt(inside))Create("Path",inside.x,inside.y,inside.z);
+        }
         var pathTemplate=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Path");
         var pathSpec=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint==pathTemplate.Blueprint);
         Require(!_validator.BlocksValid(pathSpec,new Placement(new Vector3Int(163,163,3),Orientation.Cw0,FlipMode.Unflipped)),
@@ -161,12 +167,18 @@ namespace DeepFrontier.Scripts {
       _machine.Inventory.GiveExisting(new GoodAmount("MetalBlock",batches));
     }
     private void Port(string id,bool expected) {
-      var p=_building.GetComponent<BuildingWalkwaySpec>().Openings.Single(p=>p.Id==id);
+      // Player-path terrace deck (PlatformDeck, 2026-10-30): the rail hides exactly
+      // when actual player paths stand on the deck cell and its neighbour.
+      var p=_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id);
       var a=_building.TransformCoordinates(p.Inside);var b=_building.TransformCoordinates(p.Outside);
       var transforms=_building.GetComponent<BuildingModel>().FinishedModel.GetComponentsInChildren<Transform>(true);
       bool connected=_nav.AreConnectedInstant(a,b)&&_nav.AreConnectedInstant(b,a);
       bool hidden=p.HiddenNodes.All(n=>!transforms.Single(t=>t.name==n).gameObject.activeSelf);
-      Require(connected==expected&&hidden==expected,"Laboratory rail/path mismatch "+id);
+      bool paths=IsPlayerPath(a)&&IsPlayerPath(b);
+      Require(paths==expected&&hidden==expected&&(!expected||connected),"Laboratory rail/path mismatch "+id);
+    }
+    private bool IsPlayerPath(Vector3Int c) {
+      var o=_blocks.GetPathObjectAt(c);return o&&o.IsFinished&&o.HasComponent<PathSpec>();
     }
     private void Start() {
       Require(_building.GetComponent<BuildingSpec>().ScienceCost==12000,"Laboratory must unlock at 12,000 science");
@@ -192,10 +204,9 @@ namespace DeepFrontier.Scripts {
       for(int i=0;i<4;i++)workers[i].EmployAt(_building.GetComponent<Workplace>());
       _walker=workers[4].GetComponent<ControllableCharacter>();_walker.ChangeAnimation("BeaverAdult_idle");
       _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(new Vector3Int(160,159,3)));
-      foreach(var cell in new[]{new Vector3Int(1,2,2),new Vector3Int(0,1,2),new Vector3Int(2,0,2)}) {
-        var p=_building.GetComponent<BuildingWalkwaySpec>().Waypoints.Single(p=>p.Cell==cell);
-        _destinations.Enqueue(_building.Transform.TransformPoint(p.Position));
-      }
+      // Terrace deck cells (layer 1 since the 2026-10-30 compaction), walked as grid cells.
+      foreach(var cell in new[]{new Vector3Int(1,2,1),new Vector3Int(0,1,1),new Vector3Int(2,0,1)})
+        _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(_building.TransformCoordinates(cell)));
       _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(new Vector3Int(160,159,3)));
       NextWalk();Phase(_reload?7:1);_speed.ChangeSpeed(3);
     }

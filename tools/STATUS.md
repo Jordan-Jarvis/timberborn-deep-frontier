@@ -4,6 +4,31 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Player-path decks on Fishery Works, Materials Laboratory and Reinforced Hydro Turbine: every flat roof tile placeable (Claude Code session, 2026-10-30, roof-audit agent; exports and data promoted; validated in mirror `roofaudit` on HEAD + this change; acceptance fixtures updated and compiled, not run; not built or run in game)
+
+- **Why:** the user wants every flat roof tile to be a placeable area. On these three buildings, 37 flat roof cells sat under BuiltInWalkways path cells ('Floor, Bottom, Path'): Fishery Works galleries and terrace 15, Materials Laboratory terrace 9, Turbine terrace lane 13. `flat_roof_platforms` now passes on every building: 68 templates, 899 flat roof cells, 893 platformable and 6 under solid geometry.
+- **Migration:** the same PlayerPlacedPaths contract as the Restaurant, Hospital and Hatchery (`deckMode`, `PlatformDeckSpec`):
+  - The outdoor deck cells are free, with stackable slabs under them (`GenerateFloorsOnStackable`).
+  - Only the enclosed interior route keeps building navigation edges. Each upper door is a deck door link, and the old route nodes become `suggestedPathCells`.
+  - The adaptive rails open on actual player paths (`PlatformDeck`). The exporter writes `<Model>-platform-deck.json` and no more connection-only `WalkwayJoin` planks. The stale `-walkway.json` files are removed.
+- **Fishery Works:**
+  - The lane in front of the upper hall (5..7,1,1) and the terrace doorstep (2,4,1) share their cells with the hall's front wall and the door house (registered regions). They stay interior building lanes, and `FishFront5..7` are no longer openings, so those rails stay closed.
+  - Deck door links: (7,1,1) -> side gallery (8,1,1), and the door house (2,4,1) -> roof terrace (1,4,1).
+  - The ground door cell (3,0,0) is an interior cell.
+- **Materials Laboratory:** deck door link from the records office (1,3,1) -> terrace (1,2,1).
+- **Reinforced Hydro Turbine:** no workers and no enclosed door, so its deck has no door links. Players lay ordinary paths across the terrace, and onto a neighbouring turbine, as on any roof. `PlatformDeck.cs` now accepts an empty (but explicit) door list.
+- **Also:**
+  - `automation_content.json` drops `BuildingWalkwaySpec`, which no building uses any more. The `BuildingWalkway` component code stays.
+  - The aquaculture workbook text was updated.
+  - Stale assertion fixed: `validate_hydro_exports.py` size 8x10x7 -> 8x10x6, left over from the 2026-10-30 compaction.
+- **Acceptance (C#, compiled with 0 errors, not run):**
+  - `FisheryAcceptance`, `ResearchAcceptance` and `HydroAcceptance` check `PlatformDeckSpec` rails: hidden exactly when player paths stand on both sides. They lay a path on each open rail's deck cell and walk grid cells instead of walkway waypoints.
+  - The Fishery and Laboratory walk targets moved to layer 1, matching the compaction.
+  - `ResearchAcceptance` still expects the pre-compaction 10x8x9 laboratory and its freed cells (pre-existing; not changed here).
+- **Old saves:** placed buildings keep their footprint. Their deck cells change from built-in walkway to free stackable cells, so beavers reach the upper doors over player paths or the native deck floors.
+- **Checks (mirror):** canonical generation reaches a fixed point. `validate_all -Only` 26 checks pass: exports civic/connection/fishery/hatchery/hydro/research/preview_budget, sources research/hydro/civic, model-bindings, entrances, connection faces, freed cells, roof decks, flat_roof_platforms, smog, status icons, slice content, automation, sounds, construction materials, power rule, workforce risks, audit progression and building assets. The triangle budget passes (878,159 / 922,305) and the incremental compile check passes.
+- **In game:** not seen yet. Still to test: placement on the decks, rail opening, the upper doors reached over player paths, and the turbine lane bridging neighbouring turbines.
+
 ## Flat roofs placeable (new validator), roof variety, no roof vents, no visible concrete before concrete: 17 buildings (Claude Code session, 2026-10-30, roof-audit agent; scenes, exports and data promoted; validated in mirror `roofaudit` on HEAD + this change; not built or run in game)
 
 - **User rules:** "all flat roof tiles should be placeable areas, similar to a platform"; roof variety and "no roof vents" (BRIEF "ROOF VARIETY"); buildings that unlock before concrete exists must not show concrete.

@@ -1,0 +1,382 @@
+{
+  "Openings": [
+    {
+      "Id": "FishFront8",
+      "Inside": {
+        "X": 8,
+        "Y": 1,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 0,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 1,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.007"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRight3",
+      "Inside": {
+        "X": 8,
+        "Y": 1,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 1,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 1,
+        "Z": 1.4999999999999998
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.008"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRight4",
+      "Inside": {
+        "X": 8,
+        "Y": 2,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 2,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 1,
+        "Z": 2.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.009"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRight5",
+      "Inside": {
+        "X": 8,
+        "Y": 3,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 3,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 1,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.010"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRight6",
+      "Inside": {
+        "X": 8,
+        "Y": 4,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 4,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 1,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.011"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRight7",
+      "Inside": {
+        "X": 8,
+        "Y": 5,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 5,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 1,
+        "Z": 5.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.012"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRight8",
+      "Inside": {
+        "X": 8,
+        "Y": 6,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 9,
+        "Y": 6,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 1,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.013"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRear2",
+      "Inside": {
+        "X": 2,
+        "Y": 6,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 2,
+        "Y": 7,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 2.5,
+        "Y": 1,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.000"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRear3",
+      "Inside": {
+        "X": 3,
+        "Y": 6,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 3,
+        "Y": 7,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 3.5,
+        "Y": 1,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.001"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRear4",
+      "Inside": {
+        "X": 4,
+        "Y": 6,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 4,
+        "Y": 7,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 4.5,
+        "Y": 1,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.002"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRear5",
+      "Inside": {
+        "X": 5,
+        "Y": 6,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 5,
+        "Y": 7,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 5.5,
+        "Y": 1,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.003"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRear6",
+      "Inside": {
+        "X": 6,
+        "Y": 6,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 6,
+        "Y": 7,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 6.5,
+        "Y": 1,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.004"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRear7",
+      "Inside": {
+        "X": 7,
+        "Y": 6,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 7,
+        "Y": 7,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 7.5,
+        "Y": 1,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.005"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRear8",
+      "Inside": {
+        "X": 8,
+        "Y": 6,
+        "Z": 1
+      },
+      "Outside": {
+        "X": 8,
+        "Y": 7,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 8.5,
+        "Y": 1,
+        "Z": 6.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.006"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRoofLeft5",
+      "Inside": {
+        "X": 0,
+        "Y": 3,
+        "Z": 1
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 3,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 1,
+        "Z": 3.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.014"
+      ],
+      "ShownNodes": []
+    },
+    {
+      "Id": "FishRoofLeft6",
+      "Inside": {
+        "X": 0,
+        "Y": 4,
+        "Z": 1
+      },
+      "Outside": {
+        "X": -1,
+        "Y": 4,
+        "Z": 1
+      },
+      "ApproachPosition": {
+        "X": 0.5,
+        "Y": 1,
+        "Z": 4.5
+      },
+      "HiddenNodes": [
+        "WalkwayGroup.FisheryWorks.015"
+      ],
+      "ShownNodes": []
+    }
+  ],
+  "Doors": [
+    {
+      "Interior": {
+        "X": 7,
+        "Y": 1,
+        "Z": 1
+      },
+      "Exterior": {
+        "X": 8,
+        "Y": 1,
+        "Z": 1
+      }
+    },
+    {
+      "Interior": {
+        "X": 2,
+        "Y": 4,
+        "Z": 1
+      },
+      "Exterior": {
+        "X": 1,
+        "Y": 4,
+        "Z": 1
+      }
+    }
+  ]
+}

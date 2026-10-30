@@ -236,13 +236,21 @@ namespace DeepFrontier.Scripts {
         if(Vector3.Dot(fisher.GetComponent<Timberborn.CharacterModelSystem.CharacterModel>().Model.forward,direction)<.99f)
           throw new InvalidOperationException("Fisher model is not facing the fixture pond");
         Debug.Log("[DeepFrontier Fishery] PASS visible fisher model faces the water");Capture("fishing-regression");
-        SetupAccess();_shorePhase=9;
+        SetupAccess();
+        // Player-path decks (2026-10-30): an opening's rail hides only between
+        // two actual player paths, so the open rails get a path on their deck cell.
+        foreach(var id in new[]{"FishFront8","FishRoofLeft6"}) {
+          var inside=_building.TransformCoordinates(_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id).Inside);
+          if(!_blocks.GetPathObjectAt(inside))Create("Path",inside.x,inside.y,inside.z);
+        }
+        _shorePhase=9;
       } else if(_shorePhase==9&&_frame>=_shoreFrame+120) {
         CheckPort("FishFront8",true);CheckPort("FishRoofLeft6",true);CheckPort("FishRoofLeft5",false);
         var worker=_registry.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>()).First(w=>w.WorkerType=="Beaver"&&w.Workplace!=_flag.GetComponent<Workplace>());
         worker.Unemploy();_walker=worker.GetComponent<ControllableCharacter>();_walker.ChangeAnimation("BeaverAdult_idle");
         _walkBuilding=_building;
-        foreach(var cell in new[]{new Vector3Int(8,-3,0),new Vector3Int(8,1,2),new Vector3Int(5,2,2),new Vector3Int(2,4,2),new Vector3Int(0,4,2),new Vector3Int(3,-3,0)})_walkTargets.Enqueue(cell);
+        // Deck cells one layer up since the 2026-10-30 compaction (galleries at layer 1).
+        foreach(var cell in new[]{new Vector3Int(8,-3,0),new Vector3Int(8,1,1),new Vector3Int(5,1,1),new Vector3Int(2,4,1),new Vector3Int(0,4,1),new Vector3Int(3,-3,0)})_walkTargets.Enqueue(cell);
         _camera.MoveTargetTo(new Vector3(166,7,164));_camera.SetZoomLevel(20,0);_shorePhase=10;NextTarget();
       } else if(_shorePhase==10&&Vector3.Distance(_walker.Transform.position,_walkWorld)<.18f) {
         Debug.Log("[DeepFrontier Fishery] PASS actual beaver reached "+_walkTarget);
@@ -495,20 +503,24 @@ namespace DeepFrontier.Scripts {
         throw new InvalidOperationException("Hatchery player-path rail mismatch: "+id+", path="+neighboringPath+", hidden="+hidden+", floorConnected="+connected);
       Debug.Log("[DeepFrontier Fishery] PASS hatchery decorative rail "+id+" actual outside path="+neighboringPath+", hidden="+hidden);
     }
+    // Player-path deck rail (PlatformDeck, 2026-10-30): hidden exactly when actual
+    // player paths stand on both the deck cell and the neighbouring cell.
     private void CheckPort(string id,bool expected,BlockObject building) {
-      var p=building.GetComponent<BuildingWalkwaySpec>().Openings.Single(p=>p.Id==id);
+      var p=building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id);
       var a=building.TransformCoordinates(p.Inside);var b=building.TransformCoordinates(p.Outside);
+      bool paths=IsPlayerPath(a)&&IsPlayerPath(b);
       bool connected=_nav.AreConnectedInstant(a,b)&&_nav.AreConnectedInstant(b,a);
       var nodes=building.GetComponent<BuildingModel>().FinishedModel.GetComponentsInChildren<Transform>(true);
       bool hidden=p.HiddenNodes.All(name=>!nodes.Single(t=>t.name==name).gameObject.activeSelf);
-      if(connected!=expected||hidden!=expected)throw new InvalidOperationException("Fishery rail/route mismatch: "+id);
-      Debug.Log("[DeepFrontier Fishery] PASS rail "+id+": connected="+connected+", hidden="+hidden);
+      if(paths!=expected||hidden!=expected||(expected&&!connected))throw new InvalidOperationException("Fishery rail/route mismatch: "+id);
+      Debug.Log("[DeepFrontier Fishery] PASS rail "+id+": paths="+paths+", connected="+connected+", hidden="+hidden);
     }
+    private bool IsPlayerPath(Vector3Int c){var o=_blocks.GetPathObjectAt(c);return o&&o.IsFinished&&o.HasComponent<PathSpec>();}
     private void NextTarget() {
       _walkTarget=_walkTargets.Dequeue();
       // Negative local y: a road cell in front of the building (grid target).
-      if(_walkBuilding==_hatchery||_walkTarget.y<0)_walkWorld=NavigationCoordinateSystem.GridToWorld(_walkBuilding.TransformCoordinates(_walkTarget));
-      else _walkWorld=_walkBuilding.Transform.TransformPoint(_walkBuilding.GetComponent<BuildingWalkwaySpec>().Waypoints.Single(w=>w.Cell==_walkTarget).Position);
+      // Both buildings are player-path decks (2026-10-30): every target is a grid cell.
+      _walkWorld=NavigationCoordinateSystem.GridToWorld(_walkBuilding.TransformCoordinates(_walkTarget));
       var corners=new List<PathCorner>();
       if(!_navigation.FindPathUnlimitedRange(_walker.Transform.position,_walkWorld,corners,out var distance))throw new InvalidOperationException("No native route to fishery target "+_walkTarget);
       _walker.TakeControlAndMoveTo(CoordinateSystem.WorldToGrid(_walkWorld));

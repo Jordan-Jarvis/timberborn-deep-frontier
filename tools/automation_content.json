@@ -818,10 +818,6 @@
       "kind": "cosmetic",
       "response": "Static native prop placement."
     },
-    "BuildingWalkwaySpec": {
-      "kind": "passive",
-      "response": "Navigation geometry only."
-    },
     "PlatformDeckSpec": {
       "kind": "passive",
       "response": "Walkable deck geometry only."

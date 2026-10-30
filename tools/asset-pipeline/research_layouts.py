@@ -6,7 +6,11 @@ from industrial_layouts import layout,lane,grid_lane,edge,port
 # Idle slots stand 8 cm in front of each door casing (ground casing on y=0).
 # 2026-10-30 compaction: one layer per storey; the terrace and the records
 # office door are at layer 1 (were 2), 10x8x9 -> 10x8x5.
-LAB=layout([0,0,0],[10,8,5],[1,0,0],[[1.35,-.08,0],[1.65,-.08,0],[1.35,2.92,1],[1.65,2.92,1]],deck_mode='BuiltInWalkways')
+# 2026-10-30 (user: every flat roof tile placeable like a platform): the
+# terrace is a player-placed-path deck (PlatformDeckSpec, as the Restaurant,
+# Hospital and Hatchery decks), no longer a built-in walkway; its nodes are
+# suggested path cells, the records office door the one deck door link.
+LAB=layout([0,0,0],[10,8,5],[1,0,0],[[1.35,-.08,0],[1.65,-.08,0],[1.35,2.92,1],[1.65,2.92,1]],deck_mode='PlayerPlacedPaths')
 lane(LAB,[(1,0,0),(1,1,0),(1,2,0),(1,3,0)],
      [(1.5,.5,0),(1.5,1.5,0),(1.5,2.5,0),(1.5,3.5,0)])
 lane(LAB,[(1,3,z) for z in range(2)],[(1.5,3.5,z) for z in range(2)])
@@ -21,6 +25,8 @@ port(LAB,'Right0',(2,0,1),(3,0,1),'TerraceRight0')
 LAB['interiorCells']=[[1,y,0] for y in range(0,4)]+[[1,3,1]]
 LAB['buildableCells']=[[x,y,1] for y in range(2) for x in range(3)]
 LAB['doorNodes']=[[1,0,0],[1,2,1]]
+LAB['doorLinks']=[{'Interior':[1,3,1],'Exterior':[1,2,1]}]
+LAB['suggestedPathCells']=[n['cell'] for n in LAB['nodes'] if n['cell'] not in LAB['interiorCells']]
 LAYOUTS={'MaterialsLaboratory':LAB}
 
 if __name__=='__main__':

@@ -3,7 +3,7 @@
   "targets": [
     "FisheryWorks"
   ],
-  "joinedObjects": 60,
+  "joinedObjects": 72,
   "objects": [
     "FisheryWorks.Architecture",
     "FisheryWorks.Door.Door0",
@@ -13,6 +13,13 @@
     "WalkwayRail.FisheryWorks.FishBack.Panel12.CellPart1",
     "WalkwayRail.FisheryWorks.FishFrontfront.Panel00.CellPart0",
     "WalkwayRail.FisheryWorks.FishFrontfront.Panel01.CellPart0",
+    "WalkwayRail.FisheryWorks.FishFrontfront.Panel01.CellPart1",
+    "WalkwayRail.FisheryWorks.FishFrontfront.Panel02.CellPart0",
+    "WalkwayRail.FisheryWorks.FishFrontfront.Panel03.CellPart0",
+    "WalkwayRail.FisheryWorks.FishFrontfront.Panel03.CellPart1",
+    "WalkwayRail.FisheryWorks.FishFrontfront.Panel04.CellPart0",
+    "WalkwayRail.FisheryWorks.FishFrontfront.Panel05.CellPart0",
+    "WalkwayRail.FisheryWorks.FishFrontfront.Panel05.CellPart1",
     "WalkwayRail.FisheryWorks.FishLeftNorth.Panel00.CellPart0",
     "WalkwayRail.FisheryWorks.FishLeftNorth.Panel00.CellPart1",
     "WalkwayRail.FisheryWorks.FishLeftNorth.Panel01.CellPart0",
@@ -38,6 +45,7 @@
     "WalkwayRail.FisheryWorks.Post006",
     "WalkwayRail.FisheryWorks.Post007",
     "WalkwayRail.FisheryWorks.Post008",
+    "WalkwayRail.FisheryWorks.Post009",
     "WalkwayRail.FisheryWorks.Post010",
     "WalkwayRail.FisheryWorks.Post012",
     "WalkwayRail.FisheryWorks.Post016",
@@ -47,6 +55,10 @@
     "WalkwayRail.FisheryWorks.Post034",
     "WalkwayRail.FisheryWorks.Post036",
     "WalkwayRail.FisheryWorks.Post037",
+    "WalkwayRail.FisheryWorks.Post038",
+    "WalkwayRail.FisheryWorks.Post039",
+    "WalkwayRail.FisheryWorks.Post040",
+    "WalkwayRail.FisheryWorks.Post041",
     "WalkwayRail.FisheryWorks.Post042",
     "WalkwayRail.FisheryWorks.Post043",
     "WalkwayRail.FisheryWorks.Post044",
@@ -69,8 +81,8 @@
   "nodes": [
     {
       "node": "StaticMerged",
-      "parts": 60,
-      "triangles": 12111,
+      "parts": 72,
+      "triangles": 12327,
       "materials": {
         "Plaster_White.IronTeeth": 106,
         "Plaster_Orange.IronTeeth": 52,
@@ -81,7 +93,7 @@
         "RoofPlanks.IronTeeth": 426,
         "DFIndustrial12": 2268,
         "Details.IronTeeth": 160,
-        "BaseWood_Brown.Folktails": 1008
+        "BaseWood_Brown.Folktails": 1224
       }
     },
     {
@@ -182,48 +194,15 @@
     },
     "WalkwayGroup.FisheryWorks.007": {
       "parts": [
-        "WalkwayRail.FisheryWorks.FishFrontfront.Panel01.CellPart1",
-        "WalkwayRail.FisheryWorks.FishFrontfront.Panel02.CellPart0",
-        "WalkwayRail.FisheryWorks.FishFrontfront.Panel03.CellPart0",
-        "WalkwayRail.FisheryWorks.Post038",
-        "WalkwayRail.FisheryWorks.Post039"
+        "WalkwayRail.FisheryWorks.FishRightfront.Panel01.CellPart1",
+        "WalkwayRail.FisheryWorks.FishRightfront.Panel02.CellPart0",
+        "WalkwayRail.FisheryWorks.Post011"
       ],
       "nodes": [
         "WalkwayGroup.FisheryWorks.007"
       ]
     },
     "WalkwayGroup.FisheryWorks.008": {
-      "parts": [
-        "WalkwayRail.FisheryWorks.FishFrontfront.Panel03.CellPart1",
-        "WalkwayRail.FisheryWorks.FishFrontfront.Panel04.CellPart0",
-        "WalkwayRail.FisheryWorks.FishFrontfront.Panel05.CellPart0",
-        "WalkwayRail.FisheryWorks.Post040",
-        "WalkwayRail.FisheryWorks.Post041"
-      ],
-      "nodes": [
-        "WalkwayGroup.FisheryWorks.008"
-      ]
-    },
-    "WalkwayGroup.FisheryWorks.009": {
-      "parts": [
-        "WalkwayRail.FisheryWorks.FishFrontfront.Panel05.CellPart1",
-        "WalkwayRail.FisheryWorks.Post009"
-      ],
-      "nodes": [
-        "WalkwayGroup.FisheryWorks.009"
-      ]
-    },
-    "WalkwayGroup.FisheryWorks.010": {
-      "parts": [
-        "WalkwayRail.FisheryWorks.FishRightfront.Panel01.CellPart1",
-        "WalkwayRail.FisheryWorks.FishRightfront.Panel02.CellPart0",
-        "WalkwayRail.FisheryWorks.Post011"
-      ],
-      "nodes": [
-        "WalkwayGroup.FisheryWorks.010"
-      ]
-    },
-    "WalkwayGroup.FisheryWorks.011": {
       "parts": [
         "WalkwayRail.FisheryWorks.FishRightright.Panel00.CellPart1",
         "WalkwayRail.FisheryWorks.FishRightright.Panel01.CellPart0",
@@ -232,20 +211,20 @@
         "WalkwayRail.FisheryWorks.Post014"
       ],
       "nodes": [
-        "WalkwayGroup.FisheryWorks.011"
+        "WalkwayGroup.FisheryWorks.008"
       ]
     },
-    "WalkwayGroup.FisheryWorks.012": {
+    "WalkwayGroup.FisheryWorks.009": {
       "parts": [
         "WalkwayRail.FisheryWorks.FishRightright.Panel02.CellPart1",
         "WalkwayRail.FisheryWorks.FishRightright.Panel03.CellPart0",
         "WalkwayRail.FisheryWorks.Post015"
       ],
       "nodes": [
-        "WalkwayGroup.FisheryWorks.012"
+        "WalkwayGroup.FisheryWorks.009"
       ]
     },
-    "WalkwayGroup.FisheryWorks.013": {
+    "WalkwayGroup.FisheryWorks.010": {
       "parts": [
         "WalkwayRail.FisheryWorks.FishRightright.Panel03.CellPart1",
         "WalkwayRail.FisheryWorks.FishRightright.Panel04.CellPart0",
@@ -253,10 +232,10 @@
         "WalkwayRail.FisheryWorks.Post017"
       ],
       "nodes": [
-        "WalkwayGroup.FisheryWorks.013"
+        "WalkwayGroup.FisheryWorks.010"
       ]
     },
-    "WalkwayGroup.FisheryWorks.014": {
+    "WalkwayGroup.FisheryWorks.011": {
       "parts": [
         "WalkwayRail.FisheryWorks.FishRightright.Panel05.CellPart1",
         "WalkwayRail.FisheryWorks.FishRightright.Panel06.CellPart0",
@@ -265,10 +244,10 @@
         "WalkwayRail.FisheryWorks.Post019"
       ],
       "nodes": [
-        "WalkwayGroup.FisheryWorks.014"
+        "WalkwayGroup.FisheryWorks.011"
       ]
     },
-    "WalkwayGroup.FisheryWorks.015": {
+    "WalkwayGroup.FisheryWorks.012": {
       "parts": [
         "WalkwayRail.FisheryWorks.FishRightright.Panel07.CellPart1",
         "WalkwayRail.FisheryWorks.FishRightright.Panel08.CellPart0",
@@ -276,20 +255,20 @@
         "WalkwayRail.FisheryWorks.Post020"
       ],
       "nodes": [
-        "WalkwayGroup.FisheryWorks.015"
+        "WalkwayGroup.FisheryWorks.012"
       ]
     },
-    "WalkwayGroup.FisheryWorks.016": {
+    "WalkwayGroup.FisheryWorks.013": {
       "parts": [
         "WalkwayRail.FisheryWorks.FishRightright.Panel09.CellPart1",
         "WalkwayRail.FisheryWorks.FishRightright.Panel10.CellPart0",
         "WalkwayRail.FisheryWorks.Post022"
       ],
       "nodes": [
-        "WalkwayGroup.FisheryWorks.016"
+        "WalkwayGroup.FisheryWorks.013"
       ]
     },
-    "WalkwayGroup.FisheryWorks.017": {
+    "WalkwayGroup.FisheryWorks.014": {
       "parts": [
         "WalkwayRail.FisheryWorks.Post048",
         "WalkwayRail.FisheryWorks.Post049",
@@ -298,10 +277,10 @@
         "WalkwayRail.FisheryWorks.RoofTerraceLeft.Panel02.CellPart0"
       ],
       "nodes": [
-        "WalkwayGroup.FisheryWorks.017"
+        "WalkwayGroup.FisheryWorks.014"
       ]
     },
-    "WalkwayGroup.FisheryWorks.018": {
+    "WalkwayGroup.FisheryWorks.015": {
       "parts": [
         "WalkwayRail.FisheryWorks.Post050",
         "WalkwayRail.FisheryWorks.Post051",
@@ -310,7 +289,7 @@
         "WalkwayRail.FisheryWorks.RoofTerraceLeft.Panel04.CellPart0"
       ],
       "nodes": [
-        "WalkwayGroup.FisheryWorks.018"
+        "WalkwayGroup.FisheryWorks.015"
       ]
     }
   }

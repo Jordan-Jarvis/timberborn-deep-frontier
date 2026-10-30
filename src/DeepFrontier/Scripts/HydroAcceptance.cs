@@ -18,6 +18,7 @@ using Timberborn.GameSaveRepositorySystem;
 using Timberborn.GameSaveRuntimeSystem;
 using Timberborn.MechanicalSystem;
 using Timberborn.Navigation;
+using Timberborn.PathSystem;
 using Timberborn.SingletonSystem;
 using Timberborn.TemplateSystem;
 using Timberborn.TimbermeshAnimations;
@@ -57,6 +58,7 @@ namespace DeepFrontier.Scripts {
     private readonly GameSaver _saver;
     private readonly GameLoader _loader;
     private readonly NonlinearAnimationManager _animation;
+    private readonly IBlockService _blocks;
     private readonly List<BlockObject> _created=new();
     private readonly List<BlockObject> _outletPlug=new();
     private readonly List<object> _samples=new();
@@ -86,10 +88,10 @@ namespace DeepFrontier.Scripts {
       BlockObjectFactory factory,BlockValidator validator,BlockObjectValidationService validation,
       INavigationService navigation,INavMeshService nav,IWaterService water,IThreadSafeWaterMap map,
       SpeedManager speed,IDayNightCycle clock,CameraService camera,GameSaver saver,GameLoader loader,
-      NonlinearAnimationManager animation) {
+      NonlinearAnimationManager animation,IBlockService blocks) {
       _entities=entities;_entityService=entityService;_templates=templates;_factory=factory;
       _validator=validator;_validation=validation;_navigation=navigation;_nav=nav;_water=water;
-      _map=map;_speed=speed;_clock=clock;_camera=camera;_saver=saver;_loader=loader;_animation=animation;
+      _map=map;_speed=speed;_clock=clock;_camera=camera;_saver=saver;_loader=loader;_animation=animation;_blocks=blocks;
     }
     private static void Require(bool value,string message) {if(!value)throw new InvalidOperationException(message);}
     private static void Pass(string message)=>Debug.Log("[DeepFrontier Hydro] PASS "+message);
@@ -171,6 +173,9 @@ namespace DeepFrontier.Scripts {
         Create("Stairs.IronTeeth",152,170,3,Orientation.Cw180);
         Create("Platform.IronTeeth",152,171,3);Create("Stairs.IronTeeth",152,171,4,Orientation.Cw180);
         Create("DoublePlatform.IronTeeth",152,172,3);Create("Path",152,172,5);
+        // The terrace is a player-path deck (2026-10-30): the open rail gets a path on its deck cell.
+        {var deck=_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id=="Right7");
+         var inside=_building.TransformCoordinates(deck.Inside);if(!_blocks.GetPathObjectAt(inside))Create("Path",inside.x,inside.y,inside.z);}
         Create("PowerShaft.IronTeeth",152,172,3);
         Create("Platform.IronTeeth",148,174,5);Create("Platform.IronTeeth",148,174,6);
         Create("Lever.IronTeeth",153,173,3);
@@ -207,12 +212,18 @@ namespace DeepFrontier.Scripts {
       return volume;
     }
     private void Port(string id,bool expected) {
-      var p=_building.GetComponent<BuildingWalkwaySpec>().Openings.Single(p=>p.Id==id);
+      // Player-path terrace deck (PlatformDeck, 2026-10-30): the rail hides exactly
+      // when actual player paths stand on the deck cell and its neighbour.
+      var p=_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id);
       var a=_building.TransformCoordinates(p.Inside);var b=_building.TransformCoordinates(p.Outside);
       bool connected=_nav.AreConnectedInstant(a,b)&&_nav.AreConnectedInstant(b,a);
       var transforms=_building.GetComponent<BuildingModel>().FinishedModel.GetComponentsInChildren<Transform>(true);
       bool hidden=p.HiddenNodes.All(name=>!transforms.Single(t=>t.name==name).gameObject.activeSelf);
-      Require(connected==expected&&hidden==expected,"Turbine rail/path mismatch "+id);
+      bool paths=IsPlayerPath(a)&&IsPlayerPath(b);
+      Require(paths==expected&&hidden==expected&&(!expected||connected),"Turbine rail/path mismatch "+id);
+    }
+    private bool IsPlayerPath(Vector3Int c) {
+      var o=_blocks.GetPathObjectAt(c);return o&&o.IsFinished&&o.HasComponent<PathSpec>();
     }
     private void CheckConnections() {
       Require(_shaft.Graph==_building.GetComponent<MechanicalNode>().Graph,"Native shaft graph did not connect");
@@ -243,10 +254,9 @@ namespace DeepFrontier.Scripts {
         .Select(e=>e.GetComponent<ControllableCharacter>()).First();
       _walker.GetComponent<Worker>().Unemploy();_walker.ChangeAnimation("BeaverAdult_idle");
       _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(new Vector3Int(152,169,3)));
-      foreach(var cell in new[]{new Vector3Int(7,7,2),new Vector3Int(4,9,2),new Vector3Int(6,5,2)}) {
-        var point=_building.GetComponent<BuildingWalkwaySpec>().Waypoints.Single(p=>p.Cell==cell);
-        _destinations.Enqueue(_building.Transform.TransformPoint(point.Position));
-      }
+      // Terrace deck cells, walked as grid cells (player-path deck since 2026-10-30).
+      foreach(var cell in new[]{new Vector3Int(7,7,2),new Vector3Int(4,9,2),new Vector3Int(6,5,2)})
+        _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(_building.TransformCoordinates(cell)));
       _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(new Vector3Int(152,169,3)));
       NextWalk();
     }
