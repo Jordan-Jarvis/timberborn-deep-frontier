@@ -3,8 +3,10 @@
 Compacted 2026-10-30 (Workshop feedback: the buildings exceed Timberborn's
 scale; user: "it is the scaffolding and size", "one layer per floor", "make
 the roof flat on more of our buildings", "no clutter on buildable space"): 12x9x12 -> 8x5x6, inside the old
-footprint with the same origin. The door moved from the yard (entrance cell
-6, 3) to the front edge (entrance cell 1, -1). Removed: the bus-bar gantry's
+footprint with the same origin. The door moved from the old yard (entrance
+cell 6, 3) to the front edge on the same tile column (entrance cell 6, -1),
+where a placed plant's access path entered the old footprint; the map sites'
+door approach stays where it was. Removed: the bus-bar gantry's
 steel portal frames, the open cell gallery, the scrubber drums, the
 guide frames' diagonal bracing, their third girt and the monitor roof's
 pitched slopes. The holders keep their round guide columns with two girt
@@ -16,10 +18,10 @@ HERO: twin telescoping gas holders in round steel guide frames - a two-lift
 ROOF: flat concrete roof with a low curb on the cell hall, carrying a
       flat-capped glazed clerestory lantern with the hydrogen vents.
 
-Plan (8 x 5 tiles): the cell hall front-left with the door; the transformer
+Plan (8 x 5 tiles): the cell hall front-right with the door; the transformer
 pad behind it feeding brass bus bars into the hall's back wall; the water
 intake channel with its pump between pad and holders; the hydrogen holder
-front-right and the oxygen holder behind it.
+front-left and the oxygen holder behind it.
 
 Animated (7, names unchanged): two transformer fans, pump flywheel,
 hydrogen lift, hydrogen bell, oxygen bell, beacon.
@@ -41,12 +43,12 @@ FRAME_END = 121
 HERO = ('Twin telescoping gas holders in round steel guide frames: a two-lift hydrogen holder and a '
         'smaller oxygen holder whose riveted bells slowly rise and fall.')
 
-HALL = (0.0, 0.0, 4.0, 3.0)     # two storeys on whole tiles
-DOOR_X = 1.5
-H2 = (5.65, 1.5, 1.0)           # centre and bell-tank radius
-O2 = (6.85, 4.0, .7)
-TRANSFORMERS = ((1.0, 4.0), (3.0, 4.0))
-INTAKE = (4.0, 3.0, 5.0, 5.0)   # one tile wide, open to the back edge
+HALL = (4.0, 0.0, 8.0, 3.0)     # two storeys on whole tiles
+DOOR_X = 6.5                    # entrance cell (6, -1): the old access path's tile column
+H2 = (2.35, 1.5, 1.0)           # centre and bell-tank radius
+O2 = (1.15, 4.0, .7)
+TRANSFORMERS = ((5.0, 4.0), (7.0, 4.0))
+INTAKE = (3.0, 3.0, 4.0, 5.0)   # one tile wide, open to the back edge
 
 
 # ---------------------------------------------------------------- cell hall
@@ -54,27 +56,27 @@ INTAKE = (4.0, 3.0, 5.0, 5.0)   # one tile wide, open to the back edge
 def hall(g):
     x0, y0, x1, y1 = HALL
     top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=IRON, door=DOOR_X, door_id='Entrance',
-                         ground_windows={'front': [(.5, .55, 'factory'), (2.75, .55, 'factory'), (3.5, .55, 'factory')],
-                                         'left': [(1.5, .6, 'factory')]},
-                         windows={'front': [(x + .5, 1.5, .58, 'factory') for x in range(4)],
-                                  'left': [(y + .5, 1.5, .58, 'factory') for y in range(3)],
-                                  'right': [(y + .5, 1.5, .58, 'factory') for y in (0, 2)],
-                                  'back': [(.5, 1.5, .58, 'factory'), (3.5, 1.5, .58, 'factory')]})
+                         ground_windows={'front': [(7.5, .55, 'factory'), (5.25, .55, 'factory'), (4.5, .55, 'factory')],
+                                         'right': [(1.5, .6, 'factory')]},
+                         windows={'front': [(x + .5, 1.5, .58, 'factory') for x in range(4, 8)],
+                                  'right': [(y + .5, 1.5, .58, 'factory') for y in range(3)],
+                                  'left': [(y + .5, 1.5, .58, 'factory') for y in (0, 2)],
+                                  'back': [(7.5, 1.5, .58, 'factory'), (4.5, 1.5, .58, 'factory')]})
     K.lamp(g, DOOR_X - .66, y0 - .01, .8, face='front')
     K.lamp(g, DOOR_X + .66, y0 - .01, .8, face='front')
     # Flat-capped glazed clerestory lantern on the roof, with hydrogen vents.
-    lx0, ly0, lx1, ly1 = .45, .95, 3.55, 2.05
+    lx0, ly0, lx1, ly1 = 4.45, .95, 7.55, 2.05
     lz = top + .55
     C.framed_block(g, lx0, ly0, lx1, ly1, top, lz, infill=FORGED, frame=IRON, pitch=.78,
                    faces=('front', 'back'), sink=.02,
                    windows={'front': [(lx0 + .39 + k * .775, top + .28, .38, 'factory') for k in range(4)],
                             'back': [(lx0 + .39 + k * .775, top + .28, .38, 'factory') for k in range(4)]})
     blk(g, lx0 - .08, ly0 - .08, lz - .02, lx1 + .08, ly1 + .08, lz + .08, CONCRETE)
-    for x in (1.2, 2.8):
+    for x in (6.8, 5.2):
         g.cylinder((x, 1.5, lz + .35), .07, .55, IRON, 'Z', 12)
         K.revolve(g, (x, 1.5, lz + .62), [(.13, 0), (.13, .05), (.04, .16), (0, .18)], IRON, segments=12)
     # Bus-bar wall bushings on the back wall where the DC feed enters.
-    blk(g, .6, y1 + .01, 1.5, 3.4, y1 + .07, 1.8, PAINTED)
+    blk(g, 4.6, y1 + .01, 1.5, 7.4, y1 + .07, 1.8, PAINTED)
 
 
 # ---------------------------------------------------------------- transformers
@@ -123,7 +125,7 @@ def transformer(g, parts, x, y, idx, top):
 
 def transformer_pad(g, parts):
     top = .3
-    C.podium(g, 0.0, 3.0, 4.0, 5.0, top, joints=False, foot=False)   # the hall's foot course meets it
+    C.podium(g, 4.0, 3.0, 8.0, 5.0, top, joints=False, foot=False)   # the hall's foot course meets it
     for i, (x, y) in enumerate(TRANSFORMERS):
         transformer(g, parts, x, y, i + 1, top)
 
@@ -157,8 +159,8 @@ def intake(g, parts):
     fw = P.flywheel('ElectrolysisPlant.PumpFlywheel', (cx - .3, yb, 1.22), .26, axis='X', spokes=6)
     parts.append((fw, 'SPIN_X', 2))
     blk(g, cx - .27, yb - .04, 1.18, cx - .2, yb + .04, 1.26, IRON)
-    # Discharge to the hall's right wall, past the hydrogen holder.
-    P.pipe(g, [(cx, yb - .12, 1.3), (cx, yb - .12, 1.5), (cx, 2.6, 1.5), (HALL[2], 2.6, 1.5)], .065)
+    # Discharge to the hall's left wall, past the hydrogen holder.
+    P.pipe(g, [(cx, yb - .12, 1.3), (cx, yb - .12, 1.5), (cx, 2.6, 1.5), (HALL[0], 2.6, 1.5)], .065)
     P.valve(g, (cx, 3.2, 1.5), 'up', .1)
 
 
@@ -238,10 +240,10 @@ def holders(g, parts):
                   'SLIDE_Z', .5))
     parts.append((bell('ElectrolysisPlant.HydrogenBell', cx, cy, R - .25, 1.6, 1.4, guide_r=gr, phase=ph),
                   'SLIDE_Z', 1.0))
-    # Ladder up the front-right guide column; beacon on a mast on its cap.
-    lx, ly = pts[7]
+    # Ladder up the front-left guide column; beacon on a mast on its cap.
+    lx, ly = pts[4]
     K.ladder(g, lx, ly - .065, 0, 4.6, face='front', width=.3, cage=False)
-    mx, my = pts[0]
+    mx, my = pts[3]
     blk(g, mx - .03, my - .03, 4.68, mx + .03, my + .03, 5.0, IRON)
     pivot = K.beacon(g, mx, my, 5.0)
     parts.append((K.beacon_shutter(*pivot, 'ElectrolysisPlant.Beacon'), 'SPIN_Z', 2))
@@ -254,11 +256,11 @@ def holders(g, parts):
                   'SLIDE_Z', .8))
     # Gas mains from the hall: hydrogen straight into its tank, oxygen round
     # the intake to enter low down.
-    P.pipe(g, [(HALL[2], cy, .6), (cx - R - .18, cy, .6)], .08, flanges=False)
-    P.valve(g, (4.22, cy, .6), 'up', .1)
+    P.pipe(g, [(HALL[0], cy, .6), (cx + R + .18, cy, .6)], .08, flanges=False)
+    P.valve(g, (3.78, cy, .6), 'up', .1)
     ey = oy - .35
-    ex = ox - math.sqrt((r2 + .2) ** 2 - .35 ** 2) + .03
-    P.pipe(g, [(HALL[2], 2.9, 1.75), (5.3, 2.9, 1.75), (5.3, ey, 1.75), (5.3, ey, .6), (ex, ey, .6)], .06,
+    ex = ox + math.sqrt((r2 + .2) ** 2 - .35 ** 2) - .03
+    P.pipe(g, [(HALL[0], 2.9, 1.75), (2.7, 2.9, 1.75), (2.7, ey, 1.75), (2.7, ey, .6), (ex, ey, .6)], .06,
            mat=PAINTED, flanges=False)
 
 

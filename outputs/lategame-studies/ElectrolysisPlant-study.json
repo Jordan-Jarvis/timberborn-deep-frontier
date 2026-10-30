@@ -7,12 +7,12 @@
   ],
   "heightLayers": 6,
   "boundsMin": [
-    -0.06,
+    0.01,
     -0.265,
     -0.03
   ],
   "boundsMax": [
-    7.99,
+    8.06,
     5.05,
     5.32
   ],
@@ -20,7 +20,7 @@
     {
       "id": "Entrance",
       "position": [
-        1.5,
+        6.5,
         0.0,
         0
       ],
@@ -56,6 +56,6 @@
     "WindowsAtlas.IronTeeth": 370,
     "PaintedMetal.IronTeeth": 890
   },
-  "sourceHash": "ffdb809e12fe403a5152cb176a5aa85ecefddfcddfdb39a45576f4c7c348a2c1",
-  "artHash": "396494e634f7b00665b232f7acf70dfeec1d69450beff6412a56d9bce33c581e"
+  "sourceHash": "706772a4acb4ba1a1fa114c6d6ee2b808bfd2016100ca96ba0144131b2c128d8",
+  "artHash": "deb099260c445af5266b1e10d154957d462075ef9f9991790a00ab9c6e4b6ba3"
 }

@@ -70,55 +70,6 @@
     },
     "Blocks": [
       {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
         "MatterBelow": "Any",
         "Occupations": "None",
         "Stackable": "None",
@@ -344,6 +295,195 @@
       },
       {
         "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
         "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
@@ -400,27 +540,6 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
         "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
@@ -444,48 +563,6 @@
         "MatterBelow": "Any",
         "Occupations": "All",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -513,34 +590,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -582,7 +631,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -611,20 +660,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -674,13 +709,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -715,7 +743,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -736,7 +764,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -785,7 +813,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -827,28 +855,28 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -890,7 +918,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -904,7 +932,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1010,13 +1038,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1114,7 +1135,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1128,7 +1149,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1191,7 +1212,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1219,14 +1240,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1247,7 +1268,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1275,7 +1296,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1296,14 +1317,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1325,27 +1346,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1753,7 +1753,7 @@
     "Entrance": {
       "HasEntrance": true,
       "Coordinates": {
-        "X": 1,
+        "X": 6,
         "Y": -1,
         "Z": 0
       }
@@ -1764,7 +1764,7 @@
   },
   "BuildingAccessibleSpec": {
     "LocalAccess": {
-      "X": 1.5,
+      "X": 6.5,
       "Y": 0,
       "Z": 0
     },
@@ -1815,15 +1815,6 @@
     "Transputs": [
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Left, Down, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
           "X": 1,
           "Y": 0,
           "Z": 0
@@ -1834,6 +1825,24 @@
       {
         "Coordinates": {
           "X": 2,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Bottom",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Bottom",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 4,
           "Y": 0,
           "Z": 0
         },
@@ -1842,7 +1851,7 @@
       },
       {
         "Coordinates": {
-          "X": 3,
+          "X": 5,
           "Y": 0,
           "Z": 0
         },
@@ -1851,24 +1860,6 @@
       },
       {
         "Coordinates": {
-          "X": 4,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
           "X": 6,
           "Y": 0,
           "Z": 0
@@ -1878,11 +1869,11 @@
       },
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 1,
+          "X": 7,
+          "Y": 0,
           "Z": 0
         },
-        "Directions": "Left, Bottom",
+        "Directions": "Right, Down, Bottom",
         "ReverseRotation": false
       },
       {
@@ -1941,11 +1932,11 @@
       },
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 2,
+          "X": 7,
+          "Y": 1,
           "Z": 0
         },
-        "Directions": "Left, Bottom",
+        "Directions": "Right, Bottom",
         "ReverseRotation": false
       },
       {
@@ -2000,6 +1991,15 @@
           "Z": 0
         },
         "Directions": "Bottom",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 2,
+          "Z": 0
+        },
+        "Directions": "Right, Bottom",
         "ReverseRotation": false
       },
       {
@@ -2148,16 +2148,7 @@
       },
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 0,
-          "Z": 1
-        },
-        "Directions": "Left, Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
+          "X": 4,
           "Y": 0,
           "Z": 1
         },
@@ -2166,7 +2157,7 @@
       },
       {
         "Coordinates": {
-          "X": 2,
+          "X": 5,
           "Y": 0,
           "Z": 1
         },
@@ -2175,7 +2166,7 @@
       },
       {
         "Coordinates": {
-          "X": 3,
+          "X": 6,
           "Y": 0,
           "Z": 1
         },
@@ -2184,25 +2175,34 @@
       },
       {
         "Coordinates": {
-          "X": 0,
+          "X": 7,
+          "Y": 0,
+          "Z": 1
+        },
+        "Directions": "Right, Down",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 7,
           "Y": 1,
           "Z": 1
         },
-        "Directions": "Left",
+        "Directions": "Right",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 0,
+          "X": 7,
           "Y": 2,
           "Z": 1
         },
-        "Directions": "Left",
+        "Directions": "Right",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 0,
+          "X": 4,
           "Y": 0,
           "Z": 1
         },
@@ -2211,7 +2211,7 @@
       },
       {
         "Coordinates": {
-          "X": 1,
+          "X": 5,
           "Y": 0,
           "Z": 1
         },
@@ -2220,7 +2220,7 @@
       },
       {
         "Coordinates": {
-          "X": 2,
+          "X": 6,
           "Y": 0,
           "Z": 1
         },
@@ -2229,7 +2229,7 @@
       },
       {
         "Coordinates": {
-          "X": 3,
+          "X": 7,
           "Y": 0,
           "Z": 1
         },
@@ -2238,7 +2238,7 @@
       },
       {
         "Coordinates": {
-          "X": 0,
+          "X": 4,
           "Y": 2,
           "Z": 1
         },
@@ -2247,7 +2247,7 @@
       },
       {
         "Coordinates": {
-          "X": 1,
+          "X": 5,
           "Y": 2,
           "Z": 1
         },
@@ -2256,7 +2256,7 @@
       },
       {
         "Coordinates": {
-          "X": 2,
+          "X": 6,
           "Y": 2,
           "Z": 1
         },
@@ -2265,7 +2265,7 @@
       },
       {
         "Coordinates": {
-          "X": 3,
+          "X": 7,
           "Y": 2,
           "Z": 1
         },
@@ -2284,7 +2284,7 @@
         "BoxColliders": [
           {
             "Center": {
-              "X": 3.5,
+              "X": 4.5,
               "Y": 0.5,
               "Z": 2.5
             },
@@ -2296,7 +2296,7 @@
           },
           {
             "Center": {
-              "X": 7.5,
+              "X": 0.5,
               "Y": 1,
               "Z": 4
             },
@@ -2308,7 +2308,7 @@
           },
           {
             "Center": {
-              "X": 3.5,
+              "X": 4.5,
               "Y": 1.5,
               "Z": 2
             },
@@ -2320,7 +2320,19 @@
           },
           {
             "Center": {
-              "X": 2.5,
+              "X": 1.5,
+              "Y": 1.5,
+              "Z": 4.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 5.5,
               "Y": 1.5,
               "Z": 4.5
             },
@@ -2332,19 +2344,7 @@
           },
           {
             "Center": {
-              "X": 6.5,
-              "Y": 1.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
+              "X": 2.5,
               "Y": 2.5,
               "Z": 1.5
             },
@@ -2356,7 +2356,7 @@
           },
           {
             "Center": {
-              "X": 2,
+              "X": 6,
               "Y": 2.5,
               "Z": 1.5
             },
@@ -2368,7 +2368,7 @@
           },
           {
             "Center": {
-              "X": 7,
+              "X": 1,
               "Y": 3,
               "Z": 4
             },
@@ -2380,7 +2380,7 @@
           },
           {
             "Center": {
-              "X": 6,
+              "X": 2,
               "Y": 3.5,
               "Z": 1.5
             },
@@ -2392,7 +2392,7 @@
           },
           {
             "Center": {
-              "X": 2,
+              "X": 6,
               "Y": 3.5,
               "Z": 1.5
             },
@@ -2404,7 +2404,7 @@
           },
           {
             "Center": {
-              "X": 5.5,
+              "X": 2.5,
               "Y": 4.5,
               "Z": 0.5
             },
@@ -2416,7 +2416,7 @@
           },
           {
             "Center": {
-              "X": 4.5,
+              "X": 1.5,
               "Y": 4.5,
               "Z": 2
             },
@@ -2428,7 +2428,7 @@
           },
           {
             "Center": {
-              "X": 6.5,
+              "X": 3.5,
               "Y": 4.5,
               "Z": 2
             },
@@ -2440,7 +2440,7 @@
           },
           {
             "Center": {
-              "X": 5.5,
+              "X": 2.5,
               "Y": 4.5,
               "Z": 2.5
             },
@@ -2466,7 +2466,7 @@
             "BoxColliders": [
               {
                 "Center": {
-                  "X": 3.5,
+                  "X": 4.5,
                   "Y": 0.5,
                   "Z": 2.5
                 },
@@ -2478,7 +2478,7 @@
               },
               {
                 "Center": {
-                  "X": 7.5,
+                  "X": 0.5,
                   "Y": 1,
                   "Z": 4
                 },
@@ -2490,7 +2490,7 @@
               },
               {
                 "Center": {
-                  "X": 3.5,
+                  "X": 4.5,
                   "Y": 1.5,
                   "Z": 2
                 },
@@ -2502,7 +2502,19 @@
               },
               {
                 "Center": {
-                  "X": 2.5,
+                  "X": 1.5,
+                  "Y": 1.5,
+                  "Z": 4.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 5.5,
                   "Y": 1.5,
                   "Z": 4.5
                 },
@@ -2514,19 +2526,7 @@
               },
               {
                 "Center": {
-                  "X": 6.5,
-                  "Y": 1.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
+                  "X": 2.5,
                   "Y": 2.5,
                   "Z": 1.5
                 },
@@ -2538,7 +2538,7 @@
               },
               {
                 "Center": {
-                  "X": 2,
+                  "X": 6,
                   "Y": 2.5,
                   "Z": 1.5
                 },
@@ -2550,7 +2550,7 @@
               },
               {
                 "Center": {
-                  "X": 7,
+                  "X": 1,
                   "Y": 3,
                   "Z": 4
                 },
@@ -2562,7 +2562,7 @@
               },
               {
                 "Center": {
-                  "X": 6,
+                  "X": 2,
                   "Y": 3.5,
                   "Z": 1.5
                 },
@@ -2574,7 +2574,7 @@
               },
               {
                 "Center": {
-                  "X": 2,
+                  "X": 6,
                   "Y": 3.5,
                   "Z": 1.5
                 },
@@ -2586,7 +2586,7 @@
               },
               {
                 "Center": {
-                  "X": 5.5,
+                  "X": 2.5,
                   "Y": 4.5,
                   "Z": 0.5
                 },
@@ -2598,7 +2598,7 @@
               },
               {
                 "Center": {
-                  "X": 4.5,
+                  "X": 1.5,
                   "Y": 4.5,
                   "Z": 2
                 },
@@ -2610,7 +2610,7 @@
               },
               {
                 "Center": {
-                  "X": 6.5,
+                  "X": 3.5,
                   "Y": 4.5,
                   "Z": 2
                 },
@@ -2622,7 +2622,7 @@
               },
               {
                 "Center": {
-                  "X": 5.5,
+                  "X": 2.5,
                   "Y": 4.5,
                   "Z": 2.5
                 },
@@ -2686,16 +2686,7 @@
     "Ports": [
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Left, Down",
-        "State": "Open"
-      },
-      {
-        "Coordinates": {
-          "X": 2,
+          "X": 4,
           "Y": 0,
           "Z": 0
         },
@@ -2704,7 +2695,7 @@
       },
       {
         "Coordinates": {
-          "X": 3,
+          "X": 5,
           "Y": 0,
           "Z": 0
         },
@@ -2713,34 +2704,34 @@
       },
       {
         "Coordinates": {
-          "X": 0,
+          "X": 7,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Right, Down",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
           "Y": 1,
           "Z": 0
         },
-        "Directions": "Left",
+        "Directions": "Right",
         "State": "Open"
       },
       {
         "Coordinates": {
-          "X": 0,
+          "X": 7,
           "Y": 2,
           "Z": 0
         },
-        "Directions": "Left",
+        "Directions": "Right",
         "State": "Open"
       },
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 0,
-          "Z": 1
-        },
-        "Directions": "Left, Down",
-        "State": "Open"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
+          "X": 4,
           "Y": 0,
           "Z": 1
         },
@@ -2749,7 +2740,7 @@
       },
       {
         "Coordinates": {
-          "X": 2,
+          "X": 5,
           "Y": 0,
           "Z": 1
         },
@@ -2758,7 +2749,7 @@
       },
       {
         "Coordinates": {
-          "X": 3,
+          "X": 6,
           "Y": 0,
           "Z": 1
         },
@@ -2767,20 +2758,29 @@
       },
       {
         "Coordinates": {
-          "X": 0,
+          "X": 7,
+          "Y": 0,
+          "Z": 1
+        },
+        "Directions": "Right, Down",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
           "Y": 1,
           "Z": 1
         },
-        "Directions": "Left",
+        "Directions": "Right",
         "State": "Open"
       },
       {
         "Coordinates": {
-          "X": 0,
+          "X": 7,
           "Y": 2,
           "Z": 1
         },
-        "Directions": "Left",
+        "Directions": "Right",
         "State": "Open"
       }
     ]
