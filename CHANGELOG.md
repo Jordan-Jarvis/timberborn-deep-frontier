@@ -89,6 +89,13 @@ Changes since 0.5.0, the first Workshop release.
   - Steel truss bridges spanning gaps of exactly 8, 10, 12 or 15 tiles; only the near end needs support.
   - Steel columns 1 to 6 high that stack. 3×3 and 5×5 steel decks rest on four corner columns, so the corners can stand at different ground heights.
 
+### Maps
+- **Every built-in map now works with Deep Frontier.** When you start a new game on any of the 19 built-in maps, Deep Frontier places that map's resources once at the start: deep ore veins and sources, limestone and sandstone outcrops, a limestone seam and Human Record Caches. Loading a save never places them again.
+- **Taller build height:** these new games also get a 66-layer build height (vanilla 33), kept through Map Transformer, so the tall late-game buildings fit. The terrain itself is unchanged.
+- **Small maps are EXTREMELY difficult.** Diorama and Cliffside are far smaller than the Deep Frontier late game needs. A warning appears when you start one, listing what the map has no room for.
+- **Maps that can't host everything:** many built-in maps have no site for some late-game buildings; for example, 11 maps have no room for the Nuclear Reactor and Beaverome has no deep ore. A short notice at the start of a new game lists what that map can't provide.
+- The Deep Frontier map files (Plains, Plains Hard, Lakes, Terraces) are unchanged. Plains Hard's radioactive spring is only on that map file, not on built-in Plains.
+
 ### Reactor Bots
 - **Retrofit:** any bot can be upgraded in place to a **Reactor Bot**, keeping its name. Press "Retrofit to Reactor Bot" on its panel. It then fetches a Reinforced Bot Frame (Precision Machine Works) and a Reactor Power Cell (Uranium Processing Plant) from storage and is upgraded once it has both.
 - **Buffs:** a Reactor Bot carries 5× as much, moves 4× as fast, lasts 10× as long (700 days) and needs charging only a quarter as often (about every 7 days).

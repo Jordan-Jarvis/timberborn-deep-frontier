@@ -4,6 +4,7 @@
   "sourceSha256": "2418d1490734546a4e17981abca7dfbfb31231751c8236ebc46dd7eaee622003",
   "output": {"directory": "C:/Users/Jordan/Documents/Timberborn/Maps", "name": "Deep Frontier - Terraces"},
   "height": {"terrainLayers": 46, "totalHeight": 66},
+  "mapSize": {"x": 256, "y": 256},
   "hardVariant": false,
   "description": "Deep Frontier variant of the vanilla Terraces map. Checked for the full Deep Frontier loop: sandstone and limestone outcrops beside their pits near the start, a sandstone and a limestone seam for the quarries, three Deep Ore Veins (Deep Mine sites) in the Lower Basin and on the Ruin and Upper Benches, two Deep Ore Sources for Deep Drills, five Human Record Caches with Archive Excavation sites, and a checked site for every large building, including a river-side reactor in the Western Valley, a launch pad on the north-west terrace, a fish hatchery, a map-edge waste export and a dam site.",
   "placements": [

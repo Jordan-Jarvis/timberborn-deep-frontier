@@ -79,6 +79,9 @@ foreach ($file in Get-ChildItem -LiteralPath (Join-Path $root 'tools') -Filter '
   Add-Check ($file.BaseName -replace '^validate_', '') 'node' $node @($file.FullName)
 }
 
+# Built-in new-game setup: every default map variant against its unmodified built-in map (needs the game files).
+Add-Check 'map-setup-terrain' 'python' $python @((Join-Path $root 'tools/prepare_deep_frontier_map.py'), 'builtin')
+
 # 6. Audits.
 Add-Check 'audit-progression' 'node' $node @((Join-Path $root 'tools/audit_progression.mjs'))
 Add-Check 'audit-item-uses' 'node' $node @((Join-Path $root 'tools/audit_item_uses.mjs')) -ReportOnly

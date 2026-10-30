@@ -915,3 +915,44 @@ ToolGroups.DeepFrontierRadioactiveWaste,Radioactive waste,Deep Frontier toolbar 
 ToolGroups.DeepFrontierCivicServices,Civic services,Deep Frontier toolbar group
 DeepFrontier.Power.Status.NotConnected,Not connected to a power source. Connect it to a generator with shafts or power lines.,Deep Frontier
 DeepFrontier.Power.Status.NotConnected.Short,Not connected to power,Deep Frontier
+DeepFrontier.MapSetup.SmallTitle,Deep Frontier: {0} is a very small map,Deep Frontier map setup
+DeepFrontier.MapSetup.SmallIntro,"Deep Frontier is EXTREMELY difficult on {0}: it has {1} tiles, and the Deep Frontier late game is built for maps of at least {2} tiles.",Deep Frontier map setup
+DeepFrontier.MapSetup.SmallReasonsHeader,What this map cannot provide:,Deep Frontier map setup
+DeepFrontier.MapSetup.SmallSpace,"Little room: the full set of large Deep Frontier sites (the 20 x 15 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about {0} tiles with their margins on a large map.",Deep Frontier map setup
+DeepFrontier.MapSetup.SmallHeight,"Build upward: Deep Frontier raises this map's build height to {0} layers (vanilla {1}); on a small map most of the colony has to stack on platforms, which costs more materials.",Deep Frontier map setup
+DeepFrontier.MapSetup.SmallNoUnmet,"Every Deep Frontier resource and site fits on this map, but with almost no spare room.",Deep Frontier map setup
+DeepFrontier.MapSetup.UnmetTitle,Deep Frontier on {0}: this map cannot provide everything the full Deep Frontier game needs:,Deep Frontier map setup
+DeepFrontier.MapSetup.SetupFailedTitle,Deep Frontier could not set up {0},Deep Frontier map setup
+DeepFrontier.MapSetup.SetupFailed,{0} Deep Frontier map object(s) could not be placed on {1}; the late game may be missing resources. Details are in the Player.log ([DeepFrontier MapSetup]).,Deep Frontier map setup
+DeepFrontier.MapSetup.HeightFailed,Deep Frontier expected a build height of {0} layers on {1} but the map has {2}. Is Map Transformer enabled?,Deep Frontier map setup
+DeepFrontier.MapSetup.NoSetup,Deep Frontier has no setup for the built-in map {0}: no Deep Frontier resources were added.,Deep Frontier map setup
+DeepFrontier.MapSetup.DevMap,{0} is a developer test map: Deep Frontier adds no resources and keeps its height.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Beaverome.1,No Deep Drill site beside a Deep Ore Source.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Beaverome.2,No reachable Underground Ruins: scrap metal runs out.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Beaverome.Sites,"No room for: Limestone quarry, Sandstone quarry, Deep Drill, Deep Mine, Deep Ore Processor, Cryogenic tank farm, Steel mill, Mission control, Radioactive waste refinery, Uranium processing plant, Cryogenic liquefaction plant, Water treatment plant, Launch pad, Nuclear Reactor, Electrolysis plant, Hospital, Precision machine works, Radioactive Waste Vault, Chemical works, Fishery works, Materials Laboratory, Town plaza.",Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Canyon.1,No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Canyon.Sites,No room for: Nuclear Reactor.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Cliffside.1,No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Cliffside.2,No Human Record Caches to survey.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Cliffside.Sites,"No room for: Limestone quarry, Archive excavation, Nuclear Reactor, Launch pad, Water treatment plant, Uranium processing plant, Radioactive waste refinery, Cryogenic liquefaction plant, Steel mill, Mission control, Precision machine works, Cryogenic tank farm, Electrolysis plant, Hospital, Chemical works, Radioactive Waste Vault, Fishery works, Food packaging works, Materials Laboratory, Town plaza.",Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Craters.1,No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Craters.Sites,"No room for: Nuclear Reactor, Radioactive Waste Export.",Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Diorama.Sites,"No room for: Deep Mine, Limestone quarry, Nuclear Reactor, Launch pad, Water treatment plant, Uranium processing plant, Radioactive waste refinery, Cryogenic liquefaction plant, Steel mill, Mission control, Cryogenic tank farm, Electrolysis plant, Hospital, Precision machine works, Chemical works, Radioactive Waste Vault, Fishery works, Materials Laboratory, Bathhouse, Technical school, Fertilizer works, Grocery store, Public health lab.",Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Hollows.1,No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Hollows.Sites,No room for: Nuclear Reactor.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Meander.Sites,"No room for: Cryogenic liquefaction plant, Radioactive waste refinery, Water treatment plant.",Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.MountainRange.1,No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.MountainRange.Sites,No room for: Nuclear Reactor.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Nomads.1,No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Oasis.Sites,"No room for: Nuclear Reactor, Reinforced hydroelectric turbine.",Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Pillars.1,Little irrigated farmland near the start.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Pillars.Sites,"No room for: Nuclear Reactor, Reinforced hydroelectric turbine, Cryogenic tank farm, Hospital.",Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Pressure.1,Few trees near the start.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Pressure.2,Few pines (resin) near the start.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Pressure.3,Little irrigated farmland near the start.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Spillage.Sites,No room for: Nuclear Reactor.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.ThousandIslands.1,Few trees near the start.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.ThousandIslands.2,Little irrigated farmland near the start.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.ThousandIslands.Sites,"No room for: Nuclear Reactor, Steel mill.",Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Waterfalls.1,No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Waterfalls.Sites,No room for: Radioactive waste refinery.,Deep Frontier map setup

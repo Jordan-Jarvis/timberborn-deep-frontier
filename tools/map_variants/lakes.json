@@ -4,6 +4,7 @@
   "sourceSha256": "db1fbceacd7b32cdca7a383cc81ce483cc230c0630ad69b3d99f6e3a933ab29e",
   "output": {"directory": "C:/Users/Jordan/Documents/Timberborn/Maps", "name": "Deep Frontier - Lakes"},
   "height": {"terrainLayers": 46, "totalHeight": 66},
+  "mapSize": {"x": 256, "y": 256},
   "hardVariant": false,
   "description": "Deep Frontier variant of the vanilla Lakes map. Checked for the full Deep Frontier loop: sandstone and limestone outcrops beside their pits near the start, a sandstone and a limestone seam for the quarries, three Deep Ore Veins (Deep Mine sites) on the West Bench, Slope Ridge and the Southeast Lowlands, two Deep Ore Sources for Deep Drills, five Human Record Caches with Archive Excavation sites, and a checked site for every large building, including a lake-cooled reactor on Reactor Island, a launch field east of the river, a fish hatchery, a map-edge waste export and a dam site.",
   "placements": [

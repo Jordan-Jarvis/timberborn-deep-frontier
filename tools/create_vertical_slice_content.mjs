@@ -451,3 +451,6 @@ await (await import('./tool_group_content.mjs')).applyToolGroups();
 await (await import('./status_icon_content.mjs')).applyStatusIconAnchors();
 // Last: every generated building must keep its declared automation role.
 await import('./automation_building_content.mjs');
+// Built-in new-game setup (tools/map_variants, tools/map_setup.json, docs/maps.md): data only, after
+// every map-editor template exists; the localization rows land after all others.
+await (await import('./map_setup_content.mjs')).applyMapSetup();

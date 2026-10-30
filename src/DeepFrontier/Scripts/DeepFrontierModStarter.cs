@@ -28,6 +28,8 @@ namespace DeepFrontier.Scripts {
       // Moddable Recipes 11.0.0 double Enable workaround (InventoryEnableGuard.cs).
       InventoryEnableGuard.Apply();
       ModdableRecipesEnabledState.Apply();
+      // New games on built-in maps get their total build height before MapSize.Load (MapSetup/BuiltinMapHeight.cs).
+      MapSetup.BuiltinMapHeight.Apply();
 #endif
       Debug.Log("[DeepFrontier] Mod shell loaded for Timberborn 1.1.2.8; vertical-slice blueprints are enabled.");
     }

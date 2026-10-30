@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "scope": "Built-in new-game setup (src/DeepFrontier/Scripts/MapSetup, docs/maps.md 'Built-in maps: new-game setup'). The per-map placements, total height, map size and unmet items come from tools/map_variants/*.json (each default variant whose source is builtin:<Name>). tools/map_setup_content.mjs generates Configurations/DeepFrontierMapSetup.blueprint.json and the enUS rows from this file and the variants; tools/prepare_deep_frontier_map.py builtin checks this file against the game and the reference variants.",
+  "devMaps": [
+    {"name": "_Mini", "width": 32, "height": 32},
+    {"name": "_TerrainTest", "width": 96, "height": 96},
+    {"name": "_WaterPerformanceTest", "width": 256, "height": 256}
+  ],
+  "devMapsWhy": "The game's developer test maps (IsDev, empty loc keys; the new-game list shows them only in dev mode). Deep Frontier gives them no setup: a new game on one gets a notification and a log line saying so, and no objects or height. The names are their asset (GameObject) names in resources.assets; prepare_deep_frontier_map.py checks that the sizes match the game's dev maps.",
+  "smallMap": {
+    "maxArea": 11176,
+    "referenceVariants": ["plains", "lakes", "terraces"],
+    "landShare": [1, 2],
+    "why": "A built-in map is small when its area (width x height) is below maxArea. maxArea is derived, and checked by prepare_deep_frontier_map.py builtin: the largest area that the full-loop sites claim on a reference map (primary footprints plus their listed open margins, siteArea.withOpenMargins of the built-in validation) divided by landShare. Below it, those sites alone would take more than half of the map, before terrain, water, farms, forest and homes."
+  },
+  "text": {
+    "smallTitle": "Deep Frontier: {0} is a very small map",
+    "smallIntro": "Deep Frontier is EXTREMELY difficult on {0}: it has {1} tiles, and the Deep Frontier late game is built for maps of at least {2} tiles.",
+    "smallReasonsHeader": "What this map cannot provide:",
+    "smallSpace": "Little room: the full set of large Deep Frontier sites (the 20 x 15 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about {0} tiles with their margins on a large map.",
+    "smallHeight": "Build upward: Deep Frontier raises this map's build height to {0} layers (vanilla {1}); on a small map most of the colony has to stack on platforms, which costs more materials.",
+    "unmetTitle": "Deep Frontier on {0}: this map cannot provide everything the full Deep Frontier game needs:",
+    "smallNoUnmet": "Every Deep Frontier resource and site fits on this map, but with almost no spare room.",
+    "setupFailedTitle": "Deep Frontier could not set up {0}",
+    "setupFailed": "{0} Deep Frontier map object(s) could not be placed on {1}; the late game may be missing resources. Details are in the Player.log ([DeepFrontier MapSetup]).",
+    "heightFailed": "Deep Frontier expected a build height of {0} layers on {1} but the map has {2}. Is Map Transformer enabled?",
+    "noSetup": "Deep Frontier has no setup for the built-in map {0}: no Deep Frontier resources were added.",
+    "devMap": "{0} is a developer test map: Deep Frontier adds no resources and keeps its height."
+  },
+  "unmetText": {
+    "why": "Player-facing lines for a variant's declared unmet loop items (the variant's 'reason' stays in the JSON, the validation evidence and docs/maps.md). Every missing building site of a map is folded into one line, sites with the buildings' enUS display names; every other item needs its line here, and map_setup_content.mjs fails on an item without one.",
+    "sites": "No room for: {0}.",
+    "items": {
+      "shore fishing banks (first FreshFish)": "No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.",
+      "irrigated farmland near the start": "Little irrigated farmland near the start.",
+      "trees near the start": "Few trees near the start.",
+      "pines (resin) near the start": "Few pines (resin) near the start.",
+      "Deep Drill sites beside Deep Ore Sources": "No Deep Drill site beside a Deep Ore Source.",
+      "Human Record Caches in survey range of an Archive Excavation site": "No Human Record Caches to survey.",
+      "renewable scrap (Underground Ruins for the Efficient Mine)": "No reachable Underground Ruins: scrap metal runs out."
+    }
+  }
+}

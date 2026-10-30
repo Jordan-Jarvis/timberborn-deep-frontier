@@ -4,6 +4,36 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Built-in maps: new-game resource setup, 66-layer height, small-map warning (Claude Code session, 2026-10-29, built by an agent; validated in mirror `maphook` and the real repo; not built or run in game)
+
+- **User:** add the Deep Frontier resources to the official maps automatically, for all built-in maps (Diorama the hardest), and warn that small maps are EXTREMELY difficult.
+- **Detection:** `GameSceneParameters.NewGame` with `NewGameConfiguration.MapFileReference.Resource` and `.Name`, the same test native `MapNameService.Load` uses. A saved `DeepFrontierMapSetup` singleton makes it run once per settlement. Old saves and map files, including the shipped variants, are untouched.
+- **Placement:** the map editor's path. A `PreviewFactory` preview must pass `BlockObject.IsValid()`, then `BlockObjectPlacerService.GetMatchingPlacer(spec).Place(...)`; Deep Ore Sources are placed finished. Stockpiles are filled as `FixedStockpileInventorySetter` does. A rejected placement is logged and listed in a dialog, never moved or skipped.
+- **Height:** {23 terrain, 66 total}. A postfix on `GameSceneSerializedWorldSupplier.Load` keeps the new game's world; a prefix on `MapSize.Load` writes `MapHeight` for Map Transformer to apply and keep. The global `MapSizeSpec` is not touched; the stored terrain layers are read unchanged. Files: `Scripts/MapSetup/BuiltinMapHeight.cs`, `BuiltinMapSetup.cs`, `MapSetupSpecs.cs`.
+- **Data:**
+  - One spec per map in `tools/map_variants/*.json`; 16 are new runtime-only specs with declared unmet requirements.
+  - `tools/map_setup.json` sets the small-map threshold: 11,176 tiles, twice Plains' late-game site footprint. Small maps: Diorama, Cliffside.
+  - `tools/map_setup_content.mjs` writes `Configurations/DeepFrontierMapSetup.blueprint.json` and the dialog texts.
+  - `tools/validate_map_setup.mjs` checks the data, and `prepare_deep_frontier_map.py builtin` (`map-setup-terrain` in `validate_all`) validates every spec against its unmodified built-in map.
+  - Built-in Plains uses `plains.json`; Plains Hard stays map-file only.
+- **Gaps per map:** documented in `docs/maps.md` ("Built-in maps: new-game setup"). 11 maps have no reactor site; Beaverome has no deep ore; Diorama has no Deep Mine site.
+- **Accepted gap: finite deep ore.** Since the cost pass, one of each building needs about 15,600 DeepOre, but the maps carry 4,000–6,000 in sources. The loop still closes through the Deep Mines. Decision pending (more or fuller sources, or a bootstrap rule).
+- **Tool fixes:**
+  - dry badwater sources count (Nomads, Oasis);
+  - tunnel sources feed their river (Hollows);
+  - `plan` keeps going past an unplaceable building;
+  - `map_loop_requirements.json` gained ReinforcedBotFrame, BotChassis and ReactorPowerCell.
+- **Checks:** real repo `validate_all -SkipBlender` 56 pass + 1 report-only; compile.
+- **Open:**
+  - Rebuild the four shipped map files with `build` before publishing; they still carry the 0.5.0.0 description.
+  - `test_prepare_deep_frontier_map.py`'s `no_dynamite` case is stale, so the cases after it don't run.
+  - `super_bot_content.mjs` refuses to run once its outputs exist, which complicates mirror regeneration.
+- **In game:**
+  - **Plains new game:** the log shows MapHeight {23, 66} and "19 placed, 0 failed"; the slicer reaches 65.
+  - **Reload:** no re-placement, and the height is kept.
+  - **Dialogs:** Diorama shows the small-map warning once; Canyon shows the short notice.
+  - **Untouched:** the Deep Frontier Lakes map file and old saves.
+
 ## Power: science-scaled consumer floor and stronger power plants (Claude Code session, 2026-10-29, built by an agent; validated in mirror `power`; not built or run in game)
 
 - **User:** endgame buildings should need lots of power ("smog scrubber only taking 200? more like 2000"); Coal 25k, Oil 90k, Hydro 40k, Nuclear 1M.

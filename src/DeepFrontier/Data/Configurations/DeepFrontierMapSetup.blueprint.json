@@ -1,0 +1,3456 @@
+{
+  "BuiltinMapSetupSpec": {
+    "SmallMapMaxArea": 11176,
+    "ReferenceSiteArea": 5588,
+    "DevMaps": [
+      "_Mini",
+      "_TerrainTest",
+      "_WaterPerformanceTest"
+    ],
+    "Maps": [
+      {
+        "MapName": "Beaverome",
+        "VariantId": "beaverome",
+        "Width": 192,
+        "Height": 192,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Beaverome.Sites",
+          "DeepFrontier.MapSetup.Unmet.Beaverome.1",
+          "DeepFrontier.MapSetup.Unmet.Beaverome.2"
+        ],
+        "Placements": [
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, by the start)",
+            "X": 77,
+            "Y": 96,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, by the start)",
+            "X": 78,
+            "Y": 99,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, by the start)",
+            "X": 78,
+            "Y": 93,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, by the start)",
+            "X": 79,
+            "Y": 85,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, by the start)",
+            "X": 82,
+            "Y": 84,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, by the start)",
+            "X": 81,
+            "Y": 81,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 95 cells south-west of the start",
+            "X": 19,
+            "Y": 20,
+            "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 83 cells south-west of the start",
+            "X": 19,
+            "Y": 36,
+            "Z": 9,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 78 cells south-west of the start",
+            "X": 25,
+            "Y": 37,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 90 cells south-west of the start",
+            "X": 27,
+            "Y": 20,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 86 cells south-west of the start",
+            "X": 34,
+            "Y": 20,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Canyon",
+        "VariantId": "canyon",
+        "Width": 128,
+        "Height": 128,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Canyon.Sites",
+          "DeepFrontier.MapSetup.Unmet.Canyon.1"
+        ],
+        "Placements": [
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 12 cells north of the start)",
+            "X": 57,
+            "Y": 73,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 12 cells north of the start)",
+            "X": 57,
+            "Y": 79,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 12 cells north of the start)",
+            "X": 52,
+            "Y": 76,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 13 cells north of the start)",
+            "X": 68,
+            "Y": 72,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 13 cells north of the start)",
+            "X": 68,
+            "Y": 76,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 13 cells north of the start)",
+            "X": 71,
+            "Y": 74,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 59 cells north-east of the start",
+            "X": 105,
+            "Y": 100,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 48 cells west of the start",
+            "X": 14,
+            "Y": 46,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 63 cells south-east of the start",
+            "X": 102,
+            "Y": 17,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 51 cells north-west of the start",
+            "X": 15,
+            "Y": 89,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 44 cells north-west of the start)",
+            "X": 27,
+            "Y": 93,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 15 cells south-west of the start)",
+            "X": 53,
+            "Y": 47,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 42 cells south-east of the start)",
+            "X": 77,
+            "Y": 24,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 11 cells east of the start)",
+            "X": 68,
+            "Y": 65,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 53 cells south-west of the start)",
+            "X": 21,
+            "Y": 41,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 49 cells west of the start)",
+            "X": 15,
+            "Y": 55,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 57 cells south-west of the start",
+            "X": 10,
+            "Y": 37,
+            "Z": 12,
+            "Orientation": "Cw180",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Cliffside",
+        "VariantId": "cliffside",
+        "Width": 100,
+        "Height": 50,
+        "TotalHeight": 66,
+        "Small": true,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Cliffside.Sites",
+          "DeepFrontier.MapSetup.Unmet.Cliffside.1",
+          "DeepFrontier.MapSetup.Unmet.Cliffside.2"
+        ],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 21 cells south-west of the start)",
+            "X": 16,
+            "Y": 10,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 20 cells west of the start)",
+            "X": 10,
+            "Y": 23,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source, 61 cells east of the start",
+            "X": 94,
+            "Y": 34,
+            "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source, 27 cells south-west of the start",
+            "X": 12,
+            "Y": 12,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 33 cells north-west of the start)",
+            "X": 11,
+            "Y": 46,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 33 cells north-west of the start)",
+            "X": 10,
+            "Y": 49,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 33 cells north-west of the start)",
+            "X": 12,
+            "Y": 49,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 36 cells north-east of the start)",
+            "X": 68,
+            "Y": 46,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 36 cells north-east of the start)",
+            "X": 67,
+            "Y": 45,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 36 cells north-east of the start)",
+            "X": 67,
+            "Y": 47,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 14 cells north-west of the start)",
+            "X": 22,
+            "Y": 36,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Craters",
+        "VariantId": "craters",
+        "Width": 192,
+        "Height": 192,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Craters.Sites",
+          "DeepFrontier.MapSetup.Unmet.Craters.1"
+        ],
+        "Placements": [
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 14 cells north of the start)",
+            "X": 134,
+            "Y": 54,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 14 cells north of the start)",
+            "X": 137,
+            "Y": 53,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 14 cells north of the start)",
+            "X": 136,
+            "Y": 50,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 11 cells north of the start)",
+            "X": 123,
+            "Y": 55,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 11 cells north of the start)",
+            "X": 125,
+            "Y": 52,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 11 cells north of the start)",
+            "X": 125,
+            "Y": 58,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 113 cells west of the start)",
+            "X": 18,
+            "Y": 16,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 102 cells west of the start)",
+            "X": 29,
+            "Y": 56,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 39 cells north-west of the start)",
+            "X": 110,
+            "Y": 66,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 102 cells west of the start)",
+            "X": 30,
+            "Y": 12,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 103 cells west of the start",
+            "X": 30,
+            "Y": 66,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 121 cells west of the start",
+            "X": 11,
+            "Y": 61,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 122 cells west of the start",
+            "X": 11,
+            "Y": 64,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 122 cells west of the start",
+            "X": 11,
+            "Y": 67,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 123 cells west of the start",
+            "X": 11,
+            "Y": 70,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 16 cells west of the start)",
+            "X": 114,
+            "Y": 44,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 27 cells west of the start)",
+            "X": 103,
+            "Y": 43,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Diorama",
+        "VariantId": "diorama",
+        "Width": 50,
+        "Height": 50,
+        "TotalHeight": 66,
+        "Small": true,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Diorama.Sites"
+        ],
+        "Placements": [
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source, 16 cells south-east of the start",
+            "X": 39,
+            "Y": 18,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source, 14 cells south of the start",
+            "X": 28,
+            "Y": 16,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 25 cells north-east of the start)",
+            "X": 45,
+            "Y": 45,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 25 cells north-east of the start)",
+            "X": 46,
+            "Y": 44,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 25 cells north-east of the start)",
+            "X": 48,
+            "Y": 45,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 15 cells north-east of the start)",
+            "X": 39,
+            "Y": 43,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 15 cells north-east of the start)",
+            "X": 40,
+            "Y": 44,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 15 cells north-east of the start)",
+            "X": 42,
+            "Y": 43,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, by the start)",
+            "X": 23,
+            "Y": 22,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Human Record Cache 1, 33 cells south-east of the start",
+            "X": 42,
+            "Y": 0,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Human Record Cache 2, 29 cells south-east of the start",
+            "X": 44,
+            "Y": 5,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Human Record Cache 3, 27 cells south-east of the start",
+            "X": 44,
+            "Y": 9,
+            "Z": 5,
+            "Orientation": "Cw90",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Human Record Cache 4, 31 cells south-east of the start",
+            "X": 44,
+            "Y": 3,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Human Record Cache 5, 33 cells south-east of the start",
+            "X": 45,
+            "Y": 2,
+            "Z": 5,
+            "Orientation": "Cw90",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "HelixMountain",
+        "VariantId": "helix-mountain",
+        "Width": 256,
+        "Height": 256,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "West bench vein",
+            "X": 107,
+            "Y": 62,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "East slope vein",
+            "X": 203,
+            "Y": 148,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "South bank source",
+            "X": 136,
+            "Y": 26,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "East terrace source",
+            "X": 222,
+            "Y": 171,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 13 cells west of the start)",
+            "X": 117,
+            "Y": 57,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 13 cells west of the start)",
+            "X": 120,
+            "Y": 56,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 13 cells west of the start)",
+            "X": 123,
+            "Y": 57,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 14 cells west of the start)",
+            "X": 117,
+            "Y": 63,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 14 cells west of the start)",
+            "X": 121,
+            "Y": 63,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 14 cells west of the start)",
+            "X": 124,
+            "Y": 63,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 159 cells north of the start)",
+            "X": 118,
+            "Y": 218,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 54 cells south-west of the start)",
+            "X": 107,
+            "Y": 12,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 94 cells east of the start",
+            "X": 221,
+            "Y": 96,
+            "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 142 cells north of the start",
+            "X": 149,
+            "Y": 203,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 147 cells north of the start",
+            "X": 96,
+            "Y": 204,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 151 cells north-west of the start",
+            "X": 19,
+            "Y": 161,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 180 cells north-east of the start",
+            "X": 221,
+            "Y": 219,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Hollows",
+        "VariantId": "hollows",
+        "Width": 192,
+        "Height": 192,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Hollows.Sites",
+          "DeepFrontier.MapSetup.Unmet.Hollows.1"
+        ],
+        "Placements": [
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 13 cells north-east of the start)",
+            "X": 103,
+            "Y": 99,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 13 cells north-east of the start)",
+            "X": 106,
+            "Y": 98,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 13 cells north-east of the start)",
+            "X": 100,
+            "Y": 99,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 14 cells north-east of the start)",
+            "X": 94,
+            "Y": 110,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 14 cells north-east of the start)",
+            "X": 96,
+            "Y": 107,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 14 cells north-east of the start)",
+            "X": 91,
+            "Y": 111,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 99 cells south-east of the start)",
+            "X": 133,
+            "Y": 3,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 97 cells south-east of the start)",
+            "X": 158,
+            "Y": 21,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 47 cells north of the start)",
+            "X": 83,
+            "Y": 136,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 64 cells west of the start)",
+            "X": 39,
+            "Y": 98,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 73 cells east of the start)",
+            "X": 172,
+            "Y": 102,
+            "Z": 1,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 86 cells south-east of the start)",
+            "X": 158,
+            "Y": 39,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 99 cells south-east of the start)",
+            "X": 182,
+            "Y": 52,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 84 cells north of the start",
+            "X": 80,
+            "Y": 178,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 88 cells north of the start",
+            "X": 123,
+            "Y": 178,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 81 cells north-east of the start",
+            "X": 146,
+            "Y": 157,
+            "Z": 1,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 116 cells north-west of the start",
+            "X": 13,
+            "Y": 179,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 111 cells south-east of the start",
+            "X": 154,
+            "Y": 3,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Lakes",
+        "VariantId": "lakes",
+        "Width": 256,
+        "Height": 256,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "West Bench vein",
+            "X": 21,
+            "Y": 148,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Slope Ridge vein",
+            "X": 53,
+            "Y": 158,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Southeast Lowlands vein",
+            "X": 215,
+            "Y": 2,
+            "Z": 1,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "West Clearing source",
+            "X": 65,
+            "Y": 122,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 1500
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Southeast Lowlands source",
+            "X": 179,
+            "Y": 25,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2500
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "West ruins",
+            "X": 45,
+            "Y": 113,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "North river ruins",
+            "X": 116,
+            "Y": 180,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "East terrace ruins",
+            "X": 147,
+            "Y": 117,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 12 cells east of the start)",
+            "X": 110,
+            "Y": 124,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 12 cells east of the start)",
+            "X": 113,
+            "Y": 123,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 12 cells east of the start)",
+            "X": 112,
+            "Y": 120,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 12 cells north of the start)",
+            "X": 99,
+            "Y": 140,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 12 cells north of the start)",
+            "X": 99,
+            "Y": 146,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 12 cells north of the start)",
+            "X": 94,
+            "Y": 143,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 85 cells south of the start)",
+            "X": 97,
+            "Y": 43,
+            "Z": 1,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 97 cells south of the start)",
+            "X": 94,
+            "Y": 31,
+            "Z": 1,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 108 cells south of the start",
+            "X": 107,
+            "Y": 22,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 99 cells west of the start",
+            "X": 4,
+            "Y": 105,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Meander",
+        "VariantId": "meander",
+        "Width": 128,
+        "Height": 128,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Meander.Sites"
+        ],
+        "Placements": [
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 13 cells east of the start)",
+            "X": 75,
+            "Y": 50,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 13 cells east of the start)",
+            "X": 79,
+            "Y": 50,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 13 cells east of the start)",
+            "X": 74,
+            "Y": 47,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 12 cells east of the start)",
+            "X": 75,
+            "Y": 56,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 12 cells east of the start)",
+            "X": 79,
+            "Y": 56,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 12 cells east of the start)",
+            "X": 72,
+            "Y": 56,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 18 cells west of the start",
+            "X": 48,
+            "Y": 51,
+            "Z": 9,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 61 cells south-east of the start",
+            "X": 121,
+            "Y": 32,
+            "Z": 7,
+            "Orientation": "Cw90",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 52 cells north-west of the start",
+            "X": 25,
+            "Y": 89,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 52 cells south-west of the start",
+            "X": 27,
+            "Y": 21,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 45 cells east of the start",
+            "X": 110,
+            "Y": 52,
+            "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 54 cells south of the start)",
+            "X": 77,
+            "Y": 2,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 71 cells north-east of the start)",
+            "X": 107,
+            "Y": 113,
+            "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 40 cells south of the start)",
+            "X": 53,
+            "Y": 17,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 20 cells east of the start)",
+            "X": 83,
+            "Y": 61,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 65 cells south-east of the start)",
+            "X": 107,
+            "Y": 10,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 13 cells north-west of the start)",
+            "X": 48,
+            "Y": 64,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          }
+        ]
+      },
+      {
+        "MapName": "MountainRange",
+        "VariantId": "mountain-range",
+        "Width": 256,
+        "Height": 150,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.MountainRange.Sites",
+          "DeepFrontier.MapSetup.Unmet.MountainRange.1"
+        ],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "North highland vein",
+            "X": 71,
+            "Y": 87,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "South valley vein",
+            "X": 66,
+            "Y": 4,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "East bench source",
+            "X": 104,
+            "Y": 39,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "North bench source",
+            "X": 67,
+            "Y": 115,
+            "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 12 cells east of the start)",
+            "X": 79,
+            "Y": 46,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 12 cells east of the start)",
+            "X": 82,
+            "Y": 45,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 12 cells east of the start)",
+            "X": 85,
+            "Y": 46,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 14 cells south-east of the start)",
+            "X": 79,
+            "Y": 36,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 14 cells south-east of the start)",
+            "X": 82,
+            "Y": 35,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 14 cells south-east of the start)",
+            "X": 85,
+            "Y": 36,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 114 cells north-east of the start)",
+            "X": 159,
+            "Y": 112,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 148 cells north-east of the start)",
+            "X": 181,
+            "Y": 140,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 73 cells north-west of the start",
+            "X": 23,
+            "Y": 102,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 86 cells north-east of the start",
+            "X": 138,
+            "Y": 98,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 160 cells north-east of the start",
+            "X": 200,
+            "Y": 139,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 163 cells east of the start",
+            "X": 228,
+            "Y": 85,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 90 cells north-east of the start",
+            "X": 106,
+            "Y": 128,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Nomads",
+        "VariantId": "nomads",
+        "Width": 256,
+        "Height": 256,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Nomads.1"
+        ],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "South Bluff vein",
+            "X": 156,
+            "Y": 89,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "East Terrace vein",
+            "X": 187,
+            "Y": 124,
+            "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "North Hollow vein",
+            "X": 164,
+            "Y": 159,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "South Riverbank source",
+            "X": 133,
+            "Y": 74,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 1500
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "North-east Terrace source",
+            "X": 177,
+            "Y": 141,
+            "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "East Ridge source",
+            "X": 191,
+            "Y": 107,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2500
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 13 cells south-east of the start)",
+            "X": 158,
+            "Y": 112,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 13 cells south-east of the start)",
+            "X": 161,
+            "Y": 111,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 13 cells south-east of the start)",
+            "X": 160,
+            "Y": 108,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 12 cells east of the start)",
+            "X": 158,
+            "Y": 118,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 12 cells east of the start)",
+            "X": 162,
+            "Y": 118,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 12 cells east of the start)",
+            "X": 165,
+            "Y": 118,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 25 cells north of the start)",
+            "X": 142,
+            "Y": 143,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 25 cells east of the start)",
+            "X": 172,
+            "Y": 119,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 79 cells north-west of the start",
+            "X": 73,
+            "Y": 159,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 51 cells east of the start",
+            "X": 196,
+            "Y": 138,
+            "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 76 cells east of the start",
+            "X": 223,
+            "Y": 106,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 121 cells north of the start",
+            "X": 162,
+            "Y": 240,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 117 cells south-east of the start",
+            "X": 234,
+            "Y": 40,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Oasis",
+        "VariantId": "oasis",
+        "Width": 256,
+        "Height": 256,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Oasis.Sites"
+        ],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "East Hollow vein",
+            "X": 155,
+            "Y": 139,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "West Basin vein",
+            "X": 68,
+            "Y": 136,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "South Terrace vein",
+            "X": 156,
+            "Y": 86,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "West Bench source",
+            "X": 89,
+            "Y": 136,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 1500
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "South Rise source",
+            "X": 131,
+            "Y": 93,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Far East Flats source",
+            "X": 201,
+            "Y": 124,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2500
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 12 cells east of the start)",
+            "X": 133,
+            "Y": 140,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 12 cells east of the start)",
+            "X": 136,
+            "Y": 139,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 12 cells east of the start)",
+            "X": 139,
+            "Y": 140,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 12 cells north of the start)",
+            "X": 120,
+            "Y": 156,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 12 cells north of the start)",
+            "X": 122,
+            "Y": 159,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 12 cells north of the start)",
+            "X": 121,
+            "Y": 153,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 16 cells north-west of the start)",
+            "X": 111,
+            "Y": 152,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 16 cells west of the start)",
+            "X": 106,
+            "Y": 139,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Record cache 92 cells north of the start",
+            "X": 91,
+            "Y": 224,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 39 cells south-east of the start",
+            "X": 146,
+            "Y": 111,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 83 cells south-east of the start",
+            "X": 168,
+            "Y": 73,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 131 cells south of the start",
+            "X": 119,
+            "Y": 12,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 132 cells south-east of the start",
+            "X": 240,
+            "Y": 81,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Pillars",
+        "VariantId": "pillars",
+        "Width": 192,
+        "Height": 192,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Pillars.Sites",
+          "DeepFrontier.MapSetup.Unmet.Pillars.1"
+        ],
+        "Placements": [
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 10 cells north of the start)",
+            "X": 102,
+            "Y": 83,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 10 cells north of the start)",
+            "X": 103,
+            "Y": 86,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 10 cells north of the start)",
+            "X": 106,
+            "Y": 85,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 13 cells east of the start)",
+            "X": 114,
+            "Y": 79,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 13 cells east of the start)",
+            "X": 117,
+            "Y": 79,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 13 cells east of the start)",
+            "X": 111,
+            "Y": 79,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 87 cells south-east of the start)",
+            "X": 150,
+            "Y": 2,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 125 cells north-west of the start)",
+            "X": 43,
+            "Y": 184,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 33 cells north of the start)",
+            "X": 96,
+            "Y": 117,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 34 cells south-west of the start)",
+            "X": 62,
+            "Y": 57,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 22 cells south-west of the start)",
+            "X": 81,
+            "Y": 61,
+            "Z": 9,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 42 cells north-east of the start)",
+            "X": 134,
+            "Y": 97,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 106 cells north of the start",
+            "X": 112,
+            "Y": 181,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 82 cells south-east of the start",
+            "X": 165,
+            "Y": 25,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 108 cells north of the start",
+            "X": 112,
+            "Y": 183,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 85 cells south-east of the start",
+            "X": 168,
+            "Y": 25,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 111 cells north of the start",
+            "X": 112,
+            "Y": 186,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Plains",
+        "VariantId": "plains",
+        "Width": 256,
+        "Height": 256,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "Crater Rim West vein",
+            "X": 156,
+            "Y": 102,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Crater Rim East vein",
+            "X": 187,
+            "Y": 102,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "West Lowlands vein",
+            "X": 34,
+            "Y": 80,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Crater Road source",
+            "X": 159,
+            "Y": 120,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 1500
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "North Bank source",
+            "X": 108,
+            "Y": 167,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "West Lowlands source",
+            "X": 21,
+            "Y": 81,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2500
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Crater Rim ruins",
+            "X": 155,
+            "Y": 87,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "North ruins",
+            "X": 176,
+            "Y": 188,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 13 cells south of the start)",
+            "X": 125,
+            "Y": 125,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 13 cells south of the start)",
+            "X": 126,
+            "Y": 128,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 13 cells south of the start)",
+            "X": 122,
+            "Y": 126,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 13 cells west of the start)",
+            "X": 122,
+            "Y": 140,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 13 cells west of the start)",
+            "X": 120,
+            "Y": 143,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 13 cells west of the start)",
+            "X": 122,
+            "Y": 137,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 45 cells south-west of the start)",
+            "X": 100,
+            "Y": 101,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 46 cells south-east of the start)",
+            "X": 166,
+            "Y": 109,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 78 cells north-west of the start",
+            "X": 79,
+            "Y": 196,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 118 cells south of the start",
+            "X": 107,
+            "Y": 22,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 110 cells south-west of the start",
+            "X": 64,
+            "Y": 49,
+            "Z": 9,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Pressure",
+        "VariantId": "pressure",
+        "Width": 256,
+        "Height": 256,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Pressure.1",
+          "DeepFrontier.MapSetup.Unmet.Pressure.2",
+          "DeepFrontier.MapSetup.Unmet.Pressure.3"
+        ],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "South Basin vein",
+            "X": 116,
+            "Y": 123,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "North Rise vein",
+            "X": 142,
+            "Y": 188,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "South-east Gorge vein",
+            "X": 213,
+            "Y": 93,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "South Plateau source",
+            "X": 154,
+            "Y": 79,
+            "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 1500
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "East Bench source",
+            "X": 203,
+            "Y": 134,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2500
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "North-west Shelf source",
+            "X": 46,
+            "Y": 194,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 21 cells north of the start)",
+            "X": 121,
+            "Y": 174,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 21 cells north of the start)",
+            "X": 121,
+            "Y": 180,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 21 cells north of the start)",
+            "X": 124,
+            "Y": 180,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 34 cells north of the start)",
+            "X": 127,
+            "Y": 188,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 34 cells north of the start)",
+            "X": 127,
+            "Y": 185,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 34 cells north of the start)",
+            "X": 124,
+            "Y": 184,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 25 cells north-east of the start)",
+            "X": 138,
+            "Y": 174,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 23 cells west of the start)",
+            "X": 102,
+            "Y": 145,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Record cache 99 cells north-west of the start",
+            "X": 45,
+            "Y": 224,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 85 cells west of the start",
+            "X": 38,
+            "Y": 115,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Record cache 88 cells north-east of the start",
+            "X": 151,
+            "Y": 228,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Record cache 94 cells south-east of the start",
+            "X": 158,
+            "Y": 79,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Record cache 93 cells north-west of the start",
+            "X": 31,
+            "Y": 190,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Spillage",
+        "VariantId": "spillage",
+        "Width": 256,
+        "Height": 150,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Spillage.Sites"
+        ],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "North-east terrace vein",
+            "X": 131,
+            "Y": 117,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "North terrace vein",
+            "X": 107,
+            "Y": 130,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "South ridge source",
+            "X": 112,
+            "Y": 33,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "East highland source",
+            "X": 180,
+            "Y": 80,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 14 cells west of the start)",
+            "X": 73,
+            "Y": 67,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 14 cells west of the start)",
+            "X": 76,
+            "Y": 66,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 14 cells west of the start)",
+            "X": 75,
+            "Y": 63,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 13 cells south of the start)",
+            "X": 87,
+            "Y": 62,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 13 cells south of the start)",
+            "X": 88,
+            "Y": 59,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 13 cells south of the start)",
+            "X": 88,
+            "Y": 56,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 76 cells south-east of the start)",
+            "X": 141,
+            "Y": 20,
+            "Z": 9,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 101 cells east of the start)",
+            "X": 181,
+            "Y": 37,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 104 cells east of the start",
+            "X": 190,
+            "Y": 94,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 157 cells east of the start",
+            "X": 244,
+            "Y": 55,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 58 cells north-west of the start",
+            "X": 36,
+            "Y": 101,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 67 cells north-east of the start",
+            "X": 142,
+            "Y": 116,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 104 cells south-east of the start",
+            "X": 176,
+            "Y": 18,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Terraces",
+        "VariantId": "terraces",
+        "Width": 256,
+        "Height": 256,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "Lower Basin vein",
+            "X": 169,
+            "Y": 114,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Ruin Bench vein",
+            "X": 147,
+            "Y": 127,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Upper Bench vein",
+            "X": 112,
+            "Y": 164,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Bench source",
+            "X": 126,
+            "Y": 136,
+            "Z": 9,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 1500
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Basin Rim source",
+            "X": 152,
+            "Y": 106,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2500
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Bench ruins",
+            "X": 149,
+            "Y": 155,
+            "Z": 11,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Valley-top ruins",
+            "X": 45,
+            "Y": 187,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 12 cells north of the start)",
+            "X": 77,
+            "Y": 167,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 12 cells north of the start)",
+            "X": 79,
+            "Y": 164,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 12 cells north of the start)",
+            "X": 74,
+            "Y": 167,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 13 cells east of the start)",
+            "X": 90,
+            "Y": 146,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 13 cells east of the start)",
+            "X": 87,
+            "Y": 146,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 13 cells east of the start)",
+            "X": 90,
+            "Y": 143,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 92 cells south-east of the start)",
+            "X": 150,
+            "Y": 94,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 107 cells east of the start)",
+            "X": 179,
+            "Y": 114,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 93 cells south-east of the start",
+            "X": 144,
+            "Y": 86,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 49 cells south-west of the start",
+            "X": 42,
+            "Y": 123,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 91 cells south of the start",
+            "X": 89,
+            "Y": 63,
+            "Z": 15,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "ThousandIslands",
+        "VariantId": "thousand-islands",
+        "Width": 256,
+        "Height": 256,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.ThousandIslands.Sites",
+          "DeepFrontier.MapSetup.Unmet.ThousandIslands.1",
+          "DeepFrontier.MapSetup.Unmet.ThousandIslands.2"
+        ],
+        "Placements": [
+          {
+            "Template": "DeepOreVein",
+            "Label": "Neighbour Isle vein",
+            "X": 112,
+            "Y": 121,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "North-east Highland vein",
+            "X": 243,
+            "Y": 242,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "South-east Isle source",
+            "X": 203,
+            "Y": 30,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "South-west Isle source",
+            "X": 61,
+            "Y": 29,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 13 cells south of the start)",
+            "X": 87,
+            "Y": 87,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 13 cells south of the start)",
+            "X": 87,
+            "Y": 84,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 13 cells south of the start)",
+            "X": 84,
+            "Y": 85,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 35 cells west of the start)",
+            "X": 54,
+            "Y": 92,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 35 cells west of the start)",
+            "X": 53,
+            "Y": 98,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 35 cells west of the start)",
+            "X": 52,
+            "Y": 89,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 78 cells south-west of the start)",
+            "X": 24,
+            "Y": 55,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 191 cells north-east of the start)",
+            "X": 204,
+            "Y": 250,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "South-east Isle record cache 1",
+            "X": 172,
+            "Y": 34,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "South-east Isle record cache 2",
+            "X": 173,
+            "Y": 48,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "South-east Isle record cache 3",
+            "X": 174,
+            "Y": 37,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Lagoon Isle record cache 1",
+            "X": 151,
+            "Y": 166,
+            "Z": 6,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Lagoon Isle record cache 2",
+            "X": 153,
+            "Y": 157,
+            "Z": 9,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      },
+      {
+        "MapName": "Waterfalls",
+        "VariantId": "waterfalls",
+        "Width": 128,
+        "Height": 128,
+        "TotalHeight": 66,
+        "Small": false,
+        "UnmetLocKeys": [
+          "DeepFrontier.MapSetup.Unmet.Waterfalls.Sites",
+          "DeepFrontier.MapSetup.Unmet.Waterfalls.1"
+        ],
+        "Placements": [
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 1 (Limestone Pit, 13 cells north-east of the start)",
+            "X": 72,
+            "Y": 83,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 2 (Limestone Pit, 13 cells north-east of the start)",
+            "X": 74,
+            "Y": 80,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneOutcrop",
+            "Label": "Limestone Outcrop 3 (Limestone Pit, 13 cells north-east of the start)",
+            "X": 69,
+            "Y": 82,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 1 (Sandstone Pit, 13 cells west of the start)",
+            "X": 58,
+            "Y": 65,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 2 (Sandstone Pit, 13 cells west of the start)",
+            "X": 63,
+            "Y": 67,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneOutcrop",
+            "Label": "Sandstone Outcrop 3 (Sandstone Pit, 13 cells west of the start)",
+            "X": 61,
+            "Y": 64,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 41 cells east of the start",
+            "X": 112,
+            "Y": 63,
+            "Z": 8,
+            "Orientation": "Cw90",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 45 cells north of the start",
+            "X": 54,
+            "Y": 111,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 51 cells south-east of the start",
+            "X": 105,
+            "Y": 31,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 69 cells south-west of the start",
+            "X": 32,
+            "Y": 12,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 19 cells south of the start)",
+            "X": 76,
+            "Y": 48,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 49 cells north-east of the start)",
+            "X": 101,
+            "Y": 108,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 49 cells south of the start)",
+            "X": 73,
+            "Y": 19,
+            "Z": 1,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 72 cells south-west of the start)",
+            "X": 41,
+            "Y": 2,
+            "Z": 16,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 69 cells south of the start)",
+            "X": 97,
+            "Y": 11,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 32 cells west of the start)",
+            "X": 43,
+            "Y": 81,
+            "Z": 5,
+            "Orientation": "Cw0",
+            "Good": "DeepOre",
+            "Amount": 2000
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 44 cells east of the start, second cache",
+            "X": 115,
+            "Y": 63,
+            "Z": 7,
+            "Orientation": "Cw90",
+            "Good": "",
+            "Amount": 0
+          }
+        ]
+      }
+    ]
+  }
+}

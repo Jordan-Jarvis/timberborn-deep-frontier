@@ -14,12 +14,35 @@ repairs inputs: an invalid placement, an unknown template or a changed source
 map is an error.
 
 Commands (run from any directory):
-  analyze  <source> [--png PATH]   terrain/water/site survey of a source map
-  suggest  <source> [--png PATH]   candidate vein/source/reactor/pad sites
+  analyze  <source> [--png PATH] [--total-height N]
+                                   terrain/water/site survey of a source map
+  suggest  <source> [--png PATH] [--total-height N]
+                                   candidate vein/source/reactor/pad sites
+                                   (--total-height 66: as the new-game setup
+                                   loads a built-in map)
   plan     <variant.json> --out P  propose the placements and sites a variant
                                    still lacks for the full loop (for review)
   build    <variant.json>...       write the variant(s) and validate them
   validate <variant.json>...       validate already written variant(s)
+  builtin  [<variant.json>...]     validate the new-game setup of built-in maps
+                                   (src/DeepFrontier/Scripts/MapSetup): every
+                                   default (non-hard) variant whose source is a
+                                   built-in map, checked against the unmodified
+                                   built-in terrain at its stored terrain layers
+                                   and the variant's total height, exactly as the
+                                   runtime places it; with no arguments, every
+                                   tools/map_variants/*.json plus the coverage of
+                                   every built-in map and tools/map_setup.json
+
+A variant whose "output" is null is runtime-only: it is never written as a
+.timber; the built-in new-game setup applies it (builtin command). Its
+"height" holds only "totalHeight": the runtime keeps the map's stored terrain
+layers. A variant may declare "unmet": [{"item", "reason"}], loop-coverage
+items the map physically cannot provide; the check fails unless the failing
+items equal the declared ones exactly. Placement and site problems can never
+be declared. tools/map_loop_requirements.json "acceptedGaps" lists the
+coverage items accepted on every map until a design decision; each is printed
+on every run.
 
 <source> is either builtin:<Name> (a built-in map, read from the game's
 resources.assets by its MapMetadata.<Name>.Name key) or a .timber path.
@@ -108,10 +131,16 @@ def read_zip_bytes(data):
     return {name: archive.read(name) for name in names}
 
 
-def builtin_map_bytes(name):
-    """Return the zip bytes of a built-in map stored as BinaryData in resources.assets."""
-    key = f'MapMetadata.{name}.Name'
-    matches = []
+_BUILTIN_MAPS = None
+
+
+def builtin_maps():
+    """(map_metadata, zip bytes) of every built-in map: the BinaryData assets of the resource
+    folder Maps (MapRepository.GetBuiltinMapNames), found as zips inside resources.assets."""
+    global _BUILTIN_MAPS
+    if _BUILTIN_MAPS is not None:
+        return _BUILTIN_MAPS
+    found = []
     with open(RESOURCES_ASSETS, 'rb') as handle:
         view = mmap.mmap(handle.fileno(), 0, access=mmap.ACCESS_READ)
         position = view.find(b'PK\x05\x06')
@@ -127,9 +156,30 @@ def builtin_map_bytes(name):
                     metadata = json.loads(zipfile.ZipFile(io.BytesIO(data)).read('map_metadata.json'))
                 except (KeyError, zipfile.BadZipFile):
                     metadata = None
-                if metadata and metadata.get('MapNameLocKey') == key:
-                    matches.append(data)
+                if metadata is not None:
+                    found.append((metadata, data))
             position = view.find(b'PK\x05\x06', position + 1)
+    _BUILTIN_MAPS = found
+    return found
+
+
+# The new-game list names a built-in map by its asset name (MapFileReference.FromResource(name),
+# OfficialMapItemFactory; MapNameService saves it). In 1.1.2.8 every named built-in map's asset
+# (GameObject) name equals the <Name> of its MapMetadata.<Name>.Name key: checked against the
+# GameObject names in resources.assets (Plains, Lakes, Terraces, Diorama, HelixMountain, ...) and
+# against saves of new games on Plains, Lakes and Meander (MapNameService.Name). The three dev maps
+# (IsDev, empty loc keys, listed only in dev mode) are _Mini, _TerrainTest and _WaterPerformanceTest.
+def builtin_map_name(metadata):
+    key = metadata.get('MapNameLocKey') or ''
+    if not (key.startswith('MapMetadata.') and key.endswith('.Name')):
+        return None
+    return key[len('MapMetadata.'):-len('.Name')]
+
+
+def builtin_map_bytes(name):
+    """Return the zip bytes of a built-in map stored as BinaryData in resources.assets."""
+    key = f'MapMetadata.{name}.Name'
+    matches = [data for metadata, data in builtin_maps() if metadata.get('MapNameLocKey') == key]
     if len(matches) != 1:
         fail(f'Expected one built-in map with {key} in {RESOURCES_ASSETS}, found {len(matches)}')
     return matches[0]
@@ -190,6 +240,23 @@ def resize_height(entries, terrain_layers, total_height):
     out = dict(entries)
     out['world.json'] = resized
     return out
+
+
+def stored_terrain_layers(entries):
+    world = json.loads(entries['world.json'])
+    size = world['Singletons']['MapSize']['Size']
+    count = world['Singletons']['TerrainMap']['Voxels']['Array'].count(' ') + 1
+    cells = size['X'] * size['Y']
+    if count % cells:
+        fail('Voxel count is not a whole number of layers')
+    return count // cells
+
+
+def runtime_source_entries(variant, entries):
+    """The built-in map as the runtime new-game setup loads it (Scripts/MapSetup/BuiltinMapHeight.cs):
+    terrain unchanged at its stored layers, MapHeight {stored, totalHeight} written into the MapSize
+    singleton before MapSize.Load, which Map Transformer's postfix applies."""
+    return resize_height(entries, stored_terrain_layers(entries), variant['height']['totalHeight'])
 
 
 # ------------------------------------------------------------- blueprints
@@ -753,7 +820,7 @@ STAGE_COLOURS = {'construction': (235, 170, 110), 'deepIndustry': (255, 130, 0),
 
 def preview_marks(variant, catalog, report):
     """Marks and legend for every placement and site of a variant (site codes S1.., placement codes P1..)."""
-    marks, legend = [], [(f'{variant["output"]["name"]}', (255, 255, 255)), ('white square: starting location', (255, 255, 255)), ('', (0, 0, 0))]
+    marks, legend = [], [(variant_title(variant), (255, 255, 255)),('white square: starting location', (255, 255, 255)), ('', (0, 0, 0))]
     stages = {}
     for stage in report['loopCoverage']['stages']:
         for item in stage['items']:
@@ -816,11 +883,27 @@ def survey(model):
 def load_variant(path):
     path = Path(path)
     variant = read_json(path)
-    required = ['id', 'source', 'sourceSha256', 'output', 'hardVariant', 'description', 'placements', 'sites']
+    required = ['id', 'source', 'sourceSha256', 'output', 'height', 'mapSize', 'hardVariant', 'description', 'placements', 'sites']
     missing = [key for key in required if key not in variant]
     if missing:
         fail(f'{path}: missing keys {missing}')
+    unknown = set(variant) - set(required) - {'unmet'}
+    if unknown:
+        fail(f'{path}: unknown keys {sorted(unknown)}')
+    expected_height = {'terrainLayers', 'totalHeight'} if variant['output'] is not None else {'totalHeight'}
+    if set(variant['height']) != expected_height:
+        fail(f'{path}: height must have exactly {sorted(expected_height)} '
+             f'({"written" if variant["output"] is not None else "runtime-only"} variant), found {sorted(variant["height"])}')
+    if set(variant['mapSize']) != {'x', 'y'}:
+        fail(f'{path}: mapSize must be {{"x", "y"}} (the source map size), found {variant["mapSize"]}')
+    for entry in variant.get('unmet', []):
+        if set(entry) != {'item', 'reason'} or not entry['reason'].strip():
+            fail(f'{path}: unmet entry {entry} needs exactly a loop-coverage "item" and a non-empty "reason"')
     return variant
+
+
+def variant_title(variant):
+    return variant['output']['name'] if variant['output'] is not None else f'{variant["id"]} (built-in {variant["source"]}, new-game setup)'
 
 
 def dump_variant(variant):
@@ -1137,13 +1220,65 @@ def wet_components(model):
     return labels
 
 
+def column_components(model):
+    """Connected components of every wet water column (all column slots, underground ones included).
+
+    A column slot is the open space of a cell from its floor up to the next solid voxel (or the total
+    height); two horizontally adjacent wet slots are connected when their open spaces overlap, so water
+    can pass between them. Returns (labels {(level, y, x): component}, surface {component: surface wet
+    labels of wet_components}).
+    """
+    if hasattr(model, '_column_components'):
+        return model._column_components
+    depth, floor = model.water_depth_levels, model.water_floor_levels
+    layers = model.solid.shape[0]
+    slots = {}
+    for level, y, x in zip(*np.nonzero(depth > 0)):
+        f = int(floor[level, y, x])
+        above = np.nonzero(model.solid[f:, y, x])[0] if f < layers else []
+        ceiling = f + int(above[0]) if len(above) else model.total_height
+        slots.setdefault((int(y), int(x)), []).append((int(level), f, ceiling))
+    labels, current = {}, 0
+    for (y0, x0), entries in slots.items():
+        for entry in entries:
+            if (entry[0], y0, x0) in labels:
+                continue
+            labels[(entry[0], y0, x0)] = current
+            queue = deque([(y0, x0, entry)])
+            while queue:
+                y, x, (_, f, c) = queue.popleft()
+                for ny, nx in ((y + 1, x), (y - 1, x), (y, x + 1), (y, x - 1)):
+                    for other in slots.get((ny, nx), ()):
+                        key = (other[0], ny, nx)
+                        if key not in labels and max(f, other[1]) < min(c, other[2]):
+                            labels[key] = current
+                            queue.append((ny, nx, other))
+            current += 1
+    surface_labels = wet_components(model)
+    surface = {}
+    for (level, y, x), component in labels.items():
+        if floor[level, y, x] == model.height[y, x] and surface_labels[y, x] >= 0:
+            surface.setdefault(component, set()).add(int(surface_labels[y, x]))
+    model._column_components = labels, surface
+    return labels, surface
+
+
 def source_strength_by_component(model, catalog):
-    """Water-source strength feeding each wet component (a source feeds the components it touches)."""
+    """Water-source strength feeding each wet component: the components a source touches on the surface,
+    and the surface components its water reaches through connected columns underground (sources in
+    tunnels, as on Hollows, feed the river the tunnel opens onto)."""
     labels = wet_components(model)
+    column_labels, column_surface = column_components(model)
+    column_at = {}
+    for (level, cy, cx), component in column_labels.items():
+        column_at.setdefault((cy, cx), set()).add(component)
     strength = {}
     for x, y, value, _ in water_source_cells(model, catalog):
         touched = {int(labels[ny, nx]) for nx, ny in ((x, y), (x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1))
                    if 0 <= nx < model.sx and 0 <= ny < model.sy and labels[ny, nx] >= 0}
+        for nx, ny in ((x, y), (x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+            for component in column_at.get((ny, nx), ()):
+                touched |= column_surface.get(component, set())
         for label in touched:
             strength[label] = strength.get(label, 0) + value
     return strength
@@ -1572,6 +1707,13 @@ def start_resources(model, catalog, requirements):
 
     fed = [label for label, value in strength.items() if value > 0]
     fed_clean = clean_wet & np.isin(labels, fed)
+    # Badwater: saved badwater cells, plus the outlet cells of every badwater source with a positive
+    # SpecifiedStrength. Such a source runs from the first tick, so badwater is available beside it even
+    # when the saved map holds none there (Nomads and Oasis store their badwater sources dry).
+    bad_points = bad_wet.copy()
+    for x, y, value, _ in water_source_cells(model, catalog, badwater=True):
+        if value > 0 and 0 <= x < model.sx and 0 <= y < model.sy:
+            bad_points[y, x] = True
     underground, ruin_scrap = [], 0
     for record in model.objects:
         blueprint = catalog.get(record['template'])
@@ -1587,7 +1729,7 @@ def start_resources(model, catalog, requirements):
         'badwaterSourceStrength': round(sum(s[2] for s in water_source_cells(model, catalog, badwater=True)), 3),
         'sourceFedCleanCells': int(fed_clean.sum()),
         'cleanWaterNearest': nearest(fed_clean),
-        'badwaterNearest': nearest(bad_wet),
+        'badwaterNearest': nearest(bad_points),
         'treesNearStart': trees, 'pinesNearStart': resin,
         'fieldCellsNearStart': int(fields.sum()),
         'shoreBanks': len(banks), 'shoreBanksNearStart': len(shore_near), 'shoreBanksReachable': len(shore_reachable),
@@ -1819,66 +1961,12 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
     return report, errors
 
 
-def validate_variant(variant, catalog, source_entries, output_entries):
-    """Static validation of a written variant. Returns (report, errors)."""
+def validate_content(variant, catalog, source, added):
+    """Placements (the variant's added entities), sites and full-loop coverage against the source
+    MapModel. Shared by the written variants (validate_variant) and the built-in new-game setup
+    (validate_builtin). Returns (report, errors)."""
     errors = []
-    report = {'variant': variant['id'], 'output': str(output_path(variant))}
-    source = MapModel(source_entries, catalog)
-    out_world = json.loads(output_entries['world.json'])
-    out_meta = json.loads(output_entries['map_metadata.json'])
-    src_world = source.world
-    # versions and unchanged singletons
-    if output_entries['version.txt'] != source_entries['version.txt']:
-        errors.append('version.txt differs from the source map')
-    if out_world['GameVersion'] != src_world['GameVersion']:
-        errors.append(f'GameVersion {out_world["GameVersion"]} != source {src_world["GameVersion"]}')
-    report['version'] = {'version.txt': source.version, 'GameVersion': src_world['GameVersion']}
-    for key, value in src_world['Singletons'].items():
-        if out_world['Singletons'].get(key) != value:
-            errors.append(f'Singleton {key} differs from the source map')
-    if set(out_world['Singletons']) != set(src_world['Singletons']):
-        errors.append('Singleton set differs from the source map')
-    # Every water source must carry exactly the fields native WaterSource.Load
-    # reads (as the source map's own sources do); a missing one aborts loading.
-    native_fields = {'SpecifiedStrength', 'CurrentStrength'}
-    for entity in out_world['Entities']:
-        fields = entity.get('Components', {}).get('WaterSource')
-        if fields is not None and set(fields) != native_fields:
-            errors.append(f'{entity["Template"]} {entity["Id"]}: WaterSource saves {sorted(fields)}, native needs {sorted(native_fields)}')
-    if output_entries['map_thumbnail.jpg'] != source_entries['map_thumbnail.jpg']:
-        errors.append('Thumbnail differs from the source map')
-    # metadata
-    expected_meta = {'Width': source.sx, 'Height': source.sy, 'MapNameLocKey': '', 'MapDescriptionLocKey': '',
-                     'MapDescription': compose_description(variant), 'IsRecommended': False,
-                     'IsUnconventional': False, 'IsDev': False}
-    if out_meta != expected_meta:
-        errors.append(f'map_metadata.json {out_meta} != {expected_meta}')
-    if not variant['output']['name'].startswith('Deep Frontier - '):
-        errors.append('Output name must start with "Deep Frontier - "')
-    manifest, names = required_mod_names()
-    for name in [manifest['Name']] + names:
-        if name not in out_meta.get('MapDescription', ''):
-            errors.append(f'Description does not mention required mod {name}')
-    report['description'] = out_meta.get('MapDescription')
-    # entity accounting
-    out_ids = [e['Id'] for e in out_world['Entities']]
-    if len(set(out_ids)) != len(out_ids):
-        errors.append('Duplicate entity ids in the output')
-    source_by_id = {e['Id']: e for e in src_world['Entities']}
-    removed_ids = set(source_by_id) - set(out_ids)
-    added = [e for e in out_world['Entities'] if e['Id'] not in source_by_id]
-    for entity in out_world['Entities']:
-        if entity['Id'] in source_by_id and entity != source_by_id[entity['Id']]:
-            errors.append(f'Source entity {entity["Id"]} was modified')
-    if removed_ids:
-        errors.append(f'{len(removed_ids)} source entities are missing from the output')
-    head = entity_array_head(source_entries['world.json'])
-    if not output_entries['world.json'].startswith(head):
-        errors.append('Output world.json does not keep the source bytes up to the end of the source entities')
-    report['sourceBytesPreserved'] = output_entries['world.json'].startswith(head)
-    if len(added) != len(variant['placements']):
-        errors.append(f'{len(added)} added entities for {len(variant["placements"])} placements')
-    # placements against the source terrain, water and entities
+    report = {}
     placed = {}
     placed_columns = {}
     placement_reports = []
@@ -1963,8 +2051,83 @@ def validate_variant(variant, catalog, source_entries, output_entries):
     errors += site_errors
     coverage, coverage_errors = loop_coverage(source, catalog, variant, records, site_reports, requirements)
     errors += coverage_errors
+    # Area the full-loop sites claim: primary footprints plus their listed open margins
+    # (tools/map_setup.json smallMap derives the small-map threshold from it).
+    margin_cells = set(claimed)
+    for site, info in zip(variant['sites'], site_reports):
+        if info['alternative'] or info['rule'] in ('hydro', 'waterDepth', 'waterInput'):
+            continue
+        strips = side_strips(info['_cells'], site['margin'])
+        for side in site['openSides']:
+            margin_cells |= strips[side]
+    report['siteArea'] = {'footprintCells': len(claimed), 'withOpenMargins': len(margin_cells)}
     report['sites'] = [{k: v for k, v in info.items() if k != '_cells'} for info in site_reports]
     report['loopCoverage'] = coverage
+    return report, errors
+
+
+def validate_variant(variant, catalog, source_entries, output_entries):
+    """Static validation of a written variant. Returns (report, errors)."""
+    errors = []
+    report = {'variant': variant['id'], 'output': str(output_path(variant))}
+    source = MapModel(source_entries, catalog)
+    out_world = json.loads(output_entries['world.json'])
+    out_meta = json.loads(output_entries['map_metadata.json'])
+    src_world = source.world
+    # versions and unchanged singletons
+    if output_entries['version.txt'] != source_entries['version.txt']:
+        errors.append('version.txt differs from the source map')
+    if out_world['GameVersion'] != src_world['GameVersion']:
+        errors.append(f'GameVersion {out_world["GameVersion"]} != source {src_world["GameVersion"]}')
+    report['version'] = {'version.txt': source.version, 'GameVersion': src_world['GameVersion']}
+    for key, value in src_world['Singletons'].items():
+        if out_world['Singletons'].get(key) != value:
+            errors.append(f'Singleton {key} differs from the source map')
+    if set(out_world['Singletons']) != set(src_world['Singletons']):
+        errors.append('Singleton set differs from the source map')
+    # Every water source must carry exactly the fields native WaterSource.Load
+    # reads (as the source map's own sources do); a missing one aborts loading.
+    native_fields = {'SpecifiedStrength', 'CurrentStrength'}
+    for entity in out_world['Entities']:
+        fields = entity.get('Components', {}).get('WaterSource')
+        if fields is not None and set(fields) != native_fields:
+            errors.append(f'{entity["Template"]} {entity["Id"]}: WaterSource saves {sorted(fields)}, native needs {sorted(native_fields)}')
+    if output_entries['map_thumbnail.jpg'] != source_entries['map_thumbnail.jpg']:
+        errors.append('Thumbnail differs from the source map')
+    # metadata
+    expected_meta = {'Width': source.sx, 'Height': source.sy, 'MapNameLocKey': '', 'MapDescriptionLocKey': '',
+                     'MapDescription': compose_description(variant), 'IsRecommended': False,
+                     'IsUnconventional': False, 'IsDev': False}
+    if out_meta != expected_meta:
+        errors.append(f'map_metadata.json {out_meta} != {expected_meta}')
+    if not variant['output']['name'].startswith('Deep Frontier - '):
+        errors.append('Output name must start with "Deep Frontier - "')
+    manifest, names = required_mod_names()
+    for name in [manifest['Name']] + names:
+        if name not in out_meta.get('MapDescription', ''):
+            errors.append(f'Description does not mention required mod {name}')
+    report['description'] = out_meta.get('MapDescription')
+    # entity accounting
+    out_ids = [e['Id'] for e in out_world['Entities']]
+    if len(set(out_ids)) != len(out_ids):
+        errors.append('Duplicate entity ids in the output')
+    source_by_id = {e['Id']: e for e in src_world['Entities']}
+    removed_ids = set(source_by_id) - set(out_ids)
+    added = [e for e in out_world['Entities'] if e['Id'] not in source_by_id]
+    for entity in out_world['Entities']:
+        if entity['Id'] in source_by_id and entity != source_by_id[entity['Id']]:
+            errors.append(f'Source entity {entity["Id"]} was modified')
+    if removed_ids:
+        errors.append(f'{len(removed_ids)} source entities are missing from the output')
+    head = entity_array_head(source_entries['world.json'])
+    if not output_entries['world.json'].startswith(head):
+        errors.append('Output world.json does not keep the source bytes up to the end of the source entities')
+    report['sourceBytesPreserved'] = output_entries['world.json'].startswith(head)
+    if len(added) != len(variant['placements']):
+        errors.append(f'{len(added)} added entities for {len(variant["placements"])} placements')
+    content, content_errors = validate_content(variant, catalog, source, added)
+    report.update(content)
+    errors += content_errors
     expected_height = {'X': variant['height']['terrainLayers'], 'Y': variant['height']['totalHeight']}
     if out_world['Singletons']['MapSize'].get('MapHeight') != expected_height:
         errors.append(f'MapHeight {out_world["Singletons"]["MapSize"].get("MapHeight")} != {expected_height}')
@@ -1972,14 +2135,64 @@ def validate_variant(variant, catalog, source_entries, output_entries):
         errors.append(f'{source.layers} stored terrain layers != MapHeight terrain {source.terrain_layers}')
     report['zBudget'] = {'terrainLayers': source.terrain_layers, 'totalHeight': source.total_height,
                          'source': source.height_source, 'maxTerrainHeight': int(source.height.max())}
+    errors += map_size_errors(variant, source)
+    errors = resolve_declared_gaps(variant, report, errors)
     report['errors'] = errors
     return report, errors
+
+
+def map_size_errors(variant, source):
+    if (variant['mapSize']['x'], variant['mapSize']['y']) != (source.sx, source.sy):
+        return [f'mapSize {variant["mapSize"]} != source map size {source.sx} x {source.sy}']
+    return []
+
+
+def resolve_declared_gaps(variant, report, errors):
+    """Loop-coverage items the variant declares unmet ("unmet") and the gaps accepted on every map
+    (tools/map_loop_requirements.json acceptedGaps) leave the error list and are reported. Every other
+    error stays. A declared item that is met, or that names no coverage item, is itself an error."""
+    requirements = load_loop_requirements()
+    gaps = {g['item']: g['why'] for g in requirements['acceptedGaps']}
+    declared = {u['item']: u['reason'] for u in variant.get('unmet', [])}
+    items = {i['item']: (stage['id'], i) for stage in report['loopCoverage']['stages'] for i in stage['items']}
+    remaining = list(errors)
+    report['declaredUnmet'], report['acceptedGaps'] = [], []
+    for item, reason in declared.items():
+        if item in gaps:
+            remaining.append(f'unmet item {item!r} is an accepted gap of every map; do not declare it per map')
+            continue
+        if item not in items:
+            remaining.append(f'unmet item {item!r} is not a loop-coverage item of this map')
+            continue
+        stage, info = items[item]
+        if info['ok']:
+            remaining.append(f'unmet item {item!r} is met ({info["detail"]}); remove the declaration')
+            continue
+        prefix = f'loop coverage [{stage}] {item}: '
+        remaining = [e for e in remaining if not e.startswith(prefix)]
+        report['declaredUnmet'].append({'item': item, 'stage': stage, 'detail': info['detail'], 'reason': reason})
+    for item, why in gaps.items():
+        if item in items and not items[item][1]['ok']:
+            stage, info = items[item]
+            prefix = f'loop coverage [{stage}] {item}: '
+            remaining = [e for e in remaining if not e.startswith(prefix)]
+            report['acceptedGaps'].append({'item': item, 'stage': stage, 'detail': info['detail'], 'why': why})
+    return remaining
+
+
+def print_gaps(variant, report):
+    for gap in report['acceptedGaps']:
+        print(f'   ACCEPTED GAP (every map, pending a design decision): {gap["item"]}: {gap["detail"]}')
+    for unmet in report['declaredUnmet']:
+        print(f'   DECLARED UNMET: {unmet["item"]}: {unmet["detail"]} -- {unmet["reason"]}')
 
 
 def build(variant_paths, catalog, out_dir=None, write=True):
     results = []
     for variant_path in variant_paths:
         variant = load_variant(variant_path)
+        if variant['output'] is None:
+            fail(f'{variant["id"]} is runtime-only (output null): validate it with the builtin command')
         data, source_entries = load_source(variant['source'])
         digest = hashlib.sha256(data).hexdigest()
         if digest != variant['sourceSha256']:
@@ -2004,10 +2217,160 @@ def build(variant_paths, catalog, out_dir=None, write=True):
         render_preview(model, ROOT / 'outputs/maps' / f'{variant["id"]}-preview.png', marks, legend)
         status = 'OK' if not errors else f'{len(errors)} ERRORS'
         print(f'{variant["id"]}: {status} -> {destination}')
+        print_gaps(variant, report)
         for error in errors[:40]:
             print('  ', error)
         results.append((variant, report, errors))
     return results
+
+
+# ------------------------------------------------- built-in new-game setup
+#
+# src/DeepFrontier/Scripts/MapSetup places the default (non-hard) variant of the built-in map a
+# new game starts on into the live world, with the native placement path, and raises the total
+# height to the variant's totalHeight while keeping the stored terrain layers. The runtime data is
+# generated from the same variant JSON by tools/map_setup_content.mjs; this command validates the
+# variant against the state the runtime produces.
+
+MAP_SETUP = ROOT / 'tools/map_setup.json'
+VARIANTS_DIR = ROOT / 'tools/map_variants'
+
+
+def load_map_setup():
+    raw = read_json(MAP_SETUP)
+    if raw.get('schema') != 1:
+        fail(f'{MAP_SETUP}: schema must be 1')
+    return raw
+
+
+def is_runtime_variant(variant):
+    return variant['source'].startswith('builtin:') and not variant['hardVariant']
+
+
+def validate_builtin(variant, catalog):
+    """Static validation of a variant as the built-in new-game setup applies it. Returns (report, errors)."""
+    if not is_runtime_variant(variant):
+        fail(f'{variant["id"]}: only default variants of built-in maps are applied at new-game time')
+    data, entries = load_source(variant['source'])
+    digest = hashlib.sha256(data).hexdigest()
+    if digest != variant['sourceSha256']:
+        fail(f'{variant["id"]}: source sha256 {digest} != recorded {variant["sourceSha256"]}')
+    entries = runtime_source_entries(variant, entries)
+    source = MapModel(entries, catalog)
+    added = [new_entity(p, catalog, variant['id'], i) for i, p in enumerate(variant['placements'])]
+    report = {'variant': variant['id'], 'builtinMap': variant['source'].split(':', 1)[1], 'sourceSha256': digest,
+              'mode': 'built-in new game (Scripts/MapSetup): unmodified terrain, MapHeight {stored, totalHeight}'}
+    content, errors = validate_content(variant, catalog, source, added)
+    report.update(content)
+    errors += map_size_errors(variant, source)
+    if source.layers != source.terrain_layers:
+        errors.append(f'{source.layers} stored terrain layers != runtime terrain layers {source.terrain_layers}')
+    report['zBudget'] = {'terrainLayers': source.terrain_layers, 'totalHeight': source.total_height,
+                         'source': source.height_source, 'maxTerrainHeight': int(source.height.max())}
+    errors = resolve_declared_gaps(variant, report, errors)
+    report['errors'] = errors
+    out = ROOT / 'outputs/maps'
+    out.mkdir(parents=True, exist_ok=True)
+    (out / f'{variant["id"]}-builtin-validation.json').write_text(json.dumps(report, indent=1, default=list), encoding='utf-8')
+    model = MapModel(apply_variant(variant, entries, catalog), catalog)
+    marks, legend = preview_marks(variant, catalog, report)
+    render_preview(model, out / f'{variant["id"]}-builtin-preview.png', marks, legend)
+    return report, errors
+
+
+def builtin_coverage(variants, reports):
+    """Every non-dev built-in map has exactly one default variant; the dev maps and the small-map
+    threshold of tools/map_setup.json match the game and the reference variants. Returns (summary, errors)."""
+    errors = []
+    setup = load_map_setup()
+    named, dev_sizes = {}, []
+    for metadata, _ in builtin_maps():
+        if metadata.get('IsDev'):
+            dev_sizes.append((metadata['Width'], metadata['Height']))
+            continue
+        name = builtin_map_name(metadata)
+        if name is None:
+            fail(f'Built-in map without a MapMetadata.<Name>.Name key: {metadata}')
+        if name in named:
+            fail(f'Two built-in maps named {name}')
+        named[name] = metadata
+    runtime = {}
+    for variant in variants:
+        if not is_runtime_variant(variant):
+            continue
+        name = variant['source'].split(':', 1)[1]
+        if name in runtime:
+            errors.append(f'built-in map {name} has two default variants: {runtime[name]["id"]} and {variant["id"]}')
+        runtime[name] = variant
+    for name in sorted(set(named) - set(runtime)):
+        errors.append(f'built-in map {name} has no default variant in {VARIANTS_DIR}')
+    for name in sorted(set(runtime) - set(named)):
+        errors.append(f'variant {runtime[name]["id"]} names a built-in map {name} the game does not have')
+    for variant in variants:
+        if variant['output'] is None and not is_runtime_variant(variant):
+            errors.append(f'{variant["id"]}: runtime-only variant (output null) that the new-game setup never applies')
+    listed_dev = sorted((d['width'], d['height']) for d in setup['devMaps'])
+    if listed_dev != sorted(dev_sizes):
+        errors.append(f'{MAP_SETUP} devMaps sizes {listed_dev} != the dev maps in the game {sorted(dev_sizes)}')
+    small = setup['smallMap']
+    claimed = {v['id']: reports[v['id']]['siteArea']['withOpenMargins'] for v in variants if v['id'] in small['referenceVariants']}
+    if sorted(claimed) != sorted(small['referenceVariants']):
+        fail(f'{MAP_SETUP} smallMap referenceVariants {small["referenceVariants"]} were not all validated')
+    numerator, denominator = small['landShare']
+    derived = -(-max(claimed.values()) * denominator // numerator)
+    if small['maxArea'] != derived:
+        errors.append(f'{MAP_SETUP} smallMap maxArea {small["maxArea"]} != derived {derived} (largest reference '
+                      f'site area {max(claimed.values())} cells / land share {numerator}/{denominator})')
+    maps = []
+    for name in sorted(named):
+        metadata = named[name]
+        variant = runtime.get(name)
+        report = reports.get(variant['id']) if variant else None
+        area = metadata['Width'] * metadata['Height']
+        maps.append({'map': name, 'size': [metadata['Width'], metadata['Height']], 'area': area,
+                     'small': area < small['maxArea'], 'unconventional': metadata.get('IsUnconventional', False),
+                     'variant': variant['id'] if variant else None,
+                     'placements': len(variant['placements']) if variant else 0,
+                     'sites': len(variant['sites']) if variant else 0,
+                     'siteArea': report['siteArea'] if report else None,
+                     'declaredUnmet': [u['item'] for u in report['declaredUnmet']] if report else None,
+                     'errors': len(report['errors']) if report else None})
+    summary = {'maps': maps, 'devMaps': setup['devMaps'], 'smallMapMaxArea': small['maxArea'],
+               'referenceSiteArea': claimed, 'errors': errors}
+    out = ROOT / 'outputs/maps/builtin-coverage.json'
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(summary, indent=1), encoding='utf-8')
+    return summary, errors
+
+
+def run_builtin(paths, catalog):
+    full = not paths
+    paths = paths or sorted(str(p) for p in VARIANTS_DIR.glob('*.json'))
+    variants = [load_variant(p) for p in paths]
+    reports, failed = {}, False
+    for variant in variants:
+        if not is_runtime_variant(variant):
+            print(f'{variant["id"]}: not applied at new-game time (hard variant or not a built-in source)')
+            continue
+        report, errors = validate_builtin(variant, catalog)
+        reports[variant['id']] = report
+        status = 'OK' if not errors else f'{len(errors)} ERRORS'
+        print(f'{variant["id"]} (built-in {report["builtinMap"]}, total height {variant["height"]["totalHeight"]}): {status}; '
+              f'{len(variant["placements"])} placements, {len(variant["sites"])} sites, '
+              f'site area {report["siteArea"]["withOpenMargins"]} cells')
+        print_gaps(variant, report)
+        for error in errors[:40]:
+            print('  ', error)
+        failed |= bool(errors)
+    if full:
+        summary, errors = builtin_coverage(variants, reports)
+        small = [m['map'] for m in summary['maps'] if m['small']]
+        print(f'coverage: {len(summary["maps"])} built-in maps, {len(summary["devMaps"])} dev maps; '
+              f'small (< {summary["smallMapMaxArea"]} cells): {", ".join(small) or "none"}')
+        for error in errors:
+            print('  ', error)
+        failed |= bool(errors)
+    return 1 if failed else 0
 
 
 # ---------------------------------------------------------------- suggest
@@ -2233,6 +2596,7 @@ class Planner:
         self.rect_cache = {}
         self.length, self.bridges = model.route()
         self.added_placements, self.added_sites = [], []
+        self.cache_spacing = 30   # cells between ruin clusters that get a new cache (plan --cache-spacing)
 
     # ---- bookkeeping
     def _place(self, placement):
@@ -2517,7 +2881,7 @@ class Planner:
             if route is not None:
                 routed.append(((bridge_cells > 0, route), r['coordinates']))
         for _, (x, y, z) in sorted(routed):
-            if any(abs(x - ex) < 30 and abs(y - ey) < 30 for ex, ey, _ in existing + clusters):
+            if any(abs(x - ex) < self.cache_spacing and abs(y - ey) < self.cache_spacing for ex, ey, _ in existing + clusters):
                 continue
             clusters.append((x, y, z))
         for cx, cy, cz in clusters:
@@ -2765,6 +3129,7 @@ class Planner:
         def area(t):
             size = self.catalog.get(t)['BlockObjectSpec']['Size']
             return size['X'] * size['Y']
+        unplaced = []
         for template in sorted(missing, key=lambda t: -area(t)):
             site, info = self.flat_site(template, max_route=100)
             if site is None:
@@ -2772,24 +3137,38 @@ class Planner:
             if site is None:
                 site, info = self.flat_site(template, all_sides=False, keep_out=6)
             if site is None:
-                fail(f'{self.variant["id"]}: no flat site for {template}')
+                unplaced.append(template)   # the remaining buildings are still planned
+                continue
             self.add_site(site)
+        if unplaced:
+            fail(f'{self.variant["id"]}: no flat site for {", ".join(unplaced)}')
 
 
-def plan(variant_path, catalog, out):
+def plan(variant_path, catalog, out, cache_spacing=30):
+    """Propose the placements and sites a variant lacks. A stage that finds no answer is reported
+    as INCOMPLETE and the proposal is still written: plan is a review aid, the validation is the gate."""
     variant = load_variant(variant_path)
     data, entries = load_source(variant['source'])
-    entries = resize_height(entries, variant['height']['terrainLayers'], variant['height']['totalHeight'])
+    if variant['output'] is None:
+        entries = runtime_source_entries(variant, entries)
+    else:
+        entries = resize_height(entries, variant['height']['terrainLayers'], variant['height']['totalHeight'])
     model = MapModel(entries, catalog)
     requirements = load_loop_requirements()
     planner = Planner(variant, catalog, model, requirements)
-    planner.plan_pits()
-    planner.plan_understructures()
-    planner.plan_caches()
-    for rule in ('waterDepth', 'waterInput', 'mapEdge', 'hydro'):
-        planner.plan_special(rule)
-    planner.plan_flat()
+    planner.cache_spacing = cache_spacing
+    incomplete = []
+    stages = [('pits', planner.plan_pits), ('understructures', planner.plan_understructures), ('caches', planner.plan_caches)]
+    stages += [(rule, lambda rule=rule: planner.plan_special(rule)) for rule in ('waterDepth', 'waterInput', 'mapEdge', 'hydro')]
+    stages.append(('flat', planner.plan_flat))
+    for name, stage in stages:
+        try:
+            stage()
+        except MapError as error:
+            incomplete.append(f'{name}: {error}')
     Path(out).write_text(dump_variant(variant), encoding='utf-8')
+    for line in incomplete:
+        print(f'   INCOMPLETE {line}')
     print(f'{variant["id"]}: +{len(planner.added_placements)} placements, +{len(planner.added_sites)} sites -> {out}')
     for p in planner.added_placements:
         print('   placement', p['template'], p['label'], (p['x'], p['y'], p['z']))
@@ -2804,20 +3183,27 @@ def main(argv=None):
         p = sub.add_parser(name)
         p.add_argument('source')
         p.add_argument('--png')
+        p.add_argument('--total-height', type=int,
+                       help='survey a built-in map as the new-game setup loads it: stored terrain layers, this total height')
     p = sub.add_parser('build')
     p.add_argument('variants', nargs='+')
     p.add_argument('--out-dir')
     p = sub.add_parser('validate')
     p.add_argument('variants', nargs='+')
     p.add_argument('--out-dir')
+    p = sub.add_parser('builtin')
+    p.add_argument('variants', nargs='*')
     p = sub.add_parser('plan')
     p.add_argument('variant')
     p.add_argument('--out', required=True)
+    p.add_argument('--cache-spacing', type=int, default=30, help='cells between ruin clusters that get a new cache')
     args = parser.parse_args(argv)
     catalog = TemplateCatalog()
     try:
         if args.command in ('analyze', 'suggest'):
             data, entries = load_source(args.source)
+            if args.total_height is not None:
+                entries = resize_height(entries, stored_terrain_layers(entries), args.total_height)
             model = MapModel(entries, catalog)
             info = survey(model)
             info['sha256'] = hashlib.sha256(data).hexdigest()
@@ -2828,8 +3214,10 @@ def main(argv=None):
                 render_preview(model, Path(args.png))
             return 0
         if args.command == 'plan':
-            plan(args.variant, catalog, args.out)
+            plan(args.variant, catalog, args.out, args.cache_spacing)
             return 0
+        if args.command == 'builtin':
+            return run_builtin(args.variants, catalog)
         results = build(args.variants, catalog, args.out_dir, write=args.command == 'build')
         return 1 if any(errors for _, _, errors in results) else 0
     except MapError as error:

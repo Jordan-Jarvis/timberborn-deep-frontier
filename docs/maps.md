@@ -1,5 +1,7 @@
 # Deep Frontier map variants
 
+Status 2026-10-29: every built-in map now also gets its Deep Frontier objects at new-game time (see "Built-in maps: new-game setup"). The written map files below are unchanged; since the 0.6.0.0 manifest and the cost pass, `validate` reports their description (written for 0.5.0.0) and the accepted finite-ore gap, so rebuild them with `build` before publishing.
+
 Status 2026-10-24: the three vanilla-based maps and the hard variant are written to `C:\Users\Jordan\Documents\Timberborn\Maps\`. Each passes the static validation and the full-loop coverage check below with 0 errors. None has been loaded in the game since this pass. The in-game proof (`tools/start_map_loop_test.ps1`) is written and compiles, but has not been run. `tools/STATUS.md` records runtime verification.
 
 | Map file (new-game list name) | Source | Character | Height | Output SHA-256 (prefix) |
@@ -19,7 +21,7 @@ The variants are regenerated from `tools/map_variants/<id>.json` by `tools/prepa
 
 ```
 python tools/prepare_deep_frontier_map.py build tools/map_variants/plains.json tools/map_variants/plains-hard.json tools/map_variants/lakes.json tools/map_variants/terraces.json
-python tools/prepare_deep_frontier_map.py validate tools/map_variants/*.json      # re-read the written files only
+python tools/prepare_deep_frontier_map.py validate tools/map_variants/plains.json tools/map_variants/plains-hard.json tools/map_variants/lakes.json tools/map_variants/terraces.json   # re-read the written files only
 python tools/prepare_deep_frontier_map.py plan tools/map_variants/lakes.json --out lakes-plan.json   # propose what a variant still lacks
 python tools/prepare_deep_frontier_map.py suggest builtin:Waterfalls --png out.png # candidate sites for a new map
 python tools/test_prepare_deep_frontier_map.py                                    # 17 injected faults must each fail
@@ -27,6 +29,143 @@ pwsh tools/start_map_loop_test.ps1 -Label <label>                               
 ```
 
 Use the codex runtime Python (`numpy` and `Pillow` are needed). `--out-dir DIR` writes the maps elsewhere for a dry run. `plan` writes a complete variant JSON for review. Its output is ordinary variant data, which `build` validates like any hand-written entry. This pass authored the new placements and sites with `plan` and reviewed them before adopting them.
+
+## Built-in maps: new-game setup
+
+Status 2026-10-29: implemented, compiled and statically validated; not built into the mod and not run in game. A new game on any built-in map now gets that map's Deep Frontier objects and a total build height of 66, so players can use the official maps. The four `Deep Frontier - *.timber` files above still work as before (they are user maps; the setup leaves them alone).
+
+### What happens at a new game
+
+Evidence: Timberborn 1.1.2.8 and Map Transformer 11.0.0, decompiled with `tools/dotnet/ilspycmd.exe`.
+
+1. **New game and map.** `GameSceneLoader.StartNewGame` loads the game scene with `GameSceneParameters.CreateNewGameParameters(NewGameConfiguration)`. `GameSceneParameters.NewGame` is true only then, and `NewGameConfiguration.MapFileReference` names the map (`Resource` true for a built-in map, `Name` its asset name). This is the same test native `MapNameService.Load` and `GameLoader.LoadNew` use. A loaded save has `NewGame` false.
+2. **Height, before the map loads** (`src/DeepFrontier/Scripts/MapSetup/BuiltinMapHeight.cs`, two Harmony patches applied by `DeepFrontierModStarter`):
+   - a postfix on `GameSceneSerializedWorldSupplier.Load` keeps the deserialized map world and the map name, only for a new game on a built-in map;
+   - a prefix on `MapSize.Load` writes `MapHeight {X: 23, Y: TotalHeight}` into that world's `MapSize` singleton with the native `ObjectSaver`. `MapSize` loads after the supplier because it depends on it (`ISingletonLoader` → `WorldSingletonLoader` → `ISerializedWorldSupplier`), and `ISpecService` is already loaded because `MapSize` itself depends on it.
+   - Map Transformer's own `MapSize.Load` postfix then applies the key (`MaxHeightAboveTerrain = Y − X`, terrain height unchanged), and its `MapSize.Save` postfix writes it into every save, so reloads keep 66 without Deep Frontier doing anything.
+3. **Objects, on the first frame** (`BuiltinMapSetup.cs`, a game singleton). For each placement of the map's entry, in order, it takes the map editor's own path:
+   - a native preview (`PreviewFactory.Create`, `BlockObject.Reposition`) must pass `BlockObject.IsValid()`, which is `BlockValidator.BlocksValid` plus every `IBlockObjectValidator` (matter below, `ContinuousTerrainConstraint`, …), as the `BlockObjectTool`'s `PreviewPlacer` requires;
+   - then `BlockObjectPlacerService.GetMatchingPlacer(spec).Place(new EntitySetup.Builder(blueprint), placement)`, exactly as `BlockObjectTool.Place`. The Deep Ore Source goes through `BuildingPlacer` (`BuildingSpec.PlaceFinished`, so it is finished); the other objects through `DefaultBlockObjectPlacer`;
+   - a stockpile then gets its good and amount as the map editor's `FixedStockpileInventorySetter` does (`SingleGoodAllower.Allow`, `FixedStockpile.SetFixedGood`, `Inventory.GiveExisting`), and the stock is read back.
+   - `GameStarter` spawns the starting building on its own first frame; the StartingLocation entity has the District Center's 3×3×5 footprint, and the static validation checks that no placement overlaps it or any other object.
+4. **Exactly once.** The outcome is saved in a `DeepFrontierMapSetup` singleton (`Map`, `Outcome`, `Placed`, `Failed`). A world that has it is never set up again. A save from before this system loads with outcome `SavedBeforeSetup` and is never touched. A new game on a map file (including the four shipped variants) is `UserMap`.
+5. **Failures are reported, never hidden.** A placement the native preview rejects is not moved or skipped: it is logged as an error (`[DeepFrontier MapSetup] FAILED …`, with the validator message) and listed in a dialog when the game UI appears. The setup also checks the resulting `MapSize` (terrain 23, total = the entry's height) and reports a mismatch, for example when Map Transformer is disabled. A built-in map with no entry is an error dialog and log line; the validation below makes that impossible for every shipped built-in map. The three developer test maps (dev mode only) get a dialog saying they have no setup.
+
+### Height decision
+
+- **What Deep Frontier needs is total height, not terrain layers.** Its tall late-game buildings need `top occupied layer < total height` (`BlockValidator.FitsInMap`). No Deep Frontier building or script raises terrain or reads `MaxGameTerrainHeight`; only vanilla terrain-raising would use the 46 terrain layers of the shipped variants.
+- **A new game on a built-in map gets 23 terrain / 66 total.** The stored 23 terrain layers stay, so `TerrainMap.Load` → `MapIndexService.Unpack3D` reads the map's data unchanged (the out-of-range problem of `docs/map-height.md` does not arise). Map Transformer's own Resize Map Height dialog accepts the same independent terrain and total values.
+- **Systems that read the height** treat terrain and total separately: `LevelVisibilityService.MaxVisibleLevel = MaxGameTerrainHeight + MaxHeightAboveTerrain` = 65 (slicing reaches the top layer); water (`WaterSimulator`, `FlowLimiterService`, `WaterOverflowCalculator`), `TerrainPhysicsPostLoader` and navigation size their arrays by `TotalSize`; the stored water columns keep their slots (ceilings are recomputed from terrain); `BlockValidator` accepts blocks up to z = 65. The camera target clamps to `TerrainSize.z + MapMargin` = 23 + 50 = 73, above 66.
+- **The global `MapSizeSpec` is not changed.** Saves, map files and the map editor keep their own height.
+- **Placement validity does not depend on the height.** The Plains, Lakes and Terraces placements and all their sites pass on the unmodified built-in terrain at 66 and also at the vanilla 33 (checked with `builtin` on copies set to 33). The height is for building upward, as the art direction wants, not for the placements.
+
+### Plains Hard
+
+The built-in Plains game gets `plains.json`. `plains-hard.json` is not applied to built-in games: it stays the separate map file `Deep Frontier - Plains (Hard, Radioactive Spring)`. The game's difficulty presets (`GameModeSpec`) set beavers, food, droughts and badtides; tying the radioactive spring to the Hard preset would give no way to play Hard without the spring or the spring on Normal. The file keeps it an explicit choice. Only default (`hardVariant: false`) variants of built-in maps are applied, and `builtin` fails if a map has two.
+
+### Data and validation
+
+One JSON per map stays the only source: `tools/map_variants/<id>.json`. The default variant whose `source` is `builtin:<Name>` is the setup of that built-in map.
+
+- **Runtime-only variants** (`"output": null`) are never written as `.timber`. Their `height` has only `totalHeight`; `mapSize` records the map size.
+- **`unmet`**: `[{"item", "reason"}]` lists loop-coverage items the map physically cannot provide. `builtin` fails unless the failing items equal the declared ones exactly; placement and site problems can never be declared. The reason (with numbers) stays in the JSON, the evidence and this document; the in-game line comes from `tools/map_setup.json` `unmetText`.
+- **Accepted gaps** (`tools/map_loop_requirements.json` `acceptedGaps`): coverage items accepted on every map until a design decision, printed on every run. Currently one: *finite deep ore covers one of each building*. Since the late-game cost pass one of each building needs about 15,600 DeepOre of raw material (the reactor about 6,400), while a source holds at most 4,000 and the maps carry 4,000–6,000. The loop still closes through the permanent Deep Mines (40 DeepOre of buildings before the Deep Mine). This needs a decision: more or fuller sources, or a bootstrap rule like the stone rule.
+- **Generated data**: `tools/map_setup_content.mjs` (the last step of canonical generation, `create_vertical_slice_content.mjs`) writes `Configurations/DeepFrontierMapSetup.blueprint.json` (`BuiltinMapSetupSpec`: per map the name, size, total height, small flag, unmet text keys and placements) and the `DeepFrontier.MapSetup.*` rows of `enUS.csv`, from the variants and `tools/map_setup.json` (dev maps, small-map rule, dialog text).
+- **Checks**:
+  - `python tools/prepare_deep_frontier_map.py builtin` (validate_all `map-setup-terrain`) validates every default variant against its unmodified built-in map, at the stored terrain layers and the variant's total height: exactly the state the runtime produces. It uses the same placement, site and full-loop code as `validate`. It also checks that every non-dev built-in map has exactly one variant, that the dev-map list matches the game, and that the small-map threshold matches its derivation. Evidence: `outputs/maps/<id>-builtin-validation.json`, `<id>-builtin-preview.png`, `builtin-coverage.json`.
+  - `node tools/validate_map_setup.mjs` (validate_all `map_setup`) checks that the generated blueprint and rows equal what the generator derives from the sources, and that the C# records and loc keys match.
+- **Built-in map names.** The new-game list names a built-in map by its asset name (`OfficialMapItemFactory`: `MapFileReference.FromResource(name)`). In 1.1.2.8 every named built-in map's asset (GameObject) name equals the `<Name>` of its `MapMetadata.<Name>.Name` key (checked against the GameObject names in `resources.assets`, and against `MapNameService` in saves of new games on Plains, Lakes and Meander). The dev maps are `_Mini`, `_TerrainTest` and `_WaterPerformanceTest`.
+
+```
+python tools/prepare_deep_frontier_map.py builtin                                   # every variant + coverage (game files needed)
+python tools/prepare_deep_frontier_map.py builtin tools/map_variants/diorama.json   # one map
+python tools/prepare_deep_frontier_map.py suggest builtin:Diorama --total-height 66  # survey as the setup loads it
+python tools/prepare_deep_frontier_map.py plan tools/map_variants/diorama.json --out p.json [--cache-spacing 15]
+node tools/map_setup_content.mjs <dataRoot>     # only on a Data tree without the rows (canonical generation runs it)
+node tools/validate_map_setup.mjs
+```
+
+`build` and `validate` refuse runtime-only variants; list the four written variants explicitly.
+
+### Small maps
+
+A built-in map is **small** when its area is below `smallMap.maxArea` = **11,176** cells (`tools/map_setup.json`). The number is derived and checked: the largest area the full-loop sites claim on a reference map (primary footprints plus their listed open margins: Plains 5,588, Terraces 5,476, Lakes 5,134) divided by the land share 1/2. Below it the late-game sites alone would cover more than half the map, before terrain, water, farms, forest and homes. The built-in sizes fall into clear groups (2,500; 5,000; 16,384; 36,864–38,400; 65,536), so the rule picks out exactly **Diorama** (50×50) and **Cliffside** (100×50); the 128×128 maps are three times larger.
+
+A new game on a small map shows a one-time dialog when the game UI appears (`DialogBoxShower`), built from the generated text and the map's own data:
+
+Diorama:
+
+```
+Deep Frontier: Diorama is a very small map
+Deep Frontier is EXTREMELY difficult on Diorama: it has 50 x 50 = 2500 tiles, and the Deep Frontier late game is built for maps of at least 11176 tiles.
+- Little room: the full set of large Deep Frontier sites (the 20 x 15 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about 5588 tiles with their margins on a large map.
+- Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
+What this map cannot provide:
+- No room for: Deep Mine, Limestone quarry, Nuclear Reactor, Launch pad, Water treatment plant, Uranium processing plant, Radioactive waste refinery, Cryogenic liquefaction plant, Steel mill, Mission control, Cryogenic tank farm, Electrolysis plant, Hospital, Precision machine works, Chemical works, Radioactive Waste Vault, Fishery works, Materials Laboratory, Bathhouse, Technical school, Fertilizer works, Grocery store, Public health lab.
+```
+
+Cliffside:
+
+```
+Deep Frontier: Cliffside is a very small map
+Deep Frontier is EXTREMELY difficult on Cliffside: it has 100 x 50 = 5000 tiles, and the Deep Frontier late game is built for maps of at least 11176 tiles.
+- Little room: the full set of large Deep Frontier sites (the 20 x 15 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about 5588 tiles with their margins on a large map.
+- Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
+What this map cannot provide:
+- No room for: Limestone quarry, Archive excavation, Nuclear Reactor, Launch pad, Water treatment plant, Uranium processing plant, Radioactive waste refinery, Cryogenic liquefaction plant, Steel mill, Mission control, Precision machine works, Cryogenic tank farm, Electrolysis plant, Hospital, Chemical works, Radioactive Waste Vault, Fishery works, Food packaging works, Materials Laboratory, Town plaza.
+- No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.
+- No Human Record Caches to survey.
+```
+
+A map that is not small but has unmet items gets a shorter dialog (`UnmetTitle` plus the same lines), for example on Canyon: "Deep Frontier on Canyon: this map cannot provide everything the full Deep Frontier game needs: - No room for: Nuclear Reactor. - No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish."
+
+### Per-map setup
+
+| Map | Size | Small | Variant | Placements | Sites | Finite DeepOre | Not met on this map (declared `unmet`) |
+|---|---|---|---|---:|---:|---:|---|
+| Beaverome | 192×192 |  | `beaverome` | 11 | 18 | 0 | LimestoneQuarry site (understructure); SandstoneQuarry site (understructure); Deep Drill sites beside Deep Ore Sources; renewable scrap (Underground Ruins for the Efficient Mine); DeepDrill site (flat); DeepMine site (understructure); DeepProcessor site (flat); CryogenicTankFarm site (flat); SteelMill site (flat); MissionControl site (flat); RadioactiveWasteRefinery site (flat); UraniumProcessingPlant site (flat); CryogenicLiquefactionPlant site (flat); WaterTreatmentPlant site (flat); LaunchPad site (flat); NuclearReactor site (flat); ElectrolysisPlant site (flat); Hospital site (flat); PrecisionMachineWorks site (flat); RadioactiveWasteVault site (flat); ChemicalWorks site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); TownPlaza site (flat) |
+| Canyon | 128×128 |  | `canyon` | 17 | 45 | 4,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
+| Cliffside | 100×50 | yes | `cliffside` | 11 | 22 | 4,000 | shore fishing banks (first FreshFish); LimestoneQuarry site (understructure); ArchiveExcavation site (flat); Human Record Caches in survey range of an Archive Excavation site; NuclearReactor site (flat); LaunchPad site (flat); WaterTreatmentPlant site (flat); UraniumProcessingPlant site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); SteelMill site (flat); MissionControl site (flat); PrecisionMachineWorks site (flat); CryogenicTankFarm site (flat); ElectrolysisPlant site (flat); Hospital site (flat); ChemicalWorks site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); FoodPackagingWorks site (flat); MaterialsLaboratory site (flat); TownPlaza site (flat) |
+| Craters | 192×192 |  | `craters` | 17 | 40 | 4,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat); RadioactiveWasteExport site (mapEdge) |
+| Diorama | 50×50 | yes | `diorama` | 14 | 18 | 4,000 | DeepMine site (understructure); LimestoneQuarry site (understructure); NuclearReactor site (flat); LaunchPad site (flat); WaterTreatmentPlant site (flat); UraniumProcessingPlant site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); SteelMill site (flat); MissionControl site (flat); CryogenicTankFarm site (flat); ElectrolysisPlant site (flat); Hospital site (flat); PrecisionMachineWorks site (flat); ChemicalWorks site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); Bathhouse site (flat); TechnicalSchool site (flat); FertilizerWorks site (flat); GroceryStore site (flat); PublicHealthLab site (flat) |
+| HelixMountain | 256×256 |  | `helix-mountain` | 17 | 46 | 4,000 | none |
+| Hollows | 192×192 |  | `hollows` | 18 | 46 | 6,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
+| Lakes | 256×256 |  | `lakes` | 18 | 47 | 4,000 | none |
+| Meander | 128×128 |  | `meander` | 17 | 43 | 4,000 | CryogenicLiquefactionPlant site (flat); RadioactiveWasteRefinery site (flat); WaterTreatmentPlant site (flat) |
+| MountainRange | 256×150 |  | `mountain-range` | 17 | 45 | 4,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
+| Nomads | 256×256 |  | `nomads` | 19 | 48 | 6,000 | shore fishing banks (first FreshFish) |
+| Oasis | 256×256 |  | `oasis` | 19 | 46 | 6,000 | NuclearReactor site (flat); ReinforcedHydroTurbine site (hydro) |
+| Pillars | 192×192 |  | `pillars` | 17 | 39 | 4,000 | irrigated farmland near the start; NuclearReactor site (flat); ReinforcedHydroTurbine site (hydro); CryogenicTankFarm site (flat); Hospital site (flat) |
+| Plains | 256×256 |  | `plains` | 19 | 48 | 6,000 | none |
+| Pressure | 256×256 |  | `pressure` | 19 | 48 | 6,000 | trees near the start; pines (resin) near the start; irrigated farmland near the start |
+| Spillage | 256×150 |  | `spillage` | 17 | 45 | 4,000 | NuclearReactor site (flat) |
+| Terraces | 256×256 |  | `terraces` | 18 | 49 | 4,000 | none |
+| ThousandIslands | 256×256 |  | `thousand-islands` | 17 | 41 | 4,000 | trees near the start; irrigated farmland near the start; NuclearReactor site (flat); SteelMill site (flat) |
+| Waterfalls | 128×128 |  | `waterfalls` | 17 | 44 | 4,000 | shore fishing banks (first FreshFish); RadioactiveWasteRefinery site (flat) |
+
+Every row passes `builtin` (evidence `outputs/maps/builtin-coverage.json` and the per-map files). The reasons, with their numbers, are in each variant's `unmet` entries. Notes:
+
+- **No reactor site** on 11 maps (Beaverome, Canyon, Cliffside, Craters, Diorama, Hollows, Mountain Range, Oasis, Pillars, Spillage, Thousand Islands): either no dry, flat 20×15 footprint exists at any level, or none lies within 15 cells of clean water (Craters, Oasis, Spillage). The reactor never needs more height: at 66 the highest legal base is 47.
+- **Beaverome is not small by area (192×192), but it gets no deep ore at all:** shallow lakes and sloping shores; the largest dry flat square is 9×9, so no Deep Mine, Drill, Processor or quarry fits, and its two Underground Ruins lie under 6–9 of water. It shows the shorter "cannot provide" dialog with 22 missing buildings. The area rule does not call it small; if it should get the small-map warning, the rule needs a second criterion (for example "no Deep Mine site").
+- **Diorama has no Deep Mine:** every 10×11 mine footprint has trees on the 5×5 vein cells, and a placed object may not overlap trees (the vein would have to wait for the player to cut them). It keeps two Drills with 4,000 finite DeepOre.
+- **Cliffside**: the Deep Ore Processor (without it deep ore has no use) took priority over the Limestone Quarry; an exhaustive search found no layout with both quarries, both mines, both drills and the processor. The 1,800 limestone of its outcrops remain.
+- **Meander**: the three missing 12×11 plants are the best result of an optimising packing with the reactor on the north-west plateau, not a proof; a run with the reactor elsewhere was stopped for memory.
+- **Shore banks** (7 maps): the saved water is too shallow (or its banks too high) for `ShoreFishingSpec`; damming a river deeper creates banks in play.
+- **Tool changes made for these maps**: badwater counts the outlet of a badwater source with a positive strength (Nomads and Oasis store theirs dry), and a source feeds the surface water its tunnel water reaches (Hollows: `column_components` follows connected water columns underground).
+- In game, every missing building site of a map is folded into one "No room for: …" line with the enUS building names; the other items use the lines in `tools/map_setup.json` `unmetText`.
+
+### In-game test (user present; startup dialogs need clicking)
+
+Build the mod with the official Mod Builder first (canonical generation must have produced `Configurations/DeepFrontierMapSetup.blueprint.json`). Use a test settlement name: these runs make autosaves.
+
+1. **Plains, new game.** New game → Plains → Iron Teeth. In `Player.log`: `[DeepFrontier MapSetup] new game on built-in Plains: MapHeight {23, 66} written for Map Transformer`, Map Transformer's `Loaded height: Terrain = 23, Total = 66`, then 19 `placed` lines and `Plains: 19 placed, 0 failed`. No dialog appears (Plains is not small and has nothing unmet).
+2. **Objects.** Look at the coordinates from `tools/map_variants/plains.json`: the three veins and seams sit on the ground, each Deep Ore Source shows its 1,500 / 2,000 / 2,500 DeepOre, the outcrops 600, the caches are unsurveyed. The starting building and beavers spawned normally.
+3. **Height.** The layer slicer reaches 65; a platform stack can be built to z = 65 and a block at z = 66 is refused.
+4. **Exactly once.** Save, return to the menu and load the save: no new `MapSetup` placement lines, the objects are not duplicated, and the height is still 66 (Map Transformer's log line `Terrain = 23, Total = 66`).
+5. **Diorama, new game.** The small-map dialog appears once with the text above; the log lists every placement. Load its save: no dialog.
+6. **One map with unmet items that is not small** (see the table): the shorter dialog appears.
+7. **A shipped variant file** (`Deep Frontier - Lakes`): no `MapSetup` placement lines (outcome `UserMap`), the map's own objects are there as before.
+8. **An existing save** from before this build loads with no `MapSetup` lines and no dialog.
 
 ## Full game loop
 
@@ -67,7 +206,7 @@ A map supports the loop when a player can reach every stage, from the start to t
 | 1 Start | Log, Plank; TreatedPlank = Plank + PineResin (archive, airframes, payload) | ≥ 200 trees and ≥ 50 resin pines within route 60 | `TreeComponentSpec`, Pine `GatherableSpec` | `trees`, `pines` |
 | 1 Start | crops (Canola → Grease → ArchiveData; Corn; Eggplant) | ≥ 150 dry, free, flat cells within 4 of clean water near the start | policy | `irrigated farmland` |
 | 1 Start | Gatherer Flag shore fishing: FreshFish → FishOil → Lubricant → Cryocoolant (rocket fuel); hatchery stock | ≥ 4 reachable banks: dry bank, neighbour one layer down with clean water ≥ 0.5 deep (contamination ≤ 0.01), surface within 1.25 below the bank | `ShoreFishingSpec` (GathererFlag patch), `ShoreFishing.Suitable` | `shore fishing banks` |
-| 2 Construction | Sandstone Pit, Limestone Pit | deposits of the pit's `ResourceGroup` within 20 steps of its door, on its level; yield ≥ the stone that every building up to the permanent quarry (4,000 science) costs: 249 sandstone, 214 limestone | `MineralPitSpec`, `YieldRemovingBuildingSpec`, `MineralDepositSpec`, `NavigationDistance.ResourceBuildings` | pit site + `deposits in range` |
+| 2 Construction | Sandstone Pit, Limestone Pit | deposits of the pit's `ResourceGroup` within 20 steps of its door, on its level; yield ≥ the stone that every building up to the permanent quarry (4,000 science) costs: 842 sandstone, 722 limestone (2026-10-29; 249 / 214 before the cost pass) | `MineralPitSpec`, `YieldRemovingBuildingSpec`, `MineralDepositSpec`, `NavigationDistance.ResourceBuildings` | pit site + `deposits in range` |
 | 2 Construction | Sandstone / Limestone Quarry (renewable stone for cement, aggregate, concrete) | a placed `SandstoneSeam` / `LimestoneSeam` (5×5) under the quarry's 5×5 Top core (local x 3–7, y 1–5), flat 11×7 site | `UnderstructureConstraintSpec` | understructure site |
 | 3 Deep industry | Deep Drill (DeepOre from a finite source) | ≥ 2 flat 11×9 drill sites within 25 cells of a `DeepOreSource` (Pileable, ≤ 4,000, consumed by a DeepDrill recipe); finite DeepOre ≥ 2,450, the DeepOre in one of each building | `StockpileSpec`, DeepDrill recipes, `ProgramModel` | `Deep Drill sites`, `finite deep ore` |
 | 3 Deep industry | Deep Mine (permanent DeepOre: coal, oil, deep alloy, uranium for the rest of the game) | ≥ 2 `DeepOreVein`s each under a checked mine site (21-cell core at local x 2–6, y 1–5) | `UnderstructureConstraintSpec` | understructure sites (min 2) |
@@ -92,6 +231,8 @@ A map supports the loop when a player can reach every stage, from the start to t
 
 From the recipes (`loopCoverage.program` in the evidence):
 
+> 2026-10-29: these figures predate the late-game cost pass. One of each building now needs about 15,600 DeepOre (the Nuclear Reactor about 6,400), more than any map's finite sources; this is the accepted gap of `tools/map_loop_requirements.json` (see "Built-in maps: new-game setup").
+
 | Need | DeepOre | ScrapMetal | Water | Log | Sandstone / Limestone |
 |---|---:|---:|---:|---:|---:|
 | One of each collection building (reactor included) | 2,450 | 11,134 | 4,634 | 5,891 | 1,940 / 1,663 |
@@ -105,7 +246,7 @@ From the recipes (`loopCoverage.program` in the evidence):
 - Oil plants burn 2 Crude Oil per working hour (0.67 DeepOre).
 - **The launch program therefore depends on the permanent Deep Mines.** Every map has three veins with checked mine sites; the rule requires two.
 - Scrap follows the same pattern: ruins hold 16,125–23,730, and the program needs about 27,000. The Efficient Mine on Underground Ruins is required. Every map has two to four, at least two of them reachable.
-- Stone: three 600-yield outcrops per mineral (1,800) cover the 249 / 214 needed before the quarries 4–8 times over. The quarries are permanent.
+- Stone: three 600-yield outcrops per mineral (1,800) cover the 842 / 722 needed before the quarries about twice over (2026-10-29). The quarries are permanent.
 
 ### Audit: gaps before and after (2026-10-24)
 
@@ -578,5 +719,5 @@ The user must be present for these.
 ## Follow-ups
 
 - **Sludge Recovery Pump intake geometry.** Needs a decision by the building owner (see Building-side findings).
-- **Other built-in maps.** With 66 layers, maps rejected for the 33-layer reactor limit (Canyon, Mountain Range, Helix Mountain) can be re-scanned with `suggest` and `plan`.
+- **Other built-in maps.** Done: every built-in map has a default variant (see "Built-in maps: new-game setup").
 - **Map object art.** Another agent is redesigning the visuals of the vein, source, seams, spring, cache and ore goods. The tool reads ids and footprints from the blueprints. After an id or footprint change, rerun `build`; then rerun `plan` for anything it reports.

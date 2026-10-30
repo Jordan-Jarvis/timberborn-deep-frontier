@@ -4,6 +4,7 @@
   "sourceSha256": "5c0b27aa53976c630bf783bfc79c927aca0fafc411ad2db47e7e80ff06d0556f",
   "output": {"directory": "C:/Users/Jordan/Documents/Timberborn/Maps", "name": "Deep Frontier - Plains (Hard, Radioactive Spring)"},
   "height": {"terrainLayers": 46, "totalHeight": 66},
+  "mapSize": {"x": 256, "y": 256},
   "hardVariant": true,
   "description": "HARD variant: a weak Radioactive Spring (0.2 radioactive water per hour) seeps into the head of the north-east river, far upstream of the colony, so contaminated water reaches the start area and the downstream farms over time. Otherwise identical to Deep Frontier - Plains: Deep Frontier variant of the vanilla Plains map. Checked for the full Deep Frontier loop: sandstone and limestone outcrops beside their pits near the start, a sandstone and a limestone seam for the quarries, three Deep Ore Veins (Deep Mine sites) at the Crater Rim and in the West Lowlands, three Deep Ore Sources for Deep Drills, five Human Record Caches with Archive Excavation sites, and a checked site for every large building, including the reactor and launch pad on the North Bank plain, a fish hatchery, a map-edge waste export and a dam site.",
   "placements": [
