@@ -245,7 +245,7 @@ def render_model(ident,cli):
         water=bpy.context.object;water.name='Studio.WorldWater';move(water)
         water.scale=(4.2,3.6,1);water.data.materials.append(native_material('Water'))
     scene.world.color=(.28,.28,.28);scene.view_settings.view_transform='AgX'
-    scene.render.engine='CYCLES';scene.cycles.samples=96;scene.cycles.use_denoising=True
+    scene.render.engine='CYCLES';scene.cycles.samples=32;scene.cycles.use_denoising=True
     # Layered native leaf cards need more than Cycles' default eight transparent
     # intersections; otherwise flower centres render black despite valid alpha.
     scene.cycles.transparent_max_bounces=32

@@ -757,7 +757,7 @@ def main():
     parser.add_argument('--models', required=True)
     parser.add_argument('--views', default='front,front-right,rear')
     parser.add_argument('--resolution', type=int, default=1200)
-    parser.add_argument('--samples', type=int, default=64)
+    parser.add_argument('--samples', type=int, default=32)
     parser.add_argument('--save-only', action='store_true')
     parser.add_argument('--culled', action='store_true', help='Also render back-face-culled diagnostics')
     parser.add_argument('--skip-unchanged', action='store_true',

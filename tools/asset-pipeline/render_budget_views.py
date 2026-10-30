@@ -105,7 +105,7 @@ def main():
     world.node_tree.nodes['Background'].inputs['Strength'].default_value = .9
     scene.view_settings.view_transform = 'AgX'
     scene.render.engine = 'CYCLES'
-    scene.cycles.samples = 48
+    scene.cycles.samples = 32
     scene.cycles.use_denoising = True
     scene.cycles.seed = 0
     scene.cycles.transparent_max_bounces = 32
