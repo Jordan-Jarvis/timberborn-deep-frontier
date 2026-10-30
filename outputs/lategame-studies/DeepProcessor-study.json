@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Riveted blast-furnace tower with gooseneck downcomer and bleeders, fed by a diagonal 60-degree skip bridge",
+  "hero": "Riveted blast furnace on a low hearth podium, charged by a plated vertical skip hoist, with stoves and a casting bay",
   "footprint": [
-    11,
-    10
+    7,
+    6
   ],
-  "heightLayers": 14,
+  "heightLayers": 8,
   "boundsMin": [
-    -0.11,
-    -0.0,
+    -0.1,
+    -0.135,
     0.0
   ],
   "boundsMax": [
-    11.0,
-    10.0,
-    13.6
+    7.05,
+    6.05,
+    7.9
   ],
   "doors": [
     {
       "id": "Door0",
       "position": [
         1.5,
-        0.18,
+        0.0,
         0.0
       ],
       "outward": [
@@ -41,20 +41,18 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 6466,
+  "faces": 2597,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 566,
-    "IrregularPlanks_DarkBrown.IronTeeth": 158,
-    "BaseMetal.IronTeeth": 4166,
-    "RoofPlanks.IronTeeth": 372,
-    "Details.IronTeeth": 522,
-    "accent8": 100,
-    "Plaster_White.IronTeeth": 268,
+    "BaseWood_DarkBrown.IronTeeth": 338,
+    "BaseMetal.IronTeeth": 1755,
+    "Details.IronTeeth": 138,
+    "accent8": 94,
+    "Plaster_White.IronTeeth": 180,
     "Plaster_Orange.IronTeeth": 31,
     "IrregularPlanks_MetalForged.IronTeeth": 36,
-    "WindowsAtlas.IronTeeth": 122,
-    "PaintedMetal.IronTeeth": 634
+    "WindowsAtlas.IronTeeth": 50,
+    "PaintedMetal.IronTeeth": 438
   },
-  "sourceHash": "6326c1e11535114a587493d491d6726571c65abf8d487fa2b467a703b1bac60c",
-  "artHash": "59ba4e212815ac2077808eedfa2b046f373b8e929d28a5fa8652c24d195f916a"
+  "sourceHash": "f6a8a14b99b64f2e6c01c41959cc1f5baeb0c643484311c1de6197273d0d85b3",
+  "artHash": "b207ce8a7916afaf45f5a7adeaf873af3196c76688e47fbd37d6dc4ec25c2270"
 }

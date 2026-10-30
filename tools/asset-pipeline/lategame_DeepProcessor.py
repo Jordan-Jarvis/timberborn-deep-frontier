@@ -4,20 +4,27 @@ Revised 2026-10-22 (no forced decoration; footprint ends at the walls):
 removed the ingot yard with its gantry crane and ingot stacks, and the post
 lamp.
 
-HERO: a riveted blast-furnace tower on a concrete hearth podium: banded bosh and
-tapering stack, bustle main with tuyeres, top platform with a rotating charging
-distributor, three uptakes into a gooseneck downcomer and twin bleeder stacks,
-fed by a 60-degree steel skip bridge rising diagonally from the ore bunkers.
-Roofs: teal plank gable over the open casting bay, plank gable on the blower
-house, domed caps on the hot-blast stoves.
+Compacted 2026-10-30 (Workshop feedback: the buildings exceed Timberborn's
+scale; one layer per floor, flat roofs): 11x10x14 -> 7x6x8, inside the old
+footprint with the same origin, door and native entrance. Removed: the open
+column-and-brace frame round the furnace, the 60-degree lattice skip bridge
+with its support bents, the third hot-blast stove and the stove catwalk, the
+gabled casting bay and the gabled blower house.
 
-Parts: concrete podium; three domed hot-blast stoves with stove chimney, flue
-and hot-blast main; dust catcher; blower house with gable fan; open casting bay
-with runner, tilting ladle and pig moulds (small GLOW accents only); ingot yard
-with travelling gantry crane; ore bunkers and skip pit.
+HERO: a riveted blast furnace on a one-layer concrete hearth podium: banded
+bosh and tapering stack, bustle main with tuyeres, a small top platform with
+the rotating charging distributor, uptakes into a downcomer to the dust
+catcher and a bleeder, charged by a plated vertical skip hoist from the ore
+pit behind it.
 
-Animated (6): skip car on the incline, charging distributor, tilting ladle,
-pour stream flicker, gantry crane bridge, blower-house gable fan.
+Parts: concrete hearth podium; two domed hot-blast stoves with their chimney
+and hot-blast main; dust catcher; flat-roofed open casting bay with runner,
+tilting ladle and pig moulds (small GLOW accents only); flat-roofed brick
+blower house with the door and a wall blower fan; skip hoist over its ore pit. Flat roofs stay
+clear (user, 2026-10-30: no clutter on buildable space).
+
+Animated (5, same names): skip car in the hoist, charging distributor,
+tilting ladle, pour stream flicker, blower fan (now on the blower house's left wall).
 """
 import math
 
@@ -30,36 +37,28 @@ import lategame_mining_parts as P
 from lategame_mining_parts import bx
 
 IDENT = 'DeepProcessor'
-FOOTPRINT = (11, 10)
-HEIGHT = 14
-HERO = 'Riveted blast-furnace tower with gooseneck downcomer and bleeders, fed by a diagonal 60-degree skip bridge'
+FOOTPRINT = (7, 6)
+HEIGHT = 8
+HERO = 'Riveted blast furnace on a low hearth podium, charged by a plated vertical skip hoist, with stoves and a casting bay'
 FRAME_END = 121
 
-F = (5.0, 5.8)
-PODIUM = (3.06, 7.94, 4.06, 7.94, 2.0)      # x0, x1, y0, y1, top (base course on tiles 3..8 x 4..8)
-TOPDECK = 10
-# Skip incline: top end over the hopper, falling toward the back-right corner.
-T = Vector((5.55, 6.1, 12.0))
-U = Vector((.821, .572, 0)).normalized()
-DROP = 11.5
-PLAN = 6.11
-B = T + U * PLAN + Vector((0, 0, -DROP))
-L3 = (B - T).length / PLAN                   # incline length per plan unit
-D = (B - T).normalized()                     # down-slope unit vector
-PERP = Vector((-U.y, U.x, 0))
+F = (5.0, 3.5)
+PODIUM = (3.06, 6.94, 2.06, 4.94, 1.0)     # x0, x1, y0, y1, top (base course on tiles 3..7 x 2..5)
+TOPDECK = 6
+ZT = 6.35                                   # furnace throat top
+# Skip hoist: vertical shaft on the back-right corner tile (6, 5).
+HOIST = (6.5, 5.5)
+SKIP_LOW, SKIP_HIGH = .75, 6.65             # skip-car centre at the bottom and top of the wind
+T = Vector((HOIST[0], HOIST[1], SKIP_HIGH))
+B = Vector((HOIST[0], HOIST[1], SKIP_LOW))
+D = (B - T).normalized()                    # down the hoist
+PERP = Vector((1, 0, 0))
 NUP = PERP.cross(D).normalized()
-if NUP.z < 0:
-    NUP = -NUP
-
-
-def on_incline(s):
-    """Point on the incline centreline at plan distance s from the top end."""
-    return T + U * s + Vector((0, 0, -DROP * s / PLAN))
 
 
 def r_shell(z):
     """Furnace outer radius at height z."""
-    pts = [(2.0, 1.1), (3.0, 1.1), (4.2, 1.38), (10.0, .86), (10.6, .56)]
+    pts = [(1.0, .78), (1.6, .78), (2.4, .98), (6.0, .6), (6.35, .38)]
     for (za, ra), (zb, rb) in zip(pts, pts[1:]):
         if za <= z <= zb:
             return ra + (rb - ra) * (z - za) / (zb - za)
@@ -73,269 +72,209 @@ def podium(g):
     bx(g, x0 - .06, x1 + .06, y0 - .06, y1 + .06, 0, .3, CONCRETE)
     bx(g, x0, x1, y0, y1, .3, top - .12, CONCRETE)
     bx(g, x0 - .05, x1 + .05, y0 - .05, y1 + .05, top - .12, top, CONCRETE)
-    for x in (4.0, 6.4):
-        P.face_member(g, 'front', (x0, x1, y0, y1), x - .12, x + .12, -.01, .05, .3, top - .12, CONCRETE)
-    for x in (4.6, 5.8):
-        P.window(g, x, y0, 1.05, 'front', .6, 'factory')
-    for y in (5.0, 6.6):
-        P.window(g, x0, y, 1.05, 'left', .6, 'factory')
-        P.window(g, x1, y, 1.05, 'right', .6, 'factory')
+    for x in (4.0, 6.0):
+        P.face_member(g, 'front', (x0, x1, y0, y1), x - .12, x + .12, -.01, .05, .3, top - .12,
+                      CONCRETE)
+    for y in (3.0, 4.0):
+        P.window(g, x1, y, .6, 'right', .4, 'factory')
 
 
 def furnace(g, parts):
     cx, cy = F
-    K.revolve(g, (cx, cy, 2.0), [(1.1, 0), (1.1, 1.0)], PAINTED, segments=16)
-    K.revolve(g, (cx, cy, 3.0), [(1.1, 0), (1.38, 1.2)], FORGED, segments=16)
-    K.revolve(g, (cx, cy, 4.2), [(1.38, 0), (.86, 5.8)], IRON, segments=16)
-    K.revolve(g, (cx, cy, 10.0), [(.86, 0), (.56, .6)], IRON, segments=16)
-    for z in (2.25, 2.75):
-        K.band(g, (cx, cy, 0), 1.1, z, .1, IRON, segments=16)
-    for z in (5.2, 6.3, 7.4, 8.5, 9.5):
-        K.band(g, (cx, cy, 0), r_shell(z), z, .09, PAINTED, segments=16)
-    # Mantle ring carried by the four columns.
-    K.revolve(g, (cx, cy, 4.14), [(1.62, 0), (1.62, .16)], IRON, segments=16)
+    K.revolve(g, (cx, cy, 1.0), [(.78, 0), (.78, .6)], PAINTED, segments=16)
+    K.revolve(g, (cx, cy, 1.6), [(.78, 0), (.98, .8)], FORGED, segments=16)
+    K.revolve(g, (cx, cy, 2.4), [(.98, 0), (.6, 3.6)], IRON, segments=16)
+    K.revolve(g, (cx, cy, 6.0), [(.6, 0), (.38, .35)], IRON, segments=16)
+    for z in (1.2, 1.45):
+        K.band(g, (cx, cy, 0), .78, z, .08, IRON, segments=16)
+    for z in (3.2, 4.1, 5.0, 5.75):
+        K.band(g, (cx, cy, 0), r_shell(z), z, .08, PAINTED, segments=16)
+    K.revolve(g, (cx, cy, 2.36), [(1.12, 0), (1.12, .12)], IRON, segments=16)
     # Bustle main and tuyere stocks.
-    g.ring((cx, cy, 3.62), 1.7, .28, .32, IRON, 'Z', 16)
-    for k in range(10):
-        a = 2 * math.pi * (k + .5) / 10
+    g.ring((cx, cy, 2.05), 1.25, .22, .26, IRON, 'Z', 16)
+    for k in range(8):
+        a = 2 * math.pi * (k + .5) / 8
         c, s = math.cos(a), math.sin(a)
-        g.beam((cx + c * 1.5, cy + s * 1.5, 3.5), (cx + c * 1.05, cy + s * 1.05, 2.75), .09, mat=IRON)
-    # Taphole with a glowing tap, runner across the podium to the casting bay.
-    bx(g, cx - .25, cx + .25, cy - 1.2, cy - 1.05, 2.0, 2.55, IRON)
-    bx(g, cx - .08, cx + .08, cy - 1.215, cy - 1.19, 2.12, 2.3, GLOW)
-    bx(g, cx - .2, cx + .2, PODIUM[2] - .05, cy - 1.2, 2.0, 2.14, FORGED)
-    bx(g, cx - .07, cx + .07, PODIUM[2] - .02, cy - 1.22, 2.14, 2.155, GLOW)
-    # Top platform: open quadrant at the back-right for the skip bridge.
-    for x0, x1, y0, y1 in ((3.4, 6.7, 4.1, 4.85), (3.4, 4.05, 4.85, 7.5), (4.05, 5.9, 6.75, 7.5),
-                           (5.95, 6.7, 4.85, 5.9)):
-        bx(g, x0, x1, y0, y1, TOPDECK - .08, TOPDECK, IRON)
+        g.beam((cx + c * 1.08, cy + s * 1.08, 1.95), (cx + c * .74, cy + s * .74, 1.42), .08, mat=IRON)
+    # Taphole with a glowing tap.
+    bx(g, cx - .2, cx + .2, cy - .9, cy - .76, 1.0, 1.42, IRON)
+    bx(g, cx - .07, cx + .07, cy - .915, cy - .9, 1.08, 1.24, GLOW)
+    # Top platform round the throat on brackets from the shell.
+    bx(g, cx - .85, cx + .85, cy - .85, cy + .85, TOPDECK - .08, TOPDECK, IRON)
     zr = TOPDECK
-    for a, b, ss, se, dz in (((3.44, 4.14), (6.66, 4.14), False, False, 0),
-                             ((3.44, 4.14), (3.44, 4.68), True, False, -.011),
-                             ((3.44, 5.1), (3.44, 5.32), False, False, -.011),
-                             ((3.44, 6.25), (3.44, 7.46), False, True, -.011),
-                             ((3.44, 7.46), (5.86, 7.46), False, False, 0),
-                             ((6.66, 4.14), (6.66, 5.86), True, False, -.011)):
+    for a, b, ss, se, dz in (((cx - .81, cy - .81), (cx + .81, cy - .81), False, False, 0),
+                             ((cx - .81, cy - .81), (cx - .81, cy + .81), True, True, -.011),
+                             ((cx - .81, cy + .81), (cx + .81, cy + .81), False, False, 0),
+                             ((cx + .81, cy - .81), (cx + .81, cy + .2), True, False, -.011)):
         P.rail(g, a, b, zr, skip_start=ss, skip_end=se, dz=dz)
-    for x, y in ((3.5, 4.3), (6.5, 4.3), (3.5, 7.3)):
-        P.column(g, x, y, 2.0, TOPDECK - .08, .26)
-    # Bracing between the columns (front and left faces).
-    for (ax, ay), (bxx, by), n in (((3.5, 4.3), (6.5, 4.3), (0, -1)), ((3.5, 7.3), (3.5, 4.3), (-1, 0))):
-        for k, (za, zb) in enumerate(((4.4, 7.1), (7.1, 9.8))):
-            pa, pb = ((ax, ay), (bxx, by)) if k % 2 else ((bxx, by), (ax, ay))
-            off = .16 + .02 * k
-            g.beam((pa[0] + n[0] * off, pa[1] + n[1] * off, za), (pb[0] + n[0] * off, pb[1] + n[1] * off, zb),
-                   .06, .1, IRON)
-    for z in (7.1,):
-        bx(g, 3.64, 6.36, 4.23, 4.37, z - .07, z + .07, IRON)
-        bx(g, 3.43, 3.57, 4.44, 7.16, z - .04, z + .1, IRON)
-    K.ladder(g, 3.3, 4.9, PODIUM[4], TOPDECK, face='left', width=.34, cage=True)
+    for k in range(4):
+        a = math.pi / 4 + k * math.pi / 2
+        c, s = math.cos(a), math.sin(a)
+        g.beam((cx + c * .72, cy + s * .72, 4.9), (cx + c * 1.1, cy + s * 1.1, TOPDECK - .1), .09, mat=IRON)
     # Rotating charging distributor and hopper on the furnace top.
-    zt = 10.6
-    dist = Geometry('ChargingDistributor', (cx, cy, zt))
-    K.revolve(dist, (cx, cy, zt), [(.5, 0), (.5, .12), (.78, .62), (.78, .72)], IRON, segments=12)
+    dist = Geometry('ChargingDistributor', (cx, cy, ZT))
+    K.revolve(dist, (cx, cy, ZT), [(.36, 0), (.36, .1), (.58, .5), (.58, .58)], IRON, segments=12)
     for k in range(4):
         a = k * math.pi / 2
-        bx(dist, cx + math.cos(a) * .72 - .06, cx + math.cos(a) * .72 + .06,
-           cy + math.sin(a) * .72 - .06, cy + math.sin(a) * .72 + .06, zt + .2, zt + .5, BRASS)
-    for i in range(6):
-        dist.rock((cx - .3 + i * .12, cy + (.15 if i % 2 else -.15), zt + .74 + .01 * i), (.2, .18, .14), IRON, 70 + i)
+        bx(dist, cx + math.cos(a) * .53 - .05, cx + math.cos(a) * .53 + .05,
+           cy + math.sin(a) * .53 - .05, cy + math.sin(a) * .53 + .05, ZT + .16, ZT + .4, BRASS)
+    for i in range(5):
+        dist.rock((cx - .2 + i * .1, cy + (.1 if i % 2 else -.1), ZT + .6 + .01 * i), (.16, .14, .11), IRON, 70 + i)
     parts.append((dist, 'SPIN_Z', 1))
-    # Uptakes, junction, bleeders and the gooseneck downcomer to the dust catcher.
-    J = (4.1, 5.8, 12.2)
-    for a in (150, 180, 210):
+    # Uptakes, junction, bleeder and the downcomer to the dust catcher.
+    J = (4.35, 3.75, 6.85)
+    for a in (160, 200):
         r = math.radians(a)
-        P.tube(g, (cx + math.cos(r) * .6, cy + math.sin(r) * .6, 10.3), J, .15, IRON, 12)
-    K.revolve(g, J, [(.2, -.3), (.36, -.12), (.36, .14), (.2, .3)], PAINTED, segments=16)
-    for y in (5.65, 5.95):
-        P.tube(g, (J[0], y, 12.4), (J[0], y, 13.5), .1, IRON, 10)
-        g.cylinder((J[0], y, 13.55), .14, .1, BRASS, 'Z', 12)
-    dc = (1.4, 5.6, 5.45)
-    P.tube(g, J, dc, .26, IRON, 14)
-    for f in (.3, .62):
-        p = [J[i] + (dc[i] - J[i]) * f for i in range(3)]
-        d = Vector(dc) - Vector(J)
-        P.tube(g, Vector(p) - d.normalized() * .04, Vector(p) + d.normalized() * .04, .33, BRASS, 14)
-    # Dust catcher.
-    bx(g, .75, 2.05, 4.95, 6.25, 0, 1.2, CONCRETE)
-    K.revolve(g, (1.4, 5.6, 1.2), [(.62, 0), (.62, 3.6), (.3, 4.2), (.26, 4.4)], IRON, segments=12)
-    for z in (2.2, 3.4, 4.5):
-        K.band(g, (1.4, 5.6, 0), .62, z, .08, PAINTED, segments=12)
-    P.gauge(g, 1.4, 4.97, 2.0, 'front', .09)
+        P.tube(g, (cx + math.cos(r) * .42, cy + math.sin(r) * .42, ZT - .2), J, .1, IRON, 10)
+    K.revolve(g, J, [(.14, -.2), (.24, -.08), (.24, .1), (.14, .2)], PAINTED, segments=12)
+    P.tube(g, (J[0], J[1], J[2] + .2), (J[0], J[1], 7.6), .08, IRON, 10)
+    g.cylinder((J[0], J[1], 7.64), .11, .08, BRASS, 'Z', 12)
+    dc = (3.5, 5.5, 3.7)
+    P.tube(g, J, dc, .16, IRON, 12)
+    # Dust catcher on its own base behind the podium.
+    bx(g, 3.0, 4.0, 5.0, 6.0, 0, .9, CONCRETE)
+    K.revolve(g, (3.5, 5.5, .9), [(.38, 0), (.38, 2.4), (.2, 2.8), (.17, 2.95)], IRON, segments=12)
+    for z in (1.6, 2.5):
+        K.band(g, (3.5, 5.5, 0), .38, z, .07, PAINTED, segments=12)
+    P.gauge(g, 3.5, 5.12, 1.4, 'front', .07)
 
 
 # ------------------------------------------------------------------ stoves
 
 def stoves(g):
-    xs = (1.2, 2.85, 4.5)
+    xs = (.8, 2.2)
     for x in xs:
-        K.tank(g, x, 8.9, 0, .72, 8.3, mat=PAINTED, bands=6, roof='dome', segments=16)
-        P.gauge(g, x - .35, 8.9 - .66, 1.5, 'front', .08)
+        K.tank(g, x, 4.6, 0, .55, 4.0, mat=PAINTED, bands=4, roof='dome', segments=16)
+        P.gauge(g, x - .3, 4.6 - .5, 1.2, 'front', .07)
     # Hot-blast main to the bustle pipe, with a valve per stove.
-    P.tube(g, (.95, 7.9, 3.62), (5.0, 7.9, 3.62), .2, IRON, 14)
-    P.tube(g, (5.0, 7.9, 3.62), (5.0, 7.4, 3.62), .2, IRON, 14)
-    g.cylinder((.93, 7.9, 3.62), .27, .06, BRASS, 'X', 14)
-    g.cylinder((5.0, 7.9, 3.62), .24, .5, PAINTED, 'Z', 14)
+    P.tube(g, (.6, 3.5, 2.05), (3.8, 3.5, 2.05), .15, IRON, 12)
+    g.cylinder((.58, 3.5, 2.05), .2, .05, BRASS, 'X', 12)
     for x in xs:
-        P.tube(g, (x, 7.95, 3.62), (x, 8.4, 3.62), .17, IRON, 12)
-        g.cylinder((x, 8.08, 3.62), .26, .12, BRASS, 'Y', 14)
-        K.valve_wheel(g, x, 7.96, 4.15, face='front', r=.16)
-        P.tube(g, (x, 7.95, 3.9), (x, 7.95, 4.12), .03, IRON, 6)
-    # Cold blast from the blower house; gas from the dust catcher.
-    P.tube(g, (.45, 3.5, 2.6), (.45, 8.4, 2.6), .17, IRON, 12)
-    P.tube(g, (.45, 8.4, 2.6), (.95, 8.4, 2.6), .17, IRON, 12)
-    g.cylinder((.45, 8.4, 2.6), .21, .44, PAINTED, 'Z', 12)
-    for y in (4.3, 6.3):
-        g.cylinder((.45, y, 2.6), .25, .06, BRASS, 'Y', 12)
-    K.pipe_run(g, [(1.9, 5.6, 4.6), (2.85, 5.6, 4.6), (2.85, 8.4, 4.6)], .14)
-    # Stove chimney and flue.
-    K.stack(g, 6.2, 9.3, 0, 11.0, emits='smoke', r=.3, bands=5)
-    P.tube(g, (1.2, 9.75, 1.2), (6.1, 9.75, 1.2), .16, IRON, 12)
-    # Service catwalk between the stoves at mid height.
-    P.deck(g, .9, 4.8, 7.7, 8.15, 6, rails=('front',), bars=False)
-    for x in (2.05, 3.7):
-        g.beam((x, 8.3, 5.2), (x, 7.8, 5.9), .07, mat=IRON)
+        P.tube(g, (x, 3.55, 2.05), (x, 4.1, 2.05), .12, IRON, 10)
+        g.cylinder((x, 3.8, 2.05), .19, .1, BRASS, 'Y', 12)
+        K.valve_wheel(g, x, 3.62, 2.45, face='front', r=.13)
+        P.tube(g, (x, 3.62, 2.12), (x, 3.62, 2.42), .025, IRON, 6)
+    # Stove chimney with a low flue from both stoves.
+    K.stack(g, 1.5, 5.62, 0, 6.3, emits='smoke', r=.22, bands=4)
+    P.tube(g, (.8, 5.15, .7), (2.2, 5.15, .7), .1, IRON, 10)
+    P.tube(g, (1.5, 5.2, .7), (1.5, 5.4, .7), .08, IRON, 10)
 
 
-# ------------------------------------------------------------------ incline
+# ------------------------------------------------------------------ skip hoist
 
-def incline(g, parts):
-    s_top, s_bot = .05, PLAN - .35
-    for side in (-1, 1):
-        off = PERP * side * .42
-        a, b = on_incline(s_top) + off, on_incline(s_bot - .1) + off
-        g.beam(a, b, .16, .3, PAINTED)                                   # top chord girder
-        g.beam(a - NUP * .85, b - NUP * .85 + D * 0, .12, .16, IRON)      # bottom chord
-        n = 12
-        for k in range(n + 1):
-            pa = a + (b - a) * k / n
-            g.beam(pa - NUP * .1, pa - NUP * .8, .1, .1, IRON)            # verticals
-            if k < n:
-                pb = a + (b - a) * (k + 1) / n
-                q = (pa - NUP * .78) if k % 2 == 0 else (pa - NUP * .12)
-                r = (pb - NUP * .12) if k % 2 == 0 else (pb - NUP * .78)
-                st = .07 if k % 2 == 0 else .09
-                g.beam(q + PERP * side * st, r + PERP * side * st, .05, .08, IRON)
-        # Track rail on the girder.
-        g.beam(a + NUP * .17, b + NUP * .17, .05, .04, IRON)
-    for k in range(13):
-        c = on_incline(s_top + (s_bot - s_top - .1) * k / 12) - NUP * .25
-        g.beam(c - PERP * .42, c + PERP * .42, .08, .08, IRON)
-    # Support bents under the bottom chords: top one on the podium, lower on piers.
-    for sb, base in ((2.4, PODIUM[4]), (4.0, 0)):
-        feet = []
-        for side in (-1, 1):
-            q = on_incline(sb) + PERP * side * .42 - NUP * .85
-            if math.hypot(q.x - F[0], q.y - F[1]) < 2.0:
-                raise ValueError('Incline bent collides with the furnace')
-            if base == 0:
-                P.pier(g, q.x, q.y, 0, .5, .36)
-                P.column(g, q.x, q.y, .55, q.z - .06, .2)
-            else:
-                if not (PODIUM[0] + .15 < q.x < PODIUM[1] - .15 and PODIUM[2] + .15 < q.y < PODIUM[3] - .15):
-                    raise ValueError(f'Upper incline bent is off the podium: {q}')
-                P.column(g, q.x, q.y, base, q.z - .06, .2)
-            feet.append(q)
-        q0, q1 = feet
-        zl = q0.z - .3
-        g.beam((q0.x, q0.y, zl), (q1.x, q1.y, zl), .14, mat=IRON)
-        g.beam((q0.x, q0.y, base + .6), (q1.x, q1.y, zl - .15), .08, mat=IRON)
-    # Skip pit and ore bunkers at the foot.
-    # Skip pit and three bunkers, one tile each along the back edge.
-    bx(g, 10.0, 11.0, 9.0, 10.0, 0, .5, CONCRETE)
-    for x0, x1 in ((7.0, 8.0), (8.0, 9.0), (9.0, 10.0)):
-        bx(g, x0, x1, 9.0, 10.0, 0, .25, CONCRETE)
-        bx(g, x0, x1, 9.82, 10.0, .25, 1.3, CONCRETE)
-        bx(g, x0 + .02, x0 + .14, 9.0, 9.82, .25, 1.1, CONCRETE)
-        bx(g, x1 - .14, x1 - .02, 9.0, 9.82, .25, 1.1, CONCRETE)
-        P.ore_heap(g, (x0 + x1) / 2, 9.42, .25, .4, .32, h=.7, mats=(IRON, IRON, BRASS), seed=int(x0 * 10))
+def hoist(g, parts):
+    x, y = HOIST
+    # Ore pit inside the shaft foot (no bunker outside it: the ground beside stays buildable).
+    bx(g, 6.0, 7.0, 5.0, 6.0, 0, .25, CONCRETE)
+    # Plated hoist shaft on the tile edges: sides and back closed, front open over the skip.
+    z0, z1 = .25, 7.15
+    for px in (6.0, 7.0):
+        bx(g, px - .03, px + .03, 5.0, 5.94, z0, z1, PAINTED)
+    bx(g, 6.0, 7.0, 5.94, 6.0, z0, z1, PAINTED)
+    for z in (2.0, 4.0, 6.0):
+        bx(g, 6.03, 6.97, 4.98, 5.06, z - .05, z + .05, IRON)
+    # Guide rails for the skip car.
+    for gx in (x - .4, x + .4):
+        bx(g, gx - .03, gx + .03, y + .3, y + .38, z0, z1, IRON)
+    # Head frame: cap plate, sheave on two pedestals, and the chute to the furnace hopper.
+    bx(g, 5.95, 7.05, 4.95, 6.05, z1, z1 + .08, IRON)
+    for px in (x - .25, x + .25):
+        bx(g, px - .05, px + .05, y - .12, y + .12, z1 + .08, z1 + .52, PAINTED)
+    g.cylinder((x, y, z1 + .45), .04, .62, IRON, 'X', 10)
+    g.ring((x, y, z1 + .45), .3, .06, .1, IRON, 'X', 16)
+    for k in range(4):
+        a = k * math.pi / 2 + math.pi / 4
+        g.beam((x, y + math.cos(a) * .05, z1 + .45 + math.sin(a) * .05),
+               (x, y + math.cos(a) * .25, z1 + .45 + math.sin(a) * .25), .035, mat=IRON)
+    P.slab_quad(g, [(6.05, 5.2, 7.05), (6.05, 4.8, 7.05), (5.4, 3.9, 6.98), (5.4, 4.3, 6.98)],
+                (.12, -.07, 1), .05, FORGED)
     # Skip car.
-    s0 = PLAN - .95
-    c0 = on_incline(s0) + NUP * .6
+    c0 = B + NUP * .1
     car = Geometry('SkipCar', tuple(c0))
-    P.oriented_box(car, c0, D, PERP, NUP, (.42, .34, .3), FORGED)
-    P.oriented_box(car, c0 + NUP * .28, D, PERP, NUP, (.45, .37, .05), PAINTED)
+    P.oriented_box(car, c0, D, PERP, NUP, (.42, .34, .28), FORGED)
+    P.oriented_box(car, c0 - D * .4, D, PERP, NUP, (.05, .37, .31), PAINTED)
     for sd in (-1, 1):
         for sp in (-1, 1):
-            w = c0 + D * sd * .3 + PERP * sp * .38 - NUP * .3
-            P.oriented_box(car, w, D, PERP, NUP, (.1, .03, .1), IRON)
-    for i in range(5):
-        car.rock(tuple(c0 + NUP * .36 + D * (i - 2) * .15), (.2, .18, .14), IRON, 90 + i)
-    parts.append((car, 'CUSTOM_INCLINE', (s0 - .45) * L3))
+            w = c0 + D * sd * .3 + PERP * sp * .37 + NUP * .2
+            P.oriented_box(car, w, D, PERP, NUP, (.1, .03, .08), IRON)
+    for i in range(4):
+        car.rock(tuple(c0 - D * .46 + PERP * (i - 1.5) * .14), (.16, .14, .12), IRON, 90 + i)
+    parts.append((car, 'CUSTOM_INCLINE', SKIP_HIGH - SKIP_LOW))
 
 
-# ------------------------------------------------------------------ casting & yard
+# ------------------------------------------------------------------ casting bay
 
 def casting_bay(g, parts):
-    bx(g, 3.0, 7.0, 0.0, 4.0, 0, .2, CONCRETE)   # bay floor on tiles 3..7 x 0..4
-    for x in (3.2, 5.0, 6.8):
-        for y in (.45, 3.55):
-            P.column(g, x, y, .2, 3.76, .18)
-            g.beam((x, y, 3.72), (x, 2.0, 4.6), .1 if y < 1 else .09, .12, IRON)
-        bx(g, x - .08, x + .08, 1.8, 2.2, 4.42, 4.68, PAINTED)
-        bx(g, x - .06, x + .06, .5, 3.5, 3.0, 3.12, IRON)
-    P.plank_gable(g, 3.1, 6.9, .45, 3.55, 3.85, 4.75, ridge_axis='X', seed=81, gable=False)
-    # Back wall of the bay (plank boards on a solid core) toward the podium.
-    # Runner trough down from the podium to the ladle.
-    y0, z0, y1, z1 = PODIUM[2] - .05, 2.0, 3.25, 1.62
-    P.slab_quad(g, [(4.8, y1, z1), (5.2, y1, z1), (5.2, y0, z0), (4.8, y0, z0)], (0, .4, 1), .1, FORGED)
-    P.slab_quad(g, [(4.93, y1 + .05, z1 + .006), (5.07, y1 + .05, z1 + .006), (5.07, y0, z0 + .006),
-                    (4.93, y0, z0 + .006)], (0, .4, 1), .005, GLOW)
-    g.beam((5.0, 3.8, .2), (5.0, 3.8, 1.75), .12, mat=IRON)
+    bx(g, 3.0, 7.0, 0.0, 2.0, 0, .12, CONCRETE)   # bay floor on tiles 3..7 x 0..2
+    for x in (3.25, 6.75):
+        for y in (.25, 1.75):
+            P.column(g, x, y, .12, 1.72, .18)
+    for y in (.25, 1.75):
+        bx(g, 3.1, 6.9, y - .07, y + .07, 1.72, 1.84, IRON)
+    bx(g, 3.0, 7.0, 0.0, 2.0, 1.84, 2.0, CONCRETE)  # flat roof
+    # Runner trough from the taphole over the podium edge to the ladle.
+    y0, z0, y1, z1 = F[1] - .9, 1.36, 1.45, 1.24
+    P.slab_quad(g, [(4.86, y1, z1), (5.14, y1, z1), (5.14, y0, z0), (4.86, y0, z0)], (0, .1, 1), .08, FORGED)
+    P.slab_quad(g, [(4.95, y1 + .05, z1 + .005), (5.05, y1 + .05, z1 + .005), (5.05, y0, z0 + .005),
+                    (4.95, y0, z0 + .005)], (0, .1, 1), .004, GLOW)
+    g.beam((5.0, 1.75, .12), (5.0, 1.75, 1.18), .1, mat=IRON)
     # Ladle stand and tilting ladle.
-    lc = (5.0, 2.75, 1.45)
+    lc = (5.0, 1.0, 1.08)
     for x in (4.45, 5.55):
-        g.beam((x, 2.35, .2), (x, 2.75, 1.48), .1, mat=IRON)
-        g.beam((x, 3.15, .2), (x, 2.75, 1.48), .09, mat=IRON)
-        bx(g, x - .07, x + .07, 2.55, 2.95, 1.3, 1.62, BRASS)
+        g.beam((x, .65, .12), (x, 1.0, 1.1), .08, mat=IRON)
+        g.beam((x, 1.35, .12), (x, 1.0, 1.1), .07, mat=IRON)
+        bx(g, x - .06, x + .06, .85, 1.15, .96, 1.22, BRASS)
     lad = Geometry('Ladle', lc)
-    K.revolve(lad, (5.0, 2.75, .82), [(.3, 0), (.42, .25), (.45, .62), (.47, .72)], PAINTED, segments=12)
-    lad.cylinder((5.0, 2.75, 1.555), .43, .02, GLOW, 'Z', 16)
-    for z in (1.0, 1.3):
-        K.band(lad, (5.0, 2.75, 0), .44 if z < 1.2 else .46, z, .06, IRON, segments=12)
-    lad.cylinder((5.0, 2.75, 1.45), .05, 1.06, IRON, 'X', 10)
-    bx(lad, 4.93, 5.07, 2.22, 2.35, 1.42, 1.52, PAINTED)
+    K.revolve(lad, (5.0, 1.0, .5), [(.26, 0), (.36, .22), (.39, .55), (.41, .64)], PAINTED, segments=12)
+    lad.cylinder((5.0, 1.0, 1.15), .37, .02, GLOW, 'Z', 16)
+    for z in (.68, .95):
+        K.band(lad, (5.0, 1.0, 0), .37 if z < .8 else .4, z, .05, IRON, segments=12)
+    lad.cylinder(lc, .045, .96, IRON, 'X', 10)
+    bx(lad, 4.94, 5.06, .52, .63, 1.06, 1.15, PAINTED)
     parts.append((lad, 'SWAY_X', .18))
-    stream = Geometry('PourStream', (5.0, 2.24, 1.4))
-    bx(stream, 4.97, 5.03, 2.21, 2.27, .52, 1.4, GLOW)
+    stream = Geometry('PourStream', (5.0, .56, 1.0))
+    bx(stream, 4.97, 5.03, .53, .59, .32, 1.0, GLOW)
     parts.append((stream, 'FLAME', 0))
     # Pig moulds on a casting line.
-    for side in (1.74, 2.26):
-        bx(g, 3.5, 6.5, side - .03, side + .03, .2, .32, IRON)
+    for side in (.3, .82):
+        bx(g, 3.55, 6.45, side - .03, side + .03, .12, .22, IRON)
     for i in range(7):
-        x = 5.0 + (i - 3) * .42
-        bx(g, x - .17, x + .17, 1.66, 2.34, .32, .5, IRON)
+        x = 5.0 + (i - 3) * .4
+        bx(g, x - .16, x + .16, .33, .79, .22, .38, IRON)
         if i in (2, 3, 4):
-            bx(g, x - .12, x + .12, 1.73, 2.27, .5, .52, GLOW)
+            bx(g, x - .11, x + .11, .38, .74, .38, .4, GLOW)
         else:
-            bx(g, x - .12, x + .12, 1.73, 2.27, .5, .54, IRON)
-    K.lamp(g, 3.2, .36, 2.6, face='front')
-    K.lamp(g, 6.8, .36, 2.6, face='front')
+            bx(g, x - .11, x + .11, .38, .74, .38, .42, IRON)
+    K.lamp(g, 3.25, .16, 1.3, face='front')
+    K.lamp(g, 6.75, .16, 1.3, face='front')
 
 
 def blower_house(g, parts):
-    # Plinth course (core + .05) on tiles 0..3 x 0..4; door face stays .18.
-    P.hall(g, .05, 2.95, .3, 3.95, 3.6, plinth=.6, doors=[1.5], pitch=1.0,
-           windows={'left': [(.76, 2.1), (1.67, 2.1), (2.58, 2.1)], 'right': [(.76, 2.1), (3.49, 2.1)],
-                    'back': [(2.55, 2.1)]},
-           lamps=[('front', .78, 1.35), ('front', 2.22, 1.35)])
-    P.plank_gable(g, .05, 2.95, .3, 3.95, 3.6, 5.0, ridge_axis='Y', seed=91)
-    g.ring((1.5, .18, 4.0), .42, .07, .14, IRON, 'Y', 16)
-    parts.append((P.rotor('GableFan', (1.5, .2, 4.0), .34, 'Y', 6), 'SPIN_Y', 4))
-    K.stack(g, 2.4, 4.3, 0, 6.0, emits='smoke', r=.17, bands=3)
+    # Brick hall on tiles 0..3 x 0..3. The core front at .12 puts the native
+    # portal's face on the tile edge y = 0.
+    P.hall(g, .05, 2.95, .12, 2.95, 1.84, plinth=.5, doors=[1.5], pitch=1.0,
+           posts=('front', 'left', 'back'),
+           windows={'front': [(.45, 1.15, 'grand', .55), (2.55, 1.15, 'grand', .55)],
+                    'left': [(.59, 1.15, 'grand', .55), (2.48, 1.15, 'grand', .55)]})
+    K.lamp(g, .78, .12, 1.15, face='front')
+    K.lamp(g, 2.22, .12, 1.15, face='front')
+    P.flat_roof(g, .05, 2.95, .12, 2.95, 1.84, overhang=.05, parapet=.25)
+    # Blower intake fan on the left wall (the flat roof stays clear and buildable).
+    g.ring((-.01, 1.535, 1.15), .34, .06, .1, IRON, 'X', 16)
+    parts.append((P.rotor('GableFan', (-.03, 1.535, 1.15), .28, 'X', 6), 'SPIN_X', 4))
 
 
 def build(g, parts):
     podium(g)
     furnace(g, parts)
     stoves(g)
-    incline(g, parts)
+    hoist(g, parts)
     casting_bay(g, parts)
     blower_house(g, parts)
 
 
 def animate(obj, kind, value, frame_end):
-    """Skip car: haul up the incline, tip, return."""
+    """Skip car: haul up the hoist, tip, return."""
     if kind != 'CUSTOM_INCLINE':
         raise ValueError('Unknown custom animation ' + kind)
     span = frame_end - 1

@@ -198,7 +198,7 @@ A map supports the loop when a player can reach every stage, from the start to t
     - `WaterInputSpec`: water intake;
     - `MineralPitSpec`: pit with deposits;
     - `HydroTurbineSpec`: dam site;
-  - otherwise a power generator (`WorkshopPoweredGeneratorSpec` or `GoodPoweredGeneratorSpec`), or any building with a footprint side of 8 or more (`largeFootprint`), needs a checked flat site; so does the Deep Drill whatever its size (`DEEP_DRILL`: the deep-industry stage counts its sites);
+  - otherwise a power generator (`WorkshopPoweredGeneratorSpec` or `GoodPoweredGeneratorSpec`), or any building with a footprint side of 8 or more (`largeFootprint`), needs a checked flat site; so do the Deep Drill and the Deep Ore Processor whatever their size (`FLAT_SITE_TEMPLATES`: the deep-industry stage counts the drill's sites and needs the processor, the only building that turns DeepOre into products);
   - `Buildings/Platforms` pieces and the small free-standing buildings need none: the crusher, kiln, mixer, smog scrubber, observation deck and outfall place on any flat patch.
   - A new building in the collection is classified automatically, and the build fails until the variants list its site.
 - **Sizes, entrances and heights** come from the blueprint `BlockObjectSpec`. `top occupied layer < 66` replaces the old z < 33 limit (see Format and Z budget).

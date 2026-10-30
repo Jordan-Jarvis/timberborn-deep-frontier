@@ -1077,6 +1077,12 @@ def output_path(variant):
 # The Deep Drill draws DeepOre from an authored DeepOreSource: the deep-industry stage
 # counts its checked flat sites beside a source (minDrillSites), whatever its size.
 DEEP_DRILL = 'DeepDrill.IronTeeth'
+# Buildings that need a checked flat site whatever their footprint (largeFootprint):
+# the deep-industry stage cannot run without them.
+FLAT_SITE_TEMPLATES = {
+    DEEP_DRILL: 'its sites beside the Deep Ore Sources are counted (minDrillSites)',
+    'DeepProcessor.IronTeeth': 'the only building that turns DeepOre into products (alloy, coal, oil, uranium)',
+}
 SPECIAL_SITE_RULES = (('UnderstructureConstraintSpec', 'understructure'), ('MapEdgeSiteSpec', 'mapEdge'),
                       ('WaterDepthWorkCellsSpec', 'waterDepth'), ('WaterInputSpec', 'waterInput'),
                       ('MineralPitSpec', 'pit'), ('HydroTurbineSpec', 'hydro'))
@@ -1117,7 +1123,7 @@ def site_rule(catalog, template, large):
             return rule
     if catalog.building_collection[template].startswith('Buildings/Platforms/'):
         return None
-    if template == DEEP_DRILL:
+    if template in FLAT_SITE_TEMPLATES:
         return 'flat'
     size = blueprint['BlockObjectSpec']['Size']
     if 'WorkshopPoweredGeneratorSpec' in blueprint or 'GoodPoweredGeneratorSpec' in blueprint or max(size['X'], size['Y']) >= large:

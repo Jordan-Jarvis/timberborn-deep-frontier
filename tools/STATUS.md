@@ -4,6 +4,18 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction: Deep Ore Processor 11x10x14 -> 7x6x8 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `minesdrill` on HEAD + this change; not built or run in game)
+
+- **Art** (`lategame_DeepProcessor.py`, saved scene unpacked): a riveted blast furnace on a one-layer concrete hearth podium (tiles 3..7 x 2..5) with banded bosh and stack, bustle main and tuyeres, a top platform at layer 6 on shell brackets, the rotating charging distributor, uptakes into a downcomer to the dust catcher and a bleeder. A plated vertical skip hoist on tile (6, 5) charges it over a short chute. Two domed hot-blast stoves with their chimney and the hot-blast main stand behind the flat-roofed brick blower house (the door, a wall blower fan). In front, a flat-roofed open casting bay holds the runner, the tilting ladle, the pour stream and the pig moulds. Removed: the column-and-brace frame round the furnace, the 60-degree lattice skip bridge and its bents, the third stove and its catwalk, the gabled casting bay and blower house, and the bunker strip. No clutter on buildable space: the flat roofs are clear and the ground beside the hoist is open.
+- **Animation:** the same 5 parts (`ChargingDistributor`, `SkipCar` now rising in the hoist, `Ladle`, `PourStream`, `GableFan` now on the blower house's left wall, SPIN_X).
+- **Checks on the art:** triangles 15,098 -> 6,826 (ceiling re-recorded); strict z-fight audit 0 visible at frames 1/31/51/61/91/111; grid audit 0 edge and floor misses.
+- **Data:** footprint inside the old one with the same origin, door tile and Entrance (1,-1,0); door face on the tile edge (`LocalAccess` z 0.18 -> 0). Shaft transputs 107 -> 67, pipe ports 41 -> 26 (still water for its recipes); one smoke/smog source at the stove chimney (1.5, 5.62). Roof decks: the blower-house and casting-bay roofs and the podium edges are platformable. Cost held by `lategame_cost_basis.json`; power, workers and recipes unchanged. `lategame_freed_cells.json`: the 2026-10-22 inside cells now lie outside the 7x6 footprint.
+- **Maps:** the processor is now under `largeFootprint` (8), so `prepare_deep_frontier_map.py` lists it with the drill in `FLAT_SITE_TEMPLATES` (the deep-industry stage needs it: the only building that turns DeepOre into products). `map-setup-terrain` still fails only on `smallMap.maxArea`, re-derived after the pass.
+- **Old saves:** a placed processor keeps its position and entrance and frees the tiles it no longer uses at any rotation; a flipped one's entrance moves 4 tiles (local x 9 -> 5). Shafts and pipes on removed walls disconnect.
+- **Review:** `outputs/compaction/DeepProcessor-before-after.png`, `DeepProcessor-compaction-close.png`, `DeepProcessor-footprint-height.png`.
+- **Checks (mirror):** canonical generation to a fixed point; 21 `validate_all -Only` checks pass except `map-setup-terrain` (maxArea, as above); triangle budget passes.
+- **In game:** not seen yet.
+
 ## Compaction: civic and wellbeing late-game buildings (Claude Code session, 2026-10-30, built by an agent; each building committed when promoted; validated in mirror `civicwell` on HEAD + that building; not built or run in game)
 
 - **Shared:** `lategame_kit.parapet` (and `flat_roof(..., parapet_height=)`) caps its ring with one IRON plate over the whole roof, so `measure_connection_faces.py` records the roof below as covered and blocked and it never becomes a roof deck. The compacted buildings use `parapet_ring` from the new `lategame_roofdeck_parts.py` instead (walls and cap strips only, inside the 0.15 occupancy inset). The kit helper is unchanged. Costs are held by `lategame_cost_basis.json`.
