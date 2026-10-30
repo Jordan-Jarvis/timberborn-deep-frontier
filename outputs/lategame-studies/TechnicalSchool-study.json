@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Fourteen-layer clock tower with a four-faced clock stage, lancet belfry and teal pyramid spire with a weathervane.",
+  "hero": "Clock tower on the entrance axis with a four-faced clock stage, lancet belfry and teal pyramid spire with a weathervane.",
   "footprint": [
-    11,
-    5
+    8,
+    4
   ],
-  "heightLayers": 14,
+  "heightLayers": 7,
   "boundsMin": [
-    -0.09,
+    -0.06,
     -0.255,
     -0.03
   ],
   "boundsMax": [
-    11.09,
-    5.1,
-    13.99
+    8.05,
+    4.06,
+    6.43
   ],
   "doors": [
     {
@@ -46,19 +46,18 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 5395,
+  "faces": 3705,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 2538,
-    "BaseMetal.IronTeeth": 1263,
-    "RoofPlanks.IronTeeth": 57,
+    "BaseWood_DarkBrown.IronTeeth": 1278,
+    "BaseMetal.IronTeeth": 1179,
+    "RoofPlanks.IronTeeth": 9,
     "Details.IronTeeth": 444,
     "accent8": 20,
-    "Plaster_White.IronTeeth": 722,
-    "Plaster_Orange.IronTeeth": 37,
-    "IrregularPlanks_MetalForged.IronTeeth": 8,
-    "WindowsAtlas.IronTeeth": 630,
+    "Plaster_White.IronTeeth": 554,
+    "Plaster_Orange.IronTeeth": 31,
+    "WindowsAtlas.IronTeeth": 514,
     "PaintedMetal.IronTeeth": 112
   },
-  "sourceHash": "0010f807fdd83782d54aa18c961f3ba090a30f969a0140253d1cf4e49cc5f10c",
-  "artHash": "42ba6160ce59790fccf213ee2226a289a55d362913524a4981e8ca0278889481"
+  "sourceHash": "5c6b42f08d990379ad213ee9c7294123ccd1bf3033b3a45c953e90dd451ece45",
+  "artHash": "c2abfe16cc65a2472b114be5f0fdd2a4cd0cc32826502c9d3cff542fc6191fb0"
 }

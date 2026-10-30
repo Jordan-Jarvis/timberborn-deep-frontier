@@ -111,21 +111,16 @@
     14
    ],
    "footprintAfter": [
-    11,
-    5,
-    14
+    8,
+    4,
+    7
    ],
    "gridOrigin": [
     0,
     1
    ],
    "outsideCells": 11,
-   "insideCells": [
-    [
-     1,
-     0
-    ]
-   ]
+   "insideCells": []
   },
   "RocketAssemblyHangar": {
    "footprintBefore": [

@@ -805,9 +805,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 9024,
-   "vertices": 17116,
-   "construction": 9024,
+   "finished": 6842,
+   "vertices": 12970,
+   "construction": 6842,
    "file": "outputs/lategame-integration/Data/Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.Model.timbermesh"
   },
   "TownPlaza": {
