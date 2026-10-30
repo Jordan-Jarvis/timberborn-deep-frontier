@@ -1,7 +1,7 @@
 {
  "ident": "MaterialsLaboratory",
  "source": "src/DeepFrontier/Art/Source/MaterialsLaboratory-ReferenceStudy.blend",
- "sourceSha256": "d61305d54192c3379763a851c3c902eff6abcf08f4c35e9aac554955f15d534a",
+ "sourceSha256": "4f4fbe5660dabc8e2fab96ad6c8f1dc64a509c2f037f12ff8521301de83675fc",
  "frame": 1,
  "layout": "tools/research-layouts.json",
  "origin": [
@@ -14,7 +14,7 @@
   10,
   8
  ],
- "height": 9,
+ "height": 5,
  "coordinateSystem": "Native grid XYZ, Z up: authored artwork + registration origin (the late-game registration frame)",
  "smokeEmitters": [
   {
@@ -22,7 +22,7 @@
    "position": [
     4.15,
     6.8,
-    7.985
+    4.2744
    ],
    "radius": 0.15
   },
@@ -31,7 +31,7 @@
    "position": [
     7.3,
     2.8,
-    5.885
+    3.2883
    ],
    "radius": 0.15
   }
@@ -43,20 +43,20 @@
     "position": [
      4.15,
      6.8,
-     7.985
+     4.2744
     ],
-    "stackTop": 7.985,
-    "lowestNearby": 7.12,
+    "stackTop": 4.2744,
+    "lowestNearby": 3.4094,
     "vertices": 216
    },
    {
     "position": [
      7.3,
      2.8,
-     5.885
+     3.2883
     ],
-    "stackTop": 5.885,
-    "lowestNearby": 1.93,
+    "stackTop": 3.2883,
+    "lowestNearby": 1.0,
     "vertices": 233
    }
   ]

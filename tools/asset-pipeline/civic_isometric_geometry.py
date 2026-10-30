@@ -123,7 +123,9 @@ CIVIC_ACCESS={
     'GroceryStore':{'entrance':[1.6,1.65,0], 'balconyLayers':[2,4], 'headroom':1.09,
                     'routes':[[(1.3,2.35),(7.0,2.35),(7.0,6.5),(2.0,6.5)]],
                     'stairBays':[[6.5,0.35,7.5,2.35]]},
-    'FisheryWorks':{'entrance':[2.0,1.55,0], 'balconyLayers':[2], 'headroom':1.09,
+    # One layer per storey since 2026-10-30: galleries at layer 1, open to
+    # the sky except under the main roof's eave timbers (from 1.93).
+    'FisheryWorks':{'entrance':[2.0,1.55,0], 'balconyLayers':[1], 'headroom':.85,
                     'routes':[[(1.66,6.90),(1.66,7.80),(7.35,7.80),(7.35,2.50)],[(3.55,2.50),(7.35,2.50)]],
                     'stairBays':[[6.85,.30,7.85,2.30]]},
 }
@@ -135,7 +137,7 @@ CIVIC_TERRACES={
     'Hospital':{'bounds':[5,6,9,10], 'layer':6, 'clearArea':[5.3,7.3,8.7,9.7]},
     'Restaurant':{'bounds':[5.8,2.85,9.8,5.85], 'layer':3, 'clearArea':[7.05,3.10,9.55,5.60]},
     'GroceryStore':{'bounds':[6.48,3.25,9.68,6.15], 'layer':6, 'clearArea':[7.2,3.7,9.2,5.7]},
-    'FisheryWorks':{'bounds':[-1.25,4.00,1.40,7.10], 'layer':2, 'clearArea':[-.95,4.45,.65,6.15]},
+    'FisheryWorks':{'bounds':[-1.25,4.00,1.40,7.10], 'layer':1, 'clearArea':[-.95,4.45,.65,6.15]},
 }
 
 
@@ -247,17 +249,23 @@ def restaurant_roof_stairhead(g,terrace):
     for dx in (-.97,.97):g.box((cx+dx,cy,4.015),(.06,.80,.03),IRON)
 
 
-def terrace_access_house(g,terrace,left_facing,model):
-    """Closed stairhead joined to the upper hall, opening onto the roof deck."""
+def terrace_access_house(g,terrace,left_facing,model,*,storey=False):
+    """Closed stairhead joined to the upper hall, opening onto the roof deck.
+
+    `storey=True` (2026-10-30 compaction) builds it one layer tall: a .95
+    room, lamps beside the door at its storey, a low gable and a small rear
+    window."""
     x0,y0,x1,y1=terrace['bounds'];z=terrace['layer'];cy=(y0+y1)/2
     face=x1-.18 if left_facing else x0+.30
     part=Geometry('Terrace stairhead')
     base_spans={'front':[(-.64,.64)],'back':[],'left':[(.25,.73)],'right':[(.25,.73)]} if left_facing else None
-    framed_room(part,-.64,.15,.64,1.35,z,z+1.55,2,(0,1.0,1.0),base_spans=base_spans)
-    for dx in (-.62,.62):wall_lamp(part,dx,.17,z+1.20)
-    roof_bearing(part,-.64,.15,.64,1.35,z+1.55,z+1.62)
-    gabled_roof(part,-.78,-.10,.78,1.49,z+1.62,z+2.12,855)
-    glazing(part,0,1.41,z+.82,0.8,'back')
+    height,lamp_z,ridge,window=(.95,.50,.38,(.48,.45)) if storey else (1.55,1.20,.50,(.82,.8))
+    framed_room(part,-.64,.15,.64,1.35,z,z+height,2,(0,1.0,1.0),base_spans=base_spans,
+                wall_style='storey' if storey else 'banded')
+    for dx in (-.62,.62):wall_lamp(part,dx,.17,z+lamp_z)
+    roof_bearing(part,-.64,.15,.64,1.35,z+height,z+height+.07)
+    gabled_roof(part,-.78,-.10,.78,1.49,z+height+.07,z+height+.07+ridge,855)
+    glazing(part,0,1.41,z+window[0],window[1],'back')
     vertices=[]
     for vx,vy,vz in part.vertices:
         x,y=-vx,-vy
@@ -341,17 +349,26 @@ def facade_band(g,x0,y0,x1,y1,z,height,material,door=None):
         g.box((x+sign*.049,(y0+y1)/2,z),(.09,y1-y0,height),material)
 
 
-def framed_room(g,x0,y0,x1,y1,bottom,top,bays=3,front_door=None,infill=CIVIC_ORANGE_PANEL,*,base_spans=None,trim='full'):
-    """Opaque timber shell with visible individual cladding and bolted framing."""
+def framed_room(g,x0,y0,x1,y1,bottom,top,bays=3,front_door=None,infill=CIVIC_ORANGE_PANEL,*,base_spans=None,trim='full',wall_style='banded'):
+    """Opaque timber shell with visible individual cladding and bolted framing.
+
+    `wall_style='storey'` (opt-in, 2026-10-30 compaction) dresses a room of
+    about one layer like a storey: a base course, the infill and a forged
+    head band, instead of the single plank band the default gives a room under
+    1.5 tall."""
     # Each wall face is authored once. Material bands meet at their edges;
     # plaster is not a second skin laid over a full wooden wall.
     # The shell extends to its exact floor and ceiling. The framing is a
     # projecting physical member, not a substitute for a sealed wall edge:
     # its softened bottom/top edges previously left 2–4 cm open ribbons.
     lo,hi=bottom,top
+    if wall_style not in ('banded','storey'):raise ValueError('Unknown framed room wall style '+str(wall_style))
     bands=[(lo,hi,PLANK)] if top-bottom<=1.5 else [
         (lo,bottom+.53,CIVIC_CONCRETE if bottom==0 else PLANK),
         (bottom+.53,top-.36,infill),(top-.36,hi,CIVIC_FORGED_PANEL)]
+    if wall_style=='storey':
+        if not .8<=top-bottom<=1.1:raise ValueError('Storey framed rooms are about one layer tall')
+        bands=[(lo,bottom+.22,CIVIC_CONCRETE if bottom==0 else PLANK),(bottom+.22,top-.20,infill),(top-.20,hi,CIVIC_FORGED_PANEL)]
     for low,high,material in bands:
         for y,sign,door in ((y0,-1,front_door),(y1,1,None)):
             runs=[(x0-.06,x1+.06)]
@@ -387,11 +404,12 @@ def framed_room(g,x0,y0,x1,y1,bottom,top,bays=3,front_door=None,infill=CIVIC_ORA
             post_bottom=bottom+.22
             if y==y0 and front_door is not None and abs(xx-front_door[0])<front_door[1]/2+.13:
                 post_bottom=bottom+front_door[2]
-            if post_bottom<top-.24:timber_column(g,xx,y,post_bottom,top-.24,.20,steel_channels=False,collars=plates)
+            # One-layer storey posts are too short for two collars.
+            if post_bottom<top-.24:timber_column(g,xx,y,post_bottom,top-.24,.20,steel_channels=False,collars=plates and wall_style!='storey')
     for side,x in (('left',x0),('right',x1)):
         for a,b in base_spans[side]:beam_joint(g,(x,a,bottom+.12),(x,b,bottom+.12),.20,.20,plates=plates)
         beam_joint(g,(x,y0+.10,top-.14),(x,y1-.10,top-.14),.20,.20,plates=plates)
-        for i in range(1,bays):timber_column(g,x,y0+(y1-y0)*i/bays,bottom+.22,top-.24,.19,steel_channels=False,collars=plates)
+        for i in range(1,bays):timber_column(g,x,y0+(y1-y0)*i/bays,bottom+.22,top-.24,.19,steel_channels=False,collars=plates and wall_style!='storey')
     # The cast facade plinth supports the wall frame; do not duplicate it
     # with overlapping corner footings where adjacent rooms meet.
     # Wood grain/wear comes from the native atlas. The former tiny splinter
@@ -517,6 +535,23 @@ def balcony(g,rails,ident,x0,y0,x1,y1,z=2,edges=('front','back','left','right'),
         for dx in (-1,1):
             xx=x+dx*.40
             if x0<xx<x1:g.beam((x,y,z-.60),(xx,y,z-.14),.10,mat=WOOD)
+    endpoints={'front':((x0,y0),(x1,y0)),'back':((x0,y1),(x1,y1)),
+               'left':((x0,y0),(x0,y1)),'right':((x1,y0),(x1,y1))}
+    for side in edges:rails.run(ident+side,*endpoints[side],z)
+
+
+def balcony_storey(g,rails,ident,x0,y0,x1,y1,z=1,edges=('front','back','left','right'),support_corners=((-1,-1),(-1,1),(1,-1),(1,1))):
+    """balcony for a one-layer storey (2026-10-30 compaction): its corner
+    posts rise one layer from the floor below (balcony's are two), with the
+    knee braces lower to suit."""
+    deck(g,x0,y0,x1,y1,z-.07)
+    for sx,sy in support_corners:
+        x=x0+.12 if sx==-1 else x1-.12
+        y=y0+.12 if sy==-1 else y1-.12
+        timber_column(g,x,y,z-1,z-.16,.18)
+        for dx in (-1,1):
+            xx=x+dx*.32
+            if x0<xx<x1:g.beam((x,y,z-.45),(xx,y,z-.14),.09,mat=WOOD)
     endpoints={'front':((x0,y0),(x1,y0)),'back':((x0,y1),(x1,y1)),
                'left':((x0,y0),(x0,y1)),'right':((x1,y0),(x1,y1))}
     for side in edges:rails.run(ident+side,*endpoints[side],z)
@@ -690,6 +725,20 @@ def component_doorway(g,model,ident):
     for dx in (-.62,.62):wall_lamp(g,x+dx,y+.17,z+1.20)
 
 
+def component_doorway_storey(g,model,ident):
+    """component_doorway for a one-layer storey (2026-10-30 compaction): the
+    flanking lamps hang at the door's own storey (.36 up, was 1.20), under
+    a one-layer framed room's head beam."""
+    from building_components import DOOR_LAYOUTS,recipe
+    door=DOOR_LAYOUTS[model][0][ident]
+    x,y,z=door['position']
+    if door['outward']!=[0,-1]:raise ValueError('Front doorway lamps require a front-facing component')
+    g.include_component(recipe(model,'Door.'+ident))
+    g.doorways.append({'id':ident,'position':[x,y,z],'outward':[0,-1],
+                      'width':DOOR_OUTER_WIDTH,'internalConnection':'BuildingInterior'})
+    for dx in (-.62,.62):wall_lamp(g,x+dx,y+.17,z+.36)
+
+
 def wall_lamp(g,x,y,z,face='front'):
     nx,ny={'front':(0,-1),'back':(0,1),'left':(-1,0),'right':(1,0)}[face]
     xx,yy=x+nx*.21,y+ny*.21
@@ -808,24 +857,26 @@ def restaurant_roof_sign(g,parts):
     """Carved restaurant sign swinging from a steel gantry on the flat roof.
 
     2026-10-30 compaction: the front gable it hung from is gone. Two forged
-    posts stand on the main roof at its front edge and carry a cross beam; the
-    board hangs between them, facing the street. The gantry and the whole
-    swing stay inside its reserved roof cells (native 2 <= x < 4, y 2, z 3-4),
-    clear of the upper gallery below and of the roof terrace.
+    posts stand on the front parapet and carry a cross beam; the board hangs
+    between them over the parapet, facing the street. Gantry and swing stay in
+    the parapet's edge strip (native y 2.0..2.13, 2 <= x < 4, z 3-4), so the
+    roof cells behind stay buildable (no-clutter rule).
     """
-    x=restaurant_source((3,0,0))[0];y=restaurant_source((0,2.28,0))[1];w=1.42;z=3.47
+    x=restaurant_source((3,0,0))[0];y=restaurant_source((0,2.08,0))[1];w=1.42;z=3.52
     for xx in (x-.80,x+.80):
-        g.box((xx,y,3.0+.38),(.09,.09,.76),IRON)
-        g.box((xx,y,3.02),(.20,.20,.05),IRON)
-    g.beam((x-.86,y,3.80),(x+.86,y,3.80),.10,.10,WOOD)
+        g.box((xx,y,(3.23+3.77)/2),(.09,.09,3.77-3.23),IRON)
+        g.box((xx,y,3.255),(.10,.10,.05),IRON)
+    g.beam((x-.86,y,3.82),(x+.86,y,3.82),.10,.10,WOOD)
     for xx in (x-w*.36,x+w*.36):
-        g.box((xx,y,3.74),(.035,.035,.03),IRON)
-    m=Geometry('Restaurant.CarvedSign',(x,y,3.725))
+        g.box((xx,y,3.755),(.035,.035,.03),IRON)
+    m=Geometry('Restaurant.CarvedSign',(x,y,3.74))
     for i in range(4):m.box((x,y,z-.20+i*.13),(w,.09,.125),PLANK)
     for xx in (x-w/2,x+w/2):
-        m.box((xx,y-.02,z),(.07,.12,.56),WOOD)
-    for xx in (x-w*.36,x+w*.36):m.box((xx,y,3.69),(.03,.03,.07),IRON)
-    sign_emblem(m,x,y-.08,z,'Restaurant',w*.50)
+        # The side rails stop 1 cm under the gantry beam and stay 1 cm
+        # thinner than it, so no face meets the beam's.
+        m.box((xx,y,z),(.07,.08,.48),WOOD)
+    for xx in (x-w*.36,x+w*.36):m.box((xx,y,3.705),(.03,.03,.07),IRON)
+    sign_emblem(m,x,y-.055,z,'Restaurant',w*.50)
     parts.append((m,'SWAY',.012))
 
 
@@ -950,11 +1001,11 @@ def restaurant(g,parts):
     # Enclosed kitchen annex with a stone bake oven in its rear wall.
     grid_room(g,'Kitchen',RESTAURANT_ROOMS['Kitchen'],RESTAURANT_ORIGIN,exterior=RESTAURANT_WALLS['Kitchen'],wall_style='storey')
     kitchen_hearth(g)
-    # Both stacks stand on the flat roof and carry kitchen and hearth smoke
-    # while the kitchen works; their feet sink into the deck boards.
-    for native in ((4.72,4.62),(1.5,3.5)):
-        x,y,_=restaurant_source((*native,0))
-        chimney(g,x,y,2.95,1.30,emits='smoke')
+    # The kitchen stack rises from the roof stairhead's cap (one solid core,
+    # no-clutter rule): the main roof's cells stay buildable. It carries the
+    # kitchen and hearth smoke while the kitchen works.
+    x,y,_=restaurant_source((4.5,3.5,0))
+    chimney(g,x,y,3.95,.90,emits='smoke')
     # Forged steel plates on two exposed kitchen infill panels. The rear
     # wall's orange face is recessed, so these real projecting plates have
     # thickness and do not share its depth plane.
@@ -1095,96 +1146,93 @@ def fishery(g,parts):
     # The user's Fishery.png isometric building is a waterfront processing
     # works: dominant long roof, offset floors, nets and a visible wheel.
     # It must not reuse the three-storey civic hall and duplicate balcony ring.
+    # 2026-10-30 compaction: one layer per storey (processing floor 0-1,
+    # upper hall and working galleries at 1). The long gabled roof stays as
+    # the works' defining silhouette, lower; the lean-to awnings under the
+    # galleries, the wall service ducts and the roof cowl are gone.
     r=RailAssembly('WalkwayRail.FisheryWorks')
-    framed_room(g,1.65,3.05,6.50,7.15,0,1.90,4,base_spans={
-        'front':[(3.10,6.50)],'back':[(1.65,6.50)],'left':[(3.65,7.05)],'right':[(3.15,7.05)]})
-    framed_room(g,2.05,3.28,6.05,7.15,2,4.02,3,(3.90,1.0,1.0),infill=CIVIC_FORGED_PANEL,base_spans={
-        'front':[(2.05,6.05)],'back':[(2.05,6.05)],'left':[(3.38,4.81),(6.29,7.05)],'right':[(3.38,7.05)]})
-    component_doorway(g,'FisheryWorks','Door0')
-    framed_room(g,1.30,1.72,3.0,3.55,0,1.80,2,(2.0,1.0,1.0))
-    component_doorway(g,'FisheryWorks','Door1')
-    # Longer main roof, one low monitor and an offset lower entrance gable.
-    # The reference's broad roof planes replace the hospital-like dormer crown.
-    roof_bearing(g,2.05,3.28,6.05,7.15,4.02,4.15)
-    gabled_roof(g,1.78,3.03,6.32,7.43,4.15,5.35,310)
-    roof_bearing(g,1.30,1.72,3.0,3.55,1.80,2.05)
-    gabled_roof(g,1.12,1.50,3.21,3.65,2.05,2.78,311)
-    # Low riveted ventilation cowl follows the reference's uninterrupted ridge.
-    # It is equipment on the roof, not another civic pavilion/storey.
-    g.box((4.05,5.63,5.39),(.62,1.12,.22),CIVIC_FORGED_PANEL)
-    g.box((4.05,5.63,5.52),(.77,1.24,.08),ROOF)
-    for x in (3.72,4.38):
-        for y in (5.23,5.46,5.69,5.92):g.box((x,y,5.40),(.035,.13,.08),IRON)
-    glazing(g,4.05,2.985,4.65,1.1,style='diamond')
-    # Lower lean-to roofs keep the warehouse wider than the upper processing
-    # hall. Native forged metal contrasts with the blue main roof and timber.
-    awning(g,1.20,3.65,1.98,7.15,1.66,1.90)
-    balcony(g,r,'FishLeft',.40,3.55,1.95,8.40,edges=('front',),support_corners=((-1,-1),(-1,1)))
+    framed_room(g,1.65,3.05,6.50,7.15,0,.95,4,base_spans={
+        'front':[(3.10,6.50)],'back':[(1.65,6.50)],'left':[(3.65,7.05)],'right':[(3.15,7.05)]},wall_style='storey')
+    framed_room(g,2.05,3.28,6.05,7.15,1,2.02,3,(3.90,1.0,1.0),infill=CIVIC_FORGED_PANEL,base_spans={
+        'front':[(2.05,6.05)],'back':[(2.05,6.05)],'left':[(3.38,4.81),(6.29,7.05)],'right':[(3.38,7.05)]},wall_style='storey')
+    component_doorway_storey(g,'FisheryWorks','Door0')
+    framed_room(g,1.30,1.72,3.0,3.55,0,.85,2,(2.0,1.0,1.0),wall_style='storey')
+    component_doorway_storey(g,'FisheryWorks','Door1')
+    # Longer main roof and an offset lower entrance gable.
+    roof_bearing(g,2.05,3.28,6.05,7.15,2.02,2.12)
+    gabled_roof(g,1.78,3.03,6.32,7.43,2.12,3.12,310)
+    roof_bearing(g,1.30,1.72,3.0,3.55,.85,.98)
+    gabled_roof(g,1.12,1.50,3.21,3.65,.98,1.43,311)
+    glazing(g,4.05,2.985,2.55,.60,style='diamond')
+    balcony_storey(g,r,'FishLeft',.40,3.55,1.95,8.40,edges=('front',),support_corners=((-1,-1),(-1,1)))
     # The warehouse roof and left gallery are one continuous working deck.
     # Rail only their outside boundary; never fence across their shared floor.
-    r.run('FishLeftSouth',(.40,3.55),(.40,4.00),2)
-    r.run('FishLeftNorth',(.40,7.10),(.40,8.40),2)
-    balcony(g,r,'FishRight',6.15,2.05,7.85,8.40,edges=('front','right'),support_corners=((1,-1),))
-    balcony(g,r,'FishRear',1.95,7.20,6.15,8.40,edges=(),support_corners=((-1,1),(1,1)))
-    r.run('FishBack',(.40,8.40),(7.85,8.40),2)
-    balcony(g,r,'FishFront',3.15,2.05,6.15,3.28,2,edges=('front',),support_corners=((-1,-1),(1,-1)))
-    for x in (2.62,5.32):glazing(g,x,3.22,3.10,1.25,style='factory')
+    r.run('FishLeftSouth',(.40,3.55),(.40,4.00),1)
+    r.run('FishLeftNorth',(.40,7.10),(.40,8.40),1)
+    balcony_storey(g,r,'FishRight',6.15,2.05,7.85,8.40,edges=('front','right'),support_corners=((1,-1),))
+    balcony_storey(g,r,'FishRear',1.95,7.20,6.15,8.40,edges=(),support_corners=((-1,1),(1,1)))
+    r.run('FishBack',(.40,8.40),(7.85,8.40),1)
+    balcony_storey(g,r,'FishFront',3.15,2.05,6.15,3.28,1,edges=('front',),support_corners=((-1,-1),(1,-1)))
+    for x in (2.62,5.32):glazing(g,x,3.22,1.48,.50,style='factory')
     for y in (3.85,5.15,6.46):
-        glazing(g,6.11,y,3.10,1.25,'right','factory')
-        glazing(g,1.59,y,1.15,1.25,'left','factory')
-    for x in (2.7,4.05,5.4):glazing(g,x,7.21,3.10,1.35,'back','lancet')
-    awning(g,3.13,1.54,6.40,2.90,1.73,1.87)
+        glazing(g,6.11,y,1.48,.50,'right','factory')
+        glazing(g,1.59,y,.48,.50,'left','factory')
+    for x in (2.7,4.05,5.4):glazing(g,x,7.21,1.48,.50,'back','lancet')
     # 2026-10-22 (user): no forced decoration beyond the walls. The outdoor
     # fish tables, fish bins and drying hooks in front are gone; the wall
     # keeps its washdown splashbacks and drains.
     for x in (3.80,5.35):
-        g.box((x,2.91,.93),(1.22,.06,.61),CIVIC_FORGED_PANEL)
-        round_pipe(g,[(x-.44,2.70,.73),(x-.44,2.70,1.02),(x-.25,2.70,1.02)],.027)
-    hanging_board(g,parts,'FisheryWorks',.76,1.42,2.70,1.13)
-    for x in (1.75,3.1,4.5,6.3):wall_lamp(g,x,3.0,1.38)
-    for x in (2.18,5.94):wall_lamp(g,x,3.23,3.60)
-    for y in (3.3,5.1,7.5):deck_lamp(g,7.76,y)
-    for x in (2.65,4.18,5.55):fishing_net(g,x,7.27,3.58,1.0,1.10)
+        g.box((x,2.91,.47),(1.22,.06,.40),CIVIC_FORGED_PANEL)
+        round_pipe(g,[(x-.44,2.70,.34),(x-.44,2.70,.58),(x-.25,2.70,.58)],.027)
+    hanging_board_storey(g,parts,'FisheryWorks',.76,1.42,.85,1.13)
+    for x in (1.75,3.1,4.5,6.3):wall_lamp(g,x,3.0,.46)
+    # The left lamp went: the entrance roof's ridge stands in front of it.
+    wall_lamp(g,5.94,3.23,1.48)
+    for y in (3.3,5.1,7.5):deck_lamp(g,7.76,y,floor=1)
+    for x in (2.65,4.18,5.55):fishing_net(g,x,7.27,1.90,1.0,.78)
     # The net drying frames on the warehouse roof terrace are gone too: the
     # terrace is the player's (2026-10-22).
     # Water wheel, header and low basins form one visibly connected water route.
     prop(g,'FisheryNativeWheel','CompactWaterWheel.IronTeeth',(8.15,6.50,.03),1,90)
     basin(g,8.10,3.25,9.55,6.58);basin(g,8.10,1.30,9.55,3.10)
-    basin(g,8.28,5.15,9.02,6.60,2.63)
+    # The header basin sits just above the native wheel (1.69 tall).
+    basin(g,8.28,5.15,9.02,6.60,1.72)
     flow=Geometry('FisheryCascade')
-    flow.add([(8.40,5.15,3.07),(8.90,5.15,3.07),(8.38,4.72,2.75),(8.92,4.72,2.75),
+    flow.add([(8.40,5.15,2.16),(8.90,5.15,2.16),(8.38,4.72,1.90),(8.92,4.72,1.90),
               (8.36,3.75,.64),(8.94,3.75,.64)],[(0,1,3,2),(2,3,5,4)],WATER)
     parts.append((flow,'STATIC',0))
-    round_pipe(g,[(8.65,6.35,3.07),(8.65,6.70,3.07),(8.65,6.70,1.0),(6.55,6.70,1.0)],.10)
-    # Small crane on the rear balcony carries a modeled rope net, not a beaver.
-    timber_column(g,7.65,8.15,0,5.25,.24)
-    beam_joint(g,(7.65,8.15,5.20),(9.15,8.15,5.20),.20,.23)
-    g.beam((7.65,8.15,4.30),(8.64,8.15,5.20),.13,mat=WOOD)
-    g.cylinder((7.65,8.15,3.30),.24,.44,IRON,'Y',20)
-    g.ring((7.65,7.90,3.30),.28,.045,.06,BRASS,'Y',20)
-    load=Geometry('FisheryWorks.CraneNet',(9.10,8.15,5.12))
-    load.beam((9.10,8.15,5.12),(9.10,8.15,3.76),.02,mat=CLOTH)
+    round_pipe(g,[(8.65,6.35,2.16),(8.65,6.70,2.16),(8.65,6.70,.55),(6.55,6.70,.55)],.10)
+    # Small crane on the rear gallery carries a modeled rope net, not a beaver.
+    timber_column(g,7.65,8.15,0,2.90,.24)
+    beam_joint(g,(7.65,8.15,2.85),(9.15,8.15,2.85),.20,.23)
+    g.beam((7.65,8.15,1.95),(8.64,8.15,2.85),.13,mat=WOOD)
+    g.cylinder((7.65,8.15,1.35),.24,.44,IRON,'Y',20)
+    g.ring((7.65,7.90,1.35),.28,.045,.06,BRASS,'Y',20)
+    load=Geometry('FisheryWorks.CraneNet',(9.10,8.15,2.77))
+    load.beam((9.10,8.15,2.77),(9.10,8.15,1.41),.02,mat=CLOTH)
     for i in range(8):
         a=i*math.pi/4
-        load.beam((9.10,8.15,3.83),(9.10+math.cos(a)*.27,8.15+math.sin(a)*.27,3.42),.016,mat=CLOTH)
-        load.beam((9.10+math.cos(a)*.27,8.15+math.sin(a)*.27,3.42),(9.10,8.15,3.27),.016,mat=CLOTH)
-    for z,rr in ((3.35,.16),(3.45,.26),(3.56,.20)):load.ring((9.10,8.15,z),rr,.010,.015,CLOTH,'Z',16)
-    for i in range(6):load.rock((8.96+(i%3)*.13,8.09+(i//3)*.13,3.47),(.16,.16,.13),SAND,500+i)
+        load.beam((9.10,8.15,1.48),(9.10+math.cos(a)*.27,8.15+math.sin(a)*.27,1.07),.016,mat=CLOTH)
+        load.beam((9.10+math.cos(a)*.27,8.15+math.sin(a)*.27,1.07),(9.10,8.15,.92),.016,mat=CLOTH)
+    for z,rr in ((1.00,.16),(1.10,.26),(1.21,.20)):load.ring((9.10,8.15,z),rr,.010,.015,CLOTH,'Z',16)
+    for i in range(6):load.rock((8.96+(i%3)*.13,8.09+(i//3)*.13,1.12),(.16,.16,.13),SAND,500+i)
     parts.append((load,'SWAY',.025))
-    # Fish-oil rendering vents steam, not combustion smoke (no smog).
-    chimney(g,5.72,6.65,4.20,1.92,emits='steam')
+    # Fish-oil rendering vents steam, not combustion smoke (no smog). The
+    # stack's foot sinks into the main roof (2.38 at x 5.72).
+    chimney(g,5.72,6.65,2.25,1.05,emits='steam')
     # The two rear water tanks are the Timber Pipes inlet (aquaculture pipe
     # port), so they stay; the loose barrels and the supply pile are gone.
-    for i,x in enumerate((2.3,3.0)):water_barrel(g,'FisheryWaterBarrel'+str(i),(x,8.55,0),.62)
-    # A single-storey offset warehouse carries the working roof at layer 2.
+    # 2026-10-30 (no-clutter rule): they stand under the rear gallery now,
+    # not on their own row behind it.
+    for i,x in enumerate((2.3,3.0)):water_barrel(g,'FisheryWaterBarrel'+str(i),(x,7.80,0),.62)
+    # A single-storey offset warehouse carries the working roof at layer 1.
     # The open middle remains available for player platforms and decorations.
     t=CIVIC_TERRACES['FisheryWorks'];x0,y0,x1,y1=t['bounds']
-    framed_room(g,x0+.12,y0+.12,x1-.12,y1-.12,0,1.88,3)
-    g.box(((x0+.40)/2,(y0+y1)/2,1.85),(.40-x0-.06,y1-y0-.06,.02),IRON)
-    deck(g,x0,y0,.40,y1,1.93)
-    for side,a,b in [('Front',(x0,y0),(.40,y0)),('Rear',(x0,y1),(.40,y1)),('Left',(x0,y0),(x0,y1))]:r.run('RoofTerrace'+side,a,b,2)
-    terrace_access_house(g,t,left_facing=True,model='FisheryWorks')
+    framed_room(g,x0+.12,y0+.12,x1-.12,y1-.12,0,.90,3,wall_style='storey')
+    g.box(((x0+.40)/2,(y0+y1)/2,.85),(.40-x0-.06,y1-y0-.06,.02),IRON)
+    deck(g,x0,y0,.40,y1,.93)
+    for side,a,b in [('Front',(x0,y0),(.40,y0)),('Rear',(x0,y1),(.40,y1)),('Left',(x0,y0),(x0,y1))]:r.run('RoofTerrace'+side,a,b,1)
+    terrace_access_house(g,t,left_facing=True,model='FisheryWorks',storey=True)
     for x in (x0+.55,x0+1.55):
-        glazing(g,x,y0+.06,1.1,1)
-    civic_service_details(g,2.05,3.05,6.50,7.15)
+        glazing(g,x,y0+.06,.48,.50)
     return r

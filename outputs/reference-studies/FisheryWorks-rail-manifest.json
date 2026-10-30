@@ -10,12 +10,12 @@
           "start": [
             0.4000000059604645,
             3.549999952316284,
-            2
+            1
           ],
           "end": [
             0.9166667461395264,
             3.549999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post000",
           "endPost": "WalkwayRail.FisheryWorks.Post001"
@@ -25,12 +25,12 @@
           "start": [
             0.9166667461395264,
             3.549999952316284,
-            2
+            1
           ],
           "end": [
             1.433333396911621,
             3.549999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post001",
           "endPost": "WalkwayRail.FisheryWorks.Post002"
@@ -40,12 +40,12 @@
           "start": [
             1.433333396911621,
             3.549999952316284,
-            2
+            1
           ],
           "end": [
             1.9500000476837158,
             3.549999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post002",
           "endPost": "WalkwayRail.FisheryWorks.Post003"
@@ -60,12 +60,12 @@
           "start": [
             0.4000000059604645,
             3.549999952316284,
-            2
+            1
           ],
           "end": [
             0.4000000059604645,
             4.0,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post000",
           "endPost": "WalkwayRail.FisheryWorks.Post004"
@@ -80,12 +80,12 @@
           "start": [
             0.4000000059604645,
             7.099999904632568,
-            2
+            1
           ],
           "end": [
             0.4000000059604645,
             7.5333333015441895,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post005",
           "endPost": "WalkwayRail.FisheryWorks.Post006"
@@ -95,12 +95,12 @@
           "start": [
             0.4000000059604645,
             7.5333333015441895,
-            2
+            1
           ],
           "end": [
             0.4000000059604645,
             7.966666221618652,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post006",
           "endPost": "WalkwayRail.FisheryWorks.Post007"
@@ -110,12 +110,12 @@
           "start": [
             0.4000000059604645,
             7.966666221618652,
-            2
+            1
           ],
           "end": [
             0.4000000059604645,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post007",
           "endPost": "WalkwayRail.FisheryWorks.Post008"
@@ -130,12 +130,12 @@
           "start": [
             6.150000095367432,
             2.049999952316284,
-            2
+            1
           ],
           "end": [
             6.7166666984558105,
             2.049999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post009",
           "endPost": "WalkwayRail.FisheryWorks.Post010"
@@ -145,12 +145,12 @@
           "start": [
             6.7166666984558105,
             2.049999952316284,
-            2
+            1
           ],
           "end": [
             7.2833333015441895,
             2.049999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post010",
           "endPost": "WalkwayRail.FisheryWorks.Post011"
@@ -160,12 +160,12 @@
           "start": [
             7.2833333015441895,
             2.049999952316284,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             2.049999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post011",
           "endPost": "WalkwayRail.FisheryWorks.Post012"
@@ -180,12 +180,12 @@
           "start": [
             7.849999904632568,
             2.049999952316284,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             2.627272605895996,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post012",
           "endPost": "WalkwayRail.FisheryWorks.Post013"
@@ -195,12 +195,12 @@
           "start": [
             7.849999904632568,
             2.627272605895996,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             3.204545497894287,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post013",
           "endPost": "WalkwayRail.FisheryWorks.Post014"
@@ -210,12 +210,12 @@
           "start": [
             7.849999904632568,
             3.204545497894287,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             3.781818151473999,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post014",
           "endPost": "WalkwayRail.FisheryWorks.Post015"
@@ -225,12 +225,12 @@
           "start": [
             7.849999904632568,
             3.781818151473999,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             4.359090805053711,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post015",
           "endPost": "WalkwayRail.FisheryWorks.Post016"
@@ -240,12 +240,12 @@
           "start": [
             7.849999904632568,
             4.359090805053711,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             4.936363220214844,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post016",
           "endPost": "WalkwayRail.FisheryWorks.Post017"
@@ -255,12 +255,12 @@
           "start": [
             7.849999904632568,
             4.936363220214844,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             5.513636589050293,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post017",
           "endPost": "WalkwayRail.FisheryWorks.Post018"
@@ -270,12 +270,12 @@
           "start": [
             7.849999904632568,
             5.513636589050293,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             6.090909004211426,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post018",
           "endPost": "WalkwayRail.FisheryWorks.Post019"
@@ -285,12 +285,12 @@
           "start": [
             7.849999904632568,
             6.090909004211426,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             6.668181419372559,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post019",
           "endPost": "WalkwayRail.FisheryWorks.Post020"
@@ -300,12 +300,12 @@
           "start": [
             7.849999904632568,
             6.668181419372559,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             7.245453834533691,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post020",
           "endPost": "WalkwayRail.FisheryWorks.Post021"
@@ -315,12 +315,12 @@
           "start": [
             7.849999904632568,
             7.245453834533691,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             7.822726249694824,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post021",
           "endPost": "WalkwayRail.FisheryWorks.Post022"
@@ -330,12 +330,12 @@
           "start": [
             7.849999904632568,
             7.822726249694824,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post022",
           "endPost": "WalkwayRail.FisheryWorks.Post023"
@@ -350,12 +350,12 @@
           "start": [
             0.4000000059604645,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             0.9730769395828247,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post008",
           "endPost": "WalkwayRail.FisheryWorks.Post024"
@@ -365,12 +365,12 @@
           "start": [
             0.9730769395828247,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             1.5461537837982178,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post024",
           "endPost": "WalkwayRail.FisheryWorks.Post025"
@@ -380,12 +380,12 @@
           "start": [
             1.5461537837982178,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             2.1192307472229004,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post025",
           "endPost": "WalkwayRail.FisheryWorks.Post026"
@@ -395,12 +395,12 @@
           "start": [
             2.1192307472229004,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             2.692307710647583,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post026",
           "endPost": "WalkwayRail.FisheryWorks.Post027"
@@ -410,12 +410,12 @@
           "start": [
             2.692307710647583,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             3.2653849124908447,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post027",
           "endPost": "WalkwayRail.FisheryWorks.Post028"
@@ -425,12 +425,12 @@
           "start": [
             3.2653849124908447,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             3.8384616374969482,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post028",
           "endPost": "WalkwayRail.FisheryWorks.Post029"
@@ -440,12 +440,12 @@
           "start": [
             3.8384616374969482,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             4.411538600921631,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post029",
           "endPost": "WalkwayRail.FisheryWorks.Post030"
@@ -455,12 +455,12 @@
           "start": [
             4.411538600921631,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             4.984615325927734,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post030",
           "endPost": "WalkwayRail.FisheryWorks.Post031"
@@ -470,12 +470,12 @@
           "start": [
             4.984615325927734,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             5.557692050933838,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post031",
           "endPost": "WalkwayRail.FisheryWorks.Post032"
@@ -485,12 +485,12 @@
           "start": [
             5.557692050933838,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             6.130769729614258,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post032",
           "endPost": "WalkwayRail.FisheryWorks.Post033"
@@ -500,12 +500,12 @@
           "start": [
             6.130769729614258,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             6.703846454620361,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post033",
           "endPost": "WalkwayRail.FisheryWorks.Post034"
@@ -515,12 +515,12 @@
           "start": [
             6.703846454620361,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             7.276923179626465,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post034",
           "endPost": "WalkwayRail.FisheryWorks.Post035"
@@ -530,12 +530,12 @@
           "start": [
             7.276923179626465,
             8.399999618530273,
-            2
+            1
           ],
           "end": [
             7.849999904632568,
             8.399999618530273,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post035",
           "endPost": "WalkwayRail.FisheryWorks.Post023"
@@ -550,12 +550,12 @@
           "start": [
             3.1500000953674316,
             2.049999952316284,
-            2
+            1
           ],
           "end": [
             3.6500000953674316,
             2.049999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post036",
           "endPost": "WalkwayRail.FisheryWorks.Post037"
@@ -565,12 +565,12 @@
           "start": [
             3.6500000953674316,
             2.049999952316284,
-            2
+            1
           ],
           "end": [
             4.150000095367432,
             2.049999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post037",
           "endPost": "WalkwayRail.FisheryWorks.Post038"
@@ -580,12 +580,12 @@
           "start": [
             4.150000095367432,
             2.049999952316284,
-            2
+            1
           ],
           "end": [
             4.650000095367432,
             2.049999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post038",
           "endPost": "WalkwayRail.FisheryWorks.Post039"
@@ -595,12 +595,12 @@
           "start": [
             4.650000095367432,
             2.049999952316284,
-            2
+            1
           ],
           "end": [
             5.150000095367432,
             2.049999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post039",
           "endPost": "WalkwayRail.FisheryWorks.Post040"
@@ -610,12 +610,12 @@
           "start": [
             5.150000095367432,
             2.049999952316284,
-            2
+            1
           ],
           "end": [
             5.650000095367432,
             2.049999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post040",
           "endPost": "WalkwayRail.FisheryWorks.Post041"
@@ -625,12 +625,12 @@
           "start": [
             5.650000095367432,
             2.049999952316284,
-            2
+            1
           ],
           "end": [
             6.150000095367432,
             2.049999952316284,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post041",
           "endPost": "WalkwayRail.FisheryWorks.Post009"
@@ -645,12 +645,12 @@
           "start": [
             -1.25,
             4.0,
-            2
+            1
           ],
           "end": [
             -0.699999988079071,
             4.0,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post042",
           "endPost": "WalkwayRail.FisheryWorks.Post043"
@@ -660,12 +660,12 @@
           "start": [
             -0.699999988079071,
             4.0,
-            2
+            1
           ],
           "end": [
             -0.1499999761581421,
             4.0,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post043",
           "endPost": "WalkwayRail.FisheryWorks.Post044"
@@ -675,12 +675,12 @@
           "start": [
             -0.1499999761581421,
             4.0,
-            2
+            1
           ],
           "end": [
             0.4000000059604645,
             4.0,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post044",
           "endPost": "WalkwayRail.FisheryWorks.Post004"
@@ -695,12 +695,12 @@
           "start": [
             -1.25,
             7.099999904632568,
-            2
+            1
           ],
           "end": [
             -0.699999988079071,
             7.099999904632568,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post045",
           "endPost": "WalkwayRail.FisheryWorks.Post046"
@@ -710,12 +710,12 @@
           "start": [
             -0.699999988079071,
             7.099999904632568,
-            2
+            1
           ],
           "end": [
             -0.1499999761581421,
             7.099999904632568,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post046",
           "endPost": "WalkwayRail.FisheryWorks.Post047"
@@ -725,12 +725,12 @@
           "start": [
             -0.1499999761581421,
             7.099999904632568,
-            2
+            1
           ],
           "end": [
             0.4000000059604645,
             7.099999904632568,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post047",
           "endPost": "WalkwayRail.FisheryWorks.Post005"
@@ -745,12 +745,12 @@
           "start": [
             -1.25,
             4.0,
-            2
+            1
           ],
           "end": [
             -1.25,
             4.516666412353516,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post042",
           "endPost": "WalkwayRail.FisheryWorks.Post048"
@@ -760,12 +760,12 @@
           "start": [
             -1.25,
             4.516666412353516,
-            2
+            1
           ],
           "end": [
             -1.25,
             5.0333333015441895,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post048",
           "endPost": "WalkwayRail.FisheryWorks.Post049"
@@ -775,12 +775,12 @@
           "start": [
             -1.25,
             5.0333333015441895,
-            2
+            1
           ],
           "end": [
             -1.25,
             5.550000190734863,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post049",
           "endPost": "WalkwayRail.FisheryWorks.Post050"
@@ -790,12 +790,12 @@
           "start": [
             -1.25,
             5.550000190734863,
-            2
+            1
           ],
           "end": [
             -1.25,
             6.066666603088379,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post050",
           "endPost": "WalkwayRail.FisheryWorks.Post051"
@@ -805,12 +805,12 @@
           "start": [
             -1.25,
             6.066666603088379,
-            2
+            1
           ],
           "end": [
             -1.25,
             6.583333492279053,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post051",
           "endPost": "WalkwayRail.FisheryWorks.Post052"
@@ -820,12 +820,12 @@
           "start": [
             -1.25,
             6.583333492279053,
-            2
+            1
           ],
           "end": [
             -1.25,
             7.099999904632568,
-            2
+            1
           ],
           "startPost": "WalkwayRail.FisheryWorks.Post052",
           "endPost": "WalkwayRail.FisheryWorks.Post045"

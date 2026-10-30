@@ -68,6 +68,9 @@ REVIEWS = {
             'Restaurant': ('Restaurant', 'Restaurant-before-after.png'),
             'Hospital': ('Hospital', 'Hospital-before-after.png'),
             'GroceryStore': ('GroceryMarket', 'GroceryStore-before-after.png'),
+            'FishHatchery': ('FishHatchery', 'FishHatchery-before-after.png'),
+            'FisheryWorks': ('FisheryWorks', 'FisheryWorks-before-after.png'),
+            'MaterialsLaboratory': ('MaterialsLaboratory', 'MaterialsLaboratory-before-after.png'),
         },
         'extra': (),
         'scope': 'Before | after | difference sheets (render_budget_views.py with the pre-compaction cameras, '

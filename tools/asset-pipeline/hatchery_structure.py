@@ -5,12 +5,19 @@ the pens (LeftDock x=0, RearDock y=7, RightDock x=6..7 at y=4..7) and the
 walkway column beside the headhouse are gone: 8x8 -> 7x7. Grid x moved by -1
 (SOURCE_ORIGIN x 1.2 -> 0.2), so every kept part keeps its source position.
 The front walkway (row 3) and the centre dock between the pens still reach
-the pens from the headhouse side."""
+the pens from the headhouse side.
+
+2026-10-30 compaction (user: "currently we have two layers between floors,
+we should reduce it to one"; flat roofs): the headhouse is one layer tall
+(native z 1..2) under a flat cast roof, and the pump canopy is one layer
+under a flat roof too. The gabled roofs and the roof vent are gone. The 7x7
+footprint, origin, BaseZ, door, pens, decks and rails are unchanged; the
+height is 5 -> 3."""
 ORIGIN=[.2,.75,0]
 BASE_Z=1
 SOURCE_ORIGIN=[.2,.75,1]
-SIZE=[7,7,5]
-ROOMS={'Headhouse':[0,1,1,4,3,3]}
+SIZE=[7,7,3]
+ROOMS={'Headhouse':[0,1,1,4,3,2]}
 PLATFORMS={
     'MainFrontApron':[0,0,0,5,1,1], 'MainApron':[0,1,0,5,4,1],
     'CentreDock':[2,4,0,3,7,1],
@@ -23,9 +30,8 @@ DOORS={'Door0':{'position':[1.5,1,1],'outward':[0,-1],'width':1.0}}
 PENS=[[0,4,0,2,7,1],[3,4,0,5,7,1]]
 RESERVATIONS=[
     *PENS,
-    [0,0,3,5,4,4], [1,1,4,3,3,5],
-    [4,1,1,7,3,3], [4,1,3,7,4,4],
-    [4,3,1,5,4,3], [6,3,1,7,4,3], # Retained rear canopy posts and pipe bend.
+    [4,1,1,7,3,2],  # one-layer pump canopy and its machinery
+    [4,3,1,5,4,2], [6,3,1,7,4,2], # Retained rear canopy posts and pipe bend.
     # Bank-row header tank (the reservoir stock). The barrels and sacks that
     # reserved (3..4,0) and (7,0) went with the forced decoration (2026-10-22).
     [5,0,1,6,1,2],

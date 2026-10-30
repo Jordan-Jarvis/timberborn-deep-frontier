@@ -45,23 +45,24 @@ export async function applyFishery(value) {
   // 2026-10-22: the footprint ends at the walls (12x10 -> 11x8, native y 2
   // less). The front basin and the rear stock are gone; the two rear water
   // tanks stay as the pipe inlet.
-  region([2,1,0],[8,6,0],'Corners');
-  region([2,1,1],[8,6,1],'Top, Corners');
-  region([2,1,0],[7,5,1],'All'); // Lower processing hall.
-  region([3,1,2],[7,5,3],'All'); // Set-back upper hall.
-  region([2,0,0],[4,2,1],'All'); // Enclosed entrance vestibule.
-  region([2,0,2],[4,1,2],'All'); // Low entrance roof.
-  region([2,1,4],[7,6,4],'All');
-  region([4,1,5],[5,6,5],'All'); // Main roof ridge.
-  region([6,5,5],[7,5,6],'All'); // Chimney.
-  region([0,2,0],[2,5,1],'All'); // One-storey warehouse and roof slab.
-  region([2,3,2],[3,4,3],'All'); // Terrace door house.
-  region([2,3,4],[3,4,4],'All');
+  // 2026-10-30 compaction: one layer per storey (galleries and the upper
+  // hall at layer 1, the long roof lower, 11x8x7 -> 11x8x4); the rear water
+  // tanks stand under the rear gallery (no-clutter rule).
+  region([2,1,0],[8,6,0],'Top, Corners'); // Gallery slabs on their corner posts.
+  region([2,1,0],[7,5,0],'All'); // Lower processing hall.
+  region([3,1,1],[7,5,1],'All'); // Set-back upper hall.
+  region([2,0,0],[4,2,0],'All'); // Enclosed entrance vestibule.
+  region([2,0,1],[4,1,1],'All'); // Low entrance roof.
+  region([2,1,2],[7,6,2],'All'); // Main roof.
+  region([4,1,3],[5,6,3],'All'); // Main roof ridge.
+  region([6,5,3],[7,5,3],'All'); // Chimney.
+  region([0,2,0],[2,5,0],'All'); // One-storey warehouse and roof slab.
+  region([2,3,1],[3,4,2],'All'); // Terrace door house and its roof.
   region([9,0,0],[10,5,0],'All'); // Low water basins.
-  region([9,2,1],[10,5,3],'All'); // Native wheel and upper header.
-  region([3,7,0],[4,7,0],'All'); // Rear water tanks: the pipe inlet.
-  region([8,6,0],[8,6,4],'Corners'); // Hoist mast outside the walking lane.
-  region([8,6,5],[10,6,5],'All');
+  region([9,2,1],[10,5,2],'All'); // Native wheel and upper header.
+  region([3,6,0],[4,6,0],'All'); // Rear water tanks under the gallery: the pipe inlet.
+  region([8,6,0],[8,6,1],'Corners'); // Hoist mast outside the walking lane.
+  region([8,6,2],[10,6,2],'All');
   const interior=new Set(d.interiorCells.map(c=>c.join(',')));
   for(const n of d.nodes) {
     if(interior.has(n.cell.join(',')))continue;

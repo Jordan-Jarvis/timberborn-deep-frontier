@@ -3,6 +3,13 @@
 Stepped sawtooth testing halls, enclosed records wing, cast foundations,
 instrument tower and a working screw press. Artwork sets the envelope; no
 top-view or printed footprint is consulted. The public terrace is layer two.
+
+2026-10-30 compaction (user: "currently we have two layers between floors,
+we should reduce it to one"; flat roofs): the cast bases are one layer, the
+public terrace is layer one, the records office is one layer under a flat
+cast roof, and the sawtooth testing hall, instrument tower and press are
+lower. The sawtooth sheds stay: they are the laboratory's silhouette.
+10x8x9 -> 10x8x5.
 """
 import math
 import random
@@ -58,10 +65,13 @@ def concrete_course(g,x0,y0,x1,y1,top,door=None,cap=True,*,left_wall=True,left_s
     # The cap is flush with the outer wall faces, so a cast shell on tile
     # edges ends exactly on them.
     if cap:g.box(((x0+x1)/2,(y0+y1)/2,top-.08),(x1-x0+.15,y1-y0+.15,.16),CIVIC_CONCRETE)
+    # One strap per corner on a one-layer course (2026-10-30); the two of a
+    # two-layer course would overlap there.
+    straps=((.45,.46),(top-.4,.46)) if top>=1.5 else ((top/2,min(.46,top-.30)),)
     for x in ((x0,x1) if left_straps else (x1,)):
         for y in (y0,y1):
-            for z in (.45,top-.4):
-                g.box((x,y,z),(.24,.24,.46),IRON)
+            for z,h in straps:
+                g.box((x,y,z),(.24,.24,h),IRON)
 
 
 def girder(g,a,b,width=.22,*,plate_stations=(.12,.88)):
@@ -122,20 +132,24 @@ def slope_facade(g,x0,x1,y,bottom,left,right,seed,tall_windows,outward=-1):
     girder(g,(x0,y-.12,left-.08),(x1,y-.12,right-.08))
     for i in range(5):
         x=x0+(x1-x0)*i/4
-        girder(g,(x,y-.12,bottom),(x,y-.12,z(x)))
+        # Lower facades (2026-10-30): the upper plate stays clear of the
+        # roof's edge girder, and a short stile has none.
+        girder(g,(x,y-.12,bottom),(x,y-.12,z(x)),plate_stations=(.12,.70) if z(x)-bottom>=.8 else ())
         if i==4:continue
         cx=x+(x1-x0)/8;head=z(cx)-.32
         if tall_windows:
             # Testing-hall bays: full-height steel curtain glazing with big
             # native panes, so specimens can be inspected in daylight.
-            low=bottom+.65
-            glass_curtain(g,cx,y-.055,low,head,(x1-x0)/4-.30,'front',cols=2,rows=max(2,round((head-low)/.85)))
+            low=bottom+.35
+            glass_curtain(g,cx,y-.055,low,head,(x1-x0)/4-.30,'front',cols=2,rows=max(1,round((head-low)/.85)))
         else:
-            # North-light ribbon on the sawtooth step.
-            atlas_window(g,cx,y-.055,head-.2,.84,'front','ribbon')
-            g.box((cx,y-.09,bottom+.33),((x1-x0)/4-.24,.06,.27),CIVIC_FORGED_PANEL)
+            # North-light ribbon on the sawtooth step, sized to the lower
+            # step facade (2026-10-30).
+            width=min(.84,3*(z(cx)-bottom-.22))
+            atlas_window(g,cx,y-.055,bottom+.10+width/6,width,'front','ribbon')
     for a,b in ((x0,x0+(x1-x0)/4),(x1-(x1-x0)/4,x1)):
-        girder(g,(a,y-.27,bottom+.24),(b,y-.27,z(b)-.16),.15)
+        # A low step facade (2026-10-30) has no room for the diagonal brace.
+        if z(b)-.16-(bottom+.24)>=.40:girder(g,(a,y-.27,bottom+.24),(b,y-.27,z(b)-.16),.15)
 
 
 def stack(g,x,y,bottom,height,*,emits):
@@ -248,12 +262,14 @@ HALL_FRONT,HALL_STEP,HALL_REAR=1.32,4.30,7.30
 ROOF_X0,ROOF_X1=3.04,7.98
 
 
+# One-layer cast base (2026-10-30): the sheds start a layer lower and fall
+# less steeply (were 6.62..4.75 and 7.58..5.71).
 def front_roof_z(x):
-    return 6.62+(4.75-6.62)*(x-2.98)/4.86
+    return 3.10+(2.35-3.10)*(x-2.98)/4.86
 
 
 def rear_roof_z(x):
-    return 7.58+(5.71-7.58)*(x-2.98)/4.86
+    return 3.60+(2.85-3.60)*(x-2.98)/4.86
 
 
 def service_bay(g):
@@ -277,10 +293,10 @@ def service_bay(g):
     g.box((wall+.06,3.5,.17),(.12,.62,.035),IRON)
     # Power Lines connection: bracket arm with three insulators on the upper
     # hall wall (PowerLineSpec point at the top insulator).
-    g.box((upper+.03,3.5,2.35),(.06,.30,.30),IRON)
-    g.beam((upper+.05,3.5,2.35),(upper+.30,3.5,2.35),.07,mat=IRON)
-    for dz in (0,.09,.18):g.cylinder((upper+.30,3.5,2.40+dz),.045,.06,BRASS,'Z',8)
-    g.cylinder((upper+.30,3.5,2.66),.02,.06,IRON,'Z',6)
+    g.box((upper+.03,3.5,1.75),(.06,.30,.30),IRON)
+    g.beam((upper+.05,3.5,1.75),(upper+.30,3.5,1.75),.07,mat=IRON)
+    for dz in (0,.09,.18):g.cylinder((upper+.30,3.5,1.80+dz),.045,.06,BRASS,'Z',8)
+    g.cylinder((upper+.30,3.5,2.06),.02,.06,IRON,'Z',6)
     # Water inlet socket on the tower plinth's bay face (the y=5 tile edge),
     # at ground-pipe height. Timber Pipes accepts any face; this marks the spot.
     face,wx=5.0,9.6
@@ -299,85 +315,95 @@ def instrument_tower(g,x,y,*,base=None):
     abuts the hall: no left wall or straps, and its own cap starts where the
     hall's cap ends (the hall's x=8 face) so the two tops never overlap.
     """
+    # One-layer plinth (2026-10-30): the barrel, its bands, cap and fittings
+    # keep their proportions, scaled .62 in height from the plinth top.
+    def f(z):return 1+(z-2)*.62
     if base is None:
-        concrete_course(g,x-.78,y-.78,x+.78,y+.78,2,left_straps=False)
+        concrete_course(g,x-.78,y-.78,x+.78,y+.78,1,left_straps=False)
         front_face=y-.955
     else:
         bx0,by0,bx1,by1=base
-        concrete_course(g,bx0,by0,bx1,by1,2,cap=False,left_wall=False,left_straps=False,
+        concrete_course(g,bx0,by0,bx1,by1,1,cap=False,left_wall=False,left_straps=False,
                         front_from=bx0+.075,back_from=bx0+.075)
         cap_x0,cap_x1=bx0+.075,bx1+.075
-        g.box(((cap_x0+cap_x1)/2,(by0+by1)/2,1.92),(cap_x1-cap_x0,by1-by0+.15,.16),CIVIC_CONCRETE)
+        g.box(((cap_x0+cap_x1)/2,(by0+by1)/2,.92),(cap_x1-cap_x0,by1-by0+.15,.16),CIVIC_CONCRETE)
         front_face=by0-.075
-    # The barrel stands on the plinth cap (top z=2), not 7.5 cm above it.
+    # The barrel stands on the plinth cap (top z=1).
     # 24 sides (was 32); the hoops lose their buried inner face and their
     # sixteen 3 cm rivets each (sub-pixel at normal zoom).
-    g.cylinder((x,y,4.16),.61,4.33,IRON,'Z',24)
-    for z in (2.20,3.15,4.40,5.55,6.27):
-        band(g,(x,y,z),.65,.06,.11,BRASS,'Z',24)
+    g.cylinder((x,y,f(4.165)),.61,4.33*.62,IRON,'Z',24)
+    for z in (2.20,3.15,4.40,5.55,6.20):
+        band(g,(x,y,f(z)),.65,.06,.11,BRASS,'Z',24)
     for i in range(12):
         a=i*math.tau/12
-        g.beam((x+math.cos(a)*.612,y+math.sin(a)*.612,2.28),
-               (x+math.cos(a)*.612,y+math.sin(a)*.612,6.22),.016,mat=BRASS)
-    g.cylinder((x,y,6.66),.91,.62,ROOF,'Z',16,.09)
-    g.ring((x,y,6.36),.92,.055,.07,IRON,'Z',16)
+        g.beam((x+math.cos(a)*.612,y+math.sin(a)*.612,f(2.36)),
+               (x+math.cos(a)*.612,y+math.sin(a)*.612,f(6.10)),.016,mat=BRASS)
+    g.cylinder((x,y,f(6.66)),.91,.42,ROOF,'Z',16,.09)
+    g.ring((x,y,f(6.36)),.92,.055,.07,IRON,'Z',16)
     for i in range(12):
         a=i*math.tau/12
-        g.beam((x+math.cos(a)*.90,y+math.sin(a)*.90,6.39),(x+math.cos(a)*.09,y+math.sin(a)*.09,6.97),.024,mat=IRON)
-    g.cylinder((x,y,7.02),.085,.16,IRON,'Z',8,.035)
-    for z,r in ((3.02,.19),(4.93,.23),(5.66,.17)):
-        gauge(g,x+.32,y-.65,z,r)
+        g.beam((x+math.cos(a)*.90,y+math.sin(a)*.90,f(6.39)),(x+math.cos(a)*.09,y+math.sin(a)*.09,f(6.97)),.024,mat=IRON)
+    g.cylinder((x,y,f(7.02)),.085,.12,IRON,'Z',8,.035)
+    for z,r in ((3.02,.15),(4.93,.17)):
+        gauge(g,x+.32,y-.65,f(z),r)
     for offset in (-.72,.72):
-        flanged_pipe(g,[(x+offset,y-.20,1.0),(x+offset,y-.20,5.65),(x+offset*.5,y-.20,5.65)],.055)
-        for z in (1.2,2.65,4.9):g.box((x+offset,y-.2,z),(.17,.18,.06),IRON)
-        handwheel(g,(x+offset,y-.37,2.85),.13,'Y',IRON,BRASS)
-    # Header pipe runs onto the hall's right eave, clear of its girder.
-    flanged_pipe(g,[(x-.60,y,5.88),(x-1.05,y,5.88),(x-1.05,y-1,5.88)],.11)
+        flanged_pipe(g,[(x+offset,y-.20,.60),(x+offset,y-.20,f(5.65)),(x+offset*.5,y-.20,f(5.65))],.055)
+        for z in (1.2,2.65,4.9):g.box((x+offset,y-.2,f(z)),(.17,.18,.06),IRON)
+        handwheel(g,(x+offset,y-.37,f(2.85)),.13,'Y',IRON,BRASS)
+    # Header pipe runs onto the hall's right eave, just above the rear roof
+    # edge (2.85), clear of its girder.
+    flanged_pipe(g,[(x-.60,y,2.98),(x-1.05,y,2.98),(x-1.05,y-1,2.98)],.11)
     front=front_face+.02   # half set into the plinth face: flanges stay within 11 cm
     # Down the plinth's bay face in the x=9 column, high enough to pass over
     # the water inlet socket.
-    flanged_pipe(g,[(x+.2,y-.60,2.3),(x+.2,front,2.3),(x+.2,front,.75),(x+.95,front,.75)],.085,16)
+    flanged_pipe(g,[(x+.2,y-.60,1.30),(x+.2,front,1.30),(x+.2,front,.75),(x+.95,front,.75)],.085,16)
 
 
 def testing_press(g,parts,x,y,*,base=None,flywheel_x=None):
+    # Lower press on a lower plinth (2026-10-30): heights over the plinth
+    # scaled .62 (h), the ram's stroke .14 (animate_press).
+    def h(z):return .80+(z-1.55)*.62
     bx0,by0,bx1,by1=(x-.72,y-.65,x+1,y+.75) if base is None else base
     # With an explicit base the front wall covers the hall's corner and the
     # back wall starts at the hall's face.
-    concrete_course(g,bx0,by0,bx1,by1,1.55,cap=base is None,left_wall=False,left_straps=False,
+    concrete_course(g,bx0,by0,bx1,by1,.80,cap=base is None,left_wall=False,left_straps=False,
                     back_from=None if base is None else bx0+.075)
     if base is not None:
         # Own cap from the hall's x=8 face outward: never inside its wall.
-        g.box(((bx0+.075+bx1+.075)/2,(by0+by1)/2,1.55-.08),(bx1-bx0,by1-by0+.15,.16),CIVIC_CONCRETE)
+        g.box(((bx0+.075+bx1+.075)/2,(by0+by1)/2,.80-.08),(bx1-bx0,by1-by0+.15,.16),CIVIC_CONCRETE)
     for xx in (x-.78,x+.78):
-        girder(g,(xx,y-.1,1.6),(xx,y-.1,4.56),.24)
-        g.box((xx,y,1.62),(.48,.51,.14),IRON)
+        girder(g,(xx,y-.1,h(1.6)),(xx,y-.1,h(4.56)),.24)
+        g.box((xx,y,h(1.62)),(.48,.51,.14),IRON)
     # Two top plates sit between the upright fasteners, not through them.
-    girder(g,(x-.85,y-.1,4.56),(x+.85,y-.1,4.56),.30,plate_stations=(.30,.70))
-    g.box((x,y,2.03),(1.20,.70,.28),IRON)
-    g.box((x,y,2.35),(.53,.5,.38),CIVIC_CONCRETE)
+    girder(g,(x-.85,y-.1,h(4.56)),(x+.85,y-.1,h(4.56)),.30,plate_stations=(.30,.70))
+    g.box((x,y,h(2.03)),(1.20,.70,.20),IRON)
+    g.box((x,y,h(2.31)),(.53,.5,.24),CIVIC_CONCRETE)
     for z in (2.05,4.43):
-        g.cylinder((x,y,z),.19,.19,IRON,'Z',12)
-    screw=Geometry('MaterialsLaboratory.PressScrew',(x,y,3.68))
-    screw.cylinder((x,y,3.68),.10,1.40,IRON,'Z',12)
-    # The same 14-turn thread in 8 segments per turn (was 10).
+        g.cylinder((x,y,h(z)),.19,.14,IRON,'Z',12)
+    screw=Geometry('MaterialsLaboratory.PressScrew',(x,y,h(3.68)))
+    screw.cylinder((x,y,h(3.68)),.10,.87,IRON,'Z',12)
+    # The same 14-turn thread in 8 segments per turn, its pitch scaled with
+    # the press.
     for i in range(112):
         a=i*math.tau/8;b=(i+1)*math.tau/8
-        screw.beam((x+math.cos(a)*.14,y+math.sin(a)*.14,3.0+i*.011875),
-                   (x+math.cos(b)*.14,y+math.sin(b)*.14,3.0+(i+1)*.011875),.040,mat=BRASS)
+        screw.beam((x+math.cos(a)*.14,y+math.sin(a)*.14,h(3.0+i*.011875)),
+                   (x+math.cos(b)*.14,y+math.sin(b)*.14,h(3.0+(i+1)*.011875)),.040,mat=BRASS)
     parts.append((screw,'Z',1))
-    ram=Geometry('MaterialsLaboratory.TestRam',(x,y,2.98))
-    ram.box((x,y,2.98),(1.12,.72,.29),IRON)
-    ram.box((x,y,2.77),(.64,.54,.12),CIVIC_CONCRETE)
+    ram=Geometry('MaterialsLaboratory.TestRam',(x,y,h(2.98)))
+    ram.box((x,y,h(2.98)),(1.12,.72,.18),IRON)
+    ram.box((x,y,h(2.98)-.13),(.64,.54,.08),CIVIC_CONCRETE)
     parts.append((ram,'LAB_PRESS',1))
-    gauge(g,x-.94,y-.18,3.22,.14)
-    flanged_pipe(g,[(x-.95,y+.25,1.8),(x-.95,y+.25,3.8),(x-.2,y+.25,3.8)],.05)
+    gauge(g,x-.94,y-.18,h(3.22),.12)
+    flanged_pipe(g,[(x-.95,y+.25,h(1.8)),(x-.95,y+.25,h(3.8)),(x-.2,y+.25,h(3.8))],.05)
     fx=x-1.40 if flywheel_x is None else flywheel_x
-    fly=Geometry('MaterialsLaboratory.Flywheel',(fx,y+.30,2.69))
-    fly.wheel((fx,y+.30,2.69),.69,'Y',IRON,BRASS)
-    fly.ring((fx,y+.30,2.69),.73,.09,.19,IRON,'Y',24)
+    # The flywheel's rim clears the hall's one-layer base cap (top z=1).
+    fz=1.0+.73-.04
+    fly=Geometry('MaterialsLaboratory.Flywheel',(fx,y+.30,fz))
+    fly.wheel((fx,y+.30,fz),.69,'Y',IRON,BRASS)
+    fly.ring((fx,y+.30,fz),.73,.09,.19,IRON,'Y',24)
     parts.append((fly,'Y',-1))
-    g.cylinder((fx,y+.43,2.69),.10,.57,IRON,'Y',12)
-    for xx in (fx-.25,fx+.25):g.box((xx,y+.48,2.23),(.15,.30,.60),IRON)
+    g.cylinder((fx,y+.43,fz),.10,.57,IRON,'Y',12)
+    for xx in (fx-.25,fx+.25):g.box((xx,y+.48,(1.0+fz)/2),(.15,.30,fz-1.0),IRON)
 
 
 def laboratory(g,parts):
@@ -385,58 +411,61 @@ def laboratory(g,parts):
     # Cast lower records wing and broad front terrace; no integral stairs.
     # Outer faces: x=0, y=0.015 (behind the door casing on the y=0 edge),
     # x=2.975 and y=7.
-    concrete_course(g,.075,.09,2.90,6.925,2,(1.5,1.0,1.0),cap=False)
+    concrete_course(g,.075,.09,2.90,6.925,1,(1.5,1.0,1.0),cap=False)
     # The cast opening and terrace slab already form the reveal and sill, so
     # the portal omits its own cavity faces (no duplicate surfaces). The
     # casing face lies on the y=0 tile edge, centred on tile x=1.
     building_portal(g,1.5,0.0,0,facade='grid')
     g.doorways.append({'id':'GroundDoor','position':[1.5,0.0,0],'outward':[0,-1],'width':1.0,'internalConnection':'BuildingInterior'})
     # Cast records base: sturdy nine-pane grids front, high archive bands side.
-    for x in (.52,2.48):atlas_window(g,x,.015,1.0,.72,'front','grid9')
-    for y in (1.45,3.6,5.8):atlas_window(g,0.0,y,1.38,.96,'left','band4')
-    # Door lamps over the entrance path cell, arms on the wall face.
-    for x in (1.09,1.91):cage_lamp(g,x,-.035,1.49)
+    for x in (.52,2.48):atlas_window(g,x,.015,.48,.44,'front','grid9')
+    for y in (1.45,3.6,5.8):atlas_window(g,0.0,y,.52,.72,'left','band4')
+    # Door lamps beside the entrance, arms on the wall face.
+    for x in (1.09,1.91):cage_lamp(g,x,-.035,.62)
     # Floor edges sit on whole cell boundaries, and the nine middle cells stay clear.
-    g.box((1.4975,1.5,1.905),(2.995,3,.13),CIVIC_CONCRETE)
-    g.box((1.4875,5.0,1.92),(2.975,4.0,.16),CIVIC_CONCRETE)
-    for i in range(14):g.box((.11+i*2.78/13,1.50,1.985),(.185,2.85,.03),PLANK)
+    g.box((1.4975,1.5,.905),(2.995,3,.13),CIVIC_CONCRETE)
+    g.box((1.4875,5.0,.92),(2.975,4.0,.16),CIVIC_CONCRETE)
+    for i in range(14):g.box((.11+i*2.78/13,1.50,.985),(.185,2.85,.03),PLANK)
     # Terrace rails: native posts (0.14 x 0.16) set in by half a post so their
     # outer faces lie on the terrace edges; one run per cell, with the inner
     # posts on cell edges so an open cell never leaves a stub.
     ix,iy=.071,.081
     for x in range(3):
-        rails.run(f'TerraceFront{x}',(x+ix if x==0 else x,iy),(x+1-ix if x==2 else x+1,iy),2)
+        rails.run(f'TerraceFront{x}',(x+ix if x==0 else x,iy),(x+1-ix if x==2 else x+1,iy),1)
     for y in range(3):
-        rails.run(f'TerraceLeft{y}',(ix,y+iy if y==0 else y),(ix,y+1),2)
-    rails.run('TerraceRight0',(3-ix,iy),(3-ix,1),2)
+        rails.run(f'TerraceLeft{y}',(ix,y+iy if y==0 else y),(ix,y+1),1)
+    rails.run('TerraceRight0',(3-ix,iy),(3-ix,1),1)
     # Short return to the hall's front frame across the plinth ledge.
-    rails.run('TerraceRightReturn',(3-ix,1),(3-ix,HALL_FRONT-.05),2)
-    framed_room(g,.27,3.10,2.73,6.55,2,4.20,3,(1.5,1.0,1.0))
-    building_portal(g,1.5,3.00,2,facade='grid')
-    g.doorways.append({'id':'TerraceDoor','position':[1.5,3.00,2],'outward':[0,-1],'width':1.0,'internalConnection':'BuildingInterior'})
-    roof_bearing(g,.27,3.10,2.73,6.55,4.20,4.24)
-    gabled_roof(g,.05,2.85,2.94,6.80,4.24,5.16,121)
-    # Records office: tall lancets either side of the terrace door, framed
-    # crosses along the side, one grand window as the gable's feature.
+    rails.run('TerraceRightReturn',(3-ix,1),(3-ix,HALL_FRONT-.05),1)
+    framed_room(g,.27,3.10,2.73,6.55,1,2.0,3,(1.5,1.0,1.0),wall_style='storey')
+    building_portal(g,1.5,3.00,1,facade='grid')
+    g.doorways.append({'id':'TerraceDoor','position':[1.5,3.00,1],'outward':[0,-1],'width':1.0,'internalConnection':'BuildingInterior'})
+    # Flat cast roof (2026-10-30; the gable roof is gone): its top is the
+    # layer-2 cell boundary, its forged fascia on the slab edges.
+    g.box((1.50,4.825,1.94),(2.62,3.61,.12),CIVIC_CONCRETE)
+    for yy in (3.0,6.65):g.box((1.50,yy,1.94),(2.64,.04,.08),IRON)
+    for xx in (.17,2.83):g.box((xx,4.825,1.94),(.04,3.61,.08),IRON)
+    # Records office: lancets either side of the terrace door, framed
+    # crosses along the side.
     # Centred in framed_room's bays: front posts .27/1.09/1.91/2.73 (door
     # between), side posts 3.10/4.25/5.40/6.55.
-    for x in (.68,2.32):window(g,x,3.04,3.03,.95,'front','lancet')
-    for y in (3.675,4.825,5.975):atlas_window(g,.21,y,3.10,.7,'left','cross')
-    # Gable feature window on the gable cladding. At scale 1.15 its inner
-    # frame plane clears the eave beam face by 4.6 mm (1.1 left it 4 mm).
-    window_y(g,1.5,2.805,4.45,1.15)
-    for x in (.57,2.50):cage_lamp(g,x,2.84,3.65)
+    for x in (.68,2.32):window(g,x,3.04,1.47,.55,'front','lancet')
+    for y in (3.675,4.825,5.975):atlas_window(g,.21,y,1.50,.40,'left','cross')
+    # The office's two front lamps went (2026-10-30): one layer up they hung
+    # in the terrace's walking headroom.
     # The roof terrace stays clear, usable space: no planters or decor on its
     # walkable cells (user rule, 2026-10-21); only wall-mounted lamps above.
     # Main hall: cast base on the x=3..8, y=1..8 tile edges; enclosed
     # sawtooth upper hall set back on its plinth.
     bx0,by0,bx1,by1=HALL_BASE
-    concrete_course(g,bx0+.075,by0+.075,bx1-.075,by1-.075,2)
+    concrete_course(g,bx0+.075,by0+.075,bx1-.075,by1-.075,1)
     right_front=front_roof_z(HALL_X1)-.042
     right_rear=rear_roof_z(HALL_X1)-.052
-    slope_facade(g,HALL_X0,HALL_X1,HALL_FRONT,2,6.50,right_front,220,True)
-    slope_facade(g,HALL_X0,HALL_X1,HALL_STEP,4.83,7.45,right_rear,221,False)
-    slope_facade(g,HALL_X0,HALL_X1,HALL_REAR,2,7.45,right_rear,222,True,1)
+    left_front=front_roof_z(HALL_X0)-.032
+    left_rear=rear_roof_z(HALL_X0)-.032
+    slope_facade(g,HALL_X0,HALL_X1,HALL_FRONT,1,left_front,right_front,220,True)
+    slope_facade(g,HALL_X0,HALL_X1,HALL_STEP,2.43,left_rear,right_rear,221,False)
+    slope_facade(g,HALL_X0,HALL_X1,HALL_REAR,1,left_rear,right_rear,222,True,1)
     # Side bays are halves of each sawtooth section (equal 1.5 m bays); every
     # window is centred between its piers.
     front_stile,rear_stile=HALL_FRONT-.12,HALL_REAR+.12
@@ -445,46 +474,46 @@ def laboratory(g,parts):
     front_pier,rear_pier=(front_stile+HALL_STEP)/2,(HALL_STEP+rear_stile)/2+.01
     bays=[(front_stile,front_pier),(front_pier,HALL_STEP),(HALL_STEP,rear_pier),(rear_pier,rear_stile)]
     centres=[(a+b)/2 for a,b in bays]
-    for x,height_front,height_back in ((HALL_X0,6.5,7.45),(HALL_X1,right_front,right_rear)):
+    for x,height_front,height_back in ((HALL_X0,left_front,left_rear),(HALL_X1,right_front,right_rear)):
         for ya,yb,h in ((HALL_FRONT,HALL_STEP,height_front),(HALL_STEP,HALL_REAR,height_back)):
             count=math.ceil((yb-ya)/.17)
-            for i in range(count):g.box((x,ya+(i+.5)*(yb-ya)/count,(2+h)/2),(.11,(yb-ya)/count,h-2),PLANK)
+            for i in range(count):g.box((x,ya+(i+.5)*(yb-ya)/count,(1+h)/2),(.11,(yb-ya)/count,h-1),PLANK)
             # The shared sawtooth pier is authored once, to the taller roof.
             # Pier tops stop 15 mm under the boards; girders are 2 cm
             # narrower than the piers so no side faces coincide.
-            steel_column(g,x,front_pier if ya==HALL_FRONT else rear_pier,2,h-.015,.22)
-            if ya==HALL_STEP:steel_column(g,x,ya,2,4.815,.22)  # just under the step facade, clear of roof bolts
-            girder(g,(x,ya,2.05),(x,yb,2.05),.20)
+            steel_column(g,x,front_pier if ya==HALL_FRONT else rear_pier,1,h-.015,.22)
+            if ya==HALL_STEP:steel_column(g,x,ya,1,2.415,.22)  # just under the step facade, clear of roof bolts
+            girder(g,(x,ya,1.05),(x,yb,1.05),.20)
             # Side eave beams butt against the front/rear frame thickness.
             girder(g,(x,ya+.22,h-.08),(x,yb-.22,h-.08),.20)
             for yy in (centres[:2] if ya==HALL_FRONT else centres[2:]):
                 # Upper frames fit between the lower window row and the
                 # eave girder plates, with the native aspect ratio retained.
-                atlas_window(g,x+(.055 if x>5 else -.055),yy,h-.62,.52,'right' if x>5 else 'left','porthole',reveal=IRON)
+                atlas_window(g,x+(.055 if x>5 else -.055),yy,h-.40,.30,'right' if x>5 else 'left','porthole',reveal=IRON)
         if x>5:
             # Press side: large single panes looking onto the testing press,
             # one centred in each bay.
-            for yy in centres:atlas_window(g,x+.055,yy,3.15,.74,'right','single')
-            girder(g,(x+.06,HALL_FRONT+.13,2.2),(x+.06,HALL_STEP-.15,4.6),.15)
+            for yy in centres:atlas_window(g,x+.055,yy,1.50,.48,'right','single')
+            girder(g,(x+.06,HALL_FRONT+.13,1.2),(x+.06,HALL_STEP-.15,2.05),.15)
         else:
             # Service side: three-pane verticals centred in the bays, with the
             # pipe risers between the windows and the piers.
             for yy in centres:
-                atlas_window(g,x-.055,yy,4.6,.42,'left','triple')
+                atlas_window(g,x-.055,yy,1.95,.24,'left','triple')
             for yy in (front_stile+.34,HALL_STEP+.34,rear_stile-.39):
-                flanged_pipe(g,[(x-.18,yy,2.7),(x-.18,yy,5.2),(x-.18,yy+.2,5.2)],.045)
+                flanged_pipe(g,[(x-.18,yy,1.35),(x-.18,yy,2.55),(x-.18,yy+.2,2.55)],.045)
     # Sheet joints keep clear of the step facade planes and fasteners.
     shed_roof(g,ROOF_X0,ROOF_X1,HALL_FRONT-.27,HALL_STEP+.266,front_roof_z(ROOF_X0),front_roof_z(ROOF_X1),351)
     shed_roof(g,ROOF_X0,ROOF_X1,HALL_STEP-.22,HALL_REAR+.25,rear_roof_z(ROOF_X0),rear_roof_z(ROOF_X1),352)
     # Furnace and kiln-test flues: combustion smoke while the lab works.
-    stack(g,4.15,6.8,7.12,.78,emits='smoke')
-    stack(g,7.30,2.80,4.95,.85,emits='smoke')
+    stack(g,4.15,6.8,rear_roof_z(4.15)-.01,.78,emits='smoke')
+    stack(g,7.30,2.80,front_roof_z(7.30)-.01,.78,emits='smoke')
     # Timber and metal joints remain deliberately legible at normal game zoom.
     # Interior joints only; the corners carry the cast shell's own straps.
     for i in range(1,4):
         x=bx0+.075+(bx1-bx0-.15)*i/4
-        for z in (.35,1.65):
-            g.box((x,by0-.025,z),(.15,.06,.38),IRON)
+        for z in (.30,.72):
+            g.box((x,by0-.025,z),(.15,.06,.30),IRON)
     # 2026-10-22 (user): no forced decoration beyond the walls. The outdoor
     # specimen shelves before and behind the hall, the rear planters, the
     # barrel and the crate are gone; the footprint ends at the hall's rear
@@ -496,9 +525,9 @@ def laboratory(g,parts):
     g.cylinder((bx1-.15,4.58,.72),.18,.40,IRON,'X',12)
     g.ring((bx1+.04,4.58,.72),.27,.07,.07,IRON,'X',12)
     for y in (4.05,4.40):
-        flanged_pipe(g,[(bx1+.05,y,.40),(bx1+.05,y,3.95),(HALL_X1+.05,y,3.95)],.045)
-        handwheel(g,(bx1+.02,y-.17,1.25),.12,'X',IRON,BRASS)
-    for x,y,z in ((8.58,3.0,4.12),(HALL_X1+.06,6.9,3.8),(3.45,HALL_FRONT-.105,4.2),(1.5,6.75,3.8)):
+        flanged_pipe(g,[(bx1+.05,y,.40),(bx1+.05,y,2.05),(HALL_X1+.05,y,2.05)],.045)
+        handwheel(g,(bx1+.02,y-.17,.70),.12,'X',IRON,BRASS)
+    for x,y,z in ((8.58,3.0,2.10),(HALL_X1+.06,6.9,2.05),(3.45,HALL_FRONT-.105,2.15),(1.5,6.75,1.62)):
         cage_lamp(g,x,y,z)
     service_bay(g)
     return rails
@@ -507,7 +536,7 @@ def laboratory(g,parts):
 def animate_press(obj,frame_end):
     if frame_end!=121:raise ValueError('Laboratory press requires a 121-frame loop')
     base=obj.location.z
-    for frame,offset in ((1,0),(31,-.22),(46,-.22),(76,0),(121,0)):
+    for frame,offset in ((1,0),(31,-.14),(46,-.14),(76,0),(121,0)):
         obj.location.z=base+offset;obj.keyframe_insert(data_path='location',frame=frame)
     for curve in obj.animation_data.action.fcurves:
         for key in curve.keyframe_points:key.interpolation='LINEAR'

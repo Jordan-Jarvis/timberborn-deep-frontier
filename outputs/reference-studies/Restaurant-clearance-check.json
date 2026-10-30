@@ -1,6 +1,6 @@
 {
   "scope": "Authored mesh only; native grid paths, stair and platform placement are not verified",
-  "animatedSignDeckClearance": 0.4610986995697024,
+  "animatedSignDeckClearance": 0.5290148544311526,
   "sourceUnitHeadroom": 0.73,
   "sourceUnitBodyRadius": 0.2,
   "floorAndClearanceSamples": [
@@ -1722,5 +1722,5 @@
       3
     ]
   ],
-  "nativeAtlasUvCornersChecked": 22888
+  "nativeAtlasUvCornersChecked": 22664
 }

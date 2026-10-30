@@ -17,7 +17,8 @@ names=collections.Counter(n.name for n in model.nodes)
 require(all(v==1 for v in names.values()),'Duplicate model nodes')
 require(payload==(folder/'FishHatchery.IronTeeth.ConstructionStage0.Model.timbermesh').read_bytes(),'Construction model mismatch')
 # Compact early-game footprint since 2026-10-26 (8x8x5 with perimeter docks before).
-require(list(b['BlockObjectSpec']['Size'].values())==[7,7,5] and b['BlockObjectSpec']['BaseZ']==1,'Submerged registration changed')
+# 3 high since the one-layer headhouse and canopy (2026-10-30; was 5).
+require(list(b['BlockObjectSpec']['Size'].values())==[7,7,3] and b['BlockObjectSpec']['BaseZ']==1,'Submerged registration changed')
 W,D=7,7
 # Native Entrance = the bank-height path cell in front of the door cell (1,0,1) (tools/native_entrance.mjs).
 require(b['BlockObjectSpec']['Entrance']['Coordinates']=={'X':1,'Y':-1,'Z':1},'Entrance is not the bank-height path cell in front of the door')
@@ -36,7 +37,7 @@ require(supports=={'Columns':[xyz(c) for c in site['supports']['columns']+site['
                    'SegmentNodeName':'#SupportSegment','FootNodeName':'#SupportFoot'},'Pile/bank post columns differ from the waterside contract')
 require(names['#SupportSegment']==1 and names['#SupportFoot']==1,'Exported model lacks exactly one support segment/foot template')
 require('FishHatchery.Dock.Supports' not in names,'Fixed-length short posts still ship in the model')
-require(len(b['BlockObjectSpec']['Blocks'])==W*D*5,'Incomplete occupied-cell data')
+require(len(b['BlockObjectSpec']['Blocks'])==W*D*3,'Incomplete occupied-cell data')
 require(-1.02<min(v['Center']['Y']-v['Size']['Y']/2 for v in b['Children']['#Finished']['CollidersSpec']['BoxColliders'])<-.8,'Actual submerged cage colliders lost their BaseZ offset')
 cells={tuple(n['cell']) for n in layout['nodes']}
 require(layout['deckMode']=='PlayerPlacedPaths' and 'BuildingWalkwaySpec' not in b,'Hatchery still owns outdoor path routes')
@@ -102,7 +103,7 @@ require(cell(4,3,1)['Occupations']=='All' and cell(6,3,1)['Occupations']=='All',
 require(cell(2,6,0)['Occupations']=='Top, Corners' and cell(2,6,1)['Occupations']=='None','Centre dock end lost usable space above or below')
 # The perimeter docks are gone: no block beyond the pens' outer edges or behind the canopy.
 for x,y in ((5,4),(6,4),(5,6),(6,6)):
-    require(all(cell(x,y,z)['Occupations']=='None' for z in range(5)),'Removed dock cell is registered again')
+    require(all(cell(x,y,z)['Occupations']=='None' for z in range(3)),'Removed dock cell is registered again')
 for x,y,z in layout['buildableCells']:
     require(cell(x,y,z-1)['Stackable']=='BlockObject','Clear dock lacks platform support')
 require(not any(n.startswith('Studio.') for n in names),'Preview water shipped in mesh')
@@ -129,7 +130,7 @@ for node in model.nodes:
             require(valid_native_uv(mesh.material,uv[i]),'UV outside authored/native contract')
             uv_count+=1
 report={'scope':'Source/export only; native results recorded separately','modelSha256':hashlib.sha256(payload).hexdigest(),
- 'nodes':len(model.nodes),'nativeUvVertices':uv_count,'suggestedPathCells':len(cells)-1,'openings':3,'baseZ':1,'size':[W,D,5],'cursorPickChecks':pick_checks,
+ 'nodes':len(model.nodes),'nativeUvVertices':uv_count,'suggestedPathCells':len(cells)-1,'openings':3,'baseZ':1,'size':[W,D,3],'cursorPickChecks':pick_checks,
  'nativeProps':1,'tankCapacity':60,'animationTracks':tracks}
 (ROOT/'outputs/civic-integration/hatchery-static-checks.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 print(json.dumps(report))

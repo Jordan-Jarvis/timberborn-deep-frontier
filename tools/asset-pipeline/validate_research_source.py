@@ -22,7 +22,8 @@ points={tuple(n['cell']):n['point'] for n in LAB['nodes']}
 interior={tuple(c) for c in LAB['interiorCells']}
 failures=[];samples=0
 for a,b in LAB['edges']:
-    if tuple(a) in interior or tuple(b) in interior or a[2]!=2 or b[2]!=2:continue
+    # The terrace is layer 1 since the one-layer storeys (2026-10-30; was 2).
+    if tuple(a) in interior or tuple(b) in interior or a[2]!=1 or b[2]!=1:continue
     p,q=Vector(points[tuple(a)]),Vector(points[tuple(b)])
     count=math.ceil((q-p).length/.1)
     for i in range(count+1):
@@ -66,7 +67,7 @@ for suffix in ('PressScrew','TestRam','Flywheel'):
 scene.frame_set(1)
 result={'scope':'Source geometry and animations only; native operation remains to test',
     'terraceSamples':samples,'nativeUvCorners':uv_count,'animatedParts':animated,
-    'railPorts':len(LAB['ports']),'terraceLayer':2,'failures':failures}
+    'railPorts':len(LAB['ports']),'terraceLayer':1,'failures':failures}
 (ROOT/'outputs/materials-laboratory-source-validation.json').write_text(json.dumps(result,indent=2)+'\n')
 if failures:raise ValueError(f'{len(failures)} source failures: '+str(failures[:16]))
 print(json.dumps(result))

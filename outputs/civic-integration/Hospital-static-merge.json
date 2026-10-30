@@ -28,7 +28,7 @@
     {
       "node": "StaticMerged",
       "parts": 18,
-      "triangles": 9107,
+      "triangles": 9095,
       "materials": {
         "Plaster_White.IronTeeth": 350,
         "IrregularPlanks_DarkBrown.IronTeeth": 1070,
@@ -40,7 +40,7 @@
         "DFIndustrial05": 22,
         "Details.IronTeeth": 24,
         "DFIndustrial15": 24,
-        "DFIndustrial14": 48,
+        "DFIndustrial14": 36,
         "DFIndustrial16": 4,
         "BaseWood_Brown.Folktails": 234
       }

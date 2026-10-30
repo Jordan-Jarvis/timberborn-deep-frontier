@@ -19,7 +19,7 @@
       "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
       "position": [
         1.9899999999999998,
-        8.24,
+        7.49,
         0
       ],
       "scale": 0.62,
@@ -31,7 +31,7 @@
       "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
       "position": [
         2.69,
-        8.24,
+        7.49,
         0
       ],
       "scale": 0.62,
@@ -76,8 +76,8 @@
         8.649999999999999,
         5.875
       ],
-      "bottom": 2.73,
-      "top": 3.07,
+      "bottom": 1.82,
+      "top": 2.16,
       "scale": [
         0.6100000000000002,
         1.3199999999999994
@@ -89,7 +89,7 @@
       "shape": "SmallLiquidPlane",
       "center": [
         2.3,
-        8.55
+        7.8
       ],
       "bottom": 0.33852000000000004,
       "top": 0.8804,
@@ -104,7 +104,7 @@
       "shape": "SmallLiquidPlane",
       "center": [
         3.0,
-        8.55
+        7.8
       ],
       "bottom": 0.33852000000000004,
       "top": 0.8804,

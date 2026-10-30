@@ -10,12 +10,12 @@
           "start": [
             0.07100000232458115,
             0.08100000023841858,
-            2
+            1
           ],
           "end": [
             0.5354999899864197,
             0.08100000023841858,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post000",
           "endPost": "MaterialsLaboratory.Rail.Post001"
@@ -25,12 +25,12 @@
           "start": [
             0.5354999899864197,
             0.08100000023841858,
-            2
+            1
           ],
           "end": [
             1.0,
             0.08100000023841858,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post001",
           "endPost": "MaterialsLaboratory.Rail.Post002"
@@ -45,12 +45,12 @@
           "start": [
             1.0,
             0.08100000023841858,
-            2
+            1
           ],
           "end": [
             1.5,
             0.08100000023841858,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post002",
           "endPost": "MaterialsLaboratory.Rail.Post003"
@@ -60,12 +60,12 @@
           "start": [
             1.5,
             0.08100000023841858,
-            2
+            1
           ],
           "end": [
             2.0,
             0.08100000023841858,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post003",
           "endPost": "MaterialsLaboratory.Rail.Post004"
@@ -80,12 +80,12 @@
           "start": [
             2.0,
             0.08100000023841858,
-            2
+            1
           ],
           "end": [
             2.4644999504089355,
             0.08100000023841858,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post004",
           "endPost": "MaterialsLaboratory.Rail.Post005"
@@ -95,12 +95,12 @@
           "start": [
             2.4644999504089355,
             0.08100000023841858,
-            2
+            1
           ],
           "end": [
             2.928999900817871,
             0.08100000023841858,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post005",
           "endPost": "MaterialsLaboratory.Rail.Post006"
@@ -115,12 +115,12 @@
           "start": [
             0.07100000232458115,
             0.08100000023841858,
-            2
+            1
           ],
           "end": [
             0.07100000232458115,
             0.5405000448226929,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post000",
           "endPost": "MaterialsLaboratory.Rail.Post007"
@@ -130,12 +130,12 @@
           "start": [
             0.07100000232458115,
             0.5405000448226929,
-            2
+            1
           ],
           "end": [
             0.07100000232458115,
             1.0,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post007",
           "endPost": "MaterialsLaboratory.Rail.Post008"
@@ -150,12 +150,12 @@
           "start": [
             0.07100000232458115,
             1.0,
-            2
+            1
           ],
           "end": [
             0.07100000232458115,
             1.5,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post008",
           "endPost": "MaterialsLaboratory.Rail.Post009"
@@ -165,12 +165,12 @@
           "start": [
             0.07100000232458115,
             1.5,
-            2
+            1
           ],
           "end": [
             0.07100000232458115,
             2.0,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post009",
           "endPost": "MaterialsLaboratory.Rail.Post010"
@@ -185,12 +185,12 @@
           "start": [
             0.07100000232458115,
             2.0,
-            2
+            1
           ],
           "end": [
             0.07100000232458115,
             2.5,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post010",
           "endPost": "MaterialsLaboratory.Rail.Post011"
@@ -200,12 +200,12 @@
           "start": [
             0.07100000232458115,
             2.5,
-            2
+            1
           ],
           "end": [
             0.07100000232458115,
             3.0,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post011",
           "endPost": "MaterialsLaboratory.Rail.Post012"
@@ -220,12 +220,12 @@
           "start": [
             2.928999900817871,
             0.08100000023841858,
-            2
+            1
           ],
           "end": [
             2.928999900817871,
             0.5405000448226929,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post006",
           "endPost": "MaterialsLaboratory.Rail.Post013"
@@ -235,12 +235,12 @@
           "start": [
             2.928999900817871,
             0.5405000448226929,
-            2
+            1
           ],
           "end": [
             2.928999900817871,
             1.0,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post013",
           "endPost": "MaterialsLaboratory.Rail.Post014"
@@ -255,12 +255,12 @@
           "start": [
             2.928999900817871,
             1.0,
-            2
+            1
           ],
           "end": [
             2.928999900817871,
             1.2699999809265137,
-            2
+            1
           ],
           "startPost": "MaterialsLaboratory.Rail.Post014",
           "endPost": "MaterialsLaboratory.Rail.Post015"

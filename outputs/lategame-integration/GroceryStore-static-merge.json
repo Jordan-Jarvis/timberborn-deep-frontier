@@ -28,17 +28,16 @@
     {
       "node": "StaticMerged",
       "parts": 20,
-      "triangles": 7731,
+      "triangles": 7501,
       "materials": {
         "IrregularPlanks_MetalForged.IronTeeth": 853,
         "BaseWood_DarkBrown.IronTeeth": 2221,
         "IrregularPlanks_DarkBrown.IronTeeth": 548,
-        "BaseMetal.IronTeeth": 1944,
+        "BaseMetal.IronTeeth": 1860,
         "Plaster_White.IronTeeth": 450,
         "RoofPlanks.IronTeeth": 36,
-        "Details.IronTeeth": 1115,
-        "BaseWood_Brown.Folktails": 526,
-        "Plaster_Orange.IronTeeth": 38
+        "Details.IronTeeth": 1035,
+        "BaseWood_Brown.Folktails": 498
       }
     },
     {

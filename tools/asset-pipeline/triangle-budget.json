@@ -319,18 +319,18 @@
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 18950,
-   "vertices": 39452,
-   "construction": 18950,
+   "finished": 14064,
+   "vertices": 29636,
+   "construction": 14064,
    "file": "outputs/civic-integration/Data/Buildings/Food/FishHatchery/FishHatchery.IronTeeth.Model.timbermesh"
   },
   "FisheryWorks": {
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 18129,
-   "vertices": 39289,
-   "construction": 18129,
+   "finished": 16126,
+   "vertices": 35207,
+   "construction": 16126,
    "file": "outputs/civic-integration/Data/Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.Model.timbermesh"
   },
   "FoodPackagingWorks": {
@@ -355,18 +355,18 @@
    "family": "grocery",
    "class": "grand",
    "target": 20000,
-   "finished": 18662,
-   "vertices": 39596,
-   "construction": 18662,
+   "finished": 18304,
+   "vertices": 38846,
+   "construction": 18304,
    "file": "outputs/lategame-integration/Data/Buildings/Food/GroceryStore/GroceryStore.IronTeeth.Model.timbermesh"
   },
   "Hospital": {
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 10899,
-   "vertices": 23890,
-   "construction": 10899,
+   "finished": 10887,
+   "vertices": 23866,
+   "construction": 10887,
    "file": "outputs/civic-integration/Data/Buildings/Wellbeing/Hospital/Hospital.IronTeeth.Model.timbermesh"
   },
   "HumanRecordCache": {
@@ -436,9 +436,9 @@
    "family": "research",
    "class": "grand",
    "target": 20000,
-   "finished": 18938,
-   "vertices": 38965,
-   "construction": 18938,
+   "finished": 15684,
+   "vertices": 32362,
+   "construction": 15684,
    "file": "outputs/research-integration/Data/Buildings/Science/MaterialsLaboratory/MaterialsLaboratory.IronTeeth.Model.timbermesh"
   },
   "MissionControl": {
@@ -571,18 +571,18 @@
    "family": "hydro",
    "class": "grand",
    "target": 20000,
-   "finished": 12459,
-   "vertices": 26678,
-   "construction": 12459,
+   "finished": 10292,
+   "vertices": 22334,
+   "construction": 10292,
    "file": "outputs/hydro-integration/Data/Buildings/Power/ReinforcedHydroTurbine/ReinforcedHydroTurbine.IronTeeth.Model.timbermesh"
   },
   "Restaurant": {
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 14622,
-   "vertices": 31755,
-   "construction": 14622,
+   "finished": 14418,
+   "vertices": 31347,
+   "construction": 14418,
    "file": "outputs/civic-integration/Data/Buildings/Food/Restaurant/Restaurant.IronTeeth.Model.timbermesh"
   },
   "RocketAssemblyHangar": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 1319349,
+ "totalBlueprintTriangles": 922305,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

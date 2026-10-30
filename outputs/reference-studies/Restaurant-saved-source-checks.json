@@ -1,6 +1,6 @@
 {
   "scope": "Authored mesh only; native grid paths, stair and platform placement are not verified",
-  "animatedSignDeckClearance": 0.4610986995697024,
+  "animatedSignDeckClearance": 0.5290148544311526,
   "sourceUnitHeadroom": 0.73,
   "sourceUnitBodyRadius": 0.2,
   "floorAndClearanceSamples": [
@@ -1722,7 +1722,7 @@
       3
     ]
   ],
-  "nativeAtlasUvCornersChecked": 22888,
+  "nativeAtlasUvCornersChecked": 22664,
   "model": "Restaurant",
-  "sourceSha256": "de764ba7bffaa69f45acfdfe35e2bbe63beb8b53dc57f9461a4d90778efd02e8"
+  "sourceSha256": "6e1b14278f1bdb65e92ccb9b4170b184bcd24c356897bbe7a90998824916195c"
 }

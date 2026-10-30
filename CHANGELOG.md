@@ -34,6 +34,11 @@
 - **Restaurant** is 5 high (was 9) on the same 9x7 footprint: one layer per storey, both dining balconies with all their tables and chairs, a flat timber-decked roof level with the roof terrace, the sign swinging from a gantry on the roof. The gabled roof, dormers and lantern are gone.
 - **Hospital** is just its central pavilion: 4x9, 9 high (was 12x9). The two ward wings are gone; the pavilion, its doors, rear decks and roof garden are unchanged. Same cost, power, crew and 30 beds.
 - **Grocery Store** is 5 high (was 8) on the same 9x6 footprint: one layer per storey, the balcony one layer up (one stair reaches it), the gable roof and lit monitor kept.
+- **Fish Hatchery** is 3 high (was 5) on the same 7x7 footprint: the headhouse and pump canopy are one layer under flat roofs.
+- **Fishery Works** is 4 high (was 7) on the same 11x8 footprint: one layer per storey, galleries and the warehouse roof terrace one layer up, the long roof kept but lower; the rear water tanks (pipe inlet) stand under the rear gallery.
+- **Materials Laboratory** is 5 high (was 9) on the same 10x8 footprint: one-layer cast bases, the terrace one layer up, the records office under a flat roof, the sawtooth testing hall, tower and press lower. Same cost, power and crew.
+- **No clutter on open tiles:** the Restaurant's sign now hangs on its front parapet and its kitchen stack rises from the roof stairhead, so the whole roof is buildable; the Hospital's steam flue rises through its roof; the crate, basket and sack in front of the Grocery's stall wing are gone.
+- **Old saves:** paths, stairs and platforms on these buildings' old decks and terraces need re-placing; reconnect a pipe to the Fishery Works' tank inlet one tile in from where it was.
 - **Old saves:** the Restaurant and Grocery keep their place and entrance, but paths, stairs and platforms on their old balconies need re-placing. Re-place an old Hospital: its remaining pavilion now sits on the old west wing's tiles.
 
 ## 0.6.0 (2026-10-29)

@@ -2,13 +2,13 @@
   "status": "Blender art study; not exported or installed",
   "boundsMin": [
     -9.586000442504883,
-    -8.844783782958984,
+    -8.48114013671875,
     -0.014999999664723873
   ],
   "boundsMax": [
     1.320531964302063,
     -1.2640000581741333,
-    6.199999809265137
+    3.380000114440918
   ],
   "sourceReference": "docs/art/concepts/Fishery.png",
   "selectedReferenceViews": [

@@ -57,20 +57,21 @@ export async function researchContent() {
     };
     // Occupancy follows the registered shell (materials_laboratory_geometry.py):
     // cast bases on tile edges, upper storeys set back on them.
-    region([0,0,0],[2,6,1],'All'); // Cast records wing and terrace foundation.
-    region([0,3,2],[2,6,4],'All'); // Enclosed records room, upper arch and roof.
-    region([1,3,5],[1,6,5],'All'); // Gable ridge.
-    region([0,2,3],[2,2,4],'All'); // Porch roof, lancets and lamps over the terrace door lane.
-    region([1,2,5],[1,2,5],'All'); // Front gable apex over the porch.
-    region([3,1,0],[7,7,3],'All'); // Closed testing hall on its cast base (x 3..8, y 1..8).
+    // 2026-10-30 compaction: one-layer cast bases, terrace and records office
+    // at layer 1 under a flat roof, lower sawtooth sheds, tower and press.
+    region([0,0,0],[2,6,0],'All'); // Cast records wing and terrace foundation.
+    region([0,3,1],[2,6,1],'All'); // Enclosed records room under its flat roof.
+    region([3,1,0],[7,7,1],'All'); // Closed testing hall on its cast base (x 3..8, y 1..8).
     // Sloping roof occupancy follows each sawtooth: the front roof over rows
     // 1..3, the step facade and rear roof over rows 4..7.
     for(let x=3;x<=7;x++) {
-      region([x,1,4],[x,3,[6,6,5,5,5][x-3]],'All');
-      region([x,4,4],[x,7,[7,7,6,6,5][x-3]],'All');
+      region([x,1,2],[x,3,[3,2,2,2,2][x-3]],'All');
+      region([x,4,2],[x,7,[3,3,3,3,2][x-3]],'All');
     }
-    region([8,1,0],[9,2,4],'All'); // Test press on its 2x2 plinth.
-    region([8,5,0],[9,6,6],'All'); // Instrument tower on its 2x2 plinth.
+    region([4,6,4],[4,6,4],'All'); // Furnace flue above the rear roof.
+    region([7,2,3],[7,2,3],'All'); // Kiln-test flue above the front roof.
+    region([8,1,0],[9,2,2],'All'); // Test press on its 2x2 plinth.
+    region([8,5,0],[9,6,4],'All'); // Instrument tower on its 2x2 plinth.
     // No forced decoration beyond the walls (2026-10-22): the outdoor shelves,
     // planters, barrel and crate are gone; their cells are open ground.
     const interior=new Set(d.interiorCells.map(c=>c.join(',')));
@@ -118,7 +119,8 @@ export async function researchContent() {
     // connection provider accepts any face, provided the building holds a
     // liquid good. Recipe Water supplies that; no port is authored, so a pipe
     // may meet any side (the tower's bay socket marks the intended spot).
-    v.PowerLineSpec={ConnectionLocations:[xyz([.18,6.65,1.84]),xyz([8.205,3.5,2.66])]};
+    // Heights follow the one-layer bases and the lower insulator bracket (2026-10-30).
+    v.PowerLineSpec={ConnectionLocations:[xyz([.18,6.65,.84]),xyz([8.205,3.5,2.06])]};
     v.TransformSlotInitializerSpec={Slots:[{SlotKeyword:'Entrance',Animation:'ForcedIdle',Inanimate:false,RandomizeYRotation:false,WaterSlot:false}]};
     v.PlaceableBlockObjectSpec={ToolGroupId:'Science',ToolOrder:100,ToolShape:'Square',Layout:'Single',
       CustomPivot:{HasCustomPivot:false,Coordinates:xyz([0,0,0])},CanBeAttachedToTerrainSide:false,DevModeTool:false};

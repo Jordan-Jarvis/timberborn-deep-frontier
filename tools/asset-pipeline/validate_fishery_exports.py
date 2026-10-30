@@ -15,8 +15,9 @@ model=model_pb2.Model();model.ParseFromString(zlib.decompress(payload))
 names=collections.Counter(n.name for n in model.nodes)
 require(all(n==1 for n in names.values()),'Duplicate fishery mesh nodes')
 # 11x8 since the forced front/rear decoration went (2026-10-22).
-require([blueprint['BlockObjectSpec']['Size'][axis] for axis in ('X','Y','Z')]==[11,8,7],'Waterfront Fishery registration changed')
-require(len(blueprint['BlockObjectSpec']['Blocks'])==11*8*7,'Incomplete occupied-cell specification')
+# One layer per storey since 2026-10-30 (was 11x8x7).
+require([blueprint['BlockObjectSpec']['Size'][axis] for axis in ('X','Y','Z')]==[11,8,4],'Waterfront Fishery registration changed')
+require(len(blueprint['BlockObjectSpec']['Blocks'])==11*8*4,'Incomplete occupied-cell specification')
 cells={tuple(n['cell']) for n in layout['nodes']};graph={n:set() for n in cells}
 for a,b in layout['edges']:
     a,b=tuple(a),tuple(b)
@@ -28,7 +29,7 @@ while queue:
     if cell in visited:continue
     visited.add(cell);queue.extend(graph[cell]-visited)
 require(visited==cells,'Disconnected fishery routes')
-require(len(layout['doorNodes'])==3 and {c[2] for c in layout['doorNodes']}=={0,2},'Waterfront doorway contract changed')
+require(len(layout['doorNodes'])==3 and {c[2] for c in layout['doorNodes']}=={0,1},'Waterfront doorway contract changed')
 require(len(blueprint['BuildingWalkwaySpec']['Openings'])==len(layout['ports']),'Stale fishery rail export')
 for p in blueprint['BuildingWalkwaySpec']['Openings']:
     for name in p['HiddenNodes']+p['ShownNodes']:require(names[name]==1,'Missing rail binding '+name)
@@ -43,7 +44,8 @@ wing={tuple(c) for c in site['supports']['groundOptionalCells']}
 for x,y,z in wing:require(z==0 and cellAt(x,y,z)['MatterBelow']=='Any' and cellAt(x,y,z)['Occupations']=='All','Wing cell is not an occupied ground-optional basin cell')
 # 67 ground cells (the 74 of build 54 less the front basin's 4 and the rear
 # stock's 3 beside the kept water tanks, 2026-10-22) less the 11 wing cells.
-require(sum(1 for b in blocks if b['MatterBelow']=='GroundOrStackable')==67-len(wing),'Fishery ground contract changed outside the wing')
+# 65: the two rear water tanks moved under the rear gallery (2026-10-30).
+require(sum(1 for b in blocks if b['MatterBelow']=='GroundOrStackable')==65-len(wing),'Fishery ground contract changed outside the wing')
 for x,y,z in site['supports']['columns']:require(z==-1 and (x,y,0) in wing,'Pile is not directly below a wing cell')
 for cell in ((3,0,0),(9,0,0),(8,6,0)):require(cellAt(*cell)['MatterBelow']=='GroundOrStackable','Door vestibule, gallery post or hoist left the land: '+str(cell))
 origin=next(n for n in model.nodes if n.name=='IndustrialGridOrigin').position

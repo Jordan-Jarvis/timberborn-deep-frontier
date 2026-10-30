@@ -38,9 +38,10 @@ assert [(a['Prefab'],a['Parent'],[a['Position'][k] for k in 'XZY']) for a in att
     ('Buildings/Metal/Smelter/SmelterSmoke','#Finished',e['position']) for e in smoke]
 assert bp['WorkshopParticleControllerSpec']['AttachmentIds']==[a['AttachmentId'] for a in attachments]
 def cell(d):return tuple(d[k] for k in ('X','Y','Z'))
-# 10x8 since the outdoor shelves and planters went (2026-10-22).
-assert cell(bp['BlockObjectSpec']['Size'])==(10,8,9)
-blocks=bp['BlockObjectSpec']['Blocks'];assert len(blocks)==720
+# 10x8 since the outdoor shelves and planters went (2026-10-22); 5 high
+# since the one-layer storeys (2026-10-30).
+assert cell(bp['BlockObjectSpec']['Size'])==(10,8,5)
+blocks=bp['BlockObjectSpec']['Blocks'];assert len(blocks)==400
 def block(c):
     x,y,z=c;return blocks[(z*8+y)*10+x]
 routes={tuple(n['cell']) for n in layout['nodes']};graph={c:set() for c in routes}

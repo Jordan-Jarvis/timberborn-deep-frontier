@@ -62,8 +62,8 @@
     },
     "Blocks": [
       {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
+        "MatterBelow": "Any",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -2007,15 +2007,6 @@
     "Transputs": [
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
           "X": 1,
           "Y": 0,
           "Z": 0
@@ -2422,12 +2413,12 @@
         "BoxColliders": [
           {
             "Center": {
-              "X": 2,
+              "X": 2.5,
               "Y": 0.5,
               "Z": 1.5
             },
             "Size": {
-              "X": 4,
+              "X": 3,
               "Y": 1,
               "Z": 3
             }
@@ -2442,6 +2433,18 @@
               "X": 3,
               "Y": 1,
               "Z": 3
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 3.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 5
             }
           },
           {
@@ -2470,12 +2473,12 @@
           },
           {
             "Center": {
-              "X": 1,
+              "X": 1.5,
               "Y": 0.5,
               "Z": 4.5
             },
             "Size": {
-              "X": 2,
+              "X": 1,
               "Y": 1,
               "Z": 3
             }
@@ -2635,12 +2638,12 @@
             "BoxColliders": [
               {
                 "Center": {
-                  "X": 2,
+                  "X": 2.5,
                   "Y": 0.5,
                   "Z": 1.5
                 },
                 "Size": {
-                  "X": 4,
+                  "X": 3,
                   "Y": 1,
                   "Z": 3
                 }
@@ -2655,6 +2658,18 @@
                   "X": 3,
                   "Y": 1,
                   "Z": 3
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.5,
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 5
                 }
               },
               {
@@ -2683,12 +2698,12 @@
               },
               {
                 "Center": {
-                  "X": 1,
+                  "X": 1.5,
                   "Y": 0.5,
                   "Z": 4.5
                 },
                 "Size": {
-                  "X": 2,
+                  "X": 1,
                   "Y": 1,
                   "Z": 3
                 }

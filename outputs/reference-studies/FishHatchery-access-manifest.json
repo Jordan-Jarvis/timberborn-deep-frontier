@@ -29,5 +29,6 @@
       ]
     ]
   ],
-  "stairBays": []
+  "stairBays": [],
+  "headroom": 1.09
 }

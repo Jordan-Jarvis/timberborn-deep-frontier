@@ -5,8 +5,9 @@
     0
   ],
   "balconyLayers": [
-    2
+    1
   ],
+  "headroom": 0.85,
   "routes": [
     [
       [

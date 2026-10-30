@@ -1,7 +1,7 @@
 {
  "ident": "FisheryWorks",
  "source": "src/DeepFrontier/Art/Source/FisheryWorks-ReferenceStudy.blend",
- "sourceSha256": "88c4772abf7c439fe5b02fa40325bdb858beb61941f0060493d496a43beaa693",
+ "sourceSha256": "c33527db5407074c48c3586e142a0df4d8106829b46e71e2647f8d6e4d9653cc",
  "frame": 1,
  "layout": "tools/civic-layouts.json",
  "origin": [
@@ -14,7 +14,7 @@
   11,
   8
  ],
- "height": 7,
+ "height": 4,
  "coordinateSystem": "Native grid XYZ, Z up: authored artwork + registration origin (the late-game registration frame)",
  "smokeEmitters": [
   {
@@ -22,7 +22,7 @@
    "position": [
     6.97,
     5.35,
-    6.2
+    3.38
    ],
    "radius": 0.2
   }
@@ -34,11 +34,11 @@
     "position": [
      6.97,
      5.35,
-     6.2
+     3.38
     ],
-    "stackTop": 6.2,
-    "lowestNearby": 1.99,
-    "vertices": 156
+    "stackTop": 3.38,
+    "lowestNearby": 0.99,
+    "vertices": 118
    }
   ]
  }

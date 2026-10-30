@@ -36,7 +36,9 @@ for x,y,z in samples:
         if hit[0] is not None and abs(hit[0].z-z)<.005:contacts+=1
     if contacts<2:failures.append(f'Floor {x:.3f},{y:.3f},{z}')
     for dx,dy in ((0,0),(.20,0),(-.20,0),(0,.20),(0,-.20)):
-        hit=tree.ray_cast(Vector((-x-dx,-y-dy,z+.01)),Vector((0,0,1)),1.09)
+        # One-layer storeys since 2026-10-30 (civic_isometric_geometry
+        # CIVIC_ACCESS FisheryWorks headroom): clear up to the roof's eave timbers.
+        hit=tree.ray_cast(Vector((-x-dx,-y-dy,z+.01)),Vector((0,0,1)),.85)
         if hit[0] is not None:failures.append(f'Body {x+dx:.3f},{y+dy:.3f},{hit[0].z:.3f}: {owners[hit[2]]}')
 report={'scope':'Source mesh against authored game-route waypoints; native movement still requires playtesting',
         'size':F['size'],'origin':F['origin'],'exteriorSamples':len(samples),'failures':failures}

@@ -1020,11 +1020,10 @@ def stall_wing(g, parts):
     gable(g, 'X', HY1, 1, [(.10, 0), (HX0, 0), (HX0, under(HX0) + .03), (.10, under(.10) + .03)])
     for y in (2.30, 4.70):
         lantern(g, .10, y, under(.10) - .138, .02)
-    # Hanging basket sign on an iron arm from the front corner post.
-    arm_z = under(.10) - .10
-    member(g, (.10, 1.19, arm_z), (.10, .03, arm_z), .05, .06, IRON)
-    member(g, (.10, 1.0, arm_z - .22), (.10, .90, arm_z - .03), .04, .04, IRON)
-    pivot = (.10, .42, arm_z - .03)
+    # Hanging basket sign under the wing's outer beam, inside the wing's own
+    # cells (2026-10-30, no-clutter rule: it hung on an arm over the open
+    # cell in front of the wing).
+    pivot = (.10, 1.85, under(.10) - .138)
     sign = Geometry('GroceryMarket.BasketSign', pivot)
     basket_sign(sign, *pivot)
     parts.append((sign, 'SWAY', .05))
@@ -1274,13 +1273,8 @@ def front_goods(g):
     # on stepped shelves facing the side street.
     crock_shelf(g, 'FermentedCassava', 1.45, 3.25, 90)
     crock_shelf(g, 'FermentedSoybean', 3.75, 5.55, 95)
-    # In front of the stall wing, beside the sign: cassava overflow crate.
-    g_crate = (.62, .40, .44, .30, .24)
-    crate(g, g_crate[0], g_crate[1], 0, g_crate[2], g_crate[3], g_crate[4], None, 113)
-    for i, dx in enumerate((-.10, .10)):
-        crock(stock(g, 'FermentedCassava', 3), g_crate[0] + dx, g_crate[1], g_crate[4], 113 + i)
-    basket(g, .50, .80, 0, .11, 'orange', 114)
-    sack(g, .85, .78, 0, .12, .34, 115)
+    # The cassava overflow crate, basket and sack that stood on the open cell
+    # in front of the stall wing are gone (2026-10-30, no-clutter rule).
     check_stock(g)
 
 

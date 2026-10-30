@@ -82,8 +82,7 @@ DOORS = {
 # Fixed roof equipment and furniture. Their picking volumes come from the
 # actual parts; these cells are never public paths or stackable roof.
 RESERVATIONS = [
-    [4,4,3,5,5,5], [1,3,3,2,4,5],  # two kitchen stacks on the flat roof
-    [2,2,3,4,3,4],  # the carved sign's roof gantry, front edge of the main roof
+    [4,3,4,5,4,5],  # the kitchen stack on the roof stairhead's cap
     [0,0,1,6,1,2], [0,0,2,6,1,3], # fixed dining furniture, never public paths
     [6,1,1,7,6,2], # side tables and chairs
 ]
