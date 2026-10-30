@@ -4,6 +4,17 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction follow-up: board and sheet roofs on Chemical Works, Precision Machine Works, Cryogenic Liquefaction Plant and Water Treatment Plant (Claude Code session, 2026-10-30, built by an agent; scenes and exports promoted; validated in mirror `lgi` on HEAD + this change; not built or run in game)
+
+- **Why:** no flat roof may show one timber or metal texture stretched over it. Flat plank and sheet roofs are now laid as separate boards or sheets by `lategame_roofdeck_parts.deck_slab` (through `compact_industry_parts.flat_roof(boards=True)` / `storey_block(roof_boards=True)`); concrete roofs stay plain slabs.
+- **Chemical Works:** corrugated-metal hall roof in 0.5 sheets, the cooler house's steel top in plates. Triangles 8,322 -> 8,440.
+- **Precision Machine Works:** the gate office's timber roof in boards. Triangles 6,854 -> 6,950.
+- **Cryogenic Liquefaction Plant:** the compressor house's steel roof and the cold box's layer-7 cap in plates. Triangles 7,222 -> 7,296.
+- **Water Treatment Plant:** the pump shed's corrugated-metal roof in sheets (its back wall now stops under the sheets' base slab). Triangles 10,690 -> 10,738.
+- **Unchanged:** sizes, blueprints, roof decks (13 / 6 / 9 / 8 placeable cells), connection faces, animations. Fertilizer Works and Food Packaging Works already have board roofs; Electrolysis Plant and Cryogenic Tank Farm have gables.
+- **Checks:** strict z-fight audit 0 visible at frames 1/31/61/91 on all four; grid audits unchanged; canonical generation in the mirror reaches a fixed point; `validate_all -Only` 23 checks: all pass except `map-setup-terrain` (other buildings' sites only).
+- **In game:** not seen yet.
+
 ## Compaction: Food Packaging Works 10x7x12 -> 7x5x7 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `lgi` on HEAD + this change; not built or run in game)
 
 - **Art** (`lategame_FoodPackagingWorks.py`, saved scene unpacked): the cannery hall (concrete ground storey with the loading bay and the canning line, two steel-framed orange storeys with factory glazing, one layer each) under a flat corrugated-metal roof (PaintedMetal sheets through `deck_slab`) with a steel curb and the glazed monitor lantern with a flat steel cap along its middle row; three vertical retorts with the jib crane on a concrete pad; two set boilers with the feed pump in front of a one-bay boiler house under a hipped roof of native teal planks, its six-layer banded stack through the roof (smoke); a covered conveyor bridge on layer 1 to the plank-clad warehouse under a flat timber-plank roof (boards) with a timber curb. Removed: the cannery's teal gable, the two turbine ventilators (user: "no roof vents"), the bridge's steel portal and braced side frames, the feed-water tank on its legs, the boiler house's second bay and the 12-layer stack. 5 animated parts keep their names (6 -> 5: the ventilators).

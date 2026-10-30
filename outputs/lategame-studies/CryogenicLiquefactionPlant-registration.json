@@ -906,7 +906,7 @@
    6
   ]
  ],
- "partsOutsideFootprint": 12,
+ "partsOutsideFootprint": 13,
  "doors": [
   {
    "id": "CompressorHouseDoor",
@@ -1312,5 +1312,5 @@
   "CryogenicLiquefactionPlant.Piston1",
   "CryogenicLiquefactionPlant.Beacon"
  ],
- "sourceHash": "888223629bcaf5ed0d7094afdbd9ea7eb608483e876ef5537b1b52f311549efe"
+ "sourceHash": "10369e6b15b6f0e78009e87e00aaf3bd49da6924c1b36ed2ec9b920fdb8109cc"
 }

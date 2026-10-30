@@ -42,6 +42,7 @@ import lategame_industry_parts as P
 import lategame_civic_parts as C
 from lategame_civic_parts import blk
 import compact_industry_parts as Q
+from lategame_roofdeck_parts import deck_slab
 
 IDENT = 'WaterTreatmentPlant'
 FOOTPRINT = (9, 5)
@@ -250,14 +251,15 @@ def pump_shed(g, parts):
     x0, y0, x1, y1 = SHED
     base = .2
     blk(g, x0 + .05, y0 + .05, -.02, x1, y1, base, CONCRETE)   # floor slab, behind the filter house's foot
-    C.framed_block(g, x0 + .12, y1 - .3, x1 - .05, y1 - .05, base, ROOF_Z - .03, infill=FORGED, frame=IRON,
+    C.framed_block(g, x0 + .12, y1 - .3, x1 - .05, y1 - .05, base, ROOF_Z - .06, infill=FORGED, frame=IRON,
                    faces=('back',), sink=.02,
                    windows={'back': [(6.5, 1.3, .5, 'factory'), (7.5, 1.3, .5, 'factory')]})
     for y in (y0 + .2, (y0 + y1) / 2):
         blk(g, x1 - .17, y - .07, base, x1 - .03, y + .07, ROOF_Z - .1, IRON)
     blk(g, x1 - .16, y0 + .1, ROOF_Z - .26, x1 - .04, y1 - .3, ROOF_Z - .1, IRON)
     # Flat roof slab beside the filter house's (its curb stays the edge).
-    blk(g, x0 + .05, y0 + .07, ROOF_Z - Q.ROOF_T, x1 + .06, y1 + .06, ROOF_Z, PAINTED)   # corrugated metal
+    # Corrugated-metal sheets laid separately (no stretched texture).
+    deck_slab(g, x0 + .05, y0 + .07, x1 + .06, y1 + .06, ROOF_Z, 'painted', thickness=Q.ROOF_T, base=IRON)
     w = Q.CURB_W
     blk(g, x0 + .05, y1 + .06 - w, ROOF_Z, x1 + .06, y1 + .06, ROOF_Z + Q.CURB, IRON)
     blk(g, x1 + .06 - w, y0 + .07, ROOF_Z, x1 + .06, y1 + .06 - w, ROOF_Z + Q.CURB, IRON)

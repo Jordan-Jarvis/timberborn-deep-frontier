@@ -66,7 +66,7 @@ FLARE = (2.84, 4.84)   # on the cooler house's back corner, clear of its cell's 
 def hall(g):
     x0, y0, x1, y1 = HALL
     Q.storey_block(g, x0, y0, x1, y1, 2, infill=FORGED, frame=IRON, door=DOOR_X, door_id='Entrance',
-                   roof_mat=PAINTED, curb_mat=IRON,
+                   roof_mat=PAINTED, curb_mat=IRON, roof_boards=True,
                    ground_windows={'left': [(1.5, .6, 'factory'), (3.5, .6, 'factory')],
                                    'back': [(1.5, .6, 'factory')],
                                    'right': [(3.0, .6, 'factory')]},
@@ -103,7 +103,7 @@ def roof_plant(g, parts):
         blk(g, x0 + .13, y0 + .03, zz, x1 - .13, y0 + .06, zz + .06, IRON)
         blk(g, x0 + .03, y0 + .13, zz, x0 + .06, y1 - .13, zz + .06, IRON)
         blk(g, x1 - .06, y0 + .13, zz, x1 - .03, y1 - .13, zz + .06, IRON)
-    Q.flat_roof(g, x0, y0, x1, y1, top, overhang=0.0, mat=IRON, curb_mat=IRON)
+    Q.flat_roof(g, x0, y0, x1, y1, top, overhang=0.0, mat=IRON, curb_mat=IRON, boards=True)
     for i, y in enumerate((2.5, 4.5)):
         cx = 1.5
         P.hoop(g, (cx, y, top + .16), .4, .04, .3, IRON, segments=12)

@@ -168,7 +168,7 @@ def gate_office(g, parts):
     """Two-storey works office at the gate under a flat, placeable roof."""
     x0, y0, x1, y1 = OFFICE
     top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=WOOD, door=DOOR_X, door_id='Entrance',
-                         roof_mat=PLANK, curb_mat=WOOD,
+                         roof_mat=PLANK, curb_mat=WOOD, roof_boards=True,
                          ground_windows={'front': [(6.75, .55, 'grand')], 'right': [(1.0, .55, 'grand')]},
                          windows={'front': [(6.5, 1.5, .52, 'grand'), (7.5, 1.5, .52, 'grand'),
                                             (8.5, 1.5, .52, 'grand')],
