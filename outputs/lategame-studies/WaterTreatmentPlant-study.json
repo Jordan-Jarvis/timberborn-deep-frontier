@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "An elevated riveted water tower on a braced steel trestle with a railed balcony and a teal cone roof, over two round clarifiers whose scraper bridges sweep round the water.",
+  "hero": "An elevated riveted water tower with a railed balcony and a teal cone roof on a solid shaft, over two round clarifiers whose scraper bridges sweep round the water.",
   "footprint": [
-    12,
-    11
+    9,
+    5
   ],
-  "heightLayers": 13,
+  "heightLayers": 7,
   "boundsMin": [
     -0.03,
-    -0.1897,
+    -0.265,
     -0.03
   ],
   "boundsMax": [
-    12.057,
-    11.05,
-    12.36
+    9.1,
+    5.19,
+    6.74
   ],
   "doors": [
     {
       "id": "Entrance",
       "position": [
         8.5,
-        4.2,
+        0.0,
         0
       ],
       "outward": [
@@ -34,29 +34,28 @@
     "WaterTreatmentPlant.ScraperBridge1",
     "WaterTreatmentPlant.ScraperBridge2",
     "WaterTreatmentPlant.AeratorRotor",
+    "WaterTreatmentPlant.Beacon",
     "WaterTreatmentPlant.PumpFlywheel1",
-    "WaterTreatmentPlant.PumpFlywheel2",
-    "WaterTreatmentPlant.Beacon"
+    "WaterTreatmentPlant.PumpFlywheel2"
   ],
   "animationFrames": 121,
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 7712,
+  "faces": 4523,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1110,
-    "IrregularPlanks_DarkBrown.IronTeeth": 10,
-    "BaseMetal.IronTeeth": 4071,
-    "RoofPlanks.IronTeeth": 753,
-    "Details.IronTeeth": 288,
-    "accent8": 40,
+    "BaseWood_DarkBrown.IronTeeth": 854,
+    "BaseMetal.IronTeeth": 2288,
+    "RoofPlanks.IronTeeth": 240,
+    "Details.IronTeeth": 48,
+    "accent8": 30,
     "accent25": 40,
-    "Plaster_White.IronTeeth": 1036,
-    "Plaster_Orange.IronTeeth": 149,
-    "IrregularPlanks_MetalForged.IronTeeth": 66,
-    "WindowsAtlas.IronTeeth": 134,
-    "PaintedMetal.IronTeeth": 1049
+    "Plaster_White.IronTeeth": 998,
+    "Plaster_Orange.IronTeeth": 23,
+    "IrregularPlanks_MetalForged.IronTeeth": 18,
+    "WindowsAtlas.IronTeeth": 98,
+    "PaintedMetal.IronTeeth": 776
   },
-  "sourceHash": "e94a28ed0c79fcfedf7a4de5126db5261adde92680e96c3717fc8944874136d8",
-  "artHash": "dabbaa5fd97f246fc9ad21e20c944178c00986f29b7156043ebe5675f162534d"
+  "sourceHash": "659a61c31d4d9d0c7327746cc482edf4d1a026614f044bff00ab622f879635c3",
+  "artHash": "d1b9cbbb576336cb67874ab43553f7ffe02f4be25624232f3fffd1823edd6de3"
 }

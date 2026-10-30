@@ -832,9 +832,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 18502,
-   "vertices": 34634,
-   "construction": 18502,
+   "finished": 10690,
+   "vertices": 20418,
+   "construction": 10690,
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
