@@ -301,9 +301,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 18978,
-   "vertices": 36674,
-   "construction": 18978,
+   "finished": 10454,
+   "vertices": 20160,
+   "construction": 10454,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/ElectrolysisPlant/ElectrolysisPlant.IronTeeth.Model.timbermesh"
   },
   "FertilizerWorks": {

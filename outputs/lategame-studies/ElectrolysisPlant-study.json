@@ -2,26 +2,26 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Twin telescoping gas holders in round steel guide frames: a two-lift hydrogen holder and a smaller oxygen holder whose riveted bells slowly rise and fall.",
   "footprint": [
-    12,
-    9
+    8,
+    5
   ],
-  "heightLayers": 12,
+  "heightLayers": 6,
   "boundsMin": [
-    -0.0616,
-    -0.04,
+    -0.06,
+    -0.265,
     -0.03
   ],
   "boundsMax": [
-    11.9625,
-    9.16,
-    11.12
+    7.99,
+    5.05,
+    5.32
   ],
   "doors": [
     {
       "id": "Entrance",
       "position": [
-        6.5,
-        4.15,
+        1.5,
+        0.0,
         0
       ],
       "outward": [
@@ -43,21 +43,19 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 8110,
+  "faces": 4048,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 452,
-    "IrregularPlanks_DarkBrown.IronTeeth": 10,
-    "BaseMetal.IronTeeth": 3911,
-    "RoofPlanks.IronTeeth": 600,
-    "Details.IronTeeth": 628,
+    "BaseWood_DarkBrown.IronTeeth": 308,
+    "BaseMetal.IronTeeth": 2333,
+    "Details.IronTeeth": 284,
     "accent8": 20,
-    "accent25": 70,
-    "Plaster_White.IronTeeth": 2052,
-    "Plaster_Orange.IronTeeth": 139,
-    "IrregularPlanks_MetalForged.IronTeeth": 168,
-    "WindowsAtlas.IronTeeth": 386,
-    "PaintedMetal.IronTeeth": 1142
+    "accent25": 22,
+    "Plaster_White.IronTeeth": 1144,
+    "Plaster_Orange.IronTeeth": 13,
+    "IrregularPlanks_MetalForged.IronTeeth": 54,
+    "WindowsAtlas.IronTeeth": 370,
+    "PaintedMetal.IronTeeth": 890
   },
-  "sourceHash": "9c2453e4d74d36793b5af21f07c068f13c005e4d8364deb8216d4a7848b47a7f",
-  "artHash": "608a1cf785215d1884870cc0f3edf138d7a2fa21cbf368c689caa9218dbfce96"
+  "sourceHash": "ffdb809e12fe403a5152cb176a5aa85ecefddfcddfdb39a45576f4c7c348a2c1",
+  "artHash": "396494e634f7b00665b232f7acf70dfeec1d69450beff6412a56d9bce33c581e"
 }
