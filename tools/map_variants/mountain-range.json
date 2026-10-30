@@ -60,7 +60,6 @@
     {"template": "TownPlaza.IronTeeth", "label": "Town Plaza, 83 cells north of the start", "x": 81, "y": 124, "z": 11, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "MaterialsLaboratory.IronTeeth", "label": "Materials Laboratory, 35 cells east of the start", "x": 100, "y": 46, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "RocketAssemblyHangar.IronTeeth", "label": "Rocket Assembly Hangar, 36 cells south-east of the start", "x": 97, "y": 22, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": []},
-    {"template": "FoodPackagingWorks.IronTeeth", "label": "Food Packaging Works, 64 cells south-east of the start", "x": 131, "y": 19, "z": 3, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "Restaurant.IronTeeth", "label": "Restaurant, 57 cells east of the start", "x": 127, "y": 28, "z": 4, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "TechnicalSchool.IronTeeth", "label": "Technical School, 55 cells south-west of the start", "x": 31, "y": 1, "z": 1, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "GroceryStore.IronTeeth", "label": "Grocery Store, 12 cells west of the start", "x": 55, "y": 40, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["E", "W"]},

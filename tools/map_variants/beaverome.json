@@ -28,7 +28,6 @@
     {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 10 layers of natural drop, 27 cells south-east of the start", "x": 98, "y": 72, "z": 10},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Buried records 95 cells south-west of the start", "x": 33, "y": 24, "z": 11, "orientation": "Cw270", "margin": 1, "openSides": ["S"]},
     {"template": "RocketAssemblyHangar.IronTeeth", "label": "Rocket Assembly Hangar, 51 cells east of the start", "x": 128, "y": 99, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": []},
-    {"template": "FoodPackagingWorks.IronTeeth", "label": "Food Packaging Works, 77 cells north-west of the start", "x": 46, "y": 161, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["W"]},
     {"template": "Restaurant.IronTeeth", "label": "Restaurant, 85 cells north-west of the start", "x": 41, "y": 169, "z": 12, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "TechnicalSchool.IronTeeth", "label": "Technical School, 43 cells north of the start", "x": 88, "y": 132, "z": 9, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "GroceryStore.IronTeeth", "label": "Grocery Store, 83 cells north-west of the start", "x": 14, "y": 150, "z": 12, "orientation": "Cw90", "margin": 1, "openSides": ["S"]},

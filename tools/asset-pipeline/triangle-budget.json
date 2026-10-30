@@ -337,9 +337,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 11204,
-   "vertices": 21026,
-   "construction": 11204,
+   "finished": 7648,
+   "vertices": 14314,
+   "construction": 7648,
    "file": "outputs/lategame-integration/Data/Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.Model.timbermesh"
   },
   "Greenhouse": {

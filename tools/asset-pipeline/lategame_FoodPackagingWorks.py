@@ -1,260 +1,239 @@
 """FoodPackagingWorks: cannery for canned fish, packaged and medical food
+(3 workers, 140 hp).
 
 Revised 2026-10-22 (no forced decoration; footprint ends at the walls):
 removed the forecourt barrels, crates, post lamp and planting.
-(3 workers, 140 hp).
 
-HERO: a tall riveted-steel cannery hall crowned by a glazed monitor roof, with
-a 12-layer boiler stack beside it.
-ROOF: teal gable with a raised glazed monitor (clerestory) along the ridge;
-hipped boiler house; flat parapet roof on the warehouse.
+Compacted 2026-10-30 (Workshop feedback: the buildings exceed Timberborn's
+scale; user: "it is the scaffolding and size", "one layer per floor", "make
+the roof flat on more of our buildings", "no roof vents"): 10x7x12 -> 7x5x7, inside the old
+footprint with the same origin, door and native entrance (cell 2, -1).
+Removed: the cannery's gable, the conveyor bridge's steel portal
+and braced side frames, the feed-water tank on its legs, the boiler house's
+second bay and the 12-layer stack (now six layers). Storeys are one layer
+each.
 
-Parts: concrete ground storey with a deep loading bay showing the canning line;
-orange-and-steel upper storeys with factory glazing; monitor with turbine
-ventilators; three vertical retorts with a jib crane on a concrete pad; boiler
-house with two set boilers, steam header and feed pump; tall banded stack with
-flue duct; open conveyor bridge carrying crates to a timber warehouse block.
+HERO: a riveted-steel cannery hall of three one-layer storeys crowned by a
+glazed monitor lantern, beside a tall boiler stack.
+ROOF: flat corrugated-metal roof with a steel curb on the cannery (its front
+and back rows placeable) under the glazed monitor's flat steel cap; a hipped
+roof of native teal planks on the boiler house with the stack through it; a
+flat timber roof on the warehouse. No roof vents.
 
-Animated: cans on the canning line (CUSTOM_LOOP_X), seamer turret (SPIN_Z),
-crates on the bridge belt (CUSTOM_LOOP_Y), two turbine ventilators (SPIN_Z),
-boiler feed-pump rod (PISTON_Z), retort crane hook (PISTON_Z).
+Parts: concrete ground storey with a loading bay showing the canning line;
+orange-and-steel upper storeys with factory glazing; three vertical
+retorts with a jib crane on a concrete pad; two set boilers with a feed
+pump in front of the boiler house; its stack; a short covered conveyor
+bridge on layer 1 carrying crates to a plank-clad warehouse.
+
+Animated (5, names unchanged): cans on the canning line (CUSTOM_LOOP_X),
+seamer turret (SPIN_Z), crates on the bridge belt (CUSTOM_LOOP_Y), boiler
+feed-pump rod (PISTON_Z), retort crane hook (PISTON_Z). The two turbine
+ventilators are gone (user: "no roof vents").
 """
 import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
-from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK, GLOW, CYAN
+from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED
 import lategame_civic_parts as P
 from lategame_civic_parts import blk, animate  # noqa: F401
-import native_building_assets as N
+import compact_industry_parts as Q
 
 IDENT = 'FoodPackagingWorks'
-# Footprint ends at the walls (cannery front y = 1): forecourt barrels,
-# crates, post lamp and planting were removed. GRID_ORIGIN is the
-# footprint's (0, 0) corner in the artwork coordinates used below.
-FOOTPRINT = (10, 7)
+# Artwork keeps its original coordinates (cannery front y = 1); GRID_ORIGIN is
+# the footprint's (0, 0) corner.
+FOOTPRINT = (7, 5)
 GRID_ORIGIN = (0, 1)
-HEIGHT = 12
-HERO = 'Tall riveted-steel cannery hall crowned by a glazed monitor roof with turbine ventilators, beside a 12-layer boiler stack.'
+HEIGHT = 7
+HERO = ('Riveted-steel cannery hall of three storeys crowned by a glazed monitor lantern, '
+        'beside a tall boiler stack.')
 FRAME_END = 121
 
-CX0, CY0, CX1, CY1 = 1.0, 1.0, 6.0, 5.0     # cannery on tiles 1..6 x 1..5
-BAY0, BAY1, BAY_D, BAY_H = 3.6, 5.6, 1.1, 1.15
+CX0, CY0, CX1, CY1 = 1.0, 1.0, 5.0, 4.0     # cannery on tiles 1..5 x 1..4
+CANNERY_LAYERS = 3
+BAY0, BAY1, BAY_D, BAY_H = 3.3, 4.7, .85, .9
+DOOR_X = 2.5
+BOILERS = (5.0, 1.0, 7.0, 4.0)              # set boilers in front of the boiler house
+HOUSE = (5.0, 4.0, 7.0, 6.0)                # boiler house on whole tiles
+WAREHOUSE = (0.0, 5.0, 3.0, 6.0)
+BRIDGE = (1.6, 2.4)                         # covered bridge x span on layer 1
 
 
 def cannery(g, parts):
-    top = 1.4
-    # Ground storey around a deep loading bay.
+    # Ground storey around the loading bay; one coping ring over all of it
+    # (the coping is the bay head), one foot course.
+    top = 1.0
     blk(g, CX0, CY0, 0, BAY0, CY1, top - .03, CONCRETE)
     blk(g, BAY1, CY0, 0, CX1, CY1, top - .03, CONCRETE)
     blk(g, BAY0, CY0 + BAY_D, 0, BAY1, CY1, top - .03, CONCRETE)
-    blk(g, BAY0, CY0, BAY_H, BAY1, CY0 + BAY_D, top - .03, CONCRETE)
-    blk(g, CX0 - .03, CY0 - .03, -.03, CX1 + .03, CY1 + .03, .14, CONCRETE)
-    blk(g, CX0 - .05, CY0 - .05, top - .1, CX1 + .05, CY1 + .05, top, CONCRETE)
-    for x in (CX0 + 1.0, (BAY1 + CX1) / 2):
-        blk(g, x - .05, CY0 - .025, .14, x + .05, CY0, top - .1, CONCRETE)
-    for y in (2.0, 3.0, 4.0):
-        for x, s in ((CX0, -1), (CX1, 1)):
-            blk(g, min(x, x + s * .025), y - .05, .14, max(x, x + s * .025), y + .05, top - .1, CONCRETE)
-    P.door(g, 2.5, CY0, 0, 'Door0')
-    P.native_window(g, 1.75, CY0, .72, .7, 'front', 'factory')
-    P.native_window(g, CX0, 2.4, .72, .7, 'left', 'factory')
-    P.native_window(g, CX0, 3.6, .72, .7, 'left', 'factory')
-    # Bay interior: steel back plate, side plates, lintel beam and a
-    # half-raised roller shutter.
+    # Foot and coping stop short at the back-right corner, where the boiler
+    # house's own (proud of x = 5, y = 4) take over.
+    blk(g, CX0 - .03, CY0 - .03, -.03, CX1 + .03, CY1 - .03, .14, CONCRETE)
+    blk(g, CX0 - .03, CY1 - .03, -.03, CX1 - .03, CY1 + .03, .14, CONCRETE)
+    blk(g, CX0 - .05, CY0 - .05, BAY_H, CX1 + .05, CY1 - .05, top, CONCRETE)
+    blk(g, CX0 - .05, CY1 - .05, BAY_H, CX1 - .05, CY1 + .05, top, CONCRETE)
+    P.door(g, DOOR_X, CY0, 0, 'Door0')
+    P.native_window(g, 1.5, CY0, .52, .55, 'front', 'factory')
+    P.native_window(g, CX0, 2.5, .52, .6, 'left', 'factory')
+    P.native_window(g, CX1, 3.5, .52, .6, 'right', 'factory')
+    K.lamp(g, DOOR_X - .66, CY0 - .01, .78, face='front')
+    # Bay lining: steel back plate, side plates and a half-raised roller shutter.
     yb = CY0 + BAY_D
-    blk(g, BAY0 + .02, yb - .03, .14, BAY1 - .02, yb, BAY_H - .02, IRON)
-    blk(g, BAY0 - .08, CY0 - .06, BAY_H - .14, BAY1 + .08, CY0 + .02, BAY_H + .02, IRON)
-    for x in (BAY0 + .01, BAY1 - .01):
-        blk(g, x - .05, CY0 - .05, .14, x + .05, CY0 + .02, BAY_H - .14, IRON)
+    floor = .14
+    blk(g, BAY0 + .02, yb - .03, floor, BAY1 - .02, yb, BAY_H - .02, IRON)
+    for x in (BAY0 + .03, BAY1 - .03):
+        blk(g, x - .03, CY0, floor, x + .03, yb - .03, BAY_H - .02, IRON)
     for k in range(3):
-        z = BAY_H - .2 - k * .065
-        blk(g, BAY0 + .03, CY0 + .04, z, BAY1 - .03, CY0 + .1, z + .055, FORGED)
-    for x in (4.0, 5.2):
-        K.lamp(g, x, yb - .03, .95, face='front')
+        z = BAY_H - .12 - k * .05
+        blk(g, BAY0 + .06, CY0 + .04, z, BAY1 - .06, CY0 + .09, z + .045, FORGED)
+    K.lamp(g, (BAY0 + BAY1) / 2, yb - .03, .7, face='front')
     # Canning line: filler, belt, seamer.
-    zb = .55
-    blk(g, BAY0 + .05, 1.55, .14, BAY0 + .5, 2.05, 1.0, PAINTED)
-    blk(g, BAY0 + .03, 1.53, 1.0, BAY0 + .52, 2.07, 1.06, IRON)
-    P.gauge(g, BAY0 + .27, 1.55, .8, 'front')
-    blk(g, BAY0 + .5, 1.6, zb - .06, BAY1 - .55, 1.84, zb, IRON)
-    for x in (BAY0 + .7, BAY1 - .75):
-        blk(g, x - .03, 1.69, .14, x + .03, 1.75, zb - .06, IRON)
-    blk(g, BAY1 - .55, 1.5, .14, BAY1 - .05, 2.05, .62, PAINTED)
-    blk(g, BAY1 - .57, 1.48, .62, BAY1 - .03, 2.07, .68, IRON)
-    seamer = Geometry('SeamerTurret', (BAY1 - .3, 1.78, .8))
-    K.revolve(seamer, (BAY1 - .3, 1.78, .68), [(.2, 0), (.2, .1), (.08, .26)], BRASS, segments=12)
+    zb = .42
+    blk(g, BAY0 + .08, 1.35, floor, BAY0 + .4, 1.75, .72, PAINTED)
+    blk(g, BAY0 + .06, 1.33, .72, BAY0 + .42, 1.77, .77, IRON)
+    blk(g, BAY0 + .4, 1.44, zb - .05, BAY1 - .4, 1.62, zb, IRON)
+    for x in (BAY0 + .55, BAY1 - .55):
+        blk(g, x - .025, 1.51, floor, x + .025, 1.56, zb - .05, IRON)
+    blk(g, BAY1 - .4, 1.34, floor, BAY1 - .06, 1.74, .48, PAINTED)
+    blk(g, BAY1 - .42, 1.32, .48, BAY1 - .04, 1.76, .53, IRON)
+    seamer = Geometry('SeamerTurret', (BAY1 - .23, 1.54, .62))
+    K.revolve(seamer, (BAY1 - .23, 1.54, .53), [(.15, 0), (.15, .08), (.06, .2)], BRASS, segments=12)
     for i in range(6):
         a = i * math.pi / 3
-        seamer.cylinder((BAY1 - .3 + math.cos(a) * .16, 1.78 + math.sin(a) * .16, .84), .03, .12, IRON, 'Z', 6)
+        seamer.cylinder((BAY1 - .23 + math.cos(a) * .12, 1.54 + math.sin(a) * .12, .66), .025, .09, IRON, 'Z', 6)
     parts.append((seamer, 'SPIN_Z', 2))
-    cans = Geometry('CanningLine', (4.6, 1.72, zb))
-    pitch = .2
-    for k in range(9):
-        x = BAY0 + .42 + k * pitch
-        cans.cylinder((x, 1.72, zb + .07), .055, .14, BRASS, 'Z', 8)
+    cans = Geometry('CanningLine', ((BAY0 + BAY1) / 2, 1.53, zb))
+    pitch = .16
+    for k in range(4):
+        x = BAY0 + .5 + k * pitch
+        cans.cylinder((x, 1.53, zb + .055), .045, .11, BRASS, 'Z', 8)
     parts.append((cans, 'CUSTOM_LOOP_X', pitch))
-    # Upper storeys: orange plaster in a steel frame, factory glazing.
-    xs = [CX0 + .05 + (CX1 - CX0 - .1) * (i + .5) / 5 for i in range(5)]
-    ys = [CY0 + .05 + (CY1 - CY0 - .1) * (i + .5) / 4 for i in range(4)]
-    P.framed_block(g, CX0 + .05, CY0 + .05, CX1 - .05, CY1 - .05, top, 4.6, infill=ORANGE, frame=IRON,
-                   pitch=.98, floors=(3.0,),
-                   windows={'front': [(x, z, .85, 'factory') for x in xs for z in (2.2, 3.8)],
-                            'back': [(x, 2.2, .85, 'factory') for x in xs[::2]],
-                            'left': [(y, z, .85, 'factory') for y in ys for z in (2.2, 3.8)],
-                            'right': [(y, 3.8, .85, 'factory') for y in ys[1:]]})
-    for x in xs[1::2]:
-        for y in (CY0 + .05,):
-            K.stud(g, (x - .42, y - .057, 3.0), 'Y', .03)
-    # Main gable roof along X and the glazed monitor.
-    K.gable_roof(g, CX0 + .05, CY0 + .05, CX1 - .05, CY1 - .05, 4.6, 5.9, ridge_axis='X', overhang=.16)
-    my0, my1 = (CY0 + CY1) / 2 - .5, (CY0 + CY1) / 2 + .5
-    mx0, mx1 = CX0 + .55, CX1 - .55
-    P.framed_block(g, mx0, my0, mx1, my1, 5.0, 6.5, infill=FORGED, frame=IRON, pitch=.78,
-                   faces=('front', 'back'), sink=0,
-                   windows={'front': [(mx0 + .39 + k * .78, 6.0, .8, 'factory') for k in range(5)],
-                            'back': [(mx0 + .39 + k * .78, 6.0, .8, 'factory') for k in range(5)]})
-    K.gable_roof(g, mx0, my0, mx1, my1, 6.5, 7.0, ridge_axis='X', overhang=.14, gable_mat=FORGED)
-    vy = (my0 + my1) / 2
-    for i, x in enumerate((mx0 + .65, mx1 - .65)):
-        g.cylinder((x, vy, 7.12), .1, .14, IRON, 'Z', 12)
-        vent = Geometry(f'TurbineVent{i}', (x, vy, 7.4))
-        K.revolve(vent, (x, vy, 7.19), [(.12, 0), (.24, .1), (.24, .32), (.12, .42), (0, .46)], FORGED, segments=10)
-        for k in range(10):
-            a = k * 2 * math.pi / 10
-            vent.beam((x + math.cos(a) * .245, vy + math.sin(a) * .245, 7.29),
-                      (x + math.cos(a + .5) * .245, vy + math.sin(a + .5) * .245, 7.51), .03, .03, IRON)
-        parts.append((vent, 'SPIN_Z', 2 if i == 0 else -2))
+    # Upper storeys (one layer each): orange plaster in a steel frame.
+    roof = float(CANNERY_LAYERS)
+    xs = [x + .5 for x in range(1, 5)]
+    ys = [y + .5 for y in range(1, 4)]
+    P.framed_block(g, CX0 + .05, CY0 + .05, CX1 - .05, CY1 - .05, top, roof - .06, infill=ORANGE, frame=IRON,
+                   floors=(2.0,),
+                   windows={'front': [(x, z, .58, 'factory') for x in xs for z in (1.5, 2.5)],
+                            'back': [(x, 2.5, .58, 'factory') for x in xs[::2]] + [(x, 1.5, .58, 'factory') for x in xs[1::2]],
+                            'left': [(y, z, .58, 'factory') for y in ys for z in (1.5, 2.5)],
+                            'right': [(y, 2.5, .58, 'factory') for y in ys]})
+    Q.flat_roof(g, CX0 + .05, CY0 + .05, CX1 - .05, CY1 - .05, roof, overhang=.11, mat=PAINTED, curb_mat=IRON,
+                boards=True)
+    # Glazed monitor lantern (daylight for the canning floors) with a flat steel cap.
+    mx0, my0, mx1, my1 = 1.6, 2.0, 4.4, 3.0
+    mz = roof + .55
+    P.framed_block(g, mx0, my0, mx1, my1, roof, mz, infill=FORGED, frame=IRON, pitch=.7,
+                   faces=('front', 'back'), sink=.02,
+                   windows={'front': [(mx0 + .35 + k * .7, roof + .28, .4, 'factory') for k in range(4)],
+                            'back': [(mx0 + .35 + k * .7, roof + .28, .4, 'factory') for k in range(4)]})
+    blk(g, mx0 - .08, my0 - .08, mz - .02, mx1 + .08, my1 + .08, mz + .08, IRON)
     # Painted sign board over the bay.
-    blk(g, 3.9, CY0 - .03, 1.48, 5.3, CY0 + .052, 1.9, WOOD)
-    blk(g, 3.97, CY0 - .045, 1.54, 5.23, CY0 - .03, 1.84, PAINTED)
-    for x in (4.25, 4.6, 4.95):
-        g.cylinder((x, CY0 - .065, 1.69), .07, .04, BRASS, 'Y', 10)
+    blk(g, 3.3, CY0 - .03, 1.12, 4.7, CY0 + .052, 1.38, WOOD)
+    blk(g, 3.36, CY0 - .045, 1.16, 4.64, CY0 - .03, 1.34, PAINTED)
+    for x in (3.7, 4.0, 4.3):
+        g.cylinder((x, CY0 - .065, 1.25), .06, .04, BRASS, 'Y', 10)
 
 
 def retorts(g, parts):
-    P.podium(g, 0.0, 1.0, 1.0, 5.0, .3, joints=False, foot=False)   # retort bed on tiles 0..1 x 1..5
+    P.podium(g, 0.0, 1.0, 1.0, 4.0, .3, joints=False, foot=False)   # retort bed on tiles 0..1 x 1..4
     rx = .5
-    for y in (1.75, 2.8, 3.85):
-        top = K.tank(g, rx, y, .3, .36, 1.25, bands=2, roof='dome')
-        g.ring((rx, y, top), .41, .06, .09, BRASS, 'Z', 16)
-        for k in range(8):
-            a = k * math.pi / 4
-            g.box((rx + math.cos(a) * .4, y + math.sin(a) * .4, top + .02), (.06, .06, .1), IRON)
-        g.cylinder((rx, y, top + .2), .05, .1, IRON, 'Z', 8)
-        P.gauge(g, rx, y - .37, 1.2, 'front')
-        P.flanged_pipe(g, [(rx + .36, y, 1.0), (CX0 + .02, y, 1.0)], .05)
-    P.flanged_pipe(g, [(.3, 1.4, 1.95), (.3, 4.2, 1.95)], .06)
-    for y in (1.75, 2.8, 3.85):
-        g.cylinder((.3, y, 1.75), .04, .4, IRON, 'Z', 8)
-        g.cylinder((.3 + .18, y, 1.58), .04, .3, IRON, 'X', 8)
-    K.valve_wheel(g, .3, 1.32, 1.95, face='front', r=.1)
+    for y in (1.55, 2.45, 3.35):
+        top = K.tank(g, rx, y, .3, .3, 1.0, bands=2, roof='dome')
+        g.ring((rx, y, top), .34, .05, .07, BRASS, 'Z', 16)
+        g.cylinder((rx, y, top + .17), .04, .08, IRON, 'Z', 8)
+        P.gauge(g, rx, y - .31, 1.0, 'front')
+        P.flanged_pipe(g, [(rx + .3, y, .85), (CX0 + .02, y, .85)], .045)
     # Jib crane over the retort lids.
-    blk(g, .2, 4.65, .3, .4, 4.85, 3.0, IRON)   # jib post stands on the retort bed
-    g.beam((.3, 4.75, 2.9), (.3, 1.4, 2.9), .12, .16, IRON)
-    g.beam((.3, 4.65, 2.2), (.3, 3.7, 2.82), .07, mat=IRON)
-    blk(g, .2, 2.68, 2.72, .4, 2.92, 2.82, PAINTED)
-    hook = Geometry('RetortHook', (.3, 2.8, 2.3))
-    hook.box((.3, 2.8, 2.45), (.02, .02, .5), IRON)
-    hook.box((.3, 2.8, 2.18), (.14, .1, .08), PAINTED)
-    hook.ring((.3, 2.8, 2.08), .06, .02, .03, IRON, 'Y', 10)
-    parts.append((hook, 'PISTON_Z', -.35))
+    blk(g, .2, 3.82, .3, .38, 3.98, 2.3, IRON)
+    g.beam((.29, 3.9, 2.22), (.29, 1.25, 2.22), .1, .13, IRON)
+    g.beam((.29, 3.82, 1.65), (.29, 3.1, 2.16), .06, mat=IRON)
+    blk(g, .2, 2.35, 2.07, .38, 2.55, 2.16, PAINTED)
+    hook = Geometry('RetortHook', (.29, 2.45, 1.75))
+    hook.box((.29, 2.45, 1.86), (.02, .02, .4), IRON)
+    hook.box((.29, 2.45, 1.63), (.12, .09, .07), PAINTED)
+    hook.ring((.29, 2.45, 1.54), .05, .02, .03, IRON, 'Y', 10)
+    parts.append((hook, 'PISTON_Z', -.25))
 
 
 def boilers(g, parts):
-    # Boiler house.
-    bx0, by0, bx1, by1 = 7.0, 3.0, 10.0, 6.0   # whole tiles
-    P.podium(g, bx0, by0, bx1, by1, 1.2, joints=True)
-    P.framed_block(g, bx0 + .05, by0 + .05, bx1 - .05, by1 - .05, 1.2, 3.1, infill=ORANGE, pitch=.92,
-                   windows={'front': [(7.25, 2.15, 1.0, 'grand'), (9.15, 2.15, 1.0, 'grand')],
-                            'right': [(4.4, 2.15, 1.0, 'grand'), (5.6, 2.15, 1.0, 'grand')],
-                            'left': [(5.6, 2.15, 1.0, 'grand')]})
-    P.hip_roof(g, bx0 + .05, by0 + .05, bx1 - .05, by1 - .05, 3.1, 1.0)
-    # Two set boilers in front, drums running into the house.
-    # Two boiler settings, one tile each, on tiles 7..9 x 1..3; one shared foot.
-    blk(g, 6.97, .97, -.03, 9.03, by0 - .04, .1, CONCRETE)
-    for x in (7.5, 8.5):
-        blk(g, x - .5, 1.0, 0, x + .5, by0, .62, CONCRETE)
-        blk(g, x - .3, .97, .16, x + .3, 1.0, .48, IRON)
-        for xx in (x - .18, x + .18):
-            K.stud(g, (xx, .955, .32), 'Y', .03)
-        P.horizontal_vessel(g, 1.2, by0 + .02, x, .98, .45, axis='Y', bands=3, saddles=False)
-        g.cylinder((x, 2.4, 1.57), .16, .3, IRON, 'Z', 12)
-        g.ring((x, 2.4, 1.73), .2, .06, .05, BRASS, 'Z', 12)
-        g.cylinder((x, 1.7, 1.5), .06, .2, BRASS, 'Z', 8)
-        P.flanged_pipe(g, [(x, 2.4, 1.72), (x, 2.4, 2.6)], .07)
-        P.gauge(g, x + .25, 1.18, 1.0, 'front')
-    # Steam header into the cannery.
-    P.flanged_pipe(g, [(9.0, 2.4, 2.6), (CX1 + .02, 2.4, 2.6)], .08)
-    K.valve_wheel(g, 6.5, 2.27, 2.6, face='front', r=.13)
-    # Feed pump with a reciprocating rod.
-    P.pier(g, 9.65, 1.55, 0, .25, .28)
-    g.cylinder((9.65, 1.55, .55), .12, .55, PAINTED, 'Z', 12)
-    g.ring((9.65, 1.55, .83), .15, .04, .04, BRASS, 'Z', 12)
-    blk(g, 9.55, 1.45, 1.4, 9.75, 1.65, 1.46, IRON)
-    for x in (9.57, 9.73):
-        blk(g, x - .02, 1.53, .82, x + .02, 1.57, 1.4, IRON)
-    rod = Geometry('FeedPumpRod', (9.65, 1.55, 1.0))
-    rod.cylinder((9.65, 1.55, 1.0), .03, .36, IRON, 'Z', 8)
-    rod.box((9.65, 1.55, 1.2), (.18, .08, .05), BRASS)   # crosshead ends run inside the guides
-    parts.append((rod, 'PISTON_Z', .14))
-    P.flanged_pipe(g, [(9.65, 1.55, 1.46), (9.65, 1.55, 1.8), (9.65, by0 + .05, 1.8)], .04)
-    # Stack rising through the hipped roof; feed-water tank on steel legs.
-    K.stack(g, 8.2, 5.0, 3.2, 8.5, emits='smoke', r=.34, bands=6)
-    P.raised_tank(g, 9.05, 7.2, .55, 1.3, stand=1.0)
-    P.flanged_pipe(g, [(9.05, 6.62, 1.6), (9.05, by1 + .05, 1.6)], .05)
-    K.ladder(g, 9.05, 7.76, 0, 2.2, face='back', cage=False)
+    x0, y0, x1, y1 = BOILERS
+    # Two boiler settings, one tile each, on a shared foot; drums run into the house.
+    blk(g, x0 + .1, y0 + .1, -.03, x1 - .03, y1 - .05, .1, CONCRETE)
+    for x in (5.6, 6.5):
+        blk(g, x - .42, y0 + .15, 0, x + .42, y1 - .1, .5, CONCRETE)
+        blk(g, x - .26, y0 + .12, .14, x + .26, y0 + .15, .4, IRON)
+        for xx in (x - .15, x + .15):
+            K.stud(g, (xx, y0 + .105, .27), 'Y', .025)
+        P.horizontal_vessel(g, y0 + .3, y1 + .02, x, .86, .36, axis='Y', bands=3, saddles=False)
+        g.cylinder((x, 2.6, 1.3), .13, .24, IRON, 'Z', 12)
+        g.ring((x, 2.6, 1.43), .16, .05, .04, BRASS, 'Z', 12)
+        P.flanged_pipe(g, [(x, 2.6, 1.42), (x, 2.6, 1.75)], .06)
+        P.gauge(g, x + .2, y0 + .45, .86, 'front')
+    # Steam header into the cannery's right wall.
+    P.flanged_pipe(g, [(6.5, 2.6, 1.75), (CX1 + .02, 2.6, 1.75)], .07)
+    K.valve_wheel(g, 5.3, 2.47, 1.75, face='front', r=.11)
+    # Feed pump with a reciprocating rod, between the boiler fronts.
+    px, py = 6.05, 1.4
+    g.cylinder((px, py, .72), .09, .44, PAINTED, 'Z', 12)
+    g.ring((px, py, .94), .12, .035, .035, BRASS, 'Z', 12)
+    blk(g, px - .08, py - .08, 1.38, px + .08, py + .08, 1.43, IRON)
+    for x in (px - .065, px + .065):
+        blk(g, x - .015, py - .015, .94, x + .015, py + .015, 1.38, IRON)
+    rod = Geometry('FeedPumpRod', (px, py, 1.05))
+    rod.cylinder((px, py, 1.05), .025, .3, IRON, 'Z', 8)
+    rod.box((px, py, 1.2), (.14, .06, .04), BRASS)   # crosshead ends run inside the guides
+    parts.append((rod, 'PISTON_Z', .1))
+    P.flanged_pipe(g, [(px, py, 1.43), (px, py, 1.6), (px, 3.95, 1.6)], .035)
+
+
+def boiler_house(g):
+    x0, y0, x1, y1 = HOUSE
+    top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=WOOD, roof=False,
+                         ground_windows={'right': [(5.0, .55, 'grand')], 'back': [(6.0, .55, 'grand')]},
+                         windows={'front': [(5.5, 1.5, .52, 'grand'), (6.5, 1.5, .52, 'grand')],
+                                  'right': [(4.5, 1.5, .52, 'grand'), (5.5, 1.5, .52, 'grand')],
+                                  'back': [(5.5, 1.5, .52, 'grand'), (6.5, 1.5, .52, 'grand')]})
+    # Hipped roof of native teal roof planks, the boiler stack rising through it.
+    P.hip_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, top, .7, overhang=.14)
+    K.stack(g, 6.0, 5.0, top - .2, 4.85, emits='smoke', r=.26, bands=4)
 
 
 def warehouse_and_bridge(g, parts):
-    wx0, wy0, wx1, wy1 = 0.0, 6.0, 5.0, 8.0   # whole tiles
-    P.podium(g, wx0, wy0, wx1, wy1, 1.0)
-    P.framed_block(g, wx0 + .05, wy0 + .05, wx1 - .05, wy1 - .05, 1.0, 3.6, infill=PLANK, pitch=.88,
-                   floors=(2.3,),
-                   windows={'back': [(x, 1.65, .8, 'factory') for x in (1.0, 2.6, 4.2)] +
-                                     [(x, 2.95, .8, 'factory') for x in (1.0, 2.6, 4.2)],
-                            'left': [(6.9, 2.95, .8, 'factory')],
-                            'front': [(1.0, 2.95, .8, 'factory'), (4.2, 2.95, .8, 'factory')]})
-    K.sawtooth_roof(g, wx0 - .02, wy0 - .02, wx1 + .02, wy1 + .02, 3.63, teeth=2, rise=.85)
-    # Open conveyor bridge at layer 3 from cannery to warehouse.
-    x0, x1, y0, y1, z = 2.4, 3.4, CY1 - .05, wy0 + .05, 3
-    blk(g, x0, y0, z - .14, x1, y1, z, IRON)
-    for x in (x0 + .03, x1 - .03):
-        blk(g, x - .03, y0, z, x + .03, y1, z + .07, IRON)
-        blk(g, x - .025, y0, z + .78, x + .025, y1, z + .84, IRON)
-        for k in range(4):
-            ya = y0 + .15 + k * (y1 - y0 - .3) / 3
-            blk(g, x - .02, ya - .025, z + .07, x + .02, ya + .025, z + .78, IRON)
+    x0, y0, x1, y1 = WAREHOUSE
+    Q.storey_block(g, x0, y0, x1, y1, 2, infill=PLANK, frame=WOOD, roof_mat=PLANK, curb_mat=WOOD, roof_boards=True,
+                   ground_windows={'back': [(.5, .55, 'factory'), (2.5, .55, 'factory')],
+                                   'left': [(5.5, .55, 'factory')]},
+                   windows={'back': [(x + .5, 1.5, .55, 'factory') for x in range(3)],
+                            'left': [(5.5, 1.5, .55, 'factory')],
+                            'front': [(.5, 1.5, .55, 'factory')]})
+    # Covered conveyor bridge on layer 1 from the cannery to the warehouse.
+    bx0, bx1 = BRIDGE
+    ya, yb = CY1 + .05, y0 + .05
+    z = 1.0
+    blk(g, bx0, ya, z - .15, bx1, yb - .1, z - .03, IRON)   # between the two copings, under their tops
+    for x in (bx0 + .03, bx1 - .03):
+        blk(g, x - .03, ya, z, x + .03, yb, z + .06, IRON)
+        blk(g, x - .025, ya, z + .66, x + .025, yb, z + .71, IRON)
         for k in range(3):
-            ya = y0 + .15 + k * (y1 - y0 - .3) / 3
-            yb = y0 + .15 + (k + 1) * (y1 - y0 - .3) / 3
-            g.beam((x, ya, z + .1), (x, yb, z + .75), .03, mat=IRON)
-    K.gable_roof(g, x0, y0 + .05, x1, y1 - .05, z + .84, z + 1.15, ridge_axis='Y', overhang=.1, gable_mat=FORGED)
-    for y in ((y0 + y1) / 2 - .2, (y0 + y1) / 2 + .2):
-        blk(g, x0 + .1, y - .04, z + .07, x1 - .1, y + .04, z + .1, IRON)
-    belt = Geometry('BridgeCrates', (2.9, 5.3, z + .2))
-    pitch = .55
-    for k in range(5):
-        y = 4.1 + k * pitch
-        blk(belt, 2.72, y - .16, z + .1, 3.08, y + .16, z + .42, WOOD)
-        blk(belt, 2.7, y - .04, z + .14, 3.1, y + .04, z + .38, PLANK)
+            yy = ya + .1 + k * (yb - ya - .2) / 2
+            blk(g, x - .02, yy - .025, z + .06, x + .02, yy + .025, z + .66, IRON)
+    blk(g, bx0 - .06, ya - .02, z + .71, bx1 + .06, yb + .02, z + .77, IRON)
+    for y in ((ya + yb) / 2 - .15, (ya + yb) / 2 + .15):
+        blk(g, bx0 + .1, y - .03, z + .06, bx1 - .1, y + .03, z + .09, IRON)
+    belt = Geometry('BridgeCrates', ((bx0 + bx1) / 2, (ya + yb) / 2, z + .2))
+    pitch = .45
+    for k in range(3):
+        y = ya + .05 + k * pitch
+        blk(belt, 1.84, y - .13, z + .09, 2.16, y + .13, z + .37, WOOD)
+        blk(belt, 1.82, y - .035, z + .12, 2.18, y + .035, z + .34, PLANK)
     parts.append((belt, 'CUSTOM_LOOP_Y', pitch))
-    # Steel portal under the bridge.
-    py = (y0 + y1) / 2
-    for x in (x0 + .12, x1 - .12):
-        blk(g, x - .07, py - .07, .1, x + .07, py + .07, z - .14, IRON)
-        P.pier(g, x, py, 0, .1, .2)
-    blk(g, x0 + .02, py - .08, z - .3, x1 - .02, py + .08, z - .14, IRON)
-
-
-def door_lamp(g):
-    # Wall lamp by the door (no forecourt props or planting).
-    K.lamp(g, 2.0, CY0, 1.1, face='front')
 
 
 def build(g, parts):
     cannery(g, parts)
     retorts(g, parts)
     boilers(g, parts)
+    boiler_house(g)
     warehouse_and_bridge(g, parts)
-    door_lamp(g)

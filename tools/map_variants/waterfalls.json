@@ -47,7 +47,6 @@
     {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 29 cells south of the start", "x": 66, "y": 38, "z": 5, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 44 cells south-east of the start", "x": 88, "y": 28, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "FisheryWorks.IronTeeth", "label": "Fishery Works, 86 cells north-west of the start", "x": 7, "y": 117, "z": 16, "orientation": "Cw270", "margin": 1, "openSides": []},
-    {"template": "FoodPackagingWorks.IronTeeth", "label": "Food Packaging Works, 33 cells east of the start", "x": 109, "y": 79, "z": 9, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "Greenhouse.IronTeeth", "label": "Greenhouse, 38 cells north-west of the start", "x": 42, "y": 87, "z": 7, "orientation": "Cw270", "margin": 1, "openSides": ["E"]},
     {"template": "GroceryStore.IronTeeth", "label": "Grocery Store, 45 cells west of the start", "x": 24, "y": 75, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": ["E", "W"]},
     {"template": "Hospital.IronTeeth", "label": "Hospital, 29 cells west of the start", "x": 40, "y": 66, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": []},
