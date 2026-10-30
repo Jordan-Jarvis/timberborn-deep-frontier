@@ -116,10 +116,23 @@ if (ids.sort().join() !== [...expectedTierIds].sort().join()) {
 
 const round5 = (value) => Math.max(5, Math.round(value / 5) * 5);
 
+// Compacted buildings keep the cost of their pre-compaction size
+// (tools/lategame_cost_basis.json; building compaction pass 2026-10-30:
+// "Don't change recipes, costs or power"). Their cells come from that record,
+// not from the current registration; every other building is unchanged.
+export const COST_BASIS = (await read('tools/lategame_cost_basis.json')).basis;
+for (const [id, basis] of Object.entries(COST_BASIS)) {
+  if (!LATEGAME_IDS.includes(id)) throw new Error(`lategame_cost_basis.json: ${id} is not an integrated late-game building`);
+  if (!Number.isInteger(basis.builtCells) || !Number.isInteger(basis.groundCells) || basis.groundCells > basis.builtCells || basis.groundCells < 1)
+    throw new Error(`lategame_cost_basis.json: ${id} needs whole builtCells >= groundCells >= 1`);
+}
+
 export async function lategameSize(id) {
   const registration = await read(`outputs/lategame-studies/${id}-registration.json`);
   if (registration.ident !== id) throw new Error(`Registration identity mismatch: ${id}`);
-  return {builtCells: registration.occupied.length, groundCells: registration.occupied.filter((c) => c[2] === 0).length,
+  const basis = COST_BASIS[id];
+  return {builtCells: basis ? basis.builtCells : registration.occupied.length,
+    groundCells: basis ? basis.groundCells : registration.occupied.filter((c) => c[2] === 0).length,
     footprint: registration.footprint, height: registration.height};
 }
 
