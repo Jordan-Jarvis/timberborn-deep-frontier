@@ -283,9 +283,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 15098,
-   "vertices": 28364,
-   "construction": 15098,
+   "finished": 6826,
+   "vertices": 12534,
+   "construction": 6826,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model.timbermesh"
   },
   "DeepWell": {
