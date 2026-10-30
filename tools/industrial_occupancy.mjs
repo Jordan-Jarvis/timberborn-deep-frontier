@@ -23,11 +23,10 @@ export function industrialBlocks(ident, size) {
   // yard or decoration tiles beyond them); coordinates follow the shrunk
   // registrations in industrial_layouts.py.
   if(ident==='StoneCrusher') {
-    region([0,0,0,3,3,1],'All'); // workshop housing (walls on the x=0, x=4, y=4 edges), porch, output bin
-    region([0,0,2,3,3,2],'All'); // concrete machine floor: flywheel, rolls, bearings, hopper legs
-    clear([0,2,2]);              // open strip beside the hopper
-    region([0,2,3,3,3,3],'All'); // hopper and roll canopy
-    region([0,1,3,2,1,3],'All'); // hopper front and flywheel top
+    // One-layer workshop under the layer-1 machine floor (2026-10-30, 4x4x3).
+    region([0,0,0,3,3,0],'All'); // workshop housing (walls on the x=0, x=4, y=4 edges), porch, output bin
+    region([0,0,1,3,3,1],'All'); // machine floor: flywheel, rolls, bearings, hopper legs, porch canopy
+    region([0,1,2,3,3,2],'All'); // hopper, flywheel top, roll and hopper roofs
   } else if(ident==='CementKiln') {
     // Compact 5x3x4 (2026-10-30), grid y = artwork y + 1.
     region([0,0,0,4,0,0],'All'); // log stack, coal bin, porch and doorstep (3,0,0), output bin

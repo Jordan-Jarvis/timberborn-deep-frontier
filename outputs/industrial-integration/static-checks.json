@@ -7,31 +7,31 @@
       "animationTracks": 5,
       "frames": 61,
       "walkways": "none",
-      "nativeUvVerticesChecked": 3384
+      "nativeUvVerticesChecked": 3268
     },
     {
       "building": "CementKiln",
-      "nodes": 18,
-      "animationTracks": 12,
+      "nodes": 16,
+      "animationTracks": 10,
       "frames": 241,
       "walkways": "none",
-      "nativeUvVerticesChecked": 5991
+      "nativeUvVerticesChecked": 2864
     },
     {
       "building": "SandstoneQuarry",
-      "nodes": 60,
-      "animationTracks": 53,
+      "nodes": 54,
+      "animationTracks": 47,
       "frames": 481,
       "walkways": "none",
-      "nativeUvVerticesChecked": 9613
+      "nativeUvVerticesChecked": 5775
     },
     {
       "building": "LimestoneQuarry",
-      "nodes": 60,
-      "animationTracks": 53,
+      "nodes": 54,
+      "animationTracks": 47,
       "frames": 481,
       "walkways": "none",
-      "nativeUvVerticesChecked": 9613
+      "nativeUvVerticesChecked": 5775
     },
     {
       "building": "ConcreteMixer",
@@ -39,7 +39,7 @@
       "animationTracks": 2,
       "frames": 121,
       "walkways": "none",
-      "nativeUvVerticesChecked": 3708
+      "nativeUvVerticesChecked": 2139
     }
   ]
 }

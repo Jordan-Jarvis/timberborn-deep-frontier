@@ -8,7 +8,9 @@ local dimensions when attached to the new floor.
 from mathutils import Vector
 from frontier_architecture import Geometry
 
-CRUSHER_DECK=2
+# Compact pass (2026-10-30): one layer per storey, the crusher's machine
+# floor is layer 1 (was 2).
+CRUSHER_DECK=1
 KILN_DECK=2
 FACTORY_ENTRANCE=0
 FACTORY_PORCH_ROOF=1
@@ -20,7 +22,7 @@ KILN_MACHINE_DATUM=1.29
 # machinery stands on, and the quarry's layer 1 is a solid process plinth.
 LEVELS={
     'StoneCrusher':{'entranceLayer':FACTORY_ENTRANCE,'porchRoofLayer':FACTORY_PORCH_ROOF,
-                    'machineFloorLayer':CRUSHER_DECK,'walkableDeckLayers':[],'stairs':[],'access':'Ground door only','heightEnvelopeLayers':5},
+                    'machineFloorLayer':CRUSHER_DECK,'walkableDeckLayers':[],'stairs':[],'access':'Ground door only','heightEnvelopeLayers':3},
     # Compact 5x3x4 (2026-10-30): the drum stands on ground plinths.
     'CementKiln':{'entranceLayer':FACTORY_ENTRANCE,'porchRoofLayer':FACTORY_PORCH_ROOF,
                   'machineFloorLayer':0,'walkableDeckLayers':[],'stairs':[],'access':'Ground door only','heightEnvelopeLayers':4},

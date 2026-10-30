@@ -206,7 +206,7 @@ namespace DeepFrontier.Scripts {
       {"SandstoneQuarry.IronTeeth",(0,10,-2,7,new Vector3Int[0])},
       {"LimestoneQuarry.IronTeeth",(0,10,-2,7,new Vector3Int[0])}};
     private void RequireInstalledFootprints() {
-      foreach(var (id,size,entrance) in new[]{("StoneCrusher.IronTeeth",new Vector3Int(4,4,5),new Vector3Int(1,-1,0)),
+      foreach(var (id,size,entrance) in new[]{("StoneCrusher.IronTeeth",new Vector3Int(4,4,3),new Vector3Int(1,-1,0)),
         ("CementKiln.IronTeeth",new Vector3Int(5,3,4),new Vector3Int(3,-1,0)),
         ("SandstoneQuarry.IronTeeth",new Vector3Int(8,6,5),new Vector3Int(1,-1,0)),
         ("LimestoneQuarry.IronTeeth",new Vector3Int(8,6,5),new Vector3Int(1,-1,0))}) {

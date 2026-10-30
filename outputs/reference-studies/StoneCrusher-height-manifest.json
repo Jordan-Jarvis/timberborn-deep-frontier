@@ -3,9 +3,9 @@
   "scope": "Authored vertical contract; horizontal grid/collision/native routes not yet bound",
   "entranceLayer": 0,
   "porchRoofLayer": 1,
-  "machineFloorLayer": 2,
+  "machineFloorLayer": 1,
   "walkableDeckLayers": [],
   "stairs": [],
   "access": "Ground door only",
-  "heightEnvelopeLayers": 5
+  "heightEnvelopeLayers": 3
 }

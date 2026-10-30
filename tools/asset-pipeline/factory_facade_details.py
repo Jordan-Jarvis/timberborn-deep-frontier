@@ -41,13 +41,13 @@ def crusher_facades(g):
     g.box((3.96,2.98,(.25+CRUSHER_DECK-.21)/2),(1.48,.04,CRUSHER_DECK-.46),KILN_SOOT)
     g.box((3.96,2.98,.29),(1.48,.07,.12),IRON)
     for x in (3.18,4.74):g.box((x,2.95,(.27+CRUSHER_DECK-.19)/2),(.08,.12,CRUSHER_DECK-.46),WOOD)
-    for y in (3.94,4.91):side_window(g,east,y,CRUSHER_DECK-.66,0.8)
-    for x in (2.08,3.96):window_y(g,x,rear,CRUSHER_DECK-.65,0.8,'back')
-    window_y(g,1.57,2.825,CRUSHER_DECK-.53,0.6)
+    # One-layer workshop (2026-10-30): smaller panes in the lower walls.
+    for y in (3.94,4.91):side_window(g,east,y,.30,0.45)
+    for x in (2.08,3.96):window_y(g,x,rear,.30,0.45,'back')
     # The room is sealed at the top rather than open through the roll deck.
     g.box((3.005,4.39,CRUSHER_DECK-.155),(3.75,2.98,.055),WOOD)
     # Narrow rear cable trunk feeds the existing upstairs controller.
-    round_pipe(g,[(4.98,5.29,1.20),(4.98,5.29,CRUSHER_DECK+1.18),(4.98,4.14,CRUSHER_DECK+1.18),(4.98,4.14,CRUSHER_DECK+.79)],.016)
+    round_pipe(g,[(4.98,5.29,CRUSHER_DECK-.80),(4.98,5.29,CRUSHER_DECK+1.18),(4.98,4.14,CRUSHER_DECK+1.18),(4.98,4.14,CRUSHER_DECK+.79)],.016)
     for z in (CRUSHER_DECK+.15,CRUSHER_DECK+.60,CRUSHER_DECK+1.05):g.box((4.96,5.29,z),(.075,.08,.035),BRASS)
     g.box((1.57,2.785,.54),(.30,.08,.30),IRON)
     gauge(g,1.57,2.729,.58,.078)

@@ -136,18 +136,18 @@ def room(g):
     for j in range(count):
         y=y0+(j+.5)*(y1-y0)/count
         skin_board(g,(ROOM_W+.0875,y,(.255+DECK_Z-.235)/2),(.075,(y1-y0)/count,DECK_Z-.49),'Y',j,count,PLANK,'+x')
-    for a,b in (((ROOM_W+.045,3.09,.34),(ROOM_W+.045,4.35,1.28)),((ROOM_W+.045,4.50,1.28),(ROOM_W+.045,5.76,.34))):
+    for a,b in (((ROOM_W+.045,3.09,.34),(ROOM_W+.045,4.35,DECK_Z-.30)),((ROOM_W+.045,4.50,DECK_Z-.30),(ROOM_W+.045,5.76,.34))):
         g.beam(a,b,.09,mat=WOOD)
     # Rear plank wall, outer face y=5.96; trim on the inside.
     wall(g,xs[0]+.08,ROOM_REAR-.075,xs[2]-.08,DECK_Z-.19,.23)
     # Front-left wall beside the porch (front face y=2.825).
     wall(g,xs[0]+.03,2.86,MID_COLUMN-.14,DECK_Z-.19,.22)
     # East exterior knee braces on the frame face (x=5).
-    for yy in (4.15,4.89):g.beam((ROOM_E-.05,yy,.34),(ROOM_E-.05,yy+.57,1.32),.10,mat=WOOD)
+    for yy in (4.15,4.89):g.beam((ROOM_E-.05,yy,.30),(ROOM_E-.05,yy+.40,DECK_Z-.30),.10,mat=WOOD)
     # Wall couplings: flanges stand 0.02-0.03 proud of the plank skin.
     for x in (ROOM_W+.10,ROOM_E-.10):
-        prism(g,(x,4.58,.55),.13,.16,IRON,'X',8)
-        band(g,(x,4.58,.55),.16,.035,.06,BRASS,'X',8)
+        prism(g,(x,4.58,.45),.13,.16,IRON,'X',8)
+        band(g,(x,4.58,.45),.16,.035,.06,BRASS,'X',8)
     # The closed workshop: its walls, ceiling boards, the porch insert and the
     # dark output aperture seal it (ray-verified at build, enclosed_cull.py).
     g.declare_hidden_volume((ROOM_W+.12,3.02,.10),(ROOM_E-.11,ROOM_REAR-.105,DECK_Z-.18))
@@ -164,9 +164,11 @@ def porch(g):
     for a,b in ((.525,.61),(1.61,1.695)):
         facade_panel(g,'Y',.39,a,b,ENTRY_Z,ENTRY_Z+1.08,False,PLANK)
     facade_panel(g,'Y',.51,.61,1.61,ENTRY_Z+1,ENTRY_Z+1.08,False,PLANK)
-    lean_roof_curb(g,.525,.39,1.695,1.14,ENTRY_Z+1.08,ENTRY_Z+1.08,.32,1.16,PORCH_Z+.135,PORCH_Z+.385,.0225)
+    # Since the machine floor is layer 1 (2026-10-30) the canopy's back edge
+    # and right shoe stop short of the front roller bearings.
+    lean_roof_curb(g,.525,.39,1.695,1.00,ENTRY_Z+1.08,ENTRY_Z+1.08,.32,1.02,PORCH_Z+.135,PORCH_Z+.385,.0225)
     for x in (.48,1.74):timber_column(g,x,.41,ENTRY_Z,PORCH_Z+.10,.14)
-    sheet_roof(g,.38,.32,1.85,1.16,PORCH_Z+.135,PORCH_Z+.385,9)
+    sheet_roof(g,.38,.32,1.80,1.02,PORCH_Z+.135,PORCH_Z+.385,9)
     # The portal owns its doorstep; this apron meets its front edge.
     cage_lamp(g,1.60,.32,PORCH_Z-.18)
 
@@ -247,9 +249,10 @@ def crusher(g,parts):
     # Separate short roofs leave most roller teeth visible. The right-hand
     # posts and eave stay inside x=5, clear of the right walking lane.
     for x in (1.72,ROLL_ROOF_POST):
-        for y,z in ((2.97,3.03),(3.72,3.23)):timber_column(g,x,y,1.49,z,.19)
-        g.beam((x-.06,2.97,2.63),(x-.06,3.34,3.13),.105,mat=WOOD)
-        g.beam((x+.06,3.72,2.65),(x+.06,3.27,3.15),.105,mat=WOOD)
+        # Level roof: both posts end under its eave beams.
+        for y in (2.97,3.72):timber_column(g,x,y,1.49,ROLL_ROOF[4]-.135,.19)
+        g.beam((x-.06,2.97,2.63),(x-.06,3.34,3.08),.105,mat=WOOD)
+        g.beam((x+.06,3.72,2.65),(x+.06,3.27,3.08),.105,mat=WOOD)
     beam_joint(g,(1.72,2.97,3.02),(ROLL_ROOF_POST,2.97,3.02),.18,.18)
     sheet_roof(g,*ROLL_ROOF,44)
     sheet_roof(g,*HOPPER_ROOF,45)

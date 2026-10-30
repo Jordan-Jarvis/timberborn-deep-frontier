@@ -12,10 +12,11 @@ from industrial_levels import CRUSHER_DECK as DECK_Z
 # Roller canopy in the reviewed machinery frame. Its right posts and eave end
 # inside grid x=5 (legacy x 3.70), clear of the right walking lane.
 ROLL_ROOF_POST=3.50
-ROLL_ROOF=(1.65,2.87,3.56,3.84,3.13,3.36)
-# Hopper roof. It stands .02 above the roller roof's rear edge so its corner
-# brackets and straps clear that roof's edge beam and corner shoe.
-HOPPER_ROOF=(.07,3.40,1.68,3.86,3.30,3.43)
+# Flat roofs (compaction pass, 2026-10-30): native roof sheets laid level.
+ROLL_ROOF=(1.65,2.87,3.56,3.84,3.25,3.25)
+# Hopper roof. It stands .11 above the roller roof so its corner shoes and
+# straps clear that roof's edge beam and corner shoe.
+HOPPER_ROOF=(.07,3.40,1.68,3.86,3.36,3.36)
 
 
 def workshop_details(g,ground,static):
@@ -66,9 +67,10 @@ def workshop_details(g,ground,static):
     # wall line beside the porch were removed, 2026-10-22: the player places
     # their own props.)
     g=static
+    # (One-layer workshop, 2026-10-30: the vents sit under its upper side beam.)
     for y in (3.86,4.92):
-        g.box((1.045,y,.88),(.020,.42,.36),IRON)
-        for z in (.75,.83,.91,.99):g.box((1.03,y,z),(.04,.36,.045),WOOD)
+        g.box((1.045,y,.48),(.020,.42,.30),IRON)
+        for z in (.38,.46,.54,.62):g.box((1.03,y,z),(.04,.36,.045),WOOD)
 
 
 def worn_surfaces(g,ground):

@@ -4,6 +4,17 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction: Stone Crusher one-layer workshop, 4x4x5 -> 4x4x3 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `ind-head` (HEAD + this change) and the real repo; not built or run in game)
+
+- **User:** one layer per storey, flat roofs. The crusher was already 4x4; its workshop was two layers tall under a machine deck at layer 2.
+- **Changed:** `CRUSHER_DECK` 2 -> 1 (`industrial_levels.py`): the closed workshop is one layer, the concrete machine floor is at layer 1, and the reviewed machinery (rolls, flywheel, sprockets, chains, hopper, roofs) moves down 1.0 rigidly. The roll and hopper roofs are flat native roof sheets (`crusher_workshop_details.py`), the hopper roof 0.11 above the roll roof. Hard-coded heights that assumed the old deck now follow it: west and east wall braces, couplings, the east cable trunk, the louvre vents. The windows in the one-layer walls are smaller (scale 0.45), and the clerestory pane over the porch went. The porch canopy's back edge and right shoe stop short of the front roll bearings. Height 5 -> 3 (art top 2.92).
+- **Kept:** footprint, origin, door, entrance (1,-1,0), materials and atlas slots, animated parts (2 rolls, flywheel, 2 sprockets), recipe, cost and workers (checked against HEAD).
+- **Data:** layout size, `industrial_occupancy.mjs` cells (layer 0 workshop and porch, layer 1 machine floor, layer 2 hopper and roofs), catalog size, LEVELS envelope 3; wall faces, connection faces, the `roof_decks.json` row (one platformable cell on the flat hopper roof) and the triangle ceiling (8,817 -> 8,769) remeasured; `IndustrialAcceptance` expects 4x4x3.
+- **Cleanup:** `factory_clearance.py` removed (walkway routes for decks that no longer exist; nothing imported it). `test_catalog_surfaces.py` imports work again and its crusher, quarry and pit cases follow the compact geometry; the whole test passes.
+- **Old saves:** footprint, origin and entrance unchanged; the top two layers are freed.
+- **Checks:** strict z-fight 0 visible; `exports-industrial`, `model-bindings`, `building_entrances`, `construction_materials`, `freed_cells`, `status_icon_anchors`, `audit-building-assets` pass (the `roof_decks` failures are other agents' buildings). Scripts compile.
+- **Review:** `outputs/compaction/StoneCrusher-before-after.png`.
+
 ## Compaction: Restaurant, Hospital and Grocery Store (Claude Code session, 2026-10-30, civic agent; generated and validated in mirror `civic`, promoted into Data; not built or run in game)
 
 - **Restaurant 9x7x9 -> 9x7x5** (user: "needs to be shortened but footprint needs to stay the same"; one layer per storey). Footprint, origin and ground door unchanged.

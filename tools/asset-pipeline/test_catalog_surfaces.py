@@ -18,9 +18,9 @@ from factory_facade_details import crusher_facades
 from materials_laboratory_geometry import concrete_course, slope_facade, shed_roof
 from pit_isometric_geometry import enclosure
 from mixer_isometric_geometry import operator_room
-from quarry_isometric_geometry import room as quarry_room
-from quarry_isometric_geometry import workshops as quarry_workshops
-from crusher_sheet_geometry import workshop as crusher_workshop
+from quarry_isometric_geometry import tool_room as quarry_tool_room
+from quarry_isometric_geometry import cabin as quarry_cabin
+from crusher_sheet_geometry import porch as crusher_porch
 from kiln_isometric_geometry import porch as kiln_porch, feed_house as kiln_feed_house, hall as kiln_hall
 from hydro_isometric_geometry import cast_conduit
 from structural_geometry import MODELS as STRUCTURAL_MODELS
@@ -81,10 +81,10 @@ check('laboratory sloped facade',lambda g:slope_facade(g,0,4,0,2,6,4,12,False),[
     ((.12,-.055,2.1),(3.76,0,0),(0,0,1.6),(0,-1,0),401,51)])
 check('laboratory shed roof',lambda g:shed_roof(g,0,4,0,3,6,4,12),[
     ((.12,.12,5.94),(3.76,0,-1.88),(0,2.76,0),(0,0,1),41,301)])
+# One-storey pit (2026-10-30): walls to 1.70 under the flat roof.
 check('pit storeroom',lambda g:enclosure(g,limestone=False),[
-    ((.2625,1.28,.6),(0,2.25,0),(0,0,1.4),(-1,0,0),301,51),
-    ((.44,3.74,.4),(.96,0,0),(0,0,2.25),(0,1,0),151,101),
-    ((.2625,1.25,2.18),(0,2.2,.53),(0,0,.05),(-1,0,0),151,31)])
+    ((.2625,1.28,.6),(0,2.25,0),(0,0,1.0),(-1,0,0),301,51),
+    ((.44,3.74,.4),(.96,0,0),(0,0,1.2),(0,1,0),151,101)])
 # Compact 4x3x3 mixer (2026-10-30): west wall x=.10, east wall x=2, rear
 # wall y=3, vestibule y .16..1, clerestory face y=1. The roof slab carries
 # the hoppers, so it is not sampled from above.
@@ -95,8 +95,10 @@ check('mixer operator room',operator_room,[
     ((.15,1.0,1.15),(1.75,0,0),(0,0,.65),(0,-1,0),151,51),
     ((.10,.20,.05),(0,.78,0),(0,0,.95),(-1,0,0),81,101),
     ((2.0,.20,.05),(0,.78,0),(0,0,.95),(1,0,0),81,101)])
+# One-layer crusher workshop (2026-10-30): east plank skin, outer face x=4.96,
+# boards y 3.07..5.78, z .26..0.78.
 check('crusher right wall',crusher_facades,[
-    ((3.6375,1.35,.4),(0,2.10,0),(0,0,1.2),(1,0,0),301,51)])
+    ((4.96,3.20,.30),(0,2.50,0),(0,0,.40),(1,0,0),301,51)])
 # Compact 5x3x4 kiln (2026-10-30): feed-house skin 0.04 inside its corner
 # posts, drum-hall rear wall 0.10 inside the y=2 edge (artwork units).
 check('kiln feed house walls',kiln_feed_house,[
@@ -105,15 +107,19 @@ check('kiln feed house walls',kiln_feed_house,[
     ((.18,1.96,.30),(.64,0,0),(0,0,2.2),(0,1,0),151,101)])
 check('kiln drum hall rear wall',kiln_hall,[
     ((1.05,1.90,.30),(2.90,0,0),(0,0,1.9),(0,1,0),301,101)])
-check('quarry workshop side infill',lambda g:quarry_room(g,.35,4.30,1.92,6.56,3.25,710,'left'),[
-    ((.315,4.45,1.08),(0,1.95,0),(0,0,.5),(-1,0,0),301,31),
-    ((.35,4.45,3.15),(0,1.95,0),(0,0,.22),(-1,0,0),151,41)])
-check('quarry ground cabin',quarry_workshops,[
+# Compact quarry (2026-10-30): tool room skin 0.04 inside its corner posts
+# on the plinth (walls 1.0..1.98), artwork units.
+check('quarry tool room walls',quarry_tool_room,[
+    ((.04,2.50,1.10),(0,4.30,0),(0,0,.80),(-1,0,0),301,51),
+    ((.18,2.34,1.10),(1.64,0,0),(0,0,.80),(0,-1,0),151,51)])
+check('quarry ground cabin',quarry_cabin,[
     ((.77,1.43,.02),(0,.48,0),(0,0,1.24),(-1,0,0),91,101),
     ((1.96,1.43,.02),(0,.48,0),(0,0,1.24),(1,0,0),91,101)])
-check('crusher porch header and side curb',crusher_workshop,[
+# The porch in its artwork frame; its side curb ends at y=1.00 since the
+# one-layer machine floor (2026-10-30).
+check('crusher porch header and side curb',crusher_porch,[
     ((.61,.39,1.01),(1.0,0,0),(0,0,.1),(0,-1,0),151,31),
-    ((.56,.48,1.10),(0,.55,0),(0,0,.05),(-1,0,0),151,31)])
+    ((.525,.48,1.10),(0,.46,0),(0,0,.05),(-1,0,0),151,31)])
 check('kiln porch header and side curb',kiln_porch,[
     ((2.99,-.79,1.01),(.92,0,0),(0,0,.09),(0,-1,0),151,31),
     ((2.95,-.68,1.10),(0,.85,0),(0,0,.05),(-1,0,0),151,31)])
