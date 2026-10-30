@@ -29,7 +29,7 @@
     {"template": "HumanRecordCache", "label": "Record cache 93 cells north-west of the start", "x": 31, "y": 190, "z": 7, "orientation": "Cw0"}
   ],
   "sites": [
-    {"template": "NuclearReactor.IronTeeth", "label": "East Plateau", "x": 166, "y": 160, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E", "S", "W"], "maxWaterDistance": 15},
+    {"template": "NuclearReactor.IronTeeth", "label": "East Plateau", "x": 166, "y": 154, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E", "S", "W"], "maxWaterDistance": 15},
     {"template": "LaunchPad.IronTeeth", "label": "West Shore field", "x": 99, "y": 153, "z": 4, "orientation": "Cw0", "margin": 2, "openSides": []},
     {"template": "DeepMine.IronTeeth", "label": "South Basin mine", "x": 122, "y": 128, "z": 3, "orientation": "Cw180", "margin": 1, "openSides": ["E"], "understructure": [116, 123, 3]},
     {"template": "DeepMine.IronTeeth", "label": "North Rise mine", "x": 141, "y": 194, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": [], "understructure": [142, 188, 6]},

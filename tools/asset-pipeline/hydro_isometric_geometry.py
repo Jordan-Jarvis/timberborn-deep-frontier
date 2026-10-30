@@ -8,8 +8,8 @@ Compacted 2026-10-30 (outputs/compaction/BRIEF.md): 8x10x7 -> 8x10x6. The
 conduit, the dam cap (support surface at layer 6), the gates, the water cells
 and the service terrace with its built-in walkways are gameplay and stay
 exactly as they were. The workshop on the terrace is one storey (layer 2 to
-a flat concrete roof whose top is layer 4) instead of a tall room under a
-plank gable with a dormer, so nothing rises above the dam cap.
+3.84) under its plank gable roof (roof-variety pass: a real pitched roof, no
+dormer, no roof vent), so nothing rises above the dam cap.
 """
 import math
 
@@ -192,19 +192,11 @@ def workshop(g):
         side_window(g,right_wall,y,2.95,.8)
     for x in (front[0],front[2]):
         window_y(g,x,rear_wall,2.95,.8,'back')
-    # Flat cast roof: its outline lies on the workshop's tile edges (x=4..7,
-    # y=6..9), 1 cm past them on the left, front and rear, 5 mm inside the
-    # right cladding; its top is layer 4.
-    g.box(((WS_X0-.11+WS_X1+.055)/2,(WS_Y0+WS_Y1)/2,WS_TOP+.08),(WS_X1+.055-WS_X0+.11,WS_Y1-WS_Y0+.22,.16),
-          CIVIC_CONCRETE)
-    for y in (WS_Y0-.12,WS_Y1+.12):
-        g.box(((WS_X0-.11+WS_X1+.055)/2,y,WS_TOP+.13),(WS_X1+.055-WS_X0+.11,.02,.06),IRON)
-    # Weather hood / ventilation stack, not a combustion chimney.
-    roof=WS_TOP+.16
-    g.box((5.61,4.45,roof+.3),(.24,.26,.6),IRON)
-    g.box((5.61,4.45,roof+.65),(.35,.37,.10),IRON)
-    for z in (roof+.42,roof+.51):
-        g.box((5.61,4.305,z),(.27,.025,.035),IRON)
+    roof_bearing(g,WS_X0,WS_Y0,WS_X1,WS_Y1,WS_TOP,WS_TOP+.02)
+    # The eave outline lies on the workshop's tile edges (x=4..7, y=6..9),
+    # as before the compaction; 27 cm sheets.
+    gabled_roof(g,WS_X0-.11,WS_Y0-.11,WS_X1+.055,WS_Y1+.11,WS_TOP+.02,WS_TOP+.92,228,sheet=.27)
+    # (No roof props: every flat roof cell stays a roof deck, user 2026-10-30.)
     # Door lamps: arms meet the cladding, lamps stay over the door path cell.
     cage_lamp(g,WS_DOOR_X-.64,front_wall-.05,3.07)
     cage_lamp(g,WS_DOOR_X+.38,front_wall-.05,3.07)

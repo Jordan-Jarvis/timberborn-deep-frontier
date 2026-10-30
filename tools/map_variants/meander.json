@@ -27,7 +27,7 @@
     {"template": "DeepOreSource", "label": "Deep Ore Source (Deep Drill, 13 cells north-west of the start)", "x": 48, "y": 64, "z": 5, "good": "DeepOre", "amount": 8500}
   ],
   "sites": [
-    {"template": "NuclearReactor.IronTeeth", "label": "North-west Plateau reactor", "x": 27, "y": 122, "z": 6, "orientation": "Cw90", "margin": 2, "openSides": ["N", "S", "W"], "maxWaterDistance": 15},
+    {"template": "NuclearReactor.IronTeeth", "label": "North-west Plateau reactor", "x": 27, "y": 116, "z": 6, "orientation": "Cw90", "margin": 2, "openSides": ["N", "S", "W"], "maxWaterDistance": 15},
     {"template": "LimestonePit.IronTeeth", "label": "Limestone Pit, 13 cells east of the start", "x": 76, "y": 52, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "SandstonePit.IronTeeth", "label": "Sandstone Pit, 12 cells east of the start", "x": 76, "y": 58, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "FishHatchery.IronTeeth", "label": "Fish Hatchery, 36 cells north-west of the start", "x": 41, "y": 82, "z": 4, "orientation": "Cw0"},

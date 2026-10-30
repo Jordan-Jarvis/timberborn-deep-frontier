@@ -55,7 +55,7 @@
     "Size": {
       "X": 1,
       "Y": 2,
-      "Z": 5
+      "Z": 4
     },
     "Blocks": [
       {
@@ -89,20 +89,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -184,7 +170,7 @@
           "Y": 0,
           "Z": 1
         },
-        "Directions": "Left, Right, Down",
+        "Directions": "Left",
         "ReverseRotation": false
       },
       {
@@ -194,6 +180,15 @@
           "Z": 0
         },
         "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 0,
+          "Z": 1
+        },
+        "Directions": "Down",
         "ReverseRotation": false
       }
     ]
@@ -227,12 +222,12 @@
           {
             "Center": {
               "X": 0.5,
-              "Y": 4,
+              "Y": 3.5,
               "Z": 1.5
             },
             "Size": {
               "X": 1,
-              "Y": 2,
+              "Y": 1,
               "Z": 1
             }
           }
@@ -265,12 +260,12 @@
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 4,
+                  "Y": 3.5,
                   "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 2,
+                  "Y": 1,
                   "Z": 1
                 }
               }
@@ -313,7 +308,7 @@
     "ForceOneFinalAccess": false
   },
   "StatusIconAnchorSpec": {
-    "Height": 5.7
+    "Height": 4.7
   },
   "PowerConnectionStatusSpec": {}
 }

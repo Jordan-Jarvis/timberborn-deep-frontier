@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Cathedral-scale barrel-vaulted assembly hall with giant sliding doors ajar on a rocket stage",
+  "hero": "Barrel-vaulted assembly hall with riveted sliding doors ajar on a rocket stage",
   "footprint": [
-    8,
-    9
+    7,
+    8
   ],
-  "heightLayers": 14,
+  "heightLayers": 9,
   "boundsMin": [
-    -0.16,
-    -0.282,
+    -0.07,
+    -0.29,
     -0.035
   ],
   "boundsMax": [
+    7.05,
     8.05,
-    9.05,
-    13.77
+    8.92
   ],
   "doors": [
     {
@@ -34,8 +34,6 @@
   ],
   "animatedParts": [
     "RocketAssemblyHangar.DoorRight",
-    "RocketAssemblyHangar.Vent0",
-    "RocketAssemblyHangar.Vent1",
     "RocketAssemblyHangar.Beacon0",
     "RocketAssemblyHangar.Beacon1"
   ],
@@ -43,21 +41,22 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 4754,
+  "faces": 2805,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1322,
-    "BaseMetal.IronTeeth": 2016,
-    "RoofPlanks.IronTeeth": 38,
-    "Details.IronTeeth": 126,
-    "accent8": 80,
+    "BaseWood_DarkBrown.IronTeeth": 818,
+    "IrregularPlanks_DarkBrown.IronTeeth": 48,
+    "BaseMetal.IronTeeth": 1128,
+    "RoofPlanks.IronTeeth": 28,
+    "Details.IronTeeth": 90,
+    "accent8": 60,
     "accent25": 26,
-    "Plaster_White.IronTeeth": 158,
-    "Plaster_Orange.IronTeeth": 111,
-    "IrregularPlanks_MetalForged.IronTeeth": 102,
-    "WindowsAtlas.IronTeeth": 1014,
-    "PaintedMetal.IronTeeth": 225,
-    "IrregularPlanks_Grey.IronTeeth": 66
+    "Plaster_White.IronTeeth": 130,
+    "Plaster_Orange.IronTeeth": 93,
+    "IrregularPlanks_MetalForged.IronTeeth": 84,
+    "WindowsAtlas.IronTeeth": 478,
+    "PaintedMetal.IronTeeth": 82,
+    "IrregularPlanks_Grey.IronTeeth": 48
   },
-  "sourceHash": "cfe57b3bb003f915c4675c09610df16b99d9997c5c9b40769e87be600a9d9a4a",
-  "artHash": "583bc70c6e65647591f5dbc18d1c0263691924a825e65f5c7cab781cf296d0bc"
+  "sourceHash": "435b5bee1a1be56c3a51b794ba70d58200488cd9eea86a3d82fa63c7a1289d1a",
+  "artHash": "223be751b45f19adc01c6877563a45b3548b8fc3347ddab927d4ccaefd76f40d"
 }

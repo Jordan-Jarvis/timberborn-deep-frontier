@@ -1,8 +1,17 @@
 """RadioactiveWasteExport: ships radioactive sludge and contaminated water off
 
+the map (docs/radiation.md; must touch the map edge, MapEdgeSiteSpec).
+
 Revised 2026-10-22 (no forced decoration; footprint ends at the walls):
 removed the spare casks on the dock.
-the map (docs/radiation.md; must touch the map edge, MapEdgeSiteSpec).
+
+Compacted 2026-10-30 (light touch, outputs/compaction/BRIEF.md): 6x5x4 ->
+6x5x3. One layer per floor: the fill house is a concrete ground storey
+(layer 0, the hauler door) and one lead-clad storey (layer 1) under a flat
+roof whose top is layer 2, with an open parapet ring (the kit parapet's lid
+is gone, so the roof is a usable roof deck). The filling gantry and the
+dispatch gate are a layer lower. Footprint, door, pipe inlet and the
+map-edge side are unchanged.
 
 HERO: a lead-lined cask car on rails that runs from a steel filling gantry
 out through a hazard-striped dispatch gate on the back (map-edge) side.
@@ -34,10 +43,12 @@ from lategame_civic_parts import blk
 from lategame_nuclear_parts import Facer, prism
 from industrial_facades import building_portal
 from native_window_atlas import atlas_window
+from lategame_roofdeck_parts import parapet_ring
+import lategame_mining_parts as M
 
 IDENT = 'RadioactiveWasteExport'
 FOOTPRINT = (6, 5)
-HEIGHT = 4
+HEIGHT = 3
 FRAME_END = 121
 HERO = ('Lead-lined cask car on rails running from a steel filling gantry out through a hazard-striped '
         'dispatch gate on the map-edge side.')
@@ -97,25 +108,27 @@ def ground(g):
 
 def fill_house(g, parts):
     x0, y0, x1, y1 = 0.0, .15, 2.95, 3.0
-    top = P.plinth(g, x0, y0, x1, y1, 1.2, door=(DOOR_X, 1.0, 1.0))
-    building_portal(g, DOOR_X, y0 - .12, 0)
-    g.doorways.append({'id': 'HaulerDoor', 'position': [DOOR_X, y0, 0], 'outward': [0, -1]})
-    K.lamp(g, DOOR_X - .62, y0 - .04, 1.05, face='front')
-    K.lamp(g, DOOR_X + .62, y0 - .04, 1.05, face='front')
+    # Concrete ground storey: solid core with a proud course, notched for the door.
+    M.plinth_course(g, x0 + .05, x1 - .05, y0 + .12, y1 - .05, 0, 1.0, CONCRETE, [DOOR_X])
+    M.portal(g, DOOR_X, y0 + .12, 0, ident='HaulerDoor')
+    top = 1.0
+    K.lamp(g, DOOR_X - .62, y0 + .07, .75, face='front')
+    K.lamp(g, DOOR_X + .62, y0 + .07, .75, face='front')
     bx0, by0, bx1, by1 = x0 + .1, y0 + .1, x1 - .1, y1 - .1
-    z1 = 3.1
-    C.framed_block(g, bx0, by0, bx1, by1, top + .02, z1, infill=FORGED, frame=CONCRETE, pitch=.9, corner=.2,
-                   sink=.03, windows={'left': [(1.5, 2.25, .8, 'factory')]})
+    z1 = 1.84
+    C.framed_block(g, bx0, by0, bx1, by1, top + .012, z1, infill=FORGED, frame=CONCRETE, pitch=.9, corner=.2,
+                   sink=.03, windows={'left': [(1.5, 1.42, .5, 'factory')]})
     for x in (.62, 2.23):
-        atlas_window(g, x, by0, 2.3, .22, 'front', 'slit')
-    atlas_window(g, bx1, .69, 2.65, .22, 'right', 'slit')
-    atlas_window(g, bx1, 2.31, 2.65, .22, 'right', 'slit')
-    rad_sign(g, DOOR_X, by0 - .055, 2.3, 'front', .24)
-    stripes_x(g, bx0 + .12, bx1 - .12, by0 - .085, by0 - .055, 1.55, 1.67, 9)
-    K.flat_roof(g, bx0, by0, bx1, by1, z1, thickness=.16, overhang=.1, parapet_height=.3)
+        atlas_window(g, x, by0, 1.42, .2, 'front', 'slit')
+    atlas_window(g, bx1, .69, 1.42, .2, 'right', 'slit')
+    atlas_window(g, bx1, 2.31, 1.42, .2, 'right', 'slit')
+    rad_sign(g, DOOR_X, by0 - .055, 1.42, 'front', .2)
+    stripes_x(g, bx0 + .12, bx1 - .12, by0 - .085, by0 - .055, 1.06, 1.16, 9)
+    K.flat_roof(g, bx0, by0, bx1, by1, z1, thickness=.16, overhang=.1)
+    parapet_ring(g, bx0 - .1, by0 - .1, bx1 + .1, by1 + .1, z1 + .16, height=.24)
     # Shielded hatch toward the track: heavy sliding plate on rails.
-    blk(g, bx1 + .055, .9, top + .1, bx1 + .14, 1.9, top + 1.05, IRON)
-    for z in (top + .14, top + 1.0):
+    blk(g, bx1 + .055, .9, top + .1, bx1 + .14, 1.9, top + .7, IRON)
+    for z in (top + .14, top + .66):
         blk(g, bx1 + .14, .8, z - .03, bx1 + .18, 2.0, z + .03, PAINTED)
 
 
@@ -129,7 +142,7 @@ def manifold(g):
     g.cylinder((sx, sy + .02, sz), .15, .08, IRON, 'Y', 16)
     P.hoop(g, (sx, sy - .03, sz), .2, .05, .04, BRASS, axis='Y', segments=16)
     K.bolt_row(g, (sx - .16, sy - .06, sz + .14), (sx + .16, sy - .06, sz + .14), 3, r=.016)
-    P.pipe(g, [(sx, .65, 1.0), (sx, .65, 3.05), (TRACK_X, .65, 3.05), (TRACK_X, FILL_Y - .28, 3.05)], .07,
+    P.pipe(g, [(sx, .65, 1.0), (sx, .65, 2.15), (TRACK_X, .65, 2.15), (TRACK_X, FILL_Y - .28, 2.15)], .07,
            flanges=False)
     P.valve(g, (sx, .65, 1.6), 'front', .12)
     P.gauge(g, 5.2, .3, .6, 'front', .07)
@@ -139,18 +152,17 @@ def gantry(g, parts):
     y = FILL_Y
     for x in (3.6, 5.4):
         P.pier(g, x, y, .17, .5, .3)
-        blk(g, x - .09, y - .09, .55, x + .09, y + .09, 3.4, IRON)
-        g.beam((x, y, 2.8), (x + (.5 if x < 4.5 else -.5), y, 3.38), .08, mat=IRON)
-    blk(g, 3.45, y - .11, 3.4, 5.55, y + .11, 3.62, IRON)
-    stripes_x(g, 3.7, 5.3, y - .14, y - .11, 3.44, 3.58, 7)
+        blk(g, x - .09, y - .09, .55, x + .09, y + .09, 2.5, IRON)
+    blk(g, 3.45, y - .11, 2.5, 5.55, y + .11, 2.72, IRON)
+    stripes_x(g, 3.7, 5.3, y - .14, y - .11, 2.54, 2.68, 7)
     # Filling hood and its moving nozzle.
-    blk(g, TRACK_X - .3, y - .28, 2.65, TRACK_X + .3, y + .28, 3.4, FORGED)
-    for z in (2.7, 3.3):
+    blk(g, TRACK_X - .3, y - .28, 1.95, TRACK_X + .3, y + .28, 2.5, FORGED)
+    for z in (2.0, 2.44):
         blk(g, TRACK_X - .32, y - .3, z - .03, TRACK_X + .32, y + .3, z + .03, IRON)
-    n = Geometry('RadioactiveWasteExport.Nozzle', (TRACK_X, y, 2.3))
-    n.cylinder((TRACK_X, y, 2.525), .09, .95, IRON, 'Z', 12)
-    P.hoop(n, (TRACK_X, y, 2.15), .13, .04, .06, BRASS, segments=12)
-    n.cylinder((TRACK_X, y, 2.03), .06, .06, IRON, 'Z', 10)
+    n = Geometry('RadioactiveWasteExport.Nozzle', (TRACK_X, y, 1.75))
+    n.cylinder((TRACK_X, y, 1.85), .09, .6, IRON, 'Z', 12)
+    P.hoop(n, (TRACK_X, y, 1.66), .13, .04, .06, BRASS, segments=12)
+    n.cylinder((TRACK_X, y, 1.55), .06, .06, IRON, 'Z', 10)
     parts.append((n, 'PISTON_Z', -.3))
 
 
@@ -199,13 +211,13 @@ def dock(g, parts):
     gy = 4.55
     for x in (3.85, 5.15):
         P.pier(g, x, gy, .17, .45, .26)
-        blk(g, x - .08, gy - .08, .5, x + .08, gy + .08, 2.9, IRON)
-    blk(g, 3.72, gy - .1, 2.9, 5.28, gy + .1, 3.12, IRON)
-    stripes_x(g, 3.9, 5.1, gy - .13, gy - .1, 2.93, 3.09, 5)
-    rad_sign(g, 4.5, gy - .1, 2.55, 'front', .2)
+        blk(g, x - .08, gy - .08, .5, x + .08, gy + .08, 2.2, IRON)
+    blk(g, 3.72, gy - .1, 2.2, 5.28, gy + .1, 2.42, IRON)
+    stripes_x(g, 3.9, 5.1, gy - .13, gy - .1, 2.23, 2.39, 5)
+    rad_sign(g, 4.5, gy - .1, 1.9, 'front', .18)
     for x in (4.38, 4.62):
-        blk(g, x - .015, gy - .135, 2.78, x + .015, gy - .105, 2.92, IRON)
-    pivot = K.beacon(g, 4.5, gy, 3.12)
+        blk(g, x - .015, gy - .135, 2.1, x + .015, gy - .105, 2.22, IRON)
+    pivot = K.beacon(g, 4.5, gy, 2.42)
     parts.append((K.beacon_shutter(*pivot, 'RadioactiveWasteExport.Beacon'), 'SPIN_Z', 2))
     # Sign post by the kerb.
     blk(g, 5.6, 4.3, .2, 5.66, 4.36, 1.7, IRON)

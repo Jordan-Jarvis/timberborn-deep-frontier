@@ -78,7 +78,7 @@
     "Size": {
       "X": 4,
       "Y": 3,
-      "Z": 4
+      "Z": 3
     },
     "Blocks": [
       {
@@ -332,90 +332,6 @@
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
       }
     ],
     "Entrance": {
@@ -549,12 +465,12 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 3,
+              "Y": 2.5,
               "Z": 1
             },
             "Size": {
               "X": 3,
-              "Y": 2,
+              "Y": 1,
               "Z": 2
             }
           }
@@ -635,12 +551,12 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 3,
+                  "Y": 2.5,
                   "Z": 1
                 },
                 "Size": {
                   "X": 3,
-                  "Y": 2,
+                  "Y": 1,
                   "Z": 2
                 }
               }
@@ -722,42 +638,6 @@
           "Y": 0,
           "Z": 1
         },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 0,
-          "Z": 1
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 1,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 1,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 0,
-          "Z": 2
-        },
         "Directions": "Left, Down",
         "State": "OpenIn"
       },
@@ -765,7 +645,7 @@
         "Coordinates": {
           "X": 1,
           "Y": 0,
-          "Z": 2
+          "Z": 1
         },
         "Directions": "Down",
         "State": "OpenIn"
@@ -774,7 +654,7 @@
         "Coordinates": {
           "X": 0,
           "Y": 1,
-          "Z": 2
+          "Z": 1
         },
         "Directions": "Left",
         "State": "OpenIn"
@@ -783,6 +663,6 @@
   },
   "WorkshopAnimationControllerSpec": {},
   "StatusIconAnchorSpec": {
-    "Height": 4.7
+    "Height": 3.7
   }
 }

@@ -15,8 +15,9 @@ centrifuge rows nobody saw, the stack's work ring and the 13-layer stack.
 HERO: the centrifuge cascade, an open-fronted gallery on a concrete podium
 where a row of spinning gas centrifuges stands under a solid flat canopy, the
 hall behind it lit by a glazed clerestory monitor.
-ROOF: flat concrete roofs throughout (hall canopy, monitor, fuel vault,
-scrubber house), open parapet rings on the vault and the scrubber house.
+ROOF: flat roofs in varied finishes: concrete on the hall canopy and the
+scrubber house, riveted steel plate on the clerestory monitor and the fuel
+vault; open parapet rings; no roof vents (roof-variety pass).
 
 Supporting masses: an orange-slurry settling thickener with a rotating rake,
 the lead-lined fuel vault, two riveted acid tanks on a concrete bund, and the
@@ -38,6 +39,7 @@ from lategame_nuclear_parts import (bx, Facer, trefoil, gauge, drum, riveted_pan
 from industrial_facades import building_portal
 from architectural_windows import window
 from lategame_roofdeck_parts import parapet_ring
+from lategame_sheet_roofs import plate_deck
 import lategame_mining_parts as M
 
 IDENT = 'UraniumProcessingPlant'
@@ -56,7 +58,7 @@ ROW_Y = .95
 COLS = [.85, 1.95, 3.05, 4.15, 5.25]
 CASING = 1.3                # centrifuge casing height above its pedestal
 MON = (1.1, 4.9, 2.2, 3.55) # clerestory monitor x0, x1, y0, y1
-MON_TOP = 4.8
+MON_TOP = 5.0                # monitor roof top on layer 5
 
 
 def podium(g):
@@ -94,7 +96,9 @@ def hall(g, parts):
     bx(g, PX0 + .1, PY0 + .1, ROOF_Z - .22, PX1 - .1, PY0 + .5, ROOF_Z, CONCRETE)
     flat_roof(g, PX0 + .05, PY0 + .1, PX1 - .05, PY1 - .05, ROOF_Z, overhang=.05)
     roof = ROOF_Z + .16
-    parapet_ring(g, PX0, PY0 + .05, PX1, PY1, roof, height=.24)
+    parapet_ring(g, PX0, PY0 + .05, PX1, PY1, roof, height=.24, open_sides=('front',))
+    # The hall is a solid room (its cells are the building's, not free space).
+    bx(g, PX0 + .22, HYF + .07, DECK + .012, PX1 - .22, PY1 - .2, ROOF_Z, IRON)
     # Orange name board on the canopy fascia, lamps under it.
     f = Facer(3.5, PY0 + .1 - .05, 0, 'front')
     riveted_panel(g, f, -.8, .8, ROOF_Z - .2, ROOF_Z + .1, 0, .04, ORANGE)
@@ -112,8 +116,8 @@ def hall(g, parts):
                    window_style='factory', window_scale=.5)
     for x, out in ((x0, -1), (x1, 1)):
         bx(g, x - .05 if out < 0 else x - .05, y0 + .05, roof, x + .05, y1 - .05, MON_TOP - .16, FORGED)
-    flat_roof(g, x0, y0, x1, y1, MON_TOP - .16, overhang=.12)
-    beacon_part(g, parts, 'MonitorBeacon', x1 - .25, (y0 + y1) / 2, MON_TOP)
+    plate_deck(g, x0, y0, x1, y1, MON_TOP, mat=FORGED, overhang=.12)   # riveted steel plate roof
+    bx(g, x0 + .1, y0 + .1, roof, x1 - .1, y1 - .1, MON_TOP - .16, IRON)   # solid monitor room
     # Centrifuge cascade: the open-air row of five.
     for i, x in enumerate(COLS):
         centrifuge(g, parts, f'Centrifuge0{i}', x, ROW_Y)
@@ -184,16 +188,15 @@ def fuel_vault(g, parts):
     bx(g, x0, y0, 0, x1, y1, 2.0, CONCRETE)
     bx(g, x0 - .05, y0 - .05, 1.9, x1 + .05, y1 + .05, 2.012, CONCRETE)
     for x in (x0 + .3, x1 - .3):
-        bx(g, x - .08, y1, .25, x + .08, y1 + .06, 1.9, CONCRETE)
+        bx(g, x - .08, y1, 0, x + .08, y1 + .06, 1.9, CONCRETE)
     # Lead-lined door on the back face: forged leaves in a steel frame.
     f = Facer(4.0, y1, 0, 'back')
     f.box(g, 0, .865, -.03, 1.0, 1.67, .1, IRON)
     for u in (-.22, .22):
         riveted_panel(g, f, u - .2, u + .2, .15, 1.6, .02, .06, FORGED, rivets=False)
     valve_wheel(g, *f.p(0, .95, .11), face='back', r=.16)
+    plate_deck(g, x0 + .1, y0 + .1, x1 - .1, y1 - .1, 2.032, mat=FORGED, t=.04)   # riveted steel plate
     parapet_ring(g, x0 - .05, y0 - .05, x1 + .05, y1 + .05, 2.012, height=.28)
-    bx(g, 3.6, 5.1, 2.012, 4.4, 5.9, 2.5, FORGED)
-    bx(g, 3.53, 5.03, 2.5, 4.47, 5.97, 2.58, IRON)
 
 
 def acid_tanks(g, parts):
@@ -223,7 +226,8 @@ def scrubber(g, parts):
     roof = 2.0
     # Packed scrubber column.
     cx, cy = 5.9, 5.0
-    revolve(g, (cx, cy, roof), [(.6, 0), (.6, .18), (.46, .22), (.46, 3.9)], IRON, segments=12)
+    revolve(g, (cx, cy, 0.03), [(.46, 0), (.46, roof + 3.9 - .03)], IRON, segments=12)   # rises from the ground
+    revolve(g, (cx, cy, roof), [(.6, 0), (.6, .18), (.46, .22)], IRON, segments=12, cap_top=False)
     for z in (3.0, 4.6):
         band(g, (cx, cy, 0), .46, z, .08, PAINTED, segments=12)
     dome(g, (cx, cy, roof + 3.9), .47, IRON, segments=12, squash=.5)
@@ -232,20 +236,14 @@ def scrubber(g, parts):
     beacon_part(g, parts, 'ColumnBeacon', cx, cy, roof + 3.9 + .235)
     # Stack on a cast pedestal, joined to the column by a duct.
     sx, sy = 7.2, 6.15
-    bx(g, sx - .5, sy - .5, roof, sx + .5, sy + .5, 2.6, CONCRETE)
+    bx(g, sx - .5, sy - .5, 0.03, sx + .5, sy + .5, 2.6, CONCRETE)   # pedestal rises from the ground
     bx(g, sx - .55, sy - .55, 2.52, sx + .55, sy + .55, 2.64, CONCRETE)
     stack(g, sx, sy, 2.64, 5.06, emits='steam', r=.32, taper=.82, bands=3)
     pipe_path(g, [(cx, cy + .3, 5.1), (cx, sy, 5.1), (sx - .24, sy, 5.1)], .13, flanges=True)
     bx(g, sx - .05, sy - .37, 6.3, sx + .05, sy - .27, 6.5, IRON)
     beacon_part(g, parts, 'StackBeacon', sx, sy - .32, 6.5)
-    # Induced-draught fan in a ring housing on the roof.
-    fx, fy = 7.25, 4.75
-    hollow_revolve(g, (fx, fy, roof), [(.45, 0), (.45, .42)], .06, IRON, segments=12)
-    parts.append((fan('ScrubberFan', fx, fy, roof + .28, .37, blades=5), 'SPIN_Z', 3))
-    g.cylinder((fx, fy, roof + .12), .08, .24, IRON, 'Z', 10)
-    # Off-gas duct from the hall roof into the scrubber column.
-    pipe_path(g, [(5.6, 3.6, ROOF_Z + .16 + .25), (5.6, cy - .46, ROOF_Z + .16 + .25)], .15)
-    bx(g, 5.5, 3.5, ROOF_Z + .16, 5.7, 3.7, ROOF_Z + .3, IRON)
+    # Off-gas duct from the hall's back wall into the scrubber column.
+    pipe_path(g, [(5.6, PY1 - .02, 2.9), (5.6, cy - .46, 2.9)], .14)
 
 
 def build(g, parts):

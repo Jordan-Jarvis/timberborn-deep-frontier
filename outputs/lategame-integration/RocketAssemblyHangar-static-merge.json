@@ -10,34 +10,35 @@
     {
       "node": "StaticMerged",
       "parts": 2,
-      "triangles": 8078,
+      "triangles": 5086,
       "materials": {
-        "Plaster_White.IronTeeth": 342,
-        "BaseWood_DarkBrown.IronTeeth": 2182,
-        "IrregularPlanks_MetalForged.IronTeeth": 164,
-        "BaseMetal.IronTeeth": 3962,
-        "Plaster_Orange.IronTeeth": 262,
-        "RoofPlanks.IronTeeth": 128,
+        "Plaster_White.IronTeeth": 294,
+        "IrregularPlanks_MetalForged.IronTeeth": 136,
+        "BaseMetal.IronTeeth": 2450,
+        "BaseWood_DarkBrown.IronTeeth": 1268,
+        "Plaster_Orange.IronTeeth": 220,
+        "RoofPlanks.IronTeeth": 100,
         "DFIndustrial25": 44,
-        "PaintedMetal.IronTeeth": 514,
-        "Details.IronTeeth": 384,
-        "IrregularPlanks_Grey.IronTeeth": 96
+        "PaintedMetal.IronTeeth": 154,
+        "Details.IronTeeth": 264,
+        "IrregularPlanks_DarkBrown.IronTeeth": 96,
+        "IrregularPlanks_Grey.IronTeeth": 60
       }
     },
     {
       "node": "StaticMerged.DFIndustrial08",
       "parts": 1,
-      "triangles": 224,
+      "triangles": 168,
       "materials": {
-        "DFIndustrial08": 224
+        "DFIndustrial08": 168
       }
     },
     {
       "node": "StaticMerged.WindowsAtlas.IronTeeth",
       "parts": 2,
-      "triangles": 998,
+      "triangles": 462,
       "materials": {
-        "WindowsAtlas.IronTeeth": 998
+        "WindowsAtlas.IronTeeth": 462
       }
     }
   ]

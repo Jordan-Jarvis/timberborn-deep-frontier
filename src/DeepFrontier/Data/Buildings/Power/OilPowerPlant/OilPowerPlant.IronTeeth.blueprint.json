@@ -323,98 +323,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
         "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -532,7 +441,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -547,6 +463,90 @@
       {
         "MatterBelow": "Any",
         "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1211,6 +1211,15 @@
       },
       {
         "Coordinates": {
+          "X": 3,
+          "Y": 2,
+          "Z": 2
+        },
+        "Directions": "Left",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 4,
           "Y": 2,
           "Z": 2
@@ -1224,7 +1233,7 @@
           "Y": 3,
           "Z": 2
         },
-        "Directions": "Up",
+        "Directions": "Left, Up",
         "ReverseRotation": false
       },
       {
@@ -1355,83 +1364,11 @@
       },
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 0,
-          "Z": 2
-        },
-        "Directions": "Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 0,
-          "Z": 2
-        },
-        "Directions": "Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
           "X": 2,
-          "Y": 0,
-          "Z": 2
-        },
-        "Directions": "Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 0,
-          "Z": 2
-        },
-        "Directions": "Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 0,
-          "Z": 2
-        },
-        "Directions": "Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 1,
-          "Z": 2
+          "Y": 3,
+          "Z": 1
         },
         "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 1,
-          "Z": 2
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 1,
-          "Z": 2
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 2,
-          "Z": 3
-        },
-        "Directions": "Down",
         "ReverseRotation": false
       }
     ]
@@ -1489,72 +1426,48 @@
           {
             "Center": {
               "X": 2.5,
-              "Y": 1.5,
+              "Y": 1,
               "Z": 2
             },
             "Size": {
               "X": 5,
-              "Y": 3,
+              "Y": 2,
               "Z": 4
             }
           },
           {
             "Center": {
+              "X": 1,
+              "Y": 2.5,
+              "Z": 3
+            },
+            "Size": {
+              "X": 2,
+              "Y": 1,
+              "Z": 2
+            }
+          },
+          {
+            "Center": {
               "X": 2.5,
-              "Y": 3.5,
-              "Z": 0.5
+              "Y": 3,
+              "Z": 1
             },
             "Size": {
               "X": 5,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 3.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 3.5,
-              "Y": 3.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 3
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 3.5,
-              "Z": 3
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
+              "Y": 2,
               "Z": 2
             }
           },
           {
             "Center": {
               "X": 4,
-              "Y": 5,
+              "Y": 4,
               "Z": 3
             },
             "Size": {
               "X": 2,
-              "Y": 2,
+              "Y": 4,
               "Z": 2
             }
           }
@@ -1575,72 +1488,48 @@
               {
                 "Center": {
                   "X": 2.5,
-                  "Y": 1.5,
+                  "Y": 1,
                   "Z": 2
                 },
                 "Size": {
                   "X": 5,
-                  "Y": 3,
+                  "Y": 2,
                   "Z": 4
                 }
               },
               {
                 "Center": {
+                  "X": 1,
+                  "Y": 2.5,
+                  "Z": 3
+                },
+                "Size": {
+                  "X": 2,
+                  "Y": 1,
+                  "Z": 2
+                }
+              },
+              {
+                "Center": {
                   "X": 2.5,
-                  "Y": 3.5,
-                  "Z": 0.5
+                  "Y": 3,
+                  "Z": 1
                 },
                 "Size": {
                   "X": 5,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 3.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 3.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 3.5,
-                  "Z": 3
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
+                  "Y": 2,
                   "Z": 2
                 }
               },
               {
                 "Center": {
                   "X": 4,
-                  "Y": 5,
+                  "Y": 4,
                   "Z": 3
                 },
                 "Size": {
                   "X": 2,
-                  "Y": 2,
+                  "Y": 4,
                   "Z": 2
                 }
               }
@@ -1932,34 +1821,7 @@
           "Y": 0,
           "Z": 2
         },
-        "Directions": "Left, Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 0,
-          "Z": 2
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 0,
-          "Z": 2
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 0,
-          "Z": 2
-        },
-        "Directions": "Down",
+        "Directions": "Left",
         "State": "OpenIn"
       },
       {
@@ -1968,7 +1830,7 @@
           "Y": 0,
           "Z": 2
         },
-        "Directions": "Right, Down",
+        "Directions": "Right",
         "State": "OpenIn"
       },
       {
@@ -1991,6 +1853,15 @@
       },
       {
         "Coordinates": {
+          "X": 3,
+          "Y": 2,
+          "Z": 2
+        },
+        "Directions": "Left",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
           "X": 4,
           "Y": 2,
           "Z": 2
@@ -2004,7 +1875,7 @@
           "Y": 3,
           "Z": 2
         },
-        "Directions": "Up",
+        "Directions": "Left, Up",
         "State": "OpenIn"
       },
       {
@@ -2031,7 +1902,7 @@
           "Y": 2,
           "Z": 3
         },
-        "Directions": "Right, Down",
+        "Directions": "Right",
         "State": "OpenIn"
       },
       {

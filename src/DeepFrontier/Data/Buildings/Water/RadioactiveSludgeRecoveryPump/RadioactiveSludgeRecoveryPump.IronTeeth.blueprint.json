@@ -85,7 +85,7 @@
     "Size": {
       "X": 3,
       "Y": 3,
-      "Z": 5
+      "Z": 3
     },
     "Blocks": [
       {
@@ -276,132 +276,6 @@
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
       }
     ],
     "Entrance": {
@@ -517,25 +391,13 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 3,
+              "Y": 2.5,
               "Z": 1
             },
             "Size": {
               "X": 3,
-              "Y": 2,
-              "Z": 2
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 4.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
               "Y": 1,
-              "Z": 1
+              "Z": 2
             }
           }
         ],
@@ -591,25 +453,13 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 3,
+                  "Y": 2.5,
                   "Z": 1
                 },
                 "Size": {
                   "X": 3,
-                  "Y": 2,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 4.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
                   "Y": 1,
-                  "Z": 1
+                  "Z": 2
                 }
               }
             ],
@@ -673,18 +523,9 @@
       },
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 0,
-          "Z": 2
-        },
-        "Directions": "Down",
-        "State": "OpenOut"
-      },
-      {
-        "Coordinates": {
           "X": 1,
           "Y": 0,
-          "Z": 2
+          "Z": 1
         },
         "Directions": "Down",
         "State": "OpenOut"
@@ -693,41 +534,14 @@
         "Coordinates": {
           "X": 2,
           "Y": 0,
-          "Z": 2
+          "Z": 1
         },
         "Directions": "Down",
-        "State": "OpenOut"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 1,
-          "Z": 2
-        },
-        "Directions": "Up",
-        "State": "OpenOut"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 1,
-          "Z": 2
-        },
-        "Directions": "Up",
-        "State": "OpenOut"
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 1,
-          "Z": 2
-        },
-        "Directions": "Up",
         "State": "OpenOut"
       }
     ]
   },
   "StatusIconAnchorSpec": {
-    "Height": 5.7
+    "Height": 3.7
   }
 }

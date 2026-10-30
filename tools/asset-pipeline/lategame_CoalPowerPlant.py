@@ -13,8 +13,9 @@ gone; the chimney is 4 layers shorter.
 HERO: a banded riveted chimney on a square concrete base, smoking over a
       flat-roofed steel-clad boiler house, with an open horizontal steam
       engine whose spoked flywheel turns beside the boiler house.
-ROOF: flat concrete roof with a parapet on the boiler house, the riveted
-      coal bunker standing on its back half; a plank lean-to over the engine.
+ROOF: pitched corrugated-metal gable (ridge front to back) on the boiler
+      house, riveted steel gable ends; a plank lean-to over the engine
+      (roof-variety pass: no roof deck, no roof bunker).
 
 Plan (4 x 4 tiles):
 - boiler house on tiles 0..3 x 0..4: cast-concrete ground storey (the
@@ -38,6 +39,7 @@ from lategame_kit import CONCRETE, FORGED, PAINTED, LAYER_GAP
 import lategame_industry_parts as P
 import lategame_mining_parts as M
 from lategame_mining_parts import bx
+from lategame_sheet_roofs import sheet_gable
 
 IDENT = 'CoalPowerPlant'
 FOOTPRINT = (4, 4)
@@ -48,7 +50,8 @@ HERO = ('Banded riveted chimney smoking over a flat-roofed steel-clad boiler hou
 
 HALL = (.05, 2.95, .3, 3.95)      # core x0, x1, y0, y1 (plinth course .05 proud: tiles 0..3 x 0..4)
 STOREY = 1.0                      # concrete ground storey (whole layer)
-ROOF_Z = 2.84                     # roof slab bottom; its top is layer 3
+ROOF_Z = 2.6                      # eaves
+RIDGE = 3.45
 DOOR_X = 1.5
 DECK = (3.05, 4.0, 0.0, 2.05)     # engine bed, top at layer 1
 BASE = (3.05, 4.0, 2.05, 4.0)     # chimney base, top at layer 1
@@ -67,16 +70,8 @@ def boiler_house(g):
                     'left': [(1.2, 1.92), (2.85, 1.92)],
                     'back': [(1.5, 1.92)]},
            lamps=[('front', .86, .78), ('front', 2.14, .78)])
-    top = M.flat_roof(g, x0, x1, y0, y1, ROOF_Z, t=.16, overhang=.05, parapet=.3)
-    # Riveted coal bunker standing on the back half of the roof.
-    bx(g, .55, 2.4, 2.35, 3.5, top, 3.85, FORGED)
-    for x in (.55, 2.4):
-        for y in (2.35, 3.5):
-            bx(g, x - .05, x + .05, y - .05, y + .05, top, 3.9, IRON)
-    bx(g, .45, 2.5, 2.25, 3.6, 3.9, 3.98, IRON)
-    M.frustum(g, (.9, 2.05, 2.6, 3.25), 4.22, (.6, 2.35, 2.4, 3.45), 3.98, IRON)
-    for x in (.95, 1.47, 2.0):
-        K.stud(g, (x, 2.35 - .006, 3.5), 'Y', .02)
+    # Pitched corrugated-metal roof, ridge front to back.
+    sheet_gable(g, x0, y0, x1, y1, ROOF_Z, RIDGE, ridge_axis='Y', overhang=.1, mat=PAINTED)
 
 
 def engine_deck(g, parts):
@@ -132,8 +127,8 @@ def chimney(g):
     bx(g, x1, x1 + .03, 2.75, 3.3, .15, .8, IRON)
     K.stack(g, STACK[0], STACK[1], STOREY + .08, 4.72, emits='smoke', r=STACK_R, taper=.78, mat=IRON, bands=4)
     # Riveted breeching duct from the boiler house into the chimney.
-    bx(g, HALL[1], STACK[0] - .27, 2.8, 3.24, 2.05, 2.5, FORGED)
-    bx(g, 3.08, 3.14, 2.77, 3.27, 2.02, 2.53, IRON)
+    bx(g, HALL[1], STACK[0] - .27, 2.8, 3.24, 1.95, 2.4, FORGED)
+    bx(g, 3.08, 3.14, 2.77, 3.27, 1.92, 2.43, IRON)
 
 
 def build(g, parts):

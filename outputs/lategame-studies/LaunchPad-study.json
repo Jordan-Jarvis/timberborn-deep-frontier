@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Banded teal beaver rocket on a deluged flame trench beside a lattice service tower with swing arms",
+  "hero": "Banded teal beaver rocket on a deluged flame trench beside a closed riveted service tower with swing arms",
   "footprint": [
-    12,
-    12
+    10,
+    9
   ],
-  "heightLayers": 18,
+  "heightLayers": 12,
   "boundsMin": [
     -0.04,
     -0.03,
     -0.02
   ],
   "boundsMax": [
-    12.04,
-    12.04,
-    17.72
+    10.04,
+    9.04,
+    11.986
   ],
   "doors": [
     {
@@ -35,34 +35,33 @@
   "animatedParts": [
     "LaunchPad.Rocket",
     "LaunchPad.RocketExhaust",
+    "LaunchPad.ElevatorCar",
     "LaunchPad.WinchSheave",
     "LaunchPad.TowerBeacon",
-    "LaunchPad.ElevatorCar",
     "LaunchPad.UmbilicalArmLow",
     "LaunchPad.UmbilicalArmHigh",
-    "LaunchPad.PumpFlywheel",
-    "LaunchPad.MastBeacon"
+    "LaunchPad.PumpFlywheel"
   ],
   "animationFrames": 121,
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 6706,
+  "faces": 2294,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 446,
-    "IrregularPlanks_DarkBrown.IronTeeth": 36,
-    "BaseMetal.IronTeeth": 5238,
-    "RoofPlanks.IronTeeth": 85,
-    "Details.IronTeeth": 1196,
-    "accent8": 134,
-    "accent25": 68,
-    "Plaster_White.IronTeeth": 768,
+    "BaseWood_DarkBrown.IronTeeth": 350,
+    "IrregularPlanks_DarkBrown.IronTeeth": 116,
+    "BaseMetal.IronTeeth": 1444,
+    "RoofPlanks.IronTeeth": 102,
+    "Details.IronTeeth": 666,
+    "accent8": 44,
+    "accent25": 52,
+    "Plaster_White.IronTeeth": 632,
     "Plaster_Orange.IronTeeth": 51,
-    "IrregularPlanks_MetalForged.IronTeeth": 71,
-    "WindowsAtlas.IronTeeth": 66,
-    "PaintedMetal.IronTeeth": 664,
+    "IrregularPlanks_MetalForged.IronTeeth": 60,
+    "WindowsAtlas.IronTeeth": 114,
+    "PaintedMetal.IronTeeth": 462,
     "IrregularPlanks_Grey.IronTeeth": 6
   },
-  "sourceHash": "a4895308f33003ea820be1739e67d5eaff81510e768a7759f513459b45d1dc6d",
-  "artHash": "1b32b55ad864c77ab1e6d98aefe428986e49d33759ad5c88ebea8ec92fdbd736"
+  "sourceHash": "ec51c84e9e1bf623fb22bcc526dbc3455f4ec5b3df3c4da7ebee28de95ee09c8",
+  "artHash": "82018d2acca37a1c96ce80419372a0743db1d1fd40aca3417cff0b55cda492e2"
 }

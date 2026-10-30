@@ -31,9 +31,16 @@ export async function hydroBlueprint() {
   region([0,2,3],[3,3,5],'All'); // Concrete dam cap.
   region([1,1,2],[2,1,5],'All'); // Existing gate lead screw and handwheel.
   region([4,4,0],[7,9,1],'All'); // Downstream workshop foundation.
-  // One-storey workshop (2026-10-30 compaction): its flat roof's top is
-  // layer 4, its outline on the tile edges (x 4..7, y 6..9).
-  region([4,6,2],[6,8,3],'All'); // Enclosed workshop and its flat roof.
+  // One-storey workshop (2026-10-30 compaction) under its plank gable
+  // (eave 3.86, ridge 4.76; outline on the tile edges x 4..7, y 6..9).
+  region([4,6,2],[6,8,4],'All'); // Enclosed workshop and its roof.
+  // The roof's eave ring: its beams, corner brackets and gable cladding
+  // stand 15-22 cm beyond the tile edges, one layer lower than before.
+  region([3,6,3],[3,8,3],'All'); // Left eave over the conduit side.
+  region([4,5,3],[6,5,4],'All'); // Front eave and gable over the terrace lane.
+  region([4,9,3],[6,9,3],'All'); // Rear eave over the rear lane.
+  region([5,9,4],[5,9,4],'All'); // Rear gable apex.
+  region([7,6,3],[7,8,3],'All'); // Right eave over the side lane.
   region([4,5,2],[5,5,3],'All'); // Generator housing and coupling.
   region([4,4,3],[5,4,3],'All'); // Generator casing above the front lane.
   for(let y=0;y<h;y++)for(let x=0;x<w;x++)

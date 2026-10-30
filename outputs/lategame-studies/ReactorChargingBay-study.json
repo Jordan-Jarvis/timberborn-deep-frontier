@@ -31,26 +31,27 @@
     }
   ],
   "animatedParts": [
-    "ReactorChargingBay.Fan",
+    "ReactorChargingBay.CoilA",
+    "ReactorChargingBay.CoilB",
     "ReactorChargingBay.Beacon"
   ],
   "animationFrames": 121,
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 1310,
+  "faces": 1216,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 32,
-    "BaseMetal.IronTeeth": 587,
+    "BaseMetal.IronTeeth": 521,
     "Details.IronTeeth": 176,
     "accent8": 12,
     "accent25": 10,
     "Plaster_White.IronTeeth": 178,
     "Plaster_Orange.IronTeeth": 69,
-    "IrregularPlanks_MetalForged.IronTeeth": 180,
+    "IrregularPlanks_MetalForged.IronTeeth": 150,
     "WindowsAtlas.IronTeeth": 2,
-    "PaintedMetal.IronTeeth": 126
+    "PaintedMetal.IronTeeth": 84
   },
-  "sourceHash": "c4677136dc297921a909bf79600e6e852f76e2869b139518543c22b60b52c3e7",
-  "artHash": "d606021b8a8d0b8ba79dffdfe7ffd4823d2feaaa02cdf470724316a953b16be4"
+  "sourceHash": "cf5ca1a2a69c4d9d59756a09b60d05bc547c03525a7f2cdbe2ab5e83714762f2",
+  "artHash": "d5d695ef6aa1558f5c16224e663f07774d6d44bdabb36d755c5f4eca98691866"
 }

@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Goliath gantry crane: twin A-frame steel legs on rail bogies carry a riveted 10-layer bridge that lifts a finned spent-fuel cask from the cooling pond into the hot-cell roof hatch.",
+  "hero": "Cask crane: a riveted twin-girder bridge on a concrete pier lifts a finned spent-fuel cask from the cooling pond into the hot-cell roof hatch.",
   "footprint": [
-    12,
-    11
+    9,
+    7
   ],
-  "heightLayers": 12,
+  "heightLayers": 7,
   "boundsMin": [
-    -0.0,
-    -0.0,
-    -0.0385
+    -0.02,
+    -0.1275,
+    0.0
   ],
   "boundsMax": [
-    12.0,
-    11.144,
-    10.97
+    9.05,
+    7.07,
+    6.6
   ],
   "doors": [
     {
       "id": "Main",
       "position": [
         1.5,
-        1.15,
+        0.15,
         0
       ],
       "outward": [
@@ -46,21 +46,19 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 8740,
+  "faces": 3093,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 254,
-    "IrregularPlanks_DarkBrown.IronTeeth": 108,
-    "BaseMetal.IronTeeth": 6467,
-    "RoofPlanks.IronTeeth": 210,
-    "Details.IronTeeth": 1058,
-    "accent8": 32,
+    "BaseWood_DarkBrown.IronTeeth": 152,
+    "BaseMetal.IronTeeth": 2272,
+    "Details.IronTeeth": 494,
+    "accent8": 22,
     "accent25": 38,
-    "Plaster_White.IronTeeth": 540,
-    "Plaster_Orange.IronTeeth": 139,
-    "IrregularPlanks_MetalForged.IronTeeth": 86,
-    "WindowsAtlas.IronTeeth": 290,
-    "PaintedMetal.IronTeeth": 328
+    "Plaster_White.IronTeeth": 342,
+    "Plaster_Orange.IronTeeth": 157,
+    "IrregularPlanks_MetalForged.IronTeeth": 32,
+    "WindowsAtlas.IronTeeth": 162,
+    "PaintedMetal.IronTeeth": 220
   },
-  "sourceHash": "50a4cfa3c837e0ac828a3ca2239ee9ff2a61133df6a5aaea4b406c2a19a93a3a",
-  "artHash": "77ed8a67c90cf4865e854c6e9802716597de3e12f0f7ae2e696a9da59688eee7"
+  "sourceHash": "1eda4f08074e5e803a6f9315219c3b3b106dad541ef41263090fa8ec784a58bd",
+  "artHash": "6a45c81c03c7d2f8a6e1606712e0ccba168dc537463ad002e6cf0e64f039ec9a"
 }

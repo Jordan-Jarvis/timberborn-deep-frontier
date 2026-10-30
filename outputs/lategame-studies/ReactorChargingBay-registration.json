@@ -42,11 +42,6 @@
   ],
   [
    1,
-   0,
-   2
-  ],
-  [
-   1,
    1,
    0
   ],
@@ -138,6 +133,12 @@
    "Up"
   ],
   [
+   1,
+   1,
+   2,
+   "Down"
+  ],
+  [
    2,
    1,
    0,
@@ -155,8 +156,9 @@
  "frameEnd": 121,
  "fps": 30,
  "animatedParts": [
-  "ReactorChargingBay.Fan",
+  "ReactorChargingBay.CoilA",
+  "ReactorChargingBay.CoilB",
   "ReactorChargingBay.Beacon"
  ],
- "sourceHash": "c4677136dc297921a909bf79600e6e852f76e2869b139518543c22b60b52c3e7"
+ "sourceHash": "cf5ca1a2a69c4d9d59756a09b60d05bc547c03525a7f2cdbe2ab5e83714762f2"
 }

@@ -1,9 +1,16 @@
 """RadioactiveSludgeRecoveryPump: pumps world sludge back into barrels
 (docs/radiation.md: native intake pipe, 0.2 units per 0.5 h cycle).
 
+Compacted 2026-10-30 (light touch, outputs/compaction/BRIEF.md): 3x3x5 ->
+3x3x3. One layer per floor: a concrete ground storey (layer 0, the door and
+the pipe outlet) and one forged storey (layer 1) under its plank gable, a
+layer lower; the roof ventilator cowl is gone (roof variety: real roof, no
+roof vents). Footprint, door, pipe outlet, intake cell and the pool deck are
+unchanged.
+
 HERO: a hazard-banded steel pump house whose vertical pump on a pool-side
 deck drops a strainer intake pipe down into the pool.
-ROOF: teal plank gable with a turning ventilator cowl.
+ROOF: teal native plank gable (ridge front to back), no ventilator.
 
 Plan (3 x 3 tiles): concrete plinth with the builders' door and the Timber
 Pipes outlet on the front; the forged pump house on it; the steel deck
@@ -17,7 +24,7 @@ Accents: no yellow or yellow-green native material exists (brass renders
 grey), so the hazmat bands, trefoil disc and pump ring use native orange
 plaster, sparingly; the house body stays forged steel.
 
-Animated: pump coupling (SPIN_Z), roof ventilator cowl (SPIN_Z).
+Animated: pump coupling (SPIN_Z), delivery-valve handwheel (SPIN_X).
 """
 import math
 
@@ -30,10 +37,12 @@ from lategame_civic_parts import blk
 from lategame_nuclear_parts import Facer, prism
 from industrial_facades import building_portal
 from native_window_atlas import atlas_window
+from lategame_roofdeck_parts import parapet_ring
+import lategame_mining_parts as M
 
 IDENT = 'RadioactiveSludgeRecoveryPump'
 FOOTPRINT = (3, 3)
-HEIGHT = 5
+HEIGHT = 3
 FRAME_END = 121
 HERO = 'Hazard-banded steel pump house whose vertical pump on a pool-side deck drops a strainer intake into the pool.'
 
@@ -65,19 +74,19 @@ def rad_sign(g, x, y, z, face='front', r=.18):
 
 def house(g, parts):
     x0, y0, x1, y1 = 0.0, .15, 3.0, 2.0
-    top = P.plinth(g, x0, y0, x1, y1, 1.2, door=(DOOR_X, 1.0, 1.0))
-    building_portal(g, DOOR_X, y0 - .12, 0)
-    g.doorways.append({'id': 'Door0', 'position': [DOOR_X, y0, 0], 'outward': [0, -1]})
-    K.lamp(g, DOOR_X - .62, y0 - .04, 1.05, face='front')
+    M.plinth_course(g, x0 + .05, x1 - .05, y0 + .12, y1 - .05, 0, 1.0, CONCRETE, [DOOR_X])
+    M.portal(g, DOOR_X, y0 + .12, 0, ident='Door0')
+    top = 1.0
+    K.lamp(g, DOOR_X - .62, y0 + .07, .75, face='front')
     sx, sy, sz = PIPE_OUTLET['socket']
-    blk(g, sx - .25, sy + .03, sz - .25, sx + .25, y0 + .02, sz + .2, PAINTED)
+    blk(g, sx - .25, sy + .03, sz - .25, sx + .25, y0 + .09, sz + .2, PAINTED)
     g.cylinder((sx, sy + .02, sz), .15, .08, IRON, 'Y', 16)
     P.hoop(g, (sx, sy - .03, sz), .2, .05, .04, BRASS, axis='Y', segments=16)
     K.bolt_row(g, (sx - .16, sy - .06, sz + .14), (sx + .16, sy - .06, sz + .14), 3, r=.016)
     bx0, by0, bx1, by1 = x0 + .1, y0 + .1, x1 - .1, y1 - .1
-    eave = 2.9
-    C.framed_block(g, bx0, by0, bx1, by1, top + .02, eave, infill=FORGED, frame=IRON, pitch=.93, sink=.03,
-                   windows={'left': [(1.29, 2.25, .7, 'factory')], 'right': [(1.29, 2.25, .7, 'factory'), (.62, 2.25, .7, 'factory')]})
+    eave = 1.84
+    C.framed_block(g, bx0, by0, bx1, by1, top + .012, eave, infill=FORGED, frame=IRON, pitch=.93, sink=.03,
+                   windows={'left': [(1.29, 1.42, .45, 'factory')], 'right': [(1.29, 1.42, .45, 'factory'), (.62, 1.42, .45, 'factory')]})
     # Hazmat bands: brass and dark blocks wrapped round the front and sides.
     def band_x(y, out):
         n = 13
@@ -86,20 +95,14 @@ def house(g, parts):
             a = bx0 + .12 + i * w
             d0, d1 = (y - .085, y - .055) if out < 0 else (y + .055, y + .085)
             if i % 2 == 0:
-                blk(g, a, d0, 1.52, a + w, d1, 1.64, ORANGE)
+                blk(g, a, d0, 1.06, a + w, d1, 1.16, ORANGE)
             else:
-                blk(g, a + .002, d0 + .006, 1.526, a + w - .002, d1 - .006, 1.634, IRON)
+                blk(g, a + .002, d0 + .006, 1.066, a + w - .002, d1 - .006, 1.154, IRON)
     band_x(by0, -1)
-    rad_sign(g, .62, by0 - .055, 2.3, 'front', .18)
-    rad_sign(g, bx0 - .055, .62, 2.3, 'left', .18)
-    atlas_window(g, 2.25, by0, 2.3, .22, 'front', 'slit')
-    ridge = P.plank_roof(g, bx0, by0, bx1, by1, eave, eave + .75, ridge_axis='Y', overhang=.16, plank=.28)
-    for y, sgn in ((by0 - .16, -1), (by1 + .16, 1)):
-        blk(g, 1.425, min(y + sgn * .005, y + sgn * .085), eave + .67, 1.575, max(y + sgn * .005, y + sgn * .085),
-            eave + .95, WOOD)
-    cx, cy = 1.5, 1.3
-    g.cylinder((cx, cy, ridge - .05), .13, .3, IRON, 'Z', 12)
-    parts.append((C.cowl('RadioactiveSludgeRecoveryPump.Cowl', cx, cy, ridge + .1, r=.15, h=.4), 'SPIN_Z', 1))
+    rad_sign(g, .62, by0 - .055, 1.48, 'front', .16)
+    rad_sign(g, bx0 - .055, .62, 1.48, 'left', .16)
+    atlas_window(g, 2.25, by0, 1.48, .2, 'front', 'slit')
+    ridge = P.plank_roof(g, bx0, by0, bx1, by1, eave, eave + .7, ridge_axis='Y', overhang=.16, plank=.28)
 
 
 def deck(g, parts):
@@ -135,6 +138,10 @@ def deck(g, parts):
         g.box((px + math.cos(a) * .19, py + math.sin(a) * .19, .08), (.03, .03, .09), IRON)
     # Delivery line from the casing into the house.
     P.pipe(g, [(px, py - .2, DECK_Z + .3), (px, 1.89, DECK_Z + .3)], .06, flanges=False)
+    g.cylinder((px + .1, 2.15, DECK_Z + .3), .04, .12, IRON, 'X', 8)
+    v = Geometry('RadioactiveSludgeRecoveryPump.ValveWheel', (px + .19, 2.15, DECK_Z + .3))
+    K.wheel(v, (px + .19, 2.15, DECK_Z + .3), .11, 'X')
+    parts.append((v, 'SPIN_X', 1))
 
 
 def build(g, parts):

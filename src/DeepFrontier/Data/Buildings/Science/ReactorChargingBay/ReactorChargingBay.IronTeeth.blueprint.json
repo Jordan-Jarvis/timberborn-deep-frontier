@@ -179,7 +179,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -396,34 +396,10 @@
             "Center": {
               "X": 1.5,
               "Y": 2.5,
-              "Z": 1
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 2
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 2.5,
               "Z": 1.5
             },
             "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 2.5,
-              "Y": 2.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
+              "X": 3,
               "Y": 1,
               "Z": 1
             }
@@ -458,34 +434,10 @@
                 "Center": {
                   "X": 1.5,
                   "Y": 2.5,
-                  "Z": 1
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 2.5,
                   "Z": 1.5
                 },
                 "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 2.5,
-                  "Y": 2.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
+                  "X": 3,
                   "Y": 1,
                   "Z": 1
                 }

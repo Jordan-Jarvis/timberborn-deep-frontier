@@ -197,11 +197,6 @@
   ],
   [
    2,
-   2,
-   2
-  ],
-  [
-   2,
    3,
    0
   ],
@@ -209,11 +204,6 @@
    2,
    3,
    1
-  ],
-  [
-   2,
-   3,
-   2
   ],
   [
    3,
@@ -416,7 +406,7 @@
    5
   ]
  ],
- "partsOutsideFootprint": 0,
+ "partsOutsideFootprint": 1,
  "doors": [
   {
    "id": "Door0",
@@ -505,9 +495,21 @@
   ],
   [
    2,
+   1,
+   2,
+   "Up"
+  ],
+  [
+   2,
    3,
    0,
    "Up"
+  ],
+  [
+   3,
+   2,
+   2,
+   "Left"
   ],
   [
    3,
@@ -526,6 +528,12 @@
    3,
    1,
    "Up"
+  ],
+  [
+   3,
+   3,
+   2,
+   "Left"
   ],
   [
    3,
@@ -682,5 +690,5 @@
   "OilPowerPlant.CoolerFan2",
   "OilPowerPlant.PumpCoupling"
  ],
- "sourceHash": "f3d8a1c41fee1fbe2deb0565b491569d9a3c477565bf06808e0f1d036226c1f2"
+ "sourceHash": "a3aeeb0e57d5643f6d09ff9fb50e36274186b4d10f49d206c61132683309c225"
 }

@@ -9,22 +9,22 @@ scale; outputs/compaction/BRIEF.md): 9x10x12 -> 8x7x6, inside the old
 footprint with the same origin (the old GRID_ORIGIN corner), door (grid x
 4.5, face 0.15 behind the front edge) and native entrance. Two berm courses
 of one layer each instead of three, a lower dome on a short drum, vent towers
-that end 4 layers lower, and a flat-roofed gatehouse (the plank gable is
-gone). The dome is the building's defining silhouette and stays.
+that end 4 layers lower, and a lower plank-gabled gatehouse. The dome is the building's defining silhouette and stays.
 
 HERO: a half-sunk bunker: two battered concrete berm courses stepping up to a
 ribbed concrete dome on a buttressed drum, entered through a cast gatehouse,
 flanked by two ventilation towers with slowly turning cowls.
-ROOF: shallow ribbed concrete dome with a turning lantern ventilator; flat
-cast roof with a parapet ring on the gatehouse.
+ROOF: shallow ribbed concrete dome closed by a cast concrete crown cap (the
+turning lantern ventilator is gone: roof-variety pass, no roof vents); a teal
+native plank gable on the gatehouse.
 
 Supporting masses: the gatehouse with parked lead-sheet blast-door leaves on
 a steel track, the shielded cask port in the berm's left face, and warning
 beacons. No workers and no power: the machinery is the vault's passive
 ventilation.
 
-Animated (names unchanged): two tower cowls and the dome lantern (SPIN_Z),
-two warning beacons (SPIN_Z).
+Animated (names unchanged): two tower cowls (SPIN_Z) on towers rising from
+the ground, two warning beacons (SPIN_Z).
 """
 import math
 
@@ -35,6 +35,7 @@ from lategame_kit import (CONCRETE, ORANGE, FORGED, PAINTED, CYAN, GLOW, revolve
 from lategame_nuclear_parts import (bx, Facer, trefoil, riveted_panel, frustum, obox, hazard_stripes)
 from industrial_facades import building_portal
 from lategame_roofdeck_parts import parapet_ring
+import lategame_mining_parts as M
 
 IDENT = 'RadioactiveWasteVault'
 FOOTPRINT = (8, 7)
@@ -141,19 +142,10 @@ def dome_block(g, parts, top):
             pts.append((CX + math.cos(a) * r, CY + math.sin(a) * r, base + DOME_R * squash * math.sin(t) + .02))
         for p, q in zip(pts, pts[1:-1]):
             g.beam(p, q, .09, mat=IRON)
-    # Lantern ventilator on the crown.
+    # Cast concrete crown cap closing the dome (no lantern ventilator).
     crown = base + DOME_R * squash
     lz = crown - .1
-    revolve(g, (CX, CY, lz), [(.6, 0), (.6, .2), (.5, .21), (.5, .26)], CONCRETE, segments=12)
-    revolve(g, (CX, CY, lz + .26), [(.34, 0), (.34, .45)], IRON, segments=16)
-    vent = Geometry('LanternVent', (CX, CY, lz + .26))
-    for k in range(8):
-        a = k * math.pi / 4
-        obox(vent, (CX + math.cos(a) * .41, CY + math.sin(a) * .41, lz + .49), a + .6, .22, .035, .4, PAINTED)
-    vent.ring((CX, CY, lz + .71), .49, .08, .05, IRON, 'Z', 16)
-    vent.ring((CX, CY, lz + .27), .49, .08, .035, IRON, 'Z', 16)
-    revolve(vent, (CX, CY, lz + .71), [(.54, 0), (.54, .04), (.08, .34), (0, .36)], ROOF, segments=16)
-    parts.append((vent, 'SPIN_Z', .5))
+    revolve(g, (CX, CY, lz), [(.6, 0), (.6, .2), (.5, .21), (.5, .26), (.3, .3), (0, .31)], CONCRETE, segments=12)
 
 
 def gatehouse(g, parts):
@@ -168,8 +160,7 @@ def gatehouse(g, parts):
     bx(g, left, gy0 + .25, 0, right, gy1, dh, CONCRETE)
     bx(g, left + .006, gy0 + .24, .006, right - .006, gy0 + .25, dh - .006, IRON)
     bx(g, gx0, gy1, .03, gx1, gy1 + .8, gtop, CONCRETE)
-    flat_roof(g, gx0, gy0, gx1, gy1 + .8, gtop, thickness=.16, overhang=.05)
-    parapet_ring(g, gx0 - .05, gy0 - .05, gx1 + .05, gy1 + .75, gtop + .16, height=.24)
+    M.plank_gable(g, gx0, gx1, gy0, gy1 + .8, gtop, gtop + .7, ridge_axis='Y', overhang=.12, seed=31)
     building_portal(g, DOOR_X, gy0 - .12, 0)
     g.doorways.append({'id': 'Main', 'position': [DOOR_X, gy0, 0], 'outward': [0, -1]})
     # Parked lead-sheet blast-door leaves on a steel track.

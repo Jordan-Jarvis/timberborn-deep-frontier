@@ -3,7 +3,7 @@
   1,
   2
  ],
- "height": 5,
+ "height": 4,
  "occupied": [
   [
    0,
@@ -39,11 +39,6 @@
    0,
    1,
    3
-  ],
-  [
-   0,
-   1,
-   4
   ]
  ],
  "partsOutsideFootprint": 0,
@@ -99,12 +94,6 @@
   ],
   [
    0,
-   0,
-   1,
-   "Down"
-  ],
-  [
-   0,
    1,
    0,
    "Left"
@@ -155,30 +144,6 @@
    0,
    1,
    2,
-   "Up"
-  ],
-  [
-   0,
-   1,
-   3,
-   "Left"
-  ],
-  [
-   0,
-   1,
-   3,
-   "Right"
-  ],
-  [
-   0,
-   1,
-   3,
-   "Down"
-  ],
-  [
-   0,
-   1,
-   3,
    "Up"
   ]
  ],
@@ -191,5 +156,5 @@
   "DeepWell.Kelly",
   "DeepWell.Beacon"
  ],
- "sourceHash": "9f5d24f776c97cdc8d49ce12f11cca42eec7c1c0dbd5680f23adc7f042bcb392"
+ "sourceHash": "45274d02615a1c8e903e742f2c7efb223143d0eae838ff0da339b4ccc3aaa60a"
 }

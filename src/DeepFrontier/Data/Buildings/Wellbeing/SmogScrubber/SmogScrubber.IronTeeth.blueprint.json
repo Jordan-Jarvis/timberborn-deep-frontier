@@ -43,7 +43,7 @@
     "Size": {
       "X": 3,
       "Y": 3,
-      "Z": 6
+      "Z": 5
     },
     "Blocks": [
       {
@@ -119,77 +119,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -258,7 +188,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -314,7 +244,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -563,6 +500,24 @@
         },
         "Directions": "Down",
         "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 0,
+          "Z": 1
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 2,
+          "Z": 1
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
       }
     ]
   },
@@ -583,48 +538,48 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 1.5,
+              "Y": 1,
               "Z": 1.5
             },
             "Size": {
               "X": 3,
-              "Y": 3,
+              "Y": 2,
               "Z": 3
             }
           },
           {
             "Center": {
-              "X": 1,
-              "Y": 3.5,
+              "X": 0.5,
+              "Y": 3,
               "Z": 1.5
             },
             "Size": {
-              "X": 2,
-              "Y": 1,
+              "X": 1,
+              "Y": 2,
               "Z": 3
             }
           },
           {
             "Center": {
-              "X": 2.5,
-              "Y": 3.5,
+              "X": 2,
+              "Y": 3,
               "Z": 2
             },
             "Size": {
-              "X": 1,
-              "Y": 1,
+              "X": 2,
+              "Y": 2,
               "Z": 2
             }
           },
           {
             "Center": {
               "X": 1.5,
-              "Y": 5,
+              "Y": 4.5,
               "Z": 1.5
             },
             "Size": {
               "X": 3,
-              "Y": 2,
+              "Y": 1,
               "Z": 3
             }
           }
@@ -645,48 +600,48 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 1.5,
+                  "Y": 1,
                   "Z": 1.5
                 },
                 "Size": {
                   "X": 3,
-                  "Y": 3,
+                  "Y": 2,
                   "Z": 3
                 }
               },
               {
                 "Center": {
-                  "X": 1,
-                  "Y": 3.5,
+                  "X": 0.5,
+                  "Y": 3,
                   "Z": 1.5
                 },
                 "Size": {
-                  "X": 2,
-                  "Y": 1,
+                  "X": 1,
+                  "Y": 2,
                   "Z": 3
                 }
               },
               {
                 "Center": {
-                  "X": 2.5,
-                  "Y": 3.5,
+                  "X": 2,
+                  "Y": 3,
                   "Z": 2
                 },
                 "Size": {
-                  "X": 1,
-                  "Y": 1,
+                  "X": 2,
+                  "Y": 2,
                   "Z": 2
                 }
               },
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 5,
+                  "Y": 4.5,
                   "Z": 1.5
                 },
                 "Size": {
                   "X": 3,
-                  "Y": 2,
+                  "Y": 1,
                   "Z": 3
                 }
               }
@@ -715,7 +670,7 @@
         "Parent": "#Finished",
         "Position": {
           "X": 1.5,
-          "Y": 5.72,
+          "Y": 4.72,
           "Z": 1.7
         },
         "Rotation": {
@@ -738,12 +693,19 @@
       "TowerSteam1"
     ]
   },
+  "BlockObjectNavMeshSettingsSpec": {
+    "NoAutoWalls": false,
+    "GenerateFloorsOnStackable": true,
+    "EdgeGroups": [],
+    "UnblockedCoordinates": [],
+    "BlockedEdges": []
+  },
   "SmogScrubberSpec": {
     "Radius": 20,
     "Reduction": 1
   },
   "StatusIconAnchorSpec": {
-    "Height": 6.7
+    "Height": 5.7
   },
   "PowerConnectionStatusSpec": {}
 }

@@ -43,9 +43,6 @@
     "NuclearReactor.SluiceGate0",
     "NuclearReactor.SluiceGate1",
     "NuclearReactor.ExciterFlywheel",
-    "NuclearReactor.HallVent0",
-    "NuclearReactor.HallVent1",
-    "NuclearReactor.HallVent2",
     "RaceWheel0.#Empty#Animated",
     "RaceWheel1.#Empty#Animated"
   ],
@@ -78,20 +75,20 @@
     }
   ],
   "redicProps": [],
-  "faces": 4821,
+  "faces": 4585,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 466,
-    "BaseMetal.IronTeeth": 2074,
+    "BaseMetal.IronTeeth": 1824,
     "RoofPlanks.IronTeeth": 86,
-    "Details.IronTeeth": 447,
+    "Details.IronTeeth": 351,
     "accent8": 30,
     "accent25": 16,
-    "Plaster_White.IronTeeth": 1500,
+    "Plaster_White.IronTeeth": 1488,
     "Plaster_Orange.IronTeeth": 7,
-    "IrregularPlanks_MetalForged.IronTeeth": 150,
+    "IrregularPlanks_MetalForged.IronTeeth": 180,
     "WindowsAtlas.IronTeeth": 86,
-    "PaintedMetal.IronTeeth": 343
+    "PaintedMetal.IronTeeth": 315
   },
-  "sourceHash": "985ee0d74505904efb7fc7eca82fbbcbdbb3515bd786b4e5fc81756477b1833c",
-  "artHash": "1a9768ed773c84ca46fc44c1df399fa54cdee549036b252222d1f5e6aa452bbb"
+  "sourceHash": "a5170196dd417f0290398f2d62d2e4221e184c74f9f9a272b323fa2d93489a6e",
+  "artHash": "126fa11fefebb036735496a70aff8964f6ccf3fa52c3d08ab156add0e3858307"
 }

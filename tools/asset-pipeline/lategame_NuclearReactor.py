@@ -18,8 +18,9 @@ are the building's defining silhouette and keep their curves.
 
 Hero: a banded concrete containment tube under a painted steel dome,
 flanked by twin hyperboloid cooling towers standing in their own basins.
-Roof types: domed containment, open hyperboloid towers, flat parapet roofs
-on the turbine hall, fuel store and feed house.
+Roof types: domed containment, open hyperboloid towers; flat roofs in two
+finishes: riveted steel plate on the turbine hall, concrete on the feed
+house and fuel store; no roof vents (roof-variety pass).
 
 Water supply: a ground-level concrete race along the back carries native
 water past two native water wheels and is sluiced into each cooling basin.
@@ -38,6 +39,7 @@ from industrial_facades import building_portal
 from architectural_windows import window
 from native_building_assets import prop
 from lategame_roofdeck_parts import parapet_ring
+from lategame_sheet_roofs import plate_deck
 import lategame_mining_parts as M
 
 IDENT = 'NuclearReactor'
@@ -269,9 +271,9 @@ def feed_house(g, parts):
     g.box((sx, sy - .06, sz), (.44, .12, .44), PAINTED)
     g.cylinder((sx, sy - .14, sz), .14, .1, IRON, 'Y', 8)
     g.cylinder((sx, sy - .2, sz), .19, .03, BRASS, 'Y', 8)
-    # Exciter flywheel on the roof against the hall's west wall.
-    gx, gy, gz = 3.55, .9, roof + .55
-    g.box((gx, gy, roof + .2), (.4, .7, .4), CONCRETE)
+    # Exciter flywheel on its own ground plinth behind the turbine hall.
+    gx, gy, gz = 9.6, 3.55, .75
+    g.box((gx, gy, .23), (.4, .7, .4), CONCRETE)
     g.cylinder((gx + .25, gy, gz), .06, .5, IRON, 'X', 8)
     fly = Geometry('NuclearReactor.ExciterFlywheel', (gx, gy, gz))
     fly.ring((gx, gy, gz), .5, .1, .14, IRON, 'X', 12)
@@ -303,18 +305,15 @@ def turbine_hall(g, parts):
     frame_wall(g, 'Y', x1 - .05, y0 + .1, y1 - .1, w0, top, outward=1, bays=3, infill=FORGED,
                windows=[(1.6, 1.92)], window_style='lancet', window_scale=.7)
     frame_wall(g, 'Y', x0 + .05, y0 + .1, y1 - .1, w0, top, outward=-1, bays=3, infill=FORGED)
-    flat_roof(g, x0, y0, x1, y1, top, overhang=.0)
+    plate_deck(g, x0, y0, x1, y1, top + .16, mat=FORGED)   # riveted steel plate roof
     roof = top + .16
-    parapet_ring(g, x0, y0, x1, y1, roof, height=.26)
+    parapet_ring(g, x0, y0, x1, y1, roof, height=.26, open_sides=('front',))
+    # The hall is a solid room (its cells are the building's, not free space).
+    g.box(((x0 + x1) / 2, (y0 + y1) / 2, (w0 + top) / 2), (x1 - x0 - .4, y1 - y0 - .3, top - w0), IRON)
     # Emblem board and lamps over the door.
     g.box((10.5, y0 - .03, 1.55), (1.2, .06, .5), CONCRETE)
     for x in (9.6, 11.4):
         lamp(g, x, y0 - .05, .75, face='front')
-    # Roof ventilators along the middle of the roof.
-    for k, x in enumerate((5.5, 8.5, 12.5)):
-        revolve(g, (x, 1.55, roof - .02), [(.36, 0), (.36, .3)], IRON, segments=8)
-        g.ring((x, 1.55, roof + .26), .39, .05, .08, BRASS, 'Z', 8)
-        parts.append((fan(f'NuclearReactor.HallVent{k}', x, 1.55, roof + .28, .3, blades=5), 'SPIN_Z', 4))
     # Main steam lines from the containment into the hall's back wall.
     for x in (6.0, 6.7, 7.3, 8.0):
         pipe_run(g, [(x, CORE[1] - TUBE_R + .1, 2.3), (x, y1 + .05, 2.3)], .14)
@@ -332,7 +331,6 @@ def fuel_store(g, parts):
     for y in (3.4, 4.6):
         g.box((x1 + .07, y, .9), (.14, .1, 1.7), IRON)
     g.box((x1 + .08, 4.0, 1.75), (.16, 1.4, .12), IRON)
-    stack(g, 13.3, 4.4, roof, 1.6, emits=None, r=.16, bands=2)   # ventilation: no plume
 
 
 def coolant_links(g):

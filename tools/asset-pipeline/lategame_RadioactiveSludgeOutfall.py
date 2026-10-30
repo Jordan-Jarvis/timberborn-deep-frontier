@@ -1,9 +1,15 @@
 """RadioactiveSludgeOutfall: releases radioactive sludge into the world
 (docs/radiation.md: 0.6 units per cycle at its output cell).
 
+Compacted 2026-10-30 (light touch, outputs/compaction/BRIEF.md): 4x3x4 ->
+4x3x3. One layer per floor: the valve house is a concrete ground storey
+(layer 0, the door and the pipe inlet) and one steel-framed storey (layer 1)
+under its plank mono-pitch roof, now a layer lower (roof variety: a real
+pitched roof stays). Footprint, door, pipe inlet and sludge output unchanged.
+
 HERO: a stepped concrete spillway with a lifting sluice gate, running from a
 small steel valve house down to a cantilevered, hazard-striped lip.
-ROOF: teal plank mono-pitch on the concrete valve house.
+ROOF: teal native plank mono-pitch on the valve house, falling to the back.
 
 Plan (4 x 3 tiles): valve house on the left with the builders' door and the
 Timber Pipes inlet on the front; the sluice chamber and spillway on the
@@ -27,10 +33,12 @@ from lategame_nuclear_parts import Facer, prism
 from industrial_facades import building_portal
 from lategame_mining_parts import lean_to
 from native_window_atlas import atlas_window
+from lategame_roofdeck_parts import parapet_ring
+import lategame_mining_parts as M
 
 IDENT = 'RadioactiveSludgeOutfall'
 FOOTPRINT = (4, 3)
-HEIGHT = 4
+HEIGHT = 3
 FRAME_END = 121
 HERO = 'Stepped concrete spillway with a lifting sluice gate, from a steel valve house to a striped cantilevered lip.'
 
@@ -69,29 +77,28 @@ def rad_sign(g, x, y, z, face='front', r=.2):
 
 def valve_house(g, parts):
     x0, y0, x1, y1 = 0.0, .15, 2.5, 2.0
-    top = P.plinth(g, x0, y0, x1, y1, 1.2, door=(DOOR_X, 1.0, 1.0))
-    building_portal(g, DOOR_X, y0 - .12, 0)
-    g.doorways.append({'id': 'Door0', 'position': [DOOR_X, y0, 0], 'outward': [0, -1]})
-    K.lamp(g, DOOR_X + .62, y0 - .04, 1.05, face='front')
+    M.plinth_course(g, x0 + .05, x1 - .05, y0 + .12, y1 - .05, 0, 1.0, CONCRETE, [DOOR_X])
+    M.portal(g, DOOR_X, y0 + .12, 0, ident='Door0')
+    top = 1.0
+    K.lamp(g, DOOR_X + .62, y0 + .07, .75, face='front')
     # Inlet socket on the plinth front.
     sx, sy, sz = PIPE_INLET['socket']
-    blk(g, sx - .25, sy + .03, sz - .25, sx + .25, y0 + .02, sz + .2, PAINTED)
+    blk(g, sx - .25, sy + .03, sz - .25, sx + .25, y0 + .09, sz + .2, PAINTED)
     g.cylinder((sx, sy + .02, sz), .15, .08, IRON, 'Y', 16)
     P.hoop(g, (sx, sy - .03, sz), .2, .05, .04, BRASS, axis='Y', segments=16)
     K.bolt_row(g, (sx - .16, sy - .06, sz + .14), (sx + .16, sy - .06, sz + .14), 3, r=.016)
     bx0, by0, bx1, by1 = x0 + .1, y0 + .1, x1 - .1, y1 - .1
-    eave = 2.75
-    C.framed_block(g, bx0, by0, bx1, by1, top + .02, eave, infill=CONCRETE, frame=IRON, pitch=.95, sink=.03,
-                   windows={'front': [(.6, 2.0, .75, 'factory')], 'left': [(1.47, 2.0, .75, 'factory')]})
-    rad_sign(g, 1.7, by0 - .055, 2.05, 'front', .2)
-    # Mono-pitch roof falling toward the back, closed at both ends.
-    high = eave + .6
+    eave = 1.84
+    C.framed_block(g, bx0, by0, bx1, by1, top + .012, eave, infill=CONCRETE, frame=IRON, pitch=.95, sink=.03,
+                   windows={'front': [(.6, 1.42, .5, 'factory')], 'left': [(1.47, 1.42, .5, 'factory')]})
+    rad_sign(g, 1.7, by0 - .055, 1.42, 'front', .18)
+    # Mono-pitch plank roof falling toward the back, closed at both ends.
+    high = eave + .45
     lean_to(g, bx0, bx1, by0, by1, eave, high, low_side='back', overhang=.12, seed=5)
-    tri = [(by0 + .1, eave - .01), (by1, eave - .01), (by0 + .1, high - .02 - .1 * .6 / (by1 - by0))]
+    tri = [(by0 + .1, eave - .01), (by1, eave - .01), (by0 + .1, high - .02 - .1 * .45 / (by1 - by0))]
     K.extrude_profile(g, tri, bx0 + .01, bx0 + .09, CONCRETE, axis='X')
     K.extrude_profile(g, tri, bx1 - .09, bx1 - .01, CONCRETE, axis='X')
     blk(g, bx0, by0, eave - .01, bx1, by0 + .1, high - .02, CONCRETE)
-    atlas_window(g, (bx0 + bx1) / 2, by0, (eave + high) / 2 - .02, .9, 'front', 'ribbon', reveal=IRON)
     # The delivery main runs through the shared wall into the sluice chamber.
 
 

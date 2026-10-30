@@ -1,8 +1,17 @@
 """DeepWell: powered boost rig that stands over a map water source (no workers).
 
-HERO: a slim tapered steel drilling derrick hanging over the water source,
+Compacted 2026-10-30 (light touch, outputs/compaction/BRIEF.md): 1x2x5 ->
+1x2x4. The open lattice derrick is now plated on its left, right and back
+faces (open at the front for the hoist line) and ends at layer 3 (crown 3.2,
+was 4.5); the monkey board, its rail and the standpipe are gone. One layer
+per floor: the drill floor and the engine house's concrete storey are one
+layer (they were 1.2), the forged storey above is one layer, and the plank
+lean-to is a flat roof carrying the drawworks. Footprint, door, DRILL cell
+and animated parts unchanged.
+
+HERO: a slim tapered plated drilling derrick hanging over the water source,
 crowned by a crown block and beacon, driven from a riveted engine house.
-ROOF: teal plank lean-to over the engine house.
+ROOF: flat steel-capped roof on the engine house, carrying the drawworks.
 
 Plan (1 x 2 tiles, the source under the back tile):
 - front tile (the anchor, on ground or on a seep / badwater-source cell):
@@ -32,10 +41,11 @@ from lategame_civic_parts import blk
 from lategame_mining_parts import lean_to
 from industrial_facades import building_portal
 from native_window_atlas import atlas_window
+from lategame_mining_parts import slab_quad
 
 IDENT = 'DeepWell'
 FOOTPRINT = (1, 2)
-HEIGHT = 5
+HEIGHT = 4
 FRAME_END = 121
 HERO = 'Slim tapered steel drilling derrick hanging over the water source, crowned by a crown block and beacon.'
 
@@ -44,11 +54,11 @@ DRILL = {'cell': [0, 1, 0]}
 
 DOOR_X = .5
 HOUSE = (.04, .14, .96, .96)       # engine house walls (x0, y0, x1, y1)
-FLOOR = 1.2                        # plinth top = drill floor
+FLOOR = 1.0                        # plinth top = drill floor (layer 1)
 WELL = (.5, 1.5)                   # wellhead / kelly axis
 BASE = (.1, .9, 1.1, 1.9)          # derrick legs at the ground (x0, x1, y0, y1)
 TOP = (.34, .66, 1.34, 1.66)       # derrick legs at the crown deck
-ZT = 4.5                           # crown deck
+ZT = 3.2                           # crown deck
 
 
 def frame_at(z):
@@ -60,29 +70,39 @@ def engine_house(g, parts):
     x0, y0, x1, y1 = HOUSE
     # The portal's wall insert spans the whole tile at y0; the plinth stands
     # 2 cm behind it so their faces never share a plane.
-    top = P.plinth(g, x0, y0 + .02, x1, y1, FLOOR, door=(DOOR_X, .62, 1.0), pilasters=False)
+    # One-layer concrete storey: two piers either side of the door and the
+    # block behind its recess (the door is the storey's full height).
+    yb = y0 + .02
+    dl, dr = DOOR_X - .31, DOOR_X + .31
+    blk(g, x0, yb, 0, dl, y1, FLOOR, CONCRETE)
+    blk(g, dr, yb, 0, x1, y1, FLOOR, CONCRETE)
+    blk(g, dl, yb + .25, 0, dr, y1, FLOOR, CONCRETE)
+    blk(g, dl + .006, yb + .24, .006, dr - .006, yb + .25, FLOOR - .006, IRON)
+    blk(g, x0 - .04, yb - .04, FLOOR - .08, x1 + .04, y1 + .04, FLOOR + .012, CONCRETE)
+    top = FLOOR + .012
     building_portal(g, DOOR_X, y0 - .12, 0)
     g.doorways.append({'id': 'Entrance', 'position': [DOOR_X, y0, 0], 'outward': [0, -1]})
     # Riveted upper storey on the plinth.
-    eave = 2.1
+    eave = 1.84
     C.framed_block(g, x0 + .04, y0 + .04, x1 - .04, y1 - .04, top + .002, eave, infill=FORGED, frame=IRON, pitch=1.0,
                    faces=('front', 'left', 'right'))
-    atlas_window(g, DOOR_X, y0 + .04, 1.68, .26, 'front', 'slit')
+    atlas_window(g, DOOR_X, y0 + .04, 1.42, .22, 'front', 'slit')
     for x, face in ((x0 + .04, 'left'), (x1 - .04, 'right')):
-        atlas_window(g, x, .55, 1.68, .26, face, 'slit')
+        atlas_window(g, x, .55, 1.42, .22, face, 'slit')
     # Hazard band under the eave on the front.
     n = 5
     w = (x1 - x0 - .2) / n
     for i in range(n):
         a = x0 + .1 + i * w
-        blk(g, a, y0 + .04 - .055, 1.96, a + w, y0 + .04 - .015, 2.02, ORANGE if i % 2 == 0 else IRON)
-    lean_to(g, x0 + .04, x1 - .04, y0 + .04, y1 - .04, eave + .02, eave + .32, low_side='front', overhang=.07, seed=7)
-    # Drawworks on the back eave: steel cradle, drum and its motor.
-    dz = 2.6
-    dy = .84
+        blk(g, a, y0 + .04 - .055, 1.1, a + w, y0 + .04 - .015, 1.16, ORANGE if i % 2 == 0 else IRON)
+    blk(g, x0 - .01, y0 - .01, eave, x1 + .01, y1 + .01, eave + .1, IRON)
+    roof = eave + .1
+    # Drawworks on the roof: steel cradle, drum and its motor.
+    dz = roof + .3
+    dy = .7
     for x in (.2, .8):
-        blk(g, x - .04, dy - .1, eave + .33, x + .04, dy + .1, dz - .02, IRON)
-    blk(g, .13, dy - .12, eave + .3, .87, dy + .12, eave + .36, IRON)
+        blk(g, x - .04, dy - .1, roof + .06, x + .04, dy + .1, dz - .02, IRON)
+    blk(g, .13, dy - .12, roof, .87, dy + .12, roof + .06, IRON)
     drum = Geometry('DeepWell.Drawworks', (.5, dy, dz))
     P.lathe(drum, (.5, dy, dz), [(.15, -.25), (.15, -.21), (.1, -.21), (.1, .21), (.15, .21), (.15, .25)], PAINTED,
             axis='X', segments=12)
@@ -91,7 +111,7 @@ def engine_house(g, parts):
         drum.box((.5, dy + math.cos(a) * .102, dz + math.sin(a) * .102), (.4, .03, .03), BRASS)
     parts.append((drum, 'SPIN_X', 2))
     g.cylinder((.5, dy, dz), .03, .62, IRON, 'X', 8)
-    P.motor(g, (.5, dy - .36, eave + .52), .1, .3, axis='X')
+    P.motor(g, (.5, dy - .36, roof + .16), .1, .3, axis='X')
 
 
 def derrick(g):
@@ -100,31 +120,24 @@ def derrick(g):
     for (x, y), (xt, yt) in zip(corners(0), corners(ZT)):
         blk(g, x - .08, y - .08, -.03, x + .08, y + .08, .1, CONCRETE)
         g.beam((x, y, .08), (xt, yt, ZT - .02), .07, mat=IRON)
-    levels = [FLOOR, 2.3, 3.4, ZT - .08]
+    levels = [FLOOR, 2.1, ZT - .08]
     for k, z in enumerate(levels):
         fx0, fx1, fy0, fy1 = frame_at(z)
         for y in (fy0, fy1):
             blk(g, fx0 + .04, y - .025, z - .025, fx1 - .04, y + .025, z + .025, IRON)
         for x in (fx0, fx1):
             blk(g, x - .025, fy0 + .04, z + .005, x + .025, fy1 - .04, z + .055, IRON)
-    faces = {
-        'front': (lambda f: ((f[0], f[2]), (f[1], f[2])), (0, -1)),
-        'right': (lambda f: ((f[1], f[2]), (f[1], f[3])), (1, 0)),
-        'back': (lambda f: ((f[1], f[3]), (f[0], f[3])), (0, 1)),
-        'left': (lambda f: ((f[0], f[3]), (f[0], f[2])), (-1, 0)),
-    }
-    spans = [(.12, FLOOR)] + list(zip(levels, levels[1:]))
-    for fi, (face, (ends, nrm)) in enumerate(faces.items()):
-        for k, (za, zb) in enumerate(spans):
-            if face == 'front' and k == 1:
-                continue   # cable and kelly side kept open above the floor
-            off = .05 if k % 2 == 0 else .062
-            (pa, qa), (pb, qb) = ends(frame_at(za)), ends(frame_at(zb))
-            if (k + fi) % 2:
-                a, b = (pa[0] + nrm[0] * off, pa[1] + nrm[1] * off, za + .04), (qb[0] + nrm[0] * off, qb[1] + nrm[1] * off, zb - .04)
-            else:
-                a, b = (qa[0] + nrm[0] * off, qa[1] + nrm[1] * off, za + .04), (pb[0] + nrm[0] * off, pb[1] + nrm[1] * off, zb - .04)
-            g.beam(a, b, .035, .04, IRON)
+    # Riveted plating inside the legs on the left, right and back faces, from
+    # the drill floor to the crown (the front stays open for the hoist line).
+    za, zb = FLOOR + .06, ZT - .12
+    fa, fb = frame_at(za), frame_at(zb)
+    slope = (TOP[0] - BASE[0]) / ZT
+    slab_quad(g, [(fa[0] + .04, fa[3] - .05, za), (fa[0] + .04, fa[2] + .05, za),
+                  (fb[0] + .04, fb[2] + .05, zb), (fb[0] + .04, fb[3] - .05, zb)], (-1, 0, slope), .03, FORGED)
+    slab_quad(g, [(fa[1] - .04, fa[2] + .05, za), (fa[1] - .04, fa[3] - .05, za),
+                  (fb[1] - .04, fb[3] - .05, zb), (fb[1] - .04, fb[2] + .05, zb)], (1, 0, slope), .03, FORGED)
+    slab_quad(g, [(fa[1] - .05, fa[3] - .04, za), (fa[0] + .05, fa[3] - .04, za),
+                  (fb[0] + .05, fb[3] - .04, zb), (fb[1] - .05, fb[3] - .04, zb)], (0, 1, slope), .03, FORGED)
 
 
 def drill_floor(g, parts):
@@ -145,18 +158,18 @@ def drill_floor(g, parts):
     K.band(g, (wx, wy, 0), .2, FLOOR + .04, .03, ORANGE, segments=12)
     kelly = Geometry('DeepWell.Kelly', (wx, wy, FLOOR + .2))
     P.lathe(kelly, (wx, wy, FLOOR + .11), [(.1, 0), (.1, .08), (.06, .1)], IRON, segments=8)
-    kelly.box((wx, wy, (FLOOR + .2 + 3.25) / 2), (.07, .07, 3.25 - FLOOR - .2), IRON)
+    kelly.box((wx, wy, (FLOOR + .2 + 2.3) / 2), (.07, .07, 2.3 - FLOOR - .2), IRON)
     kelly.box((wx, wy, FLOOR + .14), (.16, .16, .05), BRASS)
-    P.lathe(kelly, (wx, wy, 3.25), [(.07, 0), (.07, .16), (.04, .22)], PAINTED, segments=8)
+    P.lathe(kelly, (wx, wy, 2.3), [(.07, 0), (.07, .14), (.04, .2)], PAINTED, segments=8)
     parts.append((kelly, 'SPIN_Z', 2))
     # Travelling block and hook, the hoist line to the crown and the fast line
     # down to the drawworks drum.
-    blk(g, wx - .09, wy - .06, 3.55, wx + .09, wy + .06, 3.9, PAINTED)
-    blk(g, wx - .015, wy - .015, 3.47, wx + .015, wy + .015, 3.55, IRON)
-    g.cylinder((wx, wy, 3.5), .05, .04, IRON, 'Y', 8)
+    blk(g, wx - .09, wy - .06, 2.55, wx + .09, wy + .06, 2.82, PAINTED)
+    blk(g, wx - .015, wy - .015, 2.5, wx + .015, wy + .015, 2.55, IRON)
+    g.cylinder((wx, wy, 2.52), .05, .04, IRON, 'Y', 8)
     for dx in (-.05, .05):
-        g.beam((wx + dx, wy, 3.9), (wx + dx, wy, ZT - .1), .016, mat=IRON)
-    g.beam((.5, .9, 2.74), (.5, TOP[2] + .02, ZT - .14), .018, mat=IRON)
+        g.beam((wx + dx, wy, 2.82), (wx + dx, wy, ZT - .1), .016, mat=IRON)
+    g.beam((.5, .82, 2.32), (.5, TOP[2] + .02, ZT - .14), .018, mat=IRON)
 
 
 def crown(g, parts):
@@ -173,27 +186,8 @@ def crown(g, parts):
     parts.append((K.beacon_shutter(*pivot, 'DeepWell.Beacon'), 'SPIN_Z', 1))
 
 
-def monkey_board(g):
-    """Derrickman's platform on the back of the derrick, a mud hose from the
-    standpipe to the swivel. Nothing stands outside the 1-tile width, so
-    Deep Wells on a line of 1x1 sources stand side by side."""
-    z = 3.3
-    fx0, fx1, fy0, fy1 = frame_at(z)
-    y0, y1 = fy1 - .1, 1.95
-    P.grating(g, fx0 + .02, y0, fx1 - .02, y1, z, along='Y')
-    for x in (fx0 + .06, fx1 - .06):
-        g.beam((x, fy1 + .02, z - .3), (x, y1 - .04, z - .09), .03, mat=IRON)
-    P.rail(g, [(fx0 + .05, y0 + .05), (fx0 + .05, y1 - .04), (fx1 - .05, y1 - .04), (fx1 - .05, y0 + .05)], z, height=.45)
-    # Standpipe up the right back leg and the mud hose loop to the swivel.
-    sx, sy = .74, 1.72
-    P.pipe(g, [(sx, sy, FLOOR + .02), (sx, sy, 2.6)], .03, flanges=False, segments=6)
-    for a, b in (((sx, sy, 2.6), (.68, 1.64, 2.95)), ((.68, 1.64, 2.95), (.6, 1.56, 3.32)), ((.6, 1.56, 3.32), (WELL[0] + .05, WELL[1], 3.42))):
-        g.beam(a, b, .045, mat=PAINTED)
-
-
 def build(g, parts):
     engine_house(g, parts)
     derrick(g)
     drill_floor(g, parts)
-    monkey_board(g)
     crown(g, parts)

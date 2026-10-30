@@ -31,7 +31,6 @@
     }
   ],
   "animatedParts": [
-    "LanternVent",
     "CowlWest",
     "CowlWestBeacon",
     "CowlEast",
@@ -41,19 +40,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 1791,
+  "faces": 2060,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 32,
-    "BaseMetal.IronTeeth": 1452,
-    "RoofPlanks.IronTeeth": 147,
+    "BaseWood_DarkBrown.IronTeeth": 68,
+    "IrregularPlanks_DarkBrown.IronTeeth": 168,
+    "BaseMetal.IronTeeth": 1312,
+    "RoofPlanks.IronTeeth": 182,
     "accent8": 10,
     "accent25": 20,
-    "Plaster_White.IronTeeth": 448,
+    "Plaster_White.IronTeeth": 441,
     "Plaster_Orange.IronTeeth": 39,
     "IrregularPlanks_MetalForged.IronTeeth": 30,
     "WindowsAtlas.IronTeeth": 2,
-    "PaintedMetal.IronTeeth": 90
+    "PaintedMetal.IronTeeth": 42
   },
-  "sourceHash": "076104ffb4e382b5a273245a2fdc44cfb0c276cef8975bda755f1f9cf57efc8f",
-  "artHash": "fd8cfa31a53d333c247a699eeabb9364073c3dc8dd7d7b3be4352f3183fc45d8"
+  "sourceHash": "6ea6ea01791fbbff828543d8f599f9975c5e064752e1468950a2527ec72ba33b",
+  "artHash": "1524a9204233ffcb28bd966079ef3cc88862f982c3504589221caa80fd06f4a5"
 }

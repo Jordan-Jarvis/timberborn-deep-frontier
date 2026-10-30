@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Launch-control tower with a cantilevered, outward-leaning glazed cab and antenna mast, between a teal telescope dome and a big steerable radio dish",
+  "hero": "Launch-control tower with a cantilevered, outward-leaning glazed cab and antenna mast, beside a teal telescope dome and a steerable radio dish",
   "footprint": [
-    12,
-    10
+    8,
+    7
   ],
-  "heightLayers": 16,
+  "heightLayers": 9,
   "boundsMin": [
-    -0.04,
-    0.55,
+    -0.055,
+    -0.105,
     0.0
   ],
   "boundsMax": [
-    12.04,
-    10.04,
-    15.77
+    8.095,
+    7.1,
+    8.62
   ],
   "doors": [
     {
       "id": "MissionControlEntrance",
       "position": [
         5.5,
-        1.0,
+        0.15,
         0
       ],
       "outward": [
@@ -38,27 +38,27 @@
     "MissionControl.ObservatoryDome",
     "MissionControl.DishTurret",
     "MissionControl.Dish",
-    "MissionControl.MastBeacon",
     "MissionControl.Radar"
   ],
   "animationFrames": 121,
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 5452,
+  "faces": 3699,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 2600,
-    "BaseMetal.IronTeeth": 1886,
-    "RoofPlanks.IronTeeth": 135,
-    "Details.IronTeeth": 299,
+    "BaseWood_DarkBrown.IronTeeth": 1952,
+    "IrregularPlanks_DarkBrown.IronTeeth": 264,
+    "BaseMetal.IronTeeth": 723,
+    "RoofPlanks.IronTeeth": 405,
+    "Details.IronTeeth": 287,
     "accent8": 20,
-    "accent25": 42,
-    "Plaster_White.IronTeeth": 682,
+    "accent25": 26,
+    "Plaster_White.IronTeeth": 472,
     "Plaster_Orange.IronTeeth": 187,
-    "IrregularPlanks_MetalForged.IronTeeth": 40,
-    "WindowsAtlas.IronTeeth": 514,
-    "PaintedMetal.IronTeeth": 250
+    "IrregularPlanks_MetalForged.IronTeeth": 22,
+    "WindowsAtlas.IronTeeth": 294,
+    "PaintedMetal.IronTeeth": 232
   },
-  "sourceHash": "13f588a4572ca1d77f01e552d41007a9b1a7a1de4a90c34f846cf184fec3dfdb",
-  "artHash": "fc08b0f8ed3843a1bf69c10b3b067a870b1d681ccf90f49f8357d3493b6c73d5"
+  "sourceHash": "9125576b8a925be3d05f136fc8eabc6df91d41518cd893d4acaaa44bf5390f89",
+  "artHash": "d2336a30ac2020147641b29a5108b3e50b4fd64dd396b429aac36f51e7795aaf"
 }

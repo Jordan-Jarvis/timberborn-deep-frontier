@@ -76,9 +76,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 3758,
-   "vertices": 7124,
-   "construction": 3758,
+   "finished": 2466,
+   "vertices": 4658,
+   "construction": 2466,
    "file": "outputs/lategame-integration/Data/Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.Model.timbermesh"
   },
   "ConcreteBlock": {
@@ -292,9 +292,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 2912,
-   "vertices": 5612,
-   "construction": 2912,
+   "finished": 2396,
+   "vertices": 4588,
+   "construction": 2396,
    "file": "outputs/lategame-integration/Data/Buildings/Water/DeepWell/DeepWell.IronTeeth.Model.timbermesh"
   },
   "ElectrolysisPlant": {
@@ -382,9 +382,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 18269,
-   "vertices": 34965,
-   "construction": 18269,
+   "finished": 8754,
+   "vertices": 16492,
+   "construction": 8754,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.Model.timbermesh"
   },
   "LimestoneMasonryBlock": {
@@ -445,18 +445,18 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 10860,
-   "vertices": 21200,
-   "construction": 10860,
+   "finished": 8133,
+   "vertices": 15857,
+   "construction": 8133,
    "file": "outputs/lategame-integration/Data/Buildings/Science/MissionControl/MissionControl.IronTeeth.Model.timbermesh"
   },
   "NuclearReactor": {
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 10600,
-   "vertices": 20164,
-   "construction": 10600,
+   "finished": 9870,
+   "vertices": 18788,
+   "construction": 9870,
    "file": "outputs/lategame-integration/Data/Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.Model.timbermesh"
   },
   "ObservationDeck": {
@@ -472,9 +472,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7160,
-   "vertices": 12570,
-   "construction": 7160,
+   "finished": 3516,
+   "vertices": 6530,
+   "construction": 3516,
    "file": "outputs/lategame-integration/Data/Buildings/Power/OilPowerPlant/OilPowerPlant.IronTeeth.Model.timbermesh"
   },
   "PrecisionMachineWorks": {
@@ -499,18 +499,18 @@
    "family": "lategame",
    "class": "small",
    "target": 8000,
-   "finished": 1740,
-   "vertices": 3360,
-   "construction": 1740,
+   "finished": 1696,
+   "vertices": 3256,
+   "construction": 1696,
    "file": "outputs/lategame-integration/Data/Buildings/Water/RadioactiveSludgeOutfall/RadioactiveSludgeOutfall.IronTeeth.Model.timbermesh"
   },
   "RadioactiveSludgeRecoveryPump": {
    "family": "lategame",
    "class": "small",
    "target": 8000,
-   "finished": 3088,
-   "vertices": 5784,
-   "construction": 3088,
+   "finished": 3046,
+   "vertices": 5740,
+   "construction": 3046,
    "file": "outputs/lategame-integration/Data/Buildings/Water/RadioactiveSludgeRecoveryPump/RadioactiveSludgeRecoveryPump.IronTeeth.Model.timbermesh"
   },
   "RadioactiveSpringSource": {
@@ -526,36 +526,36 @@
    "family": "lategame",
    "class": "small",
    "target": 8000,
-   "finished": 3870,
-   "vertices": 7330,
-   "construction": 3870,
+   "finished": 3834,
+   "vertices": 7254,
+   "construction": 3834,
    "file": "outputs/lategame-integration/Data/Buildings/Water/RadioactiveWasteExport/RadioactiveWasteExport.IronTeeth.Model.timbermesh"
   },
   "RadioactiveWasteRefinery": {
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 19360,
-   "vertices": 37196,
-   "construction": 19360,
+   "finished": 8138,
+   "vertices": 15348,
+   "construction": 8138,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.Model.timbermesh"
   },
   "RadioactiveWasteVault": {
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 4466,
-   "vertices": 8778,
-   "construction": 4466,
+   "finished": 4578,
+   "vertices": 9034,
+   "construction": 4578,
    "file": "outputs/lategame-integration/Data/Buildings/Storage/RadioactiveWasteVault/RadioactiveWasteVault.IronTeeth.Model.timbermesh"
   },
   "ReactorChargingBay": {
    "family": "lategame",
    "class": "small",
    "target": 8000,
-   "finished": 2772,
-   "vertices": 5304,
-   "construction": 2772,
+   "finished": 2518,
+   "vertices": 4812,
+   "construction": 2518,
    "file": "outputs/lategame-integration/Data/Buildings/Science/ReactorChargingBay/ReactorChargingBay.IronTeeth.Model.timbermesh"
   },
   "ReinforcedDamBlock": {
@@ -571,9 +571,9 @@
    "family": "hydro",
    "class": "grand",
    "target": 20000,
-   "finished": 10292,
-   "vertices": 22334,
-   "construction": 10292,
+   "finished": 11320,
+   "vertices": 24388,
+   "construction": 11320,
    "file": "outputs/hydro-integration/Data/Buildings/Power/ReinforcedHydroTurbine/ReinforcedHydroTurbine.IronTeeth.Model.timbermesh"
   },
   "Restaurant": {
@@ -589,9 +589,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9884,
-   "vertices": 18212,
-   "construction": 9884,
+   "finished": 6032,
+   "vertices": 11020,
+   "construction": 6032,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/RocketAssemblyHangar/RocketAssemblyHangar.IronTeeth.Model.timbermesh"
   },
   "SandstoneMasonryBlock": {
@@ -643,9 +643,9 @@
    "family": "lategame",
    "class": "small",
    "target": 8000,
-   "finished": 3914,
-   "vertices": 7502,
-   "construction": 3914,
+   "finished": 2930,
+   "vertices": 5512,
+   "construction": 2930,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.Model.timbermesh"
   },
   "SteelBridge10x1": {
@@ -823,9 +823,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8874,
-   "vertices": 16674,
-   "construction": 8874,
+   "finished": 8686,
+   "vertices": 16306,
+   "construction": 8686,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.Model.timbermesh"
   },
   "WaterTreatmentPlant": {

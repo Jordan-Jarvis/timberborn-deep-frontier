@@ -5,9 +5,12 @@ attraction (vanilla DecontaminationPod / MudBath) serving only the
 ReactorCharge need; 5,000 hp; burns enriched fuel while a bot charges; no
 workers. Two bots charge at once, standing in the two open cradles.
 
+Revised 2026-10-30 (roof-variety pass: no roof vents): the cooling fan and
+its cowl on the core roof are gone; the two cradle coils pulse instead.
+
 HERO: a riveted steel reactor core between two open charging cradles, with a
-banded fuel-rod cask and a cooling fan on its roof and coolant headers
-dropping onto each cradle canopy.
+banded fuel-rod cask on its roof and coolant headers dropping onto each
+cradle canopy.
 ROOF: flat steel canopies over the cradles on outer steel posts.
 
 Plan (3 x 2 tiles): the central core (x 1..2) holds the builders' door on
@@ -21,11 +24,11 @@ Bots charge at CHARGE_SLOTS (native '#Slot#Spot<i>' empties written by
 export_lategame_models.py; TransformSlotInitializerSpec SlotKeyword 'Spot',
 Charging animation), facing out of the cradle.
 
-Animated: core cooling fan (SPIN_Z), beacon shutter (SPIN_Z).
+Animated: two charging coils (PULSE), beacon shutter (SPIN_Z).
 Power: shafts meet the core's back wall and the cabinets' back faces; the
 door face is excluded by the generator.
 """
-from frontier_architecture import IRON, BRASS
+from frontier_architecture import Geometry, IRON, BRASS
 import lategame_kit as K
 from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GLOW
 import lategame_industry_parts as P
@@ -88,16 +91,10 @@ def cask_and_fan(g, parts):
     # Banded fuel-rod cask on the back half of the core roof.
     top = K.tank(g, 1.5, 1.36, CORE_TOP + .08, .3, .5, mat=PAINTED, bands=2, roof='dome', segments=16)
     g.cylinder((1.5, 1.36, top + .1), .05, .12, IRON, 'Z', 8)
-    # Cooling fan in an open cowl on the front half of the roof.
-    cx, cy, cz = 1.5, .56, CORE_TOP + .08
-    K.hollow_revolve(g, (cx, cy, cz - .01), [(.33, 0), (.35, .3)], .05, IRON, segments=16, inner_mat=PAINTED)
-    blk(g, cx - .3, cy - .03, cz, cx + .3, cy + .03, cz + .06, IRON)
-    blk(g, cx - .03, cy - .3, cz, cx + .03, cy - .031, cz + .06, IRON)
-    blk(g, cx - .03, cy + .031, cz, cx + .03, cy + .3, cz + .06, IRON)
-    parts.append((P.fan('ReactorChargingBay.Fan', cx, cy, cz + .18, .28, blades=5, pitch=.45, mat=FORGED), 'SPIN_Z', 3))
 
 
-def cradle(g, outer, inner):
+
+def cradle(g, parts, outer, inner, name):
     """Charging cabinet across the back of one cradle, its coupler arm and the
     canopy over it (outer post at the footprint edge, back on the cabinet)."""
     x0, x1 = span(outer, inner)
@@ -111,7 +108,9 @@ def cradle(g, outer, inner):
     C.gauge(g, cx - .3, CRADLE_BACK, .78, face='front')
     blk(g, cx - .2, CRADLE_BACK - .025, .42, cx + .2, CRADLE_BACK + .01, 1.02, IRON)
     # One glowing coil slot (emissive accents stay a few faces).
-    blk(g, cx - .05, CRADLE_BACK - .04, .5, cx + .05, CRADLE_BACK - .02, .94, GLOW)
+    coil = Geometry(name, (cx, CRADLE_BACK - .03, .72))
+    blk(coil, cx - .05, CRADLE_BACK - .04, .5, cx + .05, CRADLE_BACK - .02, .94, GLOW)
+    parts.append((coil, 'PULSE', .12))
     for z in (.47, .97):
         blk(g, cx - .14, CRADLE_BACK - .05, z - .02, cx + .14, CRADLE_BACK - .02, z + .02, BRASS)
     P.louvre(g, 'X', CRADLE_BACK, cx - .3, cx + .3, 1.1, 1.38, -1)
@@ -156,7 +155,7 @@ def build(g, parts):
     apron(g)
     core(g)
     cask_and_fan(g, parts)
-    for outer, inner in CRADLES:
-        cradle(g, outer, inner)
+    for (outer, inner), name in zip(CRADLES, ('ReactorChargingBay.CoilA', 'ReactorChargingBay.CoilB')):
+        cradle(g, parts, outer, inner, name)
     coolant(g)
     beacon_mast(g, parts)
