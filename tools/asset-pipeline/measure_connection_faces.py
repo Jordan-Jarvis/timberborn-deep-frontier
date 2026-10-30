@@ -119,10 +119,28 @@ def local_matrix(node):
     return matrix
 
 
+_TRIANGLES = {}
+
+
 def triangles(path, base_z):
     """Grid-frame triangles by kind: opaque, glass, animated. Outward normals
     follow -cross(v1 - v0, v2 - v0) in the grid frame (the Unity winding seen
-    through the Y/Z swap); checked on every model's outer left wall."""
+    through the Y/Z swap); checked on every model's outer left wall.
+
+    Decoded once per file version and BaseZ per process: the pure-Python
+    protobuf decode is most of validate_connection_exports' time, and it
+    reads every export two or three times. The arrays are read-only."""
+    stat = Path(path).stat()
+    key = (str(Path(path).resolve()), base_z, stat.st_size, stat.st_mtime_ns)
+    if key not in _TRIANGLES:
+        kinds = _decode_triangles(path, base_z)
+        for array in kinds.values():
+            array.setflags(write=False)
+        _TRIANGLES[key] = kinds
+    return _TRIANGLES[key]
+
+
+def _decode_triangles(path, base_z):
     model = model_pb2.Model()
     model.ParseFromString(zlib.decompress(path.read_bytes()))
     animated = set()

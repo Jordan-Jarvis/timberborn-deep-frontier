@@ -64,16 +64,23 @@ def recheck(ident, export, size, base_z, faces):
     failures = []
     kinds = M.triangles(export, base_z)
     solid = np.concatenate([kinds['opaque'], kinds['glass']])
-    hits = {(a, s): (M.AxisHits(solid, a, tuple(size), s), M.AxisHits(kinds['opaque'], a, tuple(size), s)) for a in range(3) for s in (-1, 1)}
     axes = {name: (axis, sign) for name, axis, sign in M.DIRECTIONS}
-    for f in faces:
-        axis, sign = axes[f[3]]
-        c = M.face_test(*hits[(axis, sign)], np.array([f[:3]], dtype=np.int64), axis, sign)
-        if c['axisAngle'][0] > M.AXIS_ANGLE or c['normalSpread'][0] > M.NORMAL_SPREAD:
+    # covering() measures every face (row) on its own, so each direction's
+    # faces go through face_test in one call.
+    tested = {}
+    for axis, sign in sorted({axes[f[3]] for f in faces}):
+        rows = [i for i, f in enumerate(faces) if axes[f[3]] == (axis, sign)]
+        c = M.face_test(M.AxisHits(solid, axis, tuple(size), sign), M.AxisHits(kinds['opaque'], axis, tuple(size), sign),
+                        np.array([faces[i][:3] for i in rows], dtype=np.int64), axis, sign)
+        for r, i in enumerate(rows):
+            tested[i] = (c['axisAngle'][r], c['normalSpread'][r], c['planeShare'][r])
+    for i, f in enumerate(faces):
+        axis_angle, spread, plane_share = tested[i]
+        if axis_angle > M.AXIS_ANGLE or spread > M.NORMAL_SPREAD:
             failures.append(f'{ident}: face {f} sits on a curved, faceted or sloped surface '
-                            f'({c["axisAngle"][0]:.1f} deg off the axis, {c["normalSpread"][0]:.1f} deg spread)')
-        elif c['planeShare'][0] < M.COVER:
-            failures.append(f'{ident}: face {f} has no single plane over {M.COVER:.0%} of it ({c["planeShare"][0]:.0%})')
+                            f'({axis_angle:.1f} deg off the axis, {spread:.1f} deg spread)')
+        elif plane_share < M.COVER:
+            failures.append(f'{ident}: face {f} has no single plane over {M.COVER:.0%} of it ({plane_share:.0%})')
     return failures
 
 
