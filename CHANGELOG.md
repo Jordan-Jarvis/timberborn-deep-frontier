@@ -29,6 +29,7 @@
 - **Uranium Processing Plant** is 8x7, 8 high (was 12x11, 14 high). The centrifuge row stands under a flat canopy, the steel gantry and catwalks are gone, the drum dock and its hoist are gone, and the acid tanks stand on a concrete bund. Same cost, power and crew; a flipped plant's entrance moves.
 - **Old saves:** both plants keep their origin and entrance; a flipped plant's entrance moves one tile. Reconnect shafts and pipes to the new walls.
 - **Radioactive Waste Vault** is 8x7, 6 high (was 9x10, 12 high): two berm courses, a lower dome, shorter vent towers and a flat-roofed gatehouse. Same cost.
+- **Reinforced Hydro Turbine** is 6 high (was 7) on the same 8x10 footprint: the workshop on the terrace is one storey under a flat roof you can build on. The dam, gates, water flow and terrace walkway are unchanged.
 
 ### Smaller civic buildings (compaction pass)
 - **Restaurant** is 5 high (was 9) on the same 9x7 footprint: one layer per storey, both dining balconies with all their tables and chairs, a flat timber-decked roof level with the roof terrace, the sign swinging from a gantry on the roof. The gabled roof, dormers and lantern are gone.

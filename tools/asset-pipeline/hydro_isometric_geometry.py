@@ -3,6 +3,13 @@
 The concrete conduit, high dam cap and side workshop determine the form.
 This file does not register a game footprint or claim working water controls.
 Its open conduit contains no decorative water: runtime water must be native.
+
+Compacted 2026-10-30 (outputs/compaction/BRIEF.md): 8x10x7 -> 8x10x6. The
+conduit, the dam cap (support surface at layer 6), the gates, the water cells
+and the service terrace with its built-in walkways are gameplay and stay
+exactly as they were. The workshop on the terrace is one storey (layer 2 to
+a flat concrete roof whose top is layer 4) instead of a tall room under a
+plank gable with a dormer, so nothing rises above the dam cap.
 """
 import math
 
@@ -164,6 +171,7 @@ def runner(parts):
 # wall; those posts stand 4 cm proud. Bays are thirds of the frame, and every
 # window is centred in its bay between posts.
 WS_X0,WS_Y0,WS_X1,WS_Y1=3.10,2.10,5.94,4.90
+WS_TOP=3.84            # one storey on the layer-2 terrace; roof top on layer 4
 WS_DOOR_X=5.5          # native tile x=6.5, face on the y=6 edge
 WS_BAYS=3
 
@@ -175,33 +183,27 @@ def _bay_centres(a,b):
 def workshop(g):
     front,side=_bay_centres(WS_X0,WS_X1),_bay_centres(WS_Y0,WS_Y1)
     front_wall,right_wall,rear_wall=WS_Y0-.06,WS_X1+.06,WS_Y1+.06
-    framed_room(g,WS_X0,WS_Y0,WS_X1,WS_Y1,2,4.82,WS_BAYS,
+    framed_room(g,WS_X0,WS_Y0,WS_X1,WS_Y1,2,WS_TOP,WS_BAYS,
                 front_door=(WS_DOOR_X,1.0,1.0),infill=CIVIC_FORGED_PANEL)
     g.include_component(hydro_workshop_door())
     g.doorways.append({'name':'HydroWorkshopDoor','position':[WS_DOOR_X,WS_Y0-.10,2]})
-    window_y(g,front[0],front_wall,3.82,1)
-    window_y(g,WS_DOOR_X,front_wall,4.15,0.75)
+    window_y(g,front[0],front_wall,2.95,.8)
     for y in (side[0],side[2]):
-        side_window(g,right_wall,y,3.84,1)
+        side_window(g,right_wall,y,2.95,.8)
     for x in (front[0],front[2]):
-        window_y(g,x,rear_wall,3.85,1,'back')
-    roof_bearing(g,WS_X0,WS_Y0,WS_X1,WS_Y1,4.82,4.84)
-    # The eave outline lies on the workshop's tile edges (x=4..7, y=6..9):
-    # 4 cm past the left/front/rear cladding, 5 mm inside it on the right
-    # (flush, the gable eave beams' end caps shared the cladding plane, which
-    # the folded corner brackets had covered).
-    # 1 cm past the edges so its end beams never share the frame's beam faces.
-    # 27 cm sheets, as before the 20k pass: the front wall's top cell face
-    # (native 5,6,5 Up) sits on the 60% wall-face threshold, and the wider
-    # sheets let two more of its 64 rays reach the wall (a registration change).
-    gabled_roof(g,WS_X0-.11,WS_Y0-.11,WS_X1+.055,WS_Y1+.11,4.84,5.80,228,sheet=.27)
-    # Dormer window, plates and fasteners stand 1-4 cm proud of the gable
-    # cladding (y 1.945), never on its plane.
-    dormer(g,(WS_X0+WS_X1)/2,WS_Y0-.025,5.40,1.13)  # eave beam clear of the ridge bracket
+        window_y(g,x,rear_wall,2.95,.8,'back')
+    # Flat cast roof: its outline lies on the workshop's tile edges (x=4..7,
+    # y=6..9), 1 cm past them on the left, front and rear, 5 mm inside the
+    # right cladding; its top is layer 4.
+    g.box(((WS_X0-.11+WS_X1+.055)/2,(WS_Y0+WS_Y1)/2,WS_TOP+.08),(WS_X1+.055-WS_X0+.11,WS_Y1-WS_Y0+.22,.16),
+          CIVIC_CONCRETE)
+    for y in (WS_Y0-.12,WS_Y1+.12):
+        g.box(((WS_X0-.11+WS_X1+.055)/2,y,WS_TOP+.13),(WS_X1+.055-WS_X0+.11,.02,.06),IRON)
     # Weather hood / ventilation stack, not a combustion chimney.
-    g.box((5.61,4.45,5.48),(.24,.26,.75),IRON)
-    g.box((5.61,4.45,5.89),(.35,.37,.10),IRON)
-    for z in (5.63,5.72):
+    roof=WS_TOP+.16
+    g.box((5.61,4.45,roof+.3),(.24,.26,.6),IRON)
+    g.box((5.61,4.45,roof+.65),(.35,.37,.10),IRON)
+    for z in (roof+.42,roof+.51):
         g.box((5.61,4.305,z),(.27,.025,.035),IRON)
     # Door lamps: arms meet the cladding, lamps stay over the door path cell.
     cage_lamp(g,WS_DOOR_X-.64,front_wall-.05,3.07)
@@ -214,10 +216,10 @@ def workshop(g):
         g.box((right_wall+.055,side[1],2.55+i*.085),(.035,.77,.035),IRON)
     # Instrument loop and gauges framing the front window.
     cx=front[0]
-    round_pipe(g,[(cx-.30,front_wall-.15,3.36),(cx-.30,front_wall-.15,4.40),
-                  (cx+.86,front_wall-.15,4.40),(cx+.86,front_wall-.15,3.32)],.047)
+    round_pipe(g,[(cx-.30,front_wall-.15,2.62),(cx-.30,front_wall-.15,3.55),
+                  (cx+.86,front_wall-.15,3.55),(cx+.86,front_wall-.15,2.6)],.047)
     for x in (cx-.16,cx+.16):
-        gauge(g,x,front_wall-.21,4.17,.115,rim_material=IRON)
+        gauge(g,x,front_wall-.21,3.38,.1,rim_material=IRON)
     g.box((front[1],front_wall-.145,2.55),(.36,.29,.50),IRON)
     gauge(g,front[1],front_wall-.31,2.60,.12,rim_material=IRON)
 

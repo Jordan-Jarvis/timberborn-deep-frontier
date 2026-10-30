@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from industrial_layouts import layout,grid_lane,lane,port
 
-TURBINE=layout([0,0,0],[8,10,7],[6,5,2],[],deck_mode='BuiltInWalkways')
+TURBINE=layout([0,0,0],[8,10,6],[6,5,2],[],deck_mode='BuiltInWalkways')
 grid_lane(TURBINE,[(x,4,2) for x in range(4,8)])
 grid_lane(TURBINE,[(7,y,2) for y in range(4,10)])
 grid_lane(TURBINE,[(x,9,2) for x in range(4,8)])

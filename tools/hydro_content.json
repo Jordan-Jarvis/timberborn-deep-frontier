@@ -2,7 +2,7 @@
   "id": "ReinforcedHydroTurbine",
   "name": "Reinforced hydroelectric turbine",
   "status": "Installed; native high-head main 100 and fresh-process reload 101 passed. Two wet outlet cells, 3 m³/s total and 40,000 hp maximum (9,600 hp when tested). Extended hydraulics and pump-loop balance pending.",
-  "size": [8, 10, 7],
+  "size": [8, 10, 6],
   "science": 8000,
   "cost": [["Concrete", 160], ["MetalBlock", 100], ["Gear", 60], ["TreatedPlank", 40]],
   "maxDischarge": 3,

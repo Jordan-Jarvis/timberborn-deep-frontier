@@ -198,6 +198,16 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - **Data:** same origin, door tile and Entrance (4,-1,0). Colliders 21 -> 13, roof-deck cells 1 -> 5. No power or pipes. `lategame_freed_cells.json`: footprintAfter 8x7x6, outsideCells 100; the two recorded inside cells stay free. Cost unchanged.
   - **Old saves:** keeps its origin and entrance. A flipped vault's entrance moves 1 tile (local x 4 -> 3).
   - **Checks:** building-level set plus radiation_content and meltdown_content pass; `lategame_freed_cells` passes with the record. Strict z-fight audit: 0 visible.
+- **Reinforced Hydro Turbine** 8x10x7 -> 8x10x6 (`hydro_isometric_geometry.py`, `hydro_layout.py`, `hydro_content.json`, `hydro_building_content.mjs`).
+  - **Unchanged (gameplay):** the conduit, the dam cap (support surface on layer 6), the gates, the intakes and outlets, the solid and closed-gate water cells, and the layer-2 service terrace with its built-in walkways, rails and ports.
+  - **Workshop:** one storey from the terrace to a flat concrete roof whose top is layer 4. It replaces a three-layer room under a plank gable with a dormer, so nothing rises above the dam cap.
+  - **Blocks:** the workshop region is now layers 2..3; the eave, gable and dormer regions are gone.
+  - **Scene:** rebuilt by `render_reference_studies.py --models ReinforcedHydroTurbine`; wall faces re-measured.
+  - **Checks:** exported through `export_checked_models.ps1` (strict audit 0 visible at frames 1/31/61/91). `audit_hidden_geometry` and `validate_hydro_source` pass.
+  - **Triangles:** 12,459 -> 10,292.
+  - **Data:** Size Z 7 -> 6. Colliders and solid cells 227 -> 187, shaft faces 161 -> 169 (the flat roof's walls), roof-deck cells 21 -> 29. Power (40,000 hp), cost and walkway nodes unchanged.
+  - **Old saves:** same footprint, origin and terrace. Anything placed on the old roof slopes does not exist.
+  - **Validation:** in the mirror, the building-level set plus exports-hydro passes (map-setup-terrain maxArea only).
 
 ## Compaction: Deep Mine 10x11x16 -> 7x6x7 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `minesdrill` on HEAD b2d8fb6 + this change; not built or run in game)
 
