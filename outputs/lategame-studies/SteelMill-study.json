@@ -1,28 +1,28 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Electric-arc melt shop whose three graphite electrodes rise on mast arms through a forged roof penthouse, with a fat fume duct over the roof into a 14-layer riveted steel flue.",
+  "hero": "Electric-arc melt shop whose three graphite electrodes rise on mast arms through a forged roof penthouse, with a fume duct over the flat roof into a riveted steel flue.",
   "footprint": [
-    12,
-    10
+    8,
+    6
   ],
-  "heightLayers": 15,
+  "heightLayers": 8,
   "boundsMin": [
-    -0.185,
-    -0.145,
+    -0.056,
+    -0.135,
     -0.03
   ],
   "boundsMax": [
-    12.0,
-    10.1652,
-    14.57
+    8.0,
+    6.056,
+    7.96
   ],
   "doors": [
     {
-      "id": "Entrance",
+      "id": "Door0",
       "position": [
         1.5,
-        0.15,
-        0
+        0.0,
+        0.0
       ],
       "outward": [
         0,
@@ -34,7 +34,6 @@
     "SteelMill.PulpitBeacon",
     "SteelMill.TapGlow",
     "SteelMill.Electrodes",
-    "SteelMill.LadleCrane",
     "SteelMill.TeemingLadle",
     "SteelMill.PourStream",
     "SteelMill.ReheatGlow",
@@ -50,21 +49,19 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 7550,
+  "faces": 3580,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 692,
-    "BaseMetal.IronTeeth": 4338,
-    "RoofPlanks.IronTeeth": 660,
+    "BaseWood_DarkBrown.IronTeeth": 272,
+    "BaseMetal.IronTeeth": 2285,
     "Details.IronTeeth": 762,
-    "accent8": 140,
+    "accent8": 88,
     "accent25": 10,
-    "Plaster_White.IronTeeth": 540,
+    "Plaster_White.IronTeeth": 330,
     "Plaster_Orange.IronTeeth": 7,
-    "IrregularPlanks_MetalForged.IronTeeth": 380,
-    "WindowsAtlas.IronTeeth": 610,
-    "PaintedMetal.IronTeeth": 835,
-    "IrregularPlanks_Grey.IronTeeth": 132
+    "IrregularPlanks_MetalForged.IronTeeth": 150,
+    "WindowsAtlas.IronTeeth": 294,
+    "PaintedMetal.IronTeeth": 516
   },
-  "sourceHash": "1346d5cc675e90601ad8978b76d432ab353a2d5d848d1c0e623bad6bd6dc313f",
-  "artHash": "6452402fba28d6336c1df62af193ee09e5dc5ad79e9f0806d40e2c4b4f17eef9"
+  "sourceHash": "8179ef9e25285bd2df53d950fc6951e9f9041c0809acd67ab5561c27cff910bc",
+  "artHash": "a66395b73eac562e6b6b3863cc5dcb66a15579ceb99fc66554b7b1e4ee14f2e4"
 }

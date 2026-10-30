@@ -3,32 +3,38 @@
 Revised 2026-10-22 (no forced decoration; footprint ends at the walls):
 removed the slag strip with its slag pot car and heap, and the post lamp.
 
+Compacted 2026-10-30 (Workshop feedback: the buildings exceed Timberborn's
+scale; one layer per floor, flat roofs): 12x10x15 -> 8x6x8, inside the old
+footprint with the same origin, door and native entrance. Removed: the open
+crane bay (runway columns, knee braces, girders and the travelling ladle
+crane), the scrap/coal/ore bunkers, the cooling bed, the melt shop's gable
+roof and monitor lantern, the rolling line's gable canopy and the 14-layer
+flue (now 7.6 high).
+
 HERO: an electric-arc melt shop whose three graphite electrodes rise on mast
-arms through a forged roof penthouse, with a fat fume duct running over the
-roof into a 14-layer riveted steel flue.
-ROOF: long teal plank gable (ridge along X) with a glazed monitor lantern on
-the melt shop; flat parapet roof with a beacon on the control pulpit; open
-plank gable canopy over the rolling line.
+arms through a forged roof penthouse, with a fume duct over the flat roof
+into a riveted steel flue.
+ROOFS: flat parapet roofs on the control pulpit (beacon) and the melt shop;
+flat open canopies over the rolling line and the teeming bay.
 
-Plan (12 x 10 tiles): control pulpit front-left with the door; open rolling
-mill canopy along the front (reheat furnace, roller table, three two-high
-mill stands) running onto a cooling bed at the front right; the melt shop
-across the back left; the crane bay at the back right with a travelling
-ladle crane, a tilting teeming ladle pouring into ingot moulds on a car, and
-scrap / coal / ore bunkers; a slag pot and slag heap in the strip between.
+Plan (8 x 6 tiles): control pulpit front-left with the door; the melt shop
+behind it; the open rolling line along the front right (reheat furnace,
+roller table, three two-high mill stands); the teeming bay at the back right
+(tap hole glow on the melt-shop wall, a tilting teeming ladle pouring into
+ingot moulds on a car) with the flue in its corner.
 
-Distinct from DeepProcessor (blast-furnace tower, skip bridge, stave
-bunkers): no shaft furnace, no skip; the electrodes, the duct and the open
-roll line carry the silhouette.
+Distinct from DeepProcessor (blast-furnace tower, skip hoist): no shaft
+furnace, no skip; the electrodes, the duct and the open roll line carry the
+silhouette.
 
-Animated: electrode masts (PISTON_Z), ladle crane bridge with its ladle
-(SLIDE_Y), teeming ladle rocking on its trunnions (SWAY_X), pour stream
-(PULSE), six mill rolls (SPIN_Y), hot bar running through the stands
-(CUSTOM_LOOP_X), tap-hole and reheat-furnace glow (PULSE), pulpit beacon
-(SPIN_Z).
+Animated (13): electrode masts (PISTON_Z), teeming ladle rocking on its
+trunnions (SWAY_X), pour stream (PULSE), six mill rolls (SPIN_Y), hot bar
+running through the stands (CUSTOM_LOOP_X), tap-hole and reheat-furnace glow
+(PULSE), pulpit beacon (SPIN_Z). The ladle crane went with the crane bay.
 
 No pipe port: none of the mill's recipes uses a liquid.
-Smoke: the melt shop flue and the reheat furnace stovepipe are kit stacks.
+Smoke: the melt shop flue (a kit stack). The reheat stovepipe went so the canopy roof stays
+buildable (user, 2026-10-30: no clutter on buildable space).
 """
 import math
 import random
@@ -40,34 +46,36 @@ import lategame_industry_parts as P
 import lategame_civic_parts as C
 from lategame_civic_parts import blk
 from lategame_mining_parts import ore_heap
+import lategame_mining_parts as M
 from industrial_facades import building_portal
 from native_window_atlas import atlas_window
 
 IDENT = 'SteelMill'
-FOOTPRINT = (12, 10)
-HEIGHT = 15
+FOOTPRINT = (8, 6)
+HEIGHT = 8
 FRAME_END = 121
 HERO = ('Electric-arc melt shop whose three graphite electrodes rise on mast arms through a forged roof '
-        'penthouse, with a fat fume duct over the roof into a 14-layer riveted steel flue.')
+        'penthouse, with a fume duct over the flat roof into a riveted steel flue.')
 
 DOOR_X = 1.5
-MELT = (0.0, 4.0, 7.0, 10.0)          # melt shop plinth on whole tiles
-MELT_TOP = 1.5
-EAVE, RIDGE = 6.5, 7.9
-PENT = (.9, 5.7, 3.1, 8.7)             # electrode penthouse plan
-PENT_TOP = 9.1
-ELECTRODES = ((1.55, 6.55), (2.45, 6.55), (2.0, 7.35))
-MAST_Y = 7.95
-STACK = (8.0, 9.35)
-BAY_COLS_X = (7.3, 11.62)
-BAY_COLS_Y = (4.4, 6.5, 8.6)
-RUNWAY_TOP = 5.55
-LADLE = (9.6, 5.0, 2.0)                # teeming ladle trunnion axis
+MELT = (0.0, 3.05, 5.0, 6.0)          # melt shop plinth (front .05 behind the pulpit's back plinth)
+MELT_TOP = 1.0
+EAVE = 3.5                             # melt shop wall top; flat roof slab above
+ROOF_TOP = EAVE + .16
+PENT = (1.0, 3.7, 3.0, 5.5)            # electrode penthouse plan (x0, y0, x1, y1)
+PENT_TOP = 5.0
+DZ = PENT_TOP - 9.1                    # electrode assembly keeps its 2026-10-22 shapes, lowered by this
+ELECTRODES = ((1.55, 4.1), (2.45, 4.1), (2.0, 4.7))
+MAST_Y = 5.2
+STACK = (5.65, 5.4)
+LADLE = (6.8, 4.2, 1.6)                # teeming ladle trunnion axis
 LADLE_TILT = .45                       # authored forward tilt (radians)
 LADLE_SWAY = .08
 ROLL_LINE_Y = 1.5
-STANDS = (5.72, 7.17, 8.55)
+STANDS = (5.0, 6.05, 7.1)
 BAR_Z = (.63, .71)
+CANOPY = 2.0                           # rolling-line canopy roof top (layer 2)
+BAY_ROOF = 3.0                         # teeming-bay roof top (layer 3)
 
 
 def animate(obj, kind, value, frame_end):
@@ -103,36 +111,27 @@ def copy_rotated_x(dst, src, pivot, angle):
 
 def ground(g):
     """Concrete yard slabs (one owner of the ground per spot)."""
-    blk(g, 3.0, 0.0, -.02, 9.5, 3.0, .2, CONCRETE)             # rolling line (the cooling bed owns 9.5..12)
-    blk(g, 7.05, 3.05, -.02, 12.0, 10.0, .2, CONCRETE)         # crane bay
+    blk(g, 3.0, 0.0, -.02, 8.0, 3.0, .2, CONCRETE)             # rolling line
+    blk(g, 5.0, 3.0, -.02, 8.0, 6.0, .2, CONCRETE)             # teeming bay
 
 
 # ---------------------------------------------------------------- control pulpit
 
 def pulpit(g, parts):
-    x0, y0, x1, y1 = 0.0, .15, 2.95, 3.0
-    top = P.plinth(g, x0, y0, x1, y1, 1.3, door=(DOOR_X, 1.0, 1.0))
-    building_portal(g, DOOR_X, y0 - .12, 0)
-    g.doorways.append({'id': 'Entrance', 'position': [DOOR_X, y0, 0], 'outward': [0, -1]})
-    for x in (.5, 2.5):
-        atlas_window(g, x, y0, .72, .42, 'front', 'grid9', reveal=IRON)
-    atlas_window(g, x0, 1.6, .72, .42, 'left', 'grid9', reveal=IRON)
-    # Steel-framed operating floor with a long ribbon window over the mill.
-    bx0, by0, bx1, by1 = x0 + .12, y0 + .12, x1 - .12, y1 - .12
-    z0, z1 = top + .02, 3.4
-    C.framed_block(g, bx0, by0, bx1, by1, z0, z1, infill=FORGED, frame=IRON, pitch=.92, sink=.03,
-                   windows={'front': [(.57, 2.35, .8, 'factory'), (2.38, 2.35, .8, 'factory')],
-                            'left': [(1.6, 2.35, .8, 'factory')], 'back': [(1.45, 2.35, .8, 'factory')]},
-                   skip={'right': [(.5, 2.7)]})
-    atlas_window(g, bx1, 1.6, 2.35, 1.95, 'right', 'ribbon', reveal=IRON)
-    K.flat_roof(g, bx0, by0, bx1, by1, z1, thickness=.16, overhang=.1, parapet_height=.32)
-    # Roof siren and beacon.
-    blk(g, 2.1, 2.0, z1 + .16, 2.3, 2.2, z1 + .8, IRON)
-    pivot = K.beacon(g, 2.2, 2.1, z1 + .8)
+    """Steel-framed control pulpit on tiles 0..3 x 0..3. The core front at .12
+    puts the native portal's face on the tile edge y = 0; its back stops short of
+    the melt shop's plinth. The flat roof stays
+    clear: the beacon stands on the parapet corner."""
+    M.hall(g, .05, 2.95, .12, 2.9, 1.84, plinth=.5, doors=[DOOR_X], pitch=1.0, infill=FORGED, frame=IRON,
+           posts=('front', 'left', 'right'), style='factory',
+           windows={'front': [(.45, 1.15, 'factory', .5), (2.55, 1.15, 'factory', .5)],
+                    'left': [(.59, 1.15, 'factory', .5), (1.535, 1.15, 'factory', .5), (2.48, 1.15, 'factory', .5)],
+                    'right': [(.59, 1.15, 'factory', .5), (1.535, 1.15, 'factory', .5), (2.48, 1.15, 'factory', .5)]})
+    zc = M.flat_roof(g, .05, 2.95, .12, 2.9, 1.84, overhang=.05, parapet=.25) + .25 + .05
+    pivot = K.beacon(g, 2.93, 2.88, zc)
     parts.append((K.beacon_shutter(*pivot, 'SteelMill.PulpitBeacon'), 'SPIN_Z', 2))
-    g.box((.75, 2.1, z1 + .3), (.36, .3, .28), PAINTED)
-    K.lamp(g, DOOR_X - .62, y0 - .04, 1.1, face='front')
-    K.lamp(g, DOOR_X + .62, y0 - .04, 1.1, face='front')
+    K.lamp(g, DOOR_X - .72, .12, 1.15, face='front')
+    K.lamp(g, DOOR_X + .72, .12, 1.15, face='front')
 
 
 # ---------------------------------------------------------------- melt shop
@@ -142,62 +141,43 @@ def melt_shop(g, parts):
     top = P.plinth(g, x0, y0, x1, y1, MELT_TOP)
     wx0, wy0, wx1, wy1 = x0 + .1, y0 + .1, x1 - .1, y1 - .1
     bottom = top + .01
-    xs = centres(wx0 - .05, wx1 + .05, 7)
-    ys = centres(wy0 + .05, wy1 - .05, 6)
+    xs = centres(wx0 - .05, wx1 + .05, 5)
+    ys = centres(wy0 + .05, wy1 - .05, 3)
     room(g, wx0, wy0, wx1, wy1, bottom, EAVE + .03, infill=FORGED, post=IRON, post_w=.18, style='factory',
-         scale=.95,
-         windows={'front': [(x, 5.0) for x in xs] + [(x, 2.9) for x in xs[::2]],
-                  'back': [(x, 5.0) for x in xs[::2]] + [(x, 2.9) for x in xs[1::2]],
-                  'left': [(y, z) for y in ys for z in (2.9, 5.0)],
-                  'right': [(y, 4.6) for y in (ys[0], ys[2], ys[4])]},
-         bays={'front': 7, 'back': 7, 'left': 6, 'right': 6})
+         scale=.8,
+         windows={'front': [(x, 2.85) for x in xs[3:]],
+                  'back': [(x, 2.25) for x in xs[::2]],
+                  'left': [(y, 2.25) for y in ys],
+                  'right': [(ys[0], 2.6), (ys[2], 2.6)]},
+         bays={'front': 5, 'back': 5, 'left': 3, 'right': 3})
     # Plinth windows (factory grids).
-    for y in (5.5, 7.5, 9.5):
-        atlas_window(g, x0, y, .8, .5, 'left', 'grid9', reveal=IRON)
-    for x in (1.5, 3.5, 5.5):
-        atlas_window(g, x, y1, .8, .5, 'back', 'grid9', reveal=IRON)
+    for y in (3.75, 5.25):
+        atlas_window(g, x0, y, .52, .34, 'left', 'grid9', reveal=IRON)
+    for x in (1.25, 3.75):
+        atlas_window(g, x, y1, .52, .34, 'back', 'grid9', reveal=IRON)
     # Tap hole on the bay wall: dark iron frame, glowing throat, spout.
-    ty, tz = ys[3], 2.55
-    blk(g, wx1 + .05, ty - .34, tz - .32, wx1 + .14, ty + .34, tz + .32, IRON)
-    blk(g, wx1 + .14, ty - .22, tz - .2, wx1 + .16, ty + .22, tz + .2, CONCRETE)
+    ty, tz = ys[1], 1.75
+    blk(g, wx1 + .05, ty - .3, tz - .28, wx1 + .14, ty + .3, tz + .28, IRON)
+    blk(g, wx1 + .14, ty - .2, tz - .18, wx1 + .16, ty + .2, tz + .18, CONCRETE)
     glow = Geometry('SteelMill.TapGlow', (wx1 + .18, ty, tz))
-    glow.box((wx1 + .18, ty, tz), (.04, .3, .26), GLOW)
+    glow.box((wx1 + .18, ty, tz), (.04, .26, .22), GLOW)
     parts.append((glow, 'PULSE', .08))
-    g.beam((wx1 + .16, ty, tz - .3), (wx1 + .8, ty, tz - .5), .16, .1, IRON)
-    P.plank_roof(g, wx0, wy0, wx1, wy1, EAVE, RIDGE, ridge_axis='X', overhang=.2, plank=.32, gable_mat=FORGED)
-    # Apex finials close the crossing plank ends at both gables.
-    for x, s in ((wx0 - .2, -1), (wx1 + .2, 1)):
-        blk(g, min(x + s * .005, x + s * .085), (wy0 + wy1) / 2 - .075, RIDGE - .08,
-            max(x + s * .005, x + s * .085), (wy0 + wy1) / 2 + .075, RIDGE + .2, WOOD)
-    lantern(g)
+    g.beam((wx1 + .16, ty, tz - .26), (wx1 + .7, ty, tz - .42), .14, .09, IRON)
+    M.flat_roof(g, wx0, wx1, wy0, wy1, EAVE, overhang=.1, parapet=.25)
     penthouse(g, parts)
-
-
-def lantern(g):
-    """Glazed monitor lantern astride the ridge over the east half."""
-    lx0, lx1, ly0, ly1 = 3.95, 6.5, 6.45, 7.55
-    zb, zt = 7.35, 8.45
-    blk(g, lx0, ly0, zb, lx1, ly1, zt, FORGED)
-    for x in (lx0, lx1):
-        for y in (ly0, ly1):
-            blk(g, x - .06, y - .06, zb + .2, x + .06, y + .06, zt - .02, IRON)
-    for x in (4.4, 5.2, 6.0):
-        atlas_window(g, x, ly0, 8.0, .7, 'front', 'ribbon', reveal=IRON)
-        atlas_window(g, x, ly1, 8.0, .7, 'back', 'ribbon', reveal=IRON)
-    P.plank_roof(g, lx0, ly0, lx1, ly1, zt, zt + .42, ridge_axis='X', overhang=.12, plank=.3, gable_mat=FORGED)
 
 
 def penthouse(g, parts):
     px0, py0, px1, py1 = PENT
-    blk(g, px0, py0, 6.6, px1, py1, PENT_TOP, FORGED)
+    blk(g, px0, py0, ROOF_TOP, px1, py1, PENT_TOP, FORGED)
     for x in (px0, px1):
         for y in (py0, py1):
-            blk(g, x - .07, y - .07, 7.0, x + .07, y + .07, PENT_TOP - .01, IRON)
-    for z in (7.75, 8.45):
+            blk(g, x - .07, y - .07, ROOF_TOP, x + .07, y + .07, PENT_TOP - .01, IRON)
+    for z in (4.15, 4.6):
         blk(g, px0 + .07, py0 - .03, z, px1 - .07, py0 + .002, z + .08, IRON)
         blk(g, px0 - .03, py0 + .07, z, px0 + .002, py1 - .07, z + .08, IRON)
-    P.louvre(g, 'X', py0, px0 + .25, px1 - .25, 7.85, 8.4, -1)
-    P.louvre(g, 'Y', px0, py0 + .3, py1 - .3, 7.85, 8.4, -1)
+    P.louvre(g, 'X', py0, px0 + .25, px1 - .25, 3.82, 4.08, -1)
+    P.louvre(g, 'Y', px0, py0 + .3, py1 - .3, 3.82, 4.08, -1)
     cap = PENT_TOP + .12
     blk(g, px0 - .08, py0 - .08, PENT_TOP, px1 + .08, py1 + .08, cap, IRON)
     # Electrode collars (static rings, clear of the moving electrodes).
@@ -205,102 +185,52 @@ def penthouse(g, parts):
         P.hoop(g, (ex, ey, cap + .06), .29, .08, .12, BRASS, segments=16)
     # Mast guide sleeves.
     for ex, _ in ELECTRODES:
-        blk(g, ex - .13, MAST_Y - .13, cap - .02, ex + .13, MAST_Y + .13, 10.35, IRON)
-        blk(g, ex - .16, MAST_Y - .16, 10.35, ex + .16, MAST_Y + .16, 10.43, PAINTED)
+        blk(g, ex - .13, MAST_Y - .13, cap - .02, ex + .13, MAST_Y + .13, 10.35 + DZ, IRON)
+        blk(g, ex - .16, MAST_Y - .16, 10.35 + DZ, ex + .16, MAST_Y + .16, 10.43 + DZ, PAINTED)
     # Moving assembly: electrodes, clamps, arms and mast heads.
-    m = Geometry('SteelMill.Electrodes', (2.0, 7.0, 10.0))
-    arm_z = {0: 10.95, 1: 10.95, 2: 11.15}
+    m = Geometry('SteelMill.Electrodes', (2.0, 4.4, 10.0 + DZ))
+    arm_z = {0: 10.75 + DZ, 1: 10.75 + DZ, 2: 10.95 + DZ}
+    etop = 11.8 + DZ
     for i, (ex, ey) in enumerate(ELECTRODES):
         az = arm_z[i]
-        m.cylinder((ex, ey, (8.7 + 12.25) / 2), .16, 12.25 - 8.7, IRON, 'Z', 16)
-        m.cylinder((ex, ey, 12.27), .12, .04, IRON, 'Z', 16)
-        for zj in (10.1, 11.75):
+        m.cylinder((ex, ey, (8.7 + DZ + etop) / 2), .16, etop - 8.7 - DZ, IRON, 'Z', 16)
+        m.cylinder((ex, ey, etop + .02), .12, .04, IRON, 'Z', 16)
+        for zj in (10.1 + DZ, 11.45 + DZ):
             P.hoop(m, (ex, ey, zj), .185, .05, .07, BRASS, segments=16)
         blk(m, ex - .22, ey - .22, az - .17, ex + .22, ey + .22, az + .17, PAINTED)
         blk(m, ex - .08, ey + .22, az - .1, ex + .08, MAST_Y - .07, az + .1, IRON)
-        blk(m, ex - .07, MAST_Y - .07, 9.55, ex + .07, MAST_Y + .07, az + .22, IRON)
+        blk(m, ex - .07, MAST_Y - .07, 9.55 + DZ, ex + .07, MAST_Y + .07, az + .22, IRON)
         blk(m, ex - .1, MAST_Y - .1, az + .22, ex + .1, MAST_Y + .1, az + .3, PAINTED)
         # Flexible cable loops from the clamp to the mast (heavy bus).
         for s in (-1, 1):
             m.beam((ex + s * .1, ey + .25, az - .15), (ex + s * .1, MAST_Y - .12, az - .45), .05, mat=BRASS)
     parts.append((m, 'PISTON_Z', .22))
     # Fume duct over the roof to the flue.
-    duct_y, duct_z = 8.35, 8.6
+    duct_y, duct_z = 4.9, 4.6
     P.pipe(g, [(px1 - .05, duct_y, duct_z), (STACK[0], duct_y, duct_z), (STACK[0], STACK[1] - .2, duct_z)],
-           .3, IRON, flanges=False, elbow_mat=IRON, segments=16)
-    for x in (3.6, 5.0, 6.4, 7.4):
-        P.hoop(g, (x, duct_y, duct_z), .335, .06, .1, PAINTED, axis='X', segments=16)
-    for x in (4.3, 5.7):
-        roof_z = EAVE + (MELT[3] - .1 - duct_y) * (RIDGE - EAVE) / 2.9
-        blk(g, x - .06, duct_y - .06, roof_z - .1, x + .06, duct_y + .06, duct_z - .28, IRON)
-        blk(g, x - .2, duct_y - .05, duct_z - .32, x + .2, duct_y + .05, duct_z - .27, IRON)
+           .22, IRON, flanges=False, elbow_mat=IRON, segments=16)
+    for x in (3.5, 4.3):
+        P.hoop(g, (x, duct_y, duct_z), .255, .05, .08, PAINTED, axis='X', segments=16)
+    for x in (3.9, 4.7):
+        blk(g, x - .06, duct_y - .06, ROOF_TOP, x + .06, duct_y + .06, duct_z - .2, IRON)
+        blk(g, x - .16, duct_y - .05, duct_z - .24, x + .16, duct_y + .05, duct_z - .2, IRON)
 
 
 def flue(g):
     sx, sy = STACK
-    K.revolve(g, (sx, sy, .17), [(.6, 0), (.6, .5), (.52, .58)], CONCRETE, segments=8, phase=math.pi / 8)
-    K.stack(g, sx, sy, .72, 13.75, emits='smoke', r=.42, taper=.78, mat=IRON, bands=5)
+    K.revolve(g, (sx, sy, .17), [(.5, 0), (.5, .45), (.42, .53)], CONCRETE, segments=8, phase=math.pi / 8)
+    K.stack(g, sx, sy, .62, 6.85, emits='smoke', r=.32, taper=.78, mat=IRON, bands=4)
 
 
-# ---------------------------------------------------------------- crane bay
+# ---------------------------------------------------------------- teeming bay
 
-def crane_bay(g, parts):
-    base = .2
-    for x in BAY_COLS_X:
-        for y in BAY_COLS_Y:
-            P.pier(g, x, y, base - .03, base + .35, .36)
-            blk(g, x - .11, y - .11, base + .4, x + .11, y + .11, RUNWAY_TOP - .36, IRON)
-            # Knee braces under the runway.
-            for s in (-1, 1):
-                if (y == BAY_COLS_Y[0] and s < 0) or (y == BAY_COLS_Y[-1] and s > 0):
-                    continue
-                g.beam((x, y + s * .1, RUNWAY_TOP - 1.1), (x, y + s * .62, RUNWAY_TOP - .38), .08, mat=IRON)
-        # Runway girder: stacked flanges and web, crane rail on top.
-        ya, yb = BAY_COLS_Y[0] - .2, BAY_COLS_Y[-1] + .2
-        blk(g, x - .14, ya, RUNWAY_TOP - .36, x + .14, yb, RUNWAY_TOP - .3, IRON)
-        blk(g, x - .04, ya + .01, RUNWAY_TOP - .3, x + .04, yb - .01, RUNWAY_TOP - .06, IRON)
-        blk(g, x - .12, ya, RUNWAY_TOP - .06, x + .12, yb, RUNWAY_TOP, IRON)
-        blk(g, x - .03, ya + .02, RUNWAY_TOP, x + .03, yb - .02, RUNWAY_TOP + .05, PAINTED)
-    # Ladle crane: bridge, end trucks, trolley, ropes, hook and a full ladle.
-    yc, zc = 8.0, RUNWAY_TOP + .05
-    c = Geometry('SteelMill.LadleCrane', (9.6, yc, zc))
-    xa, xb = BAY_COLS_X[0] - .15, BAY_COLS_X[1] + .15
-    for x in BAY_COLS_X:
-        blk(c, x - .13, yc - .45, zc + .01, x + .13, yc + .45, zc + .24, PAINTED)
-        for s in (-1, 1):
-            c.cylinder((x, yc + s * .3, zc + .07), .07, .2, IRON, 'X', 10)
-    for s in (-1, 1):
-        y = yc + s * .26
-        blk(c, xa + .15, y - .09, zc + .24, xb - .15, y + .09, zc + .62, IRON)
-        blk(c, xa + .17, y - .12, zc + .62, xb - .17, y + .12, zc + .67, IRON)
-        for k in range(7):
-            x = xa + .5 + k * (xb - xa - 1.0) / 6
-            K.stud(c, (x, y + s * .091, zc + .43), 'Y', .02)
-    tx = LADLE[0]
-    blk(c, tx - .45, yc - .4, zc + .68, tx + .45, yc + .4, zc + 1.0, PAINTED)
-    c.cylinder((tx, yc, zc + 1.18), .22, .7, IRON, 'X', 14)
-    blk(c, tx - .52, yc - .42, zc + 1.0, tx + .52, yc + .42, zc + 1.04, IRON)
-    hook_z = 4.0
-    for dx in (-.12, .12):
-        for dy in (-.08, .08):
-            c.beam((tx + dx, yc + dy, zc + .7), (tx + dx * .6, yc + dy * .6, hook_z + .2), .025, mat=IRON)
-    blk(c, tx - .2, yc - .14, hook_z - .1, tx + .2, yc + .14, hook_z + .2, PAINTED)
-    c.cylinder((tx, yc, hook_z - .2), .07, .22, IRON, 'Y', 10)
-    # Bail and ladle hung from the hook.
-    lz0, lz1 = 2.3, 3.3
-    for s in (-1, 1):
-        c.beam((tx + s * .1, yc, hook_z - .2), (tx + s * .62, yc, 3.0), .07, mat=IRON)
-        c.cylinder((tx + s * .56, yc, 3.0), .07, .2, IRON, 'X', 10)
-    P.lathe(c, (tx, yc, lz0), [(.42, 0), (.5, lz1 - lz0), (.56, lz1 - lz0), (.56, lz1 - lz0 + .06)], IRON,
-            segments=18)
-    for z in (2.55, 2.95):
-        K.band(c, (tx, yc, 0), .42 + .08 * (z - lz0) / (lz1 - lz0), z, .06, PAINTED, segments=18)
-    rim = lz1 + .06
-    c.cylinder((tx, yc, rim + .01), .5, .02, IRON, 'Z', 18)
-    c.cylinder((tx, yc, rim + .0275), .3, .015, GLOW, 'Z', 12)
-    parts.append((c, 'SLIDE_Y', -1.8))
-    teeming(g, parts)
-    bunkers(g)
+def teeming_bay(g):
+    """Flat roof over the teeming bay on two posts and the melt-shop wall."""
+    for y in (5.0, 5.8):
+        P.pier(g, 7.75, y, .17, .45, .3)
+        blk(g, 7.67, y - .08, .5, 7.83, y + .08, BAY_ROOF - .28, IRON)
+    blk(g, 7.62, 3.1, BAY_ROOF - .28, 7.88, 5.9, BAY_ROOF - .16, IRON)
+    blk(g, 5.0, 3.0, BAY_ROOF - .16, 8.0, 6.0, BAY_ROOF, CONCRETE)
 
 
 def teeming(g, parts):
@@ -336,9 +266,9 @@ def teeming(g, parts):
     # Ingot moulds on a car running along the bay front.
     track_y = nose[1]
     for s in (-1, 1):
-        blk(g, 7.6, track_y + s * .25 - .03, base, 11.3, track_y + s * .25 + .03, base + .07, IRON)
-    for k in range(6):
-        x = 7.8 + k * .66
+        blk(g, 5.3, track_y + s * .25 - .03, base, 7.55, track_y + s * .25 + .03, base + .07, IRON)
+    for k in range(4):
+        x = 5.5 + k * .66
         blk(g, x - .05, track_y - .38, base - .01, x + .05, track_y + .38, base + .025, WOOD)
     for k, x in enumerate((lx - .75, lx, lx + .75)):
         blk(g, x - .32, track_y - .3, base + .2, x + .32, track_y + .3, base + .3, IRON)
@@ -351,67 +281,38 @@ def teeming(g, parts):
             blk(g, x - .1, track_y - .1, mould_top - .02, x + .1, track_y + .1, mould_top + .012, GLOW)
 
 
-def bunkers(g):
-    base = .2
-    y0, y1 = 8.95, 9.97
-    xs = (8.72, 9.8, 10.88, 11.97)
-    blk(g, xs[0] - .08, y1 - .15, base - .03, xs[-1], y1, 1.35, CONCRETE)
-    for x in xs:
-        blk(g, x - .08, y0, base - .03, min(x + .08, 11.97), y1 - .15, 1.2, CONCRETE)
-    blk(g, xs[0] - .1, y1 - .17, 1.35, xs[-1], y1 + .02, 1.4, IRON)
-    # Scrap, coal and ore heaps.
-    rng = random.Random(7)
-    cx = (xs[0] + xs[1]) / 2
-    ore_heap(g, cx, 9.4, base, .38, .32, h=.55, mats=(IRON, PAINTED, FORGED), seed=11)
-    for i in range(9):
-        a = rng.uniform(0, math.pi)
-        c = (cx + rng.uniform(-.25, .25), 9.4 + rng.uniform(-.2, .2), base + .307 + i * .017)
-        C.obox(g, c, (math.cos(a), math.sin(a), 0), (-math.sin(a), math.cos(a), 0), (0, 0, 1),
-               .16, .03, .03, rng.choice((IRON, PAINTED, FORGED)))
-    ore_heap(g, (xs[1] + xs[2]) / 2, 9.4, base, .4, .34, h=.6, mats=(IRON,), seed=12)
-    ore_heap(g, (xs[2] + xs[3]) / 2, 9.4, base, .4, .34, h=.6, mats=(GREYPLANK, IRON), seed=13)
-
-
 # ---------------------------------------------------------------- rolling line
 
 def rolling_line(g, parts):
     base = .2
-    x0, x1, ya, yb = 3.4, 9.3, .38, 2.62
-    cols = (3.55, 5.0, 6.45, 7.9, 9.15)
-    eave = 3.45
-    for x in cols:
-        for y in (ya, yb):
-            P.pier(g, x, y, base - .03, base + .3, .3)
-            blk(g, x - .08, y - .08, base + .35, x + .08, y + .08, eave - .02, IRON)
-    for y in (ya, yb):
-        blk(g, x0 + .05, y - .09, eave - .02, x1 - .05, y + .09, eave + .12, IRON)
-    for x in cols[1:-1]:
-        g.beam((x, ya + .06, eave - .55), (x, ya + .5, eave - .02), .07, mat=IRON)
-        g.beam((x, yb - .06, eave - .55), (x, yb - .5, eave - .02), .07, mat=IRON)
-    P.plank_roof(g, x0 + .05, ya, x1 - .05, yb, eave + .12, eave + 1.0, ridge_axis='X', overhang=.3, plank=.3,
-                 gables=(False, False))
+    # Flat open canopy on four steel posts (front and back), level with the pulpit roof.
+    for x in (3.2, 7.8):
+        for y in (.2, 2.88):
+            P.pier(g, x, y, base - .03, base + .3, .26)
+            blk(g, x - .07, y - .07, base + .35, x + .07, y + .07, CANOPY - .28, IRON)
+    for y in (.2, 2.88):
+        blk(g, 3.1, y - .08, CANOPY - .28, 7.9, y + .08, CANOPY - .16, IRON)
+    blk(g, 3.0, 0.0, CANOPY - .16, 8.0, 3.0, CANOPY, CONCRETE)
     # Reheat furnace at the head of the line.
-    fx0, fx1, fy0, fy1 = 3.55, 4.65, .75, 2.25
-    blk(g, fx0, fy0, base - .03, fx1, fy1, 1.45, CONCRETE)
-    blk(g, fx0 - .04, fy0 - .04, 1.45, fx1 + .04, fy1 + .04, 1.53, IRON)
+    fx0, fx1, fy0, fy1 = 3.35, 4.25, .75, 2.25
+    blk(g, fx0, fy0, base - .03, fx1, fy1, 1.4, CONCRETE)
+    blk(g, fx0 - .04, fy0 - .04, 1.4, fx1 + .04, fy1 + .04, 1.48, IRON)
     for x in (fx0 + .2, (fx0 + fx1) / 2, fx1 - .2):
-        blk(g, x - .05, fy0 - .04, base + .1, x + .05, fy0, 1.45, IRON)
-        blk(g, x - .05, fy1, base + .1, x + .05, fy1 + .04, 1.45, IRON)
-    blk(g, 3.75, fy0 - .05, .5, 4.45, fy0 - .02, 1.1, IRON)                 # charging door
-    blk(g, 3.8, fy0 - .07, 1.0, 4.4, fy0 - .05, 1.04, BRASS)
+        blk(g, x - .05, fy0 - .04, base + .1, x + .05, fy0, 1.4, IRON)
+        blk(g, x - .05, fy1, base + .1, x + .05, fy1 + .04, 1.4, IRON)
+    blk(g, 3.57, fy0 - .05, .5, 4.03, fy0 - .02, 1.05, IRON)               # charging door
+    blk(g, 3.6, fy0 - .07, .95, 4.0, fy0 - .05, .99, BRASS)
     blk(g, fx1, ROLL_LINE_Y - .3, .55, fx1 + .03, ROLL_LINE_Y + .3, .82, IRON)
     glow = Geometry('SteelMill.ReheatGlow', (fx1 + .04, ROLL_LINE_Y, .67))
     glow.box((fx1 + .04, ROLL_LINE_Y, .67), (.02, .4, .16), GLOW)
     parts.append((glow, 'PULSE', .1))
-    K.stack(g, 4.1, 1.05, 1.53, 3.35, emits='smoke', r=.12, taper=.9, bands=3)
-    P.hoop(g, (4.1, 1.05, 4.25), .2, .07, .06, IRON, segments=14)
     # Roller table, interrupted at the stands.
-    tx0, tx1 = fx1 + .04, 9.4
+    tx0, tx1 = fx1 + .04, 7.6
     cuts = [tx0] + [v for s in STANDS for v in (s - .36, s + .36)] + [tx1]
     for a, b in zip(cuts[::2], cuts[1::2]):
         for y in (ROLL_LINE_Y - .3, ROLL_LINE_Y + .3):
             blk(g, a, y - .035, .42, b, y + .035, .6, IRON)
-    for x in (5.0, 6.45, 7.9, 9.3):
+    for x in (4.6, 5.55, 6.6, 7.55):
         for y in (ROLL_LINE_Y - .3, ROLL_LINE_Y + .3):
             blk(g, x - .04, y - .04, base - .02, x + .04, y + .04, .42, IRON)
     x = tx0 + .2
@@ -423,13 +324,11 @@ def rolling_line(g, parts):
         mill_stand(g, parts, i, sx)
     # Hot bar segments travel one pitch per loop through the stands.
     pitch = .9
-    bar = Geometry('SteelMill.HotBar', (6.9, ROLL_LINE_Y, BAR_Z[0]))
-    for k in range(6):
-        xa = 4.35 + k * pitch
+    bar = Geometry('SteelMill.HotBar', (5.6, ROLL_LINE_Y, BAR_Z[0]))
+    for k in range(3):
+        xa = 4.3 + k * pitch
         blk(bar, xa, ROLL_LINE_Y - .09, BAR_Z[0] + .003, xa + .68, ROLL_LINE_Y + .09, BAR_Z[1] - .003, GLOW)
     parts.append((bar, 'CUSTOM_LOOP_X', pitch))
-    K.lamp(g, cols[0], ya - .09, 2.6, face='front')
-    K.lamp(g, cols[2], ya - .09, 2.6, face='front')
 
 
 def mill_stand(g, parts, i, sx):
@@ -438,13 +337,13 @@ def mill_stand(g, parts, i, sx):
     for side in (-1, 1):
         py = y + side * .52
         for dx in (-.22, .22):
-            blk(g, sx + dx - .07, py - .07, .2, sx + dx + .07, py + .07, 1.5, IRON)
-        blk(g, sx - .32, py - .09, 1.5, sx + .32, py + .09, 1.68, PAINTED)
+            blk(g, sx + dx - .07, py - .07, .2, sx + dx + .07, py + .07, 1.25, IRON)
+        blk(g, sx - .32, py - .09, 1.25, sx + .32, py + .09, 1.4, PAINTED)
         blk(g, sx - .34, py - .1, .17, sx + .34, py + .1, .3, IRON)
-        # Screw-down column on the crosshead.
-        g.cylinder((sx, py, 1.8), .05, .24, IRON, 'Z', 8)
-    K.wheel(g, (sx, y - .52, 1.98), .16, 'Y')
-    blk(g, sx - .3, y - .44, 1.6, sx + .3, y + .44, 1.66, IRON)
+        # Screw-down column on the crosshead (all under the canopy roof at 1.84).
+        g.cylinder((sx, py, 1.48), .05, .16, IRON, 'Z', 8)
+    K.wheel(g, (sx, y - .52, 1.6), .14, 'Y')
+    blk(g, sx - .3, y - .44, 1.4, sx + .3, y + .44, 1.46, IRON)
     # Spindles back to a pinion box and motor behind the line.
     for z in (lo, hi):
         g.cylinder((sx, y + .69, z), .06, .24, IRON, 'Y', 10)
@@ -461,29 +360,11 @@ def mill_stand(g, parts, i, sx):
         parts.append((r, 'SPIN_Y', turns))
 
 
-def cooling_bed(g):
-    base = .2
-    x0, x1, y0, y1 = 9.5, 12.0, 0.0, 3.0
-    blk(g, x0, y0, -.02, x1, y1, .36, CONCRETE)
-    n = 8
-    for k in range(n):
-        x = x0 + .12 + k * (x1 - x0 - .24) / (n - 1)
-        blk(g, x - .03, y0 + .25, .36, x + .03, y1 - .25, .52, IRON)
-        for j in range(7):
-            yy = y0 + .45 + j * .35
-            blk(g, x - .025, yy - .02, .52, x + .025, yy + .02, .58, IRON)
-    for j in range(7):
-        yy = y0 + .53 + j * .35
-        g.cylinder(((x0 + x1) / 2, yy, .6), .045, x1 - x0 - .2, PAINTED if j % 2 else IRON, 'X', 8)
-
-
-# ---------------------------------------------------------------- slag yard
-
 def build(g, parts):
     ground(g)
     pulpit(g, parts)
     melt_shop(g, parts)
     flue(g)
-    crane_bay(g, parts)
+    teeming_bay(g)
+    teeming(g, parts)
     rolling_line(g, parts)
-    cooling_bed(g)

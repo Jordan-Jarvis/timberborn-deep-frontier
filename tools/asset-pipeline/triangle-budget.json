@@ -787,9 +787,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 17760,
-   "vertices": 33822,
-   "construction": 17760,
+   "finished": 9152,
+   "vertices": 17204,
+   "construction": 9152,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/SteelMill/SteelMill.IronTeeth.Model.timbermesh"
   },
   "StoneCrusher": {
