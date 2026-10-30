@@ -20,15 +20,15 @@ head deck. The winding drum and flywheel sit in the open on the shaft-house
 deck behind it, their ropes running up to the sheaves.
 
 Ore flow: the skips tip into a chute through the headframe's side, into a
-boarded ore bin; its front chute fills an ore tub that runs out along a short
-track at the front.
+boarded ore bin on the deck.
 
 Parts: low concrete shaft house (one layer) carrying the steel deck; brick
 lamp house with the door (flat roof, parapet); one-layer bath-house annex with
-its chimney and hot-water tank; winding engine exhaust stack.
+its chimney. No clutter on buildable space (user, 2026-10-30): the front strip
+of the footprint is open ground and the flat roofs stay clear.
 
-Animated (9): two sheave wheels, two skips, their two hoist ropes (stretch),
-winding drum, engine flywheel and the ore tub.
+Animated (8): two sheave wheels, two skips, their two hoist ropes (stretch),
+winding drum and engine flywheel.
 """
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
@@ -69,7 +69,7 @@ def shaft_house(g):
                               'right': [small(1.66), small(2.89), small(4.11), small(5.34)],
                               'back': [small(3.72), small(5.0), small(6.28)]})
     bx(g, 3.0, 7.0, 1.0, 6.0, BASE - .16, BASE - .08, CONCRETE)
-    P.deck(g, 3.0, 7.0, 1.0, 6.0, BASE, rails=('front', 'back', 'right'), gaps={'front': [(6.0, 7.0)]})
+    P.deck(g, 3.0, 7.0, 1.0, 6.0, BASE, rails=('front', 'back', 'right'))
     # Shaft cover plate the skips pass through.
     bx(g, 3.5, 5.5, 1.95, 2.85, BASE_ON, BASE_ON + .02, IRON)
 
@@ -187,7 +187,6 @@ def winding_engine(g, parts):
     # Steam cylinder and bed behind the flywheel; exhaust stack.
     bx(g, 6.05, 6.95, 5.35, 5.9, BASE_ON, BASE_ON + .4, PAINTED)
     g.cylinder((6.5, 5.62, BASE_ON + .62), .2, .5, PAINTED, 'Y', 12)
-    K.stack(g, 4.5, 5.55, BASE_ON, 3.2, emits='smoke', r=.16, bands=3)
 
 
 # ------------------------------------------------------------------ ore bin and tub
@@ -203,17 +202,6 @@ def ore_bin(g, parts):
         bx(g, core[1] + .06, core[1] + .1, core[2] - .06, core[3] + .06, z - .04, z + .08, IRON)
     for i in range(6):
         g.rock((6.25 + (i % 3) * .2, 1.6 + (i // 3) * .5, 3.04 + .01 * i), (.22, .2, .14), IRON, 70 + i)
-    # Discharge chute from the bin front over the deck edge to the tub.
-    P.slab_quad(g, [(6.25, 1.15, 1.6), (6.75, 1.15, 1.6), (6.75, .55, 1.15), (6.25, .55, 1.15)],
-                (0, -.45, .6), .05, FORGED)
-    for x in (6.22, 6.78):
-        P.slab_quad(g, [(x, 1.15, 1.58), (x, .55, 1.13), (x, .55, 1.33), (x, 1.15, 1.78)],
-                    (-1 if x < 6.5 else 1, 0, 0), .03, PAINTED)
-    # Track along the front and the ore tub running out from under the chute.
-    rail = P.track(g, (3.2, .5), (6.95, .5), z=0)
-    tub = Geometry('OreTub', (4.8, .5, rail))
-    P.ore_cart(tub, 4.8, .5, rail, axis='X', seed=3, full=True)
-    parts.append((tub, 'SLIDE_X', 1.5))
 
 
 # ------------------------------------------------------------------ lamp house and bath house
@@ -232,16 +220,13 @@ def lamp_house(g):
 
 
 def bath_house(g):
-    """One-layer annex on tiles 0..3 x 3..6 with its chimney and hot-water tank on the roof."""
+    """One-layer annex on tiles 0..3 x 3..6 with its chimney in the back corner."""
     small = lambda u: (u, .52, 'factory', .4)
     # Core ends at 2.93 so its corner pilasters meet the shaft house's on an edge, not a face.
     P.concrete_house(g, .05, 2.93, 3.05, 5.95, BASE - .16, base=.2, pitch=1.3, record_doors=False,
                      windows={'left': [small(3.8), small(5.2)], 'back': [small(.8), small(2.2)]})
     bx(g, 0.0, 3.0, 3.0, 6.0, BASE - .16, BASE, CONCRETE)
     K.stack(g, .55, 5.45, BASE, 3.2, emits='smoke', r=.18, bands=3)
-    K.tank(g, 1.9, 4.4, BASE, .38, .9, mat=PAINTED, bands=2, roof='cone')
-    K.pipe_run(g, [(1.9, 4.05, 1.6), (1.9, 2.95, 1.6)], .05, flanges=False)
-    P.gauge(g, 1.9, 4.02, 1.5, 'front', .07)
 
 
 def build(g, parts):

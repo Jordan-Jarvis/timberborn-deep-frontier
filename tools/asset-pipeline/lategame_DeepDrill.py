@@ -18,13 +18,15 @@ crown block, gin pole and beacon. Roofs: teal plank gable on the doghouse;
 flat concrete roofs on the pump house and engine room form one deck with the
 drill floor.
 
-Parts: brick pump house (the entrance) with the timber doghouse and a few
-joints of drill pipe on its roof; concrete engine room carrying the steel
-drill floor, rotary table and drawworks; triplex mud pump; two mud tanks;
-smoke stacks and a radiator fan behind the engine room.
+Parts: brick pump house (the entrance) with the timber doghouse on its roof;
+concrete engine room (tiles 3..7 x 0..6) carrying the steel drill floor,
+rotary table, drawworks and the two smoke stacks, with the radiator fan on
+its right wall; triplex mud pump on its bed. No clutter on buildable space
+(user, 2026-10-30): the mud tanks and the pipe joints on the pump-house roof
+are gone and the back-left tiles are open ground.
 
 Animated (9, unchanged names and kinds except the radiator fan, which now
-turns about Y on the back wall): travelling block and hook (hoist), its drill
+turns on the engine room's right wall): travelling block and hook (hoist), its drill
 lines (stretch), kelly (descends while turning), rotary table, drawworks
 drum, mud-pump pistons and bull wheel, radiator fan, crown beacon.
 """
@@ -213,16 +215,17 @@ def rotary(g, parts):
 # ------------------------------------------------------------------ engine room and drill floor
 
 def engine_room(g):
-    """Solid concrete engine room on tiles 3..7 x 0..5; its roof is the drill floor."""
-    P.concrete_house(g, 3.05, 6.95, .05, 4.95, FLOOR - .16, base=.3, pitch=1.3, record_doors=False,
+    """Solid concrete engine room on tiles 3..7 x 0..6; its roof is the drill floor."""
+    P.concrete_house(g, 3.05, 6.95, .05, 5.95, FLOOR - .16, base=.3, pitch=1.3, record_doors=False,
                      windows={'front': [(3.72, 1.07, 'factory', .7), (5.0, 1.07, 'factory', .7),
                                         (6.28, 1.07, 'factory', .7)],
-                              'right': [(.66, 1.07, 'factory', .7), (1.89, 1.07, 'factory', .7),
-                                        (3.11, 1.07, 'factory', .7), (4.34, 1.07, 'factory', .7)],
-                              'left': [(4.34, 1.07, 'factory', .7)]})
+                              'right': [(.64, 1.07, 'factory', .7), (1.82, 1.07, 'factory', .7),
+                                        (3.0, 1.07, 'factory', .7), (4.18, 1.07, 'factory', .7)],
+                              'left': [(4.18, 1.07, 'factory', .7), (5.36, 1.07, 'factory', .7)],
+                              'back': [(3.72, 1.07, 'factory', .7), (6.28, 1.07, 'factory', .7)]})
     # Roof slab on whole tiles, steel drill floor stacked on it.
-    bx(g, 3.0, 7.0, 0.0, 5.0, FLOOR - .16, FLOOR - .08, CONCRETE)
-    P.deck(g, 3.0, 7.0, 0.0, 5.0, FLOOR, rails=('front', 'back', 'left', 'right'), gaps={'left': [(0.0, 3.0)]})
+    bx(g, 3.0, 7.0, 0.0, 6.0, FLOOR - .16, FLOOR - .08, CONCRETE)
+    P.deck(g, 3.0, 7.0, 0.0, 6.0, FLOOR, rails=('front', 'back', 'left', 'right'), gaps={'left': [(0.0, 3.0)]})
     P.gauge(g, 4.35, .01, 1.55, 'front', .08)
 
 
@@ -255,15 +258,14 @@ def drawworks(g, parts):
 
 
 def back_services(g, parts):
-    """Smoke stacks and the radiator with its fan behind the engine room."""
+    """Smoke stacks on the drill floor's back edge and the radiator fan on the engine room's right wall."""
     for x in (3.6, 4.6):
-        K.stack(g, x, 5.5, 0, 4.8, emits='smoke', r=.18, bands=3)
-        K.pipe_run(g, [(x, 4.95, 1.4), (x, 5.33, 1.4)], .07, flanges=False)
-    bx(g, 5.3, 6.7, 4.99, 5.32, .45, 1.65, PAINTED)
-    for z in (.6, 1.5):
-        bx(g, 5.35, 6.65, 5.32, 5.37, z - .04, z + .04, IRON)
-    g.ring((6.0, 5.38, 1.05), .5, .07, .12, IRON, 'Y', 16)
-    parts.append((P.rotor('RadiatorFan', (6.0, 5.47, 1.05), .42, 'Y', 6), 'SPIN_Y', 4))
+        K.stack(g, x, 5.5, ON, 2.8, emits='smoke', r=.18, bands=3)
+    bx(g, 6.95, 7.1, 5.0, 5.85, .5, 1.6, PAINTED)
+    for z in (.65, 1.45):
+        bx(g, 7.1, 7.13, 5.05, 5.8, z - .04, z + .04, IRON)
+    g.ring((7.15, 5.425, 1.05), .38, .06, .08, IRON, 'X', 16)
+    parts.append((P.rotor('RadiatorFan', (7.22, 5.425, 1.05), .32, 'X', 6), 'SPIN_X', 4))
 
 
 # ------------------------------------------------------------------ pump house
@@ -294,15 +296,6 @@ def pump_house(g):
     # Stove pipe through the roof.
     P.tube(g, (.9, 2.3, 3.45), (.9, 2.3, 4.35), .07, IRON, 10)
     g.cylinder((.9, 2.3, 4.4), .11, .1, IRON, 'Z', 10)
-    # A few joints of drill pipe on sleepers in front of the doghouse.
-    for x in (.6, 2.4):
-        bx(g, x - .06, x + .06, .35, 1.0, zr, zr + .08, WOOD)
-    r = .06
-    for i in range(4):
-        P.tube(g, (.3, .45 + i * .15, zr + .08 + r), (2.7, .45 + i * .15, zr + .08 + r), r, IRON, 8)
-    for i in range(3):
-        y = .525 + i * .15
-        P.tube(g, (.35, y, zr + .08 + r + .095), (2.65, y, zr + .08 + r + .095), r, IRON, 8)
 
 
 def mud_pump(g, parts):
@@ -327,19 +320,9 @@ def mud_pump(g, parts):
     wheel = P.spoked_wheel('MudPumpBullWheel', (2.06, 3.28, .98), .5, 'Y', rim_t=.08, rim_w=.1,
                            spokes=6, groove=False, hub_r=.12)
     parts.append((wheel, 'SPIN_Y', 2))
-    # Suction from the mud tank; discharge into the engine room.
-    K.pipe_run(g, [(.8, 4.4, .95), (.8, 5.2, .95)], .08)
+    # Discharge into the engine room.
     K.pipe_run(g, [(.8, 4.0, 1.0), (.8, 4.0, 1.7), (3.05, 4.0, 1.7)], .08)
     P.gauge(g, .5, 4.2, 1.0, 'left', .08)
-
-
-def mud_tanks(g):
-    for x in (.6, 1.75):
-        K.tank(g, x, 5.5, 0, .4, 2.4, mat=PAINTED, bands=3, roof='dome')
-    K.ladder(g, .2, 5.5, 0, 2.65, face='left', width=.3, cage=False)
-    P.gauge(g, 1.75, 5.1, 1.2, 'front', .09)
-    # Return line from the engine room to the tanks.
-    K.pipe_run(g, [(3.05, 4.6, 1.55), (1.75, 4.6, 1.55), (1.75, 5.15, 1.55)], .07)
 
 
 def build(g, parts):
@@ -348,7 +331,6 @@ def build(g, parts):
     rotary(g, parts)
     pump_house(g)
     mud_pump(g, parts)
-    mud_tanks(g)
     back_services(g, parts)
     drawworks(g, parts)
     parts.append((travelling_block(), 'CUSTOM_HOIST', STROKE))

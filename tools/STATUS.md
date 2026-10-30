@@ -4,6 +4,14 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction follow-up: no clutter on buildable space, Deep Drill and Deep Mine (Claude Code session, 2026-10-30, built by an agent; scenes, exports and blueprints promoted; validated in mirror `minesdrill` on HEAD + this change; not built or run in game)
+
+- **User rule:** "we don't want clutter everywhere taking buildable space"; props must not claim otherwise-open footprint or roof cells.
+- **Deep Drill (7x6x8):** the drill-pipe joints on the pump-house roof and the two mud tanks (with their ladder, gauge and pipes) are gone. The engine room now runs to y 6 (tiles 3..7 x 0..6), so the two stacks stand on its deck and the radiator fan sits on its right wall (SPIN_X again). The back-left tiles (0..2, 5) are open ground. Triangles 10,588 -> 9,532 (ceiling re-recorded). Strict z-fight audit 0 visible at frames 1/31/61/95/121.
+- **Deep Mine (7x6x7):** the front ore track and ore tub (`OreTub` removed, 8 animated parts again), the bin's front chute, the bath-house hot-water tank and the winding-engine exhaust stack are gone. The front strip (tiles 3..6 x 0) is open ground, and one smoke source remains (the bath-house chimney). Triangles 9,436 -> 8,139 (ceiling re-recorded). Strict z-fight audit 0 visible at frames 1/26/51/61/91/111.
+- **Data:** roof decks, connection faces and smoke/smog regenerated for both; cost, power, crew, entrance and the mine's vein core unchanged.
+- **Checks (mirror):** canonical generation to a fixed point; the building checks pass except `map-setup-terrain` (`smallMap.maxArea`, re-derived after the pass).
+
 ## Compaction: Chemical Works 10x9x14 -> 5x5x8 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `lgi` on HEAD + this change; not built or run in game)
 
 - **Art** (`lategame_ChemicalWorks.py`, new own helper `compact_industry_parts.py`: one-layer storey blocks with a flat roof whose top is a whole layer and a curb under 0.15; not named `lategame_*_parts.py`, so other studies' source hashes stay put; saved scene unpacked): a solid two-storey reactor hall (concrete ground storey with the door, steel-framed forged upper storey, one layer each, floor band on every layer) under a flat concrete roof that carries the fin-fan cooler, the three turbine ventilators on the cooler housing and a short flare stack with its flame at the back corner; three agitated reactors in a row on a concrete apron along the hall's right wall; the 7-layer riveted column (insulated middle, one ring platform on layer 5, ladder) behind them, its vapour line dropping to the cooler. Removed: the lattice flare tower and knock-out drum, the pipe-rack catwalk on its bents, the cooler's piers, the spherical product tank, two of the three column platforms and both gabled roofs. Same textures, slots and UV authoring; the 9 animated parts keep their names.
