@@ -48,6 +48,10 @@ def init_gpu():
     try:
         gpu.platform.renderer_get()
     except SystemError:
+        # One shader-compile worker: each worker thread opens its own OpenGL
+        # context, and the automatic count made GPU initialisation cost
+        # ~1.5 instead of ~1.0 CPU-s. Set in memory only (never saved).
+        bpy.context.preferences.system.gpu_shader_workers = 1
         scene = bpy.data.scenes.new('gpu_visibility_init')
         camera = bpy.data.objects.new('gpu_visibility_init', bpy.data.cameras.new('gpu_visibility_init'))
         scene.collection.objects.link(camera)
