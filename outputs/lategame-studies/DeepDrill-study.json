@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Sixteen-layer tapered steel lattice derrick on a concrete substructure, crowned by a crown block and beacon",
+  "hero": "Boarded, tapered drilling tower on a solid concrete engine room, crowned by a crown block and beacon",
   "footprint": [
-    11,
-    9
+    7,
+    6
   ],
-  "heightLayers": 16,
+  "heightLayers": 8,
   "boundsMin": [
-    -0.045,
-    -0.005,
+    -0.04,
+    -0.135,
     0.0
   ],
   "boundsMax": [
-    10.66,
-    8.72,
-    15.9
+    7.01,
+    6.0,
+    7.9
   ],
   "doors": [
     {
       "id": "Door0",
       "position": [
         1.5,
-        0.18,
+        0.0,
         0.0
       ],
       "outward": [
@@ -45,20 +45,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 8674,
+  "faces": 4341,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1800,
-    "IrregularPlanks_DarkBrown.IronTeeth": 400,
-    "BaseMetal.IronTeeth": 4461,
-    "RoofPlanks.IronTeeth": 300,
-    "Details.IronTeeth": 836,
+    "BaseWood_DarkBrown.IronTeeth": 814,
+    "IrregularPlanks_DarkBrown.IronTeeth": 278,
+    "BaseMetal.IronTeeth": 2519,
+    "RoofPlanks.IronTeeth": 108,
+    "Details.IronTeeth": 568,
     "accent8": 40,
     "accent25": 10,
-    "Plaster_White.IronTeeth": 440,
-    "Plaster_Orange.IronTeeth": 69,
-    "WindowsAtlas.IronTeeth": 174,
-    "PaintedMetal.IronTeeth": 1082
+    "Plaster_White.IronTeeth": 244,
+    "Plaster_Orange.IronTeeth": 62,
+    "WindowsAtlas.IronTeeth": 168,
+    "PaintedMetal.IronTeeth": 468
   },
-  "sourceHash": "6a0a0014e67515df0c5832deaf2d229982fa7c26eaeca6b625b74bf6b0e407be",
-  "artHash": "24f068a125822e66046c521392497ede773278b212ecaa7526e3c061696822de"
+  "sourceHash": "93b47190ec1c02ffbd7e233de27a61bb42ead7e40474c583fce9817f0403acdd",
+  "artHash": "0f9020b86d9f87efdd8c31a568beb842760a271de764393e04621981ae1a83bd"
 }

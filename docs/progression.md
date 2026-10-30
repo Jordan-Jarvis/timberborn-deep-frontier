@@ -404,7 +404,7 @@ Still open:
 | 22 | B021 | Polymer and Chemical Works | 6×8×4 → 10×9×14 | 1,200 → 4,000 |
 | 23 | B022 | Precision Machine Works | 5×6×4 → 11×9×14 | 1,100 → 5,000 |
 | 24 | B023 | Water Treatment Plant | 4×5×3 → 12×11×13 | 420 → 1,800 |
-| 27 | B026 | Deep Drill | 4×4×5 → 11×9×16 | unchanged |
+| 27 | B026 | Deep Drill | 4×4×5 → 11×9×16 → 7×6×8 (compaction, 2026-10-30) | unchanged |
 | 32 | B031 | Nuclear Reactor | 4×4×5 → 20×15×22 | unchanged |
 | 33 | B032 | Uranium Processing Plant | 5×6×4 → 12×11×14 | 12,000 → 9,000 |
 | 34 | B033 | Electrolysis Plant | 4×5×4 → 12×9×12 | 9,000 → 10,000 |

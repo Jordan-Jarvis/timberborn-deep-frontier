@@ -4,6 +4,17 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction: Deep Drill 11x9x16 -> 7x6x8 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `minesdrill` on HEAD 46d9ee9 + this change; not built or run in game)
+
+- **Art** (`lategame_DeepDrill.py`, saved scene unpacked): a boarded, tapered tower (crown at layer 7) on a solid concrete engine room whose roof is the drill floor (layer 2), open at the front so the hoist shows; brick pump house with the door, doghouse and pipe joints on its flat roof; mud pump, two mud tanks, two stacks and the radiator fan behind. Removed: the open lattice derrick (diagonals, V-door brace, monkey board, racked pipe), the pier and I-beam substructure with its cellar stack, the pipe ramp and catwalk, the pipe rack and the separate power house. Same textures, material slots and UV authoring. The 9 animated parts keep their names; the hoist stroke is 0.95 (was 2.6) and the radiator fan turns about Y on the back wall.
+- **Checks on the art:** triangles 19,264 -> 10,588 (ceiling re-recorded); strict z-fight audit 0 visible at frames 1/31/61/95/121; grid audit 0 edge and floor misses; back-face-culled renders show no holes.
+- **Data:** footprint inside the old one with the same origin, door tile and Entrance (1,-1,0). The door face moved onto the tile edge (`LocalAccess` z 0.18 -> 0). Shaft transputs 121 -> 57, pipe ports 41 -> 25, box colliders 51 -> 20; smoke and smog sources at the two new stacks (3.6/4.6, 5.5, 4.9); status icon 8.7; roof decks: 2 drill-floor cells. Cost held at its old value by `lategame_cost_basis.json` (Plank 445, Gear 175, MetalBlock 140, Concrete 180); power 1,000, 3 workers and the drill-bit upkeep unchanged.
+- **Maps:** the drill is now under `largeFootprint` (8), so `prepare_deep_frontier_map.py` names it explicitly (`DEEP_DRILL`): the deep-industry stage counts its sites (`minDrillSites`). `map-setup-terrain` fails only on `smallMap.maxArea` 11176 != derived 10796, to be re-derived once the compaction pass is done. The unmet texts of Beaverome, Meander and Waterfalls still cite 11x9 drill footprints; a 7x6 drill may now fit there (left to the map owner).
+- **Old saves:** a placed drill keeps its position and frees the tiles it no longer uses, at any rotation. A flipped drill keeps its footprint but its entrance moves 4 tiles (local x 9 -> 5). Shafts and pipes on removed walls disconnect and need reconnecting.
+- **Review:** `outputs/compaction/DeepDrill-before-after.png` (matched cameras) and `DeepDrill-footprint-height.png`.
+- **Checks (mirror):** canonical generation; `validate_all -Only` exports-lategame, exports-preview_budget, model-bindings, building_entrances, connection_faces, freed_cells, lategame_freed_cells, roof_decks, smog_content, status_icon_anchors, vertical_slice_content, power_rule, bot_upkeep, map_setup, audit-progression, audit-building-assets, tool_groups, workforce_risks pass; triangle budget passes.
+- **In game:** not seen yet.
+
 ## Compaction: Cement Kiln 7x5x6 -> 5x3x4 and Concrete Mixer 7x5x7 -> 4x3x3 (Claude Code session, 2026-10-30, built by an agent; scenes, exports and blueprints promoted; validated in mirror `cmp-industrial` and the real repo; not built or run in game)
 
 - **User (Steam Workshop feedback):** the buildings exceed Timberborn's scale; "the textures are fine.... it is the scaffolding and size". The user approved these two candidates ("looking much better") before promotion.

@@ -980,7 +980,7 @@ def good_spec(good_id):
 
 def deep_drill_inputs(catalog):
     """Goods the DeepDrill's recipes consume; a DeepOreSource must hold one of them."""
-    drill = catalog.get('DeepDrill.IronTeeth')
+    drill = catalog.get(DEEP_DRILL)
     recipe_ids = set(drill['ManufactorySpec']['ProductionRecipeIds'])
     inputs = set()
     for path in (MOD_DATA / 'Recipes').rglob('*.json'):
@@ -1074,6 +1074,9 @@ def output_path(variant):
 # recipes, building costs, narrative settings) plus the authored policy
 # minimums in tools/map_loop_requirements.json.
 
+# The Deep Drill draws DeepOre from an authored DeepOreSource: the deep-industry stage
+# counts its checked flat sites beside a source (minDrillSites), whatever its size.
+DEEP_DRILL = 'DeepDrill.IronTeeth'
 SPECIAL_SITE_RULES = (('UnderstructureConstraintSpec', 'understructure'), ('MapEdgeSiteSpec', 'mapEdge'),
                       ('WaterDepthWorkCellsSpec', 'waterDepth'), ('WaterInputSpec', 'waterInput'),
                       ('MineralPitSpec', 'pit'), ('HydroTurbineSpec', 'hydro'))
@@ -1114,6 +1117,8 @@ def site_rule(catalog, template, large):
             return rule
     if catalog.building_collection[template].startswith('Buildings/Platforms/'):
         return None
+    if template == DEEP_DRILL:
+        return 'flat'
     size = blueprint['BlockObjectSpec']['Size']
     if 'WorkshopPoweredGeneratorSpec' in blueprint or 'GoodPoweredGeneratorSpec' in blueprint or max(size['X'], size['Y']) >= large:
         return 'flat'
@@ -1908,7 +1913,7 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
 
     # 3. Metal and deep industry
     sources = [r for r in records if r['template'] == 'DeepOreSource' and r['ok']]
-    drill_sites = good_sites.get('DeepDrill.IronTeeth', [])
+    drill_sites = good_sites.get(DEEP_DRILL, [])
 
     def beside(source, info):
         return abs(source['coordinates'][0] - info['at'][0]) + abs(source['coordinates'][1] - info['at'][1]) <= 25

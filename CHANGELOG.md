@@ -5,7 +5,8 @@
 ### Smaller buildings (compaction pass)
 - **Cement Kiln** is 5x3, 4 high (was 7x5, 6 high): a closed feed house, the rotary drum under a lean-to roof on stone blocks, the stone firebox with its fire and chimney. The open timber trestle and raised drum deck are gone.
 - **Concrete Mixer** is 4x3, 3 high (was 7x5, 7 high): the hoppers sit on the operator room's roof, the drum stands on low concrete piers, the water tank on a concrete pedestal. The tall timber feed tower and tank tower are gone.
-- **Old saves:** both keep their origin and entrance; freed tiles become empty ground. Reconnect a pipe at the mixer's water inlet (now on the tank pedestal) and its power line.
+- **Deep Drill** is 7x6, 8 high (was 11x9, 16 high): a boarded drilling tower on a solid concrete engine room, open at the front so the hoist shows. The open lattice derrick, the pier substructure, the pipe ramp, the pipe rack and the separate power house are gone. Same cost, power, crew and drill-bit upkeep.
+- **Old saves:** both keep their origin and entrance; freed tiles become empty ground. Reconnect a pipe at the mixer's water inlet (now on the tank pedestal) and its power line. A placed Deep Drill keeps its origin and entrance too (a flipped one's entrance moves 4 tiles); reconnect its shafts and pipes to the new walls.
 
 ## 0.6.0 (2026-10-29)
 
