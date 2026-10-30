@@ -10,6 +10,7 @@ using Timberborn.BlueprintSystem;
 using Timberborn.Coordinates;
 using Timberborn.CoreUI;
 using Timberborn.EntitySystem;
+using Timberborn.ErrorReporting;
 using Timberborn.GameSceneLoading;
 using Timberborn.Goods;
 using Timberborn.InventorySystem;
@@ -53,6 +54,12 @@ namespace DeepFrontier.Scripts.MapSetup {
   //     reported in a dialog.
   //   - Small maps (BuiltinMapSpec.Small: below the area threshold, or no Deep Mine site) and maps
   //     with unmet loop items get a one-time dialog.
+  //   - Saved before the first frame: only the native exception save can do that (autosaves wait
+  //     for ShowPrimaryUIEvent, GameStartupAutosaveBlocker). It runs from ExceptionListener's
+  //     FirstUncaughtException after ErrorReporter.LogString is set, and saves the world as it is:
+  //     native GameStarter's first-frame starting building is then missing and, the save not being
+  //     a new game, never spawned. The setup is saved the same way, as ExceptionSaveBeforeSetup
+  //     (never set up when loaded). Any other save before the setup ran throws.
   internal sealed class BuiltinMapSetup : ILoadableSingleton, ISaveableSingleton, IUpdatableSingleton {
     private const string Tag = "[DeepFrontier MapSetup]";
     private static readonly SingletonKey Key = new("DeepFrontierMapSetup");
@@ -68,6 +75,7 @@ namespace DeepFrontier.Scripts.MapSetup {
     private const string DevMap = "DevMap";
     private const string NoSetup = "NoSetup";               // built-in map without an entry (an error)
     private const string SavedBeforeSetup = "SavedBeforeSetup"; // a save from before this system: never touched
+    private const string ExceptionSaveBeforeSetup = "ExceptionSaveBeforeSetup"; // exception save before the first frame: never set up
 
     private readonly ISingletonLoader _singletonLoader;
     private readonly ISceneLoader _sceneLoader;
@@ -146,9 +154,16 @@ namespace DeepFrontier.Scripts.MapSetup {
     }
 
     public void Save(ISingletonSaver singletonSaver) {
+      string outcome = _outcome;
+      if (outcome == null) {
+        if (ErrorReporter.LogString == null) throw new InvalidOperationException(Tag + " saved before the setup ran");
+        outcome = ExceptionSaveBeforeSetup;
+        Debug.LogWarning(Tag + " exception save before the setup ran on " + (_map == "" ? "a map not yet read" : _map)
+          + ": saved as " + ExceptionSaveBeforeSetup + "; loading it places nothing");
+      }
       var saver = singletonSaver.GetSingleton(Key);
       saver.Set(MapKey, _map);
-      saver.Set(OutcomeKey, _outcome ?? throw new InvalidOperationException(Tag + " saved before the setup ran"));
+      saver.Set(OutcomeKey, outcome);
       saver.Set(PlacedKey, _placed);
       saver.Set(FailedKey, _failed);
     }

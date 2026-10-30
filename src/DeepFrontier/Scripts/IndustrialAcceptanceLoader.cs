@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Bindito.Core;
+using Timberborn.BlueprintSystem;
 using Timberborn.GameSaveRepositorySystem;
 using Timberborn.GameSceneLoading;
 using Timberborn.MapRepositorySystem;
@@ -20,13 +21,18 @@ namespace DeepFrontier.Scripts {
     private readonly GameSaveRepository _saves;
     private readonly GameSceneLoader _loader;
     private readonly MapRepository _maps;
+    private readonly ISpecService _specs;
     private int _frame;
-    public IndustrialAcceptanceLoader(GameSaveRepository saves,GameSceneLoader loader,MapRepository maps) {
-      _saves=saves;_loader=loader;_maps=maps;
+    public IndustrialAcceptanceLoader(GameSaveRepository saves,GameSceneLoader loader,MapRepository maps,ISpecService specs) {
+      _saves=saves;_loader=loader;_maps=maps;_specs=specs;
     }
     public void UpdateSingleton() {
       if(++_frame!=30)return;
       var args=Environment.GetCommandLineArgs();
+      if(SceneCycleAcceptance.Active) {
+        SceneCycleAcceptance.MainMenu(_specs,_saves,_loader,_maps);
+        return;
+      }
       if(MemoryLoadProbe.SavePath()is string path) {
         var named=MemoryLoadProbe.Find(_saves,path);
         Debug.Log("[DeepFrontier Acceptance] Loading named save through native GameSceneLoader: "+named);

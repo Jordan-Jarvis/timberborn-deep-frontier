@@ -57,3 +57,7 @@ The marked acceptance launchers (`tools/start_*.ps1`) start Timberborn with `-de
 5. If the outcome is `stuck`, look at the screen: something new is blocking before the mods load. Record what it is here.
 
 The Windows API screenshot helper used for the probes (`System.Drawing` `CopyFromScreen` plus `EnumWindows`) is not part of the tools. The watcher's log outcomes are the run evidence.
+
+## Several game scenes in one process
+
+`pwsh tools/start_scene_cycle.ps1 -Label N` (harness `src/DeepFrontier/Scripts/SceneCycleAcceptance.cs`) loads a copy of the newest Memory Test autosave, returns to the main menu with native `MainMenuSceneLoader.OpenMainMenu`, starts an Iron Teeth new game on `builtin:Canyon`, returns again, and repeats (`-Cycles`, default 2: four games). Every main menu compares the native water and terrain materials with the first menu's record (shader, keywords, every native property value); every game requires the radiation variants on them. The run ends with `[DeepFrontier SceneCycle] COMPLETE`. The launcher backs up the Memory Test folder, restores any file the run removed with its original time, reports any file it added, and removes its save copy.

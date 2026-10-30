@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Timberborn.AssetSystem;
 using Timberborn.BlueprintSystem;
 using Timberborn.SingletonSystem;
@@ -19,7 +20,10 @@ namespace DeepFrontier.Scripts.Radiation {
   // Load verifies the native members (RadiationShading.Verify). PostLoad, when
   // every native singleton (material repository, terrain, specs) has loaded,
   // puts the Deep Frontier shader variants on the native water and terrain
-  // materials; Unload restores the native shaders. The textures are updated in the late tick, after
+  // materials; Unload restores the native shaders on every material that got a
+  // variant, also after a PostLoad that failed part-way, and also when the
+  // native scene change has already destroyed the variants (see
+  // RadiationShading). The textures are updated in the late tick, after
   // RadiationSimulation.Tick (TickableSingletonService keeps the singleton
   // repository order, and the simulation is bound and created first), for the
   // rows that hold radiation plus rows still settling to zero; only changed
@@ -36,6 +40,7 @@ namespace DeepFrontier.Scripts.Radiation {
     private readonly ITerrainService _terrainService;
     private RadioactiveWaterSurface _water;
     private IrradiatedSoilSurface _soil;
+    private readonly List<RadiationShading.ShaderSwap> _swaps = new();
     private int _lastVersion = -1;
 
     public RadiationRenderer(RadiationSimulation simulation, WaterSimulator waterSimulator, ISpecService specService,
@@ -52,14 +57,15 @@ namespace DeepFrontier.Scripts.Radiation {
       var transparentVariant = _assetLoader.Load<Shader>(RadiationShading.WaterTransparentVariant);
       var terrainVariant = _assetLoader.Load<Shader>(RadiationShading.TerrainVariant);
       var terrain = Array.ConvertAll(RadiationShading.TerrainMaterials, _materialRepository.GetMaterial);
-      _water = new RadioactiveWaterSurface(spec.OpaqueMaterial.Asset, spec.TransparentMaterial.Asset, opaqueVariant, transparentVariant);
-      _soil = new IrradiatedSoilSurface(terrain, terrainVariant, _terrainService.Size);
+      _water = new RadioactiveWaterSurface(spec.OpaqueMaterial.Asset, spec.TransparentMaterial.Asset, opaqueVariant, transparentVariant, _swaps);
+      _soil = new IrradiatedSoilSurface(terrain, terrainVariant, _terrainService.Size, _swaps);
     }
 
     public void Unload() {
       _water?.Unload();
       _soil?.Unload();
       _water = null; _soil = null;
+      RadiationShading.ShaderSwap.RestoreAll(_swaps);
     }
 
     public void Tick() => Refresh(settle: true);

@@ -33,6 +33,16 @@ namespace DeepFrontier.Scripts.Radiation {
   // the texture arrays below in the same layout, lerped over the native result
   // behind a global keyword. RadiationRenderer puts the variants on the native
   // materials while a game is loaded and restores the native shaders on unload.
+  //
+  // The native materials outlive the scene (their shaders are what the next
+  // scene starts from), but the variants do not reach Unload intact: native
+  // SceneLoader.LoadSceneCoroutine calls IAssetLoader.Reset (ModAssetBundleProvider
+  // -> ModAssetBundleLoader.Reload: AssetBundle.Unload(true) on every mod bundle,
+  // then a fresh load) before SceneManager.LoadScene, whose teardown runs
+  // SingletonLifecycleUnityAdapter.OnDestroy -> IUnloadableSingleton.Unload. A
+  // material whose shader was destroyed reports Hidden/InternalErrorShader
+  // (Unity 6000.5.11f1, checked with a bundle-loaded shader and Unload(true)), so
+  // ShaderSwap.Restore accepts exactly that shader once its variant is destroyed.
   internal static class RadiationShading {
     internal const string WaterOpaqueVariant = "Shaders/DeepFrontier/RadioactiveWaterURP_Opaque";
     internal const string WaterTransparentVariant = "Shaders/DeepFrontier/RadioactiveWaterURP_Transparent";
@@ -94,9 +104,12 @@ namespace DeepFrontier.Scripts.Radiation {
     // every keyword the native material enables must be compiled for all
     // combinations.
     internal sealed class ShaderSwap {
+      private const string ErrorShaderName = "Hidden/InternalErrorShader";
       private readonly Material _material;
-      private readonly Shader _native, _variant;
+      private readonly Shader _native, _variant, _errorShader;
       private readonly string[] _keywords;
+      private readonly string _materialName, _nativeName, _variantName;
+      private bool _applied;
 
       internal ShaderSwap(Material material, string nativeShader, Shader variant, string variantName, string[] compiledKeywords) {
         if (material == null) throw new InvalidOperationException($"Native material for {nativeShader} is missing");
@@ -107,6 +120,9 @@ namespace DeepFrontier.Scripts.Radiation {
         if (variant == null || variant.name != variantName) throw new InvalidOperationException($"Shader variant {variantName} is missing from the Deep Frontier bundle");
         if (!variant.isSupported) throw new InvalidOperationException($"Shader variant {variantName} is not supported on this GPU");
         _variant = variant;
+        _errorShader = Shader.Find(ErrorShaderName);
+        if (_errorShader == null) throw new InvalidOperationException($"Unity's {ErrorShaderName} is missing");
+        _materialName = material.name; _nativeName = nativeShader; _variantName = variantName;
         for (int i = 0; i < _native.GetPropertyCount(); i++) {
           string name = _native.GetPropertyName(i);
           int index = variant.FindPropertyIndex(name);
@@ -124,10 +140,42 @@ namespace DeepFrontier.Scripts.Radiation {
 
       internal Material Material => _material;
 
-      internal void Apply() => Use(_variant);
+      internal void Apply() {
+        _applied = true;
+        Use(_variant);
+      }
 
-      internal void Restore() {
-        if (_material != null && _material.shader == _variant) Use(_native);
+      // Puts the native shader and keywords back after Apply, always. Returns
+      // null when the material held what Apply left (the variant, or the error
+      // shader once the asset loader reset destroyed the variant), otherwise
+      // what it held instead.
+      internal string Restore() {
+        if (!_applied) return null;
+        if (_material == null) return $"{_materialName} was destroyed while it held {_variantName}";
+        if (_native == null) return $"{_materialName}: {_nativeName} was destroyed while the material held {_variantName}";
+        var current = _material.shader;
+        bool expected = _variant != null ? current == _variant : current == _errorShader;
+        string problem = expected ? null
+          : $"{_materialName}: expected {(_variant != null ? _variantName : ErrorShaderName + " (" + _variantName + " unloaded)")} before restoring {_nativeName}, found {(current == null ? "none" : current.name)}";
+        Use(_native);
+        _applied = false;
+        return problem;
+      }
+
+      // Restores every applied swap, then throws for any that failed or held
+      // something else.
+      internal static void RestoreAll(List<ShaderSwap> swaps) {
+        var problems = new List<string>();
+        foreach (var swap in swaps) {
+          try {
+            if (swap.Restore() is string problem) problems.Add(problem);
+          } catch (Exception exception) {
+            problems.Add(exception.Message);
+          }
+        }
+        swaps.Clear();
+        if (problems.Count > 0)
+          throw new InvalidOperationException("Native water or terrain material changed while Deep Frontier's shader variant was on it (native shader restored): " + string.Join("; ", problems));
       }
 
       private void Use(Shader shader) {
@@ -181,7 +229,9 @@ namespace DeepFrontier.Scripts.Radiation {
     private bool _keyword;
     private RadiationSimulation.RowRange _rowsWithData = RadiationSimulation.RowRange.None;
 
-    internal RadioactiveWaterSurface(Material opaque, Material transparent, Shader opaqueVariant, Shader transparentVariant) {
+    // Each swap joins `applied` before it is applied; the renderer restores them.
+    internal RadioactiveWaterSurface(Material opaque, Material transparent, Shader opaqueVariant, Shader transparentVariant,
+        List<RadiationShading.ShaderSwap> applied) {
       _swaps = new[] {
         new RadiationShading.ShaderSwap(opaque, RadiationShading.WaterOpaqueNative, opaqueVariant, RadiationShading.WaterOpaqueVariantName, RadiationShading.WaterCompiledKeywords),
         new RadiationShading.ShaderSwap(transparent, RadiationShading.WaterTransparentNative, transparentVariant, RadiationShading.WaterTransparentVariantName, RadiationShading.WaterCompiledKeywords),
@@ -197,6 +247,7 @@ namespace DeepFrontier.Scripts.Radiation {
         _weightToByte[k] = (byte)Mathf.RoundToInt(255f * (min + t * (max - min)));
       }
       foreach (var swap in _swaps) {
+        applied.Add(swap);
         swap.Apply();
         swap.Material.SetColor(RadiationShading.RadioactiveBaseColorA, RadiationMaterials.WaterBaseColorA);
         swap.Material.SetColor(RadiationShading.RadioactiveBaseColorB, RadiationMaterials.WaterBaseColorB);
@@ -291,7 +342,6 @@ namespace DeepFrontier.Scripts.Radiation {
 
     internal void Unload() {
       RadiationShading.SetKeyword(RadiationShading.WaterKeyword, false);
-      foreach (var swap in _swaps) swap.Restore();
       RadiationShading.Destroy(_oldArray); RadiationShading.Destroy(_newArray); RadiationShading.Destroy(_buffer);
     }
   }
@@ -318,7 +368,8 @@ namespace DeepFrontier.Scripts.Radiation {
     private bool _keyword, _primed;
     private RadiationSimulation.RowRange _rowsWithData = RadiationSimulation.RowRange.None;
 
-    internal IrradiatedSoilSurface(IReadOnlyList<Material> materials, Shader variant, Vector3Int terrainSize) {
+    // Each swap joins `applied` before it is applied; the renderer restores them.
+    internal IrradiatedSoilSurface(IReadOnlyList<Material> materials, Shader variant, Vector3Int terrainSize, List<RadiationShading.ShaderSwap> applied) {
       _swaps = new RadiationShading.ShaderSwap[materials.Count];
       for (int i = 0; i < materials.Count; i++)
         _swaps[i] = new RadiationShading.ShaderSwap(materials[i], RadiationShading.TerrainNative, variant, RadiationShading.TerrainVariantName,
@@ -336,6 +387,7 @@ namespace DeepFrontier.Scripts.Radiation {
       Shader.SetGlobalTexture(RadiationShading.IrradiatedSoilMap, _array);
       var color = SoilColor();
       foreach (var swap in _swaps) {
+        applied.Add(swap);
         swap.Apply();
         swap.Material.SetColor(RadiationShading.IrradiatedSoilColor, color);
       }
@@ -424,7 +476,6 @@ namespace DeepFrontier.Scripts.Radiation {
 
     internal void Unload() {
       RadiationShading.SetKeyword(RadiationShading.SoilKeyword, false);
-      foreach (var swap in _swaps) swap.Restore();
       RadiationShading.Destroy(_array); RadiationShading.Destroy(_buffer);
     }
   }
