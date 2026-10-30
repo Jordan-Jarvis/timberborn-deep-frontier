@@ -36,6 +36,7 @@ from mathutils import Vector, Quaternion
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).parent))
+import gpu_render_lock
 from frontier_architecture import Geometry
 from reference_materials import create_reference_materials, civic_native_materials
 from industrial_facades import extra_materials
@@ -606,7 +607,7 @@ def render_views(ident, cli, camera, center, low, high):
         camera.rotation_euler = (target - camera.location).to_track_quat('-Z', 'Y').to_euler()
         camera.data.ortho_scale = extent * 1.32
         scene.render.filepath = str(out / f'{ident}-{view}.png')
-        bpy.ops.render.render(write_still=True)
+        gpu_render_lock.render(write_still=True)
         print('LATEGAME STUDY RENDERED', ident, view, flush=True)
 
 
@@ -628,7 +629,7 @@ def render_culled(ident, cli, camera, center, low, high):
         camera.rotation_euler = (target - camera.location).to_track_quat('-Z', 'Y').to_euler()
         camera.data.ortho_scale = extent * 1.32
         scene.render.filepath = str(cli.output_dir / f'{ident}-culled-{view}.png')
-        bpy.ops.render.render(write_still=True)
+        gpu_render_lock.render(write_still=True)
     scene.render.engine = engine
 
 

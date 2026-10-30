@@ -5,6 +5,7 @@ import bpy
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(Path(__file__).parent))
+import gpu_render_lock
 from frontier_architecture import Geometry
 from native_building_assets import prop,build_native_assembly
 
@@ -39,5 +40,5 @@ if not prefs.has_oidn_gpu_devices():raise RuntimeError('RTX 2060 OIDN GPU denois
 scene.cycles.denoising_use_gpu=True
 scene.render.image_settings.file_format='PNG'
 scene.render.filepath=str(ROOT/'outputs/reference-studies/NativePlants-original.png')
-bpy.ops.render.render(write_still=True)
+gpu_render_lock.render(write_still=True)
 print('NATIVE PLANT GEOMETRY REVIEW RENDERED',flush=True)

@@ -5,6 +5,8 @@ from pathlib import Path
 import sys
 import bpy
 from mathutils import Vector
+sys.path.insert(0,str(Path(__file__).parent))
+import gpu_render_lock
 
 ROOT=Path(__file__).resolve().parents[2]
 parser=argparse.ArgumentParser()
@@ -50,6 +52,6 @@ if not prefs.has_oidn_gpu_devices():raise RuntimeError('RTX 2060 OIDN GPU denois
 scene.cycles.denoising_use_gpu=True
 args.output.parent.mkdir(parents=True,exist_ok=True)
 scene.render.filepath=str(args.output)
-bpy.ops.render.render(write_still=True)
+gpu_render_lock.render(write_still=True)
 if hashlib.sha256(source.read_bytes()).hexdigest()!=digest:raise RuntimeError('Preview changed saved geometry')
 print('SELECTED SAVED ASSET PREVIEW',names,'source unchanged',digest,flush=True)

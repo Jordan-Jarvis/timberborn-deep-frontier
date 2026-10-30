@@ -5,6 +5,7 @@ import bpy
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(Path(__file__).parent))
+import gpu_render_lock
 from native_building_assets import import_prop
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
 scene=bpy.context.scene;scene.render.fps=24
@@ -28,4 +29,4 @@ scene.cycles.device='GPU';scene.render.resolution_x=1600;scene.render.resolution
 if not prefs.has_oidn_gpu_devices():raise RuntimeError('RTX 2060 OIDN GPU denoising unavailable')
 scene.cycles.denoising_use_gpu=True
 scene.render.image_settings.file_format='PNG';scene.render.filepath=str(ROOT/'outputs/reference-studies/Window-source-comparison.png')
-bpy.ops.render.render(write_still=True)
+gpu_render_lock.render(write_still=True)

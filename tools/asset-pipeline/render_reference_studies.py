@@ -8,6 +8,7 @@ from mathutils import Vector
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(Path(__file__).parent))
+import gpu_render_lock
 from frontier_architecture import Geometry,spin,sway
 from reference_materials import create_reference_materials,civic_native_materials
 from crusher_sheet_geometry import crusher
@@ -281,7 +282,7 @@ def render_model(ident,cli):
             focus=Vector((-3.45,-.75,1.0));scale=4.5;direction=(7,9,2.5)
         camera.location=focus+Vector(direction);camera.rotation_euler=(focus-camera.location).to_track_quat('-Z','Y').to_euler()
         camera.data.ortho_scale=scale
-        scene.render.filepath=str(output/f'{ident}-{view}.png');bpy.ops.render.render(write_still=True)
+        scene.render.filepath=str(output/f'{ident}-{view}.png');gpu_render_lock.render(write_still=True)
         print('REFERENCE STUDY RENDERED',ident,view,flush=True)
     camera.location=target+Vector((7,9,6.2));camera.rotation_euler=(target-camera.location).to_track_quat('-Z','Y').to_euler()
     scene.frame_set(1)

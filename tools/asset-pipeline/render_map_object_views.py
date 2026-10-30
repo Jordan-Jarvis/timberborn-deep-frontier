@@ -22,6 +22,7 @@ from pathlib import Path
 import bpy
 
 sys.path.insert(0, str(Path(__file__).parent))
+import gpu_render_lock  # noqa: E402
 import map_object_preview as preview  # noqa: E402
 
 ROOT = preview.ROOT
@@ -98,7 +99,7 @@ def main():
         for suffix, scale, target in views:
             preview.aim(camera, target, scale)
             scene.render.filepath = str(out / f"{entry['id']}{suffix}-{cli.label}.png")
-            bpy.ops.render.render(write_still=True)
+            gpu_render_lock.render(write_still=True)
         print('MAP OBJECT VIEW', entry['id'], cli.label, json.dumps({k: v['triangles'] for k, v in
                                                                     zip(range(len(entry_stats['files'])), entry_stats['files'])}), flush=True)
         stats[entry['id']] = entry_stats

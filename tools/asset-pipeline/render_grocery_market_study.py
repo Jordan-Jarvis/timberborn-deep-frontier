@@ -19,6 +19,7 @@ from mathutils import Vector, Quaternion
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).parent))
+import gpu_render_lock
 from frontier_architecture import Geometry, sway
 from reference_materials import create_reference_materials, civic_native_materials
 from industrial_facades import extra_materials
@@ -216,7 +217,7 @@ def render_views(scene, camera, low, high, cli, suffix=''):
         camera.data.ortho_scale = extent * 1.30
         path = OUT / f'{IDENT}-{view}{suffix}.png'
         scene.render.filepath = str(path)
-        bpy.ops.render.render(write_still=True)
+        gpu_render_lock.render(write_still=True)
         paths.append(str(path.relative_to(ROOT)))
         print('GROCERY STUDY RENDERED', path, flush=True)
     return paths

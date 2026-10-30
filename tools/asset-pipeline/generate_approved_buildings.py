@@ -11,6 +11,7 @@ from mathutils import Vector
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(Path(__file__).parent))
+import gpu_render_lock
 from frontier_architecture import *
 from concept_materials import create_concept_materials
 from concept_crusher import crusher as concept_crusher
@@ -405,7 +406,7 @@ def main():
         for candidate in scene.collection.children:candidate.hide_render=candidate not in (c,rig)
         w,d,h=size;target=Vector((-w/2,-d/2,h*.43));cam.location=target+Vector((6,8,5.5))
         cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.ortho_scale=max(w,d,h)*1.52
-        scene.render.filepath=str(OUT/(ident+'-studio.png'));bpy.ops.render.render(write_still=True)
+        scene.render.filepath=str(OUT/(ident+'-studio.png'));gpu_render_lock.render(write_still=True)
         print('RENDERED',ident,flush=True)
     for c in scene.collection.children:c.hide_render=c.name=='StudioRig';c.hide_viewport=c.name=='StudioRig'
     blend=SOURCE/'Art/Source/ApprovedBuildings.blend';blend.parent.mkdir(parents=True,exist_ok=True)

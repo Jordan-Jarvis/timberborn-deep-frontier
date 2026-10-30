@@ -20,6 +20,9 @@ from pathlib import Path
 import bpy
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).parent))
+import gpu_render_lock  # noqa: E402
+
 PITCH = 45
 
 
@@ -132,7 +135,7 @@ def main():
         camera.rotation_euler = (Vector(cam['target']) - Vector(cam['location'])).to_track_quat('-Z', 'Y').to_euler()
         cam_data.ortho_scale = cam['scale']
         scene.render.filepath = str(out / f"{cli.study}-{cam['name']}-{cli.label}.png")
-        bpy.ops.render.render(write_still=True)
+        gpu_render_lock.render(write_still=True)
         print('BUDGET VIEW', cli.study, cam['name'], cli.label, flush=True)
 
 
