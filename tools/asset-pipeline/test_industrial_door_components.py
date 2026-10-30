@@ -14,7 +14,7 @@ from mathutils.bvhtree import BVHTree
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(Path(__file__).parent))
 from frontier_architecture import Geometry
-from industrial_door_components import DOORS,UV_PROFILES,LEGACY_POSITIONS,recipes,recipe,legacy_door,hydro_workshop_door,kiln_return_strips,quarry_bay_return
+from industrial_door_components import DOORS,UV_PROFILES,LEGACY_POSITIONS,recipes,recipe,legacy_door,hydro_workshop_door,kiln_return_strips
 from hydro_isometric_geometry import append_powerhouse
 
 
@@ -28,16 +28,7 @@ def check_cavity_normals(g,definition,*,legacy=False,legacy_position=None):
     nx,ny=definition['outward']
     interior=Vector((-(x-nx*.06),-(y-ny*.06),z+.5))
     count=4 if legacy or definition['returnOwnership']=='complete' else (8 if definition['returnOwnership']=='kiln-shoulder-strips' else 0)
-    if not legacy and definition['returnOwnership']=='quarry-outer-bay':
-        # The quarry bays' two cheek panels (quarry_bay_return) close the
-        # projecting bay to the side skin: exterior faces, not cavity returns.
-        bay=Geometry('bay');quarry_bay_return(bay,g.name.rsplit('.',1)[-1])
-        assert len(g.faces)==37+len(bay.faces)==39,g.name
-        for face,material,(i,expected) in zip(g.faces[37:],g.materials[37:],enumerate(bay.faces),strict=True):
-            assert material==bay.materials[i] and face_points(g,face)==face_points(bay,expected),g.name
-        count=0
-    else:
-        assert len(g.faces)==37+count
+    assert len(g.faces)==37+count
     for face in g.faces[37:37+count]:
         points=face_points(g,face)
         center=sum(points,Vector())/len(points)

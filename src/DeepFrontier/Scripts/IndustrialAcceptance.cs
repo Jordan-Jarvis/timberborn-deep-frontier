@@ -201,13 +201,15 @@ namespace DeepFrontier.Scripts {
       // Compact 5x3x4 kiln (2026-10-30, same origin and entrance): no open
       // ground cell inside its bounds; the former 7x5 cells outside it are freed.
       {"CementKiln.IronTeeth",(-1,7,-1,7,new Vector3Int[0])},
+      // Compact 8x6x5 quarries (2026-10-30, same origin, entrance and seam
+      // cells): every ground cell inside the bounds is occupied.
       {"SandstoneQuarry.IronTeeth",(0,10,-2,7,new Vector3Int[0])},
       {"LimestoneQuarry.IronTeeth",(0,10,-2,7,new Vector3Int[0])}};
     private void RequireInstalledFootprints() {
       foreach(var (id,size,entrance) in new[]{("StoneCrusher.IronTeeth",new Vector3Int(4,4,5),new Vector3Int(1,-1,0)),
         ("CementKiln.IronTeeth",new Vector3Int(5,3,4),new Vector3Int(3,-1,0)),
-        ("SandstoneQuarry.IronTeeth",new Vector3Int(11,7,9),new Vector3Int(1,-1,0)),
-        ("LimestoneQuarry.IronTeeth",new Vector3Int(11,7,9),new Vector3Int(1,-1,0))}) {
+        ("SandstoneQuarry.IronTeeth",new Vector3Int(8,6,5),new Vector3Int(1,-1,0)),
+        ("LimestoneQuarry.IronTeeth",new Vector3Int(8,6,5),new Vector3Int(1,-1,0))}) {
         var spec=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName==id).Blueprint.GetSpec<BlockObjectSpec>();
         if(spec.Size!=size||spec.Entrance.Coordinates!=entrance)
           throw new InvalidOperationException($"Installed {id} is {spec.Size} with entrance {spec.Entrance.Coordinates}; this fixture's origins, approach paths and walk targets encode {size} with entrance {entrance}.");

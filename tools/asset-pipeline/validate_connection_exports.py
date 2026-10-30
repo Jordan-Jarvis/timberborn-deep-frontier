@@ -39,8 +39,8 @@ CURVED_CASES = {
     # The round LOX tank: its cylinder wall on three sides and its dome; a hydrogen bullet.
     'CryogenicTankFarm': [[9, 6, z, 'Right'] for z in range(6)] + [[7, 4, z, 'Down'] for z in range(6)]
     + [[7, 8, z, 'Up'] for z in range(6)] + [[7, 5, 6, 'Top'], [8, 6, 6, 'Top'], [0, 1, 2, 'Left'], [1, 1, 3, 'Top']],
-    # The barrel-vaulted turbine hall roof.
-    'OilPowerPlant': [[x, y, 4, 'Top'] for y in (1, 2) for x in range(6)],
+    # The arched door portal (the barrel vault went flat in the 2026-10-30 compaction).
+    'OilPowerPlant': [[1, 0, 0, 'Left'], [1, 0, 0, 'Right'], [1, 0, 0, 'Top']],
 }
 
 

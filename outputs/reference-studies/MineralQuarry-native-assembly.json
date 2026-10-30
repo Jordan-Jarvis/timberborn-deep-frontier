@@ -6,11 +6,11 @@
       "model": "SmallTank.IronTeeth",
       "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
       "position": [
-        0.6299999999999999,
-        2.4899999999999998,
-        1.03
+        0.175,
+        1.275,
+        0
       ],
-      "scale": 0.62,
+      "scale": 0.55,
       "yaw": 0
     }
   ],
@@ -19,14 +19,14 @@
       "name": "QuarryWaterBarrel.Water",
       "shape": "SmallLiquidPlane",
       "center": [
-        0.94,
-        2.8
+        0.45,
+        1.55
       ],
-      "bottom": 1.3685200000000002,
-      "top": 1.9104,
+      "bottom": 0.30030000000000007,
+      "top": 0.781,
       "scale": [
-        0.62,
-        0.62
+        0.55,
+        0.55
       ],
       "flowOnly": false
     }

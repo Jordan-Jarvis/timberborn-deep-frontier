@@ -4,60 +4,54 @@
     "SandstoneQuarry",
     "LimestoneQuarry"
   ],
-  "joinedObjects": 8,
+  "joinedObjects": 2,
   "objects": [
     "MineralQuarry.Architecture",
-    "MineralQuarry.Door.ControlRoomDoor",
-    "MineralQuarry.Door.GroundDoor",
-    "MineralQuarry.Door.LeftWorkshopDoor",
-    "MineralQuarry.Door.RightWorkshopDoor",
-    "Quarry.AccessLadder01",
-    "Quarry.AccessLadder02",
-    "Quarry.AccessLadder03"
+    "MineralQuarry.Door.GroundDoor"
   ],
   "nodes": [
     {
       "node": "StaticMerged",
-      "parts": 8,
-      "triangles": 9009,
+      "parts": 2,
+      "triangles": 4447,
       "materials": {
-        "DFIndustrial14": 374,
-        "DFIndustrial16": 12,
-        "DFIndustrial15": 88,
-        "BaseWood_DarkBrown.IronTeeth": 2619,
-        "BaseMetal.IronTeeth": 3752,
-        "DFIndustrial13": 132,
-        "IrregularPlanks_DarkBrown.IronTeeth": 1290,
-        "RoofPlanks.IronTeeth": 72,
-        "Details.IronTeeth": 382,
-        "DFIndustrial23": 12,
+        "DFIndustrial14": 256,
+        "DFIndustrial16": 4,
+        "DFIndustrial15": 48,
+        "BaseWood_DarkBrown.IronTeeth": 1185,
+        "BaseMetal.IronTeeth": 1518,
+        "DFIndustrial13": 28,
+        "IrregularPlanks_DarkBrown.IronTeeth": 1010,
+        "RoofPlanks.IronTeeth": 82,
+        "IrregularPlanks_MetalForged.IronTeeth": 10,
+        "Details.IronTeeth": 106,
         "DFIndustrial04": 182,
-        "DFIndustrial25": 70,
-        "Plaster_Orange.IronTeeth": 24
+        "DFIndustrial25": 12,
+        "Plaster_Orange.IronTeeth": 6
       }
     },
     {
       "node": "StaticMerged.DFIndustrial08",
       "parts": 1,
-      "triangles": 112,
+      "triangles": 80,
       "materials": {
-        "DFIndustrial08": 112
+        "DFIndustrial08": 80
       }
     },
     {
       "node": "StaticMerged.DFIndustrial09",
       "parts": 1,
-      "triangles": 66,
+      "triangles": 22,
       "materials": {
-        "DFIndustrial09": 66
+        "DFIndustrial09": 22
       }
     },
     {
       "node": "StaticMerged.WindowsAtlas.IronTeeth",
-      "parts": 5,
-      "triangles": 56,
+      "parts": 2,
+      "triangles": 30,
       "materials": {
-        "WindowsAtlas.IronTeeth": 56
+        "WindowsAtlas.IronTeeth": 30
       }
     }
   ],

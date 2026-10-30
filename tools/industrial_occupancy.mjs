@@ -39,11 +39,20 @@ export function industrialBlocks(ident, size) {
     region([0,0,0,3,2,1],'All'); // operator room and canopy (doorstep (1,0,0)), drum, drive, tray, tank pedestal
     region([0,1,2,3,2,2],'All'); // hoppers on the room roof, their chutes, drum crown, header tank
   } else if(ident==='MineralQuarry') {
-    // Stone process plinth (layer 0), rooms, sorting gear, headframe members
-    // and the ladder mast, from the saved scene's solid cells.
-    region([0,0,0,10,6,0],'All');region([0,0,1,2,0,1],'All');region([6,0,1,9,1,1],'All');region([0,1,1,3,1,1],'All');region([0,2,1,0,2,1],'All');region([3,2,1,9,2,1],'All');region([0,3,1,7,3,1],'All');region([9,3,1,9,3,1],'All');region([0,4,1,1,4,1],'All');region([3,4,1,3,4,1],'All');region([6,4,1,9,4,1],'All');region([0,5,1,7,5,1],'All');region([9,5,1,9,5,1],'All');region([0,6,1,9,6,1],'All');region([3,1,2,3,1,2],'All');region([6,1,2,6,1,2],'All');region([3,2,2,9,2,2],'All');region([0,3,2,1,4,2],'All');region([4,3,2,5,3,2],'All');region([7,3,2,9,4,2],'All');region([0,5,2,7,5,2],'All');region([9,5,2,9,5,2],'All');region([2,6,2,9,6,2],'All');region([3,1,3,3,2,3],'All');region([6,1,3,6,2,3],'All');region([0,3,3,3,4,3],'All');region([6,3,3,9,4,3],'All');region([0,5,3,9,5,3],'All');region([2,6,3,2,6,3],'All');region([7,6,3,9,6,3],'All');region([3,2,4,3,4,4],'All');region([6,2,4,6,2,4],'All');region([5,3,4,7,3,4],'All');region([6,4,4,6,4,4],'All');region([1,5,4,6,5,4],'All');region([2,6,4,3,6,4],'All');region([3,2,5,6,2,5],'All');region([3,3,5,3,4,5],'All');region([5,3,5,6,3,5],'All');region([6,4,5,6,4,5],'All');region([3,5,5,6,5,5],'All');region([2,6,5,2,6,5],'All');region([3,2,6,3,4,6],'All');region([6,2,6,6,2,6],'All');region([5,3,6,6,3,6],'All');region([6,4,6,6,5,6],'All');region([1,5,6,3,6,6],'All');region([3,2,7,6,5,7],'All');region([4,3,8,5,3,8],'All');
-    region([4,2,1,5,3,7],'All'); // hoist bucket and cable travel inside the headframe
-    // Only these 25 foundations require one native 5x5 seam.
+    // Compact 8x6x5 (2026-10-30), grid y = artwork y - 1. Stone plinth and
+    // the ground front row (water tank, cabin and doorstep (1,0,0), stone bin);
+    // the cabin roof, supply bins and spoil heap on the front strip; the tool
+    // room; the supply pipe; the boarded headframe with receiver and sheave;
+    // the winding house; the belt, screen and drives.
+    region([0,0,0,7,5,0],'All');
+    region([0,0,1,5,0,1],'All');
+    region([0,1,1,1,5,2],'All');
+    region([2,1,1,3,1,1],'All');
+    region([4,2,1,6,4,4],'All');
+    region([3,4,1,6,5,2],'All');
+    region([6,1,1,7,3,1],'All');region([7,3,2,7,3,2],'All');
+    // Only these 25 foundations require one native 5x5 seam (the old
+    // registration's cells, so a saved quarry stays over its seam).
     region([3,1,0,7,5,0],'Top');
     for(let y=1;y<6;y++)for(let x=3;x<8;x++)blocks[y*w+x].MatterBelow='Ground';
   } else throw new Error(`No structural occupation authored for ${ident}`);

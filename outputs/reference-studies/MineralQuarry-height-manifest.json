@@ -5,15 +5,6 @@
   "plinthTopLayer": 1,
   "walkableDeckLayers": [],
   "stairs": [],
-  "access": "Ground door only; maintenance ladder mast",
-  "ladderLayers": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7
-  ],
-  "heightEnvelopeLayers": 9
+  "access": "Ground door only",
+  "heightEnvelopeLayers": 5
 }

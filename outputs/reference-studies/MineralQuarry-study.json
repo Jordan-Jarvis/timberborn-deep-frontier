@@ -1,14 +1,14 @@
 {
   "status": "Blender art study; not exported or installed",
   "boundsMin": [
-    -11.0,
     -8.0,
+    -7.0,
     -0.11999999731779099
   ],
   "boundsMax": [
     0.0,
     -0.9963878393173218,
-    8.324999809265137
+    4.760000228881836
   ],
   "sourceReference": "docs/art/concepts/01-mining-and-sources-concept-v1.png",
   "selectedReferenceViews": [
@@ -45,12 +45,6 @@
     "Quarry.BeltSlat13",
     "Quarry.BeltSlat14",
     "Quarry.BeltSlat15",
-    "Quarry.BeltSlat16",
-    "Quarry.BeltSlat17",
-    "Quarry.BeltSlat18",
-    "Quarry.BeltSlat19",
-    "Quarry.BeltSlat20",
-    "Quarry.BeltSlat21",
     "Quarry.PourStone00",
     "Quarry.PourStone01",
     "Quarry.PourStone02",

@@ -39,16 +39,8 @@ DOORS = {
         # behind the grid y=2 edge; shoulders meet the header at Y=1.18.
         'GroundDoor': {'position': (1.50, 1.14, 0), 'outward': (0, -1), 'transform': 'front',
             'facade': 'framed', 'panelDepth': .04, 'wallPlaneY': 1.18, 'returnOwnership': 'wall'},
-        # Workshop header faces are Y-.04: 4.26 and5.06.
-        'LeftWorkshopDoor': {'position': (.685, 4.22, 1), 'outward': (0, -1), 'transform': 'front',
-            'facade': 'framed', 'panelDepth': .04, 'wallPlaneY': 4.26,
-            'returnOwnership': 'quarry-outer-bay', 'seamCorners': ['left'], 'seamCornerAcross': {'left': -.30}},
-        'RightWorkshopDoor': {'position': (8.915, 5.02, 1), 'outward': (0, -1), 'transform': 'front',
-            'facade': 'framed', 'panelDepth': .04, 'wallPlaneY': 5.06,
-            'returnOwnership': 'quarry-outer-bay', 'seamCorners': ['right'], 'seamCornerAcross': {'right': .30}},
-        # Reflected end header is centred X=3.45, front X=3.41.
-        'ControlRoomDoor': {'position': (3.37, 7.34, 1), 'outward': (-1, 0), 'transform': 'reflected-left',
-            'facade': 'framed', 'panelDepth': .04, 'wallPlaneX': 3.41, 'returnOwnership': 'wall'},
+        # (The two upper workshop doors and the control-room door went with
+        # the compact 8x6x5 quarry, 2026-10-30.)
     },
     'SandstonePit': {
         # Centred on grid tile column 1 (x .93 + origin .57), casing face 0.14
@@ -99,9 +91,6 @@ LEGACY_POSITIONS = {
     ('CementKiln','GroundDoor'): (3.45,-.79,0),
     ('ConcreteMixer','MixerOperatorDoor'): (1.65,.50,0),
     ('MineralQuarry','GroundDoor'): (1.37,1.35,0),
-    ('MineralQuarry','LeftWorkshopDoor'): (.685,4.30-.045,1),
-    ('MineralQuarry','RightWorkshopDoor'): (8.915,5.10-.045,1),
-    ('MineralQuarry','ControlRoomDoor'): (3.45,7.49,1),
     ('SandstonePit','PitStoreDoor'): (.93,1.12-.06,0),
     ('LimestonePit','PitStoreDoor'): (.93,1.12-.06,0),
     ('ReinforcedHydroTurbine','HydroWorkshopDoor'): (5.35+1.0,2.24+4.0,2),
@@ -149,23 +138,6 @@ follow the door anchor.
               [face],CIVIC_ORANGE_PANEL)
 
 
-def quarry_bay_return(g,ident):
-    """Close the projecting workshop cheek to the real inset side skin.
-
-These bay corners are .13 beyond the side wall, not coplanar wall seams.
-The front infill already owns Y=4.26/5.06. Each return turns back .04,
-then joins the unchanged side skin; its top meets the existing header box.
-    """
-    if ident=='LeftWorkshopDoor':
-        facade_panel(g,'X',.185,4.26,4.30,1,2.96,False,PLANK)
-        facade_panel(g,'Y',4.30,.185,.315,1,2.96,True,PLANK)
-    elif ident=='RightWorkshopDoor':
-        facade_panel(g,'X',9.415,5.06,5.10,1,2.81,True,PLANK)
-        facade_panel(g,'Y',5.10,9.285,9.415,1,2.81,True,PLANK)
-    else:
-        raise ValueError('No authored Quarry outer bay for '+ident)
-
-
 def _door(model, ident, definition, *, legacy=False):
     g = Geometry(f'{model}.Door.{ident}')
     position=LEGACY_POSITIONS[(model,ident)] if legacy else definition['position']
@@ -200,7 +172,6 @@ def _door(model, ident, definition, *, legacy=False):
     if not legacy:
         if model=='StoneCrusher':crusher_return_surfaces(g,position)
         elif definition['returnOwnership']=='kiln-shoulder-strips':kiln_return_strips(g,position)
-        elif definition['returnOwnership']=='quarry-outer-bay':quarry_bay_return(g,ident)
     return g
 
 

@@ -1,45 +1,61 @@
-"""Permanent quarry from the two ISOMETRIC illustrations on mining sheet 01.
+"""Permanent quarry, compact 8x6x5 (2026-10-30 compaction pass).
 
-Original geometry, no characters, plan-view tracing or concept tile counts.
-The authored access landings and ladder clearances are explicit at the source.
-Native grid occupancy, navigation and dependency integration remain separate.
+Steam Workshop feedback: the buildings exceeded Timberborn's scale. The user
+kept the textures and asked for less scaffolding and size; the mines get
+extra care. The 11x7x9 quarry with its tall lattice headframe, side ladder
+mast and two upper workshops becomes a solid stone plinth with:
+
+- a lined shaft collar over the seam and a four-post timber headframe with
+  the head sheave on its top frame (no lattice, no ladder mast),
+- the winding drum in an open-fronted, flat-roofed winding house behind it,
+  the rope running from the drum up to the sheave and down to the bucket,
+- the tipping bucket, receiver, gravity chute, slat belt, screen and stone
+  bin on the plinth's east side,
+- the front operator cabin with the native door, a flat-roofed tool room and
+  supplies on the plinth's west side, the native water tank in front.
+
+The origin, entrance and the 5x5 seam foundation cells (grid x 3..7,
+y 1..5) are those of the old registration, so a saved quarry stays over its
+seam. Artwork coordinates: native grid = artwork + (0,-1); the footprint is
+artwork x 0..8, y 1..7. No walkable decks, galleries or ladders.
 """
 import math
 import random
+from mathutils import Vector
 from frontier_architecture import *
-from industrial_geometry import steel_bolt,bracket,timber_column,beam_joint,sheet_roof,access_stair
-from reference_details import cage_lamp,cask,round_pipe
-from industrial_kit import (open_beam,lean_wheel as wheel,lean_gauge as gauge,bracket as nutted_bracket)
-from industrial_kit import (steel_bolt,lean_bracket as bracket,lean_timber_column as timber_column,lean_beam_joint as beam_joint,lean_sheet_roof as sheet_roof,lean_cage_lamp as cage_lamp,lean_cask as cask,round_pipe,lean_bin as bin,band,prism,bolt,square_nut,open_box,lean_rock as rock,lean_rock_heap as rock_heap,lean_wall as wall,skin_board)
-from reference_materials import (CRUSHER_STEEL,KILN_STONE,KILN_STONE_LIGHT,KILN_SOOT,
-                                KILN_RUST,KILN_WOOD_SPLIT,KILN_WOOD_WEAR,KILN_DUST,WATER)
+from industrial_kit import (open_beam,lean_gauge as gauge)
+from industrial_kit import (lean_timber_column as timber_column,lean_sheet_roof as sheet_roof,lean_cage_lamp as cage_lamp,round_pipe,lean_bin as bin,band,prism,square_nut,open_box,lean_rock as rock,lean_rock_heap as rock_heap,lean_wall as wall,skin_board)
+from reference_materials import (CRUSHER_STEEL,KILN_STONE,KILN_STONE_LIGHT,KILN_SOOT,CIVIC_FORGED_PANEL)
 from walkway_geometry import RailAssembly
-from quarry_process_details import material_flow,enclosed_rooms,side_window,lift_state
+from quarry_process_details import material_flow,side_window,window_y,lift_state,HOIST_TRAVEL,BIN
 from industrial_door_components import recipe as door_recipe
 from industrial_levels import QUARRY_ENTRANCE
 
-HOIST_TRAVEL=3.60
-BUCKET_BASE=1.55
-BUCKET_TOP=BUCKET_BASE+1.30
-ROPE_TOP=7.96
+PLINTH_TOP=1.0
 HOIST_X,HOIST_Y=5.10,4.18
+BUCKET_BASE=.25
+BUCKET_H=.62
+# Rope attachment (top of the carriage yoke) above the bucket floor.
+BUCKET_TOP=BUCKET_BASE+1.0
+ROPE_TOP=4.45
+SHEAVE_R=.31
+DRUM=(HOIST_X,5.85,1.62)
+DRUM_R=.467
+# Shaft collar opening in the plinth, and the headframe post centres.
+COLLAR=(4.40,3.50,5.80,4.90)
+POSTS_X=(4.22,5.98)
+POSTS_Y=(3.33,5.07)
+HEAD_Z=4.12
+GUIDES_X=(4.62,5.58)
+GUIDE_Y=4.80
 # Ground cabin: door centred on grid x=1.5, facade 0.18 behind artwork y=1.
 CABIN_X,CABIN_FRONT=1.50,1.18
 
-# These are physical source coordinates, not inferred block occupations.
-# The quarry has no walkable decks, galleries or balconies: the process floor
-# is a solid stone plinth (layer 1 top) and the headframe is served by a
-# maintenance ladder mast with one narrow, rail-free top landing.
 ACCESS={
-    'plinthTop':1.0,
-    'ladderCellCenter':[2.5,7.5],
-    'ladderClearOpening':[2.12,7.12,2.88,7.88],
-    'ladderFlights':[[1,3],[3,5],[5,7]],
-    'serviceLanding':7.0,
-    'walkableDecks':'None; maintenance ladder only',
-    'bodyCheckRadius':0.20,
-    'hoistExclusion':[4.25,3.40,5.95,5.00],
-    'ladderNodes':['Quarry.AccessLadder01','Quarry.AccessLadder02','Quarry.AccessLadder03'],
+    'plinthTop':PLINTH_TOP,
+    'walkableDecks':'None; the quarry is not climbed (no ladder mast since 2026-10-30)',
+    'groundDoor':[CABIN_X,1.14,QUARRY_ENTRANCE],
+    'hoistExclusion':[COLLAR[0],COLLAR[1],COLLAR[2],COLLAR[3]],
     'status':'Authored clearance and motion contract; not native navigation or gameplay verification'
 }
 
@@ -53,180 +69,212 @@ def plinth(g,x0,y0,x1,y1,top):
     g.box(((x0+x1)/2,(y0+y1)/2,(top-.02)/2),(x1-x0,y1-y0,top+.02),KILN_STONE)
 
 
-def footing(g,x,y,width=.55):
-    # 12k cap (2026-10-29): no anchor nuts; the bottom faces lie on the ground.
-    open_box(g,(x,y,.16),(width,width,.30),KILN_STONE,('-z',))
-    open_box(g,(x,y,.335),(width+.035,width+.035,.065),IRON,('-z',))
-
-
-def heavy_beam(g,a,b,w=.34,plates=True):
-    # Fish plates without their nuts (12k cap); plates=False for the ring ties.
+def heavy_beam(g,a,b,w=.26,plates=True):
     g.beam(a,b,w,w,WOOD)
     for t in ((.12,.88) if plates else ()):
         p=tuple(a[i]+(b[i]-a[i])*t for i in range(3))
         if abs(b[0]-a[0])>=max(abs(b[1]-a[1]),abs(b[2]-a[2])):
-            g.box((p[0],p[1]-.19,p[2]),(.49,.045,.37),IRON)
-        else:
-            g.box((p[0]-.19,p[1],p[2]),(.045,.49,.36),IRON)
+            g.box((p[0],p[1]-w/2-.02,p[2]),(w+.12,.04,w+.03),IRON)
+        elif abs(b[1]-a[1])>=abs(b[2]-a[2]):
+            g.box((p[0]-w/2-.02,p[1],p[2]),(.04,w+.12,w+.03),IRON)
 
 
-def shaft_collar(g):
-    # Actual open volume above ground; do not fake a walkable floor over the shaft.
-    x0,x1,y0,y1=3.24,6.74,3.16,6.62
-    g.box((5.0,4.89,.065),(3.34,3.28,.10),KILN_SOOT)
-    # Stone lining in long blocks (12k cap; was 7 and 6 per course).
-    for z in (.26,.56,.86):
-        # Their outer faces lie on the plinth's inner faces.
-        for i in range(5):
-            x=x0+(i+.5)*(x1-x0)/5
-            for y in (y0,y1):open_box(g,(x,y,z),(.69,.28,.28),KILN_STONE if i%3 else KILN_STONE_LIGHT,('-z','-y' if y==y0 else '+y'))
-        for i in range(4):
-            y=y0+.25+(i+.5)*(y1-y0-.5)/4
-            for x in (x0,x1):open_box(g,(x,y,z),(.28,.73,.28),KILN_STONE,('-z','-x' if x==x0 else '+x'))
-    for y in (y0,y1):g.box((4.99,y,1.04),(3.80,.38,.16),WOOD)
-    for x in (x0,x1):g.box((x,4.89,1.04),(.38,3.08,.16),WOOD)
-    # Paired timber guide rails descend visibly into the lined collar.
-    for x in (4.32,5.88):
-        g.box((x,4.95,3.94),(.105,.14,7.72),WOOD)
-        for z in (.63,2.70,4.77,6.84):
-            g.box((x,4.95,z),(.18,.18,.14),IRON)
+def flat_roof(g,x0,y0,x1,y1,top,seed):
+    """Flat roof of the native roof sheets (the sheet roof laid level): its
+    edge beams are the fascia, its corner shoes stay inside the walls' lines."""
+    sheet_roof(g,x0+.11,y0+.11,x1-.11,y1-.11,top,top,seed)
 
 
 def foundation(g):
-    # Solid stone plinth (top at layer 1) in the same stepped, cut-away
-    # footprint as the art, with no rails. Outer faces are on tile edges
-    # (artwork y = grid y - 1); inner faces meet the stone shaft collar.
-    plinth(g,0,2.0,3.10,8.0,1.0)
-    plinth(g,2.30,1.0,3.10,2.0,1.0)
-    plinth(g,3.10,1.0,6.88,3.02,1.0)
-    plinth(g,6.88,1.0,11.0,8.0,1.0)
-    plinth(g,3.10,6.76,6.88,8.0,1.0)
-    # (The stone step in front of the sorting yard, artwork y 0..1, was a
-    # forecourt with nothing on it; removed with its footprint row, 2026-10-22.)
-    shaft_collar(g)
+    # One stone plinth, top at layer 1, around the collar opening; the cabin
+    # stands in front of it on the ground. Outer faces are on tile edges.
+    cx0,cy0,cx1,cy1=COLLAR
+    plinth(g,0,2.06,cx0,7.0,PLINTH_TOP)
+    plinth(g,cx1,2.06,8.0,7.0,PLINTH_TOP)
+    plinth(g,cx0,2.06,cx1,cy0,PLINTH_TOP)
+    plinth(g,cx0,cy1,cx1,7.0,PLINTH_TOP)
+    # Front strip, ending where the stone bin stands on the ground.
+    plinth(g,2.10,1.0,6.50,2.06,PLINTH_TOP)
+    # The lined collar: stone blocks against the plinth's inner faces, the
+    # dark shaft floor and a timber collar frame on the plinth top.
+    g.box(((cx0+cx1)/2,(cy0+cy1)/2,.065),(cx1-cx0,cy1-cy0,.10),KILN_SOOT)
+    for k,z in enumerate((.26,.56,.86)):
+        for i in range(3):
+            x=cx0+(i+.5)*(cx1-cx0)/3
+            for y,skip in ((cy0+.075,'-y'),(cy1-.075,'+y')):
+                open_box(g,(x,y,z),((cx1-cx0)/3-.01,.15,.28),KILN_STONE_LIGHT if (i+k)%3==0 else KILN_STONE,('-z',skip))
+        for j in range(2):
+            y=cy0+.15+(j+.5)*(cy1-cy0-.30)/2
+            for x,skip in ((cx0+.075,'-x'),(cx1-.075,'+x')):
+                open_box(g,(x,y,z),(.15,(cy1-cy0-.30)/2-.01,.28),KILN_STONE,('-z',skip))
+    # Frame beams 0.26 wide: their inner faces stand 2 cm behind the lining's.
+    for y in (cy0,cy1):g.box(((cx0+cx1)/2,y,1.04),(cx1-cx0+.26,.26,.16),WOOD)
+    for x in (cx0,cx1):g.box((x,(cy0+cy1)/2,1.04),(.26,cy1-cy0-.26,.16),WOOD)
 
 
 def headframe(g):
-    # Four heavy inclined legs, intermediate ties, gussets and rear X bracing.
-    feet=[(2.95,2.60),(7.05,2.60),(2.95,6.75),(7.05,6.75)]
-    heads=[(3.65,3.60),(6.35,3.60),(3.65,6.20),(6.35,6.20)]
-    for (x,y),(xx,yy) in zip(feet,heads):
-        footing(g,x,y,.65)
-        heavy_beam(g,(x,y,.38),(xx,yy,7.18),.37)
-        # End plates already reinforce the lower leg at z=1.196. The first
-        # intermediate collar belongs above that plate and its fasteners.
-        for z in (3.15,6.88):
-            t=(z-.38)/6.80;px=x+(xx-x)*t;py=y+(yy-y)*t
-            bracket(g,px,py,z,.39)
-        if (x,y)==(2.95,2.60):
-            # The front-left leg keeps its low collar with nuts: a head
-            # blocks and covers roof cell (3,1,0) in the registered
-            # connection faces (outputs/connection-faces).
-            t=(1.65-.38)/6.80
-            nutted_bracket(g,x+(xx-x)*t,y+(yy-y)*t,1.65,.39)
-    for z in (3.10,5.10,7.10):
-        t=(z-.38)/6.80
-        pts=[(x+(xx-x)*t,y+(yy-y)*t,z) for (x,y),(xx,yy) in zip(feet,heads)]
-        for a,b in ((0,1),(2,3),(0,2),(1,3)):heavy_beam(g,pts[a],pts[b],.24,plates=False)
-    # The front hoist bay stays open from collar to pulley.
-    for x in (3.35,6.65):
-        heavy_beam(g,(x,3.05,3.23),(x,6.45,5.02),.20)
-        heavy_beam(g,(x+.22,6.45,3.23),(x+.22,3.05,5.02),.20)
-    heavy_beam(g,(3.28,6.51,1.15),(6.50,6.25,4.92),.21)
-    heavy_beam(g,(6.72,6.51,1.15),(3.50,6.25,4.92),.21)
-    for y in (3.58,6.20):
-        heavy_beam(g,(3.40,y,7.18),(6.60,y,7.18),.34)
-    for x in (3.67,6.33):
-        heavy_beam(g,(x,3.38,7.15),(x,6.48,7.15),.32)
-    # Bearing gantry above the open bucket path.
-    for x in (4.48,5.72):
-        heavy_beam(g,(x,4.18,7.20),(x,4.18,8.10),.21)
-    heavy_beam(g,(4.25,4.18,8.14),(5.95,4.18,8.14),.28)
+    """Four timber posts round the collar, a head frame carrying the sheave,
+    mid ties on the closed sides and short knee braces; the east side stays
+    open for the tipping bucket."""
+    top=HEAD_Z+.08
+    for x in POSTS_X:
+        for y in POSTS_Y:
+            open_box(g,(x,y,PLINTH_TOP+.03),(.40,.40,.06),IRON,('-z',))
+            heavy_beam(g,(x,y,PLINTH_TOP),(x,y,top),.26,plates=False)
+            for z in (2.10,3.70):g.box((x,y,z),(.31,.31,.12),IRON)
+    # The head beams run 3 cm past the posts' outer faces.
+    for y in POSTS_Y:heavy_beam(g,(POSTS_X[0]-.16,y,HEAD_Z),(POSTS_X[1]+.16,y,HEAD_Z),.24,plates=False)
+    for x in POSTS_X:heavy_beam(g,(x,POSTS_Y[0]+.12,HEAD_Z),(x,POSTS_Y[1]-.12,HEAD_Z),.24,plates=False)
+    # Mid ties: front, rear and west at 2.6; east low at 1.9, under the receiver.
+    for y in POSTS_Y:heavy_beam(g,(POSTS_X[0]+.13,y,2.60),(POSTS_X[1]-.13,y,2.60),.18,plates=False)
+    heavy_beam(g,(POSTS_X[0],POSTS_Y[0]+.13,2.60),(POSTS_X[0],POSTS_Y[1]-.13,2.60),.18,plates=False)
+    heavy_beam(g,(POSTS_X[1],POSTS_Y[0]+.13,1.90),(POSTS_X[1],POSTS_Y[1]-.13,1.90),.18,plates=False)
+    # Knee braces under the head frame on the west and rear faces.
+    for y,sign in ((POSTS_Y[0],1),(POSTS_Y[1],-1)):
+        g.beam((POSTS_X[0],y+sign*.10,3.55),(POSTS_X[0],y+sign*.55,HEAD_Z-.10),.11,mat=WOOD)
+    for x,sign in ((POSTS_X[0],1),(POSTS_X[1],-1)):
+        g.beam((x+sign*.10,POSTS_Y[1],3.55),(x+sign*.55,POSTS_Y[1],HEAD_Z-.10),.11,mat=WOOD)
+    # Sheave carriers on the head frame, with the sheave bearings.
+    for x in (4.85,5.35):
+        g.box((x,(POSTS_Y[0]+POSTS_Y[1])/2,HEAD_Z+.19),(.14,POSTS_Y[1]-POSTS_Y[0]+.12,.14),WOOD)
+        g.box((x,4.49,ROPE_TOP-.05),(.18,.26,.16),IRON)
+    prism(g,(5.10,4.49,ROPE_TOP),.06,.54,CRUSHER_STEEL,'X',8)
+    # Timber guides for the carriage, from the shaft floor to the head.
+    for x in GUIDES_X:
+        g.box((x,GUIDE_Y,(.15+HEAD_Z-.12)/2),(.105,.14,HEAD_Z-.12-.15),WOOD)
+        for z in (1.70,2.90):g.box((x,GUIDE_Y,z),(.17,.20,.10),IRON)
+    # Iron straps from the guides back to the rear mid tie.
+    for x in GUIDES_X:
+        g.box((x,4.93,2.60),(.10,.12,.10),IRON)
+    for x,y in ((POSTS_X[0],POSTS_Y[0]-.13),(POSTS_X[1],POSTS_Y[0]-.13)):
+        cage_lamp(g,x,y,2.35)
+    # Boarded shaft house: the west and rear faces closed to the rope slot,
+    # an upper band on the front; the east face stays open for the tipping
+    # bucket and the front below the band shows the collar.
+    def boards(axis,line,a,b,z0,z1):
+        count=max(2,round((b-a)/.17))
+        for j in range(count):
+            c=a+(j+.5)*(b-a)/count
+            p=(line,c,(z0+z1)/2) if axis=='Y' else (c,line,(z0+z1)/2)
+            size=(.07,(b-a)/count,z1-z0) if axis=='Y' else ((b-a)/count,.07,z1-z0)
+            skin_board(g,p,size,axis,j,count,PLANK,None)
+    boards('Y',POSTS_X[0],POSTS_Y[0]+.13,POSTS_Y[1]-.13,PLINTH_TOP+.12,HEAD_Z-.12)
+    boards('X',POSTS_Y[1],POSTS_X[0]+.13,POSTS_X[1]-.13,PLINTH_TOP+.12,3.40)
+    boards('X',POSTS_Y[0],POSTS_X[0]+.13,POSTS_X[1]-.13,2.72,HEAD_Z-.12)
 
 
-def ladder_mesh(g,x,y,bottom,top,handhold=.44):
-    # Two continuous stiles, bolted round rungs, anti-slip tread sleeves and
-    # handholds above each exit. Designed for a reserved vertical access bay.
-    # 12k cap: each rung is one six-sided timber rod (no iron core, brass end
-    # caps or clamp nuts), the old tread sleeve's section: its edge covers
-    # roof cell (2,6,0) in the registered connection faces.
-    for xx in (x-.29,x+.29):
-        g.box((xx,y,(bottom+top+handhold)/2),(.09,.10,top-bottom+handhold),WOOD)
-        for z in (bottom+.10,top-.10):
-            g.box((xx,y+.08,z),(.16,.24,.10),IRON)
-    count=round((top-bottom)/.20)
-    if abs(count*.20-(top-bottom))>1e-6:raise ValueError('Ladder rise must be an exact multiple of rung spacing')
-    for i in range(count):
-        z=bottom+.16+i*.20
-        prism(g,(x,y-.025,z),.034,.65,WOOD,'X',6,(False,False),phase=0)
+def wheel(g,p,r,axis,segments=16):
+    band(g,p,r,.09,.16,IRON,axis,segments)
+    prism(g,p,.13,.26,IRON,axis,8)
+    for i in range(6):
+        a=i*math.tau/6
+        q=(p[0],p[1]+math.cos(a)*(r-.04),p[2]+math.sin(a)*(r-.04)) if axis=='X' else (p[0]+math.cos(a)*(r-.04),p[1],p[2]+math.sin(a)*(r-.04))
+        s=(p[0],p[1]+math.cos(a)*.12,p[2]+math.sin(a)*.12) if axis=='X' else (p[0]+math.cos(a)*.12,p[1],p[2]+math.sin(a)*.12)
+        open_beam(g,s,q,.082,.065,IRON,end=False)
 
 
-def access_tower(g,parts):
-    # The maintenance ladder mast is beside the headframe, never inside its
-    # moving bucket. Galleries and balconies are removed; one narrow,
-    # rail-free hatch frame at the top serves the head gear.
-    # The rear posts, collars and landing end on the plinth's rear face
-    # (artwork y 8, the footprint edge since 2026-10-22). The posts stand
-    # beside the ladder opening (x 2.12..2.88), so its clearance is unchanged.
-    for x in (1.98,3.12):
-        for y,base in ((6.88,6.88),(7.88,7.80)):
-            footing(g,x,base,.36);timber_column(g,x,y,.36,7.12,.17)
-    top=ACCESS['serviceLanding']
-    platform(g,1.90,6.80,3.35,7.12,top)
-    platform(g,1.90,7.88,3.35,7.995,top)
-    platform(g,1.90,7.12,2.12,7.88,top)
-    platform(g,2.88,7.12,3.35,7.88,top)
-    for level in (3.0,5.0,7.0):
-        # Ring frames tie the mast posts at each flight joint.
-        for yy in (6.85,7.88):g.box((2.62,yy,level-.35),(1.60,.13,.22),WOOD)
-    for i,(bottom,top) in enumerate(ACCESS['ladderFlights']):
-        node=Geometry(ACCESS['ladderNodes'][i]);ladder_mesh(node,2.5,7.68,bottom,top,handhold=.44 if top==7 else 0)
-        parts.append((node,'STATIC',0))
+def winding_house(g):
+    """Flat-roofed winding house on the plinth's rear (artwork x 3..7,
+    y 5.6..7): closed sides and back, open toward the headframe so the rope
+    leaves the drum under the roof's front edge."""
+    x0,x1,y0,y1=3.0,7.0,5.60,7.0
+    top=2.85
+    for x in (x0+.08,x1-.08):
+        for y in (y0+.08,y1-.08):g.box((x,y,(PLINTH_TOP+top-.12)/2),(.16,.16,top-.12-PLINTH_TOP),WOOD)
+    # Open front: the walls keep their inner faces.
+    count=8
+    for x in (x0+.0775,x1-.0775):
+        for j in range(count):
+            y=y0+.16+(j+.5)*(y1-y0-.32)/count
+            skin_board(g,(x,y,(PLINTH_TOP+top-.12)/2),(.075,(y1-y0-.32)/count,top-.12-PLINTH_TOP),'Y',j,count,PLANK,None)
+    # The back wall stands 0.10 inside the y=7 edge so its window casings
+    # stay inside the footprint.
+    wall(g,x0+.16,y1-.135,x1-.16,top-.12,PLINTH_TOP)
+    window_y(g,4.20,y1-.10,1.95,.8,'back')
+    window_y(g,5.80,y1-.10,1.95,.8,'back')
+    side_window(g,x1-.04,6.30,1.95,.8,'right')
+    g.box(((x0+x1)/2,y0+.08,top-.20),(x1-x0-.32,.16,.16),WOOD)
+    flat_roof(g,x0,y0,x1,y1,top,731)
+    cage_lamp(g,3.60,y0+.0,2.45)
+    # The engine: housing and flywheel on the east side of the drum.
+    g.box((6.20,6.62,1.35),(.44,.44,.70),CIVIC_FORGED_PANEL)
+    for z in (1.20,1.45):prism(g,(6.20,6.385,z),.05,.03,BRASS,'Y',8,(True,False))
 
 
-def room(g,x0,y0,x1,y1,top,seed,door_side):
-    from opaque_shell_geometry import lean_roof_curb
-    for x in (x0,x1):
-        for y in (y0,y1):
-            # Front door bays have a header above the one-tile wall insert,
-            # not a full post running through that entrance.
-            over_door=y==y0 and x==(x0 if door_side=='left' else x1)
-            timber_column(g,x,y,2.0 if over_door else 1.0,top,.22,top_collar_only=True)
-            if (x,y)==(1.92,4.30):
-                # Its foot collar keeps its nuts: their heads keep cell
-                # (1,3,1)'s Right face out of the registered connection faces.
-                nutted_bracket(g,x,y,1.0+.115,.22)
-    wall(g,x0,y1,x1,top-.08,1.04)
-    # Opaque side cladding behind the native window assemblies. The old
-    # full-width window band was wider than those assemblies and leaked sky.
-    for x in (x0,x1):
-        count=math.ceil((y1-y0)/.17)
-        for i in range(count):
-            y=y0+(i+.5)*(y1-y0)/count
-            # Inner faces kept: the connection-face registration samples them.
-            skin_board(g,(x,y,(top-.12+1.04)/2),(.07,(y1-y0)/count,top-.12-1.04),'Y',i,count,PLANK,None)
-        side_window(g,x+(-.035 if x==x0 else .035),(y0+y1)/2,2.15,1,'left' if x==x0 else 'right')
-        for z in (1.15,top-.15):g.box((x,(y0+y1)/2,z),(.13,y1-y0-.04,.12),WOOD)
-        for yy in (y0+.12,y1-.43):
-            g.beam((x-.05,yy,1.12),(x-.05,yy+.21,1.54),.070,mat=WOOD)
-    heavy_beam(g,(x0,y0,top-.10),(x1,y0,top-.10),.16)
-    lean_roof_curb(g,x0,y0,x1,y1,top-.12,top-.12,y0-.23,y1+.20,top+.12,top+.49,.0225)
-    sheet_roof(g,x0-.18,y0-.23,x1+.18,y1+.20,top+.12,top+.49,seed)
+def machinery(g,parts):
+    # Winding drum with helical rope turns, stone-seated bearings.
+    cx,cy,cz=DRUM
+    p=DRUM;m=Geometry('Quarry.HoistDrum',p)
+    prism(m,p,.43,1.64,IRON,'X',16)
+    for dx in (-.87,.87):prism(m,(cx+dx,cy,cz),.57,.11,IRON,'X',16)
+    for i in range(10):
+        x=cx-.7565+i*.155;prism(m,(x,cy,cz),DRUM_R,.125,WOOD,'X',8,(False,False))
+    for dx in (-1.08,1.08):prism(m,(cx+dx,cy,cz),.13,.43,CRUSHER_STEEL,'X',6)
+    wheel(m,(cx-1.20,cy,cz),.54,'X')
+    parts.append((m,'HOIST_DRUM',1.0))
+    for dx in (-1.01,1.01):
+        x=cx+dx
+        open_box(g,(x,cy,(PLINTH_TOP+1.245)/2),(.34,.58,1.245-PLINTH_TOP),KILN_STONE,('-z',))
+        g.box((x,cy,1.34),(.38,.67,.19),WOOD)
+        prism(g,(x,cy,cz),.18,.23,IRON,'X',8)
+    # Head sheave over the shaft.
+    p=(HOIST_X,4.49,ROPE_TOP);m=Geometry('Quarry.HeadSheave',p)
+    wheel(m,p,SHEAVE_R,'X',12);parts.append((m,'HOIST_SHEAVE',1.0))
+    # Static rope run from the drum's top to the sheave's rear.
+    round_pipe(g,[(HOIST_X,cy-.10,cz+DRUM_R-.01),(HOIST_X,4.49+SHEAVE_R-.01,ROPE_TOP+.03)],.019)
+    # Carriage: yoke on the guides, bucket hinged on its east side.
+    p=(HOIST_X,HOIST_Y,BUCKET_BASE);carrier=Geometry('Quarry.LiftCarriage',p)
+    yoke_y=4.68
+    for xx in GUIDES_X:
+        carrier.box((xx,GUIDE_Y,BUCKET_BASE+.52),(.21,.24,.14),IRON)
+        carrier.beam((xx,yoke_y,BUCKET_BASE+.20),(xx,yoke_y,BUCKET_TOP),.075,mat=IRON)
+    carrier.beam((GUIDES_X[0],yoke_y,BUCKET_TOP),(GUIDES_X[1],yoke_y,BUCKET_TOP),.065,mat=IRON)
+    carrier.beam((HOIST_X,yoke_y-.0375,BUCKET_TOP),(HOIST_X,HOIST_Y,BUCKET_TOP),.075,mat=IRON)
+    band(carrier,(HOIST_X,HOIST_Y,BUCKET_TOP),.075,.020,.045,IRON,'Y',8,inner=True)
+    hinge=(HOIST_X+.46,HOIST_Y,BUCKET_BASE+.58)
+    for yy in (HOIST_Y-.47,HOIST_Y+.47):
+        prism(carrier,(hinge[0],yy,hinge[2]),.06,.10,BRASS,'Y',8)
+    carrier.beam((GUIDES_X[1],yoke_y,BUCKET_BASE+.50),(hinge[0],HOIST_Y+.52,hinge[2]),.055,mat=IRON)
+    parts.append((carrier,'HOIST_LIFT',1.0))
+    bucket=Geometry('Quarry.TippingBucket',hinge);bin(bucket,p,(.92,.86,BUCKET_H),None)
+    parts.append((bucket,'HOIST_TIP',1.0))
+    load=Geometry('Quarry.BucketLoad',hinge);rng=random.Random(848)
+    for i in range(5):
+        rock(load,(HOIST_X+rng.uniform(-.30,.30),HOIST_Y+rng.uniform(-.28,.28),BUCKET_BASE+BUCKET_H-.12),(.20,.17,.15),SAND,84800+i)
+    parts.append((load,'HOIST_LOAD',1.0))
+    rope=Geometry('Quarry.LiftCable',(HOIST_X,HOIST_Y,ROPE_TOP))
+    prism(rope,(HOIST_X,HOIST_Y,(ROPE_TOP+BUCKET_TOP)/2),.022,ROPE_TOP-BUCKET_TOP,WOOD,'Z',6)
+    parts.append((rope,'HOIST_CABLE',1.0))
+    # Drive train: belt and screen drives at the east edge, engine flywheel
+    # in the winding house.
+    for name,p,r,turns in (
+        ('Quarry.InputFlywheel',(7.86,4.05,1.70),.40,4),
+        ('Quarry.SortingDrive',(7.86,2.95,1.40),.22,-6),
+        ('Quarry.EngineFlywheel',(6.55,6.10,1.68),.42,4)):
+        m=Geometry(name,p);wheel(m,p,r,'X',16 if r>.3 else 12);parts.append((m,'X',turns))
+    for y,z in ((4.05,1.70),(2.95,1.40)):
+        open_box(g,(7.86,y,(PLINTH_TOP+z-.18)/2),(.20,.30,z-.18-PLINTH_TOP),WOOD,('-z',))
+        prism(g,(7.86,y,z),.15,.24,IRON,'X',8)
 
 
-def workshops(g):
-    room(g,.35,4.30,1.92,6.56,3.25,710,'left')
-    room(g,7.44,5.10,9.25,7.52,3.10,711,'right')
-    for x in (.52,1.74):cage_lamp(g,x,4.31,2.87)
-    # Exterior regulator cabinet; enclosed room interiors are not modeled.
-    g.box((7.65,5.27,2.15),(.29,.18,.50),IRON)
-    for z in (2.03,2.27):
-        prism(g,(7.65,5.16,z),.082,.03,BRASS,'Y',8,(True,False))
-        prism(g,(7.65,5.14,z),.064,.012,KILN_WOOD_WEAR,'Y',8,(True,False))
-        g.beam((7.65,5.13,z),(7.68,5.13,z+.041),.009,mat=IRON)
-    cage_lamp(g,9.20,5.06,2.72)
-    # Lower operator cabin in front of the plinth. Its door is centred on grid
-    # tile column 1 with the face 0.14 behind the grid y=2 edge (artwork y=1).
+def sorting(g,parts):
+    x,y,z=BIN
+    bin(g,(x,y,z),(1.30,.90,.42),SAND,738)
+    # Suspended vibrating screen between the belt foot and the discharge.
+    p=(7.30,2.80,1.35);m=Geometry('Quarry.SortingSieve',p)
+    for xx in (6.88,7.72):m.beam((xx,3.20,1.45),(xx,2.45,1.25),.06,.07,IRON)
+    for i in range(9):
+        yy=2.48+i*.085;zz=1.25+(yy-2.45)*.20/.75
+        m.beam((6.89,yy,zz),(7.71,yy,zz),.023,mat=IRON)
+    parts.append((m,'SIEVE',.020))
+    for xx in (6.88,7.72):
+        for yy,zz in ((2.47,1.25),(3.18,1.45)):
+            prism(g,(xx,yy,(PLINTH_TOP+zz-.04)/2),.04,zz-.04-PLINTH_TOP,IRON,'Z',6)
+
+
+def cabin(g):
+    # Ground operator cabin in front of the plinth. Its door is centred on grid
+    # tile column 1 with the face 0.14 behind the grid y=0 edge (artwork y=1).
     cx,front=CABIN_X,CABIN_FRONT
     x0,x1=cx-.595,cx+.595
     for x in (x0-.02,x1+.03):timber_column(g,x,front+.07,QUARRY_ENTRANCE,1.34,.16)
@@ -237,8 +285,6 @@ def workshops(g):
         facade_panel(g,'Y',front,lo,hi,QUARRY_ENTRANCE,1.26,False,PLANK)
     wall(g,cx-.50,front,cx+.50,1.26,QUARRY_ENTRANCE+1.0)
     g.include_component(door_recipe('MineralQuarry','Door.GroundDoor'))
-    # The ground cabin has opaque side walls, rather than a door between
-    # four posts with unobstructed views straight through the workshop.
     def cabin_top(y):return 1.30+(1.57-1.30)*(y-(front-.07))/(2.12-(front-.07))-.0225
     for x,positive in ((x0,False),(x1,True)):
         g.add([(x,front,QUARRY_ENTRANCE),(x,2.055,QUARRY_ENTRANCE),
@@ -246,135 +292,62 @@ def workshops(g):
               [(0,1,2,3) if positive else (3,2,1,0)],PLANK)
     facade_panel(g,'Y',front,x0,x1,1.26,cabin_top(front),False,PLANK)
     facade_panel(g,'Y',2.055,x0,x1,1.35,cabin_top(2.055),True,PLANK)
-    # Same pitch as before, raised 4 cm to keep a header above the door wall.
     sheet_roof(g,x0-.14,front-.07,x1+.13,2.12,1.30,1.57,712)
     cage_lamp(g,x1-.03,front+.02,.94)
     g.box((cx,1.075,QUARRY_ENTRANCE-.045),(.75,.15,.15),WOOD)
 
 
-def wheel(g,p,r,axis,segments=16):
-    # 12k cap: one 16-sided rim (12 on the small sheave and drive; the inner
-    # brass ring went), six spokes.
-    band(g,p,r,.09,.16,IRON,axis,segments)
-    prism(g,p,.13,.26,IRON,axis,8)
-    for i in range(6):
-        a=i*math.tau/6
-        q=(p[0],p[1]+math.cos(a)*(r-.04),p[2]+math.sin(a)*(r-.04)) if axis=='X' else (p[0]+math.cos(a)*(r-.04),p[1],p[2]+math.sin(a)*(r-.04))
-        s=(p[0],p[1]+math.cos(a)*.12,p[2]+math.sin(a)*.12) if axis=='X' else (p[0]+math.cos(a)*.12,p[1],p[2]+math.sin(a)*.12)
-        open_beam(g,s,q,.082,.065,IRON,end=False)
+def tool_room(g):
+    """Flat-roofed tool room on the plinth's west side (artwork x 0..2,
+    y 2.3..5), one layer high: corner posts on the tile lines, plank skin
+    0.04 inside them."""
+    x0,x1,y0,y1=0.0,2.0,2.30,7.0
+    top=2.10
+    for x in (x0+.08,x1-.08):
+        for y in (y0+.08,y1-.08):g.box((x,y,(PLINTH_TOP+top-.12)/2),(.16,.16,top-.12-PLINTH_TOP),WOOD)
+    count=20
+    for x,inner in ((x0+.0775,'+x'),(x1-.0775,'-x')):
+        for j in range(count):
+            y=y0+.16+(j+.5)*(y1-y0-.32)/count
+            skin_board(g,(x,y,(PLINTH_TOP+top-.12)/2),(.075,(y1-y0-.32)/count,top-.12-PLINTH_TOP),'Y',j,count,PLANK,inner)
+    for y,inner in ((y0+.0775,'+y'),(y1-.0775,'-y')):
+        count=8
+        for j in range(count):
+            x=x0+.16+(j+.5)*(x1-x0-.32)/count
+            skin_board(g,(x,y,(PLINTH_TOP+top-.12)/2),((x1-x0-.32)/count,.075,top-.12-PLINTH_TOP),'X',j,count,PLANK,inner)
+    # Two sheet runs (a single 4.5-long run stretches the native sheet
+    # strips); the rear run steps up 4 cm, its eave 2 cm behind the front's.
+    sheet_roof(g,x0+.11,y0+.11,x1-.11,4.64,top,top,732)
+    sheet_roof(g,x0+.13,4.66,x1-.13,y1-.11,top+.04,top+.04,733)
+    # Front and east windows only: a west or rear casing would stand outside
+    # the footprint edge.
+    for x in (.62,1.38):window_y(g,x,y0+.04,1.40,.70)
+    for y in (3.60,5.70):side_window(g,x1-.04,y,1.40,.80,'right')
+    cage_lamp(g,1.65,y0+.04,1.85)
 
 
-def machinery(g,parts):
-    # Main hoisting drum with many actual helical rope windings.
-    p=(4.99,5.62,7.54);m=Geometry('Quarry.HoistDrum',p)
-    prism(m,p,.43,1.64,IRON,'X',16)
-    for x in (4.12,5.86):prism(m,(x,5.62,7.54),.57,.11,IRON,'X',16)
-    # Each rope turn is its outer surface; between turns the core shows as the
-    # groove. (12k cap: 10 broad 8-sided turns; were 42.)
-    for i in range(10):
-        x=4.2335+i*.155;prism(m,(x,5.62,7.54),.467,.125,WOOD,'X',8,(False,False))
-    # Six-sided stubs: the wheel hub is an 8-sided prism of the same radius.
-    for x in (3.91,6.07):prism(m,(x,5.62,7.54),.13,.43,CRUSHER_STEEL,'X',6)
-    wheel(m,(3.79,5.62,7.54),.54,'X')
-    parts.append((m,'HOIST_DRUM',1.0))
-    for x in (3.99,6.01):
-        g.box((x,5.62,7.26),(.38,.67,.19),WOOD)
-        prism(g,(x,5.62,7.54),.18,.23,IRON,'X',8)
-        band(g,(x-.14,5.62,7.54),.18,.035,.045,BRASS,'X',8,inner=True)
-    # Sheave guides the moving lift cable down the open shaft.
-    p=(HOIST_X,4.49,ROPE_TOP);m=Geometry('Quarry.HeadSheave',p)
-    wheel(m,p,.31,'X',12);parts.append((m,'HOIST_SHEAVE',1.0))
-    round_pipe(g,[(HOIST_X,5.15,7.54),(HOIST_X,4.72,8.16)],.019)
-    p=(HOIST_X,HOIST_Y,BUCKET_BASE);carrier=Geometry('Quarry.LiftCarriage',p)
-    # A rear yoke keeps guides and cable separate from the tipping container.
-    for xx in (4.32,5.88):
-        carrier.box((xx,4.95,BUCKET_BASE+.52),(.21,.24,.14),IRON)
-        carrier.beam((xx,4.95,BUCKET_BASE+.20),(xx,4.95,BUCKET_TOP),.075,mat=IRON)
-    carrier.beam((4.32,4.95,BUCKET_TOP),(5.88,4.95,BUCKET_TOP),.075,mat=IRON)
-    # Butts against the cross beam's face rather than overlapping its top.
-    carrier.beam((HOIST_X,4.9125,BUCKET_TOP),(HOIST_X,HOIST_Y,BUCKET_TOP),.075,mat=IRON)
-    band(carrier,(HOIST_X,HOIST_Y,BUCKET_TOP),.075,.020,.045,IRON,'Y',8,inner=True)
-    # Bucket hinge and trunnions attach to the rear yoke. They do not rotate the cable.
-    hinge=(HOIST_X+.59,HOIST_Y,BUCKET_BASE+.76)
-    for yy in (HOIST_Y-.61,HOIST_Y+.61):
-        prism(carrier,(hinge[0],yy,hinge[2]),.07,.13,BRASS,'Y',8)
-    carrier.beam((5.88,4.95,BUCKET_BASE+.70),(hinge[0],4.79,hinge[2]),.065,mat=IRON)
-    parts.append((carrier,'HOIST_LIFT',1.0))
-    bucket=Geometry('Quarry.TippingBucket',hinge);bin(bucket,p,(1.18,1.12,.76),None)
-    parts.append((bucket,'HOIST_TIP',1.0))
-    load=Geometry('Quarry.BucketLoad',hinge);rng=random.Random(848)
-    for i in range(6):
-        rock(load,(HOIST_X+rng.uniform(-.40,.40),HOIST_Y+rng.uniform(-.36,.36),BUCKET_BASE+.60),(.23,.20,.18),SAND,84800+i)
-    parts.append((load,'HOIST_LOAD',1.0))
-    rope=Geometry('Quarry.LiftCable',(HOIST_X,HOIST_Y,ROPE_TOP))
-    prism(rope,(HOIST_X,HOIST_Y,(ROPE_TOP+BUCKET_TOP)/2),.022,ROPE_TOP-BUCKET_TOP,WOOD,'Z',6)
-    parts.append((rope,'HOIST_CABLE',1.0))
-    # Low-level power train beneath the sorting deck and the covered engine.
-    for name,p,r,axis,turns in (
-        ('Quarry.InputFlywheel',(9.70,3.60,1.64),.62,'X',4),
-        ('Quarry.SortingDrive',(7.52,3.60,1.64),.27,'X',-6),
-        ('Quarry.EngineFlywheel',(9.45,6.30,2.00),.53,'X',4)):
-        m=Geometry(name,p);wheel(m,p,r,axis,16 if r>.4 else 12);parts.append((m,axis,turns))
-    prism(g,(8.54,3.60,1.64),.105,2.65,IRON,'X',8)
-    for x in (7.53,9.34):
-        g.box((x,3.60,1.25),(.38,.55,.35),WOOD)
-        prism(g,(x,3.60,1.64),.18,.26,IRON,'X',8)
-
-
-def sorting(g,parts):
-    bin(g,(8.00,1.91,1.00),(2.42,1.48,.46),SAND,738)
-    # Deep slatted sorting tray, angled toward the separate finished-stone bin.
-    for i in range(11):
-        x=6.83+i*.2114;g.beam((x,3.80,1.83),(x,2.68,1.35),.12,.055,WOOD)
-    for x in (6.72,9.06):
-        g.beam((x,3.85,1.86),(x,2.66,1.37),.11,.21,IRON)
-    # Six separator fingers (12k cap; were eleven) fit inside the two outer tray beams.
-    for i in range(6):
-        x=6.92+i*.36;g.box((x,3.30,1.78),(.10,.04,.24),IRON)
-    # Suspended sieve frame has a restrained, physically connected shake.
-    p=(7.90,3.20,1.61);m=Geometry('Quarry.SortingSieve',p)
-    for x in (6.88,8.92):m.beam((x,3.73,1.92),(x,2.79,1.52),.06,.07,IRON)
-    # Sparser screen bars (12k cap: 12, were 18 at 5.4 cm).
-    for i in range(12):
-        y=2.80+i*.0818;z=1.52+(y-2.80)*.40/.94
-        m.beam((6.89,y,z),(8.91,y,z),.023,mat=IRON)
-    parts.append((m,'SIEVE',.020))
-    for x in (6.89,8.92):
-        for y,z in ((2.81,1.56),(3.71,1.94)):
-            prism(g,(x,y,z-.11),.046,.19,IRON,'Z',6)
-
-
-def water_and_supplies(g):
-    # Closed pump circuit and valved fill port; no decorative infinite discharge.
+def supplies(g):
+    # Native water tank on the ground in front of the plinth, its supply pipe
+    # up the plinth face to the collar; covered supply bins on the rear plinth.
     from native_building_assets import water_barrel
-    water_barrel(g,'QuarryWaterBarrel',(.94,2.80,1.03),.62)
-    round_pipe(g,[(.94,2.80,1.1),(.94,2.57,1.1),(.12,2.57,1.1),(.12,2.57,.58)],.095)
-    for x in (.18,.65):
-        prism(g,(x,2.57,1.10),.15,.055,IRON,'X',8)
-    band(g,(.38,2.57,1.45),.15,.027,.04,IRON,'Z',8,inner=True)
-    for i in range(4):
-        a=i*math.pi/2;g.beam((.38,2.57,1.45),(.38+math.cos(a)*.13,2.57+math.sin(a)*.13,1.45),.025,mat=BRASS)
-    prism(g,(.38,2.57,1.29),.025,.31,IRON,'Z',6)
-    # Covered supply bins on the plinth beside the ladder mast. (2026-10-22:
-    # the bin hanging over the rear plinth edge, and the spare sheave and
-    # timber stack left buried in the plinth, were removed.)
-    for x,y,w,d in ((.95,7.12,.63,.55),(1.65,7.13,.55,.55)):
-        bin(g,(x,y,1.03),(w,d,.48),None)
-        for i in range(4):g.box((x,y-d*.35+i*d*.23,1.555),(w,.11,.055),PLANK)
-    for x in (3.07,6.93):
-        cage_lamp(g,x,2.46,2.68)
-        g.box((x,2.48,2.17),(.25,.09,.28),IRON)
-    cage_lamp(g,3.13,7.88,6.55)
+    water_barrel(g,'QuarryWaterBarrel',(.45,1.55,0),.55)
+    round_pipe(g,[(.45,1.86,.52),(.45,2.00,.52),(.45,2.00,1.10),(.45,2.18,1.10),(4.00,2.18,1.10),
+                  (4.00,3.68,1.10),(4.30,3.68,1.10),(4.30,3.68,.70)],.06)
+    band(g,(2.40,2.18,1.10),.10,.03,.08,BRASS,'X',8)
+    gauge(g,3.20,2.08,1.32,.09)
+    g.box((3.20,2.16,1.21),(.20,.10,.22),IRON)
+    # Covered supply bins and a spoil heap on the plinth's front strip.
+    for x,w in ((2.62,.60),(3.30,.58)):
+        bin(g,(x,1.52,PLINTH_TOP+.02),(w,.62,.42),None)
+        for i in range(3):g.box((x,1.52-.62*.30+i*.62*.30,PLINTH_TOP+.475),(w,.12,.05),PLANK)
+    rock_heap(g,4.10,1.20,5.70,1.90,PLINTH_TOP,SAND,905,8,(.16,.26))
 
 
 def quarry(g,parts):
-    # No walkways or balconies: the rail assembly stays empty. (The 7 mm roof
-    # scratches, 8 mm dust flecks and 1.2 cm polished rung strips of the old
-    # wear() were sub-pixel at game zoom; removed 2026-10-29.)
+    # No walkways or balconies: the rail assembly stays empty.
     rails=RailAssembly('WalkwayRail')
-    foundation(g);headframe(g);access_tower(g,parts)
-    workshops(g);machinery(g,parts);sorting(g,parts);water_and_supplies(g)
-    material_flow(g,parts);enclosed_rooms(g)
+    foundation(g);headframe(g);winding_house(g);machinery(g,parts)
+    sorting(g,parts);material_flow(g,parts);cabin(g);tool_room(g);supplies(g)
     return rails
 
 
@@ -391,7 +364,7 @@ def animate_hoist(obj,kind,frame_end):
         elif kind=='HOIST_CABLE':
             obj.scale.z=(length-lift)/length;obj.keyframe_insert(data_path='scale',frame=frame)
         elif kind in ('HOIST_DRUM','HOIST_SHEAVE'):
-            radius={'HOIST_DRUM':.467,'HOIST_SHEAVE':.31}[kind]
+            radius={'HOIST_DRUM':DRUM_R,'HOIST_SHEAVE':SHEAVE_R}[kind]
             obj.rotation_mode='QUATERNION';obj.rotation_quaternion=Quaternion((-1,0,0),lift/radius)
             obj.keyframe_insert(data_path='rotation_quaternion',frame=frame)
         elif kind in ('HOIST_TIP','HOIST_LOAD'):

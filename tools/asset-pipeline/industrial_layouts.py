@@ -71,9 +71,10 @@ ground_door(C,(1.50,.10,0),(0,-1))
 K=layout([0,1,0],[5,3,4],[3,-1,0],[[3.50,-.94,0]],deck_mode='None')
 ground_door(K,(3.50,.14,0),(0,-1))
 
-# Quarry artwork = native grid + (0,1). The workshop and control-room doors on
-# the stone plinth are facade details; only the ground cabin door is used.
-Q=layout([0,-1,0],[11,7,9],[1,-1,0],[[1.50,1.06,0]],deck_mode='None')
+# Quarry artwork = native grid + (0,1). Compact 8x6x5 (2026-10-30): the old
+# 11x7x9 origin, entrance, door and 5x5 seam cells (grid x 3..7, y 1..5) are
+# kept; the ground cabin door is the only door.
+Q=layout([0,-1,0],[8,6,5],[1,-1,0],[[1.50,1.06,0]],deck_mode='None')
 ground_door(Q,(1.50,.14,0),(0,-1))
 
 # Native entrance = the path cell in front of the door (vanilla convention);
