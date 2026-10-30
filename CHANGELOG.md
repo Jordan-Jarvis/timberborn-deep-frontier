@@ -41,6 +41,7 @@
   - Roof flues and stacks are gone from the Restaurant, Hospital, Fishery Works, Grocery and Materials Laboratory (the Restaurant and Laboratory no longer make smog). The Deep Drill, Deep Mine and Archive chimneys rise up their walls.
   - The Stone Crusher, Concrete Mixer, both pits and the Fish Hatchery no longer show concrete: stone flagstones and coursed masonry, timber and steel instead.
 - **Fishery Works galleries, Materials Laboratory terrace and Reinforced Hydro Turbine terrace are player-path decks:** every flat roof tile on them can carry paths, platforms and buildings, like the Restaurant and Hospital balconies. Lay paths over them to reach the upper doors; their rails open where your paths cross.
+- **Deep Mine:** the ore bin's top no longer shows see-through gaps between the ore lumps.
 
 ### Smaller late-game buildings (compaction pass: power, nuclear, rocketry)
 

@@ -202,8 +202,12 @@ def ore_bin(g, parts):
         bx(g, core[0] - .02, core[1] + .1, core[2] - .1, core[2] - .06, z - .06, z + .06, IRON)
         bx(g, core[0] - .02, core[1] + .1, core[3] + .06, core[3] + .1, z - .06, z + .06, IRON)
         bx(g, core[1] + .06, core[1] + .1, core[2] - .06, core[3] + .06, z - .04, z + .08, IRON)
+    # Ore lumps rest on the bin's top (their lowest ring 0.45 x 0.14 below the
+    # centre clears 3.0): sunk into it, the enclosed-face cull dropped the top
+    # face under them while camera rays still reached it between the lumps
+    # (audit_hidden_geometry culledFacesExposed, 2026-10-30).
     for i in range(6):
-        g.rock((6.25 + (i % 3) * .2, 1.6 + (i // 3) * .5, 3.04 + .01 * i), (.22, .2, .14), IRON, 70 + i)
+        g.rock((6.25 + (i % 3) * .2, 1.6 + (i // 3) * .5, 3.066 + .004 * i), (.22, .2, .14), IRON, 70 + i)
 
 
 # ------------------------------------------------------------------ lamp house and bath house

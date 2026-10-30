@@ -256,9 +256,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9059,
-   "vertices": 17453,
-   "construction": 9059,
+   "finished": 9088,
+   "vertices": 17502,
+   "construction": 9088,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepMine/DeepMine.IronTeeth.Model.timbermesh"
   },
   "DeepOreSource": {

@@ -4,6 +4,12 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Fix: Deep Mine ore bin top hidden-geometry hole (Claude Code session, 2026-10-30, roof-audit agent; scene, export and data promoted; validated in mirror `roofaudit`)
+
+- **Found by** the GPU visibility agent: `audit_hidden_geometry.py` reported 7 culled faces exposed on the Deep Mine, on both the CPU and the GPU path. They were the ore bin's top face (artwork x 6.3..6.6, y 1.5..1.7, z 3.0). The six ore lumps sank 2-3 cm into it, so the enclosed-face cull dropped the top under them while camera rays still reached it between the lumps.
+- **Fix** (`lategame_DeepMine.py` `ore_bin`): the lumps rest on the bin top (lowest ring above 3.0), so the top face stays. Audit: 0 of 297 culled faces exposed. Strict z-fight 0 visible at frames 1/31/61/91. Triangles 9,059 -> 9,088 (ceiling re-recorded). Scene unpacked.
+- **Checks (mirror):** canonical generation reaches a fixed point; 13 `validate_all -Only` checks pass (exports lategame/connection/preview_budget, model-bindings, entrances, connection faces, late-game freed cells, roof decks, flat_roof_platforms, smog, status icons, slice content, building assets); the triangle budget passes.
+
 ## Player-path decks on Fishery Works, Materials Laboratory and Reinforced Hydro Turbine: every flat roof tile placeable (Claude Code session, 2026-10-30, roof-audit agent; exports and data promoted; validated in mirror `roofaudit` on HEAD + this change; acceptance fixtures updated and compiled, not run; not built or run in game)
 
 - **Why:** the user wants every flat roof tile to be a placeable area. On these three buildings, 37 flat roof cells sat under BuiltInWalkways path cells ('Floor, Bottom, Path'): Fishery Works galleries and terrace 15, Materials Laboratory terrace 9, Turbine terrace lane 13. `flat_roof_platforms` now passes on every building: 68 templates, 899 flat roof cells, 893 platformable and 6 under solid geometry.
