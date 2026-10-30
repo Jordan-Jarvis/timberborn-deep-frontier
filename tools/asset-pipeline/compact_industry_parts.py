@@ -25,12 +25,18 @@ just a bunch of boring concrete"): flat roofs take roof_mat/curb_mat
 CONCRETE only sometimes); pitched and sawtooth roofs are authored by the
 buildings themselves in the native roof planks. No roof vents.
 
+Buildings unlocked before concrete exists (user, 2026-10-30: the visible
+materials must match the progression) build without it: storey_block's
+ground_mat puts a boarded timber ground storey on a timber sole plate
+(timber_podium), and stave_silo stands on a riveted steel drum.
+
 Native material slots only (lategame_kit.NATIVE_SLOTS); same-facing parallel
 surfaces are kept at least LAYER_GAP apart or buried in a solid.
 """
 from frontier_architecture import WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
-from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED
+from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYPLANK
+import math
 import lategame_civic_parts as C
 from lategame_civic_parts import blk
 
@@ -40,11 +46,22 @@ ROOF_T = .12       # roof slab thickness under its top
 EAVE = .06         # slab overhang beyond the storey core
 
 
-def flat_roof(g, x0, y0, x1, y1, top, *, overhang=EAVE, curb=True, mat=CONCRETE, curb_mat=CONCRETE):
+BOARD_FINISH = {PLANK: 'timber', GREYPLANK: 'greytimber', FORGED: 'forged', PAINTED: 'painted', IRON: 'steel'}
+
+
+def flat_roof(g, x0, y0, x1, y1, top, *, overhang=EAVE, curb=True, mat=CONCRETE, curb_mat=CONCRETE, boards=False):
     """Flat slab whose top face lies exactly at `top` (a whole layer), with a
-    low curb ring flush with the slab edge. Returns `top`."""
+    low curb ring flush with the slab edge. Returns `top`.
+
+    `boards=True` lays a plank or sheet `mat` as separate boards or sheets
+    (lategame_roofdeck_parts.deck_slab) on a slab of `curb_mat`, so the
+    native texture is not stretched over the whole roof."""
     xa, ya, xb, yb = x0 - overhang, y0 - overhang, x1 + overhang, y1 + overhang
-    blk(g, xa, ya, top - ROOF_T, xb, yb, top, mat)
+    if boards and mat in BOARD_FINISH:
+        from lategame_roofdeck_parts import deck_slab
+        deck_slab(g, xa, ya, xb, yb, top, BOARD_FINISH[mat], thickness=ROOF_T, base=curb_mat)
+    else:
+        blk(g, xa, ya, top - ROOF_T, xb, yb, top, mat)
     if curb:
         w = CURB_W
         blk(g, xa, ya, top, xb, ya + w, top + CURB, curb_mat)
@@ -56,7 +73,8 @@ def flat_roof(g, x0, y0, x1, y1, top, *, overhang=EAVE, curb=True, mat=CONCRETE,
 
 def storey_block(g, x0, y0, x1, y1, layers, *, infill=ORANGE, frame=WOOD, door=None, door_id='Door0',
                  ground_windows=None, windows=None, roof=True, curb=True, pitch=1.0, ground_skip=(),
-                 faces=('front', 'back', 'left', 'right'), roof_mat=CONCRETE, curb_mat=CONCRETE):
+                 faces=('front', 'back', 'left', 'right'), roof_mat=CONCRETE, curb_mat=CONCRETE,
+                 ground_mat=CONCRETE, roof_boards=False):
     """Concrete ground storey (0..1) plus `layers - 1` framed storeys of one
     layer each, floor bands on every whole layer, and a flat roof whose top is
     the whole layer `layers`.
@@ -71,7 +89,10 @@ def storey_block(g, x0, y0, x1, y1, layers, *, infill=ORANGE, frame=WOOD, door=N
     skip = list(ground_skip)
     if door is not None:
         skip.append((door - .5, door + .5))
-    C.podium(g, x0, y0, x1, y1, 1.0, skip=skip)
+    if ground_mat == CONCRETE:
+        C.podium(g, x0, y0, x1, y1, 1.0, skip=skip)
+    else:
+        timber_podium(g, x0, y0, x1, y1, 1.0, core=ground_mat, frame=frame, skip=skip)
     if door is not None:
         C.door(g, door, y0, 0, door_id)
     for face, items in (ground_windows or {}).items():
@@ -84,7 +105,9 @@ def storey_block(g, x0, y0, x1, y1, layers, *, infill=ORANGE, frame=WOOD, door=N
     top = 1.0
     if layers > 1:
         top = float(layers)
-        z1 = top - .03 if roof else top
+        # Under a board roof the frame top sinks into the deck's base slab,
+        # below the boards' bottom (deck_slab skin .03).
+        z1 = (top - .06 if roof_boards else top - .03) if roof else top
         C.framed_block(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, 1.0, z1, infill=infill, frame=frame,
                        pitch=pitch, faces=faces, floors=tuple(float(z) for z in range(2, layers)),
                        windows=windows)
@@ -92,7 +115,7 @@ def storey_block(g, x0, y0, x1, y1, layers, *, infill=ORANGE, frame=WOOD, door=N
         if layers > 1:
             # Over the framed core (inset .05) and past its proud frame (.055).
             flat_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, top, overhang=EAVE + .05,
-                      curb=curb, mat=roof_mat, curb_mat=curb_mat)
+                      curb=curb, mat=roof_mat, curb_mat=curb_mat, boards=roof_boards)
         elif curb:
             # The podium coping is the roof: add the curb on its edge.
             xa, ya, xb, yb = x0 - .05, y0 - .05, x1 + .05, y1 + .05
@@ -109,3 +132,42 @@ def roof_vent(g, x, y, top, *, h=.34, r=.16):
     g.cylinder((x, y, top + h / 2), r * .7, h, IRON, 'Z', 12)
     g.cylinder((x, y, top + h - .015), r, .03, BRASS, 'Z', 12)
     return top + h
+
+
+def timber_podium(g, x0, y0, x1, y1, top, *, core=GREYPLANK, frame=WOOD, foot=True, skip=(), base=0.0):
+    """C.podium's shape without concrete: a boarded core, a timber sole plate
+    as the foot, a timber head beam as the coping and timber posts at every
+    tile line. The walking surface is exactly z=top."""
+    blk(g, x0, y0, base, x1, y1, top - .03, core)
+    if foot:
+        blk(g, x0 - .03, y0 - .03, base - .03, x1 + .03, y1 + .03, base + .14, frame)
+    blk(g, x0 - .05, y0 - .05, top - .10, x1 + .05, y1 + .05, top, frame)
+    lo, hi = base + (.14 if foot else .02), top - .10
+    if hi - lo < .15:
+        return
+    for x in C._stations(x0, x1, 1.0):
+        for y, s in ((y0, -1), (y1, 1)):
+            if s < 0 and any(a - .08 < x < b + .08 for a, b in skip):
+                continue
+            blk(g, x - .05, min(y, y + s * .025), lo, x + .05, max(y, y + s * .025), hi, frame)
+    for y in C._stations(y0, y1, 1.0):
+        for x, s in ((x0, -1), (x1, 1)):
+            blk(g, min(x, x + s * .025), y - .05, lo, max(x, x + s * .025), y + .05, hi, frame)
+
+
+def stave_silo(g, x, y, z0, r, h, *, base_h=1.1, cone=.9, hoops=5, body=PLANK, drum=FORGED, footing=IRON,
+               segments=12):
+    """C.silo with its drum and footing in other materials (a riveted steel
+    drum on a steel footing ring where concrete is not yet available)."""
+    K.revolve(g, (x, y, z0), [(r + .07, 0), (r + .07, base_h)], drum, segments=segments)
+    K.revolve(g, (x, y, z0 - .03), [(r + .11, 0), (r + .11, .19)], footing, segments=segments, cap_top=True,
+              phase=math.pi / segments)
+    zb = z0 + base_h
+    K.revolve(g, (x, y, zb), [(r, 0), (r, h)], body, segments=segments, cap_bottom=False, cap_top=False)
+    for k in range(hoops):
+        z = zb + .35 + (h - .6) * k / max(1, hoops - 1)
+        K.band(g, (x, y, 0), r, z, .07, IRON, segments=segments)
+    top = zb + h
+    K.revolve(g, (x, y, top), [(r + .1, 0), (r + .1, .06), (.12, cone), (0, cone + .02)], ROOF, segments=segments)
+    K.band(g, (x, y, 0), r, top - .05, .1, FORGED, segments=segments, proud=.035)
+    return top + cone

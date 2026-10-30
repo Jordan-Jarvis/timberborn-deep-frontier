@@ -43,7 +43,6 @@
     {"template": "FisheryWorks.IronTeeth", "label": "Fishery Works, 40 cells north of the start", "x": 122, "y": 88, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "MaterialsLaboratory.IronTeeth", "label": "Materials Laboratory, 35 cells north of the start", "x": 137, "y": 82, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "FoodPackagingWorks.IronTeeth", "label": "Food Packaging Works, 33 cells east of the start", "x": 168, "y": 37, "z": 7, "orientation": "Cw270", "margin": 1, "openSides": []},
-    {"template": "FertilizerWorks.IronTeeth", "label": "Fertilizer Works, 37 cells north of the start", "x": 116, "y": 82, "z": 3, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "FishHatchery.IronTeeth", "label": "Fish Hatchery, 18 cells south of the start", "x": 129, "y": 24, "z": 6, "orientation": "Cw270"},
     {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "label": "Radioactive Sludge Recovery Pump, 21 cells north-west of the start", "x": 123, "y": 62, "z": 3, "orientation": "Cw270"},
     {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 7 layers of natural drop, 30 cells south of the start", "x": 125, "y": 15, "z": 6},

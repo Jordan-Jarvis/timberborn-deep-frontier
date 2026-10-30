@@ -45,7 +45,6 @@
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 54 cells south of the start", "x": 82, "y": 0, "z": 5, "orientation": "Cw270", "margin": 1, "openSides": [], "understructure": [77, 2, 5]},
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 71 cells north-east of the start", "x": 112, "y": 111, "z": 8, "orientation": "Cw270", "margin": 1, "openSides": ["E"], "understructure": [107, 113, 8]},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 16 cells north-east of the start", "x": 81, "y": 63, "z": 5, "orientation": "Cw270", "margin": 1, "openSides": ["S"]},
-    {"template": "FertilizerWorks.IronTeeth", "label": "Fertilizer Works, 35 cells north-east of the start", "x": 81, "y": 84, "z": 9, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "FisheryWorks.IronTeeth", "label": "Fishery Works, 8 cells south of the start", "x": 70, "y": 44, "z": 5, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "FoodPackagingWorks.IronTeeth", "label": "Food Packaging Works, 44 cells north of the start", "x": 64, "y": 104, "z": 6, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "Greenhouse.IronTeeth", "label": "Greenhouse, 30 cells south of the start", "x": 63, "y": 30, "z": 3, "orientation": "Cw180", "margin": 1, "openSides": ["W"]},

@@ -310,9 +310,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 11777,
-   "vertices": 22439,
-   "construction": 11777,
+   "finished": 6230,
+   "vertices": 11750,
+   "construction": 6230,
    "file": "outputs/lategame-integration/Data/Buildings/Food/FertilizerWorks/FertilizerWorks.IronTeeth.Model.timbermesh"
   },
   "FishHatchery": {

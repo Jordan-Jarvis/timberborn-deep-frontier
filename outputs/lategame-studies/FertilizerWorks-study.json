@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Battery of three tall hooped timber-stave silos with teal cone caps, fed by a lattice bucket elevator and a roof-top gallery.",
+  "hero": "Battery of three hooped timber-stave silos with teal cone caps, fed by a closed bucket elevator and a covered gallery.",
   "footprint": [
-    9,
-    6
+    7,
+    5
   ],
-  "heightLayers": 13,
+  "heightLayers": 7,
   "boundsMin": [
-    -0.0717,
-    -0.255,
+    -0.06,
+    -0.265,
     -0.03
   ],
   "boundsMax": [
-    9.05,
-    6.05,
-    12.66
+    7.05,
+    5.05,
+    6.87
   ],
   "doors": [
     {
@@ -41,21 +41,21 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 5082,
+  "faces": 2474,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 856,
-    "IrregularPlanks_DarkBrown.IronTeeth": 38,
-    "BaseMetal.IronTeeth": 3475,
-    "RoofPlanks.IronTeeth": 178,
-    "Details.IronTeeth": 278,
+    "BaseWood_DarkBrown.IronTeeth": 716,
+    "IrregularPlanks_DarkBrown.IronTeeth": 108,
+    "BaseMetal.IronTeeth": 1343,
+    "RoofPlanks.IronTeeth": 120,
+    "Details.IronTeeth": 240,
     "accent8": 20,
     "accent25": 10,
-    "Plaster_White.IronTeeth": 292,
     "Plaster_Orange.IronTeeth": 13,
-    "IrregularPlanks_MetalForged.IronTeeth": 100,
-    "WindowsAtlas.IronTeeth": 182,
-    "PaintedMetal.IronTeeth": 468
+    "IrregularPlanks_MetalForged.IronTeeth": 128,
+    "WindowsAtlas.IronTeeth": 98,
+    "PaintedMetal.IronTeeth": 386,
+    "IrregularPlanks_Grey.IronTeeth": 12
   },
-  "sourceHash": "fa819e7bade66148c428d01244894bc0eef9ebd5997da07b74feb5f13896efaf",
-  "artHash": "b0d77b1160fa2d930f63f4ffa5d975512e9faeea32bbc2b68f9ae0a9bab92df8"
+  "sourceHash": "1e9b1a78fd008b036b9b9da2567bbe3f41aa713bc4cecf1d87db1e9b74123e27",
+  "artHash": "7f5b07f6ba5a1a1dec659493d26235651b5074c2d02b4edbfd5f66616f2fff85"
 }

@@ -43,7 +43,6 @@
     {"template": "RocketAssemblyHangar.IronTeeth", "label": "Rocket Assembly Hangar, 18 cells south-east of the start", "x": 108, "y": 65, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "FoodPackagingWorks.IronTeeth", "label": "Food Packaging Works, 26 cells south of the start", "x": 99, "y": 55, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "TechnicalSchool.IronTeeth", "label": "Technical School, 28 cells north of the start", "x": 115, "y": 105, "z": 13, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
-    {"template": "FertilizerWorks.IronTeeth", "label": "Fertilizer Works, 34 cells north of the start", "x": 104, "y": 114, "z": 13, "orientation": "Cw90", "margin": 1, "openSides": ["N"]},
     {"template": "GroceryStore.IronTeeth", "label": "Grocery Store, 38 cells west of the start", "x": 59, "y": 78, "z": 10, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "Greenhouse.IronTeeth", "label": "Greenhouse, 16 cells north-west of the start", "x": 86, "y": 90, "z": 13, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Buried records 106 cells north of the start", "x": 118, "y": 191, "z": 9, "orientation": "Cw90", "margin": 1, "openSides": []},

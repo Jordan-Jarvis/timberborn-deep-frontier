@@ -105,7 +105,7 @@ Deep Frontier is EXTREMELY difficult on Diorama
 - Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
 - No Deep Mine: the Deep Mine is the only lasting source of deep ore, which the late game and the rocket launches need. Any Deep Ore Sources on this map run out.
 What this map cannot provide:
-- No room for: Deep Mine, Limestone quarry, Nuclear Reactor, Launch pad, Water treatment plant, Uranium processing plant, Radioactive waste refinery, Cryogenic liquefaction plant, Steel mill, Mission control, Electrolysis plant, Hospital, Precision machine works, Radioactive Waste Vault, Fishery works, Materials Laboratory, Technical school, Fertilizer works, Grocery store.
+- No room for: Deep Mine, Limestone quarry, Nuclear Reactor, Launch pad, Water treatment plant, Uranium processing plant, Radioactive waste refinery, Cryogenic liquefaction plant, Steel mill, Mission control, Electrolysis plant, Hospital, Precision machine works, Radioactive Waste Vault, Fishery works, Materials Laboratory, Technical school, Grocery store.
 ```
 
 Cliffside:
@@ -139,25 +139,25 @@ A map without the warning but with unmet items gets a shorter dialog (`UnmetTitl
 
 | Map | Size | EXTREMELY difficult | Variant | Placements | Sites | Finite DeepOre | Not met on this map (declared `unmet`) |
 |---|---|---|---|---:|---:|---:|---|
-| Beaverome | 192×192 | yes (no Deep Mine) | `beaverome` | 11 | 18 | 0 | LimestoneQuarry site (understructure); SandstoneQuarry site (understructure); Deep Drill sites beside Deep Ore Sources; finite deep ore covers one of each building; renewable scrap (Underground Ruins for the Efficient Mine); DeepDrill site (flat); DeepMine site (understructure); DeepProcessor site (flat); SteelMill site (flat); MissionControl site (flat); RadioactiveWasteRefinery site (flat); UraniumProcessingPlant site (flat); CryogenicLiquefactionPlant site (flat); WaterTreatmentPlant site (flat); LaunchPad site (flat); NuclearReactor site (flat); ElectrolysisPlant site (flat); Hospital site (flat); PrecisionMachineWorks site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); TownPlaza site (flat) |
-| Canyon | 128×128 |  | `canyon` | 17 | 43 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
-| Cliffside | 100×50 | yes (area) | `cliffside` | 11 | 22 | 17,000 | shore fishing banks (first FreshFish); LimestoneQuarry site (understructure); ArchiveExcavation site (flat); Human Record Caches in survey range of an Archive Excavation site; NuclearReactor site (flat); LaunchPad site (flat); WaterTreatmentPlant site (flat); UraniumProcessingPlant site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); SteelMill site (flat); MissionControl site (flat); PrecisionMachineWorks site (flat); ElectrolysisPlant site (flat); Hospital site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); FoodPackagingWorks site (flat); MaterialsLaboratory site (flat); TownPlaza site (flat) |
-| Craters | 192×192 |  | `craters` | 17 | 38 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat); RadioactiveWasteExport site (mapEdge) |
-| Diorama | 50×50 | yes (area, no Deep Mine) | `diorama` | 14 | 18 | 17,000 | DeepMine site (understructure); LimestoneQuarry site (understructure); NuclearReactor site (flat); LaunchPad site (flat); WaterTreatmentPlant site (flat); UraniumProcessingPlant site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); SteelMill site (flat); MissionControl site (flat); ElectrolysisPlant site (flat); Hospital site (flat); PrecisionMachineWorks site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); TechnicalSchool site (flat); FertilizerWorks site (flat); GroceryStore site (flat) |
-| HelixMountain | 256×256 |  | `helix-mountain` | 17 | 44 | 17,000 | none |
-| Hollows | 192×192 |  | `hollows` | 18 | 44 | 18,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
-| Lakes | 256×256 |  | `lakes` | 18 | 45 | 17,000 | none |
-| Meander | 128×128 |  | `meander` | 17 | 41 | 17,000 | CryogenicLiquefactionPlant site (flat); RadioactiveWasteRefinery site (flat); WaterTreatmentPlant site (flat) |
-| MountainRange | 256×150 |  | `mountain-range` | 17 | 43 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
-| Nomads | 256×256 |  | `nomads` | 19 | 46 | 18,000 | shore fishing banks (first FreshFish) |
-| Oasis | 256×256 |  | `oasis` | 19 | 44 | 18,000 | NuclearReactor site (flat); ReinforcedHydroTurbine site (hydro) |
-| Pillars | 192×192 |  | `pillars` | 17 | 38 | 17,000 | irrigated farmland near the start; NuclearReactor site (flat); ReinforcedHydroTurbine site (hydro); Hospital site (flat) |
-| Plains | 256×256 |  | `plains` | 19 | 46 | 18,000 | none |
-| Pressure | 256×256 |  | `pressure` | 19 | 46 | 18,000 | trees near the start; pines (resin) near the start; irrigated farmland near the start |
-| Spillage | 256×150 |  | `spillage` | 17 | 43 | 17,000 | NuclearReactor site (flat) |
-| Terraces | 256×256 |  | `terraces` | 18 | 47 | 17,000 | none |
-| ThousandIslands | 256×256 |  | `thousand-islands` | 17 | 39 | 17,000 | trees near the start; irrigated farmland near the start; NuclearReactor site (flat); SteelMill site (flat) |
-| Waterfalls | 128×128 |  | `waterfalls` | 17 | 42 | 17,000 | shore fishing banks (first FreshFish); RadioactiveWasteRefinery site (flat) |
+| Beaverome | 192×192 | yes (no Deep Mine) | `beaverome` | 11 | 17 | 0 | LimestoneQuarry site (understructure); SandstoneQuarry site (understructure); Deep Drill sites beside Deep Ore Sources; finite deep ore covers one of each building; renewable scrap (Underground Ruins for the Efficient Mine); DeepDrill site (flat); DeepMine site (understructure); DeepProcessor site (flat); SteelMill site (flat); MissionControl site (flat); RadioactiveWasteRefinery site (flat); UraniumProcessingPlant site (flat); CryogenicLiquefactionPlant site (flat); WaterTreatmentPlant site (flat); LaunchPad site (flat); NuclearReactor site (flat); ElectrolysisPlant site (flat); Hospital site (flat); PrecisionMachineWorks site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); TownPlaza site (flat) |
+| Canyon | 128×128 |  | `canyon` | 17 | 42 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
+| Cliffside | 100×50 | yes (area) | `cliffside` | 11 | 21 | 17,000 | shore fishing banks (first FreshFish); LimestoneQuarry site (understructure); ArchiveExcavation site (flat); Human Record Caches in survey range of an Archive Excavation site; NuclearReactor site (flat); LaunchPad site (flat); WaterTreatmentPlant site (flat); UraniumProcessingPlant site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); SteelMill site (flat); MissionControl site (flat); PrecisionMachineWorks site (flat); ElectrolysisPlant site (flat); Hospital site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); FoodPackagingWorks site (flat); MaterialsLaboratory site (flat); TownPlaza site (flat) |
+| Craters | 192×192 |  | `craters` | 17 | 37 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat); RadioactiveWasteExport site (mapEdge) |
+| Diorama | 50×50 | yes (area, no Deep Mine) | `diorama` | 14 | 18 | 17,000 | DeepMine site (understructure); LimestoneQuarry site (understructure); NuclearReactor site (flat); LaunchPad site (flat); WaterTreatmentPlant site (flat); UraniumProcessingPlant site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); SteelMill site (flat); MissionControl site (flat); ElectrolysisPlant site (flat); Hospital site (flat); PrecisionMachineWorks site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); TechnicalSchool site (flat); GroceryStore site (flat) |
+| HelixMountain | 256×256 |  | `helix-mountain` | 17 | 43 | 17,000 | none |
+| Hollows | 192×192 |  | `hollows` | 18 | 43 | 18,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
+| Lakes | 256×256 |  | `lakes` | 18 | 44 | 17,000 | none |
+| Meander | 128×128 |  | `meander` | 17 | 40 | 17,000 | CryogenicLiquefactionPlant site (flat); RadioactiveWasteRefinery site (flat); WaterTreatmentPlant site (flat) |
+| MountainRange | 256×150 |  | `mountain-range` | 17 | 42 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
+| Nomads | 256×256 |  | `nomads` | 19 | 45 | 18,000 | shore fishing banks (first FreshFish) |
+| Oasis | 256×256 |  | `oasis` | 19 | 43 | 18,000 | NuclearReactor site (flat); ReinforcedHydroTurbine site (hydro) |
+| Pillars | 192×192 |  | `pillars` | 17 | 37 | 17,000 | irrigated farmland near the start; NuclearReactor site (flat); ReinforcedHydroTurbine site (hydro); Hospital site (flat) |
+| Plains | 256×256 |  | `plains` | 19 | 45 | 18,000 | none |
+| Pressure | 256×256 |  | `pressure` | 19 | 45 | 18,000 | trees near the start; pines (resin) near the start; irrigated farmland near the start |
+| Spillage | 256×150 |  | `spillage` | 17 | 42 | 17,000 | NuclearReactor site (flat) |
+| Terraces | 256×256 |  | `terraces` | 18 | 46 | 17,000 | none |
+| ThousandIslands | 256×256 |  | `thousand-islands` | 17 | 38 | 17,000 | trees near the start; irrigated farmland near the start; NuclearReactor site (flat); SteelMill site (flat) |
+| Waterfalls | 128×128 |  | `waterfalls` | 17 | 41 | 17,000 | shore fishing banks (first FreshFish); RadioactiveWasteRefinery site (flat) |
 
 Every row passes `builtin` (evidence `outputs/maps/builtin-coverage.json` and the per-map files). The reasons, with their numbers, are in each variant's `unmet` entries. Notes:
 
@@ -437,7 +437,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S39 | FoodPackagingWorks | Food Packaging Works, 55 cells south-east of the start | 173, 106, 4 Cw0 | flat | open NSEW (1) | 62 / 0 | 6 |
 | S40 | Restaurant | Restaurant, 21 cells east of the start | 148, 135, 3 Cw0 | flat | open NSEW (1) | 15 / 0 | 43 |
 | S42 | TechnicalSchool | Technical School, 55 cells south-west of the start | 100, 96, 3 Cw90 | flat | open NSEW (1) | 61 / 0 | 0 |
-| S43 | FertilizerWorks | Fertilizer Works, 62 cells south of the start | 130, 80, 4 Cw90 | flat | open NSEW (1) | 54 / 0 | 15 |
 | S44 | GroceryStore | Grocery Store, 16 cells west of the start | 114, 148, 3 Cw90 | flat | open SW (1) | 8 / 0 | 43 |
 | S46 | Greenhouse | Greenhouse, 49 cells east of the start | 177, 130, 6 Cw90 | flat | open NSEW (1) | 48 / 0 | 7 |
 | S47 | OilPowerPlant | Oil Power Plant, 29 cells south-east of the start | 155, 123, 4 Cw0 | flat | open NSEW (1) | 28 / 0 | 19 |
@@ -506,7 +505,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S38 | FoodPackagingWorks | Food Packaging Works, 18 cells west of the start | 80, 132, 5 Cw90 | flat | open N (1) | 13 / 0 | 12 |
 | S39 | Restaurant | Restaurant, 30 cells east of the start | 127, 129, 2 Cw0 | flat | open NSEW (1) | 22 / 5 | 12 |
 | S41 | TechnicalSchool | Technical School, 53 cells south of the start | 89, 75, 3 Cw0 | flat | open NSEW (1) | 49 / 0 | 22 |
-| S42 | FertilizerWorks | Fertilizer Works, 49 cells north-east of the start | 126, 175, 4 Cw90 | flat | open NSEW (1) | 54 / 5 | 0 |
 | S43 | GroceryStore | Grocery Store, 55 cells east of the start | 150, 153, 2 Cw90 | flat | open NSEW (1) | 56 / 5 | 0 |
 | S45 | Greenhouse | Greenhouse, 48 cells west of the start | 55, 116, 3 Cw90 | flat | open NSEW (1) | 52 / 0 | 15 |
 | S46 | OilPowerPlant | Oil Power Plant, 53 cells south-west of the start | 58, 93, 4 Cw0 | flat | open NSEW (1) | 66 / 0 | 6 |
@@ -576,7 +574,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S39 | FoodPackagingWorks | Food Packaging Works, 30 cells north-east of the start | 102, 176, 11 Cw90 | flat | open NSEW (1) | 26 / 0 | 0 |
 | S40 | Restaurant | Restaurant, 19 cells west of the start | 59, 158, 16 Cw90 | flat | open NSEW (1) | 14 / 0 | 18 |
 | S42 | TechnicalSchool | Technical School, 21 cells east of the start | 100, 163, 15 Cw90 | flat | open NSEW (1) | 15 / 0 | 13 |
-| S43 | FertilizerWorks | Fertilizer Works, 34 cells south of the start | 74, 118, 10 Cw0 | flat | open NSEW (1) | 66 / 0 | 1 |
 | S44 | GroceryStore | Grocery Store, 66 cells east of the start | 143, 172, 13 Cw90 | flat | open NSEW (1) | 64 / 0 | 9 |
 | S46 | Greenhouse | Greenhouse, 62 cells east of the start | 135, 129, 11 Cw0 | flat | open NSEW (1) | 72 / 0 | 23 |
 | S47 | OilPowerPlant | Oil Power Plant, 18 cells south of the start | 80, 134, 15 Cw0 | flat | open NSEW (1) | 13 / 0 | 0 |
