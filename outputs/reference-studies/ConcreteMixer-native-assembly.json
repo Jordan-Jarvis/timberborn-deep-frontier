@@ -6,11 +6,11 @@
       "model": "SmallTank.IronTeeth",
       "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
       "position": [
-        5.98,
-        3.8200000000000003,
-        4.25
+        3.2399999999999998,
+        2.34,
+        1.315
       ],
-      "scale": 1.02,
+      "scale": 0.62,
       "yaw": 0
     }
   ],
@@ -19,14 +19,14 @@
       "name": "MixerHeaderTank.Water",
       "shape": "SmallLiquidPlane",
       "center": [
-        6.49,
-        4.33
+        3.55,
+        2.65
       ],
-      "bottom": 4.80692,
-      "top": 5.6983999999999995,
+      "bottom": 1.6535199999999999,
+      "top": 2.1954,
       "scale": [
-        1.02,
-        1.02
+        0.62,
+        0.62
       ],
       "flowOnly": false
     }

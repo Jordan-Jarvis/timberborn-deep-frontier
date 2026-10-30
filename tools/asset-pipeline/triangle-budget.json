@@ -58,9 +58,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 11930,
-   "vertices": 24590,
-   "construction": 11930,
+   "finished": 6183,
+   "vertices": 12795,
+   "construction": 6183,
    "file": "src/DeepFrontier/Data/Buildings/Metal/CementKiln/CementKiln.IronTeeth.Model.timbermesh"
   },
   "ChemicalWorks": {
@@ -94,9 +94,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 9857,
-   "vertices": 20377,
-   "construction": 9857,
+   "finished": 5088,
+   "vertices": 10656,
+   "construction": 5088,
    "file": "src/DeepFrontier/Data/Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model.timbermesh"
   },
   "ConcreteOverflowDam": {

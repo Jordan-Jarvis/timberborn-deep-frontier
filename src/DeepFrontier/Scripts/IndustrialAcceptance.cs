@@ -198,13 +198,14 @@ namespace DeepFrontier.Scripts {
     // inside the new bounds (tools/validate_freed_cells.mjs, outputs/freed-cells.json).
     private static readonly Dictionary<string,(int,int,int,int,Vector3Int[])> Freed=new() {
       {"StoneCrusher.IronTeeth",(-1,4,-2,4,new Vector3Int[0])},
-      {"CementKiln.IronTeeth",(-1,7,-1,7,new[]{new Vector3Int(0,0,0),new Vector3Int(1,0,0),new Vector3Int(0,1,0),
-        new Vector3Int(1,1,0),new Vector3Int(2,1,0),new Vector3Int(4,1,0),new Vector3Int(2,3,0)})},
+      // Compact 5x3x4 kiln (2026-10-30, same origin and entrance): no open
+      // ground cell inside its bounds; the former 7x5 cells outside it are freed.
+      {"CementKiln.IronTeeth",(-1,7,-1,7,new Vector3Int[0])},
       {"SandstoneQuarry.IronTeeth",(0,10,-2,7,new Vector3Int[0])},
       {"LimestoneQuarry.IronTeeth",(0,10,-2,7,new Vector3Int[0])}};
     private void RequireInstalledFootprints() {
       foreach(var (id,size,entrance) in new[]{("StoneCrusher.IronTeeth",new Vector3Int(4,4,5),new Vector3Int(1,-1,0)),
-        ("CementKiln.IronTeeth",new Vector3Int(7,5,6),new Vector3Int(3,-1,0)),
+        ("CementKiln.IronTeeth",new Vector3Int(5,3,4),new Vector3Int(3,-1,0)),
         ("SandstoneQuarry.IronTeeth",new Vector3Int(11,7,9),new Vector3Int(1,-1,0)),
         ("LimestoneQuarry.IronTeeth",new Vector3Int(11,7,9),new Vector3Int(1,-1,0))}) {
         var spec=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName==id).Blueprint.GetSpec<BlockObjectSpec>();

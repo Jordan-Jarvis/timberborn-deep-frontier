@@ -1,7 +1,7 @@
 {
  "ident": "CementKiln",
  "source": "src/DeepFrontier/Art/Source/CementKiln-ReferenceStudy.blend",
- "sourceSha256": "e98e448e1edc2d6fa77dae5fced660d0fe5ea5d579064d82cdcc03b8033c3612",
+ "sourceSha256": "9e6c359432a1ded899a58fac3347c318fc44c928f08529e106f4bd4af64fa783",
  "frame": 1,
  "layout": "tools/industrial-layouts.json",
  "origin": [
@@ -11,20 +11,20 @@
  ],
  "baseZ": 0,
  "footprint": [
-  7,
-  5
+  5,
+  3
  ],
- "height": 6,
+ "height": 4,
  "coordinateSystem": "Native grid XYZ, Z up: authored artwork + registration origin (the late-game registration frame)",
  "smokeEmitters": [
   {
    "kind": "smoke",
    "position": [
-    6.22,
-    3.7,
-    5.43
+    4.5,
+    2.45,
+    3.94
    ],
-   "radius": 0.19
+   "radius": 0.175
   }
  ],
  "sceneCheck": {
@@ -32,13 +32,13 @@
   "mouths": [
    {
     "position": [
-     6.22,
-     3.7,
-     5.43
+     4.5,
+     2.45,
+     3.94
     ],
-    "stackTop": 5.43,
-    "lowestNearby": 0.1064,
-    "vertices": 429
+    "stackTop": 3.94,
+    "lowestNearby": 0.0091,
+    "vertices": 286
    }
   ]
  }

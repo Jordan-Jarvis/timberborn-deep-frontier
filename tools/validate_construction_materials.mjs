@@ -57,15 +57,15 @@ for (const entry of catalog.buildings) {
   }
   if (entry.kind === 'quarry') assert.deepEqual(value.UnderstructureConstraintSpec.UnderstructureTemplateNames, [entry.source]);
   if (entry.id === 'ConcreteMixer') {
-    // Deck-free mixer (2026-10-21): the drop pipe reaches the ground at the
-    // foot of the header-tank tower, cell (6,4); the power-line insulator is
-    // on that tower's rear-right pier. The tested inlet stays first; the
-    // other flat exterior faces follow (validate_connection_faces.mjs).
+    // Compact 4x3x3 mixer (2026-10-30): the riser reaches the ground on the
+    // header-tank pedestal's east face, cell (3,2); the power-line insulator
+    // is on the pedestal cap's rear-right corner. The tested inlet stays
+    // first; the other flat exterior faces follow (validate_connection_faces.mjs).
     assert.deepEqual(value.BuildingPipeTargetPortsSpec.Ports[0],
-      {Coordinates:{X:6,Y:4,Z:0},Directions:'Right',State:'OpenIn'});
-    const portBlock=value.BlockObjectSpec.Blocks[4*size.X+6];
+      {Coordinates:{X:3,Y:2,Z:0},Directions:'Right',State:'OpenIn'});
+    const portBlock=value.BlockObjectSpec.Blocks[2*size.X+3];
     assert.notEqual(portBlock.Occupations,'None','Mixer service inlet requires an occupied frame cell');
-    assert.deepEqual(value.PowerLineSpec.ConnectionLocations,[{X:6.9,Y:4.9,Z:3.8}]);
+    assert.deepEqual(value.PowerLineSpec.ConnectionLocations,[{X:3.9,Y:2.9,Z:1.32}]);
     // A navmesh spec may only switch on native floors over platformable roofs (roof_deck_content.mjs).
     const nav=value.BlockObjectNavMeshSettingsSpec;
     assert(!value.BuildingWalkwaySpec && (!nav || !(nav.EdgeGroups.length || nav.UnblockedCoordinates.length || nav.BlockedEdges.length)),'Mixer has no walkway data');

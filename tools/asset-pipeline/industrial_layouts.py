@@ -66,8 +66,9 @@ def decorative_port(d,ident,inside,outside,run):
 C=layout([-1,-2,0],[4,4,5],[1,-1,0],[[2.50,2.02,0]],deck_mode='None')
 ground_door(C,(1.50,.10,0),(0,-1))
 
-# Kiln artwork = native grid - (0,1).
-K=layout([0,1,0],[7,5,6],[3,-1,0],[[3.50,-.94,0]],deck_mode='None')
+# Kiln artwork = native grid - (0,1). Compact 5x3x4 (2026-10-30): the old
+# 7x5x6 registration's origin, entrance and door are kept.
+K=layout([0,1,0],[5,3,4],[3,-1,0],[[3.50,-.94,0]],deck_mode='None')
 ground_door(K,(3.50,.14,0),(0,-1))
 
 # Quarry artwork = native grid + (0,1). The workshop and control-room doors on
@@ -77,7 +78,8 @@ ground_door(Q,(1.50,.14,0),(0,-1))
 
 # Native entrance = the path cell in front of the door (vanilla convention);
 # the door cell (1,0,0) is the occupied doorstep.
-M=layout([0,0,0],[7,5,7],[1,-1,0],[[1.50,.04,0]],deck_mode='None')
+# Compact 4x3x3 (2026-10-30): the old 7x5x7 origin, entrance and door kept.
+M=layout([0,0,0],[4,3,3],[1,-1,0],[[1.50,.04,0]],deck_mode='None')
 ground_door(M,(1.50,.12,0),(0,-1))
 
 LAYOUTS={'StoneCrusher':C,'CementKiln':K,'MineralQuarry':Q,'ConcreteMixer':M}

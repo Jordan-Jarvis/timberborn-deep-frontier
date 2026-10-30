@@ -110,11 +110,12 @@ namespace DeepFrontier.Scripts {
         // cells inside the bounds (former block stacks, outputs/freed-cells.json) and the former
         // 8x6 column x 7 and row y 5.
         var size=_building.GetComponent<BlockObjectSpec>().Size;
-        Require(size==new Vector3Int(7,5,7),"Installed mixer is "+size+"; this fixture's freed cells encode the 7x5x7 mixer");
+        // Compact 4x3x3 mixer (2026-10-30, same origin and entrance): every
+        // ground cell inside its bounds is occupied; the former 7x5 (and 8x6)
+        // cells outside it are freed.
+        Require(size==new Vector3Int(4,3,3),"Installed mixer is "+size+"; this fixture's freed cells encode the 4x3x3 mixer");
         FreedCellProbe.Require(_templates,_validator,_building,
-          new[]{new Vector3Int(3,0,0),new Vector3Int(4,0,0),new Vector3Int(3,1,0),new Vector3Int(4,1,0),
-            new Vector3Int(4,2,0),new Vector3Int(6,2,0),new Vector3Int(5,3,0),new Vector3Int(0,4,0)}
-            .Concat(FreedCellProbe.Outside(0,7,0,5,size)),"ConcreteMixer",Pass);
+          FreedCellProbe.Outside(0,7,0,5,size),"ConcreteMixer",Pass);
         for(int y=157;y<=159;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(173,y,3)))Create("Path",173,y,3);
         for(int x=159;x<173;x++)Create("Path",x,159,3);
         // The ground door's native Entrance is the road cell in front of it,

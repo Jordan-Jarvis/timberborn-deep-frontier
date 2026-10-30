@@ -29,34 +29,15 @@ export function industrialBlocks(ident, size) {
     region([0,2,3,3,3,3],'All'); // hopper and roll canopy
     region([0,1,3,2,1,3],'All'); // hopper front and flywheel top
   } else if(ident==='CementKiln') {
-    region([2,0,0,6,0,0],'All'); // porch posts, doorstep (3,0,0), output bin
-    region([2,0,1,4,0,1],'All'); // porch canopy
-    region([2,1,1,2,1,1],'All');region([4,1,1,4,1,1],'All'); // canopy eaves beside the room
-    region([3,1,0,3,1,1],'All'); // one-tile control room (walls on x=3, x=4)
-    region([5,1,0,6,1,2],'All'); // output bin, firebox front, furnace front
-    region([0,2,0,6,4,1],'All'); // fuel, feed tower, coal, firebox, hall frame and saddles
-    clear([2,3,0],[6,3,1],[6,4,1]);
-    // (0..1, 0..1) stays open: free ground in front of the fuel bay.
-    region([0,2,2,6,4,3],'All'); // drum, feed bins, hood, furnace and chimney base
-    region([0,3,4,6,3,4],'All');region([0,4,4,5,4,4],'All');region([2,2,4,3,2,4],'All'); // roof
-    region([6,3,5,6,3,5],'All'); // chimney cap
+    // Compact 5x3x4 (2026-10-30), grid y = artwork y + 1.
+    region([0,0,0,4,0,0],'All'); // log stack, coal bin, porch and doorstep (3,0,0), output bin
+    region([2,0,1,4,0,1],'All'); // porch canopy and its eaves
+    region([0,1,0,4,2,2],'All'); // feed house, drum hall and roof, firebox and crown
+    region([4,2,3,4,2,3],'All'); // chimney stack
   } else if(ident==='ConcreteMixer') {
-    region([0,0,0,2,0,0],'All'); // vestibule and doorstep (1,0,0)
-    region([5,0,0,6,0,0],'All'); // discharge tray (3..4,0,0 are free ground: the block stacks went)
-    region([0,0,1,2,0,1],'All'); // vestibule canopy and clerestory
-    region([5,0,1,6,0,1],'All'); // tray rim
-    region([0,1,0,2,3,1],'All'); // enclosed operator room with its concrete roof
-    region([5,1,0,6,1,1],'All'); // discharge chute and tray
-    region([3,2,0,3,3,1],'All');region([4,3,0,4,3,1],'All'); // drum piers, control cabinet
-    region([5,2,0,5,3,1],'All');region([6,3,0,6,3,1],'All');
-    clear([5,3,0]);
-    region([1,4,0,6,4,1],'All'); // feed tower base, drum piers, hopper legs, tank tower
-    region([3,1,2,5,1,2],'All');region([4,1,3,4,1,3],'All'); // drive flywheel and chute head
-    region([1,2,2,5,2,3],'All');region([3,3,2,6,3,3],'All');region([1,3,3,2,3,3],'All');
-    region([1,4,2,6,4,3],'All'); // feed tower, hoppers, drum, header tower
-    region([1,2,4,4,2,4],'All');region([1,3,4,6,4,4],'All'); // hoppers, tower decks
-    region([1,2,5,2,3,5],'All');region([3,3,5,3,3,5],'All');region([6,3,5,6,3,5],'All');
-    region([1,4,5,4,4,5],'All');region([6,4,5,6,4,5],'All'); // roofs, hopper tops, header tank
+    // Compact 4x3x3 (2026-10-30).
+    region([0,0,0,3,2,1],'All'); // operator room and canopy (doorstep (1,0,0)), drum, drive, tray, tank pedestal
+    region([0,1,2,3,2,2],'All'); // hoppers on the room roof, their chutes, drum crown, header tank
   } else if(ident==='MineralQuarry') {
     // Stone process plinth (layer 0), rooms, sorting gear, headframe members
     // and the ladder mast, from the saved scene's solid cells.

@@ -27,16 +27,6 @@
       "sampleMatrixDifference": 2.0
     },
     {
-      "name": "ReferenceKilnSupport31",
-      "loopMatrixError": 2.384185791015625e-07,
-      "sampleMatrixDifference": 2.0
-    },
-    {
-      "name": "ReferenceKilnSupport32",
-      "loopMatrixError": 2.384185791015625e-07,
-      "sampleMatrixDifference": 2.0
-    },
-    {
       "name": "ReferenceKilnPinion",
       "loopMatrixError": 2.384185791015625e-07,
       "sampleMatrixDifference": 2.0
@@ -64,8 +54,8 @@
   ],
   "sourceTimelineFrames": 241,
   "sourceFps": 30,
-  "sourceVertices": 10210,
-  "sourcePolygons": 6069,
+  "sourceVertices": 5389,
+  "sourcePolygons": 3151,
   "separateRailNodes": 0,
   "railRuns": 0,
   "navigationStatus": "Rail nodes checked in Blender; native pathing and adaptive connections not implemented",
@@ -74,11 +64,11 @@
     "scope": "Authored vertical contract; horizontal grid/collision/native routes not yet bound",
     "entranceLayer": 0,
     "porchRoofLayer": 1,
-    "machineFloorLayer": 2,
+    "machineFloorLayer": 0,
     "walkableDeckLayers": [],
     "stairs": [],
     "access": "Ground door only",
-    "heightEnvelopeLayers": 6
+    "heightEnvelopeLayers": 4
   },
   "walkways": "None (ground door only)"
 }

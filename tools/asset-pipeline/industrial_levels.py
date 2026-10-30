@@ -21,8 +21,9 @@ KILN_MACHINE_DATUM=1.29
 LEVELS={
     'StoneCrusher':{'entranceLayer':FACTORY_ENTRANCE,'porchRoofLayer':FACTORY_PORCH_ROOF,
                     'machineFloorLayer':CRUSHER_DECK,'walkableDeckLayers':[],'stairs':[],'access':'Ground door only','heightEnvelopeLayers':5},
+    # Compact 5x3x4 (2026-10-30): the drum stands on ground plinths.
     'CementKiln':{'entranceLayer':FACTORY_ENTRANCE,'porchRoofLayer':FACTORY_PORCH_ROOF,
-                  'machineFloorLayer':KILN_DECK,'walkableDeckLayers':[],'stairs':[],'access':'Ground door only','heightEnvelopeLayers':6},
+                  'machineFloorLayer':0,'walkableDeckLayers':[],'stairs':[],'access':'Ground door only','heightEnvelopeLayers':4},
     'MineralQuarry':{'entranceLayer':QUARRY_ENTRANCE,'plinthTopLayer':1,
                      'walkableDeckLayers':[],'stairs':[],'access':'Ground door only; maintenance ladder mast',
                      'ladderLayers':[1,2,3,4,5,6,7],'heightEnvelopeLayers':9},

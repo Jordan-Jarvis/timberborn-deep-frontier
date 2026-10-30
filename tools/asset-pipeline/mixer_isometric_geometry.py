@@ -1,24 +1,34 @@
-"""Concrete mixer from the production sheet's right-hand isometric view.
+"""Concrete mixer, compact 4x3 workshop (2026-10-30 compaction pass).
 
-The feed tower, exposed drum and independent tank determine the architecture.
-Whole-height decks are authored here; registration must follow this artwork.
-No reference top view or printed footprint is used.
+Steam Workshop feedback: the buildings exceeded Timberborn's scale. The user
+kept the textures and asked for less scaffolding and size. The 7x5x7 mixer
+with its tall timber feed tower, stilted header-tank tower and pier-borne
+drum becomes a 4x3x3 workshop with the same parts and materials:
+
+- the closed operator room (grid x 0..1, all three rows) with its door,
+  canopy and clerestory, its concrete roof carrying the aggregate and cement
+  hoppers, which feed the drum through two short chutes,
+- the mixing drum (same profile, 0.62 scale) on four rollers seated on low
+  concrete piers, its flywheel on a concrete drive pedestal in front,
+- the discharge chute and wet tray in the front-right cell,
+- the native header tank on a concrete pedestal in the rear-right cell.
+
+Native grid XY (layout origin 0); outer walls and pedestals sit on the tile
+lines x 0..4, y 0..3. No walkways, decks or balconies.
 """
 import math
 import random
 
-from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS, deck, facade_panel
-from industrial_geometry import timber_column, beam_joint, bracket, steel_bolt, sheet_roof
-from industrial_facades import side_window, window_y, gauge
+from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS, facade_panel
+from industrial_facades import side_window, window_y
 from industrial_door_components import recipe as door_recipe
-from reference_details import machinery_shell, round_pipe, cage_lamp
-from industrial_kit import (open_beam,lean_wheel as wheel,lean_gauge as gauge,bracket as nutted_bracket,timber_column as nutted_column)
-from industrial_kit import (lean_timber_column as timber_column,lean_beam_joint as beam_joint,lean_bracket as bracket,steel_bolt,lean_sheet_roof as sheet_roof,lean_machinery_shell as machinery_shell,round_pipe,lean_cage_lamp as cage_lamp,band,prism,bolt,square_nut,open_box,lean_rock as rock)
+from industrial_kit import (open_beam,lean_wheel as wheel,lean_gauge as gauge,bracket as nutted_bracket)
+from industrial_kit import (lean_timber_column as timber_column,lean_bracket as bracket,lean_sheet_roof as sheet_roof,lean_machinery_shell as machinery_shell,round_pipe,lean_cage_lamp as cage_lamp,lean_bin as bin,band,prism,open_box,lean_rock as rock)
 from reference_materials import (
-    CRUSHER_STEEL, KILN_CEMENT, KILN_DUST, KILN_SOOT,
+    CRUSHER_STEEL, KILN_CEMENT, KILN_DUST,
     CIVIC_CONCRETE, CIVIC_FORGED_PANEL,
 )
-from native_building_assets import barrel, water_barrel
+from native_building_assets import water_barrel
 from walkway_geometry import RailAssembly
 from factory_registration import machine_slab
 
@@ -27,7 +37,15 @@ DECK = 2
 # column 1 with its face 0.12 behind the y=0 edge; the native entrance is the
 # path cell in front of it, (1,-1,0), and the door cell is the doorstep.
 DOOR_X, DOOR_FACE, WALL_FRONT = 1.50, .12, .16
-ROOM_W, ROOM_E, ROOM_REAR = .10, 2.8275, 4.0
+# Operator room: west wall 0.10 inside the x=0 edge (corner piers stand in it
+# as pilasters), east wall on the x=2 line, rear wall on the y=3 edge. The
+# low entry vestibule (y .16..1) carries the canopy; the clerestory face is
+# on y=1.
+ROOM_W, ROOM_E, ROOM_FRONT, ROOM_REAR = .10, 2.0, 1.0, 3.0
+ROOF_TOP = 1.96
+# Drum: the original profile and fittings at this scale about its centre.
+DRUM = (2.85, 1.45, 1.35)
+DRUM_SCALE = .62
 ACCESS = {
     "groundDoor": [DOOR_X, DOOR_FACE, 0],
     "decks": "None: the machine is not walked on at upper levels",
@@ -37,13 +55,14 @@ ACCESS = {
 def pier(g, x, y, top, collar=bracket, column=timber_column):
     g.box((x, y, .15), (.40, .40, .30), CIVIC_CONCRETE)
     column(g, x, y, .29, top, .24)
-    for z in (1.15, 2.15, 3.15, 4.15):
+    for z in (1.15,):
         if z < top - .3:
             collar(g, x, y, z, .24)
 
 
 def hopper(g, x, y, bottom, width, length, material, seed, *, powder=False):
-    """Open plank-lined bin, tapered steel throat and individually piled input."""
+    """Open plank-lined bin standing on the room's concrete roof, with its
+    individually piled input."""
     top = bottom + .82
     for row in range(4):
         z = bottom + .10 + row * .20
@@ -54,18 +73,11 @@ def hopper(g, x, y, bottom, width, length, material, seed, *, powder=False):
     for xx in (x-width/2, x+width/2):
         g.box((xx, y, top), (.15, length+.15, .12), WOOD)
         for yy in (y-length/2, y+length/2):
-            # The full collar, nuts included: its heads count towards the
-            # tower's registered wall faces (industrial_wall_faces.py).
             nutted_bracket(g, xx, yy, top-.15, .18)
     for yy in (y-length/2, y+length/2):
         g.box((x, yy, top), (width-.15, .15, .12), WOOD)
         for xx in (x-width*.30, x+width*.30):
-            g.box((xx, yy-.05, bottom+.40), (.06, .035, .67), IRON)
-    verts = [(x+dx*width/2, y+dy*length/2, bottom)
-             for dx,dy in ((-1,-1),(1,-1),(1,1),(-1,1))]
-    verts += [(x+dx*.25, y+dy*.24, bottom-.50)
-              for dx,dy in ((-1,-1),(1,-1),(1,1),(-1,1))]
-    g.add(verts, [(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7),(4,5,6,7)], IRON)
+            g.box((xx, yy-.05 if yy < y else yy+.05, bottom+.40), (.06, .035, .67), IRON)
     g.box((x, y, bottom+.53), (width-.13,length-.13,.15), material)
     rng = random.Random(seed)
     if powder:
@@ -74,116 +86,104 @@ def hopper(g, x, y, bottom, width, length, material, seed, *, powder=False):
             for col in range(5):
                 u=col/4*2-1;v=row/3*2-1
                 vertices.append((x+u*(width-.15)/2,y+v*(length-.15)/2,
-                                 bottom+.60+.28*(1-u*u)*(1-v*v)+rng.uniform(-.015,.015)))
+                                 bottom+.60+.22*(1-u*u)*(1-v*v)+rng.uniform(-.015,.015)))
         g.add(vertices,[(r*5+c,r*5+c+1,(r+1)*5+c+1,(r+1)*5+c)
                         for r in range(3) for c in range(4)],material)
     else:
-        # 12k cap: twelve large stones (was thirty).
-        for row in range(3):
-            for col in range(4):
-                xx=x-width*.33+col*width*.22+rng.uniform(-.055,.055)
-                yy=y-length*.30+row*length*.30+rng.uniform(-.05,.05)
-                size=rng.uniform(.30,.44)
-                rock(g,(xx,yy,bottom+.66+rng.uniform(-.025,.12)),
+        for row in range(2):
+            for col in range(5):
+                xx=x-width*.38+col*width*.19+rng.uniform(-.04,.04)
+                yy=y-length*.22+row*length*.44+rng.uniform(-.04,.04)
+                size=rng.uniform(.26,.36)
+                rock(g,(xx,yy,bottom+.66+rng.uniform(-.02,.06)),
                      (size,size*.82,size*.64),material,seed+row*6+col)
-    # Screw-operated slide gate and inspection plate below the throat.
-    g.box((x,y-.29,bottom-.35),(.65,.08,.24),IRON)
-    prism(g,(x,y-.43,bottom-.35),.035,.30,BRASS,'Y',6)
-    wheel(g,(x,y-.60,bottom-.35),.16,'Y')
 
 
 def operator_room(g):
-    # Door at ground, canopy top at layer one, accessible gallery at layer two.
-    # The enclosed room fills grid cells x 0..2, y 0..3: its west wall face is
-    # 0.10 inside the x=0 tile edge (the corner piers stand in it as pilasters)
-    # and its rear wall face is on the y=4 edge, facing the bays under the
-    # left walk and the feed tower.
-    w,e,rear=ROOM_W,ROOM_E,ROOM_REAR
-    for x in (w+.10,2.80):
-        pier(g,x,1.15,DECK-.08)
+    # Door at ground, canopy top at layer one, concrete roof at layer two.
+    w,e,front,rear=ROOM_W,ROOM_E,ROOM_FRONT,ROOM_REAR
+    for x in (w+.10,e-.10):
+        pier(g,x,front,DECK-.08)
         pier(g,x,rear-.22,DECK-.08)
+    count=13
     for x,positive in ((w,False),(e,True)):
-        for j in range(18):
-            a=1.15+j*(rear-1.15)/18;b=1.15+(j+1)*(rear-1.15)/18
+        for j in range(count):
+            a=front+j*(rear-front)/count;b=front+(j+1)*(rear-front)/count
             facade_panel(g,'X',x,a,b,0,1.86,positive,PLANK)
-    for x in (w+.04,2.79):g.box((x,(1.165+rear-.015)/2,.28),(.10,rear-1.18,.35),CIVIC_CONCRETE)
-    for j in range(17):
-        a=w+j*(e-w)/17;b=w+(j+1)*(e-w)/17
+    for x in (w+.04,e-.04):g.box((x,(front+.015+rear-.015)/2,.28),(.10,rear-front-.03,.35),CIVIC_CONCRETE)
+    count=12
+    for j in range(count):
+        a=w+j*(e-w)/count;b=w+(j+1)*(e-w)/count
         facade_panel(g,'Y',rear,a,b,0,1.86,True,PLANK)
-    # Entry sits in the front of the fully enclosed vestibule; no modelled
-    # interior. The plank wall's front face is WALL_FRONT.
-    for a,b in ((w+.005,DOOR_X-.5),(DOOR_X+.5,2.84)):
-        for i in range(5):
-            x=a+(i+.5)*(b-a)/5
-            g.box((x,WALL_FRONT+.04,.5425),((b-a)/5,.08,1.075),PLANK)
+    # Entry vestibule: plank front wall west of the door, the native door on
+    # tile column 1 (its east jamb on the room's east wall). The plank wall's
+    # front face is WALL_FRONT.
+    a,b=w+.005,DOOR_X-.5
+    for i in range(5):
+        x=a+(i+.5)*(b-a)/5
+        g.box((x,WALL_FRONT+.04,.5425),((b-a)/5,.08,1.075),PLANK)
     g.include_component(door_recipe('ConcreteMixer','Door.MixerOperatorDoor'))
     g.doorways.append({"name":"MixerOperatorDoor","position":[DOOR_X,DOOR_FACE,0]})
-    # The porch, upper clerestory and machine-floor roof are one closed room.
-    # The former clerestory windows had no wall and the feed tower looked
-    # straight through the operator room's missing ceiling.
-    facade_panel(g,'Y',1.15,w,e,1.08,1.86,False,PLANK)
+    # The vestibule, clerestory and roof slab close one room.
+    facade_panel(g,'Y',front,w,e,1.08,1.86,False,PLANK)
     for x,positive in ((w,False),(e,True)):
-        facade_panel(g,'X',x,WALL_FRONT,1.17,0,1.08,positive,PLANK)
-    # Concrete roof slab over the closed room (formerly under the gallery).
-    machine_slab(g,w,1.15,e,rear,1.96,.10)
-    # Canopy eave and corner shoes stay inside the tile edges. The front
-    # walk's corner piers carry it; lamps hang on the clerestory.
+        facade_panel(g,'X',x,WALL_FRONT,front,0,1.08,positive,PLANK)
+    machine_slab(g,w,front,e,rear,ROOF_TOP,.10)
+    # Canopy over the vestibule, carried by one front post and the east wall.
     # Its corner collars close the registered front connection faces.
-    sheet_roof(g,.36,.11,2.93,1.15,.94,1.15,910,corner_collars=True)
-    for x in (.48,2.80):timber_column(g,x,.20,.03,.93,.16)
-    for x in (.55,1.23):cage_lamp(g,x,1.195,1.62)
-    # High clerestory panes sit above the entry canopy.
-    for x in (.82,1.64,2.46):
-        window_y(g,x,1.15,1.55,0.7)
-    for y in (2.07,3.39):
-        side_window(g,w,y,1.16,0.9,'left')
-    window_y(g,(w+e)/2,rear,1.15,1,'back')
-    round_pipe(g,[(2.91,1.20,.28),(2.91,1.20,1.66),
-                  (2.91,3.74,1.66),(3.20,3.74,1.66)],.052)
-    g.box((2.05,1.09,1.48),(.36,.12,.43),CIVIC_FORGED_PANEL)
-    gauge(g,2.05,1.01,1.50,.105)
+    sheet_roof(g,.36,.11,2.06,front,.94,1.12,910,corner_collars=True)
+    timber_column(g,.48,.20,.03,.93,.16)
+    for x in (.40,.95):
+        window_y(g,x,front,1.30,.6)
+    g.box((1.62,front-.06,1.48),(.30,.12,.40),CIVIC_FORGED_PANEL)
+    gauge(g,1.62,front-.14,1.50,.095)
+    cage_lamp(g,1.27,front+.045,1.66)
+    # Side windows only: a casing on the rear wall would stand outside the
+    # y=3 edge.
+    for y in (1.55,2.45):side_window(g,w,y,1.0,.9,'left')
+    # Control cabinet on the east wall, facing the drum.
+    g.box((e+.05,2.45,1.05),(.10,.40,.50),CIVIC_FORGED_PANEL)
+    for z in (.92,1.18):
+        prism(g,(e+.115,2.45,z),.06,.03,BRASS,'X',8,(False,True))
+    # Aggregate and cement hoppers on the roof, chutes to the drum.
+    hopper(g,1.05,1.55,ROOF_TOP,1.60,.82,CIVIC_CONCRETE,930)
+    hopper(g,1.05,2.48,ROOF_TOP,1.50,.72,KILN_CEMENT,970,powder=True)
+    chute(g,(1.90,1.50,2.55),(2.55,1.30,2.05),.30)
+    chute(g,(1.83,2.48,2.45),(2.62,2.05,1.88),.28)
 
 
 def drum(g, parts):
-    p=(4.40,3.30,3.19)
-    m=Geometry('Mixer.Drum',p)
-    # 12k cap: 16-sided shell; eight wear bars on its ridges (no hex heads).
-    machinery_shell(m,p,[(-1.23,.27),(-1.05,.46),(-.78,.79),
-                         (-.52,1.03),(.63,1.03),(.98,.73),(1.23,.29)],'Y',16)
-    for yy in (2.80,3.90):
-        band(m,(4.40,yy,3.19),1.065,.055,.14,CRUSHER_STEEL,'Y',16)
+    s=DRUM_SCALE;cx,cy,cz=DRUM
+    def at(dx,dy,dz):return (cx+dx*s,cy+dy*s,cz+dz*s)
+    m=Geometry('Mixer.Drum',DRUM)
+    machinery_shell(m,DRUM,[(t*s,r*s) for t,r in ((-1.23,.27),(-1.05,.46),(-.78,.79),
+                         (-.52,1.03),(.63,1.03),(.98,.73),(1.23,.29))],'Y',16)
+    for dy in (-.50,.61):
+        band(m,at(0,dy,0),1.065*s,.055*s,.14*s,CRUSHER_STEEL,'Y',16)
     for i in range(8):
         a=i*math.pi/4
-        xx=4.40+math.cos(a)*1.043
-        zz=3.19+math.sin(a)*1.043
-        m.beam((xx,2.80,zz),(xx,3.91,zz),.033,.022,IRON)
-    prism(m,(4.40,2.02,3.19),.19,.32,IRON,'Y',10)
-    band(m,(4.40,2.00,3.19),.36,.08,.13,BRASS,'Y',12,inner=True)
+        dx=math.cos(a)*1.043;dz=math.sin(a)*1.043
+        m.beam(at(dx,-.50,dz),at(dx,.61,dz),.033*s,.022*s,IRON)
+    prism(m,at(0,-1.28,0),.19*s,.32*s,IRON,'Y',10)
+    band(m,at(0,-1.30,0),.36*s,.08*s,.13*s,BRASS,'Y',12,inner=True)
     parts.append((m,'Y',1))
-    for x in (3.48,5.57):
-        for y in (2.35,4.26):
-            pier(g,x,y,2.52)
-        beam_joint(g,(x,2.30,2.50),(x,4.35,2.50),.22,.24)
-        g.beam((x,2.35,1.02),(x,4.20,2.45),.18,mat=WOOD)
-    for yy in (2.79,3.91):
-        beam_joint(g,(3.17,yy,2.30),(5.64,yy,2.30),.25,.25)
-        for xx in (3.66,5.14):
-            g.box((xx,yy,2.37),(.43,.35,.22),IRON)
-            prism(g,(xx,yy,2.57),.21,.28,CRUSHER_STEEL,'Y',8)
-    # Independent keyed power shaft, flywheel, motor and lower crank.
-    drive=Geometry('Mixer.Drive',(4.40,1.77,3.19))
-    wheel(drive,(4.40,1.77,3.19),.51,'Y')
-    prism(drive,(4.40,1.77,3.19),.105,.54,IRON,'Y',10)
+    # Rollers under each tyre on low concrete piers clear of the tyre.
+    for dy in (-.50,.61):
+        y=cy+dy*s
+        for side in (-1,1):
+            x=cx+side*.55
+            g.box((x,y,.3865),(.20,.40,.773),CIVIC_CONCRETE)
+            prism(g,(x,y,.933),.13,.17,CRUSHER_STEEL,'Y',8)
+            prism(g,(x,y,.933),.04,.38,IRON,'Y',6)
+            for yy in (y-.135,y+.135):
+                open_box(g,(x,yy,.853),(.18,.09,.16),IRON,('-z',))
+    # Flywheel on a concrete drive pedestal in front of the drum mouth.
+    drive=Geometry('Mixer.Drive',(cx,.40,cz))
+    wheel(drive,(cx,.40,cz),.34,'Y')
+    prism(drive,(cx,.45,cz),.07,.45,IRON,'Y',10)
     parts.append((drive,'Y',2))
-    g.box((4.40,1.89,2.57),(1.18,.65,.18),WOOD)
-    for x in (3.97,4.83):
-        g.beam((x,2.40,2.01),(x,1.86,2.57),.14,mat=WOOD)
-        g.box((x,1.89,2.73),(.18,.40,.19),IRON)
-    g.box((3.38,3.44,1.16),(.55,1.15,.65),CIVIC_FORGED_PANEL)
-    for y in (3.03,3.15,3.27,3.39,3.51,3.63,3.75,3.87):
-        g.box((3.08,y,1.15),(.04,.034,.43),IRON)
-    prism(g,(3.38,2.74,1.16),.19,.30,IRON,'Y',8)
-    band(g,(3.38,2.55,1.16),.20,.04,.07,CRUSHER_STEEL,'Y',8,inner=True)
+    g.box((cx,.59,.56),(.40,.18,1.12),CIVIC_CONCRETE)
+    open_box(g,(cx,.59,1.20),(.26,.16,.16),IRON,('-z',))
 
 
 def chute(g, start, end, width):
@@ -193,85 +193,41 @@ def chute(g, start, end, width):
     nx,ny=-(end[1]-start[1])/length,(end[0]-start[0])/length
     for side in (-1,1):
         dx,dy=nx*side*width/2,ny*side*width/2
-        g.beam((start[0]+dx,start[1]+dy,start[2]+.09),
-               (end[0]+dx,end[1]+dy,end[2]+.09),.055,.21,IRON)
+        g.beam((start[0]+dx,start[1]+dy,start[2]+.10),
+               (end[0]+dx,end[1]+dy,end[2]+.10),.055,.21,IRON)
+
+
+def tank(g):
+    # Native header tank on a concrete pedestal (rear-right cell), drop line
+    # into the drum's rear journal and a riser to the ground inlet.
+    g.box((3.55,2.65,.65),(.90,.70,1.30),CIVIC_CONCRETE)
+    open_box(g,(3.55,2.65,1.285),(.86,.66,.06),IRON,('-z',))
+    water_barrel(g,'MixerHeaderTank',(3.55,2.65,1.315),.62)
+    round_pipe(g,[(3.27,2.62,1.62),(2.85,2.62,1.62),(2.85,2.62,1.35),(2.85,2.25,1.35)],.06)
+    band(g,(2.85,2.62,1.47),.10,.03,.08,BRASS,'Z',8)
+    wheel(g,(3.05,2.50,1.62),.12,'Y')
+    round_pipe(g,[(3.80,2.30,1.36),(3.80,2.24,1.36),(3.80,2.24,.40),(3.92,2.24,.40)],.06)
+    band(g,(3.80,2.24,.70),.10,.03,.08,BRASS,'Z',8)
+    gauge(g,3.35,2.27,.95,.10)
+    cage_lamp(g,3.55,2.30,1.08)
+
+
+def tray(g):
+    # Sloped discharge from the drum's side and the wet tray in the front-
+    # right cell (the stacked finished blocks were loose props, removed
+    # 2026-10-22).
+    chute(g,(3.30,.95,1.28),(3.58,.55,.66),.40)
+    bin(g,(3.58,.48,.02),(.76,.84,.42),None)
+    open_box(g,(3.58,.48,.37),(.64,.72,.05),KILN_CEMENT,('-z',))
+    for i in range(4):
+        rock(g,(3.40+(i%2)*.36,.30+(i//2)*.38,.42),(.20,.16,.05),KILN_DUST,1000+i)
 
 
 def mixer(g, parts):
-    # No gallery or balconies: the drum, feed tower, hoppers and header tank
-    # stand on their own concrete piers and timber frames. The assembly stays
-    # empty (no rail manifest runs).
+    # No gallery or balconies: the assembly stays empty (no rail runs).
     rails=RailAssembly('MixerRails')
     operator_room(g)
-    # Feed tower: open equipment bays with a low roof behind the loaded bins.
-    # Its rear piers stand inside grid row 4, clear of the bay under the rear
-    # walk; the roof keeps its rear overhang above that walk.
-    for x in (1.23,2.97):
-        for y in (2.15,4.80):
-            # The front-right pier keeps its collar nuts: their heads complete
-            # the registered wall face of cell (2,2,4) (industrial_wall_faces.py).
-            pier(g,x,y,5.10 if y<3 else 5.70,nutted_bracket if (x,y)==(2.97,2.15) else bracket)
-        beam_joint(g,(x,2.15,3.17),(x,4.80,3.17),.20,.22)
-        g.beam((x,2.20,2.25),(x,4.70,4.70),.18,mat=WOOD)
-    for y,z in ((2.15,5.10),(4.80,5.70)):
-        beam_joint(g,(1.23,y,z),(2.97,y,z),.22,.24)
-    # Footprint ends at y=5 and x=7 (2026-10-22): the feed-tower roof, the
-    # cement hopper and the header-tank tower stay inside those tile edges.
-    sheet_roof(g,1.03,3.95,3.20,4.98,5.47,5.81,919)
-    sheet_roof(g,1.03,3.18,1.92,3.69,5.10,5.32,920)
-    hopper(g,2.03,3.12,4.01,1.65,1.55,CIVIC_CONCRETE,930)
-    hopper(g,3.87,4.37,4.30,1.55,1.25,KILN_CEMENT,970,powder=True)
-    # Cement hopper legs, under the hopper's front and rear thirds.
-    for x in (4.02,4.57):
-        for y in (4.18,4.60):
-            # The rear right leg keeps its post-collar nuts: their heads keep
-            # cell (4,4,4)'s Right face out of the registered connection faces.
-            pier(g,x,y,4.26,column=nutted_column if (x,y)==(4.57,4.60) else timber_column)
-    chute(g,(2.10,3.24,3.53),(3.38,3.24,3.25),.49)
-    chute(g,(3.90,4.37,3.81),(4.40,4.20,3.54),.52)
     drum(g,parts)
-    # Independent native tank and flanged drop line, as in the reference.
-    # Tower piers stand inside grid column 6, clear of the right walk.
-    for x in (6.18,6.80):
-        for y in (3.80,4.80):
-            pier(g,x,y,4.20)
-        g.beam((x,3.83,2.25),(x,4.77,3.97),.15,mat=WOOD)
-    # The header tank (the mixer's water reservoir display) and its deck end
-    # on the x=7 tile edge.
-    deck(g,6.0,3.62,7.0,5.0,4.17)
-    water_barrel(g,'MixerHeaderTank',(6.49,4.33,4.25),1.02)
-    round_pipe(g,[(6.02,4.10,4.86),(5.84,4.10,4.86),
-                  (5.78,4.10,4.70),(5.78,4.10,3.85),
-                  (5.60,4.10,3.67),(5.03,4.10,3.67)],.075)
-    for z in (4.02,4.58):
-        band(g,(5.78,4.10,z),.11,.035,.09,BRASS,'Z',8)
-    gauge(g,5.80,3.98,4.16,.13)
-    wheel(g,(5.78,3.85,4.48),.18,'Y')
-    # The riser drops inside the tank tower (row 4), clear of the rear lane.
-    round_pipe(g,[(6.49,4.83,4.45),(6.49,4.91,4.45),
-                  (6.49,4.91,.40)],.078)
-    band(g,(6.49,4.91,.40),.145,.040,.10,IRON,'Z',8)
-    # Sloped discharge and a removable wet tray (the stacked finished blocks
-    # were loose props and were removed, 2026-10-22).
-    chute(g,(5.25,2.73,2.70),(6.15,.69,.88),.74)
-    for x in (5.59,6.78):
-        for y in (.22,1.34):
-            pier(g,x,y,.81)
-    g.box((6.20,.79,.69),(1.40,1.30,.15),IRON)
-    for y in (.17,1.42):
-        g.box((6.20,y,.89),(1.27,.13,.35),PLANK)
-    for x in (5.50,6.90):
-        g.box((x,.79,.89),(.13,1.30,.35),PLANK)
-    g.box((6.20,.79,.86),(1.20,1.09,.14),KILN_CEMENT)
-    for i in range(4):
-        rock(g,(5.82+(i%2)*.70,.42+(i//2)*.62,.96),(.26,.21,.05),KILN_DUST,1000+i)
-    for x,y,z in ((1.22,2.11,3.08),(2.98,2.11,4.79)):
-        cage_lamp(g,x,y,z)
-    # Low-level utilities and control cabinet add detail without occupying walks.
-    round_pipe(g,[(3.00,3.55,.40),(4.60,3.55,.40),(4.60,3.55,1.44),
-                  (5.86,3.55,1.44),(5.86,4.93,1.44)],.055)
-    g.box((6.02,3.63,2.48),(.44,.20,.57),CIVIC_FORGED_PANEL)
-    gauge(g,6.02,3.50,2.55,.105)
-    for x in (5.89,6.02,6.15):
-        prism(g,(x,3.50,2.29),.027,.04,BRASS,'Y',6,(True,False))
+    tank(g)
+    tray(g)
     return rails

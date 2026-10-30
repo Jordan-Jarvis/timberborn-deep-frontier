@@ -14,14 +14,14 @@ from mathutils.bvhtree import BVHTree
 sys.path.insert(0, str(Path(__file__).parent))
 from frontier_architecture import Geometry, wall, roof
 from industrial_geometry import sheet_roof
-from factory_facade_details import crusher_facades, kiln_facades
+from factory_facade_details import crusher_facades
 from materials_laboratory_geometry import concrete_course, slope_facade, shed_roof
 from pit_isometric_geometry import enclosure
 from mixer_isometric_geometry import operator_room
 from quarry_isometric_geometry import room as quarry_room
 from quarry_isometric_geometry import workshops as quarry_workshops
 from crusher_sheet_geometry import workshop as crusher_workshop
-from kiln_isometric_geometry import porch as kiln_porch
+from kiln_isometric_geometry import porch as kiln_porch, feed_house as kiln_feed_house, hall as kiln_hall
 from hydro_isometric_geometry import cast_conduit
 from structural_geometry import MODELS as STRUCTURAL_MODELS
 from civic_isometric_geometry import framed_room,gabled_roof,roof_bearing
@@ -85,17 +85,26 @@ check('pit storeroom',lambda g:enclosure(g,limestone=False),[
     ((.2625,1.28,.6),(0,2.25,0),(0,0,1.4),(-1,0,0),301,51),
     ((.44,3.74,.4),(.96,0,0),(0,0,2.25),(0,1,0),151,101),
     ((.2625,1.25,2.18),(0,2.2,.53),(0,0,.05),(-1,0,0),151,31)])
+# Compact 4x3x3 mixer (2026-10-30): west wall x=.10, east wall x=2, rear
+# wall y=3, vestibule y .16..1, clerestory face y=1. The roof slab carries
+# the hoppers, so it is not sampled from above.
 check('mixer operator room',operator_room,[
-    ((.4525,1.28,.5),(0,2.25,0),(0,0,1.2),(-1,0,0),301,51),
-    ((.56,3.7175,.4),(2.03,0,0),(0,0,1.2),(0,1,0),301,51),
-    ((.49,.46,.1),(.58,0,0),(0,0,.8),(0,-1,0),151,51),
-    ((.55,1.15,1.15),(2.15,0,0),(0,0,.65),(0,-1,0),151,51),
-    ((.58,1.25,1.86),(2.10,0,0),(0,2.25,0),(0,0,1),151,101),
-    ((.4525,.57,.05),(0,.50,0),(0,0,.95),(-1,0,0),81,101)])
+    ((.10,1.10,.45),(0,1.80,0),(0,0,1.2),(-1,0,0),301,51),
+    ((.20,3.0,.40),(1.70,0,0),(0,0,1.2),(0,1,0),301,51),
+    ((.15,.16,.10),(.80,0,0),(0,0,.85),(0,-1,0),151,51),
+    ((.15,1.0,1.15),(1.75,0,0),(0,0,.65),(0,-1,0),151,51),
+    ((.10,.20,.05),(0,.78,0),(0,0,.95),(-1,0,0),81,101),
+    ((2.0,.20,.05),(0,.78,0),(0,0,.95),(1,0,0),81,101)])
 check('crusher right wall',crusher_facades,[
     ((3.6375,1.35,.4),(0,2.10,0),(0,0,1.2),(1,0,0),301,51)])
-check('kiln operator side walls',kiln_facades,[
-    ((2.8425,.40,.4),(0,2.70,0),(0,0,1.2),(-1,0,0),301,51)])
+# Compact 5x3x4 kiln (2026-10-30): feed-house skin 0.04 inside its corner
+# posts, drum-hall rear wall 0.10 inside the y=2 edge (artwork units).
+check('kiln feed house walls',kiln_feed_house,[
+    ((.04,.20,.30),(0,1.60,0),(0,0,2.2),(-1,0,0),301,101),
+    ((.18,.04,.30),(.64,0,0),(0,0,2.2),(0,-1,0),151,101),
+    ((.18,1.96,.30),(.64,0,0),(0,0,2.2),(0,1,0),151,101)])
+check('kiln drum hall rear wall',kiln_hall,[
+    ((1.05,1.90,.30),(2.90,0,0),(0,0,1.9),(0,1,0),301,101)])
 check('quarry workshop side infill',lambda g:quarry_room(g,.35,4.30,1.92,6.56,3.25,710,'left'),[
     ((.315,4.45,1.08),(0,1.95,0),(0,0,.5),(-1,0,0),301,31),
     ((.35,4.45,3.15),(0,1.95,0),(0,0,.22),(-1,0,0),151,41)])

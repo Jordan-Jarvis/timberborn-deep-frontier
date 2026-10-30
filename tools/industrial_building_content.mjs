@@ -122,16 +122,17 @@ export async function applyIndustrialLayout(value,building){
   value.SimpleManufactoryBehaviorsSpec={};
   if(ident==='MineralQuarry'||ident==='ConcreteMixer')await applyNativeBuildingAssembly(value,ident,d.origin,
     {goodId:'Water',flowNodes:[],wheelNodes:[]});
-  // The service inlet is at the foot of the header-tank tower, where the
-  // drop pipe reaches the ground. Recipe Water stays in the native
-  // manufactory inventory.
+  // The service inlet is on the header-tank pedestal's east face, where the
+  // riser reaches the ground (compact 4x3x3, 2026-10-30). Recipe Water stays
+  // in the native manufactory inventory.
   if(ident==='ConcreteMixer')value.BuildingPipeTargetPortsSpec={
-    Ports:[{Coordinates:xyz([6,4,0]),Directions:'Right',State:'OpenIn'}],
+    Ports:[{Coordinates:xyz([3,2,0]),Directions:'Right',State:'OpenIn'}],
   };
-  // Rear-right pier of the header-tank tower; Power Lines expects grid XYZ
-  // (Z is height). Connection count/range remain player-configured settings.
+  // Rear-right corner of the header-tank pedestal's iron cap; Power Lines
+  // expects grid XYZ (Z is height). Connection count/range remain
+  // player-configured settings.
   if(ident==='ConcreteMixer')value.PowerLineSpec={
-    ConnectionLocations:[xyz([6.90,4.90,3.80])],
+    ConnectionLocations:[xyz([3.90,2.90,1.32])],
   };
   // Kiln firing smoke at the steel stack while it works (the other machines
   // have no flue). Smog lists the kiln as a polluter.

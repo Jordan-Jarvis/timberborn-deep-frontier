@@ -52,38 +52,3 @@ def crusher_facades(g):
     g.box((1.57,2.785,.54),(.30,.08,.30),IRON)
     gauge(g,1.57,2.729,.58,.078)
     instrument_strip(g,1.57,2.725,.78,.24)
-
-
-def kiln_facades(g):
-    machinery=MountedMachinery(g,KILN_MACHINE_DATUM,KILN_DECK)
-    # Under-deck operator room continues back from the existing front porch.
-    # Solid panes hide the room; the roofed rotary machinery stays visible.
-    # One tile wide (grid x 4..5): plank outer faces on the tile edges.
-    for x in (3.0375,3.9625):
-        left=x<3.5
-        # Plank skin: the boards' inner faces look into the closed room.
-        for j in range(19):
-            y=.32+j*.159
-            skin_board(g,(x,y,(.20+KILN_DECK-.19)/2),(.075,.159,KILN_DECK-.39),'Y',j,19,PLANK,'+x' if left else '-x')
-        for y in (.75,2.75):side_window(g,x+(-.0375 if left else .0375),y,KILN_DECK-.58,0.75,'left' if left else 'right')
-        for y in (.25,1.75,3.28):
-            g.box((x,y,(.155+KILN_DECK-.145)/2),(.11,.12,KILN_DECK-.30),WOOD)
-    g.box((3.5,1.75,KILN_DECK-.16),(.925,3.10,.07),WOOD)
-    window_y(g,3.5,3.335,KILN_DECK-.57,0.8,'back')
-    # The porch is the room's width; one header closes the front above it.
-    wall(g,3.075,.28,3.925,KILN_DECK-.18,FACTORY_PORCH_ROOF+.08)
-    # Air/control lines stay on the rear machine frame, inside the gallery's
-    # walking line; their ends visibly connect to the damper and feed gate.
-    round_pipe(machinery,[(.42,1.52,2.47),(.42,3.42,2.47),(.42,3.42,2.88),
-                  (5.87,3.42,2.88),(5.87,2.70,2.88),(5.87,2.70,3.28)],.045)
-    for x in (1.60,2.75,4.02,5.30):
-        band(machinery,(x,3.42,2.88),.076,.025,.055,BRASS,'X',6)
-        machinery.box((x,3.34,2.88),(.07,.18,.15),IRON)
-    for y in (1.48,3.30):strapped_vessel(g,4.12,y,.65,.11,.60)
-    round_pipe(g,[(4.12,1.48,.99),(4.12,1.48,1.10),(4.12,3.30,1.10),(4.12,3.30,.99)],.027)
-    round_pipe(g,[(4.12,3.30,.99),(4.12,3.42,.99),(4.12,3.42,KILN_DECK+2.88-KILN_MACHINE_DATUM)],.023)
-    # The original mechanical gauges get a small status strip, not neon trim.
-    instrument_strip(machinery,4.89,1.33,1.86,.24)
-    # A short sealed outlet neck connects the process chamber to its front tray.
-    machinery.box((6.16,.95,.84),(.58,.16,.16),KILN_SOOT)
-    for x in (5.84,6.48):machinery.box((x,.85,.84),(.06,.25,.21),IRON)
