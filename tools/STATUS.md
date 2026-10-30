@@ -136,6 +136,12 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - **Old saves:** keeps its origin and entrance. A flipped plant's entrance moves 4 tiles (local x 8 -> 4).
   - **Checks:** same building-level set as Coal/Oil, plus workforce_risks and building_sounds; all pass apart from `map-setup-terrain` (maxArea only). Strict z-fight audit: 0 visible.
 - **In game:** not seen yet.
+- **Radioactive Waste Vault** 9x10x12 -> 8x7x6 (`lategame_RadioactiveWasteVault.py`; the old `GRID_ORIGIN` (4,2) corner is the same grid origin, now authored directly).
+  - **Building:** two one-layer battered berm courses (there were three), a lower ribbed dome on a short buttressed drum with its turning lantern, two vent towers with turning cowls (ending 4.4/4.9, was 8.6/9.6), the cask port in the left berm face, and a flat-roofed gatehouse with an open parapet ring (the plank gable is gone). The dome stays as the defining silhouette.
+  - **Triangles:** 6,086 -> 4,466.
+  - **Data:** same origin, door tile and Entrance (4,-1,0). Colliders 21 -> 13, roof-deck cells 1 -> 5. No power or pipes. `lategame_freed_cells.json`: footprintAfter 8x7x6, outsideCells 100; the two recorded inside cells stay free. Cost unchanged.
+  - **Old saves:** keeps its origin and entrance. A flipped vault's entrance moves 1 tile (local x 4 -> 3).
+  - **Checks:** building-level set plus radiation_content and meltdown_content pass; `lategame_freed_cells` passes with the record. Strict z-fight audit: 0 visible.
 
 ## Compaction: Deep Mine 10x11x16 -> 7x6x7 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `minesdrill` on HEAD b2d8fb6 + this change; not built or run in game)
 

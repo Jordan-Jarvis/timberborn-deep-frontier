@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Half-sunk monumental bunker: three battered concrete berm courses stepping up to a ribbed concrete dome, entered through a gatehouse in a cutting, with two turning-cowl vent towers.",
+  "hero": "Half-sunk bunker: two battered concrete berm courses stepping up to a ribbed concrete dome, entered through a cast gatehouse, with two turning-cowl vent towers.",
   "footprint": [
-    9,
-    10
+    8,
+    7
   ],
-  "heightLayers": 12,
+  "heightLayers": 6,
   "boundsMin": [
-    -0.055,
+    -0.005,
     -0.105,
     0.0
   ],
   "boundsMax": [
-    9.0,
-    10.0,
-    10.9
+    8.0,
+    7.0,
+    5.96
   ],
   "doors": [
     {
@@ -41,20 +41,19 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 2328,
+  "faces": 1791,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 56,
-    "IrregularPlanks_DarkBrown.IronTeeth": 72,
-    "BaseMetal.IronTeeth": 1650,
-    "RoofPlanks.IronTeeth": 243,
-    "accent8": 20,
+    "BaseWood_DarkBrown.IronTeeth": 32,
+    "BaseMetal.IronTeeth": 1452,
+    "RoofPlanks.IronTeeth": 147,
+    "accent8": 10,
     "accent25": 20,
-    "Plaster_White.IronTeeth": 579,
-    "Plaster_Orange.IronTeeth": 45,
+    "Plaster_White.IronTeeth": 448,
+    "Plaster_Orange.IronTeeth": 39,
     "IrregularPlanks_MetalForged.IronTeeth": 30,
     "WindowsAtlas.IronTeeth": 2,
     "PaintedMetal.IronTeeth": 90
   },
-  "sourceHash": "55617e0a4cca58401901e2f54304f6a40fead25ff0fe294dc60c0f605873afcb",
-  "artHash": "7ce08a8535867f7223b570f56b8ddbbaf86c79a32155be0b941b36071fe93b26"
+  "sourceHash": "076104ffb4e382b5a273245a2fdc44cfb0c276cef8975bda755f1f9cf57efc8f",
+  "artHash": "fd8cfa31a53d333c247a699eeabb9364073c3dc8dd7d7b3be4352f3183fc45d8"
 }

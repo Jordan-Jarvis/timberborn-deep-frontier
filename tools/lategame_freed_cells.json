@@ -147,15 +147,15 @@
     12
    ],
    "footprintAfter": [
-    9,
-    10,
-    12
+    8,
+    7,
+    6
    ],
    "gridOrigin": [
     4,
     2
    ],
-   "outsideCells": 66,
+   "outsideCells": 100,
    "insideCells": [
     [
      2,
