@@ -9,6 +9,7 @@ using ConveyorBelt.Services;
 using Newtonsoft.Json;
 using PowerLines.Components;
 using PowerLines.Services;
+using PowerLines.Specs;
 using TimberPipes.Components;
 using TimberPipes.Models;
 using TimberPipes.Specs;
@@ -62,7 +63,10 @@ namespace DeepFrontier.Scripts {
     private const string RecordPath="C:/Users/Jordan/Documents/TimberbornModding/outputs/factory-transport-expectations.json";
     private const string PowerRecordPath="C:/Users/Jordan/Documents/TimberbornModding/outputs/factory-power-lines-expectations.json";
     private static readonly string[] Solids={"Aggregate","Cement","Concrete"};
-    private static readonly Vector3Int MixerIntake=new(6,4,0);
+    // From the installed mixer blueprint in Setup: its first pipe port (the
+    // water intake) and, per transport lane, the mixer cell it meets.
+    private Vector3Int _intake;
+    private List<(Vector3Int Cell,Vector3Int Out)> _laneFaces;
     private static readonly string[] MixerGoods={"Aggregate","Cement","Water","Concrete"};
     private readonly EntityRegistry _entities;
     private readonly BlockObjectFactory _factory;
@@ -129,26 +133,32 @@ namespace DeepFrontier.Scripts {
       _building=_entities.Entities.Single(e=>e.HasComponent<TemplateSpec>()
         &&e.GetComponent<TemplateSpec>().TemplateName=="ConcreteMixer.IronTeeth").GetComponent<BlockObject>();
       Require(_building.Coordinates==new Vector3Int(159,160,3),"Unexpected mixer fixture position");
-      // 7x5 mixer (2026-10-22, footprint at the walls; local frame unchanged). Its outward
-      // ground-layer shaft faces (outputs/connection-faces/ConcreteMixer.json, flatness rule) are
-      // the west wall x 0 rows 0..3 facing Left, (0,3,0) facing Up into the open corner cell
-      // (0,4,0), and (0,0,0)/(2,0,0) facing the road or the open front cells. The braced rear
-      // tank tower (6,4) offers no shaft face. Its water intake is the first pipe port (6,4,0)
-      // facing Right and its cable anchor PowerLineSpec (6.9,4.9,3.8). The lanes and the shaft
-      // line below meet those faces, so belts and pump share the mixer's mechanical graph.
+      // The fixture follows the installed mixer blueprint, not a size literal
+      // (compact 4x3x3 since 2026-10-30). Its water intake is the first pipe
+      // port (the generated ports on its other flat faces follow it,
+      // tools/connection_content.mjs). The transport lanes meet its measured
+      // ground-layer wall faces (outputs/connection-faces/ConcreteMixer.json):
+      // the west wall's Left faces, except the row of the saved shaft beside
+      // Transputs[0] (MixerAcceptance builds it there), then the rear wall's Up
+      // faces; the next rear Up face carries the shaft line to the pump, so
+      // belts and pump share the mixer's mechanical graph.
       var mixerSpec=_building.GetComponent<BlockObjectSpec>();
-      // The tested intake is the first port; the generated ports on the mixer's
-      // other flat exterior faces follow it (tools/connection_content.mjs).
       var intake=_building.GetComponent<BuildingPipeTargetPortsSpec>().Ports[0];
-      Require(mixerSpec.Size==new Vector3Int(7,5,7)&&intake.Coordinates==MixerIntake&&intake.Directions.ToString()=="Right",
-        "Installed mixer is "+mixerSpec.Size+" with intake "+intake.Coordinates+" "+intake.Directions+
-        "; this fixture's lanes and pipe line encode the 7x5x7 mixer with its intake at "+MixerIntake+" Right");
+      Require(intake.Directions.ToString()=="Right",
+        "Mixer intake "+intake.Coordinates+" "+intake.Directions+" is not the Right face this fixture's pipe line meets");
+      _intake=intake.Coordinates;
       var faces=_building.GetComponent<TransputProviderSpec>().Transputs;
       bool Offers(Vector3Int cell,string direction)=>faces.Any(t=>t.Coordinates==cell
         &&t.Directions.ToString().Split(',').Select(d=>d.Trim()).Contains(direction));
-      Require(Offers(new Vector3Int(0,1,0),"Left")&&Offers(new Vector3Int(0,2,0),"Left")&&Offers(new Vector3Int(0,3,0),"Left")
-        &&Offers(new Vector3Int(0,3,0),"Up")&&!Offers(new Vector3Int(6,4,0),"Up"),
-        "Installed mixer shaft faces differ from the west wall rows 1..3 Left and (0,3,0) Up that this fixture's lanes and shaft line use");
+      int shaftRow=faces[0].Coordinates.y;
+      var west=Enumerable.Range(0,mixerSpec.Size.y).Where(y=>y!=shaftRow&&Offers(new Vector3Int(0,y,0),"Left"))
+        .Select(y=>(Cell:new Vector3Int(0,y,0),Out:new Vector3Int(-1,0,0)));
+      var rear=Enumerable.Range(0,mixerSpec.Size.x).Where(x=>Offers(new Vector3Int(x,mixerSpec.Size.y-1,0),"Up"))
+        .Select(x=>(Cell:new Vector3Int(x,mixerSpec.Size.y-1,0),Out:new Vector3Int(0,1,0)));
+      var laneFaces=west.Concat(rear).ToList();
+      Require(laneFaces.Count>=4&&laneFaces[3].Out.y==1,
+        "Installed mixer offers "+laneFaces.Count+" lane faces; this fixture needs three lanes and a rear Up face for its shaft line");
+      _laneFaces=laneFaces;
       Require(_building.GetComponent<PausableBuilding>().Paused,"Expected saved paused mixer");
       _mixer=_building.GetComponent<Manufactory>();
       foreach(var e in _entities.Entities.Where(e=>e.HasComponent<Workplace>()&&e.HasComponent<PausableBuilding>()))
@@ -170,32 +180,42 @@ namespace DeepFrontier.Scripts {
         }
         Require(_mixer.Inventory.AmountInStock("Concrete")==12&&_mixer.ProductionProgress==0,
           "Expected main mixer acceptance checkpoint");
-        // West lanes on the wall faces of rows 1..3 (row 0 holds the mixer's saved shaft):
-        // Cw270 belts run east into the mixer, the Cw90 Concrete lane runs west out of it.
-        // Each warehouse faces its lane (entrance on the belt), as the former rear lanes did.
+        // One lane per derived face: two belts straight out from the face and a
+        // warehouse facing them (entrance on the belt). Ingredient lanes run into
+        // the mixer, the third (Concrete) runs out of it. Cw0 runs south, Cw90
+        // west, Cw180 north, Cw270 east.
+        Orientation Toward(Vector3Int d)=>d.x>0?Orientation.Cw270:d.x<0?Orientation.Cw90:d.y>0?Orientation.Cw180:Orientation.Cw0;
         for(int lane=0;lane<3;lane++) {
-          int y=161+lane;
-          var orientation=lane==2?Orientation.Cw90:Orientation.Cw270;
-          for(int x=158;x>=157;x--)
-            _belts.Add(Create("ConveyorBeltSp1.IronTeeth",x,y,3,orientation).GetComponent<BeltCarrier>());
-          var store=Create("SmallWarehouse.IronTeeth",156,y,3,Orientation.Cw270);
+          var (cell,dir)=_laneFaces[lane];
+          var face=_building.TransformCoordinates(cell);
+          var orientation=lane==2?Toward(dir):Toward(-dir);
+          for(int step=1;step<=2;step++) {
+            var c=face+dir*step;
+            _belts.Add(Create("ConveyorBeltSp1.IronTeeth",c.x,c.y,c.z,orientation).GetComponent<BeltCarrier>());
+          }
+          var at=face+dir*3;
+          var store=Create("SmallWarehouse.IronTeeth",at.x,at.y,at.z,Toward(-dir));
           store.GetComponent<SingleGoodAllower>().Allow(Solids[lane]);
           var inventory=store.GetComponent<Stockpile>().Inventory;
           _stores.Add(inventory);
           if(lane<2)inventory.GiveExisting(new GoodAmount(Solids[lane],lane==0?30:12));
         }
-        // Pipe line east of the intake (6,4,0) Right, world (165,164,3).
-        var valve=Create("HorizontalPipeValve.IronTeeth",166,164,3,Orientation.Cw270);
-        var pipe=Create("HorizontalPipe.IronTeeth",167,164,3,Orientation.Cw90);
-        var pump=Create("HorizontalPipePump.IronTeeth",168,164,3,Orientation.Cw270);
-        var tank=Create("MediumTank.IronTeeth",169,164,3);
-        Create("DevPowerGenerator",168,163,3);
-        // Vanilla shaft line from the mixer's (0,3,0) Up face: the open corner cell (0,4,0),
-        // world (159,164,3), then north to (159,165,3) and east along the freed former rear
-        // row y 165 to the pump's north face at (168,165,3). Pump, its generator and the tank
-        // line share the mixer's graph through it.
-        Create("PowerShaft.IronTeeth",159,164,3);
-        for(int x=159;x<=168;x++)Create("PowerShaft.IronTeeth",x,165,3);
+        // Pipe line east of the intake's Right face (the mixer stands Cw0 unflipped).
+        var port=_building.TransformCoordinates(_intake);
+        var valve=Create("HorizontalPipeValve.IronTeeth",port.x+1,port.y,port.z,Orientation.Cw270);
+        var pipe=Create("HorizontalPipe.IronTeeth",port.x+2,port.y,port.z,Orientation.Cw90);
+        var pump=Create("HorizontalPipePump.IronTeeth",port.x+3,port.y,port.z,Orientation.Cw270);
+        var tank=Create("MediumTank.IronTeeth",port.x+4,port.y,port.z);
+        Create("DevPowerGenerator",port.x+3,port.y-1,port.z);
+        // Vanilla shaft line from the fourth derived face (a rear Up face): north
+        // past the rear lane's warehouse row, east, then south to the pump's
+        // north face. Pump, its generator and the tank line share the mixer's
+        // graph through it.
+        var shaftFace=_building.TransformCoordinates(_laneFaces[3].Cell);
+        int turnY=shaftFace.y+4,pumpX=port.x+3;
+        for(int y=shaftFace.y+1;y<=turnY;y++)Create("PowerShaft.IronTeeth",shaftFace.x,y,port.z);
+        for(int x=shaftFace.x+1;x<=pumpX;x++)Create("PowerShaft.IronTeeth",x,turnY,port.z);
+        for(int y=turnY-1;y>port.y;y--)Create("PowerShaft.IronTeeth",pumpX,y,port.z);
         tank.GetComponent<SingleGoodAllower>().Allow("Water");
         tank.GetComponent<Stockpile>().Inventory.GiveExisting(new GoodAmount("Water",300));
         _tank=tank.GetComponent<PipeTank>();_pump=pump.GetComponent<HeadliftPipe>();
@@ -282,9 +302,9 @@ namespace DeepFrontier.Scripts {
     }
     private void Start() {
       if(!_power)Require(_belts.All(b=>b.Running),"A factory belt has no native power");
-      Require(_belts[0].OutPort.Target==new Vector3Int(159,161,3)
-        &&_belts[2].OutPort.Target==new Vector3Int(159,162,3)
-        &&_belts[4].InPort.Target==new Vector3Int(159,163,3),"Belt endpoint orientation differs");
+      Require(_belts[0].OutPort.Target==_building.TransformCoordinates(_laneFaces[0].Cell)
+        &&_belts[2].OutPort.Target==_building.TransformCoordinates(_laneFaces[1].Cell)
+        &&_belts[4].InPort.Target==_building.TransformCoordinates(_laneFaces[2].Cell),"Belt endpoint orientation differs");
       Require(_belts.All(b=>b.Sim.Output!=null)
         &&_belts[1].Sim.Input!=null&&_belts[3].Sim.Input!=null&&_belts[4].Sim.Input!=null,
         "Disconnected factory belt inventory endpoint");
@@ -303,7 +323,7 @@ namespace DeepFrontier.Scripts {
       Require(target!=null&&target.Target.BlockObject==_building,"Pipe missed the authored mixer intake");
       Require(!target.TryTransfer("Badwater",1),"Mixer intake accepted Badwater");
       var pipeTarget=_building.GetComponent<BuildingPipeTarget>();
-      var port=_building.TransformCoordinates(MixerIntake);
+      var port=_building.TransformCoordinates(_intake);
       Require(pipeTarget.TryConnecting(_valve.Pipe,new PipePortDefinition(port,Direction3D.Right),false)==null
         &&pipeTarget.TryConnecting(_valve.Pipe,new PipePortDefinition(port,Direction3D.Left),true)==null,
         "Mixer inlet permits withdrawal or a wrong face");
@@ -331,7 +351,7 @@ namespace DeepFrontier.Scripts {
       if(_power) {
         foreach(var generator in _supplies.Keys)generator.SetOutputMultiplier(0);
         _remoteSource.SetOutputMultiplier(0);
-        var location=_building.TransformCoordinates(new Vector3(6.9f,4.9f,3.8f));
+        var location=_building.TransformCoordinates(_building.GetComponent<PowerLineSpec>().ConnectionLocations[0]);
         Require(_building.GetComponent<PowerLineComponent>().ConnectionLocations.Length==1
           &&Vector3.Distance(_building.GetComponent<PowerLineComponent>().ConnectionLocations[0],location)<.00001f,
           "Mixer cable anchor is not on the authored rear frame");
