@@ -13,6 +13,12 @@ single-sided facade seen from behind is culled in game, so the ray continues
 through it. Animated parts, water and native props never occlude (they move
 or are transparent), so the count is conservative.
 
+The rays run on the RTX 2060 (gpu_visibility.py), which reproduces the
+mathutils BVHTree ray casts this audit used, ray for ray: see that module for
+the exact test. A ray exactly along a seam between two triangles can slip
+between them (the BVH's box culling of grazing rays), so an escape counts only
+when two rays offset 0.1 mm sideways escape too.
+
 Optional terrain: --terrain-z Z adds an opaque ground plane at scene height Z
 for land buildings (parts below it are buried). Without it, nothing below the
 building counts as hidden by ground.
@@ -35,15 +41,16 @@ from pathlib import Path
 import bpy
 import numpy as np
 from mathutils import Vector
-from mathutils.bvhtree import BVHTree
 
 sys.path.insert(0, str(Path(__file__).parent))
 from enclosed_cull import FACING  # noqa: E402
+import gpu_visibility  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 ELEVATIONS = (12, 30, 48, 66, 84)
 AZIMUTHS = 16
 STUDIES = {'GroceryStore': 'GroceryMarket'}
+F32 = np.float32
 
 
 def directions():
@@ -91,40 +98,14 @@ def triangles(obj, deps):
     return world, tri, [names[i] if i < len(names) else '' for i in mat[poly]], source
 
 
-def escapes(bvh, origin, d):
-    """True when a ray from origin towards the camera reaches open sky:
-    hits on faces the camera sees from behind (culled) let it continue.
-    A ray exactly along a seam between two triangles can slip between them
-    (BVH casts are not watertight), so an escape counts only when two rays
-    offset 0.1 mm sideways escape too."""
-    if not _escapes(bvh, origin, d):
-        return False
-    side = d.orthogonal().normalized() * 1e-4
-    up = d.cross(side).normalized() * 1e-4
-    return _escapes(bvh, origin + side, d) and _escapes(bvh, origin + up, d)
-
-
-def _escapes(bvh, origin, d):
-    for _ in range(64):
-        hit = bvh.ray_cast(origin, d, 500.0)
-        if hit[0] is None:
-            return True
-        if hit[1].dot(d) > 0:
-            return False
-        # A back face can touch a coplanar front face (a board resting on a
-        # lid): the ray tie may return either, so look for the front one.
-        if any(n.dot(d) > 0 for _, n, _, _ in bvh.find_nearest_range(hit[0], 2e-5)):
-            return False
-        origin = hit[0] + d * 2e-4
-    return False
-
-
-def check_culled(collection, bvh, dirs):
+def check_culled(collection, scene, dirs, table):
     """Every face removed by enclosed_cull.py (sidecar written at build) must
     stay occluded from every camera direction in this saved scene. Samples:
     centroid, inner points and corners pulled 5% towards the centroid."""
     folder = ROOT / 'outputs/triangle-budget/culled'
     checked, exposed, examples = 0, 0, []
+    # one GPU batch per occluder scene: the static scene and each moving part
+    batches = {id(scene): (scene, [])}
     for obj in collection.all_objects:
         path = folder / (obj.name + '.json')
         if obj.type != 'MESH' or 'df_enclosed_culled' not in obj or not path.is_file():
@@ -133,12 +114,13 @@ def check_culled(collection, bvh, dirs):
         if record['object'] != obj.name or len(record['polygons']) != obj['df_enclosed_culled']:
             raise SystemExit(f'{obj.name}: culled-face sidecar does not belong to this build')
         m = obj.matrix_world
-        tree = bvh
+        tree = scene
         if animated(obj):
             # A moving part is culled only against its own solids, which move
             # with it: check it against itself.
             world, tri, _, _ = triangles(obj, bpy.context.evaluated_depsgraph_get())
-            tree = BVHTree.FromPolygons([tuple(v) for v in world], [tuple(t) for t in tri.tolist()], all_triangles=True, epsilon=0.0)
+            tree = gpu_visibility.Scene(world, tri)
+        faces = []
         for polygon in record['polygons']:
             pts = [m @ Vector(p) for p in polygon]
             n = Vector((0, 0, 0))
@@ -151,25 +133,65 @@ def check_culled(collection, bvh, dirs):
             c = sum(pts, Vector((0, 0, 0))) / len(pts)
             samples = [c] + [c + (p - c) * .95 for p in pts] + [c + (p - c) * .5 for p in pts]
             checked += 1
-            seen = False
-            for d in dirs:
+            base = [tuple(sample + n * 2e-4) for sample in samples]
+            points, dir_index = [], []
+            for k, d in enumerate(dirs):
                 if n.dot(d) <= FACING:
                     continue
-                for sample in samples:
-                    if escapes(tree, sample + n * 2e-4 + d * 2e-4, d):
-                        seen = True
-                        break
-                if seen:
-                    break
-            if seen:
+                points += base
+                dir_index += [k] * len(base)
+            faces.append((obj.name, m, c, points, dir_index))
+        batches.setdefault(id(tree), (tree, []))[1].extend(faces)
+    for tree, faces in batches.values():
+        points = [p for face in faces for p in face[3]]
+        dir_index = [k for face in faces for k in face[4]]
+        seen = tree.escapes(np.array(points, dtype=F32).reshape(-1, 3), np.array(dir_index, dtype=np.int64), table)
+        at = 0
+        for name, m, c, face_points, _ in faces:
+            if seen[at:at + len(face_points)].any():
                 exposed += 1
                 if len(examples) < 20:
-                    examples.append({'object': obj.name, 'centroid': [round(v, 3) for v in (m.inverted() @ c)]})
+                    examples.append({'object': name, 'centroid': [round(v, 3) for v in (m.inverted() @ c)]})
+            at += len(face_points)
     return {'culledFacesChecked': checked, 'culledFacesExposed': exposed, 'exposedExamples': examples}
 
 
 def study_of(ident):
     return STUDIES.get(ident, ident)
+
+
+def hidden_triangles(scene, meshes, dirs_np, table):
+    """For each (world, tri) mesh, per triangle: no sample sees open sky along
+    any orbit direction it faces. All meshes go to the GPU in one batch."""
+    rays_tri, rays_dir, rays_base, offsets = [], [], [], [0]
+    for world, tri in meshes:
+        a, b, c = world[tri[:, 0]], world[tri[:, 1]], world[tri[:, 2]]
+        normal = np.cross(b - a, c - a)
+        area2 = np.linalg.norm(normal, axis=1)
+        unit = normal / np.maximum(area2, 1e-30)[:, None]
+        centroid = (a + b + c) / 3
+        facing = unit @ dirs_np.T > FACING
+        facing[area2 < 1e-14] = False          # degenerate: never rasterised
+        # centroid, then three inner points unless the triangle is tiny
+        samples = np.stack([centroid, .5 * (centroid + a), .5 * (centroid + b), .5 * (centroid + c)], 1)
+        count = np.where(area2 < 1e-5, 1, 4)
+        # float32 exactly as mathutils computes Vector(s) + n * 2e-4
+        base = samples.astype(F32) + unit.astype(F32)[:, None, :] * F32(2e-4)
+        t_idx, k_idx = np.nonzero(facing)
+        s_count = count[t_idx]
+        reps = np.repeat(np.arange(len(t_idx)), s_count)
+        s_idx = np.arange(len(reps)) - np.repeat(np.cumsum(s_count) - s_count, s_count)
+        rays_tri.append(t_idx[reps] + offsets[-1])
+        rays_dir.append(k_idx[reps])
+        rays_base.append(base[t_idx[reps], s_idx])
+        offsets.append(offsets[-1] + len(tri))
+    if not meshes:
+        return []
+    ray_tri = np.concatenate(rays_tri)
+    seen_ray = scene.escapes(np.concatenate(rays_base), np.concatenate(rays_dir), table)
+    seen = np.zeros(offsets[-1], dtype=bool)
+    seen[ray_tri[seen_ray]] = True
+    return [~seen[offsets[i]:offsets[i + 1]] for i in range(len(meshes))]
 
 
 def audit(ident, terrain_z, blend_dir=None):
@@ -209,44 +231,18 @@ def audit(ident, terrain_z, blend_dir=None):
         base += 4
     allv = np.vstack(verts)
     allp = np.vstack(polys)
-    bvh = BVHTree.FromPolygons([tuple(v) for v in allv], [tuple(p) for p in allp.tolist()], all_triangles=True, epsilon=0.0)
+    scene = gpu_visibility.Scene(allv, allp)
     dirs = directions()
     dirs_np = np.array([tuple(d) for d in dirs])
+    table = gpu_visibility.direction_table(dirs)
     started = time.time()
     objects = []
     total = hidden_total = 0
     by_source = {}
+    static = iter(hidden_triangles(scene, [(world, tri) for _, world, tri, _, _, moving in shipped if not moving], dirs_np, table))
     for obj, world, tri, mats, source, moving in shipped:
         sources = json.loads(obj.get('df_source_locations', '[]'))
-        a, b, c = world[tri[:, 0]], world[tri[:, 1]], world[tri[:, 2]]
-        normal = np.cross(b - a, c - a)
-        area2 = np.linalg.norm(normal, axis=1)
-        unit = normal / np.maximum(area2, 1e-30)[:, None]
-        centroid = (a + b + c) / 3
-        facing = unit @ dirs_np.T > FACING
-        hidden = np.zeros(len(tri), dtype=bool)
-        if not moving:
-            for t in range(len(tri)):
-                if area2[t] < 1e-14:
-                    hidden[t] = True  # degenerate: never rasterised
-                    continue
-                order = np.nonzero(facing[t])[0]
-                if not len(order):
-                    hidden[t] = True
-                    continue
-                cen = centroid[t]
-                samples = [cen] if area2[t] < 1e-5 else [cen, .5 * (cen + a[t]), .5 * (cen + b[t]), .5 * (cen + c[t])]
-                n = Vector(unit[t])
-                seen = False
-                for k in order:
-                    d = dirs[k]
-                    for s in samples:
-                        if escapes(bvh, Vector(s) + n * 2e-4 + d * 2e-4, d):
-                            seen = True
-                            break
-                    if seen:
-                        break
-                hidden[t] = not seen
+        hidden = np.zeros(len(tri), dtype=bool) if moving else next(static)
         count = int(hidden.sum())
         total += len(tri)
         hidden_total += count
@@ -271,7 +267,7 @@ def audit(ident, terrain_z, blend_dir=None):
                 hidden_mats[name] = hidden_mats.get(name, 0) + 1
         objects.append({'name': obj.name, 'animated': moving, 'triangles': len(tri), 'hidden': count,
                         'hiddenByMaterial': dict(sorted(hidden_mats.items(), key=lambda kv: -kv[1]))})
-    culled = check_culled(collection, bvh, dirs)
+    culled = check_culled(collection, scene, dirs, table)
     report = {
         **culled,
         'model': ident, 'study': study, 'source': str(path).replace('\\', '/'),
@@ -296,6 +292,7 @@ def main():
     cli = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
     out = Path(cli.out)
     out.mkdir(parents=True, exist_ok=True)
+    gpu_visibility.init_gpu()
     failed = False
     for ident in cli.models.split(','):
         report = audit(ident, cli.terrain_z, cli.blend_dir)

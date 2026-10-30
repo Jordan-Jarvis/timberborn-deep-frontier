@@ -4,6 +4,16 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## CPU load: GPU denoising, 32-sample review renders, GPU render lock, hidden-geometry rays on the GPU (Claude Code session, 2026-10-30; tools only, no game content changed; verified in mirror `gpuaudit`)
+
+- **Where the CPU went:** a per-process sampler over the agents' live workload put ~88% of all CPU in Cycles review renders (`render_lategame_studies.py` 51%, `render_budget_views.py` 37%); the visibility audits were 1-3%.
+- **5238cfb** every OptiX renderer denoises on the GPU (`denoising_use_gpu`, fails without an OIDN-capable GPU). ChemicalWorks study, 3 views: 290 -> 37 CPU-s; budget views, 4 views: 257 -> 41 CPU-s; images within 1/255.
+- **bc37ac7** review renders at 32 samples (lategame studies, budget views, reference studies); Greenhouse side-by-side against 64 reads the same; render time 35 -> 14 s for three views.
+- **4a35c0d** `gpu_render_lock.render()`: one Cycles render at a time machine-wide (named mutex `Local\DeepFrontierGpuRender`, no timeout, released by Windows if the holder dies; crash-tested). A render spins one CPU core for as long as it holds the GPU.
+- **This change:** `audit_hidden_geometry.py` casts its rays on the RTX 2060 (`gpu_visibility.py`, OpenGL compute), reproducing the mathutils BVHTree casts ray for ray (watertight triangle test, BLI_kdopbvh's FLT_EPSILON-grown box culling, float32 arithmetic). Same CLI and report. Equivalence: 29 representative scenes (industrial, civic shells, late-game, structural, map objects with `--terrain-z 0`), every report identical except its timing field; 99,970/99,970 adversarial one-triangle cases; 0 differences in 600,000 real audit rays. CPU per audit: Restaurant 19.0 -> 5.3 CPU-s, GroceryMarket 18.8 -> 5.5, FisheryWorks 15.2 -> 5.4, MaterialsLaboratory 14.6 -> 5.4, Hospital 9.2 -> 4.4; small models cost 1-3 CPU-s more (fixed ~2 CPU-s GPU initialisation); the 29 scenes 169 -> 120 CPU-s in total.
+- **Unchanged:** `zfight_audit.py` (its rays are negligible; its time is Python candidate pairing) and the build-time `enclosed_cull.visible`.
+- **In game:** not applicable (tooling).
+
 ## Compaction follow-up: board and sheet roofs on Chemical Works, Precision Machine Works, Cryogenic Liquefaction Plant and Water Treatment Plant (Claude Code session, 2026-10-30, built by an agent; scenes and exports promoted; validated in mirror `lgi` on HEAD + this change; not built or run in game)
 
 - **Why:** no flat roof may show one timber or metal texture stretched over it. Flat plank and sheet roofs are now laid as separate boards or sheets by `lategame_roofdeck_parts.deck_slab` (through `compact_industry_parts.flat_roof(boards=True)` / `storey_block(roof_boards=True)`); concrete roofs stay plain slabs.

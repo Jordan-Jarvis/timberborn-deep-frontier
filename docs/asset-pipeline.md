@@ -1,5 +1,42 @@
 # Deep Frontier asset pipeline
 
+## GPU work and the CPU budget (2026-10-30)
+
+A sampler of every agent process on this machine (i7-8750H, 6 cores, RTX 2060) found about 88% of all CPU in the Cycles review renders: `render_lategame_studies.py` 51%, `render_budget_views.py` 37%. The visibility audits (`audit_hidden_geometry.py`, `zfight_audit.py`) were 1-3%.
+
+- **Denoising on the GPU.** Every renderer that selects the RTX 2060 through OptiX also sets `denoising_use_gpu` and fails unless `has_oidn_gpu_devices()`. On the CPU, OpenImageDenoise had taken about 85 of the 95 CPU-seconds of each 1200 px view. The output differs by at most 1/255.
+- **32 samples.** Review renders use 32 Cycles samples: `render_lategame_studies --samples` defaults to 32, and `render_budget_views` and `render_reference_studies` use 32. In a side-by-side review against 64, glass, lamps and thin rails read the same. Render both sides of a before/after sheet at the same sample count.
+- **One GPU render at a time.** While a Cycles render holds the GPU, its host thread keeps one CPU core busy, so renders that time-slice the GPU each spin a core.
+  - Renderers call `gpu_render_lock.render()` instead of `bpy.ops.render.render()`. It waits, with no timeout, on the named Windows mutex `Local\DeepFrontierGpuRender`.
+  - If the process dies while holding the mutex, Windows releases it, so no lock is ever left stale.
+  - While queued, a renderer prints `GPU RENDER LOCK: waiting`.
+  - `render.threads` and persistent data do not reduce this cost: one render thread tripled it.
+
+### Hidden-geometry rays on the GPU
+
+`audit_hidden_geometry.py` keeps its command line and report. Its rays now run in an OpenGL compute shader on the RTX 2060 (`gpu_visibility.py`), which reproduces the `mathutils.bvhtree.BVHTree` casts ray for ray:
+
+- the audit's float32 ray origins;
+- `BVHTree.ray_cast`'s normalised direction;
+- the watertight ray/triangle test (`isect_ray_tri_watertight_v3`), not Möller-Trumbore;
+- BLI_kdopbvh's box culling. `BLI_bvhtree_new` raises the tree epsilon to at least FLT_EPSILON and grows every box by it in absolute float32: this survives below about 2 m and rounds away above. Direction components under FLT_EPSILON are treated as parallel (inverse FLT_MAX). So a ray that grazes a box face with such a component is culled or not depending on where the box sits. Boxes nest, so testing each triangle's own grown box reproduces the tree exactly;
+- `normal_tri_v3` facing and `closest_on_tri_to_point_v3` for the 2e-5 front-face range check;
+- GLSL `precise` (no fused multiply-adds), with the GPU's two divisions corrected to the IEEE quotient.
+
+The GPU's own BVH (full-sweep SAH, boxes grown by 1 mm) only prunes, so it never changes which triangle a ray hits. Checks of the emulation:
+
+- 99,970 of 99,970 adversarial one-triangle cases (grazing edges, quasi-axis directions) against BVHTree;
+- 0 differences on 300,000 real audit rays each on Restaurant and GroceryMarket.
+
+Practical notes:
+
+- Blender's `gpu` module refuses to run in background mode until the GPU is initialised. A 4x4 Workbench render does that (about 2 CPU-s, the fixed cost of the GPU path), and the renderer must be the RTX 2060.
+- Readbacks spin about two CPU cores in the NVIDIA OpenGL driver while the GPU works. Dispatches are only submitted at the readback, so sleeping beforehand does not help.
+- Integer textures cannot be uploaded or read back from Python, so indices travel as exact floats.
+- Dispatches take `gpu_render_lock`.
+
+`zfight_audit.py` stays on the CPU: its five exterior rays per overlap are a negligible part of its time, which goes to Python candidate pairing. `enclosed_cull.visible` (build-time, polygon BVH, single rays) is unchanged.
+
 ## Map objects and pile goods (2026-10-25)
 
 `tools/map_objects.json` lists the map-object models and the stockpile pile meshes: footprint, height band and triangle ceiling for each. `tools/asset-pipeline/build_map_objects.py -- --models all` builds them from `map_objects_geometry.py`, checks them against that file, saves `src/DeepFrontier/Art/Source/<Id>-ReferenceStudy.blend` and exports to `outputs/mapobjects-integration`.
@@ -30,7 +67,7 @@ These scenes are built as shells: the civic family (FisheryWorks, FishHatchery, 
 
 Removing the bevel can make faces coplanar that the chamfers used to separate, so run the strict audit (`zfight_audit.py --fail-on-visible`) after regenerating.
 
-`audit_hidden_geometry.py -- --models X [--blend-dir D]` measures the triangles no orbit camera sees, per object and per producing source line. It also re-checks every removed face against the saved scene and fails if one is exposed (`culledFacesExposed`). Run it after any scene save or component rebuild of a shell model. The FishHatchery scene carries migration metadata that generation does not write; after regenerating it, run `carry_hatchery_metadata.py` (checks the native props and rails are unchanged, then refreshes the manifests). For an intentional redesign that changes rooms, decks or rails (the 2026-10-26 compact 7x7 footprint), run `refresh_hatchery_metadata.py -- --scene <new blend> --native-assembly <new native-assembly.json> --output <dir>` instead: it writes that metadata from the same recipes without editing any mesh, then refreshes the manifests. Before/after review: `render_budget_views.py` (matched orthographic cameras, 45 degree pitch, whole building and 4.5-tile closest zoom) and `compose_budget_sheet.py` (before | after | difference sheet with changed-pixel share).
+`audit_hidden_geometry.py -- --models X [--blend-dir D]` measures the triangles no orbit camera sees, per object and per producing source line, casting its rays on the GPU (see GPU work, above). It also re-checks every removed face against the saved scene and fails if one is exposed (`culledFacesExposed`). Run it after any scene save or component rebuild of a shell model. The FishHatchery scene carries migration metadata that generation does not write; after regenerating it, run `carry_hatchery_metadata.py` (checks the native props and rails are unchanged, then refreshes the manifests). For an intentional redesign that changes rooms, decks or rails (the 2026-10-26 compact 7x7 footprint), run `refresh_hatchery_metadata.py -- --scene <new blend> --native-assembly <new native-assembly.json> --output <dir>` instead: it writes that metadata from the same recipes without editing any mesh, then refreshes the manifests. Before/after review: `render_budget_views.py` (matched orthographic cameras, 45 degree pitch, whole building and 4.5-tile closest zoom) and `compose_budget_sheet.py` (before | after | difference sheet with changed-pixel share).
 
 ## Selected component authoring (2026-10-21)
 
