@@ -1,9 +1,9 @@
 ID,Text,Comment
 Building.DeepDrill.DisplayName,Deep Drill,Deep Frontier
-Building.DeepDrill.Description,"Extracts one unit of Deep Ore from an authored source stockpile using water and 1000 hp. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.DeepDrill.Description,"Extracts one unit of Deep Ore from an authored source stockpile using water and 1000 hp. Wears out 0.1 high-grade steel drill bits per hour at full crew and stops without them. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.DeepDrill.FlavorDescription,The first boring machine turns a finite deposit into a surface supply chain.,Deep Frontier
 Building.DeepMine.DisplayName,Deep Mine,Deep Frontier
-Building.DeepMine.Description,"Extracts four Deep Ore every cycle from a marked vein using water and 4000 hp. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.DeepMine.Description,"Extracts four Deep Ore every cycle from a marked vein using water and 4000 hp. Wears out 0.1 high-grade steel drill bits and 0.1 concrete shaft lining per hour at full crew and stops without them. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.DeepMine.FlavorDescription,The vein is endless; the power bill is not.,Deep Frontier
 Building.DeepProcessor.DisplayName,Deep Ore Processor,Deep Frontier
 Building.DeepProcessor.Description,"Refines deep ore into a dense industrial alloy. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
@@ -915,11 +915,12 @@ ToolGroups.DeepFrontierRadioactiveWaste,Radioactive waste,Deep Frontier toolbar 
 ToolGroups.DeepFrontierCivicServices,Civic services,Deep Frontier toolbar group
 DeepFrontier.Power.Status.NotConnected,Not connected to a power source. Connect it to a generator with shafts or power lines.,Deep Frontier
 DeepFrontier.Power.Status.NotConnected.Short,Not connected to power,Deep Frontier
-DeepFrontier.MapSetup.SmallTitle,Deep Frontier: {0} is a very small map,Deep Frontier map setup
-DeepFrontier.MapSetup.SmallIntro,"Deep Frontier is EXTREMELY difficult on {0}: it has {1} tiles, and the Deep Frontier late game is built for maps of at least {2} tiles.",Deep Frontier map setup
+DeepFrontier.MapSetup.SmallTitle,Deep Frontier is EXTREMELY difficult on {0},Deep Frontier map setup
+DeepFrontier.MapSetup.SmallIntro,"Small map: {0} has {1} tiles, and the Deep Frontier late game is built for maps of at least {2} tiles.",Deep Frontier map setup
 DeepFrontier.MapSetup.SmallReasonsHeader,What this map cannot provide:,Deep Frontier map setup
 DeepFrontier.MapSetup.SmallSpace,"Little room: the full set of large Deep Frontier sites (the 20 x 15 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about {0} tiles with their margins on a large map.",Deep Frontier map setup
 DeepFrontier.MapSetup.SmallHeight,"Build upward: Deep Frontier raises this map's build height to {0} layers (vanilla {1}); on a small map most of the colony has to stack on platforms, which costs more materials.",Deep Frontier map setup
+DeepFrontier.MapSetup.SmallNoDeepMine,"No Deep Mine: the Deep Mine is the only lasting source of deep ore, which the late game and the rocket launches need. Any Deep Ore Sources on this map run out.",Deep Frontier map setup
 DeepFrontier.MapSetup.SmallNoUnmet,"Every Deep Frontier resource and site fits on this map, but with almost no spare room.",Deep Frontier map setup
 DeepFrontier.MapSetup.UnmetTitle,Deep Frontier on {0}: this map cannot provide everything the full Deep Frontier game needs:,Deep Frontier map setup
 DeepFrontier.MapSetup.SetupFailedTitle,Deep Frontier could not set up {0},Deep Frontier map setup
@@ -928,7 +929,8 @@ DeepFrontier.MapSetup.HeightFailed,Deep Frontier expected a build height of {0} 
 DeepFrontier.MapSetup.NoSetup,Deep Frontier has no setup for the built-in map {0}: no Deep Frontier resources were added.,Deep Frontier map setup
 DeepFrontier.MapSetup.DevMap,{0} is a developer test map: Deep Frontier adds no resources and keeps its height.,Deep Frontier map setup
 DeepFrontier.MapSetup.Unmet.Beaverome.1,No Deep Drill site beside a Deep Ore Source.,Deep Frontier map setup
-DeepFrontier.MapSetup.Unmet.Beaverome.2,No reachable Underground Ruins: scrap metal runs out.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Beaverome.2,Not enough deep ore in Deep Ore Sources to build one of each building.,Deep Frontier map setup
+DeepFrontier.MapSetup.Unmet.Beaverome.3,No reachable Underground Ruins: scrap metal runs out.,Deep Frontier map setup
 DeepFrontier.MapSetup.Unmet.Beaverome.Sites,"No room for: Limestone quarry, Sandstone quarry, Deep Drill, Deep Mine, Deep Ore Processor, Cryogenic tank farm, Steel mill, Mission control, Radioactive waste refinery, Uranium processing plant, Cryogenic liquefaction plant, Water treatment plant, Launch pad, Nuclear Reactor, Electrolysis plant, Hospital, Precision machine works, Radioactive Waste Vault, Chemical works, Fishery works, Materials Laboratory, Town plaza.",Deep Frontier map setup
 DeepFrontier.MapSetup.Unmet.Canyon.1,No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.,Deep Frontier map setup
 DeepFrontier.MapSetup.Unmet.Canyon.Sites,No room for: Nuclear Reactor.,Deep Frontier map setup

@@ -23,8 +23,8 @@
     {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 71 cells north-east of the start)", "x": 107, "y": 113, "z": 8, "orientation": "Cw0"},
     {"template": "LimestoneSeam", "label": "Limestone Seam (Limestone Quarry, 40 cells south of the start)", "x": 53, "y": 17, "z": 2, "orientation": "Cw0"},
     {"template": "SandstoneSeam", "label": "Sandstone Seam (Sandstone Quarry, 20 cells east of the start)", "x": 83, "y": 61, "z": 5, "orientation": "Cw0"},
-    {"template": "DeepOreSource", "label": "Deep Ore Source (Deep Drill, 65 cells south-east of the start)", "x": 107, "y": 10, "z": 4, "good": "DeepOre", "amount": 2000},
-    {"template": "DeepOreSource", "label": "Deep Ore Source (Deep Drill, 13 cells north-west of the start)", "x": 48, "y": 64, "z": 5, "good": "DeepOre", "amount": 2000}
+    {"template": "DeepOreSource", "label": "Deep Ore Source (Deep Drill, 65 cells south-east of the start)", "x": 107, "y": 10, "z": 4, "good": "DeepOre", "amount": 8500},
+    {"template": "DeepOreSource", "label": "Deep Ore Source (Deep Drill, 13 cells north-west of the start)", "x": 48, "y": 64, "z": 5, "good": "DeepOre", "amount": 8500}
   ],
   "sites": [
     {"template": "NuclearReactor.IronTeeth", "label": "North-west Plateau reactor", "x": 27, "y": 122, "z": 6, "orientation": "Cw90", "margin": 2, "openSides": ["N", "S", "W"], "maxWaterDistance": 15},

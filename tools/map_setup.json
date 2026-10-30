@@ -11,11 +11,13 @@
     "maxArea": 11176,
     "referenceVariants": ["plains", "lakes", "terraces"],
     "landShare": [1, 2],
-    "why": "A built-in map is small when its area (width x height) is below maxArea. maxArea is derived, and checked by prepare_deep_frontier_map.py builtin: the largest area that the full-loop sites claim on a reference map (primary footprints plus their listed open margins, siteArea.withOpenMargins of the built-in validation) divided by landShare. Below it, those sites alone would take more than half of the map, before terrain, water, farms, forest and homes."
+    "deepMineSite": "DeepMine.IronTeeth",
+    "why": "A built-in map gets the EXTREMELY difficult warning (BuiltinMapSpec.Small) when its area (width x height) is below maxArea, or when its variant lists no primary (non-alternative) site of deepMineSite. maxArea is derived, and checked by prepare_deep_frontier_map.py builtin: the largest area that the full-loop sites claim on a reference map (primary footprints plus their listed open margins, siteArea.withOpenMargins of the built-in validation) divided by landShare. Below it, those sites alone would take more than half of the map, before terrain, water, farms, forest and homes. deepMineSite is the only building that mines deep ore without end (the one building whose understructure is the Deep Ore Vein; prepare_deep_frontier_map.py builtin checks this). Deep ore is required for the late game, and the finite Deep Ore Sources are sized for one of each building, not for the launch program, so a map without a Deep Mine site cannot finish the game whatever its size."
   },
   "text": {
-    "smallTitle": "Deep Frontier: {0} is a very small map",
-    "smallIntro": "Deep Frontier is EXTREMELY difficult on {0}: it has {1} tiles, and the Deep Frontier late game is built for maps of at least {2} tiles.",
+    "smallTitle": "Deep Frontier is EXTREMELY difficult on {0}",
+    "smallIntro": "Small map: {0} has {1} tiles, and the Deep Frontier late game is built for maps of at least {2} tiles.",
+    "smallNoDeepMine": "No Deep Mine: the Deep Mine is the only lasting source of deep ore, which the late game and the rocket launches need. Any Deep Ore Sources on this map run out.",
     "smallReasonsHeader": "What this map cannot provide:",
     "smallSpace": "Little room: the full set of large Deep Frontier sites (the 20 x 15 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about {0} tiles with their margins on a large map.",
     "smallHeight": "Build upward: Deep Frontier raises this map's build height to {0} layers (vanilla {1}); on a small map most of the colony has to stack on platforms, which costs more materials.",
@@ -36,6 +38,7 @@
       "trees near the start": "Few trees near the start.",
       "pines (resin) near the start": "Few pines (resin) near the start.",
       "Deep Drill sites beside Deep Ore Sources": "No Deep Drill site beside a Deep Ore Source.",
+      "finite deep ore covers one of each building": "Not enough deep ore in Deep Ore Sources to build one of each building.",
       "Human Record Caches in survey range of an Archive Excavation site": "No Human Record Caches to survey.",
       "renewable scrap (Underground Ruins for the Efficient Mine)": "No reachable Underground Ruins: scrap metal runs out."
     }

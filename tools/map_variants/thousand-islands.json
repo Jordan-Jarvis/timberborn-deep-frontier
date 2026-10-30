@@ -10,8 +10,8 @@
   "placements": [
     {"template": "DeepOreVein", "label": "Neighbour Isle vein", "x": 112, "y": 121, "z": 5, "orientation": "Cw0"},
     {"template": "DeepOreVein", "label": "North-east Highland vein", "x": 243, "y": 242, "z": 16, "orientation": "Cw0"},
-    {"template": "DeepOreSource", "label": "South-east Isle source", "x": 203, "y": 30, "z": 4, "good": "DeepOre", "amount": 2000},
-    {"template": "DeepOreSource", "label": "South-west Isle source", "x": 61, "y": 29, "z": 6, "good": "DeepOre", "amount": 2000},
+    {"template": "DeepOreSource", "label": "South-east Isle source", "x": 203, "y": 30, "z": 4, "good": "DeepOre", "amount": 8500},
+    {"template": "DeepOreSource", "label": "South-west Isle source", "x": 61, "y": 29, "z": 6, "good": "DeepOre", "amount": 8500},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 1 (Limestone Pit, 13 cells south of the start)", "x": 87, "y": 87, "z": 4},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 2 (Limestone Pit, 13 cells south of the start)", "x": 87, "y": 84, "z": 4},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 3 (Limestone Pit, 13 cells south of the start)", "x": 84, "y": 85, "z": 4},

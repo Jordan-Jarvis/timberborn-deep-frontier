@@ -69,8 +69,11 @@ def open_margin(v):
     vault.update(x=pad['x'], y=pad['y'] - 11, z=pad['z'], orientation='Cw0')
 
 
-def no_dynamite(v):
-    site(v, 'RadioactiveSludgeRecoveryPump.IronTeeth').pop('dynamite')
+def dynamite_outside(v):
+    # Plains' sites list no Dynamite any more; a charge listed outside a site's footprint must
+    # still fail.
+    s = site(v, 'RadioactiveSludgeRecoveryPump.IronTeeth')
+    s['dynamite'] = [[s['x'] - 10, s['y'] - 10, 1]]
 
 
 def poor_sources(v):
@@ -124,7 +127,7 @@ CASES = [
     ('hatchery off the water', hatchery_off_water, 'work cell'),
     ('overlapping sites', overlap, 'overlaps'),
     ('footprint in an open margin', open_margin, 'margin is inside'),
-    ('sludge pump without its dynamite', no_dynamite, 'needs open air below'),
+    ('dynamite outside the footprint', dynamite_outside, 'is outside the footprint'),
     ('finite deep ore too small', poor_sources, 'finite deep ore covers one of each building'),
     ('dam site on dry land', dry_dam, 'dam site is not a wet river cell'),
     ('one vein only', one_vein, 'DeepMine.IronTeeth site (understructure): 1 checked sites (min 2)'),

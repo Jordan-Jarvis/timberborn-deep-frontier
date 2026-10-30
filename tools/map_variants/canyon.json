@@ -22,8 +22,8 @@
     {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 15 cells south-west of the start)", "x": 53, "y": 47, "z": 3, "orientation": "Cw0"},
     {"template": "LimestoneSeam", "label": "Limestone Seam (Limestone Quarry, 42 cells south-east of the start)", "x": 77, "y": 24, "z": 7, "orientation": "Cw0"},
     {"template": "SandstoneSeam", "label": "Sandstone Seam (Sandstone Quarry, 11 cells east of the start)", "x": 68, "y": 65, "z": 2, "orientation": "Cw0"},
-    {"template": "DeepOreSource", "label": "Deep Ore Source (Deep Drill, 53 cells south-west of the start)", "x": 21, "y": 41, "z": 12, "good": "DeepOre", "amount": 2000},
-    {"template": "DeepOreSource", "label": "Deep Ore Source (Deep Drill, 49 cells west of the start)", "x": 15, "y": 55, "z": 11, "good": "DeepOre", "amount": 2000},
+    {"template": "DeepOreSource", "label": "Deep Ore Source (Deep Drill, 53 cells south-west of the start)", "x": 21, "y": 41, "z": 12, "good": "DeepOre", "amount": 8500},
+    {"template": "DeepOreSource", "label": "Deep Ore Source (Deep Drill, 49 cells west of the start)", "x": 15, "y": 55, "z": 11, "good": "DeepOre", "amount": 8500},
     {"template": "HumanRecordCache", "label": "Ruins 57 cells south-west of the start", "x": 10, "y": 37, "z": 12, "orientation": "Cw180"}
   ],
   "sites": [

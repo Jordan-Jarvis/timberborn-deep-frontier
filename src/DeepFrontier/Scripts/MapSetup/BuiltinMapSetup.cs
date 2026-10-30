@@ -51,7 +51,8 @@ namespace DeepFrontier.Scripts.MapSetup {
   //     Inventory.GiveExisting).
   //   - A placement that fails is not moved or skipped silently: it is logged as an error and
   //     reported in a dialog.
-  //   - Small maps (BuiltinMapSpec.Small) and maps with unmet loop items get a one-time dialog.
+  //   - Small maps (BuiltinMapSpec.Small: below the area threshold, or no Deep Mine site) and maps
+  //     with unmet loop items get a one-time dialog.
   internal sealed class BuiltinMapSetup : ILoadableSingleton, ISaveableSingleton, IUpdatableSingleton {
     private const string Tag = "[DeepFrontier MapSetup]";
     private static readonly SingletonKey Key = new("DeepFrontierMapSetup");
@@ -219,12 +220,13 @@ namespace DeepFrontier.Scripts.MapSetup {
       var vanilla = _specs.GetSingleSpec<MapSizeSpec>();
       int vanillaTotal = vanilla.MaxGameTerrainHeight + 1 + vanilla.MaxHeightAboveTerrain;
       var setup = _specs.GetSingleSpec<BuiltinMapSetupSpec>();
-      var lines = new List<string> {
-        _loc.T(MapSetupLoc.SmallTitle, DisplayName()),
-        _loc.T(MapSetupLoc.SmallIntro, DisplayName(), _entry.Width + " x " + _entry.Height + " = " + (_entry.Width * _entry.Height), setup.SmallMapMaxArea),
-        "- " + _loc.T(MapSetupLoc.SmallSpace, setup.ReferenceSiteArea),
-        "- " + _loc.T(MapSetupLoc.SmallHeight, _mapSize.TotalSize.z, vanillaTotal),
-      };
+      var lines = new List<string> { _loc.T(MapSetupLoc.SmallTitle, DisplayName()) };
+      if (_entry.SmallArea) {
+        lines.Add("- " + _loc.T(MapSetupLoc.SmallIntro, DisplayName(), _entry.Width + " x " + _entry.Height + " = " + (_entry.Width * _entry.Height), setup.SmallMapMaxArea));
+        lines.Add("- " + _loc.T(MapSetupLoc.SmallSpace, setup.ReferenceSiteArea));
+        lines.Add("- " + _loc.T(MapSetupLoc.SmallHeight, _mapSize.TotalSize.z, vanillaTotal));
+      }
+      if (_entry.NoDeepMineSite) lines.Add("- " + _loc.T(MapSetupLoc.SmallNoDeepMine));
       if (_entry.UnmetLocKeys.Length > 0) {
         lines.Add(_loc.T(MapSetupLoc.SmallReasonsHeader));
         lines.AddRange(_entry.UnmetLocKeys.Select(k => "- " + _loc.T(k)));
@@ -251,6 +253,7 @@ namespace DeepFrontier.Scripts.MapSetup {
     public const string SmallReasonsHeader = Prefix + "SmallReasonsHeader";
     public const string SmallSpace = Prefix + "SmallSpace";
     public const string SmallHeight = Prefix + "SmallHeight";
+    public const string SmallNoDeepMine = Prefix + "SmallNoDeepMine";
     public const string SmallNoUnmet = Prefix + "SmallNoUnmet";
     public const string UnmetTitle = Prefix + "UnmetTitle";
     public const string SetupFailedTitle = Prefix + "SetupFailedTitle";

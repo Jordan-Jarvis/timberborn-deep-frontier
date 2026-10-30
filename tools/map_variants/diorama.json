@@ -8,8 +8,8 @@
   "hardVariant": false,
   "description": "Diorama (50x50): a river valley between forested level-2 to level-6 terraces; Deep Ore Sources with Deep Drill sites on the south-east level-4 bench and the east level-6 terrace, the Deep Processor and the sandstone quarry on the central level-3 strip, five record caches around the Archive Excavation at the south edge.",
   "placements": [
-    {"template": "DeepOreSource", "label": "Deep Ore Source, 16 cells south-east of the start", "x": 39, "y": 18, "z": 6, "good": "DeepOre", "amount": 2000},
-    {"template": "DeepOreSource", "label": "Deep Ore Source, 14 cells south of the start", "x": 28, "y": 16, "z": 4, "good": "DeepOre", "amount": 2000},
+    {"template": "DeepOreSource", "label": "Deep Ore Source, 16 cells south-east of the start", "x": 39, "y": 18, "z": 6, "good": "DeepOre", "amount": 8500},
+    {"template": "DeepOreSource", "label": "Deep Ore Source, 14 cells south of the start", "x": 28, "y": 16, "z": 4, "good": "DeepOre", "amount": 8500},
     {"template": "SandstoneOutcrop", "label": "Sandstone Outcrop 1 (Sandstone Pit, 25 cells north-east of the start)", "x": 45, "y": 45, "z": 15},
     {"template": "SandstoneOutcrop", "label": "Sandstone Outcrop 2 (Sandstone Pit, 25 cells north-east of the start)", "x": 46, "y": 44, "z": 15},
     {"template": "SandstoneOutcrop", "label": "Sandstone Outcrop 3 (Sandstone Pit, 25 cells north-east of the start)", "x": 48, "y": 45, "z": 15},

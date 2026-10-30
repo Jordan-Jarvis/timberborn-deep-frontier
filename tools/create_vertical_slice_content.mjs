@@ -320,7 +320,9 @@ deepOreSource.TemplateSpec = {
   TemplateName: 'DeepOreSource',
   BackwardCompatibleTemplateNames: [],
 };
-deepOreSource.StockpileSpec = { MaxCapacity: 4000, WhitelistedGoodType: 'Pileable' };
+// 10,000 per source: two sources hold the DeepOre of one of each building with margin
+// (tools/map_loop_requirements.json finiteDeepOreMargin, checked by prepare_deep_frontier_map.py).
+deepOreSource.StockpileSpec = { MaxCapacity: 10000, WhitelistedGoodType: 'Pileable' };
 deepOreSource.PlaceableBlockObjectSpec = {
   ...deepOreSource.PlaceableBlockObjectSpec,
   ToolGroupId: 'MapEditorObjects',

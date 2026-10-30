@@ -99,7 +99,7 @@ assert(mine.ManufactorySpec.ProductionRecipeIds.includes('DeepOre.Mine'), 'Deep 
 assert(mine.UnderstructureConstraintSpec.UnderstructureTemplateNames.includes('DeepOreVein'), 'Deep Mine must require a DeepOreVein understructure.');
 assert(processor.MechanicalNodeSpec.PowerInput === 500 && processor.MechanicalNodeSpec.PowerOutput === 0, 'Deep Processor power contract is invalid.');
 assert(processor.ManufactorySpec.ProductionRecipeIds.includes('DeepAlloy'), 'Deep Processor is not wired to the DeepAlloy recipe.');
-assert(source.StockpileSpec.MaxCapacity === 4000, 'Deep Ore source capacity changed unexpectedly.');
+assert(source.StockpileSpec.MaxCapacity === 10000, 'Deep Ore source capacity changed unexpectedly.');
 assert(source.Children['#Finished'].TimbermeshSpec.Model === 'MapEditor/Objects/DeepOreSource/DeepOreSource.Model', 'Deep Ore source must use its authored ore model.');
 assert(vein.TemplateSpec.TemplateName === 'DeepOreVein', 'Deep Ore vein marker template is invalid.');
 assert(goodsCollection.GoodCollectionSpec['Goods#append'].includes('DeepOre') && goodsCollection.GoodCollectionSpec['Goods#append'].includes('DeepAlloy'), 'Iron Teeth base good collection overlay is incomplete.');

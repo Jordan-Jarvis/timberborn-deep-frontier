@@ -8,7 +8,7 @@
 //
 // Sources (the only ones): tools/map_variants/*.json, one variant per built-in map whose source is
 // builtin:<Name> and hardVariant false (placements, totalHeight, mapSize, unmet), and
-// tools/map_setup.json (dev maps, small-map threshold, dialog text). The terrain validation of every
+// tools/map_setup.json (dev maps, small-map rule, dialog text). The terrain validation of every
 // placement is tools/prepare_deep_frontier_map.py builtin; tools/validate_map_setup.mjs checks that
 // the generated data equals what this module derives from the sources.
 //
@@ -30,7 +30,7 @@ export const LOC_PREFIX = 'DeepFrontier.MapSetup.';
 const ORIENTATIONS = ['Cw0', 'Cw90', 'Cw180', 'Cw270'];
 const PLACEMENT_KEYS = new Set(['template', 'label', 'x', 'y', 'z', 'orientation', 'good', 'amount', 'radioactivePerHour']);
 // Loc keys the runtime uses (Scripts/MapSetup/BuiltinMapSetup.cs MapSetupLoc), from tools/map_setup.json text.
-export const TEXT_KEYS = ['smallTitle', 'smallIntro', 'smallReasonsHeader', 'smallSpace', 'smallHeight', 'smallNoUnmet',
+export const TEXT_KEYS = ['smallTitle', 'smallIntro', 'smallReasonsHeader', 'smallSpace', 'smallHeight', 'smallNoDeepMine', 'smallNoUnmet',
   'unmetTitle', 'setupFailedTitle', 'setupFailed', 'heightFailed', 'noSetup', 'devMap'];
 
 const readJson = async (path) => JSON.parse((await readFile(path, 'utf8')).replace(/^﻿/, ''));
@@ -97,6 +97,7 @@ export async function mapSetupContent({root = defaultRoot, dataRoot = resolve(ro
   const small = setup.smallMap;
   const [numerator, denominator] = small.landShare;
   if (!Number.isInteger(small.maxArea) || small.maxArea <= 0) fail('smallMap.maxArea must be a positive integer (prepare_deep_frontier_map.py builtin derives it)');
+  if (typeof small.deepMineSite !== 'string' || !small.deepMineSite) fail('smallMap.deepMineSite must name the Deep Mine template (prepare_deep_frontier_map.py builtin checks it)');
   const devMaps = setup.devMaps.map((d) => d.name);
   const runtime = variants.filter((v) => typeof v.source === 'string' && v.source.startsWith('builtin:') && v.hardVariant === false);
   const maps = [];
@@ -152,8 +153,12 @@ export async function mapSetupContent({root = defaultRoot, dataRoot = resolve(ro
       unmetLocKeys.unshift(unmetSitesLocKey(mapName));
       rows.push([unmetSitesLocKey(mapName), unmetText.sites.replace('{0}', sites.join(', '))]);
     }
+    // tools/map_setup.json smallMap: EXTREMELY difficult below maxArea, or without a primary Deep Mine site.
+    if (!Array.isArray(v.sites)) fail(`${v.file}: sites must be a list`);
+    const deepMineSites = v.sites.filter((s) => s.template === small.deepMineSite && !s.alternative).length;
     maps.push({MapName: mapName, VariantId: v.id, Width: width, Height: height, TotalHeight: totalHeight,
-      Small: width * height < small.maxArea, UnmetLocKeys: unmetLocKeys, Placements: placements});
+      SmallArea: width * height < small.maxArea, NoDeepMineSite: deepMineSites === 0,
+      UnmetLocKeys: unmetLocKeys, Placements: placements});
   }
   maps.sort((a, b) => a.MapName.localeCompare(b.MapName));
   const spec = {
@@ -176,7 +181,7 @@ export async function applyMapSetup({root = defaultRoot, dataRoot = resolve(root
   const ids = new Set(text.split(/\r?\n/).map((line) => line.split(',')[0]));
   for (const [id] of rows) if (ids.has(id)) fail(`enUS.csv already defines ${id}`);
   await writeFile(localizationPath, text + rows.map(([id, value]) => csvRow(id, value)).join('\n') + '\n', 'utf8');
-  return {maps: spec.Maps.length, small: spec.Maps.filter((m) => m.Small).map((m) => m.MapName), rows: rows.length};
+  return {maps: spec.Maps.length, small: spec.Maps.filter((m) => m.SmallArea || m.NoDeepMineSite).map((m) => m.MapName), rows: rows.length};
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

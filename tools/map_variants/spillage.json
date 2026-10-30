@@ -10,8 +10,8 @@
   "placements": [
     {"template": "DeepOreVein", "label": "North-east terrace vein", "x": 131, "y": 117, "z": 6, "orientation": "Cw0"},
     {"template": "DeepOreVein", "label": "North terrace vein", "x": 107, "y": 130, "z": 7, "orientation": "Cw0"},
-    {"template": "DeepOreSource", "label": "South ridge source", "x": 112, "y": 33, "z": 7, "good": "DeepOre", "amount": 2000},
-    {"template": "DeepOreSource", "label": "East highland source", "x": 180, "y": 80, "z": 13, "good": "DeepOre", "amount": 2000},
+    {"template": "DeepOreSource", "label": "South ridge source", "x": 112, "y": 33, "z": 7, "good": "DeepOre", "amount": 8500},
+    {"template": "DeepOreSource", "label": "East highland source", "x": 180, "y": 80, "z": 13, "good": "DeepOre", "amount": 8500},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 1 (Limestone Pit, 14 cells west of the start)", "x": 73, "y": 67, "z": 4},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 2 (Limestone Pit, 14 cells west of the start)", "x": 76, "y": 66, "z": 4},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 3 (Limestone Pit, 14 cells west of the start)", "x": 75, "y": 63, "z": 4},

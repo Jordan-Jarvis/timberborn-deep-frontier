@@ -10,8 +10,8 @@
   "placements": [
     {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 21 cells south-west of the start)", "x": 16, "y": 10, "z": 4, "orientation": "Cw0"},
     {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 20 cells west of the start)", "x": 10, "y": 23, "z": 4, "orientation": "Cw0"},
-    {"template": "DeepOreSource", "label": "Deep Ore Source, 61 cells east of the start", "x": 94, "y": 34, "z": 8, "good": "DeepOre", "amount": 2000},
-    {"template": "DeepOreSource", "label": "Deep Ore Source, 27 cells south-west of the start", "x": 12, "y": 12, "z": 4, "good": "DeepOre", "amount": 2000},
+    {"template": "DeepOreSource", "label": "Deep Ore Source, 61 cells east of the start", "x": 94, "y": 34, "z": 8, "good": "DeepOre", "amount": 8500},
+    {"template": "DeepOreSource", "label": "Deep Ore Source, 27 cells south-west of the start", "x": 12, "y": 12, "z": 4, "good": "DeepOre", "amount": 8500},
     {"template": "SandstoneOutcrop", "label": "Sandstone Outcrop 1 (Sandstone Pit, 33 cells north-west of the start)", "x": 11, "y": 46, "z": 16},
     {"template": "SandstoneOutcrop", "label": "Sandstone Outcrop 2 (Sandstone Pit, 33 cells north-west of the start)", "x": 10, "y": 49, "z": 16},
     {"template": "SandstoneOutcrop", "label": "Sandstone Outcrop 3 (Sandstone Pit, 33 cells north-west of the start)", "x": 12, "y": 49, "z": 16},

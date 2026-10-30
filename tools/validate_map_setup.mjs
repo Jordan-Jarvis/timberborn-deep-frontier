@@ -66,7 +66,8 @@ if (spec.Maps.length) {
 const report = {
   check: 'map-setup',
   maps: spec.Maps.map((m) => ({map: m.MapName, variant: m.VariantId, size: [m.Width, m.Height], totalHeight: m.TotalHeight,
-    small: m.Small, placements: m.Placements.length, unmet: m.UnmetLocKeys.length})),
+    small: m.SmallArea || m.NoDeepMineSite, smallArea: m.SmallArea, noDeepMineSite: m.NoDeepMineSite,
+    placements: m.Placements.length, unmet: m.UnmetLocKeys.length})),
   smallMapMaxArea: spec.SmallMapMaxArea, devMaps: spec.DevMaps, rows: rows.length, failures,
 };
 if (failures.length) {

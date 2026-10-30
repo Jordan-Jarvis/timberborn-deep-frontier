@@ -92,9 +92,10 @@ Changes since 0.5.0, the first Workshop release.
 ### Maps
 - **Every built-in map now works with Deep Frontier.** When you start a new game on any of the 19 built-in maps, Deep Frontier places that map's resources once at the start: deep ore veins and sources, limestone and sandstone outcrops, a limestone seam and Human Record Caches. Loading a save never places them again.
 - **Taller build height:** these new games also get a 66-layer build height (vanilla 33), kept through Map Transformer, so the tall late-game buildings fit. The terrain itself is unchanged.
-- **Small maps are EXTREMELY difficult.** Diorama and Cliffside are far smaller than the Deep Frontier late game needs. A warning appears when you start one, listing what the map has no room for.
-- **Maps that can't host everything:** many built-in maps have no site for some late-game buildings; for example, 11 maps have no room for the Nuclear Reactor and Beaverome has no deep ore. A short notice at the start of a new game lists what that map can't provide.
-- The Deep Frontier map files (Plains, Plains Hard, Lakes, Terraces) are unchanged. Plains Hard's radioactive spring is only on that map file, not on built-in Plains.
+- **Three maps are EXTREMELY difficult.** Diorama and Cliffside are far smaller than the Deep Frontier late game needs. Beaverome is large, but it has no room for a Deep Mine and no deep ore at all; any map without a Deep Mine site gets the same warning. A warning appears when you start one of them, listing what the map can't provide.
+- **Maps that can't host everything:** many built-in maps have no site for some late-game buildings; for example, 11 maps have no room for the Nuclear Reactor. A short notice at the start of a new game lists what that map can't provide.
+- **Fuller Deep Ore Sources:** a Deep Ore Source now holds up to 10,000 deep ore (was 4,000). Every map with Deep Drill sites has 17,000 or 18,000 deep ore in its sources (was 4,000 to 6,000). That is enough to build one of each building with a little to spare; the rocket launches still need the Deep Mines.
+- The Deep Frontier map files (Plains, Plains Hard, Lakes, Terraces) are rebuilt with the fuller sources: 18,000 deep ore on Plains and Plains Hard, 17,000 on Lakes and Terraces. Their layout is unchanged. Plains Hard's radioactive spring is only on that map file, not on built-in Plains.
 
 ### Reactor Bots
 - **Retrofit:** any bot can be upgraded in place to a **Reactor Bot**, keeping its name. Press "Retrofit to Reactor Bot" on its panel. It then fetches a Reinforced Bot Frame (Precision Machine Works) and a Reactor Power Cell (Uranium Processing Plant) from storage and is upgraded once it has both.

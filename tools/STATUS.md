@@ -4,6 +4,24 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Maps: Beaverome warning, fuller Deep Ore Sources, rebuilt map files (Claude Code session, 2026-10-30, built by an agent; validated in mirror `mapfix` and the real repo; not built or run in game)
+
+- **User:** Beaverome gets the EXTREMELY difficult warning (deep ore is required and it has none), with a data-driven rule rather than a map list. Finite Deep Ore Sources should cover one of each building with margin. Rebuild the four map files and fix the stale map test.
+- **Warning rule** (`tools/map_setup.json` `smallMap`): a map gets the warning when its area is below `maxArea` (11,176) **or** its variant lists no primary site of `deepMineSite` (`DeepMine.IronTeeth`, the only permanent deep ore). `prepare_deep_frontier_map.py builtin` checks that it is the only building over a Deep Ore Vein.
+  - Warned maps: Beaverome (no Deep Mine), Cliffside (area) and Diorama (area and no Deep Mine).
+  - `BuiltinMapSpec.Small` is replaced by `SmallArea` + `NoDeepMineSite`, and the C# `Small` is now computed from them.
+  - Dialog: the title is "Deep Frontier is EXTREMELY difficult on {0}". The small-map lines (size, room, height) show only on small maps; a new `SmallNoDeepMine` line shows on maps without a Deep Mine.
+- **Finite deep ore:**
+  - `DeepOreSource` `StockpileSpec.MaxCapacity` is 10,000 (was 4,000; set in `create_vertical_slice_content.mjs`).
+  - Map source amounts: two-source maps 17,000 (8,500 + 8,500; Lakes and Terraces 7,000 + 10,000); three-source maps 18,000 (x3).
+  - The `acceptedGaps` entry is retired (`acceptedGaps` is now empty). The check now counts only sources with a checked drill site within 25 cells and requires their DeepOre to cover one of each building, as the ProgramModel computes it (15,608 now), plus `finiteDeepOreMargin` 5% = 16,389.
+  - Beaverome declares it `unmet` (no Deep Drill site fits, so it has no sources), with a new `unmetText` line.
+- **Map files:** `build` rewrote the four files in `Documents/Timberborn/Maps` (0.6.0.0 description; Plains and Plains Hard 18,000, Lakes and Terraces 17,000). 0 errors; hashes in `docs/maps.md`.
+- **Test:** `test_prepare_deep_frontier_map.py`: the stale `no_dynamite` case (Plains lists no Dynamite) is replaced by "a Dynamite cell outside the footprint". 17/17 caught; "finite deep ore too small" now fails as a real requirement.
+- **Docs:** `docs/maps.md` (rule, dialogs, per-map table, quantities table refreshed to the current costs), CHANGELOG, Workshop description and 0.6.0 change notes.
+- **Checks:** `builtin` passes on all 19 maps, compile check passes, real repo `validate_all -SkipBlender` 56 pass + 1 report-only.
+- **In game:** not run. Still to see: the Beaverome dialog, a 10,000 source in the map editor, and a Deep Drill on a 8,500 source.
+
 ## Built-in maps: new-game resource setup, 66-layer height, small-map warning (Claude Code session, 2026-10-29, built by an agent; validated in mirror `maphook` and the real repo; not built or run in game)
 
 - **User:** add the Deep Frontier resources to the official maps automatically, for all built-in maps (Diorama the hardest), and warn that small maps are EXTREMELY difficult.

@@ -67,6 +67,7 @@ import argparse
 import hashlib
 import io
 import json
+import math
 import mmap
 import struct
 import sys
@@ -1907,14 +1908,23 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
 
     # 3. Metal and deep industry
     sources = [r for r in records if r['template'] == 'DeepOreSource' and r['ok']]
-    finite = sum(r['placement']['amount'] for r in sources)
-    need('deepIndustry', 'finite deep ore covers one of each building', finite >= construction.get('DeepOre', 0),
-         f'{finite} DeepOre in {len(sources)} sources; one of each collection building needs {int(round(construction.get("DeepOre", 0)))}')
     drill_sites = good_sites.get('DeepDrill.IronTeeth', [])
-    near_source = [info for info in drill_sites if any(
-        abs(r['coordinates'][0] - info['at'][0]) + abs(r['coordinates'][1] - info['at'][1]) <= 25 for r in sources)]
+
+    def beside(source, info):
+        return abs(source['coordinates'][0] - info['at'][0]) + abs(source['coordinates'][1] - info['at'][1]) <= 25
+
+    near_source = [info for info in drill_sites if any(beside(r, info) for r in sources)]
     need('deepIndustry', 'Deep Drill sites beside Deep Ore Sources', len(near_source) >= requirements['minDrillSites'],
          f'{len(near_source)} checked drill sites within 25 cells of a source (min {requirements["minDrillSites"]})')
+    # Only a source with a checked drill site beside it can be drilled.
+    drillable = [r for r in sources if any(beside(r, info) for info in drill_sites)]
+    finite = sum(r['placement']['amount'] for r in drillable)
+    collection_ore = construction.get('DeepOre', 0)
+    finite_needed = math.ceil(collection_ore * (1 + requirements['finiteDeepOreMargin']))
+    need('deepIndustry', 'finite deep ore covers one of each building', finite >= finite_needed,
+         f'{finite} DeepOre in {len(drillable)} of {len(sources)} sources beside a checked Deep Drill site; one of each '
+         f'collection building needs {int(round(collection_ore))}, {finite_needed} with the '
+         f'{requirements["finiteDeepOreMargin"]:.0%} margin')
     reachable_ruins = [u for u in resources['undergroundRuins'] if u['routeFromStart'] is not None]
     need('deepIndustry', 'renewable scrap (Underground Ruins for the Efficient Mine)',
          len(reachable_ruins) >= requirements['minUndergroundRuinsReachable'],
@@ -1957,7 +1967,7 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
                'items': [i for i in items if i['stage'] == sid]} for sid, title in LOOP_STAGES]
     report = {'stages': stages, 'startResources': resources, 'caches': caches,
               'program': {'missions': missions, 'allMissions': total, 'oneOfEachBuilding': rounded(construction),
-                          'finiteDeepOre': finite}}
+                          'finiteDeepOre': finite, 'finiteDeepOreNeeded': finite_needed}}
     return report, errors
 
 
@@ -2278,9 +2288,10 @@ def validate_builtin(variant, catalog):
     return report, errors
 
 
-def builtin_coverage(variants, reports):
+def builtin_coverage(variants, reports, catalog):
     """Every non-dev built-in map has exactly one default variant; the dev maps and the small-map
-    threshold of tools/map_setup.json match the game and the reference variants. Returns (summary, errors)."""
+    rule of tools/map_setup.json (area threshold, Deep Mine site) match the game, the reference variants
+    and the building collection. Returns (summary, errors)."""
     errors = []
     setup = load_map_setup()
     named, dev_sizes = {}, []
@@ -2321,14 +2332,24 @@ def builtin_coverage(variants, reports):
     if small['maxArea'] != derived:
         errors.append(f'{MAP_SETUP} smallMap maxArea {small["maxArea"]} != derived {derived} (largest reference '
                       f'site area {max(claimed.values())} cells / land share {numerator}/{denominator})')
+    # The permanent deep ore: the collection building(s) whose understructure is the Deep Ore Vein.
+    mines = sorted(t for t in catalog.building_collection if 'DeepOreVein' in
+                   catalog.get(t).get('UnderstructureConstraintSpec', {}).get('UnderstructureTemplateNames', []))
+    if mines != [small['deepMineSite']]:
+        errors.append(f'{MAP_SETUP} smallMap deepMineSite {small["deepMineSite"]!r} != the buildings over a '
+                      f'DeepOreVein {mines}')
     maps = []
     for name in sorted(named):
         metadata = named[name]
         variant = runtime.get(name)
         report = reports.get(variant['id']) if variant else None
         area = metadata['Width'] * metadata['Height']
+        mine_sites = [s for s in variant['sites'] if s['template'] == small['deepMineSite'] and not s.get('alternative')] \
+            if variant else []
+        small_area, no_mine = area < small['maxArea'], not mine_sites
         maps.append({'map': name, 'size': [metadata['Width'], metadata['Height']], 'area': area,
-                     'small': area < small['maxArea'], 'unconventional': metadata.get('IsUnconventional', False),
+                     'small': small_area or no_mine, 'smallArea': small_area, 'noDeepMineSite': no_mine,
+                     'unconventional': metadata.get('IsUnconventional', False),
                      'variant': variant['id'] if variant else None,
                      'placements': len(variant['placements']) if variant else 0,
                      'sites': len(variant['sites']) if variant else 0,
@@ -2363,10 +2384,12 @@ def run_builtin(paths, catalog):
             print('  ', error)
         failed |= bool(errors)
     if full:
-        summary, errors = builtin_coverage(variants, reports)
-        small = [m['map'] for m in summary['maps'] if m['small']]
-        print(f'coverage: {len(summary["maps"])} built-in maps, {len(summary["devMaps"])} dev maps; '
-              f'small (< {summary["smallMapMaxArea"]} cells): {", ".join(small) or "none"}')
+        summary, errors = builtin_coverage(variants, reports, catalog)
+        small = [m['map'] for m in summary['maps'] if m['smallArea']]
+        no_mine = [m['map'] for m in summary['maps'] if m['noDeepMineSite']]
+        print(f'coverage: {len(summary["maps"])} built-in maps, {len(summary["devMaps"])} dev maps; EXTREMELY difficult: '
+              f'small (< {summary["smallMapMaxArea"]} cells): {", ".join(small) or "none"}; '
+              f'no Deep Mine site: {", ".join(no_mine) or "none"}')
         for error in errors:
             print('  ', error)
         failed |= bool(errors)

@@ -23,7 +23,7 @@
     "UndergroundModelDepth": 0
   },
   "StockpileSpec": {
-    "MaxCapacity": 4000,
+    "MaxCapacity": 10000,
     "WhitelistedGoodType": "Pileable"
   },
   "EnterableSpec": {

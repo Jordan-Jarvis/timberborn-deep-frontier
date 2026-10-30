@@ -14,11 +14,13 @@
         "Width": 192,
         "Height": 192,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": true,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Beaverome.Sites",
           "DeepFrontier.MapSetup.Unmet.Beaverome.1",
-          "DeepFrontier.MapSetup.Unmet.Beaverome.2"
+          "DeepFrontier.MapSetup.Unmet.Beaverome.2",
+          "DeepFrontier.MapSetup.Unmet.Beaverome.3"
         ],
         "Placements": [
           {
@@ -139,7 +141,8 @@
         "Width": 128,
         "Height": 128,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Canyon.Sites",
           "DeepFrontier.MapSetup.Unmet.Canyon.1"
@@ -293,7 +296,7 @@
             "Z": 12,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -303,7 +306,7 @@
             "Z": 11,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "HumanRecordCache",
@@ -323,7 +326,8 @@
         "Width": 100,
         "Height": 50,
         "TotalHeight": 66,
-        "Small": true,
+        "SmallArea": true,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Cliffside.Sites",
           "DeepFrontier.MapSetup.Unmet.Cliffside.1",
@@ -358,7 +362,7 @@
             "Z": 8,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -368,7 +372,7 @@
             "Z": 4,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "SandstoneOutcrop",
@@ -448,7 +452,8 @@
         "Width": 192,
         "Height": 192,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Craters.Sites",
           "DeepFrontier.MapSetup.Unmet.Craters.1"
@@ -542,7 +547,7 @@
             "Z": 3,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -552,7 +557,7 @@
             "Z": 15,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "HumanRecordCache",
@@ -632,7 +637,8 @@
         "Width": 50,
         "Height": 50,
         "TotalHeight": 66,
-        "Small": true,
+        "SmallArea": true,
+        "NoDeepMineSite": true,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Diorama.Sites"
         ],
@@ -645,7 +651,7 @@
             "Z": 6,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -655,7 +661,7 @@
             "Z": 4,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "SandstoneOutcrop",
@@ -785,7 +791,8 @@
         "Width": 256,
         "Height": 256,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [],
         "Placements": [
           {
@@ -816,7 +823,7 @@
             "Z": 6,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -826,7 +833,7 @@
             "Z": 4,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "LimestoneOutcrop",
@@ -966,7 +973,8 @@
         "Width": 192,
         "Height": 192,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Hollows.Sites",
           "DeepFrontier.MapSetup.Unmet.Hollows.1"
@@ -1060,7 +1068,7 @@
             "Z": 5,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 6000
           },
           {
             "Template": "DeepOreSource",
@@ -1070,7 +1078,7 @@
             "Z": 5,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 6000
           },
           {
             "Template": "DeepOreSource",
@@ -1080,7 +1088,7 @@
             "Z": 1,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 6000
           },
           {
             "Template": "SandstoneSeam",
@@ -1160,7 +1168,8 @@
         "Width": 256,
         "Height": 256,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [],
         "Placements": [
           {
@@ -1201,7 +1210,7 @@
             "Z": 2,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 1500
+            "Amount": 7000
           },
           {
             "Template": "DeepOreSource",
@@ -1211,7 +1220,7 @@
             "Z": 2,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2500
+            "Amount": 10000
           },
           {
             "Template": "HumanRecordCache",
@@ -1351,7 +1360,8 @@
         "Width": 128,
         "Height": 128,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Meander.Sites"
         ],
@@ -1514,7 +1524,7 @@
             "Z": 4,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -1524,7 +1534,7 @@
             "Z": 5,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           }
         ]
       },
@@ -1534,7 +1544,8 @@
         "Width": 256,
         "Height": 150,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.MountainRange.Sites",
           "DeepFrontier.MapSetup.Unmet.MountainRange.1"
@@ -1568,7 +1579,7 @@
             "Z": 6,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -1578,7 +1589,7 @@
             "Z": 8,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "LimestoneOutcrop",
@@ -1718,7 +1729,8 @@
         "Width": 256,
         "Height": 256,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Nomads.1"
         ],
@@ -1761,7 +1773,7 @@
             "Z": 5,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 1500
+            "Amount": 4500
           },
           {
             "Template": "DeepOreSource",
@@ -1771,7 +1783,7 @@
             "Z": 8,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 6000
           },
           {
             "Template": "DeepOreSource",
@@ -1781,7 +1793,7 @@
             "Z": 11,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2500
+            "Amount": 7500
           },
           {
             "Template": "LimestoneOutcrop",
@@ -1921,7 +1933,8 @@
         "Width": 256,
         "Height": 256,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Oasis.Sites"
         ],
@@ -1964,7 +1977,7 @@
             "Z": 5,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 1500
+            "Amount": 4500
           },
           {
             "Template": "DeepOreSource",
@@ -1974,7 +1987,7 @@
             "Z": 7,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 6000
           },
           {
             "Template": "DeepOreSource",
@@ -1984,7 +1997,7 @@
             "Z": 5,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2500
+            "Amount": 7500
           },
           {
             "Template": "LimestoneOutcrop",
@@ -2124,7 +2137,8 @@
         "Width": 192,
         "Height": 192,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Pillars.Sites",
           "DeepFrontier.MapSetup.Unmet.Pillars.1"
@@ -2218,7 +2232,7 @@
             "Z": 12,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -2228,7 +2242,7 @@
             "Z": 12,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "SandstoneSeam",
@@ -2308,7 +2322,8 @@
         "Width": 256,
         "Height": 256,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [],
         "Placements": [
           {
@@ -2349,7 +2364,7 @@
             "Z": 4,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 1500
+            "Amount": 4500
           },
           {
             "Template": "DeepOreSource",
@@ -2359,7 +2374,7 @@
             "Z": 4,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 6000
           },
           {
             "Template": "DeepOreSource",
@@ -2369,7 +2384,7 @@
             "Z": 2,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2500
+            "Amount": 7500
           },
           {
             "Template": "HumanRecordCache",
@@ -2509,7 +2524,8 @@
         "Width": 256,
         "Height": 256,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Pressure.1",
           "DeepFrontier.MapSetup.Unmet.Pressure.2",
@@ -2554,7 +2570,7 @@
             "Z": 8,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 1500
+            "Amount": 4500
           },
           {
             "Template": "DeepOreSource",
@@ -2564,7 +2580,7 @@
             "Z": 7,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2500
+            "Amount": 7500
           },
           {
             "Template": "DeepOreSource",
@@ -2574,7 +2590,7 @@
             "Z": 5,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 6000
           },
           {
             "Template": "LimestoneOutcrop",
@@ -2714,7 +2730,8 @@
         "Width": 256,
         "Height": 150,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Spillage.Sites"
         ],
@@ -2747,7 +2764,7 @@
             "Z": 7,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -2757,7 +2774,7 @@
             "Z": 13,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "LimestoneOutcrop",
@@ -2897,7 +2914,8 @@
         "Width": 256,
         "Height": 256,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [],
         "Placements": [
           {
@@ -2938,7 +2956,7 @@
             "Z": 9,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 1500
+            "Amount": 7000
           },
           {
             "Template": "DeepOreSource",
@@ -2948,7 +2966,7 @@
             "Z": 11,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2500
+            "Amount": 10000
           },
           {
             "Template": "HumanRecordCache",
@@ -3088,7 +3106,8 @@
         "Width": 256,
         "Height": 256,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.ThousandIslands.Sites",
           "DeepFrontier.MapSetup.Unmet.ThousandIslands.1",
@@ -3123,7 +3142,7 @@
             "Z": 4,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -3133,7 +3152,7 @@
             "Z": 6,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "LimestoneOutcrop",
@@ -3273,7 +3292,8 @@
         "Width": 128,
         "Height": 128,
         "TotalHeight": 66,
-        "Small": false,
+        "SmallArea": false,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Waterfalls.Sites",
           "DeepFrontier.MapSetup.Unmet.Waterfalls.1"
@@ -3427,7 +3447,7 @@
             "Z": 2,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "DeepOreSource",
@@ -3437,7 +3457,7 @@
             "Z": 5,
             "Orientation": "Cw0",
             "Good": "DeepOre",
-            "Amount": 2000
+            "Amount": 8500
           },
           {
             "Template": "HumanRecordCache",

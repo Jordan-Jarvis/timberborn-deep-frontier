@@ -10,7 +10,8 @@ namespace DeepFrontier.Scripts.MapSetup {
   // tools/map_setup.json, and tools/prepare_deep_frontier_map.py builtin validates every entry
   // against the unmodified built-in map. Every value is required; nothing is defaulted.
   internal record BuiltinMapSetupSpec : ComponentSpec {
-    // A map whose area (width x height) is below this is small (tools/map_setup.json smallMap).
+    // A map whose area (width x height) is below this is small (tools/map_setup.json smallMap;
+    // BuiltinMapSpec.SmallArea).
     [Serialize] public int SmallMapMaxArea { get; init; }
     // Cells the full-loop sites claim with their margins on the largest reference map.
     [Serialize] public int ReferenceSiteArea { get; init; }
@@ -30,7 +31,12 @@ namespace DeepFrontier.Scripts.MapSetup {
     [Serialize] public int Height { get; init; }
     // Total build height (layers) of a new game on this map; the terrain keeps its stored layers.
     [Serialize] public int TotalHeight { get; init; }
-    [Serialize] public bool Small { get; init; }
+    // tools/map_setup.json smallMap: the area is below SmallMapMaxArea ...
+    [Serialize] public bool SmallArea { get; init; }
+    // ... or the variant lists no Deep Mine site (no permanent deep ore). Either gives the
+    // EXTREMELY difficult warning.
+    [Serialize] public bool NoDeepMineSite { get; init; }
+    public bool Small => SmallArea || NoDeepMineSite;
     // One localized line per loop-coverage item the map cannot provide (the variant's "unmet").
     [Serialize] public ImmutableArray<string> UnmetLocKeys { get; init; }
     [Serialize] public ImmutableArray<MapPlacementSpec> Placements { get; init; }
