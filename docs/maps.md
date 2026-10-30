@@ -105,7 +105,7 @@ Deep Frontier is EXTREMELY difficult on Diorama
 - Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
 - No Deep Mine: the Deep Mine is the only lasting source of deep ore, which the late game and the rocket launches need. Any Deep Ore Sources on this map run out.
 What this map cannot provide:
-- No room for: Deep Mine, Limestone quarry, Nuclear Reactor, Launch pad, Water treatment plant, Uranium processing plant, Radioactive waste refinery, Cryogenic liquefaction plant, Steel mill, Mission control, Cryogenic tank farm, Electrolysis plant, Hospital, Precision machine works, Radioactive Waste Vault, Fishery works, Materials Laboratory, Bathhouse, Technical school, Fertilizer works, Grocery store.
+- No room for: Deep Mine, Limestone quarry, Nuclear Reactor, Launch pad, Water treatment plant, Uranium processing plant, Radioactive waste refinery, Cryogenic liquefaction plant, Steel mill, Mission control, Cryogenic tank farm, Electrolysis plant, Hospital, Precision machine works, Radioactive Waste Vault, Fishery works, Materials Laboratory, Technical school, Fertilizer works, Grocery store.
 ```
 
 Cliffside:
@@ -143,7 +143,7 @@ A map without the warning but with unmet items gets a shorter dialog (`UnmetTitl
 | Canyon | 128×128 |  | `canyon` | 17 | 44 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
 | Cliffside | 100×50 | yes (area) | `cliffside` | 11 | 22 | 17,000 | shore fishing banks (first FreshFish); LimestoneQuarry site (understructure); ArchiveExcavation site (flat); Human Record Caches in survey range of an Archive Excavation site; NuclearReactor site (flat); LaunchPad site (flat); WaterTreatmentPlant site (flat); UraniumProcessingPlant site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); SteelMill site (flat); MissionControl site (flat); PrecisionMachineWorks site (flat); CryogenicTankFarm site (flat); ElectrolysisPlant site (flat); Hospital site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); FoodPackagingWorks site (flat); MaterialsLaboratory site (flat); TownPlaza site (flat) |
 | Craters | 192×192 |  | `craters` | 17 | 39 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat); RadioactiveWasteExport site (mapEdge) |
-| Diorama | 50×50 | yes (area, no Deep Mine) | `diorama` | 14 | 18 | 17,000 | DeepMine site (understructure); LimestoneQuarry site (understructure); NuclearReactor site (flat); LaunchPad site (flat); WaterTreatmentPlant site (flat); UraniumProcessingPlant site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); SteelMill site (flat); MissionControl site (flat); CryogenicTankFarm site (flat); ElectrolysisPlant site (flat); Hospital site (flat); PrecisionMachineWorks site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); Bathhouse site (flat); TechnicalSchool site (flat); FertilizerWorks site (flat); GroceryStore site (flat) |
+| Diorama | 50×50 | yes (area, no Deep Mine) | `diorama` | 14 | 18 | 17,000 | DeepMine site (understructure); LimestoneQuarry site (understructure); NuclearReactor site (flat); LaunchPad site (flat); WaterTreatmentPlant site (flat); UraniumProcessingPlant site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); SteelMill site (flat); MissionControl site (flat); CryogenicTankFarm site (flat); ElectrolysisPlant site (flat); Hospital site (flat); PrecisionMachineWorks site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); TechnicalSchool site (flat); FertilizerWorks site (flat); GroceryStore site (flat) |
 | HelixMountain | 256×256 |  | `helix-mountain` | 17 | 45 | 17,000 | none |
 | Hollows | 192×192 |  | `hollows` | 18 | 45 | 18,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
 | Lakes | 256×256 |  | `lakes` | 18 | 46 | 17,000 | none |
@@ -242,7 +242,7 @@ A map supports the loop when a player can reach every stage, from the start to t
 | 7 Rocket | Water Treatment Plant → Electrolysis → Cryogenic Liquefaction → Cryogenic Tank Farm; Rocket Assembly Hangar; Mission Control; Launch Pad | flat sites; source-fed clean water (three launches need about 26,400 Water) | sizes, mission recipes | flat sites, `clean water` |
 | 8 Space | every building above | non-overlapping primary sites, door approach free and routable, listed open margins clear of other footprints and placements | — | site checks |
 | — | Fish Hatchery (7×7×5 since 2026-10-26) | door cell on dry ground at the bank level; the other bank cells at or below it (adaptive bank posts); deck blocks above terrain (they may stand in water); each of the four work cells (local y 5) in an open water column whose surface stands ≥ 0.2 above the cell floor (bank − 1) and holding ≤ 7 of water; work cell 0 contamination ≤ 0.05; every pile and bank post reaches the bed within 6; Dynamite allowed on deck cells | `WaterDepthWorkCellsSpec`, `ContaminationBlockableBuilding` | waterside site |
-| — | Fishery Works, Restaurant, Grocery, Hospital, Bathhouse, Town Plaza, Greenhouse, Fertilizer Works, Food Packaging Works, Technical School, Materials Laboratory | flat sites. The fishery's basins are filled by haulers or pipes, so it does not need a shore | size | flat sites |
+| — | Fishery Works, Restaurant, Grocery, Hospital, Town Plaza, Greenhouse, Fertilizer Works, Food Packaging Works, Technical School, Materials Laboratory | flat sites. The fishery's basins are filled by haulers or pipes, so it does not need a shore | size | flat sites |
 
 ### Quantities: is the deep ore enough for a launch program?
 
@@ -437,7 +437,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S38 | RocketAssemblyHangar | Rocket Assembly Hangar, 32 cells south-west of the start | 103, 113, 4 Cw0 | flat | open NSEW (1) | 30 / 0 | 0 |
 | S39 | FoodPackagingWorks | Food Packaging Works, 55 cells south-east of the start | 173, 106, 4 Cw0 | flat | open NSEW (1) | 62 / 0 | 6 |
 | S40 | Restaurant | Restaurant, 21 cells east of the start | 148, 135, 3 Cw0 | flat | open NSEW (1) | 15 / 0 | 43 |
-| S41 | Bathhouse | Bathhouse, 53 cells south of the start | 109, 93, 4 Cw90 | flat | open NSEW (1) | 53 / 0 | 12 |
 | S42 | TechnicalSchool | Technical School, 55 cells south-west of the start | 100, 96, 3 Cw90 | flat | open NSEW (1) | 61 / 0 | 0 |
 | S43 | FertilizerWorks | Fertilizer Works, 62 cells south of the start | 130, 80, 4 Cw90 | flat | open NSEW (1) | 54 / 0 | 15 |
 | S44 | GroceryStore | Grocery Store, 16 cells west of the start | 114, 148, 3 Cw90 | flat | open SW (1) | 8 / 0 | 43 |
@@ -508,7 +507,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S37 | RocketAssemblyHangar | Rocket Assembly Hangar, 12 cells east of the start | 109, 137, 2 Cw90 | flat | open S (1) | 4 / 0 | 44 |
 | S38 | FoodPackagingWorks | Food Packaging Works, 18 cells west of the start | 80, 132, 5 Cw90 | flat | open N (1) | 13 / 0 | 12 |
 | S39 | Restaurant | Restaurant, 30 cells east of the start | 127, 129, 2 Cw0 | flat | open NSEW (1) | 22 / 5 | 12 |
-| S40 | Bathhouse | Bathhouse, 62 cells north-east of the start | 145, 166, 4 Cw0 | flat | open NSEW (1) | 72 / 5 | 11 |
 | S41 | TechnicalSchool | Technical School, 53 cells south of the start | 89, 75, 3 Cw0 | flat | open NSEW (1) | 49 / 0 | 22 |
 | S42 | FertilizerWorks | Fertilizer Works, 49 cells north-east of the start | 126, 175, 4 Cw90 | flat | open NSEW (1) | 54 / 5 | 0 |
 | S43 | GroceryStore | Grocery Store, 55 cells east of the start | 150, 153, 2 Cw90 | flat | open NSEW (1) | 56 / 5 | 0 |
@@ -580,7 +578,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S38 | RocketAssemblyHangar | Rocket Assembly Hangar, 39 cells north-east of the start | 92, 193, 6 Cw90 | flat | open NSEW (1) | 35 / 5 | 0 |
 | S39 | FoodPackagingWorks | Food Packaging Works, 30 cells north-east of the start | 102, 176, 11 Cw90 | flat | open NSEW (1) | 26 / 0 | 0 |
 | S40 | Restaurant | Restaurant, 19 cells west of the start | 59, 158, 16 Cw90 | flat | open NSEW (1) | 14 / 0 | 18 |
-| S41 | Bathhouse | Bathhouse, 59 cells south-east of the start | 121, 111, 8 Cw0 | flat | open NSEW (1) | 79 / 0 | 0 |
 | S42 | TechnicalSchool | Technical School, 21 cells east of the start | 100, 163, 15 Cw90 | flat | open NSEW (1) | 15 / 0 | 13 |
 | S43 | FertilizerWorks | Fertilizer Works, 34 cells south of the start | 74, 118, 10 Cw0 | flat | open NSEW (1) | 66 / 0 | 1 |
 | S44 | GroceryStore | Grocery Store, 66 cells east of the start | 143, 172, 13 Cw90 | flat | open NSEW (1) | 64 / 0 | 9 |

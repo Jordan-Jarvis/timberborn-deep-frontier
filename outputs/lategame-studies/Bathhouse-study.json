@@ -2,19 +2,19 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Cross-vaulted bath hall: four teal plank barrel quarters meeting in groins, iron-banded arches over semicircular thermal windows, and a louvred steam lantern at the crossing.",
   "footprint": [
-    9,
-    7
+    7,
+    5
   ],
-  "heightLayers": 11,
+  "heightLayers": 5,
   "boundsMin": [
     -0.05,
     -0.03,
     -0.03
   ],
   "boundsMax": [
-    9.03,
-    7.05,
-    10.5
+    7.0432,
+    5.05,
+    4.5
   ],
   "doors": [
     {
@@ -39,22 +39,21 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 4508,
+  "faces": 3264,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 904,
-    "IrregularPlanks_DarkBrown.IronTeeth": 178,
-    "BaseMetal.IronTeeth": 1746,
-    "RoofPlanks.IronTeeth": 494,
-    "Details.IronTeeth": 670,
+    "BaseWood_DarkBrown.IronTeeth": 404,
+    "BaseMetal.IronTeeth": 1704,
+    "RoofPlanks.IronTeeth": 230,
+    "Details.IronTeeth": 650,
     "accent8": 20,
     "Water": 10,
-    "Plaster_White.IronTeeth": 468,
+    "Plaster_White.IronTeeth": 420,
     "Plaster_Orange.IronTeeth": 17,
-    "IrregularPlanks_MetalForged.IronTeeth": 90,
-    "WindowsAtlas.IronTeeth": 309,
-    "PaintedMetal.IronTeeth": 236,
+    "IrregularPlanks_MetalForged.IronTeeth": 56,
+    "WindowsAtlas.IronTeeth": 179,
+    "PaintedMetal.IronTeeth": 208,
     "IrregularPlanks_Grey.IronTeeth": 6
   },
-  "sourceHash": "d09daa614ddcbcc9647abda973c13d38d328d336d9f2532ed8110dc7f59b043a",
-  "artHash": "4d1e6c51204fa9ea29c60876f98783893d999dd7652e69122bd8dc6846d5061c"
+  "sourceHash": "0c2c50cd5247973af46527d74e0221d28b4cbcb2bf4d3cfefefd46d72140524f",
+  "artHash": "233a2359d0f7e059701bb1d47d949b4761ae77c7d5e1b880af4b47107f57f7d8"
 }

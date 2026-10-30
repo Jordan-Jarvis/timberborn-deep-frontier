@@ -242,25 +242,16 @@
     11
    ],
    "footprintAfter": [
-    9,
     7,
-    11
+    5,
+    5
    ],
    "gridOrigin": [
     0,
     0
    ],
    "outsideCells": 0,
-   "insideCells": [
-    [
-     0,
-     0
-    ],
-    [
-     0,
-     1
-    ]
-   ]
+   "insideCells": []
   },
   "TownPlaza": {
    "footprintBefore": [

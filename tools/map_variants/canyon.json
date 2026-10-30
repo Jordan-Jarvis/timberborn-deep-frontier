@@ -62,7 +62,6 @@
     {"template": "MaterialsLaboratory.IronTeeth", "label": "Materials Laboratory, 35 cells south-west of the start", "x": 32, "y": 43, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": ["N"]},
     {"template": "RocketAssemblyHangar.IronTeeth", "label": "Rocket Assembly Hangar, 57 cells west of the start", "x": 3, "y": 46, "z": 12, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "FoodPackagingWorks.IronTeeth", "label": "Food Packaging Works, 32 cells south-west of the start", "x": 47, "y": 31, "z": 6, "orientation": "Cw270", "margin": 1, "openSides": []},
-    {"template": "Bathhouse.IronTeeth", "label": "Bathhouse, 33 cells east of the start", "x": 96, "y": 64, "z": 5, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "Restaurant.IronTeeth", "label": "Restaurant, 25 cells east of the start", "x": 82, "y": 71, "z": 2, "orientation": "Cw90", "margin": 1, "openSides": ["W"]},
     {"template": "TechnicalSchool.IronTeeth", "label": "Technical School, 71 cells south-west of the start", "x": 7, "y": 19, "z": 12, "orientation": "Cw90", "margin": 1, "openSides": ["N"]},
     {"template": "FertilizerWorks.IronTeeth", "label": "Fertilizer Works, 71 cells north-west of the start", "x": 15, "y": 112, "z": 10, "orientation": "Cw270", "margin": 1, "openSides": []},

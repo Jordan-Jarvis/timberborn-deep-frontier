@@ -49,9 +49,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 9722,
-   "vertices": 18678,
-   "construction": 9722,
+   "finished": 7704,
+   "vertices": 14842,
+   "construction": 7704,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.Model.timbermesh"
   },
   "CementKiln": {

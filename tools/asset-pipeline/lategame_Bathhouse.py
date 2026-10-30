@@ -4,33 +4,40 @@ Revised 2026-10-22 (no forced decoration; footprint ends at the walls):
 removed the colonnaded portico, the planter with shrubs and the lamp standard;
 the plunge-pool court stays.
 
-HERO: a cross-vaulted (groin-vaulted) bath hall: four teal plank barrel
-quarters meeting in valley groins, each ending in an iron-banded arch over a
-semicircular thermal (Diocletian) window, with a louvred steam lantern at the
-crossing. No other study has a groin vault or thermal windows.
-ROOF: groin vault on the hall; classical plank pediment on the portico;
-plank gable on the boiler room; lean-to roofs on the changing wing and the
-engine shed.
+Compacted 2026-10-30 (Workshop feedback: the buildings exceed Timberborn's
+scale; user: "it is the scaffolding and size", "one layer per floor", "make
+the roof flat on more of our buildings"): 9x7x11 -> 7x5x5, inside the old
+footprint with the same origin, door and native entrance cell. The bath hall
+is a 3 x 3 hall (one-layer concrete storey, a short plaster band and the
+vault) instead of 5 x 5 with a 1.2-layer podium and three-layer walls; the
+changing wing and the boiler room are one layer high with flat roofs (no lean-
+to or plank gable); the steam stack is less than half as tall.
 
-Plan (9 x 7 tiles; front y = 0):
-  x 1..6, y 2..7  bath hall on a rusticated concrete podium (top layer 1.2),
-                  orange plaster upper walls set back 0.15, clerestory ribbons
-                  above the side wings, thermal windows in all four lunettes.
-  x 1..6, y 0..2  colonnaded portico: six concrete columns on the grid lines
-                  x = 1..6 and a plank pediment with a gear tympanum. The door
-                  is centred on x = 3.5 with its face on the y = 2 tile edge;
-                  its path cell (3,1,0) between the columns stays free.
-  x 0..1, y 2..7  changing-room wing, grey-plank timber frame, portholes.
-  x 6..9, y 0..3  plunge-pool court: cast basin with native water and a
+HERO (kept as the silhouette): a cross-vaulted (groin-vaulted) bath hall:
+four teal plank barrel quarters meeting in valley groins, each ending in an
+iron-banded arch over a semicircular thermal (Diocletian) window, with a
+louvred steam lantern at the crossing. No other study has a groin vault or
+thermal windows.
+ROOF: groin vault on the hall; flat concrete roofs (layer 1) with low
+parapets on the changing wing and the boiler room.
+
+Plan (7 x 5 tiles; front y = 0):
+  x 2..5, y 2..5  bath hall: rusticated concrete ground storey (top layer 1)
+                  with the door centred on x = 3.5, face on the y = 2 tile
+                  edge (its path cell (3,1,0) stays free), orange plaster band
+                  set back 0.15, cornice and the groin vault.
+  x 0..2, y 2..5  changing-room wing, grey-plank timber frame, portholes.
+  x 0..3, y 0..2  plunge-pool court: cast basin with native water and a
                   bronze spout stele.
-  x 6..9, y 3..4  open engine shed: flywheel and a belt-driven laundry drum.
-  x 6..9, y 4..7  boiler room (forged sheet in a timber frame) with the steam
-                  stack, a safety valve on the ridge and the steam main to
-                  the hall; the Water pipe socket sits in a recess at its back.
+  x 4..7, y 1..2  open engine yard along the boiler-room wall: flywheel and a
+                  belt-driven laundry drum; the front row y 0..1 stays bare.
+  x 5..7, y 2..5  boiler room (concrete) with the steam stack, the safety valve
+                  on its roof and the steam main into the hall; the Water pipe
+                  socket sits in a recess at its back (cell (6,4,0), Up).
 
-Animated: flywheel (SPIN_Y), laundry/towel drum (SPIN_Y), safety-valve
-weighted lever (SWAY_Y).
-Emitters: steam at the stack mouth and at the lantern vent.
+Animated (unchanged names and kinds): flywheel (SPIN_Y), laundry/towel drum
+(SPIN_Y), safety-valve weighted lever (SWAY_Y).
+Emitters: steam at the stack mouth, at the lantern vent and off the pool.
 """
 import math
 
@@ -40,31 +47,32 @@ from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK,
 import lategame_civic_parts as P
 from lategame_civic_parts import blk, obox
 import lategame_industry_parts as I
-from lategame_mining_parts import plank_gable, plank_slope, lean_to
 import native_window_atlas as A
 import native_building_assets as N
 import civic_wellbeing_parts as W
 from civic_wellbeing_parts import animate  # noqa: F401  (CUSTOM_ kinds)
 
 IDENT = 'Bathhouse'
-FOOTPRINT = (9, 7)
-HEIGHT = 11
+FOOTPRINT = (7, 5)
+HEIGHT = 5
 FRAME_END = 121
 HERO = ('Cross-vaulted bath hall: four teal plank barrel quarters meeting in groins, iron-banded arches over '
         'semicircular thermal windows, and a louvred steam lantern at the crossing.')
 
 # Bath water arrives by Timber Pipes at the boiler room's back recess
 # (same record shape as the NuclearReactor coolant inlet).
-PIPE_INLET = {'cell': [7, 6, 0], 'direction': 'Up', 'state': 'OpenIn', 'good': 'Water',
-              'socket': [7.5, 6.84, .45]}
+PIPE_INLET = {'cell': [6, 4, 0], 'direction': 'Up', 'state': 'OpenIn', 'good': 'Water',
+              'socket': [6.5, 4.84, .45]}
 
-HALL = (1.0, 2.0, 6.0, 7.0)          # podium on whole tiles
-PT = 1.2                              # podium top
-HW = (1.15, 2.15, 5.85, 6.85)         # upper walls, set back 0.15
-WT = 3.9                              # wall top
-CX, CY = 3.5, 4.5
-SPRING, RISE, HALF = 4.0, 2.0, 2.35    # springing on the cornice top, exactly layer 4
+HALL = (2.0, 2.0, 5.0, 5.0)          # ground storey on whole tiles
+PT = 1.0                              # ground storey top: one layer
+HW = (2.15, 2.15, 4.85, 4.85)         # plaster band, set back 0.15
+WT = 1.38                             # band top
+CX, CY = 3.5, 3.5
+SPRING, RISE, HALF = 1.5, .95, 1.35    # springing on the cornice top
 DOOR_X = 3.5
+SIDE_TOP = 1.0                        # changing wing and boiler room roofs, layer 1
+SLAB = .16
 
 # Visitor seats (export_lategame_models.bathhouse_slots writes them as native
 # '#Slot#Spot<i>' empties; Sitting animation as on the vanilla MudBath, not a
@@ -72,10 +80,10 @@ DOOR_X = 3.5
 # Native FixedSlotManager needs a slot per visitor (capacity 12), so the
 # bathers fill the six pool seats first and the other six sit inside the
 # closed hall, unseen, as before. (x, y, seat z, facing x, facing y).
-POOL_WATER = .42                      # plunge-pool water surface (pool_court)
-BATH_SEATS = [(6.75, 2.42, .08, 0, -1), (7.5, 2.42, .08, 0, -1), (8.25, 2.42, .08, 0, -1),
-              (6.58, 1.7, .08, 1, 0), (6.58, 1.0, .08, 1, 0), (8.3, .6, .08, -1, 1)]
-HALL_SEATS = [(x, y, PT, 0, 1) for y in (3.8, 5.2) for x in (2.5, 3.5, 4.5)]
+POOL_WATER = .38                      # plunge-pool water surface (pool_court)
+BATH_SEATS = [(.75, 1.58, .08, 0, -1), (1.5, 1.58, .08, 0, -1), (2.25, 1.58, .08, 0, -1),
+              (.75, .42, .08, 0, 1), (1.5, .42, .08, 0, 1), (2.25, .42, .08, 0, 1)]
+HALL_SEATS = [(x, y, PT, 0, 1) for y in (3.0, 4.0) for x in (2.5, 3.5, 4.5)]
 
 
 # ---------------------------------------------------------------- bath hall
@@ -84,81 +92,92 @@ def hall(g, parts):
     x0, y0, x1, y1 = HALL
     P.podium(g, x0, y0, x1, y1, PT, skip=[(DOOR_X - .5, DOOR_X + .5)])
     P.door(g, DOOR_X, y0, 0, 'Door0')
-    K.lamp(g, DOOR_X - .66, y0, 1.02, face='front')
-    K.lamp(g, DOOR_X + .66, y0, 1.02, face='front')
-    for x in (1.55, 2.4, 4.6, 5.45):
-        P.native_window(g, x, y0, .62, .62, 'front', 'factory')
-    for x in (1.5, 2.5, 3.5, 4.5, 5.5):
-        P.native_window(g, x, y1, .62, .7, 'back', 'factory')
+    K.lamp(g, DOOR_X - .64, y0, .5, face='front')
+    K.lamp(g, DOOR_X + .64, y0, .5, face='front')
+    for x in (2.45, 4.55):
+        P.native_window(g, x, y0, .47, .5, 'front', 'factory')
+    for x in (2.5, 3.5, 4.5):
+        P.native_window(g, x, y1, .47, .5, 'back', 'factory')
     hx0, hy0, hx1, hy1 = HW
-    bays = [hx0 + (hx1 - hx0) * (i + .5) / 5 for i in range(5)]
-    P.framed_block(g, hx0, hy0, hx1, hy1, PT, WT, infill=ORANGE, frame=CONCRETE, pitch=(hx1 - hx0) / 5,
-                   corner=.2, post=.11,
-                   windows={'back': [(x, 2.55, 1.05, 'grand') for x in bays]})
-    # Clerestory ribbons above the side wings, and the portico's outer bays.
-    for y in bays:
-        A.atlas_window(g, hx0, y, 3.56, .68, 'left', 'ribbon')
-        A.atlas_window(g, hx1, y, 3.56, .68, 'right', 'ribbon')
-    for x in (bays[0], bays[4]):
-        A.atlas_window(g, x, hy0, 3.56, .68, 'front', 'ribbon')
-    # Cornice slab capping the walls; the vault springs from its top.
-    blk(g, hx0 - .1, hy0 - .1, WT - .08, hx1 + .1, hy1 + .1, SPRING, CONCRETE)
-    hi, ri = W.groin_vault(g, CX, CY, HALF, SPRING, RISE, overhang=.12, t=.1, segments=16)
+    P.framed_block(g, hx0, hy0, hx1, hy1, PT, WT, infill=ORANGE, frame=CONCRETE, pitch=(hx1 - hx0) / 3,
+                   corner=.2, post=.11)
+    # Cornice slab capping the band; the vault springs from its top.
+    blk(g, hx0 - .1, hy0 - .1, WT - .06, hx1 + .1, hy1 + .1, SPRING, CONCRETE)
+    hi, ri = W.groin_vault(g, CX, CY, HALF, SPRING, RISE, overhang=.1, t=.08, segments=16)
     # Lunette infills (orange plaster) with a thermal window in each.
     for face, axis, plane, centre, out in (('front', 'Y', hy0, CX, -1), ('back', 'Y', hy1, CX, 1),
                                            ('left', 'X', hx0, CY, -1), ('right', 'X', hx1, CY, 1)):
         K.arch_infill(g, axis, plane, centre, hi + .03, SPRING, ri + .04, out, ORANGE, segments=16)
         wx, wy = (centre, plane) if axis == 'Y' else (plane, centre)
-        W.thermal_window(g, face, wx, wy, SPRING + .1, 1.42)
+        W.thermal_window(g, face, wx, wy, SPRING + .06, .72)
     # Corner pinnacles hide the vault's springing corners.
     for x in (hx0, hx1):
         for y in (hy0, hy1):
-            blk(g, x - .17, y - .17, WT - .12, x + .17, y + .17, 4.72, CONCRETE)
-            blk(g, x - .19, y - .19, 4.72, x + .19, y + .19, 4.78, IRON)
-            I.sphere(g, (x, y, 4.88), .085, BRASS, segments=10, rings=6)
-            g.cylinder((x, y, 4.79), .03, .03, IRON, 'Z', 8)
+            blk(g, x - .15, y - .15, WT - .1, x + .15, y + .15, 1.95, CONCRETE)
+            blk(g, x - .17, y - .17, 1.95, x + .17, y + .17, 2.0, IRON)
+            I.sphere(g, (x, y, 2.09), .07, BRASS, segments=10, rings=6)
+            g.cylinder((x, y, 2.01), .025, .025, IRON, 'Z', 8)
     lantern(g)
 
 
 def lantern(g):
     """Louvred steam lantern at the crossing (round, never octagonal)."""
-    z0 = SPRING + RISE - .15
-    K.revolve(g, (CX, CY, z0), [(.4, 0), (.4, .85)], IRON, segments=12)
-    for k in range(5):
-        K.band(g, (CX, CY, 0), .4, z0 + .25 + k * .11, .05, FORGED, segments=12, proud=.03)
-    K.band(g, (CX, CY, 0), .4, z0 + .06, .1, IRON, segments=12, proud=.05)
-    top = z0 + .85
-    K.revolve(g, (CX, CY, top), [(.56, 0), (.56, .05), (.09, .44), (.09 - .001, .445)], ROOF, segments=12)
-    K.revolve(g, (CX, CY, top + .44), [(.07, 0), (.07, .26)], IRON, segments=10)
-    g.ring((CX, CY, top + .68), .1, .04, .05, BRASS, 'Z', 10)
-    K.emitter(g, 'steam', CX, CY, top + .705, .07)
+    z0 = SPRING + RISE - .12
+    K.revolve(g, (CX, CY, z0), [(.28, 0), (.28, .5)], IRON, segments=12)
+    for k in range(3):
+        K.band(g, (CX, CY, 0), .28, z0 + .2 + k * .1, .045, FORGED, segments=12, proud=.025)
+    K.band(g, (CX, CY, 0), .28, z0 + .06, .08, IRON, segments=12, proud=.04)
+    top = z0 + .5
+    K.revolve(g, (CX, CY, top), [(.4, 0), (.4, .04), (.07, .3), (.07 - .001, .305)], ROOF, segments=12)
+    K.revolve(g, (CX, CY, top + .3), [(.055, 0), (.055, .18)], IRON, segments=10)
+    g.ring((CX, CY, top + .46), .075, .03, .04, BRASS, 'Z', 10)
+    K.emitter(g, 'steam', CX, CY, top + .48, .055)
 
 
 # ---------------------------------------------------------------- changing wing
 
 def changing_wing(g):
-    P.podium(g, 0.0, 2.0, 1.0, 7.0, .5, joints=False, foot=False)
-    zt = 2.45
-    P.framed_block(g, .06, 2.06, HW[0], 6.94, .5, zt, infill=GREYPLANK, frame=WOOD, pitch=.98,
+    P.podium(g, 0.0, 2.0, 2.0, 5.0, .2, joints=False, foot=False)
+    zt = SIDE_TOP - SLAB
+    P.framed_block(g, .06, 2.06, 1.99, 4.94, .2, zt, infill=GREYPLANK, frame=WOOD, pitch=.96,
                    corner=.14, faces=('front', 'back', 'left'))
-    ys = [2.06 + (6.94 - 2.06) * (i + .5) / 5 for i in range(5)]
-    for y in ys:
-        A.atlas_window(g, .06, y, 1.55, .38, 'left', 'porthole')
-    A.atlas_window(g, .6, 2.06, 1.55, .34, 'front', 'porthole')
-    A.atlas_window(g, .6, 6.94, 1.55, .34, 'back', 'porthole')
-    lean_to(g, .06, HW[0] + .06, 2.06, 6.94, zt, 3.12, low_side='left', overhang=.1, seed=5)
-    # Gable triangles closing the wedge under the lean-to at both ends.
-    slope = (3.12 - zt) / (HW[0] + .06 - .06)
-    tri = [(.06, zt), (HW[0], zt), (HW[0], zt + slope * (HW[0] - .06) - .01)]
-    K.extrude_profile(g, tri, 2.06, 2.14, PLANK, axis='Y')
-    K.extrude_profile(g, tri, 6.86, 6.94, PLANK, axis='Y')
+    for y in (2.5, 3.5, 4.5):
+        A.atlas_window(g, .06, y, .52, .3, 'left', 'porthole')
+    A.atlas_window(g, 1.0, 2.06, .52, .3, 'front', 'porthole')
+    A.atlas_window(g, 1.0, 4.94, .52, .3, 'back', 'porthole')
+    blk(g, .02, 2.02, zt, HALL[0] - .05, 4.98, SIDE_TOP, CONCRETE)     # roof slab, clear of the hall coping
+    low_parapet(g, 0.0, 2.0, 2.0, 5.0, open_side='right')
+
+
+def low_parapet(g, x0, y0, x1, y1, *, open_side):
+    """Low concrete parapet with an iron cap on three edges of a layer-1 roof;
+    `open_side` abuts the hall."""
+    t, h, z = .12, .2, SIDE_TOP
+    xa = x0 - .02
+    xb = x1 + .02 if open_side != 'right' else x1 - .05
+    xl = x0 - .02 if open_side != 'left' else x0 + .05
+    blk(g, xl, y0 - .02, z, xb, y0 - .02 + t, z + h, CONCRETE)
+    blk(g, xl, y1 + .02 - t, z, xb, y1 + .02, z + h, CONCRETE)
+    if open_side != 'left':
+        blk(g, xa, y0 - .02 + t, z, xa + t, y1 + .02 - t, z + h, CONCRETE)
+    if open_side != 'right':
+        blk(g, xb - t, y0 - .02 + t, z, xb, y1 + .02 - t, z + h, CONCRETE)
+    c = .02
+    blk(g, xl - (c if open_side != 'left' else 0), y0 - .02 - c, z + h, xb + (c if open_side != 'right' else 0),
+        y0 - .02 + t + c, z + h + .04, IRON)
+    blk(g, xl - (c if open_side != 'left' else 0), y1 + .02 - t - c, z + h, xb + (c if open_side != 'right' else 0),
+        y1 + .02 + c, z + h + .04, IRON)
+    if open_side != 'left':
+        blk(g, xa - c, y0 - .02 + t + c, z + h, xa + t + c, y1 + .02 - t - c, z + h + .04, IRON)
+    if open_side != 'right':
+        blk(g, xb - t - c, y0 - .02 + t + c, z + h, xb + c, y1 + .02 - t - c, z + h + .04, IRON)
 
 
 # ---------------------------------------------------------------- pool court
 
 def pool_court(g):
-    x0, y0, x1, y1 = 6.0, 0.0, 9.0, 3.0
-    t, h = .25, .55
+    x0, y0, x1, y1 = 0.0, 0.0, 2.95, 2.0     # x1 .05 short: the door portal's side panel stands on x 3
+    t, h = .2, .5
     blk(g, x0, y0, 0, x1, y0 + t, h, CONCRETE)
     blk(g, x0, y1 - t, 0, x1, y1, h, CONCRETE)
     blk(g, x0, y0 + t, 0, x0 + t, y1 - t, h, CONCRETE)
@@ -171,116 +190,113 @@ def pool_court(g):
     blk(g, x0 + t, y0 + t, .0, x1 - t, y1 - t, .08, CONCRETE)        # basin floor
     g.liquid_surfaces.append(dict(name='PlungePool', shape='Rectangle', center=[(x0 + x1) / 2, (y0 + y1) / 2],
                                   bottom=.08, top=POOL_WATER, scale=[x1 - x0 - 2 * t, y1 - y0 - 2 * t], flowOnly=False))
-    # Iron pool ladder on the inner front wall.
-    for x in (7.32, 7.68):
-        g.box((x, y0 + t + .06, .4), (.04, .04, .7), IRON)
-        g.beam((x, y0 + t + .06, .75), (x, y0 + t - .02, .75), .04, mat=IRON)
+    # Iron pool ladder on the inner right wall (beside the entrance path).
+    lx = x1 - t - .06
+    for y in (.82, 1.18):
+        g.box((lx, y, .36), (.04, .04, .62), IRON)
+        g.beam((lx, y, .67), (lx + .08, y, .67), .04, mat=IRON)
     for k in range(3):
-        g.box((7.5, y0 + t + .06, .12 + k * .2), (.36, .03, .03), IRON)
-    # Spout stele on the side wall (clear of the engine yard behind) with a
-    # bronze spout and its falling water.
-    sy = 1.5
-    blk(g, x1 - t + .02, sy - .35, h + .07, x1 - .02, sy + .35, 1.42, CONCRETE)
-    blk(g, x1 - t - .02, sy - .39, 1.42, x1 + .0, sy + .39, 1.5, CONCRETE)
-    I.sphere(g, (x1 - t - .01, sy, 1.14), .1, BRASS, segments=12, rings=6)
-    I.tube(g, (x1 - t - .02, sy, 1.1), (x1 - t - .26, sy, 1.06), .045, BRASS, segments=10)
-    I.tube(g, (x1 - t - .27, sy, 1.04), (x1 - t - .33, sy, .43), .03, WATER, segments=8)
+        g.box((lx, 1.0, .12 + k * .18), (.03, .36, .03), IRON)
+    # Spout stele on the left wall with a bronze spout and its falling water.
+    sy = 1.0
+    blk(g, x0 + .02, sy - .3, h + .07, x0 + t - .02, sy + .3, 1.2, CONCRETE)
+    blk(g, x0 - .0, sy - .34, 1.2, x0 + t + .02, sy + .34, 1.27, CONCRETE)
+    I.sphere(g, (x0 + t + .01, sy, .95), .09, BRASS, segments=12, rings=6)
+    I.tube(g, (x0 + t + .02, sy, .92), (x0 + t + .24, sy, .88), .04, BRASS, segments=10)
+    I.tube(g, (x0 + t + .25, sy, .86), (x0 + t + .3, sy, .39), .028, WATER, segments=8)
     # Steam rising off the hot pool (vanilla SteamEngineSmoke; it plays while
     # bathers are in, EnterableParticleController via vanilla_smoke.mjs).
-    for ex, ey in ((7.05, 1.15), (7.95, 1.95)):
+    for ex, ey in ((1.05, .8), (2.0, 1.25)):
         K.emitter(g, 'steam', ex, ey, POOL_WATER + .03, .3)
 
 
-# ---------------------------------------------------------------- engine shed
+# ---------------------------------------------------------------- engine yard
 
-def engine_shed(g, parts):
-    y0, y1 = 3.0, 4.08
-    # Concrete bed and pedestals.
-    blk(g, 6.0, 3.0, 0, 9.0, 4.0, .1, CONCRETE)
-    fx, fy, fz, fr = 8.2, 3.45, 1.2, .7
-    for y in (3.16, 3.74):
-        blk(g, fx - .11, y - .08, .1, fx + .11, y + .08, fz - .1, CONCRETE)
-        blk(g, fx - .13, y - .1, fz - .1, fx + .13, y + .1, fz - .04, IRON)
-    g.cylinder((fx, 3.6, fz), .05, 1.0, IRON, 'Y', 10)           # shaft into the boiler room
+def engine_yard(g, parts):
+    """Flywheel and laundry drum on a concrete bed along the boiler-room wall
+    (tiles x 4..7, y 1..2). The front row y 0..1 stays bare ground: no
+    machinery leaves a mostly open tile unbuildable (BRIEF, no clutter)."""
+    blk(g, 4.05, 1.0, -.03, 7.0, 1.96, .1, CONCRETE)    # clear of the door portal (x 4) and the hall foot
+    fx, fy, fz, fr = 6.3, 1.4, .72, .5
+    for y in (1.18, 1.62):
+        blk(g, fx - .1, y - .07, .1, fx + .1, y + .07, fz - .09, CONCRETE)
+        blk(g, fx - .12, y - .09, fz - .09, fx + .12, y + .09, fz - .04, IRON)
+    g.cylinder((fx, 1.6, fz), .045, .92, IRON, 'Y', 10)            # shaft into the boiler room
     wheel = Geometry('Bathhouse.Flywheel', (fx, fy, fz))
-    wheel.ring((fx, fy, fz), fr, .1, .14, IRON, 'Y', 16)
-    wheel.ring((fx, fy, fz), fr - .1, .03, .1, BRASS, 'Y', 16)
-    wheel.cylinder((fx, fy, fz), .12, .22, IRON, 'Y', 12)
+    wheel.ring((fx, fy, fz), fr, .085, .12, IRON, 'Y', 16)
+    wheel.ring((fx, fy, fz), fr - .085, .025, .09, BRASS, 'Y', 16)
+    wheel.cylinder((fx, fy, fz), .1, .2, IRON, 'Y', 12)
     for i in range(6):
         a = i * math.pi / 3
-        wheel.beam((fx, fy, fz), (fx + math.cos(a) * (fr - .08), fy, fz + math.sin(a) * (fr - .08)), .07, mat=IRON)
-    wheel.ring((fx, 3.95, fz), .2, .05, .08, PAINTED, 'Y', 16)    # belt pulley
+        wheel.beam((fx, fy, fz), (fx + math.cos(a) * (fr - .07), fy, fz + math.sin(a) * (fr - .07)), .06, mat=IRON)
+    wheel.ring((fx, 1.85, fz), .17, .045, .07, PAINTED, 'Y', 16)    # belt pulley
     for k in range(3):
         a = k * math.pi / 3
-        wheel.beam((fx - math.cos(a) * .16, 3.95, fz - math.sin(a) * .16),
-                   (fx + math.cos(a) * .16, 3.95, fz + math.sin(a) * .16), .03, mat=IRON)
+        wheel.beam((fx - math.cos(a) * .13, 1.85, fz - math.sin(a) * .13),
+                   (fx + math.cos(a) * .13, 1.85, fz + math.sin(a) * .13), .028, mat=IRON)
     parts.append((wheel, 'SPIN_Y', 1))
     # Laundry (towel) drum on two iron A-frames, belt-driven from the shaft.
-    dx, dz, dr = 6.78, 1.0, .46
-    for y in (3.14, 3.84):
+    dx, dz, dr = 4.7, .55, .32
+    for y in (1.15, 1.72):
         for s in (-1, 1):
-            g.beam((dx + s * .42, y, .1), (dx + s * .03, y, dz - .02), .07, mat=IRON)
-        blk(g, dx - .07, y - .05, dz - .07, dx + .07, y + .05, dz + .07, IRON)
-    g.cylinder((dx, 3.53, dz), .04, .92, IRON, 'Y', 8)
-    drum = Geometry('Bathhouse.LaundryDrum', (dx, 3.5, dz))
-    drum.cylinder((dx, 3.5, dz), dr, .56, FORGED, 'Y', 12)
-    for y in (3.28, 3.5, 3.72):
-        drum.ring((dx, y, dz), dr + .025, .05, .05, IRON, 'Y', 12)
-    drum.ring((dx + .22, 3.215, dz + .1), .12, .035, .025, BRASS, 'Y', 14)   # loading hatch
-    drum.cylinder((dx + .22, 3.215, dz + .1), .09, .012, IRON, 'Y', 12)
-    drum.ring((dx, 3.95, dz), .26, .05, .08, PAINTED, 'Y', 16)              # driven pulley
+            g.beam((dx + s * .3, y, .1), (dx + s * .03, y, dz - .02), .055, mat=IRON)
+        blk(g, dx - .055, y - .04, dz - .055, dx + .055, y + .04, dz + .055, IRON)
+    g.cylinder((dx, 1.5, dz), .032, .9, IRON, 'Y', 8)
+    drum = Geometry('Bathhouse.LaundryDrum', (dx, 1.45, dz))
+    drum.cylinder((dx, 1.45, dz), dr, .36, FORGED, 'Y', 12)
+    for y in (1.3, 1.45, 1.6):
+        drum.ring((dx, y, dz), dr + .02, .035, .04, IRON, 'Y', 12)
+    drum.ring((dx + .15, 1.255, dz + .07), .09, .028, .02, BRASS, 'Y', 14)   # loading hatch
+    drum.cylinder((dx + .15, 1.255, dz + .07), .068, .01, IRON, 'Y', 12)
+    drum.ring((dx, 1.85, dz), .2, .045, .07, PAINTED, 'Y', 16)              # driven pulley
     parts.append((drum, 'SPIN_Y', .5))
     # Belt runs (static) between the pulleys.
     for s in (-1, 1):
-        a = (fx, 3.95, fz + s * .2)
-        b = (dx, 3.95, dz + s * .26)
-        g.beam(a, b, .06, .015, IRON)
+        a = (fx, 1.85, fz + s * .17)
+        b = (dx, 1.85, dz + s * .2)
+        g.beam(a, b, .05, .013, IRON)
 
 
 # ---------------------------------------------------------------- boiler room
 
 def boiler_room(g, parts):
-    # Podium with a recess for the Water pipe socket in the back face.
-    zt = .6
-    rx0, rx1, ry = 7.15, 7.85, 6.7
-    blk(g, 6.0, 4.0, 0, rx0, 7.0, zt - .03, CONCRETE)
-    blk(g, rx1, 4.0, 0, 9.0, 7.0, zt - .03, CONCRETE)
-    blk(g, rx0, 4.0, 0, rx1, ry, zt - .03, CONCRETE)
-    blk(g, 5.98, 3.98, zt - .1, 9.02, 7.02, zt, CONCRETE)        # coping (lintel over the recess)
+    # Concrete room (one layer) with a recess for the Water pipe socket in the
+    # back face; the roof slab is the lintel over the recess.
+    zt = SIDE_TOP - SLAB
+    rx0, rx1, ry = 6.15, 6.85, 4.7
+    blk(g, 5.0, 2.0, 0, rx0, 5.0, zt, CONCRETE)
+    blk(g, rx1, 2.0, 0, 7.0, 5.0, zt, CONCRETE)
+    blk(g, rx0, 2.0, 0, rx1, ry, zt, CONCRETE)
+    blk(g, HALL[2] + .05, 2.0, zt, 7.0, 5.0, SIDE_TOP, CONCRETE)      # roof slab, clear of the hall coping
+    blk(g, 4.98, 1.98, zt - .12, 7.02, 5.02, zt - .02, CONCRETE)       # string course
     sx, sy, sz = PIPE_INLET['socket']
     g.box((sx, sy - .12, sz), (.44, .2, .44), PAINTED)
     g.cylinder((sx, sy + .02, sz), .15, .12, IRON, 'Y', 16)
     g.ring((sx, sy + .085, sz), .2, .06, .04, BRASS, 'Y', 16)
     K.bolt_row(g, (sx - .16, sy + .11, sz + .14), (sx + .16, sy + .11, sz + .14), 3, r=.016)
-    # Walls: forged sheet in a dark timber frame; no posts on the hall side.
-    bx0, by0, bx1, by1 = HW[2], 4.08, 8.92, 6.92
-    top = 3.0
-    ys = [by0 + (by1 - by0) * (i + .5) / 3 for i in range(3)]
-    P.framed_block(g, bx0, by0, bx1, by1, zt, top, infill=FORGED, frame=WOOD, pitch=(by1 - by0) / 3,
-                   corner=.17, faces=('front', 'back', 'right'),
-                   windows={'right': [(y, 1.75, .8, 'factory') for y in ys],
-                            'front': [(6.36, 2.32, .7, 'factory'), (8.41, 2.32, .7, 'factory')],
-                            'back': [(6.36, 1.75, .8, 'factory'), (8.41, 1.75, .8, 'factory')]})
-    # Overhang .08: the eave plank ends (x 5.77) clear the hall corner post face (x 5.75).
-    plank_gable(g, bx0, bx1, by0, by1, top, 4.0, ridge_axis='Y', overhang=.08, gable=True, seed=8)
-    # Steam stack through the roof (flare buried in the wall core).
-    K.stack(g, 8.4, 6.4, 2.2, 8.2, emits='steam', r=.3, taper=.75, bands=5)
-    # Safety valve on the ridge: steam dome, fulcrum and the weighted lever.
-    mx = (bx0 + bx1) / 2
-    vy = 5.0
-    K.revolve(g, (mx, vy, 3.95), [(.2, 0), (.2, .22), (.12, .32), (.06, .34)], IRON, segments=16)
-    K.band(g, (mx, vy, 0), .2, 4.1, .05, BRASS, segments=16)
-    g.cylinder((mx, vy, 4.37), .045, .2, BRASS, 'Z', 10)
-    blk(g, mx - .16, vy - .03, 4.2, mx - .1, vy + .03, 4.55, IRON)
-    lever = Geometry('Bathhouse.SafetyValveLever', (mx - .13, vy, 4.5))
-    lever.box((mx + .16, vy, 4.5), (.62, .04, .04), IRON)
-    I.sphere(lever, (mx + .46, vy, 4.47), .08, BRASS, segments=12, rings=6)
-    lever.cylinder((mx - .13, vy, 4.5), .03, .1, IRON, 'Y', 8)
+    for y in (2.5, 3.5, 4.5):
+        P.native_window(g, 7.0, y, .4, .45, 'right', 'factory')
+    P.native_window(g, 5.5, 5.0, .4, .45, 'back', 'factory')
+    P.native_window(g, 5.5, 2.0, .4, .45, 'front', 'factory')
+    low_parapet(g, 5.0, 2.0, 7.0, 5.0, open_side='left')
+    # Steam stack through the roof (foot buried in the room).
+    K.stack(g, 6.45, 3.3, .9, 3.5, emits='steam', r=.2, taper=.75, bands=3)
+    # Safety valve on the roof: steam dome, fulcrum and the weighted lever.
+    mx, vy = 5.65, 4.25
+    base = SIDE_TOP - .05
+    K.revolve(g, (mx, vy, base), [(.17, 0), (.17, .2), (.1, .28), (.05, .3)], IRON, segments=16)
+    K.band(g, (mx, vy, 0), .17, base + .14, .045, BRASS, segments=16)
+    g.cylinder((mx, vy, base + .39), .04, .18, BRASS, 'Z', 10)
+    blk(g, mx - .14, vy - .03, base + .22, mx - .09, vy + .03, base + .54, IRON)
+    lever = Geometry('Bathhouse.SafetyValveLever', (mx - .115, vy, base + .5))
+    lever.box((mx + .14, vy, base + .5), (.54, .035, .035), IRON)
+    I.sphere(lever, (mx + .4, vy, base + .47), .07, BRASS, segments=12, rings=6)
+    lever.cylinder((mx - .115, vy, base + .5), .025, .09, IRON, 'Y', 8)
     parts.append((lever, 'SWAY_Y', .1))
-    # Steam main from the boiler room along the hall wall into the hall.
-    z = 3.3
-    I.pipe(g, [(6.5, 6.55, z), (5.97, 6.55, z), (5.97, 4.35, z), (HW[2] - .05, 4.35, z)], .065)
-    I.valve(g, (5.97, 5.4, z), 'up', r=.1, stem=.16)
+    # Steam main from the roof into the hall's plaster band.
+    z = 1.2
+    I.pipe(g, [(5.3, 2.75, SIDE_TOP - .05), (5.3, 2.75, z), (HW[2] - .05, 2.75, z)], .055)
+    I.valve(g, (5.3, 2.75, 1.1), 'up', r=.08, stem=.12)
 
 
 # ---------------------------------------------------------------- grounds
@@ -289,5 +305,5 @@ def build(g, parts):
     hall(g, parts)
     changing_wing(g)
     pool_court(g)
-    engine_shed(g, parts)
+    engine_yard(g, parts)
     boiler_room(g, parts)
