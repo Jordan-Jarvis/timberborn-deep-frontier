@@ -12,22 +12,26 @@ layer each; the central block and the engine house have flat roof decks. The
 right lecture-hall wing is gone, the left wing became the engine house behind
 the demonstration yard, the hipped roofs, ventilator cupolas, skylight and
 yard guard rail were removed, and the clock tower lost half its height.
+Roof variety (user, 2026-10-30: "some buildings can have actual roofs"): the
+central block has a teal gabled roof in the native roof planks instead of the
+flat deck; the engine house keeps a flat roof deck, in timber decking.
 
 HERO (kept as the silhouette): the clock tower on the entrance axis:
 concrete-framed orange shaft, four-faced clock stage with moving hands,
 lancet belfry and a teal pyramid spire with a turning weathervane.
-ROOF: flat parapet roofs on the central block (layer 2) and the engine house
-(layer 1); the pyramid spire on the tower.
+ROOF: teal gabled roof of separate native roof planks (boarded gable ends) on
+the central block; timber-decked flat roof deck on layer 1 on the engine house; the
+pyramid spire on the tower.
 
 Plan (8 x 4 tiles; front y = 0; one layer per storey):
   - tower x 4.75..6.25, y 0..1.5, door centred on x = 5.5 with its face on the
     y = 0 tile edge; shaft to layer 3, clock stage, belfry, spire;
   - central block x 3..8, y 1..4: rusticated concrete ground storey, orange
-    plaster upper storey with grand windows, roof deck on layer 2 (no
-    chimneys: their steam would bar the roof cells round them);
+    plaster upper storey with grand windows, gabled roof along x (no
+    chimneys or roof vents);
   - demonstration yard x 0..3, y 0..2: beam engine, flywheel, flyball
     governor and vertical boiler on a low concrete bed;
-  - engine house x 0..3, y 2..4: one storey, roof deck on layer 1.
+  - engine house x 0..3, y 2..4: one storey, timber roof deck on layer 1.
 
 Animated (unchanged names and kinds): six clock hands on three faces
 (SPIN_Y / SPIN_X), weathervane (SPIN_Z), engine flywheel (SPIN_X), rocking
@@ -41,7 +45,8 @@ from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK,
 import lategame_civic_parts as P
 from lategame_civic_parts import blk, animate  # noqa: F401
 import native_building_assets as N
-from lategame_roofdeck_parts import parapet_ring
+from lategame_roofdeck_parts import deck_slab
+from lategame_mining_parts import plank_gable
 
 IDENT = 'TechnicalSchool'
 FOOTPRINT = (8, 4)
@@ -67,14 +72,13 @@ def central(g):
     for y in (2.0, 3.0):
         P.native_window(g, x1, y, .47, .52, 'right', 'factory')
     u0, u1, v0, v1 = x0 + .05, y0 + .05, x1 - .05, y1 - .05
-    P.framed_block(g, u0, u1, v0, v1, 1.0, 2.0 - SLAB, infill=ORANGE, frame=CONCRETE,
+    P.framed_block(g, u0, u1, v0, v1, 1.0, 2.0, infill=ORANGE, frame=CONCRETE,
                    pitch=(v0 - u0) / 5, corner=.2, post=.12, skip={'front': [(4.6, 6.4)]},
                    faces=('front', 'back', 'right'),
                    windows={'front': [(x, 1.42, .5, 'grand') for x in front],
                             'back': [(x, 1.42, .5, 'grand') for x in (3.5, 4.5, 5.5, 6.5, 7.5)],
                             'right': [(y, 1.42, .5, 'grand') for y in (1.75, 3.25)]})
-    K.flat_roof(g, u0, u1, v0, v1, 2.0 - SLAB, thickness=SLAB, overhang=.05)
-    parapet_ring(g, x0 - .03, y0 - .03, x1 + .03, y1 + .03, 2.0)
+    plank_gable(g, u0, v0, u1, v1, 2.0, 3.05, ridge_axis='X', overhang=.15, gable_mat=PLANK, seed=3)
 
 
 def tower(g, parts):
@@ -152,15 +156,17 @@ def clock_face(g, parts, name, c, axis, s, spin, k=1.0):
 
 def engine_house(g):
     x0, y0, x1, y1 = HOUSE
-    P.podium(g, x0, y0, x1 - .08, y1, .2, joints=False, foot=False)   # coping clears the block's joint strips
+    # Plinth top 0.25: the wall core's 12 mm edge chamfer then sits between the
+    # connection-face measuring rows, so the walls count as flat faces.
+    P.podium(g, x0, y0, x1 - .08, y1, .25, joints=False, foot=False)   # coping clears the block's joint strips
     u0, v0, u1, v1 = x0 + .05, y0 + .05, x1 - .02, y1 - .05
-    P.framed_block(g, u0, v0, u1, v1, .2, 1.0 - SLAB, infill=ORANGE, frame=WOOD, pitch=(u1 - u0) / 3,
+    P.framed_block(g, u0, v0, u1, v1, .25, 1.0 - SLAB, infill=ORANGE, frame=WOOD, pitch=(u1 - u0) / 3,
                    faces=('front', 'back', 'left'), corner=.16,
                    windows={'front': [(x, .52, .42, 'factory') for x in (.55, 1.5, 2.45)],
                             'back': [(x, .52, .42, 'factory') for x in (.55, 1.5, 2.45)],
                             'left': [(y, .52, .42, 'factory') for y in (2.55, 3.45)]})
     # Roof slab (layer 1); it stops at the central block's coping (x 2.95).
-    blk(g, u0 - .05, v0 - .05, 1.0 - SLAB, CB[0] - .05, v1 + .05, 1.0, CONCRETE)
+    deck_slab(g, u0 - .05, v0 - .05, CB[0] - .05, v1 + .05, 1.0, 'timber', thickness=SLAB)
     # Parapet on the three open edges (the back of the central block closes the fourth).
     t, h = .14, .24
     blk(g, x0 - .03, y0 - .03, 1.0, x1 - .03, y0 - .03 + t, 1.0 + h, CONCRETE)

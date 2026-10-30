@@ -10,8 +10,9 @@ our buildings"; the tower's height is its purpose, so it stays a lookout):
 drops from layer 12 to layer 7 and the stair landing from 9 to 5. The eight
 open radial cantilever trusses are replaced by a solid concrete corbel and
 four solid web brackets; the stairhead and the ticket kiosk are one layer
-high with flat roofs (no pyramid or plank gable) and the beacon mast is
-shorter.
+high and the beacon mast is shorter. Roof variety (user, 2026-10-30: "some
+buildings can have actual roofs"): the stairhead keeps a low teal pyramid
+roof in the native roof planks and the kiosk a plank gable.
 
 HERO: a tapering riveted steel tube column wrapped by an open helical stair,
 carrying a broad square deck on a solid concrete corbel, with a glazed
@@ -19,14 +20,15 @@ railing all round, a brass telescope on the front rail and a beacon mast on
 the stairhead. Distinct from the launch gantries (no lattice) and from
 MissionControl's glazed cab (the deck is open, the glazing is only a
 waist-high railing).
-ROOF: open deck (a roof terrace); flat concrete roofs on the stairhead and the
-kiosk; conical cap on the beacon.
+ROOF: open concrete deck (a roof terrace); low teal pyramid roof (native roof
+planks) on the stairhead; dark plank gable on the kiosk; conical cap on the
+beacon.
 
 Plan (6 x 6 tiles; front y = 0):
   - Ground: ticket kiosk on tiles x 2..4, y 0..1 (door centred on x = 2.5,
-    face on the y = 0 tile edge; ticket window at x = 3.5), one layer with
-    its flat roof on layer 1; concrete footing ring and the flared foot of
-    the tube at (3, 3).
+    face on the y = 0 tile edge; ticket window at x = 3.5), one layer under a
+    plank gable; concrete footing ring and the flared foot of the tube at
+    (3, 3).
   - Helical stair: 26 riveted treads, 20 degrees and 0.19 layers apart, from
     the ground to a grated landing at exactly layer 5 round the tube.
   - Capital drum (layers 5..7) houses the upper stair and carries the corbel.
@@ -270,7 +272,7 @@ def railing(g, parts):
 def stairhead(g, parts):
     x0, y0, x1, y1 = STAIRHEAD
     z = DECK
-    P.framed_block(g, x0, y0, x1, y1, z, z + .84, infill=ORANGE, frame=WOOD, pitch=2.0, corner=.16,
+    P.framed_block(g, x0, y0, x1, y1, z, z + 1.0, infill=ORANGE, frame=WOOD, pitch=2.0, corner=.16,
                    skip={'front': [(DOOR_X - .5, DOOR_X + .5)]},
                    windows={'left': [(3.0, z + .45, .5, 'lancet')], 'right': [(3.0, z + .45, .5, 'lancet')],
                             'back': [(2.5, z + .45, .5, 'lancet'), (3.5, z + .45, .5, 'lancet')]})
@@ -281,21 +283,21 @@ def stairhead(g, parts):
     building_portal(g, DOOR_X, y0 - .135, z + .012)
     g.doorways.append({'id': 'DeckDoor', 'position': [DOOR_X, y0, z], 'outward': [0, -1]})
     A.atlas_window(g, 3.5, y0, z + .45, .3, 'front', 'porthole')
-    K.flat_roof(g, x0, y0, x1, y1, z + .84, thickness=.16, overhang=.08)
-    # Beacon mast with an anemometer arm (at the meeting point of the four
-    # stairhead roof cells, so their middles stay clear).
-    mz0 = z + 1.0
-    K.revolve(g, (CX, CY, mz0), [(.09, 0), (.07, .2), (.05, .95)], IRON, segments=10)
-    pivot = K.beacon(g, CX, CY, mz0 + .95)
+    blk(g, x0 - .06, y0 - .06, z + 1.0, x1 + .06, y1 + .06, z + 1.06, CONCRETE)
+    P.pyramid_roof(g, (x0 + x1) / 2, (y0 + y1) / 2, 1.0, z + 1.06, .55, overhang=.12)
+    # Beacon mast with an anemometer arm on the pyramid's apex.
+    mz0 = z + 1.06 + .55
+    K.revolve(g, (CX, CY, mz0 - .04), [(.08, 0), (.065, .15), (.05, .74)], IRON, segments=10)
+    pivot = K.beacon(g, CX, CY, mz0 + .7)
     parts.append((K.beacon_shutter(*pivot, 'ObservationDeck.BeaconShutter'), 'SPIN_Z', 2))
-    g.beam((CX, CY, mz0 + .6), (CX + .38, CY, mz0 + .6), .03, mat=IRON)
-    g.cylinder((CX + .38, CY, mz0 + .66), .02, .12, IRON, 'Z', 8)
-    an = Geometry('ObservationDeck.Anemometer', (CX + .38, CY, mz0 + .74))
-    an.cylinder((CX + .38, CY, mz0 + .73), .035, .05, BRASS, 'Z', 8)
+    g.beam((CX, CY, mz0 + .4), (CX + .38, CY, mz0 + .4), .03, mat=IRON)
+    g.cylinder((CX + .38, CY, mz0 + .46), .02, .12, IRON, 'Z', 8)
+    an = Geometry('ObservationDeck.Anemometer', (CX + .38, CY, mz0 + .54))
+    an.cylinder((CX + .38, CY, mz0 + .53), .035, .05, BRASS, 'Z', 8)
     for i in range(3):
         a = i * 2 * math.pi / 3
-        tip = (CX + .38 + math.cos(a) * .2, CY + math.sin(a) * .2, mz0 + .745)
-        an.beam((CX + .38, CY, mz0 + .74), (tip[0], tip[1], mz0 + .74), .02, mat=IRON)   # tops clear of the hub top
+        tip = (CX + .38 + math.cos(a) * .2, CY + math.sin(a) * .2, mz0 + .545)
+        an.beam((CX + .38, CY, mz0 + .54), (tip[0], tip[1], mz0 + .54), .02, mat=IRON)   # tops clear of the hub top
         K.revolve(an, (tip[0], tip[1], tip[2] - .04), [(.001, 0), (.055, .03), (.055, .07), (.001, .085)], BRASS,
                   segments=8)
     parts.append((an, 'SPIN_Z', 2))
@@ -306,15 +308,14 @@ def stairhead(g, parts):
 def kiosk(g):
     x0, y0, x1, y1 = 2.0, 0.0, 4.0, 1.0
     P.podium(g, x0, y0, x1, y1, .12, joints=False, foot=False, skip=[(DOOR_X - .5, DOOR_X + .5)])
-    P.framed_block(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, .12, .84, infill=ORANGE, frame=WOOD, pitch=1.0,
+    P.framed_block(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, .12, 1.0, infill=ORANGE, frame=WOOD, pitch=1.0,
                    corner=.14, skip={'front': [(DOOR_X - .5, DOOR_X + .5)]},
                    windows={'left': [(.5, .5, .4, 'lancet')], 'right': [(.5, .5, .4, 'lancet')]})
     P.door(g, DOOR_X, y0, 0, 'Door0')
     # Ticket window with a counter and an iron awning.
     A.atlas_window(g, 3.5, y0 + .05, .5, .36, 'front', 'cross')
     blk(g, 3.22, y0 - .1, -.03, 3.78, y0 - .005, .35, WOOD)     # ticket counter
-    K.flat_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, .84, thickness=.16, overhang=.05)
-    blk(g, x0 + .02, y0, 1.0, x1 - .02, y0 + .1, 1.06, IRON)     # fascia, behind the portal recess
+    plank_gable(g, x0 + .05, x1 - .05, y0 + .05, y1 - .05, 1.0, 1.5, ridge_axis='X', overhang=.1, seed=4)
     K.lamp(g, 3.08, y0 + .05, .52, face='front')
 
 

@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Square concrete ventilation shaft, steel-banded and louvred, rising from the flat roof deck and crowned by a ring of turning ventilator cowls.",
+  "hero": "Pale plaster laboratory in a grey timber frame under a teal plank gabled roof, with a brass anemometer and a weathervane on the ridge.",
   "footprint": [
     6,
     4
   ],
-  "heightLayers": 5,
+  "heightLayers": 4,
   "boundsMin": [
-    -0.05,
+    -0.06,
     -0.255,
     -0.03
   ],
   "boundsMax": [
-    6.05,
+    6.06,
     4.05,
-    4.744
+    3.832
   ],
   "doors": [
     {
@@ -31,29 +31,26 @@
     }
   ],
   "animatedParts": [
-    "TowerCowl0",
-    "TowerCowl1",
-    "TowerCowl2",
-    "TowerCowl3",
-    "TowerCowlMain",
+    "Weathervane",
     "Anemometer"
   ],
   "animationFrames": 121,
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 2239,
+  "faces": 2413,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 806,
-    "BaseMetal.IronTeeth": 392,
-    "Details.IronTeeth": 144,
+    "BaseWood_DarkBrown.IronTeeth": 816,
+    "BaseMetal.IronTeeth": 68,
+    "RoofPlanks.IronTeeth": 276,
+    "Details.IronTeeth": 164,
     "accent8": 20,
-    "Plaster_White.IronTeeth": 150,
+    "Plaster_White.IronTeeth": 108,
     "Plaster_Orange.IronTeeth": 7,
-    "IrregularPlanks_MetalForged.IronTeeth": 212,
-    "WindowsAtlas.IronTeeth": 726,
-    "BaseWood_Grey.IronTeeth": 168
+    "WindowsAtlas.IronTeeth": 706,
+    "BaseWood_Grey.IronTeeth": 168,
+    "IrregularPlanks_Grey.IronTeeth": 206
   },
-  "sourceHash": "e6b612691b0cfc82568e3d5aae4b558b01a407a0e8fdf332a9dd7f1f10afee8f",
-  "artHash": "3e7b477ab56799596a0ef6f96b54c887003fd35b706b28d9bf3cc7ae57f7c95c"
+  "sourceHash": "cf776627e5f22a7c84320f49541ddc0f9002c9f9f3f7655dae0838da47b948f3",
+  "artHash": "3caa31a5b3d7798c5dedec611dfa4caad5e2a6400e58ea31a2a044eafe480962"
 }

@@ -8,16 +8,22 @@ Compacted 2026-10-30 (Workshop feedback: the buildings exceed Timberborn's
 scale; user: "it is the scaffolding and size", "one layer per floor"):
 9x5x9 -> 9x3x5, inside the old footprint with the same origin, width, door
 and native entrance. The boiler house moved from behind the pavilion to the
-strip behind the right wing, with the coal bunker beside it and the
-circulating pump on its roof; the wings drop from 2.4 to 0.95 layers
+strip behind the right wing, with the circulating pump on a plinth
+beside it (the coal bunker is gone); the wings drop from 2.4 to 0.95 layers
 at the eaves (one glazed storey, no floor band), the pavilion from 3.4 to 2
 and the dome tiers are flatter; the stack is 4.2 instead of 8.3 high.
+No concrete before concrete exists (user, 2026-10-30: the Greenhouse unlocks
+at 600 science): the podiums are cast iron, the boiler-house base timber,
+the pump stands on a timber plinth; no Plaster_White anywhere.
+Roof variety (user, 2026-10-30: "no roof vents"): the hinged ridge vent flaps
+on the wing roofs are gone, the boiler-house roof deck is painted metal and
+the boiler stack rises from the ground in its back wall, not from the roof.
 
 HERO: a square glazed palm pavilion crowned by a two-tier faceted octagonal
 glass dome, a glazed lantern and a weathervane.
 ROOF: glazed ridge roofs on the two wings and the faceted glass dome on the
-pavilion, kept as the glasshouse's defining silhouette; flat concrete roof on
-the boiler house. All glazing is native factory/grand window assemblies
+pavilion, kept as the glasshouse's defining silhouette; flat painted-metal
+roof deck on the boiler house. All glazing is native factory/grand window assemblies
 seated on an opaque steel host plane (sloped facets use the same native
 assemblies, re-oriented onto the facet plane).
 
@@ -25,13 +31,13 @@ Plan (9 x 3 tiles; front y = 0):
   - pavilion x 3..6, y 0..3 on a concrete podium; the native door centred on
     x = 4.5 with its face on the y = 0 tile edge;
   - glazed wings x 0..3 and 6..9, y 0..2;
-  - behind the right wing (y 2..3): boiler house with the smoke stack and the
-    circulating pump on its roof (x 6..8) and the coal bunker (x 8..9); the
+  - behind the right wing (y 2..3): boiler house with the smoke stack (x 6..8)
+    and the circulating pump on its plinth (x 8..9); the
     strip behind the left wing holds only the heating main on the wing wall,
     so its cells stay free.
 
 Animated (unchanged names and kinds): two gable circulating fans (SPIN_X),
-four ridge vent flap rows (SWAY_X), weathervane (SPIN_Z), boiler
+weathervane (SPIN_Z), boiler
 circulating-pump flywheel (SPIN_X).
 """
 import math
@@ -42,6 +48,7 @@ from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK,
 import lategame_civic_parts as P
 from lategame_civic_parts import blk, animate  # noqa: F401
 import native_building_assets as N
+from lategame_roofdeck_parts import deck_slab
 
 IDENT = 'Greenhouse'
 FOOTPRINT = (9, 3)
@@ -53,7 +60,7 @@ FRAME_END = 121
 PCX, PCY = 4.5, 1.5                     # pavilion centre
 PX0, PY0, PX1, PY1 = 3.05, .05, 5.95, 2.95
 PTOP = 2.0                              # pavilion wall top
-WY0, WY1 = .15, 1.95                    # wing walls, set back behind the pavilion front
+WY0, WY1 = .08, 1.95                    # wing walls, set back behind the pavilion front (one flat face)
 WPY0, WPY1 = .06, 2.0                   # wing podium (front .06 behind the pavilion podium's)
 WALL_TOP, OVER = .95, .06
 RIDGE = WALL_TOP + (WY1 - WY0) / 2 + OVER
@@ -61,7 +68,7 @@ S45 = math.sqrt(.5)
 
 
 def pavilion(g):
-    P.podium(g, PX0 - .05, PY0 - .05, PX1 + .05, PY1 + .05, .3, joints=False)
+    P.podium(g, PX0 - .05, PY0 - .05, PX1 + .05, PY1 + .05, .3, joints=False, mat=PAINTED)   # cast-iron base
     xs = [PX0 + (PX1 - PX0) * (i + .5) / 3 for i in range(3)]
     P.framed_block(g, PX0, PY0, PX1, PY1, .3, PTOP, infill=IRON, frame=PAINTED, pitch=.93, floors=(1.2,),
                    faces=('front', 'back'),
@@ -121,7 +128,8 @@ def pavilion(g):
 def wing(g, parts, x0, x1, side):
     """Glazed wing; side -1 for the left (outer end at x0), +1 for the right."""
     outer = x0 if side < 0 else x1
-    P.podium(g, x0 - .05 if side < 0 else PX1 + .05, WPY0, PX0 - .05 if side < 0 else x1 + .05, WPY1, .25, foot=False)
+    P.podium(g, x0 - .05 if side < 0 else PX1 + .05, WPY0, PX0 - .05 if side < 0 else x1 + .05, WPY1, .25, foot=False,
+             mat=PAINTED)
     faces = ('front', 'back', 'left' if side < 0 else 'right')
     bays = [x0 + (x1 - x0) * (i + .5) / 3 for i in range(3)]
     end = 'left' if side < 0 else 'right'
@@ -146,31 +154,11 @@ def wing(g, parts, x0, x1, side):
                 yy, zz = on_slope(d)
                 P.framed_window(g, (x, yy, zz), n, up, .72, 'factory')
         for i in range(4):
-            x = ra + .045 + (rb - ra - .09) * i / 3
+            x = ra + .1 + (rb - ra - .2) * i / 3     # end rafters clear the pavilion corner posts
             p0, p1 = on_slope(.02, .02), on_slope(slant - .02, .02)
             g.beam((x, p0[0], p0[1]), (x, p1[0], p1[1]), .06, .05, PAINTED)
         # Eave gutter.
         blk(g, ra, y_eave + (-.07 if sgn < 0 else 0), WALL_TOP - .1, rb, y_eave + (0 if sgn < 0 else .07), WALL_TOP + .0, IRON)
-        # Hinged ridge vent flaps (pre-opened so the sway stays clear of the roof).
-        hinge = (0, ym, RIDGE + .03)
-        vent = Geometry(f'RidgeVent{"L" if side < 0 else "R"}{"F" if sgn < 0 else "B"}', ((ra + rb) / 2, ym, RIDGE + .03))
-        open_angle = .2
-        for x in [ra + (rb - ra) * (i + .5) / 3 for i in range(3)]:
-            yy, zz = on_slope(slant - .2, .05)
-            c = (x, yy, zz)
-            ax = (1, 0, 0)
-            ay = (0, up[1], up[2])
-            az = n
-            # Rotate open about the ridge hinge so the lower edge lifts.
-            angle = open_angle * (1 if sgn < 0 else -1)
-            cr = P.rot_x(c, hinge, angle)
-            ayr = P.rot_x(ay, (0, 0, 0), angle)
-            azr = P.rot_x(az, (0, 0, 0), angle)
-            P.obox(vent, cr, ax, ayr, azr, .36, .15, .015, FORGED)
-            for xx in (x - .3, x + .3):
-                vent.beam(P.rot_x((xx, *on_slope(slant - .02, .075)), hinge, angle),
-                          P.rot_x((xx, *on_slope(slant - .4, .075)), hinge, angle), .03, mat=IRON)
-        parts.append((vent, 'SWAY_X', .12))
     # Ridge cap with cresting.
     blk(g, ra - .03, ym - .07, RIDGE - .04, rb + .03, ym + .07, RIDGE + .03, IRON)
     for i in range(7):
@@ -190,35 +178,36 @@ def boiler_house(g, parts):
     """Boiler house behind the right wing (x 6..8, y 2..3), one layer with a
     flat roof, the smoke stack and a coal bunker beside it."""
     x0, y0, x1, y1 = 6.0, 2.0, 8.0, 3.0
-    P.podium(g, x0, y0, x1, y1, .2, joints=False, foot=False)
+    P.podium(g, x0, y0, x1, y1, .2, joints=False, foot=False, mat=WOOD)
     # x0 + .13: its corner posts clear the pavilion's back corner post (x 6.035).
     P.framed_block(g, x0 + .13, y0 + .05, x1 - .05, y1 - .05, .2, .84, infill=ORANGE, pitch=.95,
                    windows={'back': [(6.5, .5, .45, 'factory'), (7.5, .5, .45, 'factory')]})
-    K.flat_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, .84, thickness=.16, overhang=.05)
-    K.stack(g, 7.45, 2.5, .9, 3.3, emits='smoke', r=.18)
-    # Coal bunker, one tile, beside the boiler house.
-    blk(g, 8.0, 2.0, 0, 9.0, 3.0, .5, CONCRETE)
-    blk(g, 8.04, 2.04, .5, 8.96, 2.96, .56, IRON)
-    P.hopper(g, 8.5, 2.5, .56, .82, .42, .32)
+    deck_slab(g, x0, y0, x1, y1, 1.0, 'painted', base=WOOD)
+    # Boiler stack rising from the plinth in the back wall (not from the roof),
+    # its mouth above layer 4 so the smoke does not bar the roof deck.
+    K.stack(g, 7.45, 2.72, .1, 4.2, emits='smoke', r=.18)
     # Heating main from the boiler house along the right wing's back wall.
     P.flanged_pipe(g, [(x0 + .05, 2.3, .4), (6.2, 2.3, .4), (6.2, 2.07, .4)], .05)
 
 
 def pump(g, parts):
-    """Circulating pump with flywheel on the boiler-house roof (its cells
-    already sit beside the stack's smoke, so no roof-deck cell is lost; BRIEF
-    "no clutter on buildable space": nothing stands on the open strip behind
-    the left wing), and the heating main along that wing's back wall, within
-    0.15 of the wall so it claims no cell."""
-    px, py, base = 6.5, 2.5, 1.0
-    P.pier(g, px, py, base - .03, base + .22, .4)
+    """Circulating pump with flywheel on a full-tile concrete plinth beside the
+    boiler house (tile x 8..9, y 2..3), piped into its wall; the boiler-house
+    roof stays a clear roof deck and nothing stands on the open strip behind
+    the left wing (BRIEF: no clutter on buildable space). The heating main
+    runs along that wing's back wall, within 0.15 of it, so it claims no cell."""
+    blk(g, 8.0, 2.0, -.03, 9.0, 3.0, .3, WOOD)          # timber plinth
+    blk(g, 8.04, 2.04, .3, 8.96, 2.96, .36, IRON)
+    px, py, base = 8.35, 2.5, .36
+    blk(g, px - .2, py - .2, base - .03, px + .2, py + .2, base + .22, PAINTED)
+    blk(g, px - .22, py - .22, base + .22, px + .22, py + .22, base + .29, IRON)
     g.cylinder((px, py, base + .5), .14, .44, PAINTED, 'Z', 12)
     g.ring((px, py, base + .72), .17, .045, .05, BRASS, 'Z', 12)
     wheel = Geometry('PumpFlywheel', (px + .3, py, base + .5))
     K.wheel(wheel, (px + .3, py, base + .5), .24, 'X')
     parts.append((wheel, 'SPIN_X', 1))
     g.cylinder((px + .19, py, base + .5), .04, .22, IRON, 'X', 8)
-    P.flanged_pipe(g, [(px, py - .15, base + .5), (px, 2.12, base + .5), (px, 2.12, base - .02)], .045)
+    P.flanged_pipe(g, [(px, py - .17, base + .5), (px, 2.2, base + .5), (7.97, 2.2, base + .5)], .045)
     P.flanged_pipe(g, [(.4, 2.06, .55), (2.95, 2.06, .55)], .05)
 
 

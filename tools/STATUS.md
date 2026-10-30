@@ -184,6 +184,24 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - **Data:** same footprint, origin, both doors (ground Entrance (2,-1,0), deck door at layer 7) and the 20 visitor places on the deck's outer ring. Occupied cells 274 -> 164. Roof decks: every flat roof tile open to the sky is platformable (35: the deck, the stairhead and kiosk roofs) except the deck door's entrance tile. No power or pipes (as before). Cost unchanged. `lategame_freed_cells.json` footprintAfter 6x6x10; its four corner ground cells stay free.
   - **Old saves:** a placed deck keeps its footprint, entrance and visitor places at any rotation, flipped too; the deck and its visitors sit 5 layers lower.
   - **Review:** `outputs/compaction/ObservationDeck-before-after.png`.
+- **Follow-up: roof variety, no roof vents, flat surfaces, no concrete before concrete** (BRIEF "ROOF VARIETY", "Every flat surface takes power, pipes and conveyors", "all flat roof tiles should be placeable areas"; user on the Greenhouse's concrete):
+  - **Roofs (type and material):**
+    - Public Health Lab: teal gabled roof of separate native roof planks (RoofPlanks.IronTeeth, the barracks roof) with iron battens, grey boarded gables. The vent shaft, its five cowls and the flue are gone. The weathervane and anemometer stand on brass finials at the ridge ends (animated parts now Weathervane and Anemometer). Height 5 -> 4.
+    - Technical School: teal plank gabled roof on the central block, plus the clock tower's pyramid spire. Timber-decked flat roof deck on the engine house (6 platformable tiles).
+    - Bathhouse: the groin vault in teal roof planks stays. The louvred steam lantern on it, a roof vent, is now a brass finial. Flat roof decks: timber decking on the changing wing, riveted metal (MetalForged) on the boiler room, 11 platformable tiles. The boiler chimney rises from the ground in the back wall, with the safety valve bracketed off it. The steam main across the roof is gone.
+    - Greenhouse: glazed ridge roofs and glass dome. The hinged ridge vent flaps (four animated rows) are removed. Painted-metal flat roof deck on the boiler house (1 platformable tile; the other holds the stack). The stack rises from the plinth in the back wall. The pump stands on a timber plinth beside the boiler house.
+    - Observation Deck: concrete deck terrace (31 platformable tiles; the deck door's entrance tile is the only exclusion). Low teal pyramid roof on the stairhead with the beacon mast on its apex, and a dark plank gable on the kiosk.
+    - Town Plaza: teal bell roof on the bandstand, unchanged.
+  - **Flat-roof finishes** come from `lategame_roofdeck_parts.deck_slab`: separate boards or sheets on a base slab, so each takes its own texture island. Finishes are timber, grey timber, forged, painted, steel and concrete. Every flat roof tile open to the sky on these buildings is platformable.
+  - **Connection faces** (walls / roof / bottom, before this follow-up -> after):
+    - PHL 39/23/24 -> 43/0/24 (the roof is pitched now).
+    - Technical School 24/18/30 -> 31/6/30. The engine-house plinth went up to 0.25, because a 12 mm wall-core chamfer had sat on a measuring row.
+    - Bathhouse 17/8/30 -> 22/11/30. Plaster band 0.06 behind the cell faces (was 0.15) with a 0.05 cornice; pool coping 0.02 proud.
+    - Greenhouse 22/0/24 -> 28/1/24. Wing fronts 0.08 behind the cell faces (was 0.15).
+    - Pipe faces follow the walls: PHL 43, Bathhouse 23, Greenhouse 28.
+    - Against the pre-compaction buildings (469d72a), walls are PHL 60 -> 43, Technical School 97 -> 31, Bathhouse 91 -> 22, Greenhouse 49 -> 28. The rest of each loss is the smaller size; the mid-tile clock tower and the curved vault, pool and engine yard offer no flat faces.
+  - **No concrete on the Greenhouse** (600 science): the podiums are painted cast iron, the boiler-house base and the pump plinth timber, and the roof deck's base timber. It shows no Plaster_White.
+  - **Checks:** strict z-fight 0 visible on all five (frames 1/31/61/91); hidden-geometry 0 culled faces exposed; grid audits unchanged; triangles re-recorded. Mirror (HEAD + these five): canonical generation to a fixed point, roof-deck list current, triangle budget passes.
 ## Compaction: Stone Crusher one-layer workshop, 4x4x5 -> 4x4x3 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `ind-head` (HEAD + this change) and the real repo; not built or run in game)
 
 - **User:** one layer per storey, flat roofs. The crusher was already 4x4; its workshop was two layers tall under a machine deck at layer 2.

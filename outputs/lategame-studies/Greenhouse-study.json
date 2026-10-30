@@ -32,11 +32,7 @@
   ],
   "animatedParts": [
     "Weathervane",
-    "RidgeVentLF",
-    "RidgeVentLB",
     "GableFanL",
-    "RidgeVentRF",
-    "RidgeVentRB",
     "GableFanR",
     "PumpFlywheel"
   ],
@@ -44,19 +40,17 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 4240,
+  "faces": 4220,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1436,
-    "BaseMetal.IronTeeth": 818,
+    "BaseWood_DarkBrown.IronTeeth": 1460,
+    "BaseMetal.IronTeeth": 674,
     "RoofPlanks.IronTeeth": 25,
-    "Details.IronTeeth": 528,
+    "Details.IronTeeth": 508,
     "accent8": 10,
-    "Plaster_White.IronTeeth": 78,
     "Plaster_Orange.IronTeeth": 13,
-    "IrregularPlanks_MetalForged.IronTeeth": 78,
     "WindowsAtlas.IronTeeth": 1102,
-    "PaintedMetal.IronTeeth": 590
+    "PaintedMetal.IronTeeth": 650
   },
-  "sourceHash": "0d53b9b44938915143196883650791332902ad254faec766f8ac026382a31e45",
-  "artHash": "d7884566772675dda5d5a708deaec8f39b69893e53ee2c4944b75299082c0ce7"
+  "sourceHash": "af53c03dc4b08e6ec589c09709a05eab0bb559458033b2b478abcc9ace86b79b",
+  "artHash": "b63544b359ca62d71b2a9f20176b74508d9ef6681ac47f3615226f40e3d09cad"
 }

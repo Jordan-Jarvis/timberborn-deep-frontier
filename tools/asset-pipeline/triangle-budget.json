@@ -49,9 +49,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7704,
-   "vertices": 14842,
-   "construction": 7704,
+   "finished": 7124,
+   "vertices": 13854,
+   "construction": 7124,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.Model.timbermesh"
   },
   "CementKiln": {
@@ -346,9 +346,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7478,
-   "vertices": 15392,
-   "construction": 7478,
+   "finished": 6980,
+   "vertices": 14420,
+   "construction": 6980,
    "file": "outputs/lategame-integration/Data/Buildings/Food/Greenhouse/Greenhouse.IronTeeth.Model.timbermesh"
   },
   "GroceryStore": {
@@ -463,9 +463,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 6658,
-   "vertices": 12826,
-   "construction": 6658,
+   "finished": 7092,
+   "vertices": 13688,
+   "construction": 7092,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.Model.timbermesh"
   },
   "OilPowerPlant": {
@@ -490,9 +490,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 4116,
-   "vertices": 7670,
-   "construction": 4116,
+   "finished": 3866,
+   "vertices": 7426,
+   "construction": 3866,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.Model.timbermesh"
   },
   "RadioactiveSludgeOutfall": {
@@ -805,9 +805,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 6842,
-   "vertices": 12970,
-   "construction": 6842,
+   "finished": 7780,
+   "vertices": 14836,
+   "construction": 7780,
    "file": "outputs/lategame-integration/Data/Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.Model.timbermesh"
   },
   "TownPlaza": {
