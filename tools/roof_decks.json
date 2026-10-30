@@ -889,6 +889,41 @@
     }
    ]
   },
+  "ChemicalWorks": {
+   "platformable": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     1
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     0,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     2,
+     1,
+     1
+    ]
+   ],
+   "excluded": []
+  },
   "DeepDrill": {
    "platformable": [
     [
@@ -4789,99 +4824,81 @@
    "excluded": []
   },
   "TechnicalSchool": {
-   "platformable": [
-    [
-     0,
-     2,
-     0
-    ],
-    [
-     1,
-     2,
-     0
-    ],
-    [
-     2,
-     2,
-     0
-    ],
-    [
-     0,
-     3,
-     0
-    ],
-    [
-     1,
-     3,
-     0
-    ],
-    [
-     2,
-     3,
-     0
-    ],
-    [
-     3,
-     1,
-     1
-    ],
-    [
-     7,
-     1,
-     1
-    ],
-    [
-     3,
-     2,
-     1
-    ],
-    [
-     4,
-     2,
-     1
-    ],
-    [
-     5,
-     2,
-     1
-    ],
-    [
-     6,
-     2,
-     1
-    ],
-    [
-     7,
-     2,
-     1
-    ],
-    [
-     3,
-     3,
-     1
-    ],
-    [
-     4,
-     3,
-     1
-    ],
-    [
-     5,
-     3,
-     1
-    ],
-    [
-     6,
-     3,
-     1
-    ],
-    [
-     7,
-     3,
-     1
-    ]
-   ],
-   "excluded": []
+   "platformable": [],
+   "excluded": [
+    {
+     "cell": [
+      3,
+      1,
+      4
+     ],
+     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
+    },
+    {
+     "cell": [
+      7,
+      1,
+      4
+     ],
+     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
+    },
+    {
+     "cell": [
+      3,
+      2,
+      4
+     ],
+     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
+    },
+    {
+     "cell": [
+      7,
+      2,
+      4
+     ],
+     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
+    },
+    {
+     "cell": [
+      3,
+      4,
+      4
+     ],
+     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
+    },
+    {
+     "cell": [
+      4,
+      4,
+      4
+     ],
+     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
+    },
+    {
+     "cell": [
+      5,
+      4,
+      4
+     ],
+     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
+    },
+    {
+     "cell": [
+      6,
+      4,
+      4
+     ],
+     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
+    },
+    {
+     "cell": [
+      7,
+      4,
+      4
+     ],
+     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
+    }
+   ]
   },
   "RadioactiveWasteVault": {
    "platformable": [
