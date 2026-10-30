@@ -1915,7 +1915,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5804,36 +5804,6 @@
       "PointsPerHour": 0.15,
       "SatisfyToMaxValue": false
     }
-  },
-  "TemplateAttachmentsSpec": {
-    "Attachments": [
-      {
-        "AttachmentId": "Steam1",
-        "Prefab": "Buildings/Power/SteamEngine/SteamEngineSmoke",
-        "Parent": "#Finished",
-        "Position": {
-          "X": 0.5,
-          "Y": 7.75,
-          "Z": 3.5
-        },
-        "Rotation": {
-          "X": 0,
-          "Y": 0,
-          "Z": 0
-        },
-        "Scale": {
-          "X": 1.3333,
-          "Y": 1.3333,
-          "Z": 1.3333
-        },
-        "CreateInstantly": true
-      }
-    ]
-  },
-  "EnterableParticleControllerSpec": {
-    "AttachmentIds": [
-      "Steam1"
-    ]
   },
   "BuildingPipeTargetPortsSpec": {
     "Ports": [

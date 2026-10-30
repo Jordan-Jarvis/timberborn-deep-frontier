@@ -316,10 +316,14 @@ def lean_to(g, x0, x1, y0, y1, z_low, z_high, *, low_side='front', overhang=.12,
         plank_slope(g, 'Y', 0, lo, hi, ae, z_low - s * overhang, ar, z_high + s * overhang, seed=seed, battens=1)
 
 
-def flat_roof(g, x0, x1, y0, y1, z, *, t=.16, overhang=.08, parapet=.3, pt=.14, coping=IRON):
-    """Concrete roof slab with an open parapet ring and steel coping."""
+def flat_roof(g, x0, x1, y0, y1, z, *, t=.16, overhang=.08, parapet=.3, pt=.14, coping=IRON, deck='concrete'):
+    """Roof slab with an open parapet ring and steel coping. `deck` is the
+    slab's finish, a lategame_roofdeck_parts.FINISHES name (roof variety, user
+    2026-10-30): concrete stays one slab, plank and sheet finishes are laid
+    as separate boards or sheets on a steel slab (deck_slab)."""
+    from lategame_roofdeck_parts import deck_slab
     a0, a1, b0, b1 = x0 - overhang, x1 + overhang, y0 - overhang, y1 + overhang
-    bx(g, a0, a1, b0, b1, z, z + t, CONCRETE)
+    deck_slab(g, a0, b0, a1, b1, z + t, deck, thickness=t, base=IRON)
     if not parapet:
         return z + t
     zt = z + t
@@ -712,3 +716,27 @@ def oriented_box(g, c, d, p, n, half, mat):
                 key[others[1]] = b
                 quad_keys.append(tuple(key))
             oriented_polygon(g, [tuple(corners[k]) for k in quad_keys], tuple(vec * s), mat)
+
+
+def plank_deck(g, x0, x1, y0, y1, top, *, t=.16, width=.25, length=1.5, mat=PLANK, seed=0):
+    """Flat timber roof deck of separate native planks whose tops lie at `top`
+    (a whole layer, so the roof is a platformable deck). Roof variety, user
+    2026-10-30. Each plank is its own box, so each shows one native plank
+    strip (one box over a whole roof stretches a single strip across it).
+    Planks run along X in rows across Y; joints are staggered by half a plank
+    between rows; tops vary by at most 8 mm below `top` (one flat plane for
+    measure_connection_faces.py)."""
+    if x1 - x0 <= 0 or y1 - y0 <= 0 or t <= .01:
+        raise ValueError(f'Degenerate plank deck {x0, x1, y0, y1, t}')
+    rng = random.Random(seed)
+    rows = max(1, round((y1 - y0) / width))
+    count = max(1, math.ceil((x1 - x0) / length))
+    step = (x1 - x0) / count
+    for r in range(rows):
+        ya, yb = y0 + (y1 - y0) * r / rows, y0 + (y1 - y0) * (r + 1) / rows
+        cuts = [x0 + step * k for k in range(count + 1)]
+        if r % 2 and count > 1:
+            cuts = [x0] + [c - step / 2 for c in cuts[1:]] + [x1]
+        for xa, xb in zip(cuts, cuts[1:]):
+            if xb - xa > 1e-6:
+                bx(g, xa, xb, ya, yb, top - t, top - rng.choice((0, .004, .008)), mat)

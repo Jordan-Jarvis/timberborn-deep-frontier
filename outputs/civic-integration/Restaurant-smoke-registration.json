@@ -1,7 +1,7 @@
 {
  "ident": "Restaurant",
  "source": "src/DeepFrontier/Art/Source/Restaurant-ReferenceStudy.blend",
- "sourceSha256": "6e1b14278f1bdb65e92ccb9b4170b184bcd24c356897bbe7a90998824916195c",
+ "sourceSha256": "4feb7271080beecc45de0ded880d4120158e5949a908bce25e90bd089226065c",
  "frame": 1,
  "layout": "tools/civic-layouts.json",
  "origin": [
@@ -16,30 +16,9 @@
  ],
  "height": 5,
  "coordinateSystem": "Native grid XYZ, Z up: authored artwork + registration origin (the late-game registration frame)",
- "smokeEmitters": [
-  {
-   "kind": "smoke",
-   "position": [
-    4.5,
-    3.5,
-    4.93
-   ],
-   "radius": 0.2
-  }
- ],
+ "smokeEmitters": [],
  "sceneCheck": {
   "rule": "highest static surface within radius + 0.2 at the mouth height (+/-0.002), at least 0.5 above the lowest",
-  "mouths": [
-   {
-    "position": [
-     4.5,
-     3.5,
-     4.93
-    ],
-    "stackTop": 4.93,
-    "lowestNearby": 0.2,
-    "vertices": 248
-   }
-  ]
+  "mouths": []
  }
 }

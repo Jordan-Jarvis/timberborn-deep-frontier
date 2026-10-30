@@ -173,7 +173,7 @@ def gallery(g,rails,ident,bounds,origin,edges,supports,*,grid_rails=False,**plat
         else:rails.run(ident+edge,*ends[edge],z1-oz)
 
 
-def room(g,ident,bounds,origin,front_door=None,*,exterior,joined_ends=None,joined_post_inset=0.0,wall_style='banded'):
+def room(g,ident,bounds,origin,front_door=None,*,exterior,joined_ends=None,joined_post_inset=0.0,wall_style='banded',plinth=CIVIC_CONCRETE):
     """Opaque exterior shell; shared partitions and room interiors are not drawn.
 
     `wall_style='storey'` (opt-in, 2026-10-30 compaction) is the infill for a
@@ -206,7 +206,9 @@ def room(g,ident,bounds,origin,front_door=None,*,exterior,joined_ends=None,joine
            (z0+.45,z0+.53,PLANK),(z0+.53,z1-.36,CIVIC_ORANGE_PANEL),
            (z1-.36,z1-.33,PLANK),(z1-.33,z1-.28,CIVIC_FORGED_PANEL))
     if wall_style=='storey':
-        bands=(((z0+.20,z0+.36,CIVIC_CONCRETE),(z0+.36,z0+.40,PLANK),(z0+.40,z1-.28,CIVIC_ORANGE_PANEL))
+        # `plinth`: the ground band's material (concrete unless the building
+        # unlocks before concrete exists, user 2026-10-30).
+        bands=(((z0+.20,z0+.36,plinth),(z0+.36,z0+.40,PLANK),(z0+.40,z1-.28,CIVIC_ORANGE_PANEL))
                if z0==0 else ((z0+.20,z1-.28,CIVIC_ORANGE_PANEL),))
     for side,axis,plane,sign,start,end,door in (
             ('front','Y',y0,1,x0,x1,front_door),('back','Y',y1,-1,x0,x1,None),

@@ -40,9 +40,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8166,
-   "vertices": 15842,
-   "construction": 8166,
+   "finished": 9034,
+   "vertices": 17546,
+   "construction": 9034,
    "file": "outputs/lategame-integration/Data/Buildings/Science/ArchiveExcavation/ArchiveExcavation.IronTeeth.Model.timbermesh"
   },
   "Bathhouse": {
@@ -94,9 +94,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 4998,
-   "vertices": 10476,
-   "construction": 4998,
+   "finished": 5150,
+   "vertices": 10780,
+   "construction": 5150,
    "file": "src/DeepFrontier/Data/Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model.timbermesh"
   },
   "ConcreteOverflowDam": {
@@ -256,9 +256,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8139,
-   "vertices": 15625,
-   "construction": 8139,
+   "finished": 9059,
+   "vertices": 17453,
+   "construction": 9059,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepMine/DeepMine.IronTeeth.Model.timbermesh"
   },
   "DeepOreSource": {
@@ -283,9 +283,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 6826,
-   "vertices": 12534,
-   "construction": 6826,
+   "finished": 6946,
+   "vertices": 12774,
+   "construction": 6946,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model.timbermesh"
   },
   "DeepWell": {
@@ -787,18 +787,18 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9152,
-   "vertices": 17204,
-   "construction": 9152,
+   "finished": 9314,
+   "vertices": 17518,
+   "construction": 9314,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/SteelMill/SteelMill.IronTeeth.Model.timbermesh"
   },
   "StoneCrusher": {
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 8769,
-   "vertices": 17906,
-   "construction": 8769,
+   "finished": 8975,
+   "vertices": 18318,
+   "construction": 8975,
    "file": "src/DeepFrontier/Data/Buildings/Metal/StoneCrusher/StoneCrusher.IronTeeth.Model.timbermesh"
   },
   "TechnicalSchool": {

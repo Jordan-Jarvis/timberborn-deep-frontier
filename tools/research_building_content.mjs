@@ -68,8 +68,6 @@ export async function researchContent() {
       region([x,1,2],[x,3,[3,2,2,2,2][x-3]],'All');
       region([x,4,2],[x,7,[3,3,3,3,2][x-3]],'All');
     }
-    region([4,6,4],[4,6,4],'All'); // Furnace flue above the rear roof.
-    region([7,2,3],[7,2,3],'All'); // Kiln-test flue above the front roof.
     region([8,1,0],[9,2,2],'All'); // Test press on its 2x2 plinth.
     region([8,5,0],[9,6,4],'All'); // Instrument tower on its 2x2 plinth.
     // No forced decoration beyond the walls (2026-10-22): the outdoor shelves,
@@ -130,8 +128,9 @@ export async function researchContent() {
     const colliders=industrialColliders(blocks,d.size,0);
     v.Children={'#Finished':{TimbermeshSpec:{Model:model+'.Model'},CollidersSpec:colliders},
       '#Unfinished':{Children:{ConstructionStage0:{TimbermeshSpec:{Model:model+'.ConstructionStage0.Model'},CollidersSpec:colliders}}}};
-    // Smoke at the furnace and kiln-test flues while the lab works (the donor
-    // Smelter's own effects were removed above). Smog lists it as a polluter.
+    // Vanilla smoke from the scene's registered emitters (the donor Smelter's own
+    // effects were removed above): none since the roof flues went (no roof vents,
+    // user 2026-10-30), so the lab no longer pollutes.
     applyVanillaSmoke(v,await sceneSmokeRegistration('research-integration',b.id,d),b.id);
     await applyNativeBuildingAssembly(v,b.id,d.origin,{goodId:'Water',flowNodes:[],wheelNodes:[]});
     buildings.push({id:b.id,path:model+'.blueprint.json',blueprint:v,rows:[

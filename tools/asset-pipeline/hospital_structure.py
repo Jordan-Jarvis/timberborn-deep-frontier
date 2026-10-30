@@ -58,7 +58,6 @@ DOORS={
 RESERVATIONS=[
     [0,0,6,4,4,7],[0,1,7,4,3,8],
     [2,4,8,3,5,9],
-    [0,3,7,1,4,8],  # the steam flue above the transverse roof's rear slope
 ]
 
 def source(point):

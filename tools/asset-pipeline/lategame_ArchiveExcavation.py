@@ -17,8 +17,10 @@ HERO: an excavation pit inside concrete retaining walls, exposing a giant
 rusted human cogwheel half-buried in spoil beside a broken fluted column,
 laid out with an archaeologist's string grid and worked by a riveted steel
 tripod derrick with a hoist bucket.
-ROOFS: flat parapet roofs on the archive hall, the archive stack tower and
-the catalogue wing; a flat roof over the open sieving shed.
+ROOFS (roof variety, user 2026-10-30): a gabled roof of native barracks roof
+planks on the archive hall; flat parapet roofs on the archive stack tower
+(concrete) and the catalogue wing (timber plank deck); a flat roof over the
+open sieving shed. No roof vents: the stove flue rises up the tower's corner.
 
 Plan (7 x 6 tiles): archive hall front-left with the door (the tile in front
 of it is the entrance); the archive stack tower and catalogue wing behind it;
@@ -36,7 +38,7 @@ shaking sieves (PISTON_X), spoil belt (CUSTOM_LOOP_X), derrick beacon
 (SPIN_Z).
 
 No pipe port: neither recipe uses a liquid.
-Smoke: the archive stack's stove flue is a kit stack.
+Smoke: the archive stack's stove flue is a kit wall stack (from the podium).
 """
 import math
 import random
@@ -48,6 +50,7 @@ import lategame_industry_parts as P
 import lategame_civic_parts as C
 from lategame_civic_parts import blk
 from lategame_mining_parts import ore_heap
+import lategame_mining_parts as MP
 from lategame_roofdeck_parts import parapet_ring
 from native_window_atlas import atlas_window
 import native_building_assets as N
@@ -108,10 +111,16 @@ def bays(a, b, pitch):
     return max(1, round((b - a) / pitch))
 
 
-def flat_roof(g, x0, y0, x1, y1, z, open_sides=()):
-    """Concrete roof slab on the block's top and a ring parapet (no lid), so
-    the roof stays a usable deck (lategame_roofdeck_parts)."""
-    blk(g, x0 - .05, y0 - .05, z, x1 + .05, y1 + .05, z + ROOF_T, CONCRETE)
+def flat_roof(g, x0, y0, x1, y1, z, open_sides=(), deck='concrete'):
+    """Roof slab on the block's top, concrete or a timber plank deck (roof
+    variety, user 2026-10-30), and a ring parapet (no lid), so the roof stays
+    a usable deck (lategame_roofdeck_parts)."""
+    if deck == 'concrete':
+        blk(g, x0 - .05, y0 - .05, z, x1 + .05, y1 + .05, z + ROOF_T, CONCRETE)
+    elif deck == 'timber':
+        MP.plank_deck(g, x0 - .05, x1 + .05, y0 - .05, y1 + .05, z + ROOF_T, t=ROOF_T, seed=37)
+    else:
+        raise ValueError(f'Unknown archive roof deck {deck!r}')
     parapet_ring(g, x0 - .05, y0 - .05, x1 + .05, y1 + .05, z + ROOF_T, open_sides=open_sides)
 
 
@@ -134,7 +143,9 @@ def hall(g, parts):
                    windows={'front': [(fx[0], z, .85, 'lancet'), (fx[-1], z, .85, 'lancet')],
                             'left': [(y, z, .85, 'lancet') for y in fy],
                             'right': [(fy[0], z, .85, 'lancet')]})
-    flat_roof(g, bx0, by0, bx1, by1, HALL_EAVE)
+    # A real gabled roof in the native barracks roof planks over the hall
+    # (roof variety, user 2026-10-30: "some buildings can have actual roofs").
+    MP.plank_gable(g, bx0, bx1, by0, by1, HALL_EAVE, 2.75, ridge_axis='X', overhang=.05, seed=31)
     # No wall lamps beside the door: they would claim the open tiles (1, 0) and (3, 0).
 
 
@@ -168,9 +179,9 @@ def stacks(g, parts):
             for d in (-.14, .14):
                 atlas_window(g, tx1, y + d, z, .2, 'right', 'slit')
     flat_roof(g, tx0, ty0, tx1, ty1, TOWER_EAVE)
-    # Stove flue in the tower roof's back-left corner, against the parapet.
-    sx, sy = .35, 5.65
-    K.stack(g, sx, sy, TOWER_EAVE + ROOF_T, 1.0, emits='smoke', r=.11, taper=.9, bands=2)
+    # Stove flue up the tower's back-left corner from the podium (no roof vents,
+    # user 2026-10-30), in the roof cell's outer band, mouth at its old height.
+    K.wall_stack(g, .16, 5.84, REAR_TOP, TOWER_EAVE + ROOF_T + 1.0 - REAR_TOP, emits='smoke', r=.11, bands=3)
     # Catalogue wing: card-index grid of nine-pane windows facing the dig.
     wx0, wx1 = TOWER_X1, x1 - .05
     wy0 = ty0 + .08
@@ -180,7 +191,7 @@ def stacks(g, parts):
         atlas_window(g, wx1, y, 1.17, .5, 'right', 'grid9')
     for x in gaps(wx0, wx1, bays(wx0, wx1, .95), .11, .17):
         atlas_window(g, x, ty1, 1.17, .5, 'back', 'grid9')
-    flat_roof(g, wx0 + .05, wy0, wx1, ty1, WING_EAVE, open_sides=('left',))
+    flat_roof(g, wx0 + .05, wy0, wx1, ty1, WING_EAVE, open_sides=('left',), deck='timber')
 
 
 # ---------------------------------------------------------------- dig

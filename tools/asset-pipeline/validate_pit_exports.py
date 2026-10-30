@@ -24,9 +24,15 @@ for ident in ('SandstonePit','LimestonePit'):
     assert names['#Slot#Entrance0']==1,ident
     assert not any(n.startswith('NativeBarrel') for n in names), 'Native barrel must stay an external reference'
     materials={mesh.material for node in model.nodes for mesh in node.meshes}
-    native={'BaseWood_DarkBrown.IronTeeth','IrregularPlanks_DarkBrown.IronTeeth',
-            'RoofPlanks.IronTeeth','BaseMetal.IronTeeth'}
+    # Roof variety (2026-10-30): native roof sheets on the sandstone pit, a
+    # riveted steel plate roof on the limestone pit.
+    native={'BaseWood_DarkBrown.IronTeeth','IrregularPlanks_DarkBrown.IronTeeth','BaseMetal.IronTeeth',
+            'IrregularPlanks_MetalForged.IronTeeth' if ident=='LimestonePit' else 'RoofPlanks.IronTeeth'}
     assert native<=materials,ident
+    # Wood and metal only (user, 2026-10-30): a pit cannot cost the stone its
+    # own chain produces, so no concrete and no masonry (the dug stone in the
+    # bins and basket is the product, not building material).
+    assert not materials&{'Plaster_White.IronTeeth','DFIndustrial14','DFIndustrial15'},(ident,materials)
     count=0
     for node in model.nodes:
         meshes=[m for m in node.meshes if m.material in native]

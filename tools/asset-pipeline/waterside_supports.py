@@ -37,8 +37,10 @@ FOOT_NODE='#SupportFoot'
 # Width matches each building's own timber columns; shift is explained above.
 # lean: plain collar and no bevel modifier (see above).
 STYLES={
-    'hatchery':{'width':.16,'shift':-.10,'pier':.30,'pierTop':.16,'lean':False},
-    'fishery':{'width':.17,'shift':0.,'pier':.32,'pierTop':.18,'lean':True},
+    # pierMat: the hatchery unlocks before concrete exists, so its pile foot is
+    # a steel shoe, not a cast pier (user 2026-10-30).
+    'hatchery':{'width':.16,'shift':-.10,'pier':.30,'pierTop':.16,'lean':False,'pierMat':IRON},
+    'fishery':{'width':.17,'shift':0.,'pier':.32,'pierTop':.18,'lean':True,'pierMat':CIVIC_CONCRETE},
 }
 FOOT_EMBED=.22   # The foot runs this far below the bed top, into the ground.
 
@@ -69,7 +71,7 @@ def foot(style):
     g=Geometry(FOOT_NODE)
     # Core bottom stays 20 mm inside the pier so their bottom faces never coincide.
     g.box((0,0,(low+.02+top)/2),(w,w,top-low-.02),WOOD)
-    g.box((0,0,(low+s['pierTop'])/2),(s['pier'],s['pier'],s['pierTop']-low),CIVIC_CONCRETE)
+    g.box((0,0,(low+s['pierTop'])/2),(s['pier'],s['pier'],s['pierTop']-low),s['pierMat'])
     # Bearing plate straddles the pier top: no coincident pier/plate faces.
     g.box((0,0,s['pierTop']+.02),(s['pier']+.02,s['pier']+.02,.06),IRON)
     _channels(g,w,s['pierTop']+.06,top)

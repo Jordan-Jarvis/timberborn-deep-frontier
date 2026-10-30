@@ -81,9 +81,12 @@ DOORS = {
 }
 # Fixed roof equipment and furniture. Their picking volumes come from the
 # actual parts; these cells are never public paths or stackable roof.
+# 2026-10-30 (user: "no roof vents"; every flat roof tile placeable): the
+# kitchen stack on the stairhead cap went with its reservation, and the upper
+# front furniture row ends at x 5: its last cell (5,0,2) holds no furniture
+# (the second table's chairs end at x 5.0), so it is a free balcony deck cell.
 RESERVATIONS = [
-    [4,3,4,5,4,5],  # the kitchen stack on the roof stairhead's cap
-    [0,0,1,6,1,2], [0,0,2,6,1,3], # fixed dining furniture, never public paths
+    [0,0,1,6,1,2], [0,0,2,5,1,3], # fixed dining furniture, never public paths
     [6,1,1,7,6,2], # side tables and chairs
 ]
 # Walking clearance above a deck or floor, below the beams of the deck one

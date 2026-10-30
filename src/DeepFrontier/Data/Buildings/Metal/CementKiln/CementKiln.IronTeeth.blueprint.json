@@ -238,7 +238,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -723,6 +723,15 @@
           "Z": 2
         },
         "Directions": "Left, Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 1,
+          "Z": 1
+        },
+        "Directions": "Top",
         "ReverseRotation": false
       }
     ]
@@ -1644,6 +1653,13 @@
     ],
     "CapacityPerGood": 10,
     "ServiceHours": 24
+  },
+  "BlockObjectNavMeshSettingsSpec": {
+    "NoAutoWalls": false,
+    "GenerateFloorsOnStackable": true,
+    "EdgeGroups": [],
+    "UnblockedCoordinates": [],
+    "BlockedEdges": []
   },
   "SmogEmitterSpec": {
     "Activity": "Workshop",

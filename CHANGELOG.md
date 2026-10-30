@@ -32,6 +32,11 @@
 - **Food Packaging Works** is 7x5, 7 high (was 10x7, 12 high): the steel cannery under a flat corrugated-metal roof and glazed monitor, the retorts, the boilers and a hip-roofed boiler house with a shorter stack, and a timber-roofed warehouse over a short conveyor bridge. The gable, turbine ventilators, feed-water tank and tall stack are gone. Same cost, power and crew.
 - **Flat timber and metal roofs** on Chemical Works, Precision Machine Works, Cryogenic Liquefaction Plant and Water Treatment Plant are laid as separate boards and sheets instead of one stretched texture.
 - **Old saves:** both keep their origin and entrance; freed tiles become empty ground. Reconnect a pipe at the mixer's water inlet (now on the tank pedestal) and its power line. A placed Deep Drill keeps its origin and entrance too (a flipped one's entrance moves 4 tiles); reconnect its shafts and pipes to the new walls.
+- **Flat roofs you can build on, roof variety, no roof vents, no concrete before concrete:**
+  - The Restaurant's and quarries' last blocked flat roof tiles, and those beside the kiln and drill stacks, now take platforms.
+  - The Deep Mine's lamp house and the Archive's hall have real plank gables. The Deep Drill, Deep Ore Processor, Steel Mill, quarry winding house and Limestone Pit get steel plate or painted sheet roofs; the Deep Mine annex and the Archive catalogue wing get timber decks.
+  - Roof flues and stacks are gone from the Restaurant, Hospital, Fishery Works, Grocery and Materials Laboratory (the Restaurant and Laboratory no longer make smog). The Deep Drill, Deep Mine and Archive chimneys rise up their walls.
+  - The Stone Crusher, Concrete Mixer, both pits and the Fish Hatchery no longer show concrete: stone flagstones and coursed masonry, timber and steel instead.
 
 ### Smaller late-game buildings (compaction pass: power, nuclear, rocketry)
 

@@ -36,6 +36,10 @@ from lategame_kit import EMITTER_KINDS
 MOUTH_REACH = .2      # the top frame/collar stands up to 0.2 outside the mouth radius
 HEIGHT_TOLERANCE = .002
 STACK_DEPTH = .5
+# Buildings whose roof flues were removed (user, 2026-10-30: "no roof vents"):
+# they register an empty emitter list, and an emitter recorded on them fails.
+# Every other model must still record at least one.
+FLUELESS = frozenset({'Restaurant', 'Hospital', 'FisheryWorks', 'MaterialsLaboratory'})
 
 
 def models():
@@ -56,6 +60,10 @@ def authored_emitters(ident, build):
         if geo.__dict__.get('emitters'):
             raise ValueError(f'{ident}: emitter on {geo.name}; record it on the static architecture')
     emitters = static.__dict__.get('emitters', [])
+    if ident in FLUELESS:
+        if emitters:
+            raise ValueError(f'{ident}: has no flue since 2026-10-30, but the art records {len(emitters)} emitter(s)')
+        return []
     if not emitters:
         raise ValueError(f'{ident}: the authored art records no smoke/steam emitter')
     for e in emitters:

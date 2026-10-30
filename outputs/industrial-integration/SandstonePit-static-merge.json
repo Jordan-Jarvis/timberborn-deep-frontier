@@ -15,14 +15,13 @@
       "parts": 3,
       "triangles": 7490,
       "materials": {
-        "BaseWood_DarkBrown.IronTeeth": 610,
+        "BaseWood_DarkBrown.IronTeeth": 622,
         "BaseMetal.IronTeeth": 1842,
         "DFIndustrial13": 3078,
         "IrregularPlanks_DarkBrown.IronTeeth": 622,
         "IrregularPlanks_MetalForged.IronTeeth": 16,
         "RoofPlanks.IronTeeth": 44,
         "DFIndustrial04": 1260,
-        "Plaster_White.IronTeeth": 12,
         "Plaster_Orange.IronTeeth": 6
       }
     },

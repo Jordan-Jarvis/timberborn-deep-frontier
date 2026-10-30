@@ -1,7 +1,7 @@
 {
  "ident": "Hospital",
  "source": "src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend",
- "sourceSha256": "2bf22ac307edcd72d61878957d0ca4da1a5f3df05f25b2d564a9b1c409664a75",
+ "sourceSha256": "ae7b3d515cb3afb8b96f1e56d646c7fad0b42f389c17a058737c65b5e2a20694",
  "frame": 1,
  "layout": "tools/civic-layouts.json",
  "origin": [
@@ -16,30 +16,9 @@
  ],
  "height": 9,
  "coordinateSystem": "Native grid XYZ, Z up: authored artwork + registration origin (the late-game registration frame)",
- "smokeEmitters": [
-  {
-   "kind": "steam",
-   "position": [
-    0.5,
-    3.5,
-    7.75
-   ],
-   "radius": 0.2
-  }
- ],
+ "smokeEmitters": [],
  "sceneCheck": {
   "rule": "highest static surface within radius + 0.2 at the mouth height (+/-0.002), at least 0.5 above the lowest",
-  "mouths": [
-   {
-    "position": [
-     0.5,
-     3.5,
-     7.75
-    ],
-    "stackTop": 7.75,
-    "lowestNearby": 0.2,
-    "vertices": 212
-   }
-  ]
+  "mouths": []
  }
 }

@@ -15,8 +15,10 @@ base under the drill floor.
 HERO: a boarded, tapered drilling tower (five layers above the drill floor)
 on a solid concrete engine room, open at the front so the hoist shows, with
 crown block, gin pole and beacon. Roofs: teal plank gable on the doghouse;
-flat concrete roofs on the pump house and engine room form one deck with the
-drill floor.
+a riveted steel plate roof on the pump house forms one deck with the steel
+drill floor on the engine room (roof variety, user 2026-10-30). No roof vents:
+the two smoke stacks rise up the engine room's back wall and the doghouse stove
+pipe is gone.
 
 Parts: brick pump house (the entrance) with the timber doghouse on its roof;
 concrete engine room (tiles 3..7 x 0..6) carrying the steel drill floor,
@@ -39,6 +41,7 @@ import lategame_kit as K
 from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK
 import lategame_mining_parts as P
 from lategame_mining_parts import bx
+from lategame_roofdeck_parts import deck_slab
 
 IDENT = 'DeepDrill'
 FOOTPRINT = (7, 6)
@@ -225,7 +228,8 @@ def engine_room(g):
                               'back': [(3.72, 1.07, 'factory', .7), (6.28, 1.07, 'factory', .7)]})
     # Roof slab on whole tiles, steel drill floor stacked on it.
     bx(g, 3.0, 7.0, 0.0, 6.0, FLOOR - .16, FLOOR - .08, CONCRETE)
-    P.deck(g, 3.0, 7.0, 0.0, 6.0, FLOOR, rails=('front', 'back', 'left', 'right'), gaps={'left': [(0.0, 3.0)]})
+    P.deck(g, 3.0, 7.0, 0.0, 6.0, FLOOR, rails=('front', 'back', 'left', 'right'),
+           gaps={'left': [(0.0, 3.0)], 'back': [(x - .2, x + .2) for x in STACKS_X]})
     P.gauge(g, 4.35, .01, 1.55, 'front', .08)
 
 
@@ -257,10 +261,18 @@ def drawworks(g, parts):
     g.beam((3.45, 4.35, ON + .3), (WELL[0] - .4, TOP[3] - .05, ZT + .35), .035, mat=IRON)
 
 
+STACKS_X = (4.75, 5.25)       # smoke stacks against the engine room's back wall
+
+
 def back_services(g, parts):
-    """Smoke stacks on the drill floor's back edge and the radiator fan on the engine room's right wall."""
-    for x in (3.6, 4.6):
-        K.stack(g, x, 5.5, ON, 2.8, emits='smoke', r=.18, bands=3)
+    """Smoke stacks against the engine room's back wall and the radiator fan on its right wall.
+
+    User, 2026-10-30 ("no roof vents"): the stacks rise from the base course up
+    the outside of the back wall instead of standing on the drill floor; they
+    stay in the deck cells' outer band, so the deck behind the drawworks stays
+    platformable."""
+    for x in STACKS_X:
+        K.wall_stack(g, x, 5.84, .3, ON + 2.8 - .3, emits='smoke', r=.12, bands=3)
     bx(g, 6.95, 7.1, 5.0, 5.85, .5, 1.6, PAINTED)
     for z in (.65, 1.45):
         bx(g, 7.1, 7.13, 5.05, 5.8, z - .04, z + .04, IRON)
@@ -280,8 +292,9 @@ def pump_house(g):
                     'back': [(1.5, 1.15, 'grand', .55)]})
     K.lamp(g, .78, .12, 1.15, face='front')
     K.lamp(g, 2.22, .12, 1.15, face='front')
-    # Roof slab on whole tiles (a canopy over the door), level with the drill floor.
-    bx(g, 0.0, 3.0, 0.0, 3.0, FLOOR - .16, FLOOR, CONCRETE)
+    # Roof slab on whole tiles (a canopy over the door), level with the drill
+    # floor: riveted steel plate, one deck with the steel drill floor.
+    deck_slab(g, 0.0, 0.0, 3.0, 3.0, FLOOR, 'forged', base=IRON)
     zr = FLOOR
     for a, b, ss, se, dz in (((.04, .04), (2.96, .04), False, False, 0),
                              ((.04, .04), (.04, 2.96), True, True, -.011),
@@ -293,9 +306,7 @@ def pump_house(g):
            pitch=1.05)
     P.plank_gable(g, .45, 2.55, 1.2, 2.75, FLOOR + 1.3, FLOOR + 1.95, ridge_axis='X', seed=11)
     K.lamp(g, 2.15, 1.2, 2.85, face='front')
-    # Stove pipe through the roof.
-    P.tube(g, (.9, 2.3, 3.45), (.9, 2.3, 4.35), .07, IRON, 10)
-    g.cylinder((.9, 2.3, 4.4), .11, .1, IRON, 'Z', 10)
+    # (The doghouse stove pipe through the roof went: no roof vents, user 2026-10-30.)
 
 
 def mud_pump(g, parts):

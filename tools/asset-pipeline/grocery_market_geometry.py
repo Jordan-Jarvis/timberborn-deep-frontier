@@ -1288,7 +1288,7 @@ def grocery_market(g, parts):
     roof_battens(g)
     dormer(g, 2.40, 2.50, 1)
     dormer(g, 2.40, 5.50, -1)
-    chimney(g, 7.00, 4.75)
+    # (The rear-slope flue went: no roof vents, user 2026-10-30.)
     arcade(g)
     balcony(g, rails)
     stall_wing(g, parts)

@@ -14,8 +14,9 @@ flue (now 7.6 high).
 HERO: an electric-arc melt shop whose three graphite electrodes rise on mast
 arms through a forged roof penthouse, with a fume duct over the flat roof
 into a riveted steel flue.
-ROOFS: flat parapet roofs on the control pulpit (beacon) and the melt shop;
-flat open canopies over the rolling line and the teeming bay.
+ROOFS: flat parapet roofs on the control pulpit (beacon, concrete) and the
+melt shop (riveted steel plate); flat open canopies over the rolling line and
+the teeming bay (painted metal sheet). Roof variety, user 2026-10-30.
 
 Plan (8 x 6 tiles): control pulpit front-left with the door; the melt shop
 behind it; the open rolling line along the front right (reheat furnace,
@@ -47,6 +48,7 @@ import lategame_civic_parts as C
 from lategame_civic_parts import blk
 from lategame_mining_parts import ore_heap
 import lategame_mining_parts as M
+from lategame_roofdeck_parts import deck_slab
 from industrial_facades import building_portal
 from native_window_atlas import atlas_window
 
@@ -163,7 +165,8 @@ def melt_shop(g, parts):
     glow.box((wx1 + .18, ty, tz), (.04, .26, .22), GLOW)
     parts.append((glow, 'PULSE', .08))
     g.beam((wx1 + .16, ty, tz - .26), (wx1 + .7, ty, tz - .42), .14, .09, IRON)
-    M.flat_roof(g, wx0, wx1, wy0, wy1, EAVE, overhang=.1, parapet=.25)
+    # Riveted steel plate roof deck (roof variety, user 2026-10-30).
+    M.flat_roof(g, wx0, wx1, wy0, wy1, EAVE, overhang=.1, parapet=.25, deck='forged')
     penthouse(g, parts)
 
 
@@ -230,7 +233,7 @@ def teeming_bay(g):
         P.pier(g, 7.75, y, .17, .45, .3)
         blk(g, 7.67, y - .08, .5, 7.83, y + .08, BAY_ROOF - .28, IRON)
     blk(g, 7.62, 3.1, BAY_ROOF - .28, 7.88, 5.9, BAY_ROOF - .16, IRON)
-    blk(g, 5.0, 3.0, BAY_ROOF - .16, 8.0, 6.0, BAY_ROOF, CONCRETE)
+    deck_slab(g, 5.0, 3.0, 8.0, 6.0, BAY_ROOF, 'painted', base=IRON)   # painted metal sheets (roof variety)
 
 
 def teeming(g, parts):

@@ -1876,7 +1876,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -2578,18 +2578,6 @@
               "Y": 1,
               "Z": 2
             }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 4.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
           }
         ],
         "SphereColliders": [],
@@ -2803,18 +2791,6 @@
                   "Y": 1,
                   "Z": 2
                 }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 4.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
               }
             ],
             "SphereColliders": [],
@@ -2852,36 +2828,6 @@
   },
   "GroceryStockDisplaySpec": {
     "Stages": 3
-  },
-  "TemplateAttachmentsSpec": {
-    "Attachments": [
-      {
-        "AttachmentId": "Steam1",
-        "Prefab": "Buildings/Power/SteamEngine/SteamEngineSmoke",
-        "Parent": "#Finished",
-        "Position": {
-          "X": 7,
-          "Y": 4.4555,
-          "Z": 4.75
-        },
-        "Rotation": {
-          "X": 0,
-          "Y": 0,
-          "Z": 0
-        },
-        "Scale": {
-          "X": 0.7333,
-          "Y": 0.7333,
-          "Z": 0.7333
-        },
-        "CreateInstantly": true
-      }
-    ]
-  },
-  "EnterableParticleControllerSpec": {
-    "AttachmentIds": [
-      "Steam1"
-    ]
   },
   "NativeBuildingPropsSpec": {
     "Props": [

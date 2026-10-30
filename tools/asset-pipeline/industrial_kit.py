@@ -143,6 +143,20 @@ def lean_sheet_roof(g, x0, y0, x1, y1, z0, z1, seed, corner_collars=False):
     del seed
 
 
+def lean_plate_roof(g, x0, y0, x1, y1, top, mat):
+    """Flat roof of one riveted plate (`mat`, e.g. CIVIC_FORGED_PANEL) laid level
+    on lean_sheet_roof's timber edge beams and iron corner shoes, its top where
+    the sheet panels' top would be (top + 0.0225). Roof variety, user
+    2026-10-30: metal roofs beside the native roof sheets."""
+    g.box(((x0 + x1) / 2, (y0 + y1) / 2, top), (x1 - x0, y1 - y0, .045), mat)
+    for x in (x0, x1):
+        g.beam((x, y0, top - .035), (x, y1, top - .035), .13, .14, _WOOD)
+    for y in (y0, y1):
+        g.beam((x0, y, top - .055), (x1, y, top - .055), .15, .16, _WOOD)
+        for x in (x0, x1):
+            open_box(g, (x, y, top + .050), (.22, .22, .025), _IRON, ('-z',))
+
+
 def lean_rock(g, p, size, mat, seed, n=5):
     """Chunky cobble: an n-sided lower and middle ring and a top point, no
     underside (it rests on a load or a bed). Planar triangles."""

@@ -21,7 +21,8 @@ from reference_details import cage_lamp
 from industrial_kit import open_beam, wheel, gauge
 from industrial_kit import (timber_column, beam_joint, bracket, steel_bolt, sheet_roof, cage_lamp, band, prism,
                                bolt, square_nut, open_box, rock, rock_heap)
-from reference_materials import CIVIC_CONCRETE, CIVIC_FORGED_PANEL
+from reference_materials import CIVIC_FORGED_PANEL
+from industrial_kit import lean_plate_roof
 from walkway_geometry import RailAssembly
 from opaque_shell_geometry import lean_roof_curb
 
@@ -86,7 +87,9 @@ def enclosure(g, *, limestone):
 
 def hoist(g,parts,stone,*,limestone):
     x=3.70;back=3.60;end=2.35 if limestone else .95;top=HOIST_TOP
-    g.box((x,back,.17),(.60,.62,.34),CIVIC_CONCRETE)
+    # Timber sill under the hoist post: a pit shows only wood and metal (it
+    # cannot cost the stone its own chain produces; user 2026-10-30).
+    g.box((x,back,.17),(.60,.62,.34),WOOD)
     timber_column(g,x,back,.34,top-.15,.28)
     beam_joint(g,(x,back+.35,top),(x,end-.18,top),.28,.30)
     # The jib brace meets the jib clear of the basket's lifted slings.
@@ -149,8 +152,13 @@ def mineral_pit(g,parts,*,limestone):
     for x in (.30,2.88):
         beam_joint(g,(x,1.12,BEAM_Z),(x,3.70,BEAM_Z),.18,.24)
         g.beam((x,3.68,.95),(x,3.05,1.70),.12,mat=WOOD)
-    # One flat roof of native roof sheets over the store and the bay.
-    sheet_roof(g,.13,1.00,3.05,3.86,ROOF_Z,ROOF_Z,1501 if limestone else 1502)
+    # One flat roof over the store and the bay: native roof sheets on the
+    # sandstone pit, riveted steel plate on the limestone pit (roof variety,
+    # user 2026-10-30).
+    if limestone:
+        lean_plate_roof(g,.13,1.00,3.05,3.86,ROOF_Z,CIVIC_FORGED_PANEL)
+    else:
+        sheet_roof(g,.13,1.00,3.05,3.86,ROOF_Z,ROOF_Z,1502)
     stone_bin(g,(2.22,2.42,.08),(1.05,1.62,1.02),stone,1510)
     hoist(g,parts,stone,limestone=limestone)
     # (2026-10-22: the limestone hand cart, both pits' loose barrels and the

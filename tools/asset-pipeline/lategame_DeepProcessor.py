@@ -19,8 +19,9 @@ pit behind it.
 
 Parts: concrete hearth podium; two domed hot-blast stoves with their chimney
 and hot-blast main; dust catcher; flat-roofed open casting bay with runner,
-tilting ladle and pig moulds (small GLOW accents only); flat-roofed brick
-blower house with the door and a wall blower fan; skip hoist over its ore pit. Flat roofs stay
+tilting ladle and pig moulds (small GLOW accents only) under a riveted steel
+plate roof; brick blower house with the door, a painted metal sheet roof deck
+and a wall blower fan (roof variety, user 2026-10-30); skip hoist over its ore pit. Flat roofs stay
 clear (user, 2026-10-30: no clutter on buildable space).
 
 Animated (5, same names): skip car in the hoist, charging distributor,
@@ -35,6 +36,7 @@ import lategame_kit as K
 from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK, GLOW
 import lategame_mining_parts as P
 from lategame_mining_parts import bx
+from lategame_roofdeck_parts import deck_slab
 
 IDENT = 'DeepProcessor'
 FOOTPRINT = (7, 6)
@@ -211,7 +213,7 @@ def casting_bay(g, parts):
             P.column(g, x, y, .12, 1.72, .18)
     for y in (.25, 1.75):
         bx(g, 3.1, 6.9, y - .07, y + .07, 1.72, 1.84, IRON)
-    bx(g, 3.0, 7.0, 0.0, 2.0, 1.84, 2.0, CONCRETE)  # flat roof
+    deck_slab(g, 3.0, 0.0, 7.0, 2.0, 2.0, 'forged', base=IRON)  # flat roof: riveted steel plates (roof variety, 2026-10-30)
     # Runner trough from the taphole over the podium edge to the ladle.
     y0, z0, y1, z1 = F[1] - .9, 1.36, 1.45, 1.24
     P.slab_quad(g, [(4.86, y1, z1), (5.14, y1, z1), (5.14, y0, z0), (4.86, y0, z0)], (0, .1, 1), .08, FORGED)
@@ -258,7 +260,8 @@ def blower_house(g, parts):
                     'left': [(.59, 1.15, 'grand', .55), (2.48, 1.15, 'grand', .55)]})
     K.lamp(g, .78, .12, 1.15, face='front')
     K.lamp(g, 2.22, .12, 1.15, face='front')
-    P.flat_roof(g, .05, 2.95, .12, 2.95, 1.84, overhang=.05, parapet=.25)
+    # Painted metal sheet roof deck (roof variety, user 2026-10-30).
+    P.flat_roof(g, .05, 2.95, .12, 2.95, 1.84, overhang=.05, parapet=.25, deck='painted')
     # Blower intake fan on the left wall (the flat roof stays clear and buildable).
     g.ring((-.01, 1.535, 1.15), .34, .06, .1, IRON, 'X', 16)
     parts.append((P.rotor('GableFan', (-.03, 1.535, 1.15), .28, 'X', 6), 'SPIN_X', 4))

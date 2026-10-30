@@ -2346,14 +2346,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5860,30 +5860,6 @@
           },
           {
             "Center": {
-              "X": 6.5,
-              "Y": 3.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 3.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
               "X": 4.5,
               "Y": 3.5,
               "Z": 6.5
@@ -8530,30 +8506,6 @@
               },
               {
                 "Center": {
-                  "X": 6.5,
-                  "Y": 3.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 3.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
                   "X": 4.5,
                   "Y": 3.5,
                   "Z": 6.5
@@ -10576,36 +10528,6 @@
   },
   "WorkplaceSlotManagerSpec": {},
   "WorkshopWorkerHiderSpec": {},
-  "TemplateAttachmentsSpec": {
-    "Attachments": [
-      {
-        "AttachmentId": "Steam1",
-        "Prefab": "Buildings/Power/SteamEngine/SteamEngineSmoke",
-        "Parent": "#Finished",
-        "Position": {
-          "X": 6.97,
-          "Y": 3.38,
-          "Z": 5.35
-        },
-        "Rotation": {
-          "X": 0,
-          "Y": 0,
-          "Z": 0
-        },
-        "Scale": {
-          "X": 1.3333,
-          "Y": 1.3333,
-          "Z": 1.3333
-        },
-        "CreateInstantly": true
-      }
-    ]
-  },
-  "WorkshopParticleControllerSpec": {
-    "AttachmentIds": [
-      "Steam1"
-    ]
-  },
   "NativeBuildingPropsSpec": {
     "Props": [
       {

@@ -647,11 +647,6 @@
   ],
   [
    7,
-   4,
-   4
-  ],
-  [
-   7,
    5,
    0
   ],
@@ -1098,17 +1093,7 @@
    "Right"
   ]
  ],
- "smokeEmitters": [
-  {
-   "kind": "steam",
-   "position": [
-    7.0,
-    4.75,
-    4.4555
-   ],
-   "radius": 0.11
-  }
- ],
+ "smokeEmitters": [],
  "ident": "GroceryStore",
  "study": "GroceryMarket",
  "frameEnd": 121,
@@ -1215,5 +1200,5 @@
    ]
   }
  },
- "artHash": "b7e3f23372ba0c028e20035bed857b3d9b748721215f3544095553ccf4c2834b"
+ "artHash": "853d3d3500d3f92e1cb7cf4386736c330f23d59663e5c8421656180c2e2f2d88"
 }

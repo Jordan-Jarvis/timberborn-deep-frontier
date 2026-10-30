@@ -1,7 +1,7 @@
 {
  "model": "StoneCrusher",
  "source": "StoneCrusher-ReferenceStudy.blend",
- "sourceSha256": "4d36142a56210ceee1e0b61e8bdb8e3ae963d780df0cca41ea57855e59fdf88c",
+ "sourceSha256": "dd86b869106f4035d29e44601805634155d2dfdc8ed27ab4f2242b95894007f5",
  "frame": 1,
  "coordinateSystem": "Native grid XYZ; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)",
  "rule": "outward static surfaces within 0.12 behind the face plane (or up to 0.02 proud) cover >= 60% of 8x8 samples (measure_wall_faces.py)",

@@ -29,14 +29,13 @@ research=json.loads((root/'tools/research_content.json').read_text(encoding='utf
 lab=next(b for b in research['buildings'] if b['id']=='MaterialsLaboratory')
 assert bp['ManufactorySpec']['ProductionRecipeIds']==lab['recipes'], bp['ManufactorySpec']['ProductionRecipeIds']
 assert 'WorkshopRandomNeedApplierSpec' not in bp
-# The donor Smelter's own effects are gone: the only attachments are the two
-# registered flue smokes (register_smoke_emitters.py), run by the workshop.
+# The donor Smelter's own effects are gone, and since the roof flues went (no
+# roof vents, user 2026-10-30) the lab registers no smoke: no attachments, no
+# particle controller and no smog emitter.
 smoke=json.loads((root/'outputs/research-integration/MaterialsLaboratory-smoke-registration.json').read_text())['smokeEmitters']
-attachments=bp['TemplateAttachmentsSpec']['Attachments']
-assert [e['kind'] for e in smoke]==['smoke','smoke']
-assert [(a['Prefab'],a['Parent'],[a['Position'][k] for k in 'XZY']) for a in attachments]==[
-    ('Buildings/Metal/Smelter/SmelterSmoke','#Finished',e['position']) for e in smoke]
-assert bp['WorkshopParticleControllerSpec']['AttachmentIds']==[a['AttachmentId'] for a in attachments]
+assert smoke==[]
+for spec in ('TemplateAttachmentsSpec','WorkshopParticleControllerSpec','SmogEmitterSpec'):
+    assert spec not in bp, spec
 def cell(d):return tuple(d[k] for k in ('X','Y','Z'))
 # 10x8 since the outdoor shelves and planters went (2026-10-22); 5 high
 # since the one-layer storeys (2026-10-30).

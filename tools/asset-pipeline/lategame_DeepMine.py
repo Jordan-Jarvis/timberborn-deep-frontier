@@ -23,8 +23,10 @@ Ore flow: the skips tip into a chute through the headframe's side, into a
 boarded ore bin on the deck.
 
 Parts: low concrete shaft house (one layer) carrying the steel deck; brick
-lamp house with the door (flat roof, parapet); one-layer bath-house annex with
-its chimney. No clutter on buildable space (user, 2026-10-30): the front strip
+lamp house with the door under a front-gabled roof of native barracks roof
+planks; one-layer bath-house annex with a timber plank deck and its chimney
+rising from the ground up its back wall (roof variety, no roof vents: user,
+2026-10-30). No clutter on buildable space (user, 2026-10-30): the front strip
 of the footprint is open ground and the flat roofs stay clear.
 
 Animated (8): two sheave wheels, two skips, their two hoist ropes (stretch),
@@ -216,7 +218,9 @@ def lamp_house(g):
                     'back': [(.8, 1.42, 'grand', .5)]})
     K.lamp(g, .78, .12, 1.15, face='front')
     K.lamp(g, 2.22, .12, 1.15, face='front')
-    P.flat_roof(g, .05, 2.95, .12, 2.95, 1.84, overhang=.05, parapet=.25)
+    # A real front-gabled roof in the native barracks roof planks (roof variety,
+    # user 2026-10-30: "some buildings can have actual roofs").
+    P.plank_gable(g, .05, 2.95, .12, 2.95, 1.84, 2.7, ridge_axis='Y', overhang=.05, seed=21)
 
 
 def bath_house(g):
@@ -225,8 +229,11 @@ def bath_house(g):
     # Core ends at 2.93 so its corner pilasters meet the shaft house's on an edge, not a face.
     P.concrete_house(g, .05, 2.93, 3.05, 5.95, BASE - .16, base=.2, pitch=1.3, record_doors=False,
                      windows={'left': [small(3.8), small(5.2)], 'back': [small(.8), small(2.2)]})
-    bx(g, 0.0, 3.0, 3.0, 6.0, BASE - .16, BASE, CONCRETE)
-    K.stack(g, .55, 5.45, BASE, 3.2, emits='smoke', r=.18, bands=3)
+    # Timber plank deck on the annex roof (roof variety, user 2026-10-30).
+    P.plank_deck(g, 0.0, 3.0, 3.0, 6.0, BASE, seed=23)
+    # The chimney rises from the ground up the back wall, not from the roof
+    # ("no roof vents", user 2026-10-30), in the deck cell's outer band.
+    K.wall_stack(g, .4, 5.84, K.GROUND_SINK, BASE + 3.2 - K.GROUND_SINK, emits='smoke', r=.12, bands=3)
 
 
 def build(g, parts):

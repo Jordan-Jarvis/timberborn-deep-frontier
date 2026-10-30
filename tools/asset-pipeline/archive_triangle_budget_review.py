@@ -78,6 +78,27 @@ REVIEWS = {
                  'flat roofs where the roof is not the defining silhouette, and the Hospital reduced to its '
                  'central pavilion. Blender renders, not game screenshots.',
     },
+    # Roof pass after the compaction (user, 2026-10-30): no roof vents, every
+    # flat roof tile placeable, no concrete on buildings that unlock before
+    # concrete. Sheets: render_budget_views.py with the compaction cameras
+    # (outputs/compaction/<Study>-civic-cameras.json) on the scene before
+    # (HEAD) and after, compose_budget_sheet.py into outputs/roof-variety.
+    '2026-10-30-roofs': {
+        'folder': '2026-10-30-roofs-civic',
+        'sheets': 'outputs/roof-variety',
+        'models': {
+            'Restaurant': ('Restaurant', 'Restaurant-before-after.png'),
+            'Hospital': ('Hospital', 'Hospital-before-after.png'),
+            'GroceryStore': ('GroceryMarket', 'GroceryMarket-before-after.png'),
+            'FishHatchery': ('FishHatchery', 'FishHatchery-before-after.png'),
+            'FisheryWorks': ('FisheryWorks', 'FisheryWorks-before-after.png'),
+            'MaterialsLaboratory': ('MaterialsLaboratory', 'MaterialsLaboratory-before-after.png'),
+        },
+        'extra': (),
+        'scope': 'Before | after | difference sheets (render_budget_views.py with the compaction cameras, '
+                 'compose_budget_sheet.py) of the 2026-10-30 roof pass: roof flues and the kitchen stack removed, '
+                 'the Fish Hatchery without concrete. Blender renders, not game screenshots.',
+    },
 }
 
 

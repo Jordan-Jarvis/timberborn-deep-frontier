@@ -833,6 +833,27 @@ def stack(g, x, y, bottom, height, *, emits, r=.22, taper=.8, mat=IRON, bands=4)
         emitter(g, emits, x, y, bottom + height + .10, rr)   # top of the rim ring
 
 
+def wall_stack(g, x, y, bottom, height, *, emits, r=.12, taper=.85, mat=IRON, bands=3):
+    """Riveted smokestack standing against a wall from the ground or a plinth,
+    without stack()'s base flare, so it can stand within a cell's outer band
+    (0.31 from the edge) and leave the roof deck beside it platformable.
+    User, 2026-10-30: "no roof vents"; a stack that defines the building
+    rises from a wall or the ground, not from a roof."""
+    _check_positive(height, r)
+    if emits is not None and emits not in EMITTER_KINDS:
+        raise ValueError(f'Unknown stack emitter {emits!r}')
+    revolve(g, (x, y, bottom), [(r, 0), (r * taper, height)], mat, segments=12)
+    for k in range(bands):
+        z = bottom + .5 + (height - .9) * k / max(1, bands - 1)
+        rr = r + (r * taper - r) * (z - bottom) / height
+        band(g, (x, y, 0), rr, z, .06, PAINTED, segments=12)
+    rr = r * taper
+    g.ring((x, y, bottom + height + .04), rr + .03, .05, .1, IRON, 'Z', 12)
+    g.cylinder((x, y, bottom + height + .02), rr - .02, .02, DARK, 'Z', 12)
+    if emits is not None:
+        emitter(g, emits, x, y, bottom + height + .09, rr)   # top of the rim ring
+
+
 def pipe_sides(r):
     """Side count for a round pipe of radius r (vanilla pipes use 6-12)."""
     return 8 if r < .3 else 12   # no 6: a flat top face would meet the next run coplanar at elbows

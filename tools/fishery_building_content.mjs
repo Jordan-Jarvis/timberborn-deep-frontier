@@ -55,7 +55,6 @@ export async function applyFishery(value) {
   region([2,0,1],[4,1,1],'All'); // Low entrance roof.
   region([2,1,2],[7,6,2],'All'); // Main roof.
   region([4,1,3],[5,6,3],'All'); // Main roof ridge.
-  region([6,5,3],[7,5,3],'All'); // Chimney.
   region([0,2,0],[2,5,0],'All'); // One-storey warehouse and roof slab.
   region([2,3,1],[3,4,2],'All'); // Terrace door house and its roof.
   region([9,0,0],[10,5,0],'All'); // Low water basins.
@@ -116,8 +115,8 @@ export async function applyFishery(value) {
   value.BuildingPipeTargetPortsSpec=(await read('tools/aquaculture_pipe_ports.json')).FisheryWorks;
   value.TransformSlotInitializerSpec={Slots:[{SlotKeyword:'Entrance',Animation:'ForcedIdle',Inanimate:false,RandomizeYRotation:false,WaterSlot:false}]};
   value.WorkplaceSlotManagerSpec={};value.WorkshopWorkerHiderSpec={};
-  // Fish-oil rendering steam at the chimney while the works runs. Steam does
-  // not pollute.
+  // Vanilla smoke from the scene's registered emitters: none since the roof
+  // chimney went (no roof vents, user 2026-10-30).
   applyVanillaSmoke(value,await sceneSmokeRegistration('civic-integration','FisheryWorks',d),'FisheryWorks');
   await applyNativeBuildingAssembly(value,'FisheryWorks',d.origin,{goodId:'Water',flowNodes:['FisheryCascade'],wheelNodes:['FisheryNativeWheel']});
   const folder='Buildings/Food/FisheryWorks/';

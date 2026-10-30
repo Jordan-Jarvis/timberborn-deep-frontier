@@ -226,11 +226,8 @@ def hospital(g,parts):
     roof_bearing(g,7,6,8,7,8,8.05)
     gabled_roof(g,6.96,6.04,8.04,6.96,8.05,8.45,748)
     CIVIC_TERRACES['Hospital']['accessDoor']=g.doorways[-1]
-    # The ward steriliser flues went with the wings (2026-10-30). One steam
-    # flue keeps the hospital's steam: it rises through the transverse roof's
-    # rear slope near the left gable (roof 6.35..6.70 under it), so no roof
-    # garden cell is given up (no-clutter rule). Steam does not pollute.
-    chimney(g,5.50,5.50,6.25,1.42,emits='steam')
+    # The ward steriliser flues went with the wings and the last steam flue
+    # through the transverse roof went too (2026-10-30, user: "no roof vents").
 
     # 2026-10-22 (user): no forced decoration beyond the walls. The facade
     # planters, the rear supply pile and barrel are gone, and the footprint

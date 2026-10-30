@@ -47,9 +47,10 @@ def nursery_pen(g,x0,y0,x1,y1):
 
 def canopy_flat_roof(g,x0,y0,x1,y1,z):
     """Flat pump-canopy roof (2026-10-30): edge beams on the four posts, a
-    cast slab and timber decking set in from its edges."""
+    timber slab and timber decking set in from its edges (no concrete: the
+    hatchery unlocks before concrete exists, user 2026-10-30)."""
     for y in (y0+.22,y1-.19):beam_joint(g,(x0+.10,y,z+.07),(x1-.10,y,z+.07),.16,.14)
-    g.box(((x0+x1)/2,(y0+y1)/2,z+.20),(x1-x0,y1-y0,.12),CIVIC_CONCRETE)
+    g.box(((x0+x1)/2,(y0+y1)/2,z+.20),(x1-x0,y1-y0,.12),WOOD)
     g.box(((x0+x1)/2,(y0+y1)/2,z+.27),(x1-x0-.30,y1-y0-.30,.02),PLANK)
 
 
@@ -78,9 +79,9 @@ def hatchery(g,parts):
     # on its cast base.
     include(g,'Deck.CanopyFrontApron');include(g,'Deck.CanopyBaseApron')
     for x in (4.55,6.15):
-        for y in (.76,2.62):timber_column(g,x,y,0,.80,.15,collars=False)
+        for y in (.76,2.62):timber_column(g,x,y,0,.80,.15,collars=False,foot=WOOD)
     canopy_flat_roof(g,4.35,.54,6.34,2.81,.80)
-    g.box((5.35,1.50,.13),(1.05,.72,.26),CIVIC_CONCRETE)
+    g.box((5.35,1.50,.13),(1.05,.72,.26),WOOD)   # timber sleeper bed under the pump
     g.box((5.35,1.50,.29),(1.13,.80,.06),IRON)
     g.cylinder((5.35,1.50,.56),.24,.76,CIVIC_FORGED_PANEL,'X',24)
     for x in (4.99,5.71):g.ring((x,1.50,.56),.26,.025,.045,IRON,'X',24)

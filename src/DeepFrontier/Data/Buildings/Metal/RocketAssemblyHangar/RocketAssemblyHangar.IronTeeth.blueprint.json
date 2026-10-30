@@ -717,7 +717,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -5457,6 +5457,15 @@
         "Coordinates": {
           "X": 1,
           "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 5,
           "Z": 1
         },
         "Directions": "Top",

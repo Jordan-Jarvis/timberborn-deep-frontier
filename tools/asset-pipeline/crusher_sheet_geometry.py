@@ -18,7 +18,7 @@ from crusher_workshop_details import workshop_details,worn_surfaces,ROLL_ROOF,RO
 from industrial_door_components import recipe as door_recipe
 from factory_facade_details import crusher_facades
 from opaque_shell_geometry import lean_roof_curb
-from factory_registration import RigidPlacement,machine_slab
+from factory_registration import RigidPlacement,flagstone_slab
 from industrial_levels import (CRUSHER_DECK as DECK_Z,CRUSHER_MACHINE_DATUM,
                                FACTORY_ENTRANCE as ENTRY_Z,FACTORY_PORCH_ROOF as PORCH_Z)
 
@@ -178,11 +178,13 @@ def housing_roof(g):
     stands on (layer 2 top). It is not a walkway: no lanes, rails or posts.
     Outer edges are the room's tile edges (x=1, x=5, y=6); the crusher pit
     stays open around the rolls and the flywheel slot."""
-    machine_slab(g,1,2.86,1.43,6,DECK_Z)
-    machine_slab(g,1.43,5.14,5,6,DECK_Z)
-    machine_slab(g,1.43,2.56,2.62,2.91,DECK_Z)
-    machine_slab(g,2.62,2.65,5,3.20,DECK_Z)
-    machine_slab(g,4.57,3.20,5,5.14,DECK_Z)
+    # Stone masonry, not concrete: the crusher unlocks before concrete exists
+    # (user 2026-10-30).
+    flagstone_slab(g,1,2.86,1.43,6,DECK_Z)
+    flagstone_slab(g,1.43,5.14,5,6,DECK_Z)
+    flagstone_slab(g,1.43,2.56,2.62,2.91,DECK_Z)
+    flagstone_slab(g,2.62,2.65,5,3.20,DECK_Z)
+    flagstone_slab(g,4.57,3.20,5,5.14,DECK_Z)
 
 
 def discharge(g):

@@ -8,19 +8,21 @@ from hatchery_structure import SOURCE_ORIGIN,ROOMS,PLATFORMS,SUPPORTS,DOORS,RAIL
 # with a flat cast roof; the roof bearing, gabled roof and roof vent are gone.
 def shell(g):
     room(g,'Headhouse',ROOMS['Headhouse'],SOURCE_ORIGIN,(1.5,1.,1.),
-         exterior={'front':[(0,4)],'back':[(0,4)],'left':[(1,3)],'right':[(1,3)]},wall_style='storey')
+         exterior={'front':[(0,4)],'back':[(0,4)],'left':[(1,3)],'right':[(1,3)]},wall_style='storey',
+         plinth=WOOD)   # timber sill band: no concrete before concrete exists (user 2026-10-30)
 
 def lamps(g):
     from civic_isometric_geometry import wall_lamp
     for x in (.88,2.12):wall_lamp(g,*source((x,1.04,1.50)))
 
 def roof(g):
-    """Flat roof on the tile lines: a cast slab over the one-layer walls,
-    timber decking set in from its edges and a forged drip strip."""
+    """Flat roof on the tile lines: a timber slab over the one-layer walls,
+    timber decking set in from its edges and a forged drip strip. Timber, not
+    concrete: the hatchery unlocks before concrete exists (user 2026-10-30)."""
     x0,y0,_,x1,y1,z1=ROOMS['Headhouse']
     cx,cy,_=source(((x0+x1)/2,(y0+y1)/2,0))
     top=source((0,0,z1))[2]
-    g.box((cx,cy,top-.07),(x1-x0,y1-y0,.14),CIVIC_CONCRETE)
+    g.box((cx,cy,top-.07),(x1-x0,y1-y0,.14),WOOD)
     g.box((cx,cy,top+.01),(x1-x0-.30,y1-y0-.30,.02),PLANK)
     for dy in (-(y1-y0)/2+.06,(y1-y0)/2-.06):g.box((cx,cy+dy,top+.015),(x1-x0-.02,.08,.03),IRON)
     for dx in (-(x1-x0)/2+.06,(x1-x0)/2-.06):g.box((cx+dx,cy,top+.015),(.08,y1-y0-.20,.03),IRON)

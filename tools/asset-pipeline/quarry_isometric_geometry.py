@@ -24,6 +24,7 @@ import random
 from mathutils import Vector
 from frontier_architecture import *
 from industrial_kit import (open_beam,lean_gauge as gauge)
+from industrial_kit import lean_plate_roof
 from industrial_kit import (lean_timber_column as timber_column,lean_sheet_roof as sheet_roof,lean_cage_lamp as cage_lamp,round_pipe,lean_bin as bin,band,prism,square_nut,open_box,lean_rock as rock,lean_rock_heap as rock_heap,lean_wall as wall,skin_board)
 from reference_materials import (CRUSHER_STEEL,KILN_STONE,KILN_STONE_LIGHT,KILN_SOOT,CIVIC_FORGED_PANEL)
 from walkway_geometry import RailAssembly
@@ -195,7 +196,9 @@ def winding_house(g):
     window_y(g,5.80,y1-.10,1.95,.8,'back')
     side_window(g,x1-.04,6.30,1.95,.8,'right')
     g.box(((x0+x1)/2,y0+.08,top-.20),(x1-x0-.32,.16,.16),WOOD)
-    flat_roof(g,x0,y0,x1,y1,top,731)
+    # Riveted steel plate roof (roof variety, user 2026-10-30); the tool room
+    # keeps the native roof sheets.
+    lean_plate_roof(g,x0+.11,y0+.11,x1-.11,y1-.11,top,CIVIC_FORGED_PANEL)
     cage_lamp(g,3.60,y0+.0,2.45)
     # The engine: housing and flywheel on the east side of the drum.
     g.box((6.20,6.62,1.35),(.44,.44,.70),CIVIC_FORGED_PANEL)

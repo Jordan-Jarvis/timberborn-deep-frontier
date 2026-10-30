@@ -505,9 +505,8 @@ def laboratory(g,parts):
     # Sheet joints keep clear of the step facade planes and fasteners.
     shed_roof(g,ROOF_X0,ROOF_X1,HALL_FRONT-.27,HALL_STEP+.266,front_roof_z(ROOF_X0),front_roof_z(ROOF_X1),351)
     shed_roof(g,ROOF_X0,ROOF_X1,HALL_STEP-.22,HALL_REAR+.25,rear_roof_z(ROOF_X0),rear_roof_z(ROOF_X1),352)
-    # Furnace and kiln-test flues: combustion smoke while the lab works.
-    stack(g,4.15,6.8,rear_roof_z(4.15)-.01,.78,emits='smoke')
-    stack(g,7.30,2.80,front_roof_z(7.30)-.01,.78,emits='smoke')
+    # (The cowled furnace and kiln-test flues on the sawtooth roofs went, with
+    # their smoke: no roof vents, user 2026-10-30.)
     # Timber and metal joints remain deliberately legible at normal game zoom.
     # Interior joints only; the corners carry the cast shell's own straps.
     for i in range(1,4):

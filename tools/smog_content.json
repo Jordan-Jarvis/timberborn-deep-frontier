@@ -1,5 +1,5 @@
 {
-  "comment": "Deep Frontier smog. Read by tools/smog_building_content.mjs (generation, after vanilla smoke) and tools/validate_smog_content.mjs. Intensity is 0..1 per map column. Each smoke flue of a listed template pollutes a disc of `radius` cells around its mouth (drifting downwind by up to settings.WindDriftCells): full `strength` out to CoreFraction*radius, falling linearly to EdgeFactor*strength at radius, then nothing. Flues combine as 1-prod(1-c). Only 'smoke' emitters pollute; 'steam'/'towerSteam' never do. Every template whose registration or blueprint carries a smoke emitter must be listed in templates or exempt. Decision 2026-10-21: the GroceryStore and TechnicalSchool chimneys emit steam, so they are non-polluters rather than exemptions; exempt stays available for any future smoke flue that must not pollute. `registration` names <registration>-registration.json relative to outputs/lategame-studies/: a late-game study id, or for the civic, industrial and research buildings their smoke registration from tools/asset-pipeline/register_smoke_emitters.py (../<pipeline>-integration/<Model>-smoke). The Hospital and FisheryWorks flues emit steam.",
+  "comment": "Deep Frontier smog. Read by tools/smog_building_content.mjs (generation, after vanilla smoke) and tools/validate_smog_content.mjs. Intensity is 0..1 per map column. Each smoke flue of a listed template pollutes a disc of `radius` cells around its mouth (drifting downwind by up to settings.WindDriftCells): full `strength` out to CoreFraction*radius, falling linearly to EdgeFactor*strength at radius, then nothing. Flues combine as 1-prod(1-c). Only 'smoke' emitters pollute; 'steam'/'towerSteam' never do. Every template whose registration or blueprint carries a smoke emitter must be listed in templates or exempt. Decision 2026-10-21: the GroceryStore and TechnicalSchool chimneys emit steam, so they are non-polluters rather than exemptions; exempt stays available for any future smoke flue that must not pollute. `registration` names <registration>-registration.json relative to outputs/lategame-studies/: a late-game study id, or for the civic, industrial and research buildings their smoke registration from tools/asset-pipeline/register_smoke_emitters.py (../<pipeline>-integration/<Model>-smoke). Decision 2026-10-30 (user: no roof vents): the Restaurant, Materials Laboratory, Hospital, FisheryWorks and GroceryStore roof flues went, so they emit nothing.",
   "settings": {
     "LightThreshold": 0.15,
     "HeavyThreshold": 0.5,
@@ -123,20 +123,6 @@
       "smoke": {
         "radius": 6,
         "strength": 0.35
-      }
-    },
-    "MaterialsLaboratory": {
-      "registration": "../research-integration/MaterialsLaboratory-smoke",
-      "smoke": {
-        "radius": 5,
-        "strength": 0.3
-      }
-    },
-    "Restaurant": {
-      "registration": "../civic-integration/Restaurant-smoke",
-      "smoke": {
-        "radius": 4,
-        "strength": 0.3
       }
     },
     "CoalPowerPlant": {

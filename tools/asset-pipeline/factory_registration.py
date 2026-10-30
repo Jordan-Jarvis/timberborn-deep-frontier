@@ -86,11 +86,53 @@ def cell_rails(rails, prefix, axis, line, start, end, z, *, per_cell=2, cell_off
     return runs
 
 
-def machine_slab(g, x0, y0, x1, y1, top, thickness=.20):
-    """Solid concrete cap or plinth (not a walking deck): machinery housings
-    and process floors stand on it. Edges are authored on tile lines where
-    they are outer faces; top is a whole layer."""
+def machine_slab(g, x0, y0, x1, y1, top, thickness=.20, mat=None):
+    """Solid cap or plinth (not a walking deck): machinery housings and
+    process floors stand on it. Edges are authored on tile lines where they
+    are outer faces; top is a whole layer. `mat` defaults to concrete; the
+    pre-concrete buildings pass stone masonry or metal (user 2026-10-30: a
+    building that unlocks before concrete must not show concrete)."""
     from reference_materials import CIVIC_CONCRETE
     if x1 <= x0 or y1 <= y0 or thickness <= 0:
         raise ValueError('Machine slab needs a positive extent')
-    g.box(((x0 + x1) / 2, (y0 + y1) / 2, top - thickness / 2), (x1 - x0, y1 - y0, thickness), CIVIC_CONCRETE)
+    g.box(((x0 + x1) / 2, (y0 + y1) / 2, top - thickness / 2), (x1 - x0, y1 - y0, thickness),
+          CIVIC_CONCRETE if mat is None else mat)
+
+
+def masonry_box(g, center, size, *, course=.25, seed=0):
+    """Solid block of coursed stone masonry: courses of grey and pale kiln
+    masonry (KILN_STONE / KILN_STONE_LIGHT), every other course 6 mm proud,
+    so the joints read at game zoom. For footings, piers and pedestals of the
+    buildings that unlock before concrete exists (user 2026-10-30)."""
+    from reference_materials import KILN_STONE, KILN_STONE_LIGHT
+    (cx, cy, cz), (sx, sy, sz) = center, size
+    if min(sx, sy, sz) <= 0:
+        raise ValueError('Masonry block needs a positive size')
+    n = max(1, round(sz / course))
+    z0 = cz - sz / 2
+    for i in range(n):
+        a, b = z0 + sz * i / n, z0 + sz * (i + 1) / n
+        proud = .006 if (i + seed) % 2 else 0
+        g.box((cx, cy, (a + b) / 2), (sx + 2 * proud, sy + 2 * proud, b - a),
+              KILN_STONE_LIGHT if (i + seed) % 2 else KILN_STONE)
+
+
+def flagstone_slab(g, x0, y0, x1, y1, top, thickness=.20, *, stone=.5, seed=0):
+    """machine_slab in stone: a grey masonry body under a top course of
+    flagstones about `stone` across, alternating grey and pale, their tops at
+    most 6 mm below `top` (one flat plane)."""
+    import random
+    from reference_materials import KILN_STONE, KILN_STONE_LIGHT
+    if x1 <= x0 or y1 <= y0 or thickness <= .07:
+        raise ValueError('Flagstone slab needs a positive extent')
+    g.box(((x0 + x1) / 2, (y0 + y1) / 2, top - .06 - (thickness - .06) / 2), (x1 - x0, y1 - y0, thickness - .06), KILN_STONE)
+    rng = random.Random(seed)
+    nx, ny = max(1, round((x1 - x0) / stone)), max(1, round((y1 - y0) / stone))
+    for i in range(nx):
+        for j in range(ny):
+            a, b = x0 + (x1 - x0) * i / nx, x0 + (x1 - x0) * (i + 1) / nx
+            c, d = y0 + (y1 - y0) * j / ny, y0 + (y1 - y0) * (j + 1) / ny
+            h = .06 - rng.choice((0, .003, .006))
+            g.box(((a + b) / 2, (c + d) / 2, top - .06 + h / 2), (b - a, d - c, h),
+                  KILN_STONE_LIGHT if (i + j) % 2 else KILN_STONE)
+

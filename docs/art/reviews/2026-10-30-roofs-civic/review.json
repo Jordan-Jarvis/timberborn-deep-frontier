@@ -1,0 +1,72 @@
+{
+  "scope": "Before | after | difference sheets (render_budget_views.py with the compaction cameras, compose_budget_sheet.py) of the 2026-10-30 roof pass: roof flues and the kitchen stack removed, the Fish Hatchery without concrete. Blender renders, not game screenshots.",
+  "renders": [
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "4feb7271080beecc45de0ded880d4120158e5949a908bce25e90bd089226065c",
+      "images": [
+        "Restaurant-before-after.png"
+      ],
+      "imageSha256": {
+        "Restaurant-before-after.png": "08e4d91769fecce7acf24177bc757eb052f650472fded85949da8a02a582218e"
+      }
+    },
+    {
+      "model": "Hospital",
+      "source": "src\\DeepFrontier\\Art\\Source\\Hospital-ReferenceStudy.blend",
+      "sourceSha256": "ae7b3d515cb3afb8b96f1e56d646c7fad0b42f389c17a058737c65b5e2a20694",
+      "images": [
+        "Hospital-before-after.png"
+      ],
+      "imageSha256": {
+        "Hospital-before-after.png": "acc3c67a73f1bd9b2fd093007d521d6fe9a37fc56b099e66b7e91d6d2572ffef"
+      }
+    },
+    {
+      "model": "GroceryStore",
+      "source": "src\\DeepFrontier\\Art\\Source\\GroceryMarket-ReferenceStudy.blend",
+      "sourceSha256": "61d785c671a6310f49506a414849f96680a5a7e5f636c7da82d8341f4d6db356",
+      "images": [
+        "GroceryMarket-before-after.png"
+      ],
+      "imageSha256": {
+        "GroceryMarket-before-after.png": "bf3697e5721eabec727e323ad5406279c5ad919e9f6b2a7a32e3c96dcc816518"
+      }
+    },
+    {
+      "model": "FishHatchery",
+      "source": "src\\DeepFrontier\\Art\\Source\\FishHatchery-ReferenceStudy.blend",
+      "sourceSha256": "3f2ccd6630ee3dbb450662f03a2fd1029a904eacd5a5df30cde882e19b1ceee6",
+      "images": [
+        "FishHatchery-before-after.png"
+      ],
+      "imageSha256": {
+        "FishHatchery-before-after.png": "1f55d62fce2a4a0363c374406cc3a531e1af8a114054d28ab583237c619602a4"
+      }
+    },
+    {
+      "model": "FisheryWorks",
+      "source": "src\\DeepFrontier\\Art\\Source\\FisheryWorks-ReferenceStudy.blend",
+      "sourceSha256": "895098f458cbbd32bc729704924282d3bfaa68fd189f698a3ea9e35482f0d70e",
+      "images": [
+        "FisheryWorks-before-after.png"
+      ],
+      "imageSha256": {
+        "FisheryWorks-before-after.png": "91dae4b0a3d09f3b0db0b5c595c683fb549ecdd9bf42cdf0ab0e084522dc69e4"
+      }
+    },
+    {
+      "model": "MaterialsLaboratory",
+      "source": "src\\DeepFrontier\\Art\\Source\\MaterialsLaboratory-ReferenceStudy.blend",
+      "sourceSha256": "4c02da6704e2d80aeecb85fb5e90e642baf26877fbdeb4d157faac23748adfdd",
+      "images": [
+        "MaterialsLaboratory-before-after.png"
+      ],
+      "imageSha256": {
+        "MaterialsLaboratory-before-after.png": "2955a76f29e39117e75e15e38fb5869e82899926e9a63564e0f99f2f2b6d695e"
+      }
+    }
+  ],
+  "extraImages": []
+}

@@ -306,15 +306,17 @@ def civic_service_details(g,x0,y0,x1,y1):
         for z in (2.43,2.50,2.57):g.box((x,y0-.175,z),(.29,.025,.02),IRON)
 
 
-def timber_column(g,x,y,bottom,top,w=.19,*,steel_channels=True,collars=True):
-    """Timber core with visible steel channels, concrete feet and anchor bolts."""
+def timber_column(g,x,y,bottom,top,w=.19,*,steel_channels=True,collars=True,foot=CIVIC_CONCRETE):
+    """Timber core with visible steel channels, concrete feet and anchor bolts.
+    `foot`: the ground foot's material (timber for buildings that unlock before
+    concrete exists, user 2026-10-30)."""
     core_bottom=.53 if bottom==0 else bottom
     g.box((x,y,(core_bottom+top)/2),(w,w,top-core_bottom),WOOD)
     if steel_channels:
         for side in (-1,1):
             g.box((x+side*w*.44,y,(core_bottom+top)/2),(.035,w+.05,top-core_bottom-.04),IRON)
     if bottom==0:
-        g.box((x,y,.24),(w+.11,w+.11,.48),CIVIC_CONCRETE)
+        g.box((x,y,.24),(w+.11,w+.11,.48),foot)
         g.box((x,y,.50),(w+.13,w+.13,.06),IRON)
     if not collars:return
     # The collars stay 5 mm inside the column ends: a collar box face flush
@@ -1001,11 +1003,8 @@ def restaurant(g,parts):
     # Enclosed kitchen annex with a stone bake oven in its rear wall.
     grid_room(g,'Kitchen',RESTAURANT_ROOMS['Kitchen'],RESTAURANT_ORIGIN,exterior=RESTAURANT_WALLS['Kitchen'],wall_style='storey')
     kitchen_hearth(g)
-    # The kitchen stack rises from the roof stairhead's cap (one solid core,
-    # no-clutter rule): the main roof's cells stay buildable. It carries the
-    # kitchen and hearth smoke while the kitchen works.
-    x,y,_=restaurant_source((4.5,3.5,0))
-    chimney(g,x,y,3.95,.90,emits='smoke')
+    # (The kitchen stack on the roof stairhead's cap went, with its smoke:
+    # no roof vents, user 2026-10-30.)
     # Forged steel plates on two exposed kitchen infill panels. The rear
     # wall's orange face is recessed, so these real projecting plates have
     # thickness and do not share its depth plane.
@@ -1217,9 +1216,8 @@ def fishery(g,parts):
     for z,rr in ((1.00,.16),(1.10,.26),(1.21,.20)):load.ring((9.10,8.15,z),rr,.010,.015,CLOTH,'Z',16)
     for i in range(6):load.rock((8.96+(i%3)*.13,8.09+(i//3)*.13,1.12),(.16,.16,.13),SAND,500+i)
     parts.append((load,'SWAY',.025))
-    # Fish-oil rendering vents steam, not combustion smoke (no smog). The
-    # stack's foot sinks into the main roof (2.38 at x 5.72).
-    chimney(g,5.72,6.65,2.25,1.05,emits='steam')
+    # (The rendering-steam chimney on the main roof went: no roof vents,
+    # user 2026-10-30.)
     # The two rear water tanks are the Timber Pipes inlet (aquaculture pipe
     # port), so they stay; the loose barrels and the supply pile are gone.
     # 2026-10-30 (no-clutter rule): they stand under the rear gallery now,
