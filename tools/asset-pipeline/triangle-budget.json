@@ -283,9 +283,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 6826,
-   "vertices": 12534,
-   "construction": 6826,
+   "finished": 15098,
+   "vertices": 28364,
+   "construction": 15098,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model.timbermesh"
   },
   "DeepWell": {
@@ -823,9 +823,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 19684,
-   "vertices": 37550,
-   "construction": 19684,
+   "finished": 8874,
+   "vertices": 16674,
+   "construction": 8874,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.Model.timbermesh"
   },
   "WaterTreatmentPlant": {

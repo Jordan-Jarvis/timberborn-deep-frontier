@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Centrifuge cascade hall: an open-fronted steel gallery on a two-storey concrete podium with two rows of tall spinning centrifuges under a long monitor roof.",
+  "hero": "Centrifuge cascade: an open-fronted gallery on a concrete podium with a row of spinning centrifuges under a flat canopy, lit by a glazed clerestory monitor.",
   "footprint": [
-    12,
-    11
+    8,
+    7
   ],
-  "heightLayers": 14,
+  "heightLayers": 8,
   "boundsMin": [
-    -0.0885,
-    -0.105,
+    -0.0771,
+    -0.035,
     0.0
   ],
   "boundsMax": [
-    12.04,
-    11.22,
-    13.34
+    8.0439,
+    7.18,
+    7.8
   ],
   "doors": [
     {
@@ -37,22 +37,7 @@
     "Centrifuge02",
     "Centrifuge03",
     "Centrifuge04",
-    "Centrifuge05",
-    "Centrifuge10",
-    "Centrifuge11",
-    "Centrifuge12",
-    "Centrifuge13",
-    "Centrifuge14",
-    "Centrifuge15",
-    "Centrifuge20",
-    "Centrifuge21",
-    "Centrifuge22",
-    "Centrifuge23",
-    "Centrifuge24",
-    "Centrifuge25",
     "ThickenerRake",
-    "HoistCable",
-    "HoistHook",
     "ColumnBeacon",
     "StackBeacon",
     "ScrubberFan"
@@ -61,21 +46,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 8836,
+  "faces": 3912,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1568,
-    "IrregularPlanks_DarkBrown.IronTeeth": 180,
-    "BaseMetal.IronTeeth": 4616,
-    "RoofPlanks.IronTeeth": 494,
-    "Details.IronTeeth": 798,
-    "accent8": 100,
-    "accent25": 114,
-    "Plaster_White.IronTeeth": 953,
-    "Plaster_Orange.IronTeeth": 218,
-    "IrregularPlanks_MetalForged.IronTeeth": 162,
-    "WindowsAtlas.IronTeeth": 706,
-    "PaintedMetal.IronTeeth": 357
+    "BaseWood_DarkBrown.IronTeeth": 488,
+    "BaseMetal.IronTeeth": 1971,
+    "RoofPlanks.IronTeeth": 74,
+    "Details.IronTeeth": 406,
+    "accent8": 20,
+    "accent25": 96,
+    "Plaster_White.IronTeeth": 558,
+    "Plaster_Orange.IronTeeth": 100,
+    "IrregularPlanks_MetalForged.IronTeeth": 132,
+    "WindowsAtlas.IronTeeth": 370,
+    "PaintedMetal.IronTeeth": 197
   },
-  "sourceHash": "b346d68afc11c828e3219e33ba25547bb3908911d02bcc042b9c180753b8935e",
-  "artHash": "241f295e6cc224bd6bba1b1165de7f2ae08b9940eae9e6cbf6c11eb11bb58dc4"
+  "sourceHash": "5fa559f48b6f0a2abb964919db7f392e739eb37c92ee65bdea4cec31d3243ada",
+  "artHash": "83a9629375ac317228666dea66e34e800f03823929a765e5950375b5f94845c5"
 }

@@ -7,7 +7,6 @@
 - **Concrete Mixer** is 4x3, 3 high (was 7x5, 7 high): the hoppers sit on the operator room's roof, the drum stands on low concrete piers, the water tank on a concrete pedestal. The tall timber feed tower and tank tower are gone.
 - **Deep Drill** is 7x6, 8 high (was 11x9, 16 high): a boarded drilling tower on a solid concrete engine room, open at the front so the hoist shows. The open lattice derrick, the pier substructure, the pipe ramp, the pipe rack and the separate power house are gone. Same cost, power, crew and drill-bit upkeep.
 - **Deep Mine** is 7x6, 7 high (was 10x11, 16 high): a compact plated headframe on a low concrete shaft house, both skips riding in its open front under twin sheaves; the winding drum and flywheel turn on the deck, the skips tip into an ore bin and an ore tub runs out along a short track. The open lattice headframe, drum shed, engine house, stilted ore bin with its tipple and the bath house are gone. Same cost, power, crew and upkeep; it still stands over its Deep Ore Vein; a mine that was placed flipped needs re-placing over its vein.
-- **Deep Ore Processor** is 7x6, 8 high (was 11x10, 14 high): the blast furnace stands on a low hearth podium and is charged by a compact skip hoist instead of the long lattice skip bridge; a flat-roofed casting bay and blower house. Same cost, power, crew and recipes.
 - **Limestone and Sandstone Quarry** are 8x6, 5 high (was 11x7, 9 high): a boarded headframe over the shaft with its sheave, a flat-roofed winding house with the drum, and the sorting line on a stone plinth. The ladder mast and lattice tower are gone. Old quarries keep their place over the seam.
 - **Sandstone and Limestone Pit** have one storey under a flat roof (3 high, was 4); the hoist jib is lower. The flat roof can carry platforms.
 - **Stone Crusher** stays 4x4 but is 3 high (was 5): its workshop is one layer under the machine floor, and the roll and hopper roofs are flat.
@@ -25,6 +24,10 @@
 - **Hospital** is just its central pavilion: 4x9, 9 high (was 12x9). The two ward wings are gone; the pavilion, its doors, rear decks and roof garden are unchanged. Same cost, power, crew and 30 beds.
 - **Grocery Store** is 5 high (was 8) on the same 9x6 footprint: one layer per storey, the balcony one layer up (one stair reaches it), the gable roof and lit monitor kept.
 - **Old saves:** the Restaurant and Grocery keep their place and entrance, but paths, stairs and platforms on their old balconies need re-placing. Re-place an old Hospital: its remaining pavilion now sits on the old west wing's tiles.
+
+### Smaller late-game buildings (compaction pass: power, nuclear, rocketry)
+
+- **Uranium Processing Plant** is 8x7, 8 high (was 12x11, 14 high). The centrifuge row stands under a flat canopy, the steel gantry and catwalks are gone, the drum dock and its hoist are gone, and the acid tanks stand on a concrete bund. Same cost, power and crew; a flipped plant's entrance moves.
 
 ## 0.6.0 (2026-10-29)
 
