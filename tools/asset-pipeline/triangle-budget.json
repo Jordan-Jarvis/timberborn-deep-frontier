@@ -463,9 +463,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 9410,
-   "vertices": 18226,
-   "construction": 9410,
+   "finished": 6658,
+   "vertices": 12826,
+   "construction": 6658,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.Model.timbermesh"
   },
   "OilPowerPlant": {
