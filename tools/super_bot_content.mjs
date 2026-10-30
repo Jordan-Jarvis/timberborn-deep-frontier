@@ -2,7 +2,7 @@
 // (tools/super_bots.json; user direction 2026-10-29: same bot, same template,
 // a saved per-bot flag). Runtime: src/DeepFrontier/Scripts/SuperBots.
 //
-// Run once in canonical generation after the expansion generator (it extends
+// Runs in canonical generation after the expansion generator (it extends
 // the generated goods, the Precision Machine Works and Uranium Processing
 // Plant recipe lists, and the Iron Teeth good, need and template collections)
 // and after bot upkeep, before the automation audit:
@@ -24,7 +24,13 @@
 //   powered goods-consuming attraction serving only ReactorCharge, with the
 //   geometry, model and visitor slots of its late-game study.
 // - Icons and DeepFrontier.ReactorBot.* / goods / needs / building rows.
-// It fails, without writing anything, on any missing input or existing id.
+// Reruns: its own files (settings, needs, part goods and recipes, light
+// colour, charging bay, icons) are rewritten each run, byte-identical when
+// the inputs are unchanged. The files it extends (collections, manufactories,
+// upkeep goods, enUS.csv) are rewritten fresh by their producers each
+// canonical run, so none of its ids may already be in them, and no vanilla
+// good, recipe, need or colour may carry one of its ids. It fails, without
+// writing anything, on any missing input or such collision.
 import {readFile, writeFile, access, mkdir} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -249,9 +255,8 @@ export async function planSuperBots({root = defaultRoot, dataRoot = resolve(root
   if (grease.NeedSpec.CharacterType !== 'Bot' || grease.CriticalNeedSpec) errors.push('vanilla Need.Bot.Grease is no longer a plain Bot need');
   for (const id of config.upgrade.replacedNeeds) if (!await exists(resolve(vanilla, 'Needs', `Need.Bot.${id}.blueprint.json`))) errors.push(`replaced need ${id} is not a vanilla Bot need`);
   for (const [id, value] of Object.entries(needBlueprints(config, energy, grease))) {
-    const path = resolve(dataRoot, 'Needs', `Need.Bot.${id}.blueprint.json`);
-    if (await exists(path)) errors.push(`need ${id} already exists; regenerate from a fresh canonical run`);
-    writes.push({path, value});
+    if (await exists(resolve(vanilla, 'Needs', `Need.Bot.${id}.blueprint.json`))) errors.push(`need ${id} is a vanilla need`);
+    writes.push({path: resolve(dataRoot, 'Needs', `Need.Bot.${id}.blueprint.json`), value});
   }
 
   // Parts: goods, recipes and their manufactories.
@@ -259,9 +264,8 @@ export async function planSuperBots({root = defaultRoot, dataRoot = resolve(root
   const recipeTemplate = await readJson(resolve(vanilla, 'Recipes', 'Recipe.MetalBlock.blueprint.json'));
   const buildings = new Map();
   for (const part of config.parts) {
-    if (await goodPath(part.id)) errors.push(`good ${part.id} already exists`);
-    if (await exists(resolve(dataRoot, 'Recipes', `Recipe.${part.id}.blueprint.json`)) || await exists(resolve(vanilla, 'Recipes', `Recipe.${part.id}.blueprint.json`)))
-      errors.push(`recipe ${part.id} already exists`);
+    if (await exists(resolve(vanilla, 'Goods', `Good.${part.id}.blueprint.json`))) errors.push(`good ${part.id} is a vanilla good`);
+    if (await exists(resolve(vanilla, 'Recipes', `Recipe.${part.id}.blueprint.json`))) errors.push(`recipe ${part.id} is a vanilla recipe`);
     for (const [good] of part.ingredients) if (!partIds.has(good) && !await goodPath(good)) errors.push(`part ${part.id}: ingredient ${good} is not a vanilla or generated good`);
     writes.push({path: resolve(dataRoot, 'Goods', `Good.${part.id}.blueprint.json`), value: partGood(config, part, goodTemplate)});
     writes.push({path: resolve(dataRoot, 'Recipes', `Recipe.${part.id}.blueprint.json`), value: partRecipe(part, recipeTemplate)});
@@ -289,9 +293,7 @@ export async function planSuperBots({root = defaultRoot, dataRoot = resolve(root
   }
 
   // Settings, light colour.
-  const settingsPath = resolve(dataRoot, SETTINGS_PATH);
-  if (await exists(settingsPath)) errors.push(`${SETTINGS_PATH} already exists`);
-  writes.push({path: settingsPath, value: settingsBlueprint(config)});
+  writes.push({path: resolve(dataRoot, SETTINGS_PATH), value: settingsBlueprint(config)});
   const lightPath = resolve(dataRoot, 'IlluminationColors', `IlluminationColor.${config.upgrade.illumination.id}.blueprint.json`);
   if (await exists(resolve(vanilla, 'IlluminationColors', `IlluminationColor.${config.upgrade.illumination.id}.blueprint.json`))) errors.push('illumination id collides with a vanilla colour');
   writes.push({path: lightPath, value: illuminationBlueprint(config)});

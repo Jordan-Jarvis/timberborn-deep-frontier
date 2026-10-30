@@ -56,11 +56,11 @@
     "serviceHours": 24
   },
   "workplaceUpkeep": {
-    "$comment": "Written by tools/bot_upkeep_content.mjs as FrontierWorkplaceUpkeepSpec on each listed template (runtime: Scripts/Workforce/WorkplaceUpkeep.cs). Goods the building wears out while it produces, kept as extra goods of its own Manufactory inventory (capacityPerGood each, stocked by haulers whether or not bots work there). goods: [good, perHour, role]; perHour is the use per hour of full-crew production (all MaxWorkers at full power), following native recipe progress, so a partial crew uses proportionally less. Production stops while any good has no unit in use and none in stock; the building then shows the role's status. roles: the texts for each role.",
+    "$comment": "Written by tools/bot_upkeep_content.mjs as FrontierWorkplaceUpkeepSpec on each listed template (runtime: Scripts/Workforce/WorkplaceUpkeep.cs). Goods the building wears out while it produces, kept as extra goods of its own Manufactory inventory (capacityPerGood each, stocked by haulers whether or not bots work there). goods: [good, perHour, role]; perHour is the use per hour of full-crew production (all MaxWorkers at full power), following native recipe progress, so a partial crew uses proportionally less. Production stops while any good has no unit in use and none in stock; the building then shows the role's status. roles: the texts for each role; description names what wears out in the building description sentence (\"Wears out 0.1 high-grade steel drill bits per hour at full crew and stops without them.\").",
     "capacityPerGood": 15,
     "roles": {
-      "DrillBits": { "name": "Drill bits", "status": "Waiting for drill bits: production has stopped until haulers bring high-grade steel.", "short": "No drill bits" },
-      "ShaftLining": { "name": "Shaft lining", "status": "Waiting for shaft lining: production has stopped until haulers bring concrete.", "short": "No shaft lining" }
+      "DrillBits": { "name": "Drill bits", "status": "Waiting for drill bits: production has stopped until haulers bring high-grade steel.", "short": "No drill bits", "description": "high-grade steel drill bits" },
+      "ShaftLining": { "name": "Shaft lining", "status": "Waiting for shaft lining: production has stopped until haulers bring concrete.", "short": "No shaft lining", "description": "concrete shaft lining" }
     },
     "templates": {
       "Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.blueprint": [["HighGradeSteel", 0.1, "DrillBits"]],

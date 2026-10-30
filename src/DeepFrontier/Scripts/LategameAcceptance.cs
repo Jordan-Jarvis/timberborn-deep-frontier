@@ -680,6 +680,7 @@ namespace DeepFrontier.Scripts {
         } else {
           if(!CanSupport(_generator,beyond))continue;
           s.Shaft=CreateSupported(_shaft,n);s.Source=CreateSupported(_generator,beyond);
+          AcceptancePower.Cover(s.Source,s.NodeSpec);
         }
         used.Add(n);used.Add(beyond);break;
       }
@@ -1225,7 +1226,7 @@ namespace DeepFrontier.Scripts {
             case "entrance": s.EntrancePath=b;break;
             case "shaft": s.Shaft=b;break;
             case "roofShaft": s.RoofShaft=b;break;
-            case "source": s.Source=b;break;
+            case "source": s.Source=b;if(s.IsConsumer&&!s.IsGenerator)AcceptancePower.Cover(b,s.NodeSpec);break;
             case "tubeway": s.Tubeway=b;break;
             case "cable": s.CableGen=b;break;
             case "beltIn": s.BeltIn=b;break;
@@ -1331,9 +1332,6 @@ namespace DeepFrontier.Scripts {
 
     private readonly EntityRegistry _entities;
     private readonly TemplateService _templates;
-    private readonly BlockObjectFactory _factory;
-    private readonly BlockValidator _validator;
-    private readonly BlockObjectValidationService _validation;
     private readonly SpeedManager _speed;
     private readonly IDayNightCycle _clock;
     private readonly WorkingHoursManager _hours;
@@ -1368,11 +1366,10 @@ namespace DeepFrontier.Scripts {
     private Worker _legacyBeaver;
     private RocketCheckpointRecord _checkpoint;
 
-    public LategameRocketAcceptance(EntityRegistry entities,TemplateService templates,BlockObjectFactory factory,
-      BlockValidator validator,BlockObjectValidationService validation,SpeedManager speed,IDayNightCycle clock,
+    public LategameRocketAcceptance(EntityRegistry entities,TemplateService templates,SpeedManager speed,IDayNightCycle clock,
       WorkingHoursManager hours,GameSaver saver,GameLoader loader,RocketProgramService program,ScienceService science,
       NotificationBus notifications,WonderCompletionCountdownStarter wonder,PanelStack panels,CameraService camera) {
-      _entities=entities;_templates=templates;_factory=factory;_validator=validator;_validation=validation;_speed=speed;
+      _entities=entities;_templates=templates;_speed=speed;
       _clock=clock;_hours=hours;_saver=saver;_loader=loader;_program=program;_science=science;_notifications=notifications;
       _wonder=wonder;_panels=panels;_camera=camera;
     }
@@ -1465,8 +1462,12 @@ namespace DeepFrontier.Scripts {
       if(_supplies.Count==0)foreach(var g in node.Graph.Generators)_supplies[g]=g.OutputMultiplier;
       foreach(var g in _supplies.Keys)g.SetOutputMultiplier(full?_supplies[g]:0);
       if(!full) {
-        // Exactly 20,000 hp from two native dev generators: below the 27,000 hp launch load.
-        foreach(var g in _supplies.Keys.Where(g=>g.GetComponent<MechanicalNodeSpec>().PowerOutput==10000).Take(2))g.SetOutputMultiplier(1);
+        // The whole dev-generator outputs just below the launch load (27,000 hp: 20,000 hp from one generator).
+        var dev=_supplies.Keys.First(g=>g.GetComponent<TemplateSpec>().TemplateName=="DevPowerGenerator");
+        int rated=dev.GetComponent<MechanicalNodeSpec>().PowerOutput;
+        int below=AcceptancePower.Units(_padBlock.GetComponent<MechanicalNodeSpec>().PowerInput,rated)-1;
+        Require(below>0,"The launch load is within one dev generator's output; no underpowered supply is possible");
+        dev.SetOutputMultiplier(below);
       }
     }
     // Native dialogs lock game speed; the success dialog is closed so simulation continues.
@@ -1757,21 +1758,12 @@ namespace DeepFrontier.Scripts {
     }
     private void AddLaunchPower() {
       var node=_padBlock.GetComponent<MechanicalNode>();
-      var generator=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="DevPowerGenerator").Blueprint;
-      var spec=generator.GetSpec<BlockObjectSpec>();
-      int needed=(int)Math.Ceiling((_padBlock.GetComponent<MechanicalNodeSpec>().PowerInput-node.Graph.PowerSupply+2000f)/10000f);
-      var source=node.Graph.Generators.FirstOrDefault(g=>g.GetComponent<MechanicalNodeSpec>().PowerOutput==10000);
+      // The layout run's test generator (AcceptancePower) is loaded at strength 1; it is raised by whole
+      // rated outputs until the graph supplies the pad's data load plus 2,000 hp for the rest of its graph.
+      var source=node.Graph.Generators.FirstOrDefault(g=>g.GetComponent<TemplateSpec>().TemplateName=="DevPowerGenerator");
       Require(source,"LaunchPad graph has no native dev generator from the layout run");
-      var origin=source.GetComponent<BlockObject>().Coordinates;
-      foreach(var d in new[]{Vector3Int.left,Vector3Int.right,Vector3Int.up,Vector3Int.down}) {
-        if(needed<=0)break;
-        var c=origin+d;var p=new Placement(c,Orientation.Cw0,new FlipMode(false));
-        if(!_validator.BlocksValid(spec,p))continue;
-        var b=_factory.CreateFinished(new EntitySetup.Builder(generator).AddInitComponent(new FinishedConstructionSiteInit()),p);
-        Require(_validation.IsValid(b),"Native requirements rejected an extra launch generator");
-        needed--;
-      }
-      Require(needed<=0,"No room for extra launch generators beside the pad's source generator");
+      int missing=_padBlock.GetComponent<MechanicalNodeSpec>().PowerInput+2000-node.Graph.PowerSupply;
+      if(missing>0)source.SetOutputMultiplier(source.OutputMultiplier+AcceptancePower.Units(missing,source.GetComponent<MechanicalNodeSpec>().PowerOutput));
     }
     private void Liftoff(string recipe,bool fails) {
       Then("liftoff "+recipe,()=>_pad.InFlight,()=>{

@@ -26,6 +26,9 @@
 //   {ManufactorySpec: {"ProductionRecipeIds#append": [recipe]}}: native
 //   blueprint array overlay, as the mod's GoodCollection and NeedCollection.
 // - DeepFrontier.BotUpkeep.* and DeepFrontier.WorkplaceUpkeep.* localization rows.
+// - The upkeep sentence (upkeepDescription) appended to each workplaceUpkeep
+//   building's description, as the connection step appends its pipe phrase;
+//   the producer rewrites that row fresh each canonical run.
 // The late-game part recipes (bot chassis, limbs and heads from alloy,
 // machine cores and electronics) are ordinary recipes of the Precision
 // Machine Works in tools/create_frontier_expansion_content.mjs.
@@ -33,6 +36,7 @@
 import {readFile, writeFile, access, mkdir} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {parseCsvRow} from './connection_content.mjs';
 
 const defaultRoot = resolve(fileURLToPath(new URL('../', import.meta.url)));
 export const CONFIG = 'tools/workforce_risks.json';
@@ -71,6 +75,8 @@ const csvCell = (value) => {
   return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 };
 const csvRow = (id, text) => [id, text, 'Deep Frontier bot upkeep'].map(csvCell).join(',');
+const fmt = (n) => Number(n.toFixed(2)).toString();
+const listText = (items) => items.length < 3 ? items.join(' and ') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`;
 const pair = (p) => Array.isArray(p) && p.length === 2 && typeof p[0] === 'string' && p[0];
 
 export async function loadBotUpkeepConfig(root = defaultRoot) {
@@ -86,7 +92,7 @@ export function checkBotUpkeepConfig({maintenance: m, assembly: a, upkeep: u}) {
     const roles = u.roles ?? {};
     for (const [role, texts] of Object.entries(roles)) {
       if (!/^[A-Z][A-Za-z]+$/.test(role)) errors.push(`workplaceUpkeep.roles.${role}: role ids are PascalCase`);
-      for (const key of ['name', 'status', 'short']) if (typeof texts?.[key] !== 'string' || !texts[key]) errors.push(`workplaceUpkeep.roles.${role}.${key} is required`);
+      for (const key of ['name', 'status', 'short', 'description']) if (typeof texts?.[key] !== 'string' || !texts[key]) errors.push(`workplaceUpkeep.roles.${role}.${key} is required`);
     }
     const used = new Set();
     const templates = Object.entries(u.templates ?? {});
@@ -141,6 +147,11 @@ export const upkeepSpec = ({upkeep}, id) => ({
   CapacityPerGood: upkeep.capacityPerGood,
 });
 
+// The sentence appended to the building's description, e.g. "Wears out 0.1 high-grade
+// steel drill bits per hour at full crew and stops without them."
+export const upkeepDescription = ({upkeep: u}, id) =>
+  `Wears out ${listText(u.templates[id].map(([, perHour, role]) => `${fmt(perHour)} ${u.roles[role].description}`))} per hour at full crew and stops without them.`;
+
 export const assemblerPatch = ({assembly: a}) => ({ManufactorySpec: {'ProductionRecipeIds#append': [a.recipe]}});
 
 export function assemblyRecipe(template, {assembly: a}) {
@@ -192,6 +203,7 @@ export async function planBotUpkeep({root = defaultRoot, dataRoot = resolve(root
   }
   // Workplace upkeep: on the same blueprint object when it is also maintained.
   const upkept = [];
+  const described = [];
   for (const id of upkeepTemplates(config)) {
     const path = resolve(dataRoot, `${id}.json`);
     if (!collected.has(id) || !await exists(path)) { errors.push(`${id} is not a generated, collected template`); continue; }
@@ -204,9 +216,12 @@ export async function planBotUpkeep({root = defaultRoot, dataRoot = resolve(root
     }
     if (blueprint.RestaurantSpec) { errors.push(`${id}: the Restaurant kitchen has its own inventory initializer`); continue; }
     for (const [good] of config.upkeep.templates[id]) if (!await goodExists(good)) errors.push(`${id}: upkeep good ${good} is not a vanilla or generated good`);
+    const descriptionKey = blueprint.LabeledEntitySpec?.DescriptionLocKey;
+    if (!descriptionKey) { errors.push(`${id} has no LabeledEntitySpec.DescriptionLocKey for its upkeep sentence`); continue; }
     blueprint[UPKEEP_SPEC] = upkeepSpec(config, id);
     if (!changed.includes(entry)) changed.push(entry);
     upkept.push(id);
+    described.push({key: descriptionKey, sentence: upkeepDescription(config, id)});
   }
 
   const assembler = await readJson(resolve(vanilla, `${ASSEMBLER}.json`));
@@ -225,6 +240,16 @@ export async function planBotUpkeep({root = defaultRoot, dataRoot = resolve(root
   const ids = new Set(lines.map((line) => line.split(',')[0]));
   const rows = localizationRows(config);
   for (const [id] of rows) if (ids.has(id)) errors.push(`localization ${id} already exists`);
+  // Upkeep sentences: appended to the producer's description rows.
+  const index = new Map(lines.map((line, i) => [line.split(',')[0], i]));
+  for (const {key, sentence} of described) {
+    if (!index.has(key)) { errors.push(`${key} is missing from enUS.csv`); continue; }
+    const [k, text, comment, ...rest] = parseCsvRow(lines[index.get(key)]);
+    if (k !== key || rest.length) { errors.push(`${key}: unexpected CSV row`); continue; }
+    if (text.includes(sentence)) { errors.push(`${key} already carries its upkeep sentence; regenerate it from its producer`); continue; }
+    if (!/[.!?]$/.test(text)) { errors.push(`${key} must end with a full stop before the upkeep sentence`); continue; }
+    lines[index.get(key)] = [key, `${text} ${sentence}`, comment].map(csvCell).join(',');
+  }
   return {config, changed, upkept, errors, lines, rows, localizationPath,
     recipe: {path: resolve(dataRoot, 'Recipes', `Recipe.${config.assembly.recipe}.blueprint.json`), blueprint: assemblyRecipe(template, config)},
     patch: {path: resolve(dataRoot, `${ASSEMBLER}.json`), blueprint: assemblerPatch(config)}};

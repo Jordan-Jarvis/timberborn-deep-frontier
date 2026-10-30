@@ -898,6 +898,7 @@ namespace DeepFrontier.Scripts {
         if(!Free(source,beyond,o))continue;
         var shaft=Create(_shaft,At(n));var src=Create(source,At(beyond,o));
         s.Attached.Add(shaft);s.Attached.Add(src);
+        if(!s.IsGenerator)AcceptancePower.Cover(src,s.NodeSpec);
         var shaftNode=shaft.GetComponent<MechanicalNode>();
         bool linked=s.Node.Transputs.Any(x=>x.ConnectedNode==shaftNode);
         Record(s,"power connects",linked&&shaftNode.Graph==s.Node.Graph,"vanilla PowerShaft at "+n+" link="+linked+" same graph="+(shaftNode.Graph==s.Node.Graph)+
@@ -1433,6 +1434,20 @@ namespace DeepFrontier.Scripts {
 
   internal static class AllBuildingsMath {
     public static int Round(this float value)=>Mathf.RoundToInt(value);
+  }
+
+  // Test power supply sized from data (AllBuildings and Lategame runs): one native DevPowerGenerator
+  // per consumer, its output multiplier set to the whole number of rated outputs (MechanicalNodeSpec.PowerOutput)
+  // that covers the consumer's MechanicalNodeSpec.PowerInput. Native 1.1.2.8 (decompiled):
+  // AdjustableStrengthPowerGenerator.InitializeEntity starts a new generator at 0.5, MechanicalNode
+  // outputs ceil(PowerOutput x OutputMultiplier) with no upper clamp, and the multiplier is not saved
+  // (a loaded generator runs at 1), so callers size it after creating and after loading.
+  internal static class AcceptancePower {
+    public static int Units(int power,int ratedOutput)=>(power+ratedOutput-1)/ratedOutput;
+    public static void Cover(BlockObject generator,MechanicalNodeSpec consumer) {
+      var node=generator.GetComponent<MechanicalNode>();
+      node.SetOutputMultiplier(Units(consumer.PowerInput,generator.GetComponent<MechanicalNodeSpec>().PowerOutput));
+    }
   }
 }
 #endif

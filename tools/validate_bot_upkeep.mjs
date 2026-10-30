@@ -8,14 +8,16 @@
 // Read-only: the catalog, that the runtime records and localization keys
 // match what the generator writes, the generated data (exact maintenance spec
 // on every open bot-wear workplace and nowhere else, exact upkeep spec on every
-// workplaceUpkeep template and nowhere else, the industrial bot recipe and the
+// workplaceUpkeep template and nowhere else, its upkeep sentence in that
+// building's description, the industrial bot recipe and the
 // vanilla Bot Assembler patch) and the automation declarations. Exits 1 on
 // any error. Runtime behaviour is verified in game, not here.
 import {readFile, access} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {loadBotUpkeepConfig, checkBotUpkeepConfig, maintainedTemplates, maintenanceSpec, assemblerPatch, assemblyRecipe,
-  localizationRows, TEXTS, MAINTENANCE_SPEC, ASSEMBLER, RECIPE_TEMPLATE, UPKEEP_SPEC, upkeepTemplates, upkeepSpec} from './bot_upkeep_content.mjs';
+  localizationRows, TEXTS, MAINTENANCE_SPEC, ASSEMBLER, RECIPE_TEMPLATE, UPKEEP_SPEC, upkeepTemplates, upkeepSpec, upkeepDescription} from './bot_upkeep_content.mjs';
+import {parseCsvRow} from './connection_content.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const dataRoot = resolve(process.argv[2] ?? resolve(root, 'src', 'DeepFrontier', 'Data'));
@@ -80,19 +82,23 @@ if (applied) {
   }
   for (const id of maintained) if (!collection.includes(id)) errors.push(`${id}: maintained template is not collected`);
   const upkept = new Set(upkeepTemplates(config));
+  const csv = await readFile(resolve(dataRoot, 'Localizations', 'enUS.csv'), 'utf8');
+  const csvRows = new Map(csv.split('\n').map((line) => parseCsvRow(line)).map(([k, text]) => [k, text]));
   for (const id of collection) {
     const path = resolve(dataRoot, `${id}.json`);
     if (!await exists(path)) continue;
     const blueprint = await readJson(path);
     if (upkept.has(id)) {
       if (!same(blueprint[UPKEEP_SPEC], upkeepSpec(config, id))) errors.push(`${id}: ${UPKEEP_SPEC} differs from the catalog`);
+      const key = blueprint.LabeledEntitySpec?.DescriptionLocKey;
+      const described = csvRows.get(key) ?? '';
+      if (described.split(upkeepDescription(config, id)).length !== 2) errors.push(`${id}: ${key} must carry its upkeep sentence once`);
     } else if (blueprint[UPKEEP_SPEC]) errors.push(`${id}: undeclared ${UPKEEP_SPEC}`);
   }
   for (const id of upkept) if (!collection.includes(id)) errors.push(`${id}: upkeep template is not collected`);
   if (!same(await readJson(recipePath), assemblyRecipe(template, config))) errors.push(`Recipe.${config.assembly.recipe} differs from the catalog`);
   const patchPath = resolve(dataRoot, `${ASSEMBLER}.json`);
   if (!await exists(patchPath) || !same(await readJson(patchPath), assemblerPatch(config))) errors.push(`${ASSEMBLER}: same-path patch missing or different`);
-  const csv = await readFile(resolve(dataRoot, 'Localizations', 'enUS.csv'), 'utf8');
   for (const [key] of localizationRows(config)) if (!csv.includes(`\n${key},`)) errors.push(`enUS.csv lacks ${key}`);
 }
 

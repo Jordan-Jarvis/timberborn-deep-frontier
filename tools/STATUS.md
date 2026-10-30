@@ -4,6 +4,31 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Cleanups: rerunnable Reactor Bots generator, data-sized acceptance power, drill-bit descriptions (Claude Code session, 2026-10-30, built by an agent; validated in mirror `cleanups` and the real repo; not built or run in game)
+
+- **User:** three follow-ups from the Power, Drill bits and Reactor Bots entries.
+- **Reactor Bots generator reruns** (`tools/super_bot_content.mjs`): it now follows the radiation and Deep Well pattern.
+  - Its own files are rewritten each run: settings, the 5 needs, part goods and recipes, light colour, charging bay and icons.
+  - The files it extends are rewritten fresh by their producers each canonical run: collections, manufactories, upkeep goods and `enUS.csv`. They must not already hold its ids, and a vanilla good, recipe, need or colour with one of its ids still fails.
+  - Two full canonical runs in the mirror leave every Data file byte-identical. A standalone rerun on generated data still stops ("already runs", "already lists", "already has ConsumptionEffects") without writing anything.
+  - `validate_all` does not generate. `validate_super_bots` checks the outputs against the generator's functions.
+- **Acceptance power** (`AcceptancePower` in `AllBuildingsAcceptance.cs`):
+  - Correction to the Power entry: a fresh DevPowerGenerator gives 5,000 hp, not 10,000. Native `AdjustableStrengthPowerGenerator.InitializeEntity` sets strength 0.5, and the strength is not saved, so a loaded one runs at 1 (decompiled 1.1.2.8). Every consumer above 5,000 hp was underpowered in the bulk runs.
+  - Each consumer's test generator now has an output multiplier of `ceil(PowerInput / PowerOutput)`, read from the consumer's and the generator's `MechanicalNodeSpec`. `MechanicalNode` does not clamp the multiplier.
+  - **AllBuildings:** applied in `AttachPower`.
+  - **Lategame:** applied in `PlacePower`, and again on reload in `BindSaved`.
+  - **Rocket run:** `AddLaunchPower` raises the layout run's generator by whole rated outputs to the pad load plus the existing 2,000 hp margin. Before, it placed extra generators at 0.5. `SetSupply(false)` sets one generator to the whole outputs just below the launch load (27,000: 20,000). The `10000` literals and unused injected fields are gone.
+  - `HospitalAcceptance` is unchanged: two stacked generators, set to 1.
+  - Compile check passes. Acceptance was not run in game.
+- **Drill-bit descriptions:**
+  - `workplaceUpkeep.roles` gained `description` ("high-grade steel drill bits", "concrete shaft lining").
+  - `bot_upkeep_content.mjs` `upkeepDescription` appends one sentence to each upkeep building's description row, the way the connection step appends its pipe phrase. Deep Drill: "Wears out 0.1 high-grade steel drill bits per hour at full crew and stops without them." Deep Mine: "... 0.1 high-grade steel drill bits and 0.1 concrete shaft lining ...".
+  - `validate_bot_upkeep` checks that the sentence is there exactly once.
+  - The two regenerated rows reached `enUS.csv` in ef3fd53, which staged the whole file while this work was in progress. This commit adds the generator that produces them.
+- **Checks:**
+  - mirror `cleanups`: two canonical runs, byte-identical; `validate_all -SkipBlender` 55 pass + 1 report-only (`no-game-assets` outside git).
+  - real repo: `validate_all -SkipBlender` 56 pass + 1 report-only; compile.
+
 ## Maps: Beaverome warning, fuller Deep Ore Sources, rebuilt map files (Claude Code session, 2026-10-30, built by an agent; validated in mirror `mapfix` and the real repo; not built or run in game)
 
 - **User:** Beaverome gets the EXTREMELY difficult warning (deep ore is required and it has none), with a data-driven rule rather than a map list. Finite Deep Ore Sources should cover one of each building with margin. Rebuild the four map files and fix the stale map test.
@@ -45,7 +70,7 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 - **Open:**
   - Rebuild the four shipped map files with `build` before publishing; they still carry the 0.5.0.0 description.
   - `test_prepare_deep_frontier_map.py`'s `no_dynamite` case is stale, so the cases after it don't run.
-  - `super_bot_content.mjs` refuses to run once its outputs exist, which complicates mirror regeneration.
+  - Closed 2026-10-30 (Cleanups entry): `super_bot_content.mjs` rewrites its own outputs on a rerun.
 - **In game:**
   - **Plains new game:** the log shows MapHeight {23, 66} and "19 placed, 0 failed"; the slicer reaches 65.
   - **Reload:** no re-placement, and the height is kept.
@@ -65,7 +90,7 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - `HydroTurbine` compares rated to authored output within float precision.
 - **Checks:** mirror `power`: `validate_all -SkipBlender` 54 pass, 1 report-only, 2 failures from other work (`map-setup-terrain`: unfinished map work; `no-game-assets`: outside git); compile.
 - **Open:**
-  - **Bulk acceptance runs:** AllBuildings and Lategame give each consumer one 10,000 hp test generator, which no longer covers Hospital, Mission Control, Hangar, Launch Pad, Uranium or Refinery.
+  - **Bulk acceptance runs:** closed 2026-10-30 (Cleanups entry). Each consumer's test generator is now sized from its `PowerInput`. The generators actually gave 5,000 hp each (native half strength), not 10,000.
   - **Not updated:** the old balance workbook (`Timberborn_Deep_Frontier_Balance_Workbook.xlsx`, already stale) and `capture_hydro*.py` (they check the recorded 9,600 hp runs).
 
 ## Drill bits for the Deep Drill and Deep Mine (Claude Code session, 2026-10-29, built by an agent; validated in mirror `drillbits` and the real repo; not built or run in game)
@@ -78,7 +103,7 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - A native `IManufactoryLimiter` sets efficiency 0 with nothing in use and none in stock, and caps progress to the unit in use. One status per missing good ("Waiting for drill bits", "Waiting for shaft lining"). The panel has an Upkeep section.
 - **Item uses:** HighGradeSteel 33 → 35, Concrete 72 → 73.
 - **Checks:** mirror `drillbits`: `validate_all -SkipBlender` 52 pass + 1 report-only (`no-game-assets` outside git); real repo: bot upkeep, single inventory, enable guard, slice content, compile.
-- **In game:** deliveries up to 15 with and without bots; the stop, status and resume; timed use at full and partial crew; the panel; the part unit across save/load; older saves; bot oils still stocked after Moddable Recipes rebuilds the inventory. Building descriptions don't mention the upkeep yet.
+- **In game:** deliveries up to 15 with and without bots; the stop, status and resume; timed use at full and partial crew; the panel; the part unit across save/load; older saves; bot oils still stocked after Moddable Recipes rebuilds the inventory. Closed 2026-10-30 (Cleanups entry): the building descriptions now state the upkeep, generated from `workplaceUpkeep`.
 
 ## Reactor Bots: in-place bot upgrade and Reactor Charging Bay (Claude Code session, 2026-10-29, built by an agent; integrated and validated in mirror `integ`; not built or run in game)
 
