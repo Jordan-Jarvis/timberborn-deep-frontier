@@ -4,6 +4,19 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction follow-up: roof variety on Chemical Works, Precision Machine Works, Electrolysis Plant, Cryogenic Liquefaction Plant and Cryogenic Tank Farm (Claude Code session, 2026-10-30, built by an agent; scenes, exports and blueprints promoted; validated in mirror `lgi` on HEAD + this change; not built or run in game)
+
+- **Why:** the user's roof direction, "we need variety, not just a bunch of boring concrete" and "no roof vents. they just get in the way". Pitched and sawtooth roofs in native roof planks are mixed with flat roofs in corrugated metal, steel plate or timber; every roof ventilator, cowl, vent lantern and small roof stack on these five is gone. Size, origin, door and entrance unchanged.
+- **Chemical Works** (5x5x8): flat corrugated-metal (PAINTED) hall roof with a steel curb; a one-layer fin-fan cooler house on the back rows with a flat steel-plate (IRON) top on layer 3 and its two fans; the flare on the cooler house's corner; RoofVent1-3 removed (6 animated parts). Roof decks 6 -> 13 cells; shaft faces 52 -> 68, pipe ports 21 -> 30. Triangles 8,768 -> 8,322.
+- **Precision Machine Works** (9x5x7): the sawtooth stays (teal roof planks, glazed north lights); the gate office roof is flat timber plank with a timber curb; the air receiver is gone; the chimney firebox top is flat on layer 1. Roof decks 3 -> 6; shaft faces 102 -> 105, pipe ports 56. Triangles 7,504 -> 6,854.
+- **Electrolysis Plant** (8x5x6): the glazed lantern and its vents are gone; pitched gable of native teal roof planks over the cell hall (ridge X, orange gable ends). Roof decks 8 -> 0 (pitched); shaft faces 58 -> 51, pipe ports 13 -> 14. Triangles 10,454 -> 10,328.
+- **Cryogenic Liquefaction Plant** (8x6x9): flat steel-plate compressor roof with a steel curb (under the cooler bank); the cold box's cap is a flat steel deck with a curb on layer 7, all nine cells placeable; its vent stack, VentRotor and beacon are gone (8 animated parts); the beacon is on a mast on the column, the steam at a pipe mouth on the column top, the transfer line enters the cold box wall. Roof decks 0 -> 9; shaft faces 101 -> 119, pipe ports 58 -> 67. Triangles 7,792 -> 7,222.
+- **Cryogenic Tank Farm** (7x6x7): pitched gable of native teal roof planks on the control hut. Roof decks 4 -> 0 (pitched); shaft faces 54 -> 50, pipe ports 29 -> 25; pipe sockets unchanged. Triangles 9,610 -> 9,948.
+- **Checks on the art:** strict z-fight audit 0 visible at frames 1/31/61/91 on all five; grid audits as before.
+- **Review:** `outputs/compaction/<Building>-before-after.png` for the five.
+- **Checks (mirror):** canonical generation on HEAD + this change reaches a fixed point; `validate_all -Only` 23 checks: all pass except `map-setup-terrain`, whose errors are other buildings' sites only.
+- **In game:** not seen yet.
+
 ## Compaction: Cryogenic Tank Farm 11x10x11 -> 7x6x7 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `lgi` on HEAD + this change; not built or run in game)
 
 - **Art** (`lategame_CryogenicTankFarm.py`, saved scene unpacked): the LOX tank (radius 1.3) under its ribbed concrete dome with the riveted spiral stair wound from the right side round the back to the gallery on layer 4, the boil-off vent (steam), relief cap and beacon on the crown; two horizontal hydrogen bullets on saddles in the cast-concrete bund; along the front a two-storey control hut (timber-framed orange upper storey, one layer each) under a flat roof, the boil-off compressor skid with flywheel and piston rod, four star-finned ambient vaporizers and the valve manifold with the two sockets on the front edge; the insulated lines run low over the bund wall. Removed: the pipe rack on its bents and piers, the valve platform between the bullet heads with its ladder, and the hut's gable. The 4 animated parts keep their names.

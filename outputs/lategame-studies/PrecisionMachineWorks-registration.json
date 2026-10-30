@@ -477,11 +477,6 @@
   ],
   [
    6,
-   1,
-   2
-  ],
-  [
-   6,
    2,
    0
   ],
@@ -537,11 +532,6 @@
   ],
   [
    7,
-   1,
-   2
-  ],
-  [
-   7,
    2,
    0
   ],
@@ -589,11 +579,6 @@
    8,
    1,
    1
-  ],
-  [
-   8,
-   1,
-   2
   ],
   [
    8,
@@ -960,6 +945,12 @@
   ],
   [
    5,
+   1,
+   2,
+   "Right"
+  ],
+  [
+   5,
    3,
    0,
    "Right"
@@ -1114,5 +1105,5 @@
   "PrecisionMachineWorks.HammerRam",
   "PrecisionMachineWorks.YardLatheRoll"
  ],
- "sourceHash": "ad993253bbc859988a44524a868c1db392294878f1578a03ccf7099d3eebacfd"
+ "sourceHash": "c9e64cf1d3ac731be5679264a0ab368fb3204294be32c46ed4602c2ba8092e39"
 }

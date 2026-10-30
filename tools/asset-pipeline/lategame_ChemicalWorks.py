@@ -17,16 +17,19 @@ two rows stay open.
 HERO: a riveted fractionating column (seven layers) with one ring platform
       and a caged ladder, its vapour line dropping to the fin-fan cooler on
       the hall roof, beside a short flare stack with a live flame.
-ROOF: flat concrete roof with a low curb on the reactor hall (cooler,
-      turbine ventilators and flare stack at its back); steel dome on the
-      column.
+ROOF: flat corrugated-metal roof with a steel curb on the reactor hall,
+      its front two rows placeable; the one-layer fin-fan cooler house on
+      its back rows has a flat steel-plate top, placeable except the two fan
+      cells and the middle cell; steel dome on the column. No roof vents
+      (user: "no roof vents. they just get in the way").
 
 Plan (5 x 5 tiles): the reactor hall on the left (door front-left), three
 agitated reactors in a row on a concrete apron along its right wall, the
 column behind them.
 
-Animated (9, names unchanged): three agitator couplings, three roof
-ventilators, two cooler fans, the flare flame, the column beacon.
+Animated (6, names unchanged): three agitator couplings, two cooler fans,
+the flare flame, the column beacon (the three roof ventilators went in the
+roof follow-up: "no roof vents").
 """
 import math
 
@@ -55,7 +58,7 @@ PLATFORM_Z = 5
 REACTOR_X = 4.0
 REACTORS_Y = (.55, 1.5, 2.45)
 REACTOR_R = .36
-FLARE = (2.78, 4.74)
+FLARE = (2.84, 4.84)   # on the cooler house's back corner, clear of its cell's middle
 
 
 # ---------------------------------------------------------------- reactor hall
@@ -63,6 +66,7 @@ FLARE = (2.78, 4.74)
 def hall(g):
     x0, y0, x1, y1 = HALL
     Q.storey_block(g, x0, y0, x1, y1, 2, infill=FORGED, frame=IRON, door=DOOR_X, door_id='Entrance',
+                   roof_mat=PAINTED, curb_mat=IRON,
                    ground_windows={'left': [(1.5, .6, 'factory'), (3.5, .6, 'factory')],
                                    'back': [(1.5, .6, 'factory')],
                                    'right': [(3.0, .6, 'factory')]},
@@ -82,30 +86,32 @@ def hall(g):
 
 
 def roof_plant(g, parts):
-    """Fin-fan cooler and turbine ventilators on the flat hall roof."""
+    """Fin-fan cooler house: one layer on the back three rows of the hall roof
+    (tiles 0..3 x 2..5) with louvred forged sides and a flat top on layer 3.
+    The two fans stand in the middle of its front and back cells; the top's
+    other cells and the hall roof's front two rows are platformable (user: "all flat roof
+    tiles should be placeable areas")."""
     z = ROOF_Z
-    # Cooler: forged fin bank on a steel header frame, two fan rings.
-    x0, y0, x1, y1 = .35, 2.55, 2.65, 4.55
-    blk(g, x0, y0, z - .02, x1, y1, z + .12, IRON)
-    blk(g, x0 + .1, y0 + .06, z + .12, x1 - .1, y1 - .06, z + .5, FORGED)
-    for x in (x0 + .02, x1 - .18):
-        blk(g, x, y0 - .02, z + .12, x + .16, y1 + .02, z + .56, PAINTED)
-    for i, y in enumerate((y0 + .5, y1 - .5)):
-        cx = (x0 + x1) / 2
-        P.hoop(g, (cx, y, z + .7), .42, .04, .3, IRON, segments=12)
-        P.hoop(g, (cx, y, z + .87), .45, .06, .05, PAINTED, segments=12)
-        blk(g, cx - .4, y - .03, z + .55, cx + .4, y + .03, z + .6, IRON)
-        g.cylinder((cx, y, z + .66), .07, .12, IRON, 'Z', 10)
-        parts.append((P.fan(f'ChemicalWorks.CoolerFan{i + 1}', cx, y, z + .76, .36, blades=5),
+    x0, y0, x1, y1 = .06, 2.0, 2.94, 4.94   # inside the hall roof's curb
+    top = z + 1.0
+    blk(g, x0 + .06, y0 + .06, z - .02, x1 - .06, y1 - .06, top - .1, FORGED)
+    for x, y in ((x0 + .06, y0 + .06), (x1 - .06, y0 + .06), (x1 - .06, y1 - .06), (x0 + .06, y1 - .06)):
+        blk(g, x - .07, y - .07, z, x + .07, y + .07, top - .1, IRON)
+    # Louvre bands on the long sides and the front, proud of the fin bank.
+    for k in range(3):
+        zz = z + .22 + k * .22
+        blk(g, x0 + .13, y0 + .03, zz, x1 - .13, y0 + .06, zz + .06, IRON)
+        blk(g, x0 + .03, y0 + .13, zz, x0 + .06, y1 - .13, zz + .06, IRON)
+        blk(g, x1 - .06, y0 + .13, zz, x1 - .03, y1 - .13, zz + .06, IRON)
+    Q.flat_roof(g, x0, y0, x1, y1, top, overhang=0.0, mat=IRON, curb_mat=IRON)
+    for i, y in enumerate((2.5, 4.5)):
+        cx = 1.5
+        P.hoop(g, (cx, y, top + .16), .4, .04, .3, IRON, segments=12)
+        P.hoop(g, (cx, y, top + .32), .43, .06, .05, PAINTED, segments=12)
+        blk(g, cx - .38, y - .03, top, cx + .38, y + .03, top + .06, IRON)
+        g.cylinder((cx, y, top + .12), .07, .12, IRON, 'Z', 10)
+        parts.append((P.fan(f'ChemicalWorks.CoolerFan{i + 1}', cx, y, top + .22, .34, blades=5),
                       'SPIN_Z', 4 if i else -4))
-    # Turbine ventilators on the cooler housing's corners, so the front of the
-    # roof stays open (platformable).
-    for i, (x, y) in enumerate(((.62, y0 + .3), (2.38, y0 + .3), (.62, y1 - .3))):
-        top = Q.roof_vent(g, x, y, z + .5, h=.2, r=.13)
-        v = Geometry(f'ChemicalWorks.RoofVent{i + 1}', (x, y, top + .11))
-        P.lathe(v, (x, y, top + .11), [(.14, -.1), (.16, -.04), (.16, .04), (.1, .09), (0, .12)],
-                FORGED, segments=12)
-        parts.append((v, 'SPIN_Z', 2 if i != 1 else -2))
 
 
 # ---------------------------------------------------------------- reactors
@@ -189,7 +195,7 @@ def column(g, parts):
     vz = COLUMN_TOP + .5
     vx = cx - .7
     P.pipe(g, [(cx, cy, COLUMN_TOP + .2), (cx, cy, vz), (vx, cy, vz), (vx, cy, ROOF_Z + .3),
-               (2.65, cy, ROOF_Z + .3)], .08)
+               (2.92, cy, ROOF_Z + .3)], .08)
     for zz in (3.0, 4.4):
         blk(g, vx + .05, cy - .04, zz - .04, cx - r + .02, cy + .04, zz + .04, IRON)
     # Beacon on a short mast at the crown.
@@ -203,15 +209,14 @@ def column(g, parts):
 def flare(g, parts):
     """Short flare stack standing on the hall roof's back-right corner."""
     cx, cy = FLARE
-    z = ROOF_Z
-    blk(g, cx - .14, cy - .14, z - .02, cx + .14, cy + .14, z + .2, CONCRETE)
-    tip = 4.9
-    K.revolve(g, (cx, cy, z + .2), [(.08, 0), (.08, tip - z - .2)], IRON, segments=12)
+    z = ROOF_Z + 1.0
+    blk(g, cx - .08, cy - .08, z - .02, cx + .08, cy + .08, z + .2, CONCRETE)   # inside the roof's edges
+    tip = 5.3
+    K.revolve(g, (cx, cy, z + .2), [(.07, 0), (.07, tip - z - .2)], IRON, segments=12)
     K.revolve(g, (cx, cy, tip), [(.08, 0), (.13, .08), (.13, .3), (.11, .34)], IRON, segments=12)
     g.ring((cx, cy, tip + .26), .14, .035, .05, BRASS, 'Z', 12)
-    for zz in (3.0, 4.0):
-        K.band(g, (cx, cy, 0), .08, zz, .05, PAINTED, segments=12)
-    P.pipe(g, [(cx - .1, cy, z + .2), (cx - .1, cy, tip + .16), (cx - .02, cy, tip + .16)], .022, flanges=False)
+    for zz in (3.8, 4.6):
+        K.band(g, (cx, cy, 0), .07, zz, .05, PAINTED, segments=12)
     flame = Geometry('ChemicalWorks.FlareFlame', (cx, cy, tip + .34))
     K.revolve(flame, (cx, cy, tip + .34), [(.1, 0), (.12, .1), (.07, .32), (.03, .48), (0, .56)], GLOW, segments=8)
     parts.append((flame, 'FLAME', 0))

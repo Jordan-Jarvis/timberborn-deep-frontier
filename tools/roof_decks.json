@@ -3,6 +3,13 @@
  "rule": "Flat Top face (one plane, no curve or slope; glass counts) at a cell boundary; free, exterior, non-access cell above; no building geometry in the middle of the cell above, animated part, smoke/steam emitter or native prop above.",
  "coordinateSystem": "Native grid XYZ, blueprint block indices; the listed cell is the roof cell, things stand in the cell above",
  "freedAbove": {
+  "ChemicalWorks": [
+   [
+    2,
+    4,
+    3
+   ]
+  ],
   "DeepDrill": [
    [
     4,
@@ -1024,6 +1031,91 @@
      2,
      1,
      1
+    ],
+    [
+     0,
+     2,
+     2
+    ],
+    [
+     2,
+     2,
+     2
+    ],
+    [
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     3,
+     2
+    ],
+    [
+     2,
+     3,
+     2
+    ],
+    [
+     0,
+     4,
+     2
+    ],
+    [
+     2,
+     4,
+     2
+    ]
+   ],
+   "excluded": []
+  },
+  "CryogenicLiquefactionPlant": {
+   "platformable": [
+    [
+     5,
+     2,
+     6
+    ],
+    [
+     6,
+     2,
+     6
+    ],
+    [
+     7,
+     2,
+     6
+    ],
+    [
+     5,
+     3,
+     6
+    ],
+    [
+     6,
+     3,
+     6
+    ],
+    [
+     7,
+     3,
+     6
+    ],
+    [
+     5,
+     4,
+     6
+    ],
+    [
+     6,
+     4,
+     6
+    ],
+    [
+     7,
+     4,
+     6
     ]
    ],
    "excluded": []
@@ -1309,51 +1401,6 @@
      "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
     }
    ]
-  },
-  "ElectrolysisPlant": {
-   "platformable": [
-    [
-     4,
-     0,
-     1
-    ],
-    [
-     5,
-     0,
-     1
-    ],
-    [
-     6,
-     0,
-     1
-    ],
-    [
-     7,
-     0,
-     1
-    ],
-    [
-     4,
-     2,
-     1
-    ],
-    [
-     5,
-     2,
-     1
-    ],
-    [
-     6,
-     2,
-     1
-    ],
-    [
-     7,
-     2,
-     1
-    ]
-   ],
-   "excluded": []
   },
   "LaunchPad": {
    "platformable": [
@@ -1861,6 +1908,21 @@
     [
      8,
      0,
+     1
+    ],
+    [
+     6,
+     1,
+     1
+    ],
+    [
+     7,
+     1,
+     1
+    ],
+    [
+     8,
+     1,
      1
     ]
    ],
@@ -5309,31 +5371,6 @@
     [
      7,
      3,
-     1
-    ]
-   ],
-   "excluded": []
-  },
-  "CryogenicTankFarm": {
-   "platformable": [
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     1,
-     0,
-     1
-    ],
-    [
-     0,
-     1,
-     1
-    ],
-    [
-     1,
-     1,
      1
     ]
    ],

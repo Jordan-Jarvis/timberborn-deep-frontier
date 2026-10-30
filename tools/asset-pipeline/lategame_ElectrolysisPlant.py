@@ -15,8 +15,9 @@ rings; the cell hall is one solid two-storey block (one layer per storey).
 HERO: twin telescoping gas holders in round steel guide frames - a two-lift
       hydrogen holder and a smaller single-lift oxygen holder (2:1, as the
       cells make them) - whose riveted bells slowly rise and fall.
-ROOF: flat concrete roof with a low curb on the cell hall, carrying a
-      flat-capped glazed clerestory lantern with the hydrogen vents.
+ROOF: a pitched gable of native teal roof planks on the cell hall, ridge
+      along X, orange gable ends (roof variety; the glazed lantern and its
+      vents are gone).
 
 Plan (8 x 5 tiles): the cell hall front-right with the door; the transformer
 pad behind it feeding brass bus bars into the hall's back wall; the water
@@ -55,7 +56,7 @@ INTAKE = (3.0, 3.0, 4.0, 5.0)   # one tile wide, open to the back edge
 
 def hall(g):
     x0, y0, x1, y1 = HALL
-    top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=IRON, door=DOOR_X, door_id='Entrance',
+    top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=IRON, door=DOOR_X, door_id='Entrance', roof=False,
                          ground_windows={'front': [(7.5, .55, 'factory'), (5.25, .55, 'factory'), (4.5, .55, 'factory')],
                                          'right': [(1.5, .6, 'factory')]},
                          windows={'front': [(x + .5, 1.5, .58, 'factory') for x in range(4, 8)],
@@ -64,17 +65,10 @@ def hall(g):
                                   'back': [(7.5, 1.5, .58, 'factory'), (4.5, 1.5, .58, 'factory')]})
     K.lamp(g, DOOR_X - .66, y0 - .01, .8, face='front')
     K.lamp(g, DOOR_X + .66, y0 - .01, .8, face='front')
-    # Flat-capped glazed clerestory lantern on the roof, with hydrogen vents.
-    lx0, ly0, lx1, ly1 = 4.45, .95, 7.55, 2.05
-    lz = top + .55
-    C.framed_block(g, lx0, ly0, lx1, ly1, top, lz, infill=FORGED, frame=IRON, pitch=.78,
-                   faces=('front', 'back'), sink=.02,
-                   windows={'front': [(lx0 + .39 + k * .775, top + .28, .38, 'factory') for k in range(4)],
-                            'back': [(lx0 + .39 + k * .775, top + .28, .38, 'factory') for k in range(4)]})
-    blk(g, lx0 - .08, ly0 - .08, lz - .02, lx1 + .08, ly1 + .08, lz + .08, CONCRETE)
-    for x in (6.8, 5.2):
-        g.cylinder((x, 1.5, lz + .35), .07, .55, IRON, 'Z', 12)
-        K.revolve(g, (x, 1.5, lz + .62), [(.13, 0), (.13, .05), (.04, .16), (0, .18)], IRON, segments=12)
+    # Pitched gable of native teal roof planks, ridge along X (roof variety,
+    # user 2026-10-30; no lantern or vents).
+    P.plank_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, top, top + .85, ridge_axis='X', overhang=.16,
+                 plank=.3, gable_mat=ORANGE)
     # Bus-bar wall bushings on the back wall where the DC feed enters.
     blk(g, 4.6, y1 + .01, 1.5, 7.4, y1 + .07, 1.8, PAINTED)
 

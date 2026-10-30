@@ -14,7 +14,7 @@
   "boundsMax": [
     8.04,
     5.523,
-    8.1976
+    8.37
   ],
   "doors": [
     {
@@ -38,26 +38,25 @@
     "CryogenicLiquefactionPlant.Flywheel1",
     "CryogenicLiquefactionPlant.Piston0",
     "CryogenicLiquefactionPlant.Piston1",
-    "CryogenicLiquefactionPlant.VentRotor",
     "CryogenicLiquefactionPlant.Beacon"
   ],
   "animationFrames": 121,
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 3778,
+  "faces": 3556,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 200,
-    "BaseMetal.IronTeeth": 1928,
+    "BaseMetal.IronTeeth": 1886,
     "Details.IronTeeth": 216,
     "accent8": 20,
     "accent25": 40,
-    "Plaster_White.IronTeeth": 1083,
+    "Plaster_White.IronTeeth": 969,
     "Plaster_Orange.IronTeeth": 7,
     "IrregularPlanks_MetalForged.IronTeeth": 12,
     "WindowsAtlas.IronTeeth": 226,
-    "PaintedMetal.IronTeeth": 516
+    "PaintedMetal.IronTeeth": 416
   },
-  "sourceHash": "d14b65a5550367070eddaf3971e8fc5b012148931d426881d31ce273ad32c408",
-  "artHash": "fcbc7ac4482f72a73c1ac05e8187ec074138bd97dd09ae098f5d6e97b26960ae"
+  "sourceHash": "888223629bcaf5ed0d7094afdbd9ea7eb608483e876ef5537b1b52f311549efe",
+  "artHash": "c79448609edc75a4378fc97442911397b12614faa5d44764e067e1cf765bb324"
 }

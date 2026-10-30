@@ -33,9 +33,6 @@
   "animatedParts": [
     "ChemicalWorks.CoolerFan1",
     "ChemicalWorks.CoolerFan2",
-    "ChemicalWorks.RoofVent1",
-    "ChemicalWorks.RoofVent2",
-    "ChemicalWorks.RoofVent3",
     "ChemicalWorks.Agitator1",
     "ChemicalWorks.Agitator2",
     "ChemicalWorks.Agitator3",
@@ -46,19 +43,19 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 3649,
+  "faces": 3603,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 236,
-    "BaseMetal.IronTeeth": 2262,
-    "Details.IronTeeth": 264,
+    "BaseMetal.IronTeeth": 2294,
+    "Details.IronTeeth": 222,
     "accent8": 53,
     "accent25": 66,
-    "Plaster_White.IronTeeth": 246,
+    "Plaster_White.IronTeeth": 216,
     "Plaster_Orange.IronTeeth": 7,
-    "IrregularPlanks_MetalForged.IronTeeth": 173,
+    "IrregularPlanks_MetalForged.IronTeeth": 26,
     "WindowsAtlas.IronTeeth": 274,
-    "PaintedMetal.IronTeeth": 660
+    "PaintedMetal.IronTeeth": 654
   },
-  "sourceHash": "53bb4124a46de5b3c44262eea5178e2f829ab80290636431e97244f48d937618",
-  "artHash": "b938108f76c3c6aa92c5c2527361c725f55e388cbe430607df5102e7fe964c46"
+  "sourceHash": "b0f660b58d9004f368cffd69ab4ca5f977ee86701dbdcdd1c5435fba3e611ddc",
+  "artHash": "fef34cae1c735962c3c191cc28415eedbd3e460bc837fd2b943853aad9a719c4"
 }

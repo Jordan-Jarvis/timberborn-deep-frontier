@@ -8,8 +8,8 @@ scale; user: "it is the scaffolding and size", "one layer per floor", "make
 the roof flat on more of our buildings"): 11x9x14 -> 9x5x7, inside the old
 footprint with the same origin, door and native entrance (cell 8, -1).
 Removed: the crane yard's six steel columns and knee braces, the braced
-steel frame under the air receiver, the separate forge lean-to and the
-13-layer chimney. The travelling crane now runs on a solid concrete runway
+steel frame and the air receiver it carried, the separate forge lean-to
+and the 13-layer chimney. The travelling crane now runs on a solid concrete runway
 wall and a bracket beam on the shop wall; the square brick chimney is six
 layers on its firebox.
 
@@ -18,12 +18,13 @@ HERO: a long north-light sawtooth machine hall with an open belt bay, a
       iron bands.
 ROOF: the north-light sawtooth (three teal plank teeth with glazed north
       faces) stays: it is this building's defining silhouette and the only
-      sawtooth among the late-game works. Flat concrete roof with a low curb
-      on the two-storey gate office.
+      sawtooth among the late-game works. Flat timber-plank roof with a
+      timber curb on the two-storey gate office, all six cells placeable; the
+      chimney's firebox top is flat on layer 1.
 
 Plan (9 x 5 tiles): the machine shop on the left with the belt bay in its
 front wall (line shaft, belts, three lathes); the gate office front-right
-with the door, the compressed-air receiver on its roof; the crane yard
+with the door; the crane yard
 behind it with the steam hammer, the roll lathe and the chimney.
 
 Animated (7, names unchanged): line shaft, three lathe chucks, crane bridge
@@ -164,29 +165,18 @@ def belt_bay(g, parts):
 # ---------------------------------------------------------------- gate office
 
 def gate_office(g, parts):
-    """Two-storey works office at the gate; the compressed-air receiver for
-    the shop's pneumatic tools lies on saddles on its flat roof."""
+    """Two-storey works office at the gate under a flat, placeable roof."""
     x0, y0, x1, y1 = OFFICE
     top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=WOOD, door=DOOR_X, door_id='Entrance',
+                         roof_mat=PLANK, curb_mat=WOOD,
                          ground_windows={'front': [(6.75, .55, 'grand')], 'right': [(1.0, .55, 'grand')]},
                          windows={'front': [(6.5, 1.5, .52, 'grand'), (7.5, 1.5, .52, 'grand'),
                                             (8.5, 1.5, .52, 'grand')],
                                   'right': [(.5, 1.5, .52, 'grand'), (1.5, 1.5, .52, 'grand')],
                                   'back': [(7.5, 1.5, .52, 'grand')]})
     K.lamp(g, DOOR_X - .66, y0 - .01, .8, face='front')
-    # Riveted air receiver along X on two concrete saddles, kept to the back
-    # row of the roof so its front row stays open (platformable).
-    ty, tz, tr = 1.55, top + .42, .26
-    for x in (6.95, 8.05):
-        blk(g, x - .1, ty - .2, top, x + .1, ty + .2, tz - .15, CONCRETE)
-    P.lathe(g, (7.5, ty, tz), [(0, -.85), (.18, -.83), (.23, -.77), (tr, -.66), (tr, .66), (.23, .77),
-                               (.18, .83), (0, .85)], PAINTED, axis='X', segments=16)
-    for x in (7.0, 7.5, 8.0):
-        P.hoop(g, (x, ty, tz), tr + .02, .03, .045, IRON, axis='X', segments=16)
-    g.cylinder((7.25, ty, tz + tr + .045), .07, .09, IRON, 'Z', 12)
-    g.cylinder((7.25, ty, tz + tr + .1), .1, .03, BRASS, 'Z', 12)
-    g.cylinder((7.8, ty, tz + tr + .07), .03, .14, BRASS, 'Z', 8)
-    P.gauge(g, 7.75, ty - tr - .005, tz, 'front', .06)
+    # (The air receiver that lay on this roof is gone: every flat roof cell is
+    # a placeable area, user 2026-10-30.)
 
 
 # ---------------------------------------------------------------- crane yard
@@ -261,15 +251,15 @@ def chimney(g):
     firebox in the yard's back-right corner, bound with iron bands."""
     cx, cy = 8.5, 4.5
     blk(g, 8.0, 4.0, 0, 9.0, 5.0, .9, CONCRETE)
-    blk(g, 7.97, 3.97, .9, 9.03, 5.03, .98, CONCRETE)
+    blk(g, 7.97, 3.97, .9, 9.03, 5.03, 1.0, CONCRETE)   # flat top on layer 1
     # Firebox door with a glowing slot, facing the yard.
     blk(g, 9.0, 4.3, .25, 9.04, 4.7, .6, IRON)
     blk(g, 9.04, 4.38, .38, 9.06, 4.62, .44, GLOW)
     base_r, top, taper = .42, 6.5, .3
 
     def r_at(z):
-        return base_r * (1 - taper * (z - .98) / (top - .98))
-    P.lathe(g, (cx, cy, 0), [(r_at(.98 + (top - .98) * k / 8), .98 + (top - .98) * k / 8) for k in range(9)],
+        return base_r * (1 - taper * (z - 1.0) / (top - 1.0))
+    P.lathe(g, (cx, cy, 0), [(r_at(1.0 + (top - 1.0) * k / 8), 1.0 + (top - 1.0) * k / 8) for k in range(9)],
             ORANGE, segments=4, phase=math.pi / 4, cap_start=False)
     for z in (2.0, 3.4, 4.8, 6.0):
         P.lathe(g, (cx, cy, 0), [(r_at(z) + .03, z - .05), (r_at(z) + .03, z + .05)], IRON, segments=4,

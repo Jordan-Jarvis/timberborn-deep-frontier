@@ -14,8 +14,8 @@ HERO: a frost-white double-walled flat-bottom oxygen tank with a ribbed
 steel dome, wound by a riveted spiral stair up to a roof-edge gallery on a
 whole layer, with a boil-off vent and a relief valve on its crown.
 ROOF: steel dome on the LOX tank (its defining silhouette); dished heads on
-the hydrogen bullets; flat concrete roof with a low curb on the two-storey
-control hut.
+the hydrogen bullets; a pitched gable of native teal roof planks on the
+two-storey control hut (roof variety).
 
 Plan (7 x 6 tiles): a cast-concrete bund across the back holds the LOX tank
 (right) and two horizontal vacuum-jacketed hydrogen bullets on concrete
@@ -234,11 +234,13 @@ def bullets(g):
 
 def hut(g):
     x0, y0, x1, y1 = HUT
-    Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=WOOD, door=DOOR_X, door_id='Door0',
+    top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=WOOD, door=DOOR_X, door_id='Door0', roof=False,
                    ground_windows={'left': [(1.0, .55, 'grand')]},
                    windows={'front': [(.5, 1.5, .52, 'grand'), (1.5, 1.5, .52, 'grand')],
                             'left': [(.5, 1.5, .52, 'grand'), (1.5, 1.5, .52, 'grand')],
                             'right': [(1.0, 1.5, .52, 'grand')]})
+    # Pitched gable of native teal roof planks, ridge along Y (roof variety).
+    P.plank_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, top, top + .8, ridge_axis='Y', overhang=.16, plank=.28)
     K.lamp(g, DOOR_X - .66, y0 - .01, .8, face='front')
 
 

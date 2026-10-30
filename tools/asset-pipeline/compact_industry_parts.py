@@ -19,6 +19,12 @@ roof whose top is exactly on the next whole layer, edged by a low curb that
 stays under 0.15 above it (so the registration does not claim the cells
 above it, and the roof-deck step can make it platformable).
 
+Roof finishes vary by building (user, 2026-10-30: "we need variety, not
+just a bunch of boring concrete"): flat roofs take roof_mat/curb_mat
+(corrugated PAINTED metal, IRON or FORGED steel plate, PLANK timber, and
+CONCRETE only sometimes); pitched and sawtooth roofs are authored by the
+buildings themselves in the native roof planks. No roof vents.
+
 Native material slots only (lategame_kit.NATIVE_SLOTS); same-facing parallel
 surfaces are kept at least LAYER_GAP apart or buried in a solid.
 """
@@ -50,7 +56,7 @@ def flat_roof(g, x0, y0, x1, y1, top, *, overhang=EAVE, curb=True, mat=CONCRETE,
 
 def storey_block(g, x0, y0, x1, y1, layers, *, infill=ORANGE, frame=WOOD, door=None, door_id='Door0',
                  ground_windows=None, windows=None, roof=True, curb=True, pitch=1.0, ground_skip=(),
-                 faces=('front', 'back', 'left', 'right'), roof_mat=CONCRETE):
+                 faces=('front', 'back', 'left', 'right'), roof_mat=CONCRETE, curb_mat=CONCRETE):
     """Concrete ground storey (0..1) plus `layers - 1` framed storeys of one
     layer each, floor bands on every whole layer, and a flat roof whose top is
     the whole layer `layers`.
@@ -86,7 +92,7 @@ def storey_block(g, x0, y0, x1, y1, layers, *, infill=ORANGE, frame=WOOD, door=N
         if layers > 1:
             # Over the framed core (inset .05) and past its proud frame (.055).
             flat_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, top, overhang=EAVE + .05,
-                      curb=curb, mat=roof_mat)
+                      curb=curb, mat=roof_mat, curb_mat=curb_mat)
         elif curb:
             # The podium coping is the roof: add the curb on its edge.
             xa, ya, xb, yb = x0 - .05, y0 - .05, x1 + .05, y1 + .05

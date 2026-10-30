@@ -16,19 +16,21 @@ on the compressor house's flat roof.
 
 Hero: a frost-white insulated cold box tower lashed to a slender banded
 distillation column, over two Horton storage spheres on steel legs.
-Roof types: flat concrete roof with a low curb on the two-storey compressor
-house (the three cooler fans stand on it); flat steel caps on the cold box
-and column.
+Roof types: flat steel-plate roof with a steel curb on the two-storey
+compressor house (the cooler bank and its three fans cover it); a flat
+steel cap on layer 7 on the cold box, all nine cells placeable; a dome on
+the column. No vent cowls or roof stacks (the cold-box vent rotor is gone).
 
 Parts: the compressor house (concrete ground storey with the door, forged
 steel-framed upper storey, one layer each); the open engine bed on its west
 flank with two flywheels and two vertical compressor cylinders; the cold
-box with a caged ladder, vent stack and beacon; the column in front of it;
+box with a caged ladder and a flat, placeable cap; the column in front of it, with the vapour vent
+off-take and the beacon on its top;
 the two spheres behind the house, fed from its back wall.
 
-Animated (9; the loading arm went with the loading bay): two flywheels
-(spin), two compressor piston rods (piston Z), three cooler fans (spin),
-cold box vent cowl rotor (spin), beacon (spin).
+Animated (8; the loading arm went with the loading bay and the vent rotor
+with the roof follow-up, no roof vents): two flywheels (spin), two
+compressor piston rods (piston Z), three cooler fans (spin), beacon (spin).
 """
 import math
 
@@ -47,7 +49,7 @@ HERO = 'Frost-white cold box tower lashed to a banded distillation column above 
 HOUSE = (1.0, 0.0, 5.0, 3.0)          # whole tiles, two storeys
 DOOR_X = 3.5
 COLD = (5.22, 2.12, 7.88, 4.88)       # plinth (+.12) on tiles 5..8 x 2..5
-COLD_TOP = 6.5
+COLD_TOP = 6.86                       # its steel cap's top lies on layer 7: a placeable roof
 COLUMN = (6.6, 1.05)
 COLUMN_R = .42
 COLUMN_TOP = 7.5
@@ -58,6 +60,7 @@ SPHERE_R, SPHERE_Z = .92, 1.5
 def compressor_house(g, parts):
     x0, y0, x1, y1 = HOUSE
     top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=FORGED, frame=IRON, door=DOOR_X, door_id='CompressorHouseDoor',
+                         roof_mat=IRON, curb_mat=IRON,
                          ground_windows={'front': [(1.5, .55, 'factory'), (2.5, .55, 'factory'),
                                                    (4.5, .55, 'factory')],
                                          'back': [(2.25, .55, 'factory')]},
@@ -140,17 +143,16 @@ def cold_box(g, parts):
         bx(g, x0 - .05, y0 - .05, z - .05, x1 + .05, y1 + .05, z + .05, IRON)
     for x in (x0 + .55, x1 - .55):
         bolt_row(g, (x, y0 - .05, 1.3), (x, y0 - .05, COLD_TOP - .2), 14, axis='Y', r=.018)
-    # Crown: steel cap, vent stack with an animated cowl rotor, beacon.
+    # Crown: a flat steel cap on layer 7 with a low curb, clear of props, so
+    # its nine cells are placeable (the vent, rotor and beacon moved to the
+    # column top).
     bx(g, x0 - .14, y0 - .14, COLD_TOP, x1 + .14, y1 + .14, COLD_TOP + .14, IRON)
-    stack(g, x0 + .55, y0 + .6, COLD_TOP + .12, 1.2, emits='steam', r=.16)   # cold-box vapour
-    vx, vy = x1 - .55, y1 - .55
-    revolve(g, (vx, vy, COLD_TOP + .12), [(.24, 0), (.24, .45), (.28, .5), (.28, .56)], PAINTED, segments=14)
-    parts.append((fan('CryogenicLiquefactionPlant.VentRotor', vx, vy, COLD_TOP + .62, .22, axis='Z', blades=4),
-                  'SPIN_Z', 4))
-    bx(g, vx - .25, vy - .02, COLD_TOP + .66, vx + .25, vy + .02, COLD_TOP + .7, IRON)
-    bx(g, x0 + .86, y1 - .5, COLD_TOP + .12, x0 + .94, y1 - .42, COLD_TOP + 1.3, IRON)
-    pivot = beacon(g, x0 + .9, y1 - .46, COLD_TOP + 1.3)
-    parts.append((beacon_shutter(*pivot, 'CryogenicLiquefactionPlant.Beacon'), 'SPIN_Z', 2))
+    zt = COLD_TOP + .14
+    w = .12
+    bx(g, x0 - .14, y0 - .14, zt, x1 + .14, y0 - .14 + w, zt + .1, IRON)
+    bx(g, x0 - .14, y1 + .14 - w, zt, x1 + .14, y1 + .14, zt + .1, IRON)
+    bx(g, x0 - .14, y0 - .14 + w, zt, x0 - .14 + w, y1 + .14 - w, zt + .1, IRON)
+    bx(g, x1 + .14 - w, y0 - .14 + w, zt, x1 + .14, y1 + .14 - w, zt + .1, IRON)
     # Caged ladder up the back face to the crown; gauges and a valve station.
     ladder(g, (x0 + x1) / 2 + .5, y1 + .02, 1.08, COLD_TOP + .1, face='back', cage=True)
     for z in (2.0, 4.6):
@@ -159,7 +161,7 @@ def cold_box(g, parts):
     valve_wheel(g, x0 - .06, 4.2, 1.7, face='left', r=.13)
 
 
-def column(g):
+def column(g, parts):
     cx, cy = COLUMN
     r = COLUMN_R
     revolve(g, (cx, cy, -.035), [(r + .16, 0), (r + .16, .3)], CONCRETE, segments=12)
@@ -171,9 +173,14 @@ def column(g):
     for z in (2.2, 4.4, 6.2):
         g.beam((cx, cy + r - .02, z), (cx, COLD[1] + .03, z), .09, mat=IRON)
         g.ring((cx, cy, z), r + .07, .06, .1, PAINTED, 'Z', 12)
-    # Insulated transfer line from the column top over onto the cold box.
-    pipe(g, [(cx, cy, COLUMN_TOP + .15), (cx, cy, COLUMN_TOP + .6), (cx, 3.2, COLUMN_TOP + .6),
-             (cx, 3.2, COLD_TOP + .12)], r=.08, mat=CONCRETE, flanges=False)
+    # Insulated transfer line from the column's upper section into the cold box.
+    pipe(g, [(cx + .25, cy + r - .05, 6.55), (cx + .25, COLD[1] + .05, 6.55)], r=.08, mat=CONCRETE, flanges=False)
+    # Crown: the vapour off-take's open flanged mouth (steam) and the beacon.
+    revolve(g, (cx, cy, COLUMN_TOP + .2), [(.08, 0), (.08, .32), (.12, .36), (.12, .42)], IRON, segments=12)
+    emitter(g, 'steam', cx, cy, COLUMN_TOP + .43, .1)   # cold-box vapour
+    bx(g, cx + .3, cy - .04, COLUMN_TOP - .4, cx + .38, cy + .04, COLUMN_TOP + .55, IRON)
+    pivot = beacon(g, cx + .34, cy, COLUMN_TOP + .55)
+    parts.append((beacon_shutter(*pivot, 'CryogenicLiquefactionPlant.Beacon'), 'SPIN_Z', 2))
     gauge(g, cx - .2, cy - r - .01, 1.5, 'front', .09)
     # Feed from the compressor house's right wall to the column foot.
     pipe(g, [(HOUSE[2], 1.05, 1.5), (cx - r + .02, 1.05, 1.5)], r=.08, mat=CONCRETE, flanges=True)
@@ -197,5 +204,5 @@ def build(g, parts):
     compressor_house(g, parts)
     engine_bed(g, parts)
     cold_box(g, parts)
-    column(g)
+    column(g, parts)
     spheres(g)
