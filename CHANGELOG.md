@@ -41,6 +41,7 @@ Changes since 0.5.0, the first Workshop release.
   The Materials Laboratory (12,000) and the Hospital (25,000) are unchanged.
 - **Nuclear reactor:** 800,000 hp, up from 750,000.
 - **Smog Scrubber:** radius 20 tiles, up from 7, and it now removes all smog within that radius instead of 75%.
+- **Drill bits:** the Deep Drill now wears out 0.1 High-Grade Steel an hour while it produces. The Deep Mine wears out 0.1 High-Grade Steel plus 0.1 Concrete (shaft lining) an hour. Each building keeps up to 15 of each, delivered by haulers, and stops with "Waiting for drill bits" when it runs out. A smaller crew uses less; a paused building none. The building panel shows the stock and how long it lasts.
 
 ### Nuclear Reactor
 - **Falling power:** output now falls as the core heats instead of the reactor shutting itself down. Half the core heat means half the power, down to nothing at a meltdown. There is no automatic emergency shutdown any more; the manual SCRAM button remains.

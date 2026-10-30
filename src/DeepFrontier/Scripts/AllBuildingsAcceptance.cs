@@ -769,6 +769,8 @@ namespace DeepFrontier.Scripts {
       if(gc)expected.AddRange(gc.ConsumedGoods.Select(g=>g.GoodId));
       var pantry=s.Building.GetComponent<HospitalPantrySpec>();
       if(pantry!=null)expected.Add(pantry.WaterGoodId);
+      var upkeep=s.Building.GetComponent<FrontierWorkplaceUpkeepSpec>();
+      if(upkeep!=null)expected.AddRange(upkeep.Goods.Select(g=>g.GoodId));
       // Maintenance oils are accepted only while bots work there (BotMaintenanceStock); without bots
       // they must still be registered input goods.
       var maintenance=s.Building.GetComponent<FrontierBotMaintenanceSpec>();
@@ -1089,6 +1091,12 @@ namespace DeepFrontier.Scripts {
       var maintenance=s.Building.GetComponent<FrontierBotMaintenanceSpec>();
       if(maintenance!=null&&m)foreach(var g in maintenance.Goods) {
         int amount=Math.Min(maintenance.CapacityPerGood,m.Inventory.UnreservedCapacity(g.GoodId));
+        if(amount>0)m.Inventory.GiveExisting(new GoodAmount(g.GoodId,amount));
+      }
+      // Workplace upkeep (drill bits): production stops without them.
+      var upkeep=s.Building.GetComponent<FrontierWorkplaceUpkeepSpec>();
+      if(upkeep!=null&&m)foreach(var g in upkeep.Goods) {
+        int amount=Math.Min(upkeep.CapacityPerGood,m.Inventory.UnreservedCapacity(g.GoodId));
         if(amount>0)m.Inventory.GiveExisting(new GoodAmount(g.GoodId,amount));
       }
     }

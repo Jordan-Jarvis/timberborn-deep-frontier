@@ -44,7 +44,7 @@ namespace DeepFrontier.Scripts {
   // maintenance oils are therefore extra allowed goods of the workplace's own
   // native Manufactory inventory (BotMaintenanceInventory.cs patches the
   // native ManufactoryInventoryInitializer and keeps them through Moddable
-  // Recipes' rebuilds). BotMaintenanceStock wraps the native
+  // Recipes' rebuilds). ManufactoryExtraStock wraps the native
   // RecipeGoodDisallower: recipe goods keep their native per-recipe limits, and
   // each oil adds CapacityPerGood while at least one bot is assigned. Without
   // bots an oil's limit is frozen at the stock already held, so native fill
@@ -74,7 +74,7 @@ namespace DeepFrontier.Scripts {
     private readonly GoodRegistryValueSerializer _registrySerializer;
     private FrontierBotMaintenanceSpec _spec;
     private Workplace _workplace;
-    private BotMaintenanceStock _stock;
+    private ManufactoryExtraStock _stock;
     private GoodRegistry _legacyStock;
 
     public Inventory Inventory { get; private set; }
@@ -101,7 +101,7 @@ namespace DeepFrontier.Scripts {
       if(!manufactory||!manufactory.NeedsInventory)
         throw new InvalidOperationException($"{Name}: bot maintenance keeps its oils in the native Manufactory inventory, which this workplace does not have");
       Inventory=manufactory.Inventory;
-      _stock=BotMaintenanceStock.For(Inventory)
+      _stock=ManufactoryExtraStock.For(Inventory)
         ?? throw new InvalidOperationException($"{Name}: BotMaintenanceInventory did not add the maintenance oils to the Manufactory inventory");
       DisableComponent();
     }
@@ -120,7 +120,7 @@ namespace DeepFrontier.Scripts {
       foreach(var good in _legacyStock.Goods) {
         int amount=0;
         if(_spec.Goods.Any(g=>g.GoodId==good.GoodId))
-          amount=Math.Max(0,Math.Min(good.Amount,Math.Min(_spec.CapacityPerGood-_stock.MaintenanceStock(good.GoodId),Inventory.Capacity-Inventory.TotalAmountInStock)));
+          amount=Math.Max(0,Math.Min(good.Amount,Math.Min(_spec.CapacityPerGood-_stock.ExtraStock(good.GoodId),Inventory.Capacity-Inventory.TotalAmountInStock)));
         if(amount>0) {Inventory.GiveExistingIgnoringCapacity(new GoodAmount(good.GoodId,amount));moved.Add($"{amount} {good.GoodId}");}
         if(amount<good.Amount)dropped.Add($"{good.Amount-amount} {good.GoodId}");
       }
@@ -169,49 +169,74 @@ namespace DeepFrontier.Scripts {
     }
   }
 
-  // The Manufactory inventory's good disallower on maintained workplaces: the
-  // native RecipeGoodDisallower's limits plus the maintenance oils.
-  internal sealed class BotMaintenanceStock : IGoodDisallower, IInitializableGoodDisallower {
-    private static readonly ConditionalWeakTable<Inventory,BotMaintenanceStock> Stocks=new ConditionalWeakTable<Inventory,BotMaintenanceStock>();
+  // One extra good of a Manufactory inventory: a bot maintenance oil (stocked
+  // only while bots are assigned) or a workplace upkeep good (always stocked).
+  internal readonly struct ManufactoryExtraGood {
+    public readonly string GoodId;
+    public readonly int Capacity;
+    public readonly bool OnlyWithBots;
+    public ManufactoryExtraGood(string goodId,int capacity,bool onlyWithBots) {GoodId=goodId;Capacity=capacity;OnlyWithBots=onlyWithBots;}
+
+    // The extra goods a template's specs add (either may be null). A good may
+    // be added once: an oil that is also an upkeep good has no defined limit.
+    internal static ImmutableArray<ManufactoryExtraGood> Of(FrontierBotMaintenanceSpec maintenance,FrontierWorkplaceUpkeepSpec upkeep) {
+      var goods=ImmutableArray.CreateBuilder<ManufactoryExtraGood>();
+      if(maintenance!=null)foreach(var g in maintenance.Goods)goods.Add(new ManufactoryExtraGood(g.GoodId,maintenance.CapacityPerGood,true));
+      if(upkeep!=null)foreach(var g in upkeep.Goods)goods.Add(new ManufactoryExtraGood(g.GoodId,upkeep.CapacityPerGood,false));
+      var duplicate=goods.GroupBy(g=>g.GoodId).FirstOrDefault(g=>g.Count()>1);
+      if(duplicate!=null)throw new InvalidOperationException($"Manufactory extra good {duplicate.Key} is both a bot maintenance oil and a workplace upkeep good, or listed twice");
+      return goods.ToImmutable();
+    }
+  }
+
+  // The Manufactory inventory's good disallower on workplaces with bot
+  // maintenance or workplace upkeep: the native RecipeGoodDisallower's limits
+  // plus the extra goods.
+  internal sealed class ManufactoryExtraStock : IGoodDisallower, IInitializableGoodDisallower {
+    private static readonly ConditionalWeakTable<Inventory,ManufactoryExtraStock> Stocks=new ConditionalWeakTable<Inventory,ManufactoryExtraStock>();
     private readonly RecipeGoodDisallower _recipe;
-    private readonly ImmutableArray<string> _oils;
-    private readonly int _capacity;
+    private readonly ImmutableArray<ManufactoryExtraGood> _goods;
     private Inventory _inventory;
     private bool _botsPresent;
 
     public event EventHandler<DisallowedGoodsChangedEventArgs> DisallowedGoodsChanged;
 
-    internal BotMaintenanceStock(RecipeGoodDisallower recipe, FrontierBotMaintenanceSpec spec) {
-      _recipe=recipe??throw new InvalidOperationException("Maintained workplace has no native RecipeGoodDisallower");
-      _oils=spec.Goods.Select(g=>g.GoodId).ToImmutableArray();
-      _capacity=spec.CapacityPerGood;
+    internal ManufactoryExtraStock(RecipeGoodDisallower recipe, ImmutableArray<ManufactoryExtraGood> goods) {
+      _recipe=recipe??throw new InvalidOperationException("Workplace with extra Manufactory goods has no native RecipeGoodDisallower");
+      _goods=goods;
       _recipe.DisallowedGoodsChanged+=(sender,args)=>DisallowedGoodsChanged?.Invoke(this,args);
     }
 
-    internal static BotMaintenanceStock For(Inventory inventory)=>Stocks.TryGetValue(inventory,out var stock)?stock:null;
+    internal static ManufactoryExtraStock For(Inventory inventory)=>Stocks.TryGetValue(inventory,out var stock)?stock:null;
+
+    internal bool Holds(string goodId)=>_goods.Any(g=>g.GoodId==goodId);
 
     public void Initialize(Inventory inventory) {
-      if(_inventory!=null)throw new InvalidOperationException("Bot maintenance stock is already initialized");
+      if(_inventory!=null)throw new InvalidOperationException("Manufactory extra stock is already initialized");
       _inventory=inventory;
       Stocks.Add(inventory,this);
     }
 
     public int AllowedAmount(string goodId) {
       int recipe=_recipe.AllowedAmount(goodId);
-      if(!_oils.Contains(goodId))return recipe;
-      if(_botsPresent)return recipe+_capacity;
-      // No bots: hold what is in stock, deliver nothing more. A product oil
-      // keeps its native recipe limit, so surplus output still leaves natively.
-      return _inventory.Takes(goodId)?Math.Max(recipe,_inventory.AmountInStock(goodId)):recipe;
+      foreach(var good in _goods) {
+        if(good.GoodId!=goodId)continue;
+        if(!good.OnlyWithBots||_botsPresent)return recipe+good.Capacity;
+        // An oil without bots: hold what is in stock, deliver nothing more. A
+        // product oil keeps its native recipe limit, so surplus output still
+        // leaves natively.
+        return _inventory.Takes(goodId)?Math.Max(recipe,_inventory.AmountInStock(goodId)):recipe;
+      }
+      return recipe;
     }
 
-    // Oil held beyond the current recipe's own allowance.
-    internal int MaintenanceStock(string goodId)=>Math.Max(0,_inventory.AmountInStock(goodId)-_recipe.AllowedAmount(goodId));
+    // Extra good held beyond the current recipe's own allowance.
+    internal int ExtraStock(string goodId)=>Math.Max(0,_inventory.AmountInStock(goodId)-_recipe.AllowedAmount(goodId));
 
     internal void SetBotsPresent(bool present) {
       if(present==_botsPresent)return;
       _botsPresent=present;
-      foreach(var oil in _oils)DisallowedGoodsChanged?.Invoke(this,new DisallowedGoodsChangedEventArgs(oil));
+      foreach(var good in _goods)if(good.OnlyWithBots)DisallowedGoodsChanged?.Invoke(this,new DisallowedGoodsChangedEventArgs(good.GoodId));
     }
   }
 

@@ -674,6 +674,20 @@
         }
       ]
     },
+    "FrontierWorkplaceUpkeepSpec": {
+      "kind": "operational",
+      "response": "Upkeep goods are used only on native recipe progress, and the blocked workplace releases its workers on Off, so the Manufactory makes no progress and nothing is used; the goods in the production inventory are stocked only by the native fill behaviours, which stop while BlockableObject is blocked. The waiting status shows only while the building is unblocked.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/Workforce/WorkplaceUpkeep.cs",
+          "contains": "_manufactory.ProductionProgressed+=OnProductionProgressed"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/Workforce/WorkplaceUpkeep.cs",
+          "contains": "bool waiting=_finished&&_blockable.IsUnblocked&&_manufactory.HasCurrentRecipe;"
+        }
+      ]
+    },
     "PowerConnectionStatusSpec": {
       "kind": "cosmetic",
       "response": "Status only: shows 'Not connected to a power source' while the building's mechanical graph has no generator or battery (Scripts/PowerConnectionStatus.cs). It takes no part in operation, so the native Off response of the building is unchanged."

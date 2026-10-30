@@ -13661,6 +13661,16 @@
     "CapacityPerGood": 10,
     "ServiceHours": 24
   },
+  "FrontierWorkplaceUpkeepSpec": {
+    "Goods": [
+      {
+        "GoodId": "HighGradeSteel",
+        "GoodPerHour": 0.1,
+        "Role": "DrillBits"
+      }
+    ],
+    "CapacityPerGood": 15
+  },
   "BlockObjectNavMeshSettingsSpec": {
     "NoAutoWalls": false,
     "GenerateFloorsOnStackable": true,

@@ -69,7 +69,7 @@ const bots=strip(await readFile(resolve(scripts,'Workforce/BotMaintenanceInvento
 if(!has(bots,'class BotMaintenanceRecipeCompatibility{private static void Postfix(Manufactory __0,RecipeSpec __1)'))
   failures.push('BotMaintenanceRecipeCompatibility: expected a default-priority Postfix(Manufactory __0,RecipeSpec __1)');
 if(!/bool enabled=inventory\.Enabled;\s*if\(enabled\)inventory\.Disable\(\);[\s\S]*?if\(enabled\)inventory\.Enable\(\);/.test(bots))
-  failures.push('BotMaintenanceInventory.RestoreOils must keep the enabled state it finds (the restore postfix runs after it)');
+  failures.push('BotMaintenanceInventory.RestoreExtraGoods must keep the enabled state it finds (the restore postfix runs after it)');
 
 // --- Applied from the mod starter
 const starter=guarded(strip(await readFile(resolve(scripts,'DeepFrontierModStarter.cs'),'utf8')));

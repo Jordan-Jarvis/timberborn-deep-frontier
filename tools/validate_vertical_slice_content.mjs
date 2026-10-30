@@ -142,7 +142,7 @@ const nativeGeneratorSpecs = ['GoodConsumingBuildingSpec', 'GoodPoweredGenerator
 assert(nativeGeneratorSpecs.every((key) => Object.hasOwn(steamEngine, key)), 'The vanilla Steam Engine no longer carries the native generator specs.');
 const staffedSpecs = ['WorkplaceSpec', 'ManufactorySpec', 'WorkshopSpec', 'WorkshopPoweredGeneratorSpec', 'SimpleManufactoryBehaviorsSpec',
   'WorkplaceIlluminatorSpec', 'WorkplaceSlotManagerSpec', 'WorkshopWorkerHiderSpec', 'WorkshopAnimationControllerSpec', 'WorkshopParticleControllerSpec',
-  'WorkshopRandomNeedApplierSpec', 'TransformSlotInitializerSpec', 'FrontierWorkforceRiskSpec', 'FrontierBotMaintenanceSpec', 'AmbientAnimationSpec'];
+  'WorkshopRandomNeedApplierSpec', 'TransformSlotInitializerSpec', 'FrontierWorkforceRiskSpec', 'FrontierBotMaintenanceSpec', 'FrontierWorkplaceUpkeepSpec', 'AmbientAnimationSpec'];
 for (const plant of JSON.parse(await readFile(resolve(root, 'tools/frontier_progression.json'), 'utf8')).powerPlants.buildings) {
   const building = await readJson(`Data/Buildings/Power/${plant.id}/${plant.id}.IronTeeth.blueprint.json`);
   assert(plant.generator === 'GoodPoweredGenerator' && plant.workers === 0, `${plant.id} must be a workerless GoodPoweredGenerator plant in the catalog.`);

@@ -54,6 +54,8 @@ for(const blueprint of buildingCollection.TemplateCollectionSpec['Blueprints#app
   // plants are GoodConsumingBuilding generators and count above as Operation.
   if(Object.hasOwn(bp,'WorkshopPoweredGeneratorSpec'))for(const id of bp.ManufactorySpec.ProductionRecipeIds)generatorRecipes.add(id);
   if(Object.hasOwn(bp,'FrontierBotMaintenanceSpec'))for(const g of bp.FrontierBotMaintenanceSpec.Goods)add(g.GoodId,'Bot maintenance',relative(root,path));
+  // Workplace upkeep (tools/bot_upkeep_content.mjs): goods a workplace wears out while it produces (drill bits, shaft lining).
+  if(Object.hasOwn(bp,'FrontierWorkplaceUpkeepSpec'))for(const g of bp.FrontierWorkplaceUpkeepSpec.Goods)add(g.GoodId,'Upkeep: '+target,relative(root,path));
 }
 // Vanilla templates patched by a same-path Deep Frontier blueprint (native
 // array overlay): the recipes they append are active. A Bot Assembler recipe

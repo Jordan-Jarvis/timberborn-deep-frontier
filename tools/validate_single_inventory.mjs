@@ -35,11 +35,12 @@ const NATIVE_INVENTORIES = ['GoodConsumingBuildingSpec', 'StockpileSpec', 'Firew
 const MOD_INVENTORIES = {GroceryStore: 'GroceryStoreSpec'};
 // Specs whose goods live in another component's inventory (never a second
 // one): Hospital patient meals in the GoodConsumingBuilding inventory
-// (HospitalPantryInventory.cs), bot maintenance oils in the Manufactory
-// inventory (BotMaintenanceInventory.cs), the Technical School's supplies in
-// its GoodConsumingBuilding inventory (SchoolSupplyInventory.cs).
+// (HospitalPantryInventory.cs), bot maintenance oils and workplace upkeep
+// goods in the Manufactory inventory (BotMaintenanceInventory.cs), the
+// Technical School's supplies in its GoodConsumingBuilding inventory
+// (SchoolSupplyInventory.cs).
 const SHARED_INVENTORIES = {HospitalPantrySpec: 'GoodConsumingBuildingSpec', FrontierBotMaintenanceSpec: 'ManufactorySpec',
-  FrontierSpecialistSchoolSpec: 'GoodConsumingBuildingSpec'};
+  FrontierWorkplaceUpkeepSpec: 'ManufactorySpec', FrontierSpecialistSchoolSpec: 'GoodConsumingBuildingSpec'};
 
 const failures = [];
 const fail = message => failures.push(message);
@@ -75,8 +76,8 @@ for (const subject of Object.keys(MOD_INVENTORIES))
 // A shared spec adds no initializer, so the undeclared-initializer check above covers it.
 
 // Harmony prefixes on native inventory initializers must leave every other
-// building on the native path: their first statement fetches the one spec they
-// own and the second returns true (run native) when it is absent.
+// building on the native path: their first statements fetch the specs they
+// own and the next returns true (run native) when all of them are absent.
 const NATIVE_INITIALIZERS = ['GoodConsumingBuildingInventoryInitializer', 'ManufactoryInventoryInitializer', 'StockpileInventoryInitializer', 'InventoryInitializer'];
 for (const [file, text] of sources) {
   for (const match of text.matchAll(/\[HarmonyPatch\(typeof\((\w+)\),\s*nameof\([^)]*\)\)\]\s*internal static class (\w+)\s*\{([\s\S]*?)\n  \}/g)) {
@@ -85,11 +86,13 @@ for (const [file, text] of sources) {
     // A bool prefix replaces native code: it must return true (run native)
     // unless its own component is present. A void prefix always runs native
     // code and may only act after its own spec check returns early.
-    const prefix = body.match(/static bool Prefix\([^)]*\)\s*\{\s*([^;]+;)\s*([^;]+;)/);
+    const prefix = body.match(/static bool Prefix\([^)]*\)\s*\{\s*((?:var\s+\w+\s*=\s*\w+\.GetComponent<\w+>\(\);\s*)+)if\s*\(([^)]*)\)\s*return\s+true;/);
     const voidPrefix = body.match(/static void Prefix\([^)]*\)\s*\{([\s\S]*?)\n    \}/);
+    const names = prefix ? [...prefix[1].matchAll(/var\s+(\w+)/g)].map((m) => m[1]) : [];
+    const condition = prefix ? prefix[2].replace(/\s+/g, '') : '';
     const guarded = prefix
-      ? /=\s*\w+\.GetComponent<(\w+)>\(\)/.test(prefix[1])
-        && new RegExp(`if\\s*\\(\\s*!?\\s*${prefix[1].match(/var\s+(\w+)/)?.[1] ?? '\\0'}\\s*(==\\s*null)?\\s*\\)\\s*return\\s+true`).test(prefix[2])
+      ? condition === names.map((name) => `${name}==null`).join('&&') || (names.length === 1 && condition === `!${names[0]}`)
+      : !!body.match(/static bool Prefix\(/) ? false
       : !!voidPrefix && /GetComponent<\w+Spec>\(\);\s*if\s*\(\s*\w+\s*==\s*null\s*\)\s*return;/.test(voidPrefix[1]);
     if (!guarded) fail(`${relative(root, file)}: ${patch} prefix on native ${target} must first return true for buildings without its own spec`);
   }

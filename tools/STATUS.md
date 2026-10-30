@@ -4,6 +4,18 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Drill bits for the Deep Drill and Deep Mine (Claude Code session, 2026-10-29, built by an agent; validated in mirror `drillbits` and the real repo; not built or run in game)
+
+- **User:** concrete and steel need ongoing industrial uses (follow-up to the reactor casks and maintenance entry).
+- **Rates:** Deep Drill 0.1 HighGradeSteel per full-crew hour (DrillBits); Deep Mine 0.1 HighGradeSteel + 0.1 Concrete (ShaftLining). Stock 15 of each. Use scales with actual recipe progress, so a partial crew or low power uses less and an idle building none.
+- **Mechanism:** `FrontierWorkplaceUpkeepSpec` (from `tools/workforce_risks.json` `workplaceUpkeep`, written by `bot_upkeep_content.mjs`) and the `WorkplaceUpkeep` component (`Scripts/Workforce/WorkplaceUpkeep.cs`).
+  - The goods join the native Manufactory inventory through the existing bot-maintenance prefix and Moddable Recipes postfix (the stock class is renamed `ManufactoryExtraStock`), so each building keeps one enabled inventory. No new Harmony patches.
+  - Use follows `Manufactory.ProductionProgressed`. One unit is taken when the one in use wears through; the part left is saved.
+  - A native `IManufactoryLimiter` sets efficiency 0 with nothing in use and none in stock, and caps progress to the unit in use. One status per missing good ("Waiting for drill bits", "Waiting for shaft lining"). The panel has an Upkeep section.
+- **Item uses:** HighGradeSteel 33 → 35, Concrete 72 → 73.
+- **Checks:** mirror `drillbits`: `validate_all -SkipBlender` 52 pass + 1 report-only (`no-game-assets` outside git); real repo: bot upkeep, single inventory, enable guard, slice content, compile.
+- **In game:** deliveries up to 15 with and without bots; the stop, status and resume; timed use at full and partial crew; the panel; the part unit across save/load; older saves; bot oils still stocked after Moddable Recipes rebuilds the inventory. Building descriptions don't mention the upkeep yet.
+
 ## Reactor Bots: in-place bot upgrade and Reactor Charging Bay (Claude Code session, 2026-10-29, built by an agent; integrated and validated in mirror `integ`; not built or run in game)
 
 - **User:** super bots as an upgrade of the ordinary bot (same name, still a bot, big buffs, a different skin). They need steel, fuel rods and coolant, plus their own 5,000 hp charging stations. Design: `scratchpad/super-bots-design.md`.

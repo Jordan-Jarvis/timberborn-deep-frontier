@@ -870,6 +870,16 @@ DeepFrontier.BotUpkeep.Panel.Good,{0}: {1} in stock. A bot serviced with it wear
 DeepFrontier.BotUpkeep.Panel.Dose,"One dose lasts {0} hours of work here; unserviced bots wear out {1}×. Bots take the first oil in stock, in the order listed.",Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Bot.Serviced,Serviced with {0}: wears out {1}× here for {2} more hours.,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Bot.Unserviced,Not serviced: stock maintenance oil at the {0} to slow wear.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.Panel.Title,Upkeep,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.Panel.GoodName,{0} ({1}),Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.Panel.Good,"{0}: {1} in stock, {2} used per hour at full crew.",Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.Panel.Note,Production stops while any upkeep is missing. A smaller crew uses less; the stock lasts about {0} hours at full crew.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.DrillBits.Name,Drill bits,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.DrillBits.Status,Waiting for drill bits: production has stopped until haulers bring high-grade steel.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.DrillBits.Status.Short,No drill bits,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.ShaftLining.Name,Shaft lining,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.ShaftLining.Status,Waiting for shaft lining: production has stopped until haulers bring concrete.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.ShaftLining.Status.Short,No shaft lining,Deep Frontier bot upkeep
 Good.ReinforcedBotFrame.DisplayName,Reinforced Bot Frame,Deep Frontier reactor bots
 Good.ReinforcedBotFrame.PluralDisplayName,Reinforced Bot Frames,Deep Frontier reactor bots
 Good.ReactorPowerCell.DisplayName,Reactor Power Cell,Deep Frontier reactor bots

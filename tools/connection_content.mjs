@@ -182,8 +182,8 @@ export function liquidUse(value, {liquid, recipes}) {
 // Takeable), except the Restaurant, whose kitchen inventory replaces it with
 // its Givable stock (RestaurantKitchenInventory); GoodConsumingBuilding
 // supplies (Givable) plus the Hospital pantry water (HospitalPantryInventory);
-// Grocery foods (Givable and Takeable); bot-maintenance oils (Givable,
-// BotMaintenanceInventory.WithOils). Liquid goods only.
+// Grocery foods (Givable and Takeable); bot-maintenance oils and workplace
+// upkeep goods (Givable, BotMaintenanceInventory.WithExtraGoods). Liquid goods only.
 export function pipeTargetGoods(value, {liquid, recipes}) {
   const input = new Set(), output = new Set();
   const add = (set, id) => { if (liquid.has(id)) set.add(id); };
@@ -199,6 +199,7 @@ export function pipeTargetGoods(value, {liquid, recipes}) {
   if (value.HospitalPantrySpec) add(input, value.HospitalPantrySpec.WaterGoodId);
   for (const id of value.GroceryStoreSpec?.Foods ?? []) { add(input, id); add(output, id); }
   for (const g of value.FrontierBotMaintenanceSpec?.Goods ?? []) add(input, g.GoodId);
+  for (const g of value.FrontierWorkplaceUpkeepSpec?.Goods ?? []) add(input, g.GoodId);
   return {input, output, target: Boolean(value.BuildingSpec) && !value.BuildingPipeSpec && !value.TransportPipeSpec};
 }
 
