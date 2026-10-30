@@ -37,6 +37,14 @@ scene.camera.rotation_euler=(focus-scene.camera.location).to_track_quat('-Z','Y'
 scene.camera.data.ortho_scale=max(high-low)*(2.4 if args.context else 1.65)
 scene.render.resolution_x=900;scene.render.resolution_y=900;scene.render.resolution_percentage=100
 scene.cycles.samples=32;scene.cycles.use_denoising=True
+# Render on the RTX 2060 through OptiX like the other review renderers; the saved scene's device is not trusted.
+scene.render.engine='CYCLES'
+prefs=bpy.context.preferences.addons['cycles'].preferences
+prefs.compute_device_type='OPTIX';prefs.get_devices()
+gpus=[d for d in prefs.devices if d.type=='OPTIX' and d.name=='NVIDIA GeForce RTX 2060']
+if len(gpus)!=1:raise RuntimeError('RTX 2060 OptiX device required')
+for d in prefs.devices:d.use=d in gpus
+scene.cycles.device='GPU'
 args.output.parent.mkdir(parents=True,exist_ok=True)
 scene.render.filepath=str(args.output)
 bpy.ops.render.render(write_still=True)
