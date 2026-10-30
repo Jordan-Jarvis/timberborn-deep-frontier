@@ -34,8 +34,9 @@ import measure_connection_faces as M  # noqa: E402
 KEYS = ('model', 'export', 'exportSha256', 'size', 'baseZ', 'rule', 'faces', 'curvedFaces', 'roof')
 # Faces covered by curved surfaces (found 2026-10-23 on the exported models).
 CURVED_CASES = {
-    # Rounded edge of the turbine hall front (y 2, z 5) and the rounded corner pier.
-    'NuclearReactor': [[x, 2, 5, 'Up'] for x in range(6, 15)] + [[0, 0, 0, 'Left'], [0, 0, 0, 'Right']],
+    # The arched turbine-hall door portal and the containment drum (2026-10-30 compaction:
+    # the barrel-vaulted hall and the corner pier are gone).
+    'NuclearReactor': [[10, 0, 0, 'Left'], [10, 0, 0, 'Right'], [10, 0, 0, 'Top'], [6, 4, 0, 'Down'], [7, 4, 0, 'Down']],
     # The round LOX tank: its cylinder wall on three sides and its dome; a hydrogen bullet.
     'CryogenicTankFarm': [[9, 6, z, 'Right'] for z in range(6)] + [[7, 4, z, 'Down'] for z in range(6)]
     + [[7, 8, z, 'Up'] for z in range(6)] + [[7, 5, 6, 'Top'], [8, 6, 6, 'Top'], [0, 1, 2, 'Left'], [1, 1, 3, 'Top']],

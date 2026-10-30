@@ -236,6 +236,16 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - **Data:** Size Z 7 -> 6. Colliders and solid cells 227 -> 187, shaft faces 161 -> 169 (the flat roof's walls), roof-deck cells 21 -> 29. Power (40,000 hp), cost and walkway nodes unchanged.
   - **Old saves:** same footprint, origin and terrace. Anything placed on the old roof slopes does not exist.
   - **Validation:** in the mirror, the building-level set plus exports-hydro passes (map-setup-terrain maxArea only).
+- **Nuclear Reactor** 20x15x22 -> 14x11x11 (`lategame_NuclearReactor.py`). It stays the largest power landmark.
+  - **Kept:** the banded containment drum and tube under the ribbed steel dome, with its lantern and beacon, between the twin hyperboloid cooling towers in their basins, plus the back cooling-water race with its two native water wheels and sluice gates.
+  - **Flat roofs:** the turbine hall (one concrete storey plus one steel storey, roof top at layer 3, three roof ventilators), the one-storey feed house and the fuel store. All use open `parapet_ring`s.
+  - **Feed tanks:** they stand on the feed house roof, and the Timber Pipes coolant inlet stays on cell (0,0,0) facing the front (`coolant_pipe_ports.json` unchanged; its comment updated). The exciter flywheel stands on the feed house roof.
+  - **Removed:** the two ring galleries and their ladder, the lattice water tower, the lattice vent stack, the steam-bridge trestle, the coolant pipe-bridge trestles, the fuel crane gantry (`FuelCrane`) and the roof casks, the intake canal and the barrel vault. The other 15 animated parts keep their names.
+  - **Validator:** `validate_connection_exports.py` CURVED_CASES: the vault-edge and corner-pier faces become the arched door portal and the containment drum.
+  - **Triangles:** 19,536 -> 10,600.
+  - **Data:** same origin, door tile and Entrance (10,-1,0). Shaft faces 439 -> 267, pipe ports 126 -> 76 (the inlet (0,0,0) Down first), colliders 94 -> 35, roof-deck cells 53 -> 55. towerSteam emitters at the new tower mouths (2 / 12, 7.6, 7). Meltdown acts on the footprint (`docs/meltdown.md`), so its heat and cooling hooks are unchanged. Cost, 1,000,000 hp and 6 workers unchanged.
+  - **Old saves:** keeps its origin and entrance. A flipped reactor's entrance moves 6 tiles (local x 9 -> 3). The canyon, oasis and spillage map variants still declare the reactor site unmet with 20x15 wording; a 14x11 site may now fit there (left to the map owner).
+  - **Checks:** the building-level set plus meltdown_content, workforce_risks, building_sounds and automation_content pass. `map-setup-terrain` errors are another building's (Electrolysis Plant door approach) plus maxArea. Strict z-fight audit: 0 visible.
 
 ## Compaction: Deep Mine 10x11x16 -> 7x6x7 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `minesdrill` on HEAD b2d8fb6 + this change; not built or run in game)
 

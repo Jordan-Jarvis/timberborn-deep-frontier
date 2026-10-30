@@ -454,9 +454,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 19536,
-   "vertices": 37100,
-   "construction": 19536,
+   "finished": 10600,
+   "vertices": 20164,
+   "construction": 10600,
    "file": "outputs/lategame-integration/Data/Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.Model.timbermesh"
   },
   "ObservationDeck": {

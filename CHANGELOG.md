@@ -33,6 +33,7 @@
 - **Old saves:** both plants keep their origin and entrance; a flipped plant's entrance moves one tile. Reconnect shafts and pipes to the new walls.
 - **Radioactive Waste Vault** is 8x7, 6 high (was 9x10, 12 high): two berm courses, a lower dome, shorter vent towers and a flat-roofed gatehouse. Same cost.
 - **Reinforced Hydro Turbine** is 6 high (was 7) on the same 8x10 footprint: the workshop on the terrace is one storey under a flat roof you can build on. The dam, gates, water flow and terrace walkway are unchanged.
+- **Nuclear Reactor** is 14x11, 11 high (was 20x15, 22 high): the containment dome and twin cooling towers stay, the turbine hall has a flat roof, and the feed tanks stand on the feed house; the galleries, lattice water tower, vent stack and steel trestles are gone. The coolant pipe inlet is where it was. Same cost, output and crew; a flipped reactor's entrance moves.
 
 ### Smaller civic buildings (compaction pass)
 - **Restaurant** is 5 high (was 9) on the same 9x7 footprint: one layer per storey, both dining balconies with all their tables and chairs, a flat timber-decked roof level with the roof terrace, the sign swinging from a gantry on the roof. The gabled roof, dormers and lantern are gone.
