@@ -814,9 +814,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 5718,
-   "vertices": 11190,
-   "construction": 5718,
+   "finished": 4994,
+   "vertices": 9802,
+   "construction": 4994,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.Model.timbermesh"
   },
   "UraniumProcessingPlant": {

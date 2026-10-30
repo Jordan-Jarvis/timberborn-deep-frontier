@@ -53,6 +53,13 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - **Maps:** at 8 wide it still needs a flat site; the variant sites stay (the smaller footprint lies inside each old site with the same origin).
   - **Old saves:** a placed school keeps its origin and entrance at any rotation and frees the tiles it no longer uses. A flipped school's entrance moves 3 tiles (width 11 -> 8). Shafts on removed walls disconnect.
   - **Review:** `outputs/compaction/TechnicalSchool-before-after.png`.
+- **Town Plaza 9x9x6 -> 7x8x4** (`lategame_TownPlaza.py`):
+  - **Art:** the same square with the native Fountain of Joy (3 x 3), its terracotta ring and the visitors' 15 places round it, and the native Iron Teeth beaver statue. The bandstand stands on a 3 x 2 podium one layer high, with columns one layer tall under a smaller bell roof (kept as its defining silhouette). The right and back paving strips are gone. No clutter on buildable paving: the four flagpoles stand on the bandstand podium's corners instead of the corner paving, and the statue plinth fits one tile (1,1), so every paved cell outside the fountain is free. Same textures and materials; the weathervane and four flags keep their names and kinds.
+  - **Checks on the art:** triangles 5,718 -> 4,994 (ceiling re-recorded); strict z-fight 0 visible (frames 1/31/61/91); hidden-geometry audit 0 culled faces exposed; grid audit 0 misses.
+  - **Data:** same origin, door tile, Entrance (4,5,0) and 15 visitor slots (capacity unchanged). Occupied cells 71 -> 34, box colliders 12 -> 6. Cost unchanged. `lategame_freed_cells.json` footprintAfter 7x8x4; of its 2026-10-22 inside cells only (0,7) is still inside, now free paving.
+  - **Maps:** 8 deep, so it keeps its flat map sites.
+  - **Old saves:** a placed plaza keeps its origin, entrance and visitor places at any rotation and frees the tiles it no longer uses. A flipped plaza moves 2 tiles across its width (9 -> 7), entrance and visitor places with it.
+  - **Review:** `outputs/compaction/TownPlaza-before-after.png`.
 ## Compaction: Stone Crusher one-layer workshop, 4x4x5 -> 4x4x3 (Claude Code session, 2026-10-30, built by an agent; scene, export and blueprint promoted; validated in mirror `ind-head` (HEAD + this change) and the real repo; not built or run in game)
 
 - **User:** one layer per storey, flat roofs. The crusher was already 4x4; its workshop was two layers tall under a machine deck at layer 2.

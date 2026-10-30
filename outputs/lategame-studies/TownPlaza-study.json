@@ -2,19 +2,19 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "The native Fountain of Joy on the square axis, framed by a round iron bandstand under a teal bell roof and the native Iron Teeth beaver statue.",
   "footprint": [
-    9,
-    9
+    7,
+    8
   ],
-  "heightLayers": 6,
+  "heightLayers": 4,
   "boundsMin": [
     0.02,
     0.02,
     0.0
   ],
   "boundsMax": [
-    8.98,
-    9.05,
-    5.11
+    6.98,
+    8.05,
+    3.5656
   ],
   "doors": [
     {
@@ -57,26 +57,25 @@
       "model": "BeaverStatue.IronTeeth",
       "resource": "Buildings/Decoration/BeaverStatue/BeaverStatue.IronTeeth.Model",
       "position": [
-        0.30000000000000004,
-        0.30000000000000004,
+        1.05,
+        1.05,
         0.34
       ],
-      "scale": 1.4,
+      "scale": 0.9,
       "yaw": 0
     }
   ],
   "redicProps": [],
-  "faces": 2636,
+  "faces": 2280,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 104,
-    "BaseMetal.IronTeeth": 1556,
+    "BaseMetal.IronTeeth": 1316,
     "RoofPlanks.IronTeeth": 129,
     "Details.IronTeeth": 192,
-    "accent8": 20,
-    "Plaster_White.IronTeeth": 462,
+    "Plaster_White.IronTeeth": 366,
     "Plaster_Orange.IronTeeth": 439,
     "WindowsAtlas.IronTeeth": 98
   },
-  "sourceHash": "07994389abc3e325dab294deb3ec1b5f37b03e0bbbbf5ba938ca1e3fea580330",
-  "artHash": "059587842345c6c868b3d4bd1a325d02edfb44312266826b6c7faab3ef39c322"
+  "sourceHash": "679348674d37a5acdd5b5d8c6e8351a25eef9ae0b9e8e8052f0b70a7fa9908af",
+  "artHash": "eb6e1c7e2963aedbe5b2008a06cd4223cf6d1f17f121c11f0a1a003a6f2e9b8a"
 }

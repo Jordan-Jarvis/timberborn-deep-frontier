@@ -18,11 +18,11 @@
       "model": "BeaverStatue.IronTeeth",
       "resource": "Buildings/Decoration/BeaverStatue/BeaverStatue.IronTeeth.Model",
       "position": [
-        0.30000000000000004,
-        0.30000000000000004,
+        1.05,
+        1.05,
         0.34
       ],
-      "scale": 1.4,
+      "scale": 0.9,
       "yaw": 0
     }
   ],
