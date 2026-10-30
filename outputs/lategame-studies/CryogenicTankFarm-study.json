@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Squat frost-white double-walled oxygen tank under a ribbed steel dome, wound by a riveted spiral stair to a roof-edge gallery, with a tall boil-off vent on its crown.",
+  "hero": "Squat frost-white double-walled oxygen tank under a ribbed steel dome, wound by a riveted spiral stair to a roof-edge gallery, with a boil-off vent on its crown.",
   "footprint": [
-    11,
-    10
+    7,
+    6
   ],
-  "heightLayers": 11,
+  "heightLayers": 7,
   "boundsMin": [
-    -0.1805,
-    -0.105,
+    -0.0771,
+    -0.265,
     -0.03
   ],
   "boundsMax": [
-    11.0,
-    10.0,
-    10.71
+    7.0,
+    6.0176,
+    6.69
   ],
   "doors": [
     {
       "id": "Door0",
       "position": [
         1.5,
-        0.15,
+        0.0,
         0
       ],
       "outward": [
@@ -40,21 +40,18 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 6454,
+  "faces": 4578,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 460,
-    "IrregularPlanks_DarkBrown.IronTeeth": 10,
-    "BaseMetal.IronTeeth": 3739,
-    "RoofPlanks.IronTeeth": 132,
-    "Details.IronTeeth": 474,
-    "accent8": 20,
-    "accent25": 28,
-    "Plaster_White.IronTeeth": 1272,
+    "BaseWood_DarkBrown.IronTeeth": 416,
+    "BaseMetal.IronTeeth": 2357,
+    "Details.IronTeeth": 410,
+    "accent8": 10,
+    "accent25": 16,
+    "Plaster_White.IronTeeth": 1116,
     "Plaster_Orange.IronTeeth": 13,
-    "IrregularPlanks_MetalForged.IronTeeth": 24,
-    "WindowsAtlas.IronTeeth": 24,
-    "PaintedMetal.IronTeeth": 402
+    "WindowsAtlas.IronTeeth": 26,
+    "PaintedMetal.IronTeeth": 358
   },
-  "sourceHash": "260a563be3a428915ed0798cb3f6e03d090cd12a91c5c98218180a3d5e022296",
-  "artHash": "c2b093f937ceaafa7eefbc024df95663585ff414c10931e8d445b75211e77815"
+  "sourceHash": "145543ddf26e4ec013b6f1de88f4587f949b445230da8fe34a87537d41f5f0aa",
+  "artHash": "7e27f89fc85beea8340fa02810c5f4c12ad32467756c1af2f581be8606ac6d22"
 }

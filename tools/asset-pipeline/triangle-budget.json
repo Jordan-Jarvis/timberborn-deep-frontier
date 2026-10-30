@@ -238,9 +238,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 13498,
-   "vertices": 26086,
-   "construction": 13498,
+   "finished": 9610,
+   "vertices": 18494,
+   "construction": 9610,
    "file": "outputs/lategame-integration/Data/Buildings/Storage/CryogenicTankFarm/CryogenicTankFarm.IronTeeth.Model.timbermesh"
   },
   "DeepDrill": {

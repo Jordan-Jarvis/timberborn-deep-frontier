@@ -40,7 +40,6 @@
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 182 cells north-east of the start", "x": 222, "y": 215, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E"]},
     {"template": "MissionControl.IronTeeth", "label": "Mission Control, by the start", "x": 99, "y": 109, "z": 5, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 117 cells east of the start", "x": 199, "y": 141, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": []},
-    {"template": "CryogenicTankFarm.IronTeeth", "label": "Cryogenic Tank Farm, 117 cells east of the start", "x": 211, "y": 68, "z": 4, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "LimestoneQuarry.IronTeeth", "label": "Limestone Quarry, 78 cells south-west of the start", "x": 23, "y": 62, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E"], "understructure": [24, 55, 4]},
     {"template": "SandstoneQuarry.IronTeeth", "label": "Sandstone Quarry, 191 cells north-east of the start", "x": 201, "y": 249, "z": 16, "orientation": "Cw0", "margin": 1, "openSides": ["E"], "understructure": [204, 250, 16]},
     {"template": "FishHatchery.IronTeeth", "label": "Fish Hatchery, 14 cells west of the start", "x": 81, "y": 95, "z": 4, "orientation": "Cw270"},

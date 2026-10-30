@@ -38,7 +38,6 @@
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 63 cells south-east of the start", "x": 116, "y": 22, "z": 11, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 51 cells north-west of the start", "x": 24, "y": 76, "z": 8, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 68 cells south-east of the start", "x": 125, "y": 36, "z": 11, "orientation": "Cw180", "margin": 1, "openSides": ["E", "S"]},
-    {"template": "CryogenicTankFarm.IronTeeth", "label": "Cryogenic Tank Farm, 49 cells north of the start", "x": 50, "y": 114, "z": 5, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "DeepDrill.IronTeeth", "label": "Deep Drill, 53 cells south-west of the start", "x": 21, "y": 38, "z": 12, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "DeepDrill.IronTeeth", "label": "Deep Drill, 49 cells west of the start", "x": 15, "y": 58, "z": 11, "orientation": "Cw270", "margin": 1, "openSides": ["S"]},
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 44 cells north-west of the start", "x": 33, "y": 98, "z": 3, "orientation": "Cw180", "margin": 1, "openSides": ["W"], "understructure": [27, 93, 3]},

@@ -37,9 +37,8 @@ CURVED_CASES = {
     # The arched turbine-hall door portal and the containment drum (2026-10-30 compaction:
     # the barrel-vaulted hall and the corner pier are gone).
     'NuclearReactor': [[10, 0, 0, 'Left'], [10, 0, 0, 'Right'], [10, 0, 0, 'Top'], [6, 4, 0, 'Down'], [7, 4, 0, 'Down']],
-    # The round LOX tank: its cylinder wall on three sides and its dome; a hydrogen bullet.
-    'CryogenicTankFarm': [[9, 6, z, 'Right'] for z in range(6)] + [[7, 4, z, 'Down'] for z in range(6)]
-    + [[7, 8, z, 'Up'] for z in range(6)] + [[7, 5, 6, 'Top'], [8, 6, 6, 'Top'], [0, 1, 2, 'Left'], [1, 1, 3, 'Top']],
+    # The round LOX tank's dome and the hydrogen bullets' dished heads (7x6 study, 2026-10-30).
+    'CryogenicTankFarm': [[3, 3, 3, 'Top'], [3, 4, 3, 'Top'], [0, 5, 0, 'Up'], [1, 5, 0, 'Up']],
     # The arched door portal (the barrel vault went flat in the 2026-10-30 compaction).
     'OilPowerPlant': [[1, 0, 0, 'Left'], [1, 0, 0, 'Right'], [1, 0, 0, 'Top']],
 }
