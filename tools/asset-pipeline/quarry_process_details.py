@@ -20,8 +20,8 @@ BELT_B=Vector((7.30,3.40,1.47))
 BELT_R=.105
 BELT_SLATS=16
 RECEIVER=(6.00,4.20,2.40)
-# The stone bin stands on the ground in front of the plinth's east end.
-BIN=(7.25,1.55,.02)
+# The shallow stone tray stands on the plinth's front strip under the screen.
+BIN=(7.25,1.60,1.0)
 PROCESS={
     'scope':'Visual process choreography; no item creation or dependency belt entities',
     'route':['lift bucket','side tipping receiver','gravity chute',
@@ -120,8 +120,8 @@ def material_flow(g,parts):
         parts.append((cleat,'BELT_SLAT',i/BELT_SLATS))
     # Screen feed and discharge connect directly into the stone bin.
     chute(g,(7.30,3.30,1.50),(7.30,3.14,1.42),.80,.12)
-    # Discharge over the plinth's front face into the ground bin.
-    chute(g,(7.30,2.42,1.22),(7.25,2.02,.62),1.00,.12)
+    # Discharge from the screen's foot into the stone tray.
+    chute(g,(7.30,2.42,1.24),(7.25,2.10,1.21),1.00,.10)
     for i in range(6):
         pebble=Geometry(f'Quarry.PourStone{i:02d}')
         rock(pebble,(0,0,0),(.10,.09,.075),SAND,311+i)
@@ -163,7 +163,7 @@ def animate_process(obj,kind,phase,frame_end):
             elif kind=='SCREEN_STONE':
                 u=(t-.57-phase*.009)/.13;visible=0<=u<1
                 p=Vector((7.30+(phase%3-1)*.25,3.28,1.55))
-                if visible:p+=Vector((0,-1.20*u,-.85*u))
+                if visible:p+=Vector((0,-1.20*u,-.33*u))
             else:raise ValueError('Unknown process animation: '+kind)
             obj.location=(-p.x,-p.y,p.z);obj.scale=(1,1,1) if visible else (0,0,0)
             obj.keyframe_insert(data_path='location',frame=frame);obj.keyframe_insert(data_path='scale',frame=frame)

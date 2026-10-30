@@ -855,7 +855,7 @@
       1,
       1
      ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
+     "reason": "smoke or steam emitter above"
     }
    ]
   },
@@ -1385,6 +1385,41 @@
   "LimestoneQuarry": {
    "platformable": [
     [
+     0,
+     0,
+     0
+    ],
+    [
+     2,
+     0,
+     0
+    ],
+    [
+     3,
+     0,
+     0
+    ],
+    [
+     4,
+     0,
+     0
+    ],
+    [
+     5,
+     0,
+     0
+    ],
+    [
+     2,
+     1,
+     0
+    ],
+    [
+     3,
+     1,
+     0
+    ],
+    [
      4,
      1,
      0
@@ -1412,21 +1447,11 @@
     [
      3,
      3,
-     0
-    ],
-    [
-     2,
-     4,
      0
     ],
     [
      7,
      4,
-     0
-    ],
-    [
-     2,
-     5,
      0
     ],
     [
@@ -1458,27 +1483,19 @@
    "excluded": [
     {
      "cell": [
-      5,
-      0,
+      2,
+      4,
       0
      ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
+     "reason": "native prop on the roof"
     },
     {
      "cell": [
       2,
-      1,
+      5,
       0
      ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      3,
-      1,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
+     "reason": "native prop on the roof"
     }
    ]
   },
@@ -1775,6 +1792,41 @@
   "SandstoneQuarry": {
    "platformable": [
     [
+     0,
+     0,
+     0
+    ],
+    [
+     2,
+     0,
+     0
+    ],
+    [
+     3,
+     0,
+     0
+    ],
+    [
+     4,
+     0,
+     0
+    ],
+    [
+     5,
+     0,
+     0
+    ],
+    [
+     2,
+     1,
+     0
+    ],
+    [
+     3,
+     1,
+     0
+    ],
+    [
      4,
      1,
      0
@@ -1802,21 +1854,11 @@
     [
      3,
      3,
-     0
-    ],
-    [
-     2,
-     4,
      0
     ],
     [
      7,
      4,
-     0
-    ],
-    [
-     2,
-     5,
      0
     ],
     [
@@ -1848,27 +1890,19 @@
    "excluded": [
     {
      "cell": [
-      5,
-      0,
+      2,
+      4,
       0
      ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
+     "reason": "native prop on the roof"
     },
     {
      "cell": [
       2,
-      1,
+      5,
       0
      ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    },
-    {
-     "cell": [
-      3,
-      1,
-      0
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
+     "reason": "native prop on the roof"
     }
    ]
   },

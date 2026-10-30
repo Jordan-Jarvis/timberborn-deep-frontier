@@ -10,8 +10,9 @@ materials and atlas regions:
 - the rotary drum, its tyres, carrier rollers and drive pinion, on low stone
   plinths under a lean-to roof whose rear wall is closed (grid x 1..3),
 - the masonry firebox with its arched fire, grate and chimney (grid x 4),
-- the one-tile porch and door (grid x 3, unchanged native door contract),
-- fuel logs, a coal bin and the cement output bin in the front row.
+- the one-tile porch and door (grid x 3, unchanged native door contract).
+No props stand on otherwise open cells (user rule, 2026-10-30): the front
+row's other ground cells are open buildable ground.
 
 Artwork X/Y = native grid X/Y minus the layout origin (0,1): artwork x is
 grid x, artwork y is grid y - 1. The footprint is artwork x 0..5, y -1..2.
@@ -230,20 +231,6 @@ def chimney(g):
         a=i*math.pi/2;g.beam((x-.44,y,2.95),(x-.44,y+math.cos(a)*.12,2.95+math.sin(a)*.12),.022,mat=IRON)
 
 
-def output(g):
-    # Cement output bin in the front row before the arch.
-    x,y=4.63,-.52
-    bin(g,(x,y,.02),(.64,.78,.50),None)
-    open_box(g,(x,y,.47),(.52,.66,.05),KILN_CEMENT,('-z',))
-    rng=random.Random(554);verts=[];nx,ny=5,5
-    for j in range(ny):
-        for i in range(nx):
-            xx=x-.25+i*.50/(nx-1);yy=y-.32+j*.64/(ny-1)
-            zz=.495+.08*math.exp(-((xx-x)/.20)**2-((yy-y)/.24)**2)+rng.uniform(-.006,.006)
-            verts.append((xx,yy,zz))
-    g.add(verts,[(j*nx+i,j*nx+i+1,(j+1)*nx+i+1,(j+1)*nx+i) for j in range(ny-1) for i in range(nx-1)],KILN_CEMENT)
-
-
 def feed_house(g):
     """Closed plank house on the tile lines x 0..1, y 0..2 with corner posts,
     a stone sill and an open limestone bin at the top."""
@@ -313,12 +300,13 @@ def hall(g):
 def porch(g):
     # Entrance floor 0, canopy underside 1. The pitched canopy is not a
     # walking surface. The porch closes behind on y=ROOM_BACK (the drum hall).
-    for x in (DOOR_X-.65,DOOR_X+.65):timber_column(g,x,DOOR_Y+.01,ENTRY_Z,PORCH_Z+.10,.15)
+    # The canopy rests on the porch's side walls (no posts in the
+    # neighbouring cells).
     g.include_component(door_recipe('CementKiln','Door.GroundDoor'))
     for x in (DOOR_X-.555,DOOR_X+.555):g.box((x,DOOR_Y+.05,ENTRY_Z+.58),(.11,.08,1.00),PLANK)
     # Eave and corner shoes stay inside the front tile edge (artwork y=-1).
     # The eave beam's underside stays 5 mm above the door insert's top cap.
-    sheet_roof(g,DOOR_X-.77,DOOR_Y-.03,DOOR_X+.77,ROOM_BACK,PORCH_Z+.14,PORCH_Z+.38,235)
+    sheet_roof(g,DOOR_X-.62,DOOR_Y-.03,DOOR_X+.62,ROOM_BACK,PORCH_Z+.14,PORCH_Z+.38,235)
     for x in (ROOM_X0,ROOM_X1):
         g.beam((x,DOOR_Y+.01,PORCH_Z+.10),(x,ROOM_BACK-.02,PORCH_Z+.10),.12,mat=WOOD)
     # Side walls meet the door insert edges and the porch's back wall.
@@ -330,25 +318,9 @@ def porch(g):
     cage_lamp(g,DOOR_X+.46,-.78,PORCH_Z-.18)
 
 
-def fuel_logs(g):
-    rng=random.Random(17)
-    # Log stack before the feed house: twelve logs in three rows, end grain
-    # to the front.
-    for row in range(3):
-        for i in range(5-row):
-            x=.36+i*.29+row*.145;z=.13+row*.225;r=rng.uniform(.115,.135)
-            prism(g,(x,-.52,z),r,.76,WOOD,'Y',6,(False,True))
-            prism(g,(x,-.9125,z),r*.88,.025,PLANK,'Y',6,(True,False))
-    for x in (.14,1.78):
-        for y in (-.86,-.18):
-            g.box((x,y,.38),(.11,.11,.76),WOOD)
-    # Coal bin beside the logs.
-    bin(g,(2.25,-.52,.02),(.62,.72,.44),KILN_SOOT,1300)
-
-
 def kiln(g,parts):
     machinery=MountedMachinery(g,0,0)
     rails=RailAssembly('WalkwayRail')
     feed_house(g);hall(g);mechanics(machinery,parts)
-    firebox(machinery,parts);chimney(machinery);output(g);porch(g);fuel_logs(g)
+    firebox(machinery,parts);chimney(machinery);porch(g)
     return rails

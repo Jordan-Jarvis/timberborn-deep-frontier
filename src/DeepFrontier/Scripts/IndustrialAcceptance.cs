@@ -198,9 +198,11 @@ namespace DeepFrontier.Scripts {
     // inside the new bounds (tools/validate_freed_cells.mjs, outputs/freed-cells.json).
     private static readonly Dictionary<string,(int,int,int,int,Vector3Int[])> Freed=new() {
       {"StoneCrusher.IronTeeth",(-1,4,-2,4,new Vector3Int[0])},
-      // Compact 5x3x4 kiln (2026-10-30, same origin and entrance): no open
-      // ground cell inside its bounds; the former 7x5 cells outside it are freed.
-      {"CementKiln.IronTeeth",(-1,7,-1,7,new Vector3Int[0])},
+      // Compact 5x3x4 kiln (2026-10-30, same origin and entrance): the front
+      // row's ground cells beside the porch are open (no props on open cells);
+      // the former 7x5 cells outside it are freed.
+      {"CementKiln.IronTeeth",(-1,7,-1,7,new[]{new Vector3Int(0,0,0),new Vector3Int(1,0,0),
+        new Vector3Int(2,0,0),new Vector3Int(4,0,0)})},
       // Compact 8x6x5 quarries (2026-10-30, same origin, entrance and seam
       // cells): every ground cell inside the bounds is occupied.
       {"SandstoneQuarry.IronTeeth",(0,10,-2,7,new Vector3Int[0])},

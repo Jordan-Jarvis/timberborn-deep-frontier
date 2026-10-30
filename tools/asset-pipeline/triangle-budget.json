@@ -58,9 +58,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 6183,
-   "vertices": 12795,
-   "construction": 6183,
+   "finished": 5259,
+   "vertices": 10851,
+   "construction": 5259,
    "file": "src/DeepFrontier/Data/Buildings/Metal/CementKiln/CementKiln.IronTeeth.Model.timbermesh"
   },
   "ChemicalWorks": {
@@ -94,9 +94,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 5088,
-   "vertices": 10656,
-   "construction": 5088,
+   "finished": 4998,
+   "vertices": 10476,
+   "construction": 4998,
    "file": "src/DeepFrontier/Data/Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model.timbermesh"
   },
   "ConcreteOverflowDam": {
@@ -418,9 +418,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 6967,
-   "vertices": 14834,
-   "construction": 6967,
+   "finished": 6211,
+   "vertices": 13079,
+   "construction": 6211,
    "file": "src/DeepFrontier/Data/Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.Model.timbermesh"
   },
   "LimestoneSeam": {
@@ -625,9 +625,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 6967,
-   "vertices": 14834,
-   "construction": 6967,
+   "finished": 6211,
+   "vertices": 13079,
+   "construction": 6211,
    "file": "src/DeepFrontier/Data/Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.Model.timbermesh"
   },
   "SandstoneSeam": {

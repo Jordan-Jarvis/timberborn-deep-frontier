@@ -1,4 +1,4 @@
-{"template":"ConcreteMixer","model":"Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model","export":"src/DeepFrontier/Data/Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model.timbermesh","exportSha256":"966904650925bbe2a22a9372065d5e37a9b8ada9a213c3227f0d0e33ecb38235","size":[4,3,3],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)","rule":"8x8 rays per face; covering surface = nearest opaque static surface within 0.35 behind (or 0.02 proud of) the face plane; every covering normal within 5.0 deg of the outward axis and 1.0 deg of the covering mean; one plane (depths within 0.05) covers >= 60%; glass counts as a surface; no animated geometry within 1.0 in front","excluded":"Water, WalkwayRail nodes, animated nodes; native props are not in the model; glass counts as a surface","stats":{"triangles":{"opaque":3690,"glass":62,"lamp":32,"animated":1304},"flatButAnimated":6,"oldRuleFaces":33,"oldRuleCurveExcluded":1,"oldRuleSlopeExcluded":7,"oldRuleMultiPlaneExcluded":1,"newSetBackFaces":1},"curvedFaces":[[3,2,0,"Right","slope"],
+{"template":"ConcreteMixer","model":"Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model","export":"src/DeepFrontier/Data/Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model.timbermesh","exportSha256":"54a7bea8722fb94183847c592e38c122b7a618c246b27979357ece5a7194d91e","size":[4,3,3],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)","rule":"8x8 rays per face; covering surface = nearest opaque static surface within 0.35 behind (or 0.02 proud of) the face plane; every covering normal within 5.0 deg of the outward axis and 1.0 deg of the covering mean; one plane (depths within 0.05) covers >= 60%; glass counts as a surface; no animated geometry within 1.0 in front","excluded":"Water, WalkwayRail nodes, animated nodes; native props are not in the model; glass counts as a surface","stats":{"triangles":{"opaque":3600,"glass":62,"lamp":32,"animated":1304},"flatButAnimated":6,"oldRuleFaces":34,"oldRuleCurveExcluded":1,"oldRuleSlopeExcluded":7,"oldRuleMultiPlaneExcluded":1,"newSetBackFaces":1},"curvedFaces":[[3,2,0,"Right","slope"],
 [0,1,1,"Down","slope"],
 [1,1,2,"Right","slope"],
 [1,1,2,"Up","slope"],
@@ -13,6 +13,7 @@
 [0,2,1],
 [1,2,1]],"animated":[]},"faces":[[0,0,0,"Left"],
 [0,0,0,"Down"],
+[2,0,0,"Bottom"],
 [3,0,0,"Bottom"],
 [0,1,0,"Left"],
 [0,2,0,"Left"],

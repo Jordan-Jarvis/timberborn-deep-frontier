@@ -29,10 +29,13 @@ export function industrialBlocks(ident, size) {
     region([0,1,2,3,3,2],'All'); // hopper, flywheel top, roll and hopper roofs
   } else if(ident==='CementKiln') {
     // Compact 5x3x4 (2026-10-30), grid y = artwork y + 1.
-    region([0,0,0,4,0,0],'All'); // log stack, coal bin, porch and doorstep (3,0,0), output bin
+    // No props on open cells (2026-10-30): the front row's other ground
+    // cells are free; the firebox crown's cell above is left open.
+    region([3,0,0,3,0,0],'All'); // porch and doorstep (3,0,0)
     region([2,0,1,4,0,1],'All'); // porch canopy and its eaves
-    region([0,1,0,4,2,2],'All'); // feed house, drum hall and roof, firebox and crown
-    region([4,2,3,4,2,3],'All'); // chimney stack
+    region([0,1,0,4,2,1],'All'); // feed house, drum hall, firebox and crown
+    region([0,1,2,3,2,2],'All'); // feed house top, hall roof
+    region([4,2,2,4,2,3],'All'); // chimney stack and damper
   } else if(ident==='ConcreteMixer') {
     // Compact 4x3x3 (2026-10-30).
     region([0,0,0,3,2,1],'All'); // operator room and canopy (doorstep (1,0,0)), drum, drive, tray, tank pedestal
@@ -44,9 +47,9 @@ export function industrialBlocks(ident, size) {
     // room; the supply pipe; the boarded headframe with receiver and sheave;
     // the winding house; the belt, screen and drives.
     region([0,0,0,7,5,0],'All');
-    region([0,0,1,5,0,1],'All');
+    region([1,0,1,1,0,1],'All'); // cabin roof
+    region([6,0,1,7,0,1],'All'); // stone tray
     region([0,1,1,1,5,2],'All');
-    region([2,1,1,3,1,1],'All');
     region([4,2,1,6,4,4],'All');
     region([3,4,1,6,5,2],'All');
     region([6,1,1,7,3,1],'All');region([7,3,2,7,3,2],'All');

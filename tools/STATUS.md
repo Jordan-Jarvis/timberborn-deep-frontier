@@ -4,6 +4,15 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Compaction follow-up: no clutter on buildable space, kiln, mixer and quarries (Claude Code session, 2026-10-30, built by an agent; scenes, exports and blueprints promoted; validated in mirror `ind-head` and the real repo; not built or run in game)
+
+- **User rule (BRIEF.md "No clutter on buildable space"):** "we can have details, but clutter that leaves most of a tile open but makes it un buildable is not great."
+- **Cement Kiln:** the log stack, coal bin and cement output bin (front row) and the porch posts are gone; the porch canopy rests on the porch's side walls (DOOR_X +-0.62). The front row's ground cells (0,0), (1,0), (2,0) and (4,0) are open (`industrial_occupancy.mjs`; `IndustrialAcceptance` lists them as freed cells); the firebox crown's cell above stays open, though the roof-deck plan excludes it for the smoke emitter above. The door's shoulder strips (part of its frame, 0.11 wide) still reach into cells 2 and 4.
+- **Concrete Mixer:** the wet tray is now a trough on one concrete base under the drive pedestal (solid mass), not a loose bin.
+- **Quarries:** the native water tank stands inside the winding house (the ground cell it took is plinth now: the plinth's front strip runs the full width either side of the cabin); the front-strip supply bins, spoil heap and the plinth-top supply pipe are gone; the stone bin is a shallow tray on the plinth under the screen. The open plinth top and the winding-house roof are now platformable roof decks (`roof_decks.json`).
+- **Not changed:** the pits keep their yard row: the apron floor, the sandstone pit's sorting grate and the hoist basket are their working yard (the door's approach floor is in that row, so the row cannot be trimmed without moving the entrance). The crusher's porch and chute-fed output bin are its door and process.
+- **Checks:** strict z-fight 0 visible on all three; kiln and quarry motion checks; `exports-industrial`, `sources-mixer`, `model-bindings`, `building_entrances`, `construction_materials`, `freed_cells`, `status_icon_anchors`, `audit-building-assets` pass (`roof_decks` and `smog_content` fail only on other agents' buildings); recipes, costs and workers unchanged; scripts compile.
+
 ## Compaction: late-game power, nuclear and rocketry buildings (Claude Code session, 2026-10-30, built by an agent; promoted building by building; validated in mirror `compactlg`; not built or run in game)
 
 - **Uranium Processing Plant** 12x11x14 -> 8x7x8 (`lategame_UraniumProcessingPlant.py`).

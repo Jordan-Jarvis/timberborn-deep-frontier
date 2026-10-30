@@ -93,8 +93,9 @@ def foundation(g):
     plinth(g,cx1,2.06,8.0,7.0,PLINTH_TOP)
     plinth(g,cx0,2.06,cx1,cy0,PLINTH_TOP)
     plinth(g,cx0,cy1,cx1,7.0,PLINTH_TOP)
-    # Front strip, ending where the stone bin stands on the ground.
-    plinth(g,2.10,1.0,6.50,2.06,PLINTH_TOP)
+    # Front strip either side of the cabin (the stone tray stands on it).
+    plinth(g,0,1.0,.905,2.06,PLINTH_TOP)
+    plinth(g,2.10,1.0,8.0,2.06,PLINTH_TOP)
     # The lined collar: stone blocks against the plinth's inner faces, the
     # dark shaft floor and a timber collar frame on the plinth top.
     g.box(((cx0+cx1)/2,(cy0+cy1)/2,.065),(cx1-cx0,cy1-cy0,.10),KILN_SOOT)
@@ -259,7 +260,7 @@ def machinery(g,parts):
 
 def sorting(g,parts):
     x,y,z=BIN
-    bin(g,(x,y,z),(1.30,.90,.42),SAND,738)
+    bin(g,(x,y,z+.02),(1.30,.90,.18),SAND,738)
     # Suspended vibrating screen between the belt foot and the discharge.
     p=(7.30,2.80,1.35);m=Geometry('Quarry.SortingSieve',p)
     for xx in (6.88,7.72):m.beam((xx,3.20,1.45),(xx,2.45,1.25),.06,.07,IRON)
@@ -327,20 +328,13 @@ def tool_room(g):
 
 
 def supplies(g):
-    # Native water tank on the ground in front of the plinth, its supply pipe
-    # up the plinth face to the collar; covered supply bins on the rear plinth.
+    # The native water tank stands inside the winding house (no props on
+    # open plinth or ground cells, 2026-10-30); its line runs along the
+    # house's west wall to the drum's bearing.
     from native_building_assets import water_barrel
-    water_barrel(g,'QuarryWaterBarrel',(.45,1.55,0),.55)
-    round_pipe(g,[(.45,1.86,.52),(.45,2.00,.52),(.45,2.00,1.10),(.45,2.18,1.10),(4.00,2.18,1.10),
-                  (4.00,3.68,1.10),(4.30,3.68,1.10),(4.30,3.68,.70)],.06)
-    band(g,(2.40,2.18,1.10),.10,.03,.08,BRASS,'X',8)
-    gauge(g,3.20,2.08,1.32,.09)
-    g.box((3.20,2.16,1.21),(.20,.10,.22),IRON)
-    # Covered supply bins and a spoil heap on the plinth's front strip.
-    for x,w in ((2.62,.60),(3.30,.58)):
-        bin(g,(x,1.52,PLINTH_TOP+.02),(w,.62,.42),None)
-        for i in range(3):g.box((x,1.52-.62*.30+i*.62*.30,PLINTH_TOP+.475),(w,.12,.05),PLANK)
-    rock_heap(g,4.10,1.20,5.70,1.90,PLINTH_TOP,SAND,905,8,(.16,.26))
+    water_barrel(g,'QuarryWaterBarrel',(3.45,6.55,PLINTH_TOP),.55)
+    round_pipe(g,[(3.45,6.26,1.30),(3.45,6.05,1.30),(3.80,6.05,1.30)],.05)
+    band(g,(3.45,6.16,1.30),.08,.025,.06,BRASS,'Y',8)
 
 
 def quarry(g,parts):

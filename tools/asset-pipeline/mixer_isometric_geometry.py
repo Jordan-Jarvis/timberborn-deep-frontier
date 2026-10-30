@@ -182,7 +182,9 @@ def drum(g, parts):
     wheel(drive,(cx,.40,cz),.34,'Y')
     prism(drive,(cx,.45,cz),.07,.45,IRON,'Y',10)
     parts.append((drive,'Y',2))
-    g.box((cx,.59,.56),(.40,.18,1.12),CIVIC_CONCRETE)
+    # One concrete base under the drive and the wet trough (front row).
+    g.box((3.03,.50,.20),(1.86,.84,.40),CIVIC_CONCRETE)
+    g.box((cx,.59,.76),(.40,.18,.72),CIVIC_CONCRETE)
     open_box(g,(cx,.59,1.20),(.26,.16,.16),IRON,('-z',))
 
 
@@ -213,14 +215,14 @@ def tank(g):
 
 
 def tray(g):
-    # Sloped discharge from the drum's side and the wet tray in the front-
-    # right cell (the stacked finished blocks were loose props, removed
-    # 2026-10-22).
-    chute(g,(3.30,.95,1.28),(3.58,.55,.66),.40)
-    bin(g,(3.58,.48,.02),(.76,.84,.42),None)
-    open_box(g,(3.58,.48,.37),(.64,.72,.05),KILN_CEMENT,('-z',))
+    # Sloped discharge from the drum's side into the wet trough set in the
+    # concrete drive base (no loose bin on an open cell, 2026-10-30).
+    chute(g,(3.30,.95,1.28),(3.58,.55,.62),.40)
+    for y in (.16,.84):g.box((3.58,y,.46),(.74,.07,.12),PLANK)
+    for x in (3.24,3.92):g.box((x,.50,.46),(.07,.61,.12),PLANK)
+    open_box(g,(3.58,.50,.42),(.61,.61,.04),KILN_CEMENT,('-z',))
     for i in range(4):
-        rock(g,(3.40+(i%2)*.36,.30+(i//2)*.38,.42),(.20,.16,.05),KILN_DUST,1000+i)
+        rock(g,(3.43+(i%2)*.30,.36+(i//2)*.28,.455),(.16,.13,.04),KILN_DUST,1000+i)
 
 
 def mixer(g, parts):

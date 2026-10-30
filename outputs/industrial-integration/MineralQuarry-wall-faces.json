@@ -1,13 +1,25 @@
 {
  "model": "MineralQuarry",
  "source": "MineralQuarry-ReferenceStudy.blend",
- "sourceSha256": "a148b7636993c83a812cad351c9d60cb649b812d8b092eb78bcc66cbbebc8f30",
+ "sourceSha256": "3572eaecc08f5a582620b691060e9792827b6a1226e2bb48ed1095d6759918f1",
  "frame": 1,
  "coordinateSystem": "Native grid XYZ; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)",
  "rule": "outward static surfaces within 0.12 behind the face plane (or up to 0.02 proud) cover >= 60% of 8x8 samples (measure_wall_faces.py)",
  "excluded": "rail posts/panels, native props, liquids, animated parts",
  "objects": 2,
  "walls": [
+  [
+   0,
+   0,
+   0,
+   "Left"
+  ],
+  [
+   0,
+   0,
+   0,
+   "Down"
+  ],
   [
    2,
    0,
@@ -39,6 +51,18 @@
    "Down"
   ],
   [
+   7,
+   0,
+   0,
+   "Right"
+  ],
+  [
+   7,
+   0,
+   0,
+   "Down"
+  ],
+  [
    0,
    1,
    0,
@@ -58,12 +82,6 @@
   ],
   [
    3,
-   1,
-   0,
-   "Down"
-  ],
-  [
-   6,
    1,
    0,
    "Down"
