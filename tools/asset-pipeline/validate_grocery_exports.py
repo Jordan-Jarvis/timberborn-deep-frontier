@@ -91,7 +91,8 @@ require(not {'ManufactorySpec', 'WorkshopSpec', 'AttractionSpec', 'StatusHidingE
 shop = read('tools/frontier_progression.json')['groceryStore']
 require(blueprint['GroceryStoreSpec']['Foods'] == shop['stock'], 'Assortment differs from canonical data')
 require(blueprint['GroceryStoreSpec']['CapacityPerFood'] == 100 and len(shop['stock']) == 6, 'Shelf capacities differ')
-require(blueprint['MechanicalNodeSpec'] == {'PowerInput': 100, 'PowerOutput': 0, 'IsShaft': False}, 'Grocery hp roles differ')
+# 3,900 hp: the late-game power rule's floor at 6,000 science (authored 100).
+require(blueprint['MechanicalNodeSpec'] == {'PowerInput': 3900, 'PowerOutput': 0, 'IsShaft': False}, 'Grocery hp roles differ')
 require(blueprint['BuildingSpec']['ScienceCost'] == 6000, 'Initial science balance differs')
 require(blueprint['WorkplaceSpec']['MaxWorkers'] == 2, 'Clerk capacity differs')
 require(blueprint['GroceryStoreSpec']['MinimumStockedFoodTypes'] == 3, 'Stocked-service threshold differs')
@@ -99,7 +100,7 @@ report = {'status': 'Source/export checks passed; native shoppers, balcony paths
           'sourceSha256': hashlib.sha256((ROOT/'src/DeepFrontier/Art/Source/GroceryMarket-ReferenceStudy.blend').read_bytes()).hexdigest(),
           'exportSha256': hashlib.sha256(payload).hexdigest(), 'size': [w, d, h],
           'nodes': len(model.nodes), 'animatedTracks': sorted(animated), 'nativeProps': len(assembly['props']),
-          'entrance': door['entrance'], 'balconyPathCells': deck, 'workers': 2, 'hpDemand': 100, 'hpOutput': 0,
+          'entrance': door['entrance'], 'balconyPathCells': deck, 'workers': 2, 'hpDemand': 3900, 'hpOutput': 0,
           'science': 6000, 'foods': shop['stock'], 'capacityPerFood': 100,
           'clerkCell': clerk_cell, 'stockStageNodes': stock_nodes, 'stockDisplay': blueprint['GroceryStockDisplaySpec']}
 (ROOT/'outputs/civic-integration/grocery-static-checks.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')

@@ -30,7 +30,6 @@ const vanillaRelative = ['vendor', 'timberborn-modding', 'Assets', 'Tools', 'Imp
 
 export const LAUNCH_PAD = 'Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.blueprint';
 export const MISSION_CONTROL = 'Buildings/Science/MissionControl/MissionControl.IronTeeth.blueprint';
-export const LAUNCH_POWER_HP = 25000;
 export const LEGACY_RADIUS = 40;
 export const LIQUID_FUELS = ['LiquidHydrogen', 'LiquidOxygen'];
 export const VISUAL_NODES = {RocketNode: 'LaunchPad.Rocket', ExhaustNode: 'LaunchPad.RocketExhaust'};
@@ -96,7 +95,7 @@ const GENERIC_PAD_DESCRIPTION = 'Deep Frontier launch pad production building';
 
 export function localizationRows(powerHp) {
   const rows = [
-    ['Building.LaunchPad.Description', `Launches the colony's rockets. Select a mission in the recipe list: haulers stage one complete rocket (airframes, propulsion, guidance, payload and telemetry) and its liquid hydrogen and oxygen; workers then prepare it under a ${powerHp} hp load. Every launch consumes the whole rocket and fuel, and a launch can fail. Also produces guidance telemetry.`],
+    ['Building.LaunchPad.Description', `Launches the colony's rockets. Select a mission in the recipe list: haulers stage one complete rocket (airframes, propulsion, guidance, payload and telemetry) and its liquid hydrogen and oxygen; workers then prepare it under a ${powerHp.toLocaleString('en-US')} hp load. Every launch consumes the whole rocket and fuel, and a launch can fail. Also produces guidance telemetry.`],
     ['RocketProgram.Mission.OrbitalObservatory.DisplayName', 'Orbital Observatory'],
     ['RocketProgram.Mission.OrbitalObservatory.Description', 'First launch: lofts a telescope and archive receiver to read what the old orbital records saw.'],
     ['RocketProgram.Mission.OrbitalObservatory.Success', 'The observatory is in orbit. Its first passes recover fragments of the old orbital records: survey images of this valley before the drought, and a faint green trail of badwater running back to a single source far upriver. The archive now knows where to look.'],
@@ -172,8 +171,10 @@ export async function applyRocketProgram({root = defaultRoot, dataRoot = resolve
   const pad = await readJson(padPath);
   for (const key of ['ManufactorySpec', 'WorkshopSpec', 'WorkplaceSpec', 'MechanicalNodeSpec', 'MechanicalBuildingSpec'])
     if (!pad[key]) throw new Error(`Rocket program: the Launch Pad lacks ${key}`);
-  if (pad.MechanicalNodeSpec.PowerInput !== LAUNCH_POWER_HP || pad.MechanicalNodeSpec.PowerOutput !== 0)
-    throw new Error(`Rocket program: the Launch Pad must demand exactly ${LAUNCH_POWER_HP} hp of launch power`);
+  // The launch load is the pad's generated draw (power rule: lategame_costs.mjs scaledPower).
+  const launchHp = pad.MechanicalNodeSpec.PowerInput;
+  if (!(launchHp > 0) || pad.MechanicalNodeSpec.PowerOutput !== 0)
+    throw new Error(`Rocket program: the Launch Pad must be a power consumer (PowerInput ${launchHp})`);
   for (const key of ['RocketLaunchPadSpec', 'RangedEffectBuildingSpec', 'RocketLaunchVisualSpec'])
     if (pad[key]) throw new Error(`Rocket program: the Launch Pad already has ${key}; regenerate it from its producer`);
 
@@ -230,7 +231,7 @@ export async function applyRocketProgram({root = defaultRoot, dataRoot = resolve
 
   const localizationPath = resolve(dataRoot, 'Localizations', 'enUS.csv');
   const lines = (await readFile(localizationPath, 'utf8')).split('\n');
-  const rows = localizationRows(LAUNCH_POWER_HP);
+  const rows = localizationRows(launchHp);
   const index = new Map(lines.map((line, i) => [line.split(',')[0], i]));
   const [descriptionId, description] = rows[0];
   const generic = csvRow(descriptionId, GENERIC_PAD_DESCRIPTION).split(',').slice(0, 2).join(',');

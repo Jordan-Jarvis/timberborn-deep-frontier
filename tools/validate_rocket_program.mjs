@@ -5,7 +5,7 @@
 import {readFile, readdir, access} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {LAUNCH_PAD, MISSION_CONTROL, LAUNCH_POWER_HP, LEGACY_RADIUS, LIQUID_FUELS, VISUAL_NODES, MISSIONS, PROGRAM,
+import {LAUNCH_PAD, MISSION_CONTROL, LEGACY_RADIUS, LIQUID_FUELS, VISUAL_NODES, MISSIONS, PROGRAM,
   launchPadSpec, recipeId, legacyNeedId, localizationRows} from './rocket_program_content.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
@@ -20,7 +20,9 @@ const exists = (path) => access(path).then(() => true, () => false);
 
 // ---- Launch Pad blueprint ----
 const pad = await readJson(data(`${LAUNCH_PAD}.json`));
-assert(pad.MechanicalNodeSpec?.PowerInput === LAUNCH_POWER_HP && pad.MechanicalNodeSpec.PowerOutput === 0, `Launch Pad must demand ${LAUNCH_POWER_HP} hp`);
+// Its exact draw is the power rule's (validate_power_rule.mjs).
+const launchHp = pad.MechanicalNodeSpec?.PowerInput;
+assert(launchHp > 0 && pad.MechanicalNodeSpec.PowerOutput === 0, 'Launch Pad must be a power consumer');
 assert(pad.WorkplaceSpec && pad.WorkshopSpec && pad.MechanicalBuildingSpec, 'Launch Pad must stay a powered native workshop (automation role pausable)');
 const padRecipes = pad.ManufactorySpec?.ProductionRecipeIds ?? [];
 assert(padRecipes.includes('GuidanceTelemetry'), 'Launch Pad keeps its GuidanceTelemetry recipe');
@@ -105,7 +107,7 @@ const codeKeys = new Set([...csharp.matchAll(/"(RocketProgram\.[A-Za-z.]+)"/g)].
 const specKeys = spec.Missions.flatMap((m) => [m.DisplayNameLocKey, m.DescriptionLocKey, m.SuccessLocKey, m.FailureLocKey]);
 for (const key of [...codeKeys, ...specKeys, ...MISSIONS.map((m) => `Recipe.${recipeId(m)}`), ...MISSIONS.map((m) => `Need.${legacyNeedId(m)}.DisplayName`)])
   assert(loc.has(key), `Missing enUS row ${key}`);
-for (const [id] of localizationRows(LAUNCH_POWER_HP)) assert(loc.has(id), `Missing authored enUS row ${id}`);
+for (const [id] of localizationRows(launchHp)) assert(loc.has(id), `Missing authored enUS row ${id}`);
 assert(!loc.get('Building.LaunchPad.Description')?.includes('production building'), 'Launch Pad description explains launches');
 // Placeholder counts used by the code must exist in the text.
 const placeholders = {'RocketProgram.Status.Locked': 1, 'RocketProgram.Notification.Liftoff': 2, 'RocketProgram.Notification.Failure': 3,

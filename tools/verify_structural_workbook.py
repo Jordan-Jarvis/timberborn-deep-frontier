@@ -103,7 +103,7 @@ for ident in ("SandstonePit", "LimestonePit", "StoneCrusher", "CementKiln", "Con
 turbine = rows["ReinforcedHydroTurbine"]
 hydro = json.loads((root / "tools/hydro_content.json").read_text(encoding="utf-8"))
 assert turbine["Power demand (hp)"] == 0
-assert turbine["Power output (hp)"] == hydro["maxDischarge"] * hydro["maxGeneratingHead"] * hydro["hpPerFlowAndHead"]
+assert turbine["Power output (hp)"] == hydro["ratedHp"]
 assert turbine["Availability"] == "Authored build menu"
 assert turbine["Status"] == hydro["status"]
 assert [turbine[h] for h in ("Width", "Length", "Height")] == hydro["size"]

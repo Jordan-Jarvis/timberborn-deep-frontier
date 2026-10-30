@@ -28,7 +28,7 @@
     "WaterCapacity": 128,
     "LowStockUnits": 30
   },
-  "hpDemand": 600,
+  "hpDemand": 11000,
   "hpOutput": 0,
   "science": 25000,
   "treatmentEffects": {

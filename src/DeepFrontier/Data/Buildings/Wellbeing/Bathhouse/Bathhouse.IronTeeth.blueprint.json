@@ -4974,7 +4974,7 @@
   "MechanicalBuildingSpec": {},
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 300,
+    "PowerInput": 3900,
     "IsShaft": false
   },
   "EnterableIlluminatorSpec": {},

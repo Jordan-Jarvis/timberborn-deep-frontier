@@ -1465,7 +1465,7 @@ namespace DeepFrontier.Scripts {
       if(_supplies.Count==0)foreach(var g in node.Graph.Generators)_supplies[g]=g.OutputMultiplier;
       foreach(var g in _supplies.Keys)g.SetOutputMultiplier(full?_supplies[g]:0);
       if(!full) {
-        // Exactly 20,000 hp from two native dev generators: below the 25,000 hp launch load.
+        // Exactly 20,000 hp from two native dev generators: below the 27,000 hp launch load.
         foreach(var g in _supplies.Keys.Where(g=>g.GetComponent<MechanicalNodeSpec>().PowerOutput==10000).Take(2))g.SetOutputMultiplier(1);
       }
     }
@@ -1643,7 +1643,8 @@ namespace DeepFrontier.Scripts {
       });
       Then("loading: launch load",()=>Working,()=>{
         var node=_padBlock.GetComponent<MechanicalNode>();
-        Record("launch load",node.Actuals.PowerInput==25000,"native input "+node.Actuals.PowerInput+" hp, graph supply "+node.Graph.PowerSupply);
+        int load=_padBlock.GetComponent<MechanicalNodeSpec>().PowerInput;
+        Record("launch load",node.Actuals.PowerInput==load,"native input "+node.Actuals.PowerInput+" of "+load+" hp, graph supply "+node.Graph.PowerSupply);
       },6);
       FreezeAndSave("preparing");
       // 6. scrub
@@ -1758,7 +1759,7 @@ namespace DeepFrontier.Scripts {
       var node=_padBlock.GetComponent<MechanicalNode>();
       var generator=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="DevPowerGenerator").Blueprint;
       var spec=generator.GetSpec<BlockObjectSpec>();
-      int needed=(int)Math.Ceiling((25000f-node.Graph.PowerSupply+2000f)/10000f);
+      int needed=(int)Math.Ceiling((_padBlock.GetComponent<MechanicalNodeSpec>().PowerInput-node.Graph.PowerSupply+2000f)/10000f);
       var source=node.Graph.Generators.FirstOrDefault(g=>g.GetComponent<MechanicalNodeSpec>().PowerOutput==10000);
       Require(source,"LaunchPad graph has no native dev generator from the layout run");
       var origin=source.GetComponent<BlockObject>().Coordinates;

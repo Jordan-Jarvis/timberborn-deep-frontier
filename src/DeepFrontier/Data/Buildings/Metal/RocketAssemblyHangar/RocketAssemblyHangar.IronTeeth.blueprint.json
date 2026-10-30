@@ -7156,7 +7156,7 @@
   },
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 12000,
+    "PowerInput": 19000,
     "IsShaft": false
   },
   "PlaceableBlockObjectSpec": {

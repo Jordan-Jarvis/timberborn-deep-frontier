@@ -6,7 +6,7 @@ import {applyFishery,applyHatchery,authorShoreFishing,WATERSIDE_ROWS} from './fi
 import {applyHospital,authorHospitalNeed,HOSPITAL_DESCRIPTION,HOSPITAL_LOCALIZATION} from './hospital_building_content.mjs';
 import {applyGroceryStore,authorGroceryNeed} from './grocery_building_content.mjs';
 import {LATEGAME,applyLategame,studyPipePort} from './lategame_building_content.mjs';
-import {lategameCost, scaledCost} from './lategame_costs.mjs';
+import {lategameCost, scaledCost, scaledPower} from './lategame_costs.mjs';
 import {SCHOOL_WORKSHOP_SPECS} from './workforce_risk_content.mjs';
 
 // Data-only expansion layer. Every template is cloned from a captured 1.1
@@ -324,13 +324,14 @@ function plannedRow(id, outputPath, template) {
 }
 
 // Authored player-facing text for buildings whose description is more than the
-// generic production line.
+// generic production line; a description takes the generated power (hp).
+const hpText = (hp) => hp.toLocaleString('en-US');
 const BUILDING_TEXT = {
-  SteelMill: ['An electric-arc melt shop and rolling mill. Makes flux from scrap metal and deep ore, high-grade steel from metal blocks, coal and flux, and alloy from high-grade steel and deep alloy. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires 2,500 hp. Its two smokestacks pollute the air nearby.',
+  SteelMill: [(hp) => `An electric-arc melt shop and rolling mill. Makes flux from scrap metal and deep ore, high-grade steel from metal blocks, coal and flux, and alloy from high-grade steel and deep alloy. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires ${hpText(hp)} hp. Its two smokestacks pollute the air nearby.`,
     'Every reactor, rocket and machine core starts as a white-hot pour on this floor.'],
-  ArchiveExcavation: ['Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts, then restores their data drives into archive data with grease and metal parts. A Human Record Cache within 4 tiles can be surveyed for extra archive data. 4 workers, dangerous work. Requires 400 hp. Its stove chimney pollutes the air nearby.',
+  ArchiveExcavation: [(hp) => `Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts, then restores their data drives into archive data with grease and metal parts. A Human Record Cache within 4 tiles can be surveyed for extra archive data. 4 workers, dangerous work. Requires ${hpText(hp)} hp. Its stove chimney pollutes the air nearby.`,
     'The humans buried their warnings in the strata. Dig carefully.'],
-  CryogenicTankFarm: ['Stores up to 2,000 units of one cryogenic fuel, liquid hydrogen or liquid oxygen, delivered and drawn by pipes at its two front sockets or by haulers. Needs 1,000 hp to keep the fuel cold: without power the intake closes, and after 12 hours the stored fuel starts to vent.',
+  CryogenicTankFarm: [(hp) => `Stores up to 2,000 units of one cryogenic fuel, liquid hydrogen or liquid oxygen, delivered and drawn by pipes at its two front sockets or by haulers. Needs ${hpText(hp)} hp to keep the fuel cold: without power the intake closes, and after 12 hours the stored fuel starts to vent.`,
     'The coldest place in the colony, kept that way at great expense.'],
 };
 
@@ -426,19 +427,21 @@ async function makeBuilding(definition) {
   }
   if (value.ManufactorySpec) value.ManufactorySpec = { ...value.ManufactorySpec, ProductionRecipeIds: recipes.split(',') };
   if (!value.ManufactorySpec && recipes) value.ManufactorySpec = { ProductionRecipeIds: recipes.split(',') };
+  // Every building row is a consumer; its draw follows the power rule (lategame_costs.mjs scaledPower).
+  const hp = scaledPower(id, power, science);
   if (value.MechanicalNodeSpec) {
-    value.MechanicalNodeSpec = { ...value.MechanicalNodeSpec, PowerOutput: 0, PowerInput: power, IsShaft: false };
-  } else if (power > 0) {
+    value.MechanicalNodeSpec = { ...value.MechanicalNodeSpec, PowerOutput: 0, PowerInput: hp, IsShaft: false };
+  } else {
     // An unpowered template (HydroponicGarden for the FishHatchery and Greenhouse) becomes a consumer.
     // Every vanilla powered consumer also carries the native connector target, which draws the gear
     // socket where a shaft or generator meets a transput (MechanicalConnectorActivator, 1.1.2.8);
     // without it a shaft ends at a bare wall (build 176 user report).
-    value.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: power, IsShaft: false };
+    value.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: hp, IsShaft: false };
     value.MechanicalBuildingSpec = {};
     value.MechanicalConnectorTargetSpec = {};
   }
   if (id === 'TechnicalSchool' || id === 'MissionControl') {
-    value.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: power, IsShaft: false };
+    value.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: hp, IsShaft: false };
     value.MechanicalBuildingSpec = {};
   }
   // Nobody staffs the Technical School: it takes the Inventor's building, not
@@ -502,7 +505,7 @@ async function makeScrubber() {
   value.BuildingSpec = {...value.BuildingSpec, BuildingCost: (await lategameCost(id)).map(([Id, Amount]) => ({Id, Amount})), ScienceCost: science};
   value.TemplateSpec = {...value.TemplateSpec, TemplateName: `${id}.IronTeeth`, BackwardCompatibleTemplateNames: []};
   value.PlaceableBlockObjectSpec = {...value.PlaceableBlockObjectSpec, ToolGroupId: 'Wellbeing', ToolOrder: 160, DevModeTool: false};
-  value.MechanicalNodeSpec = {PowerOutput: 0, PowerInput: design.powerInputHp, IsShaft: false};
+  value.MechanicalNodeSpec = {PowerOutput: 0, PowerInput: scaledPower(id, design.powerInputHp, science), IsShaft: false};
   setLabels(value, id, outputPath);
   setModels(value, id, outputPath);
   await applyLategame(value, id);
@@ -546,7 +549,7 @@ async function makeAttraction(entry) {
   value.EnterableSpec = {...value.EnterableSpec, LimitedCapacityFinished: true, CapacityFinished: entry.capacity};
   if (entry.powerDemandHp > 0) {
     if (!value.MechanicalNodeSpec || !value.MechanicalBuildingSpec) throw new Error(`${id}: template ${entry.template} is not powered`);
-    value.MechanicalNodeSpec = {...value.MechanicalNodeSpec, PowerOutput: 0, PowerInput: entry.powerDemandHp, IsShaft: false};
+    value.MechanicalNodeSpec = {...value.MechanicalNodeSpec, PowerOutput: 0, PowerInput: scaledPower(id, entry.powerDemandHp, entry.scienceUnlock), IsShaft: false};
   } else if (value.MechanicalNodeSpec) throw new Error(`${id}: template ${entry.template} is powered but the design is not`);
   if (entry.consumes.length) {
     if (!value.GoodConsumingBuildingSpec || !value.GoodConsumingAttractionSpec) throw new Error(`${id}: template ${entry.template} consumes no goods`);
@@ -595,7 +598,7 @@ async function makeReactor() {
   const workerTemplate = await readJson(vanilla('Buildings/Metal/Smelter/Smelter.IronTeeth.blueprint.json'));
   value.WorkplaceSpec = { ...workerTemplate.WorkplaceSpec, MaxWorkers: 6, DefaultWorkers: 6, WorkerTypeUnlockCosts: [{ WorkerType: 'Bot', ScienceCost: 12000 }] };
   value.ManufactorySpec = { ProductionRecipeIds: ['NuclearWaste'] };
-  value.MechanicalNodeSpec = { PowerOutput: 800000, PowerInput: 0, IsShaft: false };
+  value.MechanicalNodeSpec = { PowerOutput: 1000000, PowerInput: 0, IsShaft: false };
   value.WorkshopPoweredGeneratorSpec = {};
   value.BuildingPipeTargetPortsSpec = coolantPorts('NuclearReactor');
   setModels(value, 'NuclearReactor', 'Buildings/Power/NuclearReactor');
@@ -707,6 +710,7 @@ for (const [id] of goodDefinitions) {
 for (const definition of buildingDefinitions) {
   const id = definition[0];
   const display = definition[9];
+  const hp = scaledPower(id, definition[6], definition[8]);
   rows.push(csvRow(`Building.${id}.DisplayName`, display));
   rows.push(csvRow(`Building.${id}.Description`, id === 'Restaurant'
     ? 'A 400 hp kitchen and dining hall. Workers serve fish, berries and prepared foods at tables, with coffee when stocked and water for thirsty diners. Ferments food and bakes sweet berry cake from berries, corn and water. Cake is cooked and eaten only here. Serves whichever main foods are in stock; a full meal of fish, berries, fermented mushrooms and eggplant rations also gives Fine Dining.'
@@ -717,8 +721,8 @@ for (const definition of buildingDefinitions) {
     : id === 'Hospital'
     ? HOSPITAL_DESCRIPTION
     : id === 'GroceryStore'
-    ? 'Stocks canned fish, packaged food, algae and corn rations, and fermented cassava and soybeans. Two clerks restock 100 of each food. With 100 hp, an attending clerk and at least three stocked foods, nearby beavers gain up to +2 wellbeing within eight cells. Food remains available during power cuts and off-duty hours.'
-    : Object.hasOwn(BUILDING_TEXT, id) ? BUILDING_TEXT[id][0]
+    ? `Stocks canned fish, packaged food, algae and corn rations, and fermented cassava and soybeans. Two clerks restock 100 of each food. With ${hpText(hp)} hp, an attending clerk and at least three stocked foods, nearby beavers gain up to +2 wellbeing within eight cells. Food remains available during power cuts and off-duty hours.`
+    : Object.hasOwn(BUILDING_TEXT, id) ? BUILDING_TEXT[id][0](hp)
     : `Deep Frontier ${display.toLowerCase()} production building`));
   rows.push(csvRow(`Building.${id}.FlavorDescription`, id === 'Restaurant'
     ? 'A good meal deserves a table, a view and good company.'
@@ -731,12 +735,12 @@ for (const definition of buildingDefinitions) {
   rows.push(csvRow('Building.SmogScrubber.DisplayName', 'Smog scrubber'));
   const removes = smog.scrubber.reduction === 1 ? 'Removes all' : `Removes ${pct(smog.scrubber.reduction)} of the`;
   const cap = smog.settings.ScrubberMaxReduction === 1 ? '' : ` Scrubbers and trees together remove at most ${pct(smog.settings.ScrubberMaxReduction)}.`;
-  rows.push(csvRow('Building.SmogScrubber.Description', `${removes} smog within ${smog.scrubber.radius} tiles while powered and not paused.${cap} No workers. Requires ${smog.scrubber.proposed.powerInputHp} hp.`));
+  rows.push(csvRow('Building.SmogScrubber.Description', `${removes} smog within ${smog.scrubber.radius} tiles while powered and not paused.${cap} No workers. Requires ${hpText(scaledPower('SmogScrubber', smog.scrubber.proposed.powerInputHp, progression.implementedBuildingScienceOverrides.SmogScrubber))} hp.`));
   rows.push(csvRow('Building.SmogScrubber.FlavorDescription', 'What goes up the smokestack comes down in the scrubber.'));
 }
 // Wellbeing attractions: names and needs from frontier_progression.json.
 const WELLBEING_TEXT = {
-  Bathhouse: [(e) => `Steam baths for up to ${e.capacity} beavers: a warm soak, a massage and a wash in one visit (Mud Bath, Massager and Wet Fur). Uses ${e.consumes[0][1]} water per hour, piped in at the boiler-room socket or carried by haulers, and ${e.powerDemandHp} hp.`,
+  Bathhouse: [(e) => `Steam baths for up to ${e.capacity} beavers: a warm soak, a massage and a wash in one visit (Mud Bath, Massager and Wet Fur). Uses ${e.consumes[0][1]} water per hour, piped in at the boiler-room socket or carried by haulers, and ${hpText(scaledPower(e.id, e.powerDemandHp, e.scienceUnlock))} hp.`,
     'The boilers run hot so the colony can run warm.'],
   TownPlaza: [(e) => `A civic square for up to ${e.capacity} beavers, who dance to the bandstand and gather round the fountain (Dance Pit and Campfire). Needs no power or supplies.`,
     'Every frontier town needs one place where nothing is being built.'],
@@ -753,7 +757,7 @@ for (const id of ['NuclearReactor', 'RadioactiveWasteVault']) {
   const display = id === 'NuclearReactor' ? 'Nuclear Reactor' : 'Radioactive Waste Vault';
   rows.push(csvRow(`Building.${id}.DisplayName`, display));
   rows.push(csvRow(`Building.${id}.Description`, id === 'NuclearReactor'
-    ? 'An 800000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive water that must be shipped off the map.'
+    ? 'A 1,000,000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive water that must be shipped off the map.'
     : 'Locked storage for radioactive waste; the contents must be processed or moved before demolition.'));
   rows.push(csvRow(`Building.${id}.FlavorDescription`, 'The frontier makes power and consequences at the same scale.'));
 }

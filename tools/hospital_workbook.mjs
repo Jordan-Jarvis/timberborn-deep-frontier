@@ -48,14 +48,14 @@ export const hospitalProgressionUpdates=new Map([['G005',{
   'Player goal':'Provide large-scale hospital care','Required buildings':'Hospital; medicine production and water supply',
   'Science range':p.scienceUnlock,
   'Required items':amounts(b.BuildingSpec.BuildingCost),
-  'Infrastructure gate':`${p.powerDemandHp} hp; ${p.workers} staff; ${inputs} per operating hour`,
+  'Infrastructure gate':`${b.MechanicalNodeSpec.PowerInput} hp; ${p.workers} staff; ${inputs} per operating hour`,
   'Suggested trigger':'Injured, chipped-tooth or contaminated workers need more care capacity',
   'Why now':'Thirty patient places and faster full-staff injury recovery support a larger industrial colony',
   'Player-facing cue':'Hospital care panel and native health needs; neighborhood benefit requires operating supplies',
   'Status':p.requirementStatus,'Data status':p.balanceStatus
 }]]);
 export const hospitalTransport=['T018','Iron Teeth','Hospital supplies and access','Native hauling; player-placed deck paths',
-  'Medicine; Water; Extract',null,p.powerDemandHp,'Ground entrance; native power shaft; six attending staff',
+  'Medicine; Water; Extract',null,b.MechanicalNodeSpec.PowerInput,'Ground entrance; native power shaft; six attending staff',
   'Four doors at 0/2/4/6; galleries at 2/4; clear 4x3 roof area at 6',`${p.areaRadius}-cell native area effect`,
   'Sustain ward care and nearby wellbeing',`${p.supplyBufferHours}-hour input buffer; actual attending staff`,
   'Pipes and belts require runtime checks','Native Enterable, Attraction, GoodConsumingBuilding and RangedEffectBuilding',

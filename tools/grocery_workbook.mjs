@@ -57,12 +57,12 @@ for(const [row,id] of [['R006','CannedFish'],['PackagedFood','PackagedFood']]) {
 }
 export const groceryProgression=['G022','Iron Teeth','3. Industrial city','Centralize neighborhood groceries',
   p.scienceUnlock,'Grocery Store; native food producers; Food Packaging Works',cost,
-  `${p.powerDemandHp} hp; ${p.workers} clerks; at least ${p.minimumStockedFoodTypes} stocked food types`,
+  `${b.MechanicalNodeSpec.PowerInput} hp; ${p.workers} clerks; at least ${p.minimumStockedFoodTypes} stocked food types`,
   'Residents travel to several food warehouses','Six foods in one store; staffed neighborhood wellbeing',
   'Makes existing food production and local delivery more useful','Stock panel explains missing assortment, power or clerks',
   'Industrial city','Native science and construction materials',p.requirementStatus,p.balanceStatus];
 export const groceryTransport=['T019','Iron Teeth','Grocery stocking and shopping','Native hauling, intake-only belts and shopper reservations',
-  foods,null,p.powerDemandHp,'Ground entrance; native power shaft',
+  foods,null,b.MechanicalNodeSpec.PowerInput,'Ground entrance; native power shaft',
   'Connected doors at layers 0/2/4/6',`${p.areaRadius}-cell neighborhood radius`,
   'Consolidate local access to food variety',`${p.capacityPerFood} per food; ${p.stock.length*p.capacityPerFood} stored units total; hauling rate depends on travel and workers`,
   'Belt intake, capacity, power and saved queue passed 73/75','One native inventory; shoppers can eat; outgoing belts cannot withdraw',

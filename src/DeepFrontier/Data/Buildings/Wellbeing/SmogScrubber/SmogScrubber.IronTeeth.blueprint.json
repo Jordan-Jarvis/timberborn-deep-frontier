@@ -569,7 +569,7 @@
   "MechanicalBuildingSpec": {},
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 200,
+    "PowerInput": 2000,
     "IsShaft": false
   },
   "MechanicalConnectorTargetSpec": {},

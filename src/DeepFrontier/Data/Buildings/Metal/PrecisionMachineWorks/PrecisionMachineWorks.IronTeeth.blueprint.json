@@ -9830,7 +9830,7 @@
   "MechanicalBuildingSpec": {},
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 2200,
+    "PowerInput": 3400,
     "IsShaft": false
   },
   "WorkshopAnimationControllerSpec": {},

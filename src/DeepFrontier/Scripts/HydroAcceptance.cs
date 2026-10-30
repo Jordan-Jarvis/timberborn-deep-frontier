@@ -362,7 +362,9 @@ namespace DeepFrontier.Scripts {
           _lever.SwitchState(true);_turbine.SetDischargeLimit(3);Phase(6);
         } else if(_phase==6&&hours>.4f) {
           CheckGeneration(1.2f);Require(_peakFlow<=3.001f,"Three-rate discharge exceeds setting");
-          Require(_peakPower>=8000&&_peakPower<=9600.01f,"Tall reservoir did not reach the requested 8–10k hp band: "+_peakPower);
+          // The band the 9,600 hp rating tested (8,000-9,600 hp), scaled to the rated output.
+          float rated=_turbine.GetComponent<MechanicalNodeSpec>().PowerOutput;
+          Require(_peakPower>=rated*8000f/9600f&&_peakPower<=rated*1.00001f,"Tall reservoir did not reach "+rated*8000f/9600f+"-"+rated+" hp: "+_peakPower);
           Require(_turbine.ChannelFlows.All(f=>f>1.4f&&f<=1.501f),"Both water lanes must share the total 3 m3/s limit");
           Require(_turbine.Outlets.All(p=>_map.WaterDepth(p)>.05f),"Visible mouth is not wet across both cells");
           Pass("high-head 3 m3/s total reaches 8–10k hp; both native outlet cells carry water");

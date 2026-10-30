@@ -39,7 +39,17 @@ Changes since 0.5.0, the first Workshop release.
   | Nuclear Reactor | 1,000,000 |
 
   The Materials Laboratory (12,000) and the Hospital (25,000) are unchanged.
-- **Nuclear reactor:** 800,000 hp, up from 750,000.
+- **Power plants:**
+
+  | Plant | Before | Now |
+  |---|---|---|
+  | Coal Power Plant | 5,000 hp | 25,000 hp |
+  | Reinforced Hydro Turbine (full flow and head) | 9,600 hp | 40,000 hp |
+  | Oil Power Plant | 20,000 hp | 90,000 hp |
+  | Nuclear Reactor | 750,000 hp | 1,000,000 hp |
+
+  Fuel use is unchanged.
+- **Late buildings need much more power.** From 2,000 science up, a building draws at least about 5.65 × science^0.75 hp; buildings that already drew more keep their value. Examples: Smog Scrubber 2,000 hp (was 200), Technical School 1,800, Steel Mill 3,100, Hospital 11,000, Mission Control 13,000, Rocket Assembly Hangar 19,000, Launch Pad 27,000, Uranium Processing Plant 53,000 and Radioactive Waste Refinery 106,000. The Deep Well (power follows its boost slider) and the Reactor Charging Bay (5,000 hp) are exempt.
 - **Smog Scrubber:** radius 20 tiles, up from 7, and it now removes all smog within that radius instead of 75%.
 - **Drill bits:** the Deep Drill now wears out 0.1 High-Grade Steel an hour while it produces. The Deep Mine wears out 0.1 High-Grade Steel plus 0.1 Concrete (shaft lining) an hour. Each building keeps up to 15 of each, delivered by haulers, and stops with "Waiting for drill bits" when it runs out. A smaller crew uses less; a paused building none. The building panel shows the stock and how long it lasts.
 

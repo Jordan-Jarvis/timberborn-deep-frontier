@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applyLategame } from './lategame_building_content.mjs';
-import { lategameCost } from './lategame_costs.mjs';
+import { lategameCost, scaledPower } from './lategame_costs.mjs';
 import { mapObjectModel, mapObjectCollider, checkMapObjectBlueprint, applyPileGoodVisualizations } from './map_object_content.mjs';
 // Late-game construction costs follow the size rule (docs/progression.md).
 const ruleCost = async (id) => (await lategameCost(id)).map(([Id, Amount]) => ({ Id, Amount }));
@@ -177,7 +177,7 @@ deepDrill.LabeledEntitySpec = { ...deepDrill.LabeledEntitySpec };
 setLoc(deepDrill.LabeledEntitySpec, 'DeepDrill');
 deepDrill.LabeledEntitySpec.Icon = 'Buildings/Metal/EfficientMine/EfficientMineIcon';
 deepDrill.MechanicalBuildingSpec = {};
-deepDrill.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: 1000, IsShaft: false };
+deepDrill.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: scaledPower('DeepDrill', 1000, deepDrill.BuildingSpec.ScienceCost), IsShaft: false };
 // Every vanilla powered consumer carries the native connector target: it draws the gear socket where a
 // shaft or generator meets a transput (MechanicalConnectorActivator). EfficientMine is unpowered.
 deepDrill.MechanicalConnectorTargetSpec = {};
@@ -252,7 +252,7 @@ setLoc(deepMine.LabeledEntitySpec, 'DeepMine');
 deepMine.LabeledEntitySpec.Icon = 'Buildings/Metal/DeepMine/DeepMineIcon';
 deepMine.UnderstructureConstraintSpec = { UnderstructureTemplateNames: ['DeepOreVein'] };
 deepMine.MechanicalBuildingSpec = {};
-deepMine.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: 4000, IsShaft: false };
+deepMine.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: scaledPower('DeepMine', 4000, deepMine.BuildingSpec.ScienceCost), IsShaft: false };
 deepMine.MechanicalConnectorTargetSpec = {};
 deepMine.MechanicalNodeAnimatorSpec = { MinSpeedMultiplier: 0.0 };
 deepMine.Children['#Finished'].TimbermeshSpec.Model = 'Buildings/Metal/DeepMine/DeepMine.IronTeeth.Model';
@@ -299,7 +299,7 @@ deepProcessor.PlaceableBlockObjectSpec = {
 deepProcessor.LabeledEntitySpec = { ...deepProcessor.LabeledEntitySpec };
 setLoc(deepProcessor.LabeledEntitySpec, 'DeepProcessor');
 deepProcessor.LabeledEntitySpec.Icon = 'Buildings/Metal/Smelter/SmelterIcon';
-deepProcessor.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: 500, IsShaft: false };
+deepProcessor.MechanicalNodeSpec = { PowerOutput: 0, PowerInput: scaledPower('DeepProcessor', 500, deepProcessor.BuildingSpec.ScienceCost), IsShaft: false };
 deepProcessor.Children['#Finished'].TimbermeshSpec.Model = 'Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model';
 deepProcessor.LabeledEntitySpec.Icon = 'Buildings/Metal/DeepProcessor/DeepProcessorIcon';
 useStudyModel(deepProcessor);
@@ -377,7 +377,7 @@ const localizationRows = [
   ['Building.DeepDrill.Description', 'Extracts one unit of Deep Ore from an authored source stockpile using water and 1000 hp.', 'Deep Frontier'],
   ['Building.DeepDrill.FlavorDescription', 'The first boring machine turns a finite deposit into a surface supply chain.', 'Deep Frontier'],
   ['Building.DeepMine.DisplayName', 'Deep Mine', 'Deep Frontier'],
-  ['Building.DeepMine.Description', 'Extracts four Deep Ore every cycle from a marked vein using water and 4000 hp.', 'Deep Frontier'],
+  ['Building.DeepMine.Description', `Extracts four Deep Ore every cycle from a marked vein using water and ${deepMine.MechanicalNodeSpec.PowerInput} hp.`, 'Deep Frontier'],
   ['Building.DeepMine.FlavorDescription', 'The vein is endless; the power bill is not.', 'Deep Frontier'],
   ['Building.DeepProcessor.DisplayName', 'Deep Ore Processor', 'Deep Frontier'],
   ['Building.DeepProcessor.Description', 'Refines deep ore into a dense industrial alloy.', 'Deep Frontier'],

@@ -170,11 +170,11 @@ namespace DeepFrontier.Scripts {
     }
     private void Start() {
       Require(_building.GetComponent<BuildingSpec>().ScienceCost==12000,"Laboratory must unlock at 12,000 science");
-      Require(_building.GetComponent<MechanicalNodeSpec>().PowerInput==600,"Laboratory demand differs from 600 hp");
+      Require(_building.GetComponent<MechanicalNodeSpec>().PowerInput==6500,"Laboratory demand differs from 6,500 hp");
       Require(_building.GetComponent<MechanicalNode>().Graph==_generator.Graph&&_generator.Graph.PowerSupply>0,"Laboratory shaft does not connect");
       Port("Front0",true);Port("Front1",false);Port("Left1",true);Port("Left2",false);
       Require(_nav.AreConnectedInstant(new Vector3Int(160,159,3),new Vector3Int(160,160,3)),"Ground door lacks its road connection");
-      Pass("12,000-science unlock, 600 hp connected graph and selective rail openings");
+      Pass("12,000-science unlock, 6,500 hp connected graph and selective rail openings");
       if(_reload) {
         var record=JsonConvert.DeserializeObject<ResearchSaveRecord>(File.ReadAllText(RecordPath));
         Require(_building.GetComponent<EntityComponent>().EntityId.ToString()==record.EntityId,"Research identity changed");

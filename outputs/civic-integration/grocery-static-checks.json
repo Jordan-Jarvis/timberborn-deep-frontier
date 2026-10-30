@@ -35,7 +35,7 @@
     ]
   ],
   "workers": 2,
-  "hpDemand": 100,
+  "hpDemand": 3900,
   "hpOutput": 0,
   "science": 6000,
   "foods": [

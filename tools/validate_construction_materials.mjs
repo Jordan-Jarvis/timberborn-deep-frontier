@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile, access, readdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { scaledPower } from './lategame_costs.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const data = resolve(root, 'src/DeepFrontier/Data');
@@ -46,7 +47,7 @@ for (const entry of catalog.buildings) {
     assert.equal(value.YieldRemovingBuildingSpec.ResourceGroup, `DeepFrontier${entry.good}`);
     assert(!value.ScavengerSpec, 'A pit must use the mineral selector, not the vanilla ruin selector');
   } else {
-    assert.equal(value.MechanicalNodeSpec.PowerInput, entry.hp);
+    assert.equal(value.MechanicalNodeSpec.PowerInput, scaledPower(entry.id, entry.hp, entry.science), `${entry.id}: draw differs from the power rule`);
     assert.equal(value.MechanicalNodeSpec.PowerOutput, 0);
     assert.deepEqual(value.ManufactorySpec.ProductionRecipeIds, entry.recipes);
     for (const port of value.TransputProviderSpec.Transputs) {

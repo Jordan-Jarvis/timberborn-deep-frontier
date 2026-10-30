@@ -19,6 +19,15 @@
 // rule already uses adds to its amount (the reactor's extra containment steel).
 // The tier is fixed by the building's science unlock (tier.scienceMax bands);
 // tools/audit_progression.mjs checks the band against the generated blueprint.
+// Power (lategameRule.power; user 2026-10-29: "smog scrubber only taking 200?
+// more like 2000"): every Deep Frontier power consumer unlocked at
+// power.scienceMin science or more draws max(authored base, floor), where
+// floor = referenceHp x (science / referenceScience) ^ exponent, rounded to
+// rounding.step (rounding.largeStep from rounding.largeFrom). Each generator
+// that writes a consumer's PowerInput calls scaledPower(id, base, science);
+// power.exempt lists the consumers that keep an authored figure, with the
+// reason. Generators (PowerOutput) are outside the rule.
+// tools/validate_power_rule.mjs checks the generated blueprints.
 //
 // CLI:
 //   node tools/lategame_costs.mjs           print the rule's costs
@@ -66,6 +75,34 @@ export function scaledCost(cost, science) {
   if (!Number.isInteger(science) || science < 0) throw new Error(`scaledCost: invalid science unlock ${science}`);
   const factor = rule.tiers[tierForScience(science)].costFactor;
   return cost.map((row) => Array.isArray(row) ? [row[0], row[1] * factor] : {...row, Amount: row.Amount * factor});
+}
+
+export const powerRule = rule.power;
+{
+  const {scienceMin, referenceScience, referenceHp, exponent, rounding, exempt} = powerRule ?? {};
+  if (![scienceMin, referenceScience, referenceHp].every((v) => Number.isInteger(v) && v > 0) || !(exponent > 0))
+    throw new Error('lategameRule.power: scienceMin, referenceScience, referenceHp and exponent must be positive');
+  if (![rounding?.step, rounding?.largeStep, rounding?.largeFrom].every((v) => Number.isInteger(v) && v > 0))
+    throw new Error('lategameRule.power.rounding: step, largeStep and largeFrom must be positive integers');
+  for (const [id, reason] of Object.entries(exempt ?? {})) {
+    if (typeof reason !== 'string' || !reason) throw new Error(`lategameRule.power.exempt.${id}: the reason is required`);
+  }
+}
+// The rule's minimum draw at a science unlock of at least power.scienceMin.
+export function powerFloor(science) {
+  const {scienceMin, referenceScience, referenceHp, exponent, rounding} = powerRule;
+  if (!Number.isInteger(science) || science < scienceMin) throw new Error(`powerFloor: science ${science} is below the power rule's ${scienceMin}`);
+  const raw = referenceHp * (science / referenceScience) ** exponent;
+  const step = raw < rounding.largeFrom ? rounding.step : rounding.largeStep;
+  return Math.round(raw / step) * step;
+}
+// A consumer's PowerInput: its authored base, raised to the floor from
+// power.scienceMin science. An exempt building must author its value directly.
+export function scaledPower(id, basePower, science) {
+  if (Object.hasOwn(powerRule.exempt, id)) throw new Error(`scaledPower: ${id} is exempt from the power rule (${powerRule.exempt[id]})`);
+  if (!Number.isInteger(basePower) || basePower <= 0) throw new Error(`scaledPower: ${id} needs a positive integer base power, got ${basePower}`);
+  if (!Number.isInteger(science) || science < 0) throw new Error(`scaledPower: ${id} has an invalid science unlock ${science}`);
+  return science < powerRule.scienceMin ? basePower : Math.max(basePower, powerFloor(science));
 }
 for (const planned of PLANNED) {
   if (catalog.lategameTier[planned.id] !== planned.costTier) throw new Error(`${planned.id}: lategameTier must equal the planned costTier ${planned.costTier}`);

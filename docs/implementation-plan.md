@@ -124,7 +124,7 @@ Balance rules:
 3. A dependency improves logistics; it does not silently remove the science or material gate for a Deep Frontier machine.
 4. A non-nuclear colony can reach the narrative ending. The tradeoff is more generators, more land, more storage, or lower throughput.
 5. A nuclear colony can be compact and reliable, but it must still solve fuel, coolant, waste, transport, and hazard isolation.
-6. Generator output scales nonlinearly by fuel tier: approximately 500 hp wood, 5,000 hp coal, 20,000 hp oil (implemented 2026-10-22, docs/progression.md "Power plants"), and the nuclear reactor above them. Each tier must add a new logistics or hazard obligation rather than only increasing a number.
+6. Generator output scales nonlinearly by fuel tier: approximately 500 hp wood, 25,000 hp coal, 90,000 hp oil (implemented 2026-10-22 at 5,000 and 20,000 hp, raised 2026-10-29; docs/progression.md "Power plants"), and the nuclear reactor above them. Each tier must add a new logistics or hazard obligation rather than only increasing a number.
 
 ## Education and specialist workforce
 
@@ -158,8 +158,8 @@ The generator curve is deliberately nonlinear:
 | Fuel tier | Target output | Main obligation |
 |---|---:|---|
 | Wood | 500 hp | Reliable wood and water supply |
-| Coal | 5,000 hp (Coal Power Plant, 5×5) | Coal from the Deep Ore Processor, water and heavy smog (no workers; burns only while the network draws power) |
-| Oil | 20,000 hp (Oil Power Plant, 6×6) | Crude oil from the Deep Ore Processor, water and smog (no workers; burns only while the network draws power) |
+| Coal | 25,000 hp (Coal Power Plant, 5×5) | Coal from the Deep Ore Processor, water and heavy smog (no workers; burns only while the network draws power) |
+| Oil | 90,000 hp (Oil Power Plant, 6×6) | Crude oil from the Deep Ore Processor, water and smog (no workers; burns only while the network draws power) |
 | Nuclear | 50,000–100,000 hp | Enriched fuel, constant coolant, sealed waste, and meltdown risk |
 
 A 75,000 hp reactor should support a serious district: several 2,500 hp arc-furnace lines, chemical works, deep drills, conveyor trunks, cryogenic plants, and a short launch preparation window. It should not make power irrelevant; the bottlenecks become water throughput, fuel production, waste custody, specialist capacity, and the physical ability to distribute that power.

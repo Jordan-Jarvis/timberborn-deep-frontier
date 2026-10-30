@@ -9473,7 +9473,7 @@
   },
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 1000,
+    "PowerInput": 6500,
     "IsShaft": false
   },
   "MechanicalBuildingSpec": {},

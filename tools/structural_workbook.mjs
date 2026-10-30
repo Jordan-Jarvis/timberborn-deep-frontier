@@ -56,7 +56,7 @@ export const hydroSource=['Controlled dam turbines','docs/hydroelectric-construc
 export const hydroBuildingRow=['ReinforcedHydroTurbine','Reinforced hydroelectric turbine','Generator',
   'Power; water control; Deep Frontier','Iron Teeth','Yes','Authored build menu',
   hydro.size[0],hydro.size[1],`${hydro.size[0]}x${hydro.size[1]}`,hydro.size[0]*hydro.size[1],hydro.size[2],
-  0,0,hydro.maxDischarge*hydro.maxGeneratingHead*hydro.hpPerFlowAndHead,
+  0,0,hydro.ratedHp,
   'Generator',hydro.science,'n.a.',costs(hydro.cost),
   `Two-cell submerged outlet; 0–${hydro.maxDischarge} m³/s total limit`,'None','docs/hydroelectric-construction.md',
   hydro.status,'4. Wonder transition',

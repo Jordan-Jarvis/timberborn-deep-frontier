@@ -19,7 +19,7 @@ Heat is 0..1 of meltdown, evaluated every tick (rates per game hour):
 | Otherwise, with coolant | −2.5%/h |
 | Dry and cold (0%), not running | stays cold |
 
-- **Power output** is `1 − heat` of the full 800,000 hp: 50% heat gives half power. `ReactorCore` is the building's `IGeneratorOutputFactor`, which `WorkshopPoweredGenerator` multiplies into its native output multiplier. A SCRAM gives 0.
+- **Power output** is `1 − heat` of the full 1,000,000 hp: 50% heat gives half power. `ReactorCore` is the building's `IGeneratorOutputFactor`, which `WorkshopPoweredGenerator` multiplies into its native output multiplier. A SCRAM gives 0.
 - **Coolant dry:** less than one cycle (6 `ReactorCoolantWater`) unreserved in stock, so the next cycle cannot start. A running core's last cycle counts, so a cold core that runs dry starts heating.
 - **Waste full:** no unreserved room for one more cycle of a product of the current recipe, the 1 Radioactive Waste and 1 Radioactive Sludge each cycle makes (the Waste Refinery's `OutputBlocked` test). It heats from cold too: waste fills only by running.
 - **Symmetry:** heating and cooling are the same 2.5%/h, so a reactor that is uncooled more than half the time gains heat on average and eventually melts down. At coolant 45% of the time the net is +0.25%/h, about 400 hours (17 days) from cold to meltdown with falling output.

@@ -90,6 +90,43 @@ A registration changes whenever its art is re-registered. Rerun `node tools/late
 
 Full-size buildings outside the late-game batch keep their bespoke authored costs: Restaurant, Fishery, Hatchery, Grocery, Hospital, Materials Laboratory, the concrete chain, structures and the hydro turbine.
 
+## Late-game power rule (2026-10-29)
+
+User request: the endgame buildings must need much more power ("smog scrubber only taking 200? more like 2000"). Every Deep Frontier power consumer (`MechanicalNodeSpec.PowerInput` > 0) unlocked at 2,000 science or more draws at least
+
+    floor(science) = 2,000 × (science / 2,500)^0.75 ≈ 5.65 × science^0.75
+
+rounded to the nearest 100 hp below 10,000 and the nearest 1,000 hp from 10,000 up, so the 2,500-science Smog Scrubber draws exactly 2,000 hp. A building draws `max(authored base, floor)`: the authored figures stay in their catalogs and generators, and every generator that writes a consumer's `PowerInput` applies `scaledPower(id, base, science)` from `tools/lategame_costs.mjs` (constants in `building_construction_costs.json` `lategameRule.power`), as authored costs go through `scaledCost`. Descriptions that state a power figure take the generated value. `tools/validate_power_rule.mjs` (a validate_all check) fails on a consumer below its floor that is not exempt, and on an exemption that names no such consumer or is no longer needed.
+
+Exempt (`lategameRule.power.exempt`): the Deep Well (its draw follows the boost slider at runtime, 1,667 hp per step, 10,000 hp at 6×) and the Reactor Charging Bay (5,000 hp, the user's explicit choice). Generators are outside the rule. Buildings below 2,000 science keep their authored draw.
+
+| Building | Science | Floor | Before | Now |
+|---|---:|---:|---:|---:|
+| Technical School | 2,200 | 1,800 | 300 | 1,800 |
+| Smog Scrubber | 2,500 | 2,000 | 200 | 2,000 |
+| Chemical Works | 4,000 | 2,800 | 3,500 | 3,500 (authored) |
+| Limestone / Sandstone Quarry | 4,000 | 2,800 | 1,500 | 2,800 |
+| Steel Mill | 4,500 | 3,100 | 2,500 | 3,100 |
+| Precision Machine Works | 5,000 | 3,400 | 2,200 | 3,400 |
+| Bathhouse | 6,000 | 3,900 | 300 | 3,900 |
+| Grocery Store | 6,000 | 3,900 | 100 | 3,900 |
+| Deep Mine | 6,000 | 3,900 | 4,000 | 4,000 (authored) |
+| Archive Excavation | 9,000 | 5,200 | 400 | 5,200 |
+| Electrolysis Plant | 10,000 | 5,700 | 6,000 | 6,000 (authored) |
+| Cryogenic Liquefaction Plant | 12,000 | 6,500 | 10,000 | 10,000 (authored) |
+| Cryogenic Tank Farm | 12,000 | 6,500 | 1,000 | 6,500 |
+| Materials Laboratory | 12,000 | 6,500 | 600 | 6,500 |
+| Hospital | 25,000 | 11,000 | 600 | 11,000 |
+| Mission Control | 30,000 | 13,000 | 1,500 | 13,000 |
+| Deep Well | 30,000 | 13,000 | 1,667–10,000 | unchanged (exempt) |
+| Rocket Assembly Hangar | 50,000 | 19,000 | 12,000 | 19,000 |
+| Launch Pad | 80,000 | 27,000 | 25,000 | 27,000 |
+| Uranium Processing Plant | 200,000 | 53,000 | 5,000 | 53,000 |
+| Reactor Charging Bay | 250,000 | 63,000 | 5,000 | 5,000 (exempt) |
+| Radioactive Waste Refinery | 500,000 | 106,000 | 8,000 | 106,000 |
+
+With the same change the generators were buffed (authored outputs, fuel unchanged): Coal Power Plant 5,000 → 25,000 hp, Oil Power Plant 20,000 → 90,000 hp, Reinforced Hydro Turbine 9,600 → 40,000 hp (rated output at its unchanged 3 m³/s and 16-layer caps; docs/hydroelectric-construction.md) and Nuclear Reactor 800,000 → 1,000,000 hp (still scaled by `1 − heat` at runtime).
+
 ## Science curve (2026-10-29)
 
 User decision: the late-game unlocks climb steeply towards the 1,000,000-science reactor, so players build the Materials Laboratory (400 science per working hour against the Numbercruncher's 10) as the stepping stone. The laboratory (12,000), everything below it and every building that makes the goods its recipes consume keep their science. The Materials Research recipe needs Gear, Concrete, Metal Block and Water; the Geochemical Assay needs UraniumOre, ConcentratedWaste, ReactorCoolantWater, LiquidHydrogen and LiquidOxygen; all of them are available at 12,000. Source: `frontier_progression.json` (`implementedBuildingScienceOverrides`, `nuclearScienceRule`), `create_frontier_expansion_content.mjs` (rocket rows), `radiation_content.mjs` (sludge buildings).
@@ -131,9 +168,9 @@ The first audit found the whole late game unreachable: no building ran Flux, Hig
 
 | Planned id | Recipes / role | Footprint target | Workers | Power | Science | Tier | Menu |
 |---|---|---|---:|---:|---:|---|---|
-| SteelMill | Flux, HighGradeSteel, Alloy | 12x10x16 | 6 | 2,500 hp | 4,500 | T3 | Metal 40 |
-| ArchiveExcavation | RecoveredArtifact, ArchiveData; proposed placement over vanilla UndergroundRuins | 10x9x10 | 4 | 400 hp | 9,000 | T4 | Science 46 |
-| CryogenicTankFarm | Pipe-fed Liquid storage for LiquidHydrogen or LiquidOxygen (one selected good per farm, 2,000 capacity) | 10x10x8 | 0 | 1,000 hp (design only: power-gated intake needs runtime code) | 12,000 | T4 | Storage 90 |
+| SteelMill | Flux, HighGradeSteel, Alloy | 12x10x16 | 6 | 3,100 hp (authored 2,500; power rule) | 4,500 | T3 | Metal 40 |
+| ArchiveExcavation | RecoveredArtifact, ArchiveData; proposed placement over vanilla UndergroundRuins | 10x9x10 | 4 | 5,200 hp (authored 400; power rule) | 9,000 | T4 | Science 46 |
+| CryogenicTankFarm | Pipe-fed Liquid storage for LiquidHydrogen or LiquidOxygen (one selected good per farm, 2,000 capacity) | 10x10x8 | 0 | 6,500 hp (authored 1,000; power rule) | 12,000 | T4 | Storage 90 |
 
 ### Decisions applied (2026-10-21, second round)
 
@@ -235,7 +272,7 @@ Coherence issues (not audit failures):
 
 ### Power (warnings)
 
-Fixed by the 8,000-science hydro turbine (9,600 hp). Before 8,000 science the best generator is the vanilla Large Water Wheel (540 hp): Chemical Works needs 7, Precision Machine Works 5 and the Deep Mine 8. After that, the Cryogenic Liquefaction Plant and Rocket Assembly Hangar need 2 turbines each and the Launch Pad 3. The installed Compact Water Turbine dependency (1,000 hp, 4,000 science) is not modelled by the audit.
+Fixed by the 8,000-science hydro turbine (9,600 hp then; 40,000 hp since 2026-10-29, when the power rule above also raised the consumers, so the counts below are historical). Before 8,000 science the best generator is the vanilla Large Water Wheel (540 hp): Chemical Works needs 7, Precision Machine Works 5 and the Deep Mine 8. After that, the Cryogenic Liquefaction Plant and Rocket Assembly Hangar need 2 turbines each and the Launch Pad 3. The installed Compact Water Turbine dependency (1,000 hp, 4,000 science) is not modelled by the audit.
 
 ### Recipe balance
 
@@ -254,25 +291,25 @@ Fixed by the 8,000-science hydro turbine (9,600 hp). Before 8,000 science the be
 
 ## Power plants (2026-10-22)
 
-User request: bring back coal and oil power plants that are smaller and give less power than the reactor (750,000 hp then, 800,000 since 2026-10-29), but still enough to run the machinery. Catalog: `frontier_progression.json` `powerPlants`; generator `makePowerPlant` in `create_frontier_expansion_content.mjs`; studies `lategame_CoalPowerPlant.py` and `lategame_OilPowerPlant.py`. Static authoring only; not built or tested in game. Since 2026-10-27 both plants are workerless native Steam Engine generators (they were staffed Smelter workshops with the `CoalFiring`/`OilFiring` recipes, now removed).
+User request: bring back coal and oil power plants that are smaller and give less power than the reactor (750,000 hp then, 1,000,000 since 2026-10-29), but still enough to run the machinery. On 2026-10-29 both were buffed with unchanged fuel use: coal 5,000 → 25,000 hp, oil 20,000 → 90,000 hp. Catalog: `frontier_progression.json` `powerPlants`; generator `makePowerPlant` in `create_frontier_expansion_content.mjs`; studies `lategame_CoalPowerPlant.py` and `lategame_OilPowerPlant.py`. Static authoring only; not built or tested in game. Since 2026-10-27 both plants are workerless native Steam Engine generators (they were staffed Smelter workshops with the `CoalFiring`/`OilFiring` recipes, now removed).
 
 | Plant | Output | Consumed per hour while generating | Footprint | Workers | Science | Cost tier |
 |---|---:|---|---|---:|---:|---|
-| Coal Power Plant | 5,000 hp | 1 Coal + 1 Water (inventory for 50 h: 50 of each) | 5×5, 10 layers | 0 | 4,500 | T3 |
-| Oil Power Plant | 20,000 hp | 2 Crude Oil + 2 Water (inventory for 50 h: 100 of each) | 6×6, 9 layers | 0 | 11,000 | T4 (+4 Machine Core gate) |
+| Coal Power Plant | 25,000 hp | 1 Coal + 1 Water (inventory for 50 h: 50 of each) | 5×5, 10 layers | 0 | 4,500 | T3 |
+| Oil Power Plant | 90,000 hp | 2 Crude Oil + 2 Water (inventory for 50 h: 100 of each) | 6×6, 9 layers | 0 | 11,000 | T4 (+4 Machine Core gate) |
 
 Demand is the sum of `MechanicalNodeSpec.PowerInput` in the generated Iron Teeth blueprints (Deep Frontier and vanilla):
 
 | Scenario | Consumers (hp) | Demand | Plants |
 |---|---|---:|---|
-| Steel mill line | Steel Mill 2,500, Deep Drill 1,000, Deep Ore Processor 500, Smelter 200, Gear Workshop 120, Wood Workshop 250 | 4,570 | 1 coal |
-| Mid-game industrial district | the line above + Chemical Works 3,500, Precision Machine Works 2,200, quarry 1,500, Cement Kiln 300, Concrete Mixer 250, Stone Crusher 200 | 12,520 | 3 coal |
-| Same, Deep Mine instead of the drill | +3,000 | 15,520 | 4 coal or 1 oil |
-| Cryogenic fuel line | Water Treatment 500, Electrolysis 6,000, Cryogenic Liquefaction 10,000, Cryogenic Tank Farm 1,000 | 17,500 | 1 oil |
-| Rocket factory | Rocket Assembly Hangar 12,000, Precision Machine Works 2,200, Steel Mill 2,500, Chemical Works 3,500, Deep Mine 4,000, Deep Ore Processor 500, Mission Control 1,500 | 26,200 | 2 oil |
-| Whole launch program | cryogenic fuel line + Hangar 12,000, Mission Control 1,500, Launch Pad 25,000 | 56,000 | 3 oil |
+| Steel mill line | Steel Mill 3,100, Deep Drill 1,000, Deep Ore Processor 500, Smelter 200, Gear Workshop 120, Wood Workshop 250 | 5,170 | 1 coal |
+| Mid-game industrial district | the line above + Chemical Works 3,500, Precision Machine Works 3,400, quarry 2,800, Cement Kiln 300, Concrete Mixer 250, Stone Crusher 200 | 15,620 | 1 coal |
+| Same, Deep Mine instead of the drill | +3,000 | 18,620 | 1 coal |
+| Cryogenic fuel line | Water Treatment 500, Electrolysis 6,000, Cryogenic Liquefaction 10,000, Cryogenic Tank Farm 6,500 | 23,000 | 1 coal or 1 oil |
+| Rocket factory | Rocket Assembly Hangar 19,000, Precision Machine Works 3,400, Steel Mill 3,100, Chemical Works 3,500, Deep Mine 4,000, Deep Ore Processor 500, Mission Control 13,000 | 46,500 | 2 coal or 1 oil |
+| Whole launch program | cryogenic fuel line + Hangar 19,000, Mission Control 13,000, Launch Pad 27,000 | 82,000 | 1 oil |
 
-The curve keeps the planned 1:4 coal-to-oil step (the plan's 2,500/10,000 doubled, since single machines now draw up to 25,000 hp). One reactor equals 40 oil plants.
+Consumer figures follow the power rule above. The first balance kept the plan's 1:4 coal-to-oil step at 5,000/20,000 hp; the 2026-10-29 buff makes it 25,000/90,000 (about 1:3.6). One reactor equals about 11 oil plants or 40 coal plants.
 
 Fuel chains (no new producer was needed):
 - Coal: Deep Drill (1,000, finite source) or Deep Mine (6,000, permanent vein) → Deep Ore → Deep Ore Processor `DeepCoal` (1 Deep Ore + 2 Water → 3 Coal per 2 h, gate 1,200). One processor (1.5 Coal per working hour) feeds 1.5 coal plants at full load during its working hours; a plant that runs through the night as well needs more (24 Coal a day at full load). The Steel Mill and carbon filters compete for it.

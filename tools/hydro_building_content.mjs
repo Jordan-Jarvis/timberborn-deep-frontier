@@ -86,11 +86,13 @@ export async function hydroBlueprint() {
     Gates:[[1,3,0],[2,3,0]].map(xyz),
     SolidWaterCells:solid.map(xyz),ClosedGateCells:[[1,3,0],[1,3,1],[2,3,0],[2,3,1]].map(xyz),
     MaxDischarge:b.maxDischarge,DefaultDischarge:b.defaultDischarge,
-    HpPerFlowAndHead:b.hpPerFlowAndHead,MaxGeneratingHead:b.maxGeneratingHead,
+    // The rated output is authored; the per-flow-and-head coefficient follows from the caps.
+    HpPerFlowAndHead:b.ratedHp/(b.maxDischarge*b.maxGeneratingHead),MaxGeneratingHead:b.maxGeneratingHead,
     AnimationSpeedMultiplier:b.animationSpeedMultiplier,
   };
   v.FinishableHorizontalWaterObstacleSpec={Obstacles:planes};
-  v.MechanicalNodeSpec={PowerOutput:b.maxDischarge*b.maxGeneratingHead*b.hpPerFlowAndHead,
+  if(!Number.isInteger(b.ratedHp)||b.ratedHp<=0)throw new Error('hydro_content.json: ratedHp must be a positive integer');
+  v.MechanicalNodeSpec={PowerOutput:b.ratedHp,
     PowerInput:0,IsShaft:false};
   v.MechanicalNodeDescriptionSpec={AlternativePowerUnitLocKey:''};
   // Shafts only where an authored wall closes the face (measured from the

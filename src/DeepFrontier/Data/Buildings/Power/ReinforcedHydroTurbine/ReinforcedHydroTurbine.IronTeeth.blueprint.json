@@ -4456,7 +4456,7 @@
     "Flippable": true
   },
   "MechanicalNodeSpec": {
-    "PowerOutput": 9600,
+    "PowerOutput": 40000,
     "PowerInput": 0,
     "IsShaft": false
   },
@@ -12053,7 +12053,7 @@
     ],
     "MaxDischarge": 3,
     "DefaultDischarge": 1,
-    "HpPerFlowAndHead": 200,
+    "HpPerFlowAndHead": 833.3333333333334,
     "MaxGeneratingHead": 16,
     "AnimationSpeedMultiplier": 4
   },

@@ -44,7 +44,7 @@ namespace DeepFrontier.Scripts {
     private readonly SpeedManager _speed; private readonly CameraService _camera;
     private readonly GameSaver _saver; private readonly GameLoader _loader; private readonly IDayNightCycle _clock;
     private readonly WorkingHoursManager _hours; private readonly INavMeshService _nav; private readonly INavigationService _navigation;
-    private Hospital _hospital; private BlockObject _building,_bed; private MechanicalNode _generator;
+    private Hospital _hospital; private BlockObject _building,_bed; private MechanicalNode[] _generators;
     private GoodConsumingBuilding _supplies; private Enterable _ward;
     private Worker[] _staff; private NeedManager[] _patients;
     private readonly string[] _conditions={"Injury","ChippedTeeth","BadwaterContamination"};
@@ -113,7 +113,10 @@ namespace DeepFrontier.Scripts {
       for(int x=3;x<=8;x++)deckPaths.Add(new Vector3Int(x,8,4));
       for(int x=4;x<=7;x++)for(int y=5;y<=7;y++)deckPaths.Add(new Vector3Int(x,y,6));
       foreach(var cell in deckPaths)Create("Path",160+cell.x,162+cell.y,3+cell.z);
-      Create("PowerShaft.IronTeeth",159,165,3);_generator=Create("DevPowerGenerator",158,165,3).GetComponent<MechanicalNode>();
+      // Two stacked 10,000 hp dev generators cover the 11,000 hp demand.
+      Create("PowerShaft.IronTeeth",159,165,3);
+      _generators=new[]{Create("DevPowerGenerator",158,165,3).GetComponent<MechanicalNode>(),
+        Create("DevPowerGenerator",158,165,5).GetComponent<MechanicalNode>()};
       Create("DoublePlatform.IronTeeth",164,167,9);Create("Platform.IronTeeth",164,167,11);Create("Path",164,167,12);
       Create("Stairs.IronTeeth",160,160,3,Orientation.Cw180);
       Create("Platform.IronTeeth",160,161,3);Create("Stairs.IronTeeth",160,161,4,Orientation.Cw180);
@@ -146,7 +149,7 @@ namespace DeepFrontier.Scripts {
       _speed.ChangeSpeed(1);
     }
     private void StartCare() {
-      Require(_building.GetComponent<MechanicalNode>().PowerEfficiency==1,"Hospital shaft lacks full 600 hp");
+      Require(_building.GetComponent<MechanicalNode>().PowerEfficiency==1,"Hospital shaft lacks full 11,000 hp");
       CheckPort("WestFrontLeft",true);CheckPort("WestFront1",false);
       foreach(var door in _building.GetComponent<PlatformDeckSpec>().Doors) {
         var a=_building.TransformCoordinates(door.Interior);var b=_building.TransformCoordinates(door.Exterior);
@@ -225,7 +228,7 @@ namespace DeepFrontier.Scripts {
           Require(!_hospital.CanUse&&!_hospital.ProvidesNeighborhoodCare,"Unpowered hospital still offers care");
           Require(!_building.GetComponent<Attraction>().IsUsable&&!_supplies.IsConsuming,"Unpowered treatment or supplies remain active");
           Pass("zero shaft power disables treatment, supplies and neighborhood care");
-          _generator.SetOutputMultiplier(1);_phase=3;
+          foreach(var g in _generators)g.SetOutputMultiplier(1);_phase=3;
         } else if(_phase==3&&_hospital.CanUse&&_hospital.ProvidesNeighborhoodCare) {
           Pass("care and neighborhood effect resume with power");
           _hours.WorkedPartOfDay=0;_phaseTime=_clock.PartialDayNumber;_phase=4;
@@ -304,7 +307,7 @@ namespace DeepFrontier.Scripts {
       if(_treated.Count==5&&_hospital.ProvidesNeighborhoodCare) {
         foreach(var id in _stockAtStart.Keys)Require(_supplies.Inventory.AmountInStock(id)<_stockAtStart[id],"Operating hospital did not consume "+id);
         Pass("native medicine, water and extract consumption; neighborhood service active");
-        Capture("hospital-treating");_generator.SetOutputMultiplier(0);
+        Capture("hospital-treating");foreach(var g in _generators)g.SetOutputMultiplier(0);
         _phaseTime=_clock.PartialDayNumber;_phase=2;
       }
     }

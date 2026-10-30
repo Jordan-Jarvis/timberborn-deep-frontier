@@ -8,7 +8,7 @@
 //   node tools/cryogenic_content.mjs [dataRoot]
 //
 // The building itself (model, footprint, LargeTank-derived liquid Stockpile,
-// 2,000 capacity, 1,000 hp MechanicalNode, costs, unlock) is owned by the
+// 2,000 capacity, MechanicalNode (6,500 hp by the power rule), costs, unlock) is owned by the
 // building integration. This module adds behaviour to that template only:
 // - CryogenicTankSpec {Goods, VentPerHourOnPowerLoss, BufferHours}.
 // - Timber Pipes BuildingPipeSpec.Ports from the study's PIPE_SOCKETS

@@ -61,7 +61,7 @@ Verification so far: regeneration changed only the two blueprints and the reacto
 
 ## Cryogenic tank farm by pipe (2026-10-22)
 
-The Cryogenic Tank Farm is the integration's LargeTank-derived Liquid Stockpile: 2,000 capacity and 1,000 hp. The player selects Liquid Hydrogen or Liquid Oxygen with the native stockpile selection. `tools/cryogenic_content.mjs` adds `CryogenicTankSpec` and the pipe sockets; the runtime is in `src/DeepFrontier/Scripts/Cryogenics/`.
+The Cryogenic Tank Farm is the integration's LargeTank-derived Liquid Stockpile: 2,000 capacity and 6,500 hp (power rule, docs/progression.md). The player selects Liquid Hydrogen or Liquid Oxygen with the native stockpile selection. `tools/cryogenic_content.mjs` adds `CryogenicTankSpec` and the pipe sockets; the runtime is in `src/DeepFrontier/Scripts/Cryogenics/`.
 
 **Source-confirmed contracts** (installed Timber Pipes 11.4.0, DLL hash equal to the audit record; game 1.1.2.8):
 - **Every liquid stockpile is an in-network tank.** `TankPipe` (`[AddTemplateModule2(typeof(Stockpile))]`) makes a Liquid stockpile a `BuildingPipe` plus `PipeTank`. `BuildingPipe.ResolveSpec` prefers an explicit `BuildingPipeSpec` with ports; otherwise it opens every exposed face.

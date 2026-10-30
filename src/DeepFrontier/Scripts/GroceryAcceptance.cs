@@ -118,7 +118,7 @@ namespace DeepFrontier.Scripts {
       _speed.ChangeSpeed(1);
     }
     private void Start() {
-      Require(_building.GetComponent<MechanicalNode>().PowerEfficiency==1,"Grocery lacks its full 100 hp");
+      Require(_building.GetComponent<MechanicalNode>().PowerEfficiency==1,"Grocery lacks its full 3,900 hp");
       RequireMarketAccess(_building,_nav);
       Pass("road, main-door entrance, stair foot and balcony deck paths form one native navigation network");
       var workers=_entities.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>()).Where(w=>w.WorkerType=="Beaver").ToArray();

@@ -105,7 +105,8 @@ namespace DeepFrontier.Scripts {
       ChannelFlows=new float[Spec.Gates.Length];ChannelHeads=new float[Spec.Gates.Length];
       float rated=Spec.MaxDischarge*Spec.MaxGeneratingHead*Spec.HpPerFlowAndHead;
       var mechanical=GetComponent<MechanicalNodeSpec>();
-      if(mechanical.PowerInput!=0||Mathf.Abs(mechanical.PowerOutput-rated)>.001f)
+      // The authored coefficient is ratedHp / (discharge x head) (833.33 hp): compare within float precision.
+      if(mechanical.PowerInput!=0||Mathf.Abs(mechanical.PowerOutput-rated)>mechanical.PowerOutput*1e-5f)
         throw new InvalidOperationException("Turbine mechanical rating differs from its authored flow/head rating");
       DischargeLimit=Spec.DefaultDischarge;
       _node.SetOutputMultiplier(0);

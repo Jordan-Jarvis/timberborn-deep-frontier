@@ -3,7 +3,7 @@ import {structureBlocks,authoredColliders,roomPowerFaces} from './grid_structure
 import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {wallRoomPowerFaces} from './civic_wall_faces.mjs';
 import {applyVanillaSmoke,sceneSmokeRegistration} from './vanilla_smoke.mjs';
-import {scaledCost} from './lategame_costs.mjs';
+import {scaledCost,scaledPower} from './lategame_costs.mjs';
 const root=new URL('../',import.meta.url);
 const data=new URL('src/DeepFrontier/Data/',root);
 const vanilla=new URL('vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources/',root);
@@ -11,6 +11,8 @@ const read=async path=>JSON.parse(await readFile(path,'utf8'));
 const xyz=([X,Y,Z])=>({X,Y,Z});
 const layout=(await read(new URL('tools/civic-layouts.json',root))).Hospital;
 const care=(await read(new URL('tools/frontier_progression.json',root))).hospital;
+// Generated draw: the authored demand under the power rule (lategame_costs.mjs scaledPower).
+const careHp=scaledPower('Hospital',care.powerDemandHp,care.scienceUnlock);
 
 // Vanilla convention (138 of 139 shipped buildings): the native Entrance is
 // the path cell in front of the door, and its doorstep is the door cell.
@@ -57,7 +59,7 @@ export async function applyHospital(value) {
   // without entering this patient-capacity pool.
   value.WorkplaceSpec={MaxWorkers:care.workers,DefaultWorkers:care.workers,DefaultWorkerType:'Beaver',DisallowOtherWorkerTypes:true,WorkerTypeUnlockCosts:[]};
   Object.assign(value.BuildingSpec,{ScienceCost:care.scienceUnlock,BuildingCost:scaledCost(care.buildingCost,care.scienceUnlock),SelectionSoundName:'MedicalBed',LoopingSoundName:''});
-  value.MechanicalNodeSpec={PowerInput:care.powerDemandHp,PowerOutput:0,IsShaft:false};
+  value.MechanicalNodeSpec={PowerInput:careHp,PowerOutput:0,IsShaft:false};
   value.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
   const colliders=authoredColliders(await read(new URL('outputs/reference-studies/Hospital-structure.json',root)),layout.structure,layout.baseZ);
   value.Children['#Finished'].CollidersSpec=colliders;
@@ -134,7 +136,7 @@ export async function applyHospital(value) {
 
 // Hospital description and the panel/status rows used by Scripts/Hospital*.cs;
 // create_frontier_expansion_content.mjs writes them with the other rows.
-export const HOSPITAL_DESCRIPTION='Houses 30 patients, who stay admitted until cured and are fed and watered from its own stock. An assigned crew of six and 600 hp treat injury 80% faster than a medical bed, plus chipped teeth, badwater contamination and 10-day radiation decontamination, day and night. Uses medicine, water and extract while treating or attended. Attending, supplied staff grant neighborhood care up to +2 wellbeing within ten cells.';
+export const HOSPITAL_DESCRIPTION=`Houses 30 patients, who stay admitted until cured and are fed and watered from its own stock. An assigned crew of six and ${careHp.toLocaleString('en-US')} hp treat injury 80% faster than a medical bed, plus chipped teeth, badwater contamination and 10-day radiation decontamination, day and night. Uses medicine, water and extract while treating or attended. Attending, supplied staff grant neighborhood care up to +2 wellbeing within ten cells.`;
 export const HOSPITAL_LOCALIZATION=[
   ['DeepFrontier.Hospital.Panel.Title','Hospital'],
   ['DeepFrontier.Hospital.Panel.Patients','Patients admitted: {0} / {1} beds'],

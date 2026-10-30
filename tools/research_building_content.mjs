@@ -5,7 +5,7 @@ import {dirname,resolve} from 'node:path';
 import {industrialColliders} from './industrial_occupancy.mjs';
 import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {applyVanillaSmoke,sceneSmokeRegistration} from './vanilla_smoke.mjs';
-import {scaledCost} from './lategame_costs.mjs';
+import {scaledCost,scaledPower} from './lategame_costs.mjs';
 const root=new URL('../',import.meta.url);
 const read=async path=>JSON.parse(await readFile(new URL(path,root),'utf8'));
 const xyz=([X,Y,Z])=>({X,Y,Z});
@@ -90,7 +90,7 @@ export async function researchContent() {
     v.WorkplaceSpec={MaxWorkers:b.workers,DefaultWorkers:b.workers,DefaultWorkerType:'Beaver',
       DisallowOtherWorkerTypes:false,WorkerTypeUnlockCosts:[{WorkerType:'Bot',ScienceCost:2000}]};
     v.ManufactorySpec={ProductionRecipeIds:b.recipes};
-    v.MechanicalNodeSpec={PowerInput:b.powerDemandHp,PowerOutput:0,IsShaft:false};
+    v.MechanicalNodeSpec={PowerInput:scaledPower(b.id,b.powerDemandHp,b.scienceUnlock),PowerOutput:0,IsShaft:false};
     v.MechanicalNodeAnimatorSpec={MinSpeedMultiplier:0};
     // Native Entrance on the path cell in front of the ground door (vanilla
     // convention, as in the donor Smelter); its doorstep is the door cell, so

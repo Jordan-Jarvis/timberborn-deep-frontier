@@ -2351,7 +2351,7 @@
     "ForceOneFinalAccess": false
   },
   "MechanicalNodeSpec": {
-    "PowerOutput": 20000,
+    "PowerOutput": 90000,
     "PowerInput": 0,
     "IsShaft": false
   },

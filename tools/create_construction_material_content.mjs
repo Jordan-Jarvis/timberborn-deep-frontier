@@ -7,7 +7,7 @@ import {applyPitLayout} from './pit_building_content.mjs';
 import {structuralBlueprints} from './structural_building_content.mjs';
 import {hydroBlueprint} from './hydro_building_content.mjs';
 import {researchContent} from './research_building_content.mjs';
-import { scaledCost } from './lategame_costs.mjs';
+import { scaledCost, scaledPower } from './lategame_costs.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dataRoot = resolve(root, 'src/DeepFrontier/Data');
@@ -43,6 +43,16 @@ await write('MaterialCollections/MaterialCollection.DeepFrontierMapResources.blu
     'Materials/UberAtlas/Materials/IronTeeth/Plaster_White.IronTeeth',
   ] },
 });
+// The generated draw under the power rule (lategame_costs.mjs scaledPower).
+const generatedHp = (building) => scaledPower(building.id, building.hp, building.science);
+// A catalog description names the generated draw: {hp} is the building's own,
+// {quarryHp} (a permanent seam) that of the one quarry built over it.
+function describe(entry, tokens) {
+  return entry.description.replace(/\{(\w+)\}/g, (match, key) => {
+    if (!Object.hasOwn(tokens, key)) throw new Error(`${entry.id}: description token ${match} does not apply`);
+    return tokens[key].toLocaleString('en-US');
+  });
+}
 function label(id, name, description, icon) {
   rows.push([`Building.${id}.DisplayName`, name], [`Building.${id}.Description`, description],
     [`Building.${id}.FlavorDescription`, 'The next age begins with a solid foundation.']);
@@ -105,7 +115,7 @@ for (const building of catalog.buildings) {
   Object.assign(value.WorkplaceSpec, { MaxWorkers: building.workers, DefaultWorkers: building.workers,
     WorkerTypeUnlockCosts: [{ WorkerType: 'Bot', ScienceCost: building.botScience }] });
   Object.assign(value.PlaceableBlockObjectSpec, { ToolGroupId: 'Metal', ToolOrder: 70 + catalog.buildings.indexOf(building), Layout: 'Single' });
-  value.LabeledEntitySpec = label(id, building.name, building.description, `Buildings/Metal/${id}/Icon`);
+  value.LabeledEntitySpec = label(id, building.name, describe(building, kind === 'pit' ? {} : {hp: generatedHp(building)}), `Buildings/Metal/${id}/Icon`);
   if (kind === 'pit') {
     delete value.ScavengerSpec;
     value.MineralPitSpec = { GoodId: building.good };
@@ -113,7 +123,7 @@ for (const building of catalog.buildings) {
     value.SimpleOutputInventorySpec.Capacity = 40;
   } else {
     value.ManufactorySpec.ProductionRecipeIds = building.recipes;
-    value.MechanicalNodeSpec = { PowerInput: building.hp, PowerOutput: 0, IsShaft: false };
+    value.MechanicalNodeSpec = { PowerInput: generatedHp(building), PowerOutput: 0, IsShaft: false };
     value.MechanicalBuildingSpec = {};
     value.MechanicalNodeAnimatorSpec = { MinSpeedMultiplier: 0 };
     value.MechanicalConnectorTargetSpec = {};
@@ -184,7 +194,9 @@ for (const source of catalog.sources) {
   value.TemplateSpec.BackwardCompatibleTemplateNames = [];
   Object.assign(value.PlaceableBlockObjectSpec, { ToolGroupId: 'MapEditorObjects',
     ToolOrder: 1020 + catalog.sources.indexOf(source), Layout: 'Single', DevModeTool: true });
-  value.LabeledEntitySpec = label(source.id, source.name, source.description, `${path}Icon`);
+  const quarries = catalog.buildings.filter((b) => b.kind === 'quarry' && b.source === source.id);
+  if (source.kind === 'permanent' && quarries.length !== 1) throw new Error(`${source.id}: expected one quarry built over it, found ${quarries.length}`);
+  value.LabeledEntitySpec = label(source.id, source.name, describe(source, quarries.length ? {quarryHp: generatedHp(quarries[0])} : {}), `${path}Icon`);
   value.BlockObjectModelSpec = { FullModelName: '#Models', UncoveredModelName: '', UndergroundModelName: '', UndergroundModelDepth: 0 };
   // Own models and colliders that fit them (tools/map_objects.json): the seams
   // are 0.3 high understructures under a quarry, not full-layer boxes.

@@ -80,7 +80,7 @@ export const LEAK_TUNING = {
 // Exact texts written by tools/create_frontier_expansion_content.mjs; the
 // descriptions below replace them.
 export const PRODUCER_DESCRIPTIONS = {
-  NuclearReactor: 'An 800000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive water that must be shipped off the map.',
+  NuclearReactor: 'A 1,000,000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive water that must be shipped off the map.',
   RadioactiveWasteVault: 'Locked storage for radioactive waste; the contents must be processed or moved before demolition.',
   RadioactiveWasteRefinery: 'Deep Frontier radioactive waste refinery production building',
 };
@@ -127,7 +127,7 @@ export function descriptions(reactor, leaks, refineryPowerHp) {
   return {
     NuclearReactor: `${PRODUCER_DESCRIPTIONS.NuclearReactor} Its power output falls as its core heats. Without coolant, or with its radioactive waste or radioactive water storage full, a hot core keeps heating, running or stopped, as fast as it cools otherwise, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. Each cycle seals its spent fuel in a cask of High-Grade Steel and Concrete. Fewer than ${t.MinOperators} trained operators working or overdue maintenance (a ${t.MaintenanceOutageHours}-hour stop every ${t.MaintenanceIntervalHours} running hours, using ${t.MaintenanceGoods.map((g) => `${g.Amount} ${g.Id === 'HighGradeSteel' ? 'High-Grade Steel' : g.Id}`).join(' and ')}) also heat it while it runs, up to ${pct(t.FaultHeatLimit)}%. At 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown.`,
     RadioactiveWasteVault: `${PRODUCER_DESCRIPTIONS.RadioactiveWasteVault} Keep it below full: when full, ${v.GoodsPerLeak} casks breach every ${v.LeakIntervalHours} hours, spilling radioactive water and irradiating the soil within ${v.SoilRadius} tiles, which kills crops.`,
-    RadioactiveWasteRefinery: `Dissolves spent-fuel casks in water into radioactive water and recovered minerals, and cleans contaminated water. Requires ${refineryPowerHp} hp. Casks can also go straight to a Radioactive Waste Export. Haul its radioactive water to a Radioactive Water Outfall or Radioactive Waste Export: when its tanks are full, ${r.GoodsPerLeak} radioactive water leaks every ${r.LeakIntervalHours} hours and irradiates the soil within ${r.SoilRadius} tiles, killing crops. Pausing it seals the tanks.`,
+    RadioactiveWasteRefinery: `Dissolves spent-fuel casks in water into radioactive water and recovered minerals, and cleans contaminated water. Requires ${refineryPowerHp.toLocaleString('en-US')} hp. Casks can also go straight to a Radioactive Waste Export. Haul its radioactive water to a Radioactive Water Outfall or Radioactive Waste Export: when its tanks are full, ${r.GoodsPerLeak} radioactive water leaks every ${r.LeakIntervalHours} hours and irradiates the soil within ${r.SoilRadius} tiles, killing crops. Pausing it seals the tanks.`,
   };
 }
 

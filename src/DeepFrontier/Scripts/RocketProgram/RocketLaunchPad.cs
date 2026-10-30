@@ -32,7 +32,7 @@ namespace DeepFrontier.Scripts {
 
   // Launch sequencing on the native Launch Pad workshop.
   // - Mission = native recipe; haulers stage the rocket and fuel, the recipe
-  //   selector chooses the mission, workers + 25,000 hp run the preparation.
+  //   selector chooses the mission, workers + the pad's 27,000 hp run the preparation.
   // - Ingredients are consumed natively when preparation starts (rocket
   //   stacked). Changing the recipe before liftoff destacks the rocket and
   //   returns its parts and fuel to the pad inventory.

@@ -7,6 +7,22 @@
     "rounding": "nearest multiple of 5, minimum 5",
     "gate": "lategameGates adds explicit goods that prove the previous stage on top of the rule: DeepMine DeepAlloy (finite drill phase), Greenhouse Compost (fertilizer works; bed soil), NuclearReactor EnrichedFuel (first core load) and 100 extra HighGradeSteel (containment; replaced RecoveredMinerals on 2026-10-29), OilPowerPlant MachineCore (turbine governors from the precision works, after the oil chain feeds polymer)",
     "tierBand": "tier is fixed by the science unlock: the first tier whose scienceMax is at least the building's science (null = no upper bound)",
+    "power": {
+      "rule": "every Deep Frontier power consumer (MechanicalNodeSpec.PowerInput > 0) unlocked at scienceMin science or more draws max(authored base, floor); floor = referenceHp x (science / referenceScience) ^ exponent (5.65 x science^0.75), rounded to the nearest rounding.step, or rounding.largeStep from rounding.largeFrom hp; each generator applies it with scaledPower (tools/lategame_costs.mjs) and tools/validate_power_rule.mjs checks the generated blueprints; generators (PowerOutput) are outside the rule",
+      "scienceMin": 2000,
+      "referenceScience": 2500,
+      "referenceHp": 2000,
+      "exponent": 0.75,
+      "rounding": {
+        "step": 100,
+        "largeStep": 1000,
+        "largeFrom": 10000
+      },
+      "exempt": {
+        "DeepWell": "its draw follows the boost slider at runtime (powerInputHp / maxBoost = 1,667 hp per step, 10,000 hp at 6x; tools/deep_well_content.json, Scripts/DeepWell)",
+        "ReactorChargingBay": "the user chose 5,000 hp explicitly (tools/super_bots.json station.powerInput)"
+      }
+    },
     "tiers": {
       "T1": {"costFactor":2,"stage":"Productive settlement","scienceMax":600,"concretePerGroundCell":0,"per100BuiltCells":{"Plank":30,"Gear":12,"MetalBlock":6}},
       "T2": {"costFactor":3,"stage":"Industrial city","scienceMax":3000,"concretePerGroundCell":0.75,"per100BuiltCells":{"Plank":25,"Gear":10,"MetalBlock":8}},

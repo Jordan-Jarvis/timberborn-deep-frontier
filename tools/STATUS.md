@@ -4,6 +4,22 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Power: science-scaled consumer floor and stronger power plants (Claude Code session, 2026-10-29, built by an agent; validated in mirror `power`; not built or run in game)
+
+- **User:** endgame buildings should need lots of power ("smog scrubber only taking 200? more like 2000"); Coal 25k, Oil 90k, Hydro 40k, Nuclear 1M.
+- **Rule:** every consumer at >= 2,000 science draws `max(base, 5.65 x science^0.75)` hp (k = 2000 / 2500^0.75; rounded to 100 below 10,000, to 1,000 above). Constants and exemptions (DeepWell: slider-driven; ReactorChargingBay: user-set 5,000) are in `building_construction_costs.json` `lategameRule.power`. `scaledPower(id, base, science)` sits next to `scaledCost` in `tools/lategame_costs.mjs`; every generator calls it where it writes `PowerInput`. `tools/validate_power_rule.mjs` fails on a consumer below its floor, or a stale or extra exemption. It cannot confirm the exact authored base of the four buildings above the floor (ChemicalWorks, DeepMine, Electrolysis, CryoLiquefaction), whose bases are generator literals.
+- **Generators:** Coal 25,000, Oil 90,000 (fuel unchanged), Reactor 1,000,000 (still x (1 - heat)). Hydro: authored as `ratedHp` 40,000; the generator derives 833.33 hp per m3/s per layer of head (cap 3 m3/s x 16 layers, unchanged; was 200).
+- **Descriptions** that state hp now take the generated value.
+- **Acceptance code:**
+  - `LategameAcceptance` reads the launch load from data.
+  - `HospitalAcceptance` stacks two 10,000 hp test generators.
+  - `HydroAcceptance` scales its band.
+  - `HydroTurbine` compares rated to authored output within float precision.
+- **Checks:** mirror `power`: `validate_all -SkipBlender` 54 pass, 1 report-only, 2 failures from other work (`map-setup-terrain`: unfinished map work; `no-game-assets`: outside git); compile.
+- **Open:**
+  - **Bulk acceptance runs:** AllBuildings and Lategame give each consumer one 10,000 hp test generator, which no longer covers Hospital, Mission Control, Hangar, Launch Pad, Uranium or Refinery.
+  - **Not updated:** the old balance workbook (`Timberborn_Deep_Frontier_Balance_Workbook.xlsx`, already stale) and `capture_hydro*.py` (they check the recorded 9,600 hp runs).
+
 ## Drill bits for the Deep Drill and Deep Mine (Claude Code session, 2026-10-29, built by an agent; validated in mirror `drillbits` and the real repo; not built or run in game)
 
 - **User:** concrete and steel need ongoing industrial uses (follow-up to the reactor casks and maintenance entry).

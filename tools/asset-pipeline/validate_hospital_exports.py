@@ -76,7 +76,8 @@ require('ManufactorySpec' not in blueprint and 'WorkshopSpec' not in blueprint,'
 require('FixedSlotManagerSpec' not in blueprint and 'WorkplaceSlotManagerSpec' not in blueprint,'Staff/patient capacity must not share restaurant slots')
 require('StatusHidingEnterableSpec' not in blueprint,'Workplace already supplies the one native IStatusHider')
 require(blueprint['EnterableSpec']['CapacityFinished']==30,'Patient capacity differs')
-require(blueprint['MechanicalNodeSpec']=={'PowerInput':600,'PowerOutput':0,'IsShaft':False},'Hospital hp roles differ')
+# 11,000 hp: the late-game power rule's floor at 25,000 science (authored 600).
+require(blueprint['MechanicalNodeSpec']=={'PowerInput':11000,'PowerOutput':0,'IsShaft':False},'Hospital hp roles differ')
 require(blueprint['BuildingSpec']['ScienceCost']==25000,'Initial science balance differs')
 effects={e['NeedId']:e for e in blueprint['AttractionSpec']['Effects']}
 # Radiation adds its 10-day Irradiation treatment (tools/radiation_content.mjs).
@@ -102,6 +103,6 @@ report={'status':'Source/export checks passed; native runtime acceptance pending
         'sourceSha256':hashlib.sha256((ROOT/'src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend').read_bytes()).hexdigest(),
         'exportSha256':hashlib.sha256(payload).hexdigest(),'nodes':len(model.nodes),'nativeUvVertices':uv_count,
         'routes':len(cells),'openings':42,'doors':6,'doorLevels':[0,2,4,6],'nativeProps':0,'bannerTracks':2,
-        'patients':30,'workers':6,'patientMeals':meals,'hpDemand':600,'hpOutput':0,'science':25000,'treatmentEffects':effects}
+        'patients':30,'workers':6,'patientMeals':meals,'hpDemand':11000,'hpOutput':0,'science':25000,'treatmentEffects':effects}
 (ROOT/'outputs/civic-integration/hospital-static-checks.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 print(json.dumps(report,indent=2))

@@ -18,7 +18,8 @@ assert sorted(tracks)==[(f'#MaterialsLaboratory.{n}',121) for n in ('Flywheel','
 assert (folder/'Icon.png').stat().st_size>100
 assert bp['BuildingSpec']['ScienceCost']==12000
 assert bp['WorkplaceSpec']['MaxWorkers']==4
-assert bp['MechanicalNodeSpec']=={'PowerInput':600,'PowerOutput':0,'IsShaft':False}
+# 6,500 hp: the late-game power rule's floor at 12,000 science (authored 600).
+assert bp['MechanicalNodeSpec']=={'PowerInput':6500,'PowerOutput':0,'IsShaft':False}
 assert recipe['ProducedSciencePoints']==800 and recipe['CycleDurationInHours']==2 and recipe['Products']==[]
 assert recipe['Ingredients']==[{'Id':'Gear','Amount':4},{'Id':'Concrete','Amount':2},{'Id':'MetalBlock','Amount':1},{'Id':'Water','Amount':1}]
 # Any-face Timber Pipes connection: recipe Water is the liquid; no port restriction.
@@ -75,6 +76,6 @@ report={'scope':'Candidate export checks; actual native operation remains to tes
     'modelSha256':hashlib.sha256(payload).hexdigest(),'nodes':len(names),'animationTracks':tracks,
     'nativeUvVertices':uv_count,'connectedRouteCells':len(routes),'railOpenings':len(bp['BuildingWalkwaySpec']['Openings']),
     'terraceSupportCells':sum(b['Stackable']=='BlockObject' for b in blocks),'scienceUnlock':12000,
-    'sciencePerBatch':800,'powerDemandHp':600,'powerOutputHp':0}
+    'sciencePerBatch':800,'powerDemandHp':6500,'powerOutputHp':0}
 (root/'outputs/research-integration/export-checks.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

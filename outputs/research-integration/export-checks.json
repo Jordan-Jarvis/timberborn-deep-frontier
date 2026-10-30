@@ -22,6 +22,6 @@
   "terraceSupportCells": 9,
   "scienceUnlock": 12000,
   "sciencePerBatch": 800,
-  "powerDemandHp": 600,
+  "powerDemandHp": 6500,
   "powerOutputHp": 0
 }

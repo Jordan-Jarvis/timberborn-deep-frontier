@@ -5158,7 +5158,7 @@
   },
   "MechanicalBuildingSpec": {},
   "MechanicalNodeSpec": {
-    "PowerInput": 600,
+    "PowerInput": 6500,
     "PowerOutput": 0,
     "IsShaft": false
   },

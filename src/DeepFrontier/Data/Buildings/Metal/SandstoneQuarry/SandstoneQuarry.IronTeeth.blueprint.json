@@ -11735,7 +11735,7 @@
     }
   },
   "MechanicalNodeSpec": {
-    "PowerInput": 1500,
+    "PowerInput": 2800,
     "PowerOutput": 0,
     "IsShaft": false
   },
