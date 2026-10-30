@@ -21,7 +21,8 @@ namespace DeepFrontier.Scripts.Radiation {
   //
   // Hauling: while it carries a radioactive good, each tick may irradiate it
   // outright (RadiationTuning.HaulingIrradiationRate per carrying hour; a
-  // notification names the beaver and the good).
+  // notification names the beaver and the good). Kits (BeaverChild) have no
+  // GoodCarrier and never haul; only adults (BeaverAdult) roll.
   //
   // Exposure: outside buildings, a beaver accumulates dose from the cell it
   // stands in: radioactive water it wades in (scaled by the radioactive share;
@@ -89,9 +90,9 @@ namespace DeepFrontier.Scripts.Radiation {
       _enterer = GetComponent<Enterer>();
       _mortal = GetComponent<Mortal>();
       _waterResistor = GetComponent<IWaterResistor>();
-      _carrier = GetComponent<GoodCarrier>();
-      if (_needs == null || _enterer == null || _mortal == null || _carrier == null)
-        throw new System.InvalidOperationException("RadiationExposure requires NeedManager, Enterer, Mortal and GoodCarrier on beavers");
+      _carrier = GetComponent<GoodCarrier>();   // null on kits: BeaverChild has no GoodCarrier
+      if (_needs == null || _enterer == null || _mortal == null)
+        throw new System.InvalidOperationException("RadiationExposure requires NeedManager, Enterer and Mortal on beavers");
     }
 
     // Prompt dose from a reactor meltdown (Meltdown/MeltdownService.cs). It
@@ -119,7 +120,7 @@ namespace DeepFrontier.Scripts.Radiation {
       }
       _dose -= RadiationTuning.ExposureDecayPerHour * hours;
       if (_dose < 0f) _dose = 0f;
-      if (_carrier.IsCarrying && !IsIrradiated) {
+      if (_carrier != null && _carrier.IsCarrying && !IsIrradiated) {
         string goodId = _carrier.CarriedGoodId;
         float rate = RadiationTuning.HaulingIrradiationRate(goodId);
         if (rate > 0f && _random.CheckProbability(1f - System.MathF.Exp(-rate * hours))) {
