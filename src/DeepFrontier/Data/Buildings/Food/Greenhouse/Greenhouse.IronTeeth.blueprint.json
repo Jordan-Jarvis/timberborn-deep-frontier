@@ -5,15 +5,19 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 90
+        "Amount": 15
+      },
+      {
+        "Id": "Log",
+        "Amount": 10
+      },
+      {
+        "Id": "MetalBlock",
+        "Amount": 65
       },
       {
         "Id": "Gear",
         "Amount": 35
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 20
       },
       {
         "Id": "Compost",

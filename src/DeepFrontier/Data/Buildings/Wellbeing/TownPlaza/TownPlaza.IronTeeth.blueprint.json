@@ -4,24 +4,16 @@
     "LoopingSoundName": "Agora",
     "BuildingCost": [
       {
-        "Id": "Plank",
-        "Amount": 55
+        "Id": "MetalBlock",
+        "Amount": 75
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 150
       },
       {
         "Id": "Gear",
         "Amount": 35
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 35
-      },
-      {
-        "Id": "TreatedPlank",
-        "Amount": 15
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 105
       }
     ],
     "ScienceCost": 5000,

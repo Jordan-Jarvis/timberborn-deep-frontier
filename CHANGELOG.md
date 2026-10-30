@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Construction costs follow materials
+- Every building now costs what it is visibly made of. Timber and plank buildings cost planks (logs too before 600 science, treated planks later), steel and sheet-metal buildings cost metal blocks, deep alloy, high-grade steel or alloy by stage, and concrete is needed only where the building shows concrete. Masonry costs limestone or sandstone. Gears and machine cores stay as they were, and no building got cheaper.
+- A building never costs a good that can only be made with that building, or with one unlocked after it: the first concrete chain (pits, crusher, kiln, mixer) needs no concrete. The pits and quarries do not pay for the stone they quarry.
+- Concrete-heavy late buildings now need far more concrete (the Nuclear Reactor 32,285, the Launch Pad 9,040), and less steel and alloy. Before the quarries, the buildings still fit in the 1,800 limestone and sandstone that every built-in map holds near its pits.
+
 ### Fewer required mods
 - Six mods are no longer required: Pump to Tank, Flywheels, Teleporter Station, Solar Panel (northforge), Expanded Storage and Powered Tubeway. Deep Frontier never used them directly. If you keep Expanded Storage, its Pile Module no longer shows deep ore and deep alloy piles.
 

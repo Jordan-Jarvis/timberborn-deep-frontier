@@ -29,12 +29,20 @@
 // reason. Generators (PowerOutput) are outside the rule.
 // tools/validate_power_rule.mjs checks the generated blueprints.
 //
+// Material rule (tools/material_costs.mjs, materialRule; user 2026-10-30):
+// the rule rows (before gates) and every authored building cost
+// (buildingCost) are recomposed from the materials the building's model shows,
+// keeping their machinery goods and not lowering their embodied value.
+// lategameCost and buildingCost take the building's science unlock, which
+// fixes its tier (stage) and the goods it can be built from without itself.
+//
 // CLI:
 //   node tools/lategame_costs.mjs           print the rule's costs
 //   node tools/lategame_costs.mjs --check   fail when a catalog row differs
 //   node tools/lategame_costs.mjs --write   rewrite the catalog rows the rule owns
 import {readFile, writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
+import {materialCost, recordedScience} from './material_costs.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = async (path) => JSON.parse(await readFile(new URL(path, root), 'utf8'));
@@ -75,6 +83,15 @@ export function scaledCost(cost, science) {
   if (!Number.isInteger(science) || science < 0) throw new Error(`scaledCost: invalid science unlock ${science}`);
   const factor = rule.tiers[tierForScience(science)].costFactor;
   return cost.map((row) => Array.isArray(row) ? [row[0], row[1] * factor] : {...row, Amount: row.Amount * factor});
+}
+
+// An authored building cost ([{Id, Amount}] or [[good, amount]]): scaledCost,
+// then the material rule; the shape is kept.
+export function buildingCost(id, cost, science) {
+  const objects = cost.length > 0 && !Array.isArray(cost[0]);
+  const scaled = scaledCost(cost, science).map((row) => Array.isArray(row) ? row : [row.Id, row.Amount]);
+  const rows = materialCost(id, scaled, science, tierForScience(science));
+  return objects ? rows.map(([Id, Amount]) => ({Id, Amount})) : rows;
 }
 
 export const powerRule = rule.power;
@@ -136,14 +153,17 @@ export async function lategameSize(id) {
     footprint: registration.footprint, height: registration.height};
 }
 
-// [[good, amount], ...] in the catalog's row format.
-export async function lategameCost(id) {
+// [[good, amount], ...] in the catalog's row format: the size rule, then the
+// material rule, then the gates.
+export async function lategameCost(id, science) {
   const tierName = catalog.lategameTier[id];
   const tier = rule.tiers[tierName];
   if (!tier) throw new Error(`${id}: unknown late-game tier ${tierName}`);
+  if (tierForScience(science) !== tierName) throw new Error(`${id}: science ${science} lies outside its tier ${tierName}`);
   const {builtCells, groundCells} = await lategameSize(id);
-  const rows = Object.entries(tier.per100BuiltCells).map(([good, rate]) => [good, round5(builtCells / 100 * rate * tier.costFactor)]);
-  if (tier.concretePerGroundCell > 0) rows.push(['Concrete', round5(groundCells * tier.concretePerGroundCell * tier.costFactor)]);
+  const sized = Object.entries(tier.per100BuiltCells).map(([good, rate]) => [good, round5(builtCells / 100 * rate * tier.costFactor)]);
+  if (tier.concretePerGroundCell > 0) sized.push(['Concrete', round5(groundCells * tier.concretePerGroundCell * tier.costFactor)]);
+  const rows = materialCost(id, sized, science, tierName);
   for (const [good, amount] of catalog.lategameGates[id] ?? []) {
     if (!Number.isInteger(amount) || amount <= 0) throw new Error(`${id}: invalid gate ${good}=${amount}`);
     const row = rows.find(([g]) => g === good);
@@ -155,7 +175,7 @@ export async function lategameCost(id) {
 
 // The catalog keeps one line per building and per tier.
 function formatCatalog(value) {
-  const known = ['status', 'lategameRule', 'lategameTier', 'lategameGates', 'buildings'];
+  const known = ['status', 'lategameRule', 'lategameTier', 'lategameGates', 'materialRule', 'buildings'];
   const extra = Object.keys(value).filter((key) => !known.includes(key));
   if (extra.length) throw new Error('Unexpected catalog keys: ' + extra.join(', '));
   const indent = (text, pad) => text.split('\n').map((line, i) => (i ? pad : '') + line).join('\n');
@@ -167,6 +187,7 @@ function formatCatalog(value) {
     `  "lategameRule": ${indent(ruleBody, '  ')}`,
     `  "lategameTier": ${map(value.lategameTier)}`,
     `  "lategameGates": ${map(value.lategameGates)}`,
+    `  "materialRule": ${indent(JSON.stringify(value.materialRule, null, 2), '  ')}`,
     `  "buildings": ${map(value.buildings)}`,
   ].join(',\n') + '\n}\n';
 }
@@ -180,7 +201,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const mismatches = [];
   for (const id of LATEGAME_IDS) {
     const size = await lategameSize(id);
-    const cost = await lategameCost(id);
+    const cost = await lategameCost(id, recordedScience(id));
     const current = catalog.buildings[id];
     const same = current && JSON.stringify(current) === JSON.stringify(cost);
     console.log(`${id.padEnd(28)} ${catalog.lategameTier[id]} ${String(size.builtCells).padStart(5)} built ${String(size.groundCells).padStart(4)} ground  ${cost.map(([g, a]) => `${a} ${g}`).join(', ')}${current ? (same ? '' : '  (catalog differs)') : '  (cost authored outside this catalog)'}`);

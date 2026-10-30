@@ -5,7 +5,7 @@ import { applyLategame } from './lategame_building_content.mjs';
 import { lategameCost, scaledPower } from './lategame_costs.mjs';
 import { mapObjectModel, mapObjectCollider, checkMapObjectBlueprint, applyPileGoodVisualizations } from './map_object_content.mjs';
 // Late-game construction costs follow the size rule (docs/progression.md).
-const ruleCost = async (id) => (await lategameCost(id)).map(([Id, Amount]) => ({ Id, Amount }));
+const ruleCost = async (id, science) => (await lategameCost(id, science)).map(([Id, Amount]) => ({ Id, Amount }));
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const sourceRoot = resolve(root, 'src', 'DeepFrontier');
@@ -151,7 +151,7 @@ deepDrill.BuildingSpec = {
   ...deepDrill.BuildingSpec,
   SelectionSoundName: 'Mine',
   LoopingSoundName: 'GearWorkshop',
-  BuildingCost: await ruleCost('DeepDrill'),
+  BuildingCost: await ruleCost('DeepDrill', 1000),
   ScienceCost: 1000,
 };
 deepDrill.WorkplaceSpec = {
@@ -225,7 +225,7 @@ deepMine.BuildingSpec = {
   ...deepMine.BuildingSpec,
   SelectionSoundName: 'Mine',
   LoopingSoundName: 'GearWorkshop',
-  BuildingCost: await ruleCost('DeepMine'),
+  BuildingCost: await ruleCost('DeepMine', 6000),
   ScienceCost: 6000,
 };
 deepMine.WorkplaceSpec = {
@@ -273,7 +273,7 @@ deepProcessor.BuildingSpec = {
   ...deepProcessor.BuildingSpec,
   SelectionSoundName: 'Smelter',
   LoopingSoundName: '',
-  BuildingCost: await ruleCost('DeepProcessor'),
+  BuildingCost: await ruleCost('DeepProcessor', 1200),
   ScienceCost: 1200,
 };
 deepProcessor.WorkplaceSpec = {

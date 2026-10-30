@@ -4,6 +4,31 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Construction costs follow materials (Claude Code session, 2026-10-30, cost-material agent; data regenerated; validated in mirror `costmat` on HEAD be385c5 + this change; not built or run in game)
+
+- **User rules:** "each building's construction materials must match what the building is visibly made of: its walls, frames and especially its roofs"; "keep in mind the supply chain progression path"; "we don't want to require concrete on a building required to make concrete the first time around". The coordinator relayed the user's decisions: raw recipe effort as value; masonry priced as Sandstone/Limestone; Log in the earliest tier; plaster unpriced; Gears and Machine Cores fixed; quarry masonry unpriced; stage-local values.
+- **Rule** (`materialRule` in `building_construction_costs.json`; `tools/material_costs.mjs`; docs/progression.md "Material cost rule"):
+  - `lategameCost(id, science)` and the new `buildingCost(id, cost, science)` recompose each cost from the model's measured area per family (wood, metal, concrete, sandstone, limestone). They keep Gear/MachineCore and the gates, and keep the embodied value (amounts round up to 5).
+  - The goods come from the tier's `familyGoods` that the settlement can make without the building, at or below its science.
+  - Callers now pass the science: 7 generators, `validate_deep_well_content.mjs` and the audit.
+- **Measurement:**
+  - `tools/asset-pipeline/measure_building_materials.py` decodes the exported finished models (official Timbermesh schema) into `tools/building_material_mix.json`: 48 buildings; structural modules are excluded.
+  - Details.IronTeeth is split by atlas region. Stone tiles are assigned by chromaticity to the sandstone/limestone reference tiles; the grey masonry reads as limestone.
+  - `node tools/material_costs.mjs --write|--check` records the value table and producer graph in `tools/material_cost_context.json`.
+- **Audit** (`audit_progression.mjs`, now loading through the shared `tools/progression_data.mjs`):
+  - New explicit `bootstrap-cycle` failure (cost goods producible without the building, at or below its science, cost-gated).
+  - Material checks: mix sha256 vs model, context staleness, missing mix, exact goods per rule, family value shares within rounding, and "concrete shown before Concrete exists".
+  - No bootstrap cycle exists; a planted Concrete cost on the Concrete Mixer trips it.
+- **Numbers (post-roof models):**
+  - Stone needed before the quarries: Limestone 1,393 and Sandstone 1,275, against 1,800 in pit range on every built-in map. With the `global` value scope Limestone needed 2,060, so `value.scope` is `buildingWorld`.
+  - Concrete up to 4,000 science 1,925 -> 2,915; all buildings 28,815 -> 92,170.
+  - Largest changes: Nuclear Reactor 6,265 -> 32,285 Concrete, HighGradeSteel 2,135 -> 1,030; Launch Pad Concrete 3,265 -> 9,040; Radioactive Waste Vault Concrete 910 -> 6,555; quarries 240 Concrete -> none; kiln 145 and mixer 120 Limestone.
+- **Checks (mirror, HEAD be385c5 + this change):**
+  - Canonical generation is at a fixed point: the mix is unchanged after regeneration, and the context and lategame `--check` pass. Only the 48 building blueprints' BuildingCost changed.
+  - `validate_all -SkipBlender`: 55 of 58 pass. `no-game-assets` fails in the mirror (not a git repo) and passes in the repo. `map-setup-terrain` fails only on `map_setup.json smallMap maxArea 11176 != derived 5966`, which comes from the compaction pass's smaller site areas, not costs; the loop coverage passes on every map.
+  - Compile check: 0 errors.
+- **In game:** not seen yet. Construction menus should show the new costs; nothing else changes at runtime.
+
 ## Fix: Deep Mine ore bin top hidden-geometry hole (Claude Code session, 2026-10-30, roof-audit agent; scene, export and data promoted; validated in mirror `roofaudit`)
 
 - **Found by** the GPU visibility agent: `audit_hidden_geometry.py` reported 7 culled faces exposed on the Deep Mine, on both the CPU and the GPU path. They were the ore bin's top face (artwork x 6.3..6.6, y 1.5..1.7, z 3.0). The six ore lumps sank 2-3 cm into it, so the enclosed-face cull dropped the top under them while camera rays still reached it between the lumps.

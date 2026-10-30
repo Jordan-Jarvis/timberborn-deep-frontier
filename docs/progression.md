@@ -7,6 +7,8 @@ Status 2026-10-21. These are the rules for unlock order, construction cost and c
 | Tool | Purpose |
 |---|---|
 | `node tools/lategame_costs.mjs [--check\|--write]` | Prints the late-game cost rule for each integrated building. `--write` rewrites the catalog rows the rule owns; `--check` fails when a row differs from the rule. |
+| `python tools/asset-pipeline/measure_building_materials.py [dataRoot]` | Measures each building's visible material mix from its exported model into `tools/building_material_mix.json` (see Material cost rule). |
+| `node tools/material_costs.mjs --write\|--check [dataRoot]` | Records (or checks) the value table and producer graph of the generated data that the material cost rule uses, in `tools/material_cost_context.json`. |
 | `node tools/audit_progression.mjs [dataRoot]` | Static progression audit of the generated data (vanilla Iron Teeth plus Deep Frontier). Writes `outputs/progression-audit.json` and exits 1 on any failure. |
 | `node tools/audit_item_uses.mjs` | Existing check that every new good has enough downstream uses. It does not check whether a good can be produced. It counts recipes appended to vanilla buildings, bot assembly and bot maintenance (see Second uses). |
 | `node tools/validate_bot_upkeep.mjs [dataRoot]` | Static check of bot maintenance and the industrial bot (catalog, runtime records, generated data, automation declarations). |
@@ -31,6 +33,8 @@ Status 2026-10-21. These are the rules for unlock order, construction cost and c
   - a late-game blueprint whose cost differs from the rule;
   - a late-game building whose science falls outside its tier's band;
   - a building that unlocks before one of its construction goods, or before any of its recipes can run;
+  - a bootstrap cycle: a construction good that cannot be produced without the building itself, or only by buildings unlocked after it;
+  - a cost that breaks the material cost rule, a stale mix or context record, or a family the rule could not price ("concrete shown before Concrete exists");
   - two recipes of one building with the same `DisplayLocKey`: the native recipe dropdown finds the chosen recipe by it (`SingleOrDefault`) and would throw.
 - **Vanilla patches.** A recipe appended to a vanilla template by a same-path patch (the Bot Assembler's IndustrialBot) is active. Its inputs must be producible; inputs that unlock after the vanilla building are warnings.
 - **Warnings:**
@@ -89,6 +93,78 @@ Each tier uses goods the chain can already make at that stage. T4 uses the front
 A registration changes whenever its art is re-registered. Rerun `node tools/lategame_costs.mjs --write` after any registration update. The audit fails while catalog or blueprint costs are stale.
 
 Full-size buildings outside the late-game batch keep their bespoke authored costs: Restaurant, Fishery, Hatchery, Grocery, Hospital, Materials Laboratory, the concrete chain, structures and the hydro turbine.
+
+Since 2026-10-30 the rule rows (and the authored costs) are only the basis: the material cost rule below recomposes them from what each model shows. The table above gives the size rule's earlier output, not current costs.
+
+## Material cost rule (2026-10-30)
+
+User request: "each building's construction materials must match what the building is visibly made of: its walls, frames and especially its roofs." Concrete is required only where the model shows concrete; plank and timber buildings cost wood, steel-plate and metal-sheet buildings cost metal goods. Later: "keep in mind the supply chain progression path" and "we don't want to require concrete on a building required to make concrete the first time around."
+
+Every Deep Frontier building with a construction cost passes through it, except the structural modules of `tools/structural_content.json`, which are named for and priced in their material. Rule data: `tools/building_construction_costs.json` `materialRule`; code: `tools/material_costs.mjs` (`materialCost`), applied by `lategameCost(id, science)` after the size rule and before the gates, and by `buildingCost(id, cost, science)` after `scaledCost` for authored costs.
+
+- **Measure.** `python tools/asset-pipeline/measure_building_materials.py [dataRoot]` decodes each building's exported finished model (official Timbermesh schema) and writes `tools/building_material_mix.json`: model path, sha256, triangle area per material and per family. Families come from `materialRule.materials`. Details.IronTeeth is split by atlas region: its strap strip is metal, crates and planks are wood, cloth is unpriced. Each stone tile takes the stone whose reference tile is nearest in chromaticity; all grey masonry reads as limestone. Glass, the orange plaster finish, lamps, water, cloth, embers, instruments and rubber are unpriced. Nested native props are game models and are not measured.
+- **Basis.** The building's cost before this rule: the late-game rule rows without gates, or its authored cost times its tier costFactor. Gear and MachineCore (machinery) keep their amounts. Gates are added afterwards, unchanged.
+- **Value.** Each material good has an embodied value: recipe effort along the cheapest route, where a primary or map-gathered good counts 1, a liquid 0, each recipe hour 1, fuel its value / CyclesFuelLasts, and a recipe's effort is shared by its product units. The user chose raw effort, so concrete-heavy buildings need large counts. `value.scope` is `buildingWorld`: a good is valued only by the routes of the building's own world (without it, at or below its science). For a building unlocked before the quarries, Limestone comes from the pits (1.0), not the quarries (0.42). Example values at 1,000 science: Plank 2.25, Log 1, MetalBlock 4.2, Gear 5.25, Concrete 1.75, TreatedPlank 6.25. At the reactor: Concrete 1.27, DeepAlloy 8.0, HighGradeSteel 12.6, Alloy 17.4, MachineCore 58.
+- **Composition.** The material value is shared over wood, metal, concrete, sandstone and limestone by the measured area. A family under 5% is folded into the others. Inside a family the goods are the tier's `familyGoods` (unit ratios, from the tier tables above, plus Log in T1 wood and TreatedPlank as T5 wood) that the settlement can make without this building. Each amount rounds up to a multiple of 5, so the value never falls.
+- **Stone.** Masonry is priced as Sandstone or Limestone. Raw stone on the buildings that produce it (the pits and the quarries) is the deposit they work and stays unpriced (`depositFamilies`).
+- **No good, no family.** A family with no producible good at the building's stage fails the audit. For concrete the failure reads "concrete shown before Concrete exists": the art must change. Fertilizer Works, Greenhouse, Fish Hatchery, Stone Crusher, Cement Kiln, Concrete Mixer and both pits show none after the roof pass.
+- **Context.** `node tools/material_costs.mjs --write|--check [dataRoot]` records the value table and producer graph of the generated data in `tools/material_cost_context.json`. After a recipe or science change: measure (if models changed), `--write`, `node tools/lategame_costs.mjs --write`, regenerate.
+- **Checks** (`audit_progression.mjs`): the mix records match the generated models (sha256); the context matches the generated data; every in-scope building has a mix; each cost's material goods are exactly the rule's; each family's value share equals the measured share within the rounding; plus the bootstrap check below.
+- **Bootstrap.** Every good of a building's cost must be producible by the settlement without that building, from buildings unlocked at or below its science whose own costs are producible the same way (`bootstrap-cycle`). No cycle exists in the generated data; planting Concrete in the Concrete Mixer's cost trips it. The first concrete chain (pits, crusher, kiln, mixer) stays concrete-free.
+- **Stone budget.** The built-in maps hold 1,800 of each stone in pit range before the quarries. After the roof pass the buildings up to the quarries need 1,393 Limestone and 1,275 Sandstone (`prepare_deep_frontier_map.py builtin`). With `global` value scope they would need 2,060 Limestone.
+
+Totals over the 48 buildings: Concrete 28,815 -> 92,170 (1,925 -> 2,915 up to 4,000 science), Plank 7,370 -> 3,605, TreatedPlank 2,300 -> 3,235, MetalBlock 10,675 -> 7,525, HighGradeSteel 4,855 -> 2,495, Alloy 3,755 -> 1,865, Limestone 0 -> 300, Log 80 -> 185.
+
+| Building | Science | Wood / metal / concrete (/ stone) % | Before (2026-10-30, be385c5) | Now |
+|---|---:|---|---|---|
+| LimestonePit | 300 | 69/25/0/s6 | 40 Log 20 Plank | 25 Plank 15 Log 10 MetalBlock |
+| SandstonePit | 300 | 79/15/0/s6 | 40 Log 20 Plank | 30 Plank 15 Log 5 MetalBlock |
+| FertilizerWorks | 350 | 58/42/0 | 205 Plank 80 Gear 40 MetalBlock | 135 Plank 70 Log 65 MetalBlock 80 Gear |
+| FishHatchery | 600 | 84/16/0/s0 | 80 Plank 40 Gear 30 MetalBlock | 95 Plank 50 Log 15 MetalBlock 40 Gear |
+| Greenhouse | 600 | 10/90/0 | 90 Plank 35 Gear 20 MetalBlock 30 Compost | 15 Plank 10 Log 65 MetalBlock 35 Gear 30 Compost |
+| StoneCrusher | 600 | 54/31/0/s15 | 60 Plank 30 Gear 20 MetalBlock | 45 Plank 25 Log 20 MetalBlock 35 Limestone 30 Gear |
+| CementKiln | 900 | 42/27/0/s31 | 120 Plank 60 Gear 45 MetalBlock | 90 Plank 30 MetalBlock 145 Limestone 60 Gear |
+| FisheryWorks | 900 | 81/17/2/s0 | 120 Plank 60 Gear 45 MetalBlock | 170 Plank 20 MetalBlock 60 Gear |
+| ConcreteMixer | 1000 | 43/31/0/s25 | 120 Plank 60 Gear 45 MetalBlock | 90 Plank 35 MetalBlock 120 Limestone 60 Gear |
+| DeepDrill | 1000 | 19/40/41 | 445 Plank 175 Gear 140 MetalBlock 180 Concrete | 165 Plank 185 MetalBlock 445 Concrete 175 Gear |
+| PublicHealthLab | 1000 | 39/4/57 | 225 Plank 90 Gear 70 MetalBlock 110 Concrete | 180 Plank 340 Concrete 90 Gear |
+| Restaurant | 1000 | 81/9/10/s0 | 120 Plank 60 Gear 45 MetalBlock 180 Concrete | 280 Plank 20 MetalBlock 45 Concrete 60 Gear |
+| DeepProcessor | 1200 | 2/69/28 | 550 Plank 220 Gear 175 MetalBlock 165 Concrete | 385 MetalBlock 375 Concrete 220 Gear |
+| FoodPackagingWorks | 1400 | 16/39/46 | 230 Plank 90 Gear 75 MetalBlock 120 Concrete | 75 Plank 100 MetalBlock 275 Concrete 90 Gear |
+| WaterTreatmentPlant | 1800 | 20/31/49 | 340 Plank 135 Gear 110 MetalBlock 255 Concrete | 155 Plank 125 MetalBlock 470 Concrete 135 Gear |
+| TechnicalSchool | 2200 | 32/10/59 | 210 Plank 85 Gear 70 MetalBlock 105 Concrete | 135 Plank 25 MetalBlock 320 Concrete 85 Gear |
+| SmogScrubber | 2500 | 1/68/31 | 40 Plank 15 Gear 15 MetalBlock 20 Concrete | 35 MetalBlock 35 Concrete 15 Gear |
+| ChemicalWorks | 4000 | 1/69/31 | 335 Plank 200 Gear 200 MetalBlock 85 TreatedPlank 310 Concrete | 420 MetalBlock 610 Concrete 200 Gear |
+| LimestoneQuarry | 4000 | 46/13/0/s40 | 480 Plank 320 Gear 240 MetalBlock 240 Concrete | 505 Plank 130 TreatedPlank 130 MetalBlock 320 Gear |
+| SandstoneQuarry | 4000 | 46/13/0/s40 | 480 Plank 320 Gear 240 MetalBlock 240 Concrete | 505 Plank 130 TreatedPlank 130 MetalBlock 320 Gear |
+| CoalPowerPlant | 4500 | 4/58/39 | 125 Plank 75 Gear 75 MetalBlock 30 TreatedPlank 100 Concrete | 135 MetalBlock 290 Concrete 75 Gear |
+| SteelMill | 4500 | 0/63/36 | 425 Plank 255 Gear 255 MetalBlock 105 TreatedPlank 450 Concrete | 495 MetalBlock 935 Concrete 255 Gear |
+| PrecisionMachineWorks | 5000 | 32/24/44 | 240 Plank 145 Gear 145 MetalBlock 60 TreatedPlank 255 Concrete | 160 Plank 40 TreatedPlank 110 MetalBlock 640 Concrete 145 Gear |
+| TownPlaza | 5000 | 4/59/36 | 55 Plank 35 Gear 35 MetalBlock 15 TreatedPlank 105 Concrete | 75 MetalBlock 150 Concrete 35 Gear |
+| Bathhouse | 6000 | 16/13/71 | 170 Plank 100 Gear 100 MetalBlock 45 TreatedPlank 200 Concrete | 60 Plank 15 TreatedPlank 45 MetalBlock 745 Concrete 100 Gear |
+| DeepMine | 6000 | 21/42/37 | 545 Plank 330 Gear 330 MetalBlock 135 TreatedPlank 270 Concrete 20 DeepAlloy | 215 Plank 55 TreatedPlank 380 MetalBlock 1115 Concrete 330 Gear 20 DeepAlloy |
+| GroceryStore | 6000 | 75/17/8 | 320 Plank 160 Concrete 140 MetalBlock 80 Gear | 300 Plank 75 TreatedPlank 65 MetalBlock 100 Concrete 80 Gear |
+| ReinforcedHydroTurbine | 8000 | 19/22/59 | 640 Concrete 400 MetalBlock 240 Gear 160 TreatedPlank | 175 Plank 45 TreatedPlank 185 MetalBlock 1615 Concrete 240 Gear |
+| ArchiveExcavation | 9000 | 31/14/55 | 500 MetalBlock 265 Gear 265 TreatedPlank 100 DeepAlloy 755 Concrete | 275 TreatedPlank 135 MetalBlock 30 DeepAlloy 2395 Concrete 265 Gear |
+| ObservationDeck | 9500 | 9/49/42 | 245 MetalBlock 130 Gear 130 TreatedPlank 50 DeepAlloy 160 Concrete | 35 TreatedPlank 210 MetalBlock 45 DeepAlloy 810 Concrete 130 Gear |
+| ElectrolysisPlant | 10000 | 19/40/41 | 505 MetalBlock 270 Gear 270 TreatedPlank 100 DeepAlloy 865 Concrete | 180 TreatedPlank 390 MetalBlock 80 DeepAlloy 1855 Concrete 270 Gear |
+| OilPowerPlant | 11000 | 0/62/37 | 185 MetalBlock 100 Gear 100 TreatedPlank 35 DeepAlloy 325 Concrete 4 MachineCore | 230 MetalBlock 50 DeepAlloy 620 Concrete 100 Gear 4 MachineCore |
+| CryogenicLiquefactionPlant | 12000 | 0/56/43 | 480 MetalBlock 255 Gear 255 TreatedPlank 95 DeepAlloy 755 Concrete | 525 MetalBlock 105 DeepAlloy 1820 Concrete 255 Gear |
+| CryogenicTankFarm | 12000 | 12/35/53 | 420 MetalBlock 225 Gear 225 TreatedPlank 85 DeepAlloy 990 Concrete | 105 TreatedPlank 310 MetalBlock 65 DeepAlloy 2125 Concrete 225 Gear |
+| MaterialsLaboratory | 12000 | 51/19/30 | 480 Plank 240 Gear 360 MetalBlock 720 Concrete | 290 TreatedPlank 115 MetalBlock 25 DeepAlloy 840 Concrete 240 Gear |
+| Hospital | 25000 | 75/11/13/s0 | 720 Plank 480 Concrete 360 MetalBlock 180 Gear 120 TreatedPlank | 540 TreatedPlank 90 MetalBlock 20 DeepAlloy 480 Concrete 180 Gear |
+| DeepWell | 30000 | 3/72/25 | 205 MetalBlock 155 Gear 5 TreatedPlank 20 DeepAlloy 60 Concrete 60 HighGradeSteel 10 MachineCore | 220 MetalBlock 20 DeepAlloy 65 Concrete 155 Gear 60 HighGradeSteel 10 MachineCore |
+| MissionControl | 30000 | 25/11/64 | 555 MetalBlock 295 Gear 295 TreatedPlank 110 DeepAlloy 970 Concrete | 250 TreatedPlank 125 MetalBlock 25 DeepAlloy 3170 Concrete 295 Gear |
+| RocketAssemblyHangar | 50000 | 17/66/17 | 650 HighGradeSteel 520 Alloy 130 MachineCore 520 MetalBlock 1680 Concrete | 575 TreatedPlank 480 HighGradeSteel 385 Alloy 385 MetalBlock 2920 Concrete 130 MachineCore |
+| LaunchPad | 80000 | 8/37/55 | 565 HighGradeSteel 455 Alloy 115 MachineCore 455 MetalBlock 3265 Concrete | 285 TreatedPlank 265 HighGradeSteel 210 Alloy 210 MetalBlock 9040 Concrete 115 MachineCore |
+| RadioactiveSludgeOutfall | 200000 | 14/15/71 | 25 HighGradeSteel 20 Alloy 5 MachineCore 20 MetalBlock 240 Concrete | 25 TreatedPlank 10 HighGradeSteel 5 Alloy 5 MetalBlock 585 Concrete 5 MachineCore |
+| RadioactiveSludgeRecoveryPump | 200000 | 37/36/27 | 25 HighGradeSteel 20 Alloy 5 MachineCore 20 MetalBlock 170 Concrete | 60 TreatedPlank 15 HighGradeSteel 10 Alloy 10 MetalBlock 205 Concrete 5 MachineCore |
+| RadioactiveWasteExport | 200000 | 2/30/69 | 60 HighGradeSteel 50 Alloy 10 MachineCore 50 MetalBlock 720 Concrete | 30 HighGradeSteel 25 Alloy 25 MetalBlock 1515 Concrete 10 MachineCore |
+| RadioactiveWasteVault | 200000 | 7/15/78 | 320 HighGradeSteel 255 Alloy 65 MachineCore 255 MetalBlock 910 Concrete | 125 TreatedPlank 55 HighGradeSteel 45 Alloy 45 MetalBlock 6555 Concrete 65 MachineCore |
+| UraniumProcessingPlant | 200000 | 1/46/53 | 515 HighGradeSteel 410 Alloy 105 MachineCore 410 MetalBlock 2810 Concrete | 300 HighGradeSteel 240 Alloy 240 MetalBlock 7920 Concrete 105 MachineCore |
+| ReactorChargingBay | 250000 | 1/82/17 | 15 HighGradeSteel 10 Alloy 5 MachineCore 10 MetalBlock 145 Concrete 2 ReinforcedBotFrame 2 ReactorPowerCell | 20 HighGradeSteel 15 Alloy 15 MetalBlock 80 Concrete 5 MachineCore 2 ReinforcedBotFrame 2 ReactorPowerCell |
+| RadioactiveWasteRefinery | 500000 | 0/39/61 | 485 HighGradeSteel 385 Alloy 95 MachineCore 385 MetalBlock 2425 Concrete | 230 HighGradeSteel 185 Alloy 185 MetalBlock 8380 Concrete 95 MachineCore |
+| NuclearReactor | 1000000 | 1/40/59 | 2135 HighGradeSteel 1630 Alloy 405 MachineCore 1630 MetalBlock 6265 Concrete 20 EnrichedFuel | 1030 HighGradeSteel 745 Alloy 745 MetalBlock 32285 Concrete 405 MachineCore 20 EnrichedFuel |
 
 ## Late-game power rule (2026-10-29)
 

@@ -4,24 +4,28 @@
     "LoopingSoundName": "WaterPump",
     "BuildingCost": [
       {
+        "Id": "TreatedPlank",
+        "Amount": 60
+      },
+      {
         "Id": "HighGradeSteel",
-        "Amount": 25
+        "Amount": 15
       },
       {
         "Id": "Alloy",
-        "Amount": 20
+        "Amount": 10
+      },
+      {
+        "Id": "MetalBlock",
+        "Amount": 10
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 205
       },
       {
         "Id": "MachineCore",
         "Amount": 5
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 20
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 170
       }
     ],
     "ScienceCost": 200000,

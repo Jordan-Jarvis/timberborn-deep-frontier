@@ -4,20 +4,16 @@
     "LoopingSoundName": "Grill",
     "BuildingCost": [
       {
-        "Id": "Plank",
-        "Amount": 550
+        "Id": "MetalBlock",
+        "Amount": 385
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 375
       },
       {
         "Id": "Gear",
         "Amount": 220
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 175
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 165
       }
     ],
     "ScienceCost": 1200,

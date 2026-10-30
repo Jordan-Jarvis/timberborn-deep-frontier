@@ -341,7 +341,7 @@ export async function buildStation(config, station, slots, dataRoot) {
   for (const name of STATION_MODEL_ONLY) delete station[name];
   Object.assign(station, stationComponents(config, slots.count));
   station.TemplateSpec = {...station.TemplateSpec, TemplateName: `${s.id}.IronTeeth`, BackwardCompatibleTemplateNames: []};
-  station.BuildingSpec = {...station.BuildingSpec, BuildingCost: (await (await costs()).lategameCost(s.id)).map(([Id, Amount]) => ({Id, Amount})), ScienceCost: s.science};
+  station.BuildingSpec = {...station.BuildingSpec, BuildingCost: (await (await costs()).lategameCost(s.id, s.science)).map(([Id, Amount]) => ({Id, Amount})), ScienceCost: s.science};
   Object.assign(station.PlaceableBlockObjectSpec, {ToolGroupId: s.toolGroup, ToolOrder: s.toolOrder});
   Object.assign(station.LabeledEntitySpec, {DisplayNameLocKey: `Building.${s.id}.DisplayName`, DescriptionLocKey: `Building.${s.id}.Description`,
     FlavorDescriptionLocKey: `Building.${s.id}.FlavorDescription`, Icon: `${s.folder}/${s.id}Icon`});

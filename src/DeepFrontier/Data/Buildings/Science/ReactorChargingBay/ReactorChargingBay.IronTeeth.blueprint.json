@@ -5,23 +5,23 @@
     "BuildingCost": [
       {
         "Id": "HighGradeSteel",
-        "Amount": 15
+        "Amount": 20
       },
       {
         "Id": "Alloy",
-        "Amount": 10
+        "Amount": 15
+      },
+      {
+        "Id": "MetalBlock",
+        "Amount": 15
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 80
       },
       {
         "Id": "MachineCore",
         "Amount": 5
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 10
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 145
       },
       {
         "Id": "ReinforcedBotFrame",

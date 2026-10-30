@@ -18,13 +18,15 @@ Dimensions below are width × depth × height. Grid blueprints use X/Y/Z in that
 
 | Building | Dimensions | Workers | Demand (hp) | Science / bot science | Construction cost |
 | --- | --- | ---: | ---: | --- | --- |
-| Sandstone Pit | 5 × 5 × 4 | 2 | 0 | 300 / 1,000 | 20 logs, 10 planks |
-| Limestone Pit | 6 × 5 × 4 | 2 | 0 | 300 / 1,000 | 20 logs, 10 planks |
-| Sandstone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 120 planks, 80 gears, 60 metal blocks, 60 concrete |
-| Limestone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 120 planks, 80 gears, 60 metal blocks, 60 concrete |
-| Stone Crusher | 6 × 7 × 5 | 2 | 200 | 600 / 1,600 | 30 planks, 15 gears, 10 metal blocks |
-| Cement Kiln | 9 × 9 × 6 | 2 | 300 | 900 / 1,900 | 40 planks, 20 gears, 15 metal blocks |
-| Concrete Mixer | 8 × 6 × 7 | 2 | 250 | 1,000 / 2,000 | 40 planks, 20 gears, 15 metal blocks |
+| Sandstone Pit | 5 × 5 × 4 | 2 | 0 | 300 / 1,000 | 30 planks, 15 logs, 5 metal blocks |
+| Limestone Pit | 6 × 5 × 4 | 2 | 0 | 300 / 1,000 | 25 planks, 15 logs, 10 metal blocks |
+| Sandstone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 505 planks, 130 treated planks, 130 metal blocks, 320 gears |
+| Limestone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 505 planks, 130 treated planks, 130 metal blocks, 320 gears |
+| Stone Crusher | 6 × 7 × 5 | 2 | 200 | 600 / 1,600 | 45 planks, 25 logs, 20 metal blocks, 35 limestone, 30 gears |
+| Cement Kiln | 9 × 9 × 6 | 2 | 300 | 900 / 1,900 | 90 planks, 30 metal blocks, 145 limestone, 60 gears |
+| Concrete Mixer | 8 × 6 × 7 | 2 | 250 | 1,000 / 2,000 | 90 planks, 35 metal blocks, 120 limestone, 60 gears |
+
+Construction costs are the generated ones (2026-10-30). They follow the material cost rule in [progression.md](progression.md#material-cost-rule-2026-10-30): the authored catalog value times its tier factor, recomposed from what each model shows. Masonry is priced as limestone or sandstone; the pits and quarries leave the stone they work unpriced, and no building of the first concrete chain costs concrete. Dimensions, workers and power in this table predate the compaction pass.
 
 These dimensions describe current authored registrations. The detailed pit replacements passed source/export checks and native harvesting, hoist animation, pause and exact save/reload/depletion in build 85. Their roofed storerooms and hand hoists follow the mining sheet's isometric views. The 85 profile included global placement/power overrides; support-rule acceptance is being repeated with those disabled. The mixer reference revision passed native placement, production and fresh-process reload in build 79; its previous 3×3×3 prototype is retired. See `tools/STATUS.md` for installed build evidence. Sparse structural occupancy and the separately supported walking decks permit appropriate native paths, platforms and shafts; the table's outer dimensions do not mean every enclosed grid cell is solid.
 

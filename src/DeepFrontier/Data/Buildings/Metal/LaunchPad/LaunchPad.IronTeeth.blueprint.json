@@ -4,24 +4,28 @@
     "LoopingSoundName": "PaperMill",
     "BuildingCost": [
       {
+        "Id": "TreatedPlank",
+        "Amount": 285
+      },
+      {
         "Id": "HighGradeSteel",
-        "Amount": 565
+        "Amount": 265
       },
       {
         "Id": "Alloy",
-        "Amount": 455
+        "Amount": 210
+      },
+      {
+        "Id": "MetalBlock",
+        "Amount": 210
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 9040
       },
       {
         "Id": "MachineCore",
         "Amount": 115
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 455
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 3265
       }
     ],
     "ScienceCost": 80000,

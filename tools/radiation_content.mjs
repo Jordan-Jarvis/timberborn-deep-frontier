@@ -218,7 +218,7 @@ async function makeBuilding(building, dataRoot, tuning) {
   value.TemplateSpec.TemplateName = `${id}.IronTeeth`;
   value.TemplateSpec.BackwardCompatibleTemplateNames = [];
   value.ManufactorySpec.ProductionRecipeIds = [...building.recipes];
-  value.BuildingSpec.BuildingCost = (await lategameCost(id)).map(([Id, Amount]) => ({Id, Amount}));
+  value.BuildingSpec.BuildingCost = (await lategameCost(id, building.science)).map(([Id, Amount]) => ({Id, Amount}));
   value.BuildingSpec.ScienceCost = building.science;
   value.PlaceableBlockObjectSpec.ToolGroupId = 'Water';
   value.PlaceableBlockObjectSpec.ToolOrder = building.toolOrder;

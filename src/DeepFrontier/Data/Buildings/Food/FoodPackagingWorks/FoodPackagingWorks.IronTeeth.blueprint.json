@@ -5,19 +5,19 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 230
+        "Amount": 75
+      },
+      {
+        "Id": "MetalBlock",
+        "Amount": 100
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 275
       },
       {
         "Id": "Gear",
         "Amount": 90
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 75
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 120
       }
     ],
     "ScienceCost": 1400,

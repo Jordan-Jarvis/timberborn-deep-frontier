@@ -7,7 +7,7 @@ import {applyHospital,authorHospitalNeed,HOSPITAL_DESCRIPTION,HOSPITAL_LOCALIZAT
 import {applyGroceryStore,authorGroceryNeed} from './grocery_building_content.mjs';
 import {LATEGAME,applyLategame,studyPipePort} from './lategame_building_content.mjs';
 import {CACHE} from './narrative_content.mjs';
-import {lategameCost, scaledCost, scaledPower} from './lategame_costs.mjs';
+import {lategameCost, buildingCost, scaledPower} from './lategame_costs.mjs';
 import {SCHOOL_WORKSHOP_SPECS} from './workforce_risk_content.mjs';
 
 // Data-only expansion layer. Every template is cloned from a captured 1.1
@@ -396,15 +396,15 @@ function setGeometry(value, id) {
 // Rule-owned rows (late-game buildings) already carry their tier's costFactor;
 // every other authored cost is scaled here by its science unlock's tier.
 function authoredCost(id, science) {
-  if(id==='Hospital')return scaledCost(clone(progression.hospital.buildingCost),science);
-  if(id==='GroceryStore')return scaledCost(clone(progression.groceryStore.buildingCost),science);
+  if(id==='Hospital')return buildingCost(id,clone(progression.hospital.buildingCost),science);
+  if(id==='GroceryStore')return buildingCost(id,clone(progression.groceryStore.buildingCost),science);
   if(!Object.hasOwn(constructionCosts.buildings,id))throw new Error('Missing explicit construction cost: '+id);
   const rows=constructionCosts.buildings[id];
   if(new Set(rows.map(([good])=>good)).size!==rows.length||
      rows.some(([good,amount])=>typeof good!=='string'||!Number.isInteger(amount)||amount<=0))
     throw new Error('Invalid authored construction cost: '+id);
   const cost=rows.map(([Id,Amount])=>({Id,Amount}));
-  return Object.hasOwn(constructionCosts.lategameTier,id)?cost:scaledCost(cost,science);
+  return Object.hasOwn(constructionCosts.lategameTier,id)?cost:buildingCost(id,cost,science);
 }
 
 async function makeBuilding(definition) {
@@ -503,7 +503,7 @@ async function makeScrubber() {
     'MechanicalNodeAnimatorSpec'], id);
   value.BuildingModelSpec = {...value.BuildingModelSpec, UndergroundModelName: '', UndergroundModelDepth: 0};
   delete value.Children['#Underground'];
-  value.BuildingSpec = {...value.BuildingSpec, BuildingCost: (await lategameCost(id)).map(([Id, Amount]) => ({Id, Amount})), ScienceCost: science};
+  value.BuildingSpec = {...value.BuildingSpec, BuildingCost: (await lategameCost(id, science)).map(([Id, Amount]) => ({Id, Amount})), ScienceCost: science};
   value.TemplateSpec = {...value.TemplateSpec, TemplateName: `${id}.IronTeeth`, BackwardCompatibleTemplateNames: []};
   value.PlaceableBlockObjectSpec = {...value.PlaceableBlockObjectSpec, ToolGroupId: 'Wellbeing', ToolOrder: 160, DevModeTool: false};
   value.MechanicalNodeSpec = {PowerOutput: 0, PowerInput: scaledPower(id, design.powerInputHp, science), IsShaft: false};
@@ -538,7 +538,7 @@ async function makeAttraction(entry) {
   if (!Object.hasOwn(ATTRACTION_TEMPLATE_SPECS, entry.template)) throw new Error(`${id}: no model-spec list for template ${entry.template}`);
   removeTemplateSpecs(value, ATTRACTION_TEMPLATE_SPECS[entry.template], id);
   for (const key of ATTRACTION_MODEL_SPECS) if (value[key]) throw new Error(`${id}: template ${entry.template} keeps ${key}`);
-  value.BuildingSpec = {...value.BuildingSpec, BuildingCost: (await lategameCost(id)).map(([Id, Amount]) => ({Id, Amount})), ScienceCost: entry.scienceUnlock};
+  value.BuildingSpec = {...value.BuildingSpec, BuildingCost: (await lategameCost(id, entry.scienceUnlock)).map(([Id, Amount]) => ({Id, Amount})), ScienceCost: entry.scienceUnlock};
   value.TemplateSpec = {...value.TemplateSpec, TemplateName: `${id}.IronTeeth`, BackwardCompatibleTemplateNames: []};
   value.PlaceableBlockObjectSpec = {...value.PlaceableBlockObjectSpec, ToolGroupId: 'Wellbeing', ToolOrder: entry.toolOrder, DevModeTool: false};
   setLabels(value, id, outputPath);
@@ -647,7 +647,8 @@ async function makePowerPlant(entry) {
 
 async function makeVault() {
   const value = clone(await readJson(vanilla('Buildings/Storage/LargeWarehouse/LargeWarehouse.IronTeeth.blueprint.json')));
-  value.BuildingSpec = { ...value.BuildingSpec, BuildingCost: (await lategameCost('RadioactiveWasteVault')).map(([Id, Amount]) => ({ Id, Amount })), ScienceCost: progression.implementedBuildingScienceOverrides.RadioactiveWasteVault };
+  const vaultScience = progression.implementedBuildingScienceOverrides.RadioactiveWasteVault;
+  value.BuildingSpec = { ...value.BuildingSpec, BuildingCost: (await lategameCost('RadioactiveWasteVault', vaultScience)).map(([Id, Amount]) => ({ Id, Amount })), ScienceCost: vaultScience };
   value.TemplateSpec = { ...value.TemplateSpec, TemplateName: 'RadioactiveWasteVault.IronTeeth', BackwardCompatibleTemplateNames: [] };
   value.PlaceableBlockObjectSpec = { ...value.PlaceableBlockObjectSpec, ToolGroupId: 'Storage', ToolOrder: 61 };
   value.StockpileSpec = { ...value.StockpileSpec, MaxCapacity: 1600, WhitelistedGoodType: 'Box' };

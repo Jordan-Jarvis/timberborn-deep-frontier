@@ -4,24 +4,24 @@
     "LoopingSoundName": "",
     "BuildingCost": [
       {
-        "Id": "Plank",
-        "Amount": 720
+        "Id": "TreatedPlank",
+        "Amount": 540
+      },
+      {
+        "Id": "MetalBlock",
+        "Amount": 90
+      },
+      {
+        "Id": "DeepAlloy",
+        "Amount": 20
       },
       {
         "Id": "Concrete",
         "Amount": 480
       },
       {
-        "Id": "MetalBlock",
-        "Amount": 360
-      },
-      {
         "Id": "Gear",
         "Amount": 180
-      },
-      {
-        "Id": "TreatedPlank",
-        "Amount": 120
       }
     ],
     "ScienceCost": 25000,

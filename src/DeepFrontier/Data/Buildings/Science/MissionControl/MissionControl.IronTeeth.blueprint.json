@@ -4,24 +4,24 @@
     "LoopingSoundName": "Inventor",
     "BuildingCost": [
       {
+        "Id": "TreatedPlank",
+        "Amount": 250
+      },
+      {
         "Id": "MetalBlock",
-        "Amount": 555
+        "Amount": 125
+      },
+      {
+        "Id": "DeepAlloy",
+        "Amount": 25
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 3170
       },
       {
         "Id": "Gear",
         "Amount": 295
-      },
-      {
-        "Id": "TreatedPlank",
-        "Amount": 295
-      },
-      {
-        "Id": "DeepAlloy",
-        "Amount": 110
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 970
       }
     ],
     "ScienceCost": 30000,

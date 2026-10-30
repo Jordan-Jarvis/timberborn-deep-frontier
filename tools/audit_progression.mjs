@@ -14,6 +14,15 @@
 // - Every Deep Frontier recipe must be run by a generated or planned building.
 // - Unlock order fails when a building unlocks before one of its construction
 //   goods, or before any of its recipes can run.
+// - Bootstrap (user 2026-10-30: "we don't want to require concrete on a
+//   building required to make concrete the first time around"): every good of
+//   a building's cost must be producible by the settlement without that
+//   building, from buildings unlocked at or below its science whose own costs
+//   are producible the same way. A failure is a bootstrap cycle.
+// - Material rule (tools/material_costs.mjs): measured mixes and the recorded
+//   context must match the generated data; a family the rule could not price
+//   fails with its failure text ("concrete shown before Concrete exists"); a
+//   cost's material goods and family value shares must follow the rule.
 // - A recipe's products are available at max(its building, its ingredients
 //   and fuel). The cheapest such route wins; availability is that route's
 //   largest single unlock ("gate") and the summed science of the distinct
@@ -22,77 +31,17 @@
 //
 // Usage: node tools/audit_progression.mjs [dataRoot]   (default src/DeepFrontier/Data)
 // Writes outputs/progression-audit.json and exits 1 when a failure is found.
-import {access, readFile, writeFile, mkdir} from 'node:fs/promises';
+import {readFile, writeFile, mkdir} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {resolve, relative} from 'node:path';
 import {catalog as costCatalog, rule as costRule, lategameCost, tierForScience, LATEGAME_IDS, PLANNED} from './lategame_costs.mjs';
+import {loadProgressionData, reachableWithout, MAP_SOURCES} from './progression_data.mjs';
+import {materialComposition, materialMix, materialRule, MATERIAL_GOODS, materialValue, deriveContext} from './material_costs.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const data = resolve(root, process.argv[2] ?? 'src/DeepFrontier/Data');
-const vanilla = resolve(root, 'vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources');
-const utf8 = new TextDecoder('utf-8', {fatal: true});
-const read = async (path) => JSON.parse(utf8.decode(await readFile(path)));
-
-// Goods gathered by a workplace rather than produced by a recipe.
-const MAP_SOURCES = {
-  ScrapMetal: {via: ['ScavengerFlag.IronTeeth'], note: 'vanilla Scavenger Flag at ruins (EfficientMine is the recipe route)'},
-  DeepOre: {via: ['DeepDrill.IronTeeth'], note: 'finite DeepOreSource marker (DeepDrill), then DeepMine over a DeepOreVein'},
-  Sandstone: {via: ['SandstonePit.IronTeeth'], note: 'finite SandstoneOutcrop yielders'},
-  Limestone: {via: ['LimestonePit.IronTeeth'], note: 'finite LimestoneOutcrop yielders'},
-  FreshFish: {via: ['GathererFlag.IronTeeth'], note: 'Gatherer Flag shore fishing'},
-  // Not gathered: produced at runtime when stored Water is irradiated
-  // (RadiationStorageService). Radiation first exists once the refinery (or
-  // reactor) makes RadioactiveSludge, so the refinery is its earliest source.
-  ContaminatedWater: {via: ['RadioactiveWasteRefinery.IronTeeth'], note: 'runtime: irradiated stored Water converts (docs/radiation.md)'},
-};
-
-const templatesOf = async (path) => {
-  const spec = (await read(path)).TemplateCollectionSpec;
-  return spec.Blueprints ?? spec['Blueprints#append'];
-};
-const vanillaPaths = [...await templatesOf(resolve(vanilla, 'TemplateCollections/TemplateCollection.Buildings.Common.blueprint.json')),
-  ...await templatesOf(resolve(vanilla, 'TemplateCollections/TemplateCollection.Buildings.IronTeeth.blueprint.json'))];
-const modPaths = await templatesOf(resolve(data, 'TemplateCollections/TemplateCollection.Buildings.IronTeeth.blueprint.json'));
-
-const buildings = new Map();
-for (const [origin, base, paths] of [['vanilla', vanilla, vanillaPaths], ['DeepFrontier', data, modPaths]]) {
-  for (const path of paths) {
-    const bp = await read(resolve(base, path + '.json'));
-    const id = bp.TemplateSpec.TemplateName;
-    if (buildings.has(id)) throw new Error(`Duplicate template ${id}`);
-    // Templates without a BuildingSpec (vanilla Path) are free tools.
-    buildings.set(id, {id, origin, path, bp, science: bp.BuildingSpec?.ScienceCost ?? 0,
-      cost: (bp.BuildingSpec?.BuildingCost ?? []).map((c) => [c.Id, c.Amount]),
-      recipes: bp.ManufactorySpec?.ProductionRecipeIds ?? []});
-  }
-}
-// Vanilla templates patched by a same-path Deep Frontier blueprint (native
-// array overlay, e.g. the Bot Assembler's industrial bot): the recipes they
-// append run there. Checked after reachability below.
-for (const b of buildings.values()) {
-  if (b.origin !== 'vanilla') continue;
-  const patchPath = resolve(data, b.path + '.json');
-  if (!await access(patchPath).then(() => true, () => false)) continue;
-  b.appended = (await read(patchPath)).ManufactorySpec?.['ProductionRecipeIds#append'] ?? [];
-  b.recipes = [...b.recipes, ...b.appended];
-}
-
-const recipes = new Map();
-const recipeFiles = async (dir) => (await import('node:fs/promises')).readdir(dir).then((names) => names.filter((n) => n.endsWith('.blueprint.json')).map((n) => resolve(dir, n)));
-for (const dir of [resolve(vanilla, 'Recipes'), resolve(data, 'Recipes')]) {
-  for (const path of await recipeFiles(dir)) {
-    const r = (await read(path)).RecipeSpec;
-    if (recipes.has(r.Id)) throw new Error(`Duplicate recipe ${r.Id}`);
-    recipes.set(r.Id, r);
-  }
-}
-// Iron Teeth goods: the vanilla Common + IronTeeth collections and the mod's
-// appended goods (Folktails-only goods such as Paper are not available).
-const collection = async (name) => (await read(resolve(vanilla, `GoodCollections/GoodCollection.${name}.blueprint.json`))).GoodCollectionSpec.Goods;
-const modGoods = new Set((await read(resolve(data, 'GoodCollections/GoodCollection.IronTeeth.blueprint.json'))).GoodCollectionSpec['Goods#append']);
-const goods = new Set([...await collection('Common'), ...await collection('IronTeeth'), ...modGoods]);
-const modRecipeIds = new Set();
-for (const path of await recipeFiles(resolve(data, 'Recipes'))) modRecipeIds.add((await read(path)).RecipeSpec.Id);
+const {buildings, recipes, goods, modGoods, modRecipeIds} = await loadProgressionData(data);
 
 const failures = [];
 const warnings = [];
@@ -107,9 +56,6 @@ for (const b of buildings.values()) {
     if (!r) { fail('missing-recipe', {building: b.id, recipe: id}); continue; }
     for (const p of r.Products) (producers.get(p.Id) ?? producers.set(p.Id, []).get(p.Id)).push({recipe: r, building: b});
   }
-}
-for (const [good, source] of Object.entries(MAP_SOURCES)) {
-  for (const via of source.via) if (!buildings.has(via)) throw new Error(`MAP_SOURCES ${good}: no template ${via}`);
 }
 // Planned producers: generated buildings take precedence once integrated.
 const planned = PLANNED.filter((p) => !buildings.has(`${p.id}.IronTeeth`)).map((p) => {
@@ -252,9 +198,56 @@ for (const id of LATEGAME_IDS) {
   const b = buildings.get(`${id}.IronTeeth`);
   if (!b) { fail('lategame-missing', {building: id}); continue; }
   const tier = costCatalog.lategameTier[id];
-  if (tierForScience(b.science) !== tier) fail('lategame-tier-band', {building: id, science: b.science, tier, band: tierForScience(b.science)});
-  const expected = await lategameCost(id);
+  if (tierForScience(b.science) !== tier) { fail('lategame-tier-band', {building: id, science: b.science, tier, band: tierForScience(b.science)}); continue; }
+  const expected = await lategameCost(id, b.science);
   if (JSON.stringify(expected) !== JSON.stringify(b.cost)) fail('lategame-cost-rule', {building: id, expected, actual: b.cost});
+}
+
+// 4b. Bootstrap: no construction good may need its own building (or a later
+// one) for its first unit.
+const graph = {buildings: new Map([...buildings].map(([id, b]) => [id, {...b, devOnly: Boolean(b.bp.PlaceableBlockObjectSpec?.DevModeTool)}])), recipes,
+  primary: new Set([...goods].filter((g) => !modGoods.has(g) && !vanillaRecipeProducts.has(g)))};
+for (const b of modBuildings) {
+  if (!b.cost.length) continue;
+  const have = reachableWithout(graph, b.id, b.science, true);
+  const missing = b.cost.filter(([g]) => !have.has(g)).map(([g]) => g);
+  if (missing.length) fail('bootstrap-cycle', {building: b.id, science: b.science, goods: missing,
+    detail: 'these goods cannot be produced without this building, or only by buildings unlocked after it'});
+}
+
+// 4c. Material rule (tools/material_costs.mjs, materialRule).
+const structures = new Set((JSON.parse(await readFile(resolve(root, 'tools/structural_content.json'), 'utf8'))).buildings.map((b) => b.id));
+const contextNow = JSON.stringify(await deriveContext(data), null, 1) + '\n';
+if (contextNow !== await readFile(resolve(root, 'tools/material_cost_context.json'), 'utf8')) fail('material-context-stale', {file: 'tools/material_cost_context.json', fix: 'node tools/material_costs.mjs --write, then regenerate'});
+const ruleBuildings = modBuildings.filter((b) => b.cost.length && !structures.has(b.id.replace(/\.IronTeeth$/, '')));
+for (const id of Object.keys(materialMix)) if (!ruleBuildings.some((b) => b.id === `${id}.IronTeeth`)) fail('material-mix-unknown', {building: id});
+for (const b of ruleBuildings) {
+  const id = b.id.replace(/\.IronTeeth$/, '');
+  const mix = materialMix[id];
+  if (!mix) { fail('material-mix-missing', {building: id, fix: 'python tools/asset-pipeline/measure_building_materials.py'}); continue; }
+  const model = b.bp.Children?.['#Finished']?.TimbermeshSpec?.Model;
+  if (model !== mix.model) { fail('material-mix-stale', {building: id, model, recorded: mix.model}); continue; }
+  const sha = createHash('sha256').update(await readFile(resolve(data, model + '.timbermesh'))).digest('hex');
+  if (sha !== mix.sha256) { fail('material-mix-stale', {building: id, model, fix: 'python tools/asset-pipeline/measure_building_materials.py'}); continue; }
+  const tier = tierForScience(b.science);
+  const gates = costCatalog.lategameGates[id] ?? [];
+  const rows = b.cost.map(([g, a]) => [g, a - (gates.find(([x]) => x === g)?.[1] ?? 0)]).filter(([, a]) => a > 0);
+  const comp = materialComposition(id, rows, b.science, tier);
+  for (const f of comp.failures) fail('material-unpriced-family', {building: id, family: f.family, share: +f.share.toFixed(3), failure: f.failure});
+  // The cost's material goods must be exactly the rule's goods, and each
+  // family's value share must match the measured share within the rounding
+  // (each amount rounds up by less than 5 units).
+  const goodsOf = (rs) => rs.filter(([g]) => MATERIAL_GOODS.has(g)).map(([g]) => g).sort().join();
+  if (goodsOf(rows) !== goodsOf(comp.rows)) { fail('material-rule-goods', {building: id, actual: goodsOf(rows), expected: goodsOf(comp.rows)}); continue; }
+  const material = rows.filter(([g]) => MATERIAL_GOODS.has(g));
+  const total = material.reduce((sum, [g, a]) => sum + a * materialValue(id, b.science, g), 0);
+  const tolerance = material.reduce((sum, [g]) => sum + 5 * materialValue(id, b.science, g), 0) / total;
+  const kept = Object.values(comp.shares).reduce((sum, x) => sum + x, 0);
+  for (const [f, share] of Object.entries(comp.shares)) {
+    const familyGoods = new Set(Object.keys(materialRule.familyGoods[tier][f]));
+    const actual = material.filter(([g]) => familyGoods.has(g)).reduce((sum, [g, a]) => sum + a * materialValue(id, b.science, g), 0) / total;
+    if (Math.abs(actual - share / kept) > tolerance + 1e-9) fail('material-rule-share', {building: id, family: f, actual: +actual.toFixed(3), measured: +(share / kept).toFixed(3), tolerance: +tolerance.toFixed(3)});
+  }
 }
 
 // 5. Power: the best single generator unlocked at or below each consumer's science.

@@ -97,7 +97,7 @@ if (await exists(path)) {
   const entrance = bp.BlockObjectSpec.Entrance;
   check(entrance.HasEntrance && !(entrance.Coordinates.X >= 0 && entrance.Coordinates.X < w && entrance.Coordinates.Y >= 0 && entrance.Coordinates.Y < h),
     `${ID}: the entrance must be a path cell outside the footprint`);
-  check(same(bp.BuildingSpec.BuildingCost, (await lategameCost(ID)).map(([Id, Amount]) => ({Id, Amount}))), `${ID}: BuildingCost differs from the late-game rule`);
+  check(same(bp.BuildingSpec.BuildingCost, (await lategameCost(ID, CONFIG.science)).map(([Id, Amount]) => ({Id, Amount}))), `${ID}: BuildingCost differs from the late-game rule`);
   check(bp.BuildingSpec.ScienceCost === CONFIG.science && tierForScience(CONFIG.science) === catalog.lategameTier[ID],
     `${ID}: science ${CONFIG.science} lies outside tier ${catalog.lategameTier[ID]}`);
   check(bp.PlaceableBlockObjectSpec.ToolGroupId === CONFIG.toolGroup && bp.PlaceableBlockObjectSpec.ToolOrder === CONFIG.toolOrder && !bp.PlaceableBlockObjectSpec.DevModeTool,

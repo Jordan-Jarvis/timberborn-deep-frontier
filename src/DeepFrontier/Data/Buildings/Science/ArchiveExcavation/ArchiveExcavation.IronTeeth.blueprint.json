@@ -4,24 +4,24 @@
     "LoopingSoundName": "GearWorkshop",
     "BuildingCost": [
       {
+        "Id": "TreatedPlank",
+        "Amount": 275
+      },
+      {
         "Id": "MetalBlock",
-        "Amount": 500
+        "Amount": 135
+      },
+      {
+        "Id": "DeepAlloy",
+        "Amount": 30
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 2395
       },
       {
         "Id": "Gear",
         "Amount": 265
-      },
-      {
-        "Id": "TreatedPlank",
-        "Amount": 265
-      },
-      {
-        "Id": "DeepAlloy",
-        "Amount": 100
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 755
       }
     ],
     "ScienceCost": 9000,

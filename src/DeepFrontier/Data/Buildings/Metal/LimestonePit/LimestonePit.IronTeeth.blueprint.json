@@ -4,12 +4,16 @@
     "LoopingSoundName": "",
     "BuildingCost": [
       {
-        "Id": "Log",
-        "Amount": 40
+        "Id": "Plank",
+        "Amount": 25
       },
       {
-        "Id": "Plank",
-        "Amount": 20
+        "Id": "Log",
+        "Amount": 15
+      },
+      {
+        "Id": "MetalBlock",
+        "Amount": 10
       }
     ],
     "ScienceCost": 300,

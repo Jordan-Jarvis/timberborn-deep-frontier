@@ -4,24 +4,16 @@
     "LoopingSoundName": "Bakery",
     "BuildingCost": [
       {
-        "Id": "Plank",
-        "Amount": 335
+        "Id": "MetalBlock",
+        "Amount": 420
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 610
       },
       {
         "Id": "Gear",
         "Amount": 200
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 200
-      },
-      {
-        "Id": "TreatedPlank",
-        "Amount": 85
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 310
       }
     ],
     "ScienceCost": 4000,

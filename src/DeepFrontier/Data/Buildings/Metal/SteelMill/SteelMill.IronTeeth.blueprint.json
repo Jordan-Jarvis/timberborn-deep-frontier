@@ -4,24 +4,16 @@
     "LoopingSoundName": "PrintingPress",
     "BuildingCost": [
       {
-        "Id": "Plank",
-        "Amount": 425
+        "Id": "MetalBlock",
+        "Amount": 495
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 935
       },
       {
         "Id": "Gear",
         "Amount": 255
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 255
-      },
-      {
-        "Id": "TreatedPlank",
-        "Amount": 105
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 450
       }
     ],
     "ScienceCost": 4500,

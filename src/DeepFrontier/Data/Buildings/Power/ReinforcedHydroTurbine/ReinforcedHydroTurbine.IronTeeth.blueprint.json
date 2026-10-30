@@ -4,20 +4,24 @@
     "LoopingSoundName": "Gristmill",
     "BuildingCost": [
       {
-        "Id": "Concrete",
-        "Amount": 640
+        "Id": "Plank",
+        "Amount": 175
+      },
+      {
+        "Id": "TreatedPlank",
+        "Amount": 45
       },
       {
         "Id": "MetalBlock",
-        "Amount": 400
+        "Amount": 185
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 1615
       },
       {
         "Id": "Gear",
         "Amount": 240
-      },
-      {
-        "Id": "TreatedPlank",
-        "Amount": 160
       }
     ],
     "ScienceCost": 8000,

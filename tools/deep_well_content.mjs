@@ -106,7 +106,7 @@ export async function deepWellBlueprint(dataRoot) {
   value.BuildingModelSpec = {...value.BuildingModelSpec, UndergroundModelName: '', UndergroundModelDepth: 0};
   delete value.Children['#Underground'];
   value.BuildingSpec = {...value.BuildingSpec,
-    BuildingCost: (await lategameCost(ID)).map(([Id, Amount]) => ({Id, Amount})), ScienceCost: CONFIG.science};
+    BuildingCost: (await lategameCost(ID, CONFIG.science)).map(([Id, Amount]) => ({Id, Amount})), ScienceCost: CONFIG.science};
   value.TemplateSpec = {...value.TemplateSpec, TemplateName: `${ID}.IronTeeth`, BackwardCompatibleTemplateNames: []};
   value.PlaceableBlockObjectSpec = {...value.PlaceableBlockObjectSpec, ToolGroupId: CONFIG.toolGroup, ToolOrder: CONFIG.toolOrder, DevModeTool: false};
   value.LabeledEntitySpec = {...value.LabeledEntitySpec, DisplayNameLocKey: `Building.${ID}.DisplayName`,

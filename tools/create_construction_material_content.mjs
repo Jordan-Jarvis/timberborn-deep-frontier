@@ -7,7 +7,7 @@ import {applyPitLayout} from './pit_building_content.mjs';
 import {structuralBlueprints} from './structural_building_content.mjs';
 import {hydroBlueprint} from './hydro_building_content.mjs';
 import {researchContent} from './research_building_content.mjs';
-import { scaledCost, scaledPower } from './lategame_costs.mjs';
+import { buildingCost, scaledPower } from './lategame_costs.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dataRoot = resolve(root, 'src/DeepFrontier/Data');
@@ -110,7 +110,7 @@ for (const building of catalog.buildings) {
   const value = await read(vanillaRoot, template);
   value.TemplateSpec.TemplateName = `${id}.IronTeeth`;
   value.TemplateSpec.BackwardCompatibleTemplateNames = [];
-  value.BuildingSpec.BuildingCost = scaledCost(building.cost.map(amount), building.science);
+  value.BuildingSpec.BuildingCost = buildingCost(id, building.cost.map(amount), building.science);
   value.BuildingSpec.ScienceCost = building.science;
   Object.assign(value.WorkplaceSpec, { MaxWorkers: building.workers, DefaultWorkers: building.workers,
     WorkerTypeUnlockCosts: [{ WorkerType: 'Bot', ScienceCost: building.botScience }] });
