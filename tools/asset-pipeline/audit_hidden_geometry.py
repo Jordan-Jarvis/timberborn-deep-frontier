@@ -13,7 +13,10 @@ single-sided facade seen from behind is culled in game, so the ray continues
 through it. Animated parts, water and native props never occlude (they move
 or are transparent), so the count is conservative.
 
-The rays run on the RTX 2060 (gpu_visibility.py), which reproduces the
+The rays run on the RTX 2060 (gpu_visibility.py) in the persistent GPU
+visibility service (gpu_visibility_service.py: one warm Blender takes the jobs
+of every agent; this script's command line submits to it and starts it when
+needed). gpu_visibility.py reproduces the
 mathutils BVHTree ray casts this audit used, ray for ray: see that module for
 the exact test. A ray exactly along a seam between two triangles can slip
 between them (the BVH's box culling of grazing rays), so an escape counts only
@@ -283,7 +286,8 @@ def audit(ident, terrain_z, blend_dir=None):
     return report
 
 
-def main():
+def run():
+    """The audit itself; runs inside the GPU visibility service."""
     parser = argparse.ArgumentParser()
     parser.add_argument('--models', required=True)
     parser.add_argument('--terrain-z', type=float, default=None)
@@ -303,6 +307,13 @@ def main():
             failed = True
     if failed:
         raise SystemExit('Enclosed-face cull exposed faces a camera can see (see culledFacesExposed)')
+
+
+def main():
+    """Client: the job runs in the warm GPU visibility service
+    (gpu_visibility_service.py), which this starts when it is not running."""
+    import gpu_visibility_service
+    gpu_visibility_service.submit(__file__, 'run', sys.argv[sys.argv.index('--') + 1:])
 
 
 if __name__ == '__main__':

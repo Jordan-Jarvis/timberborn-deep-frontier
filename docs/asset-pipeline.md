@@ -30,12 +30,39 @@ The GPU's own BVH (full-sweep SAH, boxes grown by 1 mm) only prunes, so it never
 
 Practical notes:
 
-- Blender's `gpu` module refuses to run in background mode until the GPU is initialised. A 4x4 Workbench render does that (about 2 CPU-s, the fixed cost of the GPU path), and the renderer must be the RTX 2060.
+- Blender's `gpu` module refuses to run in background mode until the GPU is initialised. A 4x4 Workbench render does that, and the renderer must be the RTX 2060. This is the fixed cost of the GPU path: about 1 CPU-s of NVIDIA driver and context start-up, with `gpu_shader_workers` set to 1 (automatic workers each open a context and cost ~0.5 CPU-s more). The GPU visibility service (below) pays it once, not once per audit.
 - Readbacks spin about two CPU cores in the NVIDIA OpenGL driver while the GPU works. Dispatches are only submitted at the readback, so sleeping beforehand does not help.
 - Integer textures cannot be uploaded or read back from Python, so indices travel as exact floats.
 - Dispatches take `gpu_render_lock`.
 
-`zfight_audit.py` stays on the CPU: its five exterior rays per overlap are a negligible part of its time, which goes to Python candidate pairing. `enclosed_cull.visible` (build-time, polygon BVH, single rays) is unchanged.
+### GPU visibility service
+
+The GPU work runs in one warm Blender that every agent shares, `gpu_visibility_service.py` on 127.0.0.1:47613, so the GPU is initialised once and not once per audit.
+
+- **Same command line.** `audit_hidden_geometry.py`'s command line is the client: it submits its own script path, arguments and working directory, prints the job's output and exits as the job did.
+- **No CPU path.** When nothing is listening, the client starts the service (detached; log `%USERPROFILE%\dfs\gpu-visibility-service.log`) and waits for it.
+- **Jobs run one at a time.** They run in arrival order, each with the client's own copy of the script, so mirrors and the repository keep their own code and `ROOT`.
+- **Nothing carries over between jobs.** Modules loaded from outside Blender are dropped and the scene is reset to factory settings.
+- **Failures.** A Python error or `SystemExit` fails only its own job. A native crash ends the service: that client reports it, and the next submission starts a fresh service.
+- **Stopping.** `python tools/asset-pipeline/gpu_visibility_service.py status|stop` (no Blender needed). The service also exits after an hour idle. Stop it after editing `gpu_visibility_service.py` itself; job scripts are reloaded on every job.
+- **The GPU lock still applies.** Its dispatches still take `gpu_render_lock`, so visibility jobs never time-slice the GPU with a Cycles render, which costs CPU in the driver.
+
+Equivalence: all 94 saved scenes run through one service lifetime give reports identical to the old CPU audit. CPU per audit (client plus service), with the old CPU path in brackets:
+
+| Scenes | Warm service | Old CPU path |
+| --- | --- | --- |
+| Tiny scenes | 0.9-1.1 | 0.7-0.8 |
+| CementKiln | 1.7 | 1.9 |
+| Hospital | 2.3 | 7.2 |
+| Restaurant | 3.1 | 15.2 |
+| GroceryMarket | 4.0 | 15.5 |
+| All 94 scenes | 158 | 270 |
+
+`zfight_audit.py` stays on the CPU: its five exterior rays per overlap are a negligible part of its time, which goes to Python candidate pairing.
+
+`enclosed_cull.visible` (the build-time check of proposed removals; polygon BVH, single rays) is unchanged and still on the CPU. It is now the largest ray cost: 14 of the 20 CPU-s of a Restaurant build (1.8 million `ray_cast` calls). The civic shells and the Grocery Market use it, the late-game buildings do not.
+
+`validate_connection_exports.py` decodes each export once per process: `measure_connection_faces.triangles` caches the decoded triangles per file version as read-only arrays. It rechecks faces one direction at a time, which cut it from ~29 to ~19 CPU-s.
 
 ## Map objects and pile goods (2026-10-25)
 
