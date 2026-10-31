@@ -19,7 +19,7 @@
   - Water power: both water wheels and the Reinforced Hydro Turbine.
   - Power shafts: the three shafts and the clutch.
   - Engines and power plants: steam engine, New Styles' steam plant, geothermal engine, Solar Panel when installed, and the coal, oil and nuclear plants.
-  - With Flywheels installed, a Flywheels sub-group with one sub-group per type: inline, horizontal framed, vertical framed.
+  - With Flywheels installed, a Flywheels sub-group with all nine flywheels (inline, horizontal framed, vertical framed).
 - **Landscaping:** Dynamite (single, double, triple), Floodgates, and Deep Frontier's masonry and concrete blocks each get a sub-group.
 - **Storage:** sorted by type, then by size: piles, then warehouses, then tanks. With Expanded Storage installed, its buildings slot in by size. The Radioactive Waste Vault comes last among the warehouses and the Cryogenic Tank Farm last among the tanks.
 - A sub-group for an optional mod's tools appears only when that mod is installed. Without the mod, nothing changes and nothing breaks. Vanilla and other mods' buildings keep their own blueprints; only their place in the menu changes.

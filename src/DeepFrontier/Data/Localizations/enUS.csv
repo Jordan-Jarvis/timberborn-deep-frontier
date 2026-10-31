@@ -922,9 +922,6 @@ ToolGroups.DeepFrontierWaterPower,Water power,Deep Frontier toolbar group
 ToolGroups.DeepFrontierPowerShafts,Power shafts,Deep Frontier toolbar group
 ToolGroups.DeepFrontierEngines,Engines and power plants,Deep Frontier toolbar group
 ToolGroups.DeepFrontierFlywheels,Flywheels,Deep Frontier toolbar group
-ToolGroups.DeepFrontierInlineFlywheels,Inline flywheels,Deep Frontier toolbar group
-ToolGroups.DeepFrontierHorizontalFlywheels,Horizontal framed flywheels,Deep Frontier toolbar group
-ToolGroups.DeepFrontierVerticalFlywheels,Vertical framed flywheels,Deep Frontier toolbar group
 ToolGroups.DeepFrontierFloodgates,Floodgates,Deep Frontier toolbar group
 ToolGroups.DeepFrontierDynamite,Dynamite,Deep Frontier toolbar group
 ToolGroups.DeepFrontierMasonryBlocks,Masonry and concrete,Deep Frontier toolbar group

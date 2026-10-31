@@ -10,5 +10,30 @@
     "ParentIds": [
       "Power"
     ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "SmallFlywheel.IronTeeth",
+      "MediumFlywheel.IronTeeth",
+      "LargeFlywheel.IronTeeth",
+      "SmallVerticalFramedFlywheel.IronTeeth",
+      "MediumVerticalFramedFlywheel.IronTeeth",
+      "LargeVerticalFramedFlywheel.IronTeeth",
+      "SmallHorizontalFramedFlywheel.IronTeeth",
+      "MediumHorizontalFramedFlywheel.IronTeeth",
+      "LargeHorizontalFramedFlywheel.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "SmallFlywheel.IronTeeth",
+      "MediumFlywheel.IronTeeth",
+      "LargeFlywheel.IronTeeth",
+      "SmallVerticalFramedFlywheel.IronTeeth",
+      "MediumVerticalFramedFlywheel.IronTeeth",
+      "LargeVerticalFramedFlywheel.IronTeeth",
+      "SmallHorizontalFramedFlywheel.IronTeeth",
+      "MediumHorizontalFramedFlywheel.IronTeeth",
+      "LargeHorizontalFramedFlywheel.IronTeeth"
+    ]
   }
 }
