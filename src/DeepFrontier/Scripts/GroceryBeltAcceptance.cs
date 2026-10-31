@@ -59,6 +59,8 @@ namespace DeepFrontier.Scripts {
     private readonly List<BeltCarrier> _incoming=new(),_outgoing=new();
     private readonly Dictionary<MechanicalNode,float> _supplies=new();
     private GroceryStore _shop; private Inventory _donor,_receiver; private MechanicalNode _generator;
+    // World rear-wall cells the incoming and outgoing lanes end on (derived in Setup).
+    private Vector3Int _laneIn,_laneOut;
     private readonly bool _reload=Environment.GetCommandLineArgs().Contains("-deepFrontierGroceryBeltsReload");
     private int _reloadTotal,_eatenCorn,_reloadSupply,_deliveredCorn;
     private int _frame,_phase; private float _start,_phaseTime; private bool _finished;
@@ -86,12 +88,18 @@ namespace DeepFrontier.Scripts {
     }
     private void Setup() {
       _shop=_entities.Entities.Single(e=>e.HasComponent<GroceryStore>()).GetComponent<GroceryStore>();
-      Require(_shop.GetComponent<BlockObject>().Coordinates==new Vector3Int(159,160,3),"Wrong grocery fixture position");
+      Require(_shop.GetComponent<BlockObject>().Coordinates==GroceryAcceptance.Origin,"Wrong grocery fixture position");
       Require(_shop.GetComponent<GroceryBeltIntake>()!=null,"Missing explicit grocery belt intake");
-      // 9x6 Grocery Market (2026-10-22): its rear wall is local y 5, world y 165; the lanes
-      // end on the wall cells (5,5,0) and (6,5,0), world (164,165,3) and (165,165,3), on the
-      // ground the former rear row y 6 freed.
-      GroceryAcceptance.RequireMarketBlueprint(_templates);
+      GroceryAcceptance.RequireMarketLayout(_templates);
+      // The lanes end on two adjacent occupied ground cells of the installed rear wall (local
+      // y Size.y-1), the first such pair from the middle of the wall eastward; each runs two belts
+      // straight out north over the ground the former rear row y 6 freed.
+      var shop=_shop.GetComponent<BlockObject>();var spec=shop.GetComponent<BlockObjectSpec>();
+      var blocks=CivicFixtureGeometry.Blocks(spec);int rear=spec.Size.y-1;
+      bool Wall(int x)=>blocks.TryGetValue(new Vector3Int(x,rear,0),out var o)&&o==BlockOccupations.All;
+      var lane=Enumerable.Range(spec.Size.x/2,spec.Size.x-spec.Size.x/2-1).Where(x=>Wall(x)&&Wall(x+1)).ToArray();
+      Require(lane.Length>0,"Installed GroceryStore has no two adjacent occupied rear-wall ground cells east of its middle for the belt lanes");
+      _laneIn=shop.TransformCoordinates(new Vector3Int(lane[0],rear,0));_laneOut=shop.TransformCoordinates(new Vector3Int(lane[0]+1,rear,0));
       foreach(var e in _entities.Entities.Where(e=>e.HasComponent<Workplace>()&&e.HasComponent<PausableBuilding>()))
         e.GetComponent<PausableBuilding>().Pause();
       foreach(var e in _entities.Entities.Where(e=>e.HasComponent<ControllableCharacter>())) {
@@ -104,20 +112,20 @@ namespace DeepFrontier.Scripts {
       }
       if(_reload) {
         LoadSavedLane();
-        _camera.MoveTargetTo(new Vector3(164,5,166));_camera.SetZoomLevel(21,0);
+        _camera.MoveTargetTo(new Vector3(_laneIn.x,5,_laneIn.y+1));_camera.SetZoomLevel(21,0);
         _camera.HorizontalAngle=205;_camera.VerticalAngle=35;
         _speed.ChangeSpeed(1);return;
       }
-      for(int y=166;y<=167;y++) {
-        _incoming.Add(Create("ConveyorBeltSp1.IronTeeth",164,y,3).GetComponent<BeltCarrier>());
-        _outgoing.Add(Create("ConveyorBeltSp1.IronTeeth",165,y,3,Orientation.Cw180).GetComponent<BeltCarrier>());
+      for(int step=1;step<=2;step++) {
+        _incoming.Add(Create("ConveyorBeltSp1.IronTeeth",_laneIn.x,_laneIn.y+step,_laneIn.z).GetComponent<BeltCarrier>());
+        _outgoing.Add(Create("ConveyorBeltSp1.IronTeeth",_laneOut.x,_laneOut.y+step,_laneOut.z,Orientation.Cw180).GetComponent<BeltCarrier>());
       }
-      _generator=Create("DevPowerGenerator",163,166,3).GetComponent<MechanicalNode>();
-      var source=Create("SmallWarehouse.IronTeeth",164,168,3);
+      _generator=Create("DevPowerGenerator",_laneIn.x-1,_laneIn.y+1,_laneIn.z).GetComponent<MechanicalNode>();
+      var source=Create("SmallWarehouse.IronTeeth",_laneIn.x,_laneIn.y+3,_laneIn.z);
       source.GetComponent<SingleGoodAllower>().Allow("CornRation");_donor=source.GetComponent<Stockpile>().Inventory;
-      var sink=Create("SmallWarehouse.IronTeeth",165,168,3);
+      var sink=Create("SmallWarehouse.IronTeeth",_laneOut.x,_laneOut.y+3,_laneOut.z);
       sink.GetComponent<SingleGoodAllower>().Allow("CornRation");_receiver=sink.GetComponent<Stockpile>().Inventory;
-      _camera.MoveTargetTo(new Vector3(164,5,166));_camera.SetZoomLevel(21,0);_camera.HorizontalAngle=205;_camera.VerticalAngle=35;
+      _camera.MoveTargetTo(new Vector3(_laneIn.x,5,_laneIn.y+1));_camera.SetZoomLevel(21,0);_camera.HorizontalAngle=205;_camera.VerticalAngle=35;
       _speed.ChangeSpeed(1);
     }
     private static void CheckStocks(Inventory inventory,GroceryBeltStockRecord record) {
@@ -165,8 +173,8 @@ namespace DeepFrontier.Scripts {
       }
     }
     private void Start() {
-      Require(_incoming[0].OutPort.Target==new Vector3Int(164,165,3),"Input belt orientation differs");
-      Require(_outgoing[0].InPort.Target==new Vector3Int(165,165,3),"Output belt orientation differs");
+      Require(_incoming[0].OutPort.Target==_laneIn,"Input belt orientation differs");
+      Require(_outgoing[0].InPort.Target==_laneOut,"Output belt orientation differs");
       Require(_incoming.Concat(_outgoing).All(b=>b.Running),"Not all belts have native power");
       foreach(var graph in _incoming.Concat(_outgoing).Select(b=>b.GetComponent<MechanicalNode>().Graph).Distinct()) {
         Require(graph.BatteryCapacity==0,"Power-cut fixture must not include stored flywheel energy");

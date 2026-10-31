@@ -19,6 +19,7 @@ using Timberborn.Navigation;
 using Timberborn.NeedSystem;
 using Timberborn.SingletonSystem;
 using Timberborn.Stockpiles;
+using Timberborn.TemplateSystem;
 using Timberborn.TimeSystem;
 using Timberborn.WorkSystem;
 using UnityEngine;
@@ -45,12 +46,13 @@ namespace DeepFrontier.Scripts {
     private readonly IDayNightCycle _clock; private readonly WorkingHoursManager _hours;
     private readonly INavigationService _navigation; private readonly INavMeshService _nav;
     private readonly GameSaver _saver; private readonly GameLoader _loader; private readonly IGoodService _goods;
+    private readonly TemplateService _templates;
     private GroceryStore _shop; private BlockObject _building; private ControllableCharacter _shopper; private NeedManager _needs;
     private int _frame,_phase,_stockBefore; private float _start,_phaseTime,_normalHours,_hungerBefore;
     private bool _finished,_entered; private Vector3 _target;
     public GroceryContinuityAcceptance(EntityRegistry entities,SpeedManager speed,IDayNightCycle clock,
-      WorkingHoursManager hours,INavigationService navigation,INavMeshService nav,GameSaver saver,GameLoader loader,IGoodService goods) {
-      _entities=entities;_speed=speed;_clock=clock;_hours=hours;_navigation=navigation;_nav=nav;_saver=saver;_loader=loader;_goods=goods;
+      WorkingHoursManager hours,INavigationService navigation,INavMeshService nav,GameSaver saver,GameLoader loader,IGoodService goods,TemplateService templates) {
+      _entities=entities;_speed=speed;_clock=clock;_hours=hours;_navigation=navigation;_nav=nav;_saver=saver;_loader=loader;_goods=goods;_templates=templates;
     }
     private static void Require(bool value,string message) {if(!value)throw new InvalidOperationException(message);}
     private static void Pass(string message) {Debug.Log("[DeepFrontier Grocery Reload] PASS "+message);}
@@ -77,9 +79,9 @@ namespace DeepFrontier.Scripts {
         var n=_entities.Entities.Single(e=>e.EntityId.ToString()==resident.EntityId).GetComponent<NeedManager>();
         foreach(var need in resident.Needs)Require(Math.Abs(n.GetNeedPoints(need.Name)-need.Points)<.0001f,"Saved neighborhood points differ");
       }
-      // Grocery Market access (GroceryAcceptance.MarketPaths/BalconyPaths): the saved door
-      // approach, stair foot and balcony deck paths must reconnect after the reload.
-      GroceryAcceptance.RequireMarketAccess(_building,_nav);
+      // Grocery Market access (GroceryAcceptance.RequireMarketLayout): the saved door walk,
+      // stair foot and balcony deck paths must reconnect after the reload.
+      GroceryAcceptance.RequireMarketAccess(_building,_nav,GroceryAcceptance.RequireMarketLayout(_templates));
       Pass("fresh-process identity, pause, exact food stocks, consumer permissions, resident needs and connected door and balcony paths");
       var workers=_entities.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>())
         .Where(w=>w.WorkerType=="Beaver").ToArray();
@@ -93,7 +95,9 @@ namespace DeepFrontier.Scripts {
       _shopper=workers[2].GetComponent<ControllableCharacter>();_needs=_shopper.GetComponent<NeedManager>();
       Require(_shopper.GetAnimationNames().Contains("BeaverAdult_idle"),"Missing adult idle animation");
       _shopper.ChangeAnimation("BeaverAdult_idle");
-      _target=NavigationCoordinateSystem.GridToWorld(new Vector3Int(163,159,3));
+      // The road row cell in front of the shop's Entrance (inside its service radius).
+      var door=_building.TransformCoordinates(_building.GetComponent<BlockObjectSpec>().Entrance.Coordinates);
+      _target=NavigationCoordinateSystem.GridToWorld(new Vector3Int(door.x,CivicFixtureGeometry.RoadY,door.z));
       Require(_navigation.FindPathUnlimitedRange(_shopper.Transform.position,_target,new List<PathCorner>(),out var distance),"No saved shopper route");
       _shopper.TakeControlAndMoveTo(CoordinateSystem.WorldToGrid(_target));
       _normalHours=_hours.WorkedPartOfDay;_hours.WorkedPartOfDay=1;
