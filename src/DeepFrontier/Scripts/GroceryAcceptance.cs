@@ -199,10 +199,10 @@ namespace DeepFrontier.Scripts {
           Pass("native restocking restores the neighborhood bonus");
           _building.GetComponent<PausableBuilding>().Pause();
           _observer.GetComponent<Worker>().Unemploy();
-          // Market access cells (all player paths): main-door approach and Entrance, the stair
+          // Market access cells (all player paths): the main-door walk to the Entrance, the stair
           // foot, the balcony at the stair head and at the balcony door, then the road.
-          foreach(var c in new[]{new Vector3Int(4,0,0),new Vector3Int(4,1,0),new Vector3Int(8,4,0),
-            new Vector3Int(8,1,2),new Vector3Int(6,1,2),new Vector3Int(7,-1,0)})_walkTargets.Enqueue(c);
+          foreach(var c in _layout.DoorWalk.OrderBy(c=>c.y).Concat(new[]{_layout.StairFoot,_layout.StairHead,_layout.BalconyDoor,
+            _layout.Entrance+new Vector3Int(0,-_layout.Entrance.y-1,0)}))_walkTargets.Enqueue(c);
           Phase(9);NextWalk();
         } else if(_phase==9&&Vector3.Distance(_observer.Transform.position,_target)<.18f) {
           Pass("actual shopper reached "+_localTarget);
