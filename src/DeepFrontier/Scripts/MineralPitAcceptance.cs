@@ -101,20 +101,31 @@ namespace DeepFrontier.Scripts {
       Require(_objects.IsValid(result),"Native requirements rejected "+id);
       return result;
     }
-    // 2026-10-22 footprints end at the walls: SandstonePit 5x5 -> 5x4 (rear plank row gone,
-    // local frame unchanged), LimestonePit 6x5 -> 5x3 (hand cart, shelter and workbench gone;
-    // its new local y 0 is the former y 1). Both keep their fixture origins (159,160) and
-    // (166,160): each new footprint lies inside the former one on the flat bank and each
-    // ground door's Entrance (1,-1,0) stays on the y 159 road ((160,159) and (167,159)).
-    // The ground they no longer cover, in each new local frame, must take a Path and a 1x1
-    // decoration (the limestone pit's former right column and rear rows, its open (4,0,0)).
+    // The fixture follows the installed pit blueprints, not size literals.
+    // Each pit is anchored by its ground door: the world cell of its native
+    // Entrance on the y 159 road, (160,159) and (167,159), which the 2026-10-22
+    // footprint pass kept; its origin is that cell minus the blueprint's
+    // Entrance, and its outcrop stands in the door's column at y 167.
+    private static readonly Vector3Int[] Doors={new(160,159,3),new(167,159,3)};
+    // The pre-2026-10-22 footprints (inclusive bounds) relative to each door:
+    // SandstonePit 5x5, LimestonePit 6x5 (tools/validate_freed_cells.mjs).
+    private static readonly (int,int,int,int)[] FormerFootprints={(-1,3,1,5),(-1,4,1,5)};
+    private Vector3Int Origin(int i) {
+      var template=_templates.GetAll<TemplateSpec>().Single(s=>s.TemplateName==Goods[i]+"Pit.IronTeeth");
+      var entrance=template.Blueprint.GetSpec<BlockObjectSpec>().Entrance;
+      Require(entrance.HasEntrance&&entrance.Coordinates.y<0&&entrance.Coordinates.z==0,
+        "Installed "+Goods[i]+"Pit entrance "+entrance.Coordinates+" is not a ground cell in front of the footprint, which the road needs");
+      return Doors[i]-entrance.Coordinates;
+    }
+    // The ground a pit no longer covers must take a Path and a 1x1 decoration:
+    // the open ground cells inside its bounds and the former footprint outside them.
     private void RequireFreedCells(int i) {
-      var size=_pits[i].GetComponent<BlockObjectSpec>().Size;
-      // One storey since the 2026-10-30 compaction (same footprints, 3 layers).
-      var expected=i==0?new Vector3Int(5,4,3):new Vector3Int(5,3,3);
-      Require(size==expected,"Installed "+Goods[i]+"Pit is "+size+"; this fixture encodes "+expected);
-      var cells=i==0?FreedCellProbe.Outside(0,4,0,4,size):
-        new[]{new Vector3Int(4,0,0)}.Concat(FreedCellProbe.Outside(0,5,0,4,size));
+      var spec=_pits[i].GetComponent<BlockObjectSpec>();
+      var size=spec.Size;var e=spec.Entrance.Coordinates;
+      var (xMin,xMax,yMin,yMax)=FormerFootprints[i];
+      var inside=spec.GetBlocks(new Placement(Vector3Int.zero,Orientation.Cw0,FlipMode.Unflipped))
+        .Where(b=>b.Coordinates.z==0&&!b.IsOccupied).Select(b=>b.Coordinates);
+      var cells=inside.Concat(FreedCellProbe.Outside(e.x+xMin,e.x+xMax,e.y+yMin,e.y+yMax,size));
       FreedCellProbe.Require(_templates,_validator,_pits[i],cells,Goods[i]+"Pit",Pass);
     }
     private void VerifyNativeRules() {
@@ -165,11 +176,11 @@ namespace DeepFrontier.Scripts {
         for(int y=157;y<=159;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(173,y,3)))Create("Path",173,y,3);
         for(int x=159;x<173;x++)Create("Path",x,159,3);
         for(int i=0;i<2;i++) {
-          int x=159+7*i;
-          _pits[i]=Create(Goods[i]+"Pit.IronTeeth",x,160,3);
+          var origin=Origin(i);
+          _pits[i]=Create(Goods[i]+"Pit.IronTeeth",origin.x,origin.y,origin.z);
           _pits[i].GetComponent<PausableBuilding>().Pause();
           RequireFreedCells(i);
-          _deposits[i]=Create(Goods[i]+"Outcrop",x+1,167,3).GetComponent<MineralDeposit>();
+          _deposits[i]=Create(Goods[i]+"Outcrop",Doors[i].x,167,3).GetComponent<MineralDeposit>();
           Require(_deposits[i].Yielder.Yield.Amount==600,"Authored finite yield changed");
           _deposits[i].Yielder.DecreaseYield(new GoodAmount(Goods[i],600-TestYield));
         }
