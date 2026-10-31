@@ -19,6 +19,7 @@ using Timberborn.GoodConsumingBuildingSystem;
 using Timberborn.Goods;
 using Timberborn.Navigation;
 using Timberborn.NeedSystem;
+using Timberborn.RangedEffectSystem;
 using Timberborn.SingletonSystem;
 using Timberborn.TimeSystem;
 using Timberborn.WorkSystem;
@@ -107,9 +108,15 @@ namespace DeepFrontier.Scripts {
       }
       _building.GetComponent<PausableBuilding>().Resume();
       foreach(var w in _staff)w.EmployAt(_workplace);
-      MoveObserver(new Vector3Int(173,159,3));
+      MoveObserver(InRange);
       _start=_clock.PartialDayNumber;Phase(1);_speed.ChangeSpeed(3);
     }
+    // Observer cells from the installed blueprint: the road cell in front of the Entrance (inside
+    // the care radius), and the fixture road junction's column the radius plus three south of the
+    // hospital (outside it).
+    private Vector3Int InRange=>_building.TransformCoordinates(_building.GetComponent<BlockObjectSpec>().Entrance.Coordinates)+new Vector3Int(0,-1,0);
+    private Vector3Int OutOfRange=>new(CivicFixtureGeometry.RoadJunction.x,
+      _building.Coordinates.y-_building.GetComponent<RangedEffectBuildingSpec>().EffectRadius-3,CivicFixtureGeometry.RoadJunction.z);
     private void MoveObserver(Vector3Int coordinates) {
       _target=NavigationCoordinateSystem.GridToWorld(coordinates);
       Require(_navigation.FindPathUnlimitedRange(_observer.Transform.position,_target,new List<PathCorner>(),out var distance),"No observer route to "+coordinates);
@@ -129,13 +136,13 @@ namespace DeepFrontier.Scripts {
           float gained=_needs.GetNeedPoints("PublicHealthcare")-_baseline;
           Require(gained>.06f,"Nearby beaver did not receive actual PublicHealthcare points");
           Pass("actual neighborhood need gained "+gained+" while inside range");
-          MoveObserver(new Vector3Int(173,149,3));Phase(3);
+          MoveObserver(OutOfRange);Phase(3);
         } else if(_phase==3&&Vector3.Distance(_observer.Transform.position,_target)<.18f) {
           _baseline=_needs.GetNeedPoints("PublicHealthcare");Phase(4);
         } else if(_phase==4&&hours>=.6f) {
           Require(_needs.GetNeedPoints("PublicHealthcare")<_baseline-.005f,"Outside observer still receives neighborhood benefit");
           Pass("actual neighborhood need decays outside radius");
-          MoveObserver(new Vector3Int(173,159,3));
+          MoveObserver(InRange);
           int stock=_supplies.Inventory.AmountInStock("Medicine");
           Require(stock==_supplies.Inventory.UnreservedAmountInStock("Medicine"),"Medicine depletion fixture encountered reserved stock");
           _supplies.Inventory.TakeConsumed(new GoodAmount("Medicine",stock));Phase(5);

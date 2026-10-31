@@ -52,6 +52,11 @@ namespace DeepFrontier.Scripts {
     private readonly Dictionary<string,int> _stockAtStart=new();
     private readonly Dictionary<string,float> _observedAtEntry=new();
     private readonly Queue<Vector3Int> _targets=new();
+    // A free stretch north of the fixture map's road row; everything around the hospital is
+    // derived from its installed blueprint in Setup.
+    private static readonly Vector3Int Origin=new(160,162,3);
+    private readonly List<Vector3Int> _walk=new();
+    private string _openRail,_closedRail;
     private ControllableCharacter _walker; private Vector3 _walkWorld; private Vector3Int _target;
     private int _frame,_phase,_phaseFrame; private bool _failed,_saved; private float _start,_phaseTime,_normalHours;
     private float _sampleTime,_sampleInjury,_bedRate,_fullStaffTime,_arrivalTime;
@@ -77,53 +82,60 @@ namespace DeepFrontier.Scripts {
       Require(_objects.IsValid(b),"Native requirements rejected "+id);
       Debug.Log("[DeepFrontier Hospital] PLACED "+id+" "+placement.Coordinates);return b;
     }
+    private BlockObject Local(string id,Vector3Int local,Orientation orientation=Orientation.Cw0) {
+      var c=_building.TransformCoordinates(local);return Create(id,c.x,c.y,c.z,orientation);
+    }
     private void Setup() {
       _speed.ChangeSpeed(0);
       Require(!_registry.Entities.Any(e=>e.HasComponent<Hospital>()),"Hospital fixture must start without a hospital");
       foreach(var e in _registry.Entities.Where(e=>e.HasComponent<Workplace>()&&e.HasComponent<PausableBuilding>()))e.GetComponent<PausableBuilding>().Pause();
-      // 12x9 hospital (2026-10-22: the two front planter/canopy rows left the footprint, so
-      // local y 0 is the old local y 2). Placing at y 162 keeps every hall, door, opening and
-      // roof cell at its old world cell; the freed rows are world y 160..161.
-      // Every world cell below encodes that layout; read the installed blueprint first so
-      // a stale or newer footprint fails here with its real size instead of drifting.
-      var installed=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Hospital.IronTeeth").Blueprint;
-      var size=installed.GetSpec<BlockObjectSpec>().Size;
-      var deck=installed.HasSpec<PlatformDeckSpec>()?installed.GetSpec<PlatformDeckSpec>():null;
-      var openings=deck==null?new string[0]:deck.Openings.Select(o=>o.Id).ToArray();
-      Require(size==new Vector3Int(12,9,9)&&openings.Contains("WestFrontLeft")&&openings.Contains("WestFront1")&&deck.Doors.Length==6
-        &&installed.GetSpec<BlockObjectSpec>().Entrance.Coordinates==new Vector3Int(6,-1,0),
-        "Installed Hospital is "+size.x+"x"+size.y+"x"+size.z+" with "+(deck==null?0:deck.Doors.Length)+" doors and openings ["+
-        string.Join(",",openings)+"]; this fixture's roads, ports and walking targets encode the 12x9x9 six-door layout "+
-        "(WestFrontLeft/WestFront1, entrance (6,-1,0)). Regenerate the Hospital or update the fixture geometry.");
-      Pass("installed Hospital blueprint is the 12x9x9 six-door layout this fixture encodes");
-      _building=Create("Hospital.IronTeeth",160,162,3);_hospital=_building.GetComponent<Hospital>();
+      // The hospital stands at the fixture origin; its road, deck paths, stairs, shaft line and
+      // rail seam below follow the installed blueprint (CivicFixtureGeometry), not a size literal
+      // (4x9x9 since the 2026-10-30 compaction: the central pavilion, rear decks at layers 2 and 4,
+      // roof garden at 6).
+      _building=Create("Hospital.IronTeeth",Origin.x,Origin.y,Origin.z);_hospital=_building.GetComponent<Hospital>();
       _supplies=_building.GetComponent<GoodConsumingBuilding>();_ward=_building.GetComponent<Enterable>();
-      // Freed ground, checked before the fixture builds on it: the rear barrel/supply cells
-      // inside the bounds (validate_freed_cells.py) and the two former front rows.
-      FreedCellProbe.Require(_templates,_validator,_building,
-        new[]{new Vector3Int(1,8,0),new Vector3Int(10,8,0),new Vector3Int(11,8,0)}.Concat(FreedCellProbe.Rect(0,11,-2,-1)),
-        "Hospital",Pass);
-      for(int y=157;y<=159;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(173,y,3)))Create("Path",173,y,3);
-      for(int x=159;x<173;x++)Create("Path",x,159,3);
-      Create("Path",166,160,3);Create("Path",166,161,3);
-      var deckPaths=new HashSet<Vector3Int>();
-      for(int x=0;x<=3;x++)deckPaths.Add(new Vector3Int(x,0,2));
-      for(int x=8;x<=11;x++)deckPaths.Add(new Vector3Int(x,0,2));
-      for(int x=0;x<=11;x++)deckPaths.Add(new Vector3Int(x,8,2));
-      for(int x=3;x<=8;x++)deckPaths.Add(new Vector3Int(x,8,4));
-      for(int x=4;x<=7;x++)for(int y=5;y<=7;y++)deckPaths.Add(new Vector3Int(x,y,6));
-      foreach(var cell in deckPaths)Create("Path",160+cell.x,162+cell.y,3+cell.z);
-      // Two stacked 10,000 hp dev generators cover the 11,000 hp demand.
-      Create("PowerShaft.IronTeeth",159,165,3);
-      _generators=new[]{Create("DevPowerGenerator",158,165,3).GetComponent<MechanicalNode>(),
-        Create("DevPowerGenerator",158,165,5).GetComponent<MechanicalNode>()};
-      Create("DoublePlatform.IronTeeth",164,167,9);Create("Platform.IronTeeth",164,167,11);Create("Path",164,167,12);
-      Create("Stairs.IronTeeth",160,160,3,Orientation.Cw180);
-      Create("Platform.IronTeeth",160,161,3);Create("Stairs.IronTeeth",160,161,4,Orientation.Cw180);
-      // Player path beside the west front balcony's end rail (WestFrontLeft).
-      Create("DoublePlatform.IronTeeth",159,162,3);Create("Path",159,162,5);
+      var spec=_building.GetComponent<BlockObjectSpec>();var deck=_building.GetComponent<PlatformDeckSpec>();
+      var blocks=CivicFixtureGeometry.Blocks(spec);
+      var pathSpec=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint==_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Path").Blueprint);
+      bool TakesPath(Vector3Int local)=>_validator.BlocksValid(pathSpec,new Placement(_building.TransformCoordinates(local),Orientation.Cw0,FlipMode.Unflipped));
+      CivicFixtureGeometry.Place place=(id,c,o)=>Create(id,c.x,c.y,c.z,o);
+      var levels=deck.Openings.Select(o=>o.Inside.z).Distinct().OrderBy(z=>z).ToArray();
+      CivicFixtureGeometry.Road(place,c=>_blocks.GetPathObjectAt(c),_building.TransformCoordinates(spec.Entrance.Coordinates));
+      // Player paths on every deck: every rail's deck cell and upper door step and the cells of
+      // their layer that take a Path, except one roof cell that carries the full platform stack.
+      var region=CivicFixtureGeometry.DeckRegion(spec,deck.Openings.Select(o=>o.Inside).Concat(deck.Doors.Select(d=>d.Exterior).Where(c=>c.z>0)),TakesPath,"Hospital");
+      var tower=region.Where(c=>c.z==levels[levels.Length-1]&&deck.Openings.All(o=>o.Inside!=c)&&deck.Doors.All(d=>d.Exterior!=c)).ToArray();
+      Require(tower.Length>0,"Hospital roof deck has no cell besides rail and door cells for the platform stack");
+      foreach(var c in region.Where(c=>c!=tower[0]))Local("Path",c);
+      Local("DoublePlatform.IronTeeth",tower[0]);Local("Platform.IronTeeth",tower[0]+new Vector3Int(0,0,2));Local("Path",tower[0]+new Vector3Int(0,0,3));
+      // Ground stairs climb to the middle rear rail of the lowest deck.
+      var rear=deck.Openings.Where(o=>o.Inside.z==levels[0]&&o.Outside-o.Inside==new Vector3Int(0,1,0)&&CivicFixtureGeometry.FreeColumn(blocks,o.Outside)).ToArray();
+      Require(rear.Length>0,"Hospital lowest deck has no rear rail with a free column outside it for the stairs");
+      var flightRail=rear[rear.Length/2];
+      var flight=CivicFixtureGeometry.Flight(place,_building.TransformCoordinates(flightRail.Outside),new Vector3Int(0,1,0),Origin.z);
+      // Player path on a platform stack beside the lowest deck's first side rail (open); the next
+      // rail of that deck with nothing outside it stays closed.
+      var seam=deck.Openings.FirstOrDefault(o=>o.Inside.z==levels[0]&&o.Outside.y==o.Inside.y&&CivicFixtureGeometry.FreeColumn(blocks,o.Outside));
+      Require(seam!=null,"Hospital lowest deck has no side rail with a free column outside it");
+      var shut=deck.Openings.FirstOrDefault(o=>o.Inside.z==levels[0]&&o.Outside!=seam.Outside&&o.Outside!=flightRail.Outside);
+      Require(shut!=null,"Hospital lowest deck has no third rail to stay closed");
+      CivicFixtureGeometry.Pad(place,_building.TransformCoordinates(seam.Outside),Origin.z);
+      _openRail=seam.Id;_closedRail=shut.Id;
+      // Two stacked 10,000 hp dev generators cover the 11,000 hp demand, on a shaft line out of the
+      // lowest wall face clear of the stairs and the seam pad.
+      var used=new HashSet<Vector2Int>(flight.Select(c=>new Vector2Int(c.x,c.y)));
+      var pad=_building.TransformCoordinates(seam.Outside);used.Add(new Vector2Int(pad.x,pad.y));
+      var face=CivicFixtureGeometry.ShaftFace(spec,_building.GetComponent<TransputProviderSpec>(),
+        c=>{var w=_building.TransformCoordinates(c);return used.Contains(new Vector2Int(w.x,w.y));},"Hospital");
+      _generators=CivicFixtureGeometry.ShaftLine(place,_building,face,2);
+      // Walk (local cells; the hospital stands Cw0 unflipped): Entrance, each upper door step, the
+      // seam pad, the stair foot, then the road south of the Entrance.
+      var entrance=spec.Entrance.Coordinates;
+      _walk.Add(entrance);_walk.AddRange(deck.Doors.Select(d=>d.Exterior).Where(c=>c.z>0));
+      _walk.Add(seam.Outside);_walk.Add(flight[0]-_building.Coordinates);_walk.Add(entrance+new Vector3Int(0,-1,0));
       _bed=Create("MedicalBed.IronTeeth",166,158,3,Orientation.Cw180);
-      Pass("native hospital placement, ground stairs and full roof platform stack");
+      Pass("native hospital placement, ground stairs, deck paths and full roof platform stack");
       Require(_ward.NumberOfEnterersInside==0,"Empty unstaffed hospital already contains patients");
       for(int i=0;i<30;i++){Require(_ward.CanReserveSlot,"Patient capacity ended before thirty");_ward.ReserveSlot();}
       Require(!_ward.CanReserveSlot,"Hospital allowed a thirty-first patient reservation");
@@ -144,26 +156,27 @@ namespace DeepFrontier.Scripts {
       Require(pantry.CanFeed&&pantry.FoodInStock==10*pantry.Foods.Count&&pantry.WaterInStock==water+60,"Native hospital inventory did not accept patient food and water");
       Require(_building.GetComponent<Attraction>().Effects.All(e=>e.SatisfyToMaxValue),"Hospital effects must keep patients admitted until cured");
       Pass("patient pantry stocked: "+pantry.Foods.Count+" faction foods and water; every treatment keeps patients until cured");
-      _camera.MoveTargetTo(new Vector3(166,7,166));_camera.SetZoomLevel(28,0);_camera.HorizontalAngle=25;_camera.VerticalAngle=35;
+      var centre=_building.TransformCoordinates(_building.GetComponent<BlockObjectSpec>().Size/2);
+      _camera.MoveTargetTo(new Vector3(centre.x,7,centre.y));_camera.SetZoomLevel(28,0);_camera.HorizontalAngle=25;_camera.VerticalAngle=35;
       _normalHours=_hours.WorkedPartOfDay;_hours.WorkedPartOfDay=1;
       _speed.ChangeSpeed(1);
     }
     private void StartCare() {
       Require(_building.GetComponent<MechanicalNode>().PowerEfficiency==1,"Hospital shaft lacks full 11,000 hp");
-      CheckPort("WestFrontLeft",true);CheckPort("WestFront1",false);
+      CheckPort(_openRail,true);CheckPort(_closedRail,false);
       foreach(var door in _building.GetComponent<PlatformDeckSpec>().Doors) {
         var a=_building.TransformCoordinates(door.Interior);var b=_building.TransformCoordinates(door.Exterior);
         Require(_nav.AreConnectedInstant(a,b)&&_nav.AreConnectedInstant(b,a),"Hospital door lacks player-path connection: "+door.Interior);
       }
-      Pass("all six one-tile doors connect to player-built roads on their own levels");
+      Pass("all "+_building.GetComponent<PlatformDeckSpec>().Doors.Length+" one-tile doors connect to player-built roads on their own levels");
       // The fixture's road to the district center predates blueprint regeneration; objects the
       // native loader dropped are tolerated only while this route still reaches the district.
       var center=_registry.Entities.Single(e=>e.HasComponent<NamedEntity>()&&e.GetComponent<NamedEntity>().EntityName=="Deep Frontier Acceptance Fixture")
         .GetComponent<BlockObject>();
       var dropped=string.Join("; ",AcceptanceLoadingIssues.DroppedObjects.Select(d=>d.Name+" "+d.Coordinates));
       Require(AcceptanceLoadingIssues.Reported,"Fixture loading issues were not captured completely; see acceptance-loading-issues.json");
-      Require(_nav.AreConnectedRoadInstant(center.PositionedEntrance.Coordinates,new Vector3Int(173,159,3)),
-        "Hospital road (173,159,3) does not reach the district center entrance "+center.PositionedEntrance.Coordinates+"; dropped fixture objects: "+dropped);
+      Require(_nav.AreConnectedRoadInstant(center.PositionedEntrance.Coordinates,CivicFixtureGeometry.RoadJunction),
+        "Hospital road "+CivicFixtureGeometry.RoadJunction+" does not reach the district center entrance "+center.PositionedEntrance.Coordinates+"; dropped fixture objects: "+dropped);
       Pass("hospital road reaches the district center"+(dropped.Length>0?"; tolerated dropped fixture objects: "+dropped:"; fixture loaded cleanly"));
       var workers=_registry.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>())
         .Where(w=>w.WorkerType=="Beaver").ToArray();
@@ -239,9 +252,7 @@ namespace DeepFrontier.Scripts {
         } else if(_phase==5&&_hospital.CanUse&&_hospital.ProvidesNeighborhoodCare) {
           _walker=_staff[0].GetComponent<ControllableCharacter>();
           _building.GetComponent<PausableBuilding>().Pause();_walker.GetComponent<Worker>().Unemploy();
-          foreach(var cell in new[]{new Vector3Int(6,0,0),new Vector3Int(2,1,2),new Vector3Int(0,8,2),
-            new Vector3Int(6,7,4),new Vector3Int(6,4,6),new Vector3Int(4,7,6),
-            new Vector3Int(0,0,2),new Vector3Int(11,0,2),new Vector3Int(9,1,2),new Vector3Int(0,-3,0)})_targets.Enqueue(cell);
+          foreach(var cell in _walk)_targets.Enqueue(cell);
           _phase=6;NextTarget();
         } else if(_phase==6&&Vector3.Distance(_walker.Transform.position,_walkWorld)<.18f) {
           Pass("actual beaver reached "+_target);
