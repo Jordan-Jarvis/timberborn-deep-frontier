@@ -773,11 +773,6 @@
   [
    5,
    6,
-   2
-  ],
-  [
-   5,
-   6,
    5
   ],
   [
@@ -939,11 +934,6 @@
    7,
    4,
    1
-  ],
-  [
-   7,
-   4,
-   2
   ],
   [
    7,
@@ -1026,7 +1016,7 @@
    7
   ]
  ],
- "partsOutsideFootprint": 11,
+ "partsOutsideFootprint": 10,
  "doors": [
   {
    "id": "Main",
@@ -1063,12 +1053,6 @@
    0,
    1,
    0,
-   "Left"
-  ],
-  [
-   0,
-   1,
-   1,
    "Left"
   ],
   [
@@ -1516,5 +1500,5 @@
   "ColumnBeacon",
   "StackBeacon"
  ],
- "sourceHash": "c64c0e698871c6b390c694c17d4c748940fe0b6817aebb306fc9efd351a9c5e4"
+ "sourceHash": "f24db6d8785d717f570d51266f01a78bb83b9ab70d74177cf6956752cb773a05"
 }

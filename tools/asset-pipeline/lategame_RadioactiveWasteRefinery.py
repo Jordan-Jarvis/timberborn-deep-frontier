@@ -15,7 +15,7 @@ rises from the ground (roof-variety pass). One layer per floor throughout.
 HERO: the cask crane, a riveted twin-girder bridge on a concrete pier and a
 roof pedestal, which lifts a finned spent-fuel cask out of the cooling pond
 and lowers it into the roof hatch of the shielded hot cells.
-ROOF: flat concrete roof with an open parapet ring on the hot cells (layer
+ROOF: flat concrete roof, open edge to edge (no parapet), on the hot cells (layer
 2); a pitched corrugated-metal gable on the vitrification hall; no roof vents
 (roof-variety pass).
 
@@ -36,11 +36,10 @@ import math
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
 from lategame_kit import (CONCRETE, ORANGE, FORGED, PAINTED, CYAN, GLOW, frame_wall, revolve, band,
-                          dome, stack, hollow_revolve, flat_roof, steel_rail, lamp, beacon, beacon_shutter)
+                          dome, stack, hollow_revolve, flat_roof, lamp, beacon, beacon_shutter)
 from lategame_nuclear_parts import (bx, Facer, trefoil, gauge, riveted_panel, pipe_path, manipulator_port,
                                     obox, cask)
 from architectural_windows import window
-from lategame_roofdeck_parts import parapet_ring
 from lategame_sheet_roofs import sheet_gable
 import lategame_mining_parts as M
 
@@ -88,7 +87,6 @@ def hot_cells(g, parts):
         manipulator_port(g, x, wall, 1.45, face='front', reach=.35)
     trefoil(g, 1.5, wall, 1.45, face='front', r=.2)
     flat_roof(g, HX0 + .05, HY0 + .05, HX1 - .05, HY1 - .05, CELL_TOP, overhang=.05)
-    parapet_ring(g, HX0, HY0, HX1, HY1, ROOF, height=.26)
     # Roof hatch collar at the cask set-down station.
     hollow_revolve(g, (CELL_X, BY, ROOF), [(.62, 0), (.62, .3)], .12, IRON, segments=16)
     g.ring((CELL_X, BY, ROOF + .27), .64, .04, .05, BRASS, 'Z', 16)
@@ -166,7 +164,6 @@ def pond(g, parts):
     for a in ((x0 - .03, y0 - .03, x1 + .03, y0 + w + .01), (x0 - .03, y1 - w - .01, x1 + .03, y1 + .03),
               (x0 - .03, y0 + w + .01, x0 + w + .01, y1 - w - .01), (x1 - w - .01, y0 + w + .01, x1 + .03, y1 - w - .01)):
         bx(g, a[0], a[1], top, a[2], a[3], top + .06, CONCRETE)
-    steel_rail(g, (x0 + .1, y0 + .1), (x1 - .1, y0 + .1), top + .06, pitch=.6)
     g.liquid_surfaces.append(dict(name='CoolingPond', shape='Rectangle', center=[(x0 + x1) / 2, (y0 + y1) / 2],
                                   bottom=.2, top=.68, scale=[x1 - x0 - 2 * w, y1 - y0 - 2 * w], flowOnly=False))
     # Submerged fuel racks either side of the cask station.

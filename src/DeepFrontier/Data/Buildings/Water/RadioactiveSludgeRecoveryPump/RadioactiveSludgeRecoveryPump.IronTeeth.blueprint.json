@@ -21,7 +21,7 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 215
+        "Amount": 225
       },
       {
         "Id": "MachineCore",
@@ -199,7 +199,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -213,7 +213,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -359,24 +359,12 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 0.5,
-              "Z": 1
-            },
-            "Size": {
-              "X": 3,
               "Y": 1,
-              "Z": 2
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 0.5,
               "Z": 2.5
             },
             "Size": {
               "X": 1,
-              "Y": 1,
+              "Y": 2,
               "Z": 1
             }
           },
@@ -384,23 +372,11 @@
             "Center": {
               "X": 1.5,
               "Y": 1.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 3,
-              "Y": 1,
-              "Z": 3
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 2.5,
               "Z": 1
             },
             "Size": {
               "X": 3,
-              "Y": 1,
+              "Y": 3,
               "Z": 2
             }
           }
@@ -421,24 +397,12 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 0.5,
-                  "Z": 1
-                },
-                "Size": {
-                  "X": 3,
                   "Y": 1,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 0.5,
                   "Z": 2.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 1,
+                  "Y": 2,
                   "Z": 1
                 }
               },
@@ -446,23 +410,11 @@
                 "Center": {
                   "X": 1.5,
                   "Y": 1.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2.5,
                   "Z": 1
                 },
                 "Size": {
                   "X": 3,
-                  "Y": 1,
+                  "Y": 3,
                   "Z": 2
                 }
               }
@@ -541,6 +493,24 @@
           "Z": 1
         },
         "Directions": "Down",
+        "State": "OpenOut"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 1,
+          "Z": 1
+        },
+        "Directions": "Up",
+        "State": "OpenOut"
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 1,
+          "Z": 1
+        },
+        "Directions": "Up",
         "State": "OpenOut"
       }
     ]

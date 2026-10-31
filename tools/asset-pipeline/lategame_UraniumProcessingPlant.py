@@ -17,7 +17,8 @@ where a row of spinning gas centrifuges stands under a solid flat canopy, the
 hall behind it lit by a glazed clerestory monitor.
 ROOF: flat roofs in varied finishes: concrete on the hall canopy and the
 scrubber house, riveted steel plate on the clerestory monitor and the fuel
-vault; open parapet rings; no roof vents (roof-variety pass).
+vault, all open platforms edge to edge (no parapets or rails: user,
+2026-10-31, "lets remove the railings"); no roof vents (roof-variety pass).
 
 Supporting masses: an orange-slurry settling thickener with a rotating rake,
 the lead-lined fuel vault, two riveted acid tanks on a concrete bund, and the
@@ -33,12 +34,11 @@ import math
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 from lategame_kit import (stud, CONCRETE, ORANGE, FORGED, PAINTED, CYAN, GLOW, plinth, frame_wall,
                           revolve, band, dome, tank, stack, hollow_revolve, flat_roof,
-                          steel_rail, ladder, lamp, beacon, beacon_shutter, fan, valve_wheel)
+                          ladder, lamp, beacon, beacon_shutter, fan, valve_wheel)
 from lategame_nuclear_parts import (bx, Facer, trefoil, gauge, drum, riveted_panel, straight_pipe,
                                     pipe_path, valve, frustum)
 from industrial_facades import building_portal
 from architectural_windows import window
-from lategame_roofdeck_parts import parapet_ring
 from lategame_sheet_roofs import plate_deck
 import lategame_mining_parts as M
 
@@ -96,18 +96,12 @@ def hall(g, parts):
     bx(g, PX0 + .1, PY0 + .1, ROOF_Z - .22, PX1 - .1, PY0 + .5, ROOF_Z, CONCRETE)
     flat_roof(g, PX0 + .05, PY0 + .1, PX1 - .05, PY1 - .05, ROOF_Z, overhang=.05)
     roof = ROOF_Z + .16
-    parapet_ring(g, PX0, PY0 + .05, PX1, PY1, roof, height=.24, open_sides=('front',))
     # The hall is a solid room (its cells are the building's, not free space).
     bx(g, PX0 + .22, HYF + .07, DECK + .012, PX1 - .22, PY1 - .2, ROOF_Z, IRON)
     # Orange name board on the canopy fascia, lamps under it.
     f = Facer(3.5, PY0 + .1 - .05, 0, 'front')
     riveted_panel(g, f, -.8, .8, ROOF_Z - .2, ROOF_Z + .1, 0, .04, ORANGE)
     trefoil(g, 1.5, PY0 + .02, ROOF_Z - .05, face='front', r=.14)
-    # Rails on the open bay's front and ends.
-    for a, b in ((PX0 + .5, 2.3), (2.7, PX1 - .5)):
-        steel_rail(g, (a, PY0 + .22), (b, PY0 + .22), DECK, pitch=.8)
-    for x in (PX0 + .12, PX1 - .12):
-        steel_rail(g, (x, PY0 + .5), (x, HYF - .1), DECK, pitch=.8)
     # Clerestory monitor: forged walls with factory windows, flat roof.
     x0, x1, y0, y1 = MON
     for y, out in ((y0, -1), (y1, 1)):
@@ -169,8 +163,6 @@ def thickener(g, parts):
     g.box((cx - .25, cy, 1.15), (.22, .16, .14), PAINTED)
     # Fixed worker bridge from the left rim to the drive head.
     bx(g, cx - .92, cy - .2, 1.18, cx - .2, cy + .2, 1.24, IRON)
-    for y in (cy - .17, cy + .17):
-        steel_rail(g, (cx - .88, y), (cx - .25, y), 1.24, pitch=.4, height=.5)
     rake = Geometry('ThickenerRake', (cx, cy, .82))
     for s in (-1, 1):
         rake.beam((cx, cy, .86), (cx + s * .7, cy, .86), .07, .07, IRON)
@@ -196,7 +188,6 @@ def fuel_vault(g, parts):
         riveted_panel(g, f, u - .2, u + .2, .15, 1.6, .02, .06, FORGED, rivets=False)
     valve_wheel(g, *f.p(0, .95, .11), face='back', r=.16)
     plate_deck(g, x0 + .1, y0 + .1, x1 - .1, y1 - .1, 2.032, mat=FORGED, t=.04)   # riveted steel plate
-    parapet_ring(g, x0 - .05, y0 - .05, x1 + .05, y1 + .05, 2.012, height=.28)
 
 
 def acid_tanks(g, parts):
@@ -218,7 +209,6 @@ def scrubber(g, parts):
     x0, y0, x1, y1 = 5.03, 4.03, 8.0, 7.0   # scrubber house on tiles 5..8 x 4..7
     bx(g, x0, y0, 0, x1, y1, 1.84, CONCRETE)
     flat_roof(g, x0, y0, x1, y1, 1.84, overhang=.0)
-    parapet_ring(g, x0, y0, x1, y1, 2.0, height=.28)
     for x in (5.7, 7.3):
         window(g, x, y1, .9, .55, 'back', 'factory')
     window(g, x1, 5.0, .9, .55, 'right', 'factory')

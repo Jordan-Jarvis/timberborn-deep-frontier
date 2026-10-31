@@ -37,7 +37,6 @@ from lategame_civic_parts import blk
 from lategame_nuclear_parts import Facer, prism
 from industrial_facades import building_portal
 from native_window_atlas import atlas_window
-from lategame_roofdeck_parts import parapet_ring
 import lategame_mining_parts as M
 
 IDENT = 'RadioactiveSludgeRecoveryPump'
@@ -116,7 +115,7 @@ def deck(g, parts):
         blk(g, x - .04, 1.88, DECK_Z - .14, x + .04, y1 - .03, DECK_Z - .08, IRON)
     blk(g, x0 + .02, y1 - .1, DECK_Z - .145, x1 - .02, y1 - .02, DECK_Z - .081, IRON)   # edge beam (joist ends buried)
     P.grating(g, x0, y0, x1, y1, DECK_Z)
-    P.rail(g, [(x0 + .04, y0 + .04), (x0 + .04, y1 - .04), (x1 - .04, y1 - .04), (x1 - .04, y0 + .04)], DECK_Z)
+    # An open deck, no rail (user, 2026-10-31: "lets remove the railings").
     px, py = PUMP
     # Vertical pump: casing, brass ring, coupling, motor.
     P.lathe(g, (px, py, DECK_Z), [(.26, 0), (.26, .06), (.21, .1), (.21, .4), (.15, .48)], PAINTED, segments=16)

@@ -36,11 +36,6 @@
    2
   ],
   [
-   0,
-   2,
-   1
-  ],
-  [
    1,
    0,
    0
@@ -109,11 +104,6 @@
    2,
    1,
    2
-  ],
-  [
-   2,
-   2,
-   1
   ]
  ],
  "partsOutsideFootprint": 20,
@@ -188,6 +178,12 @@
   [
    0,
    1,
+   1,
+   "Up"
+  ],
+  [
+   0,
+   1,
    2,
    "Left"
   ],
@@ -254,6 +250,12 @@
   [
    2,
    1,
+   1,
+   "Up"
+  ],
+  [
+   2,
+   1,
    2,
    "Right"
   ],
@@ -272,5 +274,5 @@
   "RadioactiveSludgeRecoveryPump.Coupling",
   "RadioactiveSludgeRecoveryPump.ValveWheel"
  ],
- "sourceHash": "e9843e69f37e7c141fe043f1b92f156a8728e38a4573daedb109b6f6ccbd0478"
+ "sourceHash": "1e0ae8fcfc89e5bc9a03fa0fa27fc4a5f7aae1c82ef145b682e574382885bd66"
 }

@@ -17,11 +17,11 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 7910
+        "Amount": 7900
       },
       {
         "Id": "Brick",
-        "Amount": 1565
+        "Amount": 1605
       },
       {
         "Id": "MachineCore",
@@ -4232,7 +4232,7 @@
           "Y": 1,
           "Z": 2
         },
-        "Directions": "Right",
+        "Directions": "Left, Right",
         "ReverseRotation": false
       },
       {
@@ -5164,7 +5164,7 @@
           "Y": 1,
           "Z": 2
         },
-        "Directions": "Right",
+        "Directions": "Left, Right",
         "State": "Open"
       },
       {

@@ -44,20 +44,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 3834,
+  "faces": 3504,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 488,
-    "BaseMetal.IronTeeth": 1833,
+    "BaseMetal.IronTeeth": 1569,
     "RoofPlanks.IronTeeth": 74,
     "Details.IronTeeth": 406,
     "accent8": 20,
     "accent25": 86,
-    "Plaster_White.IronTeeth": 546,
+    "Plaster_White.IronTeeth": 480,
     "Plaster_Orange.IronTeeth": 100,
     "IrregularPlanks_MetalForged.IronTeeth": 168,
     "WindowsAtlas.IronTeeth": 370,
     "PaintedMetal.IronTeeth": 197
   },
-  "sourceHash": "c64c0e698871c6b390c694c17d4c748940fe0b6817aebb306fc9efd351a9c5e4",
-  "artHash": "fc0c9798e13db807f0b526813d611c3994b9f04f71c083972a0702b1b4f90d34"
+  "sourceHash": "f24db6d8785d717f570d51266f01a78bb83b9ab70d74177cf6956752cb773a05",
+  "artHash": "ff8152a176108ee1ba1e7510c7c4dc7683a9a7cbca958f63d28ca2deedda4d99"
 }

@@ -17,7 +17,7 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 34190
+        "Amount": 34145
       },
       {
         "Id": "MachineCore",
@@ -13225,6 +13225,15 @@
       },
       {
         "Coordinates": {
+          "X": 4,
+          "Y": 0,
+          "Z": 1
+        },
+        "Directions": "Left",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 13,
           "Y": 0,
           "Z": 1
@@ -13589,7 +13598,7 @@
           "Y": 0,
           "Z": 1
         },
-        "Directions": "Left, Down",
+        "Directions": "Down",
         "ReverseRotation": false
       },
       {

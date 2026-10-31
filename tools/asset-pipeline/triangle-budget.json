@@ -454,9 +454,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9870,
-   "vertices": 18788,
-   "construction": 9870,
+   "finished": 9658,
+   "vertices": 18364,
+   "construction": 9658,
    "file": "outputs/lategame-integration/Data/Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.Model.timbermesh"
   },
   "ObservationDeck": {
@@ -508,9 +508,9 @@
    "family": "lategame",
    "class": "small",
    "target": 8000,
-   "finished": 3046,
-   "vertices": 5740,
-   "construction": 3046,
+   "finished": 2888,
+   "vertices": 5424,
+   "construction": 2888,
    "file": "outputs/lategame-integration/Data/Buildings/Water/RadioactiveSludgeRecoveryPump/RadioactiveSludgeRecoveryPump.IronTeeth.Model.timbermesh"
   },
   "RadioactiveSpringSource": {
@@ -526,18 +526,18 @@
    "family": "lategame",
    "class": "small",
    "target": 8000,
-   "finished": 3834,
-   "vertices": 7254,
-   "construction": 3834,
+   "finished": 3742,
+   "vertices": 7070,
+   "construction": 3742,
    "file": "outputs/lategame-integration/Data/Buildings/Water/RadioactiveWasteExport/RadioactiveWasteExport.IronTeeth.Model.timbermesh"
   },
   "RadioactiveWasteRefinery": {
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8138,
-   "vertices": 15348,
-   "construction": 8138,
+   "finished": 7962,
+   "vertices": 14996,
+   "construction": 7962,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.Model.timbermesh"
   },
   "RadioactiveWasteVault": {
@@ -823,9 +823,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8686,
-   "vertices": 16306,
-   "construction": 8686,
+   "finished": 8072,
+   "vertices": 15078,
+   "construction": 8072,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.Model.timbermesh"
   },
   "WaterTreatmentPlant": {

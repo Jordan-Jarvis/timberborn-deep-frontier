@@ -8,14 +8,15 @@ removed the spare casks on the dock.
 Compacted 2026-10-30 (light touch, outputs/compaction/BRIEF.md): 6x5x4 ->
 6x5x3. One layer per floor: the fill house is a concrete ground storey
 (layer 0, the hauler door) and one lead-clad storey (layer 1) under a flat
-roof whose top is layer 2, with an open parapet ring (the kit parapet's lid
-is gone, so the roof is a usable roof deck). The filling gantry and the
+roof whose top is layer 2, an open platform edge to edge (no parapet: user,
+2026-10-31, "I want it to be like an actual platform where roads can
+connect"). The filling gantry and the
 dispatch gate are a layer lower. Footprint, door, pipe inlet and the
 map-edge side are unchanged.
 
 HERO: a lead-lined cask car on rails that runs from a steel filling gantry
 out through a hazard-striped dispatch gate on the back (map-edge) side.
-ROOF: flat parapet roof on the lead-lined fill house; open steel gantry and
+ROOF: flat open roof (no parapet) on the lead-lined fill house; open steel gantry and
 gate.
 
 Plan (6 x 5 tiles): the fill house front-left (thick concrete, forged lead
@@ -43,7 +44,6 @@ from lategame_civic_parts import blk
 from lategame_nuclear_parts import Facer, prism
 from industrial_facades import building_portal
 from native_window_atlas import atlas_window
-from lategame_roofdeck_parts import parapet_ring
 import lategame_mining_parts as M
 
 IDENT = 'RadioactiveWasteExport'
@@ -125,7 +125,6 @@ def fill_house(g, parts):
     rad_sign(g, DOOR_X, by0 - .055, 1.42, 'front', .2)
     stripes_x(g, bx0 + .12, bx1 - .12, by0 - .085, by0 - .055, 1.06, 1.16, 9)
     K.flat_roof(g, bx0, by0, bx1, by1, z1, thickness=.16, overhang=.1)
-    parapet_ring(g, bx0 - .1, by0 - .1, bx1 + .1, by1 + .1, z1 + .16, height=.24)
     # Shielded hatch toward the track: heavy sliding plate on rails.
     blk(g, bx1 + .055, .9, top + .1, bx1 + .14, 1.9, top + .7, IRON)
     for z in (top + .14, top + .66):

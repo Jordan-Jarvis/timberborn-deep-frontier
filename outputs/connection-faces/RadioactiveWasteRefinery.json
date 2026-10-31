@@ -1,4 +1,4 @@
-{"template":"RadioactiveWasteRefinery","model":"Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.Model","export":"outputs/lategame-integration/Data/Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.Model.timbermesh","exportSha256":"5cd3bd0b2315ef49552b3a836fbfb19b37ae142da23377e6d470ab093a67aa00","size":[9,7,7],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)","rule":"8x8 rays per face; covering surface = nearest opaque static surface within 0.35 behind (or 0.02 proud of) the face plane; every covering normal within 5.0 deg of the outward axis and 1.0 deg of the covering mean; one plane (depths within 0.05) covers >= 60%; glass counts as a surface; no animated geometry within 1.0 in front","excluded":"Water, WalkwayRail nodes, animated nodes; native props are not in the model; glass counts as a surface","stats":{"triangles":{"opaque":6198,"glass":162,"lamp":40,"animated":1736},"flatButAnimated":11,"oldRuleFaces":279,"oldRuleCurveExcluded":3,"oldRuleSlopeExcluded":9,"oldRuleMultiPlaneExcluded":0,"newSetBackFaces":22},"curvedFaces":[[1,0,0,"Left","curve"],
+{"template":"RadioactiveWasteRefinery","model":"Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.Model","export":"outputs/lategame-integration/Data/Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.Model.timbermesh","exportSha256":"9c990ac09750b9b6809873cc5ed368417db84318cef3fa94000427dc3c10f73b","size":[9,7,7],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)","rule":"8x8 rays per face; covering surface = nearest opaque static surface within 0.35 behind (or 0.02 proud of) the face plane; every covering normal within 5.0 deg of the outward axis and 1.0 deg of the covering mean; one plane (depths within 0.05) covers >= 60%; glass counts as a surface; no animated geometry within 1.0 in front","excluded":"Water, WalkwayRail nodes, animated nodes; native props are not in the model; glass counts as a surface","stats":{"triangles":{"opaque":6022,"glass":162,"lamp":40,"animated":1736},"flatButAnimated":11,"oldRuleFaces":279,"oldRuleCurveExcluded":3,"oldRuleSlopeExcluded":9,"oldRuleMultiPlaneExcluded":0,"newSetBackFaces":23},"curvedFaces":[[1,0,0,"Left","curve"],
 [1,0,0,"Right","curve"],
 [1,0,0,"Top","curve"],
 [6,0,0,"Left","slope"],
@@ -324,6 +324,7 @@
 [7,6,1,"Up"],
 [8,6,1,"Right"],
 [8,6,1,"Up"],
+[0,1,2,"Left"],
 [0,1,2,"Right"],
 [2,1,2,"Bottom"],
 [8,1,2,"Right"],

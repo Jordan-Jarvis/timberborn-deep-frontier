@@ -20,7 +20,9 @@ Hero: a banded concrete containment tube under a painted steel dome,
 flanked by twin hyperboloid cooling towers standing in their own basins.
 Roof types: domed containment, open hyperboloid towers; flat roofs in two
 finishes: riveted steel plate on the turbine hall, concrete on the feed
-house and fuel store; no roof vents (roof-variety pass).
+house and fuel store, all open platforms edge to edge (no parapets: user,
+2026-10-31, "I want it to be like an actual platform where roads can
+connect"); no roof vents (roof-variety pass).
 
 Water supply: a ground-level concrete race along the back carries native
 water past two native water wheels and is sluiced into each cooling basin.
@@ -38,7 +40,6 @@ from frontier_architecture import Geometry
 from industrial_facades import building_portal
 from architectural_windows import window
 from native_building_assets import prop
-from lategame_roofdeck_parts import parapet_ring
 from lategame_sheet_roofs import plate_deck
 import lategame_mining_parts as M
 
@@ -253,8 +254,7 @@ def feed_house(g, parts):
     inlet on its front wall, the two feed-water tanks on its roof."""
     x0, y0, x1, y1 = FEED
     plinth(g, x0, y0, x1, y1, FEED_ROOF + .16, coping=False)
-    roof = FEED_ROOF + .16
-    parapet_ring(g, x0, y0, x1, y1, roof, height=.24, open_sides=('right',))
+    roof = FEED_ROOF + .16   # an open platform edge to edge (no parapet: user, 2026-10-31)
     for x in (1.5, 2.5):
         window(g, x, y0, .55, .45, 'front', 'factory')
     lamp(g, 3.3, y0, .65, face='front')
@@ -306,8 +306,7 @@ def turbine_hall(g, parts):
                windows=[(1.6, 1.92)], window_style='lancet', window_scale=.7)
     frame_wall(g, 'Y', x0 + .05, y0 + .1, y1 - .1, w0, top, outward=-1, bays=3, infill=FORGED)
     plate_deck(g, x0, y0, x1, y1, top + .16, mat=FORGED)   # riveted steel plate roof
-    roof = top + .16
-    parapet_ring(g, x0, y0, x1, y1, roof, height=.26, open_sides=('front',))
+    roof = top + .16   # an open platform edge to edge (no parapet: user, 2026-10-31)
     # The hall is a solid room (its cells are the building's, not free space).
     g.box(((x0 + x1) / 2, (y0 + y1) / 2, (w0 + top) / 2), (x1 - x0 - .4, y1 - y0 - .3, top - w0), IRON)
     # Emblem board and lamps over the door.
@@ -324,8 +323,7 @@ def fuel_store(g, parts):
     with a lead cask door and a vent stack."""
     x0, y0, x1, y1 = FUEL
     plinth(g, x0, y0, x1, y1, FUEL_ROOF + .16, coping=False)
-    roof = FUEL_ROOF + .16
-    parapet_ring(g, x0, y0, x1, y1, roof, height=.24, open_sides=('front',))
+    roof = FUEL_ROOF + .16   # an open platform edge to edge (no parapet: user, 2026-10-31)
     # Shielded cask door on the right face.
     g.box((x1 + .05, 4.0, .85), (.1, 1.1, 1.5), FORGED)
     for y in (3.4, 4.6):
