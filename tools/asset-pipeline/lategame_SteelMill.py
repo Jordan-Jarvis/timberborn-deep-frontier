@@ -144,7 +144,7 @@ def pulpit(g, parts):
 
 def melt_shop(g, parts):
     x0, y0, x1, y1 = MELT
-    top = P.plinth(g, x0, y0, x1, y1, MELT_TOP)
+    top = P.plinth(g, x0, y0, x1, y1, MELT_TOP, wall=K.BRICK)   # brick melt-shop podium (2026-10-31)
     wx0, wy0, wx1, wy1 = x0 + .1, y0 + .1, x1 - .1, y1 - .1
     bottom = top + .01
     xs = centres(wx0 - .05, wx1 + .05, 5)

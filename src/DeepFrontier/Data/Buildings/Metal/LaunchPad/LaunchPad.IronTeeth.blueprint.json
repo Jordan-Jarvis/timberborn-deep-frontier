@@ -5,11 +5,11 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 260
+        "Amount": 265
       },
       {
         "Id": "Alloy",
-        "Amount": 165
+        "Amount": 170
       },
       {
         "Id": "MachineCore",
@@ -25,7 +25,7 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 9340
+        "Amount": 8705
       }
     ],
     "ScienceCost": 80000,

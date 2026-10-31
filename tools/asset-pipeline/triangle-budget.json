@@ -50,7 +50,7 @@
    "class": "workshop",
    "target": 12000,
    "finished": 6980,
-   "vertices": 13566,
+   "vertices": 13552,
    "construction": 6980,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.Model.timbermesh"
   },
@@ -86,7 +86,7 @@
    "class": "workshop",
    "target": 12000,
    "finished": 2490,
-   "vertices": 4682,
+   "vertices": 4626,
    "construction": 2490,
    "file": "outputs/lategame-integration/Data/Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.Model.timbermesh"
   },
@@ -257,7 +257,7 @@
    "class": "grand",
    "target": 20000,
    "finished": 8450,
-   "vertices": 16042,
+   "vertices": 16050,
    "construction": 8450,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.Model.timbermesh"
   },
@@ -266,7 +266,7 @@
    "class": "grand",
    "target": 20000,
    "finished": 8488,
-   "vertices": 16302,
+   "vertices": 16290,
    "construction": 8488,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepMine/DeepMine.IronTeeth.Model.timbermesh"
   },
@@ -311,7 +311,7 @@
    "class": "grand",
    "target": 20000,
    "finished": 9720,
-   "vertices": 18740,
+   "vertices": 18742,
    "construction": 9720,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/ElectrolysisPlant/ElectrolysisPlant.IronTeeth.Model.timbermesh"
   },
@@ -347,7 +347,7 @@
    "class": "workshop",
    "target": 12000,
    "finished": 7816,
-   "vertices": 14650,
+   "vertices": 14638,
    "construction": 7816,
    "file": "outputs/lategame-integration/Data/Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.Model.timbermesh"
   },
@@ -482,7 +482,7 @@
    "class": "grand",
    "target": 20000,
    "finished": 6902,
-   "vertices": 12964,
+   "vertices": 12912,
    "construction": 6902,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.Model.timbermesh"
   },
@@ -491,7 +491,7 @@
    "class": "workshop",
    "target": 12000,
    "finished": 4248,
-   "vertices": 8190,
+   "vertices": 8192,
    "construction": 4248,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.Model.timbermesh"
   },
@@ -806,7 +806,7 @@
    "class": "workshop",
    "target": 12000,
    "finished": 7946,
-   "vertices": 15168,
+   "vertices": 15156,
    "construction": 7946,
    "file": "outputs/lategame-integration/Data/Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.Model.timbermesh"
   },
@@ -833,11 +833,11 @@
    "class": "grand",
    "target": 20000,
    "finished": 9750,
-   "vertices": 18538,
+   "vertices": 18532,
    "construction": 9750,
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 872890,
+ "totalBlueprintTriangles": 845434,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

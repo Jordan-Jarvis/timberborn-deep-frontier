@@ -19,8 +19,9 @@ both axes (512 = 8 x 64; the offset rows repeat every 3 bricks).
 
 Style. Flat hand-painted colour in the native manner: each brick its own red
 or brown from a small palette, a soft lighter top edge and darker lower edge,
-broad horizontal brush streaks and a few chips, set in pale lime mortar joints
-wide enough (10 px) to survive the mipmaps at game zoom.
+broad horizontal brush streaks and a few chips, set in grey lime mortar joints
+wide enough (9 px) to survive the mipmaps at game zoom. Weathered brown-red
+and terracotta, at the native textures' saturation and value (see PALETTE).
 """
 from pathlib import Path
 import bpy
@@ -31,14 +32,19 @@ OUT = ROOT / 'src/DeepFrontier/AssetBundles/Resources/Materials/DeepFrontierIndu
 SIZE = 512
 COURSES = 8
 BRICKS = 3            # stretchers per course
-JOINT = 10            # mortar joint width, px
+JOINT = 9             # mortar joint width, px
 SEED = 20261031
-# sRGB brick reds and browns, a few darker overburnt and paler underburnt ones.
+# sRGB weathered brown-reds and terracotta (2026-10-31, second pass: the
+# first palette read as bright red beside the native textures). Measured in
+# a lit swatch render beside the shipped Iron Teeth materials (mean HSV:
+# Plaster_Orange S .68 V .60, Plaster_White S .10 V .66, dark planks
+# S .13 V .25, BaseMetal V .47), the tile now sits at about S .34 V .46:
+# darker than the plasters, lighter than the timber.
 PALETTE = np.array([
-    (152, 58, 40), (138, 50, 36), (164, 70, 46), (126, 48, 36), (146, 64, 44),
-    (118, 56, 42), (132, 60, 46), (170, 80, 54), (104, 42, 34), (158, 76, 56),
+    (103, 56, 44), (92, 50, 40), (111, 64, 49), (85, 49, 40), (99, 59, 45),
+    (82, 52, 42), (106, 68, 52), (94, 47, 38), (77, 47, 38), (115, 73, 56),
 ], float)
-MORTAR = np.array((200, 190, 168), float)
+MORTAR = np.array((132, 128, 118), float)   # weathered grey lime, not stark white
 
 
 def wrap_noise(rng, cells_x, cells_y):
@@ -72,7 +78,7 @@ def paint():
     brick = np.clip((edge - JOINT / 2 + .75) / 1.5, 0, 1)     # 1 inside a brick
     # One colour per brick (row, col), varied a little in value.
     ids = rng.integers(0, len(PALETTE), (COURSES, BRICKS))
-    value = rng.uniform(.9, 1.08, (COURSES, BRICKS))
+    value = rng.uniform(.92, 1.06, (COURSES, BRICKS))
     colour = PALETTE[ids[row, col]] * value[row, col][..., None]
     # Painted relief: lighter top edge, darker lower edge (v grows upward in
     # Blender, so the image's last rows are the top of the wall).

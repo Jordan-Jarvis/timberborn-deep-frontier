@@ -41,7 +41,7 @@ import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
-from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED
+from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, BRICK
 import lategame_industry_parts as P
 import lategame_civic_parts as C
 from lategame_civic_parts import blk
@@ -149,7 +149,7 @@ def aerator(parts):
 
 def filter_house(g):
     x0, y0, x1, y1 = FILTER
-    top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=WOOD, door=DOOR_X, door_id='Entrance', roof=False,
+    top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=BRICK, frame=WOOD, door=DOOR_X, door_id='Entrance', roof=False,
                          ground_windows={'front': [(5.5, .55, 'grand'), (6.5, .55, 'grand'), (7.5, .55, 'grand')],
                                          'right': [(1.5, .55, 'grand')]},
                          windows={'front': [(x + .5, 1.5, .55, 'grand') for x in range(5, 9)],
@@ -158,7 +158,7 @@ def filter_house(g):
     K.lamp(g, DOOR_X - .66, y0 - .01, .8, face='front')
     # Pitched gable of native teal roof planks, ridge along X (roof variety).
     P.plank_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, top, top + .8, ridge_axis='X', overhang=.08, plank=.3,
-                 gable_mat=ORANGE)
+                 gable_mat=BRICK)
     # Cascade outfall into the back wall and the dosing gauge.
     P.gauge(g, x0 + .3, y1, 1.5, 'back', .08)
 
@@ -172,7 +172,7 @@ def chemical_house(g):
     # On its right (x = 5) the coping and foot stop short of the filter
     # house's, which stand proud of that corner.
     top = 1.0
-    blk(g, x0, y0, 0, x1, y1, top - .03, CONCRETE)
+    blk(g, x0, y0, 0, x1, y1, top - .03, BRICK)
     blk(g, x0 - .03, y0 - .03, -.03, x1 - .03, y1 + .03, .14, CONCRETE)
     blk(g, x0 - .05, y0 - .05, top - .1, x1 - .05, y1 + .05, top, CONCRETE)
     # Brick walls front and back (2026-10-30, bricks pass; was cast concrete),

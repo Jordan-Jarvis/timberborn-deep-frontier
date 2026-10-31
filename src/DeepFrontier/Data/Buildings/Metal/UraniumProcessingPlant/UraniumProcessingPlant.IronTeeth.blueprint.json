@@ -5,7 +5,7 @@
     "BuildingCost": [
       {
         "Id": "Alloy",
-        "Amount": 175
+        "Amount": 180
       },
       {
         "Id": "MachineCore",
@@ -21,11 +21,11 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 7665
+        "Amount": 7140
       },
       {
         "Id": "Brick",
-        "Amount": 960
+        "Amount": 975
       }
     ],
     "ScienceCost": 200000,

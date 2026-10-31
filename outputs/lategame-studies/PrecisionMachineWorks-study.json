@@ -49,15 +49,16 @@
     "IrregularPlanks_DarkBrown.IronTeeth": 48,
     "BaseMetal.IronTeeth": 864,
     "RoofPlanks.IronTeeth": 360,
+    "DFIndustrial06": 81,
     "Details.IronTeeth": 96,
     "accent8": 36,
-    "Plaster_White.IronTeeth": 174,
-    "Plaster_Orange.IronTeeth": 76,
+    "Plaster_White.IronTeeth": 156,
+    "Plaster_Orange.IronTeeth": 13,
     "IrregularPlanks_MetalForged.IronTeeth": 24,
     "WindowsAtlas.IronTeeth": 706,
     "PaintedMetal.IronTeeth": 432,
     "IrregularPlanks_Grey.IronTeeth": 12
   },
-  "sourceHash": "9dfe95621ab1af5e02811f782f2d5d9cd8fbab09c6a5d12b312106dd789f5355",
-  "artHash": "bd86fb060e51e69a5cf805cf8c16c1d018e0c70440185f46d0d4fae4b8b958ec"
+  "sourceHash": "d7e21da5150e1e55b613a13aefe64afa9b32de4174f7f6665daabda96e1e5061",
+  "artHash": "bceec98e41df90ece75f5817008478d4bc64aa94700acbeb8725e1fced2b4efb"
 }

@@ -31,7 +31,7 @@ import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
-from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, CYAN
+from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, CYAN, BRICK
 import lategame_industry_parts as P
 import lategame_civic_parts as C
 from lategame_civic_parts import blk
@@ -56,7 +56,7 @@ INTAKE = (3.0, 3.0, 4.0, 5.0)   # one tile wide, open to the back edge
 
 def hall(g):
     x0, y0, x1, y1 = HALL
-    top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=IRON, door=DOOR_X, door_id='Entrance', roof=False,
+    top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=BRICK, frame=IRON, door=DOOR_X, door_id='Entrance', roof=False,   # brick cell house (2026-10-31)
                          ground_windows={'front': [(7.5, .55, 'factory'), (5.25, .55, 'factory'), (4.5, .55, 'factory')],
                                          'right': [(1.5, .6, 'factory')]},
                          windows={'front': [(x + .5, 1.5, .58, 'factory') for x in range(4, 8)],
@@ -68,7 +68,7 @@ def hall(g):
     # Pitched gable of native teal roof planks, ridge along X (roof variety,
     # user 2026-10-30; no lantern or vents).
     P.plank_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, top, top + .85, ridge_axis='X', overhang=.16,
-                 plank=.3, gable_mat=ORANGE)
+                 plank=.3, gable_mat=BRICK)
     # Bus-bar wall bushings on the back wall where the DC feed enters.
     blk(g, 4.6, y1 + .01, 1.5, 7.4, y1 + .07, 1.8, PAINTED)
 

@@ -51,7 +51,7 @@ import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
-from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK, GLOW, CYAN, WATER, LAYER_GAP
+from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK, GLOW, CYAN, WATER, LAYER_GAP, BRICK
 import lategame_civic_parts as P
 from lategame_civic_parts import blk, obox
 import lategame_industry_parts as I
@@ -108,7 +108,7 @@ def hall(g, parts):
     for x in (2.5, 3.5, 4.5):
         P.native_window(g, x, y1, .47, .5, 'back', 'factory')
     hx0, hy0, hx1, hy1 = HW
-    P.framed_block(g, hx0, hy0, hx1, hy1, PT, WT, infill=ORANGE, frame=CONCRETE, pitch=(hx1 - hx0) / 3,
+    P.framed_block(g, hx0, hy0, hx1, hy1, PT, WT, infill=BRICK, frame=CONCRETE, pitch=(hx1 - hx0) / 3,   # brick hall, stone dressings (2026-10-31)
                    corner=.2, post=.11)
     # Cornice slab capping the band; the vault springs from its top.
     blk(g, hx0 - .05, hy0 - .05, WT - .06, hx1 + .05, hy1 + .05, SPRING, CONCRETE)
@@ -243,9 +243,9 @@ def boiler_room(g, parts):
     # back face; the roof slab is the lintel over the recess.
     zt = SIDE_TOP - SLAB
     rx0, rx1, ry = 6.15, 6.85, 4.7
-    blk(g, 5.0, 2.0, 0, rx0, 5.0, zt, CONCRETE)
-    blk(g, rx1, 2.0, 0, 7.0, 5.0, zt, CONCRETE)
-    blk(g, rx0, 2.0, 0, rx1, ry, zt, CONCRETE)
+    blk(g, 5.0, 2.0, 0, rx0, 5.0, zt, BRICK)   # brick boiler room (2026-10-31)
+    blk(g, rx1, 2.0, 0, 7.0, 5.0, zt, BRICK)
+    blk(g, rx0, 2.0, 0, rx1, ry, zt, BRICK)
     deck_slab(g, HALL[2] + .05, 2.0, 7.0, 5.0, SIDE_TOP, 'forged', thickness=SLAB)    # clear of the hall coping
     blk(g, 4.98, 1.98, zt - .12, 7.02, 5.02, zt - .02, CONCRETE)       # string course
     sx, sy, sz = PIPE_INLET['socket']
@@ -260,7 +260,7 @@ def boiler_room(g, parts):
     # Boiler chimney rising from the ground in the back wall (tile (5,4)),
     # mouth above 4 so its steam does not bar the roof deck round it.
     cx0, cy0, cx1, cy1 = 5.1, 4.55, 5.5, 4.95
-    blk(g, cx0, cy0, -.03, cx1, cy1, 4.3, CONCRETE)
+    blk(g, cx0, cy0, -.03, cx1, cy1, 4.3, BRICK)   # brick boiler chimney
     for z in (1.4, 2.6, 3.7):
         blk(g, cx0 - .03, cy0 - .03, z, cx1 + .03, cy1 + .03, z + .08, IRON)
     blk(g, cx0 - .05, cy0 - .05, 4.3, cx1 + .05, cy1 + .05, 4.42, IRON)

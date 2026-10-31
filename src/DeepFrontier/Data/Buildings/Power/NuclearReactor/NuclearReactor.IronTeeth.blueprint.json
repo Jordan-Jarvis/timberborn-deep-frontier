@@ -5,7 +5,7 @@
     "BuildingCost": [
       {
         "Id": "Alloy",
-        "Amount": 585
+        "Amount": 595
       },
       {
         "Id": "MachineCore",
@@ -21,7 +21,7 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 33425
+        "Amount": 30935
       },
       {
         "Id": "EnrichedFuel",

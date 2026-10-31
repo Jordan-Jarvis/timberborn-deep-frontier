@@ -36,7 +36,7 @@ import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
-from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED
+from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, BRICK
 import lategame_civic_parts as P
 from lategame_civic_parts import blk, animate  # noqa: F401
 import compact_industry_parts as Q
@@ -65,9 +65,10 @@ def cannery(g, parts):
     # Ground storey around the loading bay; one coping ring over all of it
     # (the coping is the bay head), one foot course.
     top = 1.0
-    blk(g, CX0, CY0, 0, BAY0, CY1, top - .03, CONCRETE)
-    blk(g, BAY1, CY0, 0, CX1, CY1, top - .03, CONCRETE)
-    blk(g, BAY0, CY0 + BAY_D, 0, BAY1, CY1, top - .03, CONCRETE)
+    # Brick walls (2026-10-31: brick as a main wall material).
+    blk(g, CX0, CY0, 0, BAY0, CY1, top - .03, BRICK)
+    blk(g, BAY1, CY0, 0, CX1, CY1, top - .03, BRICK)
+    blk(g, BAY0, CY0 + BAY_D, 0, BAY1, CY1, top - .03, BRICK)
     # Foot and coping stop short at the back-right corner, where the boiler
     # house's own (proud of x = 5, y = 4) take over.
     blk(g, CX0 - .03, CY0 - .03, -.03, CX1 + .03, CY1 - .03, .14, CONCRETE)
@@ -120,7 +121,7 @@ def cannery(g, parts):
     roof = float(CANNERY_LAYERS)
     xs = [x + .5 for x in range(1, 5)]
     ys = [y + .5 for y in range(1, 4)]
-    P.framed_block(g, CX0 + .05, CY0 + .05, CX1 - .05, CY1 - .05, top, roof - .06, infill=ORANGE, frame=IRON,
+    P.framed_block(g, CX0 + .05, CY0 + .05, CX1 - .05, CY1 - .05, top, roof - .06, infill=BRICK, frame=IRON,
                    floors=(2.0,),
                    windows={'front': [(x, z, .58, 'factory') for x in xs for z in (1.5, 2.5)],
                             'back': [(x, 2.5, .58, 'factory') for x in xs[::2]] + [(x, 1.5, .58, 'factory') for x in xs[1::2]],

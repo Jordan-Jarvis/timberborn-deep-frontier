@@ -35,7 +35,7 @@ import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
-from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK, GLOW, CYAN
+from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK, GLOW, CYAN, BRICK
 import lategame_civic_parts as P
 from lategame_civic_parts import blk, animate  # noqa: F401
 import native_building_assets as N
@@ -81,7 +81,7 @@ def upper_storey(g):
     x0, y0, x1, y1 = WALL
     xs = [x0 + (x1 - x0) * (i + .5) / W for i in range(W)]
     ys = [y0 + (y1 - y0) * (i + .5) / D for i in range(D)]
-    P.framed_block(g, x0, y0, x1, y1, STOREY, WALL_TOP, infill=CONCRETE, frame=GREYWOOD, pitch=1.0 - .2 / W,
+    P.framed_block(g, x0, y0, x1, y1, STOREY, WALL_TOP, infill=BRICK, frame=GREYWOOD,   # brick upper storey (2026-10-31) pitch=1.0 - .2 / W,
                    corner=.16, post=.1,
                    windows={'front': [(x, 1.41, .72, 'lancet') for x in xs],
                             'back': [(x, 1.41, .72, 'lancet') for x in xs],

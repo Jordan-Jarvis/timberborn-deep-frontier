@@ -41,9 +41,9 @@
   "faces": 1079,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 92,
-    "BaseMetal.IronTeeth": 626,
+    "BaseMetal.IronTeeth": 588,
     "RoofPlanks.IronTeeth": 48,
-    "DFIndustrial06": 54,
+    "DFIndustrial06": 92,
     "Details.IronTeeth": 40,
     "accent8": 20,
     "accent25": 6,
@@ -53,6 +53,6 @@
     "WindowsAtlas.IronTeeth": 82,
     "PaintedMetal.IronTeeth": 186
   },
-  "sourceHash": "c49ff2e67a332007b1503dd9504fd116885e5ab5a83c4edeeaa8d2f11ef8a4fe",
-  "artHash": "80510b9c4783f924556b84df8ca5b9629064aed58807b24d27dfc89d3ce3aa28"
+  "sourceHash": "bc963740b61241391f5289c7212f2133b108a71ba253c3a194596ec160be8791",
+  "artHash": "8e258de5901374a069477d99108337b565b77da78f84b863fcc6c202538da9a2"
 }

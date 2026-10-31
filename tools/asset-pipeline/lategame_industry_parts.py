@@ -345,10 +345,13 @@ def pulley(f, center, r, width, axis='X', mat=IRON):
 # The kit versions of these put two bottom faces on the same ground plane (or
 # overlap blades / legs); these keep one face of each pair below ground or apart.
 
-def plinth(g, x0, y0, x1, y1, top, *, door=None, mat=CONCRETE, pilasters=True):
-    """Cast concrete podium (kit API). Returns the walking surface height."""
+def plinth(g, x0, y0, x1, y1, top, *, door=None, mat=CONCRETE, pilasters=True, wall=None):
+    """Cast concrete podium (kit API). Returns the walking surface height.
+    `wall` (opt-in, 2026-10-31) is the podium body's material, e.g. BRICK for
+    a brick podium; the foot course, coping and pilasters stay `mat`."""
+    body = mat if wall is None else wall
     if door is None:
-        g.box(((x0 + x1) / 2, (y0 + y1) / 2, top / 2), (x1 - x0, y1 - y0, top), mat)
+        g.box(((x0 + x1) / 2, (y0 + y1) / 2, top / 2), (x1 - x0, y1 - y0, top), body)
         g.box(((x0 + x1) / 2, (y0 + y1) / 2, .035), (x1 - x0 + .05, y1 - y0 + .05, .13), mat)
     else:
         dx, dw, dh = door
@@ -356,10 +359,10 @@ def plinth(g, x0, y0, x1, y1, top, *, door=None, mat=CONCRETE, pilasters=True):
         if left <= x0 + .1 or right >= x1 - .1 or dh >= top:
             raise ValueError('Plinth door must sit inside the plinth face')
         depth = y1 - y0
-        g.box(((x0 + left) / 2, (y0 + y1) / 2, top / 2), (left - x0, depth, top), mat)
-        g.box(((right + x1) / 2, (y0 + y1) / 2, top / 2), (x1 - right, depth, top), mat)
-        g.box((dx, (y0 + y1) / 2, (dh + top) / 2), (dw, depth, top - dh), mat)
-        g.box((dx, y0 + .25 + depth / 2, dh / 2), (dw, depth - .5, dh), mat)
+        g.box(((x0 + left) / 2, (y0 + y1) / 2, top / 2), (left - x0, depth, top), body)
+        g.box(((right + x1) / 2, (y0 + y1) / 2, top / 2), (x1 - right, depth, top), body)
+        g.box((dx, (y0 + y1) / 2, (dh + top) / 2), (dw, depth, top - dh), body)
+        g.box((dx, y0 + .25 + depth / 2, dh / 2), (dw, depth - .5, dh), body)
         g.box((dx, y0 + .24, dh / 2), (dw - LAYER_GAP, .02, dh - LAYER_GAP), IRON)
         for a, b in ((x0 - .025, left - .03), (right + .03, x1 + .025)):
             g.box(((a + b) / 2, (y0 + y1) / 2, .035), (b - a, y1 - y0 + .05, .13), mat)

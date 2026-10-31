@@ -35,7 +35,7 @@ import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
-from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYPLANK, GLOW
+from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYPLANK, GLOW, BRICK
 import lategame_industry_parts as P
 import lategame_civic_parts as C
 from lategame_civic_parts import blk
@@ -80,17 +80,18 @@ def sawtooth(g, x0, y0, x1, y1, base, teeth=3, rise=.8):
         for plane, out in ((x0, -1), (x1, 1)):
             prof = [(ya + (.0 if i == 0 else -.02), base - .01), (wall_front, base - .01),
                     (wall_front, base + rise * (wall_front - ya) / (wc - ya + 1e-9) - .07)]
-            P.end_prism(g, 'X', plane, out, prof, ORANGE)
+            P.end_prism(g, 'X', plane, out, prof, BRICK)
 
 
 def shop(g, parts):
     x0, y0, x1, y1 = SHOP
     bx0, bx1, bz, bd = BAY
-    # Concrete ground storey around the open belt bay, one coping ring over
-    # all of it (the coping is the bay head), one foot course.
-    blk(g, x0, y0, 0, bx0, y1, .97, CONCRETE)
-    blk(g, bx1, y0, 0, x1, y1, .97, CONCRETE)
-    blk(g, bx0, y0 + bd, 0, bx1, y1, .97, CONCRETE)
+    # Brick ground storey (2026-10-31; was cast concrete) around the open belt
+    # bay, one concrete coping ring over all of it (the coping is the bay head),
+    # one foot course.
+    blk(g, x0, y0, 0, bx0, y1, .97, BRICK)
+    blk(g, bx1, y0, 0, x1, y1, .97, BRICK)
+    blk(g, bx0, y0 + bd, 0, bx1, y1, .97, BRICK)
     # The office's own foot and coping take over along x = 6 in front of y = 2.
     oy = OFFICE[3]
     blk(g, x0 - .03, y0 - .03, -.03, x1 - .03, y1 + .03, .14, CONCRETE)
@@ -248,7 +249,7 @@ def crane_yard(g, parts):
 
 
 def chimney(g):
-    """Square tapered brick chimney (orange plaster reads as brick) on its
+    """Square tapered brick chimney (the brick tile since 2026-10-31) on its
     firebox in the yard's back-right corner, bound with iron bands."""
     cx, cy = 8.5, 4.5
     blk(g, 8.0, 4.0, 0, 9.0, 5.0, .9, CONCRETE)
@@ -261,7 +262,7 @@ def chimney(g):
     def r_at(z):
         return base_r * (1 - taper * (z - 1.0) / (top - 1.0))
     P.lathe(g, (cx, cy, 0), [(r_at(1.0 + (top - 1.0) * k / 8), 1.0 + (top - 1.0) * k / 8) for k in range(9)],
-            ORANGE, segments=4, phase=math.pi / 4, cap_start=False)
+            BRICK, segments=4, phase=math.pi / 4, cap_start=False)
     for z in (2.0, 3.4, 4.8, 6.0):
         P.lathe(g, (cx, cy, 0), [(r_at(z) + .03, z - .05), (r_at(z) + .03, z + .05)], IRON, segments=4,
                 phase=math.pi / 4)

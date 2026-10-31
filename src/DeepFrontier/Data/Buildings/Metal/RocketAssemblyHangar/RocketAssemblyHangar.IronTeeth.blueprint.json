@@ -25,11 +25,11 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 2535
+        "Amount": 2340
       },
       {
         "Id": "Brick",
-        "Amount": 2495
+        "Amount": 2515
       }
     ],
     "ScienceCost": 50000,

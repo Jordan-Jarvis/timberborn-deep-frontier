@@ -72,7 +72,7 @@ def r_shell(z):
 def podium(g):
     x0, x1, y0, y1, top = PODIUM
     bx(g, x0 - .06, x1 + .06, y0 - .06, y1 + .06, 0, .3, CONCRETE)
-    bx(g, x0, x1, y0, y1, .3, top - .12, CONCRETE)
+    bx(g, x0, x1, y0, y1, .3, top - .12, P.BRICK)   # brick podium walls, concrete course and pilasters (2026-10-31)
     bx(g, x0 - .05, x1 + .05, y0 - .05, y1 + .05, top - .12, top, CONCRETE)
     for x in (4.0, 6.0):
         P.face_member(g, 'front', (x0, x1, y0, y1), x - .12, x + .12, -.01, .05, .3, top - .12,

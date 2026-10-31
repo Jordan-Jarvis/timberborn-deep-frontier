@@ -5,7 +5,7 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 100
+        "Amount": 105
       },
       {
         "Id": "Alloy",
@@ -17,7 +17,7 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 2355
+        "Amount": 2200
       },
       {
         "Id": "Gear",

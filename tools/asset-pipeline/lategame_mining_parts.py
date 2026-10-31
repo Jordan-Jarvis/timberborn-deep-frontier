@@ -607,10 +607,12 @@ def ibeam(g, axis, a0, a1, c, z0, z1, w, *, mat=IRON, web=.36, flange=.06):
 
 
 def concrete_house(g, x0, x1, y0, y1, top, *, doors=(), windows=None, pitch=1.3, base=.3, style='factory',
-                   wscale=.8, record_doors=True, z0=0.0):
-    """Cast-concrete storey: base course, proud pilasters, native windows and doors."""
+                   wscale=.8, record_doors=True, z0=0.0, wall=CONCRETE):
+    """Cast-concrete storey: base course, proud pilasters, native windows and doors.
+    `wall` is the wall body between them (BRICK for a brick house with concrete
+    dressings, 2026-10-31); the base course and pilasters stay cast concrete."""
     plinth_course(g, x0, x1, y0, y1, z0, z0 + base, CONCRETE, doors)
-    notched_block(g, x0, x1, y0, y1, z0 + base, top, CONCRETE, [(d, z0) for d in doors], depth=.08)
+    notched_block(g, x0, x1, y0, y1, z0 + base, top, wall, [(d, z0) for d in doors], depth=.08)
     for d in doors:
         portal(g, d, y0, z0, record=record_doors)
     rect = (x0, x1, y0, y1)

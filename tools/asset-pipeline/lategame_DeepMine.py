@@ -64,9 +64,9 @@ GIRTS = (2.4, 3.5)
 # ------------------------------------------------------------------ shaft house
 
 def shaft_house(g):
-    """Low concrete shaft house on tiles 3..7 x 1..6 (over the vein); its roof is the deck."""
+    """Low brick shaft house (concrete base course and pilasters, 2026-10-31) on tiles 3..7 x 1..6 (over the vein); its roof is the deck."""
     small = lambda u: (u, .52, 'factory', .4)
-    P.concrete_house(g, 3.05, 6.95, 1.05, 5.95, BASE - .16, base=.2, pitch=1.3, record_doors=False,
+    P.concrete_house(g, 3.05, 6.95, 1.05, 5.95, BASE - .16, base=.2, pitch=1.3, record_doors=False, wall=P.BRICK,
                      windows={'front': [small(3.72), small(5.0), small(6.28)],
                               'right': [small(1.66), small(2.89), small(4.11), small(5.34)],
                               'back': [small(3.72), small(5.0), small(6.28)]})
@@ -230,7 +230,7 @@ def bath_house(g):
     """One-layer annex on tiles 0..3 x 3..6 with its chimney in the back corner."""
     small = lambda u: (u, .52, 'factory', .4)
     # Core ends at 2.93 so its corner pilasters meet the shaft house's on an edge, not a face.
-    P.concrete_house(g, .05, 2.93, 3.05, 5.95, BASE - .16, base=.2, pitch=1.3, record_doors=False,
+    P.concrete_house(g, .05, 2.93, 3.05, 5.95, BASE - .16, base=.2, pitch=1.3, record_doors=False, wall=P.BRICK,
                      windows={'left': [small(3.8), small(5.2)], 'back': [small(.8), small(2.2)]})
     # Timber plank deck on the annex roof (roof variety, user 2026-10-30).
     P.plank_deck(g, 0.0, 3.0, 3.0, 6.0, BASE, seed=23)

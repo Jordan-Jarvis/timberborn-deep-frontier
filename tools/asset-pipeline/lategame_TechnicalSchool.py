@@ -43,7 +43,7 @@ import math
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, BRASS
 import lategame_kit as K
-from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK, GLOW, CYAN
+from lategame_kit import CONCRETE, ORANGE, FORGED, PAINTED, GREYWOOD, GREYPLANK, GLOW, CYAN, BRICK
 import lategame_civic_parts as P
 from lategame_civic_parts import blk, animate  # noqa: F401
 import native_building_assets as N
@@ -79,7 +79,7 @@ def central(g):
         box(lambda g, y=y: P.native_window(g, x1, y, .47, .52, 'right', 'factory'))
     P.brick_skin(g, x0, y0, x1, y1, .14, .9, faces=('front', 'back', 'right'), features=features)
     u0, u1, v0, v1 = x0 + .05, y0 + .05, x1 - .05, y1 - .05
-    P.framed_block(g, u0, u1, v0, v1, 1.0, 2.0, infill=ORANGE, frame=CONCRETE,
+    P.framed_block(g, u0, u1, v0, v1, 1.0, 2.0, infill=BRICK, frame=CONCRETE,   # brick walls, stone dressings (2026-10-31)
                    pitch=(v0 - u0) / 5, corner=.2, post=.12, skip={'front': [(4.6, 6.4)]},
                    faces=('front', 'back', 'right'),
                    windows={'front': [(x, 1.42, .5, 'grand') for x in front],
@@ -100,7 +100,7 @@ def tower(g, parts):
     box(lambda g: K.lamp(g, 6.03, TY0, .5, face='front'))
     P.brick_skin(g, x0, TY0, x1, TY1, .03, .9, faces=('front', 'left', 'right'), features=features)
     sx0, sy0, sx1, sy1 = x0 + .05, TY0 + .05, x1 - .05, TY1 - .05
-    P.framed_block(g, sx0, sy0, sx1, sy1, 1.0, 3.0, infill=ORANGE, frame=CONCRETE, pitch=1.4, floors=(2.0,),
+    P.framed_block(g, sx0, sy0, sx1, sy1, 1.0, 3.0, infill=BRICK, frame=CONCRETE, pitch=1.4, floors=(2.0,),
                    corner=.22,
                    windows={'front': [(TX, 1.45, .55, 'grand'), (TX, 2.5, .5, 'lancet')],
                             'left': [(.75, 2.5, .45, 'lancet')],
@@ -118,7 +118,7 @@ def tower(g, parts):
         clock_face(g, parts, name, c, axis, s, spin, k=.84)
     # Belfry with lancets and the pyramid spire.
     bx0, by0, bx1, by1 = x0 + .1, TY0 + .1, x1 - .1, TY1 - .1
-    P.framed_block(g, bx0, by0, bx1, by1, 4.22, 4.92, infill=ORANGE, frame=WOOD, pitch=2.0, corner=.18,
+    P.framed_block(g, bx0, by0, bx1, by1, 4.22, 4.92, infill=BRICK, frame=WOOD, pitch=2.0, corner=.18,
                    windows={f: [((bx0 + bx1) / 2 if f in ('front', 'back') else (by0 + by1) / 2, 4.57, .5, 'lancet')]
                             for f in ('front', 'back', 'left', 'right')})
     P.pyramid_roof(g, TX, (TY0 + TY1) / 2, .65, 4.92, 1.05, overhang=.14)
@@ -172,7 +172,7 @@ def engine_house(g):
     # connection-face measuring rows, so the walls count as flat faces.
     P.podium(g, x0, y0, x1 - .08, y1, .25, joints=False, foot=False)   # coping clears the block's joint strips
     u0, v0, u1, v1 = x0 + .05, y0 + .05, x1 - .02, y1 - .05
-    P.framed_block(g, u0, v0, u1, v1, .25, 1.0 - SLAB, infill=ORANGE, frame=WOOD, pitch=(u1 - u0) / 3,
+    P.framed_block(g, u0, v0, u1, v1, .25, 1.0 - SLAB, infill=BRICK, frame=WOOD, pitch=(u1 - u0) / 3,
                    faces=('front', 'back', 'left'), corner=.16,
                    windows={'front': [(x, .52, .42, 'factory') for x in (.55, 1.5, 2.45)],
                             'back': [(x, .52, .42, 'factory') for x in (.55, 1.5, 2.45)],

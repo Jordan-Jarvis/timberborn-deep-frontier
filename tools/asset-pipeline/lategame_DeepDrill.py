@@ -217,8 +217,8 @@ def rotary(g, parts):
 # ------------------------------------------------------------------ engine room and drill floor
 
 def engine_room(g):
-    """Solid concrete engine room on tiles 3..7 x 0..6; its roof is the drill floor."""
-    P.concrete_house(g, 3.05, 6.95, .05, 5.95, FLOOR - .16, base=.3, pitch=1.3, record_doors=False,
+    """Brick engine room (concrete base course and pilasters) on tiles 3..7 x 0..6; its roof is the drill floor."""
+    P.concrete_house(g, 3.05, 6.95, .05, 5.95, FLOOR - .16, base=.3, pitch=1.3, record_doors=False, wall=P.BRICK,
                      windows={'front': [(3.72, 1.07, 'factory', .7), (5.0, 1.07, 'factory', .7),
                                         (6.28, 1.07, 'factory', .7)],
                               'right': [(.64, 1.07, 'factory', .7), (1.82, 1.07, 'factory', .7),

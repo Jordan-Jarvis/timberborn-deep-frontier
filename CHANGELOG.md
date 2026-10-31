@@ -17,14 +17,14 @@
 ### Bricks: a new step between metal and concrete
 - **New good: Brick.** The Stone Crusher now grinds sandstone into vanilla dirt (brick earth, 3 sandstone into 8 dirt per hour), and the Cement Kiln fires 4 dirt and 1 water into 4 bricks every 2 hours, burning a log per batch.
 - **The Cement Kiln unlocks at 600 science** (was 900), with the crusher, so bricks get their own window before concrete (1,000). The kiln also got cheaper.
-- **Cement** is limestone and dirt again (was limestone and aggregate). **Concrete** takes sandstone directly: 3 sandstone, 2 cement and 4 water make 8 concrete every 2 hours, the same ratios as before.
-- **Buildings that show brick now cost bricks.** Brick walls and the orange brick plaster on buildings are priced as Brick, so 19 buildings from the Concrete Mixer to the Rocket Assembly Hangar take bricks instead of part of their other materials. The crusher and kiln never need bricks to build.
+- **Cement** is 3 limestone and 1 brick (crushed brick in lime mortar; was limestone and aggregate), so masonry is a strict ladder: brick, then cement, then concrete. **Concrete** takes sandstone directly: 3 sandstone, 2 cement and 4 water make 8 concrete every 2 hours, the same ratios as before.
+- **Buildings that show brick now cost bricks.** Brick walls and the orange brick plaster on buildings are priced as Brick, so 21 buildings from the Concrete Mixer to the Rocket Assembly Hangar take bricks instead of part of their other materials. The crusher and kiln never need bricks to build.
 - The kiln takes water for bricks, so it now accepts Timber Pipes on its flat walls.
 - The vanilla **Terrain Block** unlocks at 2,000 science with the Dirt Excavator (was 1,000), so cheap crusher dirt doesn't open it early. The Mud Bath is unchanged.
 - The built-in maps' starting stone still covers everything up to the quarries: 1,723 sandstone and 1,266 limestone of the 1,800 each.
 
 ### Fewer goods (seven removed)
-- **Aggregate:** concrete uses sandstone, cement uses dirt and the concrete levee block takes 1 sandstone.
+- **Aggregate:** concrete uses sandstone, cement uses brick and the concrete levee block takes 1 sandstone.
 - **Flux:** steel uses limestone as its flux. Electronics and reinforced bot chassis no longer need it.
 - **Compost:** the Fertilizer Works makes fertilizer in one step (1 log, 2 algae and 2 water make 2 fertilizer in 2 hours). The Greenhouse needs 30 fertilizer to build (was 30 compost).
 - **Medical Food, Emergency Ration and Packaged Food:** the Food Packaging Works makes canned fish. The Technical School's flight course uses canned fish, and the Grocery Store stocks eggplant rations in place of packaged food.
@@ -32,7 +32,8 @@
 - **Old saves:** stored goods load as their replacement (Aggregate as sandstone, Flux as limestone, Compost as fertilizer, the three foods as canned fish, Archive Data as recovered artifacts), and workshops set to a removed recipe switch to its replacement.
 
 ### Brick art
-- **Brick looks like brick:** a new painted texture of red and brown bricks with pale mortar joints replaces the modelled orange courses everywhere below. At normal zoom the walls read as red brick instead of orange plaster, and the brick buildings lost thousands of triangles (Coal Power Plant 6,552 to 2,490, quarries 11,593 to 6,229, Concrete Mixer 8,136 to 5,272).
+- **Brick looks like brick:** a new painted texture of weathered brown-red and terracotta bricks with grey lime mortar replaces the modelled orange courses everywhere below. At normal zoom the walls read as red brick instead of orange plaster, and the brick buildings lost thousands of triangles (Coal Power Plant 6,552 to 2,490, quarries 11,593 to 6,229, Concrete Mixer 8,136 to 5,272).
+- **Brick as a main wall material** on twelve mid-game buildings: the Public Health Lab's upper storey, the Deep Drill's engine room, the Deep Ore Processor's furnace podium, the Food Packaging Works' main block, the Water Treatment Plant's filter and chemical houses, the Technical School's upper storeys, clock tower and wing, the Coal Power Plant's chimney, the Steel Mill's melt-shop podium, the Precision Machine Works' ground storey, gables and chimney, the Deep Mine's shaft house and annex, the Bathhouse's hall and boiler room with its chimney, and the Electrolysis Plant's cell house. Concrete stays as base courses, pilasters and copings, and on tanks, slabs and the late-game reactor and rocket buildings. Brick in all building costs rises from about 8,900 to about 10,300.
 - **Brick Block:** the Limestone Masonry Block is now a brick block (4 bricks and 1 cement, 600 science) with eight courses of red brick. Placed limestone blocks load as brick blocks.
 - **Brick plinths** on the Deep Drill pump house and the Deep Processor blower house. The Coal Power Plant's bright concrete ground storey, engine bed and chimney base are dark red brick.
 - **Brick ground storeys** on the Public Health Lab, Technical School (central block and clock-tower base) and Food Packaging Works, and brick walls on the Water Treatment Plant's chemical house. The courses stop around every door, window and lamp.

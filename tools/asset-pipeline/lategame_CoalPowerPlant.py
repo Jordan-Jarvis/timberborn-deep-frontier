@@ -127,7 +127,7 @@ def chimney(g):
     bx(g, x0 - .03, x1 + .03, y0 - .03, y1 + .03, STOREY - .02, STOREY + .08, IRON)
     # Ash-pit door on the right face.
     bx(g, x1, x1 + .03, 2.75, 3.3, .15, .8, IRON)
-    K.stack(g, STACK[0], STACK[1], STOREY + .08, 4.72, emits='smoke', r=STACK_R, taper=.78, mat=IRON, bands=4)
+    K.stack(g, STACK[0], STACK[1], STOREY + .08, 4.72, emits='smoke', r=STACK_R, taper=.78, mat=M.BRICK, bands=4)   # brick chimney (2026-10-31)
     # Riveted breeching duct from the boiler house into the chimney.
     bx(g, HALL[1], STACK[0] - .27, 2.8, 3.24, 1.95, 2.4, FORGED)
     bx(g, 3.08, 3.14, 2.77, 3.27, 1.92, 2.43, IRON)
