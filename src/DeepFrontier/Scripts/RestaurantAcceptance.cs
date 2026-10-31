@@ -60,6 +60,13 @@ namespace DeepFrontier.Scripts {
     private readonly List<MechanicalNode> _powerProbes=new();
     private BlockObject _railTestPath;
     private BlockObject _rightRailTestPath;
+    // A free stretch north of the fixture map's road row; everything around the restaurant is
+    // derived from its installed blueprint in Setup.
+    private static readonly Vector3Int Origin=new(160,161,3);
+    private string _leftSeam,_rightSeam,_shutSeam;
+    private Vector3Int _leftSeamCell,_rightSeamCell;
+    private List<Vector3Int> _stairCells;
+    private readonly List<Vector3Int> _deckWalk=new();
     private bool _deckChecksPassed;
     private ControllableCharacter _walker;
     private readonly Queue<Vector3> _walkTargets=new();
@@ -172,6 +179,9 @@ namespace DeepFrontier.Scripts {
       if(!_objects.IsValid(b))throw new InvalidOperationException("Native object requirements rejected "+name);
       Debug.Log("[DeepFrontier Restaurant] PLACED "+name+" "+placement.Coordinates);return b;
     }
+    private BlockObject Local(string name,Vector3Int local,Orientation orientation=Orientation.Cw0) {
+      var c=_building.TransformCoordinates(local);return Create(name,c.x,c.y,c.z,orientation);
+    }
     private void Setup() {
       _speed.ChangeSpeed(1);
       if(_reload) {
@@ -197,24 +207,20 @@ namespace DeepFrontier.Scripts {
         if(_resumedCarriers.Count==0)throw new InvalidOperationException("Reload fixture must contain a dish carried in a waiter's hands");
         AssertOrderReservations();
         Debug.Log("[DeepFrontier Restaurant] PASS reload restored "+_resumedCarriers.Count+" dish(es) in native waiter hands with return reservations and every open order's stock reservation");
-        _generator=_registry.Entities.Where(e=>e.HasComponent<BlockObject>()&&e.GetComponent<BlockObject>().Coordinates==new Vector3Int(158,164,3)).Single().GetComponent<MechanicalNode>();
+        // The saved shaft line's generator: the one dev generator on the restaurant's graph.
+        _generator=_restaurant.GetComponent<MechanicalNode>().Graph.Generators
+          .Single(g=>g.GetComponent<TemplateSpec>().TemplateName=="DevPowerGenerator").GetComponent<MechanicalNode>();
         _normalWorkingHours=_workingHours.WorkedPartOfDay;
       } else {
         if(_registry.Entities.Any(e=>e.HasComponent<Restaurant>()))throw new InvalidOperationException("Initial restaurant fixture must contain no restaurants");
         foreach(var e in _registry.Entities.Where(e=>e.HasComponent<Workplace>()&&e.HasComponent<PausableBuilding>()))e.GetComponent<PausableBuilding>().Pause();
-        // 9x7 restaurant (2026-10-22: the empty first row and column left the footprint, so
-        // local (0,0) is the old local (1,1)). Placing at (160,161) keeps every room, deck,
-        // opening, door and shaft face at its old world cell; the freed ground is world row
-        // y 160 and column x 159.
-        var installed=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Restaurant.IronTeeth").Blueprint.GetSpec<BlockObjectSpec>();
-        if(installed.Size!=new Vector3Int(9,7,9)||installed.Entrance.Coordinates!=new Vector3Int(1,0,0))
-          throw new InvalidOperationException("Installed Restaurant is "+installed.Size+" with entrance "+installed.Entrance.Coordinates+
-            "; this fixture's world cells encode the 9x7x9 layout with its entrance at (1,0,0). Regenerate the Restaurant or update the fixture.");
-        _building=Create("Restaurant.IronTeeth",160,161,3);_restaurant=_building.GetComponent<Restaurant>();
-        // Freed ground, checked before the fixture builds on it: the service-counter row
-        // inside the bounds (validate_freed_cells.py) and the former first row and column.
-        FreedCellProbe.Require(_templates,_blocks,_building,
-          FreedCellProbe.Rect(1,5,0,0).Concat(FreedCellProbe.Rect(-1,8,-1,-1)).Concat(FreedCellProbe.Rect(-1,-1,0,6)),
+        // The restaurant stands at the fixture origin; its road, deck paths, stairs, shaft line and
+        // test seams below follow the installed blueprint (CivicFixtureGeometry), not a size literal
+        // (9x7x5 since the 2026-10-30 compaction: dining balconies at layers 1 and 2, roof deck at 3).
+        _building=Create("Restaurant.IronTeeth",Origin.x,Origin.y,Origin.z);_restaurant=_building.GetComponent<Restaurant>();
+        // Freed ground inside the bounds (validate_freed_cells.py): the service-counter row under
+        // the dining balcony, checked before the fixture builds on it.
+        FreedCellProbe.Require(_templates,_blocks,_building,FreedCellProbe.Rect(1,5,0,0),
           "Restaurant",message=>Debug.Log("[DeepFrontier Restaurant] PASS "+message));
         // Seed this disposable fixture before workers or haulers can reserve its
         // intake. Live service still uses native stock and respects reservations.
@@ -233,37 +239,67 @@ namespace DeepFrontier.Scripts {
         _restaurant.Inventory.GiveExisting(new GoodAmount("Corn",2));
         _restaurant.Inventory.GiveExisting(new GoodAmount("Water",16));
         _restaurant.Inventory.GiveExisting(new GoodAmount("Coffee",2));
-        for(int y=157;y<=159;y++)Create("Path",173,y,3);
-        for(int x=161;x<173;x++)Create("Path",x,159,3);
-        // Ordinary player Path entities are required on every exterior deck.
-        Create("Path",161,160,3);Create("Path",161,161,3);
-        for(int z=2;z<=4;z+=2) {
-          for(int x=1;x<=6;x++)Create("Path",159+x,162,3+z);
-          for(int y=3;y<=7;y++)Create("Path",165,160+y,3+z);
-          for(int x=2;x<=5;x++)Create("Path",159+x,166,3+z);
-          for(int x=2;x<=5;x++)Create("Path",159+x,167,3+z);
-        }
-        for(int y=2;y<=7;y++)Create("Path",166,160+y,7);
-        foreach(int x in new[]{7,8,9})Create("Path",159+x,163,9);
-        Create("RooftopTerrace.IronTeeth",166,164,9);
-        Debug.Log("[DeepFrontier Restaurant] PASS actual native Rooftop Terrace placed on the cleared roof with a separate entrance path");
-        Create("PowerShaft.IronTeeth",159,164,3);Create("PowerShaft.IronTeeth",160,164,3);
-        Create("DevPowerGenerator",158,164,3);
-        Create("DoublePlatform.IronTeeth",166,163,9);Create("Platform.IronTeeth",166,163,11);Create("Path",166,163,12);
-        Create("DoublePlatform.IronTeeth",160,164,3);Create("DoublePlatform.IronTeeth",160,164,5);
-        _powerProbes.Add(Create("PowerShaft.IronTeeth",160,164,5).GetComponent<MechanicalNode>());
-        _powerProbes.Add(Create("PowerShaft.IronTeeth",160,164,7).GetComponent<MechanicalNode>());
-        _powerProbes.Add(Create("PowerShaft.IronTeeth",165,164,3).GetComponent<MechanicalNode>());
-        Create("Path",167,163,3);Create("PowerShaft.IronTeeth",167,164,3);Create("Tubeway.IronTeeth",167,165,3);
-        // External vanilla stairs reach the middle rear walkway.
-        Create("Stairs.IronTeeth",165,169,3);
-        Create("Platform.IronTeeth",165,168,3);Create("Stairs.IronTeeth",165,168,4);
-        Create("Path",165,170,3);
-        Create("DoublePlatform.IronTeeth",159,162,3);Create("DoublePlatform.IronTeeth",159,162,5);
-        Create("DoublePlatform.IronTeeth",167,163,3);Create("DoublePlatform.IronTeeth",167,163,5);
+        var spec=_building.GetComponent<BlockObjectSpec>();var deck=_building.GetComponent<PlatformDeckSpec>();
+        var blocks=CivicFixtureGeometry.Blocks(spec);
         var pathSpec=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint==_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Path").Blueprint);
-        if(_blocks.BlocksValid(pathSpec,new Placement(new Vector3Int(162,164,3),Orientation.Cw0,FlipMode.Unflipped)))throw new InvalidOperationException("Path can overlap restaurant enclosed room");
-        Debug.Log("[DeepFrontier Restaurant] PASS player deck paths, platforms stacked over paths, vanilla stairs, under-deck path/shaft/tubeway and solid-room rejection through native placement");
+        bool TakesPath(Vector3Int local)=>_blocks.BlocksValid(pathSpec,new Placement(_building.TransformCoordinates(local),Orientation.Cw0,FlipMode.Unflipped));
+        CivicFixtureGeometry.Place place=(id,c,o)=>Create(id,c.x,c.y,c.z,o);
+        var levels=deck.Openings.Select(o=>o.Inside.z).Distinct().OrderBy(z=>z).ToArray();
+        if(levels.Length<3)throw new InvalidOperationException("Restaurant deck has layers ["+string.Join(",",levels)+"]; this fixture needs a lower and an upper dining balcony and a roof deck");
+        // Ordinary player Path entities on every exterior deck: every rail's deck cell and every
+        // upper door step, and the cells of their layer that take a Path, except one roof cell
+        // that carries a stacked platform tower instead.
+        var region=CivicFixtureGeometry.DeckRegion(spec,deck.Openings.Select(o=>o.Inside).Concat(deck.Doors.Select(d=>d.Exterior).Where(c=>c.z>0)),TakesPath,"Restaurant");
+        var tower=region.Where(c=>c.z==levels[2]&&deck.Openings.All(o=>o.Inside!=c)&&deck.Doors.All(d=>d.Exterior!=c)).ToArray();
+        if(tower.Length==0)throw new InvalidOperationException("Restaurant roof deck has no cell besides rail and door cells for the platform tower");
+        CivicFixtureGeometry.Road(place,c=>_blockService.GetPathObjectAt(c),_building.TransformCoordinates(spec.Entrance.Coordinates));
+        foreach(var c in region.Where(c=>c!=tower[0]))Local("Path",c);
+        Local("DoublePlatform.IronTeeth",tower[0]);Local("Platform.IronTeeth",tower[0]+new Vector3Int(0,0,2));Local("Path",tower[0]+new Vector3Int(0,0,3));
+        // Shaft line out of the ground wall face whose outward cell stays free on the most storeys
+        // that repeat the face; a probe shaft on a platform beside each upper storey's face.
+        var faces=CivicFixtureGeometry.Faces(_building.GetComponent<TransputProviderSpec>());
+        int Storeys((Vector3Int Cell,Vector3Int Out) f) {
+          int z=0;
+          while(faces.Contains((new Vector3Int(f.Cell.x,f.Cell.y,z),f.Out))&&CivicFixtureGeometry.Free(blocks,f.Cell+f.Out+new Vector3Int(0,0,z)))++z;
+          return z;
+        }
+        var ground=faces.Where(f=>f.Cell.z==0&&Enumerable.Range(1,3).All(s=>CivicFixtureGeometry.Free(blocks,f.Cell+f.Out*s))).OrderByDescending(Storeys).ToArray();
+        if(ground.Length==0||Storeys(ground[0])<levels.Length)
+          throw new InvalidOperationException("Restaurant has no ground shaft face repeated with a free outward cell on its "+levels.Length+" storeys");
+        var power=ground[0];
+        _generator=CivicFixtureGeometry.ShaftLine(place,_building,power,1)[0];
+        var probe=power.Cell+power.Out;
+        for(int z=1;z<Storeys(power);z++) {
+          Local("Platform.IronTeeth",new Vector3Int(probe.x,probe.y,z-1));
+          _powerProbes.Add(Local("PowerShaft.IronTeeth",new Vector3Int(probe.x,probe.y,z)).GetComponent<MechanicalNode>());
+        }
+        // External vanilla stairs climb to the middle rear rail of the lower dining balcony.
+        var rear=deck.Openings.Where(o=>o.Inside.z==levels[0]&&o.Outside-o.Inside==new Vector3Int(0,1,0)
+          &&CivicFixtureGeometry.FreeColumn(blocks,o.Outside)).ToArray();
+        if(rear.Length==0)throw new InvalidOperationException("Restaurant lower balcony has no rear rail with a free column outside it for the stairs");
+        _stairCells=CivicFixtureGeometry.Flight(place,_building.TransformCoordinates(rear[rear.Length/2].Outside),new Vector3Int(0,1,0),Origin.z);
+        // Rail seams of the upper balcony: platform stacks outside its first left and first right
+        // rails with a free column (the test toggles a Path on each); the next right rail along
+        // has no platform outside and must stay closed and unlinked.
+        WalkwayOpeningSpec Seam(Vector3Int dir)=>deck.Openings.FirstOrDefault(o=>o.Inside.z==levels[1]&&o.Outside-o.Inside==dir&&CivicFixtureGeometry.FreeColumn(blocks,o.Outside));
+        var left=Seam(new Vector3Int(-1,0,0));var right=Seam(new Vector3Int(1,0,0));
+        var shut=right==null?null:deck.Openings.FirstOrDefault(o=>o.Inside.z==levels[1]&&o.Outside==right.Outside+new Vector3Int(0,1,0));
+        if(left==null||right==null||shut==null)
+          throw new InvalidOperationException("Restaurant upper balcony lacks a left rail and a right rail with free columns outside them and a right rail beside the latter");
+        _leftSeam=left.Id;_rightSeam=right.Id;_shutSeam=shut.Id;
+        _leftSeamCell=_building.TransformCoordinates(left.Outside);_rightSeamCell=_building.TransformCoordinates(right.Outside);
+        for(int z=0;z<levels[1];z++) {
+          Local("Platform.IronTeeth",new Vector3Int(left.Outside.x,left.Outside.y,z));
+          Local("Platform.IronTeeth",new Vector3Int(right.Outside.x,right.Outside.y,z));
+        }
+        // Walk: stair foot and head, the left seam, a roof door step, the ground Entrance.
+        var roofStep=deck.Doors.Select(d=>d.Exterior).Where(c=>c.z==levels[2]).ToArray();
+        if(roofStep.Length==0)throw new InvalidOperationException("Restaurant roof deck has no door");
+        _deckWalk.AddRange(new[]{_stairCells[0],_stairCells[_stairCells.Count-1],_leftSeamCell,_building.TransformCoordinates(roofStep[0]),
+          _building.TransformCoordinates(spec.Entrance.Coordinates)});
+        var room=_building.TransformCoordinates(CivicFixtureGeometry.RoomCell(spec,"Restaurant"));
+        if(_blocks.BlocksValid(pathSpec,new Placement(room,Orientation.Cw0,FlipMode.Unflipped)))throw new InvalidOperationException("Path can overlap restaurant enclosed room at "+room);
+        Debug.Log("[DeepFrontier Restaurant] PASS player deck paths, stacked roof platforms, vanilla stairs, multi-storey shaft line and solid-room rejection through native placement");
         var workers=_registry.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>()).Where(w=>w.WorkerType=="Beaver").ToArray();
         foreach(var w in workers)w.Unemploy();
         foreach(var w in workers.Take(4))w.EmployAt(_restaurant.Workplace);
@@ -285,7 +321,8 @@ namespace DeepFrontier.Scripts {
       Debug.Log("[DeepFrontier Restaurant] PASS table-only inventory has no public or worker output");
       AssertSingleInventoryRegistration();
       Debug.Log("[DeepFrontier Restaurant] PASS shared kitchen inventory enabled once (single district registration)");
-      _camera.MoveTargetTo(new Vector3(164,7,164));_camera.SetZoomLevel(25,0);_camera.HorizontalAngle=25;_camera.VerticalAngle=35;
+      var centre=_building.TransformCoordinates(_building.GetComponent<BlockObjectSpec>().Size/2);
+      _camera.MoveTargetTo(new Vector3(centre.x,7,centre.y));_camera.SetZoomLevel(25,0);_camera.HorizontalAngle=25;_camera.VerticalAngle=35;
       Report();
     }
     private void AssertRail(string id,bool open,bool floorConnected) {
@@ -306,31 +343,33 @@ namespace DeepFrontier.Scripts {
       if(_frame==240) {
         foreach(var shaft in _powerProbes)if(shaft.Graph!=_restaurant.GetComponent<MechanicalNode>().Graph)throw new InvalidOperationException("Multi-level shaft is disconnected from restaurant");
         Debug.Log("[DeepFrontier Restaurant] PASS actual shaft graphs connect at ground, middle and upper room faces");
-        AssertRail("UpperDiningLeft",false,true);AssertRail("UpperDiningRight3",false,true);
-        _railTestPath=Create("Path",159,162,7);_rightRailTestPath=Create("Path",167,163,7);
+        AssertRail(_leftSeam,false,true);AssertRail(_rightSeam,false,true);
+        _railTestPath=Create("Path",_leftSeamCell.x,_leftSeamCell.y,_leftSeamCell.z);
+        _rightRailTestPath=Create("Path",_rightSeamCell.x,_rightSeamCell.y,_rightSeamCell.z);
       }
       if(_frame==330) {
-        AssertRail("UpperDiningLeft",true,true);AssertRail("UpperDiningRight3",true,true);AssertRail("UpperDiningRight4",false,false);
+        AssertRail(_leftSeam,true,true);AssertRail(_rightSeam,true,true);AssertRail(_shutSeam,false,false);
         _entityService.Delete(_railTestPath.GetComponent<EntityComponent>());
         _entityService.Delete(_rightRailTestPath.GetComponent<EntityComponent>());
       }
       if(_frame==420) {
-        AssertRail("UpperDiningLeft",false,true);AssertRail("UpperDiningRight3",false,true);
-        _railTestPath=Create("Path",159,162,7);_rightRailTestPath=Create("Path",167,163,7);
+        AssertRail(_leftSeam,false,true);AssertRail(_rightSeam,false,true);
+        _railTestPath=Create("Path",_leftSeamCell.x,_leftSeamCell.y,_leftSeamCell.z);
+        _rightRailTestPath=Create("Path",_rightSeamCell.x,_rightSeamCell.y,_rightSeamCell.z);
       }
       if(_frame==510) {
-        AssertRail("UpperDiningLeft",true,true);AssertRail("UpperDiningRight3",true,true);AssertRail("UpperDiningRight4",false,false);
+        AssertRail(_leftSeam,true,true);AssertRail(_rightSeam,true,true);AssertRail(_shutSeam,false,false);
         foreach(var door in _building.GetComponent<PlatformDeckSpec>().Doors) {
           var a=_building.TransformCoordinates(door.Interior);var b=_building.TransformCoordinates(door.Exterior);
           if(!_nav.AreConnectedInstant(a,b)||!_nav.AreConnectedInstant(b,a))throw new InvalidOperationException("Enclosed door lacks native deck-path connection: "+door.Interior);
         }
-        var stairCells=new[]{new Vector3Int(165,170,3),new Vector3Int(165,169,3),new Vector3Int(165,169,4),new Vector3Int(165,168,4),new Vector3Int(165,168,5),new Vector3Int(165,167,5)};
-        for(int i=1;i<stairCells.Length;i++)if(!_nav.AreConnectedInstant(stairCells[i-1],stairCells[i])||!_nav.AreConnectedInstant(stairCells[i],stairCells[i-1]))throw new InvalidOperationException("Vanilla stair edge disconnected "+stairCells[i-1]+" to "+stairCells[i]);
+        var stairCells=_stairCells;
+        for(int i=1;i<stairCells.Count;i++)if(!_nav.AreConnectedInstant(stairCells[i-1],stairCells[i])||!_nav.AreConnectedInstant(stairCells[i],stairCells[i-1]))throw new InvalidOperationException("Vanilla stair edge disconnected "+stairCells[i-1]+" to "+stairCells[i]);
         Debug.Log("[DeepFrontier Restaurant] PASS both directions across two native stairs to player deck path");
         _deckChecksPassed=true;Debug.Log("[DeepFrontier Restaurant] ALL PLATFORM DECK CHECKS PASSED");
         var worker=_registry.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>()).First(w=>w.WorkerType=="Beaver"&&!_restaurant.Workplace.AssignedWorkers.Contains(w));
         worker.Unemploy();_walker=worker.GetComponent<ControllableCharacter>();_walker.ChangeAnimation("BeaverAdult_idle");
-        foreach(var cell in new[]{new Vector3Int(165,170,3),new Vector3Int(165,167,5),new Vector3Int(159,162,7),new Vector3Int(167,163,9),new Vector3Int(161,161,3)})_walkTargets.Enqueue(NavigationCoordinateSystem.GridToWorld(cell));
+        foreach(var cell in _deckWalk)_walkTargets.Enqueue(NavigationCoordinateSystem.GridToWorld(cell));
         NextWalk();
       }
     }
