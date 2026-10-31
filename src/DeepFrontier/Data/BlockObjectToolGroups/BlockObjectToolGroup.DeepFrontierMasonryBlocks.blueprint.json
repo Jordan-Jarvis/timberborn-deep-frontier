@@ -1,0 +1,14 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierMasonryBlocks",
+    "Order": 110,
+    "NameLocKey": "ToolGroups.DeepFrontierMasonryBlocks",
+    "Icon": "Buildings/Platforms/ConcreteBlock/Icon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Landscaping"
+    ]
+  }
+}

@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Tidier build menu (player feedback)
+- **Paths:** platforms, suspension bridges, overhangs and tubeways each get a sub-group. So do Teleporter Station's teleporter and ring, when that mod is installed. The Paths bar goes from about 30 buttons to 14, so opening a sub-group no longer pushes the bar off the screen.
+- **Power:** new sub-groups:
+  - Water power: both water wheels and the Reinforced Hydro Turbine.
+  - Power shafts: the three shafts and the clutch.
+  - Engines and power plants: steam engine, New Styles' steam plant, geothermal engine, Solar Panel when installed, and the coal, oil and nuclear plants.
+  - With Flywheels installed, a Flywheels sub-group with one sub-group per type: inline, horizontal framed, vertical framed.
+- **Landscaping:** Dynamite (single, double, triple), Floodgates, and Deep Frontier's masonry and concrete blocks each get a sub-group.
+- **Storage:** sorted by type, then by size: piles, then warehouses, then tanks. With Expanded Storage installed, its buildings slot in by size. The Radioactive Waste Vault comes last among the warehouses and the Cryogenic Tank Farm last among the tanks.
+- A sub-group for an optional mod's tools appears only when that mod is installed. Without the mod, nothing changes and nothing breaks. Vanilla and other mods' buildings keep their own blueprints; only their place in the menu changes.
+
 ### Deep Well in droughts; vanilla Grease replaces Lubricant
 - **Deep Well in droughts** (player feedback: it was too strong): in a drought the well now runs only on its full 100,000 hp, at any boost, and drives its source at most 2× (6× otherwise). Short of full power it stops and the source dries up like any other. Outside droughts nothing changes (1,667 hp per boost step, 10,000 hp at 6×). Seeps still become steady sources while it runs, the radioactive-tide shut-off and the drill bits are unchanged, and the building description and panel state the drought rule.
 - **Grease replaces Lubricant:** Deep Frontier's Lubricant is merged into the vanilla Iron Teeth Grease, made at the Grease Factory from Extract and Canola Oil. Cryocoolant and Servo bot limbs now take Grease, and bots in heavy industry take Grease (best) or Fish Oil for maintenance. The Chemical Works' Lubricant recipe is gone.

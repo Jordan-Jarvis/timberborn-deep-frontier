@@ -1,0 +1,26 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierWaterPower",
+    "Order": 11,
+    "NameLocKey": "ToolGroups.DeepFrontierWaterPower",
+    "Icon": "Buildings/Power/LargeWaterWheel/LargeWaterWheelIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Power"
+    ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "CompactWaterWheel.IronTeeth",
+      "LargeWaterWheel.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "CompactWaterWheel.IronTeeth",
+      "LargeWaterWheel.IronTeeth",
+      "ReinforcedHydroTurbine.IronTeeth"
+    ]
+  }
+}

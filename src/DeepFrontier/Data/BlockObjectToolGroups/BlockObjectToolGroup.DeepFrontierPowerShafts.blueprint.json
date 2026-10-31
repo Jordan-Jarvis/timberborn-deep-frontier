@@ -1,0 +1,29 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierPowerShafts",
+    "Order": 30,
+    "NameLocKey": "ToolGroups.DeepFrontierPowerShafts",
+    "Icon": "Buildings/Power/PowerShaft/PowerShaftIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Power"
+    ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "PowerShaft.IronTeeth",
+      "VerticalPowerShaft.IronTeeth",
+      "ImpermeablePowerShaft.IronTeeth",
+      "Clutch.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "PowerShaft.IronTeeth",
+      "VerticalPowerShaft.IronTeeth",
+      "ImpermeablePowerShaft.IronTeeth",
+      "Clutch.IronTeeth"
+    ]
+  }
+}

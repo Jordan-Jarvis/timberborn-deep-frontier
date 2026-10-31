@@ -910,9 +910,24 @@ ToolGroups.DeepFrontierQuarrying,Quarries and cement,Deep Frontier toolbar group
 ToolGroups.DeepFrontierHeavyIndustry,Heavy industry,Deep Frontier toolbar group
 ToolGroups.DeepFrontierNuclearFuel,Nuclear fuel,Deep Frontier toolbar group
 ToolGroups.DeepFrontierRocketry,Rocketry,Deep Frontier toolbar group
+ToolGroups.DeepFrontierPathPlatforms,Platforms,Deep Frontier toolbar group
+ToolGroups.DeepFrontierTeleporters,Teleporters,Deep Frontier toolbar group
+ToolGroups.DeepFrontierTubeways,Tubeways,Deep Frontier toolbar group
+ToolGroups.DeepFrontierSuspensionBridges,Suspension bridges,Deep Frontier toolbar group
+ToolGroups.DeepFrontierOverhangs,Overhangs,Deep Frontier toolbar group
 ToolGroups.DeepFrontierConcreteScaffolds,Concrete scaffolds,Deep Frontier toolbar group
 ToolGroups.DeepFrontierConcretePlatforms,Concrete side platforms,Deep Frontier toolbar group
 ToolGroups.DeepFrontierSteelStructures,Steel structures,Deep Frontier toolbar group
+ToolGroups.DeepFrontierWaterPower,Water power,Deep Frontier toolbar group
+ToolGroups.DeepFrontierPowerShafts,Power shafts,Deep Frontier toolbar group
+ToolGroups.DeepFrontierEngines,Engines and power plants,Deep Frontier toolbar group
+ToolGroups.DeepFrontierFlywheels,Flywheels,Deep Frontier toolbar group
+ToolGroups.DeepFrontierInlineFlywheels,Inline flywheels,Deep Frontier toolbar group
+ToolGroups.DeepFrontierHorizontalFlywheels,Horizontal framed flywheels,Deep Frontier toolbar group
+ToolGroups.DeepFrontierVerticalFlywheels,Vertical framed flywheels,Deep Frontier toolbar group
+ToolGroups.DeepFrontierFloodgates,Floodgates,Deep Frontier toolbar group
+ToolGroups.DeepFrontierDynamite,Dynamite,Deep Frontier toolbar group
+ToolGroups.DeepFrontierMasonryBlocks,Masonry and concrete,Deep Frontier toolbar group
 ToolGroups.DeepFrontierRadioactiveWaste,Radioactive waste,Deep Frontier toolbar group
 ToolGroups.DeepFrontierCivicServices,Civic services,Deep Frontier toolbar group
 DeepFrontier.Power.Status.NotConnected,Not connected to a power source. Connect it to a generator with shafts or power lines.,Deep Frontier

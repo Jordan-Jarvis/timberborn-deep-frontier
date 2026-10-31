@@ -1,0 +1,32 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierEngines",
+    "Order": 50,
+    "NameLocKey": "ToolGroups.DeepFrontierEngines",
+    "Icon": "Buildings/Power/SteamEngine/SteamEngineIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Power"
+    ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "SteamEngine.IronTeeth",
+      "SteamPlant.IronTeeth",
+      "GeothermalEngine.IronTeeth",
+      "SolarPanel.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "SteamEngine.IronTeeth",
+      "SteamPlant.IronTeeth",
+      "GeothermalEngine.IronTeeth",
+      "SolarPanel.IronTeeth",
+      "CoalPowerPlant.IronTeeth",
+      "OilPowerPlant.IronTeeth",
+      "NuclearReactor.IronTeeth"
+    ]
+  }
+}

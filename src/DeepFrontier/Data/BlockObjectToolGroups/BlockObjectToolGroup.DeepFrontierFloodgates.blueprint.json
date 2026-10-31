@@ -1,0 +1,27 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierFloodgates",
+    "Order": 30,
+    "NameLocKey": "ToolGroups.DeepFrontierFloodgates",
+    "Icon": "Buildings/Landscaping/Floodgate/FloodgateIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Landscaping"
+    ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "Floodgate.IronTeeth",
+      "DoubleFloodgate.IronTeeth",
+      "TripleFloodgate.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "Floodgate.IronTeeth",
+      "DoubleFloodgate.IronTeeth",
+      "TripleFloodgate.IronTeeth"
+    ]
+  }
+}

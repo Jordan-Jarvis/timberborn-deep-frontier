@@ -1,0 +1,33 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierSuspensionBridges",
+    "Order": 70,
+    "NameLocKey": "ToolGroups.DeepFrontierSuspensionBridges",
+    "Icon": "Buildings/Paths/SuspensionBridge3x1/SuspensionBridge3x1Icon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Paths"
+    ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "SuspensionBridge1x1.IronTeeth",
+      "SuspensionBridge2x1.IronTeeth",
+      "SuspensionBridge3x1.IronTeeth",
+      "SuspensionBridge4x1.IronTeeth",
+      "SuspensionBridge5x1.IronTeeth",
+      "SuspensionBridge6x1.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "SuspensionBridge1x1.IronTeeth",
+      "SuspensionBridge2x1.IronTeeth",
+      "SuspensionBridge3x1.IronTeeth",
+      "SuspensionBridge4x1.IronTeeth",
+      "SuspensionBridge5x1.IronTeeth",
+      "SuspensionBridge6x1.IronTeeth"
+    ]
+  }
+}

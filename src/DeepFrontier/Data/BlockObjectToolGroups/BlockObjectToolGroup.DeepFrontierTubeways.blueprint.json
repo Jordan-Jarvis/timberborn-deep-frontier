@@ -1,0 +1,27 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierTubeways",
+    "Order": 51,
+    "NameLocKey": "ToolGroups.DeepFrontierTubeways",
+    "Icon": "Buildings/Paths/Tubeway/TubewayIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Paths"
+    ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "Tubeway.IronTeeth",
+      "VerticalTubeway.IronTeeth",
+      "ImpermeableTubeway.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "Tubeway.IronTeeth",
+      "VerticalTubeway.IronTeeth",
+      "ImpermeableTubeway.IronTeeth"
+    ]
+  }
+}

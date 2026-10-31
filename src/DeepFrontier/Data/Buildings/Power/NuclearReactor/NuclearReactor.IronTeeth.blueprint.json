@@ -11954,7 +11954,7 @@
     "ForceOneFinalAccess": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Power",
+    "ToolGroupId": "DeepFrontierEngines",
     "ToolOrder": 250,
     "ToolShape": "Square",
     "Layout": "Single",

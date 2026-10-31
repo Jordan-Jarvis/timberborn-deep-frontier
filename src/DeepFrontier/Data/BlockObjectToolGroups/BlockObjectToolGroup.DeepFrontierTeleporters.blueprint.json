@@ -1,0 +1,25 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierTeleporters",
+    "Order": 48,
+    "NameLocKey": "ToolGroups.DeepFrontierTeleporters",
+    "Icon": "Buildings/Paths/Teleporter/TeleporterIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Paths"
+    ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "Teleporter.IronTeeth",
+      "TeleporterRing.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "Teleporter.IronTeeth",
+      "TeleporterRing.IronTeeth"
+    ]
+  }
+}

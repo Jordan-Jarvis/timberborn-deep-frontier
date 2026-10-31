@@ -1,0 +1,27 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierDynamite",
+    "Order": 80,
+    "NameLocKey": "ToolGroups.DeepFrontierDynamite",
+    "Icon": "Buildings/Landscaping/Dynamite/DynamiteIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Landscaping"
+    ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "Dynamite.IronTeeth",
+      "DoubleDynamite.IronTeeth",
+      "TripleDynamite.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "Dynamite.IronTeeth",
+      "DoubleDynamite.IronTeeth",
+      "TripleDynamite.IronTeeth"
+    ]
+  }
+}

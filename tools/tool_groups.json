@@ -1,8 +1,56 @@
 {
   "$comment": [
-    "Deep Frontier toolbar sub-groups (Moddable Tool Groups, a required mod: a BlockObjectToolGroupSpec with ParentToolGroupSpec.ParentIds is a button inside that native group). Written by tools/tool_group_content.mjs at the end of canonical generation; checked by tools/validate_tool_groups.mjs.",
-    "Each group: parent (a native tool group), order (Moddable Tool Groups orders a group's sub-groups and buildings by one scale: native buildings use about 10-90, so sub-groups follow them at 100+), name, icon (the LabeledEntitySpec icon of the listed template), and templates (Deep Frontier building template names without the faction suffix). A listed building's PlaceableBlockObjectSpec.ToolGroupId becomes the sub-group; its ToolOrder orders it inside."
+    "Deep Frontier toolbar sub-groups (Moddable Tool Groups 11.0.0, a required mod). Written by tools/tool_group_content.mjs at the end of canonical generation; checked by tools/validate_tool_groups.mjs. Contracts below are source-confirmed in ConfigurableToolGroups.dll (ModdableToolGroupSpecService, CustomBlockObjectButtons).",
+    "Each group is a BlockObjectToolGroupSpec with ParentToolGroupSpec.ParentIds [parent]: a button inside that group. parent is a native tool group or another group declared here. order orders it among the parent's buttons on the same scale as tool ToolOrder (vanilla tools use about 10-100). name is its English name, icon the template whose LabeledEntitySpec icon it shows (a tool in the group or below it).",
+    "templates: Deep Frontier buildings (template name without the faction suffix); the generator sets their PlaceableBlockObjectSpec.ToolGroupId to the group.",
+    "claims: other templates (vanilla, a required mod, or an optional mod from externalMods), by full template name. They go in the group's ToolGroupChildrenSpec.ChildrenToolsTemplateNames with DoNotIncludePlaceableToolGroup, which takes them out of their own group; their blueprints are not touched. A claimed template that is not loaded is skipped without a warning, and a group with no loaded tool is never created, so a group of an absent optional mod's tools does not appear.",
+    "A group with claims lists its tools in ChildrenOrderedIds: claims in the order given, then templates. Otherwise templates keep their ToolOrder. A group holds either tools or sub-groups, not both.",
+    "nativeOrders: the complete order of a native group's tools, written as a same-path partial of that group's blueprint, {ToolGroupChildrenSpec: {ChildrenOrderedIds#append: [...]}} (ids get 10, 20, ...; #append keeps other mods' entries).",
+    "externalMods: the non-Deep Frontier, non-vanilla templates claimed or ordered here, with the installed package they were read from. optional mods are not in the manifest's RequiredMods. Flywheels keeps its blueprints in its asset bundle (read with UnityPy from AssetBundles/flywheels_win at 4.1.1.15): its template names swap Horizontal and Vertical against the display names, so the groups follow the display names."
   ],
+  "externalMods": {
+    "Redic.NewStyles": { "workshopId": "3723883597", "version": "0.1", "optional": false, "blueprints": "loose",
+      "templates": {
+        "SteamPlant.IronTeeth": { "toolGroup": "Power", "icon": "Buildings/Power/SteamPlantIcon" } } },
+    "othermod.TeleporterStation": { "workshopId": "3813842276", "version": "0.5.1", "optional": true, "blueprints": "loose",
+      "templates": {
+        "Teleporter.IronTeeth": { "toolGroup": "Paths", "icon": "Buildings/Paths/Teleporter/TeleporterIcon" },
+        "TeleporterRing.IronTeeth": { "toolGroup": "Paths", "icon": "Buildings/Paths/Ring/RingIcon" } } },
+    "northforge.solarpanel": { "workshopId": "3801036916", "version": "1.0.2", "optional": true, "blueprints": "loose",
+      "templates": {
+        "SolarPanel.IronTeeth": { "toolGroup": "Power", "icon": "Sprites/Buildings/Power/SolarPanel/SolarPanelIcon" } } },
+    "MauricioBedoya.ExpandedStorage": { "workshopId": "3795292508", "version": "1.0.1", "optional": true, "blueprints": "loose",
+      "templates": {
+        "PileModule.IronTeeth": { "toolGroup": "Storage", "icon": "Buildings/Storage/PileModule/PileModuleIcon" },
+        "GrandUndergroundPile.IronTeeth": { "toolGroup": "Storage", "icon": "Buildings/Storage/GrandUndergroundPile/GrandUndergroundPileIcon" },
+        "StorageModule.IronTeeth": { "toolGroup": "Storage", "icon": "Buildings/Storage/StorageModule/StorageModuleIcon" },
+        "GrandWarehouse.IronTeeth": { "toolGroup": "Storage", "icon": "Buildings/Storage/GrandWarehouse/GrandWarehouseIcon" },
+        "TankModule.IronTeeth": { "toolGroup": "Storage", "icon": "Buildings/Storage/TankModule/TankModuleIcon" },
+        "GrandTank.IronTeeth": { "toolGroup": "Storage", "icon": "Buildings/Storage/GrandTank/GrandTankIcon" } } },
+    "Battery.Flywheels": { "workshopId": "3322428023", "version": "4.1.1.15", "optional": true, "blueprints": "assetBundle",
+      "collection": [
+        "Battery.Flywheels/SmallFlywheel/SmallFlywheel.IronTeeth.blueprint",
+        "Battery.Flywheels/SmallHorizontalFramedFlywheel/SmallHorizontalFramedFlywheel.IronTeeth.blueprint",
+        "Battery.Flywheels/SmallVerticalFramedFlywheel/SmallVerticalFramedFlywheel.IronTeeth.blueprint",
+        "Battery.Flywheels/MediumFlywheel/MediumFlywheel.IronTeeth.blueprint",
+        "Battery.Flywheels/MediumHorizontalFramedFlywheel/MediumHorizontalFramedFlywheel.IronTeeth.blueprint",
+        "Battery.Flywheels/MediumVerticalFramedFlywheel/MediumVerticalFramedFlywheel.IronTeeth.blueprint",
+        "Battery.Flywheels/LargeFlywheel/LargeFlywheel.IronTeeth.blueprint",
+        "Battery.Flywheels/LargeHorizontalFramedFlywheel/LargeHorizontalFramedFlywheel.IronTeeth.blueprint",
+        "Battery.Flywheels/LargeVerticalFramedFlywheel/LargeVerticalFramedFlywheel.IronTeeth.blueprint",
+        "Battery.Flywheels/MediumVerticalJunction/MediumVerticalJunction.IronTeeth.blueprint",
+        "Battery.Flywheels/LargeVerticalJunction/LargeVerticalJunction.IronTeeth.blueprint"],
+      "templates": {
+        "SmallFlywheel.IronTeeth": { "toolGroup": "Power", "icon": "Battery.Flywheels/SmallFlywheel/SmallFlywheelIcon" },
+        "MediumFlywheel.IronTeeth": { "toolGroup": "Power", "icon": "Battery.Flywheels/MediumFlywheel/MediumFlywheelIcon" },
+        "LargeFlywheel.IronTeeth": { "toolGroup": "Power", "icon": "Battery.Flywheels/LargeFlywheel/LargeFlywheelIcon" },
+        "SmallVerticalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "icon": "Battery.Flywheels/SmallHorizontalFramedFlywheel/SmallHorizontalFramedFlywheelIcon" },
+        "MediumVerticalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "icon": "Battery.Flywheels/MediumHorizontalFramedFlywheel/MediumHorizontalFramedFlywheelIcon" },
+        "LargeVerticalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "icon": "Battery.Flywheels/LargeHorizontalFramedFlywheel/LargeHorizontalFramedFlywheelIcon" },
+        "SmallHorizontalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "icon": "Battery.Flywheels/SmallVerticalFramedFlywheel/SmallVerticalFramedFlywheelIcon" },
+        "MediumHorizontalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "icon": "Battery.Flywheels/MediumVerticalFramedFlywheel/MediumVerticalFramedFlywheelIcon" },
+        "LargeHorizontalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "icon": "Battery.Flywheels/LargeVerticalFramedFlywheel/LargeVerticalFramedFlywheelIcon" } } }
+  },
   "groups": {
     "DeepFrontierDeepMining": { "parent": "Metal", "order": 100, "name": "Deep mining", "icon": "DeepDrill",
       "templates": ["DeepDrill", "DeepMine", "DeepProcessor"] },
@@ -14,6 +62,17 @@
       "templates": ["UraniumProcessingPlant", "RadioactiveWasteRefinery"] },
     "DeepFrontierRocketry": { "parent": "Metal", "order": 140, "name": "Rocketry", "icon": "LaunchPad",
       "templates": ["RocketAssemblyHangar", "LaunchPad", "MissionControl"] },
+    "DeepFrontierPathPlatforms": { "parent": "Paths", "order": 40, "name": "Platforms", "icon": "Platform.IronTeeth",
+      "claims": ["Platform.IronTeeth", "DoublePlatform.IronTeeth", "TriplePlatform.IronTeeth", "MetalPlatform3x3.IronTeeth", "MetalPlatform5x5.IronTeeth"] },
+    "DeepFrontierTeleporters": { "parent": "Paths", "order": 48, "name": "Teleporters", "icon": "Teleporter.IronTeeth",
+      "claims": ["Teleporter.IronTeeth", "TeleporterRing.IronTeeth"] },
+    "DeepFrontierTubeways": { "parent": "Paths", "order": 51, "name": "Tubeways", "icon": "Tubeway.IronTeeth",
+      "claims": ["Tubeway.IronTeeth", "VerticalTubeway.IronTeeth", "ImpermeableTubeway.IronTeeth"] },
+    "DeepFrontierSuspensionBridges": { "parent": "Paths", "order": 70, "name": "Suspension bridges", "icon": "SuspensionBridge3x1.IronTeeth",
+      "claims": ["SuspensionBridge1x1.IronTeeth", "SuspensionBridge2x1.IronTeeth", "SuspensionBridge3x1.IronTeeth", "SuspensionBridge4x1.IronTeeth",
+        "SuspensionBridge5x1.IronTeeth", "SuspensionBridge6x1.IronTeeth"] },
+    "DeepFrontierOverhangs": { "parent": "Paths", "order": 80, "name": "Overhangs", "icon": "Overhang3x1.IronTeeth",
+      "claims": ["Overhang2x1.IronTeeth", "Overhang3x1.IronTeeth", "Overhang4x1.IronTeeth", "Overhang5x1.IronTeeth", "Overhang6x1.IronTeeth"] },
     "DeepFrontierConcreteScaffolds": { "parent": "Paths", "order": 100, "name": "Concrete scaffolds", "icon": "ConcreteScaffold4x4H2",
       "templates": ["ConcreteScaffold3x3", "ConcreteScaffold3x3H1", "ConcreteScaffold3x3H2", "ConcreteScaffold4x4H1", "ConcreteScaffold4x4H2",
         "ConcreteScaffold4x4H3", "ConcreteScaffold5x5H1", "ConcreteScaffold5x5H2", "ConcreteScaffold5x5H3", "ConcreteOverhang8x1"] },
@@ -23,9 +82,36 @@
       "templates": ["SteelColumnH1", "SteelColumnH2", "SteelColumnH3", "SteelColumnH4", "SteelColumnH5", "SteelColumnH6",
         "SteelDeck3x3", "SteelDeck5x5", "SteelCantilever10x1", "SteelCantilever12x1", "SteelCantilever15x1",
         "SteelBridge8x1", "SteelBridge10x1", "SteelBridge12x1", "SteelBridge15x1"] },
+    "DeepFrontierWaterPower": { "parent": "Power", "order": 11, "name": "Water power", "icon": "LargeWaterWheel.IronTeeth",
+      "claims": ["CompactWaterWheel.IronTeeth", "LargeWaterWheel.IronTeeth"],
+      "templates": ["ReinforcedHydroTurbine"] },
+    "DeepFrontierPowerShafts": { "parent": "Power", "order": 30, "name": "Power shafts", "icon": "PowerShaft.IronTeeth",
+      "claims": ["PowerShaft.IronTeeth", "VerticalPowerShaft.IronTeeth", "ImpermeablePowerShaft.IronTeeth", "Clutch.IronTeeth"] },
+    "DeepFrontierEngines": { "parent": "Power", "order": 50, "name": "Engines and power plants", "icon": "SteamEngine.IronTeeth",
+      "claims": ["SteamEngine.IronTeeth", "SteamPlant.IronTeeth", "GeothermalEngine.IronTeeth", "SolarPanel.IronTeeth"],
+      "templates": ["CoalPowerPlant", "OilPowerPlant", "NuclearReactor"] },
+    "DeepFrontierFlywheels": { "parent": "Power", "order": 70, "name": "Flywheels", "icon": "MediumFlywheel.IronTeeth" },
+    "DeepFrontierInlineFlywheels": { "parent": "DeepFrontierFlywheels", "order": 10, "name": "Inline flywheels", "icon": "MediumFlywheel.IronTeeth",
+      "claims": ["SmallFlywheel.IronTeeth", "MediumFlywheel.IronTeeth", "LargeFlywheel.IronTeeth"] },
+    "DeepFrontierHorizontalFlywheels": { "parent": "DeepFrontierFlywheels", "order": 20, "name": "Horizontal framed flywheels", "icon": "MediumVerticalFramedFlywheel.IronTeeth",
+      "claims": ["SmallVerticalFramedFlywheel.IronTeeth", "MediumVerticalFramedFlywheel.IronTeeth", "LargeVerticalFramedFlywheel.IronTeeth"] },
+    "DeepFrontierVerticalFlywheels": { "parent": "DeepFrontierFlywheels", "order": 30, "name": "Vertical framed flywheels", "icon": "MediumHorizontalFramedFlywheel.IronTeeth",
+      "claims": ["SmallHorizontalFramedFlywheel.IronTeeth", "MediumHorizontalFramedFlywheel.IronTeeth", "LargeHorizontalFramedFlywheel.IronTeeth"] },
+    "DeepFrontierFloodgates": { "parent": "Landscaping", "order": 30, "name": "Floodgates", "icon": "Floodgate.IronTeeth",
+      "claims": ["Floodgate.IronTeeth", "DoubleFloodgate.IronTeeth", "TripleFloodgate.IronTeeth"] },
+    "DeepFrontierDynamite": { "parent": "Landscaping", "order": 80, "name": "Dynamite", "icon": "Dynamite.IronTeeth",
+      "claims": ["Dynamite.IronTeeth", "DoubleDynamite.IronTeeth", "TripleDynamite.IronTeeth"] },
+    "DeepFrontierMasonryBlocks": { "parent": "Landscaping", "order": 110, "name": "Masonry and concrete", "icon": "ConcreteBlock",
+      "templates": ["SandstoneMasonryBlock", "LimestoneMasonryBlock", "ConcreteBlock", "ReinforcedDamBlock", "ConcreteOverflowDam"] },
     "DeepFrontierRadioactiveWaste": { "parent": "Water", "order": 100, "name": "Radioactive waste", "icon": "RadioactiveWasteExport",
       "templates": ["RadioactiveSludgeRecoveryPump", "RadioactiveSludgeOutfall", "RadioactiveWasteExport"] },
     "DeepFrontierCivicServices": { "parent": "Wellbeing", "order": 100, "name": "Civic services", "icon": "Hospital",
       "templates": ["Restaurant", "GroceryStore", "Hospital", "PublicHealthLab", "Bathhouse"] }
+  },
+  "nativeOrders": {
+    "Storage": [
+      "SmallIndustrialPile.IronTeeth", "LargeIndustrialPile.IronTeeth", "PileModule.IronTeeth", "GrandUndergroundPile.IronTeeth",
+      "SmallWarehouse.IronTeeth", "MediumWarehouse.IronTeeth", "LargeWarehouse.IronTeeth", "StorageModule.IronTeeth", "GrandWarehouse.IronTeeth", "RadioactiveWasteVault.IronTeeth",
+      "SmallTank.IronTeeth", "MediumTank.IronTeeth", "LargeTank.IronTeeth", "TankModule.IronTeeth", "GrandTank.IronTeeth", "CryogenicTankFarm.IronTeeth"]
   }
 }

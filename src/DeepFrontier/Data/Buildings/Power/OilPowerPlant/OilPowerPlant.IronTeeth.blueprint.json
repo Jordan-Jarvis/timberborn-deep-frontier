@@ -1403,7 +1403,7 @@
   "GoodPoweredGeneratorSpec": {},
   "MechanicalBuildingSpec": {},
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Power",
+    "ToolGroupId": "DeepFrontierEngines",
     "ToolOrder": 247,
     "ToolShape": "Square",
     "Layout": "Single",

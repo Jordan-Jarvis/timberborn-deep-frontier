@@ -4,6 +4,30 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Build menu sub-groups and storage order (Claude Code session, 2026-10-30, toolbar agent; data regenerated; validated in mirror `toolbar` on HEAD 054af59 + this change; not built or run in game)
+
+- **Player feedback (Workshop):** "opening the sub tabs makes some parts of the gui go out of screen". The player asked for sub-groups for the Iron Teeth suspension bridges and platforms, power shafts, flywheel types and dynamite, and for a consistent Storage order.
+- **Mechanism (source-confirmed, Moddable Tool Groups 11.0.0; skill reference dependency-apis.md):**
+  - A Deep Frontier group blueprint lists vanilla and other mods' templates in `ToolGroupChildrenSpec.ChildrenToolsTemplateNames` with `DoNotIncludePlaceableToolGroup`. No vanilla or other-mod blueprint is patched.
+  - A missing template is skipped, and an empty group is never built. So a group of an optional mod's tools exists only with that mod, and without it nothing loads differently.
+  - The native Storage group gets a same-path partial with `ChildrenOrderedIds#append`.
+  - Group icons are lazy `AssetRef`s that are read only when a group's button is built.
+- **Catalog:** `tools/tool_groups.json`, extended with:
+  - `claims`, sub-groups of groups (`parent` may be a declared group), `nativeOrders`, and `externalMods`, which records the installed package each claimed template was read from.
+  - Flywheels 4.1.1.15 keeps its blueprints in an asset bundle, and its template names swap Horizontal and Vertical against the display names; the groups follow the display names.
+  - The generator (`tools/tool_group_content.mjs`) rejects a claim from another tab, a duplicate, an icon outside the group, or an optional-mod icon on a group that also shows without that mod.
+  - `tools/validate_tool_groups.mjs` checks every claim and order against vanilla Resources, the generated Data and the installed Workshop packages: Id, Version, tool group and icon of each loose template, and the TemplateCollection for Flywheels' bundle. A required mod must be in RequiredMods; an optional one must not be. Each `nativeOrders` list must be complete. A planted typo and a wrong tool group both fail. The validator reports which groups are optional-only.
+- **Top level per tab** (Iron Teeth, required mods only; [] = only with that optional mod):
+  - **Paths, 14** (13 once the vanilla Tubeway Station is hidden, +1 with Teleporter Station; was 31 with the optional mods): Path, Stairs, Spiral Stairs, Platforms▸, Tubeway Station and New Styles' Tubeway Stop (both left alone: the dependency agent hides the vanilla station), Tubeways▸, Gate, Airlock, Suspension bridges▸, Overhangs▸, [Teleporters▸], Concrete scaffolds▸, Concrete side platforms▸, Steel structures▸.
+  - **Power, 5** (was up to 26): Water power▸, Large Power Wheel, Power shafts▸ (with the Clutch), Engines and power plants▸ (Steam Engine, New Styles Steam Plant, Geothermal Engine, [Solar Panel], Coal, Oil, Nuclear), Gravity Battery, [Flywheels▸ (Inline / Horizontal framed / Vertical framed▸)]. With Power Lines, its Lantern pole stays where Power Lines puts it (Power, order 29).
+  - **Landscaping, 13** (was 21): Dam, Levee, Floodgates▸, Fill Valve, Throttling Valve, Impermeable Floor, Irrigation Barrier, Explosives Factory, Dynamite▸, Tunnel, Dirt Excavator, Terrain Block, Masonry and concrete▸.
+  - **Storage, 10** (16 with Expanded Storage): piles Small, Large, [Pile Module, Grand Underground]; warehouses Small, Medium, Large, [Storage Module, Grand], Radioactive Waste Vault; tanks Small, Medium, Large, [Tank Module, Grand], Cryogenic Tank Farm.
+- **Checks (mirror, HEAD 054af59 + this change):**
+  - Canonical generation reaches a fixed point. It changes only 9 ToolGroupIds, 15 new group blueprints, the Storage partial and 15 localization rows.
+  - `validate_all -SkipBlender`: 54 of 58 pass. `map-setup-terrain` fails on `smallMap.maxArea` and `no-game-assets` fails in the mirror (both known). `radiation_content` fails on the `RadioactiveWaterSurface`/`IrradiatedSoilSurface.Unload` source regex, which is HEAD's shader code and not this change.
+  - `validate_mod_dependencies` passes on the working tree.
+- **In game, to check (not run yet):** see the screen-fit checklist in this entry's report. Open each tab at 1920x1080 and at 1280x720 with UI scale 100%. The top bar and every sub-group must stay on screen, including Power ▸ Flywheels ▸ a type (two levels raise the panel 108 px). Check the claimed tools build from their sub-group and are gone from the tab's top level, the Storage order, the optional groups appearing and disappearing with their mod, and no `[ConfigurableToolGroups]` warnings in Player.log.
+
 ## Deep Well drought rule; Lubricant merged into vanilla Grease (Claude Code session, 2026-10-30, dwgrease agent; data regenerated; validated and compiled in mirror `dwgrease` on HEAD af9a3b8 + this change; not built or run in game)
 
 - **Deep Well in droughts (player feedback "Deep well seems to be quite overpowered. Maybe remove the ability to get water through drought?"; user-approved: power gate plus reduced boost).** Numbers in `tools/deep_well_content.json` `drought`: `powerInputHp` 100,000, `maxBoost` 2 (normal: 10,000 hp at 6×).

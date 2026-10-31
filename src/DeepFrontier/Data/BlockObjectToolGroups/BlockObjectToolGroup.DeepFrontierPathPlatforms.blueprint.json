@@ -1,0 +1,31 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierPathPlatforms",
+    "Order": 40,
+    "NameLocKey": "ToolGroups.DeepFrontierPathPlatforms",
+    "Icon": "Buildings/Paths/Platform/PlatformIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Paths"
+    ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "Platform.IronTeeth",
+      "DoublePlatform.IronTeeth",
+      "TriplePlatform.IronTeeth",
+      "MetalPlatform3x3.IronTeeth",
+      "MetalPlatform5x5.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "Platform.IronTeeth",
+      "DoublePlatform.IronTeeth",
+      "TriplePlatform.IronTeeth",
+      "MetalPlatform3x3.IronTeeth",
+      "MetalPlatform5x5.IronTeeth"
+    ]
+  }
+}

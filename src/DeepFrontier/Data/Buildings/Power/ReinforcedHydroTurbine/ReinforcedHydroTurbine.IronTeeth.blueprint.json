@@ -4550,7 +4550,7 @@
   "PowerGeneratorSoundsSpec": {},
   "MechanicalBuildingSpec": {},
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Power",
+    "ToolGroupId": "DeepFrontierWaterPower",
     "ToolOrder": 240,
     "ToolShape": "Square",
     "Layout": "Single",

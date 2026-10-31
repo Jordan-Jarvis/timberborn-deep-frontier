@@ -1,0 +1,31 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierOverhangs",
+    "Order": 80,
+    "NameLocKey": "ToolGroups.DeepFrontierOverhangs",
+    "Icon": "Buildings/Paths/Overhang3x1/Overhang3x1Icon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Paths"
+    ]
+  },
+  "ToolGroupChildrenSpec": {
+    "ChildrenToolsTemplateNames": [
+      "Overhang2x1.IronTeeth",
+      "Overhang3x1.IronTeeth",
+      "Overhang4x1.IronTeeth",
+      "Overhang5x1.IronTeeth",
+      "Overhang6x1.IronTeeth"
+    ],
+    "DoNotIncludePlaceableToolGroup": true,
+    "ChildrenOrderedIds": [
+      "Overhang2x1.IronTeeth",
+      "Overhang3x1.IronTeeth",
+      "Overhang4x1.IronTeeth",
+      "Overhang5x1.IronTeeth",
+      "Overhang6x1.IronTeeth"
+    ]
+  }
+}

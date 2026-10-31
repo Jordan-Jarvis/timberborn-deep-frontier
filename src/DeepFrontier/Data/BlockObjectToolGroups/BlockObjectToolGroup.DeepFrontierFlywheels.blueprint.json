@@ -1,0 +1,14 @@
+{
+  "BlockObjectToolGroupSpec": {
+    "Id": "DeepFrontierFlywheels",
+    "Order": 70,
+    "NameLocKey": "ToolGroups.DeepFrontierFlywheels",
+    "Icon": "Battery.Flywheels/MediumFlywheel/MediumFlywheelIcon",
+    "FallbackGroup": false
+  },
+  "ParentToolGroupSpec": {
+    "ParentIds": [
+      "Power"
+    ]
+  }
+}

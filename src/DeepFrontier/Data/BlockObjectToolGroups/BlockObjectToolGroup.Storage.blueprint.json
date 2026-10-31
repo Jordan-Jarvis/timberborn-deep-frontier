@@ -1,0 +1,22 @@
+{
+  "ToolGroupChildrenSpec": {
+    "ChildrenOrderedIds#append": [
+      "SmallIndustrialPile.IronTeeth",
+      "LargeIndustrialPile.IronTeeth",
+      "PileModule.IronTeeth",
+      "GrandUndergroundPile.IronTeeth",
+      "SmallWarehouse.IronTeeth",
+      "MediumWarehouse.IronTeeth",
+      "LargeWarehouse.IronTeeth",
+      "StorageModule.IronTeeth",
+      "GrandWarehouse.IronTeeth",
+      "RadioactiveWasteVault.IronTeeth",
+      "SmallTank.IronTeeth",
+      "MediumTank.IronTeeth",
+      "LargeTank.IronTeeth",
+      "TankModule.IronTeeth",
+      "GrandTank.IronTeeth",
+      "CryogenicTankFarm.IronTeeth"
+    ]
+  }
+}
