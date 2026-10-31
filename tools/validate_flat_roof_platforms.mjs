@@ -25,6 +25,24 @@
 //   the Size or a block with no occupation, so a platform can stand there.
 // Any flat roof cell that is neither Stackable nor under solid geometry fails, with the reason
 // tools/roof_decks.json records for it, if any. There is no list of exempt buildings.
+// Roofs act like vanilla platforms (user, 2026-10-31: "I want it to be like an actual
+// platform where roads can connect. buildings can be built on edges of two buildings
+// butting up to each other"). On the native navigation model of each blueprint
+// (roof_platform_nav.mjs, NavMeshObjectUpdater 1.1.2.8), for every platformable roof cell:
+// - path connectivity: to each neighbouring platformable roof cell of the same layer, and
+//   across each seam (a neighbour column with no block of the building from the roof layer
+//   up, where another roof or a vanilla Platform can butt up at the same height), the
+//   stand cells carry the native floor edge both ways (GenerateFloorsOnStackable) and the
+//   building blocks neither direction (auto walls, BlockedEdges, Top occupation), so player
+//   paths on both sides join;
+// - straddle placement: at a seam, a building foundation (MatterBelow GroundOrStackable)
+//   over both stand cells is valid on this side: Stackable roof block below, no occupation
+//   of the building in the stand cell. The far side is the vanilla Platform.IronTeeth
+//   blueprint (vendor reference data, read at run time), which the check first runs through
+//   the same model as a reference: two Platforms side by side must link.
+// - deck rails (PlatformDeckSpec.Openings) open only when player paths stand on both of a
+//   rail's cells, so a rail with either cell in a block that occupies Path (a room or wall)
+//   can never open and fails.
 // Writes outputs/flat-roof-platforms-report.json (per template: counts and offending cells).
 import {writeFile} from 'node:fs/promises';
 import {join, resolve} from 'node:path';
@@ -32,6 +50,8 @@ import {fileURLToPath} from 'node:url';
 import {readFileSync} from 'node:fs';
 import {connectionTemplates, faceRecord} from './connection_content.mjs';
 import {EMITTER_REACH, EMITTER_RISE, LIST} from './roof_deck_content.mjs';
+import {buildingModel, navEdges, pathBlocked, roofLinks} from './roof_platform_nav.mjs';
+import {vanillaRoot} from './progression_data.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const args = process.argv.slice(2);
@@ -42,7 +62,28 @@ const listed = JSON.parse(readFileSync(join(root, LIST), 'utf8')).buildings;
 
 const failures = [];
 const report = {};
+
+// Reference: two vanilla Platform.IronTeeth side by side, a path on each, must link on the
+// same model (its floor edges both ways, nothing blocked), or the model is wrong.
+const platform = buildingModel(JSON.parse(readFileSync(join(vanillaRoot,
+  'Buildings/Paths/Platform/Platform.IronTeeth.blueprint.json'), 'utf8').replace(/^\uFEFF/, '')));
+const platformLink = roofLinks(platform, [[0, 0, 0]]);
+if (platformLink.failures.length || platformLink.seam !== 4 || !navEdges(platform).added.has('0,0,1>1,0,1'))
+  throw new Error('Nav model does not link two vanilla Platforms: ' + JSON.stringify(platformLink));
+
+let rails = 0, railTemplates = 0;
 for (const {id, value} of await connectionTemplates(dataRoot)) {
+  const m = buildingModel(value);
+  const openings = value.PlatformDeckSpec?.Openings ?? [];
+  if (openings.length) railTemplates++;
+  for (const o of openings) {
+    rails++;
+    for (const [side, p] of [['inside', o.Inside], ['outside', o.Outside]]) {
+      const c = [p.X, p.Y, p.Z];
+      if (pathBlocked(m, c)) failures.push(`${id}: deck rail ${o.Id} ${side} cell ${c} is occupied by the building `
+        + `(${m.block(c).Occupations}), so no player path can stand there and the rail can never open`);
+    }
+  }
   let record;
   try { record = await faceRecord(id, value, root); } catch (error) { failures.push(error.message); continue; }
   const spec = value.BlockObjectSpec, {X: w, Y: h, Z: layers} = spec.Size;
@@ -63,24 +104,34 @@ for (const {id, value} of await connectionTemplates(dataRoot)) {
   }
   for (const c of record.roof.animated) if (block(c).Occupations !== 'None' && open(c)) roofs.set(key(c), {cell: c, solid: true});
   if (!roofs.size) continue;
-  const row = {flat: roofs.size, platformable: 0, underSolid: 0, offenders: []};
+  const row = {flat: roofs.size, platformable: 0, underSolid: 0, offenders: [], links: 0, seams: 0, seamCells: 0};
+  const deck = [];
   for (const {cell, solid} of roofs.values()) {
-    if (placeable(cell)) row.platformable++;
+    if (placeable(cell)) { row.platformable++; deck.push(cell); }
     else if (solid) row.underSolid++;
     else row.offenders.push({cell, reason: reasons.get(key(cell)) ?? 'not listed in ' + LIST});
   }
   row.offenders.sort((a, b) => a.cell[2] - b.cell[2] || a.cell[1] - b.cell[1] || a.cell[0] - b.cell[0]);
+  const links = roofLinks(m, deck);
+  row.links = links.within / 2;
+  row.seams = links.seam;
+  row.seamCells = links.seamCells.size;
   report[id] = row;
   for (const o of row.offenders) failures.push(`${id}: flat roof ${o.cell} is not platformable (${o.reason})`);
+  for (const l of links.failures) failures.push(`${id}: roof ${l.cell}: ${l.why}`);
 }
 await writeFile(join(root, 'outputs/flat-roof-platforms-report.json'), JSON.stringify({
   rule: 'Every flat roof cell (flat Top face of an occupied cell open to the sky, measure_connection_faces.py) is Stackable, '
-    + 'unless static or animated building geometry stands in the middle of the cell above.',
+    + 'unless static or animated building geometry stands in the middle of the cell above. Platformable roof cells link by '
+    + 'native floor edges to their same-layer roof neighbours (links) and across seams where another roof or a vanilla Platform '
+    + 'can butt up at the same height (seams, on seamCells), with a valid straddling foundation on this side; no deck rail has '
+    + 'a cell inside a block that occupies Path.',
   buildings: report}, null, 1) + '\n');
 if (table) {
-  console.log('building'.padEnd(34), 'flat', 'platformable', 'underSolid', 'offenders');
+  console.log('building'.padEnd(34), 'flat', 'platformable', 'underSolid', 'offenders', 'links', 'seams', 'seamCells');
   for (const [id, r] of Object.entries(report).sort())
-    console.log(id.padEnd(34), String(r.flat).padStart(4), String(r.platformable).padStart(12), String(r.underSolid).padStart(10), String(r.offenders.length).padStart(9));
+    console.log(id.padEnd(34), String(r.flat).padStart(4), String(r.platformable).padStart(12), String(r.underSolid).padStart(10),
+      String(r.offenders.length).padStart(9), String(r.links).padStart(5), String(r.seams).padStart(5), String(r.seamCells).padStart(9));
 }
 const sum = (f) => Object.values(report).reduce((n, r) => n + f(r), 0);
 if (failures.length) {
@@ -89,4 +140,6 @@ if (failures.length) {
   process.exit(1);
 }
 console.log(`Flat roofs: ${Object.keys(report).length} templates, ${sum((r) => r.flat)} flat roof cells: `
-  + `${sum((r) => r.platformable)} platformable, ${sum((r) => r.underSolid)} under solid geometry, none left unplaceable.`);
+  + `${sum((r) => r.platformable)} platformable, ${sum((r) => r.underSolid)} under solid geometry, none left unplaceable; `
+  + `${sum((r) => r.links)} roof-to-roof path links and ${sum((r) => r.seams)} seam links on ${sum((r) => r.seamCells)} edge cells `
+  + `(paths join, buildings can straddle), none blocked; ${rails} deck rails on ${railTemplates} templates, none into an occupied cell.`);

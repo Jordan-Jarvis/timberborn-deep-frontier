@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Roofs are platforms
+- **No roof railings, parapets or curbs.** Every Deep Frontier building with railed or walled roofs and decks loses them (the Restaurant's rails and parapet, the civic decks' rails, every late-game parapet, curb and roof rail), so flat roofs, terraces and balconies are open platforms edge to edge: paths laid on them join paths on a neighbouring roof at the same height and on stairs, and a building can stand across the seam of two roofs that meet. Pitched roofs are unchanged. Connection points for shafts and pipes are kept (the Steel Mill melt shop's walls now rise to a whole-layer roof). The Restaurant's chairs and tables are 0.14 lower, so seated diners no longer reach the balcony ceiling. A few railings stay where they are not on a roof: the Water Treatment tower balcony, the Launch Pad crew arm and the Observation Deck stair handrail. Costs follow the materials the buildings now show.
+
 ### Bricks: a new step between metal and concrete
 - **New good: Brick.** The Stone Crusher now grinds sandstone into vanilla dirt (brick earth, 3 sandstone into 8 dirt per hour), and the Cement Kiln fires 4 dirt and 1 water into 4 bricks every 2 hours, burning a log per batch.
 - **The Cement Kiln unlocks at 600 science** (was 900), with the crusher, so bricks get their own window before concrete (1,000). The kiln also got cheaper.
