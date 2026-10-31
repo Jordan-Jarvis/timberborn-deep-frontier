@@ -67,11 +67,14 @@ for ident in ('SandstonePit','LimestonePit'):
         assert all(b['Occupations']=='None' and b['MatterBelow']=='Any' for b in free),'Free cell (4,0) is blocked'
     assert blueprint['PathModelTypeEnforcerSpec']=={'PathModelType':'Roof'},'Raised apron would hide a native DirtPath'
     assert blocks[1+size['X']*size['Y']]['Occupations']=='All','Door canopy must be occupied'
-    # The one-storey flat roof (2026-10-30) is a platformable roof deck: its
-    # stackable blocks are exactly the cells tools/roof_decks.json lists.
+    # The one-storey flat roof (2026-10-30) is a platformable roof deck, and the
+    # tops that are not flat are roof hardpoints for steel columns (2026-10-31): its
+    # stackable blocks are exactly the cells tools/roof_decks.json and
+    # tools/roof_hardpoints.json list.
     decks=json.loads((ROOT/'tools/roof_decks.json').read_text())['buildings'].get(ident,{}).get('platformable',[])
+    decks=decks+json.loads((ROOT/'tools/roof_hardpoints.json').read_text())['buildings'].get(ident,{}).get('hardpoints',[])
     stackable={(i%size['X'],(i//size['X'])%size['Y'],i//(size['X']*size['Y'])) for i,b in enumerate(blocks) if b['Stackable']!='None'}
-    assert stackable=={tuple(c) for c in decks},(ident,'Stackable roof cells differ from the roof deck plan')
+    assert stackable=={tuple(c) for c in decks},(ident,'Stackable roof cells differ from the roof deck and hardpoint plans')
     assert 'MechanicalNodeSpec' not in blueprint,'Hand-operated pit should consume no hp'
     # No loose props: the pits' barrels were removed (2026-10-22).
     assert not blueprint.get('NativeBuildingPropsSpec',{}).get('Props'),'Pits carry no native props'

@@ -1,0 +1,13 @@
+{"template":"CementKiln","model":"Buildings/Metal/CementKiln/CementKiln.IronTeeth.Model","export":"src/DeepFrontier/Data/Buildings/Metal/CementKiln/CementKiln.IronTeeth.Model.timbermesh","exportSha256":"b571ab5a2872da7529c1c63d3cc2ddad52a96792aec9a8deec3ffcc6f0cee674","size":[5,3,4],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; the cell is the top cell, a column stands in the cell above","rule":"Top cells (occupied, nothing occupied above in the blueprint); inner box = samples 2..5 of 8 per axis; blocked = static geometry from 0.1 over the cell top up one layer (vertical and horizontal rays); covered = static geometry anywhere above that; animated = animated geometry in the top cell or the cell above","cells":[{"cell":[2,0,1],"blocked":false,"covered":false,"animated":false},
+{"cell":[3,0,1],"blocked":false,"covered":false,"animated":false},
+{"cell":[4,0,1],"blocked":false,"covered":false,"animated":false},
+{"cell":[4,1,1],"blocked":false,"covered":false,"animated":false},
+{"cell":[0,1,2],"blocked":false,"covered":false,"animated":false},
+{"cell":[1,1,2],"blocked":false,"covered":false,"animated":false},
+{"cell":[2,1,2],"blocked":false,"covered":false,"animated":false},
+{"cell":[3,1,2],"blocked":false,"covered":false,"animated":false},
+{"cell":[0,2,2],"blocked":false,"covered":false,"animated":false},
+{"cell":[1,2,2],"blocked":false,"covered":false,"animated":false},
+{"cell":[2,2,2],"blocked":false,"covered":false,"animated":false},
+{"cell":[3,2,2],"blocked":false,"covered":false,"animated":false},
+{"cell":[4,2,3],"blocked":false,"covered":false,"animated":false}]}

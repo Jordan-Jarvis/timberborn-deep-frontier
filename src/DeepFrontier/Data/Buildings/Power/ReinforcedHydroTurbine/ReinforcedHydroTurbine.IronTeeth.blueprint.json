@@ -1188,28 +1188,28 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -1244,7 +1244,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -1265,7 +1265,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -1412,28 +1412,28 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -1468,28 +1468,28 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2000,14 +2000,14 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2105,7 +2105,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2133,7 +2133,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2161,7 +2161,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2189,7 +2189,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2217,7 +2217,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2245,7 +2245,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2280,7 +2280,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2294,7 +2294,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2616,21 +2616,21 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2672,21 +2672,21 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2728,21 +2728,21 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2784,21 +2784,21 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2847,7 +2847,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2931,14 +2931,14 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -10053,6 +10053,205 @@
         "X": 2,
         "Y": 5,
         "Z": 2
+      }
+    ]
+  },
+  "RoofHardpointsSpec": {
+    "Cells": [
+      {
+        "X": 0,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 1,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 2,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 3,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Z": 2
+      },
+      {
+        "X": 3,
+        "Y": 1,
+        "Z": 2
+      },
+      {
+        "X": 0,
+        "Y": 4,
+        "Z": 2
+      },
+      {
+        "X": 1,
+        "Y": 4,
+        "Z": 2
+      },
+      {
+        "X": 2,
+        "Y": 4,
+        "Z": 2
+      },
+      {
+        "X": 3,
+        "Y": 4,
+        "Z": 2
+      },
+      {
+        "X": 0,
+        "Y": 5,
+        "Z": 2
+      },
+      {
+        "X": 1,
+        "Y": 5,
+        "Z": 2
+      },
+      {
+        "X": 2,
+        "Y": 5,
+        "Z": 2
+      },
+      {
+        "X": 3,
+        "Y": 5,
+        "Z": 2
+      },
+      {
+        "X": 4,
+        "Y": 4,
+        "Z": 3
+      },
+      {
+        "X": 5,
+        "Y": 4,
+        "Z": 3
+      },
+      {
+        "X": 3,
+        "Y": 6,
+        "Z": 3
+      },
+      {
+        "X": 7,
+        "Y": 6,
+        "Z": 3
+      },
+      {
+        "X": 3,
+        "Y": 7,
+        "Z": 3
+      },
+      {
+        "X": 7,
+        "Y": 7,
+        "Z": 3
+      },
+      {
+        "X": 3,
+        "Y": 8,
+        "Z": 3
+      },
+      {
+        "X": 7,
+        "Y": 8,
+        "Z": 3
+      },
+      {
+        "X": 4,
+        "Y": 9,
+        "Z": 3
+      },
+      {
+        "X": 6,
+        "Y": 9,
+        "Z": 3
+      },
+      {
+        "X": 4,
+        "Y": 5,
+        "Z": 4
+      },
+      {
+        "X": 5,
+        "Y": 5,
+        "Z": 4
+      },
+      {
+        "X": 6,
+        "Y": 5,
+        "Z": 4
+      },
+      {
+        "X": 4,
+        "Y": 6,
+        "Z": 4
+      },
+      {
+        "X": 5,
+        "Y": 6,
+        "Z": 4
+      },
+      {
+        "X": 6,
+        "Y": 6,
+        "Z": 4
+      },
+      {
+        "X": 4,
+        "Y": 7,
+        "Z": 4
+      },
+      {
+        "X": 5,
+        "Y": 7,
+        "Z": 4
+      },
+      {
+        "X": 6,
+        "Y": 7,
+        "Z": 4
+      },
+      {
+        "X": 4,
+        "Y": 8,
+        "Z": 4
+      },
+      {
+        "X": 5,
+        "Y": 8,
+        "Z": 4
+      },
+      {
+        "X": 6,
+        "Y": 8,
+        "Z": 4
+      },
+      {
+        "X": 5,
+        "Y": 9,
+        "Z": 4
+      },
+      {
+        "X": 1,
+        "Y": 1,
+        "Z": 5
+      },
+      {
+        "X": 2,
+        "Y": 1,
+        "Z": 5
       }
     ]
   },

@@ -955,35 +955,35 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -7597,6 +7597,35 @@
           "Z": 0.29
         },
         "Flowering": false
+      }
+    ]
+  },
+  "RoofHardpointsSpec": {
+    "Cells": [
+      {
+        "X": 0,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 1,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 2,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 3,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 4,
+        "Y": 0,
+        "Z": 2
       }
     ]
   },

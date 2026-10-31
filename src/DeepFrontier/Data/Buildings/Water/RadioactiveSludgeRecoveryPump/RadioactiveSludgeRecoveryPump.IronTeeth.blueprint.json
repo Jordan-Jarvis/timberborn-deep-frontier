@@ -221,42 +221,42 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -296,7 +296,7 @@
   },
   "BlockObjectNavMeshSettingsSpec": {
     "NoAutoWalls": false,
-    "GenerateFloorsOnStackable": false,
+    "GenerateFloorsOnStackable": true,
     "EdgeGroups": [],
     "UnblockedCoordinates": [],
     "BlockedEdges": []
@@ -512,6 +512,40 @@
         },
         "Directions": "Up",
         "State": "OpenOut"
+      }
+    ]
+  },
+  "RoofHardpointsSpec": {
+    "Cells": [
+      {
+        "X": 0,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 1,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 2,
+        "Y": 0,
+        "Z": 2
+      },
+      {
+        "X": 0,
+        "Y": 1,
+        "Z": 2
+      },
+      {
+        "X": 1,
+        "Y": 1,
+        "Z": 2
+      },
+      {
+        "X": 2,
+        "Y": 1,
+        "Z": 2
       }
     ]
   },

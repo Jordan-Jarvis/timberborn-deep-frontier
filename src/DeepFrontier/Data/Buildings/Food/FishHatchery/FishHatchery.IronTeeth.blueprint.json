@@ -448,7 +448,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -490,21 +490,28 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -539,21 +546,14 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -588,7 +588,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -602,7 +602,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -2921,6 +2921,55 @@
     ],
     "FlowNodes": [],
     "WheelNodes": []
+  },
+  "RoofHardpointsSpec": {
+    "Cells": [
+      {
+        "X": 5,
+        "Y": 0,
+        "Z": 1
+      },
+      {
+        "X": 4,
+        "Y": 1,
+        "Z": 1
+      },
+      {
+        "X": 5,
+        "Y": 1,
+        "Z": 1
+      },
+      {
+        "X": 6,
+        "Y": 1,
+        "Z": 1
+      },
+      {
+        "X": 4,
+        "Y": 2,
+        "Z": 1
+      },
+      {
+        "X": 5,
+        "Y": 2,
+        "Z": 1
+      },
+      {
+        "X": 6,
+        "Y": 2,
+        "Z": 1
+      },
+      {
+        "X": 4,
+        "Y": 3,
+        "Z": 1
+      },
+      {
+        "X": 6,
+        "Y": 3,
+        "Z": 1
+      }
+    ]
   },
   "StatusIconAnchorSpec": {
     "Height": 2.7

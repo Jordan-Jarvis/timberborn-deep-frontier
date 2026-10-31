@@ -317,10 +317,14 @@ namespace DeepFrontier.Scripts.SteelStructures {
   // Draws the planned columns under a tool preview with clones of the column
   // models themselves (ColumnNodes), so the preview shows what gets built. A
   // leg without support shows plain one-layer segments down to where its probe
-  // stopped. Native PreviewPlacer calls UpdateModel every frame; clones are
-  // moved only when the plan's layout changes.
+  // stopped. A leg standing on a roof hardpoint gets one more one-layer
+  // segment inside the hardpoint cell, as the built column's sleeve
+  // (HardpointSleeve): the leg enters the roof. Native PreviewPlacer calls
+  // UpdateModel every frame; clones are moved only when the plan's layout
+  // changes.
   internal sealed class SteelDeckLegs : BaseComponent, IAwakableComponent, IPostPlacementChangeListener, IModelUpdater {
     private readonly SteelLegPlanner _planner;
+    private readonly RoofHardpointService _hardpoints;
     private BlockObject _block;
     private SteelDeckToolSpec _spec;
     private EntityMaterials _materials;
@@ -330,7 +334,7 @@ namespace DeepFrontier.Scripts.SteelStructures {
     private int[] _used;
     private SteelLegPlan _drawn;
 
-    public SteelDeckLegs(SteelLegPlanner planner) {_planner=planner;}
+    public SteelDeckLegs(SteelLegPlanner planner,RoofHardpointService hardpoints) {_planner=planner;_hardpoints=hardpoints;}
 
     public void Awake() {
       _block=GetComponent<BlockObject>();_spec=GetComponent<SteelDeckToolSpec>();
@@ -363,6 +367,8 @@ namespace DeepFrontier.Scripts.SteelStructures {
       bool created=false;
       if(plan.Valid) {
         foreach(var (column,cell) in plan.Columns())Show(column,cell,ref created);
+        foreach(var leg in plan.Legs)
+          if(leg.Length>0&&_hardpoints.IsHardpoint(leg.Bottom.Below()))Show(0,leg.Bottom.Below(),ref created);
       } else {
         foreach(var leg in plan.Legs) {
           if(leg.Failure==LegFailure.None) {

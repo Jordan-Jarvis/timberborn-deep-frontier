@@ -1270,6 +1270,7 @@
       }
     }
   },
+  "SteelSupportSpec": {},
   "StatusIconAnchorSpec": {
     "Height": 1.7
   }

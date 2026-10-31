@@ -3,11 +3,16 @@
 ## Unreleased
 
 ### Steel decks on legs
-- **New: Steel deck 3×3 and 5×5 on legs**, each 1, 2, 3 or 4 layers high (Paths → Steel structures). Point at a spot and the deck appears that high above it, with a steel column under each corner that reaches down to the first support: the ground (also under water), a platform or a flat roof. Every leg finds its own height, so the deck stays level over slopes, terraces and water.
+- **New: Steel deck 3×3 and 5×5 on legs**, each 1, 2, 3 or 4 layers high (Paths → Steel structures). Point at a spot and the deck appears that high above it, with a steel column under each corner that reaches down to the first support: the ground (also under water), a platform or the roof of a building. Every leg finds its own height, so the deck stays level over slopes, terraces and water.
 - **One click places everything.** The preview shows the exact columns that will be built. Builders put up the columns first, then the deck. A leg can be up to 12 layers long; longer legs are two stacked columns.
 - **Clear reasons.** If a leg runs into a building or finds no support within 12 layers, the preview turns red and says why.
 - **Costs shown live.** The tool panel shows the deck's cost and, for the spot under the cursor, how many columns it needs and what they add.
 - The separate steel columns and decks are still there for building by hand.
+
+### Steel legs on any roof
+- **Steel columns can now stand on top of almost any building**, not just on flat roofs: on pitched, curved and sawtooth roofs and on the tops of machinery. The column visibly continues down into the roof. This also works for the legs of the new decks, so a deck can sit over existing buildings, with some legs on the roof and some on the ground.
+- Paths, platforms and other buildings still need a flat roof; their preview says so. Columns never stand on moving parts, smoke stacks, fish pens or porches.
+- Buildings with steel columns on their roof keep working, and cannot be deleted while the columns stand.
 
 ## 0.8.0 (2026-10-31)
 

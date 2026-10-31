@@ -1,0 +1,9 @@
+{"template":"SmogScrubber","model":"Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.Model","export":"outputs/lategame-integration/Data/Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.Model.timbermesh","exportSha256":"728aa7633162bdbb6e22227c8a26ea1ddc76e45495f707a92c4ee0b3998daf9c","size":[3,3,5],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; the cell is the top cell, a column stands in the cell above","rule":"Top cells (occupied, nothing occupied above in the blueprint); inner box = samples 2..5 of 8 per axis; blocked = static geometry from 0.1 over the cell top up one layer (vertical and horizontal rays); covered = static geometry anywhere above that; animated = animated geometry in the top cell or the cell above","cells":[{"cell":[0,0,4],"blocked":false,"covered":false,"animated":false},
+{"cell":[1,0,4],"blocked":false,"covered":false,"animated":false},
+{"cell":[2,0,4],"blocked":false,"covered":false,"animated":false},
+{"cell":[0,1,4],"blocked":false,"covered":false,"animated":true},
+{"cell":[1,1,4],"blocked":false,"covered":false,"animated":true},
+{"cell":[2,1,4],"blocked":false,"covered":false,"animated":true},
+{"cell":[0,2,4],"blocked":false,"covered":false,"animated":false},
+{"cell":[1,2,4],"blocked":false,"covered":false,"animated":false},
+{"cell":[2,2,4],"blocked":false,"covered":false,"animated":false}]}

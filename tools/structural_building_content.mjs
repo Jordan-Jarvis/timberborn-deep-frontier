@@ -278,9 +278,12 @@ export function legDeckBlocks(tool) {
   return blocks;
 }
 
+export const HARDPOINT_SLEEVE='#HardpointSleeve';
 export const STEEL_LEG_ROWS=[
   ['DeepFrontier.SteelLegs.Blocked',
-   'A leg runs into a building or another object before it reaches a support. Legs stand on the ground, platforms and flat roofs.'],
+   'A leg runs into something it cannot stand on before it reaches a support: a wall, a smoke stack or a moving part of a building. Move the deck a little.'],
+  ['DeepFrontier.RoofHardpoints.SteelOnly',
+   'Only steel columns and steel decks can stand on the top of a roof that is not flat. Build paths, platforms and buildings on flat roofs.'],
   ['DeepFrontier.SteelLegs.TooDeep',
    'A leg finds no support within {0} layers below the deck. Point at higher ground or use a lower deck.'],
   ['DeepFrontier.SteelLegs.Columns',
@@ -397,6 +400,16 @@ export async function structuralBlueprints() {
       '#Unfinished':{Children:{ConstructionStage0:{
         TimbermeshSpec:{Model:model+'.ConstructionStage0.Model'},CollidersSpec:colliders}}},
     };
+    // Steel supports may stand on roof hardpoints (tools/roof_hardpoint_content.mjs,
+    // src/DeepFrontier/Scripts/SteelStructures/RoofHardpoints.cs). A column on a hardpoint
+    // shows its sleeve: the one-layer column model one layer down, inside the roof.
+    if(b.kind==='column'||b.kind==='deck')v.SteelSupportSpec={};
+    if(b.kind==='column') {
+      v.HardpointSleeveSpec={NodeName:HARDPOINT_SLEEVE};
+      v.Children['#Finished'].Children={[HARDPOINT_SLEEVE]:{
+        TransformSpec:{Position:{X:0,Y:-1,Z:0},Rotation:{X:0,Y:0,Z:0},Scale:{X:1,Y:1,Z:1}},
+        TimbermeshSpec:{Model:`Buildings/Platforms/${catalog.legDecks.columns[0]}/${catalog.legDecks.columns[0]}.IronTeeth.Model`}}};
+    }
     if(b.kind==='block'||b.kind==='dam') {
       const height=b.kind==='block'?1:.65;
       if(v.WaterObstacleSpec.Coordinates.length!==1||v.FinishableWaterObstacleSpec.Height!==height)

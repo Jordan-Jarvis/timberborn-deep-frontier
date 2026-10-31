@@ -436,6 +436,10 @@ await (await import('./super_bot_content.mjs')).applySuperBots();
 // design step after every building's blocks are final and before the connection
 // step, which offers roof faces only on stackable blocks.
 await (await import('./roof_deck_content.mjs')).applyRoofDecks();
+// Roof hardpoints (tools/roof_hardpoints.json, tools/roof_hardpoint_content.mjs): the tops of roofs
+// that are not flat become stackable beds for steel supports only; after the roof decks, before the
+// connection step (hardpoints are never flat, so they get no shaft or pipe faces).
+await (await import('./roof_hardpoint_content.mjs')).applyRoofHardpoints();
 // Power shafts and Timber Pipes on every flat exterior face
 // (outputs/connection-faces, tools/connection_content.mjs): after every
 // building blueprint, its blocks, doors and pipe sockets exist (radiation and

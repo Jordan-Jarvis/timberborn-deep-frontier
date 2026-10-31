@@ -32,7 +32,7 @@ async function sources(dir) {
 const allScripts = (await sources(scriptsRoot)).join('\n');
 
 for (const [spec, declared] of Object.entries(config.customSpecs)) {
-  if (!['operational', 'native', 'cosmetic', 'passive', 'display', 'dependency'].includes(declared.kind)) errors.push(`customSpecs.${spec}: unknown kind ${declared.kind}`);
+  if (!['operational', 'native', 'cosmetic', 'passive', 'display', 'placement', 'dependency'].includes(declared.kind)) errors.push(`customSpecs.${spec}: unknown kind ${declared.kind}`);
   if (!declared.response) errors.push(`customSpecs.${spec}: state its response to an Off signal`);
   if (declared.kind === 'dependency') {
     if (allScripts.includes(`record ${spec}`)) errors.push(`customSpecs.${spec}: declared as a dependency spec but defined in Deep Frontier scripts`);
@@ -43,6 +43,13 @@ for (const [spec, declared] of Object.entries(config.customSpecs)) {
   if (declared.kind === 'display') {
     if (!allScripts.includes(`record ${spec}`) || !allScripts.includes(`GetComponent<${spec}>()`))
       errors.push(`customSpecs.${spec}: display specs must be defined and read (GetComponent<${spec}>()) by Deep Frontier scripts`);
+    continue;
+  }
+  // A placement spec is data that placement validators and services read from placed
+  // buildings (no decorator, no runtime behaviour); defined and read by Deep Frontier scripts.
+  if (declared.kind === 'placement') {
+    if (!allScripts.includes(`record ${spec}`) || !allScripts.includes(`GetComponent<${spec}>()`))
+      errors.push(`customSpecs.${spec}: placement specs must be defined and read (GetComponent<${spec}>()) by Deep Frontier scripts`);
     continue;
   }
   if (!new RegExp(`AddDecorator<${spec}\\s*,`).test(allScripts)) errors.push(`customSpecs.${spec}: no Deep Frontier TemplateModule decorates this spec`);

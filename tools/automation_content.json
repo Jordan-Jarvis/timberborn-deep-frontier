@@ -738,6 +738,10 @@
       "kind": "display",
       "response": "Display only: caps the height of the native status icon (Scripts/StatusIconAnchor.cs). It takes no part in operation, so the native Off response of the building is unchanged."
     },
+    "RoofHardpointsSpec": {
+      "kind": "placement",
+      "response": "Placement data only: names the roof cells where steel columns may stand (Scripts/SteelStructures/RoofHardpoints.cs, tools/roof_hardpoint_content.mjs). It takes no part in operation, so the native Off response of the building is unchanged."
+    },
     "MapEdgeSiteSpec": {
       "kind": "passive",
       "response": "Placement rule only (the Radioactive Waste Export must touch the map edge). Off stops intake: the export's consumption is its native Manufactory, which stops when PausableBuildingTerminal blocks the workplace."

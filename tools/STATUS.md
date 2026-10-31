@@ -4,6 +4,16 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Roof hardpoints: steel legs on roofs that are not flat (Claude Code session, 2026-10-31, platforms agent; slice 3 of docs/platforms-design.md; generated and validated in mirror `legs` on 9a63247; not built or run in game)
+
+- **User (2026-10-29, again 2026-10-31):** legs that "connect to and sit on top of non flat topped buildings (going through/into the building)".
+- **Rule (`tools/roof_hardpoint_content.mjs`, list `tools/roof_hardpoints.json`, generated):** the top cell of every building column that is no flat roof deck, not family-stackable, has Top occupation, is not below BaseZ, has an exterior non-access cell above, nothing standing over it or hanging above, no animated part in it or above (new measurement `tools/asset-pipeline/measure_roof_hardpoints.py` -> `outputs/roof-hardpoints`), and no emitter or prop. Structural pieces and the Deep Well (`CLOSED`) get none. Applied after the roof decks: Stackable, `RoofHardpointsSpec {Cells}`, `GenerateFloorsOnStackable`.
+- **Result:** 1,124 hardpoints on 47 templates; with the 544 flat roof cells, 93.5% of the 1,784 building top cells can carry a leg. The other 116: 68 animated, 9 emitters, 12 hatchery pen cells below BaseZ, 6 porch floors, 6 with geometry above, 2 Deep Well, 1 enclosed, 12 flat roofs the roof-deck step excludes. **D2 (sleeves through buildings) not built:** the remaining cells are where a column must not stand.
+- **Code (`Scripts/SteelStructures/RoofHardpoints.cs`, no Harmony):** `RoofHardpointValidator` refuses every preview without `SteelSupportSpec` (on steel columns, steel decks, leg deck tools) whose foundation rests on a hardpoint; `HardpointSleeve` shows each column's `#HardpointSleeve` (the H1 column model one layer down) on a hardpoint; the leg deck preview draws the same sleeve. The slice 2 planner finds hardpoints as beds with no change.
+- **Other files:** `validate_pit_exports.py` accepts roof decks plus hardpoints; `validate_automation_content.mjs` kind `placement`; `CivicFixtureGeometry.DeckStands` and `AllBuildingsSites.BuildOnDeck` skip hardpoints. Native floors over hardpoints are kept (an object cannot block its own stackable floors; builders need them to reach roof columns).
+- **Checks (mirror `legs`):** canonical generation and both roof lists reach a fixed point (the roof-deck list's key order differs between mirror and repo traversal, entries equal, file untouched); new `validate_roof_hardpoints.mjs` and `validate_roof_hardpoint_exports.py` pass and fail on a broken blueprint; `validate_all -SkipBlender` 64 pass + 1 report-only (`no-game-assets` needs git; passes on the staged commit); compile check 0 errors.
+- **In game, still to test:** docs/platforms-design.md section 6, items 13-18.
+
 ## Steel decks on legs: assisted placement, one Harmony postfix (Claude Code session, 2026-10-31, platforms agent; slice 2 of docs/platforms-design.md; generated and validated in mirror `legs` on b582d9b; not built or run in game)
 
 - **User (2026-10-29, again 2026-10-31):** "dynamic leg length" for the bigger steel platforms: each of the four legs at its own height.

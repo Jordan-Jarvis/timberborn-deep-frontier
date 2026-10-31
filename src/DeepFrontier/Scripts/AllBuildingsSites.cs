@@ -334,7 +334,9 @@ namespace DeepFrontier.Scripts {
       SitePreview(s,new Placement(at,contract.Orientation,FlipMode.Unflipped),true,"site: native preview from the cursor is valid");
     }
     private void BuildOnDeck(Subject s) {
-      var slabs=s.Building.PositionedBlocks.GetAllBlocks().Where(b=>b.IsOccupied&&b.Stackable==BlockStackable.BlockObject)
+      // Roof hardpoints are stackable for steel columns only (SteelStructures/RoofHardpoints.cs): no deck slabs.
+      var hardpoints=s.Building.GetComponent<SteelStructures.RoofHardpointsSpec>()?.Cells.Select(c=>s.Building.TransformCoordinates(c)).ToHashSet()??new HashSet<Vector3Int>();
+      var slabs=s.Building.PositionedBlocks.GetAllBlocks().Where(b=>b.IsOccupied&&b.Stackable==BlockStackable.BlockObject&&!hardpoints.Contains(b.Coordinates))
         .Select(b=>b.Coordinates+new Vector3Int(0,0,1)).OrderBy(c=>c.y).ThenBy(c=>c.x).ToList();
       var rejected=new List<string>();int paths=0;bool platform=false;
       foreach(var c in slabs) {

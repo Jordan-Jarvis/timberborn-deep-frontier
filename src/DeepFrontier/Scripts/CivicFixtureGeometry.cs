@@ -38,11 +38,15 @@ namespace DeepFrontier.Scripts {
     // Stackable block of the building: GenerateFloorsOnStackable lays native floor edges there,
     // as on a vanilla Platform. Outside the bounds, free, or holding only the Top/Corners of
     // the deck one layer up (a covered balcony, as under a vanilla Platform or Overhang).
+    // Roof hardpoints (RoofHardpointsSpec, 2026-10-31) are stackable for steel columns only and
+    // are no deck stands.
     internal static List<Vector3Int> DeckStands(BlockObjectSpec spec) {
       var blocks=Blocks(spec);
+      var hardpoints=spec.HasSpec<SteelStructures.RoofHardpointsSpec>()
+        ?new HashSet<Vector3Int>(spec.GetSpec<SteelStructures.RoofHardpointsSpec>().Cells):new HashSet<Vector3Int>();
       bool Standable(Vector3Int c)=>!blocks.TryGetValue(c,out var o)||(o&~(BlockOccupations.Top|BlockOccupations.Corners))==0;
       return spec.GetBlocks(new Placement(Vector3Int.zero,Orientation.Cw0,FlipMode.Unflipped))
-        .Where(b=>b.Stackable.IsStackable()).Select(b=>b.Coordinates+new Vector3Int(0,0,1))
+        .Where(b=>b.Stackable.IsStackable()&&!hardpoints.Contains(b.Coordinates)).Select(b=>b.Coordinates+new Vector3Int(0,0,1))
         .Where(Standable).OrderBy(c=>c.z).ThenBy(c=>c.y).ThenBy(c=>c.x).ToList();
     }
     // A deck seam: a stand on the deck's edge and the cell beside it along `dir`, which is no

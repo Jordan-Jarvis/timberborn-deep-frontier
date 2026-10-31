@@ -1513,6 +1513,7 @@
       }
     }
   },
+  "SteelSupportSpec": {},
   "SteelDeckToolSpec": {
     "DeckTemplate": "SteelDeck5x5.IronTeeth",
     "DeckZ": 1,

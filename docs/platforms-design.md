@@ -10,7 +10,7 @@ Labels: **[S]** source evidence (decompiled code or blueprint JSON); **[R]** run
 |---|---|---|
 | 1 | Steel cantilevers 10/12/15, truss bridges 8/10/12/15, columns H1–H6, decks 3×3/5×5 (native data only) | Built 2026-10-29; not run in game |
 | 2 | **C2, assisted placement ("dynamic legs")**: one click places a deck and a column stack per corner, each as long as its bed needs | Built 2026-10-31; compiled and statically checked; not run in game |
-| 3 | **D1, roof hardpoints ("legs into buildings")** | See section 5 |
+| 3 | **D1, roof hardpoints ("legs into buildings")**: steel columns stand on the tops of roofs that are not flat, and enter them | Built 2026-10-31; generated and statically checked; not run in game |
 
 ---
 
@@ -95,7 +95,7 @@ No native component sizes legs at placement time. The closest: `WaterInputPipe` 
 
 | Route | Verdict |
 |---|---|
-| **D1 roof hardpoints**: the top cells of non-flat roofs become stackable beds for steel supports only | Slice 3. |
+| **D1 roof hardpoints**: the top cells of non-flat roofs become stackable beds for steel supports only | **Built in slice 3.** |
 | D2 leg sleeves: clear `Corners` down chosen building columns so columns pass through to the ground | Not built (section 5). |
 | D3 Harmony on `MatterBelowValidator`, the load flood and the deletion finder | Rejected: three core patches that must agree or saves lose objects. |
 
@@ -105,7 +105,7 @@ No native component sizes legs at placement time. The closest: `WaterInputPipe` 
 
 ### 4.1 What the player gets
 
-Eight tools in Paths → Steel structures: **Steel deck 3×3 / 5×5 on legs (1, 2, 3 or 4 high)**. The deck appears that many layers above the spot under the cursor. Under each corner the preview draws the steel columns that will be built, each reaching down to the first support: the ground (also under water), a platform, a column, a flat roof, or (slice 3) a roof hardpoint. Legs can all differ. One click places the deck and every column; the columns are built first. If a leg cannot reach a support within 12 layers below the deck, or runs into a building, the preview turns red with the reason. The tool panel shows the deck's cost and, live, the columns this spot needs and their extra cost. The manual pieces (columns, decks) stay available.
+Eight tools in Paths → Steel structures: **Steel deck 3×3 / 5×5 on legs (1, 2, 3 or 4 high)**. The deck appears that many layers above the spot under the cursor. Under each corner the preview draws the steel columns that will be built, each reaching down to the first support: the ground (also under water), a platform, a column, a flat roof, or the top of any other building roof (slice 3). Legs can all differ. One click places the deck and every column; the columns are built first. If a leg cannot reach a support within 12 layers below the deck, or runs into a building, the preview turns red with the reason. The tool panel shows the deck's cost and, live, the columns this spot needs and their extra cost. The manual pieces (columns, decks) stay available.
 
 ### 4.2 Data (`tools/structural_building_content.mjs`, `legDeckBlueprints`)
 
@@ -120,8 +120,8 @@ Eight tools in Paths → Steel structures: **Steel deck 3×3 / 5×5 on legs (1, 
 ### 4.3 Code (`src/DeepFrontier/Scripts/SteelStructures/`)
 
 - `SteelLegPlanner` (singleton): for each deck foundation (the real deck's solid-matter blocks; no separate leg list) it tries L = 0 (the deck block's own `MatterBelowValidator.Validate`) and then L = 1..MaxDepth with the native `BlockValidator.BlocksValid` on exactly the column blocks that will be built (a stacked column's upper foundation is relaxed to Any: it stands on the cap below). The shortest valid L wins. A cell no column block can hold (off the map, terrain, a non-overridable object's Corners) stops the probe early, because native validation would reject every longer leg for that same cell. Legs longer than 6 stack columns: full H6 columns with the remainder as the bottom column (every split into the same number of columns costs the same). One plan per frame and placement is shared by the validator, the drawing and the tool panel. Every tool template is checked at load (`IPostLoadableSingleton`): sizes, the relaxed deck layer, the foot, the column contract.
-- `SteelDeckLegValidator` (`IBlockObjectValidator`, previews of tools only): "A leg runs into a building or another object before it reaches a support" or "A leg finds no support within 12 layers below the deck".
-- `SteelDeckLegs` (decorator of `SteelDeckToolSpec`): clones the column nodes to draw the planned columns; a failing leg shows plain one-layer segments down to where its probe stopped. Clones keep their parent's axes and are centred on their cell, so rotation and the native -1 X flip scale draw them on the right cell. Rebuilt only when the layout changes.
+- `SteelDeckLegValidator` (`IBlockObjectValidator`, previews of tools only): "A leg runs into something it cannot stand on before it reaches a support: a wall, a smoke stack or a moving part of a building" or "A leg finds no support within 12 layers below the deck".
+- `SteelDeckLegs` (decorator of `SteelDeckToolSpec`): clones the column nodes to draw the planned columns; a leg on a roof hardpoint gets one more one-layer segment inside the roof (the built column's sleeve); a failing leg shows plain one-layer segments down to where its probe stopped. Clones keep their parent's axes and are centred on their cell, so rotation and the native -1 X flip scale draw them on the right cell. Rebuilt only when the layout changes.
 - `SteelDeckPlacer` (`IBlockObjectPlacer`, multibound): `CanHandle` = has `SteelDeckToolSpec`. `Place` plans again against the world without previews, then creates every column bottom-up and the deck last, each through the native `BuildingPlacer.Place` (unfinished, or finished with the native PlaceFinished key). `Describe` is the native `BuildingPlacer.Describe` plus a live section. `BuildingPlacer` comes from the container on first use (it is in the same multibinding, so a constructor dependency would be circular).
 - **The only Harmony patch: `SteelDeckPlacerClaim`**, a postfix on `BuildingPlacer.CanHandle` that returns false for templates with `SteelDeckToolSpec`, so `GetMatchingPlacer` finds exactly one placer. Checked at mod start (throws on a changed game): `CanHandle(BlockObjectSpec) : bool` only calls `HasSpec<BuildingSpec>`, and `GetMatchingPlacer` still uses `SingleOrDefault`. `CanHandle` is 7 bytes of IL but is only ever reached through the `IBlockObjectPlacer` interface, which Mono never inlines.
 - After the click everything is native: columns and deck are ordinary buildings with native support, construction order, deletion cascade and load validation. The tool itself is never an entity and is never saved. Removing the mod patch would leave valid entities.
@@ -150,9 +150,64 @@ See section 6.
 
 ---
 
-## 5. Slice 3: roof hardpoints
+## 5. Slice 3 as built: roof hardpoints
 
-Planned: a generator step beside `roof_deck_content.mjs` makes the top cell of every non-flat roof column a native stackable bed for steel supports only, with a validator that keeps every other object off it and a column sleeve that enters the roof.
+### 5.1 What the player gets
+
+Steel columns, placed by hand or as the legs of a deck on legs, can stand on top of almost any building: on flat roofs as before, and now also on pitched, gabled, sawtooth, curved and machinery tops. A column on such a roof shows a sleeve that continues one layer down into the roof, so the leg enters the building. Paths, platforms and other buildings still need a flat roof; their preview says "Only steel columns and steel decks can stand on the top of a roof that is not flat". Moving parts, smoke stacks, fish pens and porches stay clear.
+
+### 5.2 Rule (`tools/roof_hardpoint_content.mjs`)
+
+A **hardpoint** is the top cell of a building column (its top-most occupied block, nothing of the building above it) that
+
+1. is no flat roof face (those are the roof decks of `roof_deck_content.mjs`, platformable or excluded with a reason), is not already stackable by its family, has Top occupation (a porch or walkway floor is not a roof), is not below the building's BaseZ (the Fish Hatchery's pens stand in the water), and is not on a building whose own contract keeps every block unstackable (`CLOSED`: the Deep Well, `validate_deep_well_content.mjs`);
+2. has an exterior, non-access cell above (the roof-deck and connection test: `connectionFaces` with every block stackable);
+3. has no building geometry in the middle of the cell above, nothing hanging over it, and no animated part in the top cell or the cell above, measured on the exported model by `tools/asset-pipeline/measure_roof_hardpoints.py` (the roof-deck probes and thresholds: inner box 0.31 in from every cell edge, `ROOF_LIP` 0.1) into `outputs/roof-hardpoints/<Template>.json`;
+4. has no smoke or steam mouth in its column and no native prop in the middle of the cell above (the roof-deck emitter and prop rules).
+
+Structural pieces (masonry, platforms, decks, overhangs, bridges, columns, the leg deck tools) get none: they are supports or paths themselves. Every other top cell is listed with its reason. The list `tools/roof_hardpoints.json` is generated (`node tools/roof_hardpoint_content.mjs --write <generated Data>`); generation applies it after the roof decks and before the connection step, refusing a stale list:
+
+- each hardpoint becomes `Stackable: BlockObject`;
+- the blueprint gets `RoofHardpointsSpec {Cells}`;
+- `GenerateFloorsOnStackable` is on, as for every stackable template.
+
+Hardpoints are never flat faces, so the connection step offers no shaft or pipe face on them.
+
+### 5.3 Code (`src/DeepFrontier/Scripts/SteelStructures/RoofHardpoints.cs`)
+
+- `RoofHardpointService.IsHardpoint(cell)`: a placed building's `RoofHardpointsSpec` names the cell.
+- `RoofHardpointValidator` (`IBlockObjectValidator`, previews only): a preview without `SteelSupportSpec` whose foundation would rest on a hardpoint is refused. `SteelSupportSpec` is on the steel columns, the steel decks and the leg deck tools.
+- `HardpointSleeve` (decorator of `HardpointSleeveSpec`, on every steel column): shows `#HardpointSleeve` (the one-layer column model, `TransformSpec` one layer down) while the column stands on a hardpoint.
+- No Harmony. Everything else is native: support, cursor picking (stackable faces are pickable), load validation and order (a column on a roof sorts above the building), stack deletion, and the building's `BlockObjectAtopDeletionBlocker`; `StackableTopBlockExemption` keeps the building working under the column.
+- The slice 2 planner needed no change: its native `BlocksValid` probe accepts a hardpoint as a bed.
+- Fixtures: `CivicFixtureGeometry.DeckStands` and `AllBuildingsSites.BuildOnDeck` leave hardpoints out (they are no decks for paths).
+
+### 5.4 Numbers, and D1 or D2
+
+Of 1,784 top cells on the 48 building templates that own a model, 544 are flat platformable roofs and 1,124 are hardpoints: **93.5% of all building tops can carry a steel leg.** The other 116 are cells where no leg should stand: 68 animated parts, 9 smoke or steam mouths, 12 fish-pen cells below the hatchery's base layer, 6 porch floors, 6 cells with geometry above, 2 Deep Well cells, 1 enclosed cell, and 12 flat roofs the roof-deck step already excludes. A deck corner over one of them shows "A leg runs into something it cannot stand on", and the player moves the deck by a tile.
+
+**D2 (leg sleeves through the building down to the ground) is not needed and was not built.** D1 already lets legs stand on, and visibly enter, nearly every building top. D2 would only add landing spots under those 116 cells, which are exactly the places where a column would cut through machinery or water. It would also have to clear `Corners` through many building occupancies, admit other Corners-only objects there, and clip through the models.
+
+### 5.5 Side effects, as decided
+
+- **Floors on hardpoints.** Native `GenerateFloorsOnStackable` lays floor edges over every hardpoint, and an object cannot block its own stackable floors (1.7). Beavers can therefore walk across hardpoint tops that join a reachable path or roof. This is kept on purpose: it is how builders reach a column standing on a pitched roof. On a pitched roof they walk at the top of the hardpoint cell.
+- **Permanent contract.** Removing a hardpoint later deletes what stands on it at load, so a model change that drops one needs care.
+- `validate_pit_exports.py` now expects the pits' stackable cells to be roof decks plus hardpoints; `validate_automation_content.mjs` has a `placement` kind for data specs read by placement code (`RoofHardpointsSpec`).
+
+### 5.6 Checks
+
+- `tools/validate_roof_hardpoints.mjs` (validate_all `roof_hardpoints`): the list equals the recomputed plan; `RoofHardpointsSpec` equals the list; each hardpoint is an occupied, Top, Stackable top cell with nothing above, no roof-deck cell and no roof shaft face; every top cell of every building is decided; every curved or sloped roof face the connection measurement found on a top cell is a hardpoint or excluded with a reason; no structural piece has hardpoints; exactly the steel pieces carry `SteelSupportSpec`; every column has its sleeve; the C# wiring and the message row. A broken blueprint fails explicitly.
+- `tools/asset-pipeline/validate_roof_hardpoint_exports.py` (validate_all `exports-roof_hardpoint`): re-measures every model and compares with `outputs/roof-hardpoints`.
+
+### 5.7 Changes from the original design
+
+| Design | Built | Why |
+|---|---|---|
+| Generated `BlockedEdges` keep beavers off hardpoint tops | Floors kept | Source: an object's own `BlockedEdges` cannot remove its own stackable floors (1.7); the floors are also how builders reach a column on a roof. |
+| A new saddle or sleeve foot model | The one-layer column model one layer down (`#HardpointSleeve`) | No new art; it reads as the leg continuing into the roof. |
+| Flat-face measurement only | A new measurement of every top cell (`measure_roof_hardpoints.py`) | The connection-face records describe only flat faces; hardpoints are the non-flat ones. |
+| Every qualifying top cell | Also excluded: structural pieces, cells below BaseZ, floors without Top occupation, the Deep Well | Existing contracts (hatchery pens, Deep Well) and paths and decks that are supports themselves. |
+| `RoofHardpointSpec` | `RoofHardpointsSpec {Cells}` plus `SteelSupportSpec` and `HardpointSleeveSpec` | The validator needs the steel marker; the sleeve needs its node. |
 
 ---
 
@@ -166,9 +221,15 @@ Not yet run. Acceptance runs need someone to click the launch dialogs.
 4. **Over water.** Legs standing in a pond reach the riverbed.
 5. **On a platform / existing column / flat roof deck.** A leg ends on it; where a corner sits directly on a support, no column is placed there.
 6. **Long legs.** A 5×5 H4 over a deep valley: a leg of 7–12 layers is two stacked columns (shorter one at the bottom); 13+ layers: red preview "no support within 12 layers".
-7. **Blocked leg.** A leg landing on a non-flat building roof (before slice 3) or crossing a building: red preview "runs into a building".
+7. **Blocked leg.** A deck corner over a smoke stack, a moving part or a building wall: red preview "runs into something it cannot stand on".
 8. **Rotation and flip.** Rotate and flip the tool: the columns are drawn and built under the deck corners in every orientation.
 9. **Deletion.** Delete one column under a finished deck: blocked while the deck stands (native). Delete the deck: columns remain.
 10. **Save/reload.** Save with decks and columns finished and unfinished; reload; nothing is deleted.
 11. **Preview cost.** `tools/start_preview_cost.ps1` with a leg deck tool hovering a slope: frame time comparable to the plain deck.
 12. **Unreachable warnings.** Note whether the tool preview shows native reachability warnings; the built columns and deck must become reachable as usual.
+13. **Column on a pitched roof.** Place a SteelColumnH2 by hand on the pitched roof of the Hospital or the Grocery Store: the cursor picks the roof top, the preview is valid and shows the sleeve going down into the roof; build it; the sleeve stays.
+14. **Others refused.** A vanilla Platform, a Path and a power shaft on the same pitched roof: red preview "Only steel columns and steel decks can stand on the top of a roof that is not flat". On a flat roof deck they still work.
+15. **Deck over a building.** A 5×5 H2 on legs over a pitched-roof building, two corners on the roof and two on the ground: columns of different heights, the roof legs with sleeves; it builds, and the building keeps working underneath.
+16. **Deletion and load.** Deleting the building is blocked while columns stand on it; save and reload keeps the building, the columns, the deck and anything built on the deck.
+17. **Clear cells.** Corners over a fan, a crane, a smoke stack or the Fish Hatchery pens are refused.
+18. **Builders and walking.** Builders reach columns on a roof by a stair or platform up to the roof; watch whether beavers wander over pitched roofs, and whether that looks acceptable.
