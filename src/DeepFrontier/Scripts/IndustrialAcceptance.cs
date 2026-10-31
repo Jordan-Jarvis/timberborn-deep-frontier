@@ -148,8 +148,10 @@ namespace DeepFrontier.Scripts {
       _camera.MoveTargetTo(new Vector3(166,5,150));
       _camera.SetZoomLevel(35,0);_camera.HorizontalAngle=35;_camera.VerticalAngle=45;
       if (_reload) {
-        foreach(var c in Origins)
+        for(int i=0;i<Layout.Length;i++) {
+          var c=Origin(i);
           _factories.Add(_registry.Entities.Where(e=>e.HasComponent<TemplateSpec>()&&IsIndustrial(e.GetComponent<TemplateSpec>().TemplateName)).Select(e=>e.GetComponent<BlockObject>()).Single(b=>b.Coordinates==c));
+        }
         return;
       }
       if (_registry.Entities.Any(e=>e.HasComponent<TemplateSpec>()&&IsIndustrial(e.GetComponent<TemplateSpec>().TemplateName)))
@@ -171,57 +173,76 @@ namespace DeepFrontier.Scripts {
       // must clear every solid segment, not only the surface above voxel zero.
       for(int x=132;x<140;x++)LevelCell(x,142);
       for(int y=140;y<142;y++)LevelCell(132,y);
-      RequireInstalledFootprints();
-      _factories.Add(CreateFactory("StoneCrusher.IronTeeth",0));
-      _factories.Add(CreateFactory("StoneCrusher.IronTeeth",1));
-      _factories.Add(CreateFactory("CementKiln.IronTeeth",2));
-      Create("SandstoneSeam",179,146,3);
-      _factories.Add(CreateFactory("SandstoneQuarry.IronTeeth",3));
-      Create("LimestoneSeam",179,159,3);
-      _factories.Add(CreateFactory("LimestoneQuarry.IronTeeth",4));
-      _factories.Add(CreateFactory("StoneCrusher.IronTeeth",5,Orientation.Cw90));
-      // Ordinary district road and the existing ground-door approaches.
+      for(int i=0;i<Layout.Length;i++) {
+        var seam=Layout[i].Seam;
+        if(seam!=null) {
+          var c=Origin(i)+SeamCell(Layout[i].Template,seam);
+          Create(seam,c.x,c.y,c.z);
+        }
+        _factories.Add(CreateFactory(i));
+      }
+      // Ordinary district road and a ground-door approach from it to each
+      // door on the road side (the second quarry's door is reached later).
       for(int x=145;x<186;x++)Create("Path",x,142,3);
-      foreach(var c in new[]{new Vector3Int(150,143,3),new Vector3Int(150,144,3),new Vector3Int(156,143,3),new Vector3Int(156,144,3),new Vector3Int(167,143,3),new Vector3Int(177,143,3),new Vector3Int(177,144,3)})Create("Path",c.x,c.y,c.z);
+      foreach(var door in Layout.Where(f=>f.Orientation==Orientation.Cw0&&f.Anchor.y<150).Select(f=>f.Anchor).Distinct())
+        for(int y=143;y<=door.y;y++)Create("Path",door.x,y,door.z);
       CheckSolidRooms();
       Debug.Log("[DeepFrontier Acceptance] Fixture setup complete.");
     }
-    // 2026-10-22 footprints end at the walls: StoneCrusher 6x7 -> 4x4 (new local = old - (1,2)),
-    // CementKiln 9x9 -> 7x5 (old - (1,1)), quarries 11x10 -> 11x7 (old - (0,2)). Each origin
-    // below is the former origin plus that offset (rotated for the Cw90 crusher), so every
-    // machine, ground-door Entrance, approach path and seam keeps its former world cell and the
-    // new footprint lies inside the former one on the levelled pad. Former origins:
-    // (148,143) (154,143) (163,143) (176,143) (176,156) (148,156) Cw90.
-    private static readonly Vector3Int[] Origins={new(149,145,3),new(155,145,3),new(164,144,3),
-      new(176,145,3),new(176,158,3),new(150,155,3)};
-    // Former footprint in the new local frame (xMin,xMax,yMin,yMax) and the open ground cells
-    // inside the new bounds (tools/validate_freed_cells.mjs, outputs/freed-cells.json).
-    private static readonly Dictionary<string,(int,int,int,int,Vector3Int[])> Freed=new() {
-      {"StoneCrusher.IronTeeth",(-1,4,-2,4,new Vector3Int[0])},
-      // Compact 5x3x4 kiln (2026-10-30, same origin and entrance): the front
-      // row's ground cells beside the porch are open (no props on open cells);
-      // the former 7x5 cells outside it are freed.
-      {"CementKiln.IronTeeth",(-1,7,-1,7,new[]{new Vector3Int(0,0,0),new Vector3Int(1,0,0),
-        new Vector3Int(2,0,0),new Vector3Int(4,0,0)})},
-      // Compact 8x6x5 quarries (2026-10-30, same origin, entrance and seam
-      // cells): every ground cell inside the bounds is occupied.
-      {"SandstoneQuarry.IronTeeth",(0,10,-2,7,new Vector3Int[0])},
-      {"LimestoneQuarry.IronTeeth",(0,10,-2,7,new Vector3Int[0])}};
-    private void RequireInstalledFootprints() {
-      foreach(var (id,size,entrance) in new[]{("StoneCrusher.IronTeeth",new Vector3Int(4,4,3),new Vector3Int(1,-1,0)),
-        ("CementKiln.IronTeeth",new Vector3Int(5,3,4),new Vector3Int(3,-1,0)),
-        ("SandstoneQuarry.IronTeeth",new Vector3Int(8,6,5),new Vector3Int(1,-1,0)),
-        ("LimestoneQuarry.IronTeeth",new Vector3Int(8,6,5),new Vector3Int(1,-1,0))}) {
-        var spec=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName==id).Blueprint.GetSpec<BlockObjectSpec>();
-        if(spec.Size!=size||spec.Entrance.Coordinates!=entrance)
-          throw new InvalidOperationException($"Installed {id} is {spec.Size} with entrance {spec.Entrance.Coordinates}; this fixture's origins, approach paths and walk targets encode {size} with entrance {entrance}.");
-      }
+    // The fixture follows the installed blueprints, not size literals. Its
+    // layout anchors each upright workshop by its ground door: the world cell
+    // of its native Entrance on the levelled pad (the 2026-10-22 footprint pass
+    // kept these cells), so each origin is that cell minus the blueprint's
+    // Entrance. The rotated crusher has no approach path; its anchor is a
+    // fixed origin clear of the others.
+    private static readonly (string Template,Vector3Int Anchor,Orientation Orientation,string Seam)[] Layout={
+      ("StoneCrusher.IronTeeth",new(150,144,3),Orientation.Cw0,null),
+      ("StoneCrusher.IronTeeth",new(156,144,3),Orientation.Cw0,null),
+      ("CementKiln.IronTeeth",new(167,143,3),Orientation.Cw0,null),
+      ("SandstoneQuarry.IronTeeth",new(177,144,3),Orientation.Cw0,"SandstoneSeam"),
+      ("LimestoneQuarry.IronTeeth",new(177,157,3),Orientation.Cw0,"LimestoneSeam"),
+      ("StoneCrusher.IronTeeth",new(150,155,3),Orientation.Cw90,null)};
+    private BlockObjectSpec Spec(string template)=>
+      _templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName==template).Blueprint.GetSpec<BlockObjectSpec>();
+    private Vector3Int Origin(int index) {
+      var (template,anchor,orientation,_)=Layout[index];
+      if(orientation!=Orientation.Cw0)return anchor;
+      var entrance=Spec(template).Entrance;
+      if(!entrance.HasEntrance||entrance.Coordinates.y>=0||entrance.Coordinates.z!=0)
+        throw new InvalidOperationException($"Installed {template} entrance {entrance.Coordinates} is not a ground cell in front of the footprint, which this fixture's road approach needs");
+      return anchor-entrance.Coordinates;
     }
-    private BlockObject CreateFactory(string name,int index,Orientation orientation=Orientation.Cw0) {
-      var c=Origins[index];var b=Create(name,c.x,c.y,c.z,orientation);
-      var (xMin,xMax,yMin,yMax,inside)=Freed[name];
-      var size=b.GetComponent<BlockObjectSpec>().Size;
-      FreedCellProbe.Require(_templates,_blockValidator,b,inside.Concat(FreedCellProbe.Outside(xMin,xMax,yMin,yMax,size)),
+    // A quarry stands on its seam with the seam under its Top-only ground cells
+    // (UnderstructureConstraintSpec); the seam origin is that region's corner.
+    private Vector3Int SeamCell(string template,string seam) {
+      var cells=Spec(template).GetBlocks(new Placement(Vector3Int.zero,Orientation.Cw0,FlipMode.Unflipped))
+        .Where(b=>b.Coordinates.z==0&&b.IsOccupied&&!b.Occupation.Intersects(BlockOccupations.Floor)).Select(b=>b.Coordinates).ToArray();
+      var size=Spec(seam).Size;
+      if(cells.Length!=size.x*size.y)
+        throw new InvalidOperationException($"Installed {template} has {cells.Length} Top-only ground cells; its {seam} covers {size.x}x{size.y}");
+      var corner=new Vector3Int(cells.Min(c=>c.x),cells.Min(c=>c.y),0);
+      if(cells.Any(c=>c.x>=corner.x+size.x||c.y>=corner.y+size.y))
+        throw new InvalidOperationException($"Installed {template} Top-only ground cells are not the {size.x}x{size.y} rectangle of its {seam}");
+      return corner;
+    }
+    // The pre-2026-10-22 footprints (inclusive bounds) relative to each
+    // workshop's ground door in its local axes (tools/validate_freed_cells.mjs,
+    // outputs/freed-cells.json): StoneCrusher 6x7, CementKiln 9x9, quarries 11x10.
+    private static readonly Dictionary<string,(int,int,int,int)> FormerFootprint=new() {
+      {"StoneCrusher.IronTeeth",(-2,3,-1,5)},
+      {"CementKiln.IronTeeth",(-4,4,0,8)},
+      {"SandstoneQuarry.IronTeeth",(-1,9,-1,8)},
+      {"LimestoneQuarry.IronTeeth",(-1,9,-1,8)}};
+    private BlockObject CreateFactory(int index) {
+      var (name,_,orientation,_)=Layout[index];
+      var c=Origin(index);var b=Create(name,c.x,c.y,c.z,orientation);
+      var spec=b.GetComponent<BlockObjectSpec>();var size=spec.Size;var e=spec.Entrance.Coordinates;
+      var (xMin,xMax,yMin,yMax)=FormerFootprint[name];
+      // Freed ground: the open ground cells inside the bounds and the former
+      // footprint's cells outside them.
+      var inside=spec.GetBlocks(new Placement(Vector3Int.zero,Orientation.Cw0,FlipMode.Unflipped))
+        .Where(block=>block.Coordinates.z==0&&!block.IsOccupied).Select(block=>block.Coordinates);
+      FreedCellProbe.Require(_templates,_blockValidator,b,inside.Concat(FreedCellProbe.Outside(e.x+xMin,e.x+xMax,e.y+yMin,e.y+yMax,size)),
         $"{name} #{index}",message=>Debug.Log("[DeepFrontier Acceptance] PASS FREED CELLS "+message));
       return b;
     }
@@ -233,12 +254,19 @@ namespace DeepFrontier.Scripts {
       // Occupied rooms reject native paths (no hidden walkable cells).
       var path=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Path");
       var spec=_templates.GetAll<BlockObjectSpec>().Single(o=>o.Blueprint==path.Blueprint);
-      // The same occupied cells as before the 2026-10-22 footprint pass, in the new local frames.
-      foreach(var test in new[]{(0,new Vector3Int(2,1,0)),(2,new Vector3Int(3,2,0)),(3,new Vector3Int(1,3,1))}) {
-        var b=_factories[test.Item1];var c=b.TransformCoordinates(test.Item2);
-        if(_blockValidator.BlocksValid(spec,new Placement(c,Orientation.Cw0,FlipMode.Unflipped)))
-          throw new InvalidOperationException($"Occupied room incorrectly accepts a path: {b.Name} {test.Item2}");
-        Debug.Log($"[DeepFrontier Acceptance] PASS SOLID ROOM REJECTS PATH {b.Name} at {test.Item2}");
+      // Every ground cell whose blueprint block occupies the floor, on the
+      // crusher, the kiln and the first quarry.
+      foreach(var index in new[]{0,2,3}) {
+        var b=_factories[index];
+        var cells=b.GetComponent<BlockObjectSpec>().GetBlocks(new Placement(Vector3Int.zero,Orientation.Cw0,FlipMode.Unflipped))
+          .Where(block=>block.Coordinates.z==0&&block.Occupation.Intersects(BlockOccupations.Floor)).Select(block=>block.Coordinates).ToArray();
+        if(cells.Length==0)throw new InvalidOperationException($"{b.Name} has no floor-occupying ground cell");
+        foreach(var local in cells) {
+          var c=b.TransformCoordinates(local);
+          if(_blockValidator.BlocksValid(spec,new Placement(c,Orientation.Cw0,FlipMode.Unflipped)))
+            throw new InvalidOperationException($"Occupied room incorrectly accepts a path: {b.Name} {local}");
+        }
+        Debug.Log($"[DeepFrontier Acceptance] PASS SOLID ROOM REJECTS PATH {b.Name} on {cells.Length} occupied ground cells");
       }
     }
     private void LevelCell(int x,int y) {
@@ -285,10 +313,10 @@ namespace DeepFrontier.Scripts {
       // quarry, using actual native paths and their normal placement checks.
       for(int x=132;x<145;x++)Create("Path",x,142,3);
       for(int y=139;y<142;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(132,y,3)))Create("Path",132,y,3);
+      var secondQuarry=Layout[4].Anchor;
       for(int y=143;y<157;y++)Create("Path",173,y,3);
-      for(int x=174;x<178;x++)Create("Path",x,155,3);
-      Create("Path",177,156,3);
-      Create("Path",177,157,3);
+      for(int x=174;x<=secondQuarry.x;x++)Create("Path",x,155,3);
+      for(int y=156;y<=secondQuarry.y;y++)Create("Path",secondQuarry.x,y,secondQuarry.z);
       var workers=_registry.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>()).Where(w=>w.WorkerType=="Beaver").Take(4).ToArray();
       if(workers.Length!=4)throw new InvalidOperationException("Production fixture requires four adult beaver workers.");
       for(int i=0;i<workers.Length;i++) {
@@ -320,14 +348,14 @@ namespace DeepFrontier.Scripts {
       if(!_walker.GetAnimationNames().Contains("BeaverAdult_idle"))throw new InvalidOperationException("Native BeaverAdult_idle clip is required for the traversal fixture.");
       _walker.ChangeAnimation("BeaverAdult_idle");
       // Ground-door entrance path cells only: nobody walks on the machines.
-      AddNativeWalkTarget(0,new Vector3Int(1,-1,0),"crusher ground door entrance");
-      AddNativeWalkTarget(1,new Vector3Int(1,-1,0),"second crusher ground door entrance");
-      AddNativeWalkTarget(2,new Vector3Int(3,-1,0),"kiln ground door entrance");
-      AddNativeWalkTarget(3,new Vector3Int(1,-1,0),"quarry ground door entrance");
+      AddNativeWalkTarget(0,"crusher ground door entrance");
+      AddNativeWalkTarget(1,"second crusher ground door entrance");
+      AddNativeWalkTarget(2,"kiln ground door entrance");
+      AddNativeWalkTarget(3,"quarry ground door entrance");
       NextWalkTarget();
     }
-    private void AddNativeWalkTarget(int index,Vector3Int cell,string label) {
-      _walkTargets.Enqueue((label,NavigationCoordinateSystem.GridToWorld(_factories[index].TransformCoordinates(cell))));
+    private void AddNativeWalkTarget(int index,string label) {
+      _walkTargets.Enqueue((label,NavigationCoordinateSystem.GridToWorld(_factories[index].PositionedEntrance.Coordinates)));
     }
     private void NextWalkTarget() {
       if(_walkTargets.Count==0) {
