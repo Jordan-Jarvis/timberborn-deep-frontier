@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.7.1 (2026-10-30)
+
+### Fixes
+- No crash when a game loads without Flywheels installed. 0.7.0's build-menu group for Flywheels tried to load Flywheels' icon even when that mod is missing; the group now only exists when Flywheels is installed.
+
 ### Maps re-planned for the smaller buildings
 - Every built-in map's sites were searched again for the compacted footprints (Deep Mine and Deep Drill 7x6, quarries 8x6, Nuclear Reactor 14x11).
 - **Beaverome** now has two Deep Mine sites, two Deep Drill sites with a Deep Ore Source each (17,000 deep ore), the Deep Processor, Steel Mill, Mission Control and Launch Pad. It is no longer EXTREMELY difficult; it shows the shorter notice of what it can't provide (quarries, reactor, some plants and civic buildings, renewable scrap).
