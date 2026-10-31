@@ -11,6 +11,11 @@
 //   manifest's RequiredMods and an optional one is not; loose blueprints give each template's
 //   tool group and icon, an asset-bundle mod's IronTeeth TemplateCollection matches.
 // - nativeOrders list every vanilla Iron Teeth, Deep Frontier and externalMods tool of that group.
+// - Optional-mod groups (0.7.0 crash, aa4f884): Moddable Tool Groups builds a group that has
+//   sub-groups even when none of the tools below it loads, and then loads its icon. A group whose
+//   subtree holds only optional-mod templates therefore claims them directly and has no sub-groups,
+//   and a group's icon comes from an optional mod only when the group cannot exist without that
+//   mod: no sub-groups, and every tool it holds is that mod's.
 // Prints which groups appear only with an optional mod.
 import {readFile, readdir, access} from 'node:fs/promises';
 import {relative, resolve, sep} from 'node:path';
@@ -157,6 +162,15 @@ for (const [id, group] of Object.entries(config.groups)) {
       if (await exists(partial) && (await readJson(partial)).PlaceableBlockObjectSpec?.DevModeTool === true) errors.push(`${id}: claim ${name} is hidden by Deep Frontier's partial blueprint`);
     }
   }
+  const children = [...groupIds].filter((child) => config.groups[child].parent === id);
+  const optionalOnly = subtree.length > 0 && subtree.every(optionalMod);
+  if (optionalOnly && children.length)
+    errors.push(`${id}: every tool below it is from an optional mod (${[...new Set(subtree.map(optionalMod))].join(', ')}), so it must claim them directly; ` +
+      `its sub-groups ${children.join(', ')} make Moddable Tool Groups build it, and load its icon, without that mod`);
+  const iconMod = iconName ? optionalMod(iconName) : null;
+  if (iconMod && (children.length || subtree.some((name) => optionalMod(name) !== iconMod)))
+    errors.push(`${id}: icon ${group.icon} comes from the optional ${iconMod}, but the group exists without it ` +
+      `(${children.length ? `sub-groups ${children.join(', ')}` : `tools ${subtree.filter((name) => optionalMod(name) !== iconMod).join(', ')}`})`);
   const mods = new Set(subtree.map(optionalMod));
   if (mods.size === 1 && !mods.has(null)) report.optionalOnly[id] = [...mods][0];
   else if ([...mods].some(Boolean)) report.withOptionalTools[id] = [...mods].filter(Boolean);
