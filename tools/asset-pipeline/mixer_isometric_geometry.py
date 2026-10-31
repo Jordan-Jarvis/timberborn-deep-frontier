@@ -29,11 +29,13 @@ from reference_materials import (
     CIVIC_FORGED_PANEL,
 )
 # No concrete surfaces: the mixer unlocks before concrete exists (user,
-# 2026-10-30). Footings, piers and pedestals are coursed stone masonry;
+# 2026-10-30). Footings, piers and pedestals are brick;
 # the roof the hoppers stand on is riveted steel plate.
 from native_building_assets import water_barrel
 from walkway_geometry import RailAssembly
-from factory_registration import machine_slab, masonry_box
+# Brick footings, piers and pedestals (2026-10-30, bricks pass; were coursed
+# grey kiln masonry): bricks exist from 600 science, before the mixer.
+from factory_registration import machine_slab, brick_box
 
 DECK = 2
 # Native grid XY (layout origin 0). The operator door is centred on tile
@@ -56,7 +58,7 @@ ACCESS = {
 
 
 def pier(g, x, y, top, collar=bracket, column=timber_column):
-    masonry_box(g,(x, y, .15),(.40, .40, .30))
+    brick_box(g,(x, y, .15),(.40, .40, .30))
     column(g, x, y, .29, top, .24)
     for z in (1.15,):
         if z < top - .3:
@@ -113,7 +115,8 @@ def operator_room(g):
         for j in range(count):
             a=front+j*(rear-front)/count;b=front+(j+1)*(rear-front)/count
             facade_panel(g,'X',x,a,b,0,1.86,positive,PLANK)
-    for x in (w+.04,e-.04):g.box((x,(front+.015+rear-.015)/2,.28),(.10,rear-front-.03,.35),KILN_STONE)
+    for x,face in ((w+.04,'left'),(e-.04,'right')):
+        brick_box(g,(x,(front+.015+rear-.015)/2,.28),(.10,rear-front-.03,.35),faces=(face,))
     count=12
     for j in range(count):
         a=w+j*(e-w)/count;b=w+(j+1)*(e-w)/count
@@ -175,7 +178,7 @@ def drum(g, parts):
         y=cy+dy*s
         for side in (-1,1):
             x=cx+side*.55
-            masonry_box(g,(x,y,.3865),(.20,.40,.773))
+            brick_box(g,(x,y,.3865),(.20,.40,.773))
             prism(g,(x,y,.933),.13,.17,CRUSHER_STEEL,'Y',8)
             prism(g,(x,y,.933),.04,.38,IRON,'Y',6)
             for yy in (y-.135,y+.135):
@@ -186,8 +189,8 @@ def drum(g, parts):
     prism(drive,(cx,.45,cz),.07,.45,IRON,'Y',10)
     parts.append((drive,'Y',2))
     # One concrete base under the drive and the wet trough (front row).
-    masonry_box(g,(3.03,.50,.20),(1.86,.84,.40))
-    masonry_box(g,(cx,.59,.76),(.40,.18,.72))
+    brick_box(g,(3.03,.50,.20),(1.86,.84,.40))
+    brick_box(g,(cx,.59,.76),(.40,.18,.72))
     open_box(g,(cx,.59,1.20),(.26,.16,.16),IRON,('-z',))
 
 
@@ -205,7 +208,9 @@ def chute(g, start, end, width):
 def tank(g):
     # Native header tank on a concrete pedestal (rear-right cell), drop line
     # into the drum's rear journal and a riser to the ground inlet.
-    masonry_box(g,(3.55,2.65,.65),(.90,.70,1.30))
+    # The cap stands proud of the bearing plate's underside, so the plate never
+    # shares the mortar core's side planes.
+    brick_box(g,(3.55,2.65,.65),(.90,.70,1.30),cap=.07)
     open_box(g,(3.55,2.65,1.285),(.86,.66,.06),IRON,('-z',))
     water_barrel(g,'MixerHeaderTank',(3.55,2.65,1.315),.62)
     round_pipe(g,[(3.27,2.62,1.62),(2.85,2.62,1.62),(2.85,2.62,1.35),(2.85,2.25,1.35)],.06)

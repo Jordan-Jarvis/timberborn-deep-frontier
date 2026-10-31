@@ -3,13 +3,13 @@
 ## Unreleased
 
 ### Bricks: a new step between metal and concrete
-- **New good: Brick.** The Stone Crusher now grinds sandstone into vanilla dirt (brick earth, 3 sandstone into 6 dirt per hour), and the Cement Kiln fires 4 dirt and 1 water into 4 bricks every 2 hours, burning a log per batch.
+- **New good: Brick.** The Stone Crusher now grinds sandstone into vanilla dirt (brick earth, 3 sandstone into 8 dirt per hour), and the Cement Kiln fires 4 dirt and 1 water into 4 bricks every 2 hours, burning a log per batch.
 - **The Cement Kiln unlocks at 600 science** (was 900), with the crusher, so bricks get their own window before concrete (1,000). The kiln also got cheaper.
 - **Cement** is limestone and dirt again (was limestone and aggregate). **Concrete** takes sandstone directly: 3 sandstone, 2 cement and 4 water make 8 concrete every 2 hours, the same ratios as before.
 - **Buildings that show brick now cost bricks.** The orange brick plaster on buildings is priced as Brick, so 14 buildings from the Deep Drill to the Rocket Assembly Hangar take bricks instead of part of their other materials. The crusher and kiln never need bricks to build.
 - The kiln takes water for bricks, so it now accepts Timber Pipes on its flat walls.
 - The vanilla **Terrain Block** unlocks at 2,000 science with the Dirt Excavator (was 1,000), so cheap crusher dirt doesn't open it early. The Mud Bath is unchanged.
-- The built-in maps' starting stone still covers everything up to the quarries: 1,535 sandstone and 1,343 limestone of the 1,800 each.
+- The built-in maps' starting stone still covers everything up to the quarries: 1,723 sandstone and 1,266 limestone of the 1,800 each.
 
 ### Fewer goods (seven removed)
 - **Aggregate:** concrete uses sandstone, cement uses dirt and the concrete levee block takes 1 sandstone.
@@ -23,6 +23,7 @@
 - **Brick Block:** the Limestone Masonry Block is now a brick block (4 bricks and 1 cement, 600 science) with eight courses of red brick. Placed limestone blocks load as brick blocks.
 - **Brick plinths** on the Deep Drill pump house and the Deep Processor blower house. The Coal Power Plant's bright concrete ground storey, engine bed and chimney base are dark red brick.
 - **Brick ground storeys** on the Public Health Lab, Technical School (central block and clock-tower base) and Food Packaging Works, and brick walls on the Water Treatment Plant's chemical house. The courses stop around every door, window and lamp.
+- **Concrete Mixer** footings, piers and pedestals and the **quarries'** plinth walls are brick instead of grey stone. The quarries now cost bricks to build.
 - **Limestone outcrops and seams** are grey weathered rock with pale broken faces, instead of white blocks that looked like gems.
 
 ## 0.7.1 (2026-10-30)

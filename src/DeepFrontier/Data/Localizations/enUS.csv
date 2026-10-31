@@ -602,7 +602,7 @@ Building.LimestoneQuarry.DisplayName,Limestone quarry,Deep Frontier construction
 Building.LimestoneQuarry.Description,"Extracts limestone indefinitely from a marked deep seam. Requires water and 2,800 hp. Build over a Deep Limestone Seam. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier construction materials
 Building.LimestoneQuarry.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
 Building.StoneCrusher.DisplayName,Stone crusher,Deep Frontier construction materials
-Building.StoneCrusher.Description,Grinds 3 sandstone into 6 dirt (brick earth) per hour at 200 hp. Supply the dirt to a Cement Kiln for bricks and cement.,Deep Frontier construction materials
+Building.StoneCrusher.Description,Grinds 3 sandstone into 8 dirt (brick earth) per hour at 200 hp. Supply the dirt to a Cement Kiln for bricks and cement.,Deep Frontier construction materials
 Building.StoneCrusher.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
 Building.CementKiln.DisplayName,Cement kiln,Deep Frontier construction materials
 Building.CementKiln.Description,"Moulds and fires 4 dirt and 1 water into 4 bricks, or 3 limestone and 1 dirt into 2 cement, every 2 hours, burning one log per batch and 300 hp. No separate heat system. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier construction materials

@@ -12,8 +12,12 @@
         "Amount": 35
       },
       {
+        "Id": "Brick",
+        "Amount": 60
+      },
+      {
         "Id": "Limestone",
-        "Amount": 120
+        "Amount": 45
       },
       {
         "Id": "Gear",

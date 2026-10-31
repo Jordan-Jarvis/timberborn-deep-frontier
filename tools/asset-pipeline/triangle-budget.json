@@ -103,9 +103,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 5150,
-   "vertices": 10780,
-   "construction": 5150,
+   "finished": 8136,
+   "vertices": 16752,
+   "construction": 8136,
    "file": "src/DeepFrontier/Data/Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model.timbermesh"
   },
   "ConcreteOverflowDam": {
@@ -418,9 +418,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 6211,
-   "vertices": 13079,
-   "construction": 6211,
+   "finished": 11593,
+   "vertices": 23843,
+   "construction": 11593,
    "file": "src/DeepFrontier/Data/Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.Model.timbermesh"
   },
   "LimestoneSeam": {
@@ -625,9 +625,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 6211,
-   "vertices": 13079,
-   "construction": 6211,
+   "finished": 11593,
+   "vertices": 23843,
+   "construction": 11593,
    "file": "src/DeepFrontier/Data/Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.Model.timbermesh"
   },
   "SandstoneSeam": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 903314,
+ "totalBlueprintTriangles": 931006,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

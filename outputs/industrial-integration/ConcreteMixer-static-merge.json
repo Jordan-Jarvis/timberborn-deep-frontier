@@ -12,21 +12,21 @@
     {
       "node": "StaticMerged",
       "parts": 2,
-      "triangles": 3752,
+      "triangles": 6738,
       "materials": {
-        "DFIndustrial14": 206,
+        "DFIndustrial24": 184,
+        "DFIndustrial14": 152,
+        "Plaster_Orange.IronTeeth": 3014,
         "BaseWood_DarkBrown.IronTeeth": 403,
         "BaseMetal.IronTeeth": 1447,
         "IrregularPlanks_DarkBrown.IronTeeth": 530,
         "IrregularPlanks_MetalForged.IronTeeth": 36,
         "RoofPlanks.IronTeeth": 14,
-        "Details.IronTeeth": 148,
+        "Details.IronTeeth": 152,
         "DFIndustrial25": 24,
         "DFIndustrial13": 582,
-        "DFIndustrial15": 258,
-        "DFIndustrial19": 38,
-        "DFIndustrial24": 60,
-        "Plaster_Orange.IronTeeth": 6
+        "DFIndustrial15": 162,
+        "DFIndustrial19": 38
       }
     },
     {

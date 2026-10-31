@@ -104,7 +104,7 @@ Every Deep Frontier building with a construction cost passes through it, except 
 
 - **Measure.** `python tools/asset-pipeline/measure_building_materials.py [dataRoot]` decodes each building's exported finished model (official Timbermesh schema) and writes `tools/building_material_mix.json`: model path, sha256, triangle area per material and per family. Families come from `materialRule.materials`. Details.IronTeeth is split by atlas region: its strap strip is metal, crates and planks are wood, cloth is unpriced. Each stone tile takes the stone whose reference tile is nearest in chromaticity; all grey masonry reads as limestone. Orange plaster (Plaster_Orange.IronTeeth) is brick since the 2026-10-30 bricks pass. Glass, lamps, water, cloth, embers, instruments and rubber are unpriced. Nested native props are game models and are not measured.
 - **Basis.** The building's cost before this rule: the late-game rule rows without gates, or its authored cost times its tier costFactor. Gear and MachineCore (machinery) keep their amounts. Gates are added afterwards, unchanged.
-- **Value.** Each material good has an embodied value: recipe effort along the cheapest route, where a primary or map-gathered good counts 1, a liquid 0, each recipe hour 1, fuel its value / CyclesFuelLasts, and a recipe's effort is shared by its product units. The user chose raw effort, so concrete-heavy buildings need large counts. `value.scope` is `buildingWorld`: a good is valued only by the routes of the building's own world (without it, at or below its science). For a building unlocked before the quarries, Limestone comes from the pits (1.0), not the quarries (0.42). Example values at 1,000 science (bricks pass): Plank 2.25, Log 1, MetalBlock 4.2, Gear 5.25, Concrete 1.62, Brick 1.50, Dirt 0.67, TreatedPlank 6.25. At the reactor: Concrete 1.15, Brick 1.21, DeepAlloy 8.0, HighGradeSteel 11.8, Alloy 16.6, MachineCore 56.6.
+- **Value.** Each material good has an embodied value: recipe effort along the cheapest route, where a primary or map-gathered good counts 1, a liquid 0, each recipe hour 1, fuel its value / CyclesFuelLasts, and a recipe's effort is shared by its product units. The user chose raw effort, so concrete-heavy buildings need large counts. `value.scope` is `buildingWorld`: a good is valued only by the routes of the building's own world (without it, at or below its science). For a building unlocked before the quarries, Limestone comes from the pits (1.0), not the quarries (0.42). Example values at 1,000 science (bricks pass): Plank 2.25, Log 1, MetalBlock 4.2, Gear 5.25, Concrete 1.60, Brick 1.33, Dirt 0.50, TreatedPlank 6.25. At the reactor: Concrete 1.14, Brick 1.11, DeepAlloy 8.0, HighGradeSteel 11.8, Alloy 16.6, MachineCore 56.6.
 - **Composition.** The material value is shared over wood, metal, concrete, brick, sandstone and limestone by the measured area. A family under 5% is folded into the others. Inside a family the goods are the tier's `familyGoods` (unit ratios, from the tier tables above, plus Log in T1 wood and TreatedPlank as T5 wood) that the settlement can make without this building. Each amount rounds up to a multiple of 5, so the value never falls.
 - **Stone.** Masonry is priced as Sandstone or Limestone. Raw stone on the buildings that produce it (the pits and the quarries) is the deposit they work and stays unpriced (`depositFamilies`).
 - **No good, no family.** A family with no producible good at the building's stage fails the audit. For concrete the failure reads "concrete shown before Concrete exists": the art must change. Fertilizer Works, Greenhouse, Fish Hatchery, Stone Crusher, Cement Kiln, Concrete Mixer and both pits show none after the roof pass.
@@ -125,46 +125,46 @@ Totals over the 48 buildings when the rule landed: Concrete 28,815 -> 92,170 (1,
 | StoneCrusher | 600 | 54/31/0/1/s15 | 60 Plank 30 Gear 20 MetalBlock | 45 Plank 25 Log 20 MetalBlock 35 Limestone 30 Gear |
 | CementKiln | 600 | 42/27/0/1/s31 | 120 Plank 60 Gear 45 MetalBlock | 50 Plank 25 Log 20 MetalBlock 95 Limestone 40 Gear |
 | FisheryWorks | 900 | 78/16/2/3/s0 | 120 Plank 60 Gear 45 MetalBlock | 170 Plank 20 MetalBlock 60 Gear |
-| ConcreteMixer | 1000 | 43/31/0/0/s25 | 120 Plank 60 Gear 45 MetalBlock | 90 Plank 35 MetalBlock 120 Limestone 60 Gear |
-| DeepDrill | 1000 | 17/36/36/11 | 445 Plank 175 Gear 140 MetalBlock 180 Concrete | 145 Plank 165 MetalBlock 420 Concrete 140 Brick 175 Gear |
-| PublicHealthLab | 1000 | 39/4/57/0 | 225 Plank 90 Gear 70 MetalBlock 110 Concrete | 180 Plank 360 Concrete 90 Gear |
+| ConcreteMixer | 1000 | 43/31/0/17/s10 | 120 Plank 60 Gear 45 MetalBlock | 90 Plank 35 MetalBlock 60 Brick 45 Limestone 60 Gear |
+| DeepDrill | 1000 | 17/35/36/12 | 445 Plank 175 Gear 140 MetalBlock 180 Concrete | 145 Plank 160 MetalBlock 420 Concrete 175 Brick 175 Gear |
+| PublicHealthLab | 1000 | 38/4/54/5 | 225 Plank 90 Gear 70 MetalBlock 110 Concrete | 180 Plank 360 Concrete 90 Gear |
 | Restaurant | 1000 | 78/9/9/3/s0 | 120 Plank 60 Gear 45 MetalBlock 180 Concrete | 275 Plank 20 MetalBlock 50 Concrete 60 Gear |
-| DeepProcessor | 1200 | 2/63/26/9 | 550 Plank 220 Gear 175 MetalBlock 165 Concrete | 350 MetalBlock 365 Concrete 135 Brick 220 Gear |
-| FoodPackagingWorks | 1400 | 14/35/41/10 | 230 Plank 90 Gear 75 MetalBlock 120 Concrete | 65 Plank 90 MetalBlock 260 Concrete 70 Brick 90 Gear |
-| WaterTreatmentPlant | 1800 | 19/29/46/7 | 340 Plank 135 Gear 110 MetalBlock 255 Concrete | 140 Plank 115 MetalBlock 465 Concrete 75 Brick 135 Gear |
-| TechnicalSchool | 2200 | 27/8/50/16 | 210 Plank 85 Gear 70 MetalBlock 105 Concrete | 115 Plank 20 MetalBlock 290 Concrete 100 Brick 85 Gear |
+| DeepProcessor | 1200 | 2/62/25/10 | 550 Plank 220 Gear 175 MetalBlock 165 Concrete | 340 MetalBlock 360 Concrete 180 Brick 220 Gear |
+| FoodPackagingWorks | 1400 | 14/34/40/12 | 230 Plank 90 Gear 75 MetalBlock 120 Concrete | 65 Plank 85 MetalBlock 260 Concrete 95 Brick 90 Gear |
+| WaterTreatmentPlant | 1800 | 19/29/45/7 | 340 Plank 135 Gear 110 MetalBlock 255 Concrete | 140 Plank 115 MetalBlock 465 Concrete 90 Brick 135 Gear |
+| TechnicalSchool | 2200 | 26/8/48/18 | 210 Plank 85 Gear 70 MetalBlock 105 Concrete | 110 Plank 20 MetalBlock 285 Concrete 130 Brick 85 Gear |
 | SmogScrubber | 2500 | 1/67/31/1 | 40 Plank 15 Gear 15 MetalBlock 20 Concrete | 35 MetalBlock 40 Concrete 15 Gear |
-| ChemicalWorks | 4000 | 1/69/30/0 | 335 Plank 200 Gear 200 MetalBlock 85 TreatedPlank 310 Concrete | 410 MetalBlock 665 Concrete 200 Gear |
-| LimestoneQuarry | 4000 | 46/13/0/0/s40 | 480 Plank 320 Gear 240 MetalBlock 240 Concrete | 495 Plank 125 TreatedPlank 130 MetalBlock 320 Gear |
-| SandstoneQuarry | 4000 | 46/13/0/0/s40 | 480 Plank 320 Gear 240 MetalBlock 240 Concrete | 500 Plank 125 TreatedPlank 130 MetalBlock 320 Gear |
-| CoalPowerPlant | 4500 | 4/57/38/1 | 125 Plank 75 Gear 75 MetalBlock 30 TreatedPlank 100 Concrete | 130 MetalBlock 315 Concrete 75 Gear |
-| SteelMill | 4500 | 0/63/36/0 | 425 Plank 255 Gear 255 MetalBlock 105 TreatedPlank 450 Concrete | 485 MetalBlock 1020 Concrete 255 Gear |
-| PrecisionMachineWorks | 5000 | 31/23/42/5 | 240 Plank 145 Gear 145 MetalBlock 60 TreatedPlank 255 Concrete | 155 Plank 40 TreatedPlank 105 MetalBlock 695 Concrete 145 Gear |
+| ChemicalWorks | 4000 | 1/69/30/0 | 335 Plank 200 Gear 200 MetalBlock 85 TreatedPlank 310 Concrete | 410 MetalBlock 670 Concrete 200 Gear |
+| LimestoneQuarry | 4000 | 47/13/0/10/s29 | 480 Plank 320 Gear 240 MetalBlock 240 Concrete | 425 Plank 110 TreatedPlank 110 MetalBlock 320 Brick 320 Gear |
+| SandstoneQuarry | 4000 | 47/13/0/10/s29 | 480 Plank 320 Gear 240 MetalBlock 240 Concrete | 425 Plank 110 TreatedPlank 110 MetalBlock 270 Brick 320 Gear |
+| CoalPowerPlant | 4500 | 3/53/30/14 | 125 Plank 75 Gear 75 MetalBlock 30 TreatedPlank 100 Concrete | 120 MetalBlock 245 Concrete 120 Brick 75 Gear |
+| SteelMill | 4500 | 0/63/36/0 | 425 Plank 255 Gear 255 MetalBlock 105 TreatedPlank 450 Concrete | 485 MetalBlock 1025 Concrete 255 Gear |
+| PrecisionMachineWorks | 5000 | 31/23/42/5 | 240 Plank 145 Gear 145 MetalBlock 60 TreatedPlank 255 Concrete | 155 Plank 40 TreatedPlank 105 MetalBlock 705 Concrete 145 Gear |
 | TownPlaza | 5000 | 4/54/33/8 | 55 Plank 35 Gear 35 MetalBlock 15 TreatedPlank 105 Concrete | 70 MetalBlock 150 Concrete 40 Brick 35 Gear |
-| Bathhouse | 6000 | 15/13/68/4 | 170 Plank 100 Gear 100 MetalBlock 45 TreatedPlank 200 Concrete | 60 Plank 15 TreatedPlank 45 MetalBlock 810 Concrete 100 Gear |
-| DeepMine | 6000 | 19/38/34/9 | 545 Plank 330 Gear 330 MetalBlock 135 TreatedPlank 270 Concrete 20 DeepAlloy | 195 Plank 50 TreatedPlank 340 MetalBlock 1115 Concrete 275 Brick 330 Gear 20 DeepAlloy |
+| Bathhouse | 6000 | 15/13/68/4 | 170 Plank 100 Gear 100 MetalBlock 45 TreatedPlank 200 Concrete | 60 Plank 15 TreatedPlank 45 MetalBlock 820 Concrete 100 Gear |
+| DeepMine | 6000 | 19/38/34/9 | 545 Plank 330 Gear 330 MetalBlock 135 TreatedPlank 270 Concrete 20 DeepAlloy | 195 Plank 50 TreatedPlank 340 MetalBlock 1130 Concrete 300 Brick 330 Gear 20 DeepAlloy |
 | GroceryStore | 6000 | 75/17/8/1 | 320 Plank 160 Concrete 140 MetalBlock 80 Gear | 295 Plank 75 TreatedPlank 60 MetalBlock 110 Concrete 80 Gear |
-| ReinforcedHydroTurbine | 8000 | 19/22/59/0 | 640 Concrete 400 MetalBlock 240 Gear 160 TreatedPlank | 170 Plank 45 TreatedPlank 185 MetalBlock 1750 Concrete 240 Gear |
-| ArchiveExcavation | 9000 | 26/12/46/16 | 500 MetalBlock 265 Gear 265 TreatedPlank 100 DeepAlloy 755 Concrete | 225 TreatedPlank 115 MetalBlock 25 DeepAlloy 2195 Concrete 720 Brick 265 Gear |
-| ObservationDeck | 9500 | 8/47/41/4 | 245 MetalBlock 130 Gear 130 TreatedPlank 50 DeepAlloy 160 Concrete | 35 TreatedPlank 210 MetalBlock 45 DeepAlloy 895 Concrete 130 Gear |
-| ElectrolysisPlant | 10000 | 18/37/38/7 | 505 MetalBlock 270 Gear 270 TreatedPlank 100 DeepAlloy 865 Concrete | 160 TreatedPlank 355 MetalBlock 75 DeepAlloy 1870 Concrete 340 Brick 270 Gear |
-| OilPowerPlant | 11000 | 0/62/37/0 | 185 MetalBlock 100 Gear 100 TreatedPlank 35 DeepAlloy 325 Concrete 4 MachineCore | 225 MetalBlock 45 DeepAlloy 675 Concrete 100 Gear 4 MachineCore |
-| CryogenicLiquefactionPlant | 12000 | 0/56/43/0 | 480 MetalBlock 255 Gear 255 TreatedPlank 95 DeepAlloy 755 Concrete | 515 MetalBlock 105 DeepAlloy 1980 Concrete 255 Gear |
-| CryogenicTankFarm | 12000 | 12/34/51/3 | 420 MetalBlock 225 Gear 225 TreatedPlank 85 DeepAlloy 990 Concrete | 100 TreatedPlank 300 MetalBlock 60 DeepAlloy 2300 Concrete 225 Gear |
-| MaterialsLaboratory | 12000 | 50/18/30/1 | 480 Plank 240 Gear 360 MetalBlock 720 Concrete | 280 TreatedPlank 115 MetalBlock 25 DeepAlloy 905 Concrete 240 Gear |
-| Hospital | 25000 | 67/10/12/11/s0 | 720 Plank 480 Concrete 360 MetalBlock 180 Gear 120 TreatedPlank | 475 TreatedPlank 80 MetalBlock 20 DeepAlloy 465 Concrete 415 Brick 180 Gear |
+| ReinforcedHydroTurbine | 8000 | 19/22/59/0 | 640 Concrete 400 MetalBlock 240 Gear 160 TreatedPlank | 170 Plank 45 TreatedPlank 185 MetalBlock 1765 Concrete 240 Gear |
+| ArchiveExcavation | 9000 | 26/12/46/16 | 500 MetalBlock 265 Gear 265 TreatedPlank 100 DeepAlloy 755 Concrete | 225 TreatedPlank 115 MetalBlock 25 DeepAlloy 2215 Concrete 780 Brick 265 Gear |
+| ObservationDeck | 9500 | 8/47/41/4 | 245 MetalBlock 130 Gear 130 TreatedPlank 50 DeepAlloy 160 Concrete | 35 TreatedPlank 210 MetalBlock 45 DeepAlloy 900 Concrete 130 Gear |
+| ElectrolysisPlant | 10000 | 18/37/38/7 | 505 MetalBlock 270 Gear 270 TreatedPlank 100 DeepAlloy 865 Concrete | 160 TreatedPlank 355 MetalBlock 75 DeepAlloy 1885 Concrete 370 Brick 270 Gear |
+| OilPowerPlant | 11000 | 0/62/37/0 | 185 MetalBlock 100 Gear 100 TreatedPlank 35 DeepAlloy 325 Concrete 4 MachineCore | 225 MetalBlock 45 DeepAlloy 680 Concrete 100 Gear 4 MachineCore |
+| CryogenicLiquefactionPlant | 12000 | 0/56/43/0 | 480 MetalBlock 255 Gear 255 TreatedPlank 95 DeepAlloy 755 Concrete | 515 MetalBlock 105 DeepAlloy 2000 Concrete 255 Gear |
+| CryogenicTankFarm | 12000 | 12/34/51/3 | 420 MetalBlock 225 Gear 225 TreatedPlank 85 DeepAlloy 990 Concrete | 100 TreatedPlank 300 MetalBlock 60 DeepAlloy 2320 Concrete 225 Gear |
+| MaterialsLaboratory | 12000 | 50/18/30/1 | 480 Plank 240 Gear 360 MetalBlock 720 Concrete | 280 TreatedPlank 110 MetalBlock 25 DeepAlloy 915 Concrete 240 Gear |
+| Hospital | 25000 | 67/10/12/11/s0 | 720 Plank 480 Concrete 360 MetalBlock 180 Gear 120 TreatedPlank | 475 TreatedPlank 80 MetalBlock 20 DeepAlloy 470 Concrete 450 Brick 180 Gear |
 | DeepWell | 30000 | 3/70/24/4 | 205 MetalBlock 155 Gear 5 TreatedPlank 20 DeepAlloy 60 Concrete 60 HighGradeSteel 10 MachineCore | 215 MetalBlock 20 DeepAlloy 70 Concrete 155 Gear 60 HighGradeSteel 10 MachineCore |
-| MissionControl | 30000 | 23/10/60/7 | 555 MetalBlock 295 Gear 295 TreatedPlank 110 DeepAlloy 970 Concrete | 230 TreatedPlank 115 MetalBlock 25 DeepAlloy 3220 Concrete 340 Brick 295 Gear |
-| RocketAssemblyHangar | 50000 | 14/57/15/14 | 650 HighGradeSteel 520 Alloy 130 MachineCore 520 MetalBlock 1680 Concrete | 470 TreatedPlank 410 HighGradeSteel 330 Alloy 330 MetalBlock 2645 Concrete 2330 Brick 130 MachineCore |
-| LaunchPad | 80000 | 8/37/54/1 | 565 HighGradeSteel 455 Alloy 115 MachineCore 455 MetalBlock 3265 Concrete | 270 TreatedPlank 260 HighGradeSteel 210 Alloy 210 MetalBlock 9445 Concrete 115 MachineCore |
-| RadioactiveSludgeOutfall | 200000 | 14/15/70/1 | 25 HighGradeSteel 20 Alloy 5 MachineCore 20 MetalBlock 240 Concrete | 25 TreatedPlank 10 HighGradeSteel 5 Alloy 5 MetalBlock 610 Concrete 5 MachineCore |
+| MissionControl | 30000 | 23/10/60/7 | 555 MetalBlock 295 Gear 295 TreatedPlank 110 DeepAlloy 970 Concrete | 230 TreatedPlank 115 MetalBlock 25 DeepAlloy 3245 Concrete 370 Brick 295 Gear |
+| RocketAssemblyHangar | 50000 | 14/57/15/14 | 650 HighGradeSteel 520 Alloy 130 MachineCore 520 MetalBlock 1680 Concrete | 470 TreatedPlank 410 HighGradeSteel 330 Alloy 330 MetalBlock 2670 Concrete 2525 Brick 130 MachineCore |
+| LaunchPad | 80000 | 8/37/54/1 | 565 HighGradeSteel 455 Alloy 115 MachineCore 455 MetalBlock 3265 Concrete | 265 TreatedPlank 260 HighGradeSteel 210 Alloy 210 MetalBlock 9525 Concrete 115 MachineCore |
+| RadioactiveSludgeOutfall | 200000 | 14/15/70/1 | 25 HighGradeSteel 20 Alloy 5 MachineCore 20 MetalBlock 240 Concrete | 25 TreatedPlank 10 HighGradeSteel 5 Alloy 5 MetalBlock 615 Concrete 5 MachineCore |
 | RadioactiveSludgeRecoveryPump | 200000 | 36/36/26/2 | 25 HighGradeSteel 20 Alloy 5 MachineCore 20 MetalBlock 170 Concrete | 55 TreatedPlank 15 HighGradeSteel 10 Alloy 10 MetalBlock 215 Concrete 5 MachineCore |
-| RadioactiveWasteExport | 200000 | 2/29/67/2 | 60 HighGradeSteel 50 Alloy 10 MachineCore 50 MetalBlock 720 Concrete | 30 HighGradeSteel 25 Alloy 25 MetalBlock 1575 Concrete 10 MachineCore |
-| RadioactiveWasteVault | 200000 | 7/15/78/0 | 320 HighGradeSteel 255 Alloy 65 MachineCore 255 MetalBlock 910 Concrete | 120 TreatedPlank 55 HighGradeSteel 45 Alloy 45 MetalBlock 6880 Concrete 65 MachineCore |
-| UraniumProcessingPlant | 200000 | 1/44/50/6 | 515 HighGradeSteel 410 Alloy 105 MachineCore 410 MetalBlock 2810 Concrete | 280 HighGradeSteel 225 Alloy 225 MetalBlock 7805 Concrete 850 Brick 105 MachineCore |
+| RadioactiveWasteExport | 200000 | 2/29/67/2 | 60 HighGradeSteel 50 Alloy 10 MachineCore 50 MetalBlock 720 Concrete | 30 HighGradeSteel 25 Alloy 25 MetalBlock 1585 Concrete 10 MachineCore |
+| RadioactiveWasteVault | 200000 | 7/15/78/0 | 320 HighGradeSteel 255 Alloy 65 MachineCore 255 MetalBlock 910 Concrete | 120 TreatedPlank 55 HighGradeSteel 45 Alloy 45 MetalBlock 6945 Concrete 65 MachineCore |
+| UraniumProcessingPlant | 200000 | 1/44/50/6 | 515 HighGradeSteel 410 Alloy 105 MachineCore 410 MetalBlock 2810 Concrete | 280 HighGradeSteel 225 Alloy 225 MetalBlock 7870 Concrete 920 Brick 105 MachineCore |
 | ReactorChargingBay | 250000 | 1/80/16/2 | 15 HighGradeSteel 10 Alloy 5 MachineCore 10 MetalBlock 145 Concrete 2 ReinforcedBotFrame 2 ReactorPowerCell | 20 HighGradeSteel 15 Alloy 15 MetalBlock 85 Concrete 5 MachineCore 2 ReinforcedBotFrame 2 ReactorPowerCell |
-| RadioactiveWasteRefinery | 500000 | 0/35/54/11 | 485 HighGradeSteel 385 Alloy 95 MachineCore 385 MetalBlock 2425 Concrete | 205 HighGradeSteel 165 Alloy 165 MetalBlock 7845 Concrete 1445 Brick 95 MachineCore |
-| NuclearReactor | 1000000 | 1/40/59/0 | 2135 HighGradeSteel 1630 Alloy 405 MachineCore 1630 MetalBlock 6265 Concrete 20 EnrichedFuel | 1025 HighGradeSteel 740 Alloy 740 MetalBlock 33880 Concrete 405 MachineCore 20 EnrichedFuel |
+| RadioactiveWasteRefinery | 500000 | 0/35/54/11 | 485 HighGradeSteel 385 Alloy 95 MachineCore 385 MetalBlock 2425 Concrete | 205 HighGradeSteel 165 Alloy 165 MetalBlock 7910 Concrete 1565 Brick 95 MachineCore |
+| NuclearReactor | 1000000 | 1/40/59/0 | 2135 HighGradeSteel 1630 Alloy 405 MachineCore 1630 MetalBlock 6265 Concrete 20 EnrichedFuel | 1025 HighGradeSteel 740 Alloy 740 MetalBlock 34190 Concrete 405 MachineCore 20 EnrichedFuel |
 
 ## Bricks and retired goods (2026-10-30, bricks pass)
 
@@ -174,14 +174,14 @@ User decisions on the approved bricks proposal: one new good, Brick, on existing
 
 | Step | Building (science) | Recipe |
 |---|---|---|
-| Grind brick earth | Stone Crusher (600) | 3 Sandstone -> 6 Dirt, 1 h (`BrickEarth`; vanilla `Recipe.Dirt` is the excavator's) |
+| Grind brick earth | Stone Crusher (600) | 3 Sandstone -> 8 Dirt, 1 h (`BrickEarth`; vanilla `Recipe.Dirt` is the excavator's; 6 until the quarries' brick plinths, see the stone budget) |
 | Fire bricks | Cement Kiln (900 -> **600**) | 4 Dirt + 1 Water -> 4 Brick, 2 h, 1 Log per cycle (`FireBricks`, "Fire bricks") |
 | Fire cement | Cement Kiln | 3 Limestone + 1 **Dirt** -> 2 Cement, 2 h, 1 Log (was 1 Aggregate) |
 | Mix concrete | Concrete Mixer (1,000) | 3 **Sandstone** + 2 Cement + 4 Water -> 8 Concrete, 2 h (was 3 Aggregate + 1 Cement + 2 Water -> 4, 1 h: same ratios and throughput) |
 
 - **Order:** wood, scrap metal (vanilla), bricks (600), concrete (1,000), steel and alloys (4,500+). Brick and Cement are available at 600 science (cumulative 2,200); Concrete stays at 1,000, its cumulative science falls from 3,500 to 3,200. High-grade steel's cumulative science falls from 10,200 to 9,900.
 - **Dirt** is vanilla Dirt (Pileable, vanilla industrial piles). The crusher makes it from 600 science; the vanilla Dirt Excavator (2,000) remains the stone-free source.
-- **Values (raw effort, global):** Dirt 0.37, Brick 1.21, Concrete 1.15 (was 1.27: concrete no longer pays for a crushing hour). In a 1,000-science world (pit stone at 1.0): Dirt 0.67, Brick 1.50, Concrete 1.62 (was 1.75).
+- **Values (raw effort, global):** Dirt 0.28, Brick 1.11, Concrete 1.14 (was 1.27: concrete no longer pays for a crushing hour). In a 1,000-science world (pit stone at 1.0): Dirt 0.50, Brick 1.33, Concrete 1.60 (was 1.75).
 - **Kiln contention** is deliberate: one kiln fires bricks or cement, so players build a second kiln.
 
 ### Terrain Block
@@ -192,11 +192,13 @@ The vanilla Iron Teeth Terrain Block (4 Dirt) unlocks at **2,000** science inste
 
 `materialRule.families.brick` fails when unavailable ("brick shown before Brick exists"), `familyGoods.T1..T5.brick` is `{Brick: 1}`, and `Plaster_Orange.IronTeeth`, the one brick-red native surface, prices as brick (it was unpriced). Bootstrap: the crusher (1%) and kiln (1%) show brick under `minFamilyShare`, so it folds and they never cost the good their own chain makes first; no building below 600 science shows 5% or more (Fertilizer Works 3%, Fish Hatchery 2%, Greenhouse 2%). 14 buildings now cost Brick (7,275 in all): Deep Drill 140, Deep Processor 135, Food Packaging Works 70, Water Treatment Plant 75, Technical School 100, Town Plaza 40, Deep Mine 275, Archive Excavation 720, Electrolysis Plant 340, Hospital 415, Mission Control 340, Rocket Assembly Hangar 2,330, Uranium Processing Plant 850, Radioactive Waste Refinery 1,445. Their value is redistributed, so their other material goods fall a little. Totals over the 48 buildings: Concrete 92,170 -> 94,440 (cheaper concrete raises value-preserving counts), Plank 3,605 -> 3,445, TreatedPlank 3,235 -> 2,920, MetalBlock 7,525 -> 7,155, HighGradeSteel 2,495 -> 2,370, Alloy 1,865 -> 1,770, Limestone 300 -> 250, Log 185 -> 210.
 
-**Stone budget** (`prepare_deep_frontier_map.py builtin`, every built-in map): the buildings up to the quarries need 1,535 Sandstone (was 1,275) and 1,343 Limestone (was 1,393), against 1,800 of each in pit range. Sandstone now carries more of the load (bricks, dirt and concrete rubble), and both still fit. After the first art batch (below): 1,549 Sandstone and 1,338 Limestone.
+**Stone budget** (`prepare_deep_frontier_map.py builtin`, every built-in map): the buildings up to the quarries need 1,535 Sandstone (was 1,275) and 1,343 Limestone (was 1,393), against 1,800 of each in pit range. Sandstone now carries more of the load (bricks, dirt and concrete rubble), and both still fit. After the first art batch (below): 1,549 Sandstone and 1,338 Limestone. The quarries' brick plinths (third batch) raised Sandstone to 1,855, over the 1,800 in pit range, so the crusher yield went from 6 to 8 dirt per 3 sandstone (the proposal's lever): now **1,723 Sandstone and 1,266 Limestone**. Brick in all costs after the third batch: 8,768 (18 buildings and the Brick Block): Concrete Mixer 60, Deep Drill 175, Deep Processor 180, Food Packaging Works 95, Water Treatment Plant 90, Technical School 130, Sandstone Quarry 270, Limestone Quarry 320, Coal Power Plant 120, Town Plaza 40, Deep Mine 300, Archive Excavation 780, Electrolysis Plant 370, Hospital 450, Mission Control 370, Rocket Assembly Hangar 2,525, Uranium Processing Plant 920, Radioactive Waste Refinery 1,565.
 
 **Art, first batch.** Brick courses are geometry: running-bond bricks in Plaster_Orange over a recessed mortar course (`lategame_mining_parts.hall(plinth_mat=BRICK)` and `brick_block`, append-only; late-game studies use native materials only, so the mortar is Plaster_White). The Deep Drill pump house and Deep Processor blower house stand on brick plinths (Brick 140 -> 155 and 135 -> 160); the Coal Power Plant's pale concrete ground storey, engine bed and chimney base are brick (it now costs 110 Brick, Concrete 315 -> 245). The Limestone Masonry Block became the Brick Block (`BrickMasonryBlock`, 4 Brick + 1 Cement at 600 science, cost factor 2: 8 Brick and 2 Cement), keeping placed blocks through `BackwardCompatibleTemplateNames: ["LimestoneMasonryBlock.IronTeeth"]`. The limestone outcrop and seam are native cliff rock (WaterSource/UndergroundRuinsCliff) with pale limestone only on broken faces and grike walls.
 
 **Art, second batch.** `lategame_civic_parts.brick_skin` (append-only) lays the same courses on a solid wall and leaves each door, window and lamp open: the feature is authored through `authored_box`, which returns the box of the geometry it added, and every course skips that box on the face it stands on. Brick ground storeys on the Public Health Lab (4.5% brick, under minFamilyShare, so it folds and the cost is unchanged), Technical School (Brick 100 -> 115) and Food Packaging Works (70 -> 85), and brick walls on the Water Treatment Plant's chemical house (75 -> 80).
+
+**Art, third batch.** `factory_registration.brick_box` (append-only; the industrial palette allows the kiln tiles, so the mortar is cement dust DFIndustrial24 and the cap grey kiln masonry DFIndustrial14) replaces the Concrete Mixer's coursed grey masonry on its footings, piers and pedestals (it now costs 60 Brick, Limestone 120 -> 45) and faces the quarries' process plinth with brick on its outer sides under a grey cap (the quarries now cost 270 and 320 Brick; brick is not a deposit family, so it is priced on them).
 
 ## Retired goods (2026-10-30, bricks pass)
 

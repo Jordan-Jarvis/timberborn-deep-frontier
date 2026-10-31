@@ -13,11 +13,11 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 255
+        "Amount": 260
       },
       {
         "Id": "Brick",
-        "Amount": 85
+        "Amount": 95
       },
       {
         "Id": "Gear",

@@ -22,11 +22,11 @@ Dimensions below are width × depth × height. Grid blueprints use X/Y/Z in that
 | --- | --- | ---: | ---: | --- | --- |
 | Sandstone Pit | 5 × 5 × 4 | 2 | 0 | 300 / 1,000 | 30 planks, 15 logs, 5 metal blocks |
 | Limestone Pit | 6 × 5 × 4 | 2 | 0 | 300 / 1,000 | 25 planks, 15 logs, 10 metal blocks |
-| Sandstone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 505 planks, 130 treated planks, 130 metal blocks, 320 gears |
-| Limestone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 505 planks, 130 treated planks, 130 metal blocks, 320 gears |
+| Sandstone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 425 planks, 110 treated planks, 110 metal blocks, 270 bricks, 320 gears |
+| Limestone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 425 planks, 110 treated planks, 110 metal blocks, 320 bricks, 320 gears |
 | Stone Crusher | 6 × 7 × 5 | 2 | 200 | 600 / 1,600 | 45 planks, 25 logs, 20 metal blocks, 35 limestone, 30 gears |
 | Cement Kiln | 9 × 9 × 6 | 2 | 300 | 600 / 1,600 | 50 planks, 25 logs, 20 metal blocks, 95 limestone, 40 gears |
-| Concrete Mixer | 8 × 6 × 7 | 2 | 250 | 1,000 / 2,000 | 90 planks, 35 metal blocks, 120 limestone, 60 gears |
+| Concrete Mixer | 8 × 6 × 7 | 2 | 250 | 1,000 / 2,000 | 90 planks, 35 metal blocks, 60 bricks, 45 limestone, 60 gears |
 
 Construction costs are the generated ones (2026-10-30). They follow the material cost rule in [progression.md](progression.md#material-cost-rule-2026-10-30): the authored catalog value times its tier factor, recomposed from what each model shows. Masonry is priced as limestone or sandstone; the pits and quarries leave the stone they work unpriced, and no building of the first concrete chain costs concrete or bricks. The kiln moved from cost tier T2 (factor 3) to T1 (factor 2) with its science. Dimensions, workers and power in this table predate the compaction pass.
 
@@ -38,14 +38,14 @@ These dimensions describe current authored registrations. The detailed pit repla
 | --- | ---: | --- | --- | --- |
 | Sandstone Quarry | 2 | 4 water | 8 sandstone | None |
 | Limestone Quarry | 2 | 4 water | 8 limestone | None |
-| Stone Crusher (Grind brick earth) | 1 | 3 sandstone | 6 dirt | None |
+| Stone Crusher (Grind brick earth) | 1 | 3 sandstone | 8 dirt | None |
 | Cement Kiln (Fire bricks) | 2 | 4 dirt, 1 water | 4 bricks | 1 log per cycle |
 | Cement Kiln (Fire cement) | 2 | 3 limestone, 1 dirt | 2 cement | 1 log per cycle |
 | Concrete Mixer | 2 | 3 sandstone, 2 cement, 4 water | 8 concrete | None |
 
-These are recipe durations at nominal productivity, not guaranteed observed rates. Worker productivity, working hours, power and hauling affect actual output. A fully supplied kiln on cement produces enough binder for one continuously operating mixer. One crusher (6 dirt per hour) supplies three kilns on bricks (2 dirt per hour each) or many on cement (0.5 dirt per hour each), so the player adds kilns before duplicating the crusher. Concrete takes sandstone directly, with the same 1.5 sandstone per 4 concrete that the retired aggregate step used. The crusher/kiln/mixer line has a combined nameplate demand of 750 hp. Adding both quarries raises connected nameplate demand to 3,750 hp; idle loads follow native workshop behavior. This is deliberately below the nuclear tier.
+These are recipe durations at nominal productivity, not guaranteed observed rates. Worker productivity, working hours, power and hauling affect actual output. A fully supplied kiln on cement produces enough binder for one continuously operating mixer. One crusher (8 dirt per hour) supplies four kilns on bricks (2 dirt per hour each) or many on cement (0.5 dirt per hour each), so the player adds kilns before duplicating the crusher. Concrete takes sandstone directly, with the same 1.5 sandstone per 4 concrete that the retired aggregate step used. The crusher/kiln/mixer line has a combined nameplate demand of 750 hp. Adding both quarries raises connected nameplate demand to 3,750 hp; idle loads follow native workshop behavior. This is deliberately below the nuclear tier.
 
-One mixer nominally needs 1.75 sandstone (1.5 as rubble, 0.25 as the kiln's dirt), 1.5 limestone, 0.5 log and 2 water per production hour, excluding quarry water. A brick kiln needs 1 sandstone (as 2 dirt), 0.5 log and 0.5 water per hour for 2 bricks. Each quarry outputs 4 stone/hour and consumes 2 water/hour while active. A 600-stone outcrop of each mineral supplies about 1,370 concrete before the sandstone runs out (limestone lasts to 1,600), or 1,200 bricks from the sandstone alone, provided all other inputs are available.
+One mixer nominally needs about 1.69 sandstone (1.5 as rubble, 0.19 as the kiln's dirt), 1.5 limestone, 0.5 log and 2 water per production hour, excluding quarry water. A brick kiln needs 0.75 sandstone (as 2 dirt), 0.5 log and 0.5 water per hour for 2 bricks. Each quarry outputs 4 stone/hour and consumes 2 water/hour while active. A 600-stone outcrop of each mineral supplies about 1,420 concrete before the sandstone runs out (limestone lasts to 1,600), or 1,600 bricks from the sandstone alone, provided all other inputs are available. The crusher yield is 8 dirt per 3 sandstone (raised from 6 with the quarries' brick plinths, the proposal's lever, so the stone before the quarries still fits the built-in maps).
 
 ## Map and transport requirements
 

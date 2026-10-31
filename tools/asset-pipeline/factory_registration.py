@@ -136,3 +136,42 @@ def flagstone_slab(g, x0, y0, x1, y1, top, thickness=.20, *, stone=.5, seed=0):
             g.box(((a + b) / 2, (c + d) / 2, top - .06 + h / 2), (b - a, d - c, h),
                   KILN_STONE_LIGHT if (i + j) % 2 else KILN_STONE)
 
+
+def brick_box(g, center, size, *, faces=('front', 'back', 'left', 'right'), cap=.04):
+    """Solid block faced with running-bond bricks (2026-10-30, bricks pass;
+    it replaces masonry_box on the mixer): a cement-dust mortar core
+    (DFIndustrial24) set back by the brick depth on the bricked faces, bricks
+    in the native brick-red plaster (Plaster_Orange.IronTeeth) and a grey
+    kiln-masonry cap (DFIndustrial14) across the full top, so the block's
+    extents and its standing surface are unchanged. Front and back courses
+    run corner to corner; the side courses stop short of them."""
+    from reference_materials import KILN_STONE, KILN_DUST, CIVIC_ORANGE_PANEL
+    from lategame_mining_parts import _brick_runs, BRICK_COURSE, BRICK_JOINT, BRICK_PROUD, BRICK_EMBED
+    (cx, cy, cz), (sx, sy, sz) = center, size
+    if min(sx, sy, sz) <= 0 or sz <= cap:
+        raise ValueError('Brick block needs a positive size taller than its cap')
+    x0, x1, y0, y1, z0, z1 = cx - sx / 2, cx + sx / 2, cy - sy / 2, cy + sy / 2, cz - sz / 2, cz + sz / 2
+    d, e, j = BRICK_PROUD, BRICK_EMBED, BRICK_JOINT
+    ca, cb = x0 + (d if 'left' in faces else 0), x1 - (d if 'right' in faces else 0)
+    da, db = y0 + (d if 'front' in faces else 0), y1 - (d if 'back' in faces else 0)
+    top = z1 - cap
+    g.box(((ca + cb) / 2, (da + db) / 2, (z0 + top) / 2), (cb - ca, db - da, top - z0), KILN_DUST)
+    g.box((cx, cy, z1 - cap / 2), (sx, sy, cap), KILN_STONE)
+    n = max(1, round((top - z0) / BRICK_COURSE))
+    pitch = (top - z0) / n
+    side = (da + e + j if 'front' in faces else da, db - e - j if 'back' in faces else db)
+    runs = {'front': (x0, x1), 'back': (x0, x1), 'left': side, 'right': side}
+    for row in range(n):
+        za, zb = z0 + row * pitch + j / 2, z0 + (row + 1) * pitch - j / 2
+        for face in faces:
+            for u, v in _brick_runs(*runs[face], row % 2):
+                u, v = u + j / 2, v - j / 2
+                if face == 'front':
+                    lo, hi = (u, y0, za), (v, da + e, zb)
+                elif face == 'back':
+                    lo, hi = (u, db - e, za), (v, y1, zb)
+                elif face == 'left':
+                    lo, hi = (x0, u, za), (ca + e, v, zb)
+                else:
+                    lo, hi = (cb - e, u, za), (x1, v, zb)
+                g.box(tuple((lo[i] + hi[i]) / 2 for i in range(3)), tuple(hi[i] - lo[i] for i in range(3)), CIVIC_ORANGE_PANEL)

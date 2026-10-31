@@ -28,6 +28,7 @@ from industrial_kit import lean_plate_roof
 from industrial_kit import (lean_timber_column as timber_column,lean_sheet_roof as sheet_roof,lean_cage_lamp as cage_lamp,round_pipe,lean_bin as bin,band,prism,square_nut,open_box,lean_rock as rock,lean_rock_heap as rock_heap,lean_wall as wall,skin_board)
 from reference_materials import (CRUSHER_STEEL,KILN_STONE,KILN_STONE_LIGHT,KILN_SOOT,CIVIC_FORGED_PANEL)
 from walkway_geometry import RailAssembly
+from factory_registration import brick_box
 from quarry_process_details import material_flow,side_window,window_y,lift_state,HOIST_TRAVEL,BIN
 from industrial_door_components import recipe as door_recipe
 from industrial_levels import QUARRY_ENTRANCE
@@ -65,9 +66,14 @@ def platform(g,x0,y0,x1,y1,top):
     deck(g,x0,y0,x1,y1,top-.07)
 
 
-def plinth(g,x0,y0,x1,y1,top):
-    '''Solid stone process plinth (not a deck); its bottom is just below ground.'''
-    g.box(((x0+x1)/2,(y0+y1)/2,(top-.02)/2),(x1-x0,y1-y0,top+.02),KILN_STONE)
+def plinth(g,x0,y0,x1,y1,top,brick=()):
+    '''Solid process plinth (not a deck); its bottom is just below ground.
+    `brick` names its outer faces, which are brick under a grey kiln-masonry
+    cap (2026-10-30, bricks pass; it was all grey masonry).'''
+    if brick:
+        brick_box(g,((x0+x1)/2,(y0+y1)/2,(top-.02)/2),(x1-x0,y1-y0,top+.02),faces=brick,cap=.06)
+    else:
+        g.box(((x0+x1)/2,(y0+y1)/2,(top-.02)/2),(x1-x0,y1-y0,top+.02),KILN_STONE)
 
 
 def heavy_beam(g,a,b,w=.26,plates=True):
@@ -90,13 +96,13 @@ def foundation(g):
     # One stone plinth, top at layer 1, around the collar opening; the cabin
     # stands in front of it on the ground. Outer faces are on tile edges.
     cx0,cy0,cx1,cy1=COLLAR
-    plinth(g,0,2.06,cx0,7.0,PLINTH_TOP)
-    plinth(g,cx1,2.06,8.0,7.0,PLINTH_TOP)
+    plinth(g,0,2.06,cx0,7.0,PLINTH_TOP,brick=('left','back'))
+    plinth(g,cx1,2.06,8.0,7.0,PLINTH_TOP,brick=('right','back'))
     plinth(g,cx0,2.06,cx1,cy0,PLINTH_TOP)
-    plinth(g,cx0,cy1,cx1,7.0,PLINTH_TOP)
+    plinth(g,cx0,cy1,cx1,7.0,PLINTH_TOP,brick=('back',))
     # Front strip either side of the cabin (the stone tray stands on it).
-    plinth(g,0,1.0,.905,2.06,PLINTH_TOP)
-    plinth(g,2.10,1.0,8.0,2.06,PLINTH_TOP)
+    plinth(g,0,1.0,.905,2.06,PLINTH_TOP,brick=('front','left'))
+    plinth(g,2.10,1.0,8.0,2.06,PLINTH_TOP,brick=('front','right'))
     # The lined collar: stone blocks against the plinth's inner faces, the
     # dark shaft floor and a timber collar frame on the plinth top.
     g.box(((cx0+cx1)/2,(cy0+cy1)/2,.065),(cx1-cx0,cy1-cy0,.10),KILN_SOOT)
