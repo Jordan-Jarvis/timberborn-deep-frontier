@@ -459,10 +459,13 @@ if (check(soilCs.length > 0, 'RadiationSoil.cs missing')) {
   check(/public void Load\(\) => RadiationShading\.Verify\(\);/.test(renderer) && /class RadiationRenderer\b[^{]*IPostLoadableSingleton/.test(renderer),
     'RadiationRenderer must verify on Load and swap shaders in PostLoad');
   const unload = methodBody('RadiationRenderer.cs', 'public void Unload()') ?? '';
-  check(/_water\?\.Unload\(\);/.test(unload) && /_soil\?\.Unload\(\);/.test(unload), 'RadiationRenderer.Unload must restore the native shaders');
+  // The shader swaps belong to the renderer (registered before they are applied, so a PostLoad that
+  // fails part-way is restored too) and are restored after the surfaces unload (1ad77a8).
+  check(/_water\?\.Unload\(\);/.test(unload) && /_soil\?\.Unload\(\);/.test(unload) && /RadiationShading\.ShaderSwap\.RestoreAll\(_swaps\);/.test(unload),
+    'RadiationRenderer.Unload must unload both surfaces and restore every native shader');
   for (const surface of ['RadioactiveWaterSurface', 'IrradiatedSoilSurface']) {
     const body = shading.slice(shading.indexOf(`internal sealed class ${surface}`));
-    check(/internal void Unload\(\) \{\s*RadiationShading\.SetKeyword\([^)]*, false\);\s*foreach \(var swap in _swaps\) swap\.Restore\(\);/.test(body), `${surface}.Unload must clear its keyword and restore the native shaders`);
+    check(/internal void Unload\(\) \{\s*RadiationShading\.SetKeyword\([^)]*, false\);/.test(body), `${surface}.Unload must clear its keyword`);
     check(/if \(!_dirty\[[jz]\]\) continue;/.test(body) && /RadiationShading\.UploadLayer\(/.test(body), `${surface} must upload only changed layers`);
   }
   const swap = shading.slice(shading.indexOf('internal sealed class ShaderSwap'), shading.indexOf('internal static void UploadLayer('));
