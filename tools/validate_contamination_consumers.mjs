@@ -217,7 +217,11 @@ if (/\busing\s+SluiceIsBack\b|\bSluiceIsBack\.Components\.[A-Z]\w*\s*[<(]/.test(
 // 3. Packaging.
 const optional = `${constant('BridgeAssembly')}.dll.${constant('ModId')}.optional`;
 const batch = await read(resolve(root, 'tools', 'unity', 'DeepFrontierBatchBuild.cs'));
-require(batch, `PackageOptionalAssembly(mod.Name, "${constant('BridgeAssembly')}.dll", "${optional}");`, `the build must package the bridge as ${optional}`);
+// The build packages every DeepFrontier.<ModId> asmdef as <name>.dll.<ModId>.optional (ac37d5c),
+// so the bridge must be named DeepFrontier.<ModId> for that rule to give `optional`.
+if (constant('BridgeAssembly') !== `DeepFrontier.${constant('ModId')}`) errors.push(`SluiceIsBackBridge.BridgeAssembly must be DeepFrontier.${constant('ModId')} so the build packages it as ${optional}`);
+require(batch, 'OptionalPrefix = "DeepFrontier."', `the build must package the bridge as ${optional}`);
+require(batch, 'PackageOptionalAssembly(mod.Name, name + ".dll", name + ".dll." + name.Substring(OptionalPrefix.Length) + ".optional");', `the build must package the bridge as ${optional}`);
 const stage = await read(resolve(root, 'tools', 'stage_deep_frontier.ps1'));
 require(stage, '3677643870\\version-1.1\\SluiceIsBack.dll', 'the stage script must import SluiceIsBack.dll for the bridge compile');
 require(stage, "unity\\SluiceIsBack.dll.meta", 'the stage script must import SluiceIsBack.dll.meta');

@@ -281,7 +281,11 @@ for (const [, name] of settingLabels) {
 const stagedAsmdefs = (await readdir(stagedTree, {recursive: true})).filter(p => p.endsWith(`${t('ModdableWeathersBridgeAssembly')}.asmdef`));
 if (stagedAsmdefs.length) {
   const batch = await read(resolve(root, 'tools', 'unity', 'DeepFrontierBatchBuild.cs')) ?? '';
-  check(batch.includes('.dll.ModdableWeathers.optional'), `${stagedAsmdefs.join(', ')} is staged, but the build does not package it as *.dll.ModdableWeathers.optional; as a plain .dll it breaks mod loading without Moddable Weathers`);
+  // The build packages every DeepFrontier.<ModId> asmdef as <name>.dll.<ModId>.optional (ac37d5c).
+  check(t('ModdableWeathersBridgeAssembly') === 'DeepFrontier.ModdableWeathers'
+      && batch.includes('OptionalPrefix = "DeepFrontier."')
+      && batch.includes('PackageOptionalAssembly(mod.Name, name + ".dll", name + ".dll." + name.Substring(OptionalPrefix.Length) + ".optional");'),
+    `${stagedAsmdefs.join(', ')} is staged, but the build does not package it as *.dll.ModdableWeathers.optional; as a plain .dll it breaks mod loading without Moddable Weathers`);
 }
 if (moddableWeathersDir) {
   const mwManifest = JSON.parse((await read(resolve(moddableWeathersDir, 'manifest.json')))?.replace(/^﻿/, '') ?? '{}');
