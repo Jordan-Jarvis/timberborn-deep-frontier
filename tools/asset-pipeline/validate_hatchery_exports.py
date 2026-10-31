@@ -49,9 +49,8 @@ require(b['PathModelTypeEnforcerSpec']=={'PathModelType':'Roof'},'Bank apron doe
 require(len(cells)==15,'Suggested clear deck/door registration mismatch')
 for n in layout['nodes']:
     require(n['cell'][2]-1==n['point'][2],'Model/grid height mismatch')
-for p in b['PlatformDeckSpec']['Openings']:
-    for name in p['HiddenNodes']+p['ShownNodes']:require(names[name]==1,'Missing rail binding '+name)
-require(len(b['PlatformDeckSpec']['Openings'])==3,'Rail opening count changed')
+require(b['PlatformDeckSpec']['Openings']==[],'The hatchery decks have no rails (2026-10-31 roof pass)')
+require(not any(n.startswith(('WalkwayRail','WalkwayGroup')) for n in names),'Railing node exported')
 blocks=b['BlockObjectSpec']['Blocks']
 cell=lambda x,y,z:blocks[(z*D+y)*W+x]
 for x in range(W):

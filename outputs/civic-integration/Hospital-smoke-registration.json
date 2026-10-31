@@ -1,7 +1,7 @@
 {
  "ident": "Hospital",
  "source": "src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend",
- "sourceSha256": "ae7b3d515cb3afb8b96f1e56d646c7fad0b42f389c17a058737c65b5e2a20694",
+ "sourceSha256": "25be7296c9afdf8c36bf37a9cd5aa1824e2fa1071f6e605a66f1285cd4e7535f",
  "frame": 1,
  "layout": "tools/civic-layouts.json",
  "origin": [

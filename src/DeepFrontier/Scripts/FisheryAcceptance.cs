@@ -243,27 +243,28 @@ namespace DeepFrontier.Scripts {
           throw new InvalidOperationException("Fisher model is not facing the fixture pond");
         Debug.Log("[DeepFrontier Fishery] PASS visible fisher model faces the water");Capture("fishing-regression");
         SetupAccess();
-        // Player-path decks (2026-10-30): an opening's rail hides only between
-        // two actual player paths, so the open rails get a path on their deck cell.
-        foreach(var id in new[]{"FishFront8","FishRoofLeft6"}) {
-          var inside=_building.TransformCoordinates(_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id).Inside);
+        // Player-path decks (2026-10-30), open since 2026-10-31 (no rails): the two
+        // tested seams get a path on their deck cell.
+        foreach(var seam in new[]{FrontSeam(),TerraceSeam(0)}) {
+          var inside=_building.TransformCoordinates(seam.Inside);
           if(!_blocks.GetPathObjectAt(inside))Create("Path",inside.x,inside.y,inside.z);
         }
         _shorePhase=9;
       } else if(_shorePhase==9&&_frame>=_shoreFrame+120) {
-        CheckPort("FishFront8",true);CheckPort("FishRoofLeft6",true);CheckPort("FishRoofLeft5",false);
+        if(_building.GetComponent<PlatformDeckSpec>().Openings.Length!=0)throw new InvalidOperationException("Fishery decks must have no rails");
+        CheckSeam(FrontSeam(),true);CheckSeam(TerraceSeam(0),true);CheckSeam(TerraceSeam(-1),false);
         var worker=_registry.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>()).First(w=>w.WorkerType=="Beaver"&&w.Workplace!=_flag.GetComponent<Workplace>());
         worker.Unemploy();_walker=worker.GetComponent<ControllableCharacter>();_walker.ChangeAnimation("BeaverAdult_idle");
         _walkBuilding=_building;
         // From the road below the gallery stairs onto the gallery, through both upper doors
         // and the hall to the warehouse terrace, then down to the road in front of the Entrance.
         var deck=_building.GetComponent<PlatformDeckSpec>();
-        var front=Opening("FishFront8");var access=GalleryStairs();
+        var front=FrontSeam();var access=GalleryStairs();
         var galleryDoor=deck.Doors.Single(d=>d.Exterior==front.Inside);
         var terraceDoor=deck.Doors.Single(d=>d.Exterior!=front.Inside);
         var entrance=_building.PositionedEntrance.Coordinates;
         foreach(var cell in new[]{new Vector3Int(access.Approach.x,RoadY,Ground),_building.TransformCoordinates(front.Inside),_building.TransformCoordinates(galleryDoor.Interior),
-          _building.TransformCoordinates(terraceDoor.Interior),_building.TransformCoordinates(Opening("FishRoofLeft6").Inside),new Vector3Int(entrance.x,RoadY,Ground)})
+          _building.TransformCoordinates(terraceDoor.Interior),_building.TransformCoordinates(TerraceSeam(0).Inside),new Vector3Int(entrance.x,RoadY,Ground)})
           _walkTargets.Enqueue(cell);
         _camera.MoveTargetTo(new Vector3(166,7,164));_camera.SetZoomLevel(20,0);_shorePhase=10;NextTarget();
       } else if(_shorePhase==10&&Vector3.Distance(_walker.Transform.position,_walkWorld)<.18f) {
@@ -433,7 +434,11 @@ namespace DeepFrontier.Scripts {
           if(roof!=1||dirt!=0)throw new InvalidOperationException("Bank apron path did not select the native roof model above its timber surface");
         }
         Debug.Log("[DeepFrontier Fishery] PASS native Floor-only bank aprons retain player paths and select visible roof path models");
-        CheckHatcheryPort("NurseryBack2",true);CheckHatcheryPort("NurseryLeft3",true);CheckHatcheryPort("NurseryRight5",false);
+        if(_hatchery.GetComponent<PlatformDeckSpec>().Openings.Length!=0)throw new InvalidOperationException("Hatchery decks must have no rails");
+        // The former rail cells (removed 2026-10-31): the centre dock's end, the front
+        // walkway's left end and the canopy deck's rear edge.
+        CheckHatcheryEdge(new Vector3Int(2,6,1),new Vector3Int(2,7,1),true);CheckHatcheryEdge(new Vector3Int(0,3,1),new Vector3Int(-1,3,1),true);
+        CheckHatcheryEdge(new Vector3Int(5,3,1),new Vector3Int(5,4,1),false);
         foreach(int amount in new[]{0,30,60,4})SetHatcheryWater(amount);
         Capture("hatchery-clean-water");DrainPond();_shorePhase=12;_shoreFrame=_frame;
       } else if(_shorePhase==12) {
@@ -483,16 +488,16 @@ namespace DeepFrontier.Scripts {
       Debug.Log("[DeepFrontier Fishery] PASS hatchery native header tank "+amount+"/60");
     }
     private void SetupAccess() {
-      // Native stairs from the road row up to the FishFront8 gallery opening, and a
-      // platform stack carrying a path at both open openings' outside cells.
+      // Native stairs from the road row up to the front gallery seam, and a platform
+      // stack carrying a path at both tested seams' outside cells.
       var access=GalleryStairs();
       for(int y=RoadY+1;y<=access.Approach.y;y++)Create("Path",access.Approach.x,y,Ground);
       foreach(var (cell,climb) in access.Stairs) {
         for(int z=Ground;z<cell.z;z++)Create("Platform.IronTeeth",cell.x,cell.y,z);
         Create("Stairs.IronTeeth",cell.x,cell.y,cell.z,climb);
       }
-      foreach(var id in new[]{"FishFront8","FishRoofLeft6"}) {
-        var outside=_building.TransformCoordinates(Opening(id).Outside);
+      foreach(var seam in new[]{FrontSeam(),TerraceSeam(0)}) {
+        var outside=_building.TransformCoordinates(seam.Outside);
         for(int z=Ground;z<outside.z;z++)Create("Platform.IronTeeth",outside.x,outside.y,z);
         Create("Path",outside.x,outside.y,outside.z);
       }
@@ -512,8 +517,24 @@ namespace DeepFrontier.Scripts {
       }
       _shoreFrame=_frame;
     }
-    private void CheckPort(string id,bool expected) => CheckPort(id,expected,_building);
-    private WalkwayOpeningSpec Opening(string id)=>_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id);
+    // Open-deck seams (2026-10-31 roof pass: no deck rails). The front seam: the gallery
+    // door's exterior stand and the cell south of it (the old FishFront8). The terrace
+    // seams: the warehouse terrace's west edge at the terrace door's row (dy 0, the old
+    // FishRoofLeft6) and the row south of it (dy -1, the old FishRoofLeft5).
+    private (Vector3Int Inside,Vector3Int Outside) FrontSeam() {
+      var spec=_building.GetComponent<BlockObjectSpec>();var stands=CivicFixtureGeometry.DeckStands(spec);
+      var found=_building.GetComponent<PlatformDeckSpec>().Doors.Select(d=>d.Exterior)
+        .Where(c=>stands.Contains(c)&&CivicFixtureGeometry.FreeColumn(CivicFixtureGeometry.Blocks(spec),c+new Vector3Int(0,-1,0))).ToArray();
+      if(found.Length!=1)throw new InvalidOperationException("Fishery needs exactly one deck door exterior on the front edge, found "+found.Length);
+      return (found[0],found[0]+new Vector3Int(0,-1,0));
+    }
+    private (Vector3Int Inside,Vector3Int Outside) TerraceSeam(int dy) {
+      var spec=_building.GetComponent<BlockObjectSpec>();var front=FrontSeam();
+      var door=_building.GetComponent<PlatformDeckSpec>().Doors.Single(d=>d.Exterior!=front.Inside).Exterior;
+      var found=CivicFixtureGeometry.DeckSeams(spec,door.z,new Vector3Int(-1,0,0)).Where(s=>s.Inside.y==door.y+dy).OrderBy(s=>s.Inside.x).ToArray();
+      if(found.Length==0)throw new InvalidOperationException("Fishery terrace has no west edge at row "+(door.y+dy));
+      return found[0];
+    }
     // The Fishery's shaft line: a vanilla shaft on its first transput face (which must face
     // Left, the fixture's west side) and the developer generator beyond it. Shared with
     // AquacultureContinuityAcceptance, which finds the saved generator here.
@@ -535,28 +556,28 @@ namespace DeepFrontier.Scripts {
       if(face==null)throw new InvalidOperationException("Hatchery has no Down shaft face from its front wall onto an unpaved bank-row cell");
       return (hatchery.TransformCoordinates(face.Coordinates+down),hatchery.TransformCoordinates(face.Coordinates+down*2));
     }
-    // Stairs up to the FishFront8 opening's outside cell from the road row: one native stair
+    // Stairs up to the front seam's outside cell from the road row: one native stair
     // per layer, each on native platforms, climbing toward the building (native Stairs climb
     // toward their local Down side, as in AllBuildingsAcceptance), then the ground approach
     // cell at their foot. The opening must face the road row (south).
     private (List<(Vector3Int Cell,Orientation Climb)> Stairs,Vector3Int Approach) GalleryStairs() {
-      var front=Opening("FishFront8");
+      var front=FrontSeam();
       var outside=_building.TransformCoordinates(front.Outside);var step=outside-_building.TransformCoordinates(front.Inside);
       int height=outside.z-Ground;
       if(step!=new Vector3Int(0,-1,0)||height<1)
-        throw new InvalidOperationException("FishFront8 steps "+step+" to "+outside+"; this fixture's stairs need a raised opening facing the road row (south)");
+        throw new InvalidOperationException("Front seam steps "+step+" to "+outside+"; this fixture's stairs need a raised seam facing the road row (south)");
       var climb=Rotations.Single(o=>o.Transform(Direction2D.Down).ToOffset()==-step);
       var stairs=Enumerable.Range(1,height).Select(k=>(outside+step*k-new Vector3Int(0,0,k),climb)).ToList();
       var approach=outside+step*(height+1);approach.z=Ground;
-      if(approach.y<=RoadY)throw new InvalidOperationException("FishFront8 stairs at "+outside+" reach past the road row y "+RoadY);
+      if(approach.y<=RoadY)throw new InvalidOperationException("Front seam stairs at "+outside+" reach past the road row y "+RoadY);
       return (stairs,approach);
     }
     // Free warehouse-terrace deck cells (local) that take a native Platform, flooded from the
     // terrace door's exterior over the building's own bounds; minus the door exterior and the
-    // openings' inside cells, ordered by row then column.
+    // tested seams' inside cells, ordered by row then column.
     private List<Vector3Int> TerraceBuildCells() {
       var deck=_building.GetComponent<PlatformDeckSpec>();
-      var door=deck.Doors.Single(d=>d.Exterior!=Opening("FishFront8").Inside).Exterior;
+      var door=deck.Doors.Single(d=>d.Exterior!=FrontSeam().Inside).Exterior;
       var size=_building.GetComponent<BlockObjectSpec>().Size;
       var template=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Platform.IronTeeth");
       var platform=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint==template.Blueprint);
@@ -569,9 +590,9 @@ namespace DeepFrontier.Scripts {
         foreach(var n in new[]{c+Vector3Int.right,c+Vector3Int.left,c+Vector3Int.up,c+Vector3Int.down})
           if(!cells.Contains(n)&&Deck(n)){cells.Add(n);open.Enqueue(n);}
       }
-      var reserved=new HashSet<Vector3Int>(deck.Openings.Select(p=>p.Inside)){door};
+      var reserved=new HashSet<Vector3Int>{door,FrontSeam().Inside,TerraceSeam(0).Inside,TerraceSeam(-1).Inside};
       var result=cells.Where(c=>!reserved.Contains(c)).OrderBy(c=>c.y).ThenBy(c=>c.x).ToList();
-      if(result.Count==0)throw new InvalidOperationException("Fishery terrace offers no free deck cell besides its door and openings for this fixture's platforms");
+      if(result.Count==0)throw new InvalidOperationException("Fishery terrace offers no free deck cell besides its door and tested seams for this fixture's platforms");
       return result;
     }
     private void RequireHatcheryPlacement(string id,Vector3Int cell,bool expected,string purpose) {
@@ -581,30 +602,25 @@ namespace DeepFrontier.Scripts {
       if(_validator.BlocksValid(spec,placement)!=expected)
         throw new InvalidOperationException("Hatchery native placement mismatch for "+purpose+": "+id+" "+cell);
     }
-    private void CheckHatcheryPort(string id,bool expectedOpen) {
-      var p=_hatchery.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id);
-      var a=_hatchery.TransformCoordinates(p.Inside);var b=_hatchery.TransformCoordinates(p.Outside);
-      var inside=_blocks.GetPathObjectAt(a);var outside=_blocks.GetPathObjectAt(b);
-      if(!inside||!inside.IsFinished||!inside.HasComponent<PathSpec>())throw new InvalidOperationException("Hatchery rail test has no actual player path inside "+id);
-      bool neighboringPath=outside&&outside.IsFinished&&outside.HasComponent<PathSpec>();
+    // An open hatchery deck edge (no rails since 2026-10-31): a player path inside, and a
+    // path outside joined across the edge exactly where the fixture laid one.
+    private void CheckHatcheryEdge(Vector3Int inside,Vector3Int outside,bool expectedPath) {
+      var a=_hatchery.TransformCoordinates(inside);var b=_hatchery.TransformCoordinates(outside);
+      if(!IsPlayerPath(a))throw new InvalidOperationException("Hatchery edge test has no actual player path inside "+inside);
+      bool neighboringPath=IsPlayerPath(b);
       bool connected=_nav.AreConnectedInstant(a,b)&&_nav.AreConnectedInstant(b,a);
-      var nodes=_hatchery.GetComponent<BuildingModel>().FinishedModel.GetComponentsInChildren<Transform>(true);
-      bool hidden=p.HiddenNodes.All(name=>!nodes.Single(t=>t.name==name).gameObject.activeSelf);
-      if(neighboringPath!=expectedOpen||hidden!=expectedOpen||(expectedOpen&&!connected))
-        throw new InvalidOperationException("Hatchery player-path rail mismatch: "+id+", path="+neighboringPath+", hidden="+hidden+", floorConnected="+connected);
-      Debug.Log("[DeepFrontier Fishery] PASS hatchery decorative rail "+id+" actual outside path="+neighboringPath+", hidden="+hidden);
+      if(neighboringPath!=expectedPath||(expectedPath&&!connected))
+        throw new InvalidOperationException("Hatchery deck edge mismatch: "+inside+" -> "+outside+", path="+neighboringPath+", floorConnected="+connected);
+      Debug.Log("[DeepFrontier Fishery] PASS hatchery open deck edge "+inside+" outside path="+neighboringPath);
     }
-    // Player-path deck rail (PlatformDeck, 2026-10-30): hidden exactly when actual
-    // player paths stand on both the deck cell and the neighbouring cell.
-    private void CheckPort(string id,bool expected,BlockObject building) {
-      var p=building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id);
-      var a=building.TransformCoordinates(p.Inside);var b=building.TransformCoordinates(p.Outside);
+    // An open deck seam (no rails since 2026-10-31): player paths on both sides exactly
+    // where the test laid them, joined across the deck edge.
+    private void CheckSeam((Vector3Int Inside,Vector3Int Outside) seam,bool expected) {
+      var a=_building.TransformCoordinates(seam.Inside);var b=_building.TransformCoordinates(seam.Outside);
       bool paths=IsPlayerPath(a)&&IsPlayerPath(b);
       bool connected=_nav.AreConnectedInstant(a,b)&&_nav.AreConnectedInstant(b,a);
-      var nodes=building.GetComponent<BuildingModel>().FinishedModel.GetComponentsInChildren<Transform>(true);
-      bool hidden=p.HiddenNodes.All(name=>!nodes.Single(t=>t.name==name).gameObject.activeSelf);
-      if(paths!=expected||hidden!=expected||(expected&&!connected))throw new InvalidOperationException("Fishery rail/route mismatch: "+id);
-      Debug.Log("[DeepFrontier Fishery] PASS rail "+id+": paths="+paths+", connected="+connected+", hidden="+hidden);
+      if(paths!=expected||(expected&&!connected))throw new InvalidOperationException("Fishery seam/route mismatch: "+seam.Inside+" -> "+seam.Outside);
+      Debug.Log("[DeepFrontier Fishery] PASS open deck seam "+seam.Inside+": paths="+paths+", connected="+connected);
     }
     private bool IsPlayerPath(Vector3Int c){var o=_blocks.GetPathObjectAt(c);return o&&o.IsFinished&&o.HasComponent<PathSpec>();}
     private void NextTarget() {

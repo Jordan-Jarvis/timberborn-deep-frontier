@@ -51,12 +51,9 @@ SHAFT_PORTS=[
 ]
 BARREL_MOVE={'name':'NativeBarrel1','sourceDelta':[0,-.30,0]}
 BANK_APRON_SURFACE={'nativeFloor':1,'terrainTop':1.01,'bottom':.894,'backingTop':1.016,'wearingTop':1.020}
-# Only the deck edges that still face open water carry rails: the left end of
-# the front walkway, the end of the centre dock and the canopy deck's rear
-# edge beside its retained rear post.
-RAIL_RUNS=[('NurseryLeft',(0,3,1),(0,4,1),1),
-           ('NurseryBack',(2,7,1),(3,7,1),1),
-           ('NurseryRight',(5,4,1),(6,4,1),1)]
+# No deck rails (2026-10-31 roof pass, user: no railings on the roofs, "like an
+# actual platform where roads can connect"); the three water-side rails went.
+RAIL_RUNS=[]
 
 def source(point):
     return tuple(v-o for v,o in zip(point,SOURCE_ORIGIN,strict=True))

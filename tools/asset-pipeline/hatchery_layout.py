@@ -20,10 +20,4 @@ cells={tuple(n['cell']) for n in H['nodes']}
 for x,y,z in sorted(cells):
     for b in ((x+1,y,z),(x,y+1,z)):
         if b in cells:edge(H,(x,y,z),b)
-# One railing opening per remaining rail cell (hatchery_structure.RAIL_RUNS).
-for name,inside,outside,run in [
-    ('NurseryLeft3',(0,3,1),(-1,3,1),'NurseryLeft'),
-    ('NurseryBack2',(2,6,1),(2,7,1),'NurseryBack'),
-    ('NurseryRight5',(5,3,1),(5,4,1),'NurseryRight')]:
-    H['ports'].append({'id':name,'inside':list(inside),'outside':list(outside),'run':run,
-                       'approach':list(source((inside[0]+.5,inside[1]+.5,inside[2])))})
+# No rail openings: the decks have no rails (2026-10-31 roof pass).

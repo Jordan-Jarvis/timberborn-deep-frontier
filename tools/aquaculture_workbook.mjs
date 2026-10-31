@@ -28,7 +28,7 @@ function buildingFields(b,status) {
 export const aquacultureBuildingUpdates=new Map([
   ['B005',{'Status':'Design only; not authored','Data status':'Proposed fish pond; no active building or recipe','Notes':'Shore fishing provides the implemented starter fish supply.'}],
   ['B006',{...buildingFields(hatchery,hatcheryStatus),'Infobox':'Manufactory','Power role':'Consumer','Power mode':'Grid',
-    'Flags':'Submerged lower layer; bank-level dock; 31 route cells; 20 adaptive rails; native header tank',
+    'Flags':'Submerged lower layer; bank-level dock; 31 route cells; open decks with no rails; native header tank',
     'Stackable':'Clear side-dock tile','Stacking rule':'Native support and collision on clear dock; no artificial layer cap','Conveyor-only solids':'No','Pipe ports':pipePorts(hatchery),
     'Unlock prerequisites':'600 science; planks, gears and metal blocks; gatherer fish and native algae',
     'Inputs':amounts(juvenile.Ingredients),'Outputs':amounts(juvenile.Products),'Placement':`Front row on ground/support; real clean water below rear nursery cell (${aquaculture.hatchery.waterCell.join(',')}); BaseZ=1`,
@@ -38,7 +38,7 @@ const s=fishery.BlockObjectSpec.Size;
 export const aquacultureBuildingAdds=[
   ['FisheryWorks','Fishery Works','Manufactory','Food; Deep Frontier','Iron Teeth','Yes','Build menu',s.X,s.Y,`${s.X}x${s.Y}`,s.X*s.Y,s.Z,fishery.WorkplaceSpec.MaxWorkers,fishery.MechanicalNodeSpec.PowerInput,0,'Consumer',fishery.BuildingSpec.ScienceCost,
     fishery.WorkplaceSpec.WorkerTypeUnlockCosts.map(v=>`${v.WorkerType}: ${v.ScienceCost}`).join('; '),amounts(fishery.BuildingSpec.BuildingCost),
-    `Sparse occupation; player-path gallery and terrace decks with ${fishery.PlatformDeckSpec.Doors.length} deck doors; ${fishery.PlatformDeckSpec.Openings.length} adaptive rails; six water surfaces`,fishery.ManufactorySpec.ProductionRecipeIds.join('; '),source,fisheryStatus,'3. Industrial city',
+    `Sparse occupation; player-path gallery and terrace decks with ${fishery.PlatformDeckSpec.Doors.length} deck doors; open decks with no rails; six water surfaces`,fishery.ManufactorySpec.ProductionRecipeIds.join('; '),source,fisheryStatus,'3. Industrial city',
     'Scale fish production or press fish oil','Clear gallery and terrace cells','Native support and collision; no artificial layer cap','No',pipePorts(fishery),'Grid',
     'Hatchery juvenile fish; native algae; delivered Water; shaft power',`${amounts(fish.Ingredients)} / ${amounts(oil.Ingredients)}`,`${amounts(fish.Products)} / ${amounts(oil.Products)}`,'None',
     'Supported bank or dry land; six basins show actual stored Water','Grow beyond small shore catches',fisheryStatus,'80 hp total, zero output. Original native water wheel is a process animation, not a generator. Water capacity 90. Three doors across levels 0/2.'],

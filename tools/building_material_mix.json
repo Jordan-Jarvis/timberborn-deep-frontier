@@ -360,10 +360,9 @@
   },
   "FishHatchery": {
    "model": "Buildings/Food/FishHatchery/FishHatchery.IronTeeth.Model",
-   "sha256": "a16d714a381374044d5a1ea64120a82c5eb17a3e35cbee9a4e2e4b15fcd0ec43",
+   "sha256": "95420d7b9ef65e72b69c904503a4fddbf3467ec6a5a61c986791dbfffb14d33f",
    "areas": {
     "BaseMetal.IronTeeth": 41.5172,
-    "BaseWood_Brown.Folktails": 1.7183,
     "BaseWood_DarkBrown.IronTeeth": 82.9306,
     "DFIndustrial05": 0.0311,
     "DFIndustrial08": 0.4355,
@@ -382,20 +381,19 @@
     "limestone": 0.0311,
     "metal": 43.8031,
     "unpriced": 1.5593,
-    "wood": 228.0394
+    "wood": 226.3211
    }
   },
   "FisheryWorks": {
    "model": "Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.Model",
-   "sha256": "b2548dea7626c21e32181512cf6261ce90bb9fe095811b64904d266702a59f06",
+   "sha256": "607736fe4aa0990e465becc556a6db0992489a081627af8e03c8ae6840c1c4c6",
    "areas": {
-    "BaseMetal.IronTeeth": 81.4358,
-    "BaseWood_Brown.Folktails": 15.866,
-    "BaseWood_DarkBrown.IronTeeth": 188.3771,
+    "BaseMetal.IronTeeth": 77.4886,
+    "BaseWood_DarkBrown.IronTeeth": 187.0991,
     "DFIndustrial04": 0.3907,
     "DFIndustrial05": 0.0971,
     "DFIndustrial06": 4.0488,
-    "DFIndustrial08": 1.2195,
+    "DFIndustrial08": 0.9582,
     "DFIndustrial12": 2.4165,
     "Details.IronTeeth#metal": 0.3366,
     "IrregularPlanks_DarkBrown.IronTeeth": 204.1166,
@@ -410,10 +408,10 @@
     "brick": 25.2672,
     "concrete": 9.8556,
     "limestone": 0.0971,
-    "metal": 104.3851,
+    "metal": 100.438,
     "sandstone": 0.3907,
-    "unpriced": 7.7612,
-    "wood": 503.0729
+    "unpriced": 7.4998,
+    "wood": 485.9289
    }
   },
   "FoodPackagingWorks": {
@@ -489,10 +487,9 @@
   },
   "Hospital": {
    "model": "Buildings/Wellbeing/Hospital/Hospital.IronTeeth.Model",
-   "sha256": "d941bccbf17255fca6f13912e00e59061faf931c6d010e237abb1b5c2b40e4a4",
+   "sha256": "7334f57f973fd89104bd6616cedbcddc68642b32576311a2a9dd7c52c1496d21",
    "areas": {
     "BaseMetal.IronTeeth": 67.0086,
-    "BaseWood_Brown.Folktails": 9.1617,
     "BaseWood_DarkBrown.IronTeeth": 281.3585,
     "DFIndustrial05": 0.6866,
     "DFIndustrial08": 0.8711,
@@ -510,7 +507,7 @@
     "limestone": 0.6866,
     "metal": 70.8271,
     "unpriced": 23.7622,
-    "wood": 466.8224
+    "wood": 457.6607
    }
   },
   "LaunchPad": {

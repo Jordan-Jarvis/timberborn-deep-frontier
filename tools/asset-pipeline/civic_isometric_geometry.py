@@ -1161,15 +1161,13 @@ def fishery(g,parts):
     gabled_roof(g,1.12,1.50,3.21,3.65,.98,1.43,311)
     glazing(g,4.05,2.985,2.55,.60,style='diamond')
     # Brick footings under the deck posts (2026-10-30, bricks pass; were cast concrete).
-    balcony_storey(g,r,'FishLeft',.40,3.55,1.95,8.40,edges=('front',),support_corners=((-1,-1),(-1,1)),foot=BRICK)
-    # The warehouse roof and left gallery are one continuous working deck.
-    # Rail only their outside boundary; never fence across their shared floor.
-    r.run('FishLeftSouth',(.40,3.55),(.40,4.00),1)
-    r.run('FishLeftNorth',(.40,7.10),(.40,8.40),1)
-    balcony_storey(g,r,'FishRight',6.15,2.05,7.85,8.40,edges=('front','right'),support_corners=((1,-1),),foot=BRICK)
+    # 2026-10-31 roof pass (user: no railings on the roofs; "like an actual
+    # platform where roads can connect"): the galleries and the warehouse roof
+    # are open decks with no rails, one layer over the ground.
+    balcony_storey(g,r,'FishLeft',.40,3.55,1.95,8.40,edges=(),support_corners=((-1,-1),(-1,1)),foot=BRICK)
+    balcony_storey(g,r,'FishRight',6.15,2.05,7.85,8.40,edges=(),support_corners=((1,-1),),foot=BRICK)
     balcony_storey(g,r,'FishRear',1.95,7.20,6.15,8.40,edges=(),support_corners=((-1,1),(1,1)),foot=BRICK)
-    r.run('FishBack',(.40,8.40),(7.85,8.40),1)
-    balcony_storey(g,r,'FishFront',3.15,2.05,6.15,3.28,1,edges=('front',),support_corners=((-1,-1),(1,-1)),foot=BRICK)
+    balcony_storey(g,r,'FishFront',3.15,2.05,6.15,3.28,1,edges=(),support_corners=((-1,-1),(1,-1)),foot=BRICK)
     for x in (2.62,5.32):glazing(g,x,3.22,1.48,.50,style='factory')
     for y in (3.85,5.15,6.46):
         glazing(g,6.11,y,1.48,.50,'right','factory')
@@ -1185,7 +1183,8 @@ def fishery(g,parts):
     for x in (1.75,3.1,4.5,6.3):wall_lamp(g,x,3.0,.46)
     # The left lamp went: the entrance roof's ridge stands in front of it.
     wall_lamp(g,5.94,3.23,1.48)
-    for y in (3.3,5.1,7.5):deck_lamp(g,7.76,y,floor=1)
+    # (The three lamp posts on the side gallery's outer edge went with its rails,
+    # 2026-10-31: the deck edge stays clear for paths and abutting buildings.)
     for x in (2.65,4.18,5.55):fishing_net(g,x,7.27,1.90,1.0,.78)
     # The net drying frames on the warehouse roof terrace are gone too: the
     # terrace is the player's (2026-10-22).
@@ -1227,7 +1226,6 @@ def fishery(g,parts):
     framed_room(g,x0+.12,y0+.12,x1-.12,y1-.12,0,.90,3,wall_style='storey')
     g.box(((x0+.40)/2,(y0+y1)/2,.85),(.40-x0-.06,y1-y0-.06,.02),IRON)
     deck(g,x0,y0,.40,y1,.93)
-    for side,a,b in [('Front',(x0,y0),(.40,y0)),('Rear',(x0,y1),(.40,y1)),('Left',(x0,y0),(x0,y1))]:r.run('RoofTerrace'+side,a,b,1)
     terrace_access_house(g,t,left_facing=True,model='FisheryWorks',storey=True)
     for x in (x0+.55,x0+1.55):
         glazing(g,x,y0+.06,.48,.50)

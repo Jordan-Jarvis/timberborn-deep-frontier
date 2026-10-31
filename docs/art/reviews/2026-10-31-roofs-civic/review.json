@@ -44,6 +44,39 @@
       "imageSha256": {
         "GroceryMarket-before-after.png": "e8c2fdfc25e4d99f20991bf2893229dea21f4c26f62295266aff7a197b2ffee0"
       }
+    },
+    {
+      "model": "Hospital",
+      "source": "src\\DeepFrontier\\Art\\Source\\Hospital-ReferenceStudy.blend",
+      "sourceSha256": "25be7296c9afdf8c36bf37a9cd5aa1824e2fa1071f6e605a66f1285cd4e7535f",
+      "images": [
+        "Hospital-before-after.png"
+      ],
+      "imageSha256": {
+        "Hospital-before-after.png": "c99361570f5812111006a6c709b98706e31a968774da5941125bed9175862f4c"
+      }
+    },
+    {
+      "model": "FishHatchery",
+      "source": "src\\DeepFrontier\\Art\\Source\\FishHatchery-ReferenceStudy.blend",
+      "sourceSha256": "22de4b910374b7be9995e5cc9d8aeff645cb67b41d4e34aa0805566152ece13f",
+      "images": [
+        "FishHatchery-before-after.png"
+      ],
+      "imageSha256": {
+        "FishHatchery-before-after.png": "7ec19bd916bba132db7adf1cee21bfe9794a0cdc7fd32d1eb22c56f5f78caaa2"
+      }
+    },
+    {
+      "model": "FisheryWorks",
+      "source": "src\\DeepFrontier\\Art\\Source\\FisheryWorks-ReferenceStudy.blend",
+      "sourceSha256": "43282fa29c1782b0af82fcf24a91d35a2d108e0c80fd94578402d2f4f6aecfe6",
+      "images": [
+        "FisheryWorks-before-after.png"
+      ],
+      "imageSha256": {
+        "FisheryWorks-before-after.png": "e2246eeaa1dbec7363436e5df704e2afc9244c284820a6033bd53d7532d3d006"
+      }
     }
   ],
   "extraImages": []

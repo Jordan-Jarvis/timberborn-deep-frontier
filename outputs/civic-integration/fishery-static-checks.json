@@ -1,10 +1,10 @@
 {
   "scope": "Source/export and blueprint checks only; runtime results are separate",
-  "modelSha256": "b2548dea7626c21e32181512cf6261ce90bb9fe095811b64904d266702a59f06",
-  "nodes": 29,
-  "nativeUvVertices": 18343,
+  "modelSha256": "607736fe4aa0990e465becc556a6db0992489a081627af8e03c8ae6840c1c4c6",
+  "nodes": 13,
+  "nativeUvVertices": 17679,
   "connectedRouteCells": 31,
-  "openings": 16,
+  "openings": 0,
   "doors": [
     0,
     2

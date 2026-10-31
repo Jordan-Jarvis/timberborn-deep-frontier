@@ -156,33 +156,6 @@ def medical_banner(g,parts,x,y,z):
     g.beam((x,y+.033,z+.73),(x,y+.56,z+.73),.065,mat=IRON)
 
 
-# Each boundary is authored once, avoiding corner post piles and automatic
-# per-module joins across the open hospital balconies. Runs stay 0.10 inside
-# the deck edge; intermediate posts stand on tile boundaries (2026-10-21), so
-# opening one cell's section leaves exactly that tile open. Source artwork
-# coordinates (native + 1 in X). Front and back balconies only: short end
-# rails close each balcony at the building corners.
-# 2026-10-30: the rear balconies end at the pavilion's corners (source x 5
-# and 9) since the wings were removed; the front ward balconies are gone.
-HOSPITAL_RAIL_RUNS=[
-    ('RearOuter',(5.10,10.90),(8.90,10.90),2),
-    ('RearLeft',(5.10,10.10),(5.10,10.90),2),
-    ('RearRight',(8.90,10.10),(8.90,10.90),2),
-    ('UpperRearOuter',(5.10,10.90),(8.90,10.90),4),
-    ('UpperRearLeft',(5.10,10.10),(5.10,10.90),4),
-    ('UpperRearRight',(8.90,10.10),(8.90,10.90),4),
-    ('RoofGardenLeft',(5.10,7.10),(5.10,9.90),6),
-    ('RoofGardenRight',(8.90,7.10),(8.90,9.90),6),
-    ('RoofGardenRear',(5.10,9.90),(8.90,9.90),6),
-]
-
-
-def hospital_rails(r):
-    """Author every hospital rail run; also used by the selective rail rebuild."""
-    for name,a,b,z in HOSPITAL_RAIL_RUNS:r.run_grid(name,a,b,z,ORIGIN)
-    return r
-
-
 def hospital(g,parts):
     from civic_isometric_geometry import (
         gabled_roof,roof_bearing,glazing,planter,wall_lamp,framed_cross,
@@ -220,7 +193,9 @@ def hospital(g,parts):
     for name,b in PLATFORMS.items():
         # 10 mm board relief: 4 mm sat on the strict 0.004 overlap tolerance.
         grid_platform(g,name,b,ORIGIN,SUPPORTS[name],CIVIC_CONCRETE if name=='RoofGarden' else PLANK,board_relief=.010)
-    hospital_rails(r)
+    # No deck rails (2026-10-31 roof pass, user: no railings on the roofs, "like
+    # an actual platform where roads can connect"): the rear decks and the roof
+    # garden are open to their tile edges.
     # Access house closes the central rear roof, with a small metal cap and
     # a proper opaque attic accent above its one-tile native arch.
     roof_bearing(g,7,6,8,7,8,8.05)

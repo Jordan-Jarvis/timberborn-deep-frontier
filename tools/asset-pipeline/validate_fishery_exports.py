@@ -34,15 +34,13 @@ while queue:
 require(visited==cells,'Disconnected fishery routes')
 require(len(layout['doorNodes'])==3 and {c[2] for c in layout['doorNodes']}=={0,1},'Waterfront doorway contract changed')
 # Player-placed-path decks since 2026-10-30 (every flat roof tile placeable):
-# no built-in walkway; the adaptive rails open on actual player paths and the
-# two upper doors are the deck door links.
+# no built-in walkway; the two upper doors are the deck door links. No rails
+# since the 2026-10-31 roof pass.
 require(layout['deckMode']=='PlayerPlacedPaths' and 'BuildingWalkwaySpec' not in blueprint,'Fishery decks must be player-path decks')
 deck=blueprint['PlatformDeckSpec']
-require(len(deck['Openings'])==len(layout['ports']),'Stale fishery rail export')
+require(deck['Openings']==[] and layout['ports']==[],'The Fishery decks have no rails (2026-10-31 roof pass)')
+require(not any(n.startswith(('WalkwayRail','WalkwayGroup')) for n in names),'Railing node exported')
 require(deck['Doors']==[{k:xyz_(v) for k,v in d.items()} for d in layout['doorLinks']],'Deck doors differ from the layout door links')
-for p in deck['Openings']:
-    require(not p['ShownNodes'],'Player-path decks need no connection-only filler planks: '+p['Id'])
-    for name in p['HiddenNodes']:require(names[name]==1,'Missing rail binding '+name)
 interior={tuple(c) for c in layout['interiorCells']}
 for n in layout['nodes']:
     c=tuple(n['cell'])

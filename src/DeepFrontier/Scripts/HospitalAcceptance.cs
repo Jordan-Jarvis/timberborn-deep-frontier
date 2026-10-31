@@ -56,7 +56,8 @@ namespace DeepFrontier.Scripts {
     // derived from its installed blueprint in Setup.
     private static readonly Vector3Int Origin=new(160,162,3);
     private readonly List<Vector3Int> _walk=new();
-    private string _openRail,_closedRail;
+    // Open-deck seams (local inside stand, local outside cell); 2026-10-31: no deck rails.
+    private (Vector3Int Inside,Vector3Int Outside) _openSeam,_closedSeam;
     private ControllableCharacter _walker; private Vector3 _walkWorld; private Vector3Int _target;
     private int _frame,_phase,_phaseFrame; private bool _failed,_saved; private float _start,_phaseTime,_normalHours;
     private float _sampleTime,_sampleInjury,_bedRate,_fullStaffTime,_arrivalTime;
@@ -100,28 +101,34 @@ namespace DeepFrontier.Scripts {
       var pathSpec=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint==_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Path").Blueprint);
       bool TakesPath(Vector3Int local)=>_validator.BlocksValid(pathSpec,new Placement(_building.TransformCoordinates(local),Orientation.Cw0,FlipMode.Unflipped));
       CivicFixtureGeometry.Place place=(id,c,o)=>Create(id,c.x,c.y,c.z,o);
-      var levels=deck.Openings.Select(o=>o.Inside.z).Distinct().OrderBy(z=>z).ToArray();
+      // 2026-10-31 roof pass: the decks have no rails (PlatformDeckSpec.Openings is empty);
+      // their stands are the cells over the building's Stackable blocks.
+      Require(deck.Openings.Length==0,"Hospital decks must have no rails");
+      var stands=CivicFixtureGeometry.DeckStands(spec).Where(c=>c.z>0).ToList();
+      var levels=stands.Select(c=>c.z).Distinct().OrderBy(z=>z).ToArray();
+      Require(levels.Length>0,"Hospital has no deck");
       CivicFixtureGeometry.Road(place,c=>_blocks.GetPathObjectAt(c),_building.TransformCoordinates(spec.Entrance.Coordinates));
-      // Player paths on every deck: every rail's deck cell and upper door step and the cells of
+      // Player paths on every deck: every deck stand and upper door step and the cells of
       // their layer that take a Path, except one roof cell that carries the full platform stack.
-      var region=CivicFixtureGeometry.DeckRegion(spec,deck.Openings.Select(o=>o.Inside).Concat(deck.Doors.Select(d=>d.Exterior).Where(c=>c.z>0)),TakesPath,"Hospital");
-      var tower=region.Where(c=>c.z==levels[levels.Length-1]&&deck.Openings.All(o=>o.Inside!=c)&&deck.Doors.All(d=>d.Exterior!=c)).ToArray();
-      Require(tower.Length>0,"Hospital roof deck has no cell besides rail and door cells for the platform stack");
+      var region=CivicFixtureGeometry.DeckRegion(spec,stands.Concat(deck.Doors.Select(d=>d.Exterior).Where(c=>c.z>0)),TakesPath,"Hospital");
+      var tower=region.Where(c=>c.z==levels[levels.Length-1]&&deck.Doors.All(d=>d.Exterior!=c)).ToArray();
+      Require(tower.Length>0,"Hospital roof deck has no cell besides door cells for the platform stack");
       foreach(var c in region.Where(c=>c!=tower[0]))Local("Path",c);
       Local("DoublePlatform.IronTeeth",tower[0]);Local("Platform.IronTeeth",tower[0]+new Vector3Int(0,0,2));Local("Path",tower[0]+new Vector3Int(0,0,3));
-      // Ground stairs climb to the middle rear rail of the lowest deck.
-      var rear=deck.Openings.Where(o=>o.Inside.z==levels[0]&&o.Outside-o.Inside==new Vector3Int(0,1,0)&&CivicFixtureGeometry.FreeColumn(blocks,o.Outside)).ToArray();
-      Require(rear.Length>0,"Hospital lowest deck has no rear rail with a free column outside it for the stairs");
-      var flightRail=rear[rear.Length/2];
-      var flight=CivicFixtureGeometry.Flight(place,_building.TransformCoordinates(flightRail.Outside),new Vector3Int(0,1,0),Origin.z);
-      // Player path on a platform stack beside the lowest deck's first side rail (open); the next
-      // rail of that deck with nothing outside it stays closed.
-      var seam=deck.Openings.FirstOrDefault(o=>o.Inside.z==levels[0]&&o.Outside.y==o.Inside.y&&CivicFixtureGeometry.FreeColumn(blocks,o.Outside));
-      Require(seam!=null,"Hospital lowest deck has no side rail with a free column outside it");
-      var shut=deck.Openings.FirstOrDefault(o=>o.Inside.z==levels[0]&&o.Outside!=seam.Outside&&o.Outside!=flightRail.Outside);
-      Require(shut!=null,"Hospital lowest deck has no third rail to stay closed");
+      // Ground stairs climb to the middle rear seam of the lowest deck.
+      var rear=CivicFixtureGeometry.DeckSeams(spec,levels[0],new Vector3Int(0,1,0));
+      Require(rear.Count>0,"Hospital lowest deck has no rear edge with a free column outside it for the stairs");
+      var flightSeam=rear[rear.Count/2];
+      var flight=CivicFixtureGeometry.Flight(place,_building.TransformCoordinates(flightSeam.Outside),new Vector3Int(0,1,0),Origin.z);
+      // Player path on a platform stack beside the lowest deck's first side edge (linked); another
+      // edge of that deck with nothing outside it stays unlinked.
+      var sides=CivicFixtureGeometry.DeckSeams(spec,levels[0],new Vector3Int(-1,0,0)).Concat(CivicFixtureGeometry.DeckSeams(spec,levels[0],new Vector3Int(1,0,0))).ToList();
+      Require(sides.Count>0,"Hospital lowest deck has no side edge with a free column outside it");
+      var seam=sides[0];
+      var others=rear.Concat(sides).Where(s=>s.Outside!=seam.Outside&&s.Outside!=flightSeam.Outside).ToArray();
+      Require(others.Length>0,"Hospital lowest deck has no third edge to stay unlinked");
       CivicFixtureGeometry.Pad(place,_building.TransformCoordinates(seam.Outside),Origin.z);
-      _openRail=seam.Id;_closedRail=shut.Id;
+      _openSeam=seam;_closedSeam=others[0];
       // Two stacked 10,000 hp dev generators cover the 11,000 hp demand, on a shaft line out of the
       // lowest wall face clear of the stairs and the seam pad.
       var used=new HashSet<Vector2Int>(flight.Select(c=>new Vector2Int(c.x,c.y)));
@@ -163,7 +170,7 @@ namespace DeepFrontier.Scripts {
     }
     private void StartCare() {
       Require(_building.GetComponent<MechanicalNode>().PowerEfficiency==1,"Hospital shaft lacks full 11,000 hp");
-      CheckPort(_openRail,true);CheckPort(_closedRail,false);
+      CheckSeam(_openSeam,true);CheckSeam(_closedSeam,false);
       foreach(var door in _building.GetComponent<PlatformDeckSpec>().Doors) {
         var a=_building.TransformCoordinates(door.Interior);var b=_building.TransformCoordinates(door.Exterior);
         Require(_nav.AreConnectedInstant(a,b)&&_nav.AreConnectedInstant(b,a),"Hospital door lacks player-path connection: "+door.Interior);
@@ -322,13 +329,12 @@ namespace DeepFrontier.Scripts {
         _phaseTime=_clock.PartialDayNumber;_phase=2;
       }
     }
-    private void CheckPort(string id,bool expected) {
-      var p=_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id);
-      var a=_building.TransformCoordinates(p.Inside);var b=_building.TransformCoordinates(p.Outside);
+    // An open deck seam links across the deck edge exactly where a platform stands outside it.
+    private void CheckSeam((Vector3Int Inside,Vector3Int Outside) seam,bool expected) {
+      var a=_building.TransformCoordinates(seam.Inside);var b=_building.TransformCoordinates(seam.Outside);
       bool connected=_nav.AreConnectedInstant(a,b)&&_nav.AreConnectedInstant(b,a);
-      var nodes=_building.GetComponent<BuildingModel>().FinishedModel.GetComponentsInChildren<Transform>(true);
-      bool hidden=p.HiddenNodes.All(n=>!nodes.Single(t=>t.name==n).gameObject.activeSelf);
-      Require(connected==expected&&hidden==expected,"Hospital route/rail mismatch "+id);Pass("rail "+id+" open="+expected);
+      Require(connected==expected,"Hospital deck seam mismatch "+seam.Inside+" -> "+seam.Outside);
+      Pass("deck seam "+seam.Inside+" -> "+seam.Outside+" linked="+expected);
     }
     private void NextTarget() {
       _target=_targets.Dequeue();

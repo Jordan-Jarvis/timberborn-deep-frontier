@@ -3,7 +3,7 @@
   "targets": [
     "FishHatchery"
   ],
-  "joinedObjects": 17,
+  "joinedObjects": 11,
   "objects": [
     "FishHatchery.Architecture",
     "FishHatchery.Deck.CanopyBaseApron",
@@ -15,19 +15,13 @@
     "FishHatchery.Headhouse.DoorLamps",
     "FishHatchery.Headhouse.Roof",
     "FishHatchery.Headhouse.Shell",
-    "FishHatchery.Headhouse.Windows",
-    "WalkwayRail.FishHatchery.Post000",
-    "WalkwayRail.FishHatchery.Post001",
-    "WalkwayRail.FishHatchery.Post002",
-    "WalkwayRail.FishHatchery.Post003",
-    "WalkwayRail.FishHatchery.Post004",
-    "WalkwayRail.FishHatchery.Post005"
+    "FishHatchery.Headhouse.Windows"
   ],
   "nodes": [
     {
       "node": "StaticMerged",
-      "parts": 17,
-      "triangles": 7201,
+      "parts": 11,
+      "triangles": 7093,
       "materials": {
         "BaseWood_DarkBrown.IronTeeth": 918,
         "BaseMetal.IronTeeth": 4197,
@@ -37,8 +31,7 @@
         "Details.IronTeeth": 376,
         "IrregularPlanks_MetalForged.IronTeeth": 92,
         "DFIndustrial25": 10,
-        "Plaster_Orange.IronTeeth": 16,
-        "BaseWood_Brown.Folktails": 108
+        "Plaster_Orange.IronTeeth": 16
       }
     },
     {

@@ -43,9 +43,8 @@ require('NativeBuildingPropsSpec' not in blueprint and len(assembly['props'])==0
 # 2026-10-21: front/back balconies only; each ward and the back balcony has its own door.
 # Since the wings were removed (2026-10-30): ground, rear deck, rear ward and roof garden doors.
 require('BuildingWalkwaySpec' not in blueprint and len(blueprint['PlatformDeckSpec']['Doors'])==4,'Hospital must use player roads and four internal doors')
-require(len(blueprint['PlatformDeckSpec']['Openings'])==22,'Missing individual rail ports')
-for port in blueprint['PlatformDeckSpec']['Openings']:
-    require(all(names[n]==1 for n in port['HiddenNodes']+port['ShownNodes']),'Missing rail node '+port['Id'])
+require(blueprint['PlatformDeckSpec']['Openings']==[],'The Hospital decks have no rails (2026-10-31 roof pass)')
+require(not any(n.startswith(('WalkwayRail','WalkwayGroup')) for n in names),'Railing node exported')
 cells={tuple(n['cell']) for n in layout['nodes']};graph={c:set() for c in cells}
 for a,b in layout['edges']:
     a,b=tuple(a),tuple(b)

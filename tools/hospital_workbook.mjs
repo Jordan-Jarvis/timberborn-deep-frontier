@@ -14,7 +14,7 @@ export const hospitalBuildingUpdates=new Map([['B011',{
   'Footprint tiles':size.X*size.Y,'Height':size.Z,'Workers':b.WorkplaceSpec.MaxWorkers,
   'Power demand (hp)':b.MechanicalNodeSpec.PowerInput,'Power output (hp)':b.MechanicalNodeSpec.PowerOutput,'Power role':'Consumer',
   'Science unlock':b.BuildingSpec.ScienceCost,'Bot unlock':'Beaver staff only','Build materials':amounts(b.BuildingSpec.BuildingCost),
-  'Flags':`${p.patientCapacity} patients; staff use no patient slots; player-placed paths; ${layout.nodes.length} authored access cells; ${b.PlatformDeckSpec.Openings.length} decorative rail openings; native F mirroring`,
+  'Flags':`${p.patientCapacity} patients; staff use no patient slots; player-placed paths; ${layout.nodes.length} authored access cells; open decks with no rails; native F mirroring`,
   'Recipe names':'None; native per-hour supply consumption','Source':source,'Data status':p.requirementStatus,
   'Role':'Treat injuries, chipped teeth and badwater contamination; staffed neighborhood care',
   'Stackable':'Clear 4x3 roof construction area','Stacking rule':'Clear 4x3 roof area at layer 6; player-placed paths; native support/collision; no layer cap',

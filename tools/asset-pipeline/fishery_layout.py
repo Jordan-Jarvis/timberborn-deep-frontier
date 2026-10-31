@@ -1,5 +1,5 @@
 """Explicit waterfront Fishery registration, measured from its isometric model."""
-from industrial_layouts import layout,node,edge,lane,grid_lane,port
+from industrial_layouts import layout,node,edge,lane,grid_lane
 
 # 2026-10-22 (user): no forced decoration beyond the walls. The two front
 # rows (fish tables, bins, the front basin) and the empty right column left
@@ -28,14 +28,10 @@ lane(F,[(5,3,1),(4,3,1),(3,3,1),(3,4,1),(2,4,1),(1,4,1)],
      [(3.9,4.8,1),(2.9,4.8,1),(1.9,4.8,1),(1.9,5.55,1),(1.22,5.55,1),(.25,5.8,1)])
 grid_lane(F,[(0,4,1),(0,3,1),(1,3,1),(1,4,1)])
 edge(F,(0,4,1),(1,4,1))
-# FishFront5..7 opened from the lane in front of the upper hall; that lane
+# 2026-10-31 roof pass: the galleries and the roof terrace have no rails, so
+# there are no rail openings ('ports'). The lane in front of the upper hall
 # shares its row with the hall's registered front wall (region 3..7 x 1..5),
-# so it is an interior building lane, not a whole-tile player deck, and its
-# rails stay closed (2026-10-30, player-path decks).
-port(F,'FishFront8',(8,1,1),(8,0,1),'FishRightfront')
-for y in range(3,9):port(F,f'FishRight{y}',(8,y-2,1),(9,y-2,1),'FishRightright')
-for x in range(2,9):port(F,f'FishRear{x}',(x,6,1),(x,7,1),'FishBack')
-for y in (5,6):port(F,f'FishRoofLeft{y}',(0,y-2,1),(-1,y-2,1),'RoofTerraceLeft')
+# so it stays an interior building lane.
 # The ground door cell (3,0,0) is the enclosed vestibule's doorway: interior
 # route (2026-10-30, the outdoor deck cells are no longer building routes).
 F['interiorCells']=[[3,0,0],[3,1,0],[4,1,0],[5,1,0],[5,2,0],[5,3,0],[5,3,1],[5,1,1],[6,1,1],[7,1,1],[2,4,1],
