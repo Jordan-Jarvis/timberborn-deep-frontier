@@ -337,7 +337,7 @@
     "MissionControl": [["TreatedPlank",235],["MetalBlock",105],["DeepAlloy",25],["Concrete",3240],["Brick",380],["Gear",295]],
     "LaunchPad": [["TreatedPlank",265],["HighGradeSteel",260],["Alloy",210],["MetalBlock",210],["Concrete",9525],["MachineCore",115]],
     "NuclearReactor": [["HighGradeSteel",1025],["Alloy",740],["MetalBlock",740],["Concrete",34145],["MachineCore",405],["EnrichedFuel",20]],
-    "SteelMill": [["MetalBlock",495],["Concrete",995],["Gear",255]],
+    "SteelMill": [["MetalBlock",500],["Concrete",980],["Gear",255]],
     "ArchiveExcavation": [["TreatedPlank",235],["MetalBlock",100],["DeepAlloy",20],["Concrete",2195],["Brick",810],["Gear",265]],
     "CryogenicTankFarm": [["TreatedPlank",100],["MetalBlock",295],["DeepAlloy",60],["Concrete",2355],["Gear",225]],
     "CoalPowerPlant": [["MetalBlock",130],["Concrete",65],["Brick",265],["Gear",75]],

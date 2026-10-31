@@ -64,7 +64,9 @@ HERO = ('Electric-arc melt shop whose three graphite electrodes rise on mast arm
 DOOR_X = 1.5
 MELT = (0.0, 3.05, 5.0, 6.0)          # melt shop plinth (front .05 behind the pulpit's back plinth)
 MELT_TOP = 1.0
-EAVE = 3.5                             # melt shop wall top; flat roof slab above
+EAVE = 3.84                            # melt shop wall top; flat roof slab above, its top on layer 4
+# (2026-10-31: with the parapet gone the walls close the layer-3 side faces
+# themselves, and the roof is a whole-layer platform deck edge to edge)
 ROOF_TOP = EAVE + .16
 PENT = (1.0, 3.7, 3.0, 5.5)            # electrode penthouse plan (x0, y0, x1, y1)
 PENT_TOP = 5.0
@@ -131,7 +133,7 @@ def pulpit(g, parts):
            windows={'front': [(.45, 1.15, 'factory', .5), (2.55, 1.15, 'factory', .5)],
                     'left': [(.59, 1.15, 'factory', .5), (1.535, 1.15, 'factory', .5), (2.48, 1.15, 'factory', .5)],
                     'right': [(.59, 1.15, 'factory', .5), (1.535, 1.15, 'factory', .5), (2.48, 1.15, 'factory', .5)]})
-    zc = M.flat_roof(g, .05, 2.95, .12, 2.9, 1.84, overhang=.05, parapet=0)
+    zc = M.flat_roof(g, .05, 2.95, .12, 2.9, 1.84, overhang=.05)
     pivot = K.beacon(g, 2.82, 2.82, zc)
     parts.append((K.beacon_shutter(*pivot, 'SteelMill.PulpitBeacon'), 'SPIN_Z', 2))
     K.lamp(g, DOOR_X - .72, .12, 1.15, face='front')
@@ -168,7 +170,7 @@ def melt_shop(g, parts):
     parts.append((glow, 'PULSE', .08))
     g.beam((wx1 + .16, ty, tz - .26), (wx1 + .7, ty, tz - .42), .14, .09, IRON)
     # Riveted steel plate roof deck (roof variety, user 2026-10-30).
-    M.flat_roof(g, wx0, wx1, wy0, wy1, EAVE, overhang=.1, parapet=0, deck='forged')
+    M.flat_roof(g, wx0, wx1, wy0, wy1, EAVE, overhang=.1, deck='forged')
     penthouse(g, parts)
 
 
@@ -181,8 +183,8 @@ def penthouse(g, parts):
     for z in (4.15, 4.6):
         blk(g, px0 + .07, py0 - .03, z, px1 - .07, py0 + .002, z + .08, IRON)
         blk(g, px0 - .03, py0 + .07, z, px0 + .002, py1 - .07, z + .08, IRON)
-    P.louvre(g, 'X', py0, px0 + .25, px1 - .25, 3.82, 4.08, -1)
-    P.louvre(g, 'Y', px0, py0 + .3, py1 - .3, 3.82, 4.08, -1)
+    P.louvre(g, 'X', py0, px0 + .25, px1 - .25, 4.29, 4.55, -1)
+    P.louvre(g, 'Y', px0, py0 + .3, py1 - .3, 4.29, 4.55, -1)
     cap = PENT_TOP + .12
     blk(g, px0 - .08, py0 - .08, PENT_TOP, px1 + .08, py1 + .08, cap, IRON)
     # Electrode collars (static rings, clear of the moving electrodes).

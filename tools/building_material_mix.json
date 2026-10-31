@@ -216,9 +216,9 @@
   },
   "DeepDrill": {
    "model": "Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.Model",
-   "sha256": "cb21385750704a2d7d8ab03d56dbb2004da2b871f02ed662200bb381a19af8b8",
+   "sha256": "2cb0ccf5ca874a48fdd2ce1ac5952f3fe72d0201a2da1bfafda5c2fdf338a8c8",
    "areas": {
-    "BaseMetal.IronTeeth": 176.086,
+    "BaseMetal.IronTeeth": 157.1358,
     "BaseWood_DarkBrown.IronTeeth": 24.8939,
     "DFIndustrial06": 30.6271,
     "DFIndustrial08": 0.4579,
@@ -235,16 +235,16 @@
    "families": {
     "brick": 100.4774,
     "concrete": 200.3569,
-    "metal": 229.8402,
+    "metal": 210.89,
     "unpriced": 5.7763,
     "wood": 109.4169
    }
   },
   "DeepMine": {
    "model": "Buildings/Metal/DeepMine/DeepMine.IronTeeth.Model",
-   "sha256": "ebaa7ec809777818ea530c226b0f925b313fd6cbe74b5cc770359755b2ad88b4",
+   "sha256": "6af4aca55b0280098cec0942c910bda7445c0f1a59c8bb962500c5b59339c8e8",
    "areas": {
-    "BaseMetal.IronTeeth": 140.6934,
+    "BaseMetal.IronTeeth": 128.7855,
     "BaseWood_DarkBrown.IronTeeth": 25.488,
     "DFIndustrial08": 0.3434,
     "Details.IronTeeth#metal": 3.9451,
@@ -259,16 +259,16 @@
    "families": {
     "brick": 52.9777,
     "concrete": 205.5062,
-    "metal": 229.3056,
+    "metal": 217.3976,
     "unpriced": 2.9077,
     "wood": 117.0931
    }
   },
   "DeepProcessor": {
    "model": "Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model",
-   "sha256": "b4970b2def94394c2a274d7cdb1c940934fd6fcd87e424567c05ce7f758578ec",
+   "sha256": "bd86b03136ea43f9f6ce46a8677816f3e56f97fd935679650fe57cc4aa71420f",
    "areas": {
-    "BaseMetal.IronTeeth": 176.7855,
+    "BaseMetal.IronTeeth": 167.7391,
     "BaseWood_DarkBrown.IronTeeth": 11.6906,
     "DFIndustrial06": 30.6271,
     "DFIndustrial08": 2.3421,
@@ -276,13 +276,13 @@
     "IrregularPlanks_MetalForged.IronTeeth": 27.8599,
     "PaintedMetal.IronTeeth": 123.4195,
     "Plaster_Orange.IronTeeth": 44.9048,
-    "Plaster_White.IronTeeth": 103.1936,
+    "Plaster_White.IronTeeth": 94.9396,
     "WindowsAtlas.IronTeeth": 1.0803
    },
    "families": {
     "brick": 75.5319,
-    "concrete": 103.1936,
-    "metal": 330.4811,
+    "concrete": 94.9396,
+    "metal": 321.4347,
     "unpriced": 3.4225,
     "wood": 11.6906
    }
@@ -1066,14 +1066,14 @@
   },
   "SteelMill": {
    "model": "Buildings/Metal/SteelMill/SteelMill.IronTeeth.Model",
-   "sha256": "3645f1bef684f1386dd7f72880fc7bccb3a01f322990a36061f3c3189af45d09",
+   "sha256": "ae96326e8b78f038302b02e90865eb52e26022e4694bfe9279e2693d82750579",
    "areas": {
-    "BaseMetal.IronTeeth": 215.0633,
+    "BaseMetal.IronTeeth": 217.3753,
     "BaseWood_DarkBrown.IronTeeth": 2.9481,
     "DFIndustrial08": 2.5905,
     "DFIndustrial25": 0.0784,
     "Details.IronTeeth#metal": 3.7497,
-    "IrregularPlanks_MetalForged.IronTeeth": 174.8522,
+    "IrregularPlanks_MetalForged.IronTeeth": 183.6337,
     "PaintedMetal.IronTeeth": 42.1864,
     "Plaster_Orange.IronTeeth": 1.068,
     "Plaster_White.IronTeeth": 237.6811,
@@ -1082,7 +1082,7 @@
    "families": {
     "brick": 1.068,
     "concrete": 237.6811,
-    "metal": 435.8516,
+    "metal": 446.9451,
     "unpriced": 8.0443,
     "wood": 2.9481
    }
@@ -1118,9 +1118,9 @@
   },
   "TechnicalSchool": {
    "model": "Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.Model",
-   "sha256": "66328550b7ab26b3d719343a329e8eb8a4ad9b7a9ac4a6edeead813a25a538ea",
+   "sha256": "fa05986e2ed21a7a8fa7f3649e88b7a5a5b98f0bd091f889e6d7a2b4e9c39dd8",
    "areas": {
-    "BaseMetal.IronTeeth": 24.6468,
+    "BaseMetal.IronTeeth": 20.6968,
     "BaseWood_DarkBrown.IronTeeth": 25.3775,
     "DFIndustrial06": 15.0438,
     "DFIndustrial08": 0.229,
@@ -1128,14 +1128,14 @@
     "IrregularPlanks_DarkBrown.IronTeeth": 21.9868,
     "PaintedMetal.IronTeeth": 5.9528,
     "Plaster_Orange.IronTeeth": 62.941,
-    "Plaster_White.IronTeeth": 198.3327,
+    "Plaster_White.IronTeeth": 192.2183,
     "RoofPlanks.IronTeeth": 60.0008,
     "WindowsAtlas.IronTeeth": 4.5437
    },
    "families": {
     "brick": 77.9847,
-    "concrete": 198.3327,
-    "metal": 32.6857,
+    "concrete": 192.2183,
+    "metal": 28.7357,
     "unpriced": 4.7726,
     "wood": 107.3651
    }

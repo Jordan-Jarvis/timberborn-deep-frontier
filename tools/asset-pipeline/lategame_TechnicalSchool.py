@@ -20,7 +20,9 @@ HERO (kept as the silhouette): the clock tower on the entrance axis:
 concrete-framed orange shaft, four-faced clock stage with moving hands,
 lancet belfry and a teal pyramid spire with a turning weathervane.
 ROOF: teal gabled roof of separate native roof planks (boarded gable ends) on
-the central block; timber-decked flat roof deck on layer 1 on the engine house; the
+the central block; timber-decked flat roof deck on layer 1 on the engine house, open
+edge to edge (no parapet: user 2026-10-31, "I want it to be like an actual
+platform where roads can connect"); the
 pyramid spire on the tower.
 
 Plan (8 x 4 tiles; front y = 0; one layer per storey):
@@ -177,14 +179,6 @@ def engine_house(g):
                             'left': [(y, .52, .42, 'factory') for y in (2.55, 3.45)]})
     # Roof slab (layer 1); it stops at the central block's coping (x 2.95).
     deck_slab(g, u0 - .05, v0 - .05, CB[0] - .05, v1 + .05, 1.0, 'timber', thickness=SLAB)
-    # Parapet on the three open edges (the back of the central block closes the fourth).
-    t, h = .14, .24
-    blk(g, x0 - .03, y0 - .03, 1.0, x1 - .03, y0 - .03 + t, 1.0 + h, CONCRETE)
-    blk(g, x0 - .03, y1 + .03 - t, 1.0, x1 - .03, y1 + .03, 1.0 + h, CONCRETE)
-    blk(g, x0 - .03, y0 - .03 + t, 1.0, x0 - .03 + t, y1 + .03 - t, 1.0 + h, CONCRETE)
-    blk(g, x0 - .06, y0 - .06, 1.0 + h, x1 - .03, y0 - .03 + t + .03, 1.0 + h + .05, IRON)
-    blk(g, x0 - .06, y1 + .03 - t - .03, 1.0 + h, x1 - .03, y1 + .06, 1.0 + h + .05, IRON)
-    blk(g, x0 - .06, y0 - .03 + t + .03, 1.0 + h, x0 - .03 + t + .03, y1 + .03 - t - .03, 1.0 + h + .05, IRON)
 
 
 def engine_yard(g, parts):

@@ -103,12 +103,7 @@ def furnace(g, parts):
     bx(g, cx - .07, cx + .07, cy - .915, cy - .9, 1.08, 1.24, GLOW)
     # Top platform round the throat on brackets from the shell.
     bx(g, cx - .85, cx + .85, cy - .85, cy + .85, TOPDECK - .08, TOPDECK, IRON)
-    zr = TOPDECK
-    for a, b, ss, se, dz in (((cx - .81, cy - .81), (cx + .81, cy - .81), False, False, 0),
-                             ((cx - .81, cy - .81), (cx - .81, cy + .81), True, True, -.011),
-                             ((cx - .81, cy + .81), (cx + .81, cy + .81), False, False, 0),
-                             ((cx + .81, cy - .81), (cx + .81, cy + .2), True, False, -.011)):
-        P.rail(g, a, b, zr, skip_start=ss, skip_end=se, dz=dz)
+    # Open, no rails (user, 2026-10-31: "lets remove the railings").
     for k in range(4):
         a = math.pi / 4 + k * math.pi / 2
         c, s = math.cos(a), math.sin(a)
@@ -262,7 +257,7 @@ def blower_house(g, parts):
     K.lamp(g, .78, .12, 1.15, face='front')
     K.lamp(g, 2.22, .12, 1.15, face='front')
     # Painted metal sheet roof deck (roof variety, user 2026-10-30).
-    P.flat_roof(g, .05, 2.95, .12, 2.95, 1.84, overhang=.05, parapet=.25, deck='painted')
+    P.flat_roof(g, .05, 2.95, .12, 2.95, 1.84, overhang=.05, deck='painted')
     # Blower intake fan on the left wall (the flat roof stays clear and buildable).
     g.ring((-.01, 1.535, 1.15), .34, .06, .1, IRON, 'X', 16)
     parts.append((P.rotor('GableFan', (-.03, 1.535, 1.15), .28, 'X', 6), 'SPIN_X', 4))

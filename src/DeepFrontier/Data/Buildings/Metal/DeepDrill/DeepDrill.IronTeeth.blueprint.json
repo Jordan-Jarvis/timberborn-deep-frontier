@@ -5,19 +5,19 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 145
+        "Amount": 150
       },
       {
         "Id": "MetalBlock",
-        "Amount": 165
+        "Amount": 155
       },
       {
         "Id": "Concrete",
-        "Amount": 370
+        "Amount": 380
       },
       {
         "Id": "Brick",
-        "Amount": 225
+        "Amount": 230
       },
       {
         "Id": "Gear",
@@ -3438,6 +3438,15 @@
         },
         "Directions": "Top",
         "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 2,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
       }
     ]
   },
@@ -3819,6 +3828,15 @@
           "X": 6,
           "Y": 5,
           "Z": 1
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 2,
+          "Z": 2
         },
         "Directions": "Up",
         "State": "OpenIn"

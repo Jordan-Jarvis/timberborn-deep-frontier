@@ -12,8 +12,7 @@ Surface discipline (docs/art/lategame-style.md, zfight_audit.py --epsilon .004):
 
 Kit workarounds (kit not edited; see the final review notes):
 - lategame_kit.plinth / concrete_pier / lattice_tower put two overlapping faces
-  on the ground plane, and steel_rail's top rail sits 2.5 mm off the post sides;
-  fan blades are coplanar beyond the hub. Replacements live here.
+  on the ground plane; fan blades are coplanar beyond the hub. Replacements live here.
 - lategame_kit.gable_roof is one stretched board per slope (a single UV strip);
   plank_gable() builds separate native roof planks and boarded gables.
 """
@@ -334,28 +333,16 @@ def lean_to(g, x0, x1, y0, y1, z_low, z_high, *, low_side='front', overhang=.12,
         plank_slope(g, 'Y', 0, lo, hi, ae, z_low - s * overhang, ar, z_high + s * overhang, seed=seed, battens=1)
 
 
-def flat_roof(g, x0, x1, y0, y1, z, *, t=.16, overhang=.08, parapet=.3, pt=.14, coping=IRON, deck='concrete'):
-    """Roof slab with an open parapet ring and steel coping. `deck` is the
-    slab's finish, a lategame_roofdeck_parts.FINISHES name (roof variety, user
+def flat_roof(g, x0, x1, y0, y1, z, *, t=.16, overhang=.08, deck='concrete'):
+    """Roof slab, an open platform edge to edge (no parapet, coping or rail:
+    user, 2026-10-31, "I want it to be like an actual platform where roads
+    can connect"). Returns its top. `deck` is the slab's finish, a lategame_roofdeck_parts.FINISHES name (roof variety, user
     2026-10-30): concrete stays one slab, plank and sheet finishes are laid
     as separate boards or sheets on a steel slab (deck_slab)."""
     from lategame_roofdeck_parts import deck_slab
     a0, a1, b0, b1 = x0 - overhang, x1 + overhang, y0 - overhang, y1 + overhang
     deck_slab(g, a0, b0, a1, b1, z + t, deck, thickness=t, base=IRON)
-    if not parapet:
-        return z + t
-    zt = z + t
-    bx(g, a0, a1, b0, b0 + pt, zt, zt + parapet, CONCRETE)
-    bx(g, a0, a1, b1 - pt, b1, zt, zt + parapet, CONCRETE)
-    bx(g, a0, a0 + pt, b0 + pt, b1 - pt, zt, zt + parapet, CONCRETE)
-    bx(g, a1 - pt, a1, b0 + pt, b1 - pt, zt, zt + parapet, CONCRETE)
-    zc = zt + parapet
-    c = .02
-    bx(g, a0 - c, a1 + c, b0 - c, b0 + pt + c, zc, zc + .05, coping)
-    bx(g, a0 - c, a1 + c, b1 - pt - c, b1 + c, zc, zc + .05, coping)
-    bx(g, a0 - c, a0 + pt + c, b0 + pt + c, b1 - pt - c, zc, zc + .05, coping)
-    bx(g, a1 - pt - c, a1 + c, b0 + pt + c, b1 - pt - c, zc, zc + .05, coping)
-    return zt
+    return z + t
 
 
 # ------------------------------------------------------------------ concrete & steel
@@ -381,25 +368,9 @@ def column(g, x, y, z0, z1, w=.2, *, mat=IRON, base=True):
     bx(g, x - w / 2, x + w / 2, y - w / 2, y + w / 2, zb, z1, mat)
 
 
-def rail(g, a, b, z, *, h=.62, pitch=.7, mat=IRON, skip_start=False, skip_end=False, dz=0.0):
-    """Steel handrail: posts plus top and mid rails, faces >= 7 mm apart."""
-    a, b = Vector(a), Vector(b)
-    count = max(1, math.ceil((b - a).length / pitch))
-    for i in range(count + 1):
-        if (i == 0 and skip_start) or (i == count and skip_end):
-            continue
-        p = a + (b - a) * i / count
-        bx(g, p.x - .03, p.x + .03, p.y - .03, p.y + .03, z, z + h, mat)
-    for zz, w in ((z + h - .005 + dz, .045), (z + h * .5 + dz, .035)):
-        g.beam((a.x, a.y, zz), (b.x, b.y, zz), w, mat=mat)
-
-
-def deck(g, x0, x1, y0, y1, z, *, t=.08, rails=('front', 'back', 'left', 'right'), gaps=None,
-         bars=True, mat=IRON, rail_h=.62):
-    """Steel grating deck at whole layer z with handrails on the listed edges.
-
-    `gaps`: {edge: [(u0, u1)]} leaves rail openings (ladder heads, bridges).
-    """
+def deck(g, x0, x1, y0, y1, z, *, t=.08, bars=True, mat=IRON):
+    """Steel grating deck at whole layer z: an open platform edge to edge, no
+    handrails (user, 2026-10-31: "lets remove the railings")."""
     bx(g, x0, x1, y0, y1, z - t, z, mat)
     if bars:
         along_x = (x1 - x0) >= (y1 - y0)
@@ -413,28 +384,6 @@ def deck(g, x0, x1, y0, y1, z, *, t=.08, rails=('front', 'back', 'left', 'right'
             for i in range(n):
                 x = x0 + .04 + (x1 - x0 - .08) * (i + .5) / n
                 bx(g, x - .015, x + .015, y0 + .04, y1 - .04, z, z + .012, IRON)
-    gaps = gaps or {}
-    i = .04
-    runs = {'front': ((x0 + i, y0 + i), (x1 - i, y0 + i), 0), 'back': ((x0 + i, y1 - i), (x1 - i, y1 - i), 0),
-            'left': ((x0 + i, y0 + i), (x0 + i, y1 - i), 1), 'right': ((x1 - i, y0 + i), (x1 - i, y1 - i), 1)}
-    for name in rails:
-        a, b, side = runs[name]
-        has_front = 'front' in rails
-        has_back = 'back' in rails
-        pieces = [(0.0, 1.0)]
-        length = (Vector(b) - Vector(a)).length
-        for g0, g1 in gaps.get(name, ()):
-            # gap positions in absolute u along the run's axis
-            ua = (a[0] if side == 0 else a[1])
-            t0, t1 = (g0 - ua) / length, (g1 - ua) / length
-            pieces = [p for s in pieces for p in ((s[0], min(s[1], t0)), (max(s[0], t1), s[1])) if p[1] - p[0] > .02]
-        for t0, t1 in pieces:
-            pa = Vector(a) + (Vector(b) - Vector(a)) * t0
-            pb = Vector(a) + (Vector(b) - Vector(a)) * t1
-            ss = side == 1 and t0 == 0 and has_front
-            se = side == 1 and t1 == 1 and has_back
-            rail(g, pa, pb, z + .012 if bars else z, h=rail_h, skip_start=ss, skip_end=se,
-                 dz=-.011 if side == 1 else 0)
 
 
 def bracket(g, wall_pt, deck_pt, w=.07):

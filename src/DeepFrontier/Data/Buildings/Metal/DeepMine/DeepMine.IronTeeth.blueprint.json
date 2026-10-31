@@ -13,15 +13,15 @@
       },
       {
         "Id": "MetalBlock",
-        "Amount": 340
+        "Amount": 330
       },
       {
         "Id": "Concrete",
-        "Amount": 1130
+        "Amount": 1150
       },
       {
         "Id": "Brick",
-        "Amount": 300
+        "Amount": 305
       },
       {
         "Id": "Gear",
@@ -1332,21 +1332,21 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -1625,21 +1625,21 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -2389,18 +2389,6 @@
             "Center": {
               "X": 4.5,
               "Y": 5.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 3,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 5.5,
               "Z": 3.5
             },
             "Size": {
@@ -2625,18 +2613,6 @@
                   "X": 1,
                   "Y": 1,
                   "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 5.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 1
                 }
               },
               {
@@ -3062,7 +3038,7 @@
           "Y": 1,
           "Z": 1
         },
-        "Directions": "Right",
+        "Directions": "Right, Down",
         "ReverseRotation": false
       },
       {
@@ -3324,6 +3300,33 @@
           "Z": 2
         },
         "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 1,
+          "Z": 4
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 1,
+          "Z": 4
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 1,
+          "Z": 4
+        },
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
@@ -3725,7 +3728,7 @@
           "Y": 1,
           "Z": 1
         },
-        "Directions": "Right",
+        "Directions": "Right, Down",
         "State": "OpenIn"
       },
       {

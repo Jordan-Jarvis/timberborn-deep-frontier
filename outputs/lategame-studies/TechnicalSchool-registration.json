@@ -496,7 +496,7 @@
    2
   ]
  ],
- "partsOutsideFootprint": 65,
+ "partsOutsideFootprint": 63,
  "doors": [
   {
    "id": "Door0",
@@ -810,5 +810,5 @@
   "RockingBeam",
   "Governor"
  ],
- "sourceHash": "5f9c230494c03d567c11d2d7f428fb519b019f70edca68038fa9cb0fdbd5b43c"
+ "sourceHash": "fd912aa12a055d2d58e797d86cdbee447ed3ecd5930df728c09264077f8126f4"
 }

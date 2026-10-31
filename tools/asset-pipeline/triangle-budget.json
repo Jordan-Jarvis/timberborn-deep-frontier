@@ -256,18 +256,18 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9482,
-   "vertices": 18106,
-   "construction": 9482,
+   "finished": 8450,
+   "vertices": 16042,
+   "construction": 8450,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.Model.timbermesh"
   },
   "DeepMine": {
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9088,
-   "vertices": 17502,
-   "construction": 9088,
+   "finished": 8488,
+   "vertices": 16302,
+   "construction": 8488,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepMine/DeepMine.IronTeeth.Model.timbermesh"
   },
   "DeepOreSource": {
@@ -292,9 +292,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 6946,
-   "vertices": 12750,
-   "construction": 6946,
+   "finished": 6614,
+   "vertices": 12086,
+   "construction": 6614,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model.timbermesh"
   },
   "DeepWell": {
@@ -805,9 +805,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 8018,
-   "vertices": 15312,
-   "construction": 8018,
+   "finished": 7946,
+   "vertices": 15168,
+   "construction": 7946,
    "file": "outputs/lategame-integration/Data/Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.Model.timbermesh"
   },
   "TownPlaza": {

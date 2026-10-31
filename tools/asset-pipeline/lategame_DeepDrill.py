@@ -122,8 +122,7 @@ def tower(g):
     K.lamp(g, WELL[0] + .75, frame_at(zl + .14)[3] - .1, zl, face='front')
     # Crown deck, crown block and gin pole with beacon.
     cx, cy = WELL
-    P.deck(g, TOP[0] - .25, TOP[1] + .25, TOP[2] - .25, TOP[3] + .25, ZT,
-           rails=('front', 'back', 'left', 'right'), gaps={'left': [(cy - .25, cy + .25)]})
+    P.deck(g, TOP[0] - .25, TOP[1] + .25, TOP[2] - .25, TOP[3] + .25, ZT)   # open (user, 2026-10-31)
     zc = ZT + .012
     bx(g, cx - .5, cx + .5, cy - .35, cy + .35, zc, zc + .1, IRON)
     for x in (cx - .45, cx + .4):
@@ -228,8 +227,7 @@ def engine_room(g):
                               'back': [(3.72, 1.07, 'factory', .7), (6.28, 1.07, 'factory', .7)]})
     # Roof slab on whole tiles, steel drill floor stacked on it.
     bx(g, 3.0, 7.0, 0.0, 6.0, FLOOR - .16, FLOOR - .08, CONCRETE)
-    P.deck(g, 3.0, 7.0, 0.0, 6.0, FLOOR, rails=('front', 'back', 'left', 'right'),
-           gaps={'left': [(0.0, 3.0)], 'back': [(x - .2, x + .2) for x in STACKS_X]})
+    P.deck(g, 3.0, 7.0, 0.0, 6.0, FLOOR)   # an open platform edge to edge (user, 2026-10-31)
     P.gauge(g, 4.35, .01, 1.55, 'front', .08)
 
 
@@ -297,10 +295,6 @@ def pump_house(g):
     # floor: riveted steel plate, one deck with the steel drill floor.
     deck_slab(g, 0.0, 0.0, 3.0, 3.0, FLOOR, 'forged', base=IRON)
     zr = FLOOR
-    for a, b, ss, se, dz in (((.04, .04), (2.96, .04), False, False, 0),
-                             ((.04, .04), (.04, 2.96), True, True, -.011),
-                             ((.04, 2.96), (2.96, 2.96), False, False, 0)):
-        P.rail(g, a, b, zr, skip_start=ss, skip_end=se, dz=dz)
     # Doghouse: timber-framed cabin on the roof.
     P.hall(g, .45, 2.55, 1.2, 2.75, FLOOR + 1.3, z0=zr, plinth=.2, doors=[1.5], record_doors=False,
            windows={'left': [(1.975, 2.75)], 'right': [(1.975, 2.75)], 'back': [(.97, 2.75)]},

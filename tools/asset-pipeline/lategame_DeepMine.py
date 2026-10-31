@@ -71,7 +71,7 @@ def shaft_house(g):
                               'right': [small(1.66), small(2.89), small(4.11), small(5.34)],
                               'back': [small(3.72), small(5.0), small(6.28)]})
     bx(g, 3.0, 7.0, 1.0, 6.0, BASE - .16, BASE - .08, CONCRETE)
-    P.deck(g, 3.0, 7.0, 1.0, 6.0, BASE, rails=('front', 'back', 'right'))
+    P.deck(g, 3.0, 7.0, 1.0, 6.0, BASE)   # an open platform edge to edge (user, 2026-10-31)
     # Shaft cover plate the skips pass through.
     bx(g, 3.5, 5.5, 1.95, 2.85, BASE_ON, BASE_ON + .02, IRON)
 
@@ -101,9 +101,8 @@ def headframe(g):
             for z in (2.2, 3.4, 4.5):
                 bx(g, gx - .03, gx + .03, SHAFT_Y + .05, LEGS_Y[1] - .03, z - .04, z + .04, IRON)
     # Head deck, sheave pedestals and bearing caps.
-    # No back rail: the hoist ropes come in over the back edge to the sheaves.
-    P.deck(g, LEGS_X[0] - .25, LEGS_X[1] + .25, LEGS_Y[0] - .25, LEGS_Y[1] + .2, TOP,
-           rails=('front', 'left', 'right'), gaps={'left': [(SHAFT_Y - .2, SHAFT_Y + .2)]})
+    # Open head deck, no rails (user, 2026-10-31: "lets remove the railings").
+    P.deck(g, LEGS_X[0] - .25, LEGS_X[1] + .25, LEGS_Y[0] - .25, LEGS_Y[1] + .2, TOP)
     zd = TOP + .012
     for sx in SKIPS:
         for px in (sx - .3, sx + .3):
