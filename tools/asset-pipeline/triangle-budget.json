@@ -49,9 +49,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7124,
-   "vertices": 13854,
-   "construction": 7124,
+   "finished": 6980,
+   "vertices": 13566,
+   "construction": 6980,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.Model.timbermesh"
   },
   "BrickMasonryBlock": {
@@ -301,9 +301,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 2396,
-   "vertices": 4588,
-   "construction": 2396,
+   "finished": 2288,
+   "vertices": 4372,
+   "construction": 2288,
    "file": "outputs/lategame-integration/Data/Buildings/Water/DeepWell/DeepWell.IronTeeth.Model.timbermesh"
   },
   "ElectrolysisPlant": {
@@ -463,9 +463,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7092,
-   "vertices": 13688,
-   "construction": 7092,
+   "finished": 5252,
+   "vertices": 10140,
+   "construction": 5252,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.Model.timbermesh"
   },
   "OilPowerPlant": {
@@ -553,9 +553,9 @@
    "family": "lategame",
    "class": "small",
    "target": 8000,
-   "finished": 2518,
-   "vertices": 4812,
-   "construction": 2518,
+   "finished": 2490,
+   "vertices": 4756,
+   "construction": 2490,
    "file": "outputs/lategame-integration/Data/Buildings/Science/ReactorChargingBay/ReactorChargingBay.IronTeeth.Model.timbermesh"
   },
   "ReinforcedDamBlock": {
@@ -814,9 +814,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 4994,
-   "vertices": 9802,
-   "construction": 4994,
+   "finished": 4682,
+   "vertices": 9178,
+   "construction": 4682,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.Model.timbermesh"
   },
   "UraniumProcessingPlant": {

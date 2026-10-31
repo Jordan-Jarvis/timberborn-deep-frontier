@@ -118,17 +118,17 @@ def cradle(g, parts, outer, inner, name):
     blk(g, cx - .05, .9, 1.26, cx + .05, CRADLE_BACK + .02, 1.34, IRON)
     g.cylinder((cx, .96, 1.2), .07, .14, BRASS, 'Z', 10)
     g.cylinder((cx, .96, 1.105), .045, .06, IRON, 'Z', 8)
-    # Canopy: outer front post, steel deck, front and outer rims.
+    # Canopy: outer front post, steel deck and a hazard-striped front fascia
+    # whose top stays 12 mm under the deck top (no rim stands on the canopy:
+    # user, 2026-10-31, "remove the railings and cement railing/mini walls").
     px = outer - out * .1
     blk(g, px - .055, .15, APRON_TOP - .04, px + .055, .26, CANOPY_Z + .02, IRON)
     blk(g, x0 + .02, .14, CANOPY_Z, x1 - .02, CABINET_BACK + .02, CANOPY_Z + .09, FORGED)
-    # Front rim in hazard stripes.
+    # Front fascia in hazard stripes.
     n = 5
     for i in range(n):
         a = x0 + i * (x1 - x0) / n
-        blk(g, a, .1, CANOPY_Z + .06, a + (x1 - x0) / n, .18, CANOPY_Z + .16, ORANGE if i % 2 == (0 if out < 0 else 1) else IRON)
-    ox0, ox1 = span(outer, outer - out * .1)
-    blk(g, ox0, .18, CANOPY_Z + .06, ox1, CABINET_BACK + .04, CANOPY_Z + .15, IRON)
+        blk(g, a, .1, CANOPY_Z - .02, a + (x1 - x0) / n, .18, CANOPY_Z + .078, ORANGE if i % 2 == (0 if out < 0 else 1) else IRON)
 
 
 def coolant(g):

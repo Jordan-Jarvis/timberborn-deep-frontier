@@ -35,9 +35,9 @@
   },
   "Bathhouse": {
    "model": "Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.Model",
-   "sha256": "093bb092b0d6ceadb8eb5e798e9db27bd19328f29fbe5b93e697d1ddddc02d77",
+   "sha256": "9b4e8a101ef5fbbb451124c6094b3be7ff400b98f987bcec81c8d5e29cf1b691",
    "areas": {
-    "BaseMetal.IronTeeth": 25.6414,
+    "BaseMetal.IronTeeth": 20.1726,
     "BaseWood_DarkBrown.IronTeeth": 6.7178,
     "DFIndustrial08": 0.229,
     "Details.IronTeeth#metal": 2.023,
@@ -46,15 +46,15 @@
     "IrregularPlanks_MetalForged.IronTeeth": 13.867,
     "PaintedMetal.IronTeeth": 1.0087,
     "Plaster_Orange.IronTeeth": 13.9135,
-    "Plaster_White.IronTeeth": 229.3829,
+    "Plaster_White.IronTeeth": 220.4677,
     "RoofPlanks.IronTeeth": 20.6739,
     "Water": 4.1655,
     "WindowsAtlas.IronTeeth": 5.045
    },
    "families": {
     "brick": 13.9135,
-    "concrete": 229.3829,
-    "metal": 42.5402,
+    "concrete": 220.4677,
+    "metal": 37.0714,
     "unpriced": 9.4395,
     "wood": 52.1937
    }
@@ -289,9 +289,9 @@
   },
   "DeepWell": {
    "model": "Buildings/Water/DeepWell/DeepWell.IronTeeth.Model",
-   "sha256": "9a57c045a11c591e86e7c68787d7389f3856b43002ac20b1b9ca7b64f560b5d0",
+   "sha256": "c4e6b5b98d11a6dbdb92cb78d4ab8b0ba86321ee7edf0ff703fe27c26cb760a1",
    "areas": {
-    "BaseMetal.IronTeeth": 16.1672,
+    "BaseMetal.IronTeeth": 14.7759,
     "BaseWood_DarkBrown.IronTeeth": 1.098,
     "DFIndustrial25": 0.0784,
     "Details.IronTeeth#metal": 0.7849,
@@ -304,7 +304,7 @@
    "families": {
     "brick": 1.5546,
     "concrete": 9.3361,
-    "metal": 27.5012,
+    "metal": 26.11,
     "unpriced": 0.7592,
     "wood": 1.098
    }
@@ -512,7 +512,7 @@
   },
   "LaunchPad": {
    "model": "Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.Model",
-   "sha256": "0bad01acb9282c2132ef5d08e3c0aea2db419b70bbf38b4062d1a6308fc59855",
+   "sha256": "9cc1c0a99ba0f1790a3dc9f6dedba1591f665220e28d36468221ea0c829c9475",
    "areas": {
     "BaseMetal.IronTeeth": 121.4565,
     "BaseWood_DarkBrown.IronTeeth": 14.4143,
@@ -669,11 +669,11 @@
   },
   "ObservationDeck": {
    "model": "Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.Model",
-   "sha256": "d4aa3fb911da310f74e0c98f06ec76b7aa475213377332527f807ffaa10cc8e0",
+   "sha256": "f7d58b362f4be70167d4df78a03bde5199c852735124564fd793866dbac97093",
    "areas": {
-    "BaseMetal.IronTeeth": 163.8379,
+    "BaseMetal.IronTeeth": 141.502,
     "BaseWood_DarkBrown.IronTeeth": 15.574,
-    "DFIndustrial08": 0.514,
+    "DFIndustrial08": 0.1145,
     "DFIndustrial25": 0.0784,
     "Details.IronTeeth#metal": 0.3873,
     "IrregularPlanks_DarkBrown.IronTeeth": 1.4131,
@@ -681,13 +681,13 @@
     "Plaster_Orange.IronTeeth": 16.9903,
     "Plaster_White.IronTeeth": 182.478,
     "RoofPlanks.IronTeeth": 20.0182,
-    "WindowsAtlas.IronTeeth": 28.6869
+    "WindowsAtlas.IronTeeth": 1.3461
    },
    "families": {
     "brick": 16.9903,
     "concrete": 182.478,
-    "metal": 213.6198,
-    "unpriced": 29.2793,
+    "metal": 191.2839,
+    "unpriced": 1.539,
     "wood": 37.0053
    }
   },
@@ -883,23 +883,23 @@
   },
   "ReactorChargingBay": {
    "model": "Buildings/Science/ReactorChargingBay/ReactorChargingBay.IronTeeth.Model",
-   "sha256": "383207e034d86f99a698ea3bc0ba0176ea8fe1d22597e35de4529f70898bd90c",
+   "sha256": "d23b94a2c02d79f35e8d6a76a14a11a82ca4913bffa007520c9aa52af19f57c4",
    "areas": {
-    "BaseMetal.IronTeeth": 26.6233,
+    "BaseMetal.IronTeeth": 25.205,
     "BaseWood_DarkBrown.IronTeeth": 0.8762,
     "DFIndustrial08": 0.2192,
     "DFIndustrial25": 0.0784,
     "Details.IronTeeth#metal": 0.594,
     "IrregularPlanks_MetalForged.IronTeeth": 22.0042,
     "PaintedMetal.IronTeeth": 12.2509,
-    "Plaster_Orange.IronTeeth": 1.7731,
+    "Plaster_Orange.IronTeeth": 1.7678,
     "Plaster_White.IronTeeth": 12.6535,
     "WindowsAtlas.IronTeeth": 0.3905
    },
    "families": {
-    "brick": 1.7731,
+    "brick": 1.7678,
     "concrete": 12.6535,
-    "metal": 61.4724,
+    "metal": 60.0541,
     "unpriced": 0.688,
     "wood": 0.8762
    }
@@ -1142,9 +1142,9 @@
   },
   "TownPlaza": {
    "model": "Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.Model",
-   "sha256": "0d8744ab727b0a1aa3db67b98a5c92854d50108b06f7b52b1b10b4134437e9bd",
+   "sha256": "dcc88638770a1d8a2dd781149936ef19f693d26a575f04a7177a1a02691c85bd",
    "areas": {
-    "BaseMetal.IronTeeth": 126.1919,
+    "BaseMetal.IronTeeth": 123.7283,
     "BaseWood_DarkBrown.IronTeeth": 1.2475,
     "Details.IronTeeth#metal": 0.3363,
     "Plaster_Orange.IronTeeth": 19.7141,
@@ -1155,7 +1155,7 @@
    "families": {
     "brick": 19.7141,
     "concrete": 77.6571,
-    "metal": 126.5281,
+    "metal": 124.0645,
     "unpriced": 1.1981,
     "wood": 9.3184
    }

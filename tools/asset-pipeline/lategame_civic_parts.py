@@ -69,33 +69,6 @@ def pier(g, x, y, bottom, top, w=.3):
     blk(g, x - w / 2 - .025, y - w / 2 - .025, top, x + w / 2 + .025, y + w / 2 + .025, top + .05, IRON)
 
 
-def rail(g, a, b, z, *, height=.62, pitch=.6, skip_start=False, skip_end=False, mat=IRON):
-    """Handrail: .07 posts, .04 top and mid rails (no shared face planes)."""
-    ax, ay = a
-    bx, by = b
-    length = math.hypot(bx - ax, by - ay)
-    count = max(1, math.ceil(length / pitch))
-    for i in range(count + 1):
-        if (i == 0 and skip_start) or (i == count and skip_end):
-            continue
-        px, py = ax + (bx - ax) * i / count, ay + (by - ay) * i / count
-        g.box((px, py, z + height / 2 - .01), (.07, .07, height - .02), mat)
-    for h in (height, height * .5):
-        g.beam((ax, ay, z + h), (bx, by, z + h), .04, mat=mat)
-
-
-def walk(g, x0, y0, x1, y1, z, rails=('front',)):
-    """Steel grating walkway at whole layer z with handrails on chosen edges."""
-    K.catwalk(g, x0, y0, x1, y1, z, rails=(), brackets=None)
-    i = .045
-    lines = {'front': ((x0 + i, y0 + i), (x1 - i, y0 + i)), 'back': ((x0 + i, y1 - i), (x1 - i, y1 - i)),
-             'left': ((x0 + i, y0 + i), (x0 + i, y1 - i)), 'right': ((x1 - i, y0 + i), (x1 - i, y1 - i))}
-    for name in rails:
-        a, b = lines[name]
-        side = name in ('left', 'right')
-        rail(g, a, b, z, skip_start=side and 'front' in rails, skip_end=side and 'back' in rails)
-
-
 def _stations(a, b, pitch):
     count = max(1, round((b - a) / pitch))
     return [a + (b - a) * i / count for i in range(1, count)]

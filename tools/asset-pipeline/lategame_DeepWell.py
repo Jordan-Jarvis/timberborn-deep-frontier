@@ -143,7 +143,8 @@ def derrick(g):
 def drill_floor(g, parts):
     fx0, fx1, fy0, fy1 = frame_at(FLOOR)
     P.grating(g, fx0 + .03, fy0 + .03, fx1 - .03, fy1 - .03, FLOOR, along='X')
-    P.rail(g, [(fx1 - .04, fy0 + .06), (fx1 - .04, fy1 - .04), (fx0 + .04, fy1 - .04), (fx0 + .04, fy0 + .06)], FLOOR)
+    # No floor rail (user, 2026-10-31: "lets remove the railings"); the plating
+    # closes three sides above the floor.
     wx, wy = WELL
     # Wellhead stack on the source below the floor: base flange, spool, rams.
     P.lathe(g, (wx, wy, 0), [(.2, -.02), (.2, .08), (.12, .1), (.12, .36), (.17, .38), (.17, .58), (.11, .6),

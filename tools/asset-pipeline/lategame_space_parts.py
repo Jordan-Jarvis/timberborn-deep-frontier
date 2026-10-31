@@ -79,9 +79,9 @@ def coping_ring(g, x0, y0, x1, y1, top, *, w=.28, proud=.04, h=.16, mat=CONCRETE
 
 
 # ---------------------------------------------------------------- steelwork
-# Local replacements for two kit helpers: lategame_kit.steel_rail puts its
-# .055 top rail only 2.5 mm proud of its .05 posts, and lategame_kit.
-# lattice_tower lays consecutive diagonals in one plane where they meet.
+# Local steelwork: `rail` keeps its .08 top rail 15 mm proud of the .05 posts
+# (the Launch Pad's crew access arm), and lategame_kit.lattice_tower lays
+# consecutive diagonals in one plane where they meet.
 
 def rail(g, a, b, z, *, height=.62, pitch=.6, mat=IRON, skip_start=False, skip_end=False):
     """Handrail: .05 posts, .08 top rail (15 mm proud), .032 mid rail (buried in posts)."""
@@ -299,51 +299,6 @@ def sphere_tank(g, x, y, z_center, r, *, mat=CONCRETE, legs=8, ground=0.0, equat
             g.beam((p0[0], p0[1], ground + .2), (p1[0], p1[1], zt), .04, mat=IRON)
         else:
             g.beam((p1[0], p1[1], ground + .2), (p0[0], p0[1], zt), .04, mat=IRON)
-
-
-def grating_ring(g, x0, y0, x1, y1, z, hole, *, rails=('front', 'back', 'left', 'right'), rail_gap=None):
-    """Steel grating platform at whole layer z with a rectangular hole (hx0, hy0, hx1, hy1).
-
-    `rail_gap` = (edge, a, b): leave that stretch of rail open (arm access)."""
-    steel_rail = rail
-    hx0, hy0, hx1, hy1 = hole
-    t = .08
-    bx(g, x0, y0, z - t, x1, hy0, z, IRON)
-    bx(g, x0, hy1, z - t, x1, y1, z, IRON)
-    bx(g, x0, hy0, z - t, hx0, hy1, z, IRON)
-    bx(g, hx1, hy0, z - t, x1, hy1, z, IRON)
-    # Proud grating bars along X (front/back strips) and Y (side strips),
-    # every 20 cm.
-    for (a0, b0, a1, b1, along) in ((x0, y0, x1, hy0, 'X'), (x0, hy1, x1, y1, 'X'),
-                                    (x0, hy0, hx0, hy1, 'Y'), (hx1, hy0, x1, hy1, 'Y')):
-        if along == 'X':
-            n = max(1, int((b1 - b0) / .2))
-            for k in range(n):
-                yy = b0 + (k + .5) * (b1 - b0) / n
-                bx(g, a0 + .03, yy - .017, z - .004, a1 - .03, yy + .017, z + .014, IRON)   # 34 mm: faces clear of tower diagonals
-        else:
-            n = max(1, int((a1 - a0) / .2))
-            for k in range(n):
-                xx = a0 + (k + .5) * (a1 - a0) / n
-                bx(g, xx - .017, b0 + .03, z - .004, xx + .017, b1 - .03, z + .014, IRON)
-    ins = .04
-    lines = {'front': ((x0 + ins, y0 + ins), (x1 - ins, y0 + ins)),
-             'back': ((x0 + ins, y1 - ins), (x1 - ins, y1 - ins)),
-             'left': ((x0 + ins, y0 + ins + .06), (x0 + ins, y1 - ins - .06)),
-             'right': ((x1 - ins, y0 + ins + .06), (x1 - ins, y1 - ins - .06))}
-    for name in rails:
-        a, b = lines[name]
-        if rail_gap and rail_gap[0] == name:
-            ga, gb = rail_gap[1], rail_gap[2]
-            horiz = name in ('front', 'back')
-            u0, u1 = (a[0], b[0]) if horiz else (a[1], b[1])
-            for s0, s1 in ((u0, ga), (gb, u1)):
-                if s1 - s0 > .2:
-                    pa = (s0, a[1]) if horiz else (a[0], s0)
-                    pb = (s1, a[1]) if horiz else (a[0], s1)
-                    steel_rail(g, pa, pb, z + .014)
-            continue
-        steel_rail(g, a, b, z + .014)
 
 
 # ---------------------------------------------------------------- timber

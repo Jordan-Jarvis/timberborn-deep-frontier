@@ -15,11 +15,11 @@ buildings can have actual roofs"): the stairhead keeps a low teal pyramid
 roof in the native roof planks and the kiosk a plank gable.
 
 HERO: a tapering riveted steel tube column wrapped by an open helical stair,
-carrying a broad square deck on a solid concrete corbel, with a glazed
-railing all round, a brass telescope on the front rail and a beacon mast on
-the stairhead. Distinct from the launch gantries (no lattice) and from
-MissionControl's glazed cab (the deck is open, the glazing is only a
-waist-high railing).
+carrying a broad square deck on a solid concrete corbel, open edge to edge
+(no railing: user, 2026-10-31, "lets remove the railings ... I want it to be
+like an actual platform"), a brass telescope on a pedestal at the front edge
+and a beacon mast on the stairhead. Distinct from the launch gantries (no
+lattice) and from MissionControl's glazed cab (the deck is open).
 ROOF: open concrete deck (a roof terrace); low teal pyramid roof (native roof
 planks) on the stairhead; dark plank gable on the kiosk; conical cap on the
 beacon.
@@ -34,8 +34,9 @@ Plan (6 x 6 tiles; front y = 0):
   - Capital drum (layers 5..7) houses the upper stair and carries the corbel.
   - Deck: 6 x 6 concrete slab, top exactly layer 7. The slab is 0.2 thick so
     it claims layer 6 (the support layer) under every deck cell; layer-7
-    cells stay free except the 2 x 2 stairhead. Railings, posts and the
-    telescope stand within 0.15 of the tile edges, so no deck cell is claimed.
+    cells stay free except the 2 x 2 stairhead. The deck is open edge to edge
+    (no railing, user 2026-10-31); the telescope pedestal stands in the front
+    cells' outer band, so no deck cell is blocked.
   - Stairhead (x 2..4, y 2..4), one layer, with the deck door centred on
     x = 2.5, face on the y = 2 tile edge, at layer 7.
 
@@ -60,8 +61,8 @@ IDENT = 'ObservationDeck'
 FOOTPRINT = (6, 6)
 HEIGHT = 10
 FRAME_END = 121
-HERO = ('Tapering riveted steel tube wrapped by an open helical stair, carrying a broad square deck on a solid '
-        'concrete corbel, with a glazed railing, a brass telescope and a beacon mast.')
+HERO = ('Tapering riveted steel tube wrapped by an open helical stair, carrying a broad open square deck on a '
+        'solid concrete corbel, with a brass telescope and a beacon mast.')
 
 CX, CY = 3.0, 3.0
 LANDING = 5            # whole layer: top of the stair, round the tube
@@ -146,13 +147,8 @@ def stair(g):
         th, z = tops[i]
         r = STAIR_OUT - .04
         g.box((CX + math.cos(th) * r, CY + math.sin(th) * r, z + .31), (.04, .04, .62), IRON)
-    # Grated landing at layer 9 with a ring rail (open where the stair arrives).
+    # Grated landing at layer 9, open (no ring rail: user, 2026-10-31).
     I.annulus(g, (CX, CY), tube_r(LANDING) - .02, STAIR_OUT + .05, LANDING - .08, LANDING, IRON, segments=16)
-    th_end = THETA0 + (TREADS - 1) * STEP
-    a0 = (th_end - math.radians(15)) % (2 * math.pi)
-    a1 = (th_end + math.radians(45)) % (2 * math.pi)
-    gap = (a0, a1) if a0 < a1 else (a0 - 2 * math.pi, a1)
-    I.ring_rail(g, (CX, CY), STAIR_OUT + .02, LANDING, height=.55, posts=16, gap=gap)
     for k in range(8):
         a = k * math.pi / 4 + math.pi / 8
         if 70 <= math.degrees(a) <= 170:      # the top treads pass here
@@ -206,59 +202,20 @@ def deck(g, parts):
             quad = [at(ra, za, -.05), at(rb, zb, -.05), at(rb, zb, .05), at(ra, za, .05)]
             out = (zb - za, -(rb - ra))       # outward normal of the edge in (r, z)
             K.oriented_polygon(g, quad, (c * out[0], s_ * out[0], out[1]), IRON)
-    railing(g, parts)
+    telescope(g, parts)
     stairhead(g, parts)
 
 
-def _glass(g, a, b, z0, z1, normal):
-    """Two-sided native glass pane between plan points a, b (12 mm apart)."""
-    u0, u1, v0, v1 = A.cell_rect('glass')
-    nx, ny = normal
-    for side in (1, -1):
-        o = .006 * side
-        pts = [(a[0] + nx * o, a[1] + ny * o, z0), (b[0] + nx * o, b[1] + ny * o, z0),
-               (b[0] + nx * o, b[1] + ny * o, z1), (a[0] + nx * o, a[1] + ny * o, z1)]
-        uvs = [(u0, v0), (u1, v0), (u1, v1), (u0, v1)]
-        n = W._newell(pts)
-        if (n[0] * nx + n[1] * ny) * side < 0:
-            pts.reverse()
-            uvs.reverse()
-        g.native_piece(pts, [(0, 1, 2, 3)], uvs, WINDOW)
-
-
-def railing(g, parts):
+def telescope(g, parts):
+    """Brass telescope on a steel pedestal standing on the deck's front edge
+    at the x = 3 grid line, within the roof cells' outer band (0.31 from
+    every cell edge), so both deck cells stay placeable. Its tube swings at
+    the same height it had on the old railing."""
     z = DECK
-    e = .06                       # rail line inset from the deck edge
-    hgt = .82
-    lines = [((e, e), (6 - e, e), (0, -1)), ((6 - e, e), (6 - e, 6 - e), (1, 0)),
-             ((6 - e, 6 - e), (e, 6 - e), (0, 1)), ((e, 6 - e), (e, e), (-1, 0))]
-    for (ax_, ay_), (bx_, by_), nrm in lines:
-        L = math.hypot(bx_ - ax_, by_ - ay_)
-        dx, dy = (bx_ - ax_) / L, (by_ - ay_) / L
-        # Posts at the run start (its corner) and at every whole-tile station.
-        k0 = ax_ if dx else ay_
-        posts = [0.0] + sorted(abs(k - k0) for k in range(1, 6))
-        for t in posts:
-            g.box((ax_ + dx * t, ay_ + dy * t, z + hgt / 2), (.07, .07, hgt), IRON)
-        stations = posts + [L]
-        for t0, t1 in zip(stations, stations[1:]):
-            a = (ax_ + dx * (t0 + .045), ay_ + dy * (t0 + .045))
-            b = (ax_ + dx * (t1 - .045), ay_ + dy * (t1 - .045))
-            _glass(g, a, b, z + .1, z + hgt - .08, nrm)
-        # Top rails: front/back runs span the corners, side runs stop between
-        # them (no overlapping tops). Bottom rails stop short of the corners.
-        cxr, cyr = (ax_ + bx_) / 2, (ay_ + by_) / 2
-        span = L + .03 if nrm[1] else L - .1
-        g.box((cxr, cyr, z + hgt + .025), (abs(dx) * span + abs(nrm[0]) * .09, abs(dy) * span + abs(nrm[1]) * .09, .05),
-              IRON)
-        g.box((cxr, cyr, z + .06), (abs(dx) * (L - .08) + abs(nrm[0]) * .045, abs(dy) * (L - .08) + abs(nrm[1]) * .045,
-                                     .06), IRON)
-    # Lamp standards on the four railing corners (top-rail level).
-    for cx_, cy_ in ((e, e), (6 - e, e), (6 - e, 6 - e), (e, 6 - e)):
-        W.lamp_standard(g, cx_, cy_, z + hgt + .05, .62)
-    # Brass telescope on the front rail's middle post (x = 3 grid line).
-    tx, ty, tz = 3.0, e, z + hgt + .05
-    g.cylinder((tx, ty, tz + .06), .05, .12, IRON, 'Z', 10)
+    tx, ty, tz = 3.0, .15, z + .87
+    # Base plate and post start 15 mm down in the deck flags (above the slab under them).
+    g.cylinder((tx, ty, z + .0125), .11, .055, IRON, 'Z', 10)
+    g.cylinder((tx, ty, (z - .015 + tz + .12) / 2), .05, tz + .135 - z, IRON, 'Z', 10)
     tel = Geometry('ObservationDeck.Telescope', (tx, ty, tz + .16))
     tel.cylinder((tx, ty, tz + .14), .04, .08, IRON, 'Z', 8)
     K.revolve(tel, (tx, ty, tz + .16), [(.001, -.02), (.055, 0), (.055, .06), (.001, .08)], BRASS, segments=10)

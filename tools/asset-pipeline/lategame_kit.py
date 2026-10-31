@@ -442,22 +442,12 @@ def frame_wall(g, axis, plane, start, end, bottom, top, *, outward, infill=FORGE
             window(g, wx, wy, z, window_scale, face_name, window_style)
 
 
-def parapet(g, x0, y0, x1, y1, z, height=.35, mat=CONCRETE):
-    """Closed parapet ring standing on a flat roof slab."""
-    t = .14
-    g.box(((x0 + x1) / 2, y0 + t / 2, z + height / 2), (x1 - x0, t, height), mat)
-    g.box(((x0 + x1) / 2, y1 - t / 2, z + height / 2), (x1 - x0, t, height), mat)
-    g.box((x0 + t / 2, (y0 + y1) / 2, z + height / 2), (t, y1 - y0 - 2 * t, height), mat)
-    g.box((x1 - t / 2, (y0 + y1) / 2, z + height / 2), (t, y1 - y0 - 2 * t, height), mat)
-    g.box(((x0 + x1) / 2, (y0 + y1) / 2, z + height + .025), (x1 - x0 + .06, y1 - y0 + .06, .05), IRON)
-
-
-def flat_roof(g, x0, y0, x1, y1, z, *, thickness=.16, overhang=.10, parapet_height=None):
-    """Concrete roof slab; optional parapet ring."""
+def flat_roof(g, x0, y0, x1, y1, z, *, thickness=.16, overhang=.10):
+    """Concrete roof slab: an open platform edge to edge (no parapet, curb or
+    rail: user, 2026-10-31, "I want it to be like an actual platform where
+    roads can connect")."""
     g.box(((x0 + x1) / 2, (y0 + y1) / 2, z + thickness / 2),
           (x1 - x0 + 2 * overhang, y1 - y0 + 2 * overhang, thickness), CONCRETE)
-    if parapet_height:
-        parapet(g, x0 - overhang, y0 - overhang, x1 + overhang, y1 + overhang, z + thickness, parapet_height)
 
 
 # ---------------------------------------------------------------- roofs
@@ -616,73 +606,6 @@ def portal_frame(g, x0, x1, y, bottom, top, *, w=.18, mat=IRON):
     if reach > w:
         for x, s in ((x0, 1), (x1, -1)):
             g.beam((x + s * w / 2, y, top - .45), (x + s * reach, y, top), w * .5, mat=mat)
-
-
-def steel_rail(g, a, b, z, *, height=.62, pitch=.6, mat=IRON, skip_ends=None,
-               skip_start=False, skip_end=False):
-    """Industrial handrail: square posts, top rail and mid rail."""
-    a, b = Vector(a), Vector(b)
-    count = max(1, math.ceil((b - a).length / pitch))
-    for i in range(count + 1):
-        if (i == 0 and skip_start) or (i == count and skip_end):
-            continue
-        p = a + (b - a) * i / count
-        g.box((p.x, p.y, z + height / 2), (.05, .05, height), mat)
-    # Top rail is 15 mm proud of the 50 mm posts; the mid rail is buried in them.
-    for h, w in ((height, .08), (height * .5, .03)):
-        g.beam((a.x, a.y, z + h), (b.x, b.y, z + h), w, mat=mat)
-
-
-def catwalk(g, x0, y0, x1, y1, z, *, rails=('front', 'back', 'left', 'right'), brackets='wall',
-            wall_side='back'):
-    """Steel grating walkway at integer layer z with rails and support.
-
-    `brackets` is 'wall' (knee brackets back to the `wall_side` face) or
-    'piers' (concrete piers to the ground at the corners).
-    """
-    if z != int(z):
-        raise ValueError('Catwalk floors sit on whole height layers')
-    _check_positive(x1 - x0, y1 - y0)
-    g.box(((x0 + x1) / 2, (y0 + y1) / 2, z - .04), (x1 - x0, y1 - y0, .08), IRON)
-    # Grating bars, proud of the deck top.
-    span_x = x1 - x0 >= y1 - y0
-    count = max(2, round((x1 - x0 if span_x else y1 - y0) / .32))
-    for i in range(count):
-        if span_x:
-            x = x0 + (i + .5) * (x1 - x0) / count
-            g.box((x, (y0 + y1) / 2, z + .006), (.03, y1 - y0 - .04, .012), STEEL)
-        else:
-            y = y0 + (i + .5) * (y1 - y0) / count
-            g.box(((x0 + x1) / 2, y, z + .006), (x1 - x0 - .04, .03, .012), STEEL)
-    inset = .035
-    lines = {'front': ((x0 + inset, y0 + inset), (x1 - inset, y0 + inset)),
-             'back': ((x0 + inset, y1 - inset), (x1 - inset, y1 - inset)),
-             'left': ((x0 + inset, y0 + inset), (x0 + inset, y1 - inset)),
-             'right': ((x1 - inset, y0 + inset), (x1 - inset, y1 - inset))}
-    for name in rails:
-        if name not in lines:
-            raise ValueError('Unknown catwalk rail edge ' + name)
-        a, b = lines[name]
-        # Corner posts belong to the front/back runs only, so no two posts coincide.
-        skip = name in ('left', 'right') and any(o in rails for o in ('front', 'back'))
-        steel_rail(g, a, b, z, skip_ends=skip and 'both' or None,
-                   skip_start='front' in rails if skip else False, skip_end='back' in rails if skip else False)
-    if brackets == 'wall':
-        if wall_side in ('back', 'front'):
-            wy = y1 if wall_side == 'back' else y0
-            oy = y0 if wall_side == 'back' else y1
-            for x in [x0 + .15] + _stations(x0, x1, 1.2) + [x1 - .15]:
-                g.beam((x, wy, z - .7), (x, oy + (.1 if wall_side == 'back' else -.1), z - .09), .07, mat=IRON)
-        else:
-            wx = x1 if wall_side == 'right' else x0
-            ox = x0 if wall_side == 'right' else x1
-            for y in [y0 + .15] + _stations(y0, y1, 1.2) + [y1 - .15]:
-                g.beam((wx, y, z - .7), (ox + (.1 if wall_side == 'right' else -.1), y, z - .09), .07, mat=IRON)
-    elif brackets == 'piers':
-        for x, y in ((x0 + .2, y0 + .2), (x1 - .2, y0 + .2), (x1 - .2, y1 - .2), (x0 + .2, y1 - .2)):
-            concrete_pier(g, x, y, 0, z - .135, .3)
-    elif brackets is not None:
-        raise ValueError('Catwalk support must be wall, piers or None')
 
 
 def ladder(g, x, y, bottom, top, *, face='front', width=.36, cage=True):

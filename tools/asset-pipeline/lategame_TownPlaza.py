@@ -138,8 +138,9 @@ def bandstand(g, parts):
     P.native_window(g, 3.6, y1, .5, .5, 'back', 'factory')
     P.native_window(g, 5.4, y1, .5, .5, 'back', 'factory')
     cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
-    # Round stage furniture on the podium top (layer 1): iron columns, a
-    # round balustrade and the bell roof. The deck itself stays the podium top.
+    # Round stage furniture on the podium top (layer 1): iron columns and the
+    # bell roof, no balustrade (user, 2026-10-31: "lets remove the railings").
+    # The deck itself stays the podium top.
     z0 = 1.0
     zr = 2.0
     R = .78
@@ -149,7 +150,6 @@ def bandstand(g, parts):
         K.revolve(g, (px, py, z0 - .01), [(.08, 0), (.08, .07), (.05, .1), (.038, .16), (.038, zr - z0 - .16),
                                           (.06, zr - z0 - .1), (.09, zr - z0 - .05), (.09, zr - z0 - .0)],
                   IRON, segments=10)
-    I.ring_rail(g, (cx, cy), R, z0, height=.42, posts=12)
     K.hollow_revolve(g, (cx, cy, zr), [(R + .12, 0), (R + .12, .1)], .24, IRON, segments=16)
     rs = .68                               # bell roof scale (2026-10-22 profile)
     roof = [(r * rs, z * rs) for r, z in ((1.54, 0), (1.54, .07), (1.3, .2), (.97, .42), (.6, .78), (.32, 1.1),

@@ -23,8 +23,10 @@ iron-banded arch over a semicircular thermal (Diocletian) window, with a
 brass finial at the crossing. No other study has a groin vault or thermal
 windows.
 ROOF: groin vault in teal roof planks on the hall (kept as its silhouette);
-flat roof decks on layer 1 with low parapets: timber decking on the changing
-wing, riveted metal on the boiler room.
+flat roof decks on layer 1, open platforms edge to edge (no parapets: user
+2026-10-31, "I want it to be like an actual platform where roads can
+connect"): timber decking on the changing wing, riveted metal on the boiler
+room.
 
 Plan (7 x 5 tiles; front y = 0):
   x 2..5, y 2..5  bath hall: rusticated concrete ground storey (top layer 1)
@@ -148,31 +150,6 @@ def changing_wing(g):
     A.atlas_window(g, 1.0, 2.06, .52, .3, 'front', 'porthole')
     A.atlas_window(g, 1.0, 4.94, .52, .3, 'back', 'porthole')
     deck_slab(g, .02, 2.02, HALL[0] - .05, 4.98, SIDE_TOP, 'timber', thickness=SLAB)   # clear of the hall coping
-    low_parapet(g, 0.0, 2.0, 2.0, 5.0, open_side='right')
-
-
-def low_parapet(g, x0, y0, x1, y1, *, open_side):
-    """Low concrete parapet with an iron cap on three edges of a layer-1 roof;
-    `open_side` abuts the hall."""
-    t, h, z = .12, .2, SIDE_TOP
-    xa = x0 - .02
-    xb = x1 + .02 if open_side != 'right' else x1 - .05
-    xl = x0 - .02 if open_side != 'left' else x0 + .05
-    blk(g, xl, y0 - .02, z, xb, y0 - .02 + t, z + h, CONCRETE)
-    blk(g, xl, y1 + .02 - t, z, xb, y1 + .02, z + h, CONCRETE)
-    if open_side != 'left':
-        blk(g, xa, y0 - .02 + t, z, xa + t, y1 + .02 - t, z + h, CONCRETE)
-    if open_side != 'right':
-        blk(g, xb - t, y0 - .02 + t, z, xb, y1 + .02 - t, z + h, CONCRETE)
-    c = .02
-    blk(g, xl - (c if open_side != 'left' else 0), y0 - .02 - c, z + h, xb + (c if open_side != 'right' else 0),
-        y0 - .02 + t + c, z + h + .04, IRON)
-    blk(g, xl - (c if open_side != 'left' else 0), y1 + .02 - t - c, z + h, xb + (c if open_side != 'right' else 0),
-        y1 + .02 + c, z + h + .04, IRON)
-    if open_side != 'left':
-        blk(g, xa - c, y0 - .02 + t + c, z + h, xa + t + c, y1 + .02 - t - c, z + h + .04, IRON)
-    if open_side != 'right':
-        blk(g, xb - t - c, y0 - .02 + t + c, z + h, xb + c, y1 + .02 - t - c, z + h + .04, IRON)
 
 
 # ---------------------------------------------------------------- pool court
@@ -280,7 +257,6 @@ def boiler_room(g, parts):
         P.native_window(g, 7.0, y, .4, .45, 'right', 'factory')
     P.native_window(g, 5.5, 5.0, .4, .45, 'back', 'factory')
     P.native_window(g, 5.5, 2.0, .4, .45, 'front', 'factory')
-    low_parapet(g, 5.0, 2.0, 7.0, 5.0, open_side='left')
     # Boiler chimney rising from the ground in the back wall (tile (5,4)),
     # mouth above 4 so its steam does not bar the roof deck round it.
     cx0, cy0, cx1, cy1 = 5.1, 4.55, 5.5, 4.95

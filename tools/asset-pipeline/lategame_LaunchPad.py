@@ -85,7 +85,10 @@ def pad(g):
     for xa, xb in ((math.floor(tx0), tx0), (tx1, math.ceil(tx1))):
         bx(g, xa, 0.0, -BURY, xb, y0, .5, CONCRETE)
         bx(g, xa - .03, -.03, .47, xb + .03, y0 - .03, .56, CONCRETE)
-    coping_ring(g, x0, y0, x1, y1, DECK)
+    # Proud cast coping band on the deck's edge faces, its top 12 mm under the
+    # deck: no cap strip stands on the deck (user, 2026-10-31: roofs are
+    # platforms paths join across).
+    coping_ring(g, x0, y0, x1, y1, DECK - .052)
     skip_front = [(tx0 - .3, tx1 + .3), (DOOR_X - .5, DOOR_X + .5)]
     pilasters(g, 'X', y0, x0, x1, .1, DECK - .14, -1, skip=skip_front)
     pilasters(g, 'X', y1, x0, x1, .1, DECK - .14, 1)

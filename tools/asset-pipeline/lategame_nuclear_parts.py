@@ -375,19 +375,6 @@ def plank_barrel(g, x0, x1, y0, y1, spring, rise, *, t=.08, overhang=.15, pitch=
             board_wall(g, 'Y', y, x0, x1, spring, top)
 
 
-def ring_parapet(g, x0, y0, x1, y1, z, h, *, t=.16, mat=CONCRETE, cap=IRON):
-    """Closed parapet ring with mitred iron caps (no lid over the roof)."""
-    bx(g, x0, y0, z, x1, y0 + t, z + h, mat)
-    bx(g, x0, y1 - t, z, x1, y1, z + h, mat)
-    bx(g, x0, y0 + t, z, x0 + t, y1 - t, z + h, mat)
-    bx(g, x1 - t, y0 + t, z, x1, y1 - t, z + h, mat)
-    o = .03
-    bx(g, x0 - o, y0 - o, z + h, x1 + o, y0 + t + .015, z + h + .05, cap)
-    bx(g, x0 - o, y1 - t - .015, z + h, x1 + o, y1 + o, z + h + .05, cap)
-    bx(g, x0 - o, y0 + t + .015, z + h, x0 + t + .015, y1 - t - .015, z + h + .05, cap)
-    bx(g, x1 - t - .015, y0 + t + .015, z + h, x1 + o, y1 - t - .015, z + h + .05, cap)
-
-
 def cask(g, x, y, z, *, r=.45, h=1.3, yoke=True):
     """Shielded transport cask with cooling fins, trunnions and lifting yoke.
     Returns the yoke top height (or the lid top without a yoke)."""

@@ -244,27 +244,6 @@ def gauge(g, x, y, z, face='front', r=.1):
 
 # ---------------------------------------------------------------- walls & rails
 
-def rail(g, points, z, *, height=.62, pitch=.6, mat=IRON):
-    """Straight-run handrail through plan points. Corner posts are taller
-    newels; rails butt into them, so no two rail tops overlap."""
-    newel = .075
-    for p in points:
-        g.box((p[0], p[1], z + (height + .06) / 2), (newel, newel, height + .06), mat)
-    for a, b in zip(points, points[1:]):
-        a, b = Vector((a[0], a[1], 0)), Vector((b[0], b[1], 0))
-        d = b - a
-        length = d.length
-        u = d / length
-        count = max(1, math.ceil(length / pitch))
-        for i in range(1, count):
-            p = a + d * i / count
-            g.box((p.x, p.y, z + height / 2 - .01), (.04, .04, height - .02), mat)
-        s, e = a + u * newel / 2, b - u * newel / 2
-        # Post .04, top rail .06, mid rail .028: faces at least 6 mm apart.
-        for h, w in ((height, .06), (height * .5, .028)):
-            g.beam((s.x, s.y, z + h - w / 2), (e.x, e.y, z + h - w / 2), w, mat=mat)
-
-
 def grating(g, x0, y0, x1, y1, z, *, along='X'):
     """Steel grating deck plate whose top is at whole layer z."""
     g.box(((x0 + x1) / 2, (y0 + y1) / 2, z - .04), (x1 - x0, y1 - y0, .08), IRON)
