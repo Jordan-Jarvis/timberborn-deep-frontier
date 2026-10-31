@@ -27,6 +27,9 @@
 - **Restaurant and Fishery Works:** the pale concrete footings under their deck posts are brick.
 - **Limestone outcrops and seams** are grey weathered rock with pale broken faces, instead of white blocks that looked like gems.
 
+### Fixes
+- **Freed-ground check:** the Hospital's expected freed cells follow the 4-wide pavilion (the rear barrel and supply pile cells left the footprint with the wings), and under the Restaurant's one-layer dining balcony the check accepts a brazier there, as the in-game probe does.
+
 ## 0.7.1 (2026-10-30)
 
 ### Fixes
