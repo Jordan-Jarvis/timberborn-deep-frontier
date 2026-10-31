@@ -51,7 +51,7 @@
   },
   "botMaintenance": {
     "$comment": "Written by tools/bot_upkeep_content.mjs as FrontierBotMaintenanceSpec on every open template with botWear (runtime: Scripts/Workforce/BotMaintenance.cs). Bots working there take one dose from the building's own maintenance inventory per serviceHours of wear; while it lasts the workplace botWear is multiplied by the good's factor (never below 1x). goods: [good, wearFactor], best first; a bot takes the first one in stock. The inventory is stocked only while a bot is assigned.",
-    "goods": [["Lubricant", 0.5], ["FishOil", 0.75]],
+    "goods": [["Grease", 0.5], ["FishOil", 0.75]],
     "capacityPerGood": 10,
     "serviceHours": 24
   },

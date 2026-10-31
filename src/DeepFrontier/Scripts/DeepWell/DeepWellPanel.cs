@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 namespace DeepFrontier.Scripts.DeepWell {
   // Deep Well panel: the boost slider (1x..MaxBoost x, saved per building),
   // the Radioactive Tide shut-off checkbox, and the well's state, power
-  // demand, drill-bit use and the source's strength.
+  // demand, drill-bit use, the drought rule and the source's strength.
   internal sealed class DeepWellPanel : BaseEntityPanelFragment<DeepWell> {
     private readonly ILoc _loc;
     private GameSliderInt _boost;
@@ -43,6 +43,7 @@ namespace DeepFrontier.Scripts.DeepWell {
       text += "\n" + _loc.T(DeepWellLoc.PanelDemand, component.PowerDemandAtBoost.ToString("N0"));
       text += "\n" + _loc.T(DeepWellLoc.PanelDrillBits, component.DrillBitsPerHour.ToString("0.00"),
         component.HoursOfDrillBits.ToString("0"));
+      text += "\n" + _loc.T(DeepWellLoc.PanelDrought);
       var source = component.Source;
       if (source) {
         text += "\n" + _loc.T(DeepWellLoc.PanelSource, source.SpecifiedStrength.ToString("0.00"), source.CurrentStrength.ToString("0.00"));

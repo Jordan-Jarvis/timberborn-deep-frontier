@@ -10,7 +10,7 @@
   "Berries": 1,
   "BotChassis": 13.153125,
   "BotHead": 40.2,
-  "BotLimb": 18.286395,
+  "BotLimb": 18.800278,
   "CannedFish": 2.732909,
   "CanolaOil": 2.25,
   "CanolaSeeds": 1,
@@ -27,7 +27,7 @@
   "Corn": 1,
   "CornRation": 0.32,
   "CrudeOil": 0.664722,
-  "Cryocoolant": 4.057095,
+  "Cryocoolant": 5.084861,
   "DeepAlloy": 8.026667,
   "DeepOre": 0.998333,
   "Dirt": 1.5,
@@ -35,7 +35,7 @@
   "EggplantRation": 0.550605,
   "Electronics": 73.54,
   "EmergencyRation": 1.25,
-  "EnrichedFuel": 36.973929,
+  "EnrichedFuel": 38.075107,
   "Explosives": 4.65,
   "Extract": 2.92,
   "FermentedCassava": 0.6,
@@ -55,10 +55,9 @@
   "JuvenileFish": 3.628444,
   "Kohlrabi": 0.194413,
   "Limestone": 0.415,
-  "LiquidHydrogen": 6.120729,
-  "LiquidOxygen": 6.120729,
+  "LiquidHydrogen": 6.634612,
+  "LiquidOxygen": 6.634612,
   "Log": 1,
-  "Lubricant": 2.529468,
   "MachineCore": 58.216111,
   "MangroveFruit": 1,
   "MedicalFood": 5.98824,
@@ -76,9 +75,9 @@
   "PropulsionPackage": 500.950556,
   "PureWater": 1.421091,
   "RadioactiveSludge": 0.5,
-  "RadioactiveWaste": 21.854685,
-  "ReactorCoolantWater": 3.807818,
-  "ReactorPowerCell": 403.25173,
+  "RadioactiveWaste": 22.680569,
+  "ReactorCoolantWater": 4.06476,
+  "ReactorPowerCell": 406.40844,
   "RecoveredArtifact": 23.15,
   "RecoveredTelemetry": 530.762222,
   "ReinforcedBotFrame": 249.850903,
@@ -231,7 +230,6 @@
     "Chemical",
     "BrineChemical",
     "Polymer",
-    "Lubricant",
     "Cryocoolant"
    ],
    "devOnly": false
@@ -1928,7 +1926,7 @@
      1
     ],
     [
-     "Lubricant",
+     "Grease",
      1
     ],
     [
@@ -2780,29 +2778,6 @@
     ]
    ]
   },
-  "Lubricant": {
-   "ingredients": [
-    [
-     "CrudeOil",
-     2
-    ],
-    [
-     "FishOil",
-     1
-    ],
-    [
-     "Water",
-     1
-    ]
-   ],
-   "hours": 2,
-   "products": [
-    [
-     "Lubricant",
-     2
-    ]
-   ]
-  },
   "MachineCore": {
    "ingredients": [
     [
@@ -3467,7 +3442,7 @@
      1
     ],
     [
-     "Lubricant",
+     "Grease",
      1
     ],
     [

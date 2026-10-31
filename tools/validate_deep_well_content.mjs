@@ -6,11 +6,12 @@
 // Checks the generated blueprint against the config and the native
 // Timberborn 1.1.2.8 contracts the design rests on (source blocks, seep
 // modifier, source strength cap, floodable and goods-consuming specs), the
-// cost against the late-game rule, the localization rows and the C# contract.
+// cost against the late-game rule, the localization rows, the C# contract and
+// the drought rule (power gate and boost cap, user 2026-10-30).
 import {access, readFile, readdir} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {ANCHOR_BLOCK, CONFIG, DRILL_CELL, FULL_BOOST_RATE, HANGING_BLOCK, ICON_PATH, ID, LOCALIZATION, TEMPLATE_PATH} from './deep_well_content.mjs';
+import {ANCHOR_BLOCK, CONFIG, DRILL_CELL, DROUGHT_RULE, FULL_BOOST_RATE, HANGING_BLOCK, ICON_PATH, ID, LOCALIZATION, TEMPLATE_PATH} from './deep_well_content.mjs';
 import {catalog, lategameCost, tierForScience} from './lategame_costs.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
@@ -75,7 +76,8 @@ if (await exists(path)) {
     `${ID}: GoodConsumingBuildingSpec must consume only ${CONFIG.drillBits.good} at the full-boost rate ${FULL_BOOST_RATE}/h`);
   check(same(bp.DeepWellSpec, {DrillCell: {X: DRILL_CELL[0], Y: DRILL_CELL[1], Z: DRILL_CELL[2]}, MaxBoost: CONFIG.maxBoost,
     DefaultBoost: CONFIG.defaultBoost, DefaultShutOffDuringTide: CONFIG.defaultShutOffDuringTide,
-    DrillBitGoodId: CONFIG.drillBits.good, DrillBitsPerBoostStepPerHour: CONFIG.drillBits.perBoostStepPerHour}), `${ID}: DeepWellSpec differs from the config`);
+    DrillBitGoodId: CONFIG.drillBits.good, DrillBitsPerBoostStepPerHour: CONFIG.drillBits.perBoostStepPerHour,
+    DroughtMaxBoost: CONFIG.drought.maxBoost, DroughtPowerInput: CONFIG.drought.powerInputHp}), `${ID}: DeepWellSpec differs from the config`);
   check(CONFIG.defaultBoost >= 1 && CONFIG.defaultBoost <= CONFIG.maxBoost, `${ID}: default boost outside 1..${CONFIG.maxBoost}`);
   const {X: w, Y: h, Z: layers} = bp.BlockObjectSpec.Size;
   check(Math.min(w, h) <= 2 && Math.max(w, h) <= 4, `${ID}: footprint ${w}×${h} is larger than 2×4`);
@@ -121,7 +123,8 @@ const scripts = resolve(root, 'src', 'DeepFrontier', 'Scripts', 'DeepWell');
 const cs = (await Promise.all((await readdir(scripts)).filter((f) => f.endsWith('.cs')).map((f) => readFile(resolve(scripts, f), 'utf8')))).join('\n');
 const spec = cs.match(/record DeepWellSpec : ComponentSpec \{([\s\S]*?)\n  \}/);
 check(spec && same([...spec[1].matchAll(/\[Serialize\] public \S+ (\w+) \{ get; init; \}/g)].map((m) => m[1]),
-  ['DrillCell', 'MaxBoost', 'DefaultBoost', 'DefaultShutOffDuringTide', 'DrillBitGoodId', 'DrillBitsPerBoostStepPerHour']), 'C#: DeepWellSpec properties differ from the blueprint');
+  ['DrillCell', 'MaxBoost', 'DefaultBoost', 'DefaultShutOffDuringTide', 'DrillBitGoodId', 'DrillBitsPerBoostStepPerHour',
+    'DroughtMaxBoost', 'DroughtPowerInput']), 'C#: DeepWellSpec properties differ from the blueprint');
 const locIds = new Set(LOCALIZATION.map(([id]) => id));
 for (const [, key] of cs.matchAll(/public const string \w+ = "(DeepFrontier\.DeepWell\.[\w.]+)";/g))
   if (!key.endsWith('.')) check(locIds.has(key), `C#: loc key ${key} has no localization row`);
@@ -135,8 +138,45 @@ for (const line of ['MultiBind<IBlockObjectValidator>().To<DeepWellPlacementVali
 // The placement message must reach the preview: the validator returns it.
 check(/errorMessage = _loc\.T\(DeepWellLoc\.NoSource\)/.test(cs), 'C#: the placement validator must report the missing source');
 
+// --- drought rule (user 2026-10-30: "remove the ability to get water through
+// drought?"; approved: machines' water stays satisfiable, droughts still hurt) --
+// Numbers: a power gate far above the full-boost draw (the user's figure is
+// 100,000+ hp) and a boost cap below the normal maximum.
+const drought = CONFIG.drought;
+check(drought && Number.isInteger(drought.powerInputHp) && drought.powerInputHp >= 100000 && drought.powerInputHp > CONFIG.powerInputHp,
+  `${ID}: drought.powerInputHp must be whole hp of at least 100,000 and above the full-boost ${CONFIG.powerInputHp} hp`);
+check(drought && Number.isInteger(drought.maxBoost) && drought.maxBoost >= 1 && drought.maxBoost < CONFIG.maxBoost,
+  `${ID}: drought.maxBoost must be a whole boost from 1 to below the normal maximum ${CONFIG.maxBoost}`);
+// Players read the rule in the building description and the panel.
+const locText = new Map(LOCALIZATION);
+const droughtHp = drought.powerInputHp.toLocaleString('en-US');
+check(DROUGHT_RULE.includes(`${droughtHp} hp`) && DROUGHT_RULE.includes(`${drought.maxBoost}×`) && /dries up/.test(DROUGHT_RULE),
+  `${ID}: the drought rule text must name ${droughtHp} hp, ${drought.maxBoost}× and that the source dries up`);
+check(locText.get(`Building.${ID}.Description`)?.includes(DROUGHT_RULE), `${ID}: the building description must state the drought rule`);
+check(!/keeps flowing through drought/i.test(locText.get(`Building.${ID}.Description`) ?? ''), `${ID}: the description still promises flow through droughts`);
+check(locText.get('DeepFrontier.DeepWell.Panel.Drought') === DROUGHT_RULE, `${ID}: the panel's drought line must be the drought rule`);
+check(rows.get(`Building.${ID}.Description`)?.includes(droughtHp), 'enUS.csv: the generated Deep Well description lacks the drought power');
+check(/_loc\.T\(DeepWellLoc\.PanelDrought\)/.test(cs), 'C#: the panel must show the drought rule');
+// Runtime: drought from the native weather system by the native DroughtWeather
+// id (vanilla DroughtWeather and Moddable Weathers' GameDroughtWeather share
+// it), the same test as the tide; the demand becomes DroughtPowerInput at any
+// boost; only full power runs the well; the boost and drill bits use the cap.
+for (const [line, what] of [
+  ['public bool DroughtActive => _weather.IsHazardousWeather && _hazardousWeather.CurrentCycleHazardousWeather?.Id == _droughtWeather.Id;', 'read drought from the native weather services by the DroughtWeather id'],
+  ['public int EffectiveBoost => DroughtActive ? Mathf.Min(Boost, _spec.DroughtMaxBoost) : Boost;', 'cap the boost at DroughtMaxBoost in a drought'],
+  ['private float DemandMultiplier => DroughtActive ? (float)_spec.DroughtPowerInput / PowerInput : (float)Boost / _spec.MaxBoost;', 'demand DroughtPowerInput at any boost in a drought'],
+  ['_node.SetInputMultiplier(demand ? DemandMultiplier : 0f);', 'apply the drought demand to the native node'],
+  ['(drought ? _node.PowerEfficiency >= 1f : _node.PowerEfficiency > 0f)', 'run only on full power in a drought'],
+  ['_modifier = tide ? 0f : running ? 1f + (boost - 1) * _node.PowerEfficiency : 1f;', 'boost by the capped boost'],
+  ['if (boost != _rateBoost) ApplyConsumptionRate(boost);', 'use drill bits at the capped boost'],
+]) check(cs.includes(line), `C#: DeepWell must ${what} (${line})`);
+// Not running restores the native drought modifier, so the source dries up.
+check(/_disabledDrought\?\.Enable\(\);/.test(cs), 'C#: DeepWell must restore the native drought modifier when it stops');
+// The tide shut-off still wins over the drought rule (one hazardous weather per cycle, but checked first).
+check(/: tide \? DeepWellState\.TideShutOff/.test(cs), 'C#: the tide shut-off must stay ahead of the other states');
+
 if (errors.length) {
   console.error(`Deep Well validation failed (${errors.length}):\n- ${errors.join('\n- ')}`);
   process.exit(1);
 }
-console.log(`Deep Well content valid: ${TEMPLATE_PATH}, drill ${DRILL_CELL}, ${CONFIG.powerInputHp} hp at ${CONFIG.maxBoost}x, ${CONFIG.drillBits.perBoostStepPerHour} ${CONFIG.drillBits.good}/h per step.`);
+console.log(`Deep Well content valid: ${TEMPLATE_PATH}, drill ${DRILL_CELL}, ${CONFIG.powerInputHp} hp at ${CONFIG.maxBoost}x, drought ${CONFIG.drought.powerInputHp} hp at most ${CONFIG.drought.maxBoost}x on full power, ${CONFIG.drillBits.perBoostStepPerHour} ${CONFIG.drillBits.good}/h per step.`);

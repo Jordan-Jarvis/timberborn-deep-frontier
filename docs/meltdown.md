@@ -156,7 +156,7 @@ These checks are not yet automated, and `LategameAcceptance.cs` is unchanged. Ea
 
 ## Open questions
 
-- **Maintenance stop or goods.** Maintenance is a 24-hour stop, not Lubricant + MachineCore consumption. The reactor's only inventory is its recipe inventory: `ManufactoryInventoryInitializer` plus `RecipeGoodDisallower`, which Moddable Recipes rebuilds on recipe change. A `GoodConsumingBuilding` cannot coexist with it (two `IGoodProcessor`s). Consumed maintenance goods would need the Restaurant-style Harmony patches on both.
+- **Maintenance stop or goods.** Maintenance is a 24-hour stop, not Grease + MachineCore consumption. The reactor's only inventory is its recipe inventory: `ManufactoryInventoryInitializer` plus `RecipeGoodDisallower`, which Moddable Recipes rebuilds on recipe change. A `GoodConsumingBuilding` cannot coexist with it (two `IGoodProcessor`s). Consumed maintenance goods would need the Restaurant-style Harmony patches on both.
 - **Crew and maintenance meltdowns.** They currently cost power through SCRAMs but cannot melt the core alone. Workers are released when the building is blocked, and they go home off shift, so operator counts mean something only while running.
 - **Demolition and deletion.** Demolishing a hot reactor removes it without contamination. Deleting a full vault destroys its casks silently, despite the "processed or moved before demolition" text.
 - **Unverified in game:**

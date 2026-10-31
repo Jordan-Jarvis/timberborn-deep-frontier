@@ -50,7 +50,20 @@ namespace DeepFrontier.Scripts.DeepWell {
   // While running it also removes the seep's WaterDepthStrengthModifier (the
   // seep pours like a normal source) and disables the native
   // DroughtWaterStrengthModifier (the source keeps flowing in drought; under
-  // Moddable Weathers its replacement Disable sets IgnoreDrought). With the
+  // Moddable Weathers its replacement Disable sets IgnoreDrought).
+  //
+  // Drought (user 2026-10-30: the well was too strong in droughts). While the
+  // weather is hazardous and the cycle's IHazardousWeather has the native
+  // DroughtWeather id ("DroughtWeather": native DroughtWeather and Moddable
+  // Weathers' GameDroughtWeather, the same test as the tide below), the
+  // power demand is DroughtPowerInput at any boost (input multiplier
+  // DroughtPowerInput / PowerInput), the well runs only on full power (native
+  // PowerEfficiency 1: supply covers every demand on the network), and the
+  // boost is min(Boost, DroughtMaxBoost); drill bits follow that boost.
+  // Short of full power it does not run, so the drought modifier stays on
+  // and the source dries up like any other. The slider keeps its setting.
+  //
+  // With the
   // tide checkbox on and the Radioactive Tide current (the cycle's
   // IHazardousWeather has id RadioactiveTideWeather while the weather is
   // hazardous: the vanilla and Moddable Weathers paths), the modifier is 0:
@@ -69,6 +82,8 @@ namespace DeepFrontier.Scripts.DeepWell {
     [Serialize] public bool DefaultShutOffDuringTide { get; init; }
     [Serialize] public string DrillBitGoodId { get; init; }
     [Serialize] public float DrillBitsPerBoostStepPerHour { get; init; }
+    [Serialize] public int DroughtMaxBoost { get; init; }
+    [Serialize] public int DroughtPowerInput { get; init; }
   }
 
   internal static class DeepWellLoc {
@@ -87,11 +102,12 @@ namespace DeepFrontier.Scripts.DeepWell {
     public const string PanelDrillBits = "DeepFrontier.DeepWell.Panel.DrillBits";
     public const string PanelSource = "DeepFrontier.DeepWell.Panel.Source";
     public const string PanelSeep = "DeepFrontier.DeepWell.Panel.Seep";
+    public const string PanelDrought = "DeepFrontier.DeepWell.Panel.Drought";
     public const string PanelCapped = "DeepFrontier.DeepWell.Panel.Capped";
     public const string State = "DeepFrontier.DeepWell.State.";
   }
 
-  internal enum DeepWellState { UnderConstruction, NoSource, Paused, TideShutOff, SourceDormant, NoDrillBits, NoPower, Boosting }
+  internal enum DeepWellState { UnderConstruction, NoSource, Paused, TideShutOff, SourceDormant, NoDrillBits, NoPower, DroughtNoPower, Boosting, DroughtBoosting }
 
   // One Deep Well per water source: two would multiply their boosts.
   internal sealed class DeepWellRegistry {
@@ -165,6 +181,7 @@ namespace DeepFrontier.Scripts.DeepWell {
     private readonly EventBus _eventBus;
     private readonly WeatherService _weather;
     private readonly HazardousWeatherService _hazardousWeather;
+    private readonly DroughtWeather _droughtWeather;
     private readonly NonlinearAnimationManager _animation;
     private readonly WaterStrengthService _strength;
     private readonly ILoc _loc;
@@ -181,27 +198,36 @@ namespace DeepFrontier.Scripts.DeepWell {
     private IWaterStrengthModifier _removedSeepModifier;
     private DroughtWaterStrengthModifier _disabledDrought;
     private float _modifier = 1f;
+    private int _rateBoost;
 
     public DeepWell(IBlockService blocks, DeepWellRegistry registry, EventBus eventBus, WeatherService weather,
-        HazardousWeatherService hazardousWeather, NonlinearAnimationManager animation, WaterStrengthService strength, ILoc loc) {
+        HazardousWeatherService hazardousWeather, DroughtWeather droughtWeather, NonlinearAnimationManager animation, WaterStrengthService strength, ILoc loc) {
       _blocks = blocks; _registry = registry; _eventBus = eventBus; _weather = weather;
-      _hazardousWeather = hazardousWeather; _animation = animation; _strength = strength; _loc = loc;
+      _hazardousWeather = hazardousWeather; _droughtWeather = droughtWeather; _animation = animation; _strength = strength; _loc = loc;
     }
 
     public int Boost { get; private set; }
     public int MaxBoost => _spec.MaxBoost;
+    public int DroughtMaxBoost => _spec.DroughtMaxBoost;
+    public int DroughtPowerInput => _spec.DroughtPowerInput;
     public bool ShutOffDuringTide { get; private set; }
     public WaterSource Source { get; private set; }
     public DeepWellState State { get; private set; }
     public float StrengthModifier => _modifier;
     public bool IsSeep => Source && Source.GetComponent<WaterDepthStrengthModifier>();
-    public int PowerDemandAtBoost => Mathf.CeilToInt(_node.GetComponent<MechanicalNodeSpec>().PowerInput * (float)Boost / _spec.MaxBoost);
-    public float DrillBitsPerHour => _spec.DrillBitsPerBoostStepPerHour * Boost;
+    // The boost the well drives now: the slider, capped during a drought.
+    public int EffectiveBoost => DroughtActive ? Mathf.Min(Boost, _spec.DroughtMaxBoost) : Boost;
+    public int PowerDemandAtBoost => Mathf.CeilToInt(PowerInput * DemandMultiplier);
+    public float DrillBitsPerHour => _spec.DrillBitsPerBoostStepPerHour * EffectiveBoost;
     public float HoursOfDrillBits => _consumer.HoursUntilNoSupply();
     // The native per-cell maximum (WaterStrengthSpec.MaxWaterSourceStrength) cuts the boost.
     public bool IsCapped => State == DeepWellState.Boosting
       && Source.SpecifiedStrength * _modifier > _strength.MaxWaterSourceStrength * Source.Coordinates.Length;
     public bool TideActive => _weather.IsHazardousWeather && _hazardousWeather.CurrentCycleHazardousWeather?.Id == RadioactiveTideTuning.WeatherId;
+    public bool DroughtActive => _weather.IsHazardousWeather && _hazardousWeather.CurrentCycleHazardousWeather?.Id == _droughtWeather.Id;
+    private int PowerInput => _node.GetComponent<MechanicalNodeSpec>().PowerInput;
+    // Native input multiplier while the well demands power.
+    private float DemandMultiplier => DroughtActive ? (float)_spec.DroughtPowerInput / PowerInput : (float)Boost / _spec.MaxBoost;
 
     private static FieldInfo RequireField(Type type, string name, Type fieldType) {
       var field = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic);
@@ -219,8 +245,12 @@ namespace DeepFrontier.Scripts.DeepWell {
       _consumerSpec = GetComponent<GoodConsumingBuildingSpec>();
       if (_spec.MaxBoost < 1 || _spec.DefaultBoost < 1 || _spec.DefaultBoost > _spec.MaxBoost || !(_spec.DrillBitsPerBoostStepPerHour > 0f))
         throw new InvalidOperationException($"{Name}: DeepWellSpec needs 1 <= DefaultBoost <= MaxBoost and a positive drill-bit rate");
+      if (_spec.DroughtMaxBoost < 1 || _spec.DroughtMaxBoost >= _spec.MaxBoost)
+        throw new InvalidOperationException($"{Name}: DeepWellSpec needs 1 <= DroughtMaxBoost < MaxBoost");
       if (!_blockObject || !_blockable || !_node || !_consumer || _consumerSpec == null)
         throw new InvalidOperationException($"{Name}: a Deep Well needs BlockObject, BlockableObject, MechanicalNode and GoodConsumingBuilding");
+      if (_spec.DroughtPowerInput <= PowerInput)
+        throw new InvalidOperationException($"{Name}: DeepWellSpec.DroughtPowerInput must exceed the full-boost MechanicalNodeSpec.PowerInput {PowerInput}");
       if (_consumerSpec.ConsumedGoods.Length != 1 || _consumerSpec.ConsumedGoods[0].GoodId != _spec.DrillBitGoodId
           || !Mathf.Approximately(_consumerSpec.ConsumedGoods[0].GoodPerHour, _spec.DrillBitsPerBoostStepPerHour * _spec.MaxBoost))
         throw new InvalidOperationException($"{Name}: GoodConsumingBuildingSpec must consume only {_spec.DrillBitGoodId} at the full-boost rate");
@@ -229,6 +259,7 @@ namespace DeepFrontier.Scripts.DeepWell {
       _animator.Enabled = false;
       _toggle = _consumer.GetGoodConsumingToggle();
       Boost = _spec.DefaultBoost;
+      _rateBoost = Boost;
       ShutOffDuringTide = _spec.DefaultShutOffDuringTide;
       DisableComponent();
     }
@@ -251,7 +282,7 @@ namespace DeepFrontier.Scripts.DeepWell {
     }
 
     public void InitializeEntity() {
-      ApplyConsumptionRate();
+      ApplyConsumptionRate(Boost);
       if (_blockObject.IsPreview) return;
       _noDrillBits = StatusToggle.CreateNormalStatusWithAlertAndFloatingIcon("LackOfResources",
         _loc.T(DeepWellLoc.StatusNoDrillBits), _loc.T(DeepWellLoc.StatusNoDrillBitsShort));
@@ -304,7 +335,7 @@ namespace DeepFrontier.Scripts.DeepWell {
       if (boost < 1 || boost > _spec.MaxBoost) throw new ArgumentOutOfRangeException(nameof(boost), boost, $"{Name}: boost must be 1..{_spec.MaxBoost}");
       if (boost == Boost) return;
       Boost = boost;
-      ApplyConsumptionRate();
+      ApplyConsumptionRate(EffectiveBoost);
     }
 
     public void SetShutOffDuringTide(bool value) => ShutOffDuringTide = value;
@@ -315,11 +346,15 @@ namespace DeepFrontier.Scripts.DeepWell {
       _animator.Speed = _animation.SpeedMultiplier;
       bool linked = _finished && Source;
       bool tide = linked && ShutOffDuringTide && TideActive;
+      bool drought = DroughtActive;
+      int boost = EffectiveBoost;
+      if (boost != _rateBoost) ApplyConsumptionRate(boost);
       bool dormant = linked && Source.GetComponent<WaterSourceActivator>().GetStrengthModifier() == 0f;
       bool drillBits = _consumer.CanUse;
       bool demand = linked && _blockable.IsUnblocked && !tide && !dormant && drillBits;
-      _node.SetInputMultiplier(demand ? (float)Boost / _spec.MaxBoost : 0f);
-      bool running = demand && _node.ActiveAndPowered && _node.PowerEfficiency > 0f;
+      _node.SetInputMultiplier(demand ? DemandMultiplier : 0f);
+      // In a drought only full power runs the well (native efficiency is min(supply / demand, 1)).
+      bool running = demand && _node.ActiveAndPowered && (drought ? _node.PowerEfficiency >= 1f : _node.PowerEfficiency > 0f);
       if (running) _toggle.ResumeConsumption(); else _toggle.PauseConsumption();
       State = !_finished ? DeepWellState.UnderConstruction
         : !Source ? DeepWellState.NoSource
@@ -327,11 +362,12 @@ namespace DeepFrontier.Scripts.DeepWell {
         : !_blockable.IsUnblocked ? DeepWellState.Paused
         : dormant ? DeepWellState.SourceDormant
         : !drillBits ? DeepWellState.NoDrillBits
-        : !running ? DeepWellState.NoPower
+        : !running ? (drought ? DeepWellState.DroughtNoPower : DeepWellState.NoPower)
+        : drought ? DeepWellState.DroughtBoosting
         : DeepWellState.Boosting;
       SetActive(_noSource, _finished && !Source);
       SetActive(_noDrillBits, linked && _blockable.IsUnblocked && !tide && !dormant && !drillBits);
-      _modifier = tide ? 0f : running ? 1f + (Boost - 1) * _node.PowerEfficiency : 1f;
+      _modifier = tide ? 0f : running ? 1f + (boost - 1) * _node.PowerEfficiency : 1f;
       SetEffects(running);
     }
 
@@ -339,8 +375,9 @@ namespace DeepFrontier.Scripts.DeepWell {
       if (active) status.Activate(); else status.Deactivate();
     }
 
-    private void ApplyConsumptionRate() {
-      var good = new ConsumedGoodSpec { GoodId = _spec.DrillBitGoodId, GoodPerHour = _spec.DrillBitsPerBoostStepPerHour * Boost };
+    private void ApplyConsumptionRate(int boost) {
+      _rateBoost = boost;
+      var good = new ConsumedGoodSpec { GoodId = _spec.DrillBitGoodId, GoodPerHour = _spec.DrillBitsPerBoostStepPerHour * boost };
       ConsumerSpecField.SetValue(_consumer, _consumerSpec with { ConsumedGoods = ImmutableArray.Create(good) });
     }
 

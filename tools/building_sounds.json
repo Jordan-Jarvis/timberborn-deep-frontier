@@ -76,7 +76,7 @@
     "ChemicalWorks": {
       "template": "Buildings/Metal/ChemicalWorks/ChemicalWorks.IronTeeth.blueprint",
       "selection": "GreaseFactory", "looping": "Bakery", "loopDriver": "workshop", "family": "furnace/smelter",
-      "comment": "Its recipes include Lubricant, so it takes the native Grease Factory selection, the Iron Teeth plant that makes grease. The furnace-family loop is Bakery: a steady oven-burner roar (63% of its energy below 150 Hz, few onsets) for heated reaction vessels. It replaces the silent ('Smelter', '')."
+      "comment": "Its oil chemistry (polymer, cryocoolant from grease) takes the native Grease Factory selection, the Iron Teeth plant that makes grease. The furnace-family loop is Bakery: a steady oven-burner roar (63% of its energy below 150 Hz, few onsets) for heated reaction vessels. It replaces the silent ('Smelter', '')."
     },
     "UraniumProcessingPlant": {
       "template": "Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.blueprint",

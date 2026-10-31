@@ -118,7 +118,7 @@
     "chain": ["CrudeOil", "PolymerResin", "Plastic", "HazmatSuit and other industrial goods"],
     "legacyPolymer": "Replace the generic Polymer draft with PolymerResin and Plastic at the producing source. Do not silently rename goods in saves or alias old IDs.",
     "proposedUses": {
-      "CrudeOil": ["Polymer resin", "Lubricants", "Oil generators"],
+      "CrudeOil": ["Polymer resin", "Oil generators"],
       "PolymerResin": ["Plastic", "Composite structures", "Protective coatings", "Filter media"],
       "Plastic": ["Hazmat suits", "Pipe liners", "Food packaging", "Electronics insulation", "Medical equipment"],
       "HazmatSuit": ["Reactor work", "Waste handling", "Contamination treatment", "Emergency cleanup"]

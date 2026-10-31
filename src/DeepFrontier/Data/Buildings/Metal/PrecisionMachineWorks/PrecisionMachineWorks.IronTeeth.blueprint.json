@@ -3351,7 +3351,7 @@
   "FrontierBotMaintenanceSpec": {
     "Goods": [
       {
-        "GoodId": "Lubricant",
+        "GoodId": "Grease",
         "WearFactor": 0.5
       },
       {

@@ -293,7 +293,9 @@
     "DefaultBoost": 1,
     "DefaultShutOffDuringTide": true,
     "DrillBitGoodId": "HighGradeSteel",
-    "DrillBitsPerBoostStepPerHour": 0.05
+    "DrillBitsPerBoostStepPerHour": 0.05,
+    "DroughtMaxBoost": 2,
+    "DroughtPowerInput": 100000
   },
   "BuildingAccessibleSpec": {
     "LocalAccess": {

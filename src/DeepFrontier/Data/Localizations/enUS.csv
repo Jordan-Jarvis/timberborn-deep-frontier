@@ -222,7 +222,6 @@ Recipe.HighGradeSteel.DisplayName,High Grade Steel,Deep Frontier
 Recipe.Alloy.DisplayName,Alloy,Deep Frontier
 Recipe.Chemical.DisplayName,Chemical,Deep Frontier
 Recipe.Polymer.DisplayName,Polymer,Deep Frontier
-Recipe.Lubricant.DisplayName,Lubricant,Deep Frontier
 Recipe.MachineCore.DisplayName,Machine Core,Deep Frontier
 Recipe.Electronics.DisplayName,Electronics,Deep Frontier
 Recipe.PowerModule.DisplayName,Power Module,Deep Frontier
@@ -786,7 +785,7 @@ Building.RadioactiveSpring.Description,A natural spring of radioactive water. It
 Building.RadioactiveSpringSource.DisplayName,Radioactive Spring,Deep Frontier
 Building.RadioactiveSpringSource.Description,A natural spring of radioactive water. Its strength works like a water source; 0 stops it.,Deep Frontier
 Building.DeepWell.DisplayName,Deep Well,Deep Frontier
-Building.DeepWell.Description,"Stands with its drill over a water source, water seep or badwater source and drives the source harder while powered: up to 6× its flow, at most 8 per source cell. A seep flows like a normal source, and the source keeps flowing through droughts. Draws 1,667 hp at 1×, rising with the boost to 10,000 hp at 6×, and wears out 0.05 high-grade steel drill bits per hour per step. No workers; haulers bring the steel. Waterproof.",Deep Frontier
+Building.DeepWell.Description,"Stands with its drill over a water source, water seep or badwater source and drives the source harder while powered: up to 6× its flow, at most 8 per source cell. A seep flows like a normal source. Draws 1,667 hp at 1×, rising with the boost to 10,000 hp at 6×. In a drought it runs only on its full 100,000 hp, at any boost, and drives the source at most 2×; short of full power it stops and the source dries up like any other. Wears out 0.05 high-grade steel drill bits per hour per step. No workers; haulers bring the steel. Waterproof.",Deep Frontier
 Building.DeepWell.FlavorDescription,"When the river runs dry, drill deeper.",Deep Frontier
 DeepFrontier.DeepWell.Placement.NoSource,"The drill must stand over a water source, water seep or badwater source.",Deep Frontier
 DeepFrontier.DeepWell.Placement.SourceTaken,Another Deep Well already drives this water source.,Deep Frontier
@@ -803,6 +802,7 @@ DeepFrontier.DeepWell.Panel.Demand,Power at this boost: {0} hp,Deep Frontier
 DeepFrontier.DeepWell.Panel.DrillBits,"Drill bits: {0} per hour, {1} hours in stock",Deep Frontier
 DeepFrontier.DeepWell.Panel.Source,"Source strength: {0} set, {1} now",Deep Frontier
 DeepFrontier.DeepWell.Panel.Seep,A seep: while the well runs it pours like a normal source.,Deep Frontier
+DeepFrontier.DeepWell.Panel.Drought,"In a drought it runs only on its full 100,000 hp, at any boost, and drives the source at most 2×; short of full power it stops and the source dries up like any other.",Deep Frontier
 DeepFrontier.DeepWell.Panel.Capped,Limited by the source maximum of 8 per cell.,Deep Frontier
 DeepFrontier.DeepWell.State.UnderConstruction,Under construction.,Deep Frontier
 DeepFrontier.DeepWell.State.NoSource,No water source under the drill.,Deep Frontier
@@ -811,7 +811,9 @@ DeepFrontier.DeepWell.State.TideShutOff,Shut off for the radioactive tide: the s
 DeepFrontier.DeepWell.State.SourceDormant,The source has not started flowing yet.,Deep Frontier
 DeepFrontier.DeepWell.State.NoDrillBits,Waiting for drill bits: the source flows as normal.,Deep Frontier
 DeepFrontier.DeepWell.State.NoPower,No power: the source flows as normal.,Deep Frontier
+DeepFrontier.DeepWell.State.DroughtNoPower,"Drought: short of its full 100,000 hp, so the source is dry. Pause the well to free the power.",Deep Frontier
 DeepFrontier.DeepWell.State.Boosting,Driving the source at {0}×.,Deep Frontier
+DeepFrontier.DeepWell.State.DroughtBoosting,Drought: keeping the source flowing at {0}× (at most 2×).,Deep Frontier
 DeepFrontier.ContaminationSensor.Substance,Measures,Deep Frontier
 DeepFrontier.ContaminationSensor.Substance.Badwater,Badwater,Deep Frontier
 DeepFrontier.ContaminationSensor.Substance.Radiation,Radiation,Deep Frontier

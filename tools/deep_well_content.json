@@ -3,7 +3,8 @@
     "Deep Well (tools/deep_well_content.mjs, Scripts/DeepWell/DeepWell.cs): a powered, worker-free, waterproof rig whose drill cell hangs over a native map water source and boosts it. Checked by tools/validate_deep_well_content.mjs.",
     "Cost: the late-game rule (tools/building_construction_costs.json lategameTier.DeepWell, lategameGates.DeepWell); science here, inside that tier's band.",
     "Power: powerInputHp at maxBoost; the native MechanicalNode input multiplier is boost / maxBoost (1x = powerInputHp / maxBoost).",
-    "Drill bits: the native GoodConsumingBuilding at perBoostStepPerHour x boost; the blueprint carries the full-boost rate, which sizes its inventory (ceil(rate x fullInventoryWorkHours))."
+    "Drill bits: the native GoodConsumingBuilding at perBoostStepPerHour x boost; the blueprint carries the full-boost rate, which sizes its inventory (ceil(rate x fullInventoryWorkHours)).",
+    "Drought (user 2026-10-30, player feedback that the well was too strong in droughts): while the native weather is a drought (the cycle's hazardous weather has the native DroughtWeather id; the vanilla and Moddable Weathers paths), the well draws drought.powerInputHp at any boost, runs only on full power (network power efficiency 1) and boosts at most drought.maxBoost. Short of full power it stops and the source dries up like any other."
   ],
   "id": "DeepWell",
   "folder": "Buildings/Water/DeepWell",
@@ -16,6 +17,7 @@
   "maxBoost": 6,
   "defaultBoost": 1,
   "defaultShutOffDuringTide": true,
+  "drought": {"powerInputHp": 100000, "maxBoost": 2},
   "drillBits": {"good": "HighGradeSteel", "perBoostStepPerHour": 0.05, "fullInventoryWorkHours": 48},
   "maxWaterSourceStrengthPerCell": 8
 }

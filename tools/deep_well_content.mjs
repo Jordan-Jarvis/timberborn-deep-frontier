@@ -60,9 +60,12 @@ export const ANCHOR_BLOCK = {MatterBelow: 'GroundOrStackable', Occupations: 'Top
 
 const hp = (value) => value.toLocaleString('en-US');
 const rate = CONFIG.drillBits.perBoostStepPerHour;
+const drought = CONFIG.drought;
+// The drought rule as players read it (building description and panel).
+export const DROUGHT_RULE = `In a drought it runs only on its full ${hp(drought.powerInputHp)} hp, at any boost, and drives the source at most ${drought.maxBoost}×; short of full power it stops and the source dries up like any other.`;
 export const LOCALIZATION = [
   [`Building.${ID}.DisplayName`, 'Deep Well'],
-  [`Building.${ID}.Description`, `Stands with its drill over a water source, water seep or badwater source and drives the source harder while powered: up to ${CONFIG.maxBoost}× its flow, at most ${CONFIG.maxWaterSourceStrengthPerCell} per source cell. A seep flows like a normal source, and the source keeps flowing through droughts. Draws ${hp(Math.ceil(CONFIG.powerInputHp / CONFIG.maxBoost))} hp at 1×, rising with the boost to ${hp(CONFIG.powerInputHp)} hp at ${CONFIG.maxBoost}×, and wears out ${rate} high-grade steel drill bits per hour per step. No workers; haulers bring the steel. Waterproof.`],
+  [`Building.${ID}.Description`, `Stands with its drill over a water source, water seep or badwater source and drives the source harder while powered: up to ${CONFIG.maxBoost}× its flow, at most ${CONFIG.maxWaterSourceStrengthPerCell} per source cell. A seep flows like a normal source. Draws ${hp(Math.ceil(CONFIG.powerInputHp / CONFIG.maxBoost))} hp at 1×, rising with the boost to ${hp(CONFIG.powerInputHp)} hp at ${CONFIG.maxBoost}×. ${DROUGHT_RULE} Wears out ${rate} high-grade steel drill bits per hour per step. No workers; haulers bring the steel. Waterproof.`],
   [`Building.${ID}.FlavorDescription`, 'When the river runs dry, drill deeper.'],
   ['DeepFrontier.DeepWell.Placement.NoSource', 'The drill must stand over a water source, water seep or badwater source.'],
   ['DeepFrontier.DeepWell.Placement.SourceTaken', 'Another Deep Well already drives this water source.'],
@@ -79,6 +82,7 @@ export const LOCALIZATION = [
   ['DeepFrontier.DeepWell.Panel.DrillBits', 'Drill bits: {0} per hour, {1} hours in stock'],
   ['DeepFrontier.DeepWell.Panel.Source', 'Source strength: {0} set, {1} now'],
   ['DeepFrontier.DeepWell.Panel.Seep', 'A seep: while the well runs it pours like a normal source.'],
+  ['DeepFrontier.DeepWell.Panel.Drought', DROUGHT_RULE],
   ['DeepFrontier.DeepWell.Panel.Capped', `Limited by the source maximum of ${CONFIG.maxWaterSourceStrengthPerCell} per cell.`],
   ['DeepFrontier.DeepWell.State.UnderConstruction', 'Under construction.'],
   ['DeepFrontier.DeepWell.State.NoSource', 'No water source under the drill.'],
@@ -87,7 +91,9 @@ export const LOCALIZATION = [
   ['DeepFrontier.DeepWell.State.SourceDormant', 'The source has not started flowing yet.'],
   ['DeepFrontier.DeepWell.State.NoDrillBits', 'Waiting for drill bits: the source flows as normal.'],
   ['DeepFrontier.DeepWell.State.NoPower', 'No power: the source flows as normal.'],
+  ['DeepFrontier.DeepWell.State.DroughtNoPower', `Drought: short of its full ${hp(drought.powerInputHp)} hp, so the source is dry. Pause the well to free the power.`],
   ['DeepFrontier.DeepWell.State.Boosting', 'Driving the source at {0}×.'],
+  ['DeepFrontier.DeepWell.State.DroughtBoosting', `Drought: keeping the source flowing at {0}× (at most ${drought.maxBoost}×).`],
 ];
 
 function removeSpecs(value, keys) {
@@ -98,6 +104,10 @@ function removeSpecs(value, keys) {
 }
 
 export async function deepWellBlueprint(dataRoot) {
+  if (!Number.isInteger(drought.maxBoost) || drought.maxBoost < 1 || drought.maxBoost >= CONFIG.maxBoost)
+    throw new Error(`${ID}: drought.maxBoost ${drought.maxBoost} must be a whole boost from 1 to below maxBoost ${CONFIG.maxBoost}`);
+  if (!Number.isInteger(drought.powerInputHp) || drought.powerInputHp <= CONFIG.powerInputHp)
+    throw new Error(`${ID}: drought.powerInputHp ${drought.powerInputHp} must be whole hp above the full-boost ${CONFIG.powerInputHp}`);
   if (!LATEGAME.has(ID)) throw new Error(`${ID}: its study is not integrated (tools/lategame_batches.json)`);
   const value = clone(await readJson(resolve(vanillaRoot, CONFIG.template)));
   removeSpecs(value, CONFIG.templateSpecsRemoved);
@@ -118,7 +128,8 @@ export async function deepWellBlueprint(dataRoot) {
   value.FloodableObjectBlockerSpec = {};
   value.DeepWellSpec = {DrillCell: {X: DRILL_CELL[0], Y: DRILL_CELL[1], Z: DRILL_CELL[2]}, MaxBoost: CONFIG.maxBoost,
     DefaultBoost: CONFIG.defaultBoost, DefaultShutOffDuringTide: CONFIG.defaultShutOffDuringTide,
-    DrillBitGoodId: CONFIG.drillBits.good, DrillBitsPerBoostStepPerHour: CONFIG.drillBits.perBoostStepPerHour};
+    DrillBitGoodId: CONFIG.drillBits.good, DrillBitsPerBoostStepPerHour: CONFIG.drillBits.perBoostStepPerHour,
+    DroughtMaxBoost: drought.maxBoost, DroughtPowerInput: drought.powerInputHp};
   // Blocks, entrance and access point, colliders, construction stage, meshes.
   const result = await applyLategame(value, ID, {dataRoot});
   // DeepWell plays the study's machinery only while it boosts.

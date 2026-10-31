@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Deep Well in droughts; vanilla Grease replaces Lubricant
+- **Deep Well in droughts** (player feedback: it was too strong): in a drought the well now runs only on its full 100,000 hp, at any boost, and drives its source at most 2× (6× otherwise). Short of full power it stops and the source dries up like any other. Outside droughts nothing changes (1,667 hp per boost step, 10,000 hp at 6×). Seeps still become steady sources while it runs, the radioactive-tide shut-off and the drill bits are unchanged, and the building description and panel state the drought rule.
+- **Grease replaces Lubricant:** Deep Frontier's Lubricant is merged into the vanilla Iron Teeth Grease, made at the Grease Factory from Extract and Canola Oil. Cryocoolant and Servo bot limbs now take Grease, and bots in heavy industry take Grease (best) or Fish Oil for maintenance. The Chemical Works' Lubricant recipe is gone.
+- **Old saves:** Lubricant stays defined so saves holding it still load, but nothing makes or uses it any more. Haulers clear it out of workplaces; empty it from storage. A Chemical Works set to make Lubricant loads with no recipe: pick another.
+
 ### Fixes
 - Loading a second game in the same session (load a save, return to the main menu, start a new game or load another save) no longer crashes with "expected native shader ... found Hidden/InternalErrorShader". Water and terrain are returned to their native look whenever a game ends.
 - The error report's game save no longer fails when a crash happens while a new game is still loading.

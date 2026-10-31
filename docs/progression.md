@@ -174,7 +174,7 @@ User request: the endgame buildings must need much more power ("smog scrubber on
 
 rounded to the nearest 100 hp below 10,000 and the nearest 1,000 hp from 10,000 up, so the 2,500-science Smog Scrubber draws exactly 2,000 hp. A building draws `max(authored base, floor)`: the authored figures stay in their catalogs and generators, and every generator that writes a consumer's `PowerInput` applies `scaledPower(id, base, science)` from `tools/lategame_costs.mjs` (constants in `building_construction_costs.json` `lategameRule.power`), as authored costs go through `scaledCost`. Descriptions that state a power figure take the generated value. `tools/validate_power_rule.mjs` (a validate_all check) fails on a consumer below its floor that is not exempt, and on an exemption that names no such consumer or is no longer needed.
 
-Exempt (`lategameRule.power.exempt`): the Deep Well (its draw follows the boost slider at runtime, 1,667 hp per step, 10,000 hp at 6×) and the Reactor Charging Bay (5,000 hp, the user's explicit choice). Generators are outside the rule. Buildings below 2,000 science keep their authored draw.
+Exempt (`lategameRule.power.exempt`): the Deep Well (its draw follows the boost slider at runtime, 1,667 hp per step, 10,000 hp at 6×; in a drought 100,000 hp at any boost, running only on full power and at most 2×, `deep_well_content.json` `drought`) and the Reactor Charging Bay (5,000 hp, the user's explicit choice). Generators are outside the rule. Buildings below 2,000 science keep their authored draw.
 
 | Building | Science | Floor | Before | Now |
 |---|---:|---:|---:|---:|
@@ -194,7 +194,7 @@ Exempt (`lategameRule.power.exempt`): the Deep Well (its draw follows the boost 
 | Materials Laboratory | 12,000 | 6,500 | 600 | 6,500 |
 | Hospital | 25,000 | 11,000 | 600 | 11,000 |
 | Mission Control | 30,000 | 13,000 | 1,500 | 13,000 |
-| Deep Well | 30,000 | 13,000 | 1,667–10,000 | unchanged (exempt) |
+| Deep Well | 30,000 | 13,000 | 1,667–10,000 (drought: 100,000) | unchanged (exempt) |
 | Rocket Assembly Hangar | 50,000 | 19,000 | 12,000 | 19,000 |
 | Launch Pad | 80,000 | 27,000 | 25,000 | 27,000 |
 | Uranium Processing Plant | 200,000 | 53,000 | 5,000 | 53,000 |
@@ -299,7 +299,7 @@ The first audit found the whole late game unreachable: no building ran Flux, Hig
 | Limestone | gathered @ LimestonePit | 300 | 300 |
 | LiquidHydrogen | Liquefaction @ CryogenicLiquefactionPlant | 12,000 | 36,200 |
 | LiquidOxygen | Liquefaction @ CryogenicLiquefactionPlant | 12,000 | 36,200 |
-| Lubricant | Lubricant @ ChemicalWorks | 4,000 | 11,200 |
+| Lubricant | retired 2026-10-30: uses moved to vanilla Grease @ GreaseFactory (2,000) | | |
 | MachineCore | MachineCore @ PrecisionMachineWorks | 5,000 | 20,800 |
 | MedicalFood | MedicalFood @ FoodPackagingWorks | 1,400 | 7,350 |
 | Medicine | Medicine @ PublicHealthLab | 1,000 | 4,750 |
@@ -389,7 +389,7 @@ Consumer figures follow the power rule above. The first balance kept the plan's 
 
 Fuel chains (no new producer was needed):
 - Coal: Deep Drill (1,000, finite source) or Deep Mine (6,000, permanent vein) → Deep Ore → Deep Ore Processor `DeepCoal` (1 Deep Ore + 2 Water → 3 Coal per 2 h, gate 1,200). One processor (1.5 Coal per working hour) feeds 1.5 coal plants at full load during its working hours; a plant that runs through the night as well needs more (24 Coal a day at full load). The Steel Mill and carbon filters compete for it.
-- Oil: the same processor's `DeepOil` (1 Deep Ore + 3 Water → 6 Crude Oil per 2 h, doubled on 2026-10-27). There is no refinery and no refined fuel good, so the plant burns crude oil directly, competing with polymer and lubricant at the Chemical Works. One processor on oil makes 3 Crude Oil per working hour, so one plant at full load (2 per hour) needs 0.67 processors during the processor's working hours; running the plant through the night as well takes 48 Crude Oil a day.
+- Oil: the same processor's `DeepOil` (1 Deep Ore + 3 Water → 6 Crude Oil per 2 h, doubled on 2026-10-27). There is no refinery and no refined fuel good, so the plant burns crude oil directly, competing with polymer at the Chemical Works. One processor on oil makes 3 Crude Oil per working hour, so one plant at full load (2 per hour) needs 0.67 processors during the processor's working hours; running the plant through the night as well takes 48 Crude Oil a day.
 
 Output follows the vanilla Iron Teeth Steam Engine contract (`GoodConsumingBuildingSpec` + `GoodPoweredGeneratorSpec`, with its `PowerGeneratorSoundsSpec`, `GoodPoweredGeneratorAnimatorSpec` and `MechanicalNodeIlluminatorSpec`): no workers; native `GoodPoweredGenerator` pauses consumption while the power graph does not require power, and gives full hp while the building consumes, day and night. Fuel and water burn only while the network draws power; without either, or while paused (automation pauses it through `GoodConsumingBuilding` and `MechanicalBuilding`), output is 0. With no workers they carry no injury risk or bot upkeep. Both are smog emitters while generating (smoke and smog follow `PowerGeneratorParticleController`, SmogEmitter Activity `Generator`): coal one 12-tile disc at strength 0.55, oil two 8-tile discs at 0.3.
 
@@ -420,9 +420,9 @@ Sources: `create_frontier_expansion_content.mjs` (recipes and building recipe li
 | RecoveredMinerals | none | Retired 2026-10-29: unproduced and unused, kept only for saves | | | The reactor gate is now 100 extra HighGradeSteel. |
 | RadioactiveSludge (shown as Radioactive Water) | none (export or outfall is disposal) | Disposal only | Radioactive Waste Export, Outfall | 200,000 | Disposal at the Radioactive Waste Export (off the map) or the Outfall (into a river). Vitrification and mineral recovery were removed on 2026-10-29. |
 | ContaminatedWater | Decontamination | Waste refining with contaminated water: 4 RadioactiveWaste + 8 ContaminatedWater → 6 RadioactiveSludge (8 h) | Radioactive Waste Refinery (120,000) | 120,000 | Contaminated water replaces clean process water. Its radioactivity goes into the radioactive water. The refinery also filters badwater: 10 Badwater + 1 FilterMedia → 8 Water (2 h). |
-| Lubricant | Cryocoolant | Servo bot limbs (below); bot maintenance | Precision Machine Works (5,000); 16 hazardous workplaces | 4,000 | Servos and bot upkeep. |
+| Grease (vanilla, Grease Factory 2,000; replaced Lubricant on 2026-10-30) | Cryocoolant, ArchiveData, native bot need | Servo bot limbs (below); bot maintenance | Precision Machine Works (5,000); 16 hazardous workplaces | 2,000 | Servos and bot upkeep. |
 | PowerModule | Enriched fuel | Industrial bot battery pack (below) | vanilla Bot Assembler (750) | 5,000 | Battery for the fast-built bot. |
-| FishOil (already two uses) | CannedFish, Lubricant | Bot maintenance, as a cheaper blend | 16 hazardous workplaces | 900 | A cheap oil for bots. |
+| FishOil | CannedFish | Bot maintenance, as a cheaper blend | 16 hazardous workplaces | 900 | A cheap oil for bots. |
 
 Recipes that share a product with another recipe in the same building get their own display names: activated carbon filters, chemical from brine, aquaponic kohlrabi and fish, spent fuel reprocessing, waste refining with contaminated water, and sludge vitrification. The native recipe dropdown (`ManufactoryDropdownProvider`, 1.1.2.8) finds the chosen recipe by `DisplayLocKey` with `SingleOrDefault`, so two recipes in one building with the same key would throw. `audit_progression.mjs` now fails on this (`recipe-display-key-collision`).
 
@@ -434,7 +434,7 @@ Bots already wear out 3–5× faster in heavy industry (`workforce_risks.json`).
 
 - **Late-game bot parts** at the Precision Machine Works (5,000). These are ordinary recipes for the vanilla part goods:
   - Reinforced bot chassis: 1 Alloy + 1 Polymer + 1 Flux → 2 BotChassis (4 h).
-  - Servo bot limbs: 1 MachineCore + 1 Lubricant + 2 MetalPart → 4 BotLimb (4 h).
+  - Servo bot limbs: 1 MachineCore + 1 Grease + 2 MetalPart → 4 BotLimb (4 h).
   - Bot cortex: 1 Electronics + 1 Polymer → 2 BotHead (4 h).
 
   The Bot Part Factory needs 54 worker-hours for one bot's parts. These recipes need 8.
@@ -443,8 +443,8 @@ Bots already wear out 3–5× faster in heavy industry (`workforce_risks.json`).
   - It builds the same Iron Teeth bot. The native `BotManufactory` spawns a bot when any assembler recipe finishes, and `BotFactory.Load` takes the faction's single template with `TemplateService.GetSingle<BotSpec>()`. A second bot template is therefore impossible without patching the game. A faster recipe for the same bot is the clean route, and vanilla bots stay untouched.
   - Known caveat: the recipe is visible from the assembler's 750-science unlock, but the PowerModule only exists from 5,000. `audit_progression.mjs` reads vanilla patches now and reports this as a warning.
 - **Bot maintenance.** `FrontierBotMaintenanceSpec` goes on all 16 open workplaces that have bot wear.
-  - The building keeps a second native inventory for maintenance oil: 10 Lubricant and 10 FishOil. It is stocked only while a bot is assigned, so beaver crews never tie up oil.
-  - A bot inside whose dose has run out takes one unit, Lubricant first. For 24 hours of wear, its wear multiplier is multiplied by 0.5 for Lubricant or 0.75 for FishOil, never below 1×. For example, the uranium plant drops from 5× to 2.5× with Lubricant or 3.75× with FishOil.
+  - The building keeps a second native inventory for maintenance oil: 10 Grease and 10 FishOil. It is stocked only while a bot is assigned, so beaver crews never tie up oil.
+  - A bot inside whose dose has run out takes one unit, Grease first. For 24 hours of wear, its wear multiplier is multiplied by 0.5 for Grease or 0.75 for FishOil, never below 1×. For example, the uranium plant drops from 5× to 2.5× with Grease or 3.75× with FishOil. (Lubricant until 2026-10-30, when it was merged into the vanilla Grease.)
   - The dose stays with the bot and is saved with it (`BotWear`).
   - Native `ManufactoryHaulBehaviorProvider` and `FillInputWorkplaceBehavior` fill every enabled input inventory of the building, so no new hauling code is needed.
   - Runtime: `BotMaintenance.cs` and `BotUpkeepPanels.cs`, with the dose in `BotWear.cs`.
@@ -453,7 +453,7 @@ Bots already wear out 3–5× faster in heavy industry (`workforce_risks.json`).
   - Both audits read recipes appended to vanilla templates.
   - `tools/validate_bot_upkeep.mjs` checks the catalog, the runtime records and localization, the generated data and the automation declarations.
 
-The meltdown agent's reactor maintenance is outage-based and consumes no goods. Lubricant and MachineCore already meet the policy without it.
+The meltdown agent's reactor maintenance is outage-based and consumes no goods. Grease and MachineCore already meet the policy without it.
 
 ## Source changes applied (2026-10-21)
 

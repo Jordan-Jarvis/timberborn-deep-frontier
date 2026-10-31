@@ -62,6 +62,9 @@ const goodDefinitions = [
   ['HighGradeSteel', 'solid', 'Materials', 5100, 0.34, 0.38, 'steel'],
   ['Alloy', 'solid', 'Materials', 5110, 0.38, 0.44, 'alloy'],
   ['Polymer', 'solid', 'Materials', 5120, 0.18, 0.52, 'polymer'],
+  // Retired 2026-10-30 for the vanilla Iron Teeth Grease (Grease Factory:
+  // Extract + Canola Oil): unproduced and unused, kept so saves holding it load
+  // (tools/content_policy.json legacySaveOnlyGoods).
   ['Lubricant', 'liquid', 'Ingredients', 10050, 0.95, 0.70, 'lubricant'],
   ['MachineCore', 'solid', 'Materials', 5130, 0.42, 0.50, 'core'],
   ['PowerModule', 'solid', 'Materials', 5140, 0.28, 0.45, 'power'],
@@ -168,7 +171,6 @@ const recipeDefinitions = [
   // Industrial chemical from native badwater and extract (ChemicalWorks).
   ['Chemical', 'Chemical', 2.0, [{ Id: 'Badwater', Amount: 4 }, { Id: 'Extract', Amount: 1 }], [{ Id: 'Chemical', Amount: 2 }], 'Chemical'],
   ['Polymer', 'Polymer', 3.0, [{ Id: 'CrudeOil', Amount: 3 }, { Id: 'Chemical', Amount: 1 }, { Id: 'Water', Amount: 2 }], [{ Id: 'Polymer', Amount: 3 }], 'Polymer'],
-  ['Lubricant', 'Lubricant', 2.0, [{ Id: 'CrudeOil', Amount: 2 }, { Id: 'FishOil', Amount: 1 }, { Id: 'Water', Amount: 1 }], [{ Id: 'Lubricant', Amount: 2 }], 'Lubricant'],
   ['MachineCore', 'MachineCore', 2.0, [{ Id: 'Alloy', Amount: 2 }, { Id: 'Polymer', Amount: 1 }, { Id: 'Gear', Amount: 2 }, { Id: 'DeepAlloy', Amount: 1 }], [{ Id: 'MachineCore', Amount: 1 }], 'MachineCore'],
   // Second uses (docs/progression.md "Second uses"): solder flux in electronics,
   // graphite electrodes (coal) in power modules.
@@ -186,7 +188,7 @@ const recipeDefinitions = [
   // Oxygen as the leaching oxidant; hydrogen reduces the oxide for fuel pellets.
   ['Yellowcake', 'Yellowcake', 2.0, [{ Id: 'UraniumOre', Amount: 3 }, { Id: 'Chemical', Amount: 1 }, { Id: 'Water', Amount: 2 }, { Id: 'OxygenGas', Amount: 1 }], [{ Id: 'Yellowcake', Amount: 2 }], 'Yellowcake'],
   ['EnrichedFuel', 'EnrichedFuel', 1.0, [{ Id: 'Yellowcake', Amount: 2 }, { Id: 'MachineCore', Amount: 1 }, { Id: 'PowerModule', Amount: 1 }, { Id: 'HydrogenGas', Amount: 1 }], [{ Id: 'EnrichedFuel', Amount: 1 }, { Id: 'RadioactiveWaste', Amount: 1 }], 'EnrichedFuel'],
-  ['Cryocoolant', 'Cryocoolant', 2.0, [{ Id: 'Polymer', Amount: 1 }, { Id: 'Lubricant', Amount: 1 }, { Id: 'Water', Amount: 2 }], [{ Id: 'Cryocoolant', Amount: 2 }], 'Cryocoolant'],
+  ['Cryocoolant', 'Cryocoolant', 2.0, [{ Id: 'Polymer', Amount: 1 }, { Id: 'Grease', Amount: 1 }, { Id: 'Water', Amount: 2 }], [{ Id: 'Cryocoolant', Amount: 2 }], 'Cryocoolant'],
   ['Electrolysis', 'HydrogenGas/OxygenGas', 3.0, [{ Id: 'PureWater', Amount: 8 }], [{ Id: 'HydrogenGas', Amount: 4 }, { Id: 'OxygenGas', Amount: 4 }], 'HydrogenGas'],
   ['Liquefaction', 'LiquidHydrogen/LiquidOxygen', 2.0, [{ Id: 'HydrogenGas', Amount: 4 }, { Id: 'OxygenGas', Amount: 4 }, { Id: 'Cryocoolant', Amount: 2 }], [{ Id: 'LiquidHydrogen', Amount: 2 }, { Id: 'LiquidOxygen', Amount: 2 }], 'LiquidHydrogen'],
   ['RocketAirframe', 'RocketAirframe', 1.0, [{ Id: 'HighGradeSteel', Amount: 12 }, { Id: 'Alloy', Amount: 8 }, { Id: 'TreatedPlank', Amount: 4 }, { Id: 'Polymer', Amount: 4 }], [{ Id: 'RocketAirframe', Amount: 1 }], 'RocketAirframe'],
@@ -224,7 +226,7 @@ const recipeDefinitions = [
   // (vanilla BotChassis/BotLimb/BotHead goods), far faster than the Bot Part
   // Factory; the industrial assembly recipe is in tools/bot_upkeep_content.mjs.
   ['ReinforcedBotChassis', 'BotChassis', 4.0, [{ Id: 'Alloy', Amount: 1 }, { Id: 'Polymer', Amount: 1 }, { Id: 'Flux', Amount: 1 }], [{ Id: 'BotChassis', Amount: 2 }], 'BotChassis'],
-  ['ServoBotLimbs', 'BotLimb', 4.0, [{ Id: 'MachineCore', Amount: 1 }, { Id: 'Lubricant', Amount: 1 }, { Id: 'MetalPart', Amount: 2 }], [{ Id: 'BotLimb', Amount: 4 }], 'BotLimb'],
+  ['ServoBotLimbs', 'BotLimb', 4.0, [{ Id: 'MachineCore', Amount: 1 }, { Id: 'Grease', Amount: 1 }, { Id: 'MetalPart', Amount: 2 }], [{ Id: 'BotLimb', Amount: 4 }], 'BotLimb'],
   ['BotCortex', 'BotHead', 4.0, [{ Id: 'Electronics', Amount: 1 }, { Id: 'Polymer', Amount: 1 }], [{ Id: 'BotHead', Amount: 2 }], 'BotHead'],
   // Uranium Processing Plant: spent casks reprocessed into fresh fuel. The
   // fuel's own life yields ten casks, so reprocessing never shrinks waste.
@@ -296,7 +298,7 @@ const buildingDefinitions = [
   ['Restaurant', 'Buildings/Food/Restaurant', 'FoodFactory', progression.restaurant.kitchenRecipes.join(','), 'Wellbeing', 38, progression.restaurant.powerDemandHp, 4, 1000, 'Restaurant'],
   ['Hospital', 'Buildings/Wellbeing/Hospital', 'FoodFactory', '', 'Wellbeing', 39, progression.hospital.powerDemandHp, progression.hospital.workers, progression.hospital.scienceUnlock, 'Hospital'],
   ['Greenhouse', 'Buildings/Food/Greenhouse', 'HydroponicGarden', 'GreenhouseEggplant,GreenhouseKohlrabi,GreenhouseCoffee,GreenhouseAquaponics', 'Food', 40, 35, 1, 600, 'Greenhouse'],
-  ['ChemicalWorks', 'Buildings/Metal/ChemicalWorks', 'Smelter', 'Chemical,BrineChemical,Polymer,Lubricant,Cryocoolant', 'Metal', 41, 3500, 8, 4000, 'Chemical works'],
+  ['ChemicalWorks', 'Buildings/Metal/ChemicalWorks', 'Smelter', 'Chemical,BrineChemical,Polymer,Cryocoolant', 'Metal', 41, 3500, 8, 4000, 'Chemical works'],
   ['PrecisionMachineWorks', 'Buildings/Metal/PrecisionMachineWorks', 'BotPartFactory', 'MachineCore,Electronics,PowerModule,ReinforcedBotChassis,ServoBotLimbs,BotCortex', 'Metal', 42, 2200, 6, 5000, 'Precision machine works'],
   ['WaterTreatmentPlant', 'Buildings/Water/WaterTreatmentPlant', 'Centrifuge', 'PureWater,ReactorCoolantWater,FilterMedia,CarbonFilterMedia', 'Water', 43, 500, 4, 1800, 'Water treatment plant'],
   ['TechnicalSchool', 'Buildings/Science/TechnicalSchool', 'Inventor', '', 'Science', 44, 300, 4, 2200, 'Technical school'],

@@ -9,12 +9,13 @@
     "MissionPayload": "Rocket-specific final-goal payload, explicitly exempted by the user.",
     "RadioactiveSludge": "Waste product shown as Radioactive Water: its destination is disposal (Radioactive Waste Export off the map, or the Outfall into a river). Vitrification and mineral recovery were removed with the user's 2026-10-29 simplification of the waste chain."
   },
-  "prohibitedNewInventoryConcepts": ["DiningService", "IndustrialLicense", "SpecialistLicense", "FlightLicense", "RecoveredMinerals"],
+  "prohibitedNewInventoryConcepts": ["DiningService", "IndustrialLicense", "SpecialistLicense", "FlightLicense", "RecoveredMinerals", "Lubricant"],
   "legacySaveOnlyGoods": {
     "IndustrialLicense": "Retired 2026-10-21: Technical School courses now train persistent specialists (tools/workforce_risks.json). The good stays defined, unproduced and unused, only so existing saves that hold it still load.",
     "SpecialistLicense": "Retired 2026-10-21 with IndustrialLicense; unproduced and unused, kept only for saves.",
     "FlightLicense": "Retired 2026-10-21 with IndustrialLicense; Mission Control no longer makes it. Unproduced and unused, kept only for saves.",
-    "RecoveredMinerals": "Retired 2026-10-29 (user decision): waste refining no longer yields minerals, mineral recovery is removed and the reactor's 10-mineral gate became 100 extra HighGradeSteel. The good stays defined, unproduced and unused, only so saves that hold it still load."
+    "RecoveredMinerals": "Retired 2026-10-29 (user decision): waste refining no longer yields minerals, mineral recovery is removed and the reactor's 10-mineral gate became 100 extra HighGradeSteel. The good stays defined, unproduced and unused, only so saves that hold it still load.",
+    "Lubricant": "Retired 2026-10-30 (user decision: \"the vanilla game has grease. lets use it.\"): every use moved to the vanilla Iron Teeth Grease (Grease Factory: Extract + Canola Oil) and the Chemical Works recipe was removed. The good stays defined, unproduced and unused, only so saves that hold it still load; a saved Chemical Works set to the old recipe loads with no recipe (native Manufactory.Load)."
   },
   "prohibitedConceptDisposition": "Legacy development placeholders. Replace DiningService with worker-served native food consumption; replace license goods with persistent education/research state. Do not delete goods from existing saves without an explicit migration.",
   "validation": "Count only authored, reachable blueprint consumers as implemented. Planned uses stay separate and never satisfy the release check. Rocket-specific goods and directly edible foods may have one real use, never zero."
