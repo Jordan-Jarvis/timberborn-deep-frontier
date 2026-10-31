@@ -56,7 +56,8 @@ foreach ($name in @('research', 'hydro', 'structural')) {
 # Structural UI icons come from tools/create_structural_icons.mjs.
 $structural = (Resolve-Path 'outputs/structural-integration/Data').Path
 $icons = @(Get-ChildItem -LiteralPath $structural -Filter 'Icon.png' -File -Recurse)
-if ($icons.Count -ne 33) { throw 'Unexpected structural candidate icon count' }
+# 33 structures plus 8 steel leg deck tools (icons only; the tools reuse the deck and column models).
+if ($icons.Count -ne 41) { throw 'Unexpected structural candidate icon count' }
 foreach ($icon in $icons) {
   $relative = [IO.Path]::GetRelativePath($structural, $icon.FullName)
   Assert-Registered $relative 'Icon'

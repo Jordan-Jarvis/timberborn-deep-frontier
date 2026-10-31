@@ -1290,6 +1290,46 @@
    "recipes": [],
    "devOnly": false
   },
+  "SteelLegDeck3x3H1.IronTeeth": {
+   "science": 5400,
+   "recipes": [],
+   "devOnly": false
+  },
+  "SteelLegDeck3x3H2.IronTeeth": {
+   "science": 5400,
+   "recipes": [],
+   "devOnly": false
+  },
+  "SteelLegDeck3x3H3.IronTeeth": {
+   "science": 5400,
+   "recipes": [],
+   "devOnly": false
+  },
+  "SteelLegDeck3x3H4.IronTeeth": {
+   "science": 5400,
+   "recipes": [],
+   "devOnly": false
+  },
+  "SteelLegDeck5x5H1.IronTeeth": {
+   "science": 15000,
+   "recipes": [],
+   "devOnly": false
+  },
+  "SteelLegDeck5x5H2.IronTeeth": {
+   "science": 15000,
+   "recipes": [],
+   "devOnly": false
+  },
+  "SteelLegDeck5x5H3.IronTeeth": {
+   "science": 15000,
+   "recipes": [],
+   "devOnly": false
+  },
+  "SteelLegDeck5x5H4.IronTeeth": {
+   "science": 15000,
+   "recipes": [],
+   "devOnly": false
+  },
   "SteelMill.IronTeeth": {
    "science": 4500,
    "recipes": [

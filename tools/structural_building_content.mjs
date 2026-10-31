@@ -235,6 +235,102 @@ export const ANCHORED_DECK_ROWS=[
    'Must hang from the side of a reinforced dam block, level with its top. Point at the top of the dam block to place it.'],
 ];
 
+// Steel decks on legs (catalog.legDecks; docs/platforms-design.md, slice 2):
+// placement tools that are never entities. SteelDeckPlacer (C#,
+// src/DeepFrontier/Scripts/SteelStructures) places the named deck plus one
+// stack of steel columns per deck foundation, each leg as long as the native
+// BlockValidator needs to reach the first bed (up to maxDepth layers).
+// The tool's blocks, size [n, n, clearance+1]: the deck layer at z =
+// clearance is the deck's blocks with its foundations relaxed to Any; one foot
+// block at the footprint centre, z = 0 (GroundOrStackable, no occupation), is
+// the cell native picking puts on the pointed surface, so the tool preview is
+// natively valid wherever it can be shown and an unbuildable one stays
+// visible with its placement message (native IsAlmostValid). Every other cell
+// is empty. The deck's own models are reused one layer per clearance up
+// (TransformSpec), and every column model is a node under '#Finished' that
+// the preview clones to draw the planned columns.
+const LEG_DECK_CLEARANCES=[1,2,3,4];
+export function legDeckContract(tool) {
+  const legs=catalog.legDecks;
+  const deck=catalog.buildings.find(b=>b.id===tool.deck);
+  if(!deck||deck.kind!=='deck')throw new Error(`${tool.id}: ${tool.deck} is not a steel deck`);
+  const n=deckSpan(deck);
+  if(!LEG_DECK_CLEARANCES.includes(tool.clearance)||tool.id!==`SteelLegDeck${n}x${n}H${tool.clearance}`)
+    throw new Error(`Leg deck ${tool.id} must be SteelLegDeck${n}x${n}H<${LEG_DECK_CLEARANCES.join('|')}>`);
+  if(typeof tool.name!=='string'||!tool.name||typeof tool.description!=='string'||!tool.description)
+    throw new Error(`${tool.id}: name and description are required`);
+  const columns=legs.columns.map(id=>catalog.buildings.find(b=>b.id===id));
+  if(columns.some(c=>!c||c.kind!=='column')||columns.some((c,k)=>columnHeight(c)!==k+1))
+    throw new Error('legDecks.columns must list the steel columns 1, 2, ... layers high');
+  if(!Number.isInteger(legs.maxDepth)||legs.maxDepth<1)throw new Error('legDecks.maxDepth must be a positive integer');
+  return {n,deck,columns,clearance:tool.clearance,maxDepth:legs.maxDepth};
+}
+
+export function legDeckBlocks(tool) {
+  const {n,deck,clearance}=legDeckContract(tool);
+  const deckBlocks=structuralBlocks(deck);
+  const empty={MatterBelow:'Any',Occupations:'None',Stackable:'None',OccupyAllBelow:false,Underground:false};
+  const centre=(n-1)/2;
+  const blocks=[];
+  for(let z=0;z<clearance;z++)for(let y=0;y<n;y++)for(let x=0;x<n;x++)
+    blocks.push(z===0&&x===centre&&y===centre?{...empty,MatterBelow:'GroundOrStackable'}:{...empty});
+  for(const b of deckBlocks)blocks.push(b.MatterBelow==='Any'?{...b}:{...b,MatterBelow:'Any'});
+  return blocks;
+}
+
+export const STEEL_LEG_ROWS=[
+  ['DeepFrontier.SteelLegs.Blocked',
+   'A leg runs into a building or another object before it reaches a support. Legs stand on the ground, platforms and flat roofs.'],
+  ['DeepFrontier.SteelLegs.TooDeep',
+   'A leg finds no support within {0} layers below the deck. Point at higher ground or use a lower deck.'],
+  ['DeepFrontier.SteelLegs.Columns',
+   'Legs at this spot: {0} steel columns, {1} layers in all. They cost this on top of the deck:'],
+  ['DeepFrontier.SteelLegs.NoColumns',
+   'The deck rests directly on supports here, so no columns are needed.'],
+  ['DeepFrontier.SteelLegs.PointAt',
+   'Point where the deck should stand. Each corner leg reaches down to the first support, up to {0} layers below the deck.'],
+];
+
+function legDeckBlueprint(tool,index,built) {
+  const {n,deck,columns,clearance,maxDepth}=legDeckContract(tool);
+  const source=built.find(e=>e.id===deck.id).blueprint;
+  const v=structuredClone(source);
+  v.TemplateSpec.TemplateName=tool.id+'.IronTeeth';
+  v.TemplateSpec.BackwardCompatibleTemplateNames=[];
+  // The tool's cost panel shows the deck's own bill; the columns of the spot
+  // under the cursor are added live by the placer.
+  v.BlockObjectSpec={...v.BlockObjectSpec,Size:xyz([n,n,clearance+1]),Blocks:legDeckBlocks(tool)};
+  v.PlaceableBlockObjectSpec.ToolOrder=200+catalog.buildings.length+index;
+  v.LabeledEntitySpec={
+    DisplayNameLocKey:`Building.${tool.id}.DisplayName`,
+    DescriptionLocKey:`Building.${tool.id}.Description`,
+    FlavorDescriptionLocKey:`Building.${tool.id}.FlavorDescription`,
+    Icon:`Buildings/Platforms/${tool.id}/Icon`,
+  };
+  v.SteelDeckToolSpec={DeckTemplate:deck.id+'.IronTeeth',DeckZ:clearance,
+    Columns:columns.map(c=>c.id+'.IronTeeth'),ColumnNodes:columns.map(c=>'#'+c.id),MaxDepth:maxDepth};
+  const up={Position:{X:0,Y:clearance,Z:0},Rotation:{X:0,Y:0,Z:0},Scale:{X:1,Y:1,Z:1}};
+  const finished=source.Children['#Finished'],stage=source.Children['#Unfinished'].Children.ConstructionStage0;
+  if(Object.keys(source.Children).join()!=='#Finished,#Unfinished'||Object.keys(source.Children['#Unfinished'].Children).join()!=='ConstructionStage0')
+    throw new Error(`${deck.id}: unexpected model children for a leg deck`);
+  const nodes={'#Deck':{TransformSpec:up,TimbermeshSpec:finished.TimbermeshSpec,CollidersSpec:finished.CollidersSpec}};
+  for(const c of columns) {
+    const column=built.find(e=>e.id===c.id).blueprint.Children['#Finished'];
+    nodes['#'+c.id]={TimbermeshSpec:column.TimbermeshSpec};
+  }
+  v.Children={
+    '#Finished':{Children:nodes},
+    '#Unfinished':{Children:{ConstructionStage0:{TransformSpec:up,TimbermeshSpec:stage.TimbermeshSpec,CollidersSpec:stage.CollidersSpec}}},
+  };
+  const rows=[
+    [`Building.${tool.id}.DisplayName`,tool.name],
+    [`Building.${tool.id}.Description`,tool.description],
+    [`Building.${tool.id}.FlavorDescription`,'Steel legs find their own footing.'],
+  ];
+  if(index===0)rows.push(...STEEL_LEG_ROWS);
+  return {id:tool.id,blueprint:v,path:`Buildings/Platforms/${tool.id}/${tool.id}.IronTeeth.blueprint.json`,rows};
+}
+
 export async function structuralBlueprints() {
   const result=[];
   const templates={
@@ -319,6 +415,13 @@ export async function structuralBlueprints() {
     result.push({id:b.id,blueprint:v,path:model+'.blueprint.json',rows});
   }
   return result;
+}
+
+// The leg deck tools, built from the generated structures (structuralBlueprints()).
+export function legDeckBlueprints(built) {
+  const ids=catalog.legDecks.tools.map(t=>t.id);
+  if(new Set(ids).size!==ids.length)throw new Error('Duplicate leg deck tool ids');
+  return catalog.legDecks.tools.map((tool,index)=>legDeckBlueprint(tool,index,built));
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)) {

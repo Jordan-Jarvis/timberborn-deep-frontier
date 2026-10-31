@@ -40,6 +40,17 @@ for row in rows:
         reports.append({**row,'placeholderModel':mesh,'flippable':mirror,'size':b['BlockObjectSpec']['Size'],
             'verification':'Placeholder art: vanilla stand-in model; own art pending'})
         continue
+    if row['artStage']=='tool':
+        # A placement tool that is never an entity (the steel decks on legs): its finished model owns
+        # no mesh and shows the models of the templates it places (the deck and its columns).
+        finished=b['Children']['#Finished']
+        assert 'TimbermeshSpec' not in finished,(row['building'],'a placement tool owns no model')
+        models=[c['TimbermeshSpec']['Model'] for c in finished['Children'].values()]
+        assert models and all((ROOT/'src/DeepFrontier/Data'/(m+'.timbermesh')).is_file() for m in models),(row['building'],models)
+        assert f"Buildings/Platforms/{row['model']}/{row['model']}.IronTeeth.Model" in models,(row['building'],'shows no model of',row['model'])
+        reports.append({**row,'toolModels':models,'flippable':mirror,'size':b['BlockObjectSpec']['Size'],
+            'verification':'Placement tool: never an entity; the models are those of the deck and columns it places'})
+        continue
     mesh=b['Children']['#Finished']['TimbermeshSpec']['Model']
     payload=ROOT/'src/DeepFrontier/Data'/(mesh+'.timbermesh')
     assert payload.is_file(),payload
@@ -52,6 +63,7 @@ report={'scope':'Exact ownership and authored mirror flags. This does not certif
     'buildingCount':len(reports),'detailedTemplates':sum(r['artStage']=='detailed' for r in reports),
     'prototypeTemplates':sum(r['artStage']=='prototype' for r in reports),
     'placeholderTemplates':sum(r['artStage']=='placeholder' for r in reports),
+    'toolTemplates':sum(r['artStage']=='tool' for r in reports),
     'flippableTemplates':sum(r['flippable'] for r in reports),'buildings':reports}
 (ROOT/'outputs/building-asset-audit.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 print(json.dumps({k:v for k,v in report.items() if k!='buildings'}))

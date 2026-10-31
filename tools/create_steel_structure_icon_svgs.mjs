@@ -6,10 +6,13 @@
 //   bridge:     a deck strip between two truss rails on an abutment block;
 //   column:     a riveted trestle, one collar per layer, height by layers;
 //   deck:       an n×n plate grid on four paired-post corner trestles.
+//   leg deck:   the deck grid on three visible column legs of unequal length
+//               (the tool finds each leg's height), each standing on its own
+//               ground tick; the front leg has one collar per clearance layer.
 // Tile counts are drawn (strip cells, layers, deck grid) so the sizes read
 // apart. create_structural_icons.mjs rasterizes the written SVGs.
 import {readFile,writeFile} from 'node:fs/promises';
-import {overhangContract,bridgeSpan,columnHeight,deckSpan} from './structural_building_content.mjs';
+import {overhangContract,bridgeSpan,columnHeight,deckSpan,legDeckContract} from './structural_building_content.mjs';
 
 const root=new URL('../',import.meta.url);
 const catalog=JSON.parse(await readFile(new URL('tools/structural_content.json',root),'utf8'));
@@ -113,6 +116,30 @@ function deck(n) {
   return svg([[9,slab],[n>4?5:6,grid.join('')],[7,posts.join('')]],12);
 }
 
+function legDeck(n,clearance) {
+  // The deck of deck(n), smaller and higher, so four layers of legs fit below.
+  const s=.78,o=[128,14];
+  const at=([x,y])=>[o[0]+(x-128)*s,o[1]+(y-34)*s];
+  const left=at([23,79]),back=at([128,34]),right=at([233,79]),front=at([128,124]),T=10,LAYER=20;
+  const lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
+  const grid=[];
+  for(let i=1;i<n;i++) {
+    grid.push(`M${P(lerp(left,back,i/n))}L${P(lerp(front,right,i/n))}`);
+    grid.push(`M${P(lerp(left,front,i/n))}L${P(lerp(back,right,i/n))}`);
+  }
+  const slab=`M${P(left)}L${P(back)}L${P(right)}V${r(right[1]+T)}L${r(front[0])} ${r(front[1]+T)}L${r(left[0])} ${r(left[1]+T)}ZM${P(left)}L${P(front)}L${P(right)}M${P(front)}V${r(front[1]+T)}`;
+  // Legs: left one layer longer, front at the clearance, right one shorter
+  // (never under one layer): beds at three heights.
+  const legs=[],collars=[],ground=[];
+  for(const [corner,layers,dx] of [[left,clearance+1,12],[front,clearance,0],[right,Math.max(1,clearance-1),-12]]) {
+    const x=r(corner[0]+dx),y=r(corner[1]+T+1),bottom=r(y+layers*LAYER);
+    legs.push(`M${x-5} ${y}V${bottom}M${x+5} ${y}V${bottom}`);
+    for(let k=1;k<layers;k++)collars.push(`M${x-8} ${r(y+k*LAYER)}H${x+8}`);
+    ground.push(`M${x-16} ${bottom+4}H${x+16}`);
+  }
+  return svg([[8,slab],[n>4?4.5:5.5,grid.join('')],[6,legs.join('')],[5,collars.join('')+ground.join('')]]);
+}
+
 let count=0;
 for(const building of catalog.buildings) {
   let text;
@@ -122,6 +149,11 @@ for(const building of catalog.buildings) {
   else if(building.kind==='deck')text=deck(deckSpan(building));
   else continue;
   await writeFile(new URL(`src/DeepFrontier/Art/Icons/${building.id}.svg`,root),text);
+  count++;
+}
+for(const tool of catalog.legDecks.tools) {
+  const {n,clearance}=legDeckContract(tool);
+  await writeFile(new URL(`src/DeepFrontier/Art/Icons/${tool.id}.svg`,root),legDeck(n,clearance));
   count++;
 }
 console.log(`${count} steel structure icon SVGs written.`);

@@ -462,6 +462,8 @@ namespace DeepFrontier.Scripts {
         s.Blueprint=t.Blueprint;s.Spec=t.Blueprint.GetSpec<BlockObjectSpec>();
         if(t.Blueprint.Specs.Any(c=>c.GetType().Name=="RadioactiveWaterSourceSpec"))
           Skip(s,"placement","map-authored radioactive spring: placing it would contaminate the shared test pad");
+        if(t.Blueprint.Specs.Any(c=>c is SteelStructures.SteelDeckToolSpec))
+          Skip(s,"placement","steel deck placement tool: never an entity; its placer builds a SteelDeck and SteelColumns (SteelStructures/SteelLegDecks.cs)");
       }
       AssignSites();
       // Priority subjects first, then the largest footprints (they pack first). Subjects with a prepared

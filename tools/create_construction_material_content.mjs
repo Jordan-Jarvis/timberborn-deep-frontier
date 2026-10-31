@@ -4,7 +4,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {applyIndustrialLayout} from './industrial_building_content.mjs';
 import {applyPitLayout} from './pit_building_content.mjs';
-import {structuralBlueprints} from './structural_building_content.mjs';
+import {structuralBlueprints,legDeckBlueprints} from './structural_building_content.mjs';
 import {hydroBlueprint} from './hydro_building_content.mjs';
 import {researchContent} from './research_building_content.mjs';
 import { buildingCost, scaledPower } from './lategame_costs.mjs';
@@ -164,6 +164,12 @@ for (const building of catalog.buildings) {
 }
 const structures=await structuralBlueprints();
 for(const entry of structures) {
+  await write(entry.path,entry.blueprint);
+  buildingPaths.push(entry.path.slice(0,-5));
+  rows.push(...entry.rows);
+}
+// Steel decks on legs: placement tools built from the generated decks and columns.
+for(const entry of legDeckBlueprints(structures)) {
   await write(entry.path,entry.blueprint);
   buildingPaths.push(entry.path.slice(0,-5));
   rows.push(...entry.rows);

@@ -7,7 +7,8 @@ import {writeNativeIcon,writeReviewSheet} from './native_icon_style.mjs';
 const root=new URL('../',import.meta.url);
 const catalog=JSON.parse(await readFile(new URL('tools/structural_content.json',root),'utf8'));
 const review=[];
-for(const building of catalog.buildings) {
+// Leg deck placement tools have icons but no models (catalog.legDecks).
+for(const building of [...catalog.buildings,...catalog.legDecks.tools]) {
   const svg=await readFile(new URL(`src/DeepFrontier/Art/Icons/${building.id}.svg`,root));
   const output=new URL(`outputs/structural-integration/Data/Buildings/Platforms/${building.id}/Icon.png`,root);
   const result=await writeNativeIcon(svg,'building',output,building.id);
@@ -16,4 +17,4 @@ for(const building of catalog.buildings) {
 const reviews=new URL('docs/art/reviews/2026-10-21-icons/',root);
 await mkdir(reviews,{recursive:true});
 await writeReviewSheet(review,[],new URL('structural-candidates.png',reviews),5);
-console.log(`${catalog.buildings.length} native-style structural icon candidates exported; active game data unchanged.`);
+console.log(`${review.length} native-style structural icon candidates exported; active game data unchanged.`);

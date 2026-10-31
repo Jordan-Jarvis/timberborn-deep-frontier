@@ -373,6 +373,46 @@
       "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
       "comment": "A stackable deck: the native Metal Platform selection is Default. No loop driver."
     },
+    "SteelLegDeck3x3H1": {
+      "template": "Buildings/Platforms/SteelLegDeck3x3H1/SteelLegDeck3x3H1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A placement tool for the steel deck and its columns, never built itself; it keeps the deck's Default selection. No loop driver."
+    },
+    "SteelLegDeck3x3H2": {
+      "template": "Buildings/Platforms/SteelLegDeck3x3H2/SteelLegDeck3x3H2.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A placement tool for the steel deck and its columns, never built itself; it keeps the deck's Default selection. No loop driver."
+    },
+    "SteelLegDeck3x3H3": {
+      "template": "Buildings/Platforms/SteelLegDeck3x3H3/SteelLegDeck3x3H3.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A placement tool for the steel deck and its columns, never built itself; it keeps the deck's Default selection. No loop driver."
+    },
+    "SteelLegDeck3x3H4": {
+      "template": "Buildings/Platforms/SteelLegDeck3x3H4/SteelLegDeck3x3H4.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A placement tool for the steel deck and its columns, never built itself; it keeps the deck's Default selection. No loop driver."
+    },
+    "SteelLegDeck5x5H1": {
+      "template": "Buildings/Platforms/SteelLegDeck5x5H1/SteelLegDeck5x5H1.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A placement tool for the steel deck and its columns, never built itself; it keeps the deck's Default selection. No loop driver."
+    },
+    "SteelLegDeck5x5H2": {
+      "template": "Buildings/Platforms/SteelLegDeck5x5H2/SteelLegDeck5x5H2.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A placement tool for the steel deck and its columns, never built itself; it keeps the deck's Default selection. No loop driver."
+    },
+    "SteelLegDeck5x5H3": {
+      "template": "Buildings/Platforms/SteelLegDeck5x5H3/SteelLegDeck5x5H3.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A placement tool for the steel deck and its columns, never built itself; it keeps the deck's Default selection. No loop driver."
+    },
+    "SteelLegDeck5x5H4": {
+      "template": "Buildings/Platforms/SteelLegDeck5x5H4/SteelLegDeck5x5H4.IronTeeth.blueprint",
+      "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
+      "comment": "A placement tool for the steel deck and its columns, never built itself; it keeps the deck's Default selection. No loop driver."
+    },
     "SteelMill": {
       "template": "Buildings/Metal/SteelMill/SteelMill.IronTeeth.blueprint",
       "selection": "Smelter", "looping": "PrintingPress", "loopDriver": "workshop", "family": "furnace/smelter",

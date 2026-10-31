@@ -4,6 +4,16 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Steel decks on legs: assisted placement, one Harmony postfix (Claude Code session, 2026-10-31, platforms agent; slice 2 of docs/platforms-design.md; generated and validated in mirror `legs` on b582d9b; not built or run in game)
+
+- **User (2026-10-29, again 2026-10-31):** "dynamic leg length" for the bigger steel platforms: each of the four legs at its own height.
+- **Player:** eight tools, `SteelLegDeck3x3H1`–`H4` and `SteelLegDeck5x5H1`–`H4` (Paths → Steel structures). The deck stands 1–4 layers above the pointed spot; one click places the real `SteelDeck` plus one `SteelColumnH*` stack per corner, each down to the first native bed, up to 12 layers (two stacked columns past 6). The preview draws those columns (clones of the column models); a leg that is blocked or finds no bed turns the preview red with a reason. The tool panel adds a live section with this spot's columns and their summed cost.
+- **Native route:** tool blueprints (`structural_building_content.mjs` `legDeckBlueprints`, catalog `structural_content.json` `legDecks`) carry `SteelDeckToolSpec`; `SteelDeckPlacer` is a native `IBlockObjectPlacer` that creates every entity through the native `BuildingPlacer.Place`; leg lengths come from native `BlockValidator.BlocksValid`/`MatterBelowValidator` on the exact column blocks (`SteelLegPlanner`). The tool has one natively valid foot block under the cursor so `IsAlmostValid` keeps a failing preview visible. Everything placed is an ordinary building; the tool is never an entity.
+- **Harmony (one):** `SteelDeckPlacerClaim`, a postfix on `BuildingPlacer.CanHandle` returning false for `SteelDeckToolSpec` templates, because `BlockObjectPlacerService.GetMatchingPlacer` takes `SingleOrDefault` and BuildingPlacer claims every `BuildingSpec`. Verified at mod start (callees of `CanHandle`, `SingleOrDefault` in `GetMatchingPlacer`).
+- **Source facts found:** the game scene binds `DummyUndoRegistry` (no undo in game, only in the map editor); `IsAlmostValid` ignores validators, so an all-`Any` tool would be hidden instead of shown red; an object's `BlockedEdges` cannot remove its own stackable floor edges (`CanAddBlockingEdge`).
+- **Checks (mirror `legs`):** canonical generation reaches a fixed point (only the 8 tool folders, `enUS.csv` and the building collection change; `material_cost_context.json` regenerated); new `validate_steel_leg_decks.mjs` passes and fails on a broken tool; `validate_all -SkipBlender` 62 pass + 1 report-only (`no-game-assets` cannot run without git in a mirror; it passes on the staged commit); compile check 0 errors. 7×7 not built (docs/platforms-design.md 4.4).
+- **In game, still to test:** docs/platforms-design.md section 6.
+
 ## Progression sets: deep metal and chemistry ladders, costs climb the sets, Deep Drill bits on Metal Block (Claude Code session, 2026-10-31, progression agent; data regenerated; validated in mirror `prog` on HEAD 978f170 + this change; not built or run in game)
 
 - **User:** "we need our own progression sets", like vanilla Logs → Planks → Gears → Treated Planks and Scrap Metal → Metal Parts / Metal Blocks. Plan approved by the user via the coordinator.

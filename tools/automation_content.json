@@ -520,6 +520,38 @@
       "role": "none",
       "precedent": "Buildings/Paths/MetalPlatform5x5/MetalPlatform5x5.IronTeeth.blueprint"
     },
+    "Buildings/Platforms/SteelLegDeck3x3H1/SteelLegDeck3x3H1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelLegDeck3x3H2/SteelLegDeck3x3H2.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelLegDeck3x3H3/SteelLegDeck3x3H3.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelLegDeck3x3H4/SteelLegDeck3x3H4.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform3x3/MetalPlatform3x3.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelLegDeck5x5H1/SteelLegDeck5x5H1.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform5x5/MetalPlatform5x5.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelLegDeck5x5H2/SteelLegDeck5x5H2.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform5x5/MetalPlatform5x5.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelLegDeck5x5H3/SteelLegDeck5x5H3.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform5x5/MetalPlatform5x5.IronTeeth.blueprint"
+    },
+    "Buildings/Platforms/SteelLegDeck5x5H4/SteelLegDeck5x5H4.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Paths/MetalPlatform5x5/MetalPlatform5x5.IronTeeth.blueprint"
+    },
     "Buildings/Metal/SteelMill/SteelMill.IronTeeth.blueprint": {
       "role": "pausable",
       "sources": [

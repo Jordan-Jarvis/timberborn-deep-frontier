@@ -216,7 +216,9 @@ for (const b of modBuildings) {
 }
 
 // 4c. Material rule (tools/material_costs.mjs, materialRule).
-const structures = new Set((JSON.parse(await readFile(resolve(root, 'tools/structural_content.json'), 'utf8'))).buildings.map((b) => b.id));
+// Structures, and the steel leg deck tools that show their deck's structural cost, follow their own formulas.
+const structuralCatalog = JSON.parse(await readFile(resolve(root, 'tools/structural_content.json'), 'utf8'));
+const structures = new Set([...structuralCatalog.buildings, ...structuralCatalog.legDecks.tools].map((b) => b.id));
 const contextNow = JSON.stringify(await deriveContext(data), null, 1) + '\n';
 if (contextNow !== await readFile(resolve(root, 'tools/material_cost_context.json'), 'utf8')) fail('material-context-stale', {file: 'tools/material_cost_context.json', fix: 'node tools/material_costs.mjs --write, then regenerate'});
 const ruleBuildings = modBuildings.filter((b) => b.cost.length && !structures.has(b.id.replace(/\.IronTeeth$/, '')));
