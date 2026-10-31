@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.8.0 (2026-10-31)
+
 ### Progression sets
 - **Clear material ladders, like vanilla wood and metal.** Deep metal: Deep Ore → Deep Iron → Steel → Alloy. Chemistry: Crude Oil → Chemical → Polymer. Masonry: sandstone and limestone → brick → cement → concrete. Machinery: gears → machine cores → electronics → power modules.
 - **Renamed:** Deep Alloy is now **Deep Iron** and High-Grade Steel is now **Steel**. Only the names change, so saves keep their stock.
@@ -21,7 +23,7 @@
 - **Buildings that show brick now cost bricks.** Brick walls and the orange brick plaster on buildings are priced as Brick, so 21 buildings from the Concrete Mixer to the Rocket Assembly Hangar take bricks instead of part of their other materials. The crusher and kiln never need bricks to build.
 - The kiln takes water for bricks, so it now accepts Timber Pipes on its flat walls.
 - The vanilla **Terrain Block** unlocks at 2,000 science with the Dirt Excavator (was 1,000), so cheap crusher dirt doesn't open it early. The Mud Bath is unchanged.
-- The built-in maps' starting stone still covers everything up to the quarries: 1,723 sandstone and 1,266 limestone of the 1,800 each.
+- The built-in maps' starting stone still covers everything up to the quarries: 1,650 sandstone and 1,046 limestone of the 1,800 each.
 
 ### Fewer goods (seven removed)
 - **Aggregate:** concrete uses sandstone, cement uses brick and the concrete levee block takes 1 sandstone.
