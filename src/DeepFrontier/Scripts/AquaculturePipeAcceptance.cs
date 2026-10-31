@@ -7,6 +7,7 @@ using Bindito.Core;
 using Newtonsoft.Json;
 using TimberPipes.Components;
 using TimberPipes.Models;
+using TimberPipes.Specs;
 using Timberborn.BlockSystem;
 using Timberborn.Buildings;
 using Timberborn.CameraSystem;
@@ -109,8 +110,17 @@ namespace DeepFrontier.Scripts {
       Debug.Log("[DeepFrontier Aquaculture Pipes] PLACED "+id+" "+placement.Coordinates);
       return result;
     }
-    private Line Workshop(string id,int capacity,Vector3Int localPort,Direction3D direction,Direction3D wrongDirection,bool clearWater) {
+    private static readonly Orientation[] Rotations={Orientation.Cw0,Orientation.Cw90,Orientation.Cw180,Orientation.Cw270};
+    // The workshop's intake is its first pipe port (OpenIn, one horizontal face), from the
+    // installed blueprint; the generated ports on its other flat faces follow it
+    // (tools/connection_content.mjs, tools/aquaculture_pipe_ports.json).
+    private Line Workshop(string id,int capacity,bool clearWater) {
       var building=Find(id);
+      var port=building.GetComponent<BuildingPipeTargetPortsSpec>().Ports[0];
+      var faces=port.Directions.GetEnumerator().AsEnumerable().ToArray();
+      Require(port.State==PipePortState.OpenIn&&faces.Length==1&&faces[0].IsHorizontal(),
+        id+" intake "+port.Coordinates+" "+port.Directions+" "+port.State+" is not one horizontal OpenIn face");
+      var localPort=port.Coordinates;var direction=faces[0];var wrongDirection=direction.Across();
       Require(building.GetComponent<PausableBuilding>().Paused,"Expected saved paused workshop "+id);
       var inventory=building.GetComponent<Manufactory>().Inventory;
       int amount=inventory.AmountInStock("Water");
@@ -130,48 +140,62 @@ namespace DeepFrontier.Scripts {
         character.ChangeAnimation(idle);
         character.TakeControlAndMoveTo(CoordinateSystem.WorldToGrid(character.Transform.position));_observers.Add(character);
       }
-      // 11x8 Fishery (2026-10-22) at (159,162,3): its intake port is local (4,7,0) facing Up,
-      // world (163,169,3), one cell west of the former 12x10 port (5,9,0) at (164,169,3).
-      var fish=Workshop("FisheryWorks.IronTeeth",90,new Vector3Int(4,7,0),Direction3D.Up,Direction3D.Down,!_reload);
+      // Saved Fishery at (159,162,3) and hatchery (BaseZ 1) on the bank beside it; each
+      // intake and line follows the installed blueprint (Fishery intake (4,6,0) Up since the
+      // 2026-10-30 compaction, hatchery canopy intake (6,2,1) Right).
+      var fish=Workshop("FisheryWorks.IronTeeth",90,!_reload);
       Require(fish.Workshop.Coordinates==new Vector3Int(159,162,3),"Unexpected Fishery fixture position "+fish.Workshop.Coordinates);
-      Require(fish.Port==new Vector3Int(163,169,3),"Fishery intake registration changed");
-      // Compact 7x7 hatchery (2026-10-26): its canopy intake moved from (7,2,1) to (6,2,1).
-      var nursery=Workshop("FishHatchery.IronTeeth",60,new Vector3Int(6,2,1),Direction3D.Right,Direction3D.Left,!_reload);
-      Require(nursery.Port==new Vector3Int(193,158,3),"Hatchery intake must include its native BaseZ offset");
+      var nursery=Workshop("FishHatchery.IronTeeth",60,!_reload);
+      // The hatchery's intake sits at bank height (its native BaseZ offset), so the line
+      // outside it stands on the bank.
+      var nurseryFoot=nursery.Port+nursery.Direction.ToOffset();
+      Require(nursery.Port.z==_terrain.GetTerrainHeight(new Vector3Int(nurseryFoot.x,nurseryFoot.y,0)),
+        "Hatchery intake "+nursery.Port+" must include its native BaseZ offset (bank height "+_terrain.GetTerrainHeight(new Vector3Int(nurseryFoot.x,nurseryFoot.y,0))+")");
       _lines.Add(fish);_lines.Add(nursery);
       if(_reload) {
         LoadLines();
         SetCamera();return;
       }
-      var fishValve=Create("HorizontalPipeValve.IronTeeth",163,170,3,Orientation.Cw180);
-      var fishPipe=Create("HorizontalPipe.IronTeeth",163,171,3);
-      var fishPump=Create("HorizontalPipePump.IronTeeth",163,172,3,Orientation.Cw180);
-      var fishTank=Create("MediumTank.IronTeeth",163,173,3);
-      Create("DevPowerGenerator",162,172,3);
-      CompleteLine(fish,fishValve,fishPipe,fishPump,fishTank);
-      PrepareNurseryPipePad();
-      var hatchValve=Create("HorizontalPipeValve.IronTeeth",194,158,3,Orientation.Cw270);
-      var hatchPipe=Create("HorizontalPipe.IronTeeth",195,158,3,Orientation.Cw90);
-      var hatchPump=Create("HorizontalPipePump.IronTeeth",196,158,3,Orientation.Cw270);
-      var hatchTank=Create("MediumTank.IronTeeth",197,158,3);
-      Create("DevPowerGenerator",196,157,3);
-      CompleteLine(nursery,hatchValve,hatchPipe,hatchPump,hatchTank);
+      PlaceLine(fish);
+      PrepareNurseryPipePad(nursery);
+      PlaceLine(nursery);
       SetCamera();
     }
-    private void PrepareNurseryPipePad() {
+    // Native line outward from the intake face: valve (inlet on, outlet into the building),
+    // pipe, powered pump and tank, with the developer generator beside the pump (the
+    // orientations and side of AllBuildingsAcceptance.PlacePipeLine, native runs 76 and 81).
+    private void PlaceLine(Line line) {
+      var step=line.Direction.ToOffset();
+      Require(step.x>=0&&step.y>=0,"Intake "+line.Port+" faces "+line.Direction+"; this fixture's tank sits ahead of the pump only for Up or Right lines");
+      var valveAt=line.Port+step;var pipeAt=valveAt+step;var pumpAt=pipeAt+step;var tankAt=pumpAt+step;
+      var genAt=pumpAt+new Vector3Int(-step.y,step.x,0);
+      var toward=(Direction2D)(int)line.Direction;
+      var oValve=Rotations.Single(o=>o.Transform(Direction2D.Down)==toward);var oPipe=Rotations.Single(o=>o.Transform(Direction2D.Up)==toward);
+      var valve=Create("HorizontalPipeValve.IronTeeth",valveAt.x,valveAt.y,valveAt.z,oValve);
+      var pipe=Create("HorizontalPipe.IronTeeth",pipeAt.x,pipeAt.y,pipeAt.z,oPipe);
+      var pump=Create("HorizontalPipePump.IronTeeth",pumpAt.x,pumpAt.y,pumpAt.z,oValve);
+      var tank=Create("MediumTank.IronTeeth",tankAt.x,tankAt.y,tankAt.z);
+      Create("DevPowerGenerator",genAt.x,genAt.y,genAt.z);
+      CompleteLine(line,valve,pipe,pump,tank);
+    }
+    // The nursery line runs east from the hatchery's intake onto ground the earlier
+    // industrial fixture did not clear: the cells from one past the valve to the tank's far
+    // edge, one row either side, are levelled to the bank with the native terrain service.
+    private void PrepareNurseryPipePad(Line line) {
+      var step=line.Direction.ToOffset();
+      Require(step==new Vector3Int(1,0,0),"Hatchery intake faces "+line.Direction+"; this fixture's nursery pad runs east (Right)");
+      int x0=line.Port.x+2,x1=line.Port.x+6,y0=line.Port.y-1,y1=line.Port.y+1,bank=line.Port.z;
       Require(!_entities.Entities.Where(e=>e.HasComponent<BlockObject>()).Any(e=> {
         var c=e.GetComponent<BlockObject>().Coordinates;
-        return c.x>=195&&c.x<=199&&c.y>=157&&c.y<=159;
+        return c.x>=x0&&c.x<=x1&&c.y>=y0&&c.y<=y1;
       }),"Disposable nursery pipe pad contains an existing entity");
-      // The earlier industrial fixture cleared terrain only through x=194.
-      // Extend that explicit test pad with the native terrain service.
-      for(int x=195;x<=199;x++)for(int y=157;y<=159;y++) {
-        var surfaces=_terrain.GetAllHeightsInCell(new Vector2Int(x,y)).Where(c=>c.z>3).OrderByDescending(c=>c.z).ToArray();
-        foreach(var top in surfaces)_terrain.UnsetTerrain(new Vector3Int(x,y,top.z-1),top.z-3);
+      for(int x=x0;x<=x1;x++)for(int y=y0;y<=y1;y++) {
+        var surfaces=_terrain.GetAllHeightsInCell(new Vector2Int(x,y)).Where(c=>c.z>bank).OrderByDescending(c=>c.z).ToArray();
+        foreach(var top in surfaces)_terrain.UnsetTerrain(new Vector3Int(x,y,top.z-1),top.z-bank);
         int height=_terrain.GetTerrainHeight(new Vector3Int(x,y,0));
-        if(height<3)_terrain.SetTerrain(new Vector3Int(x,y,height),3-height);
-        Require(_terrain.GetTerrainHeight(new Vector3Int(x,y,0))==3
-          &&!Enumerable.Range(3,_terrain.Size.z-3).Any(z=>_terrain.Underground(new Vector3Int(x,y,z))),
+        if(height<bank)_terrain.SetTerrain(new Vector3Int(x,y,height),bank-height);
+        Require(_terrain.GetTerrainHeight(new Vector3Int(x,y,0))==bank
+          &&!Enumerable.Range(bank,_terrain.Size.z-bank).Any(z=>_terrain.Underground(new Vector3Int(x,y,z))),
           "Native test terrain is not clear at "+x+","+y);
       }
       Pass("prepared the marked settlement's nursery pipe pad through the native terrain service");
