@@ -124,13 +124,14 @@ namespace DeepFrontier.Scripts {
         // The road runs along the entrance row to the district path at x 173.
         var entrance=_building.PositionedEntrance.Coordinates;
         var deck=_building.GetComponent<PlatformDeckSpec>();
-        var front=_building.TransformCoordinates(deck.Openings.Single(p=>p.Id=="Front0").Outside);
-        var left=_building.TransformCoordinates(deck.Openings.Single(p=>p.Id=="Left1").Outside);
+        Require(deck.Openings.Length==0,"Laboratory terrace must have no rails (2026-10-31 roof pass)");
+        var front=_building.TransformCoordinates(Seam("Front",0).Outside);
+        var left=_building.TransformCoordinates(Seam("Left",1).Outside);
         Require(front.y==entrance.y&&front.z>entrance.z&&left.z==front.z,
-          "Laboratory terrace openings Front0 "+front+" and Left1 "+left+" do not meet one deck above the entrance row "+entrance);
+          "Laboratory terrace seams Front0 "+front+" and Left1 "+left+" do not meet one deck above the entrance row "+entrance);
         for(int y=entrance.y-2;y<=entrance.y;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(173,y,entrance.z)))Create("Path",173,y,entrance.z);
         for(int x=front.x-1;x<173;x++)Create("Path",x,entrance.y,entrance.z);
-        // A stair flight climbs north to the Front0 rail's outside cell: one
+        // A stair flight climbs north to the Front0 seam's outside cell: one
         // stair per deck level, each on a platform stack, from a ground landing
         // that a path column west of the flight joins to the road.
         int levels=front.z-entrance.z;
@@ -142,22 +143,22 @@ namespace DeepFrontier.Scripts {
           for(int z=entrance.z;z<entrance.z+k;z++)Create("Platform.IronTeeth",front.x,y,z);
           Create("Stairs.IronTeeth",front.x,y,entrance.z+k,Orientation.Cw180);
         }
-        // Each open rail's outside cell: a platform stack to the deck and a path on it.
+        // Each tested seam's outside cell: a platform stack to the deck and a path on it.
         foreach(var pad in new[]{front,left}) {
           for(int z=entrance.z;z<pad.z;z++)Create("Platform.IronTeeth",pad.x,pad.y,z);
           Create("Path",pad.x,pad.y,pad.z);
         }
-        // Stacked platforms on the terrace: Front1's deck cell (its rail stays closed).
-        var stack=_building.TransformCoordinates(deck.Openings.Single(p=>p.Id=="Front1").Inside);
+        // Stacked platforms on the terrace: Front1's deck cell (no path outside it).
+        var stack=_building.TransformCoordinates(Seam("Front",1).Inside);
         Create("DoublePlatform.IronTeeth",stack.x,stack.y,stack.z);
         Create("Platform.IronTeeth",stack.x,stack.y,stack.z+2);Create("Path",stack.x,stack.y,stack.z+3);
         var shaft=ShaftCell(1);
         Create("PowerShaft.IronTeeth",shaft.x,shaft.y,shaft.z);
         var generator=ShaftCell(2);
         _generator=Create("DevPowerGenerator",generator.x,generator.y,generator.z).GetComponent<MechanicalNode>();
-        // The terrace is a player-path deck (2026-10-30): the two open rails need a path on their deck cell.
-        foreach(var id in new[]{"Front0","Left1"}) {
-          var inside=_building.TransformCoordinates(deck.Openings.Single(p=>p.Id==id).Inside);
+        // The terrace is a player-path deck (2026-10-30): the two tested seams need a path on their deck cell.
+        foreach(var seam in new[]{Seam("Front",0),Seam("Left",1)}) {
+          var inside=_building.TransformCoordinates(seam.Inside);
           if(!_blocks.GetPathObjectAt(inside))Create("Path",inside.x,inside.y,inside.z);
         }
         var pathTemplate=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Path");
@@ -210,16 +211,28 @@ namespace DeepFrontier.Scripts {
       _machine.Inventory.GiveExisting(new GoodAmount("Concrete",2*batches));
       _machine.Inventory.GiveExisting(new GoodAmount("MetalBlock",batches));
     }
-    private void Port(string id,bool expected) {
-      // Player-path terrace deck (PlatformDeck, 2026-10-30): the rail hides exactly
-      // when actual player paths stand on the deck cell and its neighbour.
-      var p=_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id);
+    // Terrace seams (2026-10-31 roof pass: an open deck, no rails): the front row's edge
+    // stands facing -y ("Front", by x) and the left column's facing -x ("Left", by y),
+    // derived from the blueprint's Stackable blocks at the records-office door's layer.
+    private (Vector3Int Inside,Vector3Int Outside) Seam(string side,int index) {
+      var spec=_building.GetComponent<BlockObjectSpec>();
+      int z=_building.GetComponent<PlatformDeckSpec>().Doors[0].Exterior.z;
+      var dir=side=="Front"?new Vector3Int(0,-1,0):new Vector3Int(-1,0,0);
+      var seams=CivicFixtureGeometry.DeckSeams(spec,z,dir);
+      Require(seams.Count>0,"Laboratory terrace has no "+side+" edge with a free column outside it");
+      var row=side=="Front"?seams.Where(s=>s.Inside.y==seams.Min(t=>t.Inside.y)).OrderBy(s=>s.Inside.x).ToArray()
+                           :seams.Where(s=>s.Inside.x==seams.Min(t=>t.Inside.x)).OrderBy(s=>s.Inside.y).ToArray();
+      Require(index<row.Length,"Laboratory terrace has no "+side+index+" edge stand");
+      return row[index];
+    }
+    private void Port(string side,int index,bool expected) {
+      // Open terrace deck: a seam carries player paths on both sides exactly where
+      // the test laid them, and those paths connect across the deck edge.
+      var p=Seam(side,index);
       var a=_building.TransformCoordinates(p.Inside);var b=_building.TransformCoordinates(p.Outside);
-      var transforms=_building.GetComponent<BuildingModel>().FinishedModel.GetComponentsInChildren<Transform>(true);
       bool connected=_nav.AreConnectedInstant(a,b)&&_nav.AreConnectedInstant(b,a);
-      bool hidden=p.HiddenNodes.All(n=>!transforms.Single(t=>t.name==n).gameObject.activeSelf);
       bool paths=IsPlayerPath(a)&&IsPlayerPath(b);
-      Require(paths==expected&&hidden==expected&&(!expected||connected),"Laboratory rail/path mismatch "+id);
+      Require(paths==expected&&(!expected||connected),"Laboratory seam/path mismatch "+side+index);
     }
     private bool IsPlayerPath(Vector3Int c) {
       var o=_blocks.GetPathObjectAt(c);return o&&o.IsFinished&&o.HasComponent<PathSpec>();
@@ -228,10 +241,10 @@ namespace DeepFrontier.Scripts {
       Require(_building.GetComponent<BuildingSpec>().ScienceCost==12000,"Laboratory must unlock at 12,000 science");
       Require(_building.GetComponent<MechanicalNodeSpec>().PowerInput==6500,"Laboratory demand differs from 6,500 hp");
       Require(_building.GetComponent<MechanicalNode>().Graph==_generator.Graph&&_generator.Graph.PowerSupply>0,"Laboratory shaft does not connect");
-      Port("Front0",true);Port("Front1",false);Port("Left1",true);Port("Left2",false);
+      Port("Front",0,true);Port("Front",1,false);Port("Left",1,true);Port("Left",2,false);
       var entrance=_building.PositionedEntrance.Coordinates;
       Require(_nav.AreConnectedInstant(entrance,DoorCell()),"Ground door lacks its road connection");
-      Pass("12,000-science unlock, 6,500 hp connected graph and selective rail openings");
+      Pass("12,000-science unlock, 6,500 hp connected graph and open terrace seams");
       if(_reload) {
         var record=JsonConvert.DeserializeObject<ResearchSaveRecord>(File.ReadAllText(RecordPath));
         Require(_building.GetComponent<EntityComponent>().EntityId.ToString()==record.EntityId,"Research identity changed");
@@ -250,9 +263,9 @@ namespace DeepFrontier.Scripts {
       _walker=workers[4].GetComponent<ControllableCharacter>();_walker.ChangeAnimation("BeaverAdult_idle");
       _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(entrance));
       // Terrace deck cells, walked as grid cells: the records-office doorstep,
-      // the Left1 rail cell and the Front2 corner.
+      // the Left1 edge cell and the Front2 corner.
       var deck=_building.GetComponent<PlatformDeckSpec>();
-      foreach(var cell in new[]{deck.Doors[0].Exterior,deck.Openings.Single(p=>p.Id=="Left1").Inside,deck.Openings.Single(p=>p.Id=="Front2").Inside})
+      foreach(var cell in new[]{deck.Doors[0].Exterior,Seam("Left",1).Inside,Seam("Front",2).Inside})
         _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(_building.TransformCoordinates(cell)));
       _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(entrance));
       NextWalk();Phase(_reload?7:1);_speed.ChangeSpeed(3);

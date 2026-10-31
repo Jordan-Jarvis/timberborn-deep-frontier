@@ -5,11 +5,11 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 280
+        "Amount": 240
       },
       {
         "Id": "MetalBlock",
-        "Amount": 110
+        "Amount": 115
       },
       {
         "Id": "DeepAlloy",
@@ -17,7 +17,7 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 915
+        "Amount": 1105
       },
       {
         "Id": "Gear",
@@ -3646,7 +3646,7 @@
           "Y": 3,
           "Z": 1
         },
-        "Directions": "Top",
+        "Directions": "Left, Top",
         "ReverseRotation": false
       },
       {
@@ -8484,164 +8484,7 @@
     "BlockedEdges": []
   },
   "PlatformDeckSpec": {
-    "Openings": [
-      {
-        "Id": "Front0",
-        "Inside": {
-          "X": 0,
-          "Y": 0,
-          "Z": 1
-        },
-        "Outside": {
-          "X": 0,
-          "Y": -1,
-          "Z": 1
-        },
-        "ApproachPosition": {
-          "X": 0.5,
-          "Y": 1,
-          "Z": 0.5
-        },
-        "HiddenNodes": [
-          "WalkwayGroup.MaterialsLaboratory.001"
-        ],
-        "ShownNodes": []
-      },
-      {
-        "Id": "Front1",
-        "Inside": {
-          "X": 1,
-          "Y": 0,
-          "Z": 1
-        },
-        "Outside": {
-          "X": 1,
-          "Y": -1,
-          "Z": 1
-        },
-        "ApproachPosition": {
-          "X": 1.5,
-          "Y": 1,
-          "Z": 0.5
-        },
-        "HiddenNodes": [
-          "WalkwayGroup.MaterialsLaboratory.002"
-        ],
-        "ShownNodes": []
-      },
-      {
-        "Id": "Front2",
-        "Inside": {
-          "X": 2,
-          "Y": 0,
-          "Z": 1
-        },
-        "Outside": {
-          "X": 2,
-          "Y": -1,
-          "Z": 1
-        },
-        "ApproachPosition": {
-          "X": 2.5,
-          "Y": 1,
-          "Z": 0.5
-        },
-        "HiddenNodes": [
-          "WalkwayGroup.MaterialsLaboratory.003"
-        ],
-        "ShownNodes": []
-      },
-      {
-        "Id": "Left0",
-        "Inside": {
-          "X": 0,
-          "Y": 0,
-          "Z": 1
-        },
-        "Outside": {
-          "X": -1,
-          "Y": 0,
-          "Z": 1
-        },
-        "ApproachPosition": {
-          "X": 0.5,
-          "Y": 1,
-          "Z": 0.5
-        },
-        "HiddenNodes": [
-          "WalkwayGroup.MaterialsLaboratory.000",
-          "WalkwayGroup.MaterialsLaboratory.001"
-        ],
-        "ShownNodes": []
-      },
-      {
-        "Id": "Left1",
-        "Inside": {
-          "X": 0,
-          "Y": 1,
-          "Z": 1
-        },
-        "Outside": {
-          "X": -1,
-          "Y": 1,
-          "Z": 1
-        },
-        "ApproachPosition": {
-          "X": 0.5,
-          "Y": 1,
-          "Z": 1.5
-        },
-        "HiddenNodes": [
-          "WalkwayGroup.MaterialsLaboratory.005"
-        ],
-        "ShownNodes": []
-      },
-      {
-        "Id": "Left2",
-        "Inside": {
-          "X": 0,
-          "Y": 2,
-          "Z": 1
-        },
-        "Outside": {
-          "X": -1,
-          "Y": 2,
-          "Z": 1
-        },
-        "ApproachPosition": {
-          "X": 0.5,
-          "Y": 1,
-          "Z": 2.5
-        },
-        "HiddenNodes": [
-          "WalkwayGroup.MaterialsLaboratory.006"
-        ],
-        "ShownNodes": []
-      },
-      {
-        "Id": "Right0",
-        "Inside": {
-          "X": 2,
-          "Y": 0,
-          "Z": 1
-        },
-        "Outside": {
-          "X": 3,
-          "Y": 0,
-          "Z": 1
-        },
-        "ApproachPosition": {
-          "X": 2.5,
-          "Y": 1,
-          "Z": 0.5
-        },
-        "HiddenNodes": [
-          "WalkwayGroup.MaterialsLaboratory.003",
-          "WalkwayGroup.MaterialsLaboratory.004"
-        ],
-        "ShownNodes": []
-      }
-    ],
+    "Openings": [],
     "Doors": [
       {
         "Interior": {
@@ -8944,7 +8787,7 @@
           "Y": 3,
           "Z": 1
         },
-        "Directions": "Down",
+        "Directions": "Left, Down",
         "State": "OpenIn"
       },
       {

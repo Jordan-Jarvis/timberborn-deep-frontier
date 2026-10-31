@@ -66,10 +66,9 @@ for n in layout['nodes']:
     assert block((c[0],c[1],c[2]-1))['Stackable']=='BlockObject',c
 deck=bp['PlatformDeckSpec']
 assert deck['Doors']==[{k:dict(zip('XYZ',v)) for k,v in d.items()} for d in layout['doorLinks']]
-assert len(deck['Openings'])==len(layout['ports'])
-for p in deck['Openings']:
-    assert not p['ShownNodes'],p['Id']
-    for name in p['HiddenNodes']:assert names.count(name)==1,name
+# No terrace rails since the 2026-10-31 roof pass: no rail openings, no rail nodes.
+assert deck['Openings']==[] and layout['ports']==[]
+assert not any(n.startswith('MaterialsLaboratory.Rail') or n.startswith('WalkwayGroup') for n in names)
 assert bp['BlockObjectNavMeshSettingsSpec']['GenerateFloorsOnStackable']
 for socket in bp['TransputProviderSpec']['Transputs']:assert block(cell(socket['Coordinates']))['Occupations']=='All'
 for i in range(4):assert names.count(f'#Slot#Entrance{i}')==1

@@ -478,11 +478,6 @@
   [
    6,
    1,
-   1
-  ],
-  [
-   6,
-   1,
    2
   ],
   [
@@ -669,11 +664,6 @@
    8,
    1,
    0
-  ],
-  [
-   8,
-   1,
-   1
   ]
  ],
  "partsOutsideFootprint": 65,
@@ -1200,5 +1190,5 @@
    ]
   }
  },
- "artHash": "d7acff46a85a0d215511bd9ef212b73408b5d53bbf94ceca7171b00ad67ebef7"
+ "artHash": "d1341fba6b1edcd943d6d93a92aaddebced66ea660a93cb950985c9a4f7f7dd2"
 }

@@ -1,20 +1,20 @@
 {
   "status": "Source/export checks passed; native shoppers, balcony paths and service pending",
-  "sourceSha256": "755541e3e478d9c2a94d6f2cbb45ba31c53dff6c1836bc21e300deecbaf03157",
-  "exportSha256": "e49fbdef022789c6d0b7ceb02b4ebe90ff4151a6dca0096d05267204db369c23",
+  "sourceSha256": "b8719924c2b2d67def7071b629a8bacfc32153434c69e69bade2be48958b9193",
+  "exportSha256": "044100069df692c5026be8f4fc1ca56b40e2b884ce3ff213ec9af52646881ee2",
   "size": [
     9,
     6,
     5
   ],
-  "nodes": 28,
+  "nodes": 26,
   "animatedTracks": [
     "#GroceryMarket.BasketSign",
     "#GroceryMarket.HoistLoad",
     "#GroceryMarket.HoistPulley",
     "#GroceryMarket.HoistRope"
   ],
-  "nativeProps": 6,
+  "nativeProps": 0,
   "entrance": [
     4,
     1,

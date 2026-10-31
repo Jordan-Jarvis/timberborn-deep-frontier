@@ -563,6 +563,16 @@
      5,
      1,
      0
+    ],
+    [
+     7,
+     1,
+     0
+    ],
+    [
+     8,
+     1,
+     0
     ]
    ],
    "excluded": [
@@ -573,22 +583,6 @@
       0
      ],
      "reason": "enclosed, or a door, entrance or walkway cell above"
-    },
-    {
-     "cell": [
-      7,
-      1,
-      0
-     ],
-     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
-    },
-    {
-     "cell": [
-      8,
-      1,
-      0
-     ],
-     "reason": "building geometry in the middle of the cell above (stack, chimney, mast, tank, vent or frame)"
     }
    ]
   },

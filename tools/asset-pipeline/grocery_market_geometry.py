@@ -980,16 +980,9 @@ def balcony(g, rails):
         member(g, (x, 1.10, top - .58), (x + d * .32, 1.10, top - .26), .08, .08, WOOD)
     for x in (6.10, 7.50, 8.90):
         g.box((x, .992, top - .38), (.16, .016, .16), IRON)
-    # Rails: native posts (0.14 x 0.16) set in by half a post so their
-    # outer faces sit on the deck edges x = 6, x = 9 and y = 1.
-    rx0, rx1, ry0 = 6.071, 8.929, 1.081
-    rails.run('BalconyFront', (rx0, ry0), (rx1, ry0), 1)
-    rails.run('BalconyLeft', (rx0, ry0), (rx0, 1.90), 1)
-    rails.run('BalconyRight', (rx1, ry0), (rx1, 1.919), 1)
-    # Flower boxes stand inside the front rail, clear of the walking strip.
-    for i, x in enumerate((6.45, 7.45, 8.45)):
-        g.box((x, 1.30, top + .06), (.56, .16, .12), WOOD)
-        flower_box(g, x, 1.30, top + .12, .62, 11 + i, ('DandelionMature', 'BlueberryBushMature', 'DandelionMature'))
+    # No rails and no flower boxes on the deck (2026-10-31 roof pass, user: no
+    # railings on the roofs, "like an actual platform where roads can connect"):
+    # the balcony is open to its tile edges and every deck cell stays clear.
     lantern(g, 6.80, 1.10, top - .24, .02)
     lantern(g, 8.20, 1.10, top - .24, .02)
 

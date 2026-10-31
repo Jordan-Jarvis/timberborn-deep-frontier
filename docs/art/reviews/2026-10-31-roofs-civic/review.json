@@ -4,12 +4,45 @@
     {
       "model": "Restaurant",
       "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
-      "sourceSha256": "2fb40cc562e28555ba3ad90b04d83d2e9ec2eea8d22c89226e3cd4e939a051fc",
+      "sourceSha256": "91e624273539de533b90f50f009e6e1c9d26d7bb5c9e7daebbcf736255ee5e5c",
       "images": [
         "Restaurant-before-after.png"
       ],
       "imageSha256": {
         "Restaurant-before-after.png": "fb0f94cbf93803b618d3e7f644ab6adaf996a4c9f0f64f68720d1c0015c1cb6d"
+      }
+    },
+    {
+      "model": "MaterialsLaboratory",
+      "source": "src\\DeepFrontier\\Art\\Source\\MaterialsLaboratory-ReferenceStudy.blend",
+      "sourceSha256": "675efcde9bbf93efc136b80729da76c66f8e6830fa335145f4814f160ed41100",
+      "images": [
+        "MaterialsLaboratory-before-after.png"
+      ],
+      "imageSha256": {
+        "MaterialsLaboratory-before-after.png": "9f13468ae3781be9808e244060af98201aaa4171b32e07e035a3a18ac155d06c"
+      }
+    },
+    {
+      "model": "ReinforcedHydroTurbine",
+      "source": "src\\DeepFrontier\\Art\\Source\\ReinforcedHydroTurbine-ReferenceStudy.blend",
+      "sourceSha256": "5f866e458a331b692e73727b12a5e3be69dffcf68587c239a15c750f1bf027aa",
+      "images": [
+        "ReinforcedHydroTurbine-before-after.png"
+      ],
+      "imageSha256": {
+        "ReinforcedHydroTurbine-before-after.png": "93c3f61952d8e5501f6c3be5d960e1ec4d4d68e5712f105f9d25ca598b3c6730"
+      }
+    },
+    {
+      "model": "GroceryStore",
+      "source": "src\\DeepFrontier\\Art\\Source\\GroceryMarket-ReferenceStudy.blend",
+      "sourceSha256": "b8719924c2b2d67def7071b629a8bacfc32153434c69e69bade2be48958b9193",
+      "images": [
+        "GroceryMarket-before-after.png"
+      ],
+      "imageSha256": {
+        "GroceryMarket-before-after.png": "e8c2fdfc25e4d99f20991bf2893229dea21f4c26f62295266aff7a197b2ffee0"
       }
     }
   ],

@@ -463,16 +463,16 @@
   },
   "GroceryStore": {
    "model": "Buildings/Food/GroceryStore/GroceryStore.IronTeeth.Model",
-   "sha256": "e49fbdef022789c6d0b7ceb02b4ebe90ff4151a6dca0096d05267204db369c23",
+   "sha256": "044100069df692c5026be8f4fc1ca56b40e2b884ce3ff213ec9af52646881ee2",
    "areas": {
     "BaseMetal.IronTeeth": 14.8584,
-    "BaseWood_Brown.Folktails": 4.5008,
-    "BaseWood_DarkBrown.IronTeeth": 131.7997,
+    "BaseWood_Brown.Folktails": 1.7418,
+    "BaseWood_DarkBrown.IronTeeth": 129.1861,
     "DFIndustrial08": 0.8,
     "Details.IronTeeth#metal": 0.211,
     "Details.IronTeeth#unpriced": 11.1856,
     "Details.IronTeeth#wood": 5.1191,
-    "IrregularPlanks_DarkBrown.IronTeeth": 107.5075,
+    "IrregularPlanks_DarkBrown.IronTeeth": 107.128,
     "IrregularPlanks_MetalForged.IronTeeth": 54.6456,
     "Plaster_Orange.IronTeeth": 3.5606,
     "Plaster_White.IronTeeth": 34.0822,
@@ -484,7 +484,7 @@
     "concrete": 34.0822,
     "metal": 69.715,
     "unpriced": 17.5816,
-    "wood": 314.2847
+    "wood": 308.5326
    }
   },
   "Hospital": {
@@ -596,29 +596,28 @@
   },
   "MaterialsLaboratory": {
    "model": "Buildings/Science/MaterialsLaboratory/MaterialsLaboratory.IronTeeth.Model",
-   "sha256": "edd3f20caffd862a63686f9b0b9c6cf016b2474e3f6e18b5afc67622e32e8207",
+   "sha256": "2222563cf400203fd86410320ada1857e888bb63eca470bb6209efe0f435b46d",
    "areas": {
-    "BaseMetal.IronTeeth": 191.5718,
-    "BaseWood_Brown.Folktails": 4.3516,
-    "BaseWood_DarkBrown.IronTeeth": 195.87,
-    "DFIndustrial08": 0.6968,
-    "DFIndustrial09": 0.5722,
-    "DFIndustrial16": 0.6686,
-    "DFIndustrial25": 0.0172,
-    "Details.IronTeeth#metal": 14.3295,
-    "IrregularPlanks_DarkBrown.IronTeeth": 256.7913,
-    "IrregularPlanks_MetalForged.IronTeeth": 7.9086,
-    "Plaster_Orange.IronTeeth": 16.819,
-    "Plaster_White.IronTeeth": 346.8178,
-    "RoofPlanks.IronTeeth": 124.6591,
-    "WindowsAtlas.IronTeeth": 26.6395
+    "BaseMetal.IronTeeth": 120.8029,
+    "BaseWood_DarkBrown.IronTeeth": 114.0867,
+    "DFIndustrial08": 0.5226,
+    "DFIndustrial09": 0.2809,
+    "DFIndustrial16": 0.3638,
+    "DFIndustrial25": 0.0105,
+    "Details.IronTeeth#metal": 12.5249,
+    "IrregularPlanks_DarkBrown.IronTeeth": 114.2227,
+    "IrregularPlanks_MetalForged.IronTeeth": 3.1624,
+    "Plaster_Orange.IronTeeth": 7.73,
+    "Plaster_White.IronTeeth": 255.8109,
+    "RoofPlanks.IronTeeth": 76.6161,
+    "WindowsAtlas.IronTeeth": 10.9552
    },
    "families": {
-    "brick": 16.819,
-    "concrete": 346.8178,
-    "metal": 213.81,
-    "unpriced": 28.5944,
-    "wood": 581.6721
+    "brick": 7.73,
+    "concrete": 255.8109,
+    "metal": 136.4902,
+    "unpriced": 12.1331,
+    "wood": 304.9255
    }
   },
   "MissionControl": {
@@ -910,11 +909,10 @@
   },
   "ReinforcedHydroTurbine": {
    "model": "Buildings/Power/ReinforcedHydroTurbine/ReinforcedHydroTurbine.IronTeeth.Model",
-   "sha256": "9434992a9fb59eca82f701d6bc82080437305a68ceba3df295e46347c0ae9e8f",
+   "sha256": "36c9b357afda531729d18cedde099916cb6328291d5cd01788ec99fbacbb6119",
    "areas": {
-    "BaseMetal.IronTeeth": 145.3501,
-    "BaseWood_Brown.Folktails": 9.2025,
-    "BaseWood_DarkBrown.IronTeeth": 65.2491,
+    "BaseMetal.IronTeeth": 141.6593,
+    "BaseWood_DarkBrown.IronTeeth": 47.5366,
     "DFIndustrial08": 0.1742,
     "DFIndustrial09": 0.2383,
     "DFIndustrial13": 0.101,
@@ -929,9 +927,9 @@
    "families": {
     "brick": 0.588,
     "concrete": 428.3992,
-    "metal": 161.9412,
+    "metal": 158.2504,
     "unpriced": 2.1796,
-    "wood": 138.1112
+    "wood": 111.1962
    }
   },
   "Restaurant": {

@@ -1,7 +1,7 @@
 {
   "scope": "Candidate export, grid and water-seal checks; native runtime and pump balance pending",
-  "modelSha256": "96aa411f9ef3d39f02963fa2aeeb15afb92969af38041e330bcfd458095b828d",
-  "nodes": 22,
+  "modelSha256": "36c9b357afda531729d18cedde099916cb6328291d5cd01788ec99fbacbb6119",
+  "nodes": 8,
   "animationTracks": [
     [
       "#Hydro.GeneratorCoupling",
@@ -12,9 +12,9 @@
       121
     ]
   ],
-  "nativeUvVertices": 18898,
+  "nativeUvVertices": 18778,
   "routeCells": 13,
-  "adaptiveOpenings": 14,
+  "adaptiveOpenings": 0,
   "supportCells": 21,
   "solidWaterCells": 104,
   "horizontalWaterPlanes": 24,

@@ -255,28 +255,12 @@ def hydro(g,parts):
             g.box((5,y,z),(3.97,.012,.012),IRON)
         for x in (3.25,4.5,5.5,6.75):
             for z in (.28,1.72):g.cylinder((x,y+out*.0055,z),.035,.015,IRON,'Y',6)
-    # Deck edge angles only along open deck edges; the workshop wall stands
-    # on the x=4 edge between y=6 and y=9.
-    for y0,y1 in ((.03,WS_Y0-.10),(WS_Y1+.10,5.97)):
-        g.box((3.03,(y0+y1)/2,2.015),(.06,y1-y0,.05),IRON)
-    g.box((6.97,3,2.015),(.06,5.94,.05),IRON)
-    for y in (.03,5.97):
-        g.box((5,y,2.015),(3.88,.06,.05),IRON)
+    # (The iron edge angles standing 4 cm proud along the open deck edges went in
+    # the 2026-10-31 roof pass: the terrace is a plain platform edge to edge.)
     generator(g,powerhouse_parts);workshop(g)
-    # Keep a full clear strip outside the door and around the back/right wall.
-    # These are separate rail nodes so integration can reuse adaptive openings.
-    ix,iy=.071,.081
-    for x in range(3,7):
-        a=x+ix if x==3 else x;b=x+1-ix if x==6 else x+1
-        rails.run(f'Front{x}',(a,iy),(b,iy),2)
-        rails.run(f'Rear{x}',(a,6-iy),(b,6-iy),2)
-    for y in range(6):
-        a=y+iy if y==0 else y;b=y+1-iy if y==5 else y+1
-        rails.run(f'Right{y}',(7-ix,a),(7-ix,b),2)
-    # Conduit-side rails only beside the two open lane cells; the generator
-    # and the workshop wall close the rest of that edge.
-    rails.run('ConduitSide0',(3+ix,iy),(3+ix,.85),2)  # ends at the generator pedestal
-    rails.run('ConduitSide5',(3+ix,5),(3+ix,6-iy),2)
+    # No terrace rails (2026-10-31 roof pass, user: no railings on the roofs, "like
+    # an actual platform where roads can connect"): paths run off the terrace onto
+    # a neighbouring turbine or platform at any edge.
     # Flush service hatch does not obstruct the terrace or imply a second door:
     # 4.5 mm proud, so the walking surface stays on the whole layer.
     g.box((5.68,.58,2.00225),(.64,.64,.0045),IRON)

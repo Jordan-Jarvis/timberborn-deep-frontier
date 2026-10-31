@@ -426,17 +426,9 @@ def laboratory(g,parts):
     g.box((1.4975,1.5,.905),(2.995,3,.13),CIVIC_CONCRETE)
     g.box((1.4875,5.0,.92),(2.975,4.0,.16),CIVIC_CONCRETE)
     for i in range(14):g.box((.11+i*2.78/13,1.50,.985),(.185,2.85,.03),PLANK)
-    # Terrace rails: native posts (0.14 x 0.16) set in by half a post so their
-    # outer faces lie on the terrace edges; one run per cell, with the inner
-    # posts on cell edges so an open cell never leaves a stub.
-    ix,iy=.071,.081
-    for x in range(3):
-        rails.run(f'TerraceFront{x}',(x+ix if x==0 else x,iy),(x+1-ix if x==2 else x+1,iy),1)
-    for y in range(3):
-        rails.run(f'TerraceLeft{y}',(ix,y+iy if y==0 else y),(ix,y+1),1)
-    rails.run('TerraceRight0',(3-ix,iy),(3-ix,1),1)
-    # Short return to the hall's front frame across the plinth ledge.
-    rails.run('TerraceRightReturn',(3-ix,1),(3-ix,HALL_FRONT-.05),1)
+    # No terrace rails (2026-10-31 roof pass, user: no railings on the roofs, "like
+    # an actual platform where roads can connect"): the terrace is open to its
+    # tile edges, a one-layer drop as on a vanilla platform.
     framed_room(g,.27,3.10,2.73,6.55,1,2.0,3,(1.5,1.0,1.0),wall_style='storey')
     building_portal(g,1.5,3.00,1,facade='grid')
     g.doorways.append({'id':'TerraceDoor','position':[1.5,3.00,1],'outward':[0,-1],'width':1.0,'internalConnection':'BuildingInterior'})

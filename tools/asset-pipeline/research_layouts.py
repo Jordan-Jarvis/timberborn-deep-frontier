@@ -1,7 +1,7 @@
 """Explicit registration of the Materials Laboratory's existing architecture."""
 import json
 from pathlib import Path
-from industrial_layouts import layout,lane,grid_lane,edge,port
+from industrial_layouts import layout,lane,grid_lane,edge
 
 # Idle slots stand 8 cm in front of each door casing (ground casing on y=0).
 # 2026-10-30 compaction: one layer per storey; the terrace and the records
@@ -17,9 +17,7 @@ lane(LAB,[(1,3,z) for z in range(2)],[(1.5,3.5,z) for z in range(2)])
 for y in range(3):grid_lane(LAB,[(x,y,1) for x in range(3)])
 for x in range(3):grid_lane(LAB,[(x,y,1) for y in range(3)])
 edge(LAB,(1,3,1),(1,2,1))
-for x in range(3):port(LAB,f'Front{x}',(x,0,1),(x,-1,1),f'TerraceFront{x}')
-for y in range(3):port(LAB,f'Left{y}',(0,y,1),(-1,y,1),f'TerraceLeft{y}')
-port(LAB,'Right0',(2,0,1),(3,0,1),'TerraceRight0')
+# 2026-10-31 roof pass: the terrace has no rails, so no rail openings ('ports').
 # The door cell is interior too since the terrace sits one layer up, right
 # over it (2026-10-30): its solid cast cell carries the terrace slab.
 LAB['interiorCells']=[[1,y,0] for y in range(0,4)]+[[1,3,1]]

@@ -61,10 +61,9 @@ for c in routes:
 assert bp['PlatformDeckSpec']['Doors']==[] and bp['BlockObjectNavMeshSettingsSpec']['EdgeGroups']==[]
 for x in range(4):
     for y in (2,3):assert block((x,y,5))['Stackable']=='BlockObject'
-assert len(bp['PlatformDeckSpec']['Openings'])==len(layout['ports'])
-for opening in bp['PlatformDeckSpec']['Openings']:
-    assert not opening['ShownNodes'],opening['Id']
-    for name in opening['HiddenNodes']:assert names.count(name)==1,name
+# No terrace rails since the 2026-10-31 roof pass: no rail openings, no rail nodes.
+assert bp['PlatformDeckSpec']['Openings']==[] and layout['ports']==[]
+assert not any(n.startswith('HydroRails') or n.startswith('WalkwayGroup') for n in names)
 hydro=bp['HydroTurbineSpec']
 solid={cell(c) for c in hydro['SolidWaterCells']}
 closed={cell(c) for c in hydro['ClosedGateCells']}

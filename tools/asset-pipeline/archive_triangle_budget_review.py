@@ -119,6 +119,9 @@ REVIEWS = {
         'sheets': 'outputs/roofs',
         'models': {
             'Restaurant': ('Restaurant', 'Restaurant-before-after.png'),
+            'MaterialsLaboratory': ('MaterialsLaboratory', 'MaterialsLaboratory-before-after.png'),
+            'ReinforcedHydroTurbine': ('ReinforcedHydroTurbine', 'ReinforcedHydroTurbine-before-after.png'),
+            'GroceryStore': ('GroceryMarket', 'GroceryMarket-before-after.png'),
         },
         'extra': (),
         'scope': 'Before | after | difference sheets (render_budget_views.py, matched compaction cameras, '

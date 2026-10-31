@@ -34,14 +34,16 @@ namespace DeepFrontier.Scripts {
     // Free from the ground (local z 0) up to and including the cell's own layer.
     internal static bool FreeColumn(IReadOnlyDictionary<Vector3Int,BlockOccupations> blocks,Vector3Int c)=>
       Enumerable.Range(0,c.z+1).All(z=>Free(blocks,new Vector3Int(c.x,c.y,z)));
-    // Open decks (2026-10-31 roof pass: no deck rails). A deck stand is the free cell above a
+    // Open decks (2026-10-31 roof pass: no deck rails). A deck stand is the cell above a
     // Stackable block of the building: GenerateFloorsOnStackable lays native floor edges there,
-    // as on a vanilla Platform. Stands at local z 0 (on the ground) are not decks.
+    // as on a vanilla Platform. Outside the bounds, free, or holding only the Top/Corners of
+    // the deck one layer up (a covered balcony, as under a vanilla Platform or Overhang).
     internal static List<Vector3Int> DeckStands(BlockObjectSpec spec) {
       var blocks=Blocks(spec);
+      bool Standable(Vector3Int c)=>!blocks.TryGetValue(c,out var o)||(o&~(BlockOccupations.Top|BlockOccupations.Corners))==0;
       return spec.GetBlocks(new Placement(Vector3Int.zero,Orientation.Cw0,FlipMode.Unflipped))
         .Where(b=>b.Stackable.IsStackable()).Select(b=>b.Coordinates+new Vector3Int(0,0,1))
-        .Where(c=>Free(blocks,c)).OrderBy(c=>c.z).ThenBy(c=>c.y).ThenBy(c=>c.x).ToList();
+        .Where(Standable).OrderBy(c=>c.z).ThenBy(c=>c.y).ThenBy(c=>c.x).ToList();
     }
     // A deck seam: a stand on the deck's edge and the cell beside it along `dir`, which is no
     // stand and has a free column down to the ground, so a neighbour's platform or roof can butt
