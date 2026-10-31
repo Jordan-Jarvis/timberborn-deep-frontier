@@ -72,7 +72,10 @@ namespace DeepFrontier.Scripts {
       _speed.ChangeSpeed(0);
       _fishery=Find("FisheryWorks.IronTeeth");_hatchery=Find("FishHatchery.IronTeeth");
       _fish=_fishery.GetComponent<Manufactory>();_nursery=_hatchery.GetComponent<Manufactory>();_reservoir=_fishery.GetComponent<WorkshopReservoir>();
-      _generator=_entities.Entities.Single(e=>e.HasComponent<BlockObject>()&&e.GetComponent<BlockObject>().Coordinates==new Vector3Int(157,165,3)).GetComponent<MechanicalNode>();
+      // The saved generator at the end of the Fishery's shaft line (from its installed shaft face).
+      var generator=FisheryAcceptance.ShaftLine(_fishery).Generator;
+      _generator=_entities.Entities.Single(e=>e.HasComponent<BlockObject>()&&e.GetComponent<BlockObject>().Coordinates==generator
+        &&e.GetComponent<TemplateSpec>().TemplateName=="DevPowerGenerator").GetComponent<MechanicalNode>();
       _normalOutput=_generator.OutputMultiplier;
       if(_normalOutput<=0)throw new InvalidOperationException("Saved power fixture has no output");
       if(!_fishery.GetComponent<PausableBuilding>().Paused||!_hatchery.GetComponent<PausableBuilding>().Paused)

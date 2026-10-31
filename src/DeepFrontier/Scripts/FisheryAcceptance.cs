@@ -45,6 +45,12 @@ namespace DeepFrontier.Scripts {
     private readonly SpeedManager _speed;private readonly CameraService _camera;private readonly GameSaver _saver;private readonly GameLoader _loader;
     private readonly IDayNightCycle _clock;
     private readonly INavMeshService _nav;private readonly INavigationService _navigation;
+    // Fixture terrain shared by every run: the level bank at z 3, the road column x 173 and
+    // the road row y 159 south of the Fishery. Everything placed against the Fishery follows
+    // its installed blueprint (entrance, shaft face, deck openings and doors).
+    private const int Ground=3,RoadX=173,RoadY=159;
+    private static readonly Orientation[] Rotations={Orientation.Cw0,Orientation.Cw90,Orientation.Cw180,Orientation.Cw270};
+    // World cells, walked in order.
     private ControllableCharacter _walker;private readonly Queue<Vector3Int> _walkTargets=new();private Vector3Int _walkTarget;private Vector3 _walkWorld;
     private BlockObject _building;private Manufactory _manufactory;private WorkshopReservoir _reservoir;private ShoreFishing _flag;
     private int _frame,_products,_deposited,_pauseFrame;private bool _failed,_reload,_bootstrap,_sawFlow,_saved,_pausedCheck;
@@ -86,29 +92,29 @@ namespace DeepFrontier.Scripts {
         if(!_flag.FishingSelected||!_building.GetComponent<PausableBuilding>().Paused)throw new InvalidOperationException("Saved fishing selection/factory pause changed");
       } else {
         foreach(var e in _registry.Entities.Where(e=>e.HasComponent<Workplace>()&&e.HasComponent<PausableBuilding>()))e.GetComponent<PausableBuilding>().Pause();
-        // 11x8 Fishery Works (2026-10-22: the two front table/bin rows and the empty right
-        // column left the footprint, so local y 0 is the old local y 2). Placing at y 162 keeps
-        // the hall, basins, decks, openings and shaft face at their old world cells. The ground
-        // door is the hall's front cell (3,0,0), world (162,162); its native Entrance (3,-1,0),
-        // world (162,161), is the path cell in front of it (tools/native_entrance.mjs, 2026-10-26:
-        // before, the Entrance was the door cell and the player's path showed no connection).
-        // Ordinary player paths at (162,160..161) join it to the road; nothing else gives access.
-        var installed=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="FisheryWorks.IronTeeth").Blueprint.GetSpec<BlockObjectSpec>();
-        if(installed.Size!=new Vector3Int(11,8,7)||installed.Entrance.Coordinates!=new Vector3Int(3,-1,0))
-          throw new InvalidOperationException("Installed FisheryWorks is "+installed.Size+" with entrance "+installed.Entrance.Coordinates+
-            "; this fixture's world cells encode the 11x8x7 layout with its entrance at (3,-1,0) in front of the door. Regenerate the Fishery or update the fixture.");
+        // Fishery Works at (159,162,3), Cw0 unflipped. The fixture follows the installed
+        // blueprint, not a size literal (11x8x4 since the 2026-10-30 compaction): ordinary
+        // player paths join its native Entrance (the path cell in front of the ground door,
+        // tools/native_entrance.mjs) to the road row; nothing else gives ground access.
         _building=Create("FisheryWorks.IronTeeth",159,162,3);_building.GetComponent<PausableBuilding>().Pause();
         // Freed ground, checked before the fixture builds on it: the rear supply cells inside
         // the bounds (validate_freed_cells.py), the two former front rows and the right column.
         FreedCellProbe.Require(_templates,_validator,_building,
           FreedCellProbe.Rect(5,7,7,7).Concat(FreedCellProbe.Rect(0,11,-2,-1)).Concat(FreedCellProbe.Rect(11,11,0,7)),
           "FisheryWorks",message=>Debug.Log("[DeepFrontier Fishery] PASS "+message));
-        for(int y=157;y<=170;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(173,y,3)))Create("Path",173,y,3);
-        for(int x=162;x<173;x++)Create("Path",x,159,3);
-        Create("Path",162,160,3);Create("Path",162,161,3);
-        for(int x=174;x<=188;x++)Create("Path",x,170,3);
-        Create("PowerShaft.IronTeeth",158,165,3);Create("DevPowerGenerator",157,165,3);
-        Create("DoublePlatform.IronTeeth",160,165,5);Create("Platform.IronTeeth",160,165,7);Create("Path",160,165,8);
+        var entrance=_building.PositionedEntrance.Coordinates;
+        if(entrance.z!=Ground||entrance.y<=RoadY||entrance.x>=RoadX)
+          throw new InvalidOperationException("Fishery Entrance "+entrance+" is not on the bank north of the road row y "+RoadY+" and west of the road column x "+RoadX);
+        var approach=GalleryStairs().Approach;
+        for(int y=157;y<=170;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(RoadX,y,Ground)))Create("Path",RoadX,y,Ground);
+        for(int x=Math.Min(entrance.x,approach.x);x<RoadX;x++)Create("Path",x,RoadY,Ground);
+        for(int y=RoadY+1;y<=entrance.y;y++)Create("Path",entrance.x,y,Ground);
+        for(int x=174;x<=188;x++)Create("Path",x,170,Ground);
+        var line=ShaftLine(_building);
+        Create("PowerShaft.IronTeeth",line.Shaft.x,line.Shaft.y,line.Shaft.z);Create("DevPowerGenerator",line.Generator.x,line.Generator.y,line.Generator.z);
+        // A native platform stack on the first free warehouse-terrace deck cell.
+        var stack=_building.TransformCoordinates(TerraceBuildCells()[0]);
+        Create("DoublePlatform.IronTeeth",stack.x,stack.y,stack.z);Create("Platform.IronTeeth",stack.x,stack.y,stack.z+2);Create("Path",stack.x,stack.y,stack.z+3);
         Debug.Log("[DeepFrontier Fishery] PASS native terrace platform stack");
         // A native water-filled pond in the disposable fixture. Its banks and
         // four-by-four bed are outside the earlier quarry's occupied footprint.
@@ -143,7 +149,7 @@ namespace DeepFrontier.Scripts {
             VerifyWater(45);
             var active=_flag.GetComponent<Workplace>().AssignedWorkers.Any(w=>w.GetComponent<BehaviorManager>().IsRunningExecutor<ShoreCatchExecutor>());
             if(!active)throw new InvalidOperationException("Reload fixture lacks saved active catch");
-            Debug.Log("[DeepFrontier Fishery] PASS saved six-surface heights, fishing selection and active catch");
+            Debug.Log("[DeepFrontier Fishery] PASS saved reservoir surface heights, fishing selection and active catch");
             if(_hatcheryOnly) {SetupHatchery();_shorePhase=11;_shoreFrame=_frame;}
             _speed.ChangeSpeed(3);_startTime=_clock.PartialDayNumber;
           } else SetWater(0);
@@ -249,8 +255,16 @@ namespace DeepFrontier.Scripts {
         var worker=_registry.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>()).First(w=>w.WorkerType=="Beaver"&&w.Workplace!=_flag.GetComponent<Workplace>());
         worker.Unemploy();_walker=worker.GetComponent<ControllableCharacter>();_walker.ChangeAnimation("BeaverAdult_idle");
         _walkBuilding=_building;
-        // Deck cells one layer up since the 2026-10-30 compaction (galleries at layer 1).
-        foreach(var cell in new[]{new Vector3Int(8,-3,0),new Vector3Int(8,1,1),new Vector3Int(5,1,1),new Vector3Int(2,4,1),new Vector3Int(0,4,1),new Vector3Int(3,-3,0)})_walkTargets.Enqueue(cell);
+        // From the road below the gallery stairs onto the gallery, through both upper doors
+        // and the hall to the warehouse terrace, then down to the road in front of the Entrance.
+        var deck=_building.GetComponent<PlatformDeckSpec>();
+        var front=Opening("FishFront8");var access=GalleryStairs();
+        var galleryDoor=deck.Doors.Single(d=>d.Exterior==front.Inside);
+        var terraceDoor=deck.Doors.Single(d=>d.Exterior!=front.Inside);
+        var entrance=_building.PositionedEntrance.Coordinates;
+        foreach(var cell in new[]{new Vector3Int(access.Approach.x,RoadY,Ground),_building.TransformCoordinates(front.Inside),_building.TransformCoordinates(galleryDoor.Interior),
+          _building.TransformCoordinates(terraceDoor.Interior),_building.TransformCoordinates(Opening("FishRoofLeft6").Inside),new Vector3Int(entrance.x,RoadY,Ground)})
+          _walkTargets.Enqueue(cell);
         _camera.MoveTargetTo(new Vector3(166,7,164));_camera.SetZoomLevel(20,0);_shorePhase=10;NextTarget();
       } else if(_shorePhase==10&&Vector3.Distance(_walker.Transform.position,_walkWorld)<.18f) {
         Debug.Log("[DeepFrontier Fishery] PASS actual beaver reached "+_walkTarget);
@@ -437,7 +451,7 @@ namespace DeepFrontier.Scripts {
         var worker=_hatchery.GetComponent<Workplace>().AssignedWorkers.First();
         _hatchery.GetComponent<PausableBuilding>().Pause();worker.Unemploy();
         _walker=worker.GetComponent<ControllableCharacter>();_walker.ChangeAnimation("BeaverAdult_idle");_walkBuilding=_hatchery;
-        foreach(var cell in new[]{new Vector3Int(2,6,1),new Vector3Int(3,3,1),new Vector3Int(0,3,1),new Vector3Int(2,4,1),new Vector3Int(0,0,1),new Vector3Int(1,1,1)})_walkTargets.Enqueue(cell);
+        foreach(var cell in new[]{new Vector3Int(2,6,1),new Vector3Int(3,3,1),new Vector3Int(0,3,1),new Vector3Int(2,4,1),new Vector3Int(0,0,1),new Vector3Int(1,1,1)})_walkTargets.Enqueue(_hatchery.TransformCoordinates(cell));
         _shorePhase=17;NextTarget();
       } else if(_shorePhase==17&&Vector3.Distance(_walker.Transform.position,_walkWorld)<.18f) {
         Debug.Log("[DeepFrontier Fishery] PASS actual beaver reached hatchery dock/door "+_walkTarget);
@@ -464,12 +478,23 @@ namespace DeepFrontier.Scripts {
       Debug.Log("[DeepFrontier Fishery] PASS hatchery native header tank "+amount+"/60");
     }
     private void SetupAccess() {
-      Create("Path",167,160,3);
-      Create("Stairs.IronTeeth",167,161,3,Orientation.Cw180);Create("Platform.IronTeeth",167,162,3);Create("Stairs.IronTeeth",167,162,4,Orientation.Cw180);
-      Create("DoublePlatform.IronTeeth",158,166,3);Create("Path",158,166,5);
-      // The working warehouse roof supports native construction; keep its
-      // second clear cell available for the route traversal below.
-      Create("Platform.IronTeeth",160,166,5);Create("Path",160,166,6);
+      // Native stairs from the road row up to the FishFront8 gallery opening, and a
+      // platform stack carrying a path at both open openings' outside cells.
+      var access=GalleryStairs();
+      for(int y=RoadY+1;y<=access.Approach.y;y++)Create("Path",access.Approach.x,y,Ground);
+      foreach(var (cell,climb) in access.Stairs) {
+        for(int z=Ground;z<cell.z;z++)Create("Platform.IronTeeth",cell.x,cell.y,z);
+        Create("Stairs.IronTeeth",cell.x,cell.y,cell.z,climb);
+      }
+      foreach(var id in new[]{"FishFront8","FishRoofLeft6"}) {
+        var outside=_building.TransformCoordinates(Opening(id).Outside);
+        for(int z=Ground;z<outside.z;z++)Create("Platform.IronTeeth",outside.x,outside.y,z);
+        Create("Path",outside.x,outside.y,outside.z);
+      }
+      // The terrace supports native construction: a platform and path on the next free deck
+      // cell (the saved stack now fills the first), clear of the door and the opening cells.
+      var platform=_building.TransformCoordinates(TerraceBuildCells()[0]);
+      Create("Platform.IronTeeth",platform.x,platform.y,platform.z);Create("Path",platform.x,platform.y,platform.z+1);
       foreach(var e in _registry.Entities.Where(e=>e.HasComponent<WorkshopReservoirSpec>()&&e.GetComponent<WorkshopReservoirSpec>().Capacity==16)) {
         if(!e.GetComponent<PausableBuilding>().Paused)throw new InvalidOperationException("Quarry regression requires paused fixture");
         var spec=e.GetComponent<WorkshopReservoirSpec>();var visual=e.GetComponent<WorkshopReservoir>();var inventory=e.GetComponent<Manufactory>().Inventory;
@@ -483,6 +508,56 @@ namespace DeepFrontier.Scripts {
       _shoreFrame=_frame;
     }
     private void CheckPort(string id,bool expected) => CheckPort(id,expected,_building);
+    private WalkwayOpeningSpec Opening(string id)=>_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id);
+    // The Fishery's shaft line: a vanilla shaft on its first transput face (which must face
+    // Left, the fixture's west side) and the developer generator beyond it. Shared with
+    // AquacultureContinuityAcceptance, which finds the saved generator here.
+    internal static (Vector3Int Shaft,Vector3Int Generator) ShaftLine(BlockObject fishery) {
+      var face=fishery.GetComponent<TransputProviderSpec>().Transputs[0];
+      if(!face.Directions.ToString().Split(',').Select(d=>d.Trim()).Contains("Left"))
+        throw new InvalidOperationException("Fishery's first shaft face "+face.Coordinates+" "+face.Directions+" does not face Left, where this fixture's shaft line runs");
+      var shaft=fishery.TransformCoordinates(face.Coordinates)+new Vector3Int(-1,0,0);
+      return (shaft,shaft+new Vector3Int(-1,0,0));
+    }
+    // Stairs up to the FishFront8 opening's outside cell from the road row: one native stair
+    // per layer, each on native platforms, climbing toward the building (native Stairs climb
+    // toward their local Down side, as in AllBuildingsAcceptance), then the ground approach
+    // cell at their foot. The opening must face the road row (south).
+    private (List<(Vector3Int Cell,Orientation Climb)> Stairs,Vector3Int Approach) GalleryStairs() {
+      var front=Opening("FishFront8");
+      var outside=_building.TransformCoordinates(front.Outside);var step=outside-_building.TransformCoordinates(front.Inside);
+      int height=outside.z-Ground;
+      if(step!=new Vector3Int(0,-1,0)||height<1)
+        throw new InvalidOperationException("FishFront8 steps "+step+" to "+outside+"; this fixture's stairs need a raised opening facing the road row (south)");
+      var climb=Rotations.Single(o=>o.Transform(Direction2D.Down).ToOffset()==-step);
+      var stairs=Enumerable.Range(1,height).Select(k=>(outside+step*k-new Vector3Int(0,0,k),climb)).ToList();
+      var approach=outside+step*(height+1);approach.z=Ground;
+      if(approach.y<=RoadY)throw new InvalidOperationException("FishFront8 stairs at "+outside+" reach past the road row y "+RoadY);
+      return (stairs,approach);
+    }
+    // Free warehouse-terrace deck cells (local) that take a native Platform, flooded from the
+    // terrace door's exterior over the building's own bounds; minus the door exterior and the
+    // openings' inside cells, ordered by row then column.
+    private List<Vector3Int> TerraceBuildCells() {
+      var deck=_building.GetComponent<PlatformDeckSpec>();
+      var door=deck.Doors.Single(d=>d.Exterior!=Opening("FishFront8").Inside).Exterior;
+      var size=_building.GetComponent<BlockObjectSpec>().Size;
+      var template=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Platform.IronTeeth");
+      var platform=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint==template.Blueprint);
+      bool Deck(Vector3Int c)=>c.x>=0&&c.y>=0&&c.x<size.x&&c.y<size.y
+        &&_validator.BlocksValid(platform,new Placement(_building.TransformCoordinates(c),Orientation.Cw0,FlipMode.Unflipped));
+      if(!Deck(door))throw new InvalidOperationException("Fishery terrace door exterior "+door+" is not a free deck cell");
+      var cells=new HashSet<Vector3Int>{door};var open=new Queue<Vector3Int>(cells);
+      while(open.Count>0) {
+        var c=open.Dequeue();
+        foreach(var n in new[]{c+Vector3Int.right,c+Vector3Int.left,c+Vector3Int.up,c+Vector3Int.down})
+          if(!cells.Contains(n)&&Deck(n)){cells.Add(n);open.Enqueue(n);}
+      }
+      var reserved=new HashSet<Vector3Int>(deck.Openings.Select(p=>p.Inside)){door};
+      var result=cells.Where(c=>!reserved.Contains(c)).OrderBy(c=>c.y).ThenBy(c=>c.x).ToList();
+      if(result.Count==0)throw new InvalidOperationException("Fishery terrace offers no free deck cell besides its door and openings for this fixture's platforms");
+      return result;
+    }
     private void RequireHatcheryPlacement(string id,Vector3Int cell,bool expected,string purpose) {
       var template=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName==id);
       var spec=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint==template.Blueprint);
@@ -518,9 +593,8 @@ namespace DeepFrontier.Scripts {
     private bool IsPlayerPath(Vector3Int c){var o=_blocks.GetPathObjectAt(c);return o&&o.IsFinished&&o.HasComponent<PathSpec>();}
     private void NextTarget() {
       _walkTarget=_walkTargets.Dequeue();
-      // Negative local y: a road cell in front of the building (grid target).
-      // Both buildings are player-path decks (2026-10-30): every target is a grid cell.
-      _walkWorld=NavigationCoordinateSystem.GridToWorld(_walkBuilding.TransformCoordinates(_walkTarget));
+      // Both buildings are player-path decks (2026-10-30): every target is a world grid cell.
+      _walkWorld=NavigationCoordinateSystem.GridToWorld(_walkTarget);
       var corners=new List<PathCorner>();
       if(!_navigation.FindPathUnlimitedRange(_walker.Transform.position,_walkWorld,corners,out var distance))throw new InvalidOperationException("No native route to fishery target "+_walkTarget);
       _walker.TakeControlAndMoveTo(CoordinateSystem.WorldToGrid(_walkWorld));
@@ -562,12 +636,12 @@ namespace DeepFrontier.Scripts {
     }
     private void VerifyWater(int amount) {
       var spec=_building.GetComponent<WorkshopReservoirSpec>();
-      if(spec.Capacity!=90||spec.Surfaces.Length!=6||_reservoir.StoredAmount!=amount||_reservoir.SurfacesVisible!=(amount>0))throw new InvalidOperationException("Fishery water surface/stock mismatch");
+      if(spec.Capacity!=90||spec.Surfaces.Length==0||_reservoir.StoredAmount!=amount||_reservoir.SurfacesVisible!=(amount>0))throw new InvalidOperationException("Fishery water surface/stock mismatch");
       for(int i=0;i<spec.Surfaces.Length;i++) {
         var s=spec.Surfaces[i];float expected=s.EmptyHeight+(s.FullHeight-s.EmptyHeight)*amount/90f;
         if(Math.Abs(_reservoir.SurfaceHeights[i]-expected)>.00001f)throw new InvalidOperationException("Fishery liquid height mismatch: "+s.Node);
       }
-      Debug.Log("[DeepFrontier Fishery] PASS six native-material water surfaces: "+amount+"/90");
+      Debug.Log("[DeepFrontier Fishery] PASS "+spec.Surfaces.Length+" native-material water surfaces: "+amount+"/90");
     }
     private static void Capture(string name) {
       var folder=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"TimberbornModding/docs/art/reviews/2026-10-19-fishery-runtime");
