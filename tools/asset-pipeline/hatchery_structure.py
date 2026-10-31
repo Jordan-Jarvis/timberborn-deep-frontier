@@ -37,10 +37,17 @@ RESERVATIONS=[
     [5,0,1,6,1,2],
 ]
 DOOR_LINKS=[{'Interior':[1,1,1],'Exterior':[1,0,1]}]
+# Power sockets beyond the headhouse's room faces (grid_structure.roomPowerFaces);
+# tools/connection_content.mjs keeps only the measured flat faces of them.
+# 2026-10-31: the pump canopy's east side (6,1,1) Right is gone. The canopy is
+# open on its posts (hatchery_isometric_geometry.py: posts at source x 6.15,
+# roof edge 6.34, filter drum ending at 5.73), so nothing flat stands on the
+# cell's east face at source x 6.8; outputs/connection-faces/FishHatchery.json
+# never measured it and the blueprint never carried it. Its Bottom face sits
+# over the canopy's own base apron slab.
 SHAFT_PORTS=[
     {'Coordinates':{'X':0,'Y':1,'Z':1},'Directions':'Left, Bottom','ReverseRotation':False},
     {'Coordinates':{'X':2,'Y':2,'Z':1},'Directions':'Up','ReverseRotation':False},
-    {'Coordinates':{'X':6,'Y':1,'Z':1},'Directions':'Right, Bottom','ReverseRotation':False},
 ]
 BARREL_MOVE={'name':'NativeBarrel1','sourceDelta':[0,-.30,0]}
 BANK_APRON_SURFACE={'nativeFloor':1,'terrainTop':1.01,'bottom':.894,'backingTop':1.016,'wearingTop':1.020}

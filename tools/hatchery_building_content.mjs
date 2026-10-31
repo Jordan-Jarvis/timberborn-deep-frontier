@@ -81,7 +81,8 @@ export function applyHatcheryStructure(value,layout,manifest) {
   // inside this actual 20mm raised timber wearing surface.
   value.PathModelTypeEnforcerSpec={PathModelType:'Roof'};
   // Every exposed headhouse wall can receive a shaft, except the door. The
-  // separate filter-machine right face retains its original power socket.
+  // open pump canopy has no flat wall, so it has no power socket
+  // (hatchery_structure.SHAFT_PORTS).
   const transputs=new Map(roomPowerFaces(layout.structure,layout.size).map(p=>[Object.values(p.Coordinates).join(','),p]));
   for(const socket of layout.shaftPorts) {
     const key=Object.values(socket.Coordinates).join(',');

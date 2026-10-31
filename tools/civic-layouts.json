@@ -5854,15 +5854,6 @@
         },
         "Directions": "Up",
         "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 1,
-          "Z": 1
-        },
-        "Directions": "Right, Bottom",
-        "ReverseRotation": false
       }
     ],
     "waterCell": [

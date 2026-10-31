@@ -317,9 +317,14 @@ namespace DeepFrontier.Scripts {
       FreedCellProbe.Require(_templates,_validator,_hatchery,
         new[]{new Vector3Int(2,0,1),new Vector3Int(3,0,1),new Vector3Int(6,0,1)},
         "FishHatchery",message=>Debug.Log("[DeepFrontier Fishery] PASS "+message));
-      // Right canopy wall socket (6,1,1) -> shaft outside it at (194,157,3); the
-      // generator stays west of x=195, where the pipe test clears its own pad.
-      Create("PowerShaft.IronTeeth",194,157,3);Create("DevPowerGenerator",194,156,3);
+      // A shaft on the bank row below a front headhouse wall face and the generator in
+      // front of it, from the installed shaft faces (the open pump canopy has none).
+      var hatcheryShaft=HatcheryShaftLine(_hatchery);
+      foreach(var cell in new[]{hatcheryShaft.Shaft,hatcheryShaft.Generator})
+        if(_terrain.GetTerrainHeight(new Vector3Int(cell.x,cell.y,0))!=cell.z)
+          throw new InvalidOperationException("Hatchery shaft line cell "+cell+" is not on the surveyed bank (terrain "+_terrain.GetTerrainHeight(new Vector3Int(cell.x,cell.y,0))+")");
+      Create("PowerShaft.IronTeeth",hatcheryShaft.Shaft.x,hatcheryShaft.Shaft.y,hatcheryShaft.Shaft.z);
+      Create("DevPowerGenerator",hatcheryShaft.Generator.x,hatcheryShaft.Generator.y,hatcheryShaft.Generator.z);
       // A shaft under the centre dock end and a native platform stack above it,
       // over the end path (paths pass under platform legs).
       Create("PowerShaft.IronTeeth",189,162,2);
@@ -518,6 +523,17 @@ namespace DeepFrontier.Scripts {
         throw new InvalidOperationException("Fishery's first shaft face "+face.Coordinates+" "+face.Directions+" does not face Left, where this fixture's shaft line runs");
       var shaft=fishery.TransformCoordinates(face.Coordinates)+new Vector3Int(-1,0,0);
       return (shaft,shaft+new Vector3Int(-1,0,0));
+    }
+    // The hatchery's shaft line: a vanilla shaft on the bank-row cell in front of the first
+    // shaft face that faces Down (local -y, the bank side) from a front headhouse wall cell
+    // onto a cell this fixture does not pave, and the developer generator one cell further
+    // out. Shaft faces never face an access cell (tools/connection_content.mjs rule 3).
+    internal static (Vector3Int Shaft,Vector3Int Generator) HatcheryShaftLine(BlockObject hatchery) {
+      var paths=HatcheryPathCells();var down=new Vector3Int(0,-1,0);
+      var face=hatchery.GetComponent<TransputProviderSpec>().Transputs.FirstOrDefault(t=>
+        t.Directions.ToString().Split(',').Select(d=>d.Trim()).Contains("Down")&&t.Coordinates.y==1&&!paths.Contains(t.Coordinates+down));
+      if(face==null)throw new InvalidOperationException("Hatchery has no Down shaft face from its front wall onto an unpaved bank-row cell");
+      return (hatchery.TransformCoordinates(face.Coordinates+down),hatchery.TransformCoordinates(face.Coordinates+down*2));
     }
     // Stairs up to the FishFront8 opening's outside cell from the road row: one native stair
     // per layer, each on native platforms, climbing toward the building (native Stairs climb

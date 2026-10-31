@@ -29,6 +29,7 @@
 
 ### Fixes
 - **Freed-ground check:** the Hospital's expected freed cells follow the 4-wide pavilion (the rear barrel and supply pile cells left the footprint with the wings), and under the Restaurant's one-layer dining balcony the check accepts a brazier there, as the in-game probe does.
+- **Fish Hatchery power:** the hatchery no longer lists a power socket on the east side of its open pump canopy, where there is no wall to connect to. Shafts connect on its headhouse walls as before.
 
 ## 0.7.1 (2026-10-30)
 
