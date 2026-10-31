@@ -12,12 +12,8 @@
         "Amount": 10
       },
       {
-        "Id": "MetalBlock",
-        "Amount": 65
-      },
-      {
         "Id": "Gear",
-        "Amount": 35
+        "Amount": 85
       },
       {
         "Id": "Fertilizer",

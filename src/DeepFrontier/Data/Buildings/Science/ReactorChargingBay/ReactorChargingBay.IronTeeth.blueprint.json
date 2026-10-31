@@ -4,24 +4,24 @@
     "LoopingSoundName": "",
     "BuildingCost": [
       {
-        "Id": "HighGradeSteel",
-        "Amount": 20
-      },
-      {
         "Id": "Alloy",
         "Amount": 15
       },
       {
-        "Id": "MetalBlock",
-        "Amount": 15
+        "Id": "MachineCore",
+        "Amount": 10
+      },
+      {
+        "Id": "Electronics",
+        "Amount": 5
+      },
+      {
+        "Id": "PowerModule",
+        "Amount": 5
       },
       {
         "Id": "Concrete",
         "Amount": 85
-      },
-      {
-        "Id": "MachineCore",
-        "Amount": 5
       },
       {
         "Id": "ReinforcedBotFrame",

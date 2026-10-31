@@ -5,15 +5,23 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 195
+        "Amount": 140
       },
       {
         "Id": "TreatedPlank",
-        "Amount": 50
+        "Amount": 70
       },
       {
         "Id": "MetalBlock",
-        "Amount": 330
+        "Amount": 100
+      },
+      {
+        "Id": "DeepAlloy",
+        "Amount": 70
+      },
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 50
       },
       {
         "Id": "Concrete",
@@ -26,10 +34,6 @@
       {
         "Id": "Gear",
         "Amount": 330
-      },
-      {
-        "Id": "DeepAlloy",
-        "Amount": 20
       }
     ],
     "ScienceCost": 6000,
@@ -3415,7 +3419,7 @@
       {
         "GoodId": "HighGradeSteel",
         "GoodPerHour": 0.1,
-        "Role": "DrillBits"
+        "Role": "SteelDrillBits"
       },
       {
         "GoodId": "Concrete",

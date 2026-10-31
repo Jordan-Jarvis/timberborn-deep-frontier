@@ -147,8 +147,8 @@ export const upkeepSpec = ({upkeep}, id) => ({
   CapacityPerGood: upkeep.capacityPerGood,
 });
 
-// The sentence appended to the building's description, e.g. "Wears out 0.1 high-grade
-// steel drill bits per hour at full crew and stops without them."
+// The sentence appended to the building's description, e.g. "Wears out 0.1 metal block
+// drill bits per hour at full crew and stops without them."
 export const upkeepDescription = ({upkeep: u}, id) =>
   `Wears out ${listText(u.templates[id].map(([, perHour, role]) => `${fmt(perHour)} ${u.roles[role].description}`))} per hour at full crew and stops without them.`;
 

@@ -224,7 +224,7 @@ export function localizationRows(c, energy) {
     ['DeepFrontier.ReactorBot.Panel.Ordinary', `A ${parts} retrofit makes this bot a Reactor Bot: ${1 + u.carryingCapacityBonus}× load, ${u.speedMultiplier}× speed, ${u.lifespanMultiplier}× lifespan, charged at a ${s.name} every ${fmt(chargeDays)} days. Upkeep: coolant (${coolant.length} kinds) and steel plating from storage.`],
     ['DeepFrontier.ReactorBot.Panel.Queued', `Retrofit queued: the bot fetches a ${parts} from storage as soon as its district stocks them.`],
     ['DeepFrontier.ReactorBot.Panel.Upgraded', `Reactor Bot: ${1 + u.carryingCapacityBonus}× load, ${u.speedMultiplier}× speed, wears out ${u.lifespanMultiplier}× slower. Charges at a ${s.name}.`],
-    ['DeepFrontier.ReactorBot.Panel.Unplated', `No steel plating: wearing out ${u.unplatedWearMultiplier}× faster until it takes high-grade steel or alloy.`],
+    ['DeepFrontier.ReactorBot.Panel.Unplated', `No steel plating: wearing out ${u.unplatedWearMultiplier}× faster until it takes steel or alloy.`],
     ['DeepFrontier.ReactorBot.Panel.Queue', 'Retrofit to Reactor Bot'],
     ['DeepFrontier.ReactorBot.Panel.Cancel', 'Cancel retrofit']);
   return rows;

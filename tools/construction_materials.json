@@ -1,7 +1,7 @@
 {
   "goods": [
     {"id":"Sandstone","name":"Sandstone","plural":"Sandstone","weight":8,"color":[0.65,0.43,0.23],"use":"Crushed into dirt (brick earth) at the Stone Crusher; rubble aggregate in concrete; sandstone masonry construction."},
-    {"id":"Limestone","name":"Limestone","plural":"Limestone","weight":8,"color":[0.73,0.72,0.60],"use":"Cement recipe; metallurgical flux for high-grade steel; limestone masonry construction."},
+    {"id":"Limestone","name":"Limestone","plural":"Limestone","weight":8,"color":[0.73,0.72,0.60],"use":"Cement recipe; metallurgical flux for steel; limestone masonry construction."},
     {"id":"Brick","name":"Brick","plural":"Bricks","weight":8,"color":[0.62,0.31,0.18],"use":"Fired from dirt and water at the Cement Kiln; brick plinths, walls and chimneys of the buildings that show them (material cost rule); brick masonry blocks."},
     {"id":"Cement","name":"Cement","plural":"Cement","weight":4,"color":[0.65,0.64,0.58],"use":"Concrete recipe; mortar for sandstone and brick masonry."},
     {"id":"Concrete","name":"Concrete","plural":"Concrete","weight":10,"color":[0.55,0.56,0.53],"use":"Permanent quarries; advanced factory, civic, science and rocket foundations; levees; reinforced dam blocks; overflow dams; overhangs; scaffolds."}

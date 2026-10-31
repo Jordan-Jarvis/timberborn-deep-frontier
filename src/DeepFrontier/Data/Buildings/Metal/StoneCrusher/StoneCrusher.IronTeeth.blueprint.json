@@ -12,16 +12,12 @@
         "Amount": 25
       },
       {
-        "Id": "MetalBlock",
-        "Amount": 20
+        "Id": "Gear",
+        "Amount": 45
       },
       {
         "Id": "Limestone",
         "Amount": 35
-      },
-      {
-        "Id": "Gear",
-        "Amount": 30
       }
     ],
     "ScienceCost": 600,

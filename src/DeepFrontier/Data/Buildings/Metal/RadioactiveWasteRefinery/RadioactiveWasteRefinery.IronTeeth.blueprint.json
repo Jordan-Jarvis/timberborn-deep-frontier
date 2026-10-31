@@ -4,28 +4,28 @@
     "LoopingSoundName": "WaterPump",
     "BuildingCost": [
       {
-        "Id": "HighGradeSteel",
-        "Amount": 205
-      },
-      {
         "Id": "Alloy",
-        "Amount": 165
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 165
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 7900
-      },
-      {
-        "Id": "Brick",
-        "Amount": 1605
+        "Amount": 130
       },
       {
         "Id": "MachineCore",
-        "Amount": 95
+        "Amount": 115
+      },
+      {
+        "Id": "Electronics",
+        "Amount": 20
+      },
+      {
+        "Id": "PowerModule",
+        "Amount": 20
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 7745
+      },
+      {
+        "Id": "Brick",
+        "Amount": 1575
       }
     ],
     "ScienceCost": 500000,

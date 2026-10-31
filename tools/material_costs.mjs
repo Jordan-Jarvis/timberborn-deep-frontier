@@ -14,6 +14,9 @@
 // its first unit). Amounts round up to a multiple of 5, so the value never
 // falls. The deposit families (raw stone) are unpriced on the buildings that
 // produce their goods: the pits and quarries show the deposit they work.
+// A tier's familyGoods follow the progression sets (docs/progression.md
+// "Progression sets"); a machinery good named there (Gear for early metal,
+// Machine Core from the frontier) adds the family's share to its fixed amount.
 //
 // The value table and the recipe/producer graph come from the generated data
 // and are recorded in tools/material_cost_context.json:
@@ -51,9 +54,15 @@ for (const [tier, families] of Object.entries(rule.familyGoods)) {
     for (const [g, ratio] of Object.entries(goods)) if (!(ratio > 0)) throw new Error(`materialRule.familyGoods.${tier}.${f}.${g}: ratio must be positive`);
   }
 }
-export const MATERIAL_GOODS = new Set(Object.values(rule.familyGoods).flatMap((t) => Object.values(t).flatMap((g) => Object.keys(g))));
 export const MACHINERY = new Set(rule.machinery);
-for (const g of MACHINERY) if (MATERIAL_GOODS.has(g)) throw new Error(`materialRule: ${g} is both machinery and a family good`);
+// A machinery good may also stand in for a family (progression sets: Gear for
+// early metal, Machine Core from the frontier): its basis amount stays fixed
+// and the family's share is added to it. MATERIAL_GOODS are the family goods
+// that are not machinery, the goods whose basis value is shared out.
+export const MATERIAL_GOODS = new Set(Object.values(rule.familyGoods).flatMap((t) => Object.values(t).flatMap((g) => Object.keys(g))).filter((g) => !MACHINERY.has(g)));
+// The families of a tier whose goods include a machinery good: their value in
+// a finished cost cannot be told apart from the fixed machinery amount.
+export const mergedFamilies = (tierName) => FAMILIES.filter((f) => Object.keys(rule.familyGoods[tierName][f]).some((g) => MACHINERY.has(g)));
 if (!(rule.minFamilyShare >= 0 && rule.minFamilyShare < 1)) throw new Error('materialRule.minFamilyShare must lie in [0, 1)');
 for (const [material, family] of Object.entries(rule.materials)) {
   if (![...FAMILIES, 'unpriced', 'stone'].includes(family)) throw new Error(`materialRule.materials.${material}: unknown family ${family}`);
@@ -191,7 +200,12 @@ export function materialComposition(id, rows, science, tierName) {
       for (const [g, ratio] of goods) out.push([g, ceil5(familyValue * ratio / unitValue)]);
     }
   }
-  for (const [g, a] of rows) if (MACHINERY.has(g)) out.push([g, a]);
+  for (const [g, a] of rows) {
+    if (!MACHINERY.has(g)) continue;
+    const row = out.find(([x]) => x === g);
+    if (row) row[1] += a;
+    else out.push([g, a]);
+  }
   return {rows: out, failures, unpriced, folded, shares: share};
 }
 

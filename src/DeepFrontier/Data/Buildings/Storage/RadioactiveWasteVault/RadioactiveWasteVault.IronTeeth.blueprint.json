@@ -8,24 +8,24 @@
         "Amount": 120
       },
       {
-        "Id": "HighGradeSteel",
-        "Amount": 55
-      },
-      {
         "Id": "Alloy",
-        "Amount": 45
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 45
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 6945
+        "Amount": 35
       },
       {
         "Id": "MachineCore",
-        "Amount": 65
+        "Amount": 70
+      },
+      {
+        "Id": "Electronics",
+        "Amount": 5
+      },
+      {
+        "Id": "PowerModule",
+        "Amount": 5
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 6800
       }
     ],
     "ScienceCost": 200000,

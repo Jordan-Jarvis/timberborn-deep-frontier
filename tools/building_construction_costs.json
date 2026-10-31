@@ -77,9 +77,9 @@
   },
   "materialRule": {
     "scope": "Every Deep Frontier building with a BuildingSpec except the structural modules of tools/structural_content.json (named for and priced in their material). Late-game rule rows (lategameCost) and authored costs (buildingCost) both pass through materialCost (tools/material_costs.mjs); gates are added afterwards, unchanged.",
-    "basis": "The building's cost before this rule: the late-game rule rows without gates, or its authored cost times its tier costFactor (scaledCost). Machinery goods keep their amounts; the value of the material goods is redistributed.",
+    "basis": "The building's cost before this rule: the late-game rule rows without gates, or its authored cost times its tier costFactor (scaledCost). Machinery goods keep their amounts (a family share priced in a machinery good is added on top); the value of the material goods is redistributed.",
     "measure": "tools/asset-pipeline/measure_building_materials.py writes tools/building_material_mix.json: triangle area per material of the exported finished model, grouped into families by materials, detailsAtlas and stoneTiles. 'unpriced' area (glass, lamps, water, cloth, embers, instruments, rubber) is not priced.",
-    "composition": "Each priced family gets the material value times its share of the priced area. A family below minFamilyShare is folded into the others in proportion. Within a family the goods are the tier's familyGoods (unit ratios) that the building's world can produce without the building itself (tools/material_cost_context.json); each amount rounds up to a multiple of 5 (minimum 5), so the value never falls. A family with no producible good follows families[f].whenUnavailable: 'fail' prices the building without it and tools/audit_progression.mjs fails with the family's failure text (the art must change); 'unpriced' leaves the area unpriced (a stone's own producers show the deposit they work).",
+    "composition": "Each priced family gets the material value times its share of the priced area. A family below minFamilyShare is folded into the others in proportion. Within a family the goods are the tier's familyGoods (unit ratios; a machinery good among them adds the family share to its fixed amount) that the building's world can produce without the building itself (tools/material_cost_context.json); each amount rounds up to a multiple of 5 (minimum 5), so the value never falls. A family with no producible good follows families[f].whenUnavailable: 'fail' prices the building without it and tools/audit_progression.mjs fails with the family's failure text (the art must change); 'unpriced' leaves the area unpriced (a stone's own producers show the deposit they work).",
     "value": {
       "method": "Embodied recipe effort along the cheapest active Iron Teeth route (user decision 2026-10-30: raw effort): a primary or map-gathered good counts primaryGood, a liquid counts liquidGood, each recipe hour counts recipeHour, fuel counts its value / CyclesFuelLasts, and a recipe's effort is shared equally by its product units. tools/material_costs.mjs --write records the table in tools/material_cost_context.json.",
       "scope": "buildingWorld",
@@ -136,7 +136,7 @@
           "Log": 1
         },
         "metal": {
-          "MetalBlock": 1
+          "Gear": 1
         },
         "concrete": {},
         "brick": {
@@ -154,7 +154,8 @@
           "Plank": 1
         },
         "metal": {
-          "MetalBlock": 1
+          "MetalBlock": 2,
+          "DeepAlloy": 1
         },
         "concrete": {
           "Concrete": 1
@@ -171,11 +172,13 @@
       },
       "T3": {
         "wood": {
-          "Plank": 20,
-          "TreatedPlank": 5
+          "Plank": 2,
+          "TreatedPlank": 1
         },
         "metal": {
-          "MetalBlock": 1
+          "MetalBlock": 2,
+          "DeepAlloy": 1,
+          "HighGradeSteel": 1
         },
         "concrete": {
           "Concrete": 1
@@ -195,8 +198,8 @@
           "TreatedPlank": 1
         },
         "metal": {
-          "MetalBlock": 15,
-          "DeepAlloy": 3
+          "Alloy": 4,
+          "MachineCore": 1
         },
         "concrete": {
           "Concrete": 1
@@ -216,9 +219,10 @@
           "TreatedPlank": 1
         },
         "metal": {
-          "HighGradeSteel": 10,
           "Alloy": 8,
-          "MetalBlock": 8
+          "MachineCore": 1,
+          "Electronics": 1,
+          "PowerModule": 1
         },
         "concrete": {
           "Concrete": 1
@@ -234,7 +238,7 @@
         }
       }
     },
-    "familyGoodsNote": "Unit ratios from each tier's per100BuiltCells (the progression stage), plus Log in T1 wood (user 2026-10-30) and TreatedPlank as T5 wood (T5's table has no wood good). T1 is the pre-concrete stage. brick is Brick in every tier (user 2026-10-30, bricks pass): Plaster_Orange.IronTeeth, the one brick-red native surface, and DFIndustrial06, the mod's painted brick tile (2026-10-31: brick walls, plinths and footings), price as Brick; bricks exist from 600 science (Stone Crusher and Cement Kiln), so a building unlocked earlier must show under minFamilyShare of it.",
+    "familyGoodsNote": "Progression sets (user 2026-10-31, docs/progression.md \"Progression sets\"): the stage decides which good of each ladder stands in for wood, metal and masonry. Early (T1): Plank and Log, metal as Gear. Industrial (T2): Plank, Metal Block and Deep Iron (DeepAlloy). Transition (T3): Plank and Treated Plank, Metal Block, Deep Iron and Steel (HighGradeSteel). Frontier (T4): Treated Plank, Alloy and Machine Core. Endgame (T5): Treated Plank, Alloy, Machine Core, Electronics and Power Module. Ratios are units. A machinery good named here (Gear, MachineCore) keeps its fixed basis amount and adds the family share on top. T1 is the pre-concrete stage. brick is Brick in every tier (user 2026-10-30, bricks pass): Plaster_Orange.IronTeeth, the one brick-red native surface, and DFIndustrial06, the mod's painted brick tile (2026-10-31: brick walls, plinths and footings), price as Brick; bricks exist from 600 science (Stone Crusher and Cement Kiln), so a building unlocked earlier must show under minFamilyShare of it.",
     "materials": {
       "BaseMetal.IronTeeth": "metal",
       "BaseWood_Brown.Folktails": "wood",
@@ -318,29 +322,29 @@
     }
   },
   "buildings": {
-    "FertilizerWorks": [["Plank",135],["Log",70],["MetalBlock",65],["Gear",80]],
+    "FertilizerWorks": [["Plank",135],["Log",70],["Gear",135]],
     "FishHatchery": [["Plank",40],["Gear",20],["MetalBlock",15]],
     "FisheryWorks": [["Plank",40],["Gear",20],["MetalBlock",15]],
-    "FoodPackagingWorks": [["Plank",65],["MetalBlock",85],["Concrete",265],["Brick",105],["Gear",90]],
+    "FoodPackagingWorks": [["Plank",65],["MetalBlock",45],["DeepAlloy",25],["Concrete",265],["Brick",105],["Gear",90]],
     "PublicHealthLab": [["Plank",170],["Concrete",340],["Brick",50],["Gear",90]],
     "Restaurant": [["Plank",40],["Gear",20],["MetalBlock",15],["Concrete",60]],
-    "Greenhouse": [["Plank",15],["Log",10],["MetalBlock",65],["Gear",35],["Fertilizer",30]],
-    "ChemicalWorks": [["MetalBlock",405],["Concrete",700],["Gear",200]],
-    "PrecisionMachineWorks": [["Plank",150],["TreatedPlank",40],["MetalBlock",105],["Concrete",710],["Gear",145]],
-    "WaterTreatmentPlant": [["Plank",145],["MetalBlock",105],["Concrete",475],["Brick",95],["Gear",135]],
-    "TechnicalSchool": [["Plank",110],["MetalBlock",20],["Concrete",280],["Brick",135],["Gear",85]],
-    "UraniumProcessingPlant": [["HighGradeSteel",280],["Alloy",225],["MetalBlock",225],["Concrete",7815],["Brick",980],["MachineCore",105]],
-    "RadioactiveWasteRefinery": [["HighGradeSteel",205],["Alloy",165],["MetalBlock",165],["Concrete",7900],["Brick",1605],["MachineCore",95]],
-    "ElectrolysisPlant": [["TreatedPlank",165],["MetalBlock",350],["DeepAlloy",70],["Concrete",1900],["Brick",370],["Gear",270]],
-    "CryogenicLiquefactionPlant": [["MetalBlock",505],["DeepAlloy",105],["Concrete",2035],["Gear",255]],
-    "RocketAssemblyHangar": [["TreatedPlank",475],["HighGradeSteel",415],["Alloy",330],["MetalBlock",330],["Concrete",2590],["Brick",2550],["MachineCore",130]],
-    "MissionControl": [["TreatedPlank",235],["MetalBlock",105],["DeepAlloy",25],["Concrete",3240],["Brick",380],["Gear",295]],
-    "LaunchPad": [["TreatedPlank",265],["HighGradeSteel",260],["Alloy",210],["MetalBlock",210],["Concrete",9525],["MachineCore",115]],
-    "NuclearReactor": [["HighGradeSteel",1025],["Alloy",740],["MetalBlock",740],["Concrete",34145],["MachineCore",405],["EnrichedFuel",20]],
-    "SteelMill": [["MetalBlock",500],["Concrete",980],["Gear",255]],
-    "ArchiveExcavation": [["TreatedPlank",235],["MetalBlock",100],["DeepAlloy",20],["Concrete",2195],["Brick",810],["Gear",265]],
-    "CryogenicTankFarm": [["TreatedPlank",100],["MetalBlock",295],["DeepAlloy",60],["Concrete",2355],["Gear",225]],
-    "CoalPowerPlant": [["MetalBlock",130],["Concrete",65],["Brick",265],["Gear",75]],
-    "OilPowerPlant": [["MetalBlock",230],["DeepAlloy",50],["Concrete",650],["Gear",100],["MachineCore",4]]
+    "Greenhouse": [["Plank",15],["Log",10],["Gear",85],["Fertilizer",30]],
+    "ChemicalWorks": [["MetalBlock",205],["DeepAlloy",105],["Concrete",700],["Gear",200]],
+    "PrecisionMachineWorks": [["Plank",110],["TreatedPlank",55],["MetalBlock",35],["DeepAlloy",20],["HighGradeSteel",20],["Concrete",710],["Gear",145]],
+    "WaterTreatmentPlant": [["Plank",145],["MetalBlock",55],["DeepAlloy",30],["Concrete",475],["Brick",95],["Gear",135]],
+    "TechnicalSchool": [["Plank",110],["MetalBlock",10],["DeepAlloy",5],["Concrete",280],["Brick",135],["Gear",85]],
+    "UraniumProcessingPlant": [["Alloy",175],["MachineCore",130],["Electronics",25],["PowerModule",25],["Concrete",7665],["Brick",960]],
+    "RadioactiveWasteRefinery": [["Alloy",130],["MachineCore",115],["Electronics",20],["PowerModule",20],["Concrete",7745],["Brick",1575]],
+    "ElectrolysisPlant": [["TreatedPlank",165],["Alloy",70],["MachineCore",20],["Concrete",1900],["Brick",370],["Gear",270]],
+    "CryogenicLiquefactionPlant": [["Alloy",100],["MachineCore",25],["Concrete",2035],["Gear",255]],
+    "RocketAssemblyHangar": [["TreatedPlank",465],["Alloy",265],["MachineCore",165],["Electronics",35],["PowerModule",35],["Concrete",2535],["Brick",2495]],
+    "MissionControl": [["TreatedPlank",235],["Alloy",25],["MachineCore",10],["Concrete",3240],["Brick",380],["Gear",295]],
+    "LaunchPad": [["TreatedPlank",260],["Alloy",165],["MachineCore",140],["Electronics",25],["PowerModule",25],["Concrete",9340]],
+    "NuclearReactor": [["Alloy",585],["MachineCore",480],["Electronics",75],["PowerModule",75],["Concrete",33425],["EnrichedFuel",20],["HighGradeSteel",100]],
+    "SteelMill": [["MetalBlock",255],["DeepAlloy",130],["Concrete",980],["Gear",255]],
+    "ArchiveExcavation": [["TreatedPlank",235],["Alloy",20],["MachineCore",5],["Concrete",2195],["Brick",810],["Gear",265]],
+    "CryogenicTankFarm": [["TreatedPlank",100],["Alloy",60],["MachineCore",15],["Concrete",2355],["Gear",225]],
+    "CoalPowerPlant": [["MetalBlock",40],["DeepAlloy",20],["HighGradeSteel",20],["Concrete",65],["Brick",265],["Gear",75]],
+    "OilPowerPlant": [["Alloy",45],["MachineCore",19],["Concrete",650],["Gear",100]]
   }
 }

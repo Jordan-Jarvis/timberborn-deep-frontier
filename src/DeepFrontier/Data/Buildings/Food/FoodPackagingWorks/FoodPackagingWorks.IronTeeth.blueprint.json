@@ -9,7 +9,11 @@
       },
       {
         "Id": "MetalBlock",
-        "Amount": 85
+        "Amount": 45
+      },
+      {
+        "Id": "DeepAlloy",
+        "Amount": 25
       },
       {
         "Id": "Concrete",

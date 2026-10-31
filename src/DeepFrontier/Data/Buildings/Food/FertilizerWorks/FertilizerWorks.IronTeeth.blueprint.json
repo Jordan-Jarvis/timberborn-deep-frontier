@@ -12,12 +12,8 @@
         "Amount": 70
       },
       {
-        "Id": "MetalBlock",
-        "Amount": 65
-      },
-      {
         "Id": "Gear",
-        "Amount": 80
+        "Amount": 135
       }
     ],
     "ScienceCost": 350,

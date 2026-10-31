@@ -4,6 +4,14 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Progression sets: deep metal and chemistry ladders, costs climb the sets, Deep Drill bits on Metal Block (Claude Code session, 2026-10-31, progression agent; data regenerated; validated in mirror `prog` on HEAD 978f170 + this change; not built or run in game)
+
+- **User:** "we need our own progression sets", like vanilla Logs → Planks → Gears → Treated Planks and Scrap Metal → Metal Parts / Metal Blocks. Plan approved by the user via the coordinator.
+- **Ladders:** Deep Ore → Deep Iron (`DeepAlloy`, renamed) → Steel (`HighGradeSteel`, renamed) → Alloy; Steel = 2 Deep Iron + 2 Coal + 1 Limestone → 2 (was 4 Metal Block). Crude Oil → Chemical → Polymer; Chemical = 2 Crude Oil + 1 Extract → 2 (was 4 Badwater); BrineChemical unchanged. Ids unchanged, so saves are unaffected.
+- **Costs:** `materialRule.familyGoods` follow the stage table in docs/progression.md "Progression sets". A machinery good may now stand in for a family (Gear for early metal, Machine Core from T4): `material_costs.mjs` adds the family share to the fixed amount; `audit_progression.mjs` checks such a family against the others (`mergedFamilies`). Audit 0 failures; stone budget unchanged (1,213 Limestone, 1,689 Sandstone of 1,800).
+- **Deadlock fixed:** the Deep Drill (1,000) wore Steel bits (Steel from 4,500, now from drilled ore). It now wears 0.1 Metal Block per full-crew hour (`workforce_risks.json` role `DrillBits`; the Deep Mine's Steel bits are role `SteelDrillBits`). Old saves: a saved Steel part unit at a drill is dropped with a log warning (`WorkplaceUpkeep.Load`); not tested in game.
+- **Maps:** the finite deep ore check counts buildings up to and including the Deep Mine (1,290 Deep Ore; the whole collection would need about 24,500), and fails if the Deep Drill's bits embody deep ore.
+
 ## Roofs are platforms: no roof railings, parapets or curbs; roof path links and straddling checked; Restaurant seating lowered (Claude Code session, 2026-10-31, roof coordinator with a civic and a late-game agent; scenes, exports and data promoted batch by batch; validated in mirrors `roof_civic`, `roof_lg`, `roof_val` on HEAD; not built or run in game)
 
 - **User:** "lets remove the railings and cement railing/mini walls on the roofs of our buildings. I want it to be like an actual platform where roads can connect. buildings can be built on edges of two buildings butting up to each other, etc...." and "the resturaunt chairs and tables are a tad too tall, and beavers heads are clipping the ceiling when they dine."

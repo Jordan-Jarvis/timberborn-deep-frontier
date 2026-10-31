@@ -5,31 +5,31 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 475
-      },
-      {
-        "Id": "HighGradeSteel",
-        "Amount": 415
+        "Amount": 465
       },
       {
         "Id": "Alloy",
-        "Amount": 330
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 330
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 2590
-      },
-      {
-        "Id": "Brick",
-        "Amount": 2550
+        "Amount": 265
       },
       {
         "Id": "MachineCore",
-        "Amount": 130
+        "Amount": 165
+      },
+      {
+        "Id": "Electronics",
+        "Amount": 35
+      },
+      {
+        "Id": "PowerModule",
+        "Amount": 35
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 2535
+      },
+      {
+        "Id": "Brick",
+        "Amount": 2495
       }
     ],
     "ScienceCost": 50000,

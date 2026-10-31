@@ -96,6 +96,7 @@ ENTRY_ORDER = ['map_metadata.json', 'map_thumbnail.jpg', 'version.txt', 'world.j
 BUILDING_COLLECTION = MOD_DATA / 'TemplateCollections/TemplateCollection.Buildings.IronTeeth.blueprint.json'
 NARRATIVE_SETTINGS = MOD_DATA / 'Configurations/DeepFrontierNarrative.blueprint.json'
 LOOP_REQUIREMENTS = ROOT / 'tools/map_loop_requirements.json'
+WORKFORCE_RISKS = ROOT / 'tools/workforce_risks.json'
 GATHERER_FLAG_PATCH = MOD_DATA / 'Buildings/Food/GathererFlag/GathererFlag.IronTeeth.blueprint.json'
 ORIENTATIONS = ['Cw0', 'Cw90', 'Cw180', 'Cw270']
 # NavigationDistance.ResourceBuildings (Timberborn.Navigation.dll, 1.1.2.8) = 20:
@@ -1931,12 +1932,24 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
     # Only a source with a checked drill site beside it can be drilled.
     drillable = [r for r in sources if any(beside(r, info) for info in drill_sites)]
     finite = sum(r['placement']['amount'] for r in drillable)
-    collection_ore = construction.get('DeepOre', 0)
+    # After the Deep Mine, ore is renewable: the finite sources only carry the colony up to the mine,
+    # so they must hold the DeepOre of one of each building unlocked at or below the Deep Mine's science,
+    # the mine included. Drill-bit upkeep until then takes no DeepOre (the Deep Drill wears Metal Block bits).
+    mines = [t for t in templates if t != DEEP_DRILL and 'DeepOre' in program.products(t)]
+    if len(mines) != 1:
+        fail(f'Expected one permanent DeepOre building besides {DEEP_DRILL}, found {mines}')
+    mine_science = catalog.get(mines[0])['BuildingSpec']['ScienceCost']
+    upkeep = read_json(WORKFORCE_RISKS)['workplaceUpkeep']['templates']
+    drill_bits = [g for g, _, _ in upkeep[catalog.building_collection[DEEP_DRILL]]]
+    if 'DeepOre' in program.expand([(g, 1) for g in drill_bits]):
+        fail(f'{DEEP_DRILL} upkeep {drill_bits} takes DeepOre: the finite deep ore check must count it')
+    before_mine = [t for t in templates if catalog.get(t)['BuildingSpec']['ScienceCost'] <= mine_science]
+    collection_ore = program.building_cost(before_mine).get('DeepOre', 0)
     finite_needed = math.ceil(collection_ore * (1 + requirements['finiteDeepOreMargin']))
     need('deepIndustry', 'finite deep ore covers one of each building', finite >= finite_needed,
          f'{finite} DeepOre in {len(drillable)} of {len(sources)} sources beside a checked Deep Drill site; one of each '
-         f'collection building needs {int(round(collection_ore))}, {finite_needed} with the '
-         f'{requirements["finiteDeepOreMargin"]:.0%} margin')
+         f'building up to the {mines[0]} ({mine_science} science, ore renewable after it) needs '
+         f'{int(round(collection_ore))}, {finite_needed} with the {requirements["finiteDeepOreMargin"]:.0%} margin')
     reachable_ruins = [u for u in resources['undergroundRuins'] if u['routeFromStart'] is not None]
     need('deepIndustry', 'renewable scrap (Underground Ruins for the Efficient Mine)',
          len(reachable_ruins) >= requirements['minUndergroundRuinsReachable'],

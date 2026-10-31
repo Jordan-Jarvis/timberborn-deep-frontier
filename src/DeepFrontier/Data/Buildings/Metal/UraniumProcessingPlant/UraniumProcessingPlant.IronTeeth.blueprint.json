@@ -4,28 +4,28 @@
     "LoopingSoundName": "PaperMill",
     "BuildingCost": [
       {
-        "Id": "HighGradeSteel",
-        "Amount": 280
-      },
-      {
         "Id": "Alloy",
-        "Amount": 225
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 225
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 7815
-      },
-      {
-        "Id": "Brick",
-        "Amount": 980
+        "Amount": 175
       },
       {
         "Id": "MachineCore",
-        "Amount": 105
+        "Amount": 130
+      },
+      {
+        "Id": "Electronics",
+        "Amount": 25
+      },
+      {
+        "Id": "PowerModule",
+        "Amount": 25
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 7665
+      },
+      {
+        "Id": "Brick",
+        "Amount": 960
       }
     ],
     "ScienceCost": 200000,

@@ -4,28 +4,32 @@
     "LoopingSoundName": "PrintingPress",
     "BuildingCost": [
       {
-        "Id": "HighGradeSteel",
-        "Amount": 1025
-      },
-      {
         "Id": "Alloy",
-        "Amount": 740
-      },
-      {
-        "Id": "MetalBlock",
-        "Amount": 740
-      },
-      {
-        "Id": "Concrete",
-        "Amount": 34145
+        "Amount": 585
       },
       {
         "Id": "MachineCore",
-        "Amount": 405
+        "Amount": 480
+      },
+      {
+        "Id": "Electronics",
+        "Amount": 75
+      },
+      {
+        "Id": "PowerModule",
+        "Amount": 75
+      },
+      {
+        "Id": "Concrete",
+        "Amount": 33425
       },
       {
         "Id": "EnrichedFuel",
         "Amount": 20
+      },
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 100
       }
     ],
     "ScienceCost": 1000000,

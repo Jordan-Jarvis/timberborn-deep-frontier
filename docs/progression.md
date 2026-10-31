@@ -2,6 +2,54 @@
 
 Status 2026-10-21. These are the rules for unlock order, construction cost and chain reachability, with the static audit that checks them. They are authored balance plus static checks. None of this has been played or tested in game. `tools/STATUS.md` holds the runtime verification state.
 
+## Progression sets (2026-10-31)
+
+User request: "we need our own progression sets", ladders like vanilla Iron Teeth's Logs → Planks → Gears → Treated Planks and Scrap Metal → Metal Parts / Metal Blocks. Each step below consumes the one before it. Good ids are unchanged: Deep Iron is `DeepAlloy` and Steel is `HighGradeSteel` (display names only, so saves load as before).
+
+| Ladder | Step | Building (science) | Recipe |
+|---|---|---|---|
+| Deep metal | Deep Ore | Deep Drill (1,000; finite source), Deep Mine (6,000; vein) | gathered |
+| | Deep Iron | Deep Ore Processor (1,200) | 2 Deep Ore + 1 Water + 1 Metal Part → 1, 1.5 h |
+| | Steel | Steel Mill (4,500) | **2 Deep Iron** + 2 Coal + 1 Limestone → 2, 4 h (was 4 Metal Block; value 11.8 → 11.4) |
+| | Alloy | Steel Mill (4,500) | 2 Steel + 1 Deep Iron → 2, 1.5 h |
+| Chemistry | Crude Oil | Deep Ore Processor (1,200) | 1 Deep Ore + 3 Water → 6, 2 h |
+| | Chemical | Chemical Works (4,000) | **2 Crude Oil** + 1 Extract → 2, 2 h (was 4 Badwater; value 3.12 unchanged). Chemical from brine stays: 3 Concentrated Waste + 1 Extract → 2 |
+| | Polymer | Chemical Works (4,000) | 3 Crude Oil + 1 Chemical + 2 Water → 3, 3 h |
+| Masonry | Sandstone, Limestone | pits (300), quarries (4,000) | gathered |
+| | Brick | Stone Crusher, Cement Kiln (600) | 3 Sandstone → 8 Dirt; 4 Dirt + 1 Water → 4 Brick |
+| | Cement | Cement Kiln (600) | 3 Limestone + 1 Dirt → 2 (from the same brick earth, not from Brick) |
+| | Concrete | Concrete Mixer (1,000) | 3 Sandstone + 2 Cement + 4 Water → 8 |
+| Machinery | Gear | vanilla Gear Workshop (100) | 1 Plank → 1 |
+| | Machine Core | Precision Machine Works (5,000) | 2 Alloy + 1 Polymer + 2 Gear + 1 Deep Iron → 1, 2 h |
+| | Electronics | Precision Machine Works (5,000) | 1 Machine Core + 2 Metal Part + 1 Polymer → 1, 2 h |
+| | Power Module | Precision Machine Works (5,000) | 1 Electronics + 1 Alloy + 2 Metal Part + 1 Coal → 1, 2 h |
+| Water | Pure Water | Water Treatment Plant (1,800) | 10 Water + 1 Filter Media → 8 (+1 Concentrated Waste), 8 h |
+| | Reactor Coolant | Water Treatment Plant (1,800; Cryocoolant from 4,000) | 4 Pure Water + 1 Filter Media + 1 Cryocoolant → 4, 4 h |
+| Nuclear | Uranium Ore | Deep Ore Processor (1,200) | 2 Deep Ore + 4 Water → 1, 3 h |
+| | Yellowcake | Uranium Processing Plant (200,000) | 3 Uranium Ore + 1 Chemical + 2 Water + 1 Oxygen → 2, 2 h |
+| | Enriched Fuel | Uranium Processing Plant (200,000) | 2 Yellowcake + 1 Machine Core + 1 Power Module + 1 Hydrogen → 1 (+1 waste), 1 h |
+| | Reactor Power Cell | Uranium Processing Plant (200,000) | 1 Enriched Fuel + 2 Power Module + 2 Electronics + 2 Cryocoolant → 1, 6 h |
+
+Badwater keeps its uses: vanilla Extract (Centrifuge), which every Chemical recipe needs, and Badwater filtering at the Radioactive Waste Refinery. Metal Block loses Steel and gains the Deep Drill's drill bits. The Deep Drill (1,000) used to wear Steel bits that only exist from 4,500, and Steel now needs drilled ore, so the drill now wears 0.1 Metal Block per full-crew hour. The Deep Mine and the Deep Well keep Steel bits.
+
+**Construction costs climb the sets.** The stage (cost tier, fixed by the science unlock) decides which goods stand in for each visible material family (`materialRule.familyGoods`, unit ratios). The material cost rule is otherwise unchanged: the value follows each building's measured material mix, a family only uses goods producible without the building itself, and the gates stay. Gear and Machine Core keep their fixed basis amounts. Where a stage names them as a family good, the family's share is added on top (Gear for early metal, Machine Core from the frontier).
+
+| Stage (tier) | Science | Wood | Metal | Masonry | Fixed machinery |
+|---|---|---|---|---|---|
+| Early (T1) | ≤ 600 | 2 Plank : 1 Log | Gear | Brick, pit stone | Gear |
+| Industrial (T2) | ≤ 3,000 | Plank | 2 Metal Block : 1 Deep Iron | Concrete, Brick | Gear |
+| Transition (T3) | ≤ 8,000 | 2 Plank : 1 Treated Plank | 2 Metal Block : 1 Deep Iron : 1 Steel | Concrete, Brick | Gear |
+| Frontier (T4) | ≤ 30,000 | Treated Plank | 4 Alloy : 1 Machine Core | Concrete, Brick | Gear |
+| Endgame (T5) | above | Treated Plank | 8 Alloy : 1 Machine Core : 1 Electronics : 1 Power Module | Concrete, Brick | Machine Core |
+
+Availability still decides per building. Deep Iron appears from 1,200 science (not on the Deep Ore Processor itself), Steel from 4,500 (not on the Steel Mill), and Electronics and Power Modules from 5,000. Bootstrap is unchanged: the first concrete chain stays concrete-free, and no building needs a good it is needed to make (`audit_progression.mjs`: 0 failures). The audit checks a family priced in a machinery good against the others, since its value cannot be told apart from the fixed amount; late-game rule buildings are still compared with the rule exactly.
+
+Totals over every Deep Frontier building (81 blueprints, structures included), before → after: Metal Block 9,535 → 4,280, Steel 5,411 → 3,346 (structures and gates; no longer a T4/T5 family good), Plank 3,310 → 2,820, Treated Plank 2,897 → 3,067, Deep Iron 455 → 550, Alloy 1,770 → 1,815, Machine Core 954 → 1,279, Electronics 0 → 205, Power Module 0 → 205, Gear 6,622 → 6,782, Concrete 101,805 → 100,355, Brick 9,128 → 9,023. The embodied value of each cost stays within a few percent (a value-preserving swap rounded up to 5). Small endgame buildings rise most, because each of four metal goods has a minimum of 5: Sludge Outfall and Recovery Pump ×1.7, Reactor Charging Bay ×1.4.
+
+**Stone budget** (`prepare_deep_frontier_map.py builtin`): unchanged at 1,213 Limestone and 1,689 Sandstone of the 1,800 in pit range. The sets swap goods inside the wood and metal families, not the stone shares.
+
+**Finite deep ore.** Steel, Alloy, Machine Core, Electronics and Power Module now all embody deep ore, so one of each building in the whole collection needs about 24,500 Deep Ore, against the 17,000-18,000 the built-in maps hold. The map check (`finiteDeepOreMargin`) now counts the buildings up to and including the Deep Mine (6,000), because ore is renewable after it. They need 1,290 Deep Ore (1,355 with the 5% margin). Drill-bit upkeep until then takes no deep ore: the check fails if the Deep Drill's bits ever embody it.
+
 ## Tools
 
 | Tool | Purpose |
@@ -105,7 +153,7 @@ Every Deep Frontier building with a construction cost passes through it, except 
 - **Measure.** `python tools/asset-pipeline/measure_building_materials.py [dataRoot]` decodes each building's exported finished model (official Timbermesh schema) and writes `tools/building_material_mix.json`: model path, sha256, triangle area per material and per family. Families come from `materialRule.materials`. Details.IronTeeth is split by atlas region: its strap strip is metal, crates and planks are wood, cloth is unpriced. Each stone tile takes the stone whose reference tile is nearest in chromaticity; all grey masonry reads as limestone. Orange plaster (Plaster_Orange.IronTeeth) is brick since the 2026-10-30 bricks pass. Glass, lamps, water, cloth, embers, instruments and rubber are unpriced. Nested native props are game models and are not measured.
 - **Basis.** The building's cost before this rule: the late-game rule rows without gates, or its authored cost times its tier costFactor. Gear and MachineCore (machinery) keep their amounts. Gates are added afterwards, unchanged.
 - **Value.** Each material good has an embodied value: recipe effort along the cheapest route, where a primary or map-gathered good counts 1, a liquid 0, each recipe hour 1, fuel its value / CyclesFuelLasts, and a recipe's effort is shared by its product units. The user chose raw effort, so concrete-heavy buildings need large counts. `value.scope` is `buildingWorld`: a good is valued only by the routes of the building's own world (without it, at or below its science). For a building unlocked before the quarries, Limestone comes from the pits (1.0), not the quarries (0.42). Example values at 1,000 science (bricks pass): Plank 2.25, Log 1, MetalBlock 4.2, Gear 5.25, Concrete 1.60, Brick 1.33, Dirt 0.50, TreatedPlank 6.25. At the reactor: Concrete 1.14, Brick 1.11, DeepAlloy 8.0, HighGradeSteel 11.8, Alloy 16.6, MachineCore 56.6.
-- **Composition.** The material value is shared over wood, metal, concrete, brick, sandstone and limestone by the measured area. A family under 5% is folded into the others. Inside a family the goods are the tier's `familyGoods` (unit ratios, from the tier tables above, plus Log in T1 wood and TreatedPlank as T5 wood) that the settlement can make without this building. Each amount rounds up to a multiple of 5, so the value never falls.
+- **Composition.** The material value is shared over wood, metal, concrete, brick, sandstone and limestone by the measured area. A family under 5% is folded into the others. Inside a family the goods are the tier's `familyGoods` (unit ratios; since 2026-10-31 the stage table of [Progression sets](#progression-sets-2026-10-31)) that the settlement can make without this building. Each amount rounds up to a multiple of 5, so the value never falls.
 - **Stone.** Masonry is priced as Sandstone or Limestone. Raw stone on the buildings that produce it (the pits and the quarries) is the deposit they work and stays unpriced (`depositFamilies`).
 - **No good, no family.** A family with no producible good at the building's stage fails the audit. For concrete the failure reads "concrete shown before Concrete exists": the art must change. Fertilizer Works, Greenhouse, Fish Hatchery, Stone Crusher, Cement Kiln, Concrete Mixer and both pits show none after the roof pass.
 - **Context.** `node tools/material_costs.mjs --write|--check [dataRoot]` records the value table and producer graph of the generated data in `tools/material_cost_context.json`. After a recipe or science change: measure (if models changed), `--write`, `node tools/lategame_costs.mjs --write`, regenerate.

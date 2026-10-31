@@ -8,12 +8,12 @@
         "Amount": 240
       },
       {
-        "Id": "MetalBlock",
-        "Amount": 115
+        "Id": "Alloy",
+        "Amount": 25
       },
       {
-        "Id": "DeepAlloy",
-        "Amount": 25
+        "Id": "MachineCore",
+        "Amount": 10
       },
       {
         "Id": "Concrete",

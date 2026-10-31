@@ -157,11 +157,18 @@ const recipeDefinitions = [
   ['GreenhouseKohlrabi', 'Kohlrabi', 8.0, [{ Id: 'Fertilizer', Amount: 2 }, { Id: 'Water', Amount: 4 }], [{ Id: 'Kohlrabi', Amount: 112 }], 'Kohlrabi'],
   ['GreenhouseCoffee', 'CoffeeBean', 8.0, [{ Id: 'Fertilizer', Amount: 2 }, { Id: 'Water', Amount: 3 }], [{ Id: 'CoffeeBean', Amount: 24 }], 'CoffeeBean'],
   ['Medicine', 'Medicine', 2.0, [{ Id: 'Mushroom', Amount: 2 }, { Id: 'Algae', Amount: 1 }, { Id: 'Water', Amount: 1 }], [{ Id: 'Medicine', Amount: 2 }], 'Medicine'],
-  // Limestone is the flux (the retired Flux intermediate, tools/content_policy.json migratedGoods).
-  ['HighGradeSteel', 'HighGradeSteel', 4.0, [{ Id: 'MetalBlock', Amount: 4 }, { Id: 'Coal', Amount: 2 }, { Id: 'Limestone', Amount: 1 }], [{ Id: 'HighGradeSteel', Amount: 2 }], 'HighGradeSteel'],
+  // Steel (id HighGradeSteel) from Deep Iron (id DeepAlloy): the deep metal
+  // ladder Deep Ore -> Deep Iron -> Steel -> Alloy (docs/progression.md
+  // "Progression sets"). 2 Deep Iron replace the 4 Metal Blocks, keeping the
+  // embodied value close (11.8 -> 11.4). Limestone is the flux (the retired
+  // Flux intermediate, tools/content_policy.json migratedGoods).
+  ['HighGradeSteel', 'HighGradeSteel', 4.0, [{ Id: 'DeepAlloy', Amount: 2 }, { Id: 'Coal', Amount: 2 }, { Id: 'Limestone', Amount: 1 }], [{ Id: 'HighGradeSteel', Amount: 2 }], 'HighGradeSteel'],
   ['Alloy', 'Alloy', 1.5, [{ Id: 'HighGradeSteel', Amount: 2 }, { Id: 'DeepAlloy', Amount: 1 }], [{ Id: 'Alloy', Amount: 2 }], 'Alloy'],
-  // Industrial chemical from native badwater and extract (ChemicalWorks).
-  ['Chemical', 'Chemical', 2.0, [{ Id: 'Badwater', Amount: 4 }, { Id: 'Extract', Amount: 1 }], [{ Id: 'Chemical', Amount: 2 }], 'Chemical'],
+  // Industrial chemical from crude oil and extract (ChemicalWorks): the
+  // chemistry ladder Crude Oil -> Chemical -> Polymer (docs/progression.md
+  // "Progression sets"). 2 Crude Oil replace the 4 Badwater at the same
+  // embodied value (3.12); Extract is the Centrifuge's badwater distillate.
+  ['Chemical', 'Chemical', 2.0, [{ Id: 'CrudeOil', Amount: 2 }, { Id: 'Extract', Amount: 1 }], [{ Id: 'Chemical', Amount: 2 }], 'Chemical'],
   ['Polymer', 'Polymer', 3.0, [{ Id: 'CrudeOil', Amount: 3 }, { Id: 'Chemical', Amount: 1 }, { Id: 'Water', Amount: 2 }], [{ Id: 'Polymer', Amount: 3 }], 'Polymer'],
   ['MachineCore', 'MachineCore', 2.0, [{ Id: 'Alloy', Amount: 2 }, { Id: 'Polymer', Amount: 1 }, { Id: 'Gear', Amount: 2 }, { Id: 'DeepAlloy', Amount: 1 }], [{ Id: 'MachineCore', Amount: 1 }], 'MachineCore'],
   // Second use (docs/progression.md "Second uses"): graphite electrodes (coal) in power modules.
@@ -323,7 +330,7 @@ function plannedRow(id, outputPath, template) {
 // generic production line; a description takes the generated power (hp).
 const hpText = (hp) => hp.toLocaleString('en-US');
 const BUILDING_TEXT = {
-  SteelMill: [(hp) => `An electric-arc melt shop and rolling mill. Makes high-grade steel from metal blocks, coal and limestone flux, and alloy from high-grade steel and deep alloy. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires ${hpText(hp)} hp. Its two smokestacks pollute the air nearby.`,
+  SteelMill: [(hp) => `An electric-arc melt shop and rolling mill. Makes steel from deep iron, coal and limestone flux, and alloy from steel and deep iron. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires ${hpText(hp)} hp. Its two smokestacks pollute the air nearby.`,
     'Every reactor, rocket and machine core starts as a white-hot pour on this floor.'],
   ArchiveExcavation: [(hp) => `Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts and their sealed data drives, which Mission Control reads into guidance computers and telemetry. A Human Record Cache within ${CACHE.spec.SurveyRadius} tiles can be surveyed for ${CACHE.spec.RewardAmount} extra artifacts. 4 workers, dangerous work. Requires ${hpText(hp)} hp. Its stove chimney pollutes the air nearby.`,
     'The humans buried their warnings in the strata. Dig carefully.'],
@@ -698,8 +705,12 @@ const csvCell = (value) => {
   return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 };
 const csvRow = (id, text, comment = 'Deep Frontier') => [id, text, comment].map(csvCell).join(',');
+// Display names that differ from the id (progression sets 2026-10-31: the id
+// HighGradeSteel stays, so saves are unaffected).
+const GOOD_DISPLAY_NAMES = {HighGradeSteel: 'Steel'};
+for (const id of Object.keys(GOOD_DISPLAY_NAMES)) if (!goodDefinitions.some(([good]) => good === id)) throw new Error(`GOOD_DISPLAY_NAMES names undefined good ${id}`);
 for (const [id] of goodDefinitions) {
-  const display = id.replace(/([A-Z])/g, ' $1').trim();
+  const display = GOOD_DISPLAY_NAMES[id] ?? id.replace(/([A-Z])/g, ' $1').trim();
   rows.push(csvRow(`Good.${id}.DisplayName`, display));
   rows.push(csvRow(`Good.${id}.PluralDisplayName`, display));
 }
@@ -770,7 +781,7 @@ for (const entry of POWER_PLANTS) {
   rows.push(csvRow(`Building.${entry.id}.Description`, POWER_PLANT_TEXT[entry.id][0](entry)));
   rows.push(csvRow(`Building.${entry.id}.FlavorDescription`, POWER_PLANT_TEXT[entry.id][1]));
 }
-for (const [id] of recipeDefinitions) rows.push(csvRow(`Recipe.${id}.DisplayName`, Object.hasOwn(RECIPE_NAMES, id) ? RECIPE_NAMES[id] : id.replace(/([A-Z])/g, ' $1').trim()));
+for (const [id] of recipeDefinitions) rows.push(csvRow(`Recipe.${id}.DisplayName`, Object.hasOwn(RECIPE_NAMES, id) ? RECIPE_NAMES[id] : GOOD_DISPLAY_NAMES[id] ?? id.replace(/([A-Z])/g, ' $1').trim()));
 rows.push(csvRow('Need.PublicHealthcare.DisplayName','Public healthcare'));
 for (const [id, text] of HOSPITAL_LOCALIZATION) rows.push(csvRow(id, text));
 for (const [id, text] of RESTAURANT_LOCALIZATION) rows.push(csvRow(id, text));

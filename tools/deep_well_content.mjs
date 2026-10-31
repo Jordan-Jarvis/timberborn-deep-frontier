@@ -65,12 +65,12 @@ const drought = CONFIG.drought;
 export const DROUGHT_RULE = `In a drought it runs only on its full ${hp(drought.powerInputHp)} hp, at any boost, and drives the source at most ${drought.maxBoost}×; short of full power it stops and the source dries up like any other.`;
 export const LOCALIZATION = [
   [`Building.${ID}.DisplayName`, 'Deep Well'],
-  [`Building.${ID}.Description`, `Stands with its drill over a water source, water seep or badwater source and drives the source harder while powered: up to ${CONFIG.maxBoost}× its flow, at most ${CONFIG.maxWaterSourceStrengthPerCell} per source cell. A seep flows like a normal source. Draws ${hp(Math.ceil(CONFIG.powerInputHp / CONFIG.maxBoost))} hp at 1×, rising with the boost to ${hp(CONFIG.powerInputHp)} hp at ${CONFIG.maxBoost}×. ${DROUGHT_RULE} Wears out ${rate} high-grade steel drill bits per hour per step. No workers; haulers bring the steel. Waterproof.`],
+  [`Building.${ID}.Description`, `Stands with its drill over a water source, water seep or badwater source and drives the source harder while powered: up to ${CONFIG.maxBoost}× its flow, at most ${CONFIG.maxWaterSourceStrengthPerCell} per source cell. A seep flows like a normal source. Draws ${hp(Math.ceil(CONFIG.powerInputHp / CONFIG.maxBoost))} hp at 1×, rising with the boost to ${hp(CONFIG.powerInputHp)} hp at ${CONFIG.maxBoost}×. ${DROUGHT_RULE} Wears out ${rate} steel drill bits per hour per step. No workers; haulers bring the steel. Waterproof.`],
   [`Building.${ID}.FlavorDescription`, 'When the river runs dry, drill deeper.'],
   ['DeepFrontier.DeepWell.Placement.NoSource', 'The drill must stand over a water source, water seep or badwater source.'],
   ['DeepFrontier.DeepWell.Placement.SourceTaken', 'Another Deep Well already drives this water source.'],
   ['DeepFrontier.DeepWell.Placement.SourceControlled', 'A building on this water source already controls it.'],
-  ['DeepFrontier.DeepWell.Status.NoDrillBits', 'No drill bits: the well needs high-grade steel to drive its source.'],
+  ['DeepFrontier.DeepWell.Status.NoDrillBits', 'No drill bits: the well needs steel to drive its source.'],
   ['DeepFrontier.DeepWell.Status.NoDrillBits.Short', 'No drill bits'],
   ['DeepFrontier.DeepWell.Status.NoSource', 'The water source under the drill is gone.'],
   ['DeepFrontier.DeepWell.Status.NoSource.Short', 'No water source'],

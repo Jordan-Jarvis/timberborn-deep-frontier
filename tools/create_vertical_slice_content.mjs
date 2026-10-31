@@ -383,7 +383,7 @@ const localizationRows = [
   ['Building.DeepMine.Description', `Extracts four Deep Ore every cycle from a marked vein using water and ${deepMine.MechanicalNodeSpec.PowerInput} hp.`, 'Deep Frontier'],
   ['Building.DeepMine.FlavorDescription', 'The vein is endless; the power bill is not.', 'Deep Frontier'],
   ['Building.DeepProcessor.DisplayName', 'Deep Ore Processor', 'Deep Frontier'],
-  ['Building.DeepProcessor.Description', 'Refines deep ore into a dense industrial alloy.', 'Deep Frontier'],
+  ['Building.DeepProcessor.Description', 'Refines deep ore into deep iron, coal, crude oil and uranium ore.', 'Deep Frontier'],
   ['Building.DeepProcessor.FlavorDescription', 'The ore is useless until the surface factory learns how to tame it.', 'Deep Frontier'],
   ['Building.DeepOreSource.DisplayName', 'Deep Ore Source', 'Deep Frontier'],
   ['Building.DeepOreSource.Description', 'Map editor stockpile for a finite authored Deep Ore deposit.', 'Deep Frontier'],
@@ -393,8 +393,8 @@ const localizationRows = [
   ['Building.DeepOreVein.FlavorDescription', 'This geological seam is inexhaustible, but reaching it requires an industrial mine.', 'Deep Frontier'],
   ['Good.DeepOre.DisplayName', 'Deep ore', 'Deep Frontier'],
   ['Good.DeepOre.PluralDisplayName', 'Deep ore', 'Deep Frontier'],
-  ['Good.DeepAlloy.DisplayName', 'Deep alloy', 'Deep Frontier'],
-  ['Good.DeepAlloy.PluralDisplayName', 'Deep alloy', 'Deep Frontier'],
+  ['Good.DeepAlloy.DisplayName', 'Deep iron', 'Deep Frontier'],
+  ['Good.DeepAlloy.PluralDisplayName', 'Deep iron', 'Deep Frontier'],
 ];
 const csvCell = (value) => {
   const text = String(value);

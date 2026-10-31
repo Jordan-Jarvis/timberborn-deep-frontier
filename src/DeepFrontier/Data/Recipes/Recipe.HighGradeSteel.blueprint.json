@@ -8,8 +8,8 @@
     "CycleDurationInHours": 4,
     "Ingredients": [
       {
-        "Id": "MetalBlock",
-        "Amount": 4
+        "Id": "DeepAlloy",
+        "Amount": 2
       },
       {
         "Id": "Coal",

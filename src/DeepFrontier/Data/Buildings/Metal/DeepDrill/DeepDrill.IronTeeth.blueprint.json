@@ -3546,7 +3546,7 @@
   "FrontierWorkplaceUpkeepSpec": {
     "Goods": [
       {
-        "GoodId": "HighGradeSteel",
+        "GoodId": "MetalBlock",
         "GoodPerHour": 0.1,
         "Role": "DrillBits"
       }

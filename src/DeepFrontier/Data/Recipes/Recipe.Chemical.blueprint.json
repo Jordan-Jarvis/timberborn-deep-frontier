@@ -6,8 +6,8 @@
     "CycleDurationInHours": 2,
     "Ingredients": [
       {
-        "Id": "Badwater",
-        "Amount": 4
+        "Id": "CrudeOil",
+        "Amount": 2
       },
       {
         "Id": "Extract",

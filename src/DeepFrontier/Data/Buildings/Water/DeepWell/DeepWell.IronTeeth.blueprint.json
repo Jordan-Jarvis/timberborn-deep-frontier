@@ -4,12 +4,12 @@
     "LoopingSoundName": "",
     "BuildingCost": [
       {
-        "Id": "MetalBlock",
-        "Amount": 215
+        "Id": "Alloy",
+        "Amount": 5
       },
       {
-        "Id": "DeepAlloy",
-        "Amount": 20
+        "Id": "MachineCore",
+        "Amount": 15
       },
       {
         "Id": "Concrete",
@@ -20,12 +20,16 @@
         "Amount": 155
       },
       {
+        "Id": "MetalBlock",
+        "Amount": 200
+      },
+      {
         "Id": "HighGradeSteel",
         "Amount": 60
       },
       {
-        "Id": "MachineCore",
-        "Amount": 10
+        "Id": "DeepAlloy",
+        "Amount": 15
       }
     ],
     "ScienceCost": 30000,

@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Progression sets
+- **Clear material ladders, like vanilla wood and metal.** Deep metal: Deep Ore → Deep Iron → Steel → Alloy. Chemistry: Crude Oil → Chemical → Polymer. Masonry: sandstone and limestone → brick → cement → concrete. Machinery: gears → machine cores → electronics → power modules.
+- **Renamed:** Deep Alloy is now **Deep Iron** and High-Grade Steel is now **Steel**. Only the names change, so saves keep their stock.
+- **Steel is made from deep iron:** 2 deep iron, 2 coal and 1 limestone make 2 steel at the Steel Mill (was 4 metal blocks). Alloy is still steel and deep iron.
+- **Chemical is made from crude oil:** 2 crude oil and 1 extract make 2 chemical at the Chemical Works (was 4 badwater). Chemical from brine is unchanged, and badwater still makes extract and is filtered at the Waste Refinery.
+- **Building costs climb the ladders.** Early buildings (up to 600 science) cost logs, planks, gears and bricks. Industrial ones (up to 3,000) add concrete, metal blocks and deep iron. Transition buildings (up to 8,000) add steel and treated planks. Frontier buildings (up to 30,000) use alloy and machine cores, and endgame buildings add electronics and power modules. Each cost is still worth about the same and still follows what the building looks like.
+- **Deadlock fix: the Deep Drill wears metal block drill bits** (0.1 per hour at full crew; was steel). Steel only exists from 4,500 science and now needs drilled ore, so a drill on steel bits could never start. The Deep Mine and Deep Well still use steel bits.
+- The deep ore in the built-in maps' Deep Ore Sources now only has to last until the Deep Mine, since ore is renewable after it.
+
 ### Roofs are platforms
 - **No roof railings, parapets or curbs.** Every Deep Frontier building with railed or walled roofs and decks loses them (the Restaurant's rails and parapet, the civic decks' rails, every late-game parapet, curb and roof rail), so flat roofs, terraces and balconies are open platforms edge to edge: paths laid on them join paths on a neighbouring roof at the same height and on stairs, and a building can stand across the seam of two roofs that meet. Pitched roofs are unchanged. Connection points for shafts and pipes are kept (the Steel Mill melt shop's walls now rise to a whole-layer roof). The Restaurant's chairs and tables are 0.14 lower, so seated diners no longer reach the balcony ceiling. A few railings stay where they are not on a roof: the Water Treatment tower balcony, the Launch Pad crew arm and the Observation Deck stair handrail. Costs follow the materials the buildings now show.
 
@@ -16,7 +25,7 @@
 
 ### Fewer goods (seven removed)
 - **Aggregate:** concrete uses sandstone, cement uses dirt and the concrete levee block takes 1 sandstone.
-- **Flux:** high-grade steel uses limestone as its flux. Electronics and reinforced bot chassis no longer need it.
+- **Flux:** steel uses limestone as its flux. Electronics and reinforced bot chassis no longer need it.
 - **Compost:** the Fertilizer Works makes fertilizer in one step (1 log, 2 algae and 2 water make 2 fertilizer in 2 hours). The Greenhouse needs 30 fertilizer to build (was 30 compost).
 - **Medical Food, Emergency Ration and Packaged Food:** the Food Packaging Works makes canned fish. The Technical School's flight course uses canned fish, and the Grocery Store stocks eggplant rations in place of packaged food.
 - **Archive Data:** Mission Control reads the recovered artifacts' data drives directly: guidance computers take 2 artifacts and 1 grease, telemetry 2 artifacts and 1 metal part. Human Record Caches give 12 artifacts. Story chapters 5 and 6 ask for 20 and 40 recovered artifacts.

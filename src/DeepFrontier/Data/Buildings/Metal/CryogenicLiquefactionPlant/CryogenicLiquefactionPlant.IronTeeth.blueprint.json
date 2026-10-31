@@ -4,12 +4,12 @@
     "LoopingSoundName": "PaperMill",
     "BuildingCost": [
       {
-        "Id": "MetalBlock",
-        "Amount": 505
+        "Id": "Alloy",
+        "Amount": 100
       },
       {
-        "Id": "DeepAlloy",
-        "Amount": 105
+        "Id": "MachineCore",
+        "Amount": 25
       },
       {
         "Id": "Concrete",

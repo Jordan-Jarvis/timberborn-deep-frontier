@@ -1,12 +1,12 @@
 ID,Text,Comment
 Building.DeepDrill.DisplayName,Deep Drill,Deep Frontier
-Building.DeepDrill.Description,"Extracts one unit of Deep Ore from an authored source stockpile using water and 1000 hp. Wears out 0.1 high-grade steel drill bits per hour at full crew and stops without them. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.DeepDrill.Description,"Extracts one unit of Deep Ore from an authored source stockpile using water and 1000 hp. Wears out 0.1 metal block drill bits per hour at full crew and stops without them. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.DeepDrill.FlavorDescription,The first boring machine turns a finite deposit into a surface supply chain.,Deep Frontier
 Building.DeepMine.DisplayName,Deep Mine,Deep Frontier
-Building.DeepMine.Description,"Extracts four Deep Ore every cycle from a marked vein using water and 4000 hp. Wears out 0.1 high-grade steel drill bits and 0.1 concrete shaft lining per hour at full crew and stops without them. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.DeepMine.Description,"Extracts four Deep Ore every cycle from a marked vein using water and 4000 hp. Wears out 0.1 steel drill bits and 0.1 concrete shaft lining per hour at full crew and stops without them. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.DeepMine.FlavorDescription,The vein is endless; the power bill is not.,Deep Frontier
 Building.DeepProcessor.DisplayName,Deep Ore Processor,Deep Frontier
-Building.DeepProcessor.Description,"Refines deep ore into a dense industrial alloy. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.DeepProcessor.Description,"Refines deep ore into deep iron, coal, crude oil and uranium ore. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
 Building.DeepProcessor.FlavorDescription,The ore is useless until the surface factory learns how to tame it.,Deep Frontier
 Building.DeepOreSource.DisplayName,Deep Ore Source,Deep Frontier
 Building.DeepOreSource.Description,Map editor stockpile for a finite authored Deep Ore deposit.,Deep Frontier
@@ -16,8 +16,8 @@ Building.DeepOreVein.Description,Map editor understructure that authorizes a per
 Building.DeepOreVein.FlavorDescription,"This geological seam is inexhaustible, but reaching it requires an industrial mine.",Deep Frontier
 Good.DeepOre.DisplayName,Deep ore,Deep Frontier
 Good.DeepOre.PluralDisplayName,Deep ore,Deep Frontier
-Good.DeepAlloy.DisplayName,Deep alloy,Deep Frontier
-Good.DeepAlloy.PluralDisplayName,Deep alloy,Deep Frontier
+Good.DeepAlloy.DisplayName,Deep iron,Deep Frontier
+Good.DeepAlloy.PluralDisplayName,Deep iron,Deep Frontier
 Good.Coal.DisplayName,Coal,Deep Frontier
 Good.Coal.PluralDisplayName,Coal,Deep Frontier
 Good.Chemical.DisplayName,Chemical,Deep Frontier
@@ -38,8 +38,8 @@ Good.Medicine.DisplayName,Medicine,Deep Frontier
 Good.Medicine.PluralDisplayName,Medicine,Deep Frontier
 Good.SweetBerryCake.DisplayName,Sweet Berry Cake,Deep Frontier
 Good.SweetBerryCake.PluralDisplayName,Sweet Berry Cake,Deep Frontier
-Good.HighGradeSteel.DisplayName,High Grade Steel,Deep Frontier
-Good.HighGradeSteel.PluralDisplayName,High Grade Steel,Deep Frontier
+Good.HighGradeSteel.DisplayName,Steel,Deep Frontier
+Good.HighGradeSteel.PluralDisplayName,Steel,Deep Frontier
 Good.Alloy.DisplayName,Alloy,Deep Frontier
 Good.Alloy.PluralDisplayName,Alloy,Deep Frontier
 Good.Polymer.DisplayName,Polymer,Deep Frontier
@@ -159,7 +159,7 @@ Building.LaunchPad.DisplayName,Launch pad,Deep Frontier
 Building.LaunchPad.Description,"Launches the colony's rockets. Select a mission in the recipe list: haulers stage one complete rocket (airframes, propulsion, guidance, payload and telemetry) and its liquid hydrogen and oxygen; workers then prepare it under a 27,000 hp load. Every launch consumes the whole rocket and fuel, and a launch can fail. Also produces guidance telemetry. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier rocket program
 Building.LaunchPad.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
 Building.SteelMill.DisplayName,Steel mill,Deep Frontier
-Building.SteelMill.Description,"An electric-arc melt shop and rolling mill. Makes high-grade steel from metal blocks, coal and limestone flux, and alloy from high-grade steel and deep alloy. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires 3,100 hp. Its two smokestacks pollute the air nearby.",Deep Frontier
+Building.SteelMill.Description,"An electric-arc melt shop and rolling mill. Makes steel from deep iron, coal and limestone flux, and alloy from steel and deep iron. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires 3,100 hp. Its two smokestacks pollute the air nearby.",Deep Frontier
 Building.SteelMill.FlavorDescription,"Every reactor, rocket and machine core starts as a white-hot pour on this floor.",Deep Frontier
 Building.ArchiveExcavation.DisplayName,Archive excavation,Deep Frontier
 Building.ArchiveExcavation.Description,"Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts and their sealed data drives, which Mission Control reads into guidance computers and telemetry. A Human Record Cache within 7 tiles can be surveyed for 12 extra artifacts. 4 workers, dangerous work. Requires 5,200 hp. Its stove chimney pollutes the air nearby.",Deep Frontier
@@ -180,7 +180,7 @@ Building.ObservationDeck.DisplayName,Observation deck,Deep Frontier
 Building.ObservationDeck.Description,A viewing tower for up to 20 beavers on its deck: the climb up the helical stair is exercise and the view is a rooftop terrace (Exercise Plaza and Rooftop Terrace). Paths and platforms may be built on the deck.,Deep Frontier
 Building.ObservationDeck.FlavorDescription,"From up here, the whole frontier fits in one look.",Deep Frontier
 Building.NuclearReactor.DisplayName,Nuclear Reactor,Deep Frontier
-Building.NuclearReactor.Description,"A 1,000,000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive water that must be shipped off the map. Its power output falls as its core heats. Without coolant, or with its radioactive waste or radioactive water storage full, a hot core keeps heating, running or stopped, as fast as it cools otherwise, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. Each cycle seals its spent fuel in a cask of High-Grade Steel and Concrete. Fewer than 4 trained operators working or overdue maintenance (a 24-hour stop every 360 running hours, using 20 High-Grade Steel and 40 Concrete) also heat it while it runs, up to 85%. At 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
+Building.NuclearReactor.Description,"A 1,000,000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive water that must be shipped off the map. Its power output falls as its core heats. Without coolant, or with its radioactive waste or radioactive water storage full, a hot core keeps heating, running or stopped, as fast as it cools otherwise, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. Each cycle seals its spent fuel in a cask of Steel and Concrete. Fewer than 4 trained operators working or overdue maintenance (a 24-hour stop every 360 running hours, using 20 Steel and 40 Concrete) also heat it while it runs, up to 85%. At 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on. Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.",Deep Frontier
 Building.NuclearReactor.FlavorDescription,The frontier makes power and consequences at the same scale.,Deep Frontier
 Building.RadioactiveWasteVault.DisplayName,Radioactive Waste Vault,Deep Frontier
 Building.RadioactiveWasteVault.Description,"Locked storage for radioactive waste; the contents must be processed or moved before demolition. Keep it below full: when full, 4 casks breach every 24 hours, spilling radioactive water and irradiating the soil within 3 tiles, which kills crops.",Deep Frontier
@@ -201,7 +201,7 @@ Recipe.GreenhouseEggplant.DisplayName,Greenhouse Eggplant,Deep Frontier
 Recipe.GreenhouseKohlrabi.DisplayName,Greenhouse Kohlrabi,Deep Frontier
 Recipe.GreenhouseCoffee.DisplayName,Greenhouse Coffee,Deep Frontier
 Recipe.Medicine.DisplayName,Medicine,Deep Frontier
-Recipe.HighGradeSteel.DisplayName,High Grade Steel,Deep Frontier
+Recipe.HighGradeSteel.DisplayName,Steel,Deep Frontier
 Recipe.Alloy.DisplayName,Alloy,Deep Frontier
 Recipe.Chemical.DisplayName,Chemical,Deep Frontier
 Recipe.Polymer.DisplayName,Polymer,Deep Frontier
@@ -408,18 +408,18 @@ Narrative.Stage.NotNatural.Variant.WaterTreatmentPlant,"The treatment plant's fi
 Narrative.Stage.NotNatural.Variant.DeepDrill,"The drill crew brought up a core with something round and hollow inside it: a pipe, far older than the colony and far too big for beavers.",Deep Frontier narrative
 Narrative.Stage.NotNatural.Variant.ChemicalWorks,"The chemists who turn badwater into feedstock noticed that it splits the same way, batch after batch, like a recipe someone followed carefully.",Deep Frontier narrative
 Narrative.Stage.UnderTheValley.Title,Under the Valley,Deep Frontier narrative
-Narrative.Stage.UnderTheValley.Objective,Reach the deep sector: refine 20 deep alloy at a Deep Processor.,Deep Frontier narrative
-Narrative.Stage.UnderTheValley.Hint,"The Deep Drill brings up deep ore from a deep ore source; the Deep Processor turns ore and water into deep alloy, coal, crude oil and uranium ore.",Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Objective,Reach the deep sector: refine 20 deep iron at a Deep Processor.,Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Hint,"The Deep Drill brings up deep ore from a deep ore source; the Deep Processor turns ore and water into deep iron, coal, crude oil and uranium ore.",Deep Frontier narrative
 Narrative.Stage.UnderTheValley.Story.1,"The deep sector is not empty. Below the old riverbed run tunnels lined with enormous pipes, all of them stamped with the same three letters, VWA, and all of them heading upriver.",Deep Frontier narrative
 Narrative.Stage.UnderTheValley.Story.2,"Painted on one pipe, with increasing underlining: NOT FOR DRINKING. Someone long ago took that very seriously.",Deep Frontier narrative
-Narrative.Stage.UnderTheValley.Requirement.1,Deep alloy refined,Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Requirement.1,Deep iron refined,Deep Frontier narrative
 Narrative.Stage.WhatTheWaterCarries.Title,What the Water Carries,Deep Frontier narrative
-Narrative.Stage.WhatTheWaterCarries.Objective,Trace what the water carries: purify 80 pure water and make 10 chemical from badwater.,Deep Frontier narrative
-Narrative.Stage.WhatTheWaterCarries.Hint,Water Treatment Plants make pure water from water and filter media. Chemical Works make chemical from badwater and extract.,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Objective,Trace what the water carries: purify 80 pure water and make 10 chemical.,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Hint,"Water Treatment Plants make pure water from water and filter media. Chemical Works make chemical from crude oil and extract (the Centrifuge distils extract from badwater), or from the treatment plant's brine.",Deep Frontier narrative
 Narrative.Stage.WhatTheWaterCarries.Story.1,"Side by side, the filter residue and the chemical feedstock tell the same story. Badwater is a mixture: fine grit from deep rock, a stubborn green dye and a dozen compounds nothing in nature bothers to make.",Deep Frontier narrative
 Narrative.Stage.WhatTheWaterCarries.Story.2,"It is not a disease. It is runoff. Somewhere upriver, something is still leaking what the old deep pipes once carried, and the colony is going to find out what.",Deep Frontier narrative
 Narrative.Stage.WhatTheWaterCarries.Requirement.1,Pure water purified,Deep Frontier narrative
-Narrative.Stage.WhatTheWaterCarries.Requirement.2,Chemical made from badwater,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Requirement.2,Chemical made,Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Title,Open the Ruins,Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Objective,Open the human ruins: recover 6 artifacts at an Archive Excavation.,Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Hint,"The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. Any Human Record Cache on the map can be surveyed by a nearby excavation for extra artifacts.",Deep Frontier narrative
@@ -768,12 +768,12 @@ Building.RadioactiveSpring.Description,A natural spring of radioactive water. It
 Building.RadioactiveSpringSource.DisplayName,Radioactive Spring,Deep Frontier
 Building.RadioactiveSpringSource.Description,A natural spring of radioactive water. Its strength works like a water source; 0 stops it.,Deep Frontier
 Building.DeepWell.DisplayName,Deep Well,Deep Frontier
-Building.DeepWell.Description,"Stands with its drill over a water source, water seep or badwater source and drives the source harder while powered: up to 6× its flow, at most 8 per source cell. A seep flows like a normal source. Draws 1,667 hp at 1×, rising with the boost to 10,000 hp at 6×. In a drought it runs only on its full 100,000 hp, at any boost, and drives the source at most 2×; short of full power it stops and the source dries up like any other. Wears out 0.05 high-grade steel drill bits per hour per step. No workers; haulers bring the steel. Waterproof.",Deep Frontier
+Building.DeepWell.Description,"Stands with its drill over a water source, water seep or badwater source and drives the source harder while powered: up to 6× its flow, at most 8 per source cell. A seep flows like a normal source. Draws 1,667 hp at 1×, rising with the boost to 10,000 hp at 6×. In a drought it runs only on its full 100,000 hp, at any boost, and drives the source at most 2×; short of full power it stops and the source dries up like any other. Wears out 0.05 steel drill bits per hour per step. No workers; haulers bring the steel. Waterproof.",Deep Frontier
 Building.DeepWell.FlavorDescription,"When the river runs dry, drill deeper.",Deep Frontier
 DeepFrontier.DeepWell.Placement.NoSource,"The drill must stand over a water source, water seep or badwater source.",Deep Frontier
 DeepFrontier.DeepWell.Placement.SourceTaken,Another Deep Well already drives this water source.,Deep Frontier
 DeepFrontier.DeepWell.Placement.SourceControlled,A building on this water source already controls it.,Deep Frontier
-DeepFrontier.DeepWell.Status.NoDrillBits,No drill bits: the well needs high-grade steel to drive its source.,Deep Frontier
+DeepFrontier.DeepWell.Status.NoDrillBits,No drill bits: the well needs steel to drive its source.,Deep Frontier
 DeepFrontier.DeepWell.Status.NoDrillBits.Short,No drill bits,Deep Frontier
 DeepFrontier.DeepWell.Status.NoSource,The water source under the drill is gone.,Deep Frontier
 DeepFrontier.DeepWell.Status.NoSource.Short,No water source,Deep Frontier
@@ -860,8 +860,11 @@ DeepFrontier.WorkplaceUpkeep.Panel.GoodName,{0} ({1}),Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.Panel.Good,"{0}: {1} in stock, {2} used per hour at full crew.",Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.Panel.Note,Production stops while any upkeep is missing. A smaller crew uses less; the stock lasts about {0} hours at full crew.,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.DrillBits.Name,Drill bits,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.DrillBits.Status,Waiting for drill bits: production has stopped until haulers bring high-grade steel.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.DrillBits.Status,Waiting for drill bits: production has stopped until haulers bring metal blocks.,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.DrillBits.Status.Short,No drill bits,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.SteelDrillBits.Name,Drill bits,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.SteelDrillBits.Status,Waiting for drill bits: production has stopped until haulers bring steel.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.SteelDrillBits.Status.Short,No drill bits,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Name,Shaft lining,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Status,Waiting for shaft lining: production has stopped until haulers bring concrete.,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Status.Short,No shaft lining,Deep Frontier bot upkeep
@@ -885,7 +888,7 @@ DeepFrontier.ReactorBot.Panel.Title,Reactor retrofit,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Ordinary,"A Reinforced Bot Frame and Reactor Power Cell retrofit makes this bot a Reactor Bot: 5× load, 4× speed, 10× lifespan, charged at a Reactor Charging Bay every 6.9 days. Upkeep: coolant (2 kinds) and steel plating from storage.",Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Queued,Retrofit queued: the bot fetches a Reinforced Bot Frame and Reactor Power Cell from storage as soon as its district stocks them.,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Upgraded,"Reactor Bot: 5× load, 4× speed, wears out 10× slower. Charges at a Reactor Charging Bay.",Deep Frontier reactor bots
-DeepFrontier.ReactorBot.Panel.Unplated,No steel plating: wearing out 5× faster until it takes high-grade steel or alloy.,Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Unplated,No steel plating: wearing out 5× faster until it takes steel or alloy.,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Queue,Retrofit to Reactor Bot,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Cancel,Cancel retrofit,Deep Frontier reactor bots
 ToolGroups.DeepFrontierDeepMining,Deep mining,Deep Frontier toolbar group

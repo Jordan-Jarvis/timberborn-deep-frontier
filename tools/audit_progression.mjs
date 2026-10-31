@@ -37,7 +37,7 @@ import {fileURLToPath} from 'node:url';
 import {resolve, relative} from 'node:path';
 import {catalog as costCatalog, rule as costRule, lategameCost, tierForScience, LATEGAME_IDS, PLANNED} from './lategame_costs.mjs';
 import {loadProgressionData, reachableWithout, MAP_SOURCES} from './progression_data.mjs';
-import {materialComposition, materialMix, materialRule, MATERIAL_GOODS, materialValue, deriveContext} from './material_costs.mjs';
+import {materialComposition, materialMix, materialRule, MATERIAL_GOODS, materialValue, mergedFamilies, deriveContext} from './material_costs.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const data = resolve(root, process.argv[2] ?? 'src/DeepFrontier/Data');
@@ -239,11 +239,19 @@ for (const b of ruleBuildings) {
   // (each amount rounds up by less than 5 units).
   const goodsOf = (rs) => rs.filter(([g]) => MATERIAL_GOODS.has(g)).map(([g]) => g).sort().join();
   if (goodsOf(rows) !== goodsOf(comp.rows)) { fail('material-rule-goods', {building: id, actual: goodsOf(rows), expected: goodsOf(comp.rows)}); continue; }
-  const material = rows.filter(([g]) => MATERIAL_GOODS.has(g));
+  // A family that a machinery good stands in for (Gear for early metal,
+  // Machine Core from the frontier) adds to the fixed machinery amount, so its
+  // value cannot be read back from the cost: the other families are checked
+  // against each other.
+  const merged = mergedFamilies(tier).filter((f) => comp.shares[f] > 0);
+  const mergedGoods = new Set(merged.flatMap((f) => Object.keys(materialRule.familyGoods[tier][f])));
+  const material = rows.filter(([g]) => MATERIAL_GOODS.has(g) && !mergedGoods.has(g));
+  if (!material.length) continue;
   const total = material.reduce((sum, [g, a]) => sum + a * materialValue(id, b.science, g), 0);
   const tolerance = material.reduce((sum, [g]) => sum + 5 * materialValue(id, b.science, g), 0) / total;
-  const kept = Object.values(comp.shares).reduce((sum, x) => sum + x, 0);
+  const kept = Object.entries(comp.shares).filter(([f]) => !merged.includes(f)).reduce((sum, [, x]) => sum + x, 0);
   for (const [f, share] of Object.entries(comp.shares)) {
+    if (merged.includes(f)) continue;
     const familyGoods = new Set(Object.keys(materialRule.familyGoods[tier][f]));
     const actual = material.filter(([g]) => familyGoods.has(g)).reduce((sum, [g, a]) => sum + a * materialValue(id, b.science, g), 0) / total;
     if (Math.abs(actual - share / kept) > tolerance + 1e-9) fail('material-rule-share', {building: id, family: f, actual: +actual.toFixed(3), measured: +(share / kept).toFixed(3), tolerance: +tolerance.toFixed(3)});
