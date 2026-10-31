@@ -15,12 +15,15 @@ between floors, we should reduce it to one") and flat roofs on more buildings.
 So a storey block here is a concrete ground storey exactly one layer high
 (the native one-tile door fills it), timber- or steel-framed upper storeys of
 one layer each with a floor band on every whole layer, and a flat concrete
-roof whose top is exactly on the next whole layer, edged by a low curb that
-stays under 0.15 above it (so the registration does not claim the cells
-above it, and the roof-deck step can make it platformable).
+roof whose top is exactly on the next whole layer. The roof is a plain open
+platform edge to edge, with no curb, parapet or rail (user, 2026-10-31:
+"lets remove the railings and cement railing/mini walls on the roofs of our
+buildings. I want it to be like an actual platform where roads can
+connect"), so the roof-deck step makes every roof cell platformable and
+paths join across abutting roofs.
 
 Roof finishes vary by building (user, 2026-10-30: "we need variety, not
-just a bunch of boring concrete"): flat roofs take roof_mat/curb_mat
+just a bunch of boring concrete"): flat roofs take roof_mat/slab_mat
 (corrugated PAINTED metal, IRON or FORGED steel plate, PLANK timber, and
 CONCRETE only sometimes); pitched and sawtooth roofs are authored by the
 buildings themselves in the native roof planks. No roof vents.
@@ -40,8 +43,6 @@ import math
 import lategame_civic_parts as C
 from lategame_civic_parts import blk
 
-CURB = .12         # roof curb height above the roof top (registration needs < .15)
-CURB_W = .12       # roof curb width
 ROOF_T = .12       # roof slab thickness under its top
 EAVE = .06         # slab overhang beyond the storey core
 
@@ -49,35 +50,30 @@ EAVE = .06         # slab overhang beyond the storey core
 BOARD_FINISH = {PLANK: 'timber', GREYPLANK: 'greytimber', FORGED: 'forged', PAINTED: 'painted', IRON: 'steel'}
 
 
-def flat_roof(g, x0, y0, x1, y1, top, *, overhang=EAVE, curb=True, mat=CONCRETE, curb_mat=CONCRETE, boards=False):
-    """Flat slab whose top face lies exactly at `top` (a whole layer), with a
-    low curb ring flush with the slab edge. Returns `top`.
+def flat_roof(g, x0, y0, x1, y1, top, *, overhang=EAVE, mat=CONCRETE, slab_mat=CONCRETE, boards=False):
+    """Flat slab whose top face lies exactly at `top` (a whole layer): an open
+    platform edge to edge. Returns `top`.
 
     `boards=True` lays a plank or sheet `mat` as separate boards or sheets
-    (lategame_roofdeck_parts.deck_slab) on a slab of `curb_mat`, so the
+    (lategame_roofdeck_parts.deck_slab) on a slab of `slab_mat`, so the
     native texture is not stretched over the whole roof."""
     xa, ya, xb, yb = x0 - overhang, y0 - overhang, x1 + overhang, y1 + overhang
     if boards and mat in BOARD_FINISH:
         from lategame_roofdeck_parts import deck_slab
-        deck_slab(g, xa, ya, xb, yb, top, BOARD_FINISH[mat], thickness=ROOF_T, base=curb_mat)
+        deck_slab(g, xa, ya, xb, yb, top, BOARD_FINISH[mat], thickness=ROOF_T, base=slab_mat)
     else:
         blk(g, xa, ya, top - ROOF_T, xb, yb, top, mat)
-    if curb:
-        w = CURB_W
-        blk(g, xa, ya, top, xb, ya + w, top + CURB, curb_mat)
-        blk(g, xa, yb - w, top, xb, yb, top + CURB, curb_mat)
-        blk(g, xa, ya + w, top, xa + w, yb - w, top + CURB, curb_mat)
-        blk(g, xb - w, ya + w, top, xb, yb - w, top + CURB, curb_mat)
     return top
 
 
 def storey_block(g, x0, y0, x1, y1, layers, *, infill=ORANGE, frame=WOOD, door=None, door_id='Door0',
-                 ground_windows=None, windows=None, roof=True, curb=True, pitch=1.0, ground_skip=(),
-                 faces=('front', 'back', 'left', 'right'), roof_mat=CONCRETE, curb_mat=CONCRETE,
+                 ground_windows=None, windows=None, roof=True, pitch=1.0, ground_skip=(),
+                 faces=('front', 'back', 'left', 'right'), roof_mat=CONCRETE, slab_mat=CONCRETE,
                  ground_mat=CONCRETE, roof_boards=False):
     """Concrete ground storey (0..1) plus `layers - 1` framed storeys of one
     layer each, floor bands on every whole layer, and a flat roof whose top is
-    the whole layer `layers`.
+    the whole layer `layers` (an open platform; for one storey the podium
+    coping is the roof).
 
     `door` is the x centre of a native one-tile portal in the front (y0) face.
     `ground_windows` maps a face to (u, scale, style) native windows centred
@@ -111,19 +107,10 @@ def storey_block(g, x0, y0, x1, y1, layers, *, infill=ORANGE, frame=WOOD, door=N
         C.framed_block(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, 1.0, z1, infill=infill, frame=frame,
                        pitch=pitch, faces=faces, floors=tuple(float(z) for z in range(2, layers)),
                        windows=windows)
-    if roof:
-        if layers > 1:
-            # Over the framed core (inset .05) and past its proud frame (.055).
-            flat_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, top, overhang=EAVE + .05,
-                      curb=curb, mat=roof_mat, curb_mat=curb_mat, boards=roof_boards)
-        elif curb:
-            # The podium coping is the roof: add the curb on its edge.
-            xa, ya, xb, yb = x0 - .05, y0 - .05, x1 + .05, y1 + .05
-            w = CURB_W
-            blk(g, xa, ya, top, xb, ya + w, top + CURB, CONCRETE)
-            blk(g, xa, yb - w, top, xb, yb, top + CURB, CONCRETE)
-            blk(g, xa, ya + w, top, xa + w, yb - w, top + CURB, CONCRETE)
-            blk(g, xb - w, ya + w, top, xb, yb - w, top + CURB, CONCRETE)
+    if roof and layers > 1:
+        # Over the framed core (inset .05) and past its proud frame (.055).
+        flat_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, top, overhang=EAVE + .05,
+                  mat=roof_mat, slab_mat=slab_mat, boards=roof_boards)
     return top
 
 

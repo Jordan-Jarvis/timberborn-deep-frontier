@@ -65,7 +65,7 @@ GALLERY = (.3, 5.3, 4.05, 4.55, 5.1, 5.45)   # x0, x1, y0, y1, z0, z1
 def hall(g):
     x0, y0, x1, y1 = HALL
     top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=WOOD, door=DOOR_X, door_id='Door0',
-                         roof_mat=PLANK, curb_mat=WOOD, ground_mat=GREYPLANK, roof_boards=True, curb=False,
+                         roof_mat=PLANK, slab_mat=WOOD, ground_mat=GREYPLANK, roof_boards=True,
                          ground_windows={'front': [(.75, .6, 'factory'), (3.5, .6, 'factory')],
                                          'left': [(2.0, .6, 'factory')]},
                          windows={'front': [(x + .5, 1.5, .55, 'grand') for x in range(4)],

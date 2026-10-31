@@ -346,9 +346,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7912,
-   "vertices": 14842,
-   "construction": 7912,
+   "finished": 7816,
+   "vertices": 14650,
+   "construction": 7816,
    "file": "outputs/lategame-integration/Data/Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.Model.timbermesh"
   },
   "Greenhouse": {
@@ -481,9 +481,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 6950,
-   "vertices": 13060,
-   "construction": 6950,
+   "finished": 6902,
+   "vertices": 12964,
+   "construction": 6902,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.Model.timbermesh"
   },
   "PublicHealthLab": {
@@ -832,9 +832,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 10910,
-   "vertices": 20858,
-   "construction": 10910,
+   "finished": 9750,
+   "vertices": 18538,
+   "construction": 9750,
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },

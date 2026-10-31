@@ -20,8 +20,12 @@ HERO: an elevated riveted water tower with a railed balcony and a lapped teal
       scraper bridges sweep slowly round the water.
 ROOF: the water tower's cone stays (its defining silhouette); a pitched
       gable of native teal roof planks on the filter house; a flat
-      corrugated-metal roof with a steel curb on the pump shed and a flat
-      concrete roof on the chemical house (both placeable). No roof vents.
+      corrugated-metal roof on the pump shed and a flat concrete roof on the
+      chemical house, both open platforms edge to edge (no curbs or rails:
+      user 2026-10-31, "lets remove the railings"; the clarifier rims and
+      scraper bridges lose theirs too). No roof vents. The water tower keeps
+      its balcony rail: a decorative gallery high on the tower, not a
+      placeable surface (the tank stands over it).
 
 Plan (9 x 5 tiles): the primary and secondary clarifiers with native water on
 the left; the water tower front-centre with the outlet socket on its front;
@@ -79,7 +83,6 @@ def clarifier(g, parts, idx, cx, cy, RIM_OUT, RIM_IN):
     K.revolve(g, (cx, cy, 1.06), [(.18, 0), (.18, .18), (.08, .24)], PAINTED, segments=16)
     g.liquid_surfaces.append(dict(name=f'Clarifier{idx}', shape='Rectangle', center=[cx, cy], bottom=.2, top=.64,
                                   scale=[2 * RIM_IN, 2 * RIM_IN], flowOnly=False))
-    P.ring_rail(g, (cx, cy), RIM_OUT - .08, RIM_TOP, height=.5, posts=16 if RIM_OUT > 1.2 else 12)
     # Rotating full-diameter scraper bridge on the centre turntable.
     z = 1.4
     b = Geometry(f'WaterTreatmentPlant.ScraperBridge{idx}', (cx, cy, z))
@@ -91,8 +94,6 @@ def clarifier(g, parts, idx, cx, cy, RIM_OUT, RIM_IN):
         x = cx - r1 + .12 + k * (2 * r1 - .24) / (n - 1)
         b.box((x, cy, z - .04), (.05, .28, .05), IRON)
     b.box((cx, cy, z + .085), (2 * r1 - .04, .24, .04), FORGED)
-    for dy in (-.15, .15):
-        P.rail(b, [(cx - r1 + .05, cy + dy), (cx + r1 - .05, cy + dy)], z + .1, height=.42, pitch=.45)
     P.lathe(b, (cx, cy, 0), [(.22, 1.3), (.22, 1.35), (.14, 1.37)], PAINTED, segments=16)
     for side in (-1, 1):
         ex = cx + side * (RIM_OUT - .27)
@@ -174,10 +175,6 @@ def chemical_house(g):
     blk(g, x0, y0, 0, x1, y1, top - .03, CONCRETE)
     blk(g, x0 - .03, y0 - .03, -.03, x1 - .03, y1 + .03, .14, CONCRETE)
     blk(g, x0 - .05, y0 - .05, top - .1, x1 - .05, y1 + .05, top, CONCRETE)
-    w = Q.CURB_W
-    blk(g, x0 - .05, y1 + .05 - w, top, x1 - .05, y1 + .05, top + Q.CURB, CONCRETE)
-    blk(g, x0 - .05, y0 - .05, top, x0 - .05 + w, y1 + .05 - w, top + Q.CURB, CONCRETE)
-    blk(g, x0 - .05 + w, y0 - .05, top, x1 - .05, y0 - .05 + w, top + Q.CURB, CONCRETE)
     # Brick walls front and back (2026-10-30, bricks pass; was cast concrete),
     # open at the back pilaster, window and gas cylinders and where the filter
     # house and shed meet the right side.
@@ -263,12 +260,9 @@ def pump_shed(g, parts):
     for y in (y0 + .2, (y0 + y1) / 2):
         blk(g, x1 - .17, y - .07, base, x1 - .03, y + .07, ROOF_Z - .1, IRON)
     blk(g, x1 - .16, y0 + .1, ROOF_Z - .26, x1 - .04, y1 - .3, ROOF_Z - .1, IRON)
-    # Flat roof slab beside the filter house's (its curb stays the edge).
+    # Flat roof slab beside the filter house's, open edge to edge.
     # Corrugated-metal sheets laid separately (no stretched texture).
     deck_slab(g, x0 + .05, y0 + .07, x1 + .06, y1 + .06, ROOF_Z, 'painted', thickness=Q.ROOF_T, base=IRON)
-    w = Q.CURB_W
-    blk(g, x0 + .05, y1 + .06 - w, ROOF_Z, x1 + .06, y1 + .06, ROOF_Z + Q.CURB, IRON)
-    blk(g, x1 + .06 - w, y0 + .07, ROOF_Z, x1 + .06, y1 + .06 - w, ROOF_Z + Q.CURB, IRON)
     # Two flywheel pumps, axes along Y.
     for i, x in enumerate((6.6, 7.8)):
         py = 4.0

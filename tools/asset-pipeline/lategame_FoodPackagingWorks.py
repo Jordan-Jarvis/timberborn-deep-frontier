@@ -15,7 +15,8 @@ each.
 
 HERO: a riveted-steel cannery hall of three one-layer storeys crowned by a
 glazed monitor lantern, beside a tall boiler stack.
-ROOF: flat corrugated-metal roof with a steel curb on the cannery (its front
+ROOF: flat corrugated-metal roof, open edge to edge (no curb: user 2026-10-31),
+on the cannery (its front
 and back rows placeable) under the glazed monitor's flat steel cap; a hipped
 roof of native teal planks on the boiler house with the stack through it; a
 flat timber roof on the warehouse. No roof vents.
@@ -125,7 +126,7 @@ def cannery(g, parts):
                             'back': [(x, 2.5, .58, 'factory') for x in xs[::2]] + [(x, 1.5, .58, 'factory') for x in xs[1::2]],
                             'left': [(y, z, .58, 'factory') for y in ys for z in (1.5, 2.5)],
                             'right': [(y, 2.5, .58, 'factory') for y in ys]})
-    Q.flat_roof(g, CX0 + .05, CY0 + .05, CX1 - .05, CY1 - .05, roof, overhang=.11, mat=PAINTED, curb_mat=IRON,
+    Q.flat_roof(g, CX0 + .05, CY0 + .05, CX1 - .05, CY1 - .05, roof, overhang=.11, mat=PAINTED, slab_mat=IRON,
                 boards=True)
     # Glazed monitor lantern (daylight for the canning floors) with a flat steel cap.
     mx0, my0, mx1, my1 = 1.6, 2.0, 4.4, 3.0
@@ -208,7 +209,7 @@ def boiler_house(g):
 
 def warehouse_and_bridge(g, parts):
     x0, y0, x1, y1 = WAREHOUSE
-    Q.storey_block(g, x0, y0, x1, y1, 2, infill=PLANK, frame=WOOD, roof_mat=PLANK, curb_mat=WOOD, roof_boards=True,
+    Q.storey_block(g, x0, y0, x1, y1, 2, infill=PLANK, frame=WOOD, roof_mat=PLANK, slab_mat=WOOD, roof_boards=True,
                    ground_windows={'back': [(.5, .55, 'factory'), (2.5, .55, 'factory')],
                                    'left': [(5.5, .55, 'factory')]},
                    windows={'back': [(x + .5, 1.5, .55, 'factory') for x in range(3)],

@@ -18,8 +18,9 @@ HERO: a long north-light sawtooth machine hall with an open belt bay, a
       iron bands.
 ROOF: the north-light sawtooth (three teal plank teeth with glazed north
       faces) stays: it is this building's defining silhouette and the only
-      sawtooth among the late-game works. Flat timber-plank roof with a
-      timber curb on the two-storey gate office, all six cells placeable; the
+      sawtooth among the late-game works. Flat timber-plank roof, open
+      edge to edge (no curb: user 2026-10-31), on the two-storey gate office, all
+      six cells placeable; the
       chimney's firebox top is flat on layer 1.
 
 Plan (9 x 5 tiles): the machine shop on the left with the belt bay in its
@@ -168,7 +169,7 @@ def gate_office(g, parts):
     """Two-storey works office at the gate under a flat, placeable roof."""
     x0, y0, x1, y1 = OFFICE
     top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=WOOD, door=DOOR_X, door_id='Entrance',
-                         roof_mat=PLANK, curb_mat=WOOD, roof_boards=True,
+                         roof_mat=PLANK, slab_mat=WOOD, roof_boards=True,
                          ground_windows={'front': [(6.75, .55, 'grand')], 'right': [(1.0, .55, 'grand')]},
                          windows={'front': [(6.5, 1.5, .52, 'grand'), (7.5, 1.5, .52, 'grand'),
                                             (8.5, 1.5, .52, 'grand')],
@@ -186,7 +187,7 @@ def crane_yard(g, parts):
     # firebox behind it, and a steel runway beam on corbels along the shop's
     # right wall; low concrete yard paving under the lathe.
     xr = 8.0
-    # Both start .15 behind the office so they clear its roof curb.
+    # Both start .15 behind the office, clear of its roof edge.
     C.podium(g, xr, 2.15, 9.0, 4.0, RUNWAY_Z - .1, joints=False)
     blk(g, xr - .02, 2.15, RUNWAY_Z - .1, 9.0, 4.0, RUNWAY_Z, IRON)
     blk(g, 6.0, 2.0, -.02, 8.0, 4.0, .1, CONCRETE)

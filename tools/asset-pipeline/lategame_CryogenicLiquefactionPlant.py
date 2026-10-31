@@ -61,7 +61,7 @@ SPHERE_R, SPHERE_Z = .92, 1.5
 def compressor_house(g, parts):
     x0, y0, x1, y1 = HOUSE
     top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=FORGED, frame=IRON, door=DOOR_X, door_id='CompressorHouseDoor',
-                         roof_mat=IRON, curb_mat=IRON, roof_boards=True, curb=False,
+                         roof_mat=IRON, slab_mat=IRON, roof_boards=True,
                          ground_windows={'front': [(1.5, .55, 'factory'), (2.5, .55, 'factory'),
                                                    (4.5, .55, 'factory')],
                                          'back': [(2.25, .55, 'factory')]},

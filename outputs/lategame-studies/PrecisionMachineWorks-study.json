@@ -43,9 +43,9 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 3358,
+  "faces": 3334,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1166,
+    "BaseWood_DarkBrown.IronTeeth": 1142,
     "IrregularPlanks_DarkBrown.IronTeeth": 48,
     "BaseMetal.IronTeeth": 864,
     "RoofPlanks.IronTeeth": 360,
@@ -58,6 +58,6 @@
     "PaintedMetal.IronTeeth": 432,
     "IrregularPlanks_Grey.IronTeeth": 12
   },
-  "sourceHash": "ccb0f0bb0d40c82dae336f017b8059ce2043d8268d3b92287c140a9bac45646d",
-  "artHash": "5dc6fdd32f475ced6360c57b1d9b945ef2d3536be53482ccf96162624a7abbe1"
+  "sourceHash": "9dfe95621ab1af5e02811f782f2d5d9cd8fbab09c6a5d12b312106dd789f5355",
+  "artHash": "bd86fb060e51e69a5cf805cf8c16c1d018e0c70440185f46d0d4fae4b8b958ec"
 }

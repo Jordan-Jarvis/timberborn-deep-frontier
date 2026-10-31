@@ -416,10 +416,10 @@
   },
   "FoodPackagingWorks": {
    "model": "Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.Model",
-   "sha256": "56abbfb40a8649dbb2e6dca28f09762808fc80d01fa304e7abd5684518aba1cf",
+   "sha256": "29bc054b3315b1bf3358c506adbfac101b202a3aa91b74745d208446a286882c",
    "areas": {
-    "BaseMetal.IronTeeth": 110.0256,
-    "BaseWood_DarkBrown.IronTeeth": 39.6616,
+    "BaseMetal.IronTeeth": 103.1904,
+    "BaseWood_DarkBrown.IronTeeth": 35.7064,
     "DFIndustrial06": 15.244,
     "DFIndustrial08": 0.229,
     "Details.IronTeeth#metal": 2.8414,
@@ -434,9 +434,9 @@
    "families": {
     "brick": 61.8504,
     "concrete": 192.1878,
-    "metal": 162.9262,
+    "metal": 156.091,
     "unpriced": 7.9183,
-    "wood": 66.492
+    "wood": 62.5368
    }
   },
   "Greenhouse": {
@@ -716,10 +716,10 @@
   },
   "PrecisionMachineWorks": {
    "model": "Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.Model",
-   "sha256": "787d13c5bacd1b2558efb9bcf48b361e7e94b7888a9fdc67e28d83853bc5856c",
+   "sha256": "c4b49288e9de64b762f91d1131cb96b972f39770b82aec13f3ace86cc0f9965c",
    "areas": {
     "BaseMetal.IronTeeth": 46.1554,
-    "BaseWood_DarkBrown.IronTeeth": 103.4519,
+    "BaseWood_DarkBrown.IronTeeth": 98.5367,
     "DFIndustrial08": 0.3842,
     "Details.IronTeeth#metal": 0.5513,
     "IrregularPlanks_DarkBrown.IronTeeth": 14.8536,
@@ -736,7 +736,7 @@
     "concrete": 264.7916,
     "metal": 144.7457,
     "unpriced": 9.415,
-    "wood": 193.47
+    "wood": 188.5548
    }
   },
   "PublicHealthLab": {
@@ -1186,9 +1186,9 @@
   },
   "WaterTreatmentPlant": {
    "model": "Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model",
-   "sha256": "d6703309303502449bc6defdd55178e5b82590576e287b1d6615be5fcb68ad30",
+   "sha256": "e4eb9d7ff15de9eeca4d393d185e4126e09087f2b835413f6937cbf49d84f6e7",
    "areas": {
-    "BaseMetal.IronTeeth": 86.1859,
+    "BaseMetal.IronTeeth": 71.4394,
     "BaseWood_DarkBrown.IronTeeth": 49.5103,
     "DFIndustrial06": 4.3128,
     "DFIndustrial08": 0.3434,
@@ -1197,15 +1197,15 @@
     "IrregularPlanks_MetalForged.IronTeeth": 16.5233,
     "PaintedMetal.IronTeeth": 37.3366,
     "Plaster_Orange.IronTeeth": 31.8527,
-    "Plaster_White.IronTeeth": 224.0564,
+    "Plaster_White.IronTeeth": 221.1572,
     "RoofPlanks.IronTeeth": 43.5506,
     "Water": 6.5648,
     "WindowsAtlas.IronTeeth": 2.3753
    },
    "families": {
     "brick": 36.1655,
-    "concrete": 224.0564,
-    "metal": 140.7648,
+    "concrete": 221.1572,
+    "metal": 126.0184,
     "unpriced": 9.3792,
     "wood": 93.0609
    }
