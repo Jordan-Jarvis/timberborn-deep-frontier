@@ -929,13 +929,12 @@
   },
   "Restaurant": {
    "model": "Buildings/Food/Restaurant/Restaurant.IronTeeth.Model",
-   "sha256": "075a52e607b74d99f8d586e772ec60d33aa3598dd46edabd410b8a4aecb7487e",
+   "sha256": "5d313afc0eebdfdbc209d507ecbc7ceb7981fbb97be97681576c936ce98fad1a",
    "areas": {
-    "BaseMetal.IronTeeth": 60.0989,
-    "BaseWood_Brown.Folktails": 24.4256,
-    "BaseWood_DarkBrown.IronTeeth": 191.8215,
+    "BaseMetal.IronTeeth": 58.2483,
+    "BaseWood_DarkBrown.IronTeeth": 189.6868,
     "DFIndustrial04": 0.3864,
-    "DFIndustrial05": 1.528,
+    "DFIndustrial05": 1.5853,
     "DFIndustrial08": 1.0837,
     "DFIndustrial12": 3.8816,
     "DFIndustrial14": 0.9898,
@@ -945,18 +944,18 @@
     "IrregularPlanks_DarkBrown.IronTeeth": 338.4278,
     "IrregularPlanks_MetalForged.IronTeeth": 0.7246,
     "Plaster_Orange.IronTeeth": 24.0672,
-    "Plaster_White.IronTeeth": 66.9286,
+    "Plaster_White.IronTeeth": 61.2374,
     "RoofPlanks.IronTeeth": 4.5466,
     "WindowsAtlas.IronTeeth": 5.0068
    },
    "families": {
     "brick": 24.0672,
-    "concrete": 66.9286,
-    "limestone": 2.8751,
-    "metal": 61.0512,
+    "concrete": 61.2374,
+    "limestone": 2.9324,
+    "metal": 59.2006,
     "sandstone": 0.3864,
     "unpriced": 12.1609,
-    "wood": 559.2215
+    "wood": 532.6612
    }
   },
   "RocketAssemblyHangar": {

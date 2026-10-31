@@ -1,5 +1,5 @@
 """Player-built deck roads; only the enclosed interior is part of the building graph."""
-from industrial_layouts import layout,grid_lane,edge,decorative_port
+from industrial_layouts import layout,grid_lane,edge
 from restaurant_structure import ORIGIN,SIZE,PLATFORMS,SUPPORTS,ROOMS,RESERVATIONS,DOORS
 
 R=layout(ORIGIN,SIZE,[1,1,0],[],deck_mode='PlayerPlacedPaths')
@@ -29,23 +29,9 @@ for y in (2,3,4):grid_lane(R,[(x,y,3) for x in (6,7,8)])
 for x in (6,7,8):
     edge(R,(x,2,3),(x,3,3))
     edge(R,(x,3,3),(x,4,3))
-# Every physical boundary segment can open. These bindings neither create nor
-# restrict roads, and remain independent of the optional suggested path layout.
-for z,prefix in ((1,'Dining'),(2,'UpperDining')):
-    for x in range(1,7):decorative_port(R,f'{prefix}Front{x}',(x-1,0,z),(x-1,-1,z),prefix+'Frontfront')
-    decorative_port(R,prefix+'Left1',(0,0,z),(-1,0,z),prefix+'Frontleft')
-    decorative_port(R,prefix+'Left',(0,1,z),(-1,1,z),prefix+'Frontleft')
-    for x in range(2,8):decorative_port(R,f'{prefix}Rear{x}',(x-1,6,z),(x-1,7,z),prefix+'Rearback')
-    decorative_port(R,prefix+'RearLeft6',(1,5,z),(0,5,z),prefix+'Rearleft')
-    decorative_port(R,prefix+'RearLeft7',(1,6,z),(0,6,z),prefix+'Rearleft')
-    for y in range(2,8):decorative_port(R,f'{prefix}Right{y}',(6,y-1,z),(7,y-1,z),prefix+'Sideright')
-decorative_port(R,'DiningSideFront',(6,1,1),(6,0,1),'StairAccess')
-for x in range(6,10):
-    decorative_port(R,f'RoofFront{x}',(x-1,2,3),(x-1,1,3),'RoofTerraceFront')
-    decorative_port(R,f'RoofRear{x}',(x-1,4,3),(x-1,5,3),'RoofTerraceRear')
-for y in range(3,6):
-    decorative_port(R,f'RoofLeft{y}',(5,y-1,3),(4,y-1,3),'RoofTerraceLeft')
-    decorative_port(R,f'RoofRight{y}',(8,y-1,3),(9,y-1,3),'RoofTerraceRight')
+# 2026-10-31 roof pass (user: no railings on the roofs; "like an actual
+# platform where roads can connect"): the balconies and roof are open decks
+# with no rails, so there are no rail openings ('ports').
 R['interiorCells']=[[1,1,0],[2,1,0],[2,2,0],[3,2,0],[4,2,0],*[[4,3,z] for z in range(4)],
                     [4,2,1],[3,2,1],[4,2,2],[3,2,2],[5,3,3]]
 R['doorLinks']=[{'Interior':[1,1,0],'Exterior':[1,0,0]},

@@ -1,7 +1,7 @@
 {
  "ident": "Restaurant",
  "source": "src/DeepFrontier/Art/Source/Restaurant-ReferenceStudy.blend",
- "sourceSha256": "2f73cd48e0f8707dc963e2a28d527ea31b5b8a38953f7343f573b3696c7da59b",
+ "sourceSha256": "2fb40cc562e28555ba3ad90b04d83d2e9ec2eea8d22c89226e3cd4e939a051fc",
  "frame": 1,
  "layout": "tools/civic-layouts.json",
  "origin": [

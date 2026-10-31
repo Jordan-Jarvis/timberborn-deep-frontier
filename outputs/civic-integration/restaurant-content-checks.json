@@ -3,7 +3,7 @@
   "registration": [
     9,
     7,
-    9
+    5
   ],
   "guestSeats": 14,
   "staff": 4,
@@ -28,7 +28,7 @@
   "powerDemandHp": 400,
   "powerOutputHp": 0,
   "clearTerraceCells": 9,
-  "adaptiveOpenings": 59,
+  "adaptiveOpenings": 0,
   "tableDishes": 14,
   "tableService": "kitchen pass -> native GoodCarrier hands -> table; native stock/capacity reservations",
   "reviewFixes": [

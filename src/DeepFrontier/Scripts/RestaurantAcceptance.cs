@@ -58,12 +58,13 @@ namespace DeepFrontier.Scripts {
     private readonly INavigationService _navigation;
     private readonly EntityService _entityService;
     private readonly List<MechanicalNode> _powerProbes=new();
-    private BlockObject _railTestPath;
-    private BlockObject _rightRailTestPath;
+    private BlockObject _seamTestPath;
+    private BlockObject _rightSeamTestPath;
     // A free stretch north of the fixture map's road row; everything around the restaurant is
     // derived from its installed blueprint in Setup.
     private static readonly Vector3Int Origin=new(160,161,3);
-    private string _leftSeam,_rightSeam,_shutSeam;
+    // Open-deck seams (local inside stand, local outside cell); 2026-10-31: no deck rails.
+    private (Vector3Int Inside,Vector3Int Outside) _leftSeam,_rightSeam,_shutSeam;
     private Vector3Int _leftSeamCell,_rightSeamCell;
     private List<Vector3Int> _stairCells;
     private readonly List<Vector3Int> _deckWalk=new();
@@ -244,14 +245,18 @@ namespace DeepFrontier.Scripts {
         var pathSpec=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint==_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Path").Blueprint);
         bool TakesPath(Vector3Int local)=>_blocks.BlocksValid(pathSpec,new Placement(_building.TransformCoordinates(local),Orientation.Cw0,FlipMode.Unflipped));
         CivicFixtureGeometry.Place place=(id,c,o)=>Create(id,c.x,c.y,c.z,o);
-        var levels=deck.Openings.Select(o=>o.Inside.z).Distinct().OrderBy(z=>z).ToArray();
+        // 2026-10-31 roof pass: the decks have no rails (PlatformDeckSpec.Openings is empty);
+        // their stands are the free cells over the building's Stackable blocks.
+        if(deck.Openings.Length!=0)throw new InvalidOperationException("Restaurant decks must have no rails");
+        var stands=CivicFixtureGeometry.DeckStands(spec).Where(c=>c.z>0).ToList();
+        var levels=stands.Select(c=>c.z).Distinct().OrderBy(z=>z).ToArray();
         if(levels.Length<3)throw new InvalidOperationException("Restaurant deck has layers ["+string.Join(",",levels)+"]; this fixture needs a lower and an upper dining balcony and a roof deck");
-        // Ordinary player Path entities on every exterior deck: every rail's deck cell and every
+        // Ordinary player Path entities on every exterior deck: every deck stand and every
         // upper door step, and the cells of their layer that take a Path, except one roof cell
         // that carries a stacked platform tower instead.
-        var region=CivicFixtureGeometry.DeckRegion(spec,deck.Openings.Select(o=>o.Inside).Concat(deck.Doors.Select(d=>d.Exterior).Where(c=>c.z>0)),TakesPath,"Restaurant");
-        var tower=region.Where(c=>c.z==levels[2]&&deck.Openings.All(o=>o.Inside!=c)&&deck.Doors.All(d=>d.Exterior!=c)).ToArray();
-        if(tower.Length==0)throw new InvalidOperationException("Restaurant roof deck has no cell besides rail and door cells for the platform tower");
+        var region=CivicFixtureGeometry.DeckRegion(spec,stands.Concat(deck.Doors.Select(d=>d.Exterior).Where(c=>c.z>0)),TakesPath,"Restaurant");
+        var tower=region.Where(c=>c.z==levels[2]&&deck.Doors.All(d=>d.Exterior!=c)).ToArray();
+        if(tower.Length==0)throw new InvalidOperationException("Restaurant roof deck has no cell besides door cells for the platform tower");
         CivicFixtureGeometry.Road(place,c=>_blockService.GetPathObjectAt(c),_building.TransformCoordinates(spec.Entrance.Coordinates));
         foreach(var c in region.Where(c=>c!=tower[0]))Local("Path",c);
         Local("DoublePlatform.IronTeeth",tower[0]);Local("Platform.IronTeeth",tower[0]+new Vector3Int(0,0,2));Local("Path",tower[0]+new Vector3Int(0,0,3));
@@ -273,20 +278,21 @@ namespace DeepFrontier.Scripts {
           Local("Platform.IronTeeth",new Vector3Int(probe.x,probe.y,z-1));
           _powerProbes.Add(Local("PowerShaft.IronTeeth",new Vector3Int(probe.x,probe.y,z)).GetComponent<MechanicalNode>());
         }
-        // External vanilla stairs climb to the middle rear rail of the lower dining balcony.
-        var rear=deck.Openings.Where(o=>o.Inside.z==levels[0]&&o.Outside-o.Inside==new Vector3Int(0,1,0)
-          &&CivicFixtureGeometry.FreeColumn(blocks,o.Outside)).ToArray();
-        if(rear.Length==0)throw new InvalidOperationException("Restaurant lower balcony has no rear rail with a free column outside it for the stairs");
-        _stairCells=CivicFixtureGeometry.Flight(place,_building.TransformCoordinates(rear[rear.Length/2].Outside),new Vector3Int(0,1,0),Origin.z);
-        // Rail seams of the upper balcony: platform stacks outside its first left and first right
-        // rails with a free column (the test toggles a Path on each); the next right rail along
-        // has no platform outside and must stay closed and unlinked.
-        WalkwayOpeningSpec Seam(Vector3Int dir)=>deck.Openings.FirstOrDefault(o=>o.Inside.z==levels[1]&&o.Outside-o.Inside==dir&&CivicFixtureGeometry.FreeColumn(blocks,o.Outside));
-        var left=Seam(new Vector3Int(-1,0,0));var right=Seam(new Vector3Int(1,0,0));
-        var shut=right==null?null:deck.Openings.FirstOrDefault(o=>o.Inside.z==levels[1]&&o.Outside==right.Outside+new Vector3Int(0,1,0));
-        if(left==null||right==null||shut==null)
-          throw new InvalidOperationException("Restaurant upper balcony lacks a left rail and a right rail with free columns outside them and a right rail beside the latter");
-        _leftSeam=left.Id;_rightSeam=right.Id;_shutSeam=shut.Id;
+        // External vanilla stairs climb to the middle rear seam of the lower dining balcony.
+        var rear=CivicFixtureGeometry.DeckSeams(spec,levels[0],new Vector3Int(0,1,0));
+        if(rear.Count==0)throw new InvalidOperationException("Restaurant lower balcony has no rear edge with a free column outside it for the stairs");
+        _stairCells=CivicFixtureGeometry.Flight(place,_building.TransformCoordinates(rear[rear.Count/2].Outside),new Vector3Int(0,1,0),Origin.z);
+        // Seams of the upper balcony: platform stacks outside its first left and first right
+        // edge stands with a free column (the test toggles a Path on each); the next right edge
+        // stand along has no platform outside and must stay unlinked.
+        var lefts=CivicFixtureGeometry.DeckSeams(spec,levels[1],new Vector3Int(-1,0,0));
+        var rights=CivicFixtureGeometry.DeckSeams(spec,levels[1],new Vector3Int(1,0,0));
+        if(lefts.Count==0||rights.Count==0)
+          throw new InvalidOperationException("Restaurant upper balcony lacks a left and a right edge with free columns outside them");
+        var left=lefts[0];var right=rights[0];
+        var shut=rights.Where(s=>s.Outside==right.Outside+new Vector3Int(0,1,0)).ToArray();
+        if(shut.Length==0)throw new InvalidOperationException("Restaurant upper balcony has no right edge stand beside "+right.Inside);
+        _leftSeam=left;_rightSeam=right;_shutSeam=shut[0];
         _leftSeamCell=_building.TransformCoordinates(left.Outside);_rightSeamCell=_building.TransformCoordinates(right.Outside);
         for(int z=0;z<levels[1];z++) {
           Local("Platform.IronTeeth",new Vector3Int(left.Outside.x,left.Outside.y,z));
@@ -325,40 +331,37 @@ namespace DeepFrontier.Scripts {
       _camera.MoveTargetTo(new Vector3(centre.x,7,centre.y));_camera.SetZoomLevel(25,0);_camera.HorizontalAngle=25;_camera.VerticalAngle=35;
       Report();
     }
-    private void AssertRail(string id,bool open,bool floorConnected) {
-      var o=_building.GetComponent<PlatformDeckSpec>().Openings.Single(o=>o.Id==id);
-      var a=_building.TransformCoordinates(o.Inside);var b=_building.TransformCoordinates(o.Outside);
+    // An open deck seam: the two supported test seams keep their floor connection with or
+    // without a road on the neighbouring platform; the next edge stand has no platform outside
+    // and stays unlinked. Nothing on the deck edge changes with the roads (no rails).
+    private void AssertSeam((Vector3Int Inside,Vector3Int Outside) seam,bool path,bool floorConnected) {
+      var a=_building.TransformCoordinates(seam.Inside);var b=_building.TransformCoordinates(seam.Outside);
       bool linked=_nav.AreConnectedInstant(a,b)&&_nav.AreConnectedInstant(b,a);
-      var transforms=_building.GameObject.FindChildIfNameNotEmpty(_building.GetComponent<BuildingModelSpec>().FinishedModelName).GetComponentsInChildren<Transform>(true);
-      bool hidden=o.HiddenNodes.All(name=>!transforms.Single(t=>t.name==name).gameObject.activeSelf);
       var outsidePath=_blockService.GetPathObjectAt(b);
       bool neighborPath=outsidePath&&outsidePath.IsFinished&&outsidePath.HasComponent<PathSpec>();
-      // The two supported test seams retain their floor connections without
-      // roads. The next panel has no outside platform and remains disconnected.
-      // Decorative rail visibility follows actual player paths independently.
-      if(linked!=floorConnected||neighborPath!=open||hidden!=open)throw new InvalidOperationException("Platform rail/path differs: "+id+" floorLinked="+linked+" expectedFloor="+floorConnected+" neighborPath="+neighborPath+" hidden="+hidden+" expectedOpen="+open);
-      Debug.Log("[DeepFrontier Restaurant] PASS platform rail "+id+" open="+open);
+      if(linked!=floorConnected||neighborPath!=path)throw new InvalidOperationException("Open deck seam differs: "+seam.Inside+" -> "+seam.Outside+" floorLinked="+linked+" expectedFloor="+floorConnected+" neighborPath="+neighborPath+" expectedPath="+path);
+      Debug.Log("[DeepFrontier Restaurant] PASS open deck seam "+seam.Inside+" -> "+seam.Outside+" path="+path);
     }
     private void CheckPlatformDeck() {
       if(_frame==240) {
         foreach(var shaft in _powerProbes)if(shaft.Graph!=_restaurant.GetComponent<MechanicalNode>().Graph)throw new InvalidOperationException("Multi-level shaft is disconnected from restaurant");
         Debug.Log("[DeepFrontier Restaurant] PASS actual shaft graphs connect at ground, middle and upper room faces");
-        AssertRail(_leftSeam,false,true);AssertRail(_rightSeam,false,true);
-        _railTestPath=Create("Path",_leftSeamCell.x,_leftSeamCell.y,_leftSeamCell.z);
-        _rightRailTestPath=Create("Path",_rightSeamCell.x,_rightSeamCell.y,_rightSeamCell.z);
+        AssertSeam(_leftSeam,false,true);AssertSeam(_rightSeam,false,true);
+        _seamTestPath=Create("Path",_leftSeamCell.x,_leftSeamCell.y,_leftSeamCell.z);
+        _rightSeamTestPath=Create("Path",_rightSeamCell.x,_rightSeamCell.y,_rightSeamCell.z);
       }
       if(_frame==330) {
-        AssertRail(_leftSeam,true,true);AssertRail(_rightSeam,true,true);AssertRail(_shutSeam,false,false);
-        _entityService.Delete(_railTestPath.GetComponent<EntityComponent>());
-        _entityService.Delete(_rightRailTestPath.GetComponent<EntityComponent>());
+        AssertSeam(_leftSeam,true,true);AssertSeam(_rightSeam,true,true);AssertSeam(_shutSeam,false,false);
+        _entityService.Delete(_seamTestPath.GetComponent<EntityComponent>());
+        _entityService.Delete(_rightSeamTestPath.GetComponent<EntityComponent>());
       }
       if(_frame==420) {
-        AssertRail(_leftSeam,false,true);AssertRail(_rightSeam,false,true);
-        _railTestPath=Create("Path",_leftSeamCell.x,_leftSeamCell.y,_leftSeamCell.z);
-        _rightRailTestPath=Create("Path",_rightSeamCell.x,_rightSeamCell.y,_rightSeamCell.z);
+        AssertSeam(_leftSeam,false,true);AssertSeam(_rightSeam,false,true);
+        _seamTestPath=Create("Path",_leftSeamCell.x,_leftSeamCell.y,_leftSeamCell.z);
+        _rightSeamTestPath=Create("Path",_rightSeamCell.x,_rightSeamCell.y,_rightSeamCell.z);
       }
       if(_frame==510) {
-        AssertRail(_leftSeam,true,true);AssertRail(_rightSeam,true,true);AssertRail(_shutSeam,false,false);
+        AssertSeam(_leftSeam,true,true);AssertSeam(_rightSeam,true,true);AssertSeam(_shutSeam,false,false);
         foreach(var door in _building.GetComponent<PlatformDeckSpec>().Doors) {
           var a=_building.TransformCoordinates(door.Interior);var b=_building.TransformCoordinates(door.Exterior);
           if(!_nav.AreConnectedInstant(a,b)||!_nav.AreConnectedInstant(b,a))throw new InvalidOperationException("Enclosed door lacks native deck-path connection: "+door.Interior);

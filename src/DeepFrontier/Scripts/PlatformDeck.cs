@@ -47,8 +47,10 @@ namespace DeepFrontier.Scripts {
       _building=GetComponent<BlockObject>();_spec=GetComponent<PlatformDeckSpec>();
       // Doors may be empty: a deck with no enclosed door (the Reinforced Hydro
       // Turbine's terrace, 2026-10-30) is reached only by the player's paths.
-      if(_spec.Openings.IsDefaultOrEmpty||_spec.Doors.IsDefault)
-        throw new InvalidOperationException("Platform deck requires explicit rails and an explicit (possibly empty) door list.");
+      // Openings may be empty too: an open deck with no rails (the 2026-10-31
+      // roof pass), whose edges are plain platform edges.
+      if(_spec.Openings.IsDefault||_spec.Doors.IsDefault)
+        throw new InvalidOperationException("Platform deck requires an explicit (possibly empty) rail list and an explicit (possibly empty) door list.");
       if(_spec.Openings.Select(o=>o.Id).Distinct().Count()!=_spec.Openings.Length)
         throw new InvalidOperationException("Duplicate platform rail IDs.");
       foreach(var o in _spec.Openings) {

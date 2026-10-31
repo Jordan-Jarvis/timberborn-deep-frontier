@@ -36,10 +36,12 @@ require({n for n in names if n.startswith('#Slot#Staff')} == {f'#Slot#Staff{i}' 
 native = {'BaseWood_DarkBrown.IronTeeth', 'IrregularPlanks_DarkBrown.IronTeeth',
           'RoofPlanks.IronTeeth', 'BaseMetal.IronTeeth', 'Details.IronTeeth',
           'Plaster_White.IronTeeth', 'Plaster_Orange.IronTeeth',
-          'IrregularPlanks_MetalForged.IronTeeth', 'WindowsAtlas.IronTeeth',
-          'BaseWood_Brown.Folktails'}
+          'IrregularPlanks_MetalForged.IronTeeth', 'WindowsAtlas.IronTeeth'}
 materials = {m.material for n in model.nodes for m in n.meshes}
 require(native <= materials, 'Missing native civic palette materials')
+# BaseWood_Brown.Folktails painted only the Double Lodge railing pieces; the decks
+# have no rails since the 2026-10-31 roof pass.
+require('BaseWood_Brown.Folktails' not in materials, 'Folktails railing wood exported without rails')
 require(not ({f'DFIndustrial{i:02d}' for i in (0, 1, 2, 3, 7, 27, 28, 29)} & materials), 'Native palette replaced by custom material')
 uv_count = 0
 for node in model.nodes:
@@ -81,24 +83,25 @@ while queue:
     queue.extend(graph[current] - visited)
 require(visited == cells, f'Disconnected authored route cells: {cells - visited}')
 require(all(tuple(p) in visited for p in layout['doorNodes'] + layout['buildableCells']), 'Disconnected door or terrace support cell')
-require(len(walkway['Openings']) == len(layout['ports']) == 59, 'Expected all fifty-nine physical deck-edge openings')
-require(len({p['Id'] for p in walkway['Openings']}) == 59, 'Duplicate opening IDs')
-require(len(walkway['Doors'])==4 and all(not p['ShownNodes'] for p in walkway['Openings']), 'Whole-tile decks must not need connection-only filler planks')
-for opening in walkway['Openings']:
-    for name in opening['HiddenNodes'] + opening['ShownNodes']:
-        require(names[name] == 1, f'Missing adaptive railing node: {name}')
+# 2026-10-31 roof pass: open decks, no rails. The deck keeps only its four
+# enclosed door links; no railing node is exported.
+require(walkway['Openings'] == [] and layout['ports'] == [], 'The Restaurant decks have no rails (2026-10-31 roof pass)')
+require(read_json('outputs/reference-studies/Restaurant-rail-manifest.json')['runs'] == [], 'Restaurant source scene still authors rail runs')
+require(not any(n.startswith(('WalkwayRail', 'WalkwayGroup')) for n in names), 'Railing node exported')
+require(len(walkway['Doors']) == 4, 'Restaurant needs its four interior door links')
 
-# The 2026-10-30 bricks review (brick footings; archive_triangle_budget_review.py
-# --review 2026-10-30-bricks) supersedes the 2026-10-30 roof-pass review (no
-# roof vents), the 2026-10-30 compaction review, the 2026-10-29
+# The 2026-10-31 roof-pass review (rails and parapet removed, seating lowered;
+# archive_triangle_budget_review.py --review 2026-10-31-roofs) supersedes the
+# 2026-10-30 bricks review (brick footings), the 2026-10-30 roof-pass review
+# (no roof vents), the 2026-10-30 compaction review, the 2026-10-29
 # triangle-budget review (20k grand cap), the 2026-10-22 one and the
 # 2026-10-21 exterior-repair capture.
-review = next(r for r in read_json('docs/art/reviews/2026-10-30-bricks-civic/review.json')['renders'] if r['model'] == ident)
+review = next(r for r in read_json('docs/art/reviews/2026-10-31-roofs-civic/review.json')['renders'] if r['model'] == ident)
 require(hashlib.sha256((ROOT / review['source']).read_bytes()).hexdigest() == review['sourceSha256'], 'Source scene changed after native style review capture')
+# Dining headroom (2026-10-31): a seated native beaver reaches SEATED_HEAD above its
+# slot; under a deck one layer up it must stay clear of that deck's beams.
+from restaurant_structure import SEATED_HEAD, DECK_BEAM_UNDERSIDE
 seat_clearances=[]
-rails=read_json('outputs/reference-studies/Restaurant-rail-manifest.json')
-post=read_json('tools/asset-pipeline/housing-railing.json')['parts']['post']
-post_half_width=[max(abs(v[0]-1) for v in post['vertices']),max(abs(v[2]-.05) for v in post['vertices'])]
 for seat in visitor['visitorSeats']:
     x,y,z=seat['position']
     require(abs(z-seat['seatSurfaceHeight'])<1e-6, 'Sitting marker is not at the chair seat: '+seat['id'])
@@ -109,26 +112,19 @@ for seat in visitor['visitorSeats']:
     q=exported.rotation
     forward=(2*(q.x*q.z+q.w*q.y),1-2*(q.x*q.x+q.y*q.y))
     require(all(abs(a-b)<1e-5 for a,b in zip(forward,seat['facing'])), 'Exported diner faces away from its table: '+seat['id'])
-    low,high=seat['chairBounds'];minimum=float('inf')
-    for run in rails['runs']:
-        for panel in run['panels']:
-            a,b=panel['start'],panel['end']
-            if abs(a[2]-seat['deckHeight'])>1e-5:continue
-            # All authored runs are axis-aligned. Include their post half-width.
-            pmin=[min(a[i],b[i])-post_half_width[i] for i in (0,1)]
-            pmax=[max(a[i],b[i])+post_half_width[i] for i in (0,1)]
-            dx=max(pmin[0]-high[0],low[0]-pmax[0],0)
-            dy=max(pmin[1]-high[1],low[1]-pmax[1],0)
-            gap=(dx*dx+dy*dy)**.5;minimum=min(minimum,gap)
-            require(gap>.025, 'Chair intersects a railing or post: '+seat['id'])
-    seat_clearances.append({'seat':seat['id'],'railClearance':minimum,'anchorHeight':z,'facing':list(forward)})
+    nx,ny=x+layout['origin'][0],y+layout['origin'][1];deck=seat['deckHeight']
+    covered=any(b[0]<=nx<b[3] and b[1]<=ny<b[4] and b[5]==deck+1 for b in layout['structure']['platforms'].values())
+    clearance=(deck+DECK_BEAM_UNDERSIDE-(z+SEATED_HEAD)) if covered else None
+    require(clearance is None or clearance>=.03, f'Seated diner head clips the deck beams above: {seat["id"]} clearance {clearance}')
+    seat_clearances.append({'seat':seat['id'],'anchorHeight':z,'seatAboveDeck':round(z-deck,4),'headAboveDeck':round(z-deck+SEATED_HEAD,4),
+                            'headClearance':None if clearance is None else round(clearance,4),'facing':list(forward)})
 assembly = read_json('outputs/reference-studies/Restaurant-native-assembly.json')
 require(all(not any(p['name'] in name for name in names) for p in assembly['props']), 'Preview native props included in exported payload')
 report = {
     'scope': 'Staged mesh and authored graph only. Runtime occupancy, district access, native props, seating height and staffed meal service remain unverified.',
     'model': ident, 'sha256': hashlib.sha256(payload).hexdigest(), 'nodes': len(model.nodes),
     'dinerSlots': 14, 'staffMarkers': 4, 'nativeUvVerticesChecked': uv_count,
-    'animationTracks': 1, 'frames': 61, 'openings': 59, 'connectedSuggestedRouteCells': len(cells),
+    'animationTracks': 1, 'frames': 61, 'openings': 0, 'connectedSuggestedRouteCells': len(cells),
     'doorLevels': sorted({c[2] for c in layout['doorNodes']}),
     'nativePropsForRuntimeAssembly': len(assembly['props']), 'reviewSceneMatches': True,
     'seatingGeometry':seat_clearances

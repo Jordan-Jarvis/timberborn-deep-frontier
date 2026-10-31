@@ -66,9 +66,9 @@
       "position": [
         1.2999999999999998,
         1.55,
-        2.3375
+        2.1999999999999997
       ],
-      "seatSurfaceHeight": 2.3375,
+      "seatSurfaceHeight": 2.1999999999999997,
       "deckHeight": 2,
       "facing": [
         1,
@@ -88,7 +88,7 @@
       "tableCenter": [
         1.95,
         1.55,
-        2.58
+        2.4425
       ]
     },
     {
@@ -96,9 +96,9 @@
       "position": [
         2.6,
         1.55,
-        2.3375
+        2.1999999999999997
       ],
-      "seatSurfaceHeight": 2.3375,
+      "seatSurfaceHeight": 2.1999999999999997,
       "deckHeight": 2,
       "facing": [
         -1,
@@ -118,7 +118,7 @@
       "tableCenter": [
         1.95,
         1.55,
-        2.58
+        2.4425
       ]
     },
     {
@@ -126,9 +126,9 @@
       "position": [
         4.55,
         1.55,
-        2.3375
+        2.1999999999999997
       ],
-      "seatSurfaceHeight": 2.3375,
+      "seatSurfaceHeight": 2.1999999999999997,
       "deckHeight": 2,
       "facing": [
         1,
@@ -148,7 +148,7 @@
       "tableCenter": [
         5.2,
         1.55,
-        2.58
+        2.4425
       ]
     },
     {
@@ -156,9 +156,9 @@
       "position": [
         5.8500000000000005,
         1.55,
-        2.3375
+        2.1999999999999997
       ],
-      "seatSurfaceHeight": 2.3375,
+      "seatSurfaceHeight": 2.1999999999999997,
       "deckHeight": 2,
       "facing": [
         -1,
@@ -178,7 +178,7 @@
       "tableCenter": [
         5.2,
         1.55,
-        2.58
+        2.4425
       ]
     },
     {
@@ -186,9 +186,9 @@
       "position": [
         1.2999999999999998,
         1.55,
-        1.3375
+        1.2
       ],
-      "seatSurfaceHeight": 1.3375,
+      "seatSurfaceHeight": 1.2,
       "deckHeight": 1,
       "facing": [
         1,
@@ -208,7 +208,7 @@
       "tableCenter": [
         1.95,
         1.55,
-        1.58
+        1.4425000000000001
       ]
     },
     {
@@ -216,9 +216,9 @@
       "position": [
         2.6,
         1.55,
-        1.3375
+        1.2
       ],
-      "seatSurfaceHeight": 1.3375,
+      "seatSurfaceHeight": 1.2,
       "deckHeight": 1,
       "facing": [
         -1,
@@ -238,7 +238,7 @@
       "tableCenter": [
         1.95,
         1.55,
-        1.58
+        1.4425000000000001
       ]
     },
     {
@@ -246,9 +246,9 @@
       "position": [
         2.95,
         1.55,
-        1.3375
+        1.2
       ],
-      "seatSurfaceHeight": 1.3375,
+      "seatSurfaceHeight": 1.2,
       "deckHeight": 1,
       "facing": [
         1,
@@ -268,7 +268,7 @@
       "tableCenter": [
         3.6,
         1.55,
-        1.58
+        1.4425000000000001
       ]
     },
     {
@@ -276,9 +276,9 @@
       "position": [
         4.25,
         1.55,
-        1.3375
+        1.2
       ],
-      "seatSurfaceHeight": 1.3375,
+      "seatSurfaceHeight": 1.2,
       "deckHeight": 1,
       "facing": [
         -1,
@@ -298,7 +298,7 @@
       "tableCenter": [
         3.6,
         1.55,
-        1.58
+        1.4425000000000001
       ]
     },
     {
@@ -306,9 +306,9 @@
       "position": [
         4.55,
         1.55,
-        1.3375
+        1.2
       ],
-      "seatSurfaceHeight": 1.3375,
+      "seatSurfaceHeight": 1.2,
       "deckHeight": 1,
       "facing": [
         1,
@@ -328,7 +328,7 @@
       "tableCenter": [
         5.2,
         1.55,
-        1.58
+        1.4425000000000001
       ]
     },
     {
@@ -336,9 +336,9 @@
       "position": [
         5.8500000000000005,
         1.55,
-        1.3375
+        1.2
       ],
-      "seatSurfaceHeight": 1.3375,
+      "seatSurfaceHeight": 1.2,
       "deckHeight": 1,
       "facing": [
         -1,
@@ -358,7 +358,7 @@
       "tableCenter": [
         5.2,
         1.55,
-        1.58
+        1.4425000000000001
       ]
     },
     {
@@ -366,9 +366,9 @@
       "position": [
         7.04,
         2.75,
-        1.3375
+        1.2
       ],
-      "seatSurfaceHeight": 1.3375,
+      "seatSurfaceHeight": 1.2,
       "deckHeight": 1,
       "facing": [
         0,
@@ -388,7 +388,7 @@
       "tableCenter": [
         7.04,
         3.4,
-        1.58
+        1.4425000000000001
       ]
     },
     {
@@ -396,9 +396,9 @@
       "position": [
         7.04,
         4.05,
-        1.3375
+        1.2
       ],
-      "seatSurfaceHeight": 1.3375,
+      "seatSurfaceHeight": 1.2,
       "deckHeight": 1,
       "facing": [
         0,
@@ -418,7 +418,7 @@
       "tableCenter": [
         7.04,
         3.4,
-        1.58
+        1.4425000000000001
       ]
     },
     {
@@ -426,9 +426,9 @@
       "position": [
         7.04,
         4.449999999999999,
-        1.3375
+        1.2
       ],
-      "seatSurfaceHeight": 1.3375,
+      "seatSurfaceHeight": 1.2,
       "deckHeight": 1,
       "facing": [
         0,
@@ -448,7 +448,7 @@
       "tableCenter": [
         7.04,
         5.1,
-        1.58
+        1.4425000000000001
       ]
     },
     {
@@ -456,9 +456,9 @@
       "position": [
         7.04,
         5.75,
-        1.3375
+        1.2
       ],
-      "seatSurfaceHeight": 1.3375,
+      "seatSurfaceHeight": 1.2,
       "deckHeight": 1,
       "facing": [
         0,
@@ -478,7 +478,7 @@
       "tableCenter": [
         7.04,
         5.1,
-        1.58
+        1.4425000000000001
       ]
     }
   ],

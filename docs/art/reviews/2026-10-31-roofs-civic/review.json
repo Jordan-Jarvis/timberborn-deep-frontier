@@ -1,0 +1,17 @@
+{
+  "scope": "Before | after | difference sheets (render_budget_views.py, matched compaction cameras, compose_budget_sheet.py) of the 2026-10-31 roof pass: deck and roof rails, parapets and roof curbs removed (open platforms edge to edge); the Restaurant chairs and tables 0.1375 lower. Blender renders, not game screenshots.",
+  "renders": [
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "2fb40cc562e28555ba3ad90b04d83d2e9ec2eea8d22c89226e3cd4e939a051fc",
+      "images": [
+        "Restaurant-before-after.png"
+      ],
+      "imageSha256": {
+        "Restaurant-before-after.png": "fb0f94cbf93803b618d3e7f644ab6adaf996a4c9f0f64f68720d1c0015c1cb6d"
+      }
+    }
+  ],
+  "extraImages": []
+}

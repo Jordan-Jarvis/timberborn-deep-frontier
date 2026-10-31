@@ -102,7 +102,7 @@ from reference_civic import side_wall, fish
 from walkway_geometry import RailAssembly
 from grid_structure import gallery as grid_gallery, platform as grid_platform, room as grid_room
 from restaurant_structure import ORIGIN as RESTAURANT_ORIGIN, PLATFORMS as RESTAURANT_PLATFORMS, SUPPORTS as RESTAURANT_SUPPORTS, ROOMS as RESTAURANT_ROOMS, DOORS as RESTAURANT_DOORS, source as restaurant_source
-from restaurant_structure import EXTERIOR_WALLS as RESTAURANT_WALLS, HEADROOM as RESTAURANT_HEADROOM
+from restaurant_structure import EXTERIOR_WALLS as RESTAURANT_WALLS, HEADROOM as RESTAURANT_HEADROOM, TABLE_DROP as RESTAURANT_TABLE_DROP
 from hatchery_structure import ACCESS as HATCHERY_ACCESS, TERRACE as HATCHERY_TERRACE
 from lategame_kit import emitter
 
@@ -142,7 +142,9 @@ CIVIC_TERRACES={
 }
 
 
-def roof_terrace(g,rails,ident):
+def roof_terrace(g,rails,ident,*,railed=True):
+    """railed=False (opt-in, 2026-10-31 roof pass): an open platform edge to edge,
+    no railing panels, so roads and buildings continue onto neighbouring roofs."""
     terrace=CIVIC_TERRACES[ident];x0,y0,x1,y1=terrace['bounds'];z=terrace['layer']
     # Cast roof plate with expansion-joint strips, exposed steel edge girders
     # and independent railing panels. The middle stays empty for player props.
@@ -175,7 +177,7 @@ def roof_terrace(g,rails,ident):
             g.box((x,(y0+y1)/2,z-.006),(.014,y1-y0-.09,.01),IRON)
     inset=.10 if ident=='Restaurant' else 0
     for side,a,b in [('Front',(x0+inset,y0+inset),(x1-inset,y0+inset)),('Rear',(x0+inset,y1-inset),(x1-inset,y1-inset)),
-                     ('Left',(x0+inset,y0+inset),(x0+inset,y1-inset)),('Right',(x1-inset,y0+inset),(x1-inset,y1-inset))]:
+                     ('Left',(x0+inset,y0+inset),(x0+inset,y1-inset)),('Right',(x1-inset,y0+inset),(x1-inset,y1-inset))] if railed else []:
         # Restaurant rail posts stand on tile boundaries: an opened section
         # leaves exactly its own tile open.
         if ident=='Restaurant':rails.run_grid('RoofTerrace'+side,a,b,z,RESTAURANT_ORIGIN)
@@ -613,36 +615,40 @@ def plate(g,x,y,z,meal=True):
         g.box((x+.01,y,z+.034),(.12,.09,.04),SAND)
 
 
-def terrace_table(g,x,y,z=2,chair_axis='Y'):
+def terrace_table(g,x,y,z=2,chair_axis='Y',*,drop=0.0):
+    """Table with two chairs. `drop` (opt-in, 2026-10-31) lowers the seats and the
+    tabletop together by that much, legs shortened, so the plan and the seat-to-table
+    relation stay the same (the Restaurant: diners' heads cleared the deck beams above)."""
     if chair_axis not in ('X','Y'):raise ValueError('Dining chairs require an explicit X or Y axis')
-    g.box((x,y,z+.58),(.65,.53,.065),PLANK)
+    if not 0<=drop<.2:raise ValueError('Table drop must stay within the chair and table legs')
+    g.box((x,y,z+.58-drop),(.65,.53,.065),PLANK)
     for dx in (-.25,.25):
-        for dy in (-.19,.19):g.box((x+dx,y+dy,z+.285),(.055,.055,.57),WOOD)
+        for dy in (-.19,.19):g.box((x+dx,y+dy,z+(.57-drop)/2),(.055,.055,.57-drop),WOOD)
     for sign in (-1,1):
         cx=x+(sign*.65 if chair_axis=='X' else 0)
         cy=y+(sign*.65 if chair_axis=='Y' else 0)
         facing=[-sign,0] if chair_axis=='X' else [0,-sign]
-        g.visitor_seats.append({'id':'Seat'+str(len(g.visitor_seats)),'position':[cx,cy,z+.3375],
-            'seatSurfaceHeight':z+.3375,'deckHeight':z,'facing':facing,'animation':'Sitting',
+        g.visitor_seats.append({'id':'Seat'+str(len(g.visitor_seats)),'position':[cx,cy,z+.3375-drop],
+            'seatSurfaceHeight':z+.3375-drop,'deckHeight':z,'facing':facing,'animation':'Sitting',
             'chairBounds':[[cx-(.145 if chair_axis=='X' else .165),cy-(.165 if chair_axis=='X' else .145)],
                            [cx+(.145 if chair_axis=='X' else .165),cy+(.165 if chair_axis=='X' else .145)]],
-            'tableCenter':[x,y,z+.58]})
+            'tableCenter':[x,y,z+.58-drop]})
         # Local Y points towards the chair back. Rotate the complete chair,
         # including its anchor, instead of changing only the visual seat.
         def chair_box(dx,dy,dz,sx,sy,sz,mat):
             if chair_axis=='X':g.box((cx+dy,cy+dx,z+dz),(sy,sx,sz),mat)
             else:g.box((cx+dx,cy+dy,z+dz),(sx,sy,sz),mat)
-        chair_box(0,0,.31,.33,.29,.055,PLANK)
+        chair_box(0,0,.31-drop,.33,.29,.055,PLANK)
         for dx in (-.13,.13):
-            for dy in (-.10,.10):chair_box(dx,dy,.135,.043,.043,.27,WOOD)
+            for dy in (-.10,.10):chair_box(dx,dy,(.27-drop)/2,.043,.043,.27-drop,WOOD)
         # Back posts stand 7.5 mm inside the seat edge; at .12 their faces
         # were 2.5 mm from the seat's and overlapped it.
-        for dx in (-.13,.13):chair_box(dx,sign*.115,.47,.043,.045,.40,WOOD)
+        for dx in (-.13,.13):chair_box(dx,sign*.115,.47-drop,.043,.045,.40,WOOD)
         # One back rail (was two): triangle budget, 20k grand cap.
-        chair_box(0,sign*.115,.57,.217,.045,.07,PLANK)
-    g.box((x,y,z+.623),(.57,.47,.009),CLOTH)
-    for dx in (-.17,.17):plate(g,x+dx,y,z+.64)
-    g.cylinder((x,y+.11,z+.70),.034,.13,BRASS,'Z',6)
+        chair_box(0,sign*.115,.57-drop,.217,.045,.07,PLANK)
+    g.box((x,y,z+.623-drop),(.57,.47,.009),CLOTH)
+    for dx in (-.17,.17):plate(g,x+dx,y,z+.64-drop)
+    g.cylinder((x,y+.11,z+.70-drop),.034,.13,BRASS,'Z',6)
 
 
 def sign_emblem(g,x,y,z,kind,scale=1):
@@ -853,7 +859,7 @@ RESTAURANT_FASCIA={
     'UpperDiningSideFront':[('front',6,7),('right',1,2)],
     'UpperDiningSide':[('right',2,7),('back',5,7)],
     'UpperDiningRear':[('back',1,5),('left',5,7)],
-    # The main roof's edges carry the parapet; the room fascia closes below.
+    # The room fascia closes below the main roof's open slab edge.
     'MainRoof':[],
     'RoofTerraceInner':[('front',5,7),('back',5,7)],
     'RoofTerraceOuter':[('front',7,9),('back',7,9),('right',2,5)],
@@ -864,15 +870,17 @@ def restaurant_roof_sign(g,parts):
     """Carved restaurant sign swinging from a steel gantry on the flat roof.
 
     2026-10-30 compaction: the front gable it hung from is gone. Two forged
-    posts stand on the front parapet and carry a cross beam; the board hangs
-    between them over the parapet, facing the street. Gantry and swing stay in
-    the parapet's edge strip (native y 2.0..2.13, 2 <= x < 4, z 3-4), so the
+    posts stand on the roof's front edge (on the parapet until 2026-10-31) and
+    carry a cross beam; the board hangs between them, facing the street. Gantry and swing stay in
+    the roof's edge strip (native y 2.0..2.13, 2 <= x < 4, z 3-4), so the
     roof cells behind stay buildable (no-clutter rule).
     """
     x=restaurant_source((3,0,0))[0];y=restaurant_source((0,2.08,0))[1];w=1.42;z=3.52
+    # 2026-10-31: the parapet went; each post stands on a bearing plate on
+    # the deck boards (top 3.0), as the deck posts do.
     for xx in (x-.80,x+.80):
-        g.box((xx,y,(3.23+3.77)/2),(.09,.09,3.77-3.23),IRON)
-        g.box((xx,y,3.255),(.10,.10,.05),IRON)
+        g.box((xx,y,(3.04+3.77)/2),(.09,.09,3.77-3.04),IRON)
+        g.box((xx,y,3.025),(.10,.10,.05),IRON)
     g.beam((x-.86,y,3.82),(x+.86,y,3.82),.10,.10,WOOD)
     for xx in (x-w*.36,x+w*.36):
         g.box((xx,y,3.755),(.035,.035,.03),IRON)
@@ -914,22 +922,6 @@ def kitchen_hearth(g):
     for xx in (3.68,3.76,3.84,3.92):g.box((xx,7.834,.375),(.02,.006,.19),IRON)
 
 
-def restaurant_parapet(g,runs,z=3):
-    """Low cast parapet on the flat main roof's exposed edges (native spans).
-
-    Its outer face is the tile line; it stands on the deck boards and stays
-    within 0.12 of the edge, so the roof cells inside it stay buildable.
-    """
-    for side,a,b,line in runs:
-        if side in ('front','back'):
-            cx,cy,_=restaurant_source(((a+b)/2,line+(.06 if side=='front' else -.06),0));size=(b-a,.12)
-        elif side=='left':
-            cx,cy,_=restaurant_source((line+.06,(a+b)/2,0));size=(.12,b-a)
-        else:raise ValueError('Restaurant parapet side '+side)
-        g.box((cx,cy,z+.10),(*size,.20),CIVIC_CONCRETE)
-        g.box((cx,cy,z+.215),(*size,.03),IRON)
-
-
 def restaurant(g,parts):
     # 2026-10-30 compaction: one layer per storey and a flat roof (see
     # restaurant_structure.py). Footprint, ground door, dining balconies,
@@ -957,27 +949,25 @@ def restaurant(g,parts):
         for y in (3.35,4.35,5.35):
             atlas_window(g,x,y,2.46,.40,face,'cross')
     # Flat main roof: the cast slab and timber decking of the roof terrace,
-    # one level with it, a low parapet on its three street edges.
+    # one level with it. 2026-10-31 roof pass (user: "remove the railings and
+    # cement railing/mini walls on the roofs ... like an actual platform where
+    # roads can connect"): no parapet; the slab runs open to its tile edges.
     grid_platform(g,'MainRoof',RESTAURANT_PLATFORMS['MainRoof'],RESTAURANT_ORIGIN,RESTAURANT_SUPPORTS['MainRoof'],PLANK,
                   slab_material=CIVIC_CONCRETE,fascia=RESTAURANT_FASCIA['MainRoof'],fascia_material=IRON,board_relief=.010)
-    restaurant_parapet(g,[('front',1,5,2),('back',1,5,5),('left',2.12,4.88,1)])
     restaurant_roof_sign(g,parts)
     # Two storeys of dining balconies: every authored post stands on a cast
     # pier (ground) or bearing plate (deck) with knee braces into the beams it
     # carries, and exposed deck edges get a timber fascia on the tile line.
-    # Rail posts stand on tile boundaries, so an opened section is one tile.
+    # 2026-10-31 roof pass: no deck rails. The balconies are open platforms
+    # (one- and two-layer drops, as on a vanilla platform), so roads continue
+    # onto neighbouring roofs and buildings can straddle the edge.
     for prefix in ('Dining','UpperDining'):
-        for side,edges in (('Front',('front','left')),('SideFront',()),('Side',()),('Rear',())):
+        for side in ('Front','SideFront','Side','Rear'):
             name=prefix+side
-            grid_gallery(g,r,name,RESTAURANT_PLATFORMS[name],RESTAURANT_ORIGIN,edges,RESTAURANT_SUPPORTS[name],
+            grid_gallery(g,r,name,RESTAURANT_PLATFORMS[name],RESTAURANT_ORIGIN,(),RESTAURANT_SUPPORTS[name],
                          grid_rails=True,support_style='pier',fascia=RESTAURANT_FASCIA[name],board_relief=.010,
                          pier_material=BRICK)   # brick piers on the ground (2026-10-30, bricks pass; were cast)
-        z=1 if prefix=='Dining' else 2
-        r.run_grid(prefix+'Sideright',(7.70,1.95),(7.70,7.75),z,RESTAURANT_ORIGIN)
-        r.run_grid(prefix+'Rearback',(1.90,7.75),(7.70,7.75),z,RESTAURANT_ORIGIN)
-        r.run_grid(prefix+'Rearleft',(1.90,5.95),(1.90,7.75),z,RESTAURANT_ORIGIN)
-    for x in (1.95,5.20):terrace_table(g,x,1.55,2,chair_axis='X')
-    r.run_grid('StairAccess',(6.80,1.95),(7.70,1.95),1,RESTAURANT_ORIGIN)
+    for x in (1.95,5.20):terrace_table(g,x,1.55,2,chair_axis='X',drop=RESTAURANT_TABLE_DROP)
     # Main dining room: a wide warm picture window over the dining balcony,
     # timber-mullioned like the reference's dining windows; the narrow pier
     # right of the door keeps a grand window. The sides keep grand windows.
@@ -993,8 +983,8 @@ def restaurant(g,parts):
     # posts (tile centres) so no reveal meets a post face.
     for x in (2.8,3.8,4.8):atlas_window(g,x,5.81,1.46,.40,'back','grid9')
     wall_windows(g,[4.28,5.28],2.89,.48,.50,style='factory')
-    for x in (1.95,3.60,5.20):terrace_table(g,x,1.55,1,chair_axis='X')
-    for y in (3.4,5.1):terrace_table(g,7.04,y,1)
+    for x in (1.95,3.60,5.20):terrace_table(g,x,1.55,1,chair_axis='X',drop=RESTAURANT_TABLE_DROP)
+    for y in (3.4,5.1):terrace_table(g,7.04,y,1,drop=RESTAURANT_TABLE_DROP)
     # Balcony planters stand on the deck inside the rails, in front of the
     # reserved table row, instead of hanging over neighbouring tiles.
     for z in (1,2):
@@ -1022,7 +1012,7 @@ def restaurant(g,parts):
     for z in (1,2):
         for x in (2.3,5.3,7.3):
             g.box((x,7.80,z-.23),(.40,.045,.18),IRON)
-    roof_terrace(g,r,'Restaurant')
+    roof_terrace(g,r,'Restaurant',railed=False)
     return r
 
 

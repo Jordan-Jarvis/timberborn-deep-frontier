@@ -92,6 +92,18 @@ RESERVATIONS = [
 # Walking clearance above a deck or floor, below the beams of the deck one
 # layer above (their underside is 0.77 over the floor below).
 HEADROOM = .72
+DECK_BEAM_UNDERSIDE = .77
+# Dining (2026-10-31, user: "the resturaunt chairs and tables are a tad too tall,
+# and beavers heads are clipping the ceiling when they dine"). The native adult
+# beaver playing the Sitting slot animation reaches 0.51 above its slot (highest
+# vertex over the 149-frame BeaverAdult_sitting loop, measured locally from the
+# installed game's BeaverAdult.Model; the same mesh for both factions). With the
+# slot on a 0.3375 seat its head stood at 0.8475, above the 0.77 deck beams over
+# the lower dining balcony. Chairs and tables drop 0.1375 together: the seat
+# surface (and slot) is 0.20 over the deck, as the vanilla RooftopTerrace seat,
+# the head 0.71, 0.06 under the beams. Plan positions are unchanged.
+SEATED_HEAD = .51
+TABLE_DROP = .1375
 
 def source(point):
     return tuple(v-o for v,o in zip(point,ORIGIN,strict=True))

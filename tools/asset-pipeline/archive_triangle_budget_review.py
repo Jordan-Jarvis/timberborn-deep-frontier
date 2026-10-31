@@ -111,6 +111,21 @@ REVIEWS = {
                  'the cast concrete footings under the Restaurant and Fishery Works deck posts became brick '
                  '(brick_courses.py). Blender renders, not game screenshots.',
     },
+    # 2026-10-31 roof pass (user: no railings or concrete mini walls on the roofs; "like an
+    # actual platform where roads can connect"): sheets from render_budget_views.py with
+    # the compaction cameras; models join as their batch lands.
+    '2026-10-31-roofs': {
+        'folder': '2026-10-31-roofs-civic',
+        'sheets': 'outputs/roofs',
+        'models': {
+            'Restaurant': ('Restaurant', 'Restaurant-before-after.png'),
+        },
+        'extra': (),
+        'scope': 'Before | after | difference sheets (render_budget_views.py, matched compaction cameras, '
+                 'compose_budget_sheet.py) of the 2026-10-31 roof pass: deck and roof rails, parapets and '
+                 'roof curbs removed (open platforms edge to edge); the Restaurant chairs and tables 0.1375 '
+                 'lower. Blender renders, not game screenshots.',
+    },
 }
 
 

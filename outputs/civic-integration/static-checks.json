@@ -1,28 +1,30 @@
 {
   "scope": "Staged mesh and authored graph only. Runtime occupancy, district access, native props, seating height and staffed meal service remain unverified.",
   "model": "Restaurant",
-  "sha256": "29fb12f4116b783d918aada3c44499272df0855949811faea733c3b70a7f5908",
-  "nodes": 73,
+  "sha256": "5d313afc0eebdfdbc209d507ecbc7ceb7981fbb97be97681576c936ce98fad1a",
+  "nodes": 24,
   "dinerSlots": 14,
   "staffMarkers": 4,
-  "nativeUvVerticesChecked": 39530,
+  "nativeUvVerticesChecked": 23914,
   "animationTracks": 1,
   "frames": 61,
-  "openings": 59,
-  "connectedSuggestedRouteCells": 70,
+  "openings": 0,
+  "connectedSuggestedRouteCells": 69,
   "doorLevels": [
     0,
+    1,
     2,
-    4,
-    6
+    3
   ],
   "nativePropsForRuntimeAssembly": 18,
   "reviewSceneMatches": true,
   "seatingGeometry": [
     {
       "seat": "Seat0",
-      "railClearance": 0.1844680356979368,
-      "anchorHeight": 4.3375,
+      "anchorHeight": 2.1999999999999997,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": null,
       "facing": [
         0.9999999657714582,
         3.422854177870249e-08
@@ -30,8 +32,10 @@
     },
     {
       "seat": "Seat1",
-      "railClearance": 0.3538594698905946,
-      "anchorHeight": 4.3375,
+      "anchorHeight": 2.1999999999999997,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": null,
       "facing": [
         -0.9999999657714582,
         3.422854177870249e-08
@@ -39,8 +43,10 @@
     },
     {
       "seat": "Seat2",
-      "railClearance": 0.3538594698905946,
-      "anchorHeight": 4.3375,
+      "anchorHeight": 2.1999999999999997,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": null,
       "facing": [
         0.9999999657714582,
         3.422854177870249e-08
@@ -48,8 +54,10 @@
     },
     {
       "seat": "Seat3",
-      "railClearance": 0.3538594698905946,
-      "anchorHeight": 4.3375,
+      "anchorHeight": 2.1999999999999997,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": null,
       "facing": [
         -0.9999999657714582,
         3.422854177870249e-08
@@ -57,8 +65,10 @@
     },
     {
       "seat": "Seat4",
-      "railClearance": 0.1844680356979368,
-      "anchorHeight": 2.3375,
+      "anchorHeight": 1.2,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": 0.06,
       "facing": [
         0.9999999657714582,
         3.422854177870249e-08
@@ -66,8 +76,10 @@
     },
     {
       "seat": "Seat5",
-      "railClearance": 0.3538594698905946,
-      "anchorHeight": 2.3375,
+      "anchorHeight": 1.2,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": 0.06,
       "facing": [
         -0.9999999657714582,
         3.422854177870249e-08
@@ -75,8 +87,10 @@
     },
     {
       "seat": "Seat6",
-      "railClearance": 0.3538594698905946,
-      "anchorHeight": 2.3375,
+      "anchorHeight": 1.2,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": 0.06,
       "facing": [
         0.9999999657714582,
         3.422854177870249e-08
@@ -84,8 +98,10 @@
     },
     {
       "seat": "Seat7",
-      "railClearance": 0.3538594698905946,
-      "anchorHeight": 2.3375,
+      "anchorHeight": 1.2,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": 0.06,
       "facing": [
         -0.9999999657714582,
         3.422854177870249e-08
@@ -93,8 +109,10 @@
     },
     {
       "seat": "Seat8",
-      "railClearance": 0.3538594698905946,
-      "anchorHeight": 2.3375,
+      "anchorHeight": 1.2,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": 0.06,
       "facing": [
         0.9999999657714582,
         3.422854177870249e-08
@@ -102,8 +120,10 @@
     },
     {
       "seat": "Seat9",
-      "railClearance": 0.3538594698905946,
-      "anchorHeight": 2.3375,
+      "anchorHeight": 1.2,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": 0.06,
       "facing": [
         -0.9999999657714582,
         3.422854177870249e-08
@@ -111,8 +131,10 @@
     },
     {
       "seat": "Seat10",
-      "railClearance": 0.4244680356979371,
-      "anchorHeight": 2.3375,
+      "anchorHeight": 1.2,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": 0.06,
       "facing": [
         0.0,
         1.0
@@ -120,8 +142,10 @@
     },
     {
       "seat": "Seat11",
-      "railClearance": 0.4244680356979371,
-      "anchorHeight": 2.3375,
+      "anchorHeight": 1.2,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": 0.06,
       "facing": [
         8.742277657347586e-08,
         -1.0
@@ -129,8 +153,10 @@
     },
     {
       "seat": "Seat12",
-      "railClearance": 0.4244680356979371,
-      "anchorHeight": 2.3375,
+      "anchorHeight": 1.2,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": 0.06,
       "facing": [
         0.0,
         1.0
@@ -138,8 +164,10 @@
     },
     {
       "seat": "Seat13",
-      "railClearance": 0.4244680356979371,
-      "anchorHeight": 2.3375,
+      "anchorHeight": 1.2,
+      "seatAboveDeck": 0.2,
+      "headAboveDeck": 0.71,
+      "headClearance": 0.06,
       "facing": [
         8.742277657347586e-08,
         -1.0
