@@ -27,9 +27,10 @@
     "WindowsAtlas.IronTeeth": 6.8517
    },
    "families": {
+    "brick": 69.0918,
     "concrete": 200.8593,
     "metal": 51.2371,
-    "unpriced": 76.0219,
+    "unpriced": 6.9301,
     "wood": 111.8681
    }
   },
@@ -52,9 +53,10 @@
     "WindowsAtlas.IronTeeth": 5.045
    },
    "families": {
+    "brick": 13.9135,
     "concrete": 229.3829,
     "metal": 42.5402,
-    "unpriced": 23.353,
+    "unpriced": 9.4395,
     "wood": 52.1937
    }
   },
@@ -81,9 +83,10 @@
     "WindowsAtlas.IronTeeth": 1.0813
    },
    "families": {
+    "brick": 0.9208,
     "limestone": 48.2924,
     "metal": 42.4542,
-    "unpriced": 5.6335,
+    "unpriced": 4.7127,
     "wood": 65.3869
    }
   },
@@ -103,9 +106,10 @@
     "WindowsAtlas.IronTeeth": 3.283
    },
    "families": {
+    "brick": 1.068,
     "concrete": 115.5314,
     "metal": 261.1356,
-    "unpriced": 4.9755,
+    "unpriced": 3.9075,
     "wood": 2.0607
    }
   },
@@ -126,9 +130,10 @@
     "WindowsAtlas.IronTeeth": 1.4253
    },
    "families": {
+    "brick": 1.068,
     "concrete": 78.1965,
     "metal": 117.2779,
-    "unpriced": 2.7264,
+    "unpriced": 1.6584,
     "wood": 7.5767
    }
   },
@@ -154,9 +159,10 @@
     "WindowsAtlas.IronTeeth": 1.3914
    },
    "families": {
+    "brick": 0.588,
     "limestone": 32.5306,
     "metal": 39.9669,
-    "unpriced": 5.7642,
+    "unpriced": 5.1762,
     "wood": 55.3726
    }
   },
@@ -176,9 +182,10 @@
     "WindowsAtlas.IronTeeth": 2.8531
    },
    "families": {
+    "brick": 1.068,
     "concrete": 275.6506,
     "metal": 359.9348,
-    "unpriced": 4.2439,
+    "unpriced": 3.1759,
     "wood": 1.878
    }
   },
@@ -199,9 +206,10 @@
     "WindowsAtlas.IronTeeth": 1.0982
    },
    "families": {
+    "brick": 12.3477,
     "concrete": 193.7937,
     "metal": 127.5146,
-    "unpriced": 13.6429,
+    "unpriced": 1.2952,
     "wood": 45.0827
    }
   },
@@ -223,9 +231,10 @@
     "WindowsAtlas.IronTeeth": 5.24
    },
    "families": {
+    "brick": 69.8503,
     "concrete": 230.9841,
     "metal": 229.8402,
-    "unpriced": 75.6266,
+    "unpriced": 5.7763,
     "wood": 109.4169
    }
   },
@@ -246,9 +255,10 @@
     "WindowsAtlas.IronTeeth": 2.5643
    },
    "families": {
+    "brick": 52.9777,
     "concrete": 205.5062,
     "metal": 229.3056,
-    "unpriced": 55.8854,
+    "unpriced": 2.9077,
     "wood": 117.0931
    }
   },
@@ -267,9 +277,10 @@
     "WindowsAtlas.IronTeeth": 1.0803
    },
    "families": {
+    "brick": 44.9048,
     "concrete": 133.8208,
     "metal": 330.4811,
-    "unpriced": 48.3273,
+    "unpriced": 3.4225,
     "wood": 11.6906
    }
   },
@@ -288,9 +299,10 @@
     "WindowsAtlas.IronTeeth": 0.6809
    },
    "families": {
+    "brick": 1.5546,
     "concrete": 9.3361,
     "metal": 27.5012,
-    "unpriced": 2.3139,
+    "unpriced": 0.7592,
     "wood": 1.098
    }
   },
@@ -312,9 +324,10 @@
     "WindowsAtlas.IronTeeth": 3.0652
    },
    "families": {
+    "brick": 32.1588,
     "concrete": 168.4491,
     "metal": 161.6373,
-    "unpriced": 36.7482,
+    "unpriced": 4.5894,
     "wood": 78.2942
    }
   },
@@ -336,8 +349,9 @@
     "WindowsAtlas.IronTeeth": 2.1161
    },
    "families": {
+    "brick": 12.204,
     "metal": 159.8783,
-    "unpriced": 14.6275,
+    "unpriced": 2.4235,
     "wood": 219.2349
    }
   },
@@ -361,9 +375,10 @@
     "WindowsAtlas.IronTeeth": 1.0836
    },
    "families": {
+    "brick": 5.476,
     "limestone": 0.0311,
     "metal": 43.8031,
-    "unpriced": 7.0353,
+    "unpriced": 1.5593,
     "wood": 228.0394
    }
   },
@@ -388,11 +403,12 @@
     "WindowsAtlas.IronTeeth": 2.9734
    },
    "families": {
+    "brick": 21.2184,
     "concrete": 13.9044,
     "limestone": 0.0971,
     "metal": 104.3851,
     "sandstone": 0.3907,
-    "unpriced": 28.9796,
+    "unpriced": 7.7612,
     "wood": 503.0729
    }
   },
@@ -413,9 +429,10 @@
     "WindowsAtlas.IronTeeth": 7.6893
    },
    "families": {
+    "brick": 46.6064,
     "concrete": 192.1878,
     "metal": 162.9262,
-    "unpriced": 54.5247,
+    "unpriced": 7.9183,
     "wood": 66.492
    }
   },
@@ -433,14 +450,15 @@
     "WindowsAtlas.IronTeeth": 13.0309
    },
    "families": {
+    "brick": 4.6584,
     "metal": 259.2023,
-    "unpriced": 17.8038,
+    "unpriced": 13.1454,
     "wood": 29.1879
    }
   },
   "GroceryStore": {
    "model": "Buildings/Food/GroceryStore/GroceryStore.IronTeeth.Model",
-   "sha256": "83b9534e35e6b344d3fe4b8c927285a2155942fc9f14f2fd7e441f27ef03b292",
+   "sha256": "e49fbdef022789c6d0b7ceb02b4ebe90ff4151a6dca0096d05267204db369c23",
    "areas": {
     "BaseMetal.IronTeeth": 14.8584,
     "BaseWood_Brown.Folktails": 4.5008,
@@ -457,9 +475,10 @@
     "WindowsAtlas.IronTeeth": 5.596
    },
    "families": {
+    "brick": 3.5606,
     "concrete": 34.0822,
     "metal": 69.715,
-    "unpriced": 21.1422,
+    "unpriced": 17.5816,
     "wood": 314.2847
    }
   },
@@ -481,10 +500,11 @@
     "WindowsAtlas.IronTeeth": 22.8912
    },
    "families": {
+    "brick": 78.36,
     "concrete": 83.8636,
     "limestone": 0.6866,
     "metal": 70.8271,
-    "unpriced": 102.1223,
+    "unpriced": 23.7622,
     "wood": 466.8224
    }
   },
@@ -508,9 +528,10 @@
     "WindowsAtlas.IronTeeth": 1.1563
    },
    "families": {
+    "brick": 4.6183,
     "concrete": 369.1973,
     "metal": 251.7503,
-    "unpriced": 31.6926,
+    "unpriced": 27.0743,
     "wood": 56.4484
    }
   },
@@ -530,9 +551,10 @@
     "WindowsAtlas.IronTeeth": 1.3176
    },
    "families": {
+    "brick": 0.588,
     "limestone": 10.546,
     "metal": 42.3726,
-    "unpriced": 1.9927,
+    "unpriced": 1.4047,
     "wood": 120.0024
    }
   },
@@ -557,10 +579,11 @@
     "WindowsAtlas.IronTeeth": 2.1785
    },
    "families": {
+    "brick": 0.588,
     "limestone": 146.2143,
     "metal": 48.0554,
     "sandstone": 1.8442,
-    "unpriced": 8.4249,
+    "unpriced": 7.8369,
     "wood": 170.1075
    }
   },
@@ -584,9 +607,10 @@
     "WindowsAtlas.IronTeeth": 26.6395
    },
    "families": {
+    "brick": 16.819,
     "concrete": 346.8178,
     "metal": 213.81,
-    "unpriced": 45.4134,
+    "unpriced": 28.5944,
     "wood": 581.6721
    }
   },
@@ -608,9 +632,10 @@
     "WindowsAtlas.IronTeeth": 9.2725
    },
    "families": {
+    "brick": 49.593,
     "concrete": 447.0437,
     "metal": 78.1762,
-    "unpriced": 59.2539,
+    "unpriced": 9.6609,
     "wood": 172.5863
    }
   },
@@ -632,9 +657,10 @@
     "WindowsAtlas.IronTeeth": 2.4136
    },
    "families": {
+    "brick": 1.068,
     "concrete": 979.6584,
     "metal": 661.2599,
-    "unpriced": 45.073,
+    "unpriced": 44.005,
     "wood": 10.3391
    }
   },
@@ -655,9 +681,10 @@
     "WindowsAtlas.IronTeeth": 28.6869
    },
    "families": {
+    "brick": 16.9903,
     "concrete": 182.478,
     "metal": 213.6198,
-    "unpriced": 46.2696,
+    "unpriced": 29.2793,
     "wood": 37.0053
    }
   },
@@ -677,9 +704,10 @@
     "WindowsAtlas.IronTeeth": 1.6322
    },
    "families": {
+    "brick": 1.068,
     "concrete": 102.7974,
     "metal": 171.4264,
-    "unpriced": 2.9338,
+    "unpriced": 1.8658,
     "wood": 1.3457
    }
   },
@@ -701,9 +729,10 @@
     "WindowsAtlas.IronTeeth": 9.0308
    },
    "families": {
+    "brick": 30.3323,
     "concrete": 264.7916,
     "metal": 144.7457,
-    "unpriced": 39.7473,
+    "unpriced": 9.415,
     "wood": 193.47
    }
   },
@@ -723,9 +752,10 @@
     "WindowsAtlas.IronTeeth": 6.1991
    },
    "families": {
+    "brick": 1.068,
     "concrete": 167.1991,
     "metal": 11.4123,
-    "unpriced": 7.4961,
+    "unpriced": 6.4281,
     "wood": 114.82
    }
   },
@@ -745,9 +775,10 @@
     "WindowsAtlas.IronTeeth": 0.6597
    },
    "families": {
+    "brick": 1.3165,
     "concrete": 73.3875,
     "metal": 15.7422,
-    "unpriced": 2.0907,
+    "unpriced": 0.7742,
     "wood": 14.6738
    }
   },
@@ -768,9 +799,10 @@
     "WindowsAtlas.IronTeeth": 0.7976
    },
    "families": {
+    "brick": 2.1542,
     "concrete": 30.4759,
     "metal": 40.9985,
-    "unpriced": 3.0662,
+    "unpriced": 0.912,
     "wood": 41.4217
    }
   },
@@ -790,9 +822,10 @@
     "WindowsAtlas.IronTeeth": 0.8451
    },
    "families": {
+    "brick": 4.5167,
     "concrete": 131.8385,
     "metal": 56.5306,
-    "unpriced": 5.6728,
+    "unpriced": 1.1561,
     "wood": 3.1933
    }
   },
@@ -813,9 +846,10 @@
     "WindowsAtlas.IronTeeth": 2.151
    },
    "families": {
+    "brick": 83.5405,
     "concrete": 431.5338,
     "metal": 277.0711,
-    "unpriced": 92.3445,
+    "unpriced": 8.804,
     "wood": 1.5902
    }
   },
@@ -836,9 +870,10 @@
     "WindowsAtlas.IronTeeth": 0.3905
    },
    "families": {
+    "brick": 1.2914,
     "concrete": 327.6122,
     "metal": 62.0672,
-    "unpriced": 1.9531,
+    "unpriced": 0.6617,
     "wood": 30.5645
    }
   },
@@ -858,9 +893,10 @@
     "WindowsAtlas.IronTeeth": 0.3905
    },
    "families": {
+    "brick": 1.7731,
     "concrete": 12.6535,
     "metal": 61.4724,
-    "unpriced": 2.4611,
+    "unpriced": 0.688,
     "wood": 0.8762
    }
   },
@@ -883,9 +919,10 @@
     "WindowsAtlas.IronTeeth": 1.7593
    },
    "families": {
+    "brick": 0.588,
     "concrete": 428.3992,
     "metal": 161.9412,
-    "unpriced": 2.7676,
+    "unpriced": 2.1796,
     "wood": 138.1112
    }
   },
@@ -912,11 +949,12 @@
     "WindowsAtlas.IronTeeth": 5.0068
    },
    "families": {
+    "brick": 21.504,
     "concrete": 67.3846,
     "limestone": 2.8751,
     "metal": 61.0512,
     "sandstone": 0.3864,
-    "unpriced": 33.665,
+    "unpriced": 12.1609,
     "wood": 559.2215
    }
   },
@@ -939,9 +977,10 @@
     "WindowsAtlas.IronTeeth": 9.5033
    },
    "families": {
+    "brick": 180.5448,
     "concrete": 194.9495,
     "metal": 749.3331,
-    "unpriced": 190.8949,
+    "unpriced": 10.3502,
     "wood": 187.3564
    }
   },
@@ -962,9 +1001,10 @@
     "WindowsAtlas.IronTeeth": 1.3176
    },
    "families": {
+    "brick": 0.588,
     "metal": 33.4603,
     "sandstone": 12.2624,
-    "unpriced": 1.9927,
+    "unpriced": 1.4047,
     "wood": 174.2014
    }
   },
@@ -989,10 +1029,11 @@
     "WindowsAtlas.IronTeeth": 2.1785
    },
    "families": {
+    "brick": 0.588,
     "limestone": 146.2143,
     "metal": 48.0554,
     "sandstone": 1.8442,
-    "unpriced": 8.4249,
+    "unpriced": 7.8369,
     "wood": 170.1075
    }
   },
@@ -1011,9 +1052,10 @@
     "WindowsAtlas.IronTeeth": 0.3905
    },
    "families": {
+    "brick": 1.068,
     "concrete": 42.3916,
     "metal": 91.4039,
-    "unpriced": 1.573,
+    "unpriced": 0.505,
     "wood": 0.8762
    }
   },
@@ -1033,9 +1075,10 @@
     "WindowsAtlas.IronTeeth": 5.3754
    },
    "families": {
+    "brick": 1.068,
     "concrete": 256.7023,
     "metal": 448.204,
-    "unpriced": 9.1123,
+    "unpriced": 8.0443,
     "wood": 2.9481
    }
   },
@@ -1061,9 +1104,10 @@
     "WindowsAtlas.IronTeeth": 0.737
    },
    "families": {
+    "brick": 1.0799,
     "limestone": 29.8648,
     "metal": 64.175,
-    "unpriced": 3.7227,
+    "unpriced": 2.6428,
     "wood": 110.4913
    }
   },
@@ -1083,9 +1127,10 @@
     "WindowsAtlas.IronTeeth": 4.5437
    },
    "families": {
+    "brick": 62.941,
     "concrete": 199.7667,
     "metal": 32.6857,
-    "unpriced": 67.7136,
+    "unpriced": 4.7726,
     "wood": 107.3651
    }
   },
@@ -1102,9 +1147,10 @@
     "WindowsAtlas.IronTeeth": 1.1981
    },
    "families": {
+    "brick": 19.7141,
     "concrete": 77.6571,
     "metal": 126.5281,
-    "unpriced": 20.9121,
+    "unpriced": 1.1981,
     "wood": 9.3184
    }
   },
@@ -1125,9 +1171,10 @@
     "WindowsAtlas.IronTeeth": 4.7059
    },
    "families": {
+    "brick": 43.4653,
     "concrete": 380.6194,
     "metal": 334.0906,
-    "unpriced": 48.627,
+    "unpriced": 5.1617,
     "wood": 7.817
    }
   },
@@ -1149,9 +1196,10 @@
     "WindowsAtlas.IronTeeth": 2.3753
    },
    "families": {
+    "brick": 31.8527,
     "concrete": 224.0564,
     "metal": 140.7648,
-    "unpriced": 41.232,
+    "unpriced": 9.3792,
     "wood": 93.0609
    }
   }

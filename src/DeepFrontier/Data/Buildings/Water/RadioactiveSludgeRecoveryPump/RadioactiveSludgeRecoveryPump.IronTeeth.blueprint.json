@@ -5,7 +5,7 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 60
+        "Amount": 55
       },
       {
         "Id": "HighGradeSteel",
@@ -21,7 +21,7 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 205
+        "Amount": 215
       },
       {
         "Id": "MachineCore",

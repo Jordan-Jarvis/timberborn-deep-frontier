@@ -192,8 +192,9 @@ namespace DeepFrontier.Scripts {
           Require(_shop.StockedFoodTypes<3&&!_shop.ProvidesNeighborhoodService,"Sparse shelves still grant the neighborhood bonus");
           Pass("less than three stocked foods removes the neighborhood effect");
           foreach(var donor in _donors)donor.Enable();
-          _donors[0].GiveExisting(new GoodAmount("CannedFish",_donors[0].UnreservedCapacity("CannedFish")));
-          _donors[1].GiveExisting(new GoodAmount("PackagedFood",_donors[1].UnreservedCapacity("PackagedFood")));
+          // Refill the first two stocked foods' donors (one donor per GroceryStoreSpec food, in order).
+          foreach(var (donor,id) in _donors.Zip(_shop.GetComponent<GroceryStoreSpec>().Foods,(d,f)=>(d,f)).Take(2))
+            donor.GiveExisting(new GoodAmount(id,donor.UnreservedCapacity(id)));
           Phase(8);
         } else if(_phase==8&&_shop.ProvidesNeighborhoodService) {
           Pass("native restocking restores the neighborhood bonus");

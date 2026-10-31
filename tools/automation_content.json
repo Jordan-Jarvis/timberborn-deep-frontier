@@ -662,6 +662,11 @@
       "nativeRole": "none",
       "nativeSources": [],
       "producer": "tools/vanilla_tool_overrides.mjs"
+    },
+    "Buildings/Landscaping/TerrainBlock/TerrainBlock.IronTeeth.blueprint": {
+      "nativeRole": "none",
+      "nativeSources": [],
+      "producer": "tools/vanilla_tool_overrides.mjs"
     }
   },
   "customSpecs": {

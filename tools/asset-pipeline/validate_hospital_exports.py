@@ -99,7 +99,6 @@ require(meals=={'FoodCapacityPerGood':care['patientMeals']['foodUnitsPerGood'],'
 require(abs((effects['Injury']['PointsPerHour']+.1/24)/(.015+.1/24)-1.8)<1e-10,'Steady native recovery is not 80 percent faster under the observed half-treatment cadence')
 require(effects['ChippedTeeth']['PointsPerHour']==.5 and effects['BadwaterContamination']['PointsPerHour']==.068,'Native tooth/contamination rates differ')
 require(blueprint['HospitalSpec']['WardWorkPosition']=={'X':2.5,'Y':0,'Z':3.5},'Staff work point differs from the enclosed central ward')
-require('MedicalFood' in read('src/DeepFrontier/Data/Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.blueprint.json')['ManufactorySpec']['ProductionRecipeIds'],'Medical food lost its producer')
 report={'status':'Source/export checks passed; native runtime acceptance pending','size':[w,d,h],
         'sourceSha256':hashlib.sha256((ROOT/'src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend').read_bytes()).hexdigest(),
         'exportSha256':hashlib.sha256(payload).hexdigest(),'nodes':len(model.nodes),'nativeUvVertices':uv_count,

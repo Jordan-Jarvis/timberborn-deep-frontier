@@ -1,7 +1,11 @@
 {
   "RecipeSpec": {
     "Id": "CannedFish",
-    "BackwardCompatibleIds": [],
+    "BackwardCompatibleIds": [
+      "EmergencyRation",
+      "MedicalFood",
+      "PackagedFood"
+    ],
     "DisplayLocKey": "Good.CannedFish.PluralDisplayName",
     "CycleDurationInHours": 2,
     "Ingredients": [

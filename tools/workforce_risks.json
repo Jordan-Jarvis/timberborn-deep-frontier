@@ -46,7 +46,7 @@
       { "discipline": "Nuclear", "studyNeedName": "Reactor studies", "studyHours": 32,
         "supplies": [["Electronics", 0.4], ["Yellowcake", 0.2], ["Medicine", 0.4]] },
       { "discipline": "Flight", "studyNeedName": "Flight studies", "studyHours": 24,
-        "supplies": [["Electronics", 0.5], ["RecoveredTelemetry", 0.25], ["PackagedFood", 0.5]] }
+        "supplies": [["Electronics", 0.5], ["RecoveredTelemetry", 0.25], ["CannedFish", 0.5]] }
     ]
   },
   "botMaintenance": {

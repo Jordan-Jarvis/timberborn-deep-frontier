@@ -1,11 +1,11 @@
 {
   "status": "Source/export checks passed; native shoppers, balcony paths and service pending",
-  "sourceSha256": "3c209e008411e0aafdfa304f32c8b2a3f6dcbb51ee7a9d8b8af085ea451446a4",
-  "exportSha256": "1e797f48196bac5e86f184127980e9cfb214dc2986bd69ec6165dd7979c56d5e",
+  "sourceSha256": "755541e3e478d9c2a94d6f2cbb45ba31c53dff6c1836bc21e300deecbaf03157",
+  "exportSha256": "e49fbdef022789c6d0b7ceb02b4ebe90ff4151a6dca0096d05267204db369c23",
   "size": [
     9,
     6,
-    8
+    5
   ],
   "nodes": 28,
   "animatedTracks": [
@@ -14,7 +14,7 @@
     "#GroceryMarket.HoistPulley",
     "#GroceryMarket.HoistRope"
   ],
-  "nativeProps": 12,
+  "nativeProps": 6,
   "entrance": [
     4,
     1,
@@ -40,7 +40,7 @@
   "science": 6000,
   "foods": [
     "CannedFish",
-    "PackagedFood",
+    "EggplantRation",
     "AlgaeRation",
     "CornRation",
     "FermentedCassava",
@@ -56,9 +56,9 @@
     "GroceryStock.CannedFish.1",
     "GroceryStock.CannedFish.2",
     "GroceryStock.CannedFish.3",
-    "GroceryStock.PackagedFood.1",
-    "GroceryStock.PackagedFood.2",
-    "GroceryStock.PackagedFood.3",
+    "GroceryStock.EggplantRation.1",
+    "GroceryStock.EggplantRation.2",
+    "GroceryStock.EggplantRation.3",
     "GroceryStock.AlgaeRation.1",
     "GroceryStock.AlgaeRation.2",
     "GroceryStock.AlgaeRation.3",

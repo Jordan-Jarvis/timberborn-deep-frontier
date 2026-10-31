@@ -5,9 +5,6 @@ const name=id=>id.replace(/([a-z])([A-Z])/g,'$1 $2');
 const amounts=goods=>goods.map(g=>`${g.Amount} ${name(g.Id)}`).join('; ');
 const b=await read('src/DeepFrontier/Data/Buildings/Wellbeing/Hospital/Hospital.IronTeeth.blueprint.json');
 const p=(await read('tools/frontier_progression.json')).hospital;
-const r=(await read('src/DeepFrontier/Data/Recipes/Recipe.MedicalFood.blueprint.json')).RecipeSpec;
-const food=(await read('src/DeepFrontier/Data/Goods/Good.MedicalFood.blueprint.json')).GoodSpec;
-const packaging=await read('src/DeepFrontier/Data/Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.blueprint.json');
 const size=b.BlockObjectSpec.Size;
 const layout=(await read('tools/civic-layouts.json')).Hospital;
 const source='tools/frontier_progression.json; src/DeepFrontier/Data/Buildings/Wellbeing/Hospital; src/DeepFrontier/Scripts/Hospital.cs';
@@ -29,21 +26,13 @@ export const hospitalBuildingUpdates=new Map([['B011',{
   'Player cue':'Care panel shows patient occupancy, attending staff and care availability','Status':p.requirementStatus,
   'Notes':`Full staff and power target 1.8x Medical Bed injury recovery during treatment. Native treatment replaces passive healing on those ticks. ${p.areaRadius}-cell native area radius; +${p.areaWellbeingPoints} wellbeing cap. ${p.supplyPolicy} ${p.balanceStatus}`
 }]]);
+// Medical Food was retired on 2026-10-30 (bricks pass, tools/content_policy.json migratedGoods: saves map it to Canned Fish).
 export const hospitalItemUpdates=new Map([['I012',{
-  'Type':food.GoodType,'Source / recipe':'Food Packaging Works; MedicalFood','Weight':food.Weight,
-  'Satisfies / effects':food.ConsumptionEffects.map(e=>`${e.NeedId}: +${e.Points}`).join('; '),
-  'Consumed by':'Native food consumption','Source':'src/DeepFrontier/Data/Goods/Good.MedicalFood.blueprint.json',
-  'Data status':'Exact authored good and packaging recipe; runtime production pending',
-  'Primary uses':'Direct food consumption','Perishable':'No','Unit':'Solid','Science value':0,
-  'Notes':'Not a hospital operating supply. Currently provides Hunger only; no extra condition treatment or science effect.'
-}],['I011',{'Primary uses':'Hospital operating supply; Medical Food ingredient','Consumed by':'Hospital; Food Packaging Works',
-  'Notes':'Hospital consumes 2 per operating hour with water and extract. Packaging consumes medicine in the authored MedicalFood recipe.'}]]);
-export const medicalFoodRecipe=['R015','Food Packaging Works','Iron Teeth','Medical Food',amounts(r.Ingredients),amounts(r.Products),
-  r.CycleDurationInHours,packaging.MechanicalNodeSpec.PowerInput,packaging.MechanicalNodeSpec.PowerOutput,'Consumer',packaging.WorkplaceSpec.MaxWorkers,
-  'None',`${r.CyclesCapacity} recipe cycles`,'src/DeepFrontier/Data/Recipes/Recipe.MedicalFood.blueprint.json; FoodPackagingWorks.IronTeeth.blueprint.json',
-  JSON.stringify(r.Ingredients),JSON.stringify(r.Products),r.Products[0].Amount,r.CycleDurationInHours*60,
-  r.Ingredients.map(g=>name(g.Id)).join('; '),r.Ingredients.map(g=>g.Amount).join('; '),'None','3. Industrial city',
-  'Prepared food; native Hunger consumption. Hospital supplies use the separate hourly system.','Authored exact recipe; runtime production pending'];
+  'Source / recipe':'Retired','Consumed by':'None','Source':'tools/content_policy.json migratedGoods',
+  'Data status':'Retired 2026-10-30; saved stock loads as Canned Fish','Primary uses':'None',
+  'Notes':'Removed: a plain Hunger 0.3 food with no medical effect. The Hospital uses Medicine.'
+}],['I011',{'Primary uses':'Hospital operating supply; Technical School reactor course','Consumed by':'Hospital; Technical School',
+  'Notes':'Hospital consumes 2 per operating hour with water and extract; reactor studies use it as a course supply.'}]]);
 export const hospitalProgressionUpdates=new Map([['G005',{
   'Player goal':'Provide large-scale hospital care','Required buildings':'Hospital; medicine production and water supply',
   'Science range':p.scienceUnlock,

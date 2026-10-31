@@ -1,7 +1,9 @@
 {
   "GoodSpec": {
     "Id": "RecoveredArtifact",
-    "BackwardCompatibleIds": [],
+    "BackwardCompatibleIds": [
+      "ArchiveData"
+    ],
     "ConsumptionEffects": [],
     "GoodType": "Box",
     "StockpileVisualization": "Box",

@@ -1,7 +1,11 @@
 {
   "GoodSpec": {
     "Id": "CannedFish",
-    "BackwardCompatibleIds": [],
+    "BackwardCompatibleIds": [
+      "EmergencyRation",
+      "MedicalFood",
+      "PackagedFood"
+    ],
     "ConsumptionEffects": [
       {
         "NeedId": "Hunger",

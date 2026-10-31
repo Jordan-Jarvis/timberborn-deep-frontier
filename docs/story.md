@@ -31,8 +31,8 @@ The chapters complete strictly in order. Each completion grants its science, pos
 | 2 | `UnderTheValley` | Under the Valley | 20 DeepAlloy produced (Deep Processor) | VWA pipe tunnels run upriver ("NOT FOR DRINKING", with increasing underlining) | 1,000 |
 | 3 | `WhatTheWaterCarries` | What the Water Carries | 80 PureWater **and** 10 Chemical produced | Badwater is industrial runoff, still leaking from upriver | 1,500 |
 | 4 | `OpenTheRuins` | Open the Ruins | 6 RecoveredArtifact produced (Archive Excavation) | Holding Station 3 artifacts: hard hat, mug, sign; sealed data drives | 2,000 |
-| 5 | `TheArchiveWakes` | The Archive Wakes | 10 ArchiveData produced (cache surveys count) | The Deepworks, the Holding, and the postponed maintenance | 3,000 |
-| 6 | `TheLastShift` | The Last Shift | 30 ArchiveData produced in total **and** a finished Mission Control | Why the humans left; the switch set to "until further notice"; an orbital frequency still answers | 5,000 |
+| 5 | `TheArchiveWakes` | The Archive Wakes | 20 RecoveredArtifact produced in total (cache surveys count) | The Deepworks, the Holding, and the postponed maintenance | 3,000 |
+| 6 | `TheLastShift` | The Last Shift | 40 RecoveredArtifact produced in total **and** a finished Mission Control | Why the humans left; the switch set to "until further notice"; an orbital frequency still answers | 5,000 |
 | 7 | `EyesAbove` | Eyes Above | Orbital Observatory mission succeeded | Orbital images plus Authority maps: every spring and every badtide traces back to the Holding | 0 (mission gives 100,000) |
 | 8 | `WhatTheStationKept` | What the Station Kept | Recovery Probe mission succeeded | The station crew's last log; the treatment design matches the colony's plants; the Holding can be kept | 0 (mission gives 250,000) |
 | 9 | `TheMessage` | What the Beacon Says | Ending chosen (journal, or the choice dialog that opens when chapter 8 completes) | The colony's decision | 0 |
@@ -40,11 +40,11 @@ The chapters complete strictly in order. Each completion grants its science, pos
 
 Rocket missions show their own success dialog (from the Launch Pad) first. The journal's chapter dialog waits until no panel or dialog is open. Chapters 7, 8 and 10 therefore read as the archive's interpretation of what the mission found.
 
-**Evidence budget.** The three missions consume about 48 ArchiveData through guidance computers, telemetry and payloads. The 30 ArchiveData for chapter 6 is therefore not extra grinding. Every rocket route makes it anyway.
+**Evidence budget.** ArchiveData was retired on 2026-10-30 (bricks pass): Mission Control reads the recovered artifacts' sealed drives directly, 2 artifacts per guidance computer and 2 more per telemetry package, the same artifacts the old 1 ArchiveData each took. The three missions consume about 96 artifacts that way, plus the payloads' own artifacts. The 40 artifacts for chapter 6 are therefore not extra grinding. Every rocket route makes them anyway. Chapters 5 and 6 counted ArchiveData until then; a save in progress keeps its artifact count, which the native counter has tracked since chapter 4.
 
 ## How the four player stories reach the ending
 
-Every route to a launch must already build a Deep Drill and Deep Processor (DeepAlloy for T4 construction and for Alloy). It also needs a Water Treatment Plant (PureWater for electrolysis), Chemical Works (Polymer), an Archive Excavation (ArchiveData for guidance computers, artifacts for payloads) and Mission Control. Every chapter trigger uses only those mandatory steps, or an "any of" list. No trigger checks nuclear power. The reactor and vault feed only the optional discovery `HoldingOurOwn`.
+Every route to a launch must already build a Deep Drill and Deep Processor (DeepAlloy for T4 construction and for Alloy). It also needs a Water Treatment Plant (PureWater for electrolysis), Chemical Works (Polymer), an Archive Excavation (artifacts for guidance computers, telemetry and payloads) and Mission Control. Every chapter trigger uses only those mandatory steps, or an "any of" list. No trigger checks nuclear power. The reactor and vault feed only the optional discovery `HoldingOurOwn`.
 
 | Story | Chapter 1 trigger it usually hits | Order it tends to meet chapters 2–3 | Notes |
 |---|---|---|---|
@@ -75,13 +75,13 @@ Discoveries never gate the chapters, and the colony can find them in any order.
 | `CleanerThanTheRiver` | 500 PureWater produced | 250 |
 | `HoldingOurOwn` | First finished Radioactive Waste Vault (nuclear route) | 250 |
 | `CleanHands` | One DecontaminateWater cycle (radiation remediation) | 250 |
-| `CacheRoster`, `CacheDrawing`, `CacheWeather`, `CacheMemo`, `CachePostcard` | 1–5 Human Record Caches surveyed | 0 (each cache gives 6 ArchiveData) |
+| `CacheRoster`, `CacheDrawing`, `CacheWeather`, `CacheMemo`, `CachePostcard` | 1–5 Human Record Caches surveyed | 0 (each cache gives 12 RecoveredArtifact) |
 
 ## Human Record Cache (map evidence)
 
 The cache is a map-editor object (`MapEditor/Objects/HumanRecordCache`, MapEditorObjects tool order 1450). It is cloned from the vanilla Medium Relic and keeps that relic's model, colliders, icon and native demolition. Demolition still gives 800 science but loses the records.
 
-A finished workshop that runs the `ArchiveData` recipe, meaning an Archive Excavation, can survey a cache. The workshop needs an occupied cell within 7 tiles horizontally and 7 layers vertically. While its workers work, the survey advances. After 24 working hours the cache hands 6 ArchiveData to that workshop's output inventory as unreserved space allows. The survey counts toward ArchiveData chapters and unlocks the next cache record. Map authors should place caches near ruins, so a colony that excavates there finds them naturally. Caches are optional, so maps without them still complete the story.
+A finished workshop that runs the `RecoveredArtifact` recipe, meaning an Archive Excavation, can survey a cache. The workshop needs an occupied cell within 7 tiles horizontally and 7 layers vertically. While its workers work, the survey advances. After 24 working hours the cache hands 12 RecoveredArtifact to that workshop's output inventory as unreserved space allows (6 ArchiveData before the 2026-10-30 bricks pass). The survey counts toward the artifact chapters and unlocks the next cache record. Map authors should place caches near ruins, so a colony that excavates there finds them naturally. Caches are optional, so maps without them still complete the story.
 
 ## Runtime contract (summary)
 
@@ -103,4 +103,4 @@ A finished workshop that runs the `ArchiveData` recipe, meaning an Archive Excav
 - **Art:** an original Human Record Cache model and icon (currently the vanilla Medium Relic, a placeholder). A journal icon for a native-style top-right square button would replace the text panel.
 - **UI polish:** test the top-left panel's width and position against the notification panel in game. Consider a hotkey for the journal and a short "new entry" highlight.
 - **Map:** place 3–5 caches near ruins on the purpose-built Deep Frontier map.
-- **Content:** the Archive Excavation integration must keep running the `ArchiveData` and `RecoveredArtifact` recipes. The validator fails if no generated or planned building runs them.
+- **Content:** the Archive Excavation integration must keep running the `RecoveredArtifact` recipe. The validator fails if no generated or planned building runs them.

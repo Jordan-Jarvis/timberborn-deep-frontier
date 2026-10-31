@@ -18,8 +18,6 @@ Good.DeepOre.DisplayName,Deep ore,Deep Frontier
 Good.DeepOre.PluralDisplayName,Deep ore,Deep Frontier
 Good.DeepAlloy.DisplayName,Deep alloy,Deep Frontier
 Good.DeepAlloy.PluralDisplayName,Deep alloy,Deep Frontier
-Good.Compost.DisplayName,Compost,Deep Frontier
-Good.Compost.PluralDisplayName,Compost,Deep Frontier
 Good.Coal.DisplayName,Coal,Deep Frontier
 Good.Coal.PluralDisplayName,Coal,Deep Frontier
 Good.Chemical.DisplayName,Chemical,Deep Frontier
@@ -36,18 +34,10 @@ Good.FishOil.DisplayName,Fish Oil,Deep Frontier
 Good.FishOil.PluralDisplayName,Fish Oil,Deep Frontier
 Good.CannedFish.DisplayName,Canned Fish,Deep Frontier
 Good.CannedFish.PluralDisplayName,Canned Fish,Deep Frontier
-Good.EmergencyRation.DisplayName,Emergency Ration,Deep Frontier
-Good.EmergencyRation.PluralDisplayName,Emergency Ration,Deep Frontier
-Good.PackagedFood.DisplayName,Packaged Food,Deep Frontier
-Good.PackagedFood.PluralDisplayName,Packaged Food,Deep Frontier
 Good.Medicine.DisplayName,Medicine,Deep Frontier
 Good.Medicine.PluralDisplayName,Medicine,Deep Frontier
-Good.MedicalFood.DisplayName,Medical Food,Deep Frontier
-Good.MedicalFood.PluralDisplayName,Medical Food,Deep Frontier
 Good.SweetBerryCake.DisplayName,Sweet Berry Cake,Deep Frontier
 Good.SweetBerryCake.PluralDisplayName,Sweet Berry Cake,Deep Frontier
-Good.Flux.DisplayName,Flux,Deep Frontier
-Good.Flux.PluralDisplayName,Flux,Deep Frontier
 Good.HighGradeSteel.DisplayName,High Grade Steel,Deep Frontier
 Good.HighGradeSteel.PluralDisplayName,High Grade Steel,Deep Frontier
 Good.Alloy.DisplayName,Alloy,Deep Frontier
@@ -108,8 +98,6 @@ Good.ReactorCoolantWater.DisplayName,Reactor Coolant Water,Deep Frontier
 Good.ReactorCoolantWater.PluralDisplayName,Reactor Coolant Water,Deep Frontier
 Good.RecoveredMinerals.DisplayName,Recovered Minerals,Deep Frontier
 Good.RecoveredMinerals.PluralDisplayName,Recovered Minerals,Deep Frontier
-Good.ArchiveData.DisplayName,Archive Data,Deep Frontier
-Good.ArchiveData.PluralDisplayName,Archive Data,Deep Frontier
 Building.FertilizerWorks.DisplayName,Fertilizer works,Deep Frontier
 Building.FertilizerWorks.Description,"Deep Frontier fertilizer works production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.FertilizerWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
@@ -126,7 +114,7 @@ Building.PublicHealthLab.DisplayName,Public health lab,Deep Frontier
 Building.PublicHealthLab.Description,"Deep Frontier public health lab production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.PublicHealthLab.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
 Building.GroceryStore.DisplayName,Grocery store,Deep Frontier
-Building.GroceryStore.Description,"Stocks canned fish, packaged food, algae and corn rations, and fermented cassava and soybeans. Two clerks restock 100 of each food. With 3,900 hp, an attending clerk and at least three stocked foods, nearby beavers gain up to +2 wellbeing within eight cells. Food remains available during power cuts and off-duty hours.",Deep Frontier
+Building.GroceryStore.Description,"Stocks canned fish, eggplant, algae and corn rations, and fermented cassava and soybeans. Two clerks restock 100 of each food. With 3,900 hp, an attending clerk and at least three stocked foods, nearby beavers gain up to +2 wellbeing within eight cells. Food remains available during power cuts and off-duty hours.",Deep Frontier
 Building.GroceryStore.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
 Building.Restaurant.DisplayName,Restaurant,Deep Frontier
 Building.Restaurant.Description,"A 400 hp kitchen and dining hall. Workers serve fish, berries and prepared foods at tables, with coffee when stocked and water for thirsty diners. Ferments food and bakes sweet berry cake from berries, corn and water. Cake is cooked and eaten only here. Serves whichever main foods are in stock; a full meal of fish, berries, fermented mushrooms and eggplant rations also gives Fine Dining. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
@@ -165,16 +153,16 @@ Building.RocketAssemblyHangar.DisplayName,Rocket assembly hangar,Deep Frontier
 Building.RocketAssemblyHangar.Description,Deep Frontier rocket assembly hangar production building,Deep Frontier
 Building.RocketAssemblyHangar.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
 Building.MissionControl.DisplayName,Mission control,Deep Frontier
-Building.MissionControl.Description,Deep Frontier mission control production building,Deep Frontier
+Building.MissionControl.Description,"Deep Frontier mission control production building. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.MissionControl.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
 Building.LaunchPad.DisplayName,Launch pad,Deep Frontier
 Building.LaunchPad.Description,"Launches the colony's rockets. Select a mission in the recipe list: haulers stage one complete rocket (airframes, propulsion, guidance, payload and telemetry) and its liquid hydrogen and oxygen; workers then prepare it under a 27,000 hp load. Every launch consumes the whole rocket and fuel, and a launch can fail. Also produces guidance telemetry. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier rocket program
 Building.LaunchPad.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
 Building.SteelMill.DisplayName,Steel mill,Deep Frontier
-Building.SteelMill.Description,"An electric-arc melt shop and rolling mill. Makes flux from scrap metal and deep ore, high-grade steel from metal blocks, coal and flux, and alloy from high-grade steel and deep alloy. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires 3,100 hp. Its two smokestacks pollute the air nearby.",Deep Frontier
+Building.SteelMill.Description,"An electric-arc melt shop and rolling mill. Makes high-grade steel from metal blocks, coal and limestone flux, and alloy from high-grade steel and deep alloy. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires 3,100 hp. Its two smokestacks pollute the air nearby.",Deep Frontier
 Building.SteelMill.FlavorDescription,"Every reactor, rocket and machine core starts as a white-hot pour on this floor.",Deep Frontier
 Building.ArchiveExcavation.DisplayName,Archive excavation,Deep Frontier
-Building.ArchiveExcavation.Description,"Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts, then restores their data drives into archive data with grease and metal parts. A Human Record Cache within 7 tiles can be surveyed for extra archive data. 4 workers, dangerous work. Requires 5,200 hp. Its stove chimney pollutes the air nearby. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
+Building.ArchiveExcavation.Description,"Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts and their sealed data drives, which Mission Control reads into guidance computers and telemetry. A Human Record Cache within 7 tiles can be surveyed for 12 extra artifacts. 4 workers, dangerous work. Requires 5,200 hp. Its stove chimney pollutes the air nearby.",Deep Frontier
 Building.ArchiveExcavation.FlavorDescription,The humans buried their warnings in the strata. Dig carefully.,Deep Frontier
 Building.CryogenicTankFarm.DisplayName,Cryogenic tank farm,Deep Frontier
 Building.CryogenicTankFarm.Description,"Stores up to 2,000 units of one cryogenic fuel, liquid hydrogen or liquid oxygen, delivered and drawn by pipes at its two front sockets or by haulers. Needs 6,500 hp to keep the fuel cold: without power the intake closes, and after 12 hours the stored fuel starts to vent. Pipes connect directly to its flat walls, without a valve.",Deep Frontier
@@ -204,20 +192,15 @@ Building.OilPowerPlant.DisplayName,Oil power plant,Deep Frontier
 Building.OilPowerPlant.Description,"An oil-fired turbine plant. Produces 90,000 hp, day and night, burning 2 crude oil and 2 water per hour while the network draws power. No workers. Its two exhaust stacks pollute the air nearby while it runs, less than coal. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier
 Building.OilPowerPlant.FlavorDescription,"The deep ore gives up its oil, and the oil gives up its fire.",Deep Frontier
 Recipe.SweetBerryCake.DisplayName,Sweet Berry Cake,Deep Frontier
-Recipe.Compost.DisplayName,Compost,Deep Frontier
 Recipe.Fertilizer.DisplayName,Fertilizer,Deep Frontier
 Recipe.JuvenileFish.DisplayName,Juvenile Fish,Deep Frontier
 Recipe.FreshFish.DisplayName,Fresh Fish,Deep Frontier
 Recipe.FishOil.DisplayName,Fish Oil,Deep Frontier
 Recipe.CannedFish.DisplayName,Canned Fish,Deep Frontier
-Recipe.EmergencyRation.DisplayName,Emergency Ration,Deep Frontier
-Recipe.PackagedFood.DisplayName,Packaged Food,Deep Frontier
 Recipe.GreenhouseEggplant.DisplayName,Greenhouse Eggplant,Deep Frontier
 Recipe.GreenhouseKohlrabi.DisplayName,Greenhouse Kohlrabi,Deep Frontier
 Recipe.GreenhouseCoffee.DisplayName,Greenhouse Coffee,Deep Frontier
 Recipe.Medicine.DisplayName,Medicine,Deep Frontier
-Recipe.MedicalFood.DisplayName,Medical Food,Deep Frontier
-Recipe.Flux.DisplayName,Flux,Deep Frontier
 Recipe.HighGradeSteel.DisplayName,High Grade Steel,Deep Frontier
 Recipe.Alloy.DisplayName,Alloy,Deep Frontier
 Recipe.Chemical.DisplayName,Chemical,Deep Frontier
@@ -245,7 +228,6 @@ Recipe.WasteRefining.DisplayName,Waste Refining,Deep Frontier
 Recipe.DecontaminateWater.DisplayName,Decontaminate Water,Deep Frontier
 Recipe.GuidanceTelemetry.DisplayName,Guidance Telemetry,Deep Frontier
 Recipe.RecoveredArtifact.DisplayName,Recovered Artifact,Deep Frontier
-Recipe.ArchiveData.DisplayName,Archive Data,Deep Frontier
 Recipe.CarbonFilterMedia.DisplayName,Activated carbon filters,Deep Frontier
 Recipe.BrineChemical.DisplayName,Chemical from brine,Deep Frontier
 Recipe.GreenhouseAquaponics.DisplayName,Aquaponic kohlrabi and fish,Deep Frontier
@@ -440,24 +422,24 @@ Narrative.Stage.WhatTheWaterCarries.Requirement.1,Pure water purified,Deep Front
 Narrative.Stage.WhatTheWaterCarries.Requirement.2,Chemical made from badwater,Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Title,Open the Ruins,Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Objective,Open the human ruins: recover 6 artifacts at an Archive Excavation.,Deep Frontier narrative
-Narrative.Stage.OpenTheRuins.Hint,"The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. Any Human Record Cache on the map can be surveyed by a nearby excavation for extra archive data.",Deep Frontier narrative
+Narrative.Stage.OpenTheRuins.Hint,"The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. Any Human Record Cache on the map can be surveyed by a nearby excavation for extra artifacts.",Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Story.1,"The first finds are small and baffling: a hard hat big enough to bathe a kit in, a mug reading WORLD'S OKAYEST ENGINEER, and a sign that says HOLDING STATION 3 - AUTHORIZED PERSONNEL ONLY.",Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Story.2,"Underneath, in smaller letters: UNAUTHORIZED PERSONNEL ALSO ONLY. The humans, it turns out, had a sense of humour. They also had sealed data drives, which the excavation crews are now carefully drying out.",Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Requirement.1,Artifacts recovered,Deep Frontier narrative
 Narrative.Stage.TheArchiveWakes.Title,The Archive Wakes,Deep Frontier narrative
-Narrative.Stage.TheArchiveWakes.Objective,Wake the archive: restore 10 archive data.,Deep Frontier narrative
-Narrative.Stage.TheArchiveWakes.Hint,"Archive data comes from 2 recovered artifacts, grease and a metal part at the Archive Excavation.",Deep Frontier narrative
+Narrative.Stage.TheArchiveWakes.Objective,Wake the archive: recover 20 artifacts in total.,Deep Frontier narrative
+Narrative.Stage.TheArchiveWakes.Hint,Every artifact the Archive Excavation brings up carries a sealed human data drive. Human Record Caches surveyed by an excavation count too.,Deep Frontier narrative
 Narrative.Stage.TheArchiveWakes.Story.1,"The first restored drive belongs to the Valley Water Authority. Its records describe the Deepworks, the humans' great wells and drills, which pulled ancient water and ore up from under this valley for their factories.",Deep Frontier narrative
 Narrative.Stage.TheArchiveWakes.Story.2,"What the factories could not use went upriver into the Holding: a chain of sealed basins kept clean by a treatment works that ran day and night. Projected containment life: indefinite, subject to maintenance.",Deep Frontier narrative
 Narrative.Stage.TheArchiveWakes.Story.3,A memo is attached. Re: containment maintenance. Postponed to next quarter. Previous note: postponed to next quarter.,Deep Frontier narrative
-Narrative.Stage.TheArchiveWakes.Requirement.1,Archive data restored,Deep Frontier narrative
+Narrative.Stage.TheArchiveWakes.Requirement.1,Artifacts recovered,Deep Frontier narrative
 Narrative.Stage.TheLastShift.Title,The Last Shift,Deep Frontier narrative
-Narrative.Stage.TheLastShift.Objective,Read the last shift's records: restore 30 archive data in total and finish a Mission Control.,Deep Frontier narrative
-Narrative.Stage.TheLastShift.Hint,"Mission Control unlocks at 30,000 science. Guidance computers and telemetry also need archive data, so keep the drives coming.",Deep Frontier narrative
+Narrative.Stage.TheLastShift.Objective,Read the last shift's records: recover 40 artifacts in total and finish a Mission Control.,Deep Frontier narrative
+Narrative.Stage.TheLastShift.Hint,"Mission Control unlocks at 30,000 science. It reads the artifacts' drives into guidance computers and telemetry, so keep them coming.",Deep Frontier narrative
 Narrative.Stage.TheLastShift.Story.1,"The newest drives are the saddest and the tidiest. The rains failed, then the wells, then the harvests. The humans decided to leave the valley for now and follow the rain north. Nobody wrote down when now would end.",Deep Frontier narrative
 Narrative.Stage.TheLastShift.Story.2,"The last shift did its best. It set the treatment works to automatic, put the Holding's flush valves on a schedule to run until further notice, and switched off the lights. No further notice was ever given.",Deep Frontier narrative
 Narrative.Stage.TheLastShift.Story.3,Mission Control has found one more thing: an old orbital frequency. Something up there is still answering.,Deep Frontier narrative
-Narrative.Stage.TheLastShift.Requirement.1,Archive data restored,Deep Frontier narrative
+Narrative.Stage.TheLastShift.Requirement.1,Artifacts recovered,Deep Frontier narrative
 Narrative.Stage.TheLastShift.Requirement.2,Mission Control finished,Deep Frontier narrative
 Narrative.Stage.EyesAbove.Title,Eyes Above,Deep Frontier narrative
 Narrative.Stage.EyesAbove.Objective,Launch the Orbital Observatory from a Launch Pad.,Deep Frontier narrative
@@ -565,7 +547,7 @@ Narrative.Cache.Surveying,Surveying: {0}%,Deep Frontier narrative
 Narrative.Cache.WaitingForStorage,Survey complete: handing over records as the excavation has storage space ({0} of {1}).,Deep Frontier narrative
 Narrative.Cache.Reward,Survey reward: {0} {1} and a journal record. Demolishing it before the survey loses its records.,Deep Frontier narrative
 Building.HumanRecordCache.DisplayName,Human Record Cache,Deep Frontier narrative
-Building.HumanRecordCache.Description,"A sealed human records box. A working Archive Excavation within four tiles surveys it for archive data and a Frontier Journal record. It can also be demolished like a relic, losing its records.",Deep Frontier narrative
+Building.HumanRecordCache.Description,"A sealed human records box. A working Archive Excavation within 7 tiles surveys it for 12 recovered artifacts and a Frontier Journal record. It can also be demolished like a relic, losing its records.",Deep Frontier narrative
 Building.HumanRecordCache.FlavorDescription,"Labelled, in three languages: DO NOT OPEN. Open carefully.",Deep Frontier narrative
 DeepFrontier.Weather.RadioactiveTide,Radioactive tide,Deep Frontier
 DeepFrontier.Weather.Notification.RadioactiveTideApproaching,Radioactive tide approaching,Deep Frontier
@@ -595,19 +577,20 @@ Good.Sandstone.DisplayName,Sandstone,Deep Frontier construction materials
 Good.Sandstone.PluralDisplayName,Sandstone,Deep Frontier construction materials
 Good.Limestone.DisplayName,Limestone,Deep Frontier construction materials
 Good.Limestone.PluralDisplayName,Limestone,Deep Frontier construction materials
-Good.Aggregate.DisplayName,Aggregate,Deep Frontier construction materials
-Good.Aggregate.PluralDisplayName,Aggregate,Deep Frontier construction materials
+Good.Brick.DisplayName,Brick,Deep Frontier construction materials
+Good.Brick.PluralDisplayName,Bricks,Deep Frontier construction materials
 Good.Cement.DisplayName,Cement,Deep Frontier construction materials
 Good.Cement.PluralDisplayName,Cement,Deep Frontier construction materials
 Good.Concrete.DisplayName,Concrete,Deep Frontier construction materials
 Good.Concrete.PluralDisplayName,Concrete,Deep Frontier construction materials
 Recipe.SandstoneExtraction.DisplayName,Extract sandstone,Deep Frontier construction materials
 Recipe.LimestoneExtraction.DisplayName,Extract limestone,Deep Frontier construction materials
-Recipe.Aggregate.DisplayName,Crush sandstone,Deep Frontier construction materials
+Recipe.BrickEarth.DisplayName,Grind brick earth,Deep Frontier construction materials
+Recipe.FireBricks.DisplayName,Fire bricks,Deep Frontier construction materials
 Recipe.Cement.DisplayName,Fire cement,Deep Frontier construction materials
 Recipe.Concrete.DisplayName,Mix concrete,Deep Frontier construction materials
 Building.SandstonePit.DisplayName,Sandstone pit,Deep Frontier construction materials
-Building.SandstonePit.Description,"Workers collect finite sandstone deposits within walking range. The next step is a Stone Crusher, then a permanent Sandstone Quarry.",Deep Frontier construction materials
+Building.SandstonePit.Description,Workers collect finite sandstone deposits within walking range. Sandstone becomes brick earth at a Stone Crusher and concrete at a Concrete Mixer; later build a permanent Sandstone Quarry.,Deep Frontier construction materials
 Building.SandstonePit.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
 Building.LimestonePit.DisplayName,Limestone pit,Deep Frontier construction materials
 Building.LimestonePit.Description,Workers collect finite limestone deposits within walking range. Feed a Cement Kiln; later build a permanent Limestone Quarry.,Deep Frontier construction materials
@@ -619,13 +602,13 @@ Building.LimestoneQuarry.DisplayName,Limestone quarry,Deep Frontier construction
 Building.LimestoneQuarry.Description,"Extracts limestone indefinitely from a marked deep seam. Requires water and 2,800 hp. Build over a Deep Limestone Seam. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier construction materials
 Building.LimestoneQuarry.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
 Building.StoneCrusher.DisplayName,Stone crusher,Deep Frontier construction materials
-Building.StoneCrusher.Description,Crushes 3 sandstone into 6 aggregate per hour at 200 hp. Supply the aggregate to a Concrete Mixer.,Deep Frontier construction materials
+Building.StoneCrusher.Description,Grinds 3 sandstone into 6 dirt (brick earth) per hour at 200 hp. Supply the dirt to a Cement Kiln for bricks and cement.,Deep Frontier construction materials
 Building.StoneCrusher.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
 Building.CementKiln.DisplayName,Cement kiln,Deep Frontier construction materials
-Building.CementKiln.Description,"Fires 3 limestone and 1 aggregate into 2 cement every 2 hours, consuming log fuel and 300 hp. No separate heat system.",Deep Frontier construction materials
+Building.CementKiln.Description,"Moulds and fires 4 dirt and 1 water into 4 bricks, or 3 limestone and 1 dirt into 2 cement, every 2 hours, burning one log per batch and 300 hp. No separate heat system. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier construction materials
 Building.CementKiln.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
 Building.ConcreteMixer.DisplayName,Concrete mixer,Deep Frontier construction materials
-Building.ConcreteMixer.Description,"Mixes 3 aggregate, 1 cement and 2 water into 4 concrete per hour at 250 hp. Concrete unlocks permanent quarries and advanced construction. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier construction materials
+Building.ConcreteMixer.Description,"Mixes 3 sandstone rubble, 2 cement and 4 water into 8 concrete every 2 hours at 250 hp. Concrete unlocks permanent quarries and advanced construction. Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.",Deep Frontier construction materials
 Building.ConcreteMixer.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
 Building.SandstoneMasonryBlock.DisplayName,Sandstone masonry block,Deep Frontier construction materials
 Building.SandstoneMasonryBlock.Description,Mortared sandstone retaining block. Holds back water and supports construction on its top.,Deep Frontier construction materials

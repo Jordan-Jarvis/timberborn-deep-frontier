@@ -5,19 +5,23 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 275
+        "Amount": 225
       },
       {
         "Id": "MetalBlock",
-        "Amount": 135
+        "Amount": 115
       },
       {
         "Id": "DeepAlloy",
-        "Amount": 30
+        "Amount": 25
       },
       {
         "Id": "Concrete",
-        "Amount": 2395
+        "Amount": 2195
+      },
+      {
+        "Id": "Brick",
+        "Amount": 720
       },
       {
         "Id": "Gear",
@@ -58,8 +62,7 @@
   },
   "ManufactorySpec": {
     "ProductionRecipeIds": [
-      "RecoveredArtifact",
-      "ArchiveData"
+      "RecoveredArtifact"
     ]
   },
   "WorkshopSpec": {},
@@ -2804,307 +2807,6 @@
     ],
     "CapacityPerGood": 10,
     "ServiceHours": 24
-  },
-  "BuildingPipeTargetPortsSpec": {
-    "Ports": [
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Left, Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Left, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 1,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 2,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 3,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 4,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Left, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 2,
-          "Z": 2
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 4,
-          "Z": 2
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Left, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 4,
-          "Z": 3
-        },
-        "Directions": "Left, Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 4,
-          "Z": 3
-        },
-        "Directions": "Right, Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 5,
-          "Z": 3
-        },
-        "Directions": "Left, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 5,
-          "Z": 3
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      }
-    ]
   },
   "SmogEmitterSpec": {
     "Activity": "Workshop",

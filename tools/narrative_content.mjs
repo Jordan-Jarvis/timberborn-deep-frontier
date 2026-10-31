@@ -55,7 +55,9 @@ export const CACHE = {
   toolOrder: 1450,
   // Radius 7 (was 4) since the 2026-10-30 compaction trimmed the Archive Excavation from 10x9 to 7x6 inside
   // its old footprint (at most 3 tiles per axis): every cache the old excavation reached stays in range.
-  spec: {SurveyRecipeId: 'ArchiveData', SurveyRadius: 7, SurveyHours: 24, RewardGoodId: 'ArchiveData', RewardAmount: 6},
+  // Survey and reward follow the Archive Excavation's artifact recipe since ArchiveData was retired (2026-10-30
+  // bricks pass, tools/content_policy.json migratedGoods): 12 artifacts are the 6 archive data a survey gave.
+  spec: {SurveyRecipeId: 'RecoveredArtifact', SurveyRadius: 7, SurveyHours: 24, RewardGoodId: 'RecoveredArtifact', RewardAmount: 12},
 };
 
 const T = (name) => `${name}.IronTeeth`;
@@ -102,7 +104,7 @@ export const STAGES = [
   {id: 'OpenTheRuins', science: 2000,
     title: 'Open the Ruins',
     objective: 'Open the human ruins: recover 6 artifacts at an Archive Excavation.',
-    hint: 'The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. Any Human Record Cache on the map can be surveyed by a nearby excavation for extra archive data.',
+    hint: 'The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. Any Human Record Cache on the map can be surveyed by a nearby excavation for extra artifacts.',
     story: [
       'The first finds are small and baffling: a hard hat big enough to bathe a kit in, a mug reading WORLD\'S OKAYEST ENGINEER, and a sign that says HOLDING STATION 3 - AUTHORIZED PERSONNEL ONLY.',
       'Underneath, in smaller letters: UNAUTHORIZED PERSONNEL ALSO ONLY. The humans, it turns out, had a sense of humour. They also had sealed data drives, which the excavation crews are now carefully drying out.',
@@ -110,25 +112,25 @@ export const STAGES = [
     requirements: [{kind: 'GoodProduced', amount: 6, label: 'Artifacts recovered', targets: ['RecoveredArtifact']}]},
   {id: 'TheArchiveWakes', science: 3000,
     title: 'The Archive Wakes',
-    objective: 'Wake the archive: restore 10 archive data.',
-    hint: 'Archive data comes from 2 recovered artifacts, grease and a metal part at the Archive Excavation.',
+    objective: 'Wake the archive: recover 20 artifacts in total.',
+    hint: 'Every artifact the Archive Excavation brings up carries a sealed human data drive. Human Record Caches surveyed by an excavation count too.',
     story: [
       'The first restored drive belongs to the Valley Water Authority. Its records describe the Deepworks, the humans\' great wells and drills, which pulled ancient water and ore up from under this valley for their factories.',
       'What the factories could not use went upriver into the Holding: a chain of sealed basins kept clean by a treatment works that ran day and night. Projected containment life: indefinite, subject to maintenance.',
       'A memo is attached. Re: containment maintenance. Postponed to next quarter. Previous note: postponed to next quarter.',
     ],
-    requirements: [{kind: 'GoodProduced', amount: 10, label: 'Archive data restored', targets: ['ArchiveData']}]},
+    requirements: [{kind: 'GoodProduced', amount: 20, label: 'Artifacts recovered', targets: ['RecoveredArtifact']}]},
   {id: 'TheLastShift', science: 5000,
     title: 'The Last Shift',
-    objective: "Read the last shift's records: restore 30 archive data in total and finish a Mission Control.",
-    hint: 'Mission Control unlocks at 30,000 science. Guidance computers and telemetry also need archive data, so keep the drives coming.',
+    objective: "Read the last shift's records: recover 40 artifacts in total and finish a Mission Control.",
+    hint: 'Mission Control unlocks at 30,000 science. It reads the artifacts\' drives into guidance computers and telemetry, so keep them coming.',
     story: [
       'The newest drives are the saddest and the tidiest. The rains failed, then the wells, then the harvests. The humans decided to leave the valley for now and follow the rain north. Nobody wrote down when now would end.',
       'The last shift did its best. It set the treatment works to automatic, put the Holding\'s flush valves on a schedule to run until further notice, and switched off the lights. No further notice was ever given.',
       'Mission Control has found one more thing: an old orbital frequency. Something up there is still answering.',
     ],
     requirements: [
-      {kind: 'GoodProduced', amount: 30, label: 'Archive data restored', targets: ['ArchiveData']},
+      {kind: 'GoodProduced', amount: 40, label: 'Artifacts recovered', targets: ['RecoveredArtifact']},
       {kind: 'BuildingFinished', amount: 1, label: 'Mission Control finished', targets: [T('MissionControl')]},
     ]},
   {id: 'EyesAbove', science: 0,
@@ -261,7 +263,7 @@ export const UI_ROWS = [
   ['Narrative.Cache.WaitingForStorage', 'Survey complete: handing over records as the excavation has storage space ({0} of {1}).'],
   ['Narrative.Cache.Reward', 'Survey reward: {0} {1} and a journal record. Demolishing it before the survey loses its records.'],
   ['Building.HumanRecordCache.DisplayName', 'Human Record Cache'],
-  ['Building.HumanRecordCache.Description', 'A sealed human records box. A working Archive Excavation within four tiles surveys it for archive data and a Frontier Journal record. It can also be demolished like a relic, losing its records.'],
+  ['Building.HumanRecordCache.Description', `A sealed human records box. A working Archive Excavation within ${CACHE.spec.SurveyRadius} tiles surveys it for ${CACHE.spec.RewardAmount} recovered artifacts and a Frontier Journal record. It can also be demolished like a relic, losing its records.`],
   ['Building.HumanRecordCache.FlavorDescription', 'Labelled, in three languages: DO NOT OPEN. Open carefully.'],
 ];
 

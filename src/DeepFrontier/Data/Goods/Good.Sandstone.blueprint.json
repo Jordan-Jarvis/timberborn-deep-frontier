@@ -1,7 +1,9 @@
 {
   "GoodSpec": {
     "Id": "Sandstone",
-    "BackwardCompatibleIds": [],
+    "BackwardCompatibleIds": [
+      "Aggregate"
+    ],
     "ConsumptionEffects": [],
     "GoodType": "Box",
     "StockpileVisualization": "Box",

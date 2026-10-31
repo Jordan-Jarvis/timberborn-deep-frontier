@@ -140,10 +140,10 @@
     }
   },
   "HumanRecordCacheSpec": {
-    "SurveyRecipeId": "ArchiveData",
+    "SurveyRecipeId": "RecoveredArtifact",
     "SurveyRadius": 7,
     "SurveyHours": 24,
-    "RewardGoodId": "ArchiveData",
-    "RewardAmount": 6
+    "RewardGoodId": "RecoveredArtifact",
+    "RewardAmount": 12
   }
 }

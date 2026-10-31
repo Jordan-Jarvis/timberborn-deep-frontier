@@ -17,6 +17,26 @@
     "RecoveredMinerals": "Retired 2026-10-29 (user decision): waste refining no longer yields minerals, mineral recovery is removed and the reactor's 10-mineral gate became 100 extra HighGradeSteel. The good stays defined, unproduced and unused, only so saves that hold it still load.",
     "Lubricant": "Retired 2026-10-30 (user decision: \"the vanilla game has grease. lets use it.\"): every use moved to the vanilla Iron Teeth Grease (Grease Factory: Extract + Canola Oil) and the Chemical Works recipe was removed. The good stays defined, unproduced and unused, only so saves that hold it still load; a saved Chemical Works set to the old recipe loads with no recipe (native Manufactory.Load)."
   },
-  "prohibitedConceptDisposition": "Legacy development placeholders. Replace DiningService with worker-served native food consumption; replace license goods with persistent education/research state. Do not delete goods from existing saves without an explicit migration.",
+  "migratedGoods": {
+    "$comment": "Goods removed with native save migration (user decision 2026-10-30, bricks: \"for every item we add, lets remove low value items from the game\"). Each removed good is deleted from the data; its id is listed in the GoodSpec.BackwardCompatibleIds of a remaining good of the same storage type, so native GoodService.BindGoodToItsBackwardCompatibleIds resolves a saved stack, cost or reservation of the old id to that good (Timberborn.Goods 1.1.2.8; a saved id nothing resolves is dropped as obsolete). type is the removed good's GoodType, which its target must share. The generators read this table; nothing else lists the mapping (tools/good_migrations.mjs, checked by tools/validate_good_migrations.mjs).",
+    "Aggregate": {"type": "Box", "to": "Sandstone", "why": "Crushed sandstone; concrete now takes sandstone rubble directly and the crusher grinds dirt (brick earth). Not Dirt: Dirt is Pileable and would land in Box warehouses."},
+    "Flux": {"type": "Box", "to": "Limestone", "why": "Single-recipe Steel Mill intermediate; limestone is the real steelmaking flux and now goes into high-grade steel itself."},
+    "Compost": {"type": "Box", "to": "Fertilizer", "why": "Single-recipe intermediate made and used in the Fertilizer Works; the works now make fertilizer in one step."},
+    "MedicalFood": {"type": "Box", "to": "CannedFish", "why": "Plain Hunger 0.3 food with no medical effect; the Hospital uses Medicine."},
+    "EmergencyRation": {"type": "Box", "to": "CannedFish", "why": "Plain Hunger 0.3 food from corn and logs, a duplicate of the vanilla corn ration."},
+    "PackagedFood": {"type": "Box", "to": "CannedFish", "why": "Near-duplicate of canned fish (both Hunger 0.3); the Technical School's flight course now takes canned fish and the grocery stocks eggplant rations."},
+    "ArchiveData": {"type": "Box", "to": "RecoveredArtifact", "why": "Single-recipe intermediate whose two consumers were in Mission Control; guidance computers and telemetry now read the recovered artifacts' drives directly, the record caches give artifacts and the chapters count artifacts."}
+  },
+  "migratedRecipes": {
+    "$comment": "Recipes removed with the goods above. Each id is listed in the RecipeSpec.BackwardCompatibleIds of the recipe that replaces it in the same building, so a manufactory saved on the old recipe loads on the new one (native Manufactory.Load, Timberborn.Workshops 1.1.2.8).",
+    "Aggregate": "BrickEarth",
+    "Compost": "Fertilizer",
+    "EmergencyRation": "CannedFish",
+    "PackagedFood": "CannedFish",
+    "MedicalFood": "CannedFish",
+    "Flux": "HighGradeSteel",
+    "ArchiveData": "RecoveredArtifact"
+  },
+  "prohibitedConceptDisposition": "Legacy development placeholders. Replace DiningService with worker-served native food consumption; replace license goods with persistent education/research state. Do not delete goods from existing saves without an explicit migration (migratedGoods).",
   "validation": "Count only authored, reachable blueprint consumers as implemented. Planned uses stay separate and never satisfy the release check. Rocket-specific goods and directly edible foods may have one real use, never zero."
 }

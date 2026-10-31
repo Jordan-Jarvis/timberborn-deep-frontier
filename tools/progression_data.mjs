@@ -54,8 +54,11 @@ export async function loadProgressionData(data) {
     if (b.origin !== 'vanilla') continue;
     const patchPath = resolve(data, b.path + '.json');
     if (!await access(patchPath).then(() => true, () => false)) continue;
-    b.appended = (await read(patchPath)).ManufactorySpec?.['ProductionRecipeIds#append'] ?? [];
+    const patch = await read(patchPath);
+    b.appended = patch.ManufactorySpec?.['ProductionRecipeIds#append'] ?? [];
     b.recipes = [...b.recipes, ...b.appended];
+    // A raised unlock (tools/vanilla_tool_overrides.mjs: the Terrain Block).
+    if (patch.BuildingSpec?.ScienceCost !== undefined) b.science = patch.BuildingSpec.ScienceCost;
   }
   for (const [good, source] of Object.entries(MAP_SOURCES)) {
     for (const via of source.via) if (!buildings.has(via)) throw new Error(`MAP_SOURCES ${good}: no template ${via}`);

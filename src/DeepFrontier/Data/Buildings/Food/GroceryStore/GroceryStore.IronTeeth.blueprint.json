@@ -5,7 +5,7 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 300
+        "Amount": 295
       },
       {
         "Id": "TreatedPlank",
@@ -13,11 +13,11 @@
       },
       {
         "Id": "MetalBlock",
-        "Amount": 65
+        "Amount": 60
       },
       {
         "Id": "Concrete",
-        "Amount": 100
+        "Amount": 110
       },
       {
         "Id": "Gear",
@@ -2811,7 +2811,7 @@
   "GroceryStoreSpec": {
     "Foods": [
       "CannedFish",
-      "PackagedFood",
+      "EggplantRation",
       "AlgaeRation",
       "CornRation",
       "FermentedCassava",

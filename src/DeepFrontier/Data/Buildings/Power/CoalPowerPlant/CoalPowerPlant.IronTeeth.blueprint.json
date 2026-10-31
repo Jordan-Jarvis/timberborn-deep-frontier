@@ -5,11 +5,11 @@
     "BuildingCost": [
       {
         "Id": "MetalBlock",
-        "Amount": 135
+        "Amount": 130
       },
       {
         "Id": "Concrete",
-        "Amount": 290
+        "Amount": 315
       },
       {
         "Id": "Gear",

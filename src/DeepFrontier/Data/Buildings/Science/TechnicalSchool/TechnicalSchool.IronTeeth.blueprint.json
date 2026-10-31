@@ -5,15 +5,19 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 135
+        "Amount": 115
       },
       {
         "Id": "MetalBlock",
-        "Amount": 25
+        "Amount": 20
       },
       {
         "Id": "Concrete",
-        "Amount": 320
+        "Amount": 290
+      },
+      {
+        "Id": "Brick",
+        "Amount": 100
       },
       {
         "Id": "Gear",
@@ -2537,7 +2541,7 @@
         "GoodPerHour": 0.25
       },
       {
-        "GoodId": "PackagedFood",
+        "GoodId": "CannedFish",
         "GoodPerHour": 0.5
       }
     ]
@@ -2594,7 +2598,7 @@
             "GoodPerHour": 0.25
           },
           {
-            "GoodId": "PackagedFood",
+            "GoodId": "CannedFish",
             "GoodPerHour": 0.5
           }
         ]

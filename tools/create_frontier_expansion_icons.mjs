@@ -12,13 +12,13 @@ import {writeNativeIcon, writeReviewSheet} from './native_icon_style.mjs';
 const root = new URL('../', import.meta.url);
 
 const goods = [
-  'Compost', 'Coal', 'Chemical', 'RecoveredArtifact', 'Fertilizer', 'EmergencyRation',
-  'Flux', 'HighGradeSteel', 'Alloy', 'Polymer', 'Lubricant',
+  'Coal', 'Chemical', 'RecoveredArtifact', 'Fertilizer', 
+  'HighGradeSteel', 'Alloy', 'Polymer', 'Lubricant',
   'MachineCore', 'PowerModule', 'FilterMedia', 'ConcentratedWaste', 'CrudeOil',
   'UraniumOre', 'Yellowcake', 'EnrichedFuel', 'PureWater', 'HydrogenGas', 'OxygenGas',
   'LiquidHydrogen', 'LiquidOxygen', 'Cryocoolant', 'RadioactiveWaste', 'RocketAirframe', 'PropulsionPackage',
   'GuidanceComputer', 'MissionPayload', 'RecoveredTelemetry', 'IndustrialLicense', 'SpecialistLicense', 'FlightLicense',
-  'Electronics', 'ReactorCoolantWater', 'RecoveredMinerals', 'ArchiveData',
+  'Electronics', 'ReactorCoolantWater', 'RecoveredMinerals', 
   'DeepOre', 'DeepAlloy',
 ];
 const buildings = {

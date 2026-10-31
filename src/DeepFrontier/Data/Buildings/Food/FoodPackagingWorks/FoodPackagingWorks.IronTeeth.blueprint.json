@@ -5,15 +5,19 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 75
+        "Amount": 65
       },
       {
         "Id": "MetalBlock",
-        "Amount": 100
+        "Amount": 90
       },
       {
         "Id": "Concrete",
-        "Amount": 275
+        "Amount": 260
+      },
+      {
+        "Id": "Brick",
+        "Amount": 70
       },
       {
         "Id": "Gear",
@@ -47,10 +51,7 @@
   },
   "ManufactorySpec": {
     "ProductionRecipeIds": [
-      "CannedFish",
-      "EmergencyRation",
-      "PackagedFood",
-      "MedicalFood"
+      "CannedFish"
     ]
   },
   "WorkshopSpec": {},

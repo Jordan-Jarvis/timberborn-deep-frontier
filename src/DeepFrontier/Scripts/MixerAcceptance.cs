@@ -50,8 +50,16 @@ namespace DeepFrontier.Scripts {
     private readonly bool _reload=Environment.GetCommandLineArgs().Contains("-deepFrontierMixerReload");
     private readonly Queue<Vector3> _destinations=new();
     private readonly List<Inventory> _disabledDonors=new();
-    private readonly Dictionary<string,int> _consumed=new(){{"Aggregate",0},{"Cement",0},{"Water",0}};
-    private static readonly string[] Goods={"Aggregate","Cement","Water","Concrete"};
+    // The installed mixer recipe's goods and amounts per batch (Concrete since
+    // the 2026-10-30 bricks pass: sandstone rubble, cement and water).
+    private RecipeSpec _recipe;
+    private readonly Dictionary<string,int> _consumed=new();
+    private string[] InputGoods=>_recipe.Ingredients.Select(g=>g.Id).ToArray();
+    private string[] Solids=>InputGoods.Where(g=>g!="Water").ToArray();
+    private string[] Goods=>InputGoods.Concat(_recipe.Products.Select(g=>g.Id)).ToArray();
+    private int Per(string good)=>_recipe.Ingredients.Single(g=>g.Id==good).Amount;
+    private int WaterCapacity=>_recipe.GetCapacity(new GoodAmount("Water",Per("Water")));
+    private bool ConsumedBatches(int batches)=>InputGoods.All(g=>_consumed[g]==Per(g)*batches);
     private BlockObject _building; private Manufactory _machine; private MechanicalNode _generator;
     private Transform _drum; private Quaternion _firstRotation,_stoppedRotation;
     private ControllableCharacter _walker; private Vector3 _walkTarget;
@@ -141,13 +149,15 @@ namespace DeepFrontier.Scripts {
         Pass("native placement, ground-door entrance path, wall-face shaft and enclosed-room collision");
       }
       _machine=_building.GetComponent<Manufactory>();
+      _recipe=_machine.ProductionRecipes.Single();
+      foreach(var good in InputGoods)_consumed[good]=0;
       // Other accepted factories retain real output stock in this settlement.
       // Isolate this seeded consumption test at its supply source, so normal
-      // haulers cannot replenish Aggregate/Cement during exhaustion or saving.
+      // haulers cannot replenish its solid inputs during exhaustion or saving.
       foreach(var inventory in _entities.Entities.Where(e=>e.HasComponent<Inventories>())
         .SelectMany(e=>e.GetComponent<Inventories>().AllInventories)
         .Where(i=>i!=_machine.Inventory&&i.Enabled&&i.PublicOutput
-          &&(i.OutputGoods.Contains("Aggregate")||i.OutputGoods.Contains("Cement")))) {
+          &&Solids.Any(g=>i.OutputGoods.Contains(g)))) {
         inventory.Disable();_disabledDonors.Add(inventory);
       }
       _drum=_building.GetComponent<BuildingModel>().FinishedModel.GetComponentsInChildren<Transform>(true)
@@ -172,11 +182,11 @@ namespace DeepFrontier.Scripts {
     private void CheckWater(int amount) {
       var spec=_building.GetComponent<WorkshopReservoirSpec>();
       var visual=_building.GetComponent<WorkshopReservoir>();
-      Require(spec.Capacity==8&&visual.StoredAmount==amount&&visual.SurfacesVisible==(amount>0),
+      Require(spec.Capacity==WaterCapacity&&visual.StoredAmount==amount&&visual.SurfacesVisible==(amount>0),
         "Mixer header stock/visibility mismatch");
       Require(visual.SurfaceHeights.Count==1,"Expected one native mixer tank surface");
       var surface=spec.Surfaces.Single();
-      float expected=surface.EmptyHeight+(surface.FullHeight-surface.EmptyHeight)*amount/8f;
+      float expected=surface.EmptyHeight+(surface.FullHeight-surface.EmptyHeight)*amount/(float)WaterCapacity;
       Require(Math.Abs(visual.SurfaceHeights.Single()-expected)<.00001f,"Mixer header level mismatch");
     }
     private Vector3Int PowerCell(int distance) {
@@ -188,9 +198,7 @@ namespace DeepFrontier.Scripts {
       throw new InvalidOperationException("Mixer Transputs[0] has no horizontal face: "+transput.Directions);
     }
     private void Inputs(int batches) {
-      _machine.Inventory.GiveExisting(new GoodAmount("Aggregate",3*batches));
-      _machine.Inventory.GiveExisting(new GoodAmount("Cement",batches));
-      _machine.Inventory.GiveExisting(new GoodAmount("Water",2*batches));
+      foreach(var good in InputGoods)_machine.Inventory.GiveExisting(new GoodAmount(good,Per(good)*batches));
     }
     private void Start() {
       var power=_building.GetComponent<MechanicalNode>();
@@ -213,8 +221,8 @@ namespace DeepFrontier.Scripts {
         CheckWater(record.Stock["Water"]);
         Pass("fresh process restored exact mixer identity, stock, progress, supports and water surface");
       } else {
-        Water(0);Water(4);Water(8);Water(0);
-        Pass("native header tank follows 0/4/8/0 Water without a duplicate inventory");
+        Water(0);Water(WaterCapacity/2);Water(WaterCapacity);Water(0);
+        Pass($"native header tank follows 0/{WaterCapacity/2}/{WaterCapacity}/0 Water without a duplicate inventory");
         Require(_machine.Inventory.IsEmpty,"New mixer has unexpected stock");
         Inputs(2);
       }
@@ -246,7 +254,7 @@ namespace DeepFrontier.Scripts {
       _hours.WorkedPartOfDay=_normalHours;
       _speed.ChangeSpeed(0);_finished=true;
       if(!_reload) {
-        Require(new[]{"Aggregate","Cement","Water"}.All(g=>_machine.Inventory.AmountInStock(g)==0),
+        Require(InputGoods.All(g=>_machine.Inventory.AmountInStock(g)==0),
           "The controlled three-batch supply was unexpectedly replenished");
         Inputs(2);
         var record=new MixerSaveRecord {EntityId=_building.GetComponent<EntityComponent>().EntityId.ToString(),
@@ -288,15 +296,15 @@ namespace DeepFrontier.Scripts {
           Require(Quaternion.Angle(_drum.localRotation,_stoppedRotation)<.01f,"Unpowered mixer drum continued moving");
           _generator.SetOutputMultiplier(1);Pass("power loss stops recipe progress and actual drum motion");Phase(4);
         } else if(_phase==4&&_batches==2) {
-          Require(_consumed["Aggregate"]==6&&_consumed["Cement"]==2&&_consumed["Water"]==4,"Two-batch input accounting differs");
-          Phase(5);Pass("two native batches consumed 6 Aggregate, 2 Cement and 4 Water");
+          Require(ConsumedBatches(2),"Two-batch input accounting differs");
+          Phase(5);Pass("two native batches consumed "+string.Join(", ",InputGoods.Select(g=>Per(g)*2+" "+g)));
         } else if(_phase==5&&hours>.4f) {
           Require(_batches==2&&!_machine.IsReadyToProduce,"Mixer produces without ingredients");
           CheckWater(0);Inputs(1);Phase(6);
           Pass("input exhaustion stops work and empties the visible header tank");
         } else if(_phase==6&&_batches==3&&_walks==Walks) {
-          Require(_consumed["Aggregate"]==9&&_consumed["Cement"]==3&&_consumed["Water"]==6,"Three-batch input accounting differs");
-          Pass("replenishment resumes production; three batches made twelve Concrete");Finish();
+          Require(ConsumedBatches(3),"Three-batch input accounting differs");
+          Pass("replenishment resumes production; three batches made "+_recipe.Products.Sum(g=>g.Amount)*3+" Concrete");Finish();
         } else if(_phase==7&&_batches>=1&&_walks==Walks) {
           Require(_motionObserved&&_consumed["Water"]>0,"Reload did not resume actual water-consuming production");
           Pass("saved inputs produced another native batch with advancing drum and matching water surface");Finish();

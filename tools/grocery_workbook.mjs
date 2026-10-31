@@ -31,22 +31,23 @@ export const groceryBuildingUpdates=new Map([['B009',{
 export const groceryItemUpdates=new Map([
   ['I006',{'Consumed by':'Native food consumption; Grocery Store shoppers',
     'Primary uses':'Direct eating; stocked grocery assortment','Notes':'Food Packaging Works makes canned fish. The grocery stocks it; the Fishery does not can it.'}],
-  ['I010',{'Source / recipe':'Food Packaging Works','Consumed by':'Native food consumption; Grocery Store shoppers',
-    'Primary uses':'Direct eating; stocked grocery assortment','Science value':0,
-    'Notes':'Existing general preserved food. Not a restaurant service token or a restaurant menu dish.'}]
+  // Packaged Food was retired on 2026-10-30 (bricks pass, tools/content_policy.json migratedGoods: saves map it to Canned Fish).
+  ['I010',{'Source / recipe':'Retired','Consumed by':'None','Primary uses':'None','Science value':0,
+    'Source':'tools/content_policy.json migratedGoods','Data status':'Retired 2026-10-30; saved stock loads as Canned Fish',
+    'Notes':'Removed as a near-duplicate of canned fish. The grocery stocks eggplant rations in its place.'}]
 ]);
-for(const [row,id] of [['I006','CannedFish'],['I010','PackagedFood']]) {
+for(const [row,id] of [['I006','CannedFish']]) {
   const path=`src/DeepFrontier/Data/Goods/Good.${id}.blueprint.json`;
   const good=(await read(path)).GoodSpec;
   Object.assign(groceryItemUpdates.get(row),{'Type':good.GoodType,'Weight':good.Weight,'Source':path,
     'Satisfies / effects':good.ConsumptionEffects.map(e=>`${e.NeedId}: +${e.Points}`).join('; '),
     'Data status':'Exact authored food and packaging recipe; native factory production pending','Science value':0,'Perishable':'No'});
 }
-groceryItemUpdates.get('I006')['Consumed by']='Native food consumption; Grocery Store shoppers; Food Packaging Works';
-groceryItemUpdates.get('I006')['Primary uses']='Direct eating; Packaged Food ingredient; stocked grocery assortment';
+groceryItemUpdates.get('I006')['Consumed by']='Native food consumption; Grocery Store shoppers; Technical School flight course';
+groceryItemUpdates.get('I006')['Primary uses']='Direct eating; stocked grocery assortment; flight course supply';
 const amounts=goods=>goods.map(g=>`${g.Amount} ${name(g.Id)}`).join('; ');
 export const grocerySupplyRecipes=[];
-for(const [row,id] of [['R006','CannedFish'],['PackagedFood','PackagedFood']]) {
+for(const [row,id] of [['R006','CannedFish']]) {
   const r=(await read(`src/DeepFrontier/Data/Recipes/Recipe.${id}.blueprint.json`)).RecipeSpec;
   grocerySupplyRecipes.push([row,'Food Packaging Works','Iron Teeth',name(id),amounts(r.Ingredients),amounts(r.Products),
     r.CycleDurationInHours,packaging.MechanicalNodeSpec.PowerInput,packaging.MechanicalNodeSpec.PowerOutput,'Consumer',packaging.WorkplaceSpec.MaxWorkers,

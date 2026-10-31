@@ -5,11 +5,11 @@
     "BuildingCost": [
       {
         "Id": "MetalBlock",
-        "Amount": 495
+        "Amount": 485
       },
       {
         "Id": "Concrete",
-        "Amount": 935
+        "Amount": 1020
       },
       {
         "Id": "Gear",
@@ -38,7 +38,6 @@
   },
   "ManufactorySpec": {
     "ProductionRecipeIds": [
-      "Flux",
       "HighGradeSteel",
       "Alloy"
     ]

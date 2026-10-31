@@ -1,7 +1,9 @@
 {
   "RecipeSpec": {
     "Id": "HighGradeSteel",
-    "BackwardCompatibleIds": [],
+    "BackwardCompatibleIds": [
+      "Flux"
+    ],
     "DisplayLocKey": "Good.HighGradeSteel.PluralDisplayName",
     "CycleDurationInHours": 4,
     "Ingredients": [
@@ -14,7 +16,7 @@
         "Amount": 2
       },
       {
-        "Id": "Flux",
+        "Id": "Limestone",
         "Amount": 1
       }
     ],

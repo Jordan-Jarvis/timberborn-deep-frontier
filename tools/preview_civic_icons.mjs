@@ -2,7 +2,7 @@ import {readFile,mkdir} from 'node:fs/promises';
 import sharp from 'sharp';
 import {fileURLToPath} from 'node:url';
 const root=new URL('../',import.meta.url);
-const names=['GroceryStore','Hospital','CannedFish','PackagedFood','Medicine','MedicalFood'];
+const names=['GroceryStore','Hospital','CannedFish','Medicine'];
 const layers=[];
 for(let i=0;i<names.length;i++) {
   const svg=await readFile(new URL(`src/DeepFrontier/Art/Icons/${names[i]}.svg`,root));

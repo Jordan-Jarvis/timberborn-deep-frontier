@@ -1,7 +1,9 @@
 {
   "RecipeSpec": {
     "Id": "RecoveredArtifact",
-    "BackwardCompatibleIds": [],
+    "BackwardCompatibleIds": [
+      "ArchiveData"
+    ],
     "DisplayLocKey": "Good.RecoveredArtifact.PluralDisplayName",
     "CycleDurationInHours": 6,
     "Ingredients": [

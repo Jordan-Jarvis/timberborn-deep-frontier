@@ -1,7 +1,9 @@
 {
   "GoodSpec": {
     "Id": "Limestone",
-    "BackwardCompatibleIds": [],
+    "BackwardCompatibleIds": [
+      "Flux"
+    ],
     "ConsumptionEffects": [],
     "GoodType": "Box",
     "StockpileVisualization": "Box",

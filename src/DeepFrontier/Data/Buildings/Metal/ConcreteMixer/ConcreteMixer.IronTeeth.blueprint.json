@@ -1381,7 +1381,7 @@
   },
   "WorkshopReservoirSpec": {
     "GoodId": "Water",
-    "Capacity": 8,
+    "Capacity": 16,
     "Material": "Materials/Goods/Water",
     "Surfaces": [
       {

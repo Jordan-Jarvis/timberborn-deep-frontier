@@ -14,7 +14,11 @@
         "Amount": 2
       },
       {
-        "Id": "ArchiveData",
+        "Id": "RecoveredArtifact",
+        "Amount": 2
+      },
+      {
+        "Id": "Grease",
         "Amount": 1
       }
     ],

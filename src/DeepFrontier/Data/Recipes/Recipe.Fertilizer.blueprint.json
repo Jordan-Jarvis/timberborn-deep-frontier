@@ -1,21 +1,23 @@
 {
   "RecipeSpec": {
     "Id": "Fertilizer",
-    "BackwardCompatibleIds": [],
+    "BackwardCompatibleIds": [
+      "Compost"
+    ],
     "DisplayLocKey": "Good.Fertilizer.PluralDisplayName",
-    "CycleDurationInHours": 1,
+    "CycleDurationInHours": 2,
     "Ingredients": [
       {
-        "Id": "Compost",
-        "Amount": 2
-      },
-      {
-        "Id": "Water",
+        "Id": "Log",
         "Amount": 1
       },
       {
         "Id": "Algae",
-        "Amount": 1
+        "Amount": 2
+      },
+      {
+        "Id": "Water",
+        "Amount": 2
       }
     ],
     "Products": [

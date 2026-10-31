@@ -62,12 +62,13 @@ namespace DeepFrontier.Scripts {
   internal sealed class FactoryTransportAcceptance : IPostLoadableSingleton,IUpdatableSingleton {
     private const string RecordPath="C:/Users/Jordan/Documents/TimberbornModding/outputs/factory-transport-expectations.json";
     private const string PowerRecordPath="C:/Users/Jordan/Documents/TimberbornModding/outputs/factory-power-lines-expectations.json";
-    private static readonly string[] Solids={"Aggregate","Cement","Concrete"};
+    // Concrete since the 2026-10-30 bricks pass: sandstone rubble, cement and water.
+    private static readonly string[] Solids={"Sandstone","Cement","Concrete"};
     // From the installed mixer blueprint in Setup: its first pipe port (the
     // water intake) and, per transport lane, the mixer cell it meets.
     private Vector3Int _intake;
     private List<(Vector3Int Cell,Vector3Int Out)> _laneFaces;
-    private static readonly string[] MixerGoods={"Aggregate","Cement","Water","Concrete"};
+    private static readonly string[] MixerGoods={"Sandstone","Cement","Water","Concrete"};
     private readonly EntityRegistry _entities;
     private readonly BlockObjectFactory _factory;
     private readonly TemplateService _templates;
@@ -87,6 +88,10 @@ namespace DeepFrontier.Scripts {
     private readonly List<Inventory> _stores=new();
     private readonly Dictionary<MechanicalNode,float> _supplies=new();
     private readonly Dictionary<string,int> _consumed=MixerGoods.ToDictionary(g=>g,g=>0);
+    // Per-batch amounts and native buffer capacities of the installed recipe.
+    private RecipeSpec _recipe;
+    private int Per(string good)=>_recipe.Ingredients.Concat(_recipe.Products).Single(g=>g.Id==good).Amount;
+    private int Cap(string good)=>_recipe.GetCapacity(new GoodAmount(good,Per(good)));
     private readonly Dictionary<string,int> _baseline=new();
     private readonly bool _reload=Environment.GetCommandLineArgs().Contains("-deepFrontierFactoryTransportReload");
     private readonly bool _power=Environment.GetCommandLineArgs().Contains("-deepFrontierFactoryPowerLines")
@@ -161,6 +166,9 @@ namespace DeepFrontier.Scripts {
       _laneFaces=laneFaces;
       Require(_building.GetComponent<PausableBuilding>().Paused,"Expected saved paused mixer");
       _mixer=_building.GetComponent<Manufactory>();
+      _recipe=_mixer.ProductionRecipes.Single();
+      Require(MixerGoods.ToHashSet().SetEquals(_recipe.Ingredients.Concat(_recipe.Products).Select(g=>g.Id)),
+        "Mixer recipe goods differ from the fixture lanes: "+string.Join(",",_recipe.Ingredients.Concat(_recipe.Products).Select(g=>g.Id)));
       foreach(var e in _entities.Entities.Where(e=>e.HasComponent<Workplace>()&&e.HasComponent<PausableBuilding>()))
         e.GetComponent<PausableBuilding>().Pause();
       foreach(var e in _entities.Entities.Where(e=>e.HasComponent<ControllableCharacter>())) {
@@ -178,7 +186,7 @@ namespace DeepFrontier.Scripts {
           Require(_mixer.Inventory.UnreservedAmountInStock(good)==stock,"Reserved starting mixer stock");
           if(good!="Concrete"&&stock>0)_mixer.Inventory.TakeExisting(new GoodAmount(good,stock));
         }
-        Require(_mixer.Inventory.AmountInStock("Concrete")==12&&_mixer.ProductionProgress==0,
+        Require(_mixer.Inventory.AmountInStock("Concrete")==3*Per("Concrete")&&_mixer.ProductionProgress==0,
           "Expected main mixer acceptance checkpoint");
         // One lane per derived face: two belts straight out from the face and a
         // warehouse facing them (entrance on the belt). Ingredient lanes run into
@@ -198,7 +206,7 @@ namespace DeepFrontier.Scripts {
           store.GetComponent<SingleGoodAllower>().Allow(Solids[lane]);
           var inventory=store.GetComponent<Stockpile>().Inventory;
           _stores.Add(inventory);
-          if(lane<2)inventory.GiveExisting(new GoodAmount(Solids[lane],lane==0?30:12));
+          if(lane<2)inventory.GiveExisting(new GoodAmount(Solids[lane],Per(Solids[lane])*(lane==0?10:12)));
         }
         // Pipe line east of the intake's Right face (the mixer stands Cw0 unflipped).
         var port=_building.TransformCoordinates(_intake);
@@ -221,14 +229,14 @@ namespace DeepFrontier.Scripts {
         _tank=tank.GetComponent<PipeTank>();_pump=pump.GetComponent<HeadliftPipe>();
         _valve=valve.GetComponent<ExtractionPipe>();_valve.InletEnabled=true;_valve.OutletEnabled=false;
         _pipes=new[]{valve.GetComponent<BuildingPipe>(),pipe.GetComponent<BuildingPipe>(),pump.GetComponent<BuildingPipe>()};
-        _baseline.Add("Aggregate",30);_baseline.Add("Cement",12);_baseline.Add("Concrete",12);
+        _baseline.Add("Sandstone",Per("Sandstone")*10);_baseline.Add("Cement",Per("Cement")*12);_baseline.Add("Concrete",3*Per("Concrete"));
         _waterBaseline=300;
       }
       if(_power&&!_powerReload) {
         // Additional declared donor stock allows both cable runs to finish
         // with native full buffers and real incoming items still queued.
-        _stores[0].GiveExisting(new GoodAmount("Aggregate",24));_baseline["Aggregate"]+=24;
-        _stores[1].GiveExisting(new GoodAmount("Cement",8));_baseline["Cement"]+=8;
+        _stores[0].GiveExisting(new GoodAmount("Sandstone",Per("Sandstone")*8));_baseline["Sandstone"]+=Per("Sandstone")*8;
+        _stores[1].GiveExisting(new GoodAmount("Cement",Per("Cement")*8));_baseline["Cement"]+=Per("Cement")*8;
         _remoteSource=Create("DevPowerGenerator",169,168,3).GetComponent<MechanicalNode>();
       }
       // Isolate unrelated factory outputs at their supply source. The three
@@ -310,7 +318,7 @@ namespace DeepFrontier.Scripts {
         "Disconnected factory belt inventory endpoint");
       // BeltLink reports CanAccept separately from its target identity. A full
       // saved lane remains connected even when it cannot accept another item.
-      _belts[1].Sim.Output.TryGetTarget("Aggregate",out var aggregateNext);
+      _belts[1].Sim.Output.TryGetTarget("Sandstone",out var aggregateNext);
       _belts[3].Sim.Output.TryGetTarget("Cement",out var cementNext);
       _belts[4].Sim.Output.TryGetTarget("Concrete",out var concreteNext);
       Require(ReferenceEquals(aggregateNext,_belts[0].Sim)
@@ -367,26 +375,26 @@ namespace DeepFrontier.Scripts {
       +_stores.Sum(i=>i.AmountInStock(good))+_belts.Sum(b=>b.Sim.Items.Count(g=>g.Id==good));
     private float WaterTotal()=>_mixer.Inventory.AmountInStock("Water")
       +5f*(_tank.VolumeM3+_pipes.Sum(p=>p.FluidHeight));
-    private bool Full()=>_mixer.Inventory.AmountInStock("Aggregate")==12
-      &&_mixer.Inventory.AmountInStock("Cement")==4&&_mixer.Inventory.AmountInStock("Water")==8;
+    private bool Full()=>_mixer.Inventory.AmountInStock("Sandstone")==Cap("Sandstone")
+      &&_mixer.Inventory.AmountInStock("Cement")==Cap("Cement")&&_mixer.Inventory.AmountInStock("Water")==Cap("Water");
     private void CheckConservation() {
       foreach(var good in Solids) {
-        int expected=_baseline[good]+(good=="Concrete"?4*_batches:-_consumed[good]);
+        int expected=_baseline[good]+(good=="Concrete"?Per("Concrete")*_batches:-_consumed[good]);
         Require(SolidTotal(good)==expected,"Solid conservation failed: "+good+" actual="+SolidTotal(good)+" expected="+expected);
       }
       Require(Math.Abs(WaterTotal()+_consumed["Water"]-_waterBaseline)<.02f,
         "Water conservation failed: actual="+WaterTotal()+" consumed="+_consumed["Water"]+" baseline="+_waterBaseline);
-      Require(_belts.Take(2).All(b=>b.Sim.Items.All(g=>g.Id=="Aggregate"))
+      Require(_belts.Take(2).All(b=>b.Sim.Items.All(g=>g.Id=="Sandstone"))
         &&_belts.Skip(2).Take(2).All(b=>b.Sim.Items.All(g=>g.Id=="Cement"))
         &&_belts.Skip(4).All(b=>b.Sim.Items.All(g=>g.Id=="Concrete")),"Belt lane contains a wrong good");
-      Require(_mixer.Inventory.AmountInStock("Aggregate")<=12&&_mixer.Inventory.AmountInStock("Cement")<=4
-        &&_mixer.Inventory.AmountInStock("Water")<=8,"Delivery exceeded native recipe capacity");
+      Require(_mixer.Inventory.AmountInStock("Sandstone")<=Cap("Sandstone")&&_mixer.Inventory.AmountInStock("Cement")<=Cap("Cement")
+        &&_mixer.Inventory.AmountInStock("Water")<=Cap("Water"),"Delivery exceeded native recipe capacity");
       var visual=_building.GetComponent<WorkshopReservoir>();
       Require(visual.StoredAmount==_mixer.Inventory.AmountInStock("Water"),"Pipe-fed tank visual differs from native Water stock");
     }
     private void Phase(int value) {_phase=value;_phaseTime=_clock.PartialDayNumber;}
     private void StartProduction() {
-      Require(_stores[2].HasUnreservedCapacity(new GoodAmount("Concrete",8)),
+      Require(_stores[2].HasUnreservedCapacity(new GoodAmount("Concrete",2*Per("Concrete"))),
         "Receiving warehouse lacks capacity for the two declared production batches");
       var workers=_entities.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>())
         .Where(w=>w.WorkerType=="Beaver").Take(2).ToArray();
@@ -467,7 +475,7 @@ namespace DeepFrontier.Scripts {
           }
         }
         if(_frame%600==0)Debug.Log("[DeepFrontier Factory Transport] STATUS phase="+_phase
-          +" batches="+_batches+" A="+_mixer.Inventory.AmountInStock("Aggregate")+" C="+_mixer.Inventory.AmountInStock("Cement")
+          +" batches="+_batches+" S="+_mixer.Inventory.AmountInStock("Sandstone")+" C="+_mixer.Inventory.AmountInStock("Cement")
           +" W="+_mixer.Inventory.AmountInStock("Water")+" received="+_stores[2].AmountInStock("Concrete"));
         if(_phase==10&&elapsed>.3f) {
           Require(_belts.All(b=>!b.Running)&&_building.GetComponent<MechanicalNode>().Graph.PowerSupply==0
@@ -488,31 +496,31 @@ namespace DeepFrontier.Scripts {
           _lines.Connect(_remoteSource.GetComponent<PowerLineComponent>(),_building.GetComponent<PowerLineComponent>());
           Pass("disconnecting the only cable splits the remote source from the factory and stops the belts and pump");
           StartProduction();
-        } else if(_phase==1&&Full()&&_stores[2].AmountInStock("Concrete")==12) {
-          CheckConservation();Pass("real conveyors filled both ingredient buffers and collected all twelve Concrete; pipe filled eight Water");
+        } else if(_phase==1&&Full()&&_stores[2].AmountInStock("Concrete")==3*Per("Concrete")) {
+          CheckConservation();Pass($"real conveyors filled both ingredient buffers and collected all {3*Per("Concrete")} Concrete; pipe filled {Cap("Water")} Water");
           foreach(var generator in _supplies.Keys)generator.SetOutputMultiplier(0);Phase(2);
         } else if(_phase==2&&elapsed>.3f) {
           Require(_belts.All(b=>!b.Running),"Unpowered factory belts kept running");
-          _mixer.Inventory.TakeExisting(new GoodAmount("Aggregate",6));_baseline["Aggregate"]-=6;
-          _mixer.Inventory.TakeExisting(new GoodAmount("Cement",2));_baseline["Cement"]-=2;
+          _mixer.Inventory.TakeExisting(new GoodAmount("Sandstone",Cap("Sandstone")/2));_baseline["Sandstone"]-=Cap("Sandstone")/2;
+          _mixer.Inventory.TakeExisting(new GoodAmount("Cement",Cap("Cement")/2));_baseline["Cement"]-=Cap("Cement")/2;
           Phase(3);
         } else if(_phase==3&&elapsed>.6f) {
-          Require(_mixer.Inventory.AmountInStock("Aggregate")==6&&_mixer.Inventory.AmountInStock("Cement")==2,
+          Require(_mixer.Inventory.AmountInStock("Sandstone")==Cap("Sandstone")/2&&_mixer.Inventory.AmountInStock("Cement")==Cap("Cement")/2,
             "Ingredient delivery continued without power");
           CheckConservation();foreach(var supply in _supplies)supply.Key.SetOutputMultiplier(supply.Value);
           Pass("power loss stopped both ingredient lanes without losing stock");Phase(4);
         } else if(_phase==4&&Full()) {
-          _valve.InletEnabled=false;_mixer.Inventory.TakeExisting(new GoodAmount("Water",4));_waterBaseline-=4;Phase(5);
+          _valve.InletEnabled=false;_mixer.Inventory.TakeExisting(new GoodAmount("Water",Cap("Water")/2));_waterBaseline-=Cap("Water")/2;Phase(5);
         } else if(_phase==5&&elapsed>.6f) {
-          Require(_mixer.Inventory.AmountInStock("Water")==4,"Closed valve still delivers water");
+          Require(_mixer.Inventory.AmountInStock("Water")==Cap("Water")/2,"Closed valve still delivers water");
           CheckConservation();_valve.InletEnabled=true;Pass("closed valve stops water while powered solid delivery remains available");
           StartProduction();
         } else if(_phase==6&&_batches==2) {
-          Require(_consumed["Aggregate"]>0&&_consumed["Cement"]>0&&_consumed["Water"]>0,"No new pipe/belt-fed recipe consumption");
+          Require(_consumed["Sandstone"]>0&&_consumed["Cement"]>0&&_consumed["Water"]>0,"No new pipe/belt-fed recipe consumption");
           _building.GetComponent<PausableBuilding>().Pause();_outputPaused=true;Phase(7);
         } else if(_phase==7&&Full()&&_mixer.Inventory.AmountInStock("Concrete")==0
           &&_belts.Skip(4).All(b=>b.Sim.Items.Count==0)) {
-          Require(_outputPaused&&_stores[2].AmountInStock("Concrete")==_baseline["Concrete"]+4*_batches,
+          Require(_outputPaused&&_stores[2].AmountInStock("Concrete")==_baseline["Concrete"]+Per("Concrete")*_batches,
             "Produced concrete did not reach its real warehouse");
           Pass("native workers consumed conveyor ingredients and piped water; all new Concrete reached the output warehouse");
           Finish();

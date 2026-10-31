@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import { SpreadsheetFile, Workbook } from '@oai/artifact-tool';
 import {aquacultureBuildingUpdates,aquacultureBuildingAdds,aquacultureItemUpdates,aquacultureItemAdds,juvenileRecipeRow,aquacultureRecipeAdds,aquacultureOverview,aquacultureProgression,aquacultureTransport,aquacultureSource,updateAquacultureRows} from './tools/aquaculture_workbook.mjs';
-import {hospitalBuildingUpdates,hospitalItemUpdates,medicalFoodRecipe,hospitalProgressionUpdates,hospitalTransport,hospitalSource} from './tools/hospital_workbook.mjs';
+import {hospitalBuildingUpdates,hospitalItemUpdates,hospitalProgressionUpdates,hospitalTransport,hospitalSource} from './tools/hospital_workbook.mjs';
 import {groceryBuildingUpdates,groceryItemUpdates,grocerySupplyRecipes,groceryProgression,groceryTransport,grocerySource} from './tools/grocery_workbook.mjs';
 import {structuralWorkbookRows,structuralSource,hydroSource,hydroBuildingRow} from './tools/structural_workbook.mjs';
 import {updateResearchBuilding,researchRecipe,researchSource,styleDependency,styleSource} from './tools/research_workbook.mjs';
@@ -619,13 +619,13 @@ for(const id of ['R003','R005','R006']) {
   row[recipeHeaders.indexOf('Data status')]='Design only; not an active recipe on this building';
 }
 alignedRecipeRows.push(...aquacultureRecipeAdds);
+// Medical Food and Packaged Food were retired on 2026-10-30 (tools/content_policy.json migratedGoods).
 const medicalRecipeIndex=alignedRecipeRows.findIndex(r=>r[0]==='R015');
-if(medicalRecipeIndex<0)throw Error('Missing medical food draft to replace');
-alignedRecipeRows[medicalRecipeIndex]=medicalFoodRecipe;
+if(medicalRecipeIndex<0)throw Error('Missing medical food draft to remove');
+alignedRecipeRows.splice(medicalRecipeIndex,1);
 const cannedFishRecipeIndex=alignedRecipeRows.findIndex(r=>r[0]==='R006');
 if(cannedFishRecipeIndex<0)throw Error('Missing canned fish draft to replace');
 alignedRecipeRows[cannedFishRecipeIndex]=grocerySupplyRecipes[0];
-alignedRecipeRows.push(grocerySupplyRecipes[1]);
 alignedRecipeRows.push(researchRecipe);
 const recipeTable = writeTable(recipes, 1, recipeHeaders, alignedRecipeRows, 'RecipesTable', '#ED7D31');
 const recipeEnd = recipeTable.endRow;

@@ -27,14 +27,14 @@ const expected = [
 ];
 
 const expansionGoodIds = [
-  'Compost', 'Coal', 'Chemical', 'RecoveredArtifact', 'Fertilizer', 'FreshFish', 'JuvenileFish',
-  'FishOil', 'CannedFish', 'EmergencyRation', 'PackagedFood', 'Medicine', 'MedicalFood',
-  'Flux', 'HighGradeSteel', 'Alloy', 'Polymer', 'Lubricant', 'MachineCore',
+  'Coal', 'Chemical', 'RecoveredArtifact', 'Fertilizer', 'FreshFish', 'JuvenileFish',
+  'FishOil', 'CannedFish', 'Medicine', 
+  'HighGradeSteel', 'Alloy', 'Polymer', 'Lubricant', 'MachineCore',
   'PowerModule', 'FilterMedia', 'ConcentratedWaste', 'CrudeOil',
   'UraniumOre', 'Yellowcake', 'EnrichedFuel', 'PureWater', 'HydrogenGas',
   'OxygenGas', 'LiquidHydrogen', 'LiquidOxygen', 'Cryocoolant', 'RadioactiveWaste', 'RocketAirframe',
   'PropulsionPackage', 'GuidanceComputer', 'MissionPayload', 'RecoveredTelemetry', 'IndustrialLicense',
-  'SpecialistLicense', 'FlightLicense', 'Electronics', 'ReactorCoolantWater', 'RecoveredMinerals', 'ArchiveData',
+  'SpecialistLicense', 'FlightLicense', 'Electronics', 'ReactorCoolantWater', 'RecoveredMinerals', 
 ];
 const expansionBuildings = [
   ['Food', 'FertilizerWorks'], ['Food', 'FishHatchery'], ['Food', 'FisheryWorks'], ['Food', 'FoodPackagingWorks'],

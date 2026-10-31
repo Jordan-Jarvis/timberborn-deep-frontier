@@ -9,6 +9,7 @@ import {LATEGAME,applyLategame,studyPipePort} from './lategame_building_content.
 import {CACHE} from './narrative_content.mjs';
 import {lategameCost, buildingCost, scaledPower} from './lategame_costs.mjs';
 import {SCHOOL_WORKSHOP_SPECS} from './workforce_risk_content.mjs';
+import {backwardGoodIds, backwardRecipeIds} from './good_migrations.mjs';
 
 // Data-only expansion layer. Every template is cloned from a captured 1.1
 // Iron Teeth/Folktails blueprint so the importer gets the complete nested
@@ -44,7 +45,6 @@ const progression = await readJson(resolve(root, 'tools/frontier_progression.jso
 const constructionCosts = await readJson(resolve(root, 'tools/building_construction_costs.json'));
 
 const goodDefinitions = [
-  ['Compost', 'solid', 'Ingredients', 5195, 0.28, 0.45, 'compost'],
   ['Coal', 'solid', 'Materials', 5196, 0.12, 0.14, 'coal'],
   ['Chemical', 'liquid', 'Ingredients', 10055, 0.42, 0.52, 'chemical'],
   ['RecoveredArtifact', 'solid', 'Materials', 5197, 0.62, 0.48, 'artifact'],
@@ -53,12 +53,8 @@ const goodDefinitions = [
   ['JuvenileFish', 'solid', 'Ingredients', 5205, 0.20, 0.55, 'juvenile'],
   ['FishOil', 'liquid', 'Ingredients', 10040, 0.95, 0.74, 'oil'],
   ['CannedFish', 'food', 'Food', 11100, 0.32, 0.58, 'can'],
-  ['EmergencyRation', 'food', 'Food', 11110, 0.38, 0.58, 'ration'],
-  ['PackagedFood', 'food', 'Food', 11120, 0.28, 0.58, 'package'],
   ['Medicine', 'solid', 'Ingredients', 5210, 0.72, 0.84, 'medicine'],
-  ['MedicalFood', 'food', 'Food', 11130, 0.45, 0.58, 'medical'],
   ['SweetBerryCake', 'food', 'Food', 11140, 0.79, 0.36, 'cake'],
-  ['Flux', 'solid', 'Materials', 5090, 0.25, 0.27, 'flux'],
   ['HighGradeSteel', 'solid', 'Materials', 5100, 0.34, 0.38, 'steel'],
   ['Alloy', 'solid', 'Materials', 5110, 0.38, 0.44, 'alloy'],
   ['Polymer', 'solid', 'Materials', 5120, 0.18, 0.52, 'polymer'],
@@ -94,7 +90,6 @@ const goodDefinitions = [
   ['Electronics', 'solid', 'Materials', 5310, 0.15, 0.74, 'electronics'],
   ['ReactorCoolantWater', 'liquid', 'Ingredients', 10180, 0.18, 0.60, 'coolantwater'],
   ['RecoveredMinerals', 'solid', 'Materials', 5320, 0.55, 0.48, 'recovered'],
-  ['ArchiveData', 'solid', 'Materials', 5330, 0.18, 0.72, 'archive'],
 ];
 
 // Native tank-surface materials for liquids that must not read as golden
@@ -108,7 +103,7 @@ async function makeGood([id, kind, group, order, r, g, symbol]) {
   const value = clone(await readJson(basePath));
   const spec = value.GoodSpec;
   spec.Id = id;
-  spec.BackwardCompatibleIds = [];
+  spec.BackwardCompatibleIds = backwardGoodIds(id);
   spec.GoodGroupId = group;
   spec.GoodOrder = order;
   spec.Weight = kind === 'liquid' ? 2 : kind === 'food' ? 1 : 8;
@@ -148,15 +143,13 @@ async function makeGood([id, kind, group, order, r, g, symbol]) {
 
 const recipeDefinitions = [
   ['SweetBerryCake', 'SweetBerryCake', progression.restaurant.sweetBerryCake.cycleHours, progression.restaurant.sweetBerryCake.ingredients, [{Id:'SweetBerryCake',Amount:progression.restaurant.sweetBerryCake.products}], 'SweetBerryCake'],
-  // Dirt-free compost from wood and algae (Dirt needs the 2,000-science excavator).
-  ['Compost', 'Compost', 1.0, [{ Id: 'Log', Amount: 1 }, { Id: 'Algae', Amount: 1 }, { Id: 'Water', Amount: 1 }], [{ Id: 'Compost', Amount: 2 }], 'Compost'],
-  ['Fertilizer', 'Fertilizer', 1.0, [{ Id: 'Compost', Amount: 2 }, { Id: 'Water', Amount: 1 }, { Id: 'Algae', Amount: 1 }], [{ Id: 'Fertilizer', Amount: 2 }], 'Fertilizer'],
+  // One step from wood and algae (the retired Compost intermediate folded in,
+  // tools/content_policy.json migratedGoods): the two old recipes added together.
+  ['Fertilizer', 'Fertilizer', 2.0, [{ Id: 'Log', Amount: 1 }, { Id: 'Algae', Amount: 2 }, { Id: 'Water', Amount: 2 }], [{ Id: 'Fertilizer', Amount: 2 }], 'Fertilizer'],
   ['JuvenileFish', 'JuvenileFish', 2.0, [{ Id: 'FreshFish', Amount: 1 }, { Id: 'Algae', Amount: 1 }, { Id: 'Water', Amount: 2 }], [{ Id: 'JuvenileFish', Amount: 2 }], 'JuvenileFish'],
   ['FreshFish', 'FreshFish', 3.0, [{ Id: 'JuvenileFish', Amount: 1 }, { Id: 'Algae', Amount: 1 }, { Id: 'Water', Amount: 3 }], [{ Id: 'FreshFish', Amount: 3 }], 'FreshFish'],
   ['FishOil', 'FishOil', 1.0, [{ Id: 'FreshFish', Amount: 2 }], [{ Id: 'FishOil', Amount: 1 }], 'FishOil'],
   ['CannedFish', 'CannedFish', 2.0, [{ Id: 'FreshFish', Amount: 3 }, { Id: 'MetalBlock', Amount: 1 }, { Id: 'FishOil', Amount: 1 }], [{ Id: 'CannedFish', Amount: 3 }], 'CannedFish'],
-  ['EmergencyRation', 'EmergencyRation', 0.5, [{ Id: 'Corn', Amount: 1 }, { Id: 'Log', Amount: 1 }], [{ Id: 'EmergencyRation', Amount: 2 }], 'EmergencyRation'],
-  ['PackagedFood', 'PackagedFood', 1.0, [{ Id: 'CornRation', Amount: 1 }, { Id: 'CannedFish', Amount: 1 }, { Id: 'Plank', Amount: 1 }], [{ Id: 'PackagedFood', Amount: 2 }], 'PackagedFood'],
   // Greenhouse glasshouse crops: two fertilizer per 8 h cycle. Products are 8x
   // the first balance (user, 2026-10-27), about 12-16x an equal-area vanilla
   // field (42 ground cells), so the fertilizer chain pays off.
@@ -164,17 +157,15 @@ const recipeDefinitions = [
   ['GreenhouseKohlrabi', 'Kohlrabi', 8.0, [{ Id: 'Fertilizer', Amount: 2 }, { Id: 'Water', Amount: 4 }], [{ Id: 'Kohlrabi', Amount: 112 }], 'Kohlrabi'],
   ['GreenhouseCoffee', 'CoffeeBean', 8.0, [{ Id: 'Fertilizer', Amount: 2 }, { Id: 'Water', Amount: 3 }], [{ Id: 'CoffeeBean', Amount: 24 }], 'CoffeeBean'],
   ['Medicine', 'Medicine', 2.0, [{ Id: 'Mushroom', Amount: 2 }, { Id: 'Algae', Amount: 1 }, { Id: 'Water', Amount: 1 }], [{ Id: 'Medicine', Amount: 2 }], 'Medicine'],
-  ['MedicalFood', 'MedicalFood', 1.0, [{ Id: 'CannedFish', Amount: 1 }, { Id: 'CornRation', Amount: 1 }, { Id: 'Medicine', Amount: 1 }], [{ Id: 'MedicalFood', Amount: 2 }], 'MedicalFood'],
-  ['Flux', 'Flux', 1.0, [{ Id: 'ScrapMetal', Amount: 2 }, { Id: 'DeepOre', Amount: 1 }], [{ Id: 'Flux', Amount: 2 }], 'Flux'],
-  ['HighGradeSteel', 'HighGradeSteel', 4.0, [{ Id: 'MetalBlock', Amount: 4 }, { Id: 'Coal', Amount: 2 }, { Id: 'Flux', Amount: 1 }], [{ Id: 'HighGradeSteel', Amount: 2 }], 'HighGradeSteel'],
+  // Limestone is the flux (the retired Flux intermediate, tools/content_policy.json migratedGoods).
+  ['HighGradeSteel', 'HighGradeSteel', 4.0, [{ Id: 'MetalBlock', Amount: 4 }, { Id: 'Coal', Amount: 2 }, { Id: 'Limestone', Amount: 1 }], [{ Id: 'HighGradeSteel', Amount: 2 }], 'HighGradeSteel'],
   ['Alloy', 'Alloy', 1.5, [{ Id: 'HighGradeSteel', Amount: 2 }, { Id: 'DeepAlloy', Amount: 1 }], [{ Id: 'Alloy', Amount: 2 }], 'Alloy'],
   // Industrial chemical from native badwater and extract (ChemicalWorks).
   ['Chemical', 'Chemical', 2.0, [{ Id: 'Badwater', Amount: 4 }, { Id: 'Extract', Amount: 1 }], [{ Id: 'Chemical', Amount: 2 }], 'Chemical'],
   ['Polymer', 'Polymer', 3.0, [{ Id: 'CrudeOil', Amount: 3 }, { Id: 'Chemical', Amount: 1 }, { Id: 'Water', Amount: 2 }], [{ Id: 'Polymer', Amount: 3 }], 'Polymer'],
   ['MachineCore', 'MachineCore', 2.0, [{ Id: 'Alloy', Amount: 2 }, { Id: 'Polymer', Amount: 1 }, { Id: 'Gear', Amount: 2 }, { Id: 'DeepAlloy', Amount: 1 }], [{ Id: 'MachineCore', Amount: 1 }], 'MachineCore'],
-  // Second uses (docs/progression.md "Second uses"): solder flux in electronics,
-  // graphite electrodes (coal) in power modules.
-  ['Electronics', 'Electronics', 2.0, [{ Id: 'MachineCore', Amount: 1 }, { Id: 'MetalPart', Amount: 2 }, { Id: 'Polymer', Amount: 1 }, { Id: 'Flux', Amount: 1 }], [{ Id: 'Electronics', Amount: 1 }], 'Electronics'],
+  // Second use (docs/progression.md "Second uses"): graphite electrodes (coal) in power modules.
+  ['Electronics', 'Electronics', 2.0, [{ Id: 'MachineCore', Amount: 1 }, { Id: 'MetalPart', Amount: 2 }, { Id: 'Polymer', Amount: 1 }], [{ Id: 'Electronics', Amount: 1 }], 'Electronics'],
   ['PowerModule', 'PowerModule', 2.0, [{ Id: 'Electronics', Amount: 1 }, { Id: 'Alloy', Amount: 1 }, { Id: 'MetalPart', Amount: 2 }, { Id: 'Coal', Amount: 1 }], [{ Id: 'PowerModule', Amount: 1 }], 'PowerModule'],
   ['FilterMedia', 'FilterMedia', 1.0, [{ Id: 'Plank', Amount: 2 }, { Id: 'Algae', Amount: 1 }], [{ Id: 'FilterMedia', Amount: 2 }], 'FilterMedia'],
   ['PureWater', 'PureWater', 8.0, [{ Id: 'Water', Amount: 10 }, { Id: 'FilterMedia', Amount: 1 }], [{ Id: 'PureWater', Amount: 8 }, { Id: 'ConcentratedWaste', Amount: 1 }], 'PureWater'],
@@ -193,7 +184,10 @@ const recipeDefinitions = [
   ['Liquefaction', 'LiquidHydrogen/LiquidOxygen', 2.0, [{ Id: 'HydrogenGas', Amount: 4 }, { Id: 'OxygenGas', Amount: 4 }, { Id: 'Cryocoolant', Amount: 2 }], [{ Id: 'LiquidHydrogen', Amount: 2 }, { Id: 'LiquidOxygen', Amount: 2 }], 'LiquidHydrogen'],
   ['RocketAirframe', 'RocketAirframe', 1.0, [{ Id: 'HighGradeSteel', Amount: 12 }, { Id: 'Alloy', Amount: 8 }, { Id: 'TreatedPlank', Amount: 4 }, { Id: 'Polymer', Amount: 4 }], [{ Id: 'RocketAirframe', Amount: 1 }], 'RocketAirframe'],
   ['PropulsionPackage', 'PropulsionPackage', 1.0, [{ Id: 'Alloy', Amount: 10 }, { Id: 'MachineCore', Amount: 4 }, { Id: 'Polymer', Amount: 6 }, { Id: 'HighGradeSteel', Amount: 6 }], [{ Id: 'PropulsionPackage', Amount: 1 }], 'PropulsionPackage'],
-  ['GuidanceComputer', 'GuidanceComputer', 1.0, [{ Id: 'Electronics', Amount: 4 }, { Id: 'MachineCore', Amount: 2 }, { Id: 'ArchiveData', Amount: 1 }], [{ Id: 'GuidanceComputer', Amount: 1 }], 'GuidanceComputer'],
+  // Guidance computers and telemetry read the recovered artifacts' human data
+  // drives directly (the retired ArchiveData intermediate: 2 artifacts, grease
+  // and a metal part, folded into each recipe; tools/content_policy.json migratedGoods).
+  ['GuidanceComputer', 'GuidanceComputer', 1.0, [{ Id: 'Electronics', Amount: 4 }, { Id: 'MachineCore', Amount: 2 }, { Id: 'RecoveredArtifact', Amount: 2 }, { Id: 'Grease', Amount: 1 }], [{ Id: 'GuidanceComputer', Amount: 1 }], 'GuidanceComputer'],
   ['MissionPayload', 'MissionPayload', 1.0, [{ Id: 'GuidanceComputer', Amount: 1 }, { Id: 'RecoveredArtifact', Amount: 2 }, { Id: 'TreatedPlank', Amount: 2 }], [{ Id: 'MissionPayload', Amount: 1 }], 'MissionPayload'],
   // The licence token recipes are retired: specialists are trained beavers
   // (tools/workforce_risks.json). The licence goods stay for saves only.
@@ -208,11 +202,10 @@ const recipeDefinitions = [
   ['NuclearWaste', 'RadioactiveWaste', 2, [{ Id: 'ReactorCoolantWater', Amount: 6 }, { Id: 'HighGradeSteel', Amount: 1 }, { Id: 'Concrete', Amount: 2 }], [{ Id: 'RadioactiveWaste', Amount: 1 }, { Id: 'RadioactiveSludge', Amount: 1 }], 'RadioactiveWaste'],
   ['WasteRefining', 'RadioactiveSludge', 8.0, [{ Id: 'RadioactiveWaste', Amount: 4 }, { Id: 'Water', Amount: 8 }], [{ Id: 'RadioactiveSludge', Amount: 6 }], 'RadioactiveSludge'],
   ['DecontaminateWater', 'Water', 4.0, [{ Id: 'ContaminatedWater', Amount: 10 }, { Id: 'Chemical', Amount: 1 }], [{ Id: 'Water', Amount: 8 }, { Id: 'RadioactiveSludge', Amount: 1 }], 'ContaminatedWater'],
-  ['GuidanceTelemetry', 'RecoveredTelemetry', 1.0, [{ Id: 'GuidanceComputer', Amount: 1 }, { Id: 'ArchiveData', Amount: 1 }], [{ Id: 'RecoveredTelemetry', Amount: 1 }], 'RecoveredTelemetry'],
+  ['GuidanceTelemetry', 'RecoveredTelemetry', 1.0, [{ Id: 'GuidanceComputer', Amount: 1 }, { Id: 'RecoveredArtifact', Amount: 2 }, { Id: 'MetalPart', Amount: 1 }], [{ Id: 'RecoveredTelemetry', Amount: 1 }], 'RecoveredTelemetry'],
   // Archive Excavation (planned, frontier_progression.json plannedBuildings):
-  // charges and shoring open human ruins; grease and parts restore their data.
+  // charges and shoring open human ruins for artifacts and their sealed data drives.
   ['RecoveredArtifact', 'RecoveredArtifact', 6.0, [{ Id: 'Explosives', Amount: 1 }, { Id: 'TreatedPlank', Amount: 2 }], [{ Id: 'RecoveredArtifact', Amount: 1 }], 'RecoveredArtifact'],
-  ['ArchiveData', 'ArchiveData', 4.0, [{ Id: 'RecoveredArtifact', Amount: 2 }, { Id: 'Grease', Amount: 1 }, { Id: 'MetalPart', Amount: 1 }], [{ Id: 'ArchiveData', Amount: 1 }], 'ArchiveData'],
   // Second uses (docs/progression.md "Second uses"). Each consumer unlocks at
   // or after its inputs' producers (tools/audit_progression.mjs).
   // Water Treatment Plant: activated-carbon filters from coal.
@@ -225,7 +218,7 @@ const recipeDefinitions = [
   // Precision Machine Works: late-game parts for the native Iron Teeth bot
   // (vanilla BotChassis/BotLimb/BotHead goods), far faster than the Bot Part
   // Factory; the industrial assembly recipe is in tools/bot_upkeep_content.mjs.
-  ['ReinforcedBotChassis', 'BotChassis', 4.0, [{ Id: 'Alloy', Amount: 1 }, { Id: 'Polymer', Amount: 1 }, { Id: 'Flux', Amount: 1 }], [{ Id: 'BotChassis', Amount: 2 }], 'BotChassis'],
+  ['ReinforcedBotChassis', 'BotChassis', 4.0, [{ Id: 'Alloy', Amount: 1 }, { Id: 'Polymer', Amount: 1 }], [{ Id: 'BotChassis', Amount: 2 }], 'BotChassis'],
   ['ServoBotLimbs', 'BotLimb', 4.0, [{ Id: 'MachineCore', Amount: 1 }, { Id: 'Grease', Amount: 1 }, { Id: 'MetalPart', Amount: 2 }], [{ Id: 'BotLimb', Amount: 4 }], 'BotLimb'],
   ['BotCortex', 'BotHead', 4.0, [{ Id: 'Electronics', Amount: 1 }, { Id: 'Polymer', Amount: 1 }], [{ Id: 'BotHead', Amount: 2 }], 'BotHead'],
   // Uranium Processing Plant: spent casks reprocessed into fresh fuel. The
@@ -273,7 +266,7 @@ async function makeRecipe([id, outputLabel, hours, ingredients, products, iconId
   base.RecipeSpec = {
     ...base.RecipeSpec,
     Id: id,
-    BackwardCompatibleIds: [],
+    BackwardCompatibleIds: backwardRecipeIds(id),
     DisplayLocKey: Object.hasOwn(RECIPE_NAMES, id) ? `Recipe.${id}.DisplayName` : `Good.${String(outputLabel).split('/')[0]}.PluralDisplayName`,
     CycleDurationInHours: hours,
     Ingredients: ingredients,
@@ -289,10 +282,10 @@ async function makeRecipe([id, outputLabel, hours, ingredients, products, iconId
 }
 
 const buildingDefinitions = [
-  ['FertilizerWorks', 'Buildings/Food/FertilizerWorks', 'OilPress', 'Compost,Fertilizer', 'Food', 32, 80, 2, 350, 'Fertilizer works'],
+  ['FertilizerWorks', 'Buildings/Food/FertilizerWorks', 'OilPress', 'Fertilizer', 'Food', 32, 80, 2, 350, 'Fertilizer works'],
   ['FishHatchery', 'Buildings/Food/FishHatchery', 'HydroponicGarden', 'JuvenileFish', 'Food', 33, 55, 2, 600, 'Fish hatchery'],
   ['FisheryWorks', 'Buildings/Food/FisheryWorks', 'FoodFactory', 'FreshFish,FishOil', 'Food', 34, 80, 3, 900, 'Fishery works'],
-  ['FoodPackagingWorks', 'Buildings/Food/FoodPackagingWorks', 'FoodFactory', 'CannedFish,EmergencyRation,PackagedFood', 'Food', 35, 140, 3, 1400, 'Food packaging works'],
+  ['FoodPackagingWorks', 'Buildings/Food/FoodPackagingWorks', 'FoodFactory', 'CannedFish', 'Food', 35, 140, 3, 1400, 'Food packaging works'],
   ['PublicHealthLab', 'Buildings/Wellbeing/PublicHealthLab', 'OilPress', 'Medicine', 'Wellbeing', 36, 100, 3, 1000, 'Public health lab'],
   ['GroceryStore', 'Buildings/Food/GroceryStore', 'FoodFactory', '', 'Wellbeing', 37, progression.groceryStore.powerDemandHp, progression.groceryStore.workers, progression.groceryStore.scienceUnlock, 'Grocery store'],
   ['Restaurant', 'Buildings/Food/Restaurant', 'FoodFactory', progression.restaurant.kitchenRecipes.join(','), 'Wellbeing', 38, progression.restaurant.powerDemandHp, 4, 1000, 'Restaurant'],
@@ -330,9 +323,9 @@ function plannedRow(id, outputPath, template) {
 // generic production line; a description takes the generated power (hp).
 const hpText = (hp) => hp.toLocaleString('en-US');
 const BUILDING_TEXT = {
-  SteelMill: [(hp) => `An electric-arc melt shop and rolling mill. Makes flux from scrap metal and deep ore, high-grade steel from metal blocks, coal and flux, and alloy from high-grade steel and deep alloy. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires ${hpText(hp)} hp. Its two smokestacks pollute the air nearby.`,
+  SteelMill: [(hp) => `An electric-arc melt shop and rolling mill. Makes high-grade steel from metal blocks, coal and limestone flux, and alloy from high-grade steel and deep alloy. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires ${hpText(hp)} hp. Its two smokestacks pollute the air nearby.`,
     'Every reactor, rocket and machine core starts as a white-hot pour on this floor.'],
-  ArchiveExcavation: [(hp) => `Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts, then restores their data drives into archive data with grease and metal parts. A Human Record Cache within ${CACHE.spec.SurveyRadius} tiles can be surveyed for extra archive data. 4 workers, dangerous work. Requires ${hpText(hp)} hp. Its stove chimney pollutes the air nearby.`,
+  ArchiveExcavation: [(hp) => `Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts and their sealed data drives, which Mission Control reads into guidance computers and telemetry. A Human Record Cache within ${CACHE.spec.SurveyRadius} tiles can be surveyed for ${CACHE.spec.RewardAmount} extra artifacts. 4 workers, dangerous work. Requires ${hpText(hp)} hp. Its stove chimney pollutes the air nearby.`,
     'The humans buried their warnings in the strata. Dig carefully.'],
   CryogenicTankFarm: [(hp) => `Stores up to 2,000 units of one cryogenic fuel, liquid hydrogen or liquid oxygen, delivered and drawn by pipes at its two front sockets or by haulers. Needs ${hpText(hp)} hp to keep the fuel cold: without power the intake closes, and after 12 hours the stored fuel starts to vent.`,
     'The coldest place in the colony, kept that way at great expense.'],
@@ -460,7 +453,6 @@ async function makeBuilding(definition) {
   else if(id==='GroceryStore')await applyGroceryStore(value);
   else if(LATEGAME.has(id))await applyLategame(value,id);
   else setGeometry(value, id);
-  if(id==='FoodPackagingWorks')value.ManufactorySpec.ProductionRecipeIds.push('MedicalFood');
   if(id==='WaterTreatmentPlant')value.BuildingPipeTargetPortsSpec=coolantPorts(id);
   await writeJson(data(...outputPath.split('/'), `${id}.IronTeeth.blueprint.json`), value);
   return `${outputPath}/${id}.IronTeeth.blueprint`;
@@ -725,7 +717,7 @@ for (const definition of buildingDefinitions) {
     : id === 'Hospital'
     ? HOSPITAL_DESCRIPTION
     : id === 'GroceryStore'
-    ? `Stocks canned fish, packaged food, algae and corn rations, and fermented cassava and soybeans. Two clerks restock 100 of each food. With ${hpText(hp)} hp, an attending clerk and at least three stocked foods, nearby beavers gain up to +2 wellbeing within eight cells. Food remains available during power cuts and off-duty hours.`
+    ? `Stocks canned fish, eggplant, algae and corn rations, and fermented cassava and soybeans. Two clerks restock 100 of each food. With ${hpText(hp)} hp, an attending clerk and at least three stocked foods, nearby beavers gain up to +2 wellbeing within eight cells. Food remains available during power cuts and off-duty hours.`
     : Object.hasOwn(BUILDING_TEXT, id) ? BUILDING_TEXT[id][0](hp)
     : `Deep Frontier ${display.toLowerCase()} production building`));
   rows.push(csvRow(`Building.${id}.FlavorDescription`, id === 'Restaurant'

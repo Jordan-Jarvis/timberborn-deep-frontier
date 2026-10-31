@@ -1,7 +1,9 @@
 {
   "GoodSpec": {
     "Id": "Fertilizer",
-    "BackwardCompatibleIds": [],
+    "BackwardCompatibleIds": [
+      "Compost"
+    ],
     "ConsumptionEffects": [],
     "GoodType": "Box",
     "StockpileVisualization": "Box",

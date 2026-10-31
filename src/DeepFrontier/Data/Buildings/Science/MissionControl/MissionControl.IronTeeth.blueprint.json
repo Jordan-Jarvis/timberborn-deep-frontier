@@ -5,11 +5,11 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 250
+        "Amount": 230
       },
       {
         "Id": "MetalBlock",
-        "Amount": 125
+        "Amount": 115
       },
       {
         "Id": "DeepAlloy",
@@ -17,7 +17,11 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 3170
+        "Amount": 3220
+      },
+      {
+        "Id": "Brick",
+        "Amount": 340
       },
       {
         "Id": "Gear",
@@ -4901,6 +4905,415 @@
     "EdgeGroups": [],
     "UnblockedCoordinates": [],
     "BlockedEdges": []
+  },
+  "BuildingPipeTargetPortsSpec": {
+    "Ports": [
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Left, Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 6,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Right, Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 1,
+          "Z": 0
+        },
+        "Directions": "Left",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 1,
+          "Z": 0
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 2,
+          "Z": 0
+        },
+        "Directions": "Left",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 2,
+          "Z": 0
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 3,
+          "Z": 0
+        },
+        "Directions": "Left",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 3,
+          "Z": 0
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 4,
+          "Z": 0
+        },
+        "Directions": "Left",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 4,
+          "Z": 0
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 5,
+          "Z": 0
+        },
+        "Directions": "Left",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 5,
+          "Z": 0
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 6,
+          "Z": 0
+        },
+        "Directions": "Left, Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 6,
+          "Z": 0
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 6,
+          "Z": 0
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 6,
+          "Z": 0
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 6,
+          "Z": 0
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 6,
+          "Z": 0
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 6,
+          "Y": 6,
+          "Z": 0
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 6,
+          "Z": 0
+        },
+        "Directions": "Right, Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "Directions": "Left, Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 1,
+          "Z": 1
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 2,
+          "Z": 1
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 3,
+          "Z": 1
+        },
+        "Directions": "Left",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 3,
+          "Z": 1
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 5,
+          "Z": 1
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 6,
+          "Z": 1
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 6,
+          "Z": 1
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 6,
+          "Y": 6,
+          "Z": 1
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 6,
+          "Z": 1
+        },
+        "Directions": "Right, Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 1,
+          "Z": 2
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 6,
+          "Y": 1,
+          "Z": 2
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 1,
+          "Z": 2
+        },
+        "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 6,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 6,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 6,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 6,
+          "Y": 6,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
+          "Y": 6,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 6,
+          "Z": 3
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      }
+    ]
   },
   "StatusIconAnchorSpec": {
     "Height": 7.7

@@ -26,7 +26,7 @@ assert one('Progression','Gate ID','G022')['Science range']==p['scienceUnlock']
 assert one('Transport','System ID','T019')['Power demand (hp)']==p['powerDemandHp']
 assert one('Transport','System ID','T019')['Base capacity / min'] is None
 assert one('Transport','System ID','T019')['Dependency adapter']=='Belt intake, capacity, power and saved queue passed 73/75'
-for id,row_id in [('CannedFish','R006'),('PackagedFood','PackagedFood')]:
+for id,row_id in [('CannedFish','R006')]:
     r=json.loads((root/f'src/DeepFrontier/Data/Recipes/Recipe.{id}.blueprint.json').read_text())['RecipeSpec']
     entry=one('Recipes','Recipe ID',row_id)
     assert entry['Building']=='Food Packaging Works'

@@ -9,8 +9,7 @@ for(const [name,kind,path] of [
   ['FreshFish','good','Sprites/Goods/FreshFishIcon.png'],['JuvenileFish','good','Sprites/Goods/JuvenileFishIcon.png'],['FishOil','good','Sprites/Goods/FishOilIcon.png'],
   ['FisheryWorks','building','Buildings/Food/FisheryWorks/Icon.png'],['FishHatchery','building','Buildings/Food/FishHatchery/Icon.png'],
   ['GroceryStore','building','Buildings/Food/GroceryStore/Icon.png'],['Hospital','building','Buildings/Wellbeing/Hospital/Icon.png'],
-  ['CannedFish','good','Sprites/Goods/CannedFishIcon.png'],['PackagedFood','good','Sprites/Goods/PackagedFoodIcon.png'],
-  ['Medicine','good','Sprites/Goods/MedicineIcon.png'],['MedicalFood','good','Sprites/Goods/MedicalFoodIcon.png']
+  ['CannedFish','good','Sprites/Goods/CannedFishIcon.png'],['Medicine','good','Sprites/Goods/MedicineIcon.png']
 ]) {
   const svg=await readFile(new URL(`src/DeepFrontier/Art/Icons/${name}.svg`,root));
   const result=await writeNativeIcon(svg,kind,new URL(`src/DeepFrontier/Data/${path}`,root),name);

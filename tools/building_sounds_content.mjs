@@ -155,7 +155,10 @@ export async function loadBuildingSounds(root = defaultRoot) {
   return {config, errors};
 }
 
-// Every blueprint under Data/Buildings that plays a selection sound.
+// Every blueprint under Data/Buildings that plays a selection sound. A
+// same-path partial patch of a vanilla template (no TemplateSpec, e.g. the
+// Terrain Block's raised science in tools/vanilla_tool_overrides.mjs) keeps
+// the vanilla sounds.
 export async function soundTemplates(dataRoot) {
   const base = resolve(dataRoot, 'Buildings');
   const found = [];
@@ -165,7 +168,7 @@ export async function soundTemplates(dataRoot) {
       if (entry.isDirectory()) await walk(path);
       else if (entry.name.endsWith('.blueprint.json')) {
         const value = parse(await readFile(path, 'utf8'), path);
-        if (value.BuildingSpec || value.BasicSelectionSoundSpec)
+        if (value.TemplateSpec && (value.BuildingSpec || value.BasicSelectionSoundSpec))
           found.push(relative(dataRoot, path).split(sep).join('/').replace(/\.json$/, ''));
       }
     }

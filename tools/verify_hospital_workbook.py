@@ -23,20 +23,15 @@ for key,value in {
     'Science unlock':b['BuildingSpec']['ScienceCost'],'Status':p['requirementStatus']
 }.items():assert row[key]==value,(key,row[key],value)
 assert row['Recipe names']=='None; native per-hour supply consumption'
-r=read('src/DeepFrontier/Data/Recipes/Recipe.MedicalFood.blueprint.json')['RecipeSpec']
-recipe=one('Recipes','Recipe ID','R015')
-assert recipe['Building']=='Food Packaging Works'
-assert json.loads(recipe['Raw inputs'])==r['Ingredients']
-assert json.loads(recipe['Raw outputs'])==r['Products']
-assert recipe['Cycle hours']==r['CycleDurationInHours']
-assert one('Items','Item ID','I012')['Satisfies / effects']=='Hunger: +0.3'
+assert not [row for row in book['Recipes'].iter_rows(values_only=True) if row and row[0]=='R015'],'Retired Medical Food recipe still listed'
+assert one('Items','Item ID','I012')['Primary uses']=='None'
 assert one('Progression','Gate ID','G005')['Status']==p['requirementStatus']
 assert one('Transport','System ID','T018')['Power demand (hp)']==p['powerDemandHp']
 assert book['Overview']['C37'].value==p['requirementStatus']
 errors=[(s.title,c.coordinate,c.value) for s in book for cells in s for c in cells if c.data_type=='e']
 assert not errors,errors
 report={'hospital':'Exact package dimensions, hp, science, workers and status',
-        'medicalFood':'Exact separate packaging recipe and actual Hunger effect',
+        'medicalFood':'Retired 2026-10-30: no recipe row, item marked unused',
         'progressionTransportOverview':'Current hospital source values','formulaErrors':errors}
 (root/'outputs/hospital-workbook-verification.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

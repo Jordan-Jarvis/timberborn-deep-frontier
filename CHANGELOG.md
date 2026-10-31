@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+### Bricks: a new step between metal and concrete
+- **New good: Brick.** The Stone Crusher now grinds sandstone into vanilla dirt (brick earth, 3 sandstone into 6 dirt per hour), and the Cement Kiln fires 4 dirt and 1 water into 4 bricks every 2 hours, burning a log per batch.
+- **The Cement Kiln unlocks at 600 science** (was 900), with the crusher, so bricks get their own window before concrete (1,000). The kiln also got cheaper.
+- **Cement** is limestone and dirt again (was limestone and aggregate). **Concrete** takes sandstone directly: 3 sandstone, 2 cement and 4 water make 8 concrete every 2 hours, the same ratios as before.
+- **Buildings that show brick now cost bricks.** The orange brick plaster on buildings is priced as Brick, so 14 buildings from the Deep Drill to the Rocket Assembly Hangar take bricks instead of part of their other materials. The crusher and kiln never need bricks to build.
+- The kiln takes water for bricks, so it now accepts Timber Pipes on its flat walls.
+- The vanilla **Terrain Block** unlocks at 2,000 science with the Dirt Excavator (was 1,000), so cheap crusher dirt doesn't open it early. The Mud Bath is unchanged.
+- The built-in maps' starting stone still covers everything up to the quarries: 1,535 sandstone and 1,343 limestone of the 1,800 each.
+
+### Fewer goods (seven removed)
+- **Aggregate:** concrete uses sandstone, cement uses dirt and the concrete levee block takes 1 sandstone.
+- **Flux:** high-grade steel uses limestone as its flux. Electronics and reinforced bot chassis no longer need it.
+- **Compost:** the Fertilizer Works makes fertilizer in one step (1 log, 2 algae and 2 water make 2 fertilizer in 2 hours). The Greenhouse needs 30 fertilizer to build (was 30 compost).
+- **Medical Food, Emergency Ration and Packaged Food:** the Food Packaging Works makes canned fish. The Technical School's flight course uses canned fish, and the Grocery Store stocks eggplant rations in place of packaged food.
+- **Archive Data:** Mission Control reads the recovered artifacts' data drives directly: guidance computers take 2 artifacts and 1 grease, telemetry 2 artifacts and 1 metal part. Human Record Caches give 12 artifacts. Story chapters 5 and 6 ask for 20 and 40 recovered artifacts.
+- **Old saves:** stored goods load as their replacement (Aggregate as sandstone, Flux as limestone, Compost as fertilizer, the three foods as canned fish, Archive Data as recovered artifacts), and workshops set to a removed recipe switch to its replacement.
+
 ## 0.7.1 (2026-10-30)
 
 ### Fixes

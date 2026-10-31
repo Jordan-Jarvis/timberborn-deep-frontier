@@ -1,8 +1,10 @@
 {
   "RecipeSpec": {
-    "Id": "Aggregate",
-    "BackwardCompatibleIds": [],
-    "DisplayLocKey": "Recipe.Aggregate.DisplayName",
+    "Id": "BrickEarth",
+    "BackwardCompatibleIds": [
+      "Aggregate"
+    ],
+    "DisplayLocKey": "Recipe.BrickEarth.DisplayName",
     "CycleDurationInHours": 1,
     "Ingredients": [
       {
@@ -12,7 +14,7 @@
     ],
     "Products": [
       {
-        "Id": "Aggregate",
+        "Id": "Dirt",
         "Amount": 6
       }
     ],
@@ -21,6 +23,6 @@
     "CyclesFuelLasts": 0,
     "FuelCapacity": 0,
     "CyclesCapacity": 4,
-    "Icon": "Sprites/Goods/AggregateIcon"
+    "Icon": "Sprites/Goods/DirtIcon"
   }
 }

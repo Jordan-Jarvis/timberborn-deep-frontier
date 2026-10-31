@@ -68,7 +68,7 @@ The approved source remains unchanged at `Hospital-ReferenceStudy.blend`. Its ex
 
 Initial balance is 600 hp demand (11,000 hp since 2026-10-29: the late-game power rule, docs/progression.md) / zero output, six beaver staff, 25,000 science, and construction costing 120 planks, 80 concrete, 60 metal blocks, 30 gears and 20 treated planks. Each staffed, powered operating hour uses two Medicine, twelve Water and one Extract for both treatment and preventive care, with a 24-hour native inventory buffer. The ten-cell native rectangular neighborhood effect satisfies PublicHealthcare at 0.15/hour for at most +2 wellbeing; copies share the same capped need. These are provisional economy values, not measured balance.
 
-MedicalFood production belongs to Food Packaging Works. Native patient admissions and recovery, supplies, staffing, shaft connections, stairs, selective rails, door traversal, terrace construction and saved continuity passed the marked acceptance fixture in builds 63/66. Economic balance still requires colony playtesting.
+Medical Food was retired on 2026-10-30 (bricks pass; saves load it as Canned Fish); the Hospital's supply is Medicine. Native patient admissions and recovery, supplies, staffing, shaft connections, stairs, selective rails, door traversal, terrace construction and saved continuity passed the marked acceptance fixture in builds 63/66. Economic balance still requires colony playtesting.
 
 ## Grocery native inventory
 

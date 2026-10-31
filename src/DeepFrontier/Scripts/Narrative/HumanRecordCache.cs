@@ -17,7 +17,7 @@ namespace DeepFrontier.Scripts.Narrative {
 
   // Optional map evidence: a sealed human records box (map-editor object cloned
   // from the vanilla MediumRelic). The nearest finished workshop that runs the
-  // survey recipe (the Archive Excavation's ArchiveData) with an occupied cell
+  // survey recipe (the Archive Excavation's RecoveredArtifact) with an occupied cell
   // within SurveyRadius tiles horizontally and SurveyRadius layers vertically
   // surveys it while its workers work (native Workshop.CurrentlyWorking). After
   // SurveyHours of working time the cache gives RewardAmount RewardGoodId to

@@ -3,25 +3,25 @@
     "Id": "Concrete",
     "BackwardCompatibleIds": [],
     "DisplayLocKey": "Recipe.Concrete.DisplayName",
-    "CycleDurationInHours": 1,
+    "CycleDurationInHours": 2,
     "Ingredients": [
       {
-        "Id": "Aggregate",
+        "Id": "Sandstone",
         "Amount": 3
       },
       {
         "Id": "Cement",
-        "Amount": 1
+        "Amount": 2
       },
       {
         "Id": "Water",
-        "Amount": 2
+        "Amount": 4
       }
     ],
     "Products": [
       {
         "Id": "Concrete",
-        "Amount": 4
+        "Amount": 8
       }
     ],
     "ProducedSciencePoints": 0,

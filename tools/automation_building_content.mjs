@@ -135,8 +135,12 @@ export async function auditAutomationContent({root = defaultRoot, dataRoot = res
     const patch = generated.get(id);
     if (!patch) continue;
     const touched = nativeAutomationRole(patch, contract);
-    if (touched.sources.length || touched.terminals.length || touched.transmitters.length || patch.BuildingSpec)
-      errors.push(`${id}: vanilla patch changes automation-relevant specs (${[...touched.sources, ...touched.terminals, ...touched.transmitters, ...(patch.BuildingSpec ? ['BuildingSpec'] : [])].join(', ')})`);
+    // A patch may raise the science unlock (BuildingSpec.ScienceCost only, the
+    // Terrain Block in tools/vanilla_tool_overrides.mjs); any other
+    // BuildingSpec field counts as a change to the building.
+    const buildingFields = Object.keys(patch.BuildingSpec ?? {}).filter((key) => key !== 'ScienceCost');
+    if (touched.sources.length || touched.terminals.length || touched.transmitters.length || buildingFields.length)
+      errors.push(`${id}: vanilla patch changes automation-relevant specs (${[...touched.sources, ...touched.terminals, ...touched.transmitters, ...buildingFields.map((key) => `BuildingSpec.${key}`)].join(', ')})`);
     // A patch of a dependency's template names that installed dependency
     // folder as baseRoot; otherwise the base is vanilla. A native *.optional
     // patch merges into the file at the same path without ".optional".

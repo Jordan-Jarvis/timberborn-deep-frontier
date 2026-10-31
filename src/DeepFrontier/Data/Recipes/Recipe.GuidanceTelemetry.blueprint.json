@@ -10,7 +10,11 @@
         "Amount": 1
       },
       {
-        "Id": "ArchiveData",
+        "Id": "RecoveredArtifact",
+        "Amount": 2
+      },
+      {
+        "Id": "MetalPart",
         "Amount": 1
       }
     ],

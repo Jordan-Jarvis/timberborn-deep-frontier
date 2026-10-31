@@ -9,6 +9,7 @@ import {hydroBlueprint} from './hydro_building_content.mjs';
 import {researchContent} from './research_building_content.mjs';
 import { buildingCost, scaledPower } from './lategame_costs.mjs';
 import { writeIntegrations } from './optional_mod_content.mjs';
+import { backwardGoodIds, backwardRecipeIds } from './good_migrations.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dataRoot = resolve(root, 'src/DeepFrontier/Data');
@@ -79,11 +80,12 @@ function buildingGeometry(value, [width, depth, height], groundOnly, entranceX) 
 for (const good of catalog.goods) {
   const value = await read(vanillaRoot, 'Goods/Good.Paper.blueprint.json');
   const [r, g, b] = good.color;
-  Object.assign(value.GoodSpec, { Id: good.id, BackwardCompatibleIds: [], GoodGroupId: 'Materials',
+  Object.assign(value.GoodSpec, { Id: good.id, BackwardCompatibleIds: backwardGoodIds(good.id), GoodGroupId: 'Materials',
     GoodOrder: 5400 + catalog.goods.indexOf(good), Weight: good.weight, ForceImport: true,
     Icon: `Sprites/Goods/${good.id}Icon`, ContainerColor: { r, g, b, a: 1 },
     DisplayNameLocKey: `Good.${good.id}.DisplayName`, PluralDisplayNameLocKey: `Good.${good.id}.PluralDisplayName` });
-  rows.push([`Good.${good.id}.DisplayName`, good.name], [`Good.${good.id}.PluralDisplayName`, good.name]);
+  if (typeof good.plural !== 'string' || !good.plural) throw new Error(`construction_materials.json good ${good.id} needs its plural name`);
+  rows.push([`Good.${good.id}.DisplayName`, good.name], [`Good.${good.id}.PluralDisplayName`, good.plural]);
   await write(`Goods/Good.${good.id}.blueprint.json`, value);
 }
 // Register the authored goods before recipes/buildings validate their inputs.
@@ -91,7 +93,7 @@ await appendCollection('GoodCollections/GoodCollection.IronTeeth.blueprint.json'
   'GoodCollectionSpec', 'Goods#append', catalog.goods.map(g => g.id));
 for (const recipe of catalog.recipes) {
   const value = await read(vanillaRoot, 'Recipes/Recipe.MetalBlock.blueprint.json');
-  Object.assign(value.RecipeSpec, { Id: recipe.id, BackwardCompatibleIds: [], DisplayLocKey: `Recipe.${recipe.id}.DisplayName`,
+  Object.assign(value.RecipeSpec, { Id: recipe.id, BackwardCompatibleIds: backwardRecipeIds(recipe.id), DisplayLocKey: `Recipe.${recipe.id}.DisplayName`,
     CycleDurationInHours: recipe.hours, Ingredients: recipe.inputs.map(amount), Products: recipe.outputs.map(amount),
     ProducedSciencePoints: 0, Fuel: recipe.fuel, CyclesFuelLasts: recipe.fuelCycles, FuelCapacity: recipe.fuelCapacity,
     CyclesCapacity: 4, Icon: `Sprites/Goods/${recipe.outputs[0][0]}Icon` });

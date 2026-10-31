@@ -128,9 +128,9 @@
           {
             "Kind": "GoodProduced",
             "Targets": [
-              "ArchiveData"
+              "RecoveredArtifact"
             ],
-            "Amount": 10,
+            "Amount": 20,
             "LabelLocKey": "Narrative.Stage.TheArchiveWakes.Requirement.1",
             "VariantLocKeys": []
           }
@@ -152,9 +152,9 @@
           {
             "Kind": "GoodProduced",
             "Targets": [
-              "ArchiveData"
+              "RecoveredArtifact"
             ],
-            "Amount": 30,
+            "Amount": 40,
             "LabelLocKey": "Narrative.Stage.TheLastShift.Requirement.1",
             "VariantLocKeys": []
           },

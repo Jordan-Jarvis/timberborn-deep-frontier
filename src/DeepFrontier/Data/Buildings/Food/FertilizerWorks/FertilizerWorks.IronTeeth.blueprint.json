@@ -47,7 +47,6 @@
   },
   "ManufactorySpec": {
     "ProductionRecipeIds": [
-      "Compost",
       "Fertilizer"
     ]
   },

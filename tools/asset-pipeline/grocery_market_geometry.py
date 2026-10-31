@@ -69,7 +69,7 @@ HUSK = (.77, .99, .02, .22)                # BaseWood_Brown: plain tan sheet (co
 # Stock shown on the displays: the six foods of frontier_progression.json
 # groceryStore.stock. Each food has three cumulative fill stages, separate
 # objects GroceryStock.<Food>.<1|2|3>, switched by GroceryStockDisplay.cs.
-STOCK_FOODS = ('CannedFish', 'PackagedFood', 'AlgaeRation', 'CornRation', 'FermentedCassava', 'FermentedSoybean')
+STOCK_FOODS = ('CannedFish', 'EggplantRation', 'AlgaeRation', 'CornRation', 'FermentedCassava', 'FermentedSoybean')
 STOCK_STAGES = 3
 
 TILE_WALL = 1.5    # one MetalForged board sheet (8 boards) per 1.5 tiles
@@ -1128,7 +1128,8 @@ def tin(t, x, y, z, seed=0):
 
 
 def parcel(t, x, y, z, seed=0):
-    """PackagedFood: a cream paper parcel tied with crossed twine."""
+    """EggplantRation: a cream paper parcel tied with crossed twine (the stand
+    held the retired PackagedFood until the 2026-10-30 bricks pass)."""
     sx, sy, sz = .15, .11, .075
     first = len(t.faces)
     t.box((x, y, z + sz / 2), (sx, sy, sz), CREAM)
@@ -1182,7 +1183,7 @@ def heap(t, maker, x0, x1, y0, y1, z, layer, px, py, seed):
 
 
 # Item pitch and stacking height per heaped food.
-HEAP = {'CannedFish': (tin, .11, .11, .075), 'PackagedFood': (parcel, .18, .16, .097),
+HEAP = {'CannedFish': (tin, .11, .11, .075), 'EggplantRation': (parcel, .18, .16, .097),
         'AlgaeRation': (algae, .17, .14, .052), 'CornRation': (corn, .19, .14, .075)}
 
 
@@ -1243,13 +1244,13 @@ def front_goods(g):
     # Left arcade, three steps: canned fish (left), packaged food (right).
     riser(g, 1.30, 3.70, 1.04, 1.44, .28)
     riser(g, 1.30, 3.70, 1.46, 1.96, .56)
-    for food, x0, x1, seed in (('CannedFish', 1.34, 2.46, 10), ('PackagedFood', 2.54, 3.66, 30)):
+    for food, x0, x1, seed in (('CannedFish', 1.34, 2.46, 10), ('EggplantRation', 2.54, 3.66, 30)):
         stocked_tray(g, food, x0, x1, .60, .96, 0.0, seed)
         stocked_tray(g, food, x0, x1, 1.06, 1.42, .28, seed + 3)
         stocked_tray(g, food, x0, x1, 1.50, 1.86, .56, seed + 6)
     # Overflow out in the light in front of the posts at full stock.
     stocked_crate(g, 'CannedFish', 2.00, .20, 0, .40, .28, .22, 120, stages=(3,), brace=True)
-    stocked_crate(g, 'PackagedFood', 3.35, .20, 0, .44, .28, .22, 122, stages=(3,))
+    stocked_crate(g, 'EggplantRation', 3.35, .20, 0, .44, .28, .22, 122, stages=(3,))
     basket(g, 1.55, .20, 0, .11, 'apple', 121)
     basket(g, 2.90, .20, 0, .11, 'tomato', 123)
     # Awning stall (x 5..6): algae ration bundles stacked on the table.
