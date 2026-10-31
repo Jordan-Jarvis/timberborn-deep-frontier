@@ -24,6 +24,7 @@
 - **Brick plinths** on the Deep Drill pump house and the Deep Processor blower house. The Coal Power Plant's bright concrete ground storey, engine bed and chimney base are dark red brick.
 - **Brick ground storeys** on the Public Health Lab, Technical School (central block and clock-tower base) and Food Packaging Works, and brick walls on the Water Treatment Plant's chemical house. The courses stop around every door, window and lamp.
 - **Concrete Mixer** footings, piers and pedestals and the **quarries'** plinth walls are brick instead of grey stone. The quarries now cost bricks to build.
+- **Restaurant and Fishery Works:** the pale concrete footings under their deck posts are brick.
 - **Limestone outcrops and seams** are grey weathered rock with pale broken faces, instead of white blocks that looked like gems.
 
 ## 0.7.1 (2026-10-30)

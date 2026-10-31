@@ -1,0 +1,28 @@
+{
+  "scope": "Before | after sheets (render_budget_views.py, matched cameras) of the 2026-10-30 bricks pass: the cast concrete footings under the Restaurant and Fishery Works deck posts became brick (brick_courses.py). Blender renders, not game screenshots.",
+  "renders": [
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "2f73cd48e0f8707dc963e2a28d527ea31b5b8a38953f7343f573b3696c7da59b",
+      "images": [
+        "Restaurant-before-after.png"
+      ],
+      "imageSha256": {
+        "Restaurant-before-after.png": "4a4f2c1169508df169d169e3396e28cb170ad068dd25a29dedc66b5c2f6e7a42"
+      }
+    },
+    {
+      "model": "FisheryWorks",
+      "source": "src\\DeepFrontier\\Art\\Source\\FisheryWorks-ReferenceStudy.blend",
+      "sourceSha256": "7399ad222767772a440309e42d07dce901697c5ac1669d081b33ed30c9ac2edd",
+      "images": [
+        "FisheryWorks-before-after.png"
+      ],
+      "imageSha256": {
+        "FisheryWorks-before-after.png": "65192cef88fa1fd20d05bd9c4e6749253d39a42c487d6024ef6a57eaa5ff4fe1"
+      }
+    }
+  ],
+  "extraImages": []
+}

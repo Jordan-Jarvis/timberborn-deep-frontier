@@ -384,7 +384,7 @@
   },
   "FisheryWorks": {
    "model": "Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.Model",
-   "sha256": "8971800e36a9ba0131e1674e62ff0515218ec485c01490405f579ec90203b0ee",
+   "sha256": "764467ba0210aa5eea864af8e8f1eca5b21b9ba91dc116c8ef01211dd65abdae",
    "areas": {
     "BaseMetal.IronTeeth": 81.4358,
     "BaseWood_Brown.Folktails": 15.866,
@@ -396,15 +396,15 @@
     "Details.IronTeeth#metal": 0.3366,
     "IrregularPlanks_DarkBrown.IronTeeth": 204.1166,
     "IrregularPlanks_MetalForged.IronTeeth": 22.6128,
-    "Plaster_Orange.IronTeeth": 21.2184,
-    "Plaster_White.IronTeeth": 13.9044,
+    "Plaster_Orange.IronTeeth": 27.6548,
+    "Plaster_White.IronTeeth": 13.2156,
     "RoofPlanks.IronTeeth": 94.7132,
     "Water": 1.1518,
     "WindowsAtlas.IronTeeth": 2.9734
    },
    "families": {
-    "brick": 21.2184,
-    "concrete": 13.9044,
+    "brick": 27.6548,
+    "concrete": 13.2156,
     "limestone": 0.0971,
     "metal": 104.3851,
     "sandstone": 0.3907,
@@ -929,7 +929,7 @@
   },
   "Restaurant": {
    "model": "Buildings/Food/Restaurant/Restaurant.IronTeeth.Model",
-   "sha256": "e4d91764e023b1f50124df5b829453dd648bbf0cad65b203217dd2e43d854beb",
+   "sha256": "075a52e607b74d99f8d586e772ec60d33aa3598dd46edabd410b8a4aecb7487e",
    "areas": {
     "BaseMetal.IronTeeth": 60.0989,
     "BaseWood_Brown.Folktails": 24.4256,
@@ -944,14 +944,14 @@
     "Details.IronTeeth#metal": 0.2277,
     "IrregularPlanks_DarkBrown.IronTeeth": 338.4278,
     "IrregularPlanks_MetalForged.IronTeeth": 0.7246,
-    "Plaster_Orange.IronTeeth": 21.504,
-    "Plaster_White.IronTeeth": 67.3846,
+    "Plaster_Orange.IronTeeth": 24.0672,
+    "Plaster_White.IronTeeth": 66.9286,
     "RoofPlanks.IronTeeth": 4.5466,
     "WindowsAtlas.IronTeeth": 5.0068
    },
    "families": {
-    "brick": 21.504,
-    "concrete": 67.3846,
+    "brick": 24.0672,
+    "concrete": 66.9286,
     "limestone": 2.8751,
     "metal": 61.0512,
     "sandstone": 0.3864,

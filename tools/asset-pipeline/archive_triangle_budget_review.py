@@ -99,6 +99,18 @@ REVIEWS = {
                  'compose_budget_sheet.py) of the 2026-10-30 roof pass: roof flues and the kitchen stack removed, '
                  'the Fish Hatchery without concrete. Blender renders, not game screenshots.',
     },
+    '2026-10-30-bricks': {
+        'folder': '2026-10-30-bricks-civic',
+        'sheets': 'outputs/bricks',
+        'models': {
+            'Restaurant': ('Restaurant', 'Restaurant-before-after.png'),
+            'FisheryWorks': ('FisheryWorks', 'FisheryWorks-before-after.png'),
+        },
+        'extra': (),
+        'scope': 'Before | after sheets (render_budget_views.py, matched cameras) of the 2026-10-30 bricks pass: '
+                 'the cast concrete footings under the Restaurant and Fishery Works deck posts became brick '
+                 '(brick_courses.py). Blender renders, not game screenshots.',
+    },
 }
 
 

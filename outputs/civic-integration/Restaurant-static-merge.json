@@ -60,11 +60,11 @@
     {
       "node": "StaticMerged",
       "parts": 50,
-      "triangles": 12362,
+      "triangles": 13080,
       "materials": {
         "Plaster_White.IronTeeth": 162,
         "IrregularPlanks_DarkBrown.IronTeeth": 3176,
-        "Plaster_Orange.IronTeeth": 72,
+        "Plaster_Orange.IronTeeth": 790,
         "BaseWood_DarkBrown.IronTeeth": 3838,
         "BaseMetal.IronTeeth": 3388,
         "RoofPlanks.IronTeeth": 108,

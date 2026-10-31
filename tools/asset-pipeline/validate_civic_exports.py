@@ -88,11 +88,12 @@ for opening in walkway['Openings']:
     for name in opening['HiddenNodes'] + opening['ShownNodes']:
         require(names[name] == 1, f'Missing adaptive railing node: {name}')
 
-# The 2026-10-30 roof-pass review (no roof vents; archive_triangle_budget_review.py
-# --review 2026-10-30-roofs) supersedes the 2026-10-30 compaction review, the
-# 2026-10-29 triangle-budget review (20k grand cap), the 2026-10-22 one and the
+# The 2026-10-30 bricks review (brick footings; archive_triangle_budget_review.py
+# --review 2026-10-30-bricks) supersedes the 2026-10-30 roof-pass review (no
+# roof vents), the 2026-10-30 compaction review, the 2026-10-29
+# triangle-budget review (20k grand cap), the 2026-10-22 one and the
 # 2026-10-21 exterior-repair capture.
-review = next(r for r in read_json('docs/art/reviews/2026-10-30-roofs-civic/review.json')['renders'] if r['model'] == ident)
+review = next(r for r in read_json('docs/art/reviews/2026-10-30-bricks-civic/review.json')['renders'] if r['model'] == ident)
 require(hashlib.sha256((ROOT / review['source']).read_bytes()).hexdigest() == review['sourceSha256'], 'Source scene changed after native style review capture')
 seat_clearances=[]
 rails=read_json('outputs/reference-studies/Restaurant-rail-manifest.json')

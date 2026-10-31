@@ -6,6 +6,7 @@ This creates geometry at those dimensions; it never fits or rounds an old mesh.
 import math
 from frontier_architecture import WOOD,PLANK,IRON,facade_panel
 from reference_materials import CIVIC_CONCRETE,CIVIC_ORANGE_PANEL,CIVIC_FORGED_PANEL
+from brick_courses import BRICK, brick_block
 
 
 def grid_bounds(bounds):
@@ -19,7 +20,8 @@ FASCIA_SIDES=('front','back','left','right')
 
 
 def platform(g,ident,bounds,origin,supports,floor_material=PLANK,*,slab_material=None,
-             support_style='timber',fascia=(),fascia_material=WOOD,beam_material=WOOD,beam_depth=.12,board_relief=.004):
+             support_style='timber',fascia=(),fascia_material=WOOD,beam_material=WOOD,beam_depth=.12,board_relief=.004,
+             pier_material=CIVIC_CONCRETE):
     """Slab carried by explicitly authored short posts, not a per-tile forest.
 
     Defaults reproduce the original timber module exactly. Opt-in options:
@@ -112,7 +114,10 @@ def platform(g,ident,bounds,origin,supports,floor_material=PLANK,*,slab_material
         for z in (bottom+.05,z1-.28):boxes.append({'center':[x,y,z],'size':[.18,.18,.07]})
         if bottom==0:
             # Cast pier: the only solid that owns the ground under the post.
-            art((x,y,.20),(.17,.17,.40),CIVIC_CONCRETE)
+            # pier_material=brick_courses.BRICK lays it as a brick pier on a
+            # lime mortar core (2026-10-30, bricks pass).
+            if pier_material==BRICK:brick_block(art,x-.085,x+.085,y-.085,y+.085,0,.40,CIVIC_CONCRETE,CIVIC_ORANGE_PANEL)
+            else:art((x,y,.20),(.17,.17,.40),pier_material)
             art((x,y,.42),(.18,.18,.04),IRON)
             shaft=.41
         else:

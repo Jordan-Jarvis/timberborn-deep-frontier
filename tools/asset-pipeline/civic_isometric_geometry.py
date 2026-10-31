@@ -10,6 +10,7 @@ import random
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, SAND, LIME, GREY, BRASS, deck, wall, facade_panel
 from reference_materials import GLOW, GLASS, LEAF, WATER, CLOTH, KILN_SOOT, KILN_STONE, KILN_STONE_LIGHT, KILN_WOOD_WEAR, KILN_WOOD_SPLIT
 from reference_materials import CIVIC_CONCRETE, CIVIC_ORANGE_PANEL, CIVIC_FORGED_PANEL
+from brick_courses import BRICK, brick_block
 # Triangle budget: the civic, hydro, research and waterside families use the
 # shell-only fastener and container kit (industrial_budget.py): 2 square nuts per
 # collar plate, no buried caps or plate backs, 8-sided pipes.
@@ -309,14 +310,18 @@ def civic_service_details(g,x0,y0,x1,y1):
 def timber_column(g,x,y,bottom,top,w=.19,*,steel_channels=True,collars=True,foot=CIVIC_CONCRETE):
     """Timber core with visible steel channels, concrete feet and anchor bolts.
     `foot`: the ground foot's material (timber for buildings that unlock before
-    concrete exists, user 2026-10-30)."""
+    concrete exists, user 2026-10-30), or brick_courses.BRICK for a brick
+    footing on a lime mortar core (2026-10-30, bricks pass)."""
     core_bottom=.53 if bottom==0 else bottom
     g.box((x,y,(core_bottom+top)/2),(w,w,top-core_bottom),WOOD)
     if steel_channels:
         for side in (-1,1):
             g.box((x+side*w*.44,y,(core_bottom+top)/2),(.035,w+.05,top-core_bottom-.04),IRON)
     if bottom==0:
-        g.box((x,y,.24),(w+.11,w+.11,.48),foot)
+        if foot==BRICK:
+            a=(w+.11)/2
+            brick_block(g.box,x-a,x+a,y-a,y+a,0,.48,CIVIC_CONCRETE,CIVIC_ORANGE_PANEL)
+        else:g.box((x,y,.24),(w+.11,w+.11,.48),foot)
         g.box((x,y,.50),(w+.13,w+.13,.06),IRON)
     if not collars:return
     # The collars stay 5 mm inside the column ends: a collar box face flush
@@ -542,15 +547,15 @@ def balcony(g,rails,ident,x0,y0,x1,y1,z=2,edges=('front','back','left','right'),
     for side in edges:rails.run(ident+side,*endpoints[side],z)
 
 
-def balcony_storey(g,rails,ident,x0,y0,x1,y1,z=1,edges=('front','back','left','right'),support_corners=((-1,-1),(-1,1),(1,-1),(1,1))):
+def balcony_storey(g,rails,ident,x0,y0,x1,y1,z=1,edges=('front','back','left','right'),support_corners=((-1,-1),(-1,1),(1,-1),(1,1)),foot=CIVIC_CONCRETE):
     """balcony for a one-layer storey (2026-10-30 compaction): its corner
     posts rise one layer from the floor below (balcony's are two), with the
-    knee braces lower to suit."""
+    knee braces lower to suit. `foot`: the ground posts' foot (timber_column)."""
     deck(g,x0,y0,x1,y1,z-.07)
     for sx,sy in support_corners:
         x=x0+.12 if sx==-1 else x1-.12
         y=y0+.12 if sy==-1 else y1-.12
-        timber_column(g,x,y,z-1,z-.16,.18)
+        timber_column(g,x,y,z-1,z-.16,.18,foot=foot)
         for dx in (-1,1):
             xx=x+dx*.32
             if x0<xx<x1:g.beam((x,y,z-.45),(xx,y,z-.14),.09,mat=WOOD)
@@ -965,7 +970,8 @@ def restaurant(g,parts):
         for side,edges in (('Front',('front','left')),('SideFront',()),('Side',()),('Rear',())):
             name=prefix+side
             grid_gallery(g,r,name,RESTAURANT_PLATFORMS[name],RESTAURANT_ORIGIN,edges,RESTAURANT_SUPPORTS[name],
-                         grid_rails=True,support_style='pier',fascia=RESTAURANT_FASCIA[name],board_relief=.010)
+                         grid_rails=True,support_style='pier',fascia=RESTAURANT_FASCIA[name],board_relief=.010,
+                         pier_material=BRICK)   # brick piers on the ground (2026-10-30, bricks pass; were cast)
         z=1 if prefix=='Dining' else 2
         r.run_grid(prefix+'Sideright',(7.70,1.95),(7.70,7.75),z,RESTAURANT_ORIGIN)
         r.run_grid(prefix+'Rearback',(1.90,7.75),(7.70,7.75),z,RESTAURANT_ORIGIN)
@@ -1163,15 +1169,16 @@ def fishery(g,parts):
     roof_bearing(g,1.30,1.72,3.0,3.55,.85,.98)
     gabled_roof(g,1.12,1.50,3.21,3.65,.98,1.43,311)
     glazing(g,4.05,2.985,2.55,.60,style='diamond')
-    balcony_storey(g,r,'FishLeft',.40,3.55,1.95,8.40,edges=('front',),support_corners=((-1,-1),(-1,1)))
+    # Brick footings under the deck posts (2026-10-30, bricks pass; were cast concrete).
+    balcony_storey(g,r,'FishLeft',.40,3.55,1.95,8.40,edges=('front',),support_corners=((-1,-1),(-1,1)),foot=BRICK)
     # The warehouse roof and left gallery are one continuous working deck.
     # Rail only their outside boundary; never fence across their shared floor.
     r.run('FishLeftSouth',(.40,3.55),(.40,4.00),1)
     r.run('FishLeftNorth',(.40,7.10),(.40,8.40),1)
-    balcony_storey(g,r,'FishRight',6.15,2.05,7.85,8.40,edges=('front','right'),support_corners=((1,-1),))
-    balcony_storey(g,r,'FishRear',1.95,7.20,6.15,8.40,edges=(),support_corners=((-1,1),(1,1)))
+    balcony_storey(g,r,'FishRight',6.15,2.05,7.85,8.40,edges=('front','right'),support_corners=((1,-1),),foot=BRICK)
+    balcony_storey(g,r,'FishRear',1.95,7.20,6.15,8.40,edges=(),support_corners=((-1,1),(1,1)),foot=BRICK)
     r.run('FishBack',(.40,8.40),(7.85,8.40),1)
-    balcony_storey(g,r,'FishFront',3.15,2.05,6.15,3.28,1,edges=('front',),support_corners=((-1,-1),(1,-1)))
+    balcony_storey(g,r,'FishFront',3.15,2.05,6.15,3.28,1,edges=('front',),support_corners=((-1,-1),(1,-1)),foot=BRICK)
     for x in (2.62,5.32):glazing(g,x,3.22,1.48,.50,style='factory')
     for y in (3.85,5.15,6.46):
         glazing(g,6.11,y,1.48,.50,'right','factory')
