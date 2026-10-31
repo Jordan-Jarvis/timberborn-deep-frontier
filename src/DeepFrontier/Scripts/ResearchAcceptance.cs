@@ -104,41 +104,70 @@ namespace DeepFrontier.Scripts {
       if(_reload) {
         _building=_entities.Entities.Single(e=>e.HasComponent<TemplateSpec>()&&
           e.GetComponent<TemplateSpec>().TemplateName=="MaterialsLaboratory.IronTeeth").GetComponent<BlockObject>();
+        var generatorCell=ShaftCell(2);
         _generator=_entities.Entities.Where(e=>e.HasComponent<BlockObject>()).Select(e=>e.GetComponent<BlockObject>())
-          .Single(b=>b.Coordinates==new Vector3Int(168,164,3)&&b.GetComponent<TemplateSpec>().TemplateName=="DevPowerGenerator").GetComponent<MechanicalNode>();
+          .Single(b=>b.Coordinates==generatorCell&&b.GetComponent<TemplateSpec>().TemplateName=="DevPowerGenerator").GetComponent<MechanicalNode>();
       } else {
         _building=Create("MaterialsLaboratory.IronTeeth",159,160,3);
         _building.GetComponent<PausableBuilding>().Pause();
-        // 2026-10-22: the 10x8 footprint drops the rear specimen-shelf row (local frame
-        // unchanged, so the origin, door, walkway, openings and shaft face stay). Freed ground,
-        // checked before the fixture builds beside it: front shelves, rear planters, barrel and
-        // crate inside the bounds (validate_freed_cells.py) and the former rear row y 8.
-        var size=_building.GetComponent<BlockObjectSpec>().Size;
-        Require(size==new Vector3Int(10,8,9),"Installed MaterialsLaboratory is "+size+"; this fixture's freed cells encode the 10x8x9 laboratory");
+        // The fixture follows the installed laboratory blueprint, not a size
+        // literal (10x8x5 since the 2026-10-30 compaction). Freed ground: every
+        // open ground cell inside the bounds, plus the rear row the 2026-10-22
+        // footprint pass dropped (the former footprint ended at local y 8).
+        var spec=_building.GetComponent<BlockObjectSpec>();
+        var size=spec.Size;
+        var openGround=spec.GetBlocks(new Placement(Vector3Int.zero,Orientation.Cw0,FlipMode.Unflipped))
+          .Where(b=>b.Coordinates.z==0&&!b.IsOccupied).Select(b=>b.Coordinates).ToArray();
+        Require(openGround.Length>0,"Installed MaterialsLaboratory has no open ground cell inside its bounds");
         FreedCellProbe.Require(_templates,_validator,_building,
-          FreedCellProbe.Rect(3,7,0,0).Concat(new[]{new Vector3Int(0,7,0),new Vector3Int(2,7,0),new Vector3Int(8,7,0),new Vector3Int(9,7,0)})
-            .Concat(FreedCellProbe.Outside(0,9,0,8,size)),"MaterialsLaboratory",Pass);
-        for(int y=157;y<=159;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(173,y,3)))Create("Path",173,y,3);
-        for(int x=158;x<173;x++)Create("Path",x,159,3);
-        for(int y=156;y<=158;y++)Create("Path",158,y,3);
-        Create("Path",159,156,3);
-        Create("PowerShaft.IronTeeth",167,164,3);
-        _generator=Create("DevPowerGenerator",168,164,3).GetComponent<MechanicalNode>();
-        Create("Stairs.IronTeeth",159,157,3,Orientation.Cw180);
-        Create("Platform.IronTeeth",159,158,3);Create("Stairs.IronTeeth",159,158,4,Orientation.Cw180);
-        Create("DoublePlatform.IronTeeth",159,159,3);Create("Path",159,159,5);
-        Create("DoublePlatform.IronTeeth",158,161,3);Create("Path",158,161,5);
-        Create("DoublePlatform.IronTeeth",161,160,5);
-        Create("Platform.IronTeeth",161,160,7);Create("Path",161,160,8);
+          openGround.Concat(FreedCellProbe.Outside(0,size.x-1,0,8,size)),"MaterialsLaboratory",Pass);
+        // The road runs along the entrance row to the district path at x 173.
+        var entrance=_building.PositionedEntrance.Coordinates;
+        var deck=_building.GetComponent<PlatformDeckSpec>();
+        var front=_building.TransformCoordinates(deck.Openings.Single(p=>p.Id=="Front0").Outside);
+        var left=_building.TransformCoordinates(deck.Openings.Single(p=>p.Id=="Left1").Outside);
+        Require(front.y==entrance.y&&front.z>entrance.z&&left.z==front.z,
+          "Laboratory terrace openings Front0 "+front+" and Left1 "+left+" do not meet one deck above the entrance row "+entrance);
+        for(int y=entrance.y-2;y<=entrance.y;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(173,y,entrance.z)))Create("Path",173,y,entrance.z);
+        for(int x=front.x-1;x<173;x++)Create("Path",x,entrance.y,entrance.z);
+        // A stair flight climbs north to the Front0 rail's outside cell: one
+        // stair per deck level, each on a platform stack, from a ground landing
+        // that a path column west of the flight joins to the road.
+        int levels=front.z-entrance.z;
+        int landing=front.y-levels-1;
+        for(int y=landing;y<front.y;y++)Create("Path",front.x-1,y,entrance.z);
+        Create("Path",front.x,landing,entrance.z);
+        for(int k=0;k<levels;k++) {
+          int y=front.y-levels+k;
+          for(int z=entrance.z;z<entrance.z+k;z++)Create("Platform.IronTeeth",front.x,y,z);
+          Create("Stairs.IronTeeth",front.x,y,entrance.z+k,Orientation.Cw180);
+        }
+        // Each open rail's outside cell: a platform stack to the deck and a path on it.
+        foreach(var pad in new[]{front,left}) {
+          for(int z=entrance.z;z<pad.z;z++)Create("Platform.IronTeeth",pad.x,pad.y,z);
+          Create("Path",pad.x,pad.y,pad.z);
+        }
+        // Stacked platforms on the terrace: Front1's deck cell (its rail stays closed).
+        var stack=_building.TransformCoordinates(deck.Openings.Single(p=>p.Id=="Front1").Inside);
+        Create("DoublePlatform.IronTeeth",stack.x,stack.y,stack.z);
+        Create("Platform.IronTeeth",stack.x,stack.y,stack.z+2);Create("Path",stack.x,stack.y,stack.z+3);
+        var shaft=ShaftCell(1);
+        Create("PowerShaft.IronTeeth",shaft.x,shaft.y,shaft.z);
+        var generator=ShaftCell(2);
+        _generator=Create("DevPowerGenerator",generator.x,generator.y,generator.z).GetComponent<MechanicalNode>();
         // The terrace is a player-path deck (2026-10-30): the two open rails need a path on their deck cell.
         foreach(var id in new[]{"Front0","Left1"}) {
-          var inside=_building.TransformCoordinates(_building.GetComponent<PlatformDeckSpec>().Openings.Single(p=>p.Id==id).Inside);
+          var inside=_building.TransformCoordinates(deck.Openings.Single(p=>p.Id==id).Inside);
           if(!_blocks.GetPathObjectAt(inside))Create("Path",inside.x,inside.y,inside.z);
         }
         var pathTemplate=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Path");
         var pathSpec=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint==pathTemplate.Blueprint);
-        Require(!_validator.BlocksValid(pathSpec,new Placement(new Vector3Int(163,163,3),Orientation.Cw0,FlipMode.Unflipped)),
-          "Enclosed laboratory accepts ground construction");
+        // An enclosed room: the footprint's centre ground cell, occupied in the blueprint.
+        var room=new Vector3Int(size.x/2,size.y/2,0);
+        Require(!openGround.Contains(room),"Laboratory centre ground cell "+room+" is open in the installed blueprint");
+        var roomCell=_building.TransformCoordinates(room);
+        Require(!_validator.BlocksValid(pathSpec,new Placement(roomCell,Orientation.Cw0,FlipMode.Unflipped)),
+          "Enclosed laboratory accepts ground construction at "+roomCell);
         Pass("native building, stairs, stacked terrace platforms, shaft placement and enclosed-room collision");
       }
       _machine=_building.GetComponent<Manufactory>();
@@ -160,6 +189,21 @@ namespace DeepFrontier.Scripts {
       _camera.MoveTargetTo(new Vector3(163,7,164));_camera.SetZoomLevel(19,0);
       _camera.HorizontalAngle=25;_camera.VerticalAngle=35;
       _normalHours=_hours.WorkedPartOfDay;_hours.WorkedPartOfDay=1;
+    }
+    // The shaft line leaves the first transput's first horizontal face: the
+    // shaft one step out, its generator two.
+    private Vector3Int ShaftCell(int steps) {
+      var transput=_building.GetComponent<TransputProviderSpec>().Transputs[0];
+      var step=transput.Directions.ToString().Split(',').Select(d=>d.Trim()).Select(d=>
+        d=="Left"?Vector3Int.left:d=="Right"?Vector3Int.right:d=="Down"?Vector3Int.down:d=="Up"?Vector3Int.up:Vector3Int.zero)
+        .FirstOrDefault(v=>v!=Vector3Int.zero);
+      Require(step!=Vector3Int.zero,"Laboratory transput "+transput.Coordinates+" has no horizontal face: "+transput.Directions);
+      return _building.TransformCoordinates(transput.Coordinates+step*steps);
+    }
+    // The ground door: the footprint cell the native Entrance stands in front of.
+    private Vector3Int DoorCell() {
+      var spec=_building.GetComponent<BlockObjectSpec>();var e=spec.Entrance.Coordinates;
+      return _building.TransformCoordinates(new Vector3Int(Mathf.Clamp(e.x,0,spec.Size.x-1),Mathf.Clamp(e.y,0,spec.Size.y-1),e.z));
     }
     private void Inputs(int batches) {
       _machine.Inventory.GiveExisting(new GoodAmount("Gear",4*batches));
@@ -185,7 +229,8 @@ namespace DeepFrontier.Scripts {
       Require(_building.GetComponent<MechanicalNodeSpec>().PowerInput==6500,"Laboratory demand differs from 6,500 hp");
       Require(_building.GetComponent<MechanicalNode>().Graph==_generator.Graph&&_generator.Graph.PowerSupply>0,"Laboratory shaft does not connect");
       Port("Front0",true);Port("Front1",false);Port("Left1",true);Port("Left2",false);
-      Require(_nav.AreConnectedInstant(new Vector3Int(160,159,3),new Vector3Int(160,160,3)),"Ground door lacks its road connection");
+      var entrance=_building.PositionedEntrance.Coordinates;
+      Require(_nav.AreConnectedInstant(entrance,DoorCell()),"Ground door lacks its road connection");
       Pass("12,000-science unlock, 6,500 hp connected graph and selective rail openings");
       if(_reload) {
         var record=JsonConvert.DeserializeObject<ResearchSaveRecord>(File.ReadAllText(RecordPath));
@@ -203,11 +248,13 @@ namespace DeepFrontier.Scripts {
       _building.GetComponent<PausableBuilding>().Resume();
       for(int i=0;i<4;i++)workers[i].EmployAt(_building.GetComponent<Workplace>());
       _walker=workers[4].GetComponent<ControllableCharacter>();_walker.ChangeAnimation("BeaverAdult_idle");
-      _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(new Vector3Int(160,159,3)));
-      // Terrace deck cells (layer 1 since the 2026-10-30 compaction), walked as grid cells.
-      foreach(var cell in new[]{new Vector3Int(1,2,1),new Vector3Int(0,1,1),new Vector3Int(2,0,1)})
+      _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(entrance));
+      // Terrace deck cells, walked as grid cells: the records-office doorstep,
+      // the Left1 rail cell and the Front2 corner.
+      var deck=_building.GetComponent<PlatformDeckSpec>();
+      foreach(var cell in new[]{deck.Doors[0].Exterior,deck.Openings.Single(p=>p.Id=="Left1").Inside,deck.Openings.Single(p=>p.Id=="Front2").Inside})
         _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(_building.TransformCoordinates(cell)));
-      _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(new Vector3Int(160,159,3)));
+      _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(entrance));
       NextWalk();Phase(_reload?7:1);_speed.ChangeSpeed(3);
     }
     private void NextWalk() {
