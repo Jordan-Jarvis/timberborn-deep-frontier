@@ -35,7 +35,6 @@ from frontier_architecture import Geometry
 from architectural_windows import window
 from lategame_space_parts import (bx, door_block, pilasters, gauge, tube, arc_bar, place, BURY, animate)
 from lategame_civic_parts import octagon_frustum, facet_window
-from lategame_roofdeck_parts import parapet_ring
 
 IDENT = 'MissionControl'
 FOOTPRINT = (8, 7)
@@ -68,8 +67,7 @@ def podium(g, parts):
     pilasters(g, 'Y', x0, y0, y1, .05, POD_TOP - .12, -1)
     pilasters(g, 'Y', x1, y0, y1, .05, POD_TOP - .12, 1)
     pilasters(g, 'X', y1, x0, x1, .05, POD_TOP - .12, 1)
-    # Terrace edge: a low cast parapet ring, open at the tower.
-    parapet_ring(g, x0, y0, x1, y1, POD_TOP, height=.24, open_sides=('right', 'back'))
+    # The terrace is an open platform edge to edge (no parapet: user, 2026-10-31).
     lamp(g, DOOR_X - .7, y0, .7, face='front')
     lamp(g, DOOR_X + .7, y0, .7, face='front')
 

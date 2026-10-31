@@ -33,7 +33,6 @@ from lategame_nuclear_parts import Facer, prism
 from industrial_facades import building_portal
 from lategame_mining_parts import lean_to
 from native_window_atlas import atlas_window
-from lategame_roofdeck_parts import parapet_ring
 import lategame_mining_parts as M
 
 IDENT = 'RadioactiveSludgeOutfall'

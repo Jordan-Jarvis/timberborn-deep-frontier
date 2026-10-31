@@ -34,7 +34,6 @@ from lategame_kit import (CONCRETE, ORANGE, FORGED, PAINTED, CYAN, GLOW, revolve
                           flat_roof, lamp, beacon, beacon_shutter)
 from lategame_nuclear_parts import (bx, Facer, trefoil, riveted_panel, frustum, obox, hazard_stripes)
 from industrial_facades import building_portal
-from lategame_roofdeck_parts import parapet_ring
 import lategame_mining_parts as M
 
 IDENT = 'RadioactiveWasteVault'

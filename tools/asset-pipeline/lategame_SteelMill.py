@@ -14,7 +14,9 @@ flue (now 7.6 high).
 HERO: an electric-arc melt shop whose three graphite electrodes rise on mast
 arms through a forged roof penthouse, with a fume duct over the flat roof
 into a riveted steel flue.
-ROOFS: flat parapet roofs on the control pulpit (beacon, concrete) and the
+ROOFS: flat open roofs, no parapets (user 2026-10-31: "I want it to be like an
+actual platform where roads can connect"), on the control pulpit (beacon on
+its back corner, concrete) and the
 melt shop (riveted steel plate); flat open canopies over the rolling line and
 the teeming bay (painted metal sheet). Roof variety, user 2026-10-30.
 
@@ -122,15 +124,15 @@ def ground(g):
 def pulpit(g, parts):
     """Steel-framed control pulpit on tiles 0..3 x 0..3. The core front at .12
     puts the native portal's face on the tile edge y = 0; its back stops short of
-    the melt shop's plinth. The flat roof stays
-    clear: the beacon stands on the parapet corner."""
+    the melt shop's plinth. The flat roof is an open platform; the beacon
+    stands on its back-right corner, in the roof cell's outer band."""
     M.hall(g, .05, 2.95, .12, 2.9, 1.84, plinth=.5, doors=[DOOR_X], pitch=1.0, infill=FORGED, frame=IRON,
            posts=('front', 'left', 'right'), style='factory',
            windows={'front': [(.45, 1.15, 'factory', .5), (2.55, 1.15, 'factory', .5)],
                     'left': [(.59, 1.15, 'factory', .5), (1.535, 1.15, 'factory', .5), (2.48, 1.15, 'factory', .5)],
                     'right': [(.59, 1.15, 'factory', .5), (1.535, 1.15, 'factory', .5), (2.48, 1.15, 'factory', .5)]})
-    zc = M.flat_roof(g, .05, 2.95, .12, 2.9, 1.84, overhang=.05, parapet=.25) + .25 + .05
-    pivot = K.beacon(g, 2.93, 2.88, zc)
+    zc = M.flat_roof(g, .05, 2.95, .12, 2.9, 1.84, overhang=.05, parapet=0)
+    pivot = K.beacon(g, 2.82, 2.82, zc)
     parts.append((K.beacon_shutter(*pivot, 'SteelMill.PulpitBeacon'), 'SPIN_Z', 2))
     K.lamp(g, DOOR_X - .72, .12, 1.15, face='front')
     K.lamp(g, DOOR_X + .72, .12, 1.15, face='front')
@@ -166,7 +168,7 @@ def melt_shop(g, parts):
     parts.append((glow, 'PULSE', .08))
     g.beam((wx1 + .16, ty, tz - .26), (wx1 + .7, ty, tz - .42), .14, .09, IRON)
     # Riveted steel plate roof deck (roof variety, user 2026-10-30).
-    M.flat_roof(g, wx0, wx1, wy0, wy1, EAVE, overhang=.1, parapet=.25, deck='forged')
+    M.flat_roof(g, wx0, wx1, wy0, wy1, EAVE, overhang=.1, parapet=0, deck='forged')
     penthouse(g, parts)
 
 

@@ -5,11 +5,11 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 230
+        "Amount": 235
       },
       {
         "Id": "MetalBlock",
-        "Amount": 115
+        "Amount": 105
       },
       {
         "Id": "DeepAlloy",
@@ -17,11 +17,11 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 3245
+        "Amount": 3240
       },
       {
         "Id": "Brick",
-        "Amount": 370
+        "Amount": 380
       },
       {
         "Id": "Gear",
@@ -506,7 +506,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -4166,7 +4166,7 @@
           "Y": 1,
           "Z": 1
         },
-        "Directions": "Left",
+        "Directions": "Left, Down",
         "ReverseRotation": false
       },
       {
@@ -4441,15 +4441,6 @@
       },
       {
         "Coordinates": {
-          "X": 1,
-          "Y": 1,
-          "Z": 1
-        },
-        "Directions": "Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
           "X": 4,
           "Y": 1,
           "Z": 1
@@ -4535,50 +4526,14 @@
           },
           {
             "Center": {
-              "X": 5.5,
-              "Y": 1.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 7
-            }
-          },
-          {
-            "Center": {
-              "X": 3,
+              "X": 4.5,
               "Y": 1.5,
               "Z": 2
             },
             "Size": {
-              "X": 4,
-              "Y": 1,
-              "Z": 2
-            }
-          },
-          {
-            "Center": {
               "X": 7,
-              "Y": 1.5,
-              "Z": 4
-            },
-            "Size": {
-              "X": 2,
               "Y": 1,
-              "Z": 6
-            }
-          },
-          {
-            "Center": {
-              "X": 4,
-              "Y": 1.5,
-              "Z": 5
-            },
-            "Size": {
-              "X": 2,
-              "Y": 1,
-              "Z": 4
+              "Z": 2
             }
           },
           {
@@ -4591,6 +4546,18 @@
               "X": 1,
               "Y": 1,
               "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 5.5,
+              "Y": 2.5,
+              "Z": 5
+            },
+            "Size": {
+              "X": 5,
+              "Y": 3,
+              "Z": 4
             }
           },
           {
@@ -4615,18 +4582,6 @@
               "X": 8,
               "Y": 2,
               "Z": 2
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 3,
-              "Z": 5
-            },
-            "Size": {
-              "X": 5,
-              "Y": 2,
-              "Z": 4
             }
           },
           {
@@ -4717,50 +4672,14 @@
               },
               {
                 "Center": {
-                  "X": 5.5,
-                  "Y": 1.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 7
-                }
-              },
-              {
-                "Center": {
-                  "X": 3,
+                  "X": 4.5,
                   "Y": 1.5,
                   "Z": 2
                 },
                 "Size": {
-                  "X": 4,
-                  "Y": 1,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
                   "X": 7,
-                  "Y": 1.5,
-                  "Z": 4
-                },
-                "Size": {
-                  "X": 2,
                   "Y": 1,
-                  "Z": 6
-                }
-              },
-              {
-                "Center": {
-                  "X": 4,
-                  "Y": 1.5,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 4
+                  "Z": 2
                 }
               },
               {
@@ -4773,6 +4692,18 @@
                   "X": 1,
                   "Y": 1,
                   "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 5.5,
+                  "Y": 2.5,
+                  "Z": 5
+                },
+                "Size": {
+                  "X": 5,
+                  "Y": 3,
+                  "Z": 4
                 }
               },
               {
@@ -4797,18 +4728,6 @@
                   "X": 8,
                   "Y": 2,
                   "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 3,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 5,
-                  "Y": 2,
-                  "Z": 4
                 }
               },
               {

@@ -5,23 +5,23 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 225
+        "Amount": 235
       },
       {
         "Id": "MetalBlock",
-        "Amount": 115
+        "Amount": 100
       },
       {
         "Id": "DeepAlloy",
-        "Amount": 25
+        "Amount": 20
       },
       {
         "Id": "Concrete",
-        "Amount": 2215
+        "Amount": 2195
       },
       {
         "Id": "Brick",
-        "Amount": 780
+        "Amount": 810
       },
       {
         "Id": "Gear",
@@ -586,7 +586,14 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -606,14 +613,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -879,14 +879,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -2342,6 +2342,15 @@
       },
       {
         "Coordinates": {
+          "X": 1,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Right",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 0,
           "Y": 5,
           "Z": 2
@@ -2424,6 +2433,24 @@
       {
         "Coordinates": {
           "X": 2,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 2,
           "Y": 5,
           "Z": 1
         },
@@ -2479,12 +2506,12 @@
           {
             "Center": {
               "X": 5.5,
-              "Y": 1,
+              "Y": 0.5,
               "Z": 3
             },
             "Size": {
               "X": 3,
-              "Y": 2,
+              "Y": 1,
               "Z": 6
             }
           },
@@ -2502,6 +2529,30 @@
           },
           {
             "Center": {
+              "X": 5.5,
+              "Y": 1.5,
+              "Z": 2
+            },
+            "Size": {
+              "X": 3,
+              "Y": 1,
+              "Z": 4
+            }
+          },
+          {
+            "Center": {
+              "X": 6.5,
+              "Y": 1.5,
+              "Z": 5.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
               "X": 3.5,
               "Y": 2.5,
               "Z": 2.5
@@ -2514,49 +2565,25 @@
           },
           {
             "Center": {
-              "X": 3,
-              "Y": 2.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 6,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
               "X": 1,
-              "Y": 2.5,
-              "Z": 5.5
+              "Y": 3,
+              "Z": 5
             },
             "Size": {
               "X": 2,
-              "Y": 1,
-              "Z": 1
+              "Y": 2,
+              "Z": 2
             }
           },
           {
             "Center": {
               "X": 5,
-              "Y": 2.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 2,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 1,
-              "Y": 3.5,
+              "Y": 3,
               "Z": 5
             },
             "Size": {
               "X": 2,
-              "Y": 1,
+              "Y": 4,
               "Z": 2
             }
           },
@@ -2570,18 +2597,6 @@
               "X": 3,
               "Y": 2,
               "Z": 3
-            }
-          },
-          {
-            "Center": {
-              "X": 5,
-              "Y": 4,
-              "Z": 5
-            },
-            "Size": {
-              "X": 2,
-              "Y": 2,
-              "Z": 2
             }
           },
           {
@@ -2613,12 +2628,12 @@
               {
                 "Center": {
                   "X": 5.5,
-                  "Y": 1,
+                  "Y": 0.5,
                   "Z": 3
                 },
                 "Size": {
                   "X": 3,
-                  "Y": 2,
+                  "Y": 1,
                   "Z": 6
                 }
               },
@@ -2636,6 +2651,30 @@
               },
               {
                 "Center": {
+                  "X": 5.5,
+                  "Y": 1.5,
+                  "Z": 2
+                },
+                "Size": {
+                  "X": 3,
+                  "Y": 1,
+                  "Z": 4
+                }
+              },
+              {
+                "Center": {
+                  "X": 6.5,
+                  "Y": 1.5,
+                  "Z": 5.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
                   "X": 3.5,
                   "Y": 2.5,
                   "Z": 2.5
@@ -2648,49 +2687,25 @@
               },
               {
                 "Center": {
-                  "X": 3,
-                  "Y": 2.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 6,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
                   "X": 1,
-                  "Y": 2.5,
-                  "Z": 5.5
+                  "Y": 3,
+                  "Z": 5
                 },
                 "Size": {
                   "X": 2,
-                  "Y": 1,
-                  "Z": 1
+                  "Y": 2,
+                  "Z": 2
                 }
               },
               {
                 "Center": {
                   "X": 5,
-                  "Y": 2.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1,
-                  "Y": 3.5,
+                  "Y": 3,
                   "Z": 5
                 },
                 "Size": {
                   "X": 2,
-                  "Y": 1,
+                  "Y": 4,
                   "Z": 2
                 }
               },
@@ -2704,18 +2719,6 @@
                   "X": 3,
                   "Y": 2,
                   "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 5,
-                  "Y": 4,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 2,
-                  "Z": 2
                 }
               },
               {

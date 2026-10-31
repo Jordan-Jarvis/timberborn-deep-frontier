@@ -18,7 +18,8 @@ rusted human cogwheel half-buried in spoil beside a broken fluted column,
 laid out with an archaeologist's string grid and worked by a riveted steel
 tripod derrick with a hoist bucket.
 ROOFS (roof variety, user 2026-10-30): a gabled roof of native barracks roof
-planks on the archive hall; flat parapet roofs on the archive stack tower
+planks on the archive hall; flat open roofs (no parapets: user 2026-10-31,
+"I want it to be like an actual platform") on the archive stack tower
 (concrete) and the catalogue wing (timber plank deck); a flat roof over the
 open sieving shed. No roof vents: the stove flue rises up the tower's corner.
 
@@ -51,7 +52,6 @@ import lategame_civic_parts as C
 from lategame_civic_parts import blk
 from lategame_mining_parts import ore_heap
 import lategame_mining_parts as MP
-from lategame_roofdeck_parts import parapet_ring
 from native_window_atlas import atlas_window
 import native_building_assets as N
 
@@ -111,17 +111,16 @@ def bays(a, b, pitch):
     return max(1, round((b - a) / pitch))
 
 
-def flat_roof(g, x0, y0, x1, y1, z, open_sides=(), deck='concrete'):
+def flat_roof(g, x0, y0, x1, y1, z, deck='concrete'):
     """Roof slab on the block's top, concrete or a timber plank deck (roof
-    variety, user 2026-10-30), and a ring parapet (no lid), so the roof stays
-    a usable deck (lategame_roofdeck_parts)."""
+    variety, user 2026-10-30): an open platform edge to edge, no parapet
+    (user, 2026-10-31), so paths join across abutting roofs."""
     if deck == 'concrete':
         blk(g, x0 - .05, y0 - .05, z, x1 + .05, y1 + .05, z + ROOF_T, CONCRETE)
     elif deck == 'timber':
         MP.plank_deck(g, x0 - .05, x1 + .05, y0 - .05, y1 + .05, z + ROOF_T, t=ROOF_T, seed=37)
     else:
         raise ValueError(f'Unknown archive roof deck {deck!r}')
-    parapet_ring(g, x0 - .05, y0 - .05, x1 + .05, y1 + .05, z + ROOF_T, open_sides=open_sides)
 
 
 # ---------------------------------------------------------------- archive hall
@@ -191,7 +190,7 @@ def stacks(g, parts):
         atlas_window(g, wx1, y, 1.17, .5, 'right', 'grid9')
     for x in gaps(wx0, wx1, bays(wx0, wx1, .95), .11, .17):
         atlas_window(g, x, ty1, 1.17, .5, 'back', 'grid9')
-    flat_roof(g, wx0 + .05, wy0, wx1, ty1, WING_EAVE, open_sides=('left',), deck='timber')
+    flat_roof(g, wx0 + .05, wy0, wx1, ty1, WING_EAVE, deck='timber')
 
 
 # ---------------------------------------------------------------- dig
@@ -235,8 +234,6 @@ def pit(g, parts):
     blk(g, 4.0, wy0, LEDGE + .06, wx1, wy0 + .02, RIM - .08, GREYPLANK)
     blk(g, 4.0, wy1 - .02, LEDGE + .06, wx1, wy1, RIM - .08, GREYPLANK)
     blk(g, wx1 - .02, wy0 + .02, LEDGE + .06, wx1, wy1 - .02, RIM - .08, GREYPLANK)
-    # Safety rail on the right rim.
-    C.rail(g, (6.85, SHED_Y1 + .5), (6.85, 5.15), RIM)
     relics(g)
     string_grid(g)
 

@@ -15,7 +15,8 @@ HERO: a riveted heat-recovery boiler tower with twin exhaust stacks behind a
       flat-roofed turbine hall whose roof carries two spinning fin-fan
       coolers, beside the banded crude-oil day tanks.
 ROOF: pitched corrugated-metal gable (ridge along the hall) on the turbine
-      hall; flat riveted-steel roof on the boiler tower (roof-variety pass:
+      hall; flat riveted-steel roof on the boiler tower, open edge to edge
+      (no parapet; the bund has no kerb: user 2026-10-31) (roof-variety pass:
       the fin-fan cooler unit stands on the tank bund, not on a roof).
 
 Plan (5 x 4 tiles):
@@ -40,7 +41,7 @@ import lategame_industry_parts as P
 import lategame_mining_parts as M
 from lategame_mining_parts import bx
 from lategame_sheet_roofs import sheet_gable
-from lategame_roofdeck_parts import deck_slab, parapet_ring
+from lategame_roofdeck_parts import deck_slab
 
 IDENT = 'OilPowerPlant'
 FOOTPRINT = (5, 4)
@@ -76,11 +77,7 @@ def turbine_hall(g, parts):
 
 def bund(g, parts):
     x0, x1, y0, y1 = BUND
-    bx(g, x0, x1, y0, y1, 0, STOREY, CONCRETE)
-    # Low kerb on the outer edges (the hall and tower close the other two).
-    k = .12
-    bx(g, x0, x0 + k, y0, y1 - k, STOREY, STOREY + .25, CONCRETE)
-    bx(g, x0, x1, y1 - k, y1, STOREY, STOREY + .25, CONCRETE)
+    bx(g, x0, x1, y0, y1, 0, STOREY, CONCRETE)   # open edge to edge, no kerb (user, 2026-10-31)
     for x, y in TANKS:
         K.tank(g, x, y, STOREY, TANK_R, 1.55, mat=PAINTED, bands=3, roof='dome', segments=16)
     # Fin-fan cooler unit on the bund: a louvred housing with two fans on top.
@@ -120,9 +117,8 @@ def boiler_tower(g):
     for z in (2.0,):
         bx(g, x0 - .025, x1 + .025, y0 + .21, y1 + .025, z - .05, z + .05, IRON)
     P.louvre(g, 'Y', x0, y0 + .4, y1 - .4, 1.25, 1.85, -1)
-    # Riveted steel plate roof deck (separate plates) inside an open parapet ring.
+    # Riveted steel plate roof deck (separate plates), open edge to edge.
     deck_slab(g, x0 - .04, y0 + .01, x1 + .04, y1 + .04, TOWER_ROOF + .16, 'forged')
-    parapet_ring(g, x0 - .04, y0 + .01, x1 + .04, y1 + .04, TOWER_ROOF + .16, height=.25)
     # The twin exhaust stacks rise from the tower's base through its roof.
     for x in (3.55, 4.45):
         bx(g, x - .22, x + .22, 2.88, 3.32, STOREY, TOWER_ROOF + .2, IRON)

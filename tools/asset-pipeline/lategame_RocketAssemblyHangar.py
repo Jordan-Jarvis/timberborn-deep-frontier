@@ -16,8 +16,8 @@ hangar's defining silhouette.
 Hero: a barrel-vaulted assembly hall whose riveted sliding doors stand partly
 open on a dark bay holding a rocket stage.
 Roof types: teal barrel vault with steel ribs (the defining silhouette);
-flat timber-decked roof with a parapet ring over the one-storey workshop (a
-usable roof deck); no roof vents or roof stack (roof-variety pass): the forge
+flat timber-decked roof, open edge to edge (no parapet: user 2026-10-31), over
+the one-storey workshop (a usable roof deck); no roof vents or roof stack (roof-variety pass): the forge
 flue rises from the ground in the workshop's left wall.
 
 Animated (names unchanged): right door leaf (slide X), two vault beacons
@@ -29,7 +29,6 @@ from lategame_kit import *
 from frontier_architecture import Geometry
 from architectural_windows import window
 from lategame_space_parts import (bx, door_block, pilasters, gauge, rail, BURY, animate)
-from lategame_roofdeck_parts import parapet_ring
 from lategame_sheet_roofs import plate_deck
 
 IDENT = 'RocketAssemblyHangar'
@@ -180,8 +179,6 @@ def workshop(g, parts):
     lamp(g, .7, y0, 1.0, face='front')
     bx(g, x0 - .05, y0 - .05, LEAN_TOP, x1, y1 + .05, LEAN_TOP + .12, CONCRETE)
     plate_deck(g, x0 - .05, y0 - .05, x1, y1 + .05, LEAN_TOP + .16, mat=PLANK, t=.04)   # timber decking
-    roof = LEAN_TOP + .16
-    parapet_ring(g, x0 - .05, y0 - .05, x1, y1 + .05, roof, height=.24, open_sides=('right',))
     # The forge flue rises from the ground in the workshop's left wall (no roof
     # stack), within the edge band so the roof deck beside it stays platformable.
     stack(g, x0 + .14, 6.3, -BURY, 3.5 + BURY, emits='smoke', r=.14, taper=.85, bands=3)

@@ -333,14 +333,14 @@
     "RadioactiveWasteRefinery": [["HighGradeSteel",205],["Alloy",165],["MetalBlock",165],["Concrete",7900],["Brick",1605],["MachineCore",95]],
     "ElectrolysisPlant": [["TreatedPlank",165],["MetalBlock",350],["DeepAlloy",70],["Concrete",1900],["Brick",370],["Gear",270]],
     "CryogenicLiquefactionPlant": [["MetalBlock",505],["DeepAlloy",105],["Concrete",2035],["Gear",255]],
-    "RocketAssemblyHangar": [["TreatedPlank",470],["HighGradeSteel",410],["Alloy",330],["MetalBlock",330],["Concrete",2670],["Brick",2525],["MachineCore",130]],
-    "MissionControl": [["TreatedPlank",230],["MetalBlock",115],["DeepAlloy",25],["Concrete",3245],["Brick",370],["Gear",295]],
+    "RocketAssemblyHangar": [["TreatedPlank",475],["HighGradeSteel",415],["Alloy",330],["MetalBlock",330],["Concrete",2590],["Brick",2550],["MachineCore",130]],
+    "MissionControl": [["TreatedPlank",235],["MetalBlock",105],["DeepAlloy",25],["Concrete",3240],["Brick",380],["Gear",295]],
     "LaunchPad": [["TreatedPlank",265],["HighGradeSteel",260],["Alloy",210],["MetalBlock",210],["Concrete",9525],["MachineCore",115]],
     "NuclearReactor": [["HighGradeSteel",1025],["Alloy",740],["MetalBlock",740],["Concrete",34145],["MachineCore",405],["EnrichedFuel",20]],
-    "SteelMill": [["MetalBlock",485],["Concrete",1025],["Gear",255]],
-    "ArchiveExcavation": [["TreatedPlank",225],["MetalBlock",115],["DeepAlloy",25],["Concrete",2215],["Brick",780],["Gear",265]],
+    "SteelMill": [["MetalBlock",495],["Concrete",995],["Gear",255]],
+    "ArchiveExcavation": [["TreatedPlank",235],["MetalBlock",100],["DeepAlloy",20],["Concrete",2195],["Brick",810],["Gear",265]],
     "CryogenicTankFarm": [["TreatedPlank",100],["MetalBlock",295],["DeepAlloy",60],["Concrete",2355],["Gear",225]],
     "CoalPowerPlant": [["MetalBlock",120],["Concrete",245],["Brick",120],["Gear",75]],
-    "OilPowerPlant": [["MetalBlock",225],["DeepAlloy",45],["Concrete",680],["Gear",100],["MachineCore",4]]
+    "OilPowerPlant": [["MetalBlock",230],["DeepAlloy",50],["Concrete",650],["Gear",100],["MachineCore",4]]
   }
 }

@@ -40,9 +40,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9034,
-   "vertices": 17546,
-   "construction": 9034,
+   "finished": 8776,
+   "vertices": 17030,
+   "construction": 8776,
    "file": "outputs/lategame-integration/Data/Buildings/Science/ArchiveExcavation/ArchiveExcavation.IronTeeth.Model.timbermesh"
   },
   "Bathhouse": {
@@ -445,9 +445,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8133,
-   "vertices": 15857,
-   "construction": 8133,
+   "finished": 8085,
+   "vertices": 15761,
+   "construction": 8085,
    "file": "outputs/lategame-integration/Data/Buildings/Science/MissionControl/MissionControl.IronTeeth.Model.timbermesh"
   },
   "NuclearReactor": {
@@ -472,9 +472,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 3516,
-   "vertices": 6530,
-   "construction": 3516,
+   "finished": 3400,
+   "vertices": 6298,
+   "construction": 3400,
    "file": "outputs/lategame-integration/Data/Buildings/Power/OilPowerPlant/OilPowerPlant.IronTeeth.Model.timbermesh"
   },
   "PrecisionMachineWorks": {
@@ -589,9 +589,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 6032,
-   "vertices": 11020,
-   "construction": 6032,
+   "finished": 5970,
+   "vertices": 10896,
+   "construction": 5970,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/RocketAssemblyHangar/RocketAssemblyHangar.IronTeeth.Model.timbermesh"
   },
   "SandstoneMasonryBlock": {
@@ -787,9 +787,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9314,
-   "vertices": 17518,
-   "construction": 9314,
+   "finished": 9130,
+   "vertices": 17150,
+   "construction": 9130,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/SteelMill/SteelMill.IronTeeth.Model.timbermesh"
   },
   "StoneCrusher": {
