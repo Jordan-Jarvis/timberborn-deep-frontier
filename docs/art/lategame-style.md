@@ -30,8 +30,9 @@ User direction, 2026-10-21: surfaces reuse shipped Timberborn textures. Any new 
 | `PAINTED` 32 | PaintedMetal.IronTeeth | Painted machinery, tank bands, panels |
 | `GREYWOOD` 33 | BaseWood_Grey.IronTeeth | Weathered grey timber |
 | `GREYPLANK` 34 | IrregularPlanks_Grey.IronTeeth | Grey cladding |
+| `BRICK` 6 | DFIndustrial06 (mod tile) | Brick plinths, storeys and skins |
 
-Slots 32–34 are a late-game addition to the 32-slot palette. The harness authors their bounded atlas islands. Export integration must map them to these exact native names. `GLOW` (8) and `CYAN` (25) are allowed only as tiny emissive accents (lamp bulbs, indicator lights), under 4% of faces. No custom smoke or glass meshes: the game supplies particle effects, and windows come from the native atlas.
+Slots 32–34 are a late-game addition to the 32-slot palette. The harness authors their bounded atlas islands. Export integration must map them to these exact native names. `GLOW` (8) and `CYAN` (25) are allowed only as tiny emissive accents (lamp bulbs, indicator lights), under 4% of faces. `BRICK` (6) is the one mod tile allowed on broad surfaces (`lategame_kit.MOD_TILES`, 2026-10-31): the native atlases have no brick, and orange plaster courses read as plaster at game distance. It is the painted running-bond tile from `paint_brick_tile.py`, world-projected at one texture per tile (8 courses per layer), so lay it as flat faces, never as modelled bricks. No custom smoke or glass meshes: the game supplies particle effects, and windows come from the native atlas.
 
 ## What makes it late game
 

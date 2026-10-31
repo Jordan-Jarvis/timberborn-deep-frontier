@@ -9,6 +9,10 @@ CRUSHER_STEEL=13
 KILN_STONE,KILN_STONE_LIGHT,KILN_SOOT,KILN_EMBER,KILN_FLAME,KILN_CEMENT,KILN_SHELL=range(14,21)
 KILN_RUST,KILN_WOOD_SPLIT,KILN_WOOD_WEAR,KILN_DUST=range(21,25)
 CIVIC_CONCRETE,CIVIC_ORANGE_PANEL,CIVIC_FORGED_PANEL=range(27,30)
+# DFIndustrial06, the mod's painted running-bond brick tile (paint_brick_tile.py,
+# 2026-10-31; the slot held the retired aggregate tile, which no model used).
+# World-projected like every custom tile: one texture per tile, 8 courses.
+BRICK_TILE=6
 NATIVE_INDUSTRIAL_MATERIALS={0:'BaseWood_DarkBrown.IronTeeth',1:'IrregularPlanks_DarkBrown.IronTeeth',3:'RoofPlanks.IronTeeth'}
 
 def kiln_weather(mat,source,kind):
@@ -53,7 +57,7 @@ def create_reference_materials(palette='standard'):
         ('ReferenceRoof',art/'WeatheredTeal-v1.png',colors[3],.24,.70),
         ('ReferenceSandstone',existing/'DFArtSandstone.BaseColor.png',(1,1,1),0,.85),
         ('ReferenceLimestone',existing/'DFArtLimestone.BaseColor.png',(1,1,1),0,.87),
-        ('ReferenceAggregate',existing/'DFArtAggregate.BaseColor.png',(1,1,1),0,.87),
+        ('ReferenceBrick',ROOT/'src/DeepFrontier/AssetBundles/Resources/Materials/DeepFrontierIndustrial/DFIndustrial06.BaseColor.png',(1,1,1),0,.9),
         ('ReferenceBronze',existing/'DFArtBronze.BaseColor.png',(.86,.88,.90),.50,.56),
     ]
     result=[]

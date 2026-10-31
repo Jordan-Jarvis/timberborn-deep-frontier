@@ -7,6 +7,7 @@ import math
 from frontier_architecture import WOOD,PLANK,IRON,facade_panel
 from reference_materials import CIVIC_CONCRETE,CIVIC_ORANGE_PANEL,CIVIC_FORGED_PANEL
 from brick_courses import BRICK, brick_block
+from reference_materials import BRICK_TILE
 
 
 def grid_bounds(bounds):
@@ -114,9 +115,9 @@ def platform(g,ident,bounds,origin,supports,floor_material=PLANK,*,slab_material
         for z in (bottom+.05,z1-.28):boxes.append({'center':[x,y,z],'size':[.18,.18,.07]})
         if bottom==0:
             # Cast pier: the only solid that owns the ground under the post.
-            # pier_material=brick_courses.BRICK lays it as a brick pier on a
-            # lime mortar core (2026-10-30, bricks pass).
-            if pier_material==BRICK:brick_block(art,x-.085,x+.085,y-.085,y+.085,0,.40,CIVIC_CONCRETE,CIVIC_ORANGE_PANEL)
+            # pier_material=brick_courses.BRICK lays it as a brick pier (the
+            # brick tile) on a lime mortar core (2026-10-30, bricks pass).
+            if pier_material==BRICK:brick_block(art,x-.085,x+.085,y-.085,y+.085,0,.40,CIVIC_CONCRETE,BRICK_TILE)
             else:art((x,y,.20),(.17,.17,.40),pier_material)
             art((x,y,.42),(.18,.18,.04),IRON)
             shaft=.41

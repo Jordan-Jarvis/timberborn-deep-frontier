@@ -19,7 +19,7 @@ from mathutils import Vector
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, SAND, LIME, GREY, BRASS
 from reference_materials import (GLOW, GLASS, LEAF, WATER, CLOTH, CRUSHER_STEEL, KILN_STONE,
                                  KILN_SOOT, KILN_EMBER, KILN_FLAME, KILN_SHELL, KILN_RUST,
-                                 CIVIC_CONCRETE, CIVIC_ORANGE_PANEL, CIVIC_FORGED_PANEL)
+                                 CIVIC_CONCRETE, CIVIC_ORANGE_PANEL, CIVIC_FORGED_PANEL, BRICK_TILE)
 from industrial_facades import CYAN, RUBBER
 
 CONCRETE = CIVIC_CONCRETE        # Plaster_White.IronTeeth: cast concrete
@@ -41,6 +41,11 @@ NATIVE_SLOTS = {WOOD: 'BaseWood_DarkBrown.IronTeeth', PLANK: 'IrregularPlanks_Da
                 FOLK_WOOD: 'BaseWood_Brown.Folktails', PAINTED: 'PaintedMetal.IronTeeth',
                 GREYWOOD: 'BaseWood_Grey.IronTeeth', GREYPLANK: 'IrregularPlanks_Grey.IronTeeth'}
 ACCENT_SLOTS = {GLOW, CYAN}   # Tiny emissive accents only; never broad surfaces.
+# The mod's own painted tiles allowed on broad surfaces: the running-bond brick
+# (DFIndustrial06, paint_brick_tile.py; 2026-10-31, the native atlases have no
+# brick). World-projected, one texture per tile.
+BRICK = BRICK_TILE
+MOD_TILES = {BRICK: 'DFIndustrial06'}
 
 LAYER_GAP = .012   # Minimum separation between parallel overlapping surfaces.
 

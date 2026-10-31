@@ -52,7 +52,7 @@ HALL = (.05, 2.95, .3, 3.95)      # core x0, x1, y0, y1 (plinth course .05 proud
 STOREY = 1.0                      # brick ground storey (whole layer)
 # Darker ground (2026-10-30, bricks pass: the pale concrete plinth was the
 # brightest thing on the plant): the boiler-house storey, the engine bed and
-# the chimney base are brick (Plaster_Orange courses on lime mortar).
+# the chimney base are brick (the painted brick tile on lime cores, 2026-10-31).
 ROOF_Z = 2.6                      # eaves
 RIDGE = 3.45
 DOOR_X = 1.5

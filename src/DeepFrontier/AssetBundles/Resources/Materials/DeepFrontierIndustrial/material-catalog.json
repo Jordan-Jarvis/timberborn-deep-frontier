@@ -43,9 +43,9 @@
   },
   {
     "name": "DFIndustrial06",
-    "source": "ReferenceAggregate",
+    "source": "ReferenceBrick",
     "metallic": 0.0,
-    "smoothness": 0.12999999523162842,
+    "smoothness": 0.09999999403953552,
     "emission": 0.0
   },
   {

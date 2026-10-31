@@ -49,10 +49,40 @@ def _texture(nodes, links, cache, record, slot, vector, linear=False):
     return node
 
 
+# The mod's own industrial tiles (DFIndustrialNN): the bundled BaseColor tile
+# and the catalog's metallic, smoothness and emission (DeepFrontierMaterials.cs
+# builds the URP Lit materials from the same two files).
+MOD_TILES = ROOT / 'src/DeepFrontier/AssetBundles/Resources/Materials/DeepFrontierIndustrial'
+_mod_catalog = {entry['name']: entry for entry in json.loads((MOD_TILES / 'material-catalog.json').read_text())}
+
+
+def _mod_tile(name):
+    entry = _mod_catalog[name]
+    mat = bpy.data.materials.new(name)
+    mat['df_preview'] = True
+    mat.use_nodes = True
+    nodes, links = mat.node_tree.nodes, mat.node_tree.links
+    bsdf = nodes['Principled BSDF']
+    image = bpy.data.images.load(str(MOD_TILES / f'{name}.BaseColor.png'), check_existing=True)
+    image.colorspace_settings.name = 'sRGB'
+    tex = nodes.new('ShaderNodeTexImage')
+    tex.image = image
+    links.new(nodes.new('ShaderNodeTexCoord').outputs['UV'], tex.inputs['Vector'])
+    links.new(tex.outputs['Color'], bsdf.inputs['Base Color'])
+    bsdf.inputs['Metallic'].default_value = entry['metallic']
+    bsdf.inputs['Roughness'].default_value = 1 - entry['smoothness']
+    if entry['emission'] > 0:
+        links.new(tex.outputs['Color'], bsdf.inputs['Emission Color'])
+        bsdf.inputs['Emission Strength'].default_value = entry['emission']
+    return mat
+
+
 def material(name):
     existing = bpy.data.materials.get(name)
     if existing is not None and existing.get('df_preview'):
         return existing
+    if name in _mod_catalog:
+        return _mod_tile(name)
     if name not in _records:
         raise KeyError(f'No cached native material record for {name}; extend export_map_object_references.py')
     cache, record = _records[name]

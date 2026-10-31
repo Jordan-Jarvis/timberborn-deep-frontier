@@ -11,6 +11,7 @@ from frontier_architecture import Geometry, WOOD, PLANK, IRON, ROOF, SAND, LIME,
 from reference_materials import GLOW, GLASS, LEAF, WATER, CLOTH, KILN_SOOT, KILN_STONE, KILN_STONE_LIGHT, KILN_WOOD_WEAR, KILN_WOOD_SPLIT
 from reference_materials import CIVIC_CONCRETE, CIVIC_ORANGE_PANEL, CIVIC_FORGED_PANEL
 from brick_courses import BRICK, brick_block
+from reference_materials import BRICK_TILE
 # Triangle budget: the civic, hydro, research and waterside families use the
 # shell-only fastener and container kit (industrial_budget.py): 2 square nuts per
 # collar plate, no buried caps or plate backs, 8-sided pipes.
@@ -312,7 +313,7 @@ def civic_service_details(g,x0,y0,x1,y1):
 def timber_column(g,x,y,bottom,top,w=.19,*,steel_channels=True,collars=True,foot=CIVIC_CONCRETE):
     """Timber core with visible steel channels, concrete feet and anchor bolts.
     `foot`: the ground foot's material (timber for buildings that unlock before
-    concrete exists, user 2026-10-30), or brick_courses.BRICK for a brick
+    concrete exists, user 2026-10-30), or brick_courses.BRICK for a brick-tile
     footing on a lime mortar core (2026-10-30, bricks pass)."""
     core_bottom=.53 if bottom==0 else bottom
     g.box((x,y,(core_bottom+top)/2),(w,w,top-core_bottom),WOOD)
@@ -322,7 +323,7 @@ def timber_column(g,x,y,bottom,top,w=.19,*,steel_channels=True,collars=True,foot
     if bottom==0:
         if foot==BRICK:
             a=(w+.11)/2
-            brick_block(g.box,x-a,x+a,y-a,y+a,0,.48,CIVIC_CONCRETE,CIVIC_ORANGE_PANEL)
+            brick_block(g.box,x-a,x+a,y-a,y+a,0,.48,CIVIC_CONCRETE,BRICK_TILE)
         else:g.box((x,y,.24),(w+.11,w+.11,.48),foot)
         g.box((x,y,.50),(w+.13,w+.13,.06),IRON)
     if not collars:return

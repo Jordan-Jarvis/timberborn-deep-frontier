@@ -1,59 +1,49 @@
-"""Running-bond brick faces on a solid block (2026-10-30, bricks pass).
+"""Brick-faced solid blocks (2026-10-30 bricks pass; flat tile 2026-10-31).
 
-Brick coursing is geometry: the native atlases have no brick tile, so bricks
-are boxes in the brick-red plaster (Plaster_Orange.IronTeeth) over a mortar
-core set back by the brick depth, inside the block's extents. Front and back
-courses run corner to corner; the side courses stop short of them, so no two
-bricks share a face at a corner. Used through an explicit box function so
-each geometry module keeps its own coordinate convention:
+Bricks are the mod's painted running-bond tile, DFIndustrial06
+(reference_materials.BRICK_TILE, paint_brick_tile.py), on flat faces. Custom
+tiles are world-projected (frontier_architecture.Geometry.build), so the 8
+courses per height layer line up across every face of a building. The first
+pass modelled each brick as a Plaster_Orange box; that read as orange plaster
+at game distance and cost thousands of triangles.
 
-    brick_block(box, x0, x1, y0, y1, z0, z1, mortar, brick, faces=...)
+A block is a core in its own material, set back by BRICK_DEPTH on the brick
+faces, with one brick slab on each brick face, so the block's extents do not
+change and its top stays the core material. Front and back slabs run corner to
+corner; the side slabs fit between them. The slabs only touch the core (their
+backs face it), so no two faces overlap. Used through an explicit box function
+so each geometry module keeps its own coordinate convention:
+
+    brick_block(box, x0, x1, y0, y1, z0, z1, core, brick, faces=...)
     box(center, size, material)
-
-The same dimensions as lategame_mining_parts' brick plinths (BRICK_*).
 """
 
-BRICK_LENGTH = .42   # nominal stretcher; each run is divided evenly
-BRICK_COURSE = .125  # nominal course height
-BRICK_JOINT = .012
-BRICK_DEPTH = .02    # brick face in front of the mortar core
-BRICK_EMBED = .006   # brick backs sit inside the core
+BRICK_DEPTH = .02    # brick slab in front of the core
 BRICK = 'brick'      # sentinel material: a caller lays this block as brick
+FACES = ('front', 'back', 'left', 'right')
 
 
-def brick_runs(a, b, offset):
-    """Brick extents along a run: whole bricks, or half bricks at both ends (offset course)."""
-    count = max(1, round((b - a) / BRICK_LENGTH))
-    w = (b - a) / count
-    if offset and count > 1:
-        cuts = [a] + [a + w * (i + .5) for i in range(count)] + [b]
-    else:
-        cuts = [a + w * i for i in range(count + 1)]
-    return [(u, v) for u, v in zip(cuts, cuts[1:]) if v - u > BRICK_JOINT * 2]
-
-
-def brick_block(box, x0, x1, y0, y1, z0, z1, mortar, brick, faces=('front', 'back', 'left', 'right')):
+def brick_block(box, x0, x1, y0, y1, z0, z1, core, brick, faces=FACES):
     if x1 <= x0 or y1 <= y0 or z1 <= z0:
         raise ValueError(f'Degenerate brick block {x0, x1, y0, y1, z0, z1}')
-    d, e, j = BRICK_DEPTH, BRICK_EMBED, BRICK_JOINT
+    unknown = set(faces) - set(FACES)
+    if unknown or not faces:
+        raise ValueError(f'Brick block faces must be a non-empty subset of {FACES}: {faces}')
+    d = BRICK_DEPTH
     ca, cb = x0 + (d if 'left' in faces else 0), x1 - (d if 'right' in faces else 0)
     da, db = y0 + (d if 'front' in faces else 0), y1 - (d if 'back' in faces else 0)
-    box(((ca + cb) / 2, (da + db) / 2, (z0 + z1) / 2), (cb - ca, db - da, z1 - z0), mortar)
-    n = max(1, round((z1 - z0) / BRICK_COURSE))
-    pitch = (z1 - z0) / n
-    side = (da + e + j if 'front' in faces else da, db - e - j if 'back' in faces else db)
-    runs = {'front': (x0, x1), 'back': (x0, x1), 'left': side, 'right': side}
-    for row in range(n):
-        za, zb = z0 + row * pitch + j / 2, z0 + (row + 1) * pitch - j / 2
-        for face in faces:
-            for u, v in brick_runs(*runs[face], row % 2):
-                u, v = u + j / 2, v - j / 2
-                if face == 'front':
-                    lo, hi = (u, y0, za), (v, da + e, zb)
-                elif face == 'back':
-                    lo, hi = (u, db - e, za), (v, y1, zb)
-                elif face == 'left':
-                    lo, hi = (x0, u, za), (ca + e, v, zb)
-                else:
-                    lo, hi = (cb - e, u, za), (x1, v, zb)
-                box(tuple((lo[i] + hi[i]) / 2 for i in range(3)), tuple(hi[i] - lo[i] for i in range(3)), brick)
+    if cb <= ca or db <= da:
+        raise ValueError(f'Brick block thinner than its brick faces {x0, x1, y0, y1}')
+
+    def solid(lo, hi, material):
+        box(tuple((lo[i] + hi[i]) / 2 for i in range(3)), tuple(hi[i] - lo[i] for i in range(3)), material)
+
+    solid((ca, da, z0), (cb, db, z1), core)
+    if 'front' in faces:
+        solid((x0, y0, z0), (x1, da, z1), brick)
+    if 'back' in faces:
+        solid((x0, db, z0), (x1, y1, z1), brick)
+    if 'left' in faces:
+        solid((x0, da, z0), (ca, db, z1), brick)
+    if 'right' in faces:
+        solid((cb, da, z0), (x1, db, z1), brick)

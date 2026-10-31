@@ -25,6 +25,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 GAME = os.path.join(ROOT, 'src', 'DeepFrontier', 'Art', 'GameTextures')
 PACKED = os.path.join(ROOT, 'src', 'DeepFrontier', 'Art', 'Textures', 'Packed')
 TRACKED = [os.path.join(ROOT, 'src', 'DeepFrontier', 'AssetBundles', 'Resources', 'Materials', 'DeepFrontierArt'),
+           os.path.join(ROOT, 'src', 'DeepFrontier', 'AssetBundles', 'Resources', 'Materials', 'DeepFrontierIndustrial'),
            os.path.join(ROOT, 'src', 'DeepFrontier', 'Art', 'Textures', 'Reference')]
 GAME_NAME = re.compile(r'^\d+-.+\.(png|jpg|jpeg|tga|exr)$', re.I)
 

@@ -228,19 +228,19 @@ def budget_shading(obj):
 
 def check_materials(ident, geometries):
     """Surfaces must use shipped game materials; emissive accents stay tiny."""
-    from lategame_kit import NATIVE_SLOTS, ACCENT_SLOTS
+    from lategame_kit import NATIVE_SLOTS, ACCENT_SLOTS, MOD_TILES
     used = {}
     for geo in geometries:
         for m in geo.materials:
             used[m] = used.get(m, 0) + 1
-    bad = sorted(m for m in used if m not in NATIVE_SLOTS and m not in ACCENT_SLOTS)
+    bad = sorted(m for m in used if m not in NATIVE_SLOTS and m not in ACCENT_SLOTS and m not in MOD_TILES)
     if bad:
-        raise ValueError(f'{ident}: non-native material slots used: {bad}. Use lategame_kit NATIVE_SLOTS.')
+        raise ValueError(f'{ident}: non-native material slots used: {bad}. Use lategame_kit NATIVE_SLOTS or MOD_TILES.')
     total = sum(used.values())
     accent = sum(used.get(m, 0) for m in ACCENT_SLOTS)
     if accent > .04 * total:
         raise ValueError(f'{ident}: emissive accents cover {accent}/{total} faces; keep them under 4%')
-    return {NATIVE_SLOTS.get(m, f'accent{m}'): n for m, n in sorted(used.items())}
+    return {NATIVE_SLOTS.get(m, MOD_TILES.get(m, f'accent{m}')): n for m, n in sorted(used.items())}
 
 
 def clear_scene():

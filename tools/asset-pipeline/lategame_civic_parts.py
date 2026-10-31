@@ -451,13 +451,14 @@ def mansard(g, x0, y0, x1, y1, z, h, inset, *, overhang=.14, deck=IRON):
 
 
 # ------------------------------------------------------------- brick skins
-# Brick skins (2026-10-30, bricks pass): running-bond bricks in the native
-# brick-red plaster (Plaster_Orange.IronTeeth) laid 0.02 proud of a solid wall
-# whose own surface (Plaster_White here) shows as the mortar joints. Doors,
-# windows and lamps on the wall stay clear: each is authored first through
-# authored_box, and every course skips its box (plus a margin) on the face it
-# stands on. Front and back courses run corner to corner; the side courses
-# stop short of them, so no two bricks meet at a corner.
+# Brick skins (2026-10-30 bricks pass; flat tile 2026-10-31): slabs of the
+# mod's painted brick tile (lategame_kit.BRICK, DFIndustrial06, world-projected
+# so the courses line up) 0.02 proud of a solid wall. Doors, windows and lamps
+# on the wall stay clear: each is authored first through authored_box, and the
+# skin leaves its box (plus a margin) open on the face it stands on. Front and
+# back slabs run corner to corner; the side slabs fit between them. The first
+# pass modelled every brick in Plaster_Orange, which read as orange plaster at
+# game distance and cost thousands of triangles.
 BRICK_REACH = .3      # a feature within this distance of a face plane opens it
 
 
@@ -474,33 +475,34 @@ def authored_box(g, fn):
 
 
 def brick_skin(g, x0, y0, x1, y1, z0, z1, *, faces=('front', 'back', 'left', 'right'), features=(), margin=.03):
-    """Brick courses between z0 and z1 on the named faces of the solid wall
+    """Brick slabs between z0 and z1 on the named faces of the solid wall
     block x0..x1, y0..y1, leaving the feature boxes (authored_box) open."""
-    from lategame_mining_parts import _brick_runs, BRICK_COURSE, BRICK_JOINT, BRICK_PROUD, BRICK_EMBED
-    pr, em, j = BRICK_PROUD, BRICK_EMBED, BRICK_JOINT
+    pr, em = .02, .006     # slab proud of the wall face; slab back inside the wall
     planes = {'front': (1, y0, -1), 'back': (1, y1, 1), 'left': (0, x0, -1), 'right': (0, x1, 1)}
     runs = {'front': (x0 - pr, x1 + pr), 'back': (x0 - pr, x1 + pr),
-            'left': (y0 + em + j, y1 - em - j), 'right': (y0 + em + j, y1 - em - j)}
-    n = max(2, round((z1 - z0) / BRICK_COURSE))
-    pitch = (z1 - z0) / n
+            'left': (y0 + em, y1 - em), 'right': (y0 + em, y1 - em)}
     for face in faces:
         k, plane, out = planes[face]
         u_axis = 1 - k
         openings = [(lo[u_axis] - margin, hi[u_axis] + margin, lo[2] - margin, hi[2] + margin)
                     for lo, hi in features if lo[k] <= plane + BRICK_REACH and hi[k] >= plane - BRICK_REACH]
         na, nb = (plane - pr, plane + em) if out < 0 else (plane - em, plane + pr)
-        for row in range(n):
-            za, zb = z0 + row * pitch + j / 2, z0 + (row + 1) * pitch - j / 2
+        cuts = sorted({z0, z1} | {z for _, _, oa, ob in openings for z in (oa, ob) if z0 < z < z1})
+        bands = []    # (za, zb, spans), consecutive bands with the same spans merged
+        for za, zb in zip(cuts, cuts[1:]):
             spans = [runs[face]]
             for ua, ub, oa, ob in openings:
                 if ob <= za or oa >= zb:
                     continue
                 spans = [piece for a, b in spans for piece in ((a, min(b, ua)), (max(a, ub), b))
                          if piece[1] - piece[0] > .06]
+            if bands and bands[-1][2] == spans:
+                bands[-1] = (bands[-1][0], zb, spans)
+            else:
+                bands.append((za, zb, spans))
+        for za, zb, spans in bands:
             for a, b in spans:
-                for u, v in _brick_runs(a, b, row % 2):
-                    u, v = u + j / 2, v - j / 2
-                    if k == 1:
-                        blk(g, u, na, za, v, nb, zb, ORANGE)
-                    else:
-                        blk(g, na, u, za, nb, v, zb, ORANGE)
+                if k == 1:
+                    blk(g, a, na, za, b, nb, zb, K.BRICK)
+                else:
+                    blk(g, na, a, za, nb, b, zb, K.BRICK)
