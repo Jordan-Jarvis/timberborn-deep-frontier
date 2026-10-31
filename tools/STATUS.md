@@ -4,6 +4,24 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Fix: second game load in a session crashed in the radiation renderer; exception save before map setup threw (Claude Code session, 2026-10-30, shader-fix agent; code 1ad77a8; build 223 installed by the coordinator; scene-cycle run in game: 3 of 4 scenes, all checks passed)
+
+- **Crash (user, build 222):** loading a save, returning to the main menu, then starting a new game crashed in `RadiationRenderer.PostLoad` with "PhysicalWater_Opaque: expected native shader Shader Graphs/PhysicalWaterURP_Opaque, found Hidden/InternalErrorShader".
+- **Root cause (source):** native `SceneLoader.LoadSceneCoroutine` calls `IAssetLoader.Reset` before `SceneManager.LoadScene`. The reset goes through `ModAssetBundleProvider.Reset` to `ModAssetBundleLoader.Reload`, which runs `AssetBundle.Unload(true)` on every mod bundle and loads them again. Only then does the scene teardown run `IUnloadableSingleton.Unload` (`SingletonLifecycleUnityAdapter.OnDestroy`). When `Unload` ran, the Deep Frontier shader variants were already destroyed.
+- **Root cause (Unity):** reproduced in Unity 6000.5.11f1 batch mode with a bundle-loaded shader and `Unload(true)`. A material whose shader was destroyed reports `Hidden/InternalErrorShader`, and `== variant` is false. `ShaderSwap.Restore` therefore skipped the restore without any error, and the persistent native water and terrain materials carried the dead shader into the next scene.
+- **Fix (`RadiationShading.ShaderSwap`, `RadiationRenderer`):**
+  - `Restore` now always puts the native shader and keywords back after `Apply`. It accepts the live variant, or exactly Unity's error shader once the variant has been destroyed, and reports anything else.
+  - The renderer registers each swap before applying it, so a PostLoad that fails part-way is restored too.
+  - `Unload` restores every swap and then throws if any material held something else. The strict PostLoad check (native shader name, properties, keywords) is unchanged.
+- **Exception save (`BuiltinMapSetup.Save`):** the native exception save can run before the first frame, before the placements. When `ErrorReporter.LogString` is set (the first uncaught exception), `Save` now writes outcome `ExceptionSaveBeforeSetup`. That is the world as it is, the same way native `GameStarter`'s starting building is simply missing from such a save, and loading it places nothing. Any other save before setup still throws.
+- **Harness:** `-deepFrontierSceneCycle`, run with `tools/start_scene_cycle.ps1` (`Scripts/SceneCycleAcceptance.cs`). It runs save, menu, new game, menu, and so on in one process. Every main menu compares the 2 water and 5 terrain materials with the first menu (same shader object, keywords, every native property value). Every game requires the variants. The launcher backs up Memory Test and restores anything that was removed.
+- **In game (build 223, `outputs/scene-cycle-223.log`):**
+  - Game 1: Memory Test autosave copy. Game 2: new Canyon game (the user's crash case; map setup placed 17 of 17). Game 3: the save again. All loaded with the variants on all 7 materials.
+  - The menus after games 1, 2 and 3 found every material exactly as before the first game, with the same material objects.
+  - Game 4 stalled while the window was unfocused (Timberborn does not advance frames without focus), and the user closed it during that load. The native NREs after that close (`SingletonLifecycleService.UnloadSingletons`, `FactionService.Save`) come from a scene destroyed before `LoadAll`, not from Deep Frontier.
+  - Memory Test was unchanged. The user also checked by hand.
+- **Not run:** the scene-cycle harness to COMPLETE. It needs the window focused for about 12 minutes.
+
 ## Construction costs follow materials (Claude Code session, 2026-10-30, cost-material agent; data regenerated; validated in mirror `costmat` on HEAD be385c5 + this change; not built or run in game)
 
 - **User rules:** "each building's construction materials must match what the building is visibly made of: its walls, frames and especially its roofs"; "keep in mind the supply chain progression path"; "we don't want to require concrete on a building required to make concrete the first time around". The coordinator relayed the user's decisions: raw recipe effort as value; masonry priced as Sandstone/Limestone; Log in the earliest tier; plaster unpriced; Gears and Machine Cores fixed; quarry masonry unpriced; stage-local values.

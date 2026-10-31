@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixes
+- Loading a second game in the same session (load a save, return to the main menu, start a new game or load another save) no longer crashes with "expected native shader ... found Hidden/InternalErrorShader". Water and terrain are returned to their native look whenever a game ends.
+- The error report's game save no longer fails when a crash happens while a new game is still loading.
+
 ### Construction costs follow materials
 - Every building now costs what it is visibly made of. Timber and plank buildings cost planks (logs too before 600 science, treated planks later), steel and sheet-metal buildings cost metal blocks, deep alloy, high-grade steel or alloy by stage, and concrete is needed only where the building shows concrete. Masonry costs limestone or sandstone. Gears and machine cores stay as they were, and no building got cheaper.
 - A building never costs a good that can only be made with that building, or with one unlocked after it: the first concrete chain (pits, crusher, kiln, mixer) needs no concrete. The pits and quarries do not pay for the stone they quarry.
