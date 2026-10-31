@@ -73,6 +73,10 @@ if (-not $SkipBlender) {
 
 # 4. Blueprint visual bindings against the authored Timbermesh nodes.
 Add-Check 'model-bindings' 'python' $python @((Join-Path $root 'tools/asset-pipeline/validate_model_bindings.py'))
+# Freed decoration cells, triangle ceilings and finished-model animations (exported models, no Blender).
+Add-Check 'freed-cells-models' 'python' $python @((Join-Path $root 'tools/asset-pipeline/validate_freed_cells.py'))
+Add-Check 'triangle-budget' 'python' $python @((Join-Path $root 'tools/asset-pipeline/validate_triangle_budget.py'))
+Add-Check 'animations' 'python' $python @((Join-Path $root 'tools/asset-pipeline/validate_deep_frontier_animations.py'))
 
 # 5. Content and manifest validators (every tools/validate_*.mjs).
 foreach ($file in Get-ChildItem -LiteralPath (Join-Path $root 'tools') -Filter 'validate_*.mjs' | Sort-Object Name) {
