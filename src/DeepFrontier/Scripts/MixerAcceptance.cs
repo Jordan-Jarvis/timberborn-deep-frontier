@@ -105,17 +105,19 @@ namespace DeepFrontier.Scripts {
           &&e.GetComponent<TemplateSpec>().TemplateName=="ConcreteMixer.IronTeeth"),"Fixture already contains a mixer");
         _building=Create("ConcreteMixer.IronTeeth",159,160,3);
         _building.GetComponent<PausableBuilding>().Pause();
-        // 2026-10-22: the 7x5 footprint ends at the walls (local frame unchanged, so the
-        // origin stays). Freed ground, checked before the fixture builds beside it: the open
-        // cells inside the bounds (former block stacks, outputs/freed-cells.json) and the former
-        // 8x6 column x 7 and row y 5.
-        var size=_building.GetComponent<BlockObjectSpec>().Size;
-        // Compact 4x3x3 mixer (2026-10-30, same origin and entrance): every
-        // ground cell inside its bounds is occupied; the former 7x5 (and 8x6)
-        // cells outside it are freed.
-        Require(size==new Vector3Int(4,3,3),"Installed mixer is "+size+"; this fixture's freed cells encode the 4x3x3 mixer");
+        // The fixture follows the installed mixer blueprint, not a size literal
+        // (compact 4x3x3 since 2026-10-30, same origin and entrance). Freed
+        // ground, checked before the fixture builds beside it: the open ground
+        // cells inside the bounds and the former 8x6 footprint (local frame
+        // unchanged since then) outside them (outputs/freed-cells.json).
+        var spec=_building.GetComponent<BlockObjectSpec>();
+        var size=spec.Size;
+        var localBlocks=spec.GetBlocks(new Placement(Vector3Int.zero,Orientation.Cw0,FlipMode.Unflipped)).ToArray();
+        var openGround=localBlocks.Where(b=>b.Coordinates.z==0&&!b.IsOccupied).Select(b=>b.Coordinates).ToArray();
         FreedCellProbe.Require(_templates,_validator,_building,
-          FreedCellProbe.Outside(0,7,0,5,size),"ConcreteMixer",Pass);
+          openGround.Concat(FreedCellProbe.Outside(0,7,0,5,size)),"ConcreteMixer",Pass);
+        var entrance=_building.PositionedEntrance.Coordinates;
+        Require(entrance.y==159&&entrance.z==3,"Mixer entrance "+entrance+" is not on the fixture's y 159 road");
         for(int y=157;y<=159;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(173,y,3)))Create("Path",173,y,3);
         for(int x=159;x<173;x++)Create("Path",x,159,3);
         // The ground door's native Entrance is the road cell in front of it,
@@ -130,8 +132,12 @@ namespace DeepFrontier.Scripts {
         _generator=Create("DevPowerGenerator",generatorCell.x,generatorCell.y,generatorCell.z).GetComponent<MechanicalNode>();
         var pathSpec=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint
           ==_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Path").Blueprint);
-        Require(!_validator.BlocksValid(pathSpec,new Placement(new Vector3Int(160,162,3),Orientation.Cw0,FlipMode.Unflipped)),
-          "Enclosed mixer room incorrectly accepts a path");
+        // An enclosed room: every floor-occupying ground cell rejects a path.
+        var room=localBlocks.Where(b=>b.Coordinates.z==0&&b.Occupation.Intersects(BlockOccupations.Floor)).Select(b=>b.Coordinates).ToArray();
+        Require(room.Length>0,"Installed mixer has no floor-occupying ground cell");
+        foreach(var local in room)
+          Require(!_validator.BlocksValid(pathSpec,new Placement(_building.TransformCoordinates(local),Orientation.Cw0,FlipMode.Unflipped)),
+            "Enclosed mixer room incorrectly accepts a path at "+local);
         Pass("native placement, ground-door entrance path, wall-face shaft and enclosed-room collision");
       }
       _machine=_building.GetComponent<Manufactory>();
