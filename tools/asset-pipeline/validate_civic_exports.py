@@ -90,13 +90,14 @@ require(read_json('outputs/reference-studies/Restaurant-rail-manifest.json')['ru
 require(not any(n.startswith(('WalkwayRail', 'WalkwayGroup')) for n in names), 'Railing node exported')
 require(len(walkway['Doors']) == 4, 'Restaurant needs its four interior door links')
 
-# The 2026-10-31 roof-pass review (rails and parapet removed, seating lowered;
-# archive_triangle_budget_review.py --review 2026-10-31-roofs) supersedes the
-# 2026-10-30 bricks review (brick footings), the 2026-10-30 roof-pass review
+# The 2026-10-31 brick-tile review (footings in the painted brick tile;
+# archive_triangle_budget_review.py --review 2026-10-31-bricktile) supersedes the
+# 2026-10-31 roof-pass review (rails and parapet removed, seating lowered;
+# --review 2026-10-31-roofs), the 2026-10-30 bricks review (brick footings), the 2026-10-30 roof-pass review
 # (no roof vents), the 2026-10-30 compaction review, the 2026-10-29
 # triangle-budget review (20k grand cap), the 2026-10-22 one and the
 # 2026-10-21 exterior-repair capture.
-review = next(r for r in read_json('docs/art/reviews/2026-10-31-roofs-civic/review.json')['renders'] if r['model'] == ident)
+review = next(r for r in read_json('docs/art/reviews/2026-10-31-bricktile-civic/review.json')['renders'] if r['model'] == ident)
 require(hashlib.sha256((ROOT / review['source']).read_bytes()).hexdigest() == review['sourceSha256'], 'Source scene changed after native style review capture')
 # Dining headroom (2026-10-31): a seated native beaver reaches SEATED_HEAD above its
 # slot; under a deck one layer up it must stay clear of that deck's beams.

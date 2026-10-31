@@ -1,0 +1,28 @@
+{
+  "scope": "Before | after sheets (render_budget_views.py, matched cameras) of the 2026-10-31 brick tile: the deck-post footings in the painted brick tile (DFIndustrial06) as flat faces instead of modelled Plaster_Orange courses. Blender renders, not game screenshots.",
+  "renders": [
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "91e624273539de533b90f50f009e6e1c9d26d7bb5c9e7daebbcf736255ee5e5c",
+      "images": [
+        "Restaurant-before-after.png"
+      ],
+      "imageSha256": {
+        "Restaurant-before-after.png": "2fb86b273e1b4a2cd0e72a08f1bebe07f807f1cdd7e945c0d74681862e1c2c3f"
+      }
+    },
+    {
+      "model": "FisheryWorks",
+      "source": "src\\DeepFrontier\\Art\\Source\\FisheryWorks-ReferenceStudy.blend",
+      "sourceSha256": "28f83c27644779b9541610214318e4783254df21ca296c16534c8720aef91674",
+      "images": [
+        "FisheryWorks-before-after.png"
+      ],
+      "imageSha256": {
+        "FisheryWorks-before-after.png": "aab06add46796feb31ab33f862ae38d1c86f1fc327bcaa1deb8b4991fa76d492"
+      }
+    }
+  ],
+  "extraImages": []
+}

@@ -5,11 +5,15 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 180
+        "Amount": 170
       },
       {
         "Id": "Concrete",
-        "Amount": 360
+        "Amount": 340
+      },
+      {
+        "Id": "Brick",
+        "Amount": 50
       },
       {
         "Id": "Gear",

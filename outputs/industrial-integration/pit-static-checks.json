@@ -11,7 +11,7 @@
       "nodes": 9,
       "animationTracks": 3,
       "frames": 121,
-      "nativeUvVerticesChecked": 8952,
+      "nativeUvVerticesChecked": 8976,
       "emptyCells": 16
     },
     {
@@ -24,7 +24,7 @@
       "nodes": 9,
       "animationTracks": 3,
       "frames": 121,
-      "nativeUvVerticesChecked": 7536,
+      "nativeUvVerticesChecked": 7216,
       "emptyCells": 15
     }
   ]

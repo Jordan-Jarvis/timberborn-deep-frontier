@@ -58,9 +58,9 @@
    "family": "structural",
    "class": "small",
    "target": 8000,
-   "finished": 982,
-   "vertices": 1964,
-   "construction": 982,
+   "finished": 38,
+   "vertices": 76,
+   "construction": 38,
    "file": "outputs/structural-integration/Data/Buildings/Platforms/BrickMasonryBlock/BrickMasonryBlock.IronTeeth.Model.timbermesh"
   },
   "CementKiln": {
@@ -85,9 +85,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 6552,
-   "vertices": 12846,
-   "construction": 6552,
+   "finished": 2490,
+   "vertices": 4682,
+   "construction": 2490,
    "file": "outputs/lategame-integration/Data/Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.Model.timbermesh"
   },
   "ConcreteBlock": {
@@ -103,9 +103,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 8136,
-   "vertices": 16752,
-   "construction": 8136,
+   "finished": 5272,
+   "vertices": 11024,
+   "construction": 5272,
    "file": "src/DeepFrontier/Data/Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model.timbermesh"
   },
   "ConcreteOverflowDam": {
@@ -256,9 +256,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 10692,
-   "vertices": 20550,
-   "construction": 10692,
+   "finished": 9482,
+   "vertices": 18106,
+   "construction": 9482,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.Model.timbermesh"
   },
   "DeepMine": {
@@ -292,9 +292,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8184,
-   "vertices": 15250,
-   "construction": 8184,
+   "finished": 6946,
+   "vertices": 12750,
+   "construction": 6946,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model.timbermesh"
   },
   "DeepWell": {
@@ -337,18 +337,18 @@
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 16342,
-   "vertices": 35487,
-   "construction": 16342,
+   "finished": 15278,
+   "vertices": 33359,
+   "construction": 15278,
    "file": "outputs/civic-integration/Data/Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.Model.timbermesh"
   },
   "FoodPackagingWorks": {
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 9228,
-   "vertices": 17474,
-   "construction": 9228,
+   "finished": 7912,
+   "vertices": 14842,
+   "construction": 7912,
    "file": "outputs/lategame-integration/Data/Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.Model.timbermesh"
   },
   "Greenhouse": {
@@ -418,9 +418,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 11593,
-   "vertices": 23843,
-   "construction": 11593,
+   "finished": 6229,
+   "vertices": 13115,
+   "construction": 6229,
    "file": "src/DeepFrontier/Data/Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.Model.timbermesh"
   },
   "LimestoneSeam": {
@@ -490,9 +490,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 5412,
-   "vertices": 10518,
-   "construction": 5412,
+   "finished": 4248,
+   "vertices": 8190,
+   "construction": 4248,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.Model.timbermesh"
   },
   "RadioactiveSludgeOutfall": {
@@ -580,9 +580,9 @@
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 15026,
-   "vertices": 32563,
-   "construction": 15026,
+   "finished": 12234,
+   "vertices": 24807,
+   "construction": 12234,
    "file": "outputs/civic-integration/Data/Buildings/Food/Restaurant/Restaurant.IronTeeth.Model.timbermesh"
   },
   "RocketAssemblyHangar": {
@@ -625,9 +625,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 11593,
-   "vertices": 23843,
-   "construction": 11593,
+   "finished": 6229,
+   "vertices": 13115,
+   "construction": 6229,
    "file": "src/DeepFrontier/Data/Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.Model.timbermesh"
   },
   "SandstoneSeam": {
@@ -805,9 +805,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 9432,
-   "vertices": 18140,
-   "construction": 9432,
+   "finished": 8018,
+   "vertices": 15312,
+   "construction": 8018,
    "file": "outputs/lategame-integration/Data/Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.Model.timbermesh"
   },
   "TownPlaza": {
@@ -832,12 +832,12 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 11282,
-   "vertices": 21602,
-   "construction": 11282,
+   "finished": 10910,
+   "vertices": 20858,
+   "construction": 10910,
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 934794,
+ "totalBlueprintTriangles": 872890,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

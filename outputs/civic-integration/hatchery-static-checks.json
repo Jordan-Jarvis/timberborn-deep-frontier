@@ -1,15 +1,15 @@
 {
   "scope": "Source/export only; native results recorded separately",
-  "modelSha256": "98a5a85904790d4119ba01dfed2fe8bdc3c2be65d62578b93ba7de38dde5ee8b",
+  "modelSha256": "a16d714a381374044d5a1ea64120a82c5eb17a3e35cbee9a4e2e4b15fcd0ec43",
   "nodes": 14,
-  "nativeUvVertices": 29071,
+  "nativeUvVertices": 23455,
   "suggestedPathCells": 14,
   "openings": 3,
   "baseZ": 1,
   "size": [
     7,
     7,
-    5
+    3
   ],
   "cursorPickChecks": 72,
   "nativeProps": 1,

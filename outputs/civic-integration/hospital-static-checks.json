@@ -1,15 +1,15 @@
 {
   "status": "Source/export checks passed; native runtime acceptance pending",
   "size": [
-    12,
+    4,
     9,
     9
   ],
-  "sourceSha256": "84a18a2520ca7fa4335cf60ed88d34209dad3d1b9f1da459df8b089710111884",
-  "exportSha256": "3059be0db34706737329b529557b7d6f60021a55c5e853f7bb6bb9aa52cee8c1",
-  "nodes": 41,
-  "nativeUvVertices": 30872,
-  "routes": 68,
+  "sourceSha256": "ae7b3d515cb3afb8b96f1e56d646c7fad0b42f389c17a058737c65b5e2a20694",
+  "exportSha256": "d941bccbf17255fca6f13912e00e59061faf931c6d010e237abb1b5c2b40e4a4",
+  "nodes": 23,
+  "nativeUvVertices": 18069,
+  "routes": 37,
   "openings": 42,
   "doors": 6,
   "doorLevels": [

@@ -1,7 +1,7 @@
 {
   "scope": "Candidate export checks; actual native operation remains to test",
-  "modelSha256": "edd3f20caffd862a63686f9b0b9c6cf016b2474e3f6e18b5afc67622e32e8207",
-  "nodes": 27,
+  "modelSha256": "5e1a66600e0181504d7add7856636ada505eb8daee5042da35c6eaec105384e7",
+  "nodes": 20,
   "animationTracks": [
     [
       "#MaterialsLaboratory.Flywheel",
@@ -16,8 +16,8 @@
       121
     ]
   ],
-  "nativeUvVertices": 36378,
-  "connectedRouteCells": 15,
+  "nativeUvVertices": 27746,
+  "connectedRouteCells": 14,
   "railOpenings": 7,
   "terraceSupportCells": 9,
   "scienceUnlock": 12000,

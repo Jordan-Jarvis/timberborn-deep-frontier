@@ -126,6 +126,20 @@ REVIEWS = {
                  'roof curbs removed (open platforms edge to edge); the Restaurant chairs and tables 0.1375 '
                  'lower. Blender renders, not game screenshots.',
     },
+    # 2026-10-31 brick tile (user: the modelled orange courses "isn't brick"): footings
+    # in the painted brick tile DFIndustrial06 (paint_brick_tile.py), flat faces.
+    '2026-10-31-bricktile': {
+        'folder': '2026-10-31-bricktile-civic',
+        'sheets': 'outputs/bricks/tile',
+        'models': {
+            'Restaurant': ('Restaurant', 'Restaurant-before-after.png'),
+            'FisheryWorks': ('FisheryWorks', 'FisheryWorks-before-after.png'),
+        },
+        'extra': (),
+        'scope': 'Before | after sheets (render_budget_views.py, matched cameras) of the 2026-10-31 brick tile: '
+                 'the deck-post footings in the painted brick tile (DFIndustrial06) as flat faces instead of '
+                 'modelled Plaster_Orange courses. Blender renders, not game screenshots.',
+    },
 }
 
 

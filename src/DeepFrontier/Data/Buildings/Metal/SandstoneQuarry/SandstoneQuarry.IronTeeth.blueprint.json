@@ -5,19 +5,19 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 425
+        "Amount": 445
       },
       {
         "Id": "TreatedPlank",
-        "Amount": 110
+        "Amount": 115
       },
       {
         "Id": "MetalBlock",
-        "Amount": 110
+        "Amount": 115
       },
       {
         "Id": "Brick",
-        "Amount": 270
+        "Amount": 200
       },
       {
         "Id": "Gear",

@@ -8,9 +8,9 @@
       "supportCells": 1
     },
     {
-      "building": "LimestoneMasonryBlock",
+      "building": "BrickMasonryBlock",
       "nodes": 3,
-      "nativeUvVertices": 20,
+      "nativeUvVertices": 0,
       "supportCells": 1
     },
     {

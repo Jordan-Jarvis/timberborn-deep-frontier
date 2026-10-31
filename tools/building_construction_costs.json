@@ -234,7 +234,7 @@
         }
       }
     },
-    "familyGoodsNote": "Unit ratios from each tier's per100BuiltCells (the progression stage), plus Log in T1 wood (user 2026-10-30) and TreatedPlank as T5 wood (T5's table has no wood good). T1 is the pre-concrete stage. brick is Brick in every tier (user 2026-10-30, bricks pass): Plaster_Orange.IronTeeth, the one brick-red native surface, prices as Brick; bricks exist from 600 science (Stone Crusher and Cement Kiln), so a building unlocked earlier must show under minFamilyShare of it.",
+    "familyGoodsNote": "Unit ratios from each tier's per100BuiltCells (the progression stage), plus Log in T1 wood (user 2026-10-30) and TreatedPlank as T5 wood (T5's table has no wood good). T1 is the pre-concrete stage. brick is Brick in every tier (user 2026-10-30, bricks pass): Plaster_Orange.IronTeeth, the one brick-red native surface, and DFIndustrial06, the mod's painted brick tile (2026-10-31: brick walls, plinths and footings), price as Brick; bricks exist from 600 science (Stone Crusher and Cement Kiln), so a building unlocked earlier must show under minFamilyShare of it.",
     "materials": {
       "BaseMetal.IronTeeth": "metal",
       "BaseWood_Brown.Folktails": "wood",
@@ -246,7 +246,7 @@
       "DFIndustrial03": "wood",
       "DFIndustrial04": "stone",
       "DFIndustrial05": "stone",
-      "DFIndustrial06": "stone",
+      "DFIndustrial06": "brick",
       "DFIndustrial07": "metal",
       "DFIndustrial08": "unpriced",
       "DFIndustrial09": "unpriced",
@@ -312,7 +312,6 @@
       "tiles": [
         "DFIndustrial04",
         "DFIndustrial05",
-        "DFIndustrial06",
         "DFIndustrial14",
         "DFIndustrial15"
       ]

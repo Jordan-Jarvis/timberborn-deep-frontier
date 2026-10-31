@@ -23,7 +23,7 @@
       "animationTracks": 47,
       "frames": 481,
       "walkways": "none",
-      "nativeUvVerticesChecked": 5247
+      "nativeUvVerticesChecked": 5191
     },
     {
       "building": "LimestoneQuarry",
@@ -31,7 +31,7 @@
       "animationTracks": 47,
       "frames": 481,
       "walkways": "none",
-      "nativeUvVerticesChecked": 5247
+      "nativeUvVerticesChecked": 5191
     },
     {
       "building": "ConcreteMixer",

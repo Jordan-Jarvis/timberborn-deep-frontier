@@ -15,14 +15,15 @@
     {
       "node": "StaticMerged",
       "parts": 5,
-      "triangles": 12296,
+      "triangles": 11674,
       "materials": {
-        "Plaster_White.IronTeeth": 136,
+        "Plaster_White.IronTeeth": 88,
         "IrregularPlanks_DarkBrown.IronTeeth": 3176,
-        "Plaster_Orange.IronTeeth": 790,
+        "Plaster_Orange.IronTeeth": 72,
         "BaseWood_DarkBrown.IronTeeth": 3876,
         "BaseMetal.IronTeeth": 3354,
         "RoofPlanks.IronTeeth": 108,
+        "DFIndustrial06": 144,
         "DFIndustrial12": 84,
         "DFIndustrial05": 344,
         "DFIndustrial04": 140,

@@ -1,11 +1,11 @@
 {
   "scope": "Staged mesh and authored graph only. Runtime occupancy, district access, native props, seating height and staffed meal service remain unverified.",
   "model": "Restaurant",
-  "sha256": "5d313afc0eebdfdbc209d507ecbc7ceb7981fbb97be97681576c936ce98fad1a",
+  "sha256": "c2fbdf43404d28dfe67126dce5785bc4ae13701a8e1af1e8268bf81b14f2ca0b",
   "nodes": 24,
   "dinerSlots": 14,
   "staffMarkers": 4,
-  "nativeUvVerticesChecked": 23914,
+  "nativeUvVerticesChecked": 22382,
   "animationTracks": 1,
   "frames": 61,
   "openings": 0,
