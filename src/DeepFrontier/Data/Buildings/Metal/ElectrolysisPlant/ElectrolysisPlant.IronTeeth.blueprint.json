@@ -5,19 +5,19 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 160
+        "Amount": 165
       },
       {
         "Id": "MetalBlock",
-        "Amount": 355
+        "Amount": 350
       },
       {
         "Id": "DeepAlloy",
-        "Amount": 75
+        "Amount": 70
       },
       {
         "Id": "Concrete",
-        "Amount": 1885
+        "Amount": 1900
       },
       {
         "Id": "Brick",

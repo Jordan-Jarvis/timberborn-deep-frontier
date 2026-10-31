@@ -11,8 +11,8 @@ the bullet heads with its ladder, and the control hut's gable. The LOX tank,
 its spiral stair and gallery, the bullets and the vaporizer bank are smaller.
 
 HERO: a frost-white double-walled flat-bottom oxygen tank with a ribbed
-steel dome, wound by a riveted spiral stair up to a roof-edge gallery on a
-whole layer, with a boil-off vent and a relief valve on its crown.
+steel dome, wound by a riveted spiral stair up to an open roof-edge gallery
+on a whole layer (no rail: user, 2026-10-31, "lets remove the railings"), with a boil-off vent and a relief valve on its crown.
 ROOF: steel dome on the LOX tank (its defining silhouette); dished heads on
 the hydrogen bullets; a pitched gable of native teal roof planks on the
 two-storey control hut (roof variety).
@@ -138,8 +138,6 @@ def gallery(g):
     cx, cy = TANK
     z = GALLERY_Z
     P.annulus(g, (cx, cy), GAL_IN, GAL_OUT, z - .08, z, IRON, segments=20)
-    end = STAIR_A1 % (2 * math.pi)
-    P.ring_rail(g, (cx, cy), GAL_OUT - .04, z, posts=20, gap=(end - .25, end + .25))
     for i in range(10):
         a = (i + .5) * 2 * math.pi / 10
         g.beam((cx + math.cos(a) * (TANK_R + .03), cy + math.sin(a) * (TANK_R + .03), z - .55),

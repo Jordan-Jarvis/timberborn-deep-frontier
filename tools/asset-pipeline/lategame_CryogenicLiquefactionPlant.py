@@ -16,7 +16,7 @@ on the compressor house's flat roof.
 
 Hero: a frost-white insulated cold box tower lashed to a slender banded
 distillation column, over two Horton storage spheres on steel legs.
-Roof types: flat steel-plate roof with a steel curb on the two-storey
+Roof types: flat steel-plate roof, open edge to edge, on the two-storey
 compressor house (the cooler bank and its three fans cover it); a flat
 steel cap on layer 7 on the cold box, all nine cells placeable; a dome on
 the column. No vent cowls or roof stacks (the cold-box vent rotor is gone).
@@ -61,7 +61,7 @@ SPHERE_R, SPHERE_Z = .92, 1.5
 def compressor_house(g, parts):
     x0, y0, x1, y1 = HOUSE
     top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=FORGED, frame=IRON, door=DOOR_X, door_id='CompressorHouseDoor',
-                         roof_mat=IRON, curb_mat=IRON, roof_boards=True,
+                         roof_mat=IRON, curb_mat=IRON, roof_boards=True, curb=False,
                          ground_windows={'front': [(1.5, .55, 'factory'), (2.5, .55, 'factory'),
                                                    (4.5, .55, 'factory')],
                                          'back': [(2.25, .55, 'factory')]},
@@ -144,17 +144,12 @@ def cold_box(g, parts):
         bx(g, x0 - .05, y0 - .05, z - .05, x1 + .05, y1 + .05, z + .05, IRON)
     for x in (x0 + .55, x1 - .55):
         bolt_row(g, (x, y0 - .05, 1.3), (x, y0 - .05, COLD_TOP - .2), 14, axis='Y', r=.018)
-    # Crown: a flat steel cap on layer 7 with a low curb, clear of props, so
-    # its nine cells are placeable (the vent, rotor and beacon moved to the
-    # column top).
+    # Crown: a flat steel cap on layer 7, open edge to edge (no curb: user,
+    # 2026-10-31, roofs are platforms), clear of props, so its nine cells are
+    # placeable (the vent, rotor and beacon moved to the column top).
     zt = COLD_TOP + .14
     # Laid as separate steel plates (no stretched texture over the cap).
     deck_slab(g, x0 - .14, y0 - .14, x1 + .14, y1 + .14, zt, 'steel', thickness=.14, base=IRON)
-    w = .12
-    bx(g, x0 - .14, y0 - .14, zt, x1 + .14, y0 - .14 + w, zt + .1, IRON)
-    bx(g, x0 - .14, y1 + .14 - w, zt, x1 + .14, y1 + .14, zt + .1, IRON)
-    bx(g, x0 - .14, y0 - .14 + w, zt, x0 - .14 + w, y1 + .14 - w, zt + .1, IRON)
-    bx(g, x1 + .14 - w, y0 - .14 + w, zt, x1 + .14, y1 + .14 - w, zt + .1, IRON)
     # Caged ladder up the back face to the crown; gauges and a valve station.
     ladder(g, (x0 + x1) / 2 + .5, y1 + .02, 1.08, COLD_TOP + .1, face='back', cage=True)
     for z in (2.0, 4.6):

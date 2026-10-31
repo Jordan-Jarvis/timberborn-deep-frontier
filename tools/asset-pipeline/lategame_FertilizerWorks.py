@@ -15,7 +15,7 @@ and the hall's barrel vault. The silos are four layers lower.
 
 HERO: a battery of three hooped timber-stave silos with teal cone caps, fed
 by a closed bucket elevator and a covered gallery over the silo caps.
-ROOF: flat timber-plank roof with a timber curb on the two-storey
+ROOF: flat timber-plank roof, open edge to edge, on the two-storey
 composting hall (one layer per storey), all eight cells placeable; hipped
 teal cap on the elevator head house; teal cone caps on the silos. No roof
 vents or roof stacks.
@@ -65,7 +65,7 @@ GALLERY = (.3, 5.3, 4.05, 4.55, 5.1, 5.45)   # x0, x1, y0, y1, z0, z1
 def hall(g):
     x0, y0, x1, y1 = HALL
     top = Q.storey_block(g, x0, y0, x1, y1, 2, infill=ORANGE, frame=WOOD, door=DOOR_X, door_id='Door0',
-                         roof_mat=PLANK, curb_mat=WOOD, ground_mat=GREYPLANK, roof_boards=True,
+                         roof_mat=PLANK, curb_mat=WOOD, ground_mat=GREYPLANK, roof_boards=True, curb=False,
                          ground_windows={'front': [(.75, .6, 'factory'), (3.5, .6, 'factory')],
                                          'left': [(2.0, .6, 'factory')]},
                          windows={'front': [(x + .5, 1.5, .55, 'grand') for x in range(4)],
@@ -131,7 +131,7 @@ def gallery(g):
         for k in range(6):
             x = x0 + .3 + k * (x1 - x0 - .6) / 5
             blk(g, x - .035, min(y, y + s * .035), z0 + .08, x + .035, max(y, y + s * .035), z1 - .08, IRON)
-    # Flat steel roof with a low curb.
+    # Flat steel roof slab.
     blk(g, x0 - .05, y0 - .05, z1, x1 + .02, y1 + .05, z1 + .06, IRON)
     for x in SILO_X:
         g.cylinder((x, SILO_Y, (SILO_BASE + SILO_H + SILO_CONE - .08 + z0) / 2), .08,

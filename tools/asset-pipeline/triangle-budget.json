@@ -76,9 +76,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8440,
-   "vertices": 15824,
-   "construction": 8440,
+   "finished": 7924,
+   "vertices": 14792,
+   "construction": 7924,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/ChemicalWorks/ChemicalWorks.IronTeeth.Model.timbermesh"
   },
   "CoalPowerPlant": {
@@ -238,18 +238,18 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 7296,
-   "vertices": 14062,
-   "construction": 7296,
+   "finished": 7200,
+   "vertices": 13870,
+   "construction": 7200,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/CryogenicLiquefactionPlant/CryogenicLiquefactionPlant.IronTeeth.Model.timbermesh"
   },
   "CryogenicTankFarm": {
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9948,
-   "vertices": 19160,
-   "construction": 9948,
+   "finished": 9432,
+   "vertices": 18128,
+   "construction": 9432,
    "file": "outputs/lategame-integration/Data/Buildings/Storage/CryogenicTankFarm/CryogenicTankFarm.IronTeeth.Model.timbermesh"
   },
   "DeepDrill": {
@@ -310,18 +310,18 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 10328,
-   "vertices": 19956,
-   "construction": 10328,
+   "finished": 9720,
+   "vertices": 18740,
+   "construction": 9720,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/ElectrolysisPlant/ElectrolysisPlant.IronTeeth.Model.timbermesh"
   },
   "FertilizerWorks": {
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 6230,
-   "vertices": 11750,
-   "construction": 6230,
+   "finished": 6182,
+   "vertices": 11654,
+   "construction": 6182,
    "file": "outputs/lategame-integration/Data/Buildings/Food/FertilizerWorks/FertilizerWorks.IronTeeth.Model.timbermesh"
   },
   "FishHatchery": {

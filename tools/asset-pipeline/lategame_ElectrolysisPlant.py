@@ -193,9 +193,7 @@ def bell(name, cx, cy, r, z0, h, *, crown=.25, rollers=8, guide_r=None, phase=0.
     K.dome(b, (cx, cy, z0 + h), r + .02, IRON, segments=16, rings=3, squash=crown / r)
     for k in range(2):
         K.band(b, (cx, cy, 0), r, z0 + .25 + (h - .5) * k, .07, PAINTED, segments=16)
-    rr = r * .8
-    zr = z0 + h + crown * math.sqrt(max(0, 1 - (rr / (r + .02)) ** 2)) - .02
-    P.ring_rail(b, (cx, cy), rr, zr, height=.42, posts=10)
+    # No ring rail on the crown (user, 2026-10-31: "lets remove the railings").
     b.cylinder((cx, cy, z0 + h + crown + .07), .11, .18, IRON, 'Z', 12)
     P.hoop(b, (cx, cy, z0 + h + crown + .17), .16, .05, .04, BRASS)
     if guide_r:

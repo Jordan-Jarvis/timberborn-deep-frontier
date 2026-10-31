@@ -92,9 +92,9 @@
   },
   "ChemicalWorks": {
    "model": "Buildings/Metal/ChemicalWorks/ChemicalWorks.IronTeeth.Model",
-   "sha256": "122f2eb5c719158053eb4417de57627375a00aea7615e6e66f7d5fb49f4b1d99",
+   "sha256": "32ce15363d8fcd2ecebfc4c07778733114a62b2d27014d6bb35625c16b65aae1",
    "areas": {
-    "BaseMetal.IronTeeth": 162.1827,
+    "BaseMetal.IronTeeth": 145.9815,
     "BaseWood_DarkBrown.IronTeeth": 2.0607,
     "DFIndustrial08": 0.5145,
     "DFIndustrial25": 0.1099,
@@ -108,7 +108,7 @@
    "families": {
     "brick": 1.068,
     "concrete": 115.5314,
-    "metal": 261.1356,
+    "metal": 244.9343,
     "unpriced": 3.9075,
     "wood": 2.0607
    }
@@ -168,9 +168,9 @@
   },
   "CryogenicLiquefactionPlant": {
    "model": "Buildings/Metal/CryogenicLiquefactionPlant/CryogenicLiquefactionPlant.IronTeeth.Model",
-   "sha256": "9d9fa85f641118a4c08b87feae25dea35b052758d72defb4b183b975da1c610f",
+   "sha256": "9ff0ecd67f7f4bc5c0a762b786c31ce864391b5b08f09ad6810f3f12ef0fd3b7",
    "areas": {
-    "BaseMetal.IronTeeth": 317.6232,
+    "BaseMetal.IronTeeth": 305.6408,
     "BaseWood_DarkBrown.IronTeeth": 1.878,
     "DFIndustrial08": 0.229,
     "DFIndustrial25": 0.0939,
@@ -184,16 +184,16 @@
    "families": {
     "brick": 1.068,
     "concrete": 275.6506,
-    "metal": 359.9348,
+    "metal": 347.9524,
     "unpriced": 3.1759,
     "wood": 1.878
    }
   },
   "CryogenicTankFarm": {
    "model": "Buildings/Storage/CryogenicTankFarm/CryogenicTankFarm.IronTeeth.Model",
-   "sha256": "17168ae5ac2e0bcdcd70a7e2274d78ef2df9f23a8f76d8e4cfe3c9fb30d2fa9f",
+   "sha256": "ee6e7751efdf3b59810e4172bb664d2a55da299902cc94ba5cdfb89ceb4fdd4b",
    "areas": {
-    "BaseMetal.IronTeeth": 106.7751,
+    "BaseMetal.IronTeeth": 101.4993,
     "BaseWood_DarkBrown.IronTeeth": 24.913,
     "DFIndustrial08": 0.1145,
     "DFIndustrial25": 0.0825,
@@ -208,7 +208,7 @@
    "families": {
     "brick": 12.3477,
     "concrete": 193.7937,
-    "metal": 127.5146,
+    "metal": 122.2388,
     "unpriced": 1.2952,
     "wood": 45.0827
    }
@@ -308,9 +308,9 @@
   },
   "ElectrolysisPlant": {
    "model": "Buildings/Metal/ElectrolysisPlant/ElectrolysisPlant.IronTeeth.Model",
-   "sha256": "7ea1b32637fc2d4751efd342948082248ee9f352f64134c49961ea068b32058e",
+   "sha256": "31199d732105179c5757f64af6377fc032beb9b29b198dddba0e96c5a5195081",
    "areas": {
-    "BaseMetal.IronTeeth": 123.735,
+    "BaseMetal.IronTeeth": 120.117,
     "BaseWood_DarkBrown.IronTeeth": 39.2509,
     "DFIndustrial08": 0.229,
     "DFIndustrial25": 0.0849,
@@ -326,17 +326,17 @@
    "families": {
     "brick": 32.1588,
     "concrete": 168.4491,
-    "metal": 161.6373,
+    "metal": 158.0193,
     "unpriced": 4.5894,
     "wood": 78.2942
    }
   },
   "FertilizerWorks": {
    "model": "Buildings/Food/FertilizerWorks/FertilizerWorks.IronTeeth.Model",
-   "sha256": "96a8f76666830a1a541d5e901d4e5e338575d56a0737e719133a75b79da7702f",
+   "sha256": "e366da484c20d207941a98664e0231140e19a8e76afe7e6a48b19450590e6814",
    "areas": {
     "BaseMetal.IronTeeth": 107.0242,
-    "BaseWood_DarkBrown.IronTeeth": 118.2242,
+    "BaseWood_DarkBrown.IronTeeth": 112.349,
     "DFIndustrial08": 0.229,
     "DFIndustrial25": 0.0784,
     "Details.IronTeeth#metal": 1.8963,
@@ -352,7 +352,7 @@
     "brick": 12.204,
     "metal": 159.8783,
     "unpriced": 2.4235,
-    "wood": 219.2349
+    "wood": 213.3597
    }
   },
   "FishHatchery": {

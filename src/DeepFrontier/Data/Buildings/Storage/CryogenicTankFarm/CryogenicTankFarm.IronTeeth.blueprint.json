@@ -9,7 +9,7 @@
       },
       {
         "Id": "MetalBlock",
-        "Amount": 300
+        "Amount": 295
       },
       {
         "Id": "DeepAlloy",
@@ -17,7 +17,7 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 2320
+        "Amount": 2355
       },
       {
         "Id": "Gear",
@@ -1068,7 +1068,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -1361,7 +1361,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -2284,12 +2284,12 @@
           {
             "Center": {
               "X": 5,
-              "Y": 4,
+              "Y": 3.5,
               "Z": 4
             },
             "Size": {
               "X": 4,
-              "Y": 2,
+              "Y": 1,
               "Z": 4
             }
           },
@@ -2303,6 +2303,42 @@
               "X": 1,
               "Y": 2,
               "Z": 2
+            }
+          },
+          {
+            "Center": {
+              "X": 4,
+              "Y": 4.5,
+              "Z": 4
+            },
+            "Size": {
+              "X": 2,
+              "Y": 1,
+              "Z": 4
+            }
+          },
+          {
+            "Center": {
+              "X": 6.5,
+              "Y": 4.5,
+              "Z": 4
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 4
+            }
+          },
+          {
+            "Center": {
+              "X": 5.5,
+              "Y": 4.5,
+              "Z": 4.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 3
             }
           },
           {
@@ -2454,12 +2490,12 @@
               {
                 "Center": {
                   "X": 5,
-                  "Y": 4,
+                  "Y": 3.5,
                   "Z": 4
                 },
                 "Size": {
                   "X": 4,
-                  "Y": 2,
+                  "Y": 1,
                   "Z": 4
                 }
               },
@@ -2473,6 +2509,42 @@
                   "X": 1,
                   "Y": 2,
                   "Z": 2
+                }
+              },
+              {
+                "Center": {
+                  "X": 4,
+                  "Y": 4.5,
+                  "Z": 4
+                },
+                "Size": {
+                  "X": 2,
+                  "Y": 1,
+                  "Z": 4
+                }
+              },
+              {
+                "Center": {
+                  "X": 6.5,
+                  "Y": 4.5,
+                  "Z": 4
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 4
+                }
+              },
+              {
+                "Center": {
+                  "X": 5.5,
+                  "Y": 4.5,
+                  "Z": 4.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 3
                 }
               },
               {
@@ -2921,6 +2993,15 @@
         },
         "Directions": "Left",
         "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 2,
+          "Z": 3
+        },
+        "Directions": "Top",
+        "ReverseRotation": false
       }
     ]
   },
@@ -3162,8 +3243,24 @@
         },
         "Directions": "Left",
         "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 5,
+          "Y": 2,
+          "Z": 3
+        },
+        "Directions": "Top",
+        "State": "Open"
       }
     ]
+  },
+  "BlockObjectNavMeshSettingsSpec": {
+    "NoAutoWalls": false,
+    "GenerateFloorsOnStackable": true,
+    "EdgeGroups": [],
+    "UnblockedCoordinates": [],
+    "BlockedEdges": []
   },
   "StatusIconAnchorSpec": {
     "Height": 7.7

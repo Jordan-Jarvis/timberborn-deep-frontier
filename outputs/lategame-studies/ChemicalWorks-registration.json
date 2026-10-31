@@ -466,7 +466,7 @@
    7
   ]
  ],
- "partsOutsideFootprint": 48,
+ "partsOutsideFootprint": 46,
  "doors": [
   {
    "id": "Entrance",
@@ -685,5 +685,5 @@
   "ChemicalWorks.Beacon",
   "ChemicalWorks.FlareFlame"
  ],
- "sourceHash": "1ab6ee577c1f360f7f92d33029e8dff68429e01249225b742bde8304d7ed5bae"
+ "sourceHash": "7586e4d29b7f000ef36f2df025ffdaf91108ff4d741f492155f169a6aef34202"
 }

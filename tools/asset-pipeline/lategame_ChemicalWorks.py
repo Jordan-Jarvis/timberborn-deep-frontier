@@ -14,10 +14,11 @@ reactor hall is one solid two-storey block (one layer per storey) with a flat
 roof that carries the cooler, its ventilators and the flare stack; its front
 two rows stay open.
 
-HERO: a riveted fractionating column (seven layers) with one ring platform
-      and a caged ladder, its vapour line dropping to the fin-fan cooler on
+HERO: a riveted fractionating column (seven layers) with one open ring
+      platform and a ladder, its vapour line dropping to the fin-fan cooler on
       the hall roof, beside a short flare stack with a live flame.
-ROOF: flat corrugated-metal roof with a steel curb on the reactor hall,
+ROOF: flat corrugated-metal roof on the reactor hall, open edge to edge
+      (no curb: roofs are platforms paths join across, user 2026-10-31),
       its front two rows placeable; the one-layer fin-fan cooler house on
       its back rows has a flat steel-plate top, placeable except the two fan
       cells and the middle cell; steel dome on the column. No roof vents
@@ -66,7 +67,7 @@ FLARE = (2.84, 4.84)   # on the cooler house's back corner, clear of its cell's 
 def hall(g):
     x0, y0, x1, y1 = HALL
     Q.storey_block(g, x0, y0, x1, y1, 2, infill=FORGED, frame=IRON, door=DOOR_X, door_id='Entrance',
-                   roof_mat=PAINTED, curb_mat=IRON, roof_boards=True,
+                   roof_mat=PAINTED, curb_mat=IRON, roof_boards=True, curb=False,
                    ground_windows={'left': [(1.5, .6, 'factory'), (3.5, .6, 'factory')],
                                    'back': [(1.5, .6, 'factory')],
                                    'right': [(3.0, .6, 'factory')]},
@@ -92,7 +93,7 @@ def roof_plant(g, parts):
     other cells and the hall roof's front two rows are platformable (user: "all flat roof
     tiles should be placeable areas")."""
     z = ROOF_Z
-    x0, y0, x1, y1 = .06, 2.0, 2.94, 4.94   # inside the hall roof's curb
+    x0, y0, x1, y1 = .06, 2.0, 2.94, 4.94   # inside the hall roof's edge
     top = z + 1.0
     blk(g, x0 + .06, y0 + .06, z - .02, x1 - .06, y1 - .06, top - .1, FORGED)
     for x, y in ((x0 + .06, y0 + .06), (x1 - .06, y0 + .06), (x1 - .06, y1 - .06), (x0 + .06, y1 - .06)):
@@ -103,7 +104,7 @@ def roof_plant(g, parts):
         blk(g, x0 + .13, y0 + .03, zz, x1 - .13, y0 + .06, zz + .06, IRON)
         blk(g, x0 + .03, y0 + .13, zz, x0 + .06, y1 - .13, zz + .06, IRON)
         blk(g, x1 - .06, y0 + .13, zz, x1 - .03, y1 - .13, zz + .06, IRON)
-    Q.flat_roof(g, x0, y0, x1, y1, top, overhang=0.0, mat=IRON, curb_mat=IRON, boards=True)
+    Q.flat_roof(g, x0, y0, x1, y1, top, overhang=0.0, mat=IRON, curb_mat=IRON, boards=True, curb=False)
     for i, y in enumerate((2.5, 4.5)):
         cx = 1.5
         P.hoop(g, (cx, y, top + .16), .4, .04, .3, IRON, segments=12)
@@ -170,14 +171,14 @@ def column(g, parts):
     K.revolve(g, (cx, cy, 2.5), [(r + .045, 0), (r + .045, 2.2)], FORGED, segments=12, phase=math.pi / 24)
     for z in (2.7, 3.6, 4.5):
         K.band(g, (cx, cy, 0), r + .045, z, .07, IRON, segments=12, phase=math.pi / 24)
-    # One ring platform on a whole layer, knee brackets, rail open at the ladder.
+    # One open ring platform on a whole layer on knee brackets (no rail: user,
+    # 2026-10-31, "lets remove the railings"), the ladder up its right side.
     z = PLATFORM_Z
     P.annulus(g, (cx, cy), r - .1, .98, z - .08, z, IRON, segments=16)
     for k in range(8):
         a = k * math.pi / 4 + math.pi / 8
         g.beam((cx + math.cos(a) * r, cy + math.sin(a) * r, z - .6),
                (cx + math.cos(a) * .9, cy + math.sin(a) * .9, z - .1), .06, mat=IRON)
-    P.ring_rail(g, (cx, cy), .94, z, height=.6, posts=12, gap=(-math.pi * .14, math.pi * .14))
     K.ladder(g, cx + .98, cy, 0, z + .6, face='right', width=.3, cage=False)
     # Side-draw nozzles and a reflux line down the right side.
     for zz, a in ((1.8, -.3), (3.2, .4), (4.1, -.7)):
