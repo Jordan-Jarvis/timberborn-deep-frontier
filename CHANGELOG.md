@@ -28,7 +28,13 @@
 - Concrete-heavy late buildings now need far more concrete (the Nuclear Reactor 32,285, the Launch Pad 9,040), and less steel and alloy. Before the quarries, the buildings still fit in the 1,800 limestone and sandstone that every built-in map holds near its pits.
 
 ### Fewer required mods
-- Six mods are no longer required: Pump to Tank, Flywheels, Teleporter Station, Solar Panel (northforge), Expanded Storage and Powered Tubeway. Deep Frontier never used them directly. If you keep Expanded Storage, its Pile Module no longer shows deep ore and deep alloy piles.
+- **No crash without the optional mods.** Deep Frontier now loads, starts a new game and loads a save with only its required mods. Without Power Lines the game used to crash while loading mods ("Could not load file or assembly 'PowerLines'"), and three buildings carried a Power Lines spec that the game cannot load without that mod.
+- Seven mods are no longer required: Power Lines, Pump to Tank, Flywheels, Teleporter Station, Solar Panel (northforge), Expanded Storage and Powered Tubeway. Deep Frontier still integrates with the ones it uses, and only while they are enabled:
+  - **Power Lines:** cable attachment points on the Concrete Mixer, Reinforced Hydro Turbine and Materials Laboratory, and the vanilla power shafts stay in the build menu.
+  - **Expanded Storage:** its Pile Module shows Deep Ore and Deep Alloy piles again.
+  - **Moddable Weathers** and **Sluice is Back!** stay optional, as before.
+  - Pump to Tank, Flywheels, Teleporter Station, Solar Panel and Powered Tubeway need nothing from Deep Frontier and work alongside it.
+- **One Tubeway Station in the build menu:** the vanilla station is hidden in favour of New Building Styles' Tubeway Station. Placed vanilla stations keep working, and dev mode still shows both.
 
 ### Smaller buildings (compaction pass)
 - **Cement Kiln** is 5x3, 4 high (was 7x5, 6 high): a closed feed house, the rotary drum under a lean-to roof on stone blocks, the stone firebox with its fire and chimney. The open timber trestle and raised drum deck are gone.

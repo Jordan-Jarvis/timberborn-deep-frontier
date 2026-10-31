@@ -103,7 +103,6 @@ export async function hydroBlueprint() {
     {Coordinates:xyz([6,9,0]),Directions:'Up, Bottom',ReverseRotation:false},
     {Coordinates:xyz([6,4,0]),Directions:'Down, Bottom',ReverseRotation:false}
   ]})};}
-  v.PowerLineSpec={ConnectionLocations:[xyz([7.97,9.97,1.90])]};
   v.PlaceableBlockObjectSpec={ToolGroupId:'Power',ToolOrder:240,ToolShape:'Square',Layout:'Single',
     CustomPivot:{HasCustomPivot:true,Coordinates:xyz([2,3.5,0])},
     CanBeAttachedToTerrainSide:false,DevModeTool:false};
@@ -115,7 +114,9 @@ export async function hydroBlueprint() {
   v.Children={'#Finished':{TimbermeshSpec:{Model:model+'.Model'},CollidersSpec:colliders},
     '#Unfinished':{Children:{ConstructionStage0:{
       TimbermeshSpec:{Model:model+'.ConstructionStage0.Model'},CollidersSpec:colliders}}}};
-  return {id:b.id,path:model+'.blueprint.json',blueprint:v,rows:[
+  // Power Lines attachment (optional mod): its integration modifier, not a blueprint spec.
+  return {id:b.id,path:model+'.blueprint.json',blueprint:v,
+    integrations:{PowerLines:{PowerLineSpec:{ConnectionLocations:[xyz([7.97,9.97,1.90])]}}},rows:[
     [`Building.${b.id}.DisplayName`,b.name],
     [`Building.${b.id}.Description`,b.description],
     [`Building.${b.id}.FlavorDescription`,'A river, given a useful job.'],

@@ -65,7 +65,11 @@ for (const entry of catalog.buildings) {
       {Coordinates:{X:3,Y:2,Z:0},Directions:'Right',State:'OpenIn'});
     const portBlock=value.BlockObjectSpec.Blocks[2*size.X+3];
     assert.notEqual(portBlock.Occupations,'None','Mixer service inlet requires an occupied frame cell');
-    assert.deepEqual(value.PowerLineSpec.ConnectionLocations,[{X:3.9,Y:2.9,Z:1.32}]);
+    // Power Lines is optional: its attachment point is the mixer's integration modifier, never a blueprint spec.
+    assert(!value.PowerLineSpec,'Mixer blueprint must not carry the optional PowerLineSpec');
+    const line = await read(data, 'Integrations/PowerLines/ConcreteMixer.IronTeeth.json');
+    assert.equal(line.Blueprint,'Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.blueprint');
+    assert.deepEqual(line.Modifier,{PowerLineSpec:{ConnectionLocations:[{X:3.9,Y:2.9,Z:1.32}]}});
     // A navmesh spec may only switch on native floors over platformable roofs (roof_deck_content.mjs).
     const nav=value.BlockObjectNavMeshSettingsSpec;
     assert(!value.BuildingWalkwaySpec && (!nav || !(nav.EdgeGroups.length || nav.UnblockedCoordinates.length || nav.BlockedEdges.length)),'Mixer has no walkway data');

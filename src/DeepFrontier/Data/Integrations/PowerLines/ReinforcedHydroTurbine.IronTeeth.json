@@ -1,0 +1,14 @@
+{
+  "Blueprint": "Buildings/Power/ReinforcedHydroTurbine/ReinforcedHydroTurbine.IronTeeth.blueprint",
+  "Modifier": {
+    "PowerLineSpec": {
+      "ConnectionLocations": [
+        {
+          "X": 7.97,
+          "Y": 9.97,
+          "Z": 1.9
+        }
+      ]
+    }
+  }
+}

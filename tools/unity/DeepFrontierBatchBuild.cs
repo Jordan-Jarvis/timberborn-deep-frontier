@@ -8,6 +8,7 @@ using UnityEngine;
 namespace Timberborn.ModdingTools.ModBuilding {
   // Command-line entry point for the same builder used by ModBuilderWindow.
   public static class DeepFrontierBatchBuild {
+    private const string OptionalPrefix = "DeepFrontier.";
     public static void Build() {
       if (!EditorApplication.ExecuteMenuItem("Deep Frontier/Create Materials")) {
         throw new InvalidOperationException("Deep Frontier material authoring menu is unavailable.");
@@ -37,8 +38,16 @@ namespace Timberborn.ModdingTools.ModBuilding {
       if (!new ModBuilder(new[] { mod }, settings).Build()) {
         throw new InvalidOperationException("The official Deep Frontier build failed. See the Unity build log.");
       }
-      PackageOptionalAssembly(mod.Name, "DeepFrontier.ModdableWeathers.dll", "DeepFrontier.ModdableWeathers.dll.ModdableWeathers.optional");
-      PackageOptionalAssembly(mod.Name, "DeepFrontier.SluiceIsBack.dll", "DeepFrontier.SluiceIsBack.dll.SluiceIsBack.optional");
+      // Every asmdef other than the main DeepFrontier one is an optional-mod integration named
+      // DeepFrontier.<ModId> (tools/validate_mod_dependencies.mjs checks each ModId is in the
+      // manifest's OptionalMods and that only its assembly uses that mod's types).
+      foreach (var asmdef in Directory.GetFiles(Path.Combine(mod.AbsolutePath, "Scripts"), "*.asmdef", SearchOption.AllDirectories)) {
+        var name = Path.GetFileNameWithoutExtension(asmdef);
+        if (name == "DeepFrontier") continue;
+        if (!name.StartsWith(OptionalPrefix, StringComparison.Ordinal))
+          throw new InvalidOperationException("Optional assembly " + asmdef + " must be named " + OptionalPrefix + "<ModId>");
+        PackageOptionalAssembly(mod.Name, name + ".dll", name + ".dll." + name.Substring(OptionalPrefix.Length) + ".optional");
+      }
       Debug.Log("[DeepFrontier] Official Mod Builder completed successfully.");
     }
 

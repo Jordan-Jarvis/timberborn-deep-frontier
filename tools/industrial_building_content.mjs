@@ -130,11 +130,15 @@ export async function applyIndustrialLayout(value,building){
   };
   // Rear-right corner of the header-tank pedestal's iron cap; Power Lines
   // expects grid XYZ (Z is height). Connection count/range remain
-  // player-configured settings.
-  if(ident==='ConcreteMixer')value.PowerLineSpec={
+  // player-configured settings. Power Lines is optional: the spec is returned
+  // as its integration modifier (tools/optional_mod_content.mjs), not written
+  // into the blueprint.
+  const integrations={};
+  if(ident==='ConcreteMixer')integrations.PowerLines={PowerLineSpec:{
     ConnectionLocations:[xyz([3.90,2.90,1.32])],
-  };
+  }};
   // Kiln firing smoke at the steel stack while it works (the other machines
   // have no flue). Smog lists the kiln as a polluter.
   if(ident==='CementKiln')applyVanillaSmoke(value,await sceneSmokeRegistration('industrial-integration',ident,d),ident);
+  return integrations;
 }

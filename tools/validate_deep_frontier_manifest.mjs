@@ -13,6 +13,18 @@ for(const entry of required) {
   }
 }
 if(new Set(required.map(e=>e.Id)).size!==required.length) throw new Error('Duplicate required dependency ID');
+// OptionalMods (native manifest field: Timberborn.Modding ManifestLoader; ModSorter loads them before
+// this mod). Integrations with them are checked by validate_mod_dependencies.mjs.
+const optional=manifest.OptionalMods??[];
+if(!Array.isArray(optional)) throw new Error('OptionalMods must be an array');
+for(const entry of optional) {
+  if(typeof entry !== 'object' || typeof entry.Id !== 'string' || typeof entry.MinimumVersion !== 'string') {
+    throw new Error('Each optional mod must declare its exact Id and MinimumVersion');
+  }
+}
+if(new Set(optional.map(e=>e.Id)).size!==optional.length) throw new Error('Duplicate optional mod ID');
+const both=optional.filter(e=>required.some(r=>r.Id===e.Id)).map(e=>e.Id);
+if(both.length) throw new Error(`Mods both required and optional: ${both.join(', ')}`);
 function compareVersions(left,right) {
   for(const version of [left,right]) {
     if(!/^\d+\.\d+(\.\d+){0,2}$/.test(version)) throw new Error(`Invalid package version: ${version}`);
@@ -31,6 +43,7 @@ console.log(JSON.stringify({
   mod: manifest.Id,
   targetGame: manifest.MinimumGameVersion,
   requiredCount: required.length,
+  optionalCount: optional.length,
   installedFoundationCount: installed.packages.length,
   missingRequiredMods: missing,
   outdatedRequiredMods: outdated,

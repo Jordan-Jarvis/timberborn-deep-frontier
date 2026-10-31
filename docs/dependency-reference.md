@@ -39,12 +39,47 @@ The installed DLL decorates `LadderSpec` and refreshes the owner and path object
 
 Deep Frontier does not impose a numeric maximum on building layers. Timberborn blueprints already describe stacking and support through `BlockObjectSpec.Stackable`, occupations, support surfaces, collision, and path rules. Expanded Storage modules use `BlockObject` and may stack when the game accepts the support. Solar Panel and the grand stores use `None` and therefore do not stack as block modules. The practical limits are the blueprint's support/occupation rules, map height, collision, path access, and normal game placement rules.
 
+## Required and optional mods (0.6.0, 2026-10-30)
+
+`src/DeepFrontier/manifest.json` lists **RequiredMods** (what the package cannot load or play without) and **OptionalMods** (mods Deep Frontier integrates with only while they are enabled). Both are native manifest fields (Timberborn.Modding `ManifestLoader`), and `ModSorter` loads both kinds before Deep Frontier. A missing RequiredMod only shows a warning on the Mods screen (`ModWarningUpdater`); loading continues, so listing a dependency protects nothing by itself.
+
+| Mod | Status | What Deep Frontier needs it for |
+|---|---|---|
+| Harmony 2.4.1 | required | Every runtime patch (`HarmonyLib` in about 30 main-assembly files). |
+| TimberUi 11.0.1 | required | All custom panels (`TimberUi.CommonUi`). |
+| Mod Settings 1.1.1.0 | required | Radioactive tide options (`RadioactiveTideSettings`, `ModSettings.Core/Common`). |
+| Moddable Tool Groups 11.0.0 | required | The ten Deep Frontier toolbar sub-groups (`ParentToolGroupSpec` in `Data/BlockObjectToolGroups`); an unknown spec key stops template loading. |
+| Moddable Timberborn 11.1.3 | required | `OptionalModsLoader`, which loads every optional assembly below. Timber Pipes, Conveyor Belts and Map Transformer require it too. No main-assembly code uses it. |
+| Moddable Recipes 11.0.0 | required | The main assembly patches its `ManufactoryPatches.InitInventoryForRecipe` at mod start (restaurant kitchen, bot-maintenance and workplace-upkeep inventories, and the enable-state fix). These are compatibility patches for Moddable Recipes itself, and no Deep Frontier data uses its features, so it could become optional by moving those patches into a `DeepFrontier.ModdableRecipes` assembly. |
+| Timber Pipes 11.4.0 | required | `BuildingPipeTargetPortsSpec`/`BuildingPipeSpec` on 33 buildings (fluid inputs, the coolant loop, the tank farm) and `CryogenicTank`. |
+| Conveyor Belts 11.4.0 | required | `GroceryBeltIntake`, the grocery's belt intake (an `IBeltConnectionProvider`), and the belt acceptance harnesses. It has no blueprint spec, so it could become optional the same way. |
+| Map Transformer 11.0.0 | required | At runtime, not only for authoring: new games on built-in maps get the 66-layer height through the `MapHeight` key that its `MapSize.Load` postfix applies (`MapSetup/BuiltinMapHeight.cs`), and every save keeps that key through its `MapSize.Save` postfix. |
+| New Building Styles 0.1 | required | User decision (2026-10-20, [style notes](art/iron-teeth-style.md)). Deep Frontier loads none of its content. The vanilla Tubeway Station is hidden in favour of its `TubewayStop.IronTeeth` (user decision, 2026-10-30), and `validate_mod_dependencies.mjs` checks that station stays visible. |
+| Power Lines 11.1.1 | optional | `DeepFrontier.PowerLines` adds `PowerLineSpec` cable points to the Concrete Mixer, Reinforced Hydro Turbine and Materials Laboratory from `Data/Integrations/PowerLines` (`PowerLineConnectionPoints`, through the game's `IBlueprintModifierProvider`), and holds the Factory Transport and Lategame acceptance harnesses. The vanilla shaft override (`tools/vanilla_tool_overrides.mjs`) undoes the `DevModeTool` that Power Lines sets on the vanilla shafts; without Power Lines it repeats the vanilla value. |
+| Expanded Storage 1.0.1 | optional | `PileModule.IronTeeth.optional.blueprint.json` appends the Deep Ore and Deep Alloy pile visualizations. The game merges a `*.optional.blueprint.json` only when a non-optional file exists at the same path (`BlueprintFileBundleLoader`). |
+| Moddable Weathers 11.0.0 | optional | `DeepFrontier.ModdableWeathers` registers the radioactive tide as a Moddable Weathers weather. `ModdableWeatherSpecs/RadioactiveTideWeather` is a standalone blueprint that only that mod reads; without it, SpecService logs its two unknown keys and never deserializes it. |
+| Sluice is Back! 11.0.0 | optional | `DeepFrontier.SluiceIsBack`: contamination-aware sluices. |
+
+Pump to Tank, Flywheels, Teleporter Station, Northforge Solar Panel and Powered Tubeway are compatible and need no Deep Frontier content. Powered Tubeway's tubeways carry power into Deep Frontier buildings through their ordinary transputs; the lategame harness skips its tubeway check when `Tubeway.IronTeeth` has no `TransputProviderSpec`.
+
+**Root cause of the 0.6.0 player crash** ("the game crashes upon loading the mods" without these mods). Reproduced on 2026-10-30 on the installed package with only Deep Frontier and its required mods enabled (`outputs/memory-load-depfree-r1-new.log`). The game threw `TypeLoadException: Could not load type of field 'DeepFrontier.Scripts.FactoryTransportAcceptance:_lines' ... Could not load file or assembly 'PowerLines'` from `ModCodeStarter.GetModStarters`, which runs `typeof(IModStarter).IsAssignableFrom(type)` over every type in `DeepFrontier.dll`, before the main menu.
+- On Mono that check also resolves field types. So a main-assembly type with any member of an absent mod's type breaks mod start, not only base types and interfaces.
+- A second failure waited behind it, in the data. SpecService deserializes templates with `BlueprintDeserializer.DeserializeUnsafe`, which throws `No type found for key PowerLineSpec`. Only the safe path, used by tools, turns unknown keys into `NonExistingSpec`.
+- Commit 2feb3dc dropped six mods that the package never referenced; Power Lines was the one it did reference.
+
+**Rules.** `tools/validate_mod_dependencies.mjs` (part of `validate_all`) enforces these. It takes the mod list from the manifest, the assembly split from the asmdefs, and namespace and type ownership from the DLLs of the installed packages.
+- Main-assembly code uses only the game and the RequiredMods.
+- Code for an optional mod lives in `Scripts/<folder>/DeepFrontier.<ModId>.asmdef`. The build packages it as `Scripts/DeepFrontier.<ModId>.dll.<ModId>.optional`, deriving the name from the asmdefs, and Moddable Timberborn's `OptionalModsLoader` loads it only while that mod is enabled.
+- `OptionalIntegrationsConfigurator` fails a package whose Power Lines bridge is missing, and a Power Lines acceptance launch without Power Lines.
+- No Deep Frontier blueprint carries an optional mod's spec. A producer returns such a spec as `integrations: {<ModId>: {...}}`. `tools/optional_mod_content.mjs` writes it to `Data/Integrations/<ModId>/<Template>.json`, and the mod's optional assembly applies it.
+- A partial blueprint of an optional mod's template is a native `*.optional.blueprint.json`, and that mod is listed in OptionalMods.
+
 ## Integration contract for Deep Frontier
 
-Map Transformer is an authoring dependency rather than a runtime gameplay dependency. Use it to transform a copied source map, add the lower-sector Z budget, reload/save the generated map, and publish the resulting map with its custom terrain-height requirement. Do not call it from ordinary gameplay or assume it can safely resize an active save.
+Map Transformer is also a runtime dependency since built-in maps gained their 66-layer height (see the table above). As an authoring tool, use it to transform a copied source map, add the lower-sector Z budget, reload/save the generated map, and publish the resulting map with its custom terrain-height requirement. Do not call it from ordinary gameplay or assume it can safely resize an active save.
 
-1. Foundation mods declared in `src/DeepFrontier/manifest.json` are required. Verify their versions and API contracts before registering integration points. Missing or incompatible required dependencies must fail explicitly.
-2. Deep Frontier uses the dependency-owned `Pipes`, `Conveyor Belts`, `Tubeway`, and Power Lines groups. Do not create substitute toolbar groups, assets, or transport behavior when a dependency is missing.
+1. Mods in the manifest's RequiredMods are required; mods in OptionalMods are integrations that load only with their mod (see above). Verify their versions and API contracts before registering integration points. Missing or incompatible required dependencies must fail explicitly; a missing optional mod removes only its integration.
+2. Deep Frontier uses the dependency-owned `Pipes`, `Conveyor Belts`, `Tubeway`, and (when enabled) Power Lines groups. Do not create substitute toolbar groups, assets, or transport behavior when a dependency is missing.
 3. Recipes use explicit ports. Conveyor-only factories require their conveyor connection; liquids and power use the authored transport choices. Early-tier ordinary hauling and native shafts are deliberate design choices, never missing-dependency fallbacks. A candidate such as Ladder becomes required when shipped content actually depends on it.
 4. Dependency values are versioned inputs. The workbook records exact installed package facts where available and labels every unknown cost, capacity, unlock, or recipe as pending instead of silently copying an old 1.0 or legacy package.
 5. Power is recorded in hp throughout the workbook. Under-supplied powered buildings should throttle or stop according to the game and dependency behavior; the mod does not add a universal heat or maintenance simulation.

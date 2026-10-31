@@ -13,6 +13,7 @@
 import {readFile, readdir} from 'node:fs/promises';
 import {resolve, relative, sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {readIntegrations} from './optional_mod_content.mjs';
 
 const defaultRoot = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const vanillaRelative = ['vendor', 'timberborn-modding', 'Assets', 'Tools', 'ImportedAssets', 'Editor', 'Resources'];
@@ -65,6 +66,16 @@ export async function auditAutomationContent({root = defaultRoot, dataRoot = res
     const id = blueprintId(dataRoot, path);
     const value = await readJson(path);
     if (id.startsWith('Buildings/') || value.BuildingSpec) generated.set(id, value);
+  }
+  // Optional-mod specs (Data/Integrations, tools/optional_mod_content.mjs) join their template
+  // while that mod is enabled, so they are audited as part of it.
+  for (const {file, blueprint, modifier} of await readIntegrations(dataRoot)) {
+    const value = generated.get(blueprint);
+    if (!value) throw new Error(`${file}: no generated template ${blueprint}`);
+    for (const key of Object.keys(modifier)) {
+      if (Object.hasOwn(value, key)) throw new Error(`${file}: ${blueprint} already has ${key}`);
+      value[key] = modifier[key];
+    }
   }
 
   const collected = new Set(collection);
@@ -126,9 +137,11 @@ export async function auditAutomationContent({root = defaultRoot, dataRoot = res
     const touched = nativeAutomationRole(patch, contract);
     if (touched.sources.length || touched.terminals.length || touched.transmitters.length || patch.BuildingSpec)
       errors.push(`${id}: vanilla patch changes automation-relevant specs (${[...touched.sources, ...touched.terminals, ...touched.transmitters, ...(patch.BuildingSpec ? ['BuildingSpec'] : [])].join(', ')})`);
-    // A patch of a required dependency's template names that installed
-    // dependency folder as baseRoot; otherwise the base is vanilla.
-    const base = nativeAutomationRole(declared.baseRoot ? await readVanillaJson(resolve(declared.baseRoot, `${id}.json`)) : await vanillaBlueprint(id), contract);
+    // A patch of a dependency's template names that installed dependency
+    // folder as baseRoot; otherwise the base is vanilla. A native *.optional
+    // patch merges into the file at the same path without ".optional".
+    const baseId = id.replace(/\.optional\.blueprint$/, '.blueprint');
+    const base = nativeAutomationRole(declared.baseRoot ? await readVanillaJson(resolve(declared.baseRoot, `${baseId}.json`)) : await vanillaBlueprint(baseId), contract);
     if (base.role !== declared.nativeRole || !sameSet(base.sources, declared.nativeSources))
       errors.push(`${id}: vanilla base is ${base.role} [${base.sources}], declared ${declared.nativeRole} [${declared.nativeSources}]`);
     for (const key of Object.keys(patch).filter((key) => !vanillaKeys.has(key))) {

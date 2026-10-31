@@ -1,0 +1,6 @@
+{
+  "name": "DeepFrontier.PowerLines",
+  "references": ["DeepFrontier"],
+  "autoReferenced": false,
+  "allowUnsafeCode": true
+}

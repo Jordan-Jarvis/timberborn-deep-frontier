@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Throwaway compile check for the optional Power Lines assembly (src/DeepFrontier/Scripts/PowerLines)
+       against the main compile check's DeepFrontier.dll (build ../DeepFrontierCompileCheck.csproj first), the
+       installed game DLLs and the installed Power Lines 11.1.1.
+       Not part of the official Mod Builder pipeline. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>DeepFrontier.PowerLines</AssemblyName>
+    <RootNamespace>DeepFrontier.PowerLineIntegration</RootNamespace>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <!-- As the asmdef: the harnesses moved from the main assembly, which has allowUnsafeCode (SkipVerification) for non-public game members. -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <MSBuildWarningsAsMessages>MSB3277;MSB3243</MSBuildWarningsAsMessages>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Managed>$(ModsBuildManaged)</Managed>
+    <SourceRoot>$(MSBuildThisFileDirectory)../../../src/DeepFrontier/Scripts/PowerLines</SourceRoot>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(SourceRoot)/**/*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <GameDll Include="$(Managed)/*.dll" Exclude="$(Managed)/DeepFrontier.dll;$(Managed)/DeepFrontier.ModdableWeathers.dll;$(Managed)/DeepFrontier.SluiceIsBack.dll;$(Managed)/DeepFrontier.PowerLines.dll;$(Managed)/PowerLines.dll" />
+    <Reference Include="@(GameDll)" Private="false" />
+    <Reference Include="DeepFrontier" Private="false">
+      <HintPath>$(MSBuildThisFileDirectory)../bin/Debug/netstandard2.1/DeepFrontier.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerLines" Private="false">
+      <HintPath>$(Workshop)/3766893705/version-1.1/PowerLines.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <!-- Paths come from Directory.Build.props, written for this machine by tools/setup_dev.py. -->
+  <Target Name="RequireDevEnvironment" BeforeTargets="ResolveAssemblyReferences" Condition="'$(Workshop)' == '' Or '$(Managed)' == ''">
+    <Error Text="Run &quot;python tools/setup_dev.py&quot; first: tools/compile-check/Directory.Build.props sets this machine's game and Workshop paths." />
+  </Target>
+</Project>

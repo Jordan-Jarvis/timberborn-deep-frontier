@@ -1498,15 +1498,6 @@
       }
     ]
   },
-  "PowerLineSpec": {
-    "ConnectionLocations": [
-      {
-        "X": 3.9,
-        "Y": 2.9,
-        "Z": 1.32
-      }
-    ]
-  },
   "FrontierWorkforceRiskSpec": {
     "DangerTier": "Hazardous",
     "Probability": "Low",

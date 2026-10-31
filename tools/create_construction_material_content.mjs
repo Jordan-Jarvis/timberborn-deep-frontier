@@ -8,6 +8,7 @@ import {structuralBlueprints} from './structural_building_content.mjs';
 import {hydroBlueprint} from './hydro_building_content.mjs';
 import {researchContent} from './research_building_content.mjs';
 import { buildingCost, scaledPower } from './lategame_costs.mjs';
+import { writeIntegrations } from './optional_mod_content.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dataRoot = resolve(root, 'src/DeepFrontier/Data');
@@ -151,11 +152,13 @@ for (const building of catalog.buildings) {
       TimbermeshSpec: { Model: `${modelPath(id)}.ConstructionStage0.Model` }, CollidersSpec: collision(size),
     } } },
   };
-  if (['crusher','kiln','quarry','mixer'].includes(kind)) await applyIndustrialLayout(value,building);
+  const integrations = ['crusher','kiln','quarry','mixer'].includes(kind) ? await applyIndustrialLayout(value,building) : {};
   if (kind==='pit') await applyPitLayout(value,building);
   const path = `Buildings/Metal/${id}/${id}.IronTeeth.blueprint`;
   buildingPaths.push(path);
   await write(`${path}.json`, value);
+  // Optional-mod specs (Power Lines attachment points) go to Data/Integrations (optional_mod_content.mjs).
+  await writeIntegrations(`${path}.json`, integrations);
 }
 const structures=await structuralBlueprints();
 for(const entry of structures) {
@@ -165,11 +168,13 @@ for(const entry of structures) {
 }
 const turbine=await hydroBlueprint();
 await write(turbine.path,turbine.blueprint);
+await writeIntegrations(turbine.path,turbine.integrations);
 buildingPaths.push(turbine.path.slice(0,-5));
 rows.push(...turbine.rows);
 const research=await researchContent();
 for(const entry of research.buildings) {
   await write(entry.path,entry.blueprint);
+  await writeIntegrations(entry.path,entry.integrations);
   buildingPaths.push(entry.path.slice(0,-5));
   rows.push(...entry.rows);
 }

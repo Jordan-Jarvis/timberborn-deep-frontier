@@ -32,7 +32,9 @@ EXPORTS = ROOT / CONTRACT['exportRoot']
 VANILLA = ROOT / 'vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources'
 PILE_PATCHES = ['Buildings/Storage/SmallIndustrialPile/SmallIndustrialPile.IronTeeth.blueprint.json',
                 'Buildings/Storage/LargeIndustrialPile/LargeIndustrialPile.IronTeeth.blueprint.json',
-                'MapEditor/Objects/ReservePile/ReservePile.blueprint.json']
+                'MapEditor/Objects/ReservePile/ReservePile.blueprint.json',
+                # Expanded Storage is optional: a native .optional patch, merged only when its PileModule exists.
+                'Buildings/Storage/PileModule/PileModule.IronTeeth.optional.blueprint.json']
 failures, report = [], {}
 
 

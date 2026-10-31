@@ -28,9 +28,12 @@
     <Compile Remove="$(ScriptsRoot)/RadioactiveTide/ModdableWeathers/**" />
     <!-- The optional Sluice is Back! assembly compiles separately (sluice-is-back/). -->
     <Compile Remove="$(ScriptsRoot)/SluiceIsBack/**" />
+    <!-- The optional Power Lines assembly compiles separately (power-lines/). -->
+    <Compile Remove="$(ScriptsRoot)/PowerLines/**" />
   </ItemGroup>
   <ItemGroup>
-    <GameDll Include="$(Managed)/*.dll" Exclude="$(Managed)/DeepFrontier.dll;$(Managed)/DeepFrontier.ModdableWeathers.dll;$(Managed)/DeepFrontier.SluiceIsBack.dll" />
+    <GameDll Include="$(Managed)/*.dll" Exclude="$(Managed)/DeepFrontier.dll;$(Managed)/DeepFrontier.ModdableWeathers.dll;$(Managed)/DeepFrontier.SluiceIsBack.dll;$(Managed)/DeepFrontier.PowerLines.dll;$(Managed)/PowerLines.dll" />
+    <!-- PowerLines.dll is excluded: the main assembly must compile without the optional Power Lines mod. -->
     <Reference Include="@(GameDll)" Private="false" />
     <!-- Optional dependency (not staged into this Managed folder until a build imports it). The main
          DeepFrontier assembly must compile without using it: the C# compiler emits no reference to an

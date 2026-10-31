@@ -12,8 +12,13 @@
 //       Deep Frontier meshes shipped in the asset bundle;
 //     - same-path partial blueprints that append the two visualizations to
 //       every Iron Teeth pile that visualizes pileable goods (vanilla piles,
-//       and the map-editor ReservePile), so a
-//       pile shows ore and alloy instead of nothing.
+//       the map-editor ReservePile and, when Expanded Storage is installed,
+//       its PileModule), so a pile shows ore and alloy instead of nothing.
+//       Expanded Storage is optional (manifest OptionalMods): its patch is the
+//       native PileModule.IronTeeth.optional.blueprint.json, which the game
+//       merges only when a non-optional file exists at that path
+//       (Timberborn.BlueprintSystem BlueprintFileBundleLoader, 1.1.2.8), and
+//       OptionalMods sorts Expanded Storage first so the #append follows it.
 // Every input is checked; nothing falls back.
 import {readFile, writeFile, mkdir, access} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
@@ -59,17 +64,21 @@ export function checkMapObjectBlueprint(id, value, child) {
 
 // Pile templates (Iron Teeth) that visualize pileable goods, by same-path
 // partial blueprint. Base files must exist with exactly the vanilla pile list.
+// A pile of an optional mod gets a *.optional.blueprint.json patch.
 const VANILLA_PILE_LIST = ['Log', 'Plank', 'TreatedPlank', 'ScrapMetal', 'MetalBlock'];
 const PILES = [
   {source: 'vanilla', path: 'Buildings/Storage/SmallIndustrialPile/SmallIndustrialPile.IronTeeth.blueprint.json'},
   {source: 'vanilla', path: 'Buildings/Storage/LargeIndustrialPile/LargeIndustrialPile.IronTeeth.blueprint.json'},
   {source: 'vanilla', path: 'MapEditor/Objects/ReservePile/ReservePile.blueprint.json'},
+  {source: 'MauricioBedoya.ExpandedStorage', path: 'Buildings/Storage/PileModule/PileModule.IronTeeth.blueprint.json'},
 ];
+// The Deep Frontier file for a pile: same path, .optional for an optional mod's template.
+const patchPath = (pile) => pile.source === 'vanilla' ? pile.path : pile.path.replace(/\.blueprint\.json$/, '.optional.blueprint.json');
 const PILE_GOODS = [
   {good: 'DeepOre', template: 'ScrapMetal'},
   {good: 'DeepAlloy', template: 'MetalBlock'},
 ];
-export const PILE_PATCHES = PILES.map((p) => p.path);
+export const PILE_PATCHES = PILES.map(patchPath);
 export const GOOD_VISUALIZATION_FILES = PILE_GOODS.map(({good}) => `GoodVisualization/GoodVisualization.${good}.blueprint.json`);
 
 export async function applyPileGoodVisualizations({root = defaultRoot, dataRoot = resolve(root, 'src', 'DeepFrontier', 'Data')} = {}) {
@@ -94,12 +103,15 @@ export async function applyPileGoodVisualizations({root = defaultRoot, dataRoot 
     ids.push(contract.visualization);
   }
   for (const pile of PILES) {
-    const base = pile.source === 'vanilla' ? resolve(vanilla, pile.path) : resolve(EXPANDED_STORAGE, pile.path);
+    const base = pile.source === 'vanilla' ? resolve(vanilla, pile.path)
+      : pile.source === 'MauricioBedoya.ExpandedStorage' ? resolve(EXPANDED_STORAGE, pile.path)
+      : null;
+    if (!base) throw new Error(`${pile.path}: no installed package for pile source ${pile.source}`);
     if (!await exists(base)) throw new Error(`pile template base missing: ${pile.source} ${pile.path}`);
     const list = (await readJson(base)).StockpileGoodPileVisualizerSpec?.GoodPileVisualizations;
     if (JSON.stringify(list) !== JSON.stringify(VANILLA_PILE_LIST))
       throw new Error(`${pile.path}: pile visualizations ${JSON.stringify(list)} are not the vanilla list; review the patch`);
-    const target = resolve(dataRoot, pile.path);
+    const target = resolve(dataRoot, patchPath(pile));
     if (await exists(target)) {
       const keys = Object.keys(await readJson(target));
       if (keys.length !== 1 || keys[0] !== 'StockpileGoodPileVisualizerSpec')

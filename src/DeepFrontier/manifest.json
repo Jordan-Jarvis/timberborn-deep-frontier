@@ -14,7 +14,12 @@
     { "Id": "ModdableRecipes", "MinimumVersion": "11.0.0" },
     { "Id": "TimberPipes", "MinimumVersion": "11.4.0" },
     { "Id": "ConveyorBelt", "MinimumVersion": "11.4.0" },
-    { "Id": "PowerLines", "MinimumVersion": "11.1.1" },
     { "Id": "MapTransformer", "MinimumVersion": "11.0.0" }
+  ],
+  "OptionalMods": [
+    { "Id": "PowerLines", "MinimumVersion": "11.1.1" },
+    { "Id": "MauricioBedoya.ExpandedStorage", "MinimumVersion": "1.0.1" },
+    { "Id": "ModdableWeathers", "MinimumVersion": "11.0.0" },
+    { "Id": "SluiceIsBack", "MinimumVersion": "11.0.0" }
   ]
 }

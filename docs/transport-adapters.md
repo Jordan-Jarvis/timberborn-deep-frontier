@@ -1,6 +1,6 @@
 # Transport adapter boundary
 
-The foundation packages declared in Deep Frontier's manifest are required. Use their installed 1.1 contracts and the official game inventories/mechanical system. Missing required dependencies must fail explicitly. A reference-model conveyor inside a machine can be animated artwork; this does not create an item-transfer network.
+The packages in Deep Frontier's RequiredMods are required; Power Lines is an optional integration (see [required and optional mods](dependency-reference.md#required-and-optional-mods-060-2026-10-30)). Use their installed 1.1 contracts and the official game inventories/mechanical system. Missing required dependencies must fail explicitly. A reference-model conveyor inside a machine can be animated artwork; this does not create an item-transfer network.
 
 ## Verified contracts
 
@@ -9,7 +9,7 @@ The foundation packages declared in Deep Frontier's manifest are required. Use t
 | Timber Pipes | 3801726769, `version-1.1`, 11.4.0 | `BuildingPipeTargetPortsSpec.Ports` for a receiving building; `BuildingPipeSpec`/`TransportPipeSpec` for pipe entities | Explicit water, oil, badwater and waste connections to native inventories |
 | Conveyor Belts v2 | 3815376360, `version-1.1`, 11.4.0 | `BuildingBeltTarget` on BuildingSpec, native `Inventories`, `InventoryConnection`, `BeltGoodService` | Test withdrawals from enabled output inventories and accepted deliveries to input inventories; mechanical transputs alone are not item ports |
 | Powered Tubeway | 3543155128, `version-1.1` | `TransputProviderSpec` plus `MechanicalNodeSpec` | Power transmission through supported Tubeways; do not infer goods transport from power specs |
-| Power Lines | 3766893705, `version-1.1` | Mechanical network connector blueprints | Existing `MechanicalNodeSpec` values are the power contract |
+| Power Lines (optional) | 3766893705, `version-1.1` | Mechanical network connector blueprints | Existing `MechanicalNodeSpec` values are the power contract; cable points come from `Data/Integrations/PowerLines` only while it is enabled |
 | Pump to Tank | 3681283725, `Version-1.1` | Tank transfer content | Use it for water/badwater logistics; Deep Frontier does not reimplement tank transfer |
 
 The installed pipe package decorates ordinary BuildingSpec entities with BuildingPipeTarget. DefaultBuildingConnectionProvider uses explicit BuildingPipeTargetPortsSpec when authored. DefaultBuildingPipeConnection transfers registered Liquid goods into accepting native inventories and withdraws unreserved takeable stock; construction inventories are excluded. Existing Water recipe inputs already provide the machine side. Native aquaculture acceptance 76 verified real tank-to-factory transfer through authored faces; a second water inventory is unnecessary.

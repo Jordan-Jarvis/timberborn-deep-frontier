@@ -1,6 +1,6 @@
 # Dependency matrix (Timberborn 1.1)
 
-These are the intended foundation mods. Version numbers are recorded when an installed package is available and must be rechecked after updates. Deep Frontier's design layer is Iron Teeth. See the [dependency reference](dependency-reference.md) for verified 1.1 mechanics, exact public costs and unlocks, recipes, declared requirements, package facts, and stacking rules.
+Which of these are required and which are optional integrations, and why, is in [the dependency reference](dependency-reference.md#required-and-optional-mods-060-2026-10-30); the manifest's RequiredMods and OptionalMods are authoritative. Pump to Tank, Flywheels, Teleporter Stations, Solar Panel, Expanded Storage, Powered Tubeway and Power Lines are not required. These are the intended foundation mods. Version numbers are recorded when an installed package is available and must be rechecked after updates. Deep Frontier's design layer is Iron Teeth. See the [dependency reference](dependency-reference.md) for verified 1.1 mechanics, exact public costs and unlocks, recipes, declared requirements, package facts, and stacking rules.
 
 The load profile also pins the 1.1 support stack required by the foundation set: Harmony 2.4.1, Moddable Timberborn 11.1.3, Moddable Tool Groups 11.0.0, Mod Settings 1.1.1.0, and TimberUi 11.0.1. They are recorded in `tools/installed_dependency_manifests_1_1.json` and are declared by the Deep Frontier shell so a missing support package fails early with a useful dependency message.
 

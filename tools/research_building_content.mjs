@@ -123,7 +123,8 @@ export async function researchContent() {
     // liquid good. Recipe Water supplies that; no port is authored, so a pipe
     // may meet any side (the tower's bay socket marks the intended spot).
     // Heights follow the one-layer bases and the lower insulator bracket (2026-10-30).
-    v.PowerLineSpec={ConnectionLocations:[xyz([.18,6.65,.84]),xyz([8.205,3.5,2.06])]};
+    // Power Lines (optional mod): returned as its integration modifier below.
+    const integrations={PowerLines:{PowerLineSpec:{ConnectionLocations:[xyz([.18,6.65,.84]),xyz([8.205,3.5,2.06])]}}};
     v.TransformSlotInitializerSpec={Slots:[{SlotKeyword:'Entrance',Animation:'ForcedIdle',Inanimate:false,RandomizeYRotation:false,WaterSlot:false}]};
     v.PlaceableBlockObjectSpec={ToolGroupId:'Science',ToolOrder:100,ToolShape:'Square',Layout:'Single',
       CustomPivot:{HasCustomPivot:false,Coordinates:xyz([0,0,0])},CanBeAttachedToTerrainSide:false,DevModeTool:false};
@@ -138,7 +139,7 @@ export async function researchContent() {
     // user 2026-10-30), so the lab no longer pollutes.
     applyVanillaSmoke(v,await sceneSmokeRegistration('research-integration',b.id,d),b.id);
     await applyNativeBuildingAssembly(v,b.id,d.origin,{goodId:'Water',flowNodes:[],wheelNodes:[]});
-    buildings.push({id:b.id,path:model+'.blueprint.json',blueprint:v,rows:[
+    buildings.push({id:b.id,path:model+'.blueprint.json',blueprint:v,integrations,rows:[
       [`Building.${b.id}.DisplayName`,b.name],[`Building.${b.id}.Description`,b.description],
       [`Building.${b.id}.FlavorDescription`,'Break a few samples. Build a better future.']]});
   }
