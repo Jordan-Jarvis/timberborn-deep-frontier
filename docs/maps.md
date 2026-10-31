@@ -1,6 +1,8 @@
 # Deep Frontier map variants
 
-Status 2026-10-30 (after the compaction pass): the built-in variants were re-planned for the smaller footprints (Deep Mine and Deep Drill 7×6, quarries 8×6, reactor 14×11). Beaverome and Diorama now have two Deep Mine sites each, Beaverome also two Deep Drill sites beside new Deep Ore Sources, eight maps gained a reactor site (Canyon, Craters, Hollows, Mountain Range, Oasis, Pillars, Spillage, Thousand Islands), and Meander, Waterfalls, Pillars and Thousand Islands gained the plants they had no room for. `smallMap.maxArea` is re-derived (5,966). The Plains, Plains Hard, Lakes and Terraces variants did not change, so their map files were not rebuilt (see "Validation (static)" for their stale description). Nothing of this pass has been loaded in the game.
+Status 2026-10-30 (0.7.1): the four map files were rebuilt with `build` for 0.7.1.0. Only `map_metadata.json` changed: the description names Deep Frontier 0.7.1.0 and its ten required mods (it listed 0.6.0.0 and 17). `world.json` is byte-identical to the previous build. All four pass `build` and `validate` with 0 errors. `build` writes them to `C:\Users\Jordan\Documents\Timberborn\Maps\` (each variant's `output.directory`) and its evidence to `outputs/maps/`. The mod package (`src/DeepFrontier`, staged and built by the official Mod Builder) contains no `.timber`, so these files are not shipped with the Workshop item. None of the rebuilt files has been loaded in the game.
+
+Status 2026-10-30 (after the compaction pass): the built-in variants were re-planned for the smaller footprints (Deep Mine and Deep Drill 7×6, quarries 8×6, reactor 14×11). Beaverome and Diorama now have two Deep Mine sites each, Beaverome also two Deep Drill sites beside new Deep Ore Sources, eight maps gained a reactor site (Canyon, Craters, Hollows, Mountain Range, Oasis, Pillars, Spillage, Thousand Islands), and Meander, Waterfalls, Pillars and Thousand Islands gained the plants they had no room for. `smallMap.maxArea` is re-derived (5,966). The Plains, Plains Hard, Lakes and Terraces variants did not change. Nothing of this pass has been loaded in the game.
 
 Status 2026-10-30: the four map files were rebuilt with `build` for 0.6.0.0: the description names 0.6.0.0, and the Deep Ore Sources hold 18,000 (Plains, Plains Hard) or 17,000 (Lakes, Terraces), enough for one of each building (see "Full game loop"). Every built-in map also gets its Deep Frontier objects at new-game time (see "Built-in maps: new-game setup"). None of the rebuilt files has been loaded in the game.
 
@@ -8,10 +10,10 @@ Status 2026-10-24: the three vanilla-based maps and the hard variant are written
 
 | Map file (new-game list name) | Source | Character | Height | Output SHA-256 (prefix) |
 |---|---|---|---|---|
-| `Deep Frontier - Plains.timber` | built-in Plains, 256×256 | River plains around a central lake | 46 / 66 | `ad0c76ce7754ebaa` |
-| `Deep Frontier - Plains (Hard, Radioactive Spring).timber` | built-in Plains | Same, plus a weak Radioactive Spring at a river head | 46 / 66 | `10085dcc11ad4bb1` |
-| `Deep Frontier - Lakes.timber` | built-in Lakes, 256×256 | Lake district; island reactor | 46 / 66 | `7ecedc1c52341d5b` |
-| `Deep Frontier - Terraces.timber` | built-in Terraces, 256×256 | Terraced highlands, start at level 15, deep valley and basin | 46 / 66 | `11d66e29a0e32205` |
+| `Deep Frontier - Plains.timber` | built-in Plains, 256×256 | River plains around a central lake | 46 / 66 | `765286d9e3420fab` |
+| `Deep Frontier - Plains (Hard, Radioactive Spring).timber` | built-in Plains | Same, plus a weak Radioactive Spring at a river head | 46 / 66 | `1a43050146f7576c` |
+| `Deep Frontier - Lakes.timber` | built-in Lakes, 256×256 | Lake district; island reactor | 46 / 66 | `930348a51d516840` |
+| `Deep Frontier - Terraces.timber` | built-in Terraces, 256×256 | Terraced highlands, start at level 15, deep valley and basin | 46 / 66 | `0605ea8f98c64dfb` |
 
 The archive is rewritten on every build, so its SHA-256 changes on each build (zip entry times) even when the content is the same. The evidence file records the hash of the file it validated.
 
@@ -618,7 +620,7 @@ Contamination stays a consequence of play. Radioactive water comes from reactor 
 
 `build` writes each map, re-reads it from disk and runs the same validator as `validate`. All four variants passed with **0 errors** when they were built.
 
-2026-10-30, after the compaction: `validate` on the four written files reports exactly one error each, the description. The files still list the 17 required mods of the build before 2feb3dc dropped six; the placements, sites and full-loop coverage pass with the compacted footprints. The variants did not change, so this pass did not rebuild them; they are to be rebuilt once with `build` after the 0.7.0 version bump (the description names the version and the required mods, and Power Lines is optional since ac37d5c).
+2026-10-30, 0.7.1: rebuilt with `build`; `validate` on the four written files reports 0 errors. From 2feb3dc until this rebuild the files' description still listed the 17 required mods of 0.6.0.0 (one `validate` error each); the placements, sites and full-loop coverage passed with the compacted footprints throughout.
 
 - **Archive.** Entries, version and source.
   - Exactly `map_metadata.json`, `map_thumbnail.jpg`, `version.txt` and `world.json`.
