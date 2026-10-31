@@ -188,6 +188,11 @@
    "recipes": [],
    "devOnly": false
   },
+  "BrickMasonryBlock.IronTeeth": {
+   "science": 600,
+   "recipes": [],
+   "devOnly": false
+  },
   "BuildersHut.IronTeeth": {
    "science": 100,
    "recipes": [],
@@ -800,11 +805,6 @@
   },
   "Lever.IronTeeth": {
    "science": 50,
-   "recipes": [],
-   "devOnly": false
-  },
-  "LimestoneMasonryBlock.IronTeeth": {
-   "science": 900,
    "recipes": [],
    "devOnly": false
   },

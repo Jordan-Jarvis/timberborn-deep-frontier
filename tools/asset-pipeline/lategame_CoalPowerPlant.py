@@ -49,7 +49,10 @@ HERO = ('Banded riveted chimney smoking over a flat-roofed steel-clad boiler hou
         'steam engine with a spoked flywheel.')
 
 HALL = (.05, 2.95, .3, 3.95)      # core x0, x1, y0, y1 (plinth course .05 proud: tiles 0..3 x 0..4)
-STOREY = 1.0                      # concrete ground storey (whole layer)
+STOREY = 1.0                      # brick ground storey (whole layer)
+# Darker ground (2026-10-30, bricks pass: the pale concrete plinth was the
+# brightest thing on the plant): the boiler-house storey, the engine bed and
+# the chimney base are brick (Plaster_Orange courses on lime mortar).
 ROOF_Z = 2.6                      # eaves
 RIDGE = 3.45
 DOOR_X = 1.5
@@ -64,7 +67,7 @@ WHEEL_X = 3.72
 
 def boiler_house(g):
     x0, x1, y0, y1 = HALL
-    M.hall(g, x0, x1, y0, y1, ROOF_Z, plinth=STOREY, infill=FORGED, frame=IRON, doors=[DOOR_X],
+    M.hall(g, x0, x1, y0, y1, ROOF_Z, plinth=STOREY, infill=FORGED, frame=IRON, doors=[DOOR_X], plinth_mat=M.BRICK,
            posts=('front', 'back', 'left'), style='factory', wscale=.62,
            windows={'front': [(.55, 1.92), (2.45, 1.92)],
                     'left': [(1.2, 1.92), (2.85, 1.92)],
@@ -76,13 +79,12 @@ def boiler_house(g):
 
 def engine_deck(g, parts):
     x0, x1, y0, y1 = DECK
-    bx(g, x0, x1, y0, y1, 0, STOREY, CONCRETE)
-    # Proud shadow strips on the open faces of the bed.
-    M.face_member(g, 'front', DECK, 3.47, 3.59, -.01, .03, .12, STOREY - .1, CONCRETE)
-    M.face_member(g, 'right', DECK, .96, 1.08, -.01, .03, .12, STOREY - .1, CONCRETE)
+    # Brick faces on the open sides; the left side meets the boiler house and
+    # the back the chimney base.
+    M.brick_block(g, x0, x1, y0, y1, 0, STOREY, faces=('front', 'right'))
     z = STOREY
     # Engine bed and cylinder.
-    bx(g, ENGINE_X - .28, ENGINE_X + .28, .2, 1.85, z, z + .2, CONCRETE)
+    bx(g, ENGINE_X - .28, ENGINE_X + .28, .2, 1.85, z, z + .2, IRON)
     zb = z + .2
     bx(g, ENGINE_X - .17, ENGINE_X + .17, .35, .85, zb, zb + .12, IRON)
     cz = 1.55
@@ -121,8 +123,8 @@ def engine_deck(g, parts):
 
 def chimney(g):
     x0, x1, y0, y1 = BASE
-    bx(g, x0, x1, y0, y1, 0, STOREY, CONCRETE)
-    bx(g, x0 - .03, x1 + .03, y0 - .03, y1 + .03, STOREY - .02, STOREY + .08, CONCRETE)
+    M.brick_block(g, x0, x1, y0, y1, 0, STOREY, faces=('right', 'back'))
+    bx(g, x0 - .03, x1 + .03, y0 - .03, y1 + .03, STOREY - .02, STOREY + .08, IRON)
     # Ash-pit door on the right face.
     bx(g, x1, x1 + .03, 2.75, 3.3, .15, .8, IRON)
     K.stack(g, STACK[0], STACK[1], STOREY + .08, 4.72, emits='smoke', r=STACK_R, taper=.78, mat=IRON, bands=4)

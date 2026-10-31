@@ -4,15 +4,15 @@
     "LoopingSoundName": "",
     "BuildingCost": [
       {
-        "Id": "Limestone",
-        "Amount": 12
+        "Id": "Brick",
+        "Amount": 8
       },
       {
         "Id": "Cement",
-        "Amount": 3
+        "Amount": 2
       }
     ],
-    "ScienceCost": 900,
+    "ScienceCost": 600,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -26,8 +26,10 @@
     "UndergroundModelDepth": 0
   },
   "TemplateSpec": {
-    "TemplateName": "LimestoneMasonryBlock.IronTeeth",
-    "BackwardCompatibleTemplateNames": [],
+    "TemplateName": "BrickMasonryBlock.IronTeeth",
+    "BackwardCompatibleTemplateNames": [
+      "LimestoneMasonryBlock.IronTeeth"
+    ],
     "RequiredFeatureToggle": "",
     "DisablingFeatureToggle": ""
   },
@@ -66,7 +68,7 @@
     "BlockedEdges": []
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "DeepFrontierMasonryBlocks",
+    "ToolGroupId": "Landscaping",
     "ToolOrder": 201,
     "ToolShape": "Square",
     "Layout": "Rectangle",
@@ -93,10 +95,10 @@
     "Height": 1
   },
   "LabeledEntitySpec": {
-    "DisplayNameLocKey": "Building.LimestoneMasonryBlock.DisplayName",
-    "DescriptionLocKey": "Building.LimestoneMasonryBlock.Description",
-    "FlavorDescriptionLocKey": "Building.LimestoneMasonryBlock.FlavorDescription",
-    "Icon": "Buildings/Platforms/LimestoneMasonryBlock/Icon"
+    "DisplayNameLocKey": "Building.BrickMasonryBlock.DisplayName",
+    "DescriptionLocKey": "Building.BrickMasonryBlock.Description",
+    "FlavorDescriptionLocKey": "Building.BrickMasonryBlock.FlavorDescription",
+    "Icon": "Buildings/Platforms/BrickMasonryBlock/Icon"
   },
   "SoilBarrierSpec": {
     "BlockAboveMoisture": true,
@@ -109,7 +111,7 @@
   "Children": {
     "#Finished": {
       "TimbermeshSpec": {
-        "Model": "Buildings/Platforms/LimestoneMasonryBlock/LimestoneMasonryBlock.IronTeeth.Model"
+        "Model": "Buildings/Platforms/BrickMasonryBlock/BrickMasonryBlock.IronTeeth.Model"
       },
       "CollidersSpec": {
         "BoxColliders": [
@@ -134,7 +136,7 @@
       "Children": {
         "ConstructionStage0": {
           "TimbermeshSpec": {
-            "Model": "Buildings/Platforms/LimestoneMasonryBlock/LimestoneMasonryBlock.IronTeeth.ConstructionStage0.Model"
+            "Model": "Buildings/Platforms/BrickMasonryBlock/BrickMasonryBlock.IronTeeth.ConstructionStage0.Model"
           },
           "CollidersSpec": {
             "BoxColliders": [
@@ -157,8 +159,5 @@
         }
       }
     }
-  },
-  "StatusIconAnchorSpec": {
-    "Height": 1.7
   }
 }

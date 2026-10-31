@@ -242,7 +242,7 @@ Reasons for each choice are in the `comment` fields of `tools/building_sounds.js
 | FoodPackagingWorks | FoodFactory | Grill | workshop working | food/agri |
 | Greenhouse | HydroponicGarden | WaterWheel | workshop working | food/agri |
 | SandstoneMasonryBlock | Default | none | never (no loop) | platform/levee |
-| LimestoneMasonryBlock | Default | none | never (no loop) | platform/levee |
+| BrickMasonryBlock | Default | none | never (no loop) | platform/levee |
 | ConcreteBlock | Default | none | never (no loop) | platform/levee |
 | ReinforcedDamBlock | Default | none | never (no loop) | platform/levee |
 | ConcreteOverflowDam | Default | none | never (no loop) | platform/levee |

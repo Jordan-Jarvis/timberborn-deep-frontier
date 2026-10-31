@@ -264,7 +264,13 @@ export async function structuralBlueprints() {
     const v=JSON.parse(await readFile(new URL(templates[b.kind],nativeRoot),'utf8'));
     const model=`Buildings/Platforms/${b.id}/${b.id}.IronTeeth`;
     v.TemplateSpec.TemplateName=b.id+'.IronTeeth';
-    v.TemplateSpec.BackwardCompatibleTemplateNames=[];
+    // A renamed module keeps placed blocks through the native template-name
+    // mapping (TemplateNameMapper, Timberborn.TemplateSystem 1.1.2.8): the Brick
+    // Block lists the Limestone Masonry Block it replaced (2026-10-30).
+    const previous=b.backwardCompatibleTemplateNames??[];
+    if(!Array.isArray(previous)||previous.some(name=>typeof name!=='string'||!name.endsWith('.IronTeeth')))
+      throw new Error(`${b.id}: backwardCompatibleTemplateNames must list Iron Teeth template names`);
+    v.TemplateSpec.BackwardCompatibleTemplateNames=previous;
     v.BuildingSpec.BuildingCost=scaledCost(b.cost.map(([Id,Amount])=>({Id,Amount})),b.science);
     v.BuildingSpec.ScienceCost=b.science;
     v.BuildingModelSpec.FinishedUncoveredModelName='';

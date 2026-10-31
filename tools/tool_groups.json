@@ -99,7 +99,7 @@
     "DeepFrontierDynamite": { "parent": "Landscaping", "order": 80, "name": "Dynamite", "icon": "Dynamite.IronTeeth",
       "claims": ["Dynamite.IronTeeth", "DoubleDynamite.IronTeeth", "TripleDynamite.IronTeeth"] },
     "DeepFrontierMasonryBlocks": { "parent": "Landscaping", "order": 110, "name": "Masonry and concrete", "icon": "ConcreteBlock",
-      "templates": ["SandstoneMasonryBlock", "LimestoneMasonryBlock", "ConcreteBlock", "ReinforcedDamBlock", "ConcreteOverflowDam"] },
+      "templates": ["SandstoneMasonryBlock", "BrickMasonryBlock", "ConcreteBlock", "ReinforcedDamBlock", "ConcreteOverflowDam"] },
     "DeepFrontierRadioactiveWaste": { "parent": "Water", "order": 100, "name": "Radioactive waste", "icon": "RadioactiveWasteExport",
       "templates": ["RadioactiveSludgeRecoveryPump", "RadioactiveSludgeOutfall", "RadioactiveWasteExport"] },
     "DeepFrontierCivicServices": { "parent": "Wellbeing", "order": 100, "name": "Civic services", "icon": "Hospital",

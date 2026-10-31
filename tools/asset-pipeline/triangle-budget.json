@@ -54,6 +54,15 @@
    "construction": 7124,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.Model.timbermesh"
   },
+  "BrickMasonryBlock": {
+   "family": "structural",
+   "class": "small",
+   "target": 8000,
+   "finished": 982,
+   "vertices": 1964,
+   "construction": 982,
+   "file": "outputs/structural-integration/Data/Buildings/Platforms/BrickMasonryBlock/BrickMasonryBlock.IronTeeth.Model.timbermesh"
+  },
   "CementKiln": {
    "family": "industrial",
    "class": "workshop",
@@ -76,9 +85,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 2466,
-   "vertices": 4658,
-   "construction": 2466,
+   "finished": 6552,
+   "vertices": 12846,
+   "construction": 6552,
    "file": "outputs/lategame-integration/Data/Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.Model.timbermesh"
   },
   "ConcreteBlock": {
@@ -247,9 +256,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9532,
-   "vertices": 18196,
-   "construction": 9532,
+   "finished": 10692,
+   "vertices": 20550,
+   "construction": 10692,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.Model.timbermesh"
   },
   "DeepMine": {
@@ -283,9 +292,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 6946,
-   "vertices": 12774,
-   "construction": 6946,
+   "finished": 8184,
+   "vertices": 15250,
+   "construction": 8184,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model.timbermesh"
   },
   "DeepWell": {
@@ -387,21 +396,12 @@
    "construction": 8754,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.Model.timbermesh"
   },
-  "LimestoneMasonryBlock": {
-   "family": "structural",
-   "class": "small",
-   "target": 8000,
-   "finished": 342,
-   "vertices": 684,
-   "construction": 342,
-   "file": "outputs/structural-integration/Data/Buildings/Platforms/LimestoneMasonryBlock/LimestoneMasonryBlock.IronTeeth.Model.timbermesh"
-  },
   "LimestoneOutcrop": {
    "family": "mapobjects",
    "class": "mapobject",
    "target": 2500,
-   "finished": 76,
-   "vertices": 182,
+   "finished": 181,
+   "vertices": 415,
    "construction": 0,
    "file": "outputs/mapobjects-integration/Data/MapEditor/Objects/LimestoneOutcrop/LimestoneOutcrop.Model.timbermesh"
   },
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 922305,
+ "totalBlueprintTriangles": 892670,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

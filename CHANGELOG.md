@@ -19,6 +19,11 @@
 - **Archive Data:** Mission Control reads the recovered artifacts' data drives directly: guidance computers take 2 artifacts and 1 grease, telemetry 2 artifacts and 1 metal part. Human Record Caches give 12 artifacts. Story chapters 5 and 6 ask for 20 and 40 recovered artifacts.
 - **Old saves:** stored goods load as their replacement (Aggregate as sandstone, Flux as limestone, Compost as fertilizer, the three foods as canned fish, Archive Data as recovered artifacts), and workshops set to a removed recipe switch to its replacement.
 
+### Brick art
+- **Brick Block:** the Limestone Masonry Block is now a brick block (4 bricks and 1 cement, 600 science) with eight courses of red brick. Placed limestone blocks load as brick blocks.
+- **Brick plinths** on the Deep Drill pump house and the Deep Processor blower house. The Coal Power Plant's bright concrete ground storey, engine bed and chimney base are dark red brick.
+- **Limestone outcrops and seams** are grey weathered rock with pale broken faces, instead of white blocks that looked like gems.
+
 ## 0.7.1 (2026-10-30)
 
 ### Fixes

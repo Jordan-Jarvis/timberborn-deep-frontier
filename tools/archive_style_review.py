@@ -4,7 +4,7 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 models=['StoneCrusher','CementKiln','MineralQuarry','ConcreteMixer','ReinforcedHydroTurbine','MaterialsLaboratory',
         'Hospital','Restaurant','GroceryStore','FisheryWorks','FishHatchery','SandstonePit','LimestonePit',
-        'SandstoneMasonryBlock','LimestoneMasonryBlock','ConcreteBlock','ReinforcedDamBlock','ConcreteOverflowDam','ConcreteOverhang8x1','ConcreteScaffold3x3']
+        'SandstoneMasonryBlock','BrickMasonryBlock','ConcreteBlock','ReinforcedDamBlock','ConcreteOverflowDam','ConcreteOverhang8x1','ConcreteScaffold3x3']
 out=root/'docs/art/reviews/2026-10-20-native-style';out.mkdir(parents=True,exist_ok=True)
 report=[]
 for name in models:

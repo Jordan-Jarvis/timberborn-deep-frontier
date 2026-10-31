@@ -613,9 +613,9 @@ Building.ConcreteMixer.FlavorDescription,The next age begins with a solid founda
 Building.SandstoneMasonryBlock.DisplayName,Sandstone masonry block,Deep Frontier construction materials
 Building.SandstoneMasonryBlock.Description,Mortared sandstone retaining block. Holds back water and supports construction on its top.,Deep Frontier construction materials
 Building.SandstoneMasonryBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.LimestoneMasonryBlock.DisplayName,Limestone masonry block,Deep Frontier construction materials
-Building.LimestoneMasonryBlock.Description,Dressed limestone retaining block. Holds back water and supports construction on its top.,Deep Frontier construction materials
-Building.LimestoneMasonryBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
+Building.BrickMasonryBlock.DisplayName,Brick block,Deep Frontier construction materials
+Building.BrickMasonryBlock.Description,Fired brick retaining block laid in cement mortar. Holds back water and supports construction on its top.,Deep Frontier construction materials
+Building.BrickMasonryBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
 Building.ConcreteBlock.DisplayName,Concrete levee block,Deep Frontier construction materials
 Building.ConcreteBlock.Description,Cast concrete foundation and retaining block. Holds back water and supports buildings.,Deep Frontier construction materials
 Building.ConcreteBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials

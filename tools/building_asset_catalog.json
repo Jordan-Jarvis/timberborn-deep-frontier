@@ -662,12 +662,12 @@
       "artStage": "detailed"
     },
     {
-      "building": "LimestoneMasonryBlock",
-      "template": "LimestoneMasonryBlock.IronTeeth",
-      "blueprint": "src/DeepFrontier/Data/Buildings/Platforms/LimestoneMasonryBlock/LimestoneMasonryBlock.IronTeeth.blueprint.json",
-      "model": "LimestoneMasonryBlock",
-      "sourceScene": "src/DeepFrontier/Art/Source/LimestoneMasonryBlock-ReferenceStudy.blend",
-      "collection": "LimestoneMasonryBlock.ReferenceStudy",
+      "building": "BrickMasonryBlock",
+      "template": "BrickMasonryBlock.IronTeeth",
+      "blueprint": "src/DeepFrontier/Data/Buildings/Platforms/BrickMasonryBlock/BrickMasonryBlock.IronTeeth.blueprint.json",
+      "model": "BrickMasonryBlock",
+      "sourceScene": "src/DeepFrontier/Art/Source/BrickMasonryBlock-ReferenceStudy.blend",
+      "collection": "BrickMasonryBlock.ReferenceStudy",
       "geometry": "tools/asset-pipeline/structural_geometry.py",
       "generator": "tools/asset-pipeline/render_reference_studies.py",
       "exporter": "tools/asset-pipeline/export_industrial_models.py",

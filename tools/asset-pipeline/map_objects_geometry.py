@@ -461,9 +461,11 @@ def deep_ore_vein():
 # Sandstone seam (5x5x1): warm stepped bedding terraces. Three beds of
 # Voronoi blocks, each bed smaller and higher, with a thin dark parting under
 # the upper beds and a few rounded blocks weathered off the ledges.
-# Limestone seam: a pale single-level pavement of clints split by deep,
-# wide grikes, two blocks toppled out. Distinct in colour, relief (terraces
-# against a pavement) and joint pattern.
+# Limestone seam: a grey single-level pavement of clints split by deep,
+# wide grikes, two blocks toppled out. The clint tops are weathered native
+# cliff rock; only the freshly broken grike walls show the pale limestone
+# (2026-10-30, bricks pass: the all-white clints read as gems). Distinct in
+# colour, relief (terraces against a pavement) and joint pattern.
 # ---------------------------------------------------------------------------
 def sandstone_seam():
     b = Builder('SandstoneSeamGeology', 'SandstoneSeam')
@@ -508,12 +510,12 @@ def limestone_seam():
             continue
         _check_outline(outline, w, d)
         if index in toppled:
-            b.box((sx + .1, sy - .05, .1), (.5, .38, .24), 'LIME', 'plaster', yaw=b.rng.uniform(-.6, .6))
+            b.box((sx + .1, sy - .05, .1), (.5, .38, .24), 'ROCK', 'rock', yaw=b.rng.uniform(-.6, .6))
             b.rock((sx - .25, sy + .2, .02), (.08, .08, .05), 'DARK', points=7)
             continue
         rim = min(sx, sy, w - sx, d - sy) < .8
         top = (.14 if rim else .24) + b.rng.uniform(-.03, .03)
-        b.prism(outline, -.05, top, 'LIME', 'plaster', inset=.05, dome=.025)
+        b.prism(outline, -.05, top, 'LIME', 'plaster', inset=.05, dome=.025, top_key='ROCK', top_tile='rock')
     return b
 
 
@@ -532,13 +534,21 @@ def sandstone_outcrop():
 
 def limestone_outcrop():
     b = Builder('LimestoneOutcropGeology', 'LimestoneOutcrop')
-    # A small tor: jointed pale cuboids, the upper one rotated off the joint.
-    b.box((.42, .44, .13), (.5, .44, .36), 'LIME', 'plaster', yaw=.12)
-    b.box((.68, .62, .1), (.32, .4, .3), 'LIME', 'plaster', yaw=-.2)
-    b.box((.5, .5, .43), (.4, .34, .26), 'LIME', 'plaster', yaw=.55)
-    b.box((.55, .48, .6), (.22, .2, .1), 'LIME', 'plaster', yaw=.3)
-    b.rock((.85, .2, .03), (.07, .06, .05), 'DARK', points=7)
-    b.rock((.15, .8, .03), (.06, .07, .05), 'LIME', 'plaster', points=7)
+    # Flat weathered beds of grey native cliff rock (2026-10-30, bricks pass:
+    # the rotated pale cuboids read as a crystal). Three level beds, each
+    # smaller, with dark partings; pale limestone shows only where a block
+    # has freshly broken off the front of the middle bed and as one chip.
+    b.prism(b.blob_outline(.5, .5, .4, .36, 11, .08), -.05, .16, 'ROCK', 'rock', inset=.035)
+    parting = b.blob_outline(.48, .53, .32, .28, 10, .08, .25)
+    b.prism(parting, .15, .19, 'DARK', 'rock', top=False)
+    b.prism(parting, .19, .31, 'ROCK', 'rock', inset=.04, top_key='ROCK', top_tile='rock')
+    upper = b.blob_outline(.53, .55, .19, .17, 9, .08, .6)
+    b.prism(upper, .3, .33, 'DARK', 'rock', top=False)
+    b.prism(upper, .33, .42, 'ROCK', 'rock', inset=.035)
+    # Fresh break: a pale scar set into the front of the middle bed.
+    b.box((.42, .29, .245), (.15, .05, .07), 'LIME', 'plaster', yaw=.18)
+    b.rock((.22, .2, .03), (.07, .06, .045), 'LIME', 'plaster', points=7)
+    b.rock((.84, .78, .03), (.07, .06, .05), 'DARK', points=7)
     return b
 
 

@@ -341,7 +341,7 @@
     "SteelMill": [["MetalBlock",485],["Concrete",1020],["Gear",255]],
     "ArchiveExcavation": [["TreatedPlank",225],["MetalBlock",115],["DeepAlloy",25],["Concrete",2195],["Brick",720],["Gear",265]],
     "CryogenicTankFarm": [["TreatedPlank",100],["MetalBlock",300],["DeepAlloy",60],["Concrete",2300],["Gear",225]],
-    "CoalPowerPlant": [["MetalBlock",130],["Concrete",315],["Gear",75]],
+    "CoalPowerPlant": [["MetalBlock",120],["Concrete",245],["Brick",110],["Gear",75]],
     "OilPowerPlant": [["MetalBlock",225],["DeepAlloy",45],["Concrete",675],["Gear",100],["MachineCore",4]]
   }
 }

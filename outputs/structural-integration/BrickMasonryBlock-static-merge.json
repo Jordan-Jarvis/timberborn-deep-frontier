@@ -1,7 +1,7 @@
 {
-  "source": "LimestoneMasonryBlock",
+  "source": "BrickMasonryBlock",
   "targets": [
-    "LimestoneMasonryBlock"
+    "BrickMasonryBlock"
   ],
   "joinedObjects": 0,
   "objects": [],

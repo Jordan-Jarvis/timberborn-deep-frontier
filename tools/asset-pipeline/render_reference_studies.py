@@ -44,7 +44,7 @@ PALETTES={'StoneCrusher':'crusher','CementKiln':'kiln','MineralQuarry':'kiln','C
           'SandstonePit':'kiln','LimestonePit':'kiln','ReinforcedHydroTurbine':'kiln','MaterialsLaboratory':'kiln'}
 PALETTES.update({ident:'kiln' for ident in STRUCTURAL_MODELS})
 # Orthographic framing per structural model, as a multiple of its largest extent.
-STRUCTURAL_CAMERA_SCALE={'SandstoneMasonryBlock':1.9,'LimestoneMasonryBlock':1.9,
+STRUCTURAL_CAMERA_SCALE={'SandstoneMasonryBlock':1.9,'BrickMasonryBlock':1.9,
                          'ConcreteBlock':1.9,'ConcreteOverhang8x1':1.0,
                          'ConcreteScaffold3x3':1.7,'ReinforcedDamBlock':1.9,
                          'ConcreteOverflowDam':1.9,

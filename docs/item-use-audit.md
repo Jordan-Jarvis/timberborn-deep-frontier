@@ -9,9 +9,9 @@ Food may have direct eating as its only use. Rocket-specific parts still need on
 | Item | Uses | Required | Result | Authored destinations |
 |---|---:|---:|---|---|
 | Alloy | 17 | 2 | PREFERRED RANGE MET | Construction: UraniumProcessingPlant.IronTeeth; Construction: RadioactiveWasteRefinery.IronTeeth; Construction: RocketAssemblyHangar.IronTeeth; Construction: LaunchPad.IronTeeth; Construction: NuclearReactor.IronTeeth; Construction: RadioactiveWasteVault.IronTeeth; Construction: RadioactiveWasteExport.IronTeeth; Construction: RadioactiveSludgeOutfall.IronTeeth; Construction: RadioactiveSludgeRecoveryPump.IronTeeth; Construction: ReactorChargingBay.IronTeeth; Products: MachineCore; Products: PowerModule; Products: BotChassis; Products: ReinforcedBotFrame; Products: RocketAirframe; Products: PropulsionPackage; Direct consumption |
-| Brick | 14 | 2 | PREFERRED RANGE MET | Construction: DeepDrill.IronTeeth; Construction: DeepMine.IronTeeth; Construction: DeepProcessor.IronTeeth; Construction: FoodPackagingWorks.IronTeeth; Construction: Hospital.IronTeeth; Construction: WaterTreatmentPlant.IronTeeth; Construction: TechnicalSchool.IronTeeth; Construction: UraniumProcessingPlant.IronTeeth; Construction: RadioactiveWasteRefinery.IronTeeth; Construction: ElectrolysisPlant.IronTeeth; Construction: RocketAssemblyHangar.IronTeeth; Construction: MissionControl.IronTeeth; Construction: ArchiveExcavation.IronTeeth; Construction: TownPlaza.IronTeeth |
+| Brick | 16 | 2 | PREFERRED RANGE MET | Construction: DeepDrill.IronTeeth; Construction: DeepMine.IronTeeth; Construction: DeepProcessor.IronTeeth; Construction: FoodPackagingWorks.IronTeeth; Construction: Hospital.IronTeeth; Construction: WaterTreatmentPlant.IronTeeth; Construction: TechnicalSchool.IronTeeth; Construction: UraniumProcessingPlant.IronTeeth; Construction: RadioactiveWasteRefinery.IronTeeth; Construction: ElectrolysisPlant.IronTeeth; Construction: RocketAssemblyHangar.IronTeeth; Construction: MissionControl.IronTeeth; Construction: ArchiveExcavation.IronTeeth; Construction: CoalPowerPlant.IronTeeth; Construction: TownPlaza.IronTeeth; Construction: BrickMasonryBlock.IronTeeth |
 | CannedFish | 2 | 1 | MINIMUM MET | Operation: TechnicalSchool.IronTeeth; Direct consumption |
-| Cement | 3 | 2 | PREFERRED RANGE MET | Construction: SandstoneMasonryBlock.IronTeeth; Construction: LimestoneMasonryBlock.IronTeeth; Products: Concrete |
+| Cement | 3 | 2 | PREFERRED RANGE MET | Construction: SandstoneMasonryBlock.IronTeeth; Construction: BrickMasonryBlock.IronTeeth; Products: Concrete |
 | Chemical | 4 | 2 | PREFERRED RANGE MET | Products: Polymer; Products: Yellowcake; Products: EnrichedFuel + RadioactiveWaste; Products: RadioactiveSludge + Water |
 | Coal | 4 | 2 | PREFERRED RANGE MET | Operation: CoalPowerPlant.IronTeeth; Products: PowerModule; Products: FilterMedia; Products: HighGradeSteel |
 | ConcentratedWaste | 2 | 2 | MINIMUM MET | Products: Chemical; Research: Science |
@@ -33,7 +33,7 @@ Food may have direct eating as its only use. Rocket-specific parts still need on
 | HydrogenGas | 2 | 2 | MINIMUM MET | Products: EnrichedFuel + RadioactiveWaste; Products: LiquidHydrogen + LiquidOxygen |
 | IndustrialLicense | 0 | 0 | LEGACY SAVE-ONLY (unproduced, unused) |  |
 | JuvenileFish | 2 | 2 | MINIMUM MET | Products: FreshFish; Products: FreshFish + Kohlrabi |
-| Limestone | 6 | 2 | PREFERRED RANGE MET | Construction: StoneCrusher.IronTeeth; Construction: CementKiln.IronTeeth; Construction: ConcreteMixer.IronTeeth; Construction: LimestoneMasonryBlock.IronTeeth; Products: HighGradeSteel; Products: Cement |
+| Limestone | 5 | 2 | PREFERRED RANGE MET | Construction: StoneCrusher.IronTeeth; Construction: CementKiln.IronTeeth; Construction: ConcreteMixer.IronTeeth; Products: HighGradeSteel; Products: Cement |
 | LiquidHydrogen | 2 | 2 | MINIMUM MET | Launch: rocket missions; Research: Science |
 | LiquidOxygen | 2 | 2 | MINIMUM MET | Launch: rocket missions; Research: Science |
 | Lubricant | 0 | 0 | LEGACY SAVE-ONLY (unproduced, unused) |  |

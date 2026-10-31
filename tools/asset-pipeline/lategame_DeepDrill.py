@@ -285,7 +285,8 @@ def back_services(g, parts):
 def pump_house(g):
     # Brick hall on tiles 0..3 x 0..3 (plinth course core + .05). The core front
     # at .12 puts the native portal's face on the tile edge y = 0.
-    P.hall(g, .05, 2.95, .12, 2.95, FLOOR - .16, plinth=.5, doors=[1.5], pitch=1.0,
+    # Brick plinth course (2026-10-30, bricks pass; was cast concrete).
+    P.hall(g, .05, 2.95, .12, 2.95, FLOOR - .16, plinth=.5, doors=[1.5], pitch=1.0, plinth_mat=P.BRICK,
            posts=('front', 'back', 'left'),
            windows={'front': [(.45, 1.15, 'grand', .55), (2.55, 1.15, 'grand', .55)],
                     'left': [(.59, 1.15, 'grand', .55), (1.535, 1.15, 'grand', .55), (2.48, 1.15, 'grand', .55)],

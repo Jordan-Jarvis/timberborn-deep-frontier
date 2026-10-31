@@ -126,7 +126,7 @@ check('kiln porch header and side curb',kiln_porch,[
 check('hydro concrete conduit joints',cast_conduit,[
     ((.08,.18,.45),(0,5.64,0),(0,0,.42),(-1,0,0),601,31),
     ((2.55,.18,2.839),(0,5.64,0),(.10,0,-.03),(0,0,1),601,11)])
-for name in ('SandstoneMasonryBlock','LimestoneMasonryBlock','ConcreteBlock','ReinforcedDamBlock','ConcreteOverflowDam'):
+for name in ('SandstoneMasonryBlock','BrickMasonryBlock','ConcreteBlock','ReinforcedDamBlock','ConcreteOverflowDam'):
     height=.55 if name=='ConcreteOverflowDam' else .80
     check(name,lambda g,n=name:STRUCTURAL_MODELS[n](g,[]),[
         ((.04,-.01,.04),(.92,0,0),(0,0,height),(0,-1,0),101,61),

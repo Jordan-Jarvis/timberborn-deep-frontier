@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 MODELS=('StoneCrusher','CementKiln','MineralQuarry','ConcreteMixer','ReinforcedHydroTurbine',
         'MaterialsLaboratory','Hospital','Restaurant','GroceryStore','FisheryWorks','FishHatchery',
-        'SandstonePit','LimestonePit','SandstoneMasonryBlock','LimestoneMasonryBlock',
+        'SandstonePit','LimestonePit','SandstoneMasonryBlock','BrickMasonryBlock',
         'ConcreteBlock','ConcreteOverhang8x1','ConcreteScaffold3x3','ReinforcedDamBlock','ConcreteOverflowDam',
         'ConcreteScaffold3x3H1','ConcreteScaffold3x3H2','ConcreteScaffold4x4H1','ConcreteScaffold4x4H2',
         'ConcreteScaffold4x4H3','ConcreteScaffold5x5H1','ConcreteScaffold5x5H2','ConcreteScaffold5x5H3')

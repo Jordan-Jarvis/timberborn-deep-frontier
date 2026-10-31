@@ -23,7 +23,7 @@ REVIEW_NOTES = {
     'SandstonePit': 'Closed sloping cabin walls, front header and roof bearing; attached native windows.',
     'LimestonePit': 'Closed sloping cabin walls, front header and roof bearing; attached native windows.',
 }
-STRUCTURAL = ('SandstoneMasonryBlock', 'LimestoneMasonryBlock', 'ConcreteBlock',
+STRUCTURAL = ('SandstoneMasonryBlock', 'BrickMasonryBlock', 'ConcreteBlock',
               'ConcreteOverhang8x1', 'ConcreteScaffold3x3', 'ReinforcedDamBlock',
               'ConcreteOverflowDam')
 

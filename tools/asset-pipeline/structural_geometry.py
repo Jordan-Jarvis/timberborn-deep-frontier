@@ -5,7 +5,7 @@ All support planes are authored at exact whole layers. Open bays deliberately
 exclude mid-height decorative bracing that would obstruct transport.
 """
 from frontier_architecture import IRON, SAND, LIME
-from reference_materials import CIVIC_CONCRETE
+from reference_materials import CIVIC_CONCRETE, CIVIC_ORANGE_PANEL, KILN_STONE, KILN_DUST
 from walkway_geometry import RailAssembly
 
 # Triangle budget: no bevel modifier on these models (render_reference_studies
@@ -45,6 +45,37 @@ def sandstone_masonry(g,parts):
 
 def limestone_masonry(g,parts):
     return masonry(g,LIME)
+
+
+# Brick Block (2026-10-30, bricks pass; it replaced the Limestone Masonry
+# Block, whose pale courses read as a gem): eight running-bond courses of
+# bricks in the native brick-red plaster (Plaster_Orange.IronTeeth, the only
+# brick-red native surface) over a recessed cement-dust mortar core, with a
+# grey masonry coping. Stretchers 0.4 x 0.106 (about 3.8:1, a brick's face);
+# alternate courses start with a half brick. Whole-layer support top.
+BRICK_COURSES=8
+BRICK_PITCH=.945/BRICK_COURSES
+
+
+def brick_masonry(g,parts):
+    g.box((.5,.5,.495),(.98,.98,.99),KILN_DUST)
+    for row in range(BRICK_COURSES):
+        z=.015+(row+.5)*BRICK_PITCH
+        widths=(.2,.4,.4) if row%2 else (.4,.4,.2)
+        for side in range(4):
+            # Front and back courses run corner to corner; the side courses
+            # fit between them, so no two bricks share a face at a corner.
+            start,span=(.006,.988) if side<2 else (.048,.904)
+            for width in widths:
+                width*=span/sum(widths)
+                along=start+width/2
+                if side<2:
+                    g.box((along,.024 if side==0 else .976,z),(width-.012,.048,BRICK_PITCH-.012),CIVIC_ORANGE_PANEL)
+                else:
+                    g.box((.024 if side==2 else .976,along,z),(.048,width-.012,BRICK_PITCH-.012),CIVIC_ORANGE_PANEL)
+                start+=width
+    g.box((.5,.5,.98),(.992,.992,.04),KILN_STONE)
+    return RailAssembly('StructureRails')
 
 
 def concrete_block(g,parts):
@@ -254,7 +285,7 @@ def scaffold_ident(n,legs):
 
 MODELS={
     'SandstoneMasonryBlock':sandstone_masonry,
-    'LimestoneMasonryBlock':limestone_masonry,
+    'BrickMasonryBlock':brick_masonry,
     'ConcreteBlock':concrete_block,
     'ConcreteOverhang8x1':concrete_overhang,
     'ReinforcedDamBlock':reinforced_dam_block,

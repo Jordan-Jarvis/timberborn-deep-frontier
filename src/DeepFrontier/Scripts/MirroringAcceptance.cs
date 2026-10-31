@@ -27,7 +27,7 @@ namespace DeepFrontier.Scripts {
       "ConcreteOverflowDam","ConcreteScaffold3x3","CryogenicLiquefactionPlant","DeepDrill",
       "DeepMine","DeepProcessor","ElectrolysisPlant","FertilizerWorks","FishHatchery",
       "FisheryWorks","FoodPackagingWorks","Greenhouse","GroceryStore","Hospital","LaunchPad",
-      "LimestoneMasonryBlock","LimestonePit","LimestoneQuarry","MaterialsLaboratory",
+      "BrickMasonryBlock","LimestonePit","LimestoneQuarry","MaterialsLaboratory",
       "MissionControl","NuclearReactor","PrecisionMachineWorks","PublicHealthLab",
       "RadioactiveWasteRefinery","RadioactiveWasteVault","ReinforcedDamBlock",
       "ReinforcedHydroTurbine","Restaurant","RocketAssemblyHangar","SandstoneMasonryBlock",

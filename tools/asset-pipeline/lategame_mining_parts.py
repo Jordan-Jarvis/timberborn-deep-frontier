@@ -87,6 +87,95 @@ def plinth_course(g, x0, x1, y0, y1, z0, z1, mat, doors, *, proud=.05, door_z=No
         bx(g, u, x1 + proud, y0 - proud, y0, z0, z1, mat)
 
 
+# Brick plinth course (2026-10-30, bricks pass). hall(plinth_mat=BRICK) lays
+# running-bond bricks in the native brick-red plaster (Plaster_Orange.IronTeeth)
+# over the same proud course, which is then the mortar (Plaster_White: late-game
+# studies use shipped native materials only). Front and back courses run corner
+# to corner; the side courses stop short of them, so no two bricks meet at a
+# corner. Other plinth materials are unchanged.
+BRICK = 'brick'
+MORTAR = CONCRETE    # Plaster_White.IronTeeth: pale lime mortar joints
+BRICK_LENGTH = .42   # nominal stretcher; each run is divided evenly
+BRICK_COURSE = .125  # nominal course height
+BRICK_JOINT = .012
+BRICK_PROUD = .02    # brick face in front of the mortar course
+BRICK_EMBED = .006   # brick backs sit inside the course
+
+
+def _brick_runs(a, b, offset):
+    """Brick extents along a run: whole bricks, or half bricks at both ends (offset course)."""
+    count = max(1, round((b - a) / BRICK_LENGTH))
+    w = (b - a) / count
+    if offset and count > 1:
+        cuts = [a] + [a + w * (i + .5) for i in range(count)] + [b]
+    else:
+        cuts = [a + w * i for i in range(count + 1)]
+    return [(u, v) for u, v in zip(cuts, cuts[1:]) if v - u > BRICK_JOINT * 2]
+
+
+def brick_plinth_course(g, x0, x1, y0, y1, z0, z1, doors, *, proud=.05, door_z=None):
+    # The brick faces stand where a concrete course's faces would (proud of
+    # the core), so the building's extents and registration do not change.
+    plinth_course(g, x0, x1, y0, y1, z0, z1, MORTAR, doors, proud=proud - BRICK_PROUD, door_z=door_z)
+    lo, hi = z0 + BRICK_JOINT / 2, z1 - BRICK_JOINT / 2
+    n = max(2, round((hi - lo) / BRICK_COURSE))
+    pitch = (hi - lo) / n
+    gap = .012
+    m = proud - BRICK_PROUD
+    xa, xb, ya, yb = x0 - m, x1 + m, y0 - m, y1 + m
+    front = [(xa, xb)]
+    for d in sorted(doors):
+        a, b = d - .5 - gap - BRICK_JOINT, d + .5 + gap + BRICK_JOINT
+        front = [piece for u, v in front for piece in ((u, min(v, a)), (max(u, b), v)) if piece[1] - piece[0] > BRICK_JOINT * 2]
+    side = [(ya + BRICK_EMBED + BRICK_JOINT, yb - BRICK_EMBED - BRICK_JOINT)]
+    j = BRICK_JOINT / 2
+    for row in range(n):
+        za, zb = lo + row * pitch + j, lo + (row + 1) * pitch - j
+        for face, spans in (('front', front), ('back', [(xa, xb)]), ('left', side), ('right', side)):
+            for a, b in spans:
+                for u, v in _brick_runs(a, b, row % 2):
+                    u, v = u + j, v - j
+                    if face == 'front':
+                        bx(g, u, v, ya - BRICK_PROUD, ya + BRICK_EMBED, za, zb, ORANGE)
+                    elif face == 'back':
+                        bx(g, u, v, yb - BRICK_EMBED, yb + BRICK_PROUD, za, zb, ORANGE)
+                    elif face == 'left':
+                        bx(g, xa - BRICK_PROUD, xa + BRICK_EMBED, u, v, za, zb, ORANGE)
+                    else:
+                        bx(g, xb - BRICK_EMBED, xb + BRICK_PROUD, u, v, za, zb, ORANGE)
+
+
+def brick_block(g, x0, x1, y0, y1, z0, z1, faces=('front', 'back', 'left', 'right')):
+    """A solid block x0..x1, y0..y1, z0..z1 faced with running-bond bricks on
+    `faces`: a mortar core set back by the brick depth on those faces, so the
+    block's outer extents are unchanged."""
+    ca = x0 + (BRICK_PROUD if 'left' in faces else 0)
+    cb = x1 - (BRICK_PROUD if 'right' in faces else 0)
+    da = y0 + (BRICK_PROUD if 'front' in faces else 0)
+    db = y1 - (BRICK_PROUD if 'back' in faces else 0)
+    bx(g, ca, cb, da, db, z0, z1, MORTAR)
+    lo, hi = z0 + BRICK_JOINT / 2, z1 - BRICK_JOINT / 2
+    n = max(2, round((hi - lo) / BRICK_COURSE))
+    pitch = (hi - lo) / n
+    j = BRICK_JOINT / 2
+    side_a = da + BRICK_EMBED + BRICK_JOINT if 'front' in faces else da
+    side_b = db - BRICK_EMBED - BRICK_JOINT if 'back' in faces else db
+    runs = {'front': (ca, cb), 'back': (ca, cb), 'left': (side_a, side_b), 'right': (side_a, side_b)}
+    for row in range(n):
+        za, zb = lo + row * pitch + j, lo + (row + 1) * pitch - j
+        for face in faces:
+            for u, v in _brick_runs(*runs[face], row % 2):
+                u, v = u + j, v - j
+                if face == 'front':
+                    bx(g, u, v, y0, da + BRICK_EMBED, za, zb, ORANGE)
+                elif face == 'back':
+                    bx(g, u, v, db - BRICK_EMBED, y1, za, zb, ORANGE)
+                elif face == 'left':
+                    bx(g, x0, ca + BRICK_EMBED, u, v, za, zb, ORANGE)
+                else:
+                    bx(g, cb - BRICK_EMBED, x1, u, v, za, zb, ORANGE)
+
+
 def portal(g, x, wall_y, bottom, *, record=True, ident=None):
     """Native one-tile Barrack door on a front-facing wall plane."""
     from industrial_facades import building_portal
@@ -147,7 +236,10 @@ def hall(g, x0, x1, y0, y1, top, *, z0=0.0, plinth=.45, infill=ORANGE, frame=WOO
     # A recorded door stands on its whole layer; a decorative upper-floor door
     # is lifted 15 mm so the portal's threshold panel clears the floor below.
     dz = z0 if record_doors else z0 + .015
-    plinth_course(g, x0, x1, y0, y1, z0, zp, plinth_mat, doors, door_z=dz)
+    if plinth_mat == BRICK:
+        brick_plinth_course(g, x0, x1, y0, y1, z0, zp, doors, door_z=dz)
+    else:
+        plinth_course(g, x0, x1, y0, y1, z0, zp, plinth_mat, doors, door_z=dz)
     notched_block(g, x0, x1, y0, y1, zp, top, infill, [(d, dz) for d in doors], depth=.08)
     for d in doors:
         portal(g, d, y0, dz, record=record_doors)

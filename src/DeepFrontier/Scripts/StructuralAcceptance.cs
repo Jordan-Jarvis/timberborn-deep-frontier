@@ -45,7 +45,7 @@ namespace DeepFrontier.Scripts {
   }
   // Explicit disposable fixture. Every placement and route uses native services.
   internal sealed class StructuralAcceptance : IPostLoadableSingleton,IUpdatableSingleton {
-    private static readonly string[] Models={"SandstoneMasonryBlock","LimestoneMasonryBlock","ConcreteBlock",
+    private static readonly string[] Models={"SandstoneMasonryBlock","BrickMasonryBlock","ConcreteBlock",
       "ReinforcedDamBlock","ConcreteOverflowDam","ConcreteOverhang8x1","ConcreteScaffold3x3"};
     private readonly EntityRegistry _entities;
     private readonly EntityService _entityService;

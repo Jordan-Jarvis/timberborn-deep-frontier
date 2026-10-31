@@ -18,7 +18,7 @@
     "deckMode": "None",
     "supportLayer": 1
   },
-  "LimestoneMasonryBlock": {
+  "BrickMasonryBlock": {
     "origin": [
       0,
       0,

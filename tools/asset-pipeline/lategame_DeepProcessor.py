@@ -254,7 +254,8 @@ def casting_bay(g, parts):
 def blower_house(g, parts):
     # Brick hall on tiles 0..3 x 0..3. The core front at .12 puts the native
     # portal's face on the tile edge y = 0.
-    P.hall(g, .05, 2.95, .12, 2.95, 1.84, plinth=.5, doors=[1.5], pitch=1.0,
+    # Brick plinth course (2026-10-30, bricks pass; was cast concrete).
+    P.hall(g, .05, 2.95, .12, 2.95, 1.84, plinth=.5, doors=[1.5], pitch=1.0, plinth_mat=P.BRICK,
            posts=('front', 'left', 'back'),
            windows={'front': [(.45, 1.15, 'grand', .55), (2.55, 1.15, 'grand', .55)],
                     'left': [(.59, 1.15, 'grand', .55), (2.48, 1.15, 'grand', .55)]})

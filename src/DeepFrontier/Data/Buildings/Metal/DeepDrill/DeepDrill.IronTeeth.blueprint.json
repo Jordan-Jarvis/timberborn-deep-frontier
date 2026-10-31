@@ -9,15 +9,15 @@
       },
       {
         "Id": "MetalBlock",
-        "Amount": 165
+        "Amount": 160
       },
       {
         "Id": "Concrete",
-        "Amount": 420
+        "Amount": 415
       },
       {
         "Id": "Brick",
-        "Amount": 140
+        "Amount": 155
       },
       {
         "Id": "Gear",

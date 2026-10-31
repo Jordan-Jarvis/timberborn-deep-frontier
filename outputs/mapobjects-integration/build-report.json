@@ -86,7 +86,8 @@
   "triangles": 369,
   "materials": {
    "UndergroundRuinsCliff": 58,
-   "Plaster_White.IronTeeth": 311
+   "Plaster_White.IronTeeth": 194,
+   "WaterSource": 117
   },
   "boundsMin": [
    0.12,
@@ -104,9 +105,9 @@
    "LimestoneSeamGeology"
   ],
   "sourceScene": "src/DeepFrontier/Art/Source/LimestoneSeam-ReferenceStudy.blend",
-  "sourceSha256": "8efed693aebaff9c2cb113579ad9e234b21f5dab54f9f037a8b21de092b498bd",
+  "sourceSha256": "dbe5980c619e997061510f139ab14b659ecc4b67440eb00d51ad8141aa7563bb",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/LimestoneSeam/LimestoneSeam.Model.timbermesh",
-  "exportSha256": "be2704fcc1794e2dfe9e7d480dfbe70ba77452d565652882f0b26dbb1a8dbf2e"
+  "exportSha256": "7e8fe310aa5dbb134308b01009243632686b25fbd716289d82dc99c53e204016"
  },
  "SandstoneOutcrop": {
   "triangles": 145,
@@ -136,20 +137,21 @@
   "exportSha256": "49268caa386660c695ace585cf68b75d3ef1bd06e21db8dc26a64e5be2daf849"
  },
  "LimestoneOutcrop": {
-  "triangles": 76,
+  "triangles": 181,
   "materials": {
-   "Plaster_White.IronTeeth": 58,
-   "UndergroundRuinsCliff": 18
+   "WaterSource": 84,
+   "UndergroundRuinsCliff": 71,
+   "Plaster_White.IronTeeth": 26
   },
   "boundsMin": [
-   0.102,
-   0.1467,
+   0.0988,
+   0.1457,
    -0.05
   ],
   "boundsMax": [
-   0.9058,
-   0.8536,
-   0.65
+   0.8974,
+   0.8461,
+   0.42
   ],
   "uvErrors": [],
   "uvErrorCount": 0,
@@ -157,9 +159,9 @@
    "LimestoneOutcropGeology"
   ],
   "sourceScene": "src/DeepFrontier/Art/Source/LimestoneOutcrop-ReferenceStudy.blend",
-  "sourceSha256": "852c4377a8acd8f6c54f0a87fb0c080de68fc8ec2373e5ad471fa7746fb44395",
+  "sourceSha256": "00a6a8c3a22f2f50a4005e8fa9017c9f71245cd6d6aeb4b9062cc6a69ba6556e",
   "export": "C:/Users/Jordan/Documents/TimberbornModding/outputs/mapobjects-integration/Data/MapEditor/Objects/LimestoneOutcrop/LimestoneOutcrop.Model.timbermesh",
-  "exportSha256": "9dac26379c8c291368d05024f11ed1e7d01ea21d18069646ea01d8cd67890f2b"
+  "exportSha256": "a899367d9b0ba8c27a925a7dbc9d415aa8f9048c8351131251531b15aac9bf72"
  },
  "RadioactiveSpringSource": {
   "triangles": 289,

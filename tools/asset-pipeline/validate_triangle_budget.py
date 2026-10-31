@@ -80,7 +80,7 @@ OWNERS = {
         'ConcreteScaffold3x3H1', 'ConcreteScaffold3x3H2', 'ConcreteScaffold4x4H1', 'ConcreteScaffold4x4H2',
         'ConcreteScaffold4x4H3', 'ConcreteScaffold5x5H1', 'ConcreteScaffold5x5H2', 'ConcreteScaffold5x5H3',
         'ConcreteSidePlatform3x3', 'ConcreteSidePlatform4x4', 'ConcreteSidePlatform5x5',
-        'LimestoneMasonryBlock', 'ReinforcedDamBlock', 'SandstoneMasonryBlock',
+        'BrickMasonryBlock', 'ReinforcedDamBlock', 'SandstoneMasonryBlock',
         'SteelCantilever10x1', 'SteelCantilever12x1', 'SteelCantilever15x1',
         'SteelBridge8x1', 'SteelBridge10x1', 'SteelBridge12x1', 'SteelBridge15x1',
         'SteelColumnH1', 'SteelColumnH2', 'SteelColumnH3', 'SteelColumnH4', 'SteelColumnH5', 'SteelColumnH6',

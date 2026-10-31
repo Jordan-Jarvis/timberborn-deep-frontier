@@ -115,24 +115,24 @@
   },
   "CoalPowerPlant": {
    "model": "Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.Model",
-   "sha256": "a4446c678983911c593534217b61c41fa1a222bca2955173b476fe2db804b717",
+   "sha256": "572f8c0c500dff08ce6c0d0a3c2188541e28fe8e26346ca12d47eb8f52c08e16",
    "areas": {
-    "BaseMetal.IronTeeth": 34.7358,
+    "BaseMetal.IronTeeth": 41.5655,
     "BaseWood_DarkBrown.IronTeeth": 1.2675,
     "DFIndustrial08": 0.229,
     "DFIndustrial25": 0.0042,
     "Details.IronTeeth#metal": 0.7825,
     "IrregularPlanks_MetalForged.IronTeeth": 47.9142,
     "PaintedMetal.IronTeeth": 33.8454,
-    "Plaster_Orange.IronTeeth": 1.068,
-    "Plaster_White.IronTeeth": 78.1965,
+    "Plaster_Orange.IronTeeth": 32.9031,
+    "Plaster_White.IronTeeth": 70.2592,
     "RoofPlanks.IronTeeth": 6.3092,
     "WindowsAtlas.IronTeeth": 1.4253
    },
    "families": {
-    "brick": 1.068,
-    "concrete": 78.1965,
-    "metal": 117.2779,
+    "brick": 32.9031,
+    "concrete": 70.2592,
+    "metal": 124.1076,
     "unpriced": 1.6584,
     "wood": 7.5767
    }
@@ -215,7 +215,7 @@
   },
   "DeepDrill": {
    "model": "Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.Model",
-   "sha256": "c398e13f62f0fc87a987df283835d3db1f1f3160455a5d9c2ffffcaee4d0f7e6",
+   "sha256": "01d32171f700c702a89547879a643c611555d4265f21a95d2437cba160185b54",
    "areas": {
     "BaseMetal.IronTeeth": 176.086,
     "BaseWood_DarkBrown.IronTeeth": 24.8939,
@@ -225,14 +225,14 @@
     "IrregularPlanks_DarkBrown.IronTeeth": 69.1852,
     "IrregularPlanks_MetalForged.IronTeeth": 19.26,
     "PaintedMetal.IronTeeth": 30.2847,
-    "Plaster_Orange.IronTeeth": 69.8503,
-    "Plaster_White.IronTeeth": 230.9841,
+    "Plaster_Orange.IronTeeth": 79.3549,
+    "Plaster_White.IronTeeth": 230.4315,
     "RoofPlanks.IronTeeth": 15.3377,
     "WindowsAtlas.IronTeeth": 5.24
    },
    "families": {
-    "brick": 69.8503,
-    "concrete": 230.9841,
+    "brick": 79.3549,
+    "concrete": 230.4315,
     "metal": 229.8402,
     "unpriced": 5.7763,
     "wood": 109.4169
@@ -264,7 +264,7 @@
   },
   "DeepProcessor": {
    "model": "Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model",
-   "sha256": "561ed7ef211a473cb02db8b211e07385d475865ed0a3024f3ec77f8b4aad5fce",
+   "sha256": "8835fd2fd4f2568d7c1a8e9454df8fd4be75275137e9f33d6eebccc052636114",
    "areas": {
     "BaseMetal.IronTeeth": 176.7855,
     "BaseWood_DarkBrown.IronTeeth": 11.6906,
@@ -272,13 +272,13 @@
     "Details.IronTeeth#metal": 2.4162,
     "IrregularPlanks_MetalForged.IronTeeth": 27.8599,
     "PaintedMetal.IronTeeth": 123.4195,
-    "Plaster_Orange.IronTeeth": 44.9048,
-    "Plaster_White.IronTeeth": 133.8208,
+    "Plaster_Orange.IronTeeth": 54.9631,
+    "Plaster_White.IronTeeth": 133.2683,
     "WindowsAtlas.IronTeeth": 1.0803
    },
    "families": {
-    "brick": 44.9048,
-    "concrete": 133.8208,
+    "brick": 54.9631,
+    "concrete": 133.2683,
     "metal": 330.4811,
     "unpriced": 3.4225,
     "wood": 11.6906

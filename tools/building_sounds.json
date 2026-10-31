@@ -213,8 +213,8 @@
       "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
       "comment": "A retaining block that behaves like the native Levee and Terrain Block, both of which use the Default selection with no loop. There is no loop driver."
     },
-    "LimestoneMasonryBlock": {
-      "template": "Buildings/Platforms/LimestoneMasonryBlock/LimestoneMasonryBlock.IronTeeth.blueprint",
+    "BrickMasonryBlock": {
+      "template": "Buildings/Platforms/BrickMasonryBlock/BrickMasonryBlock.IronTeeth.blueprint",
       "selection": "Default", "looping": "", "loopDriver": "none", "family": "platform/levee",
       "comment": "Same as the Sandstone Masonry Block: native Levee/Terrain Block Default selection, no loop driver."
     },

@@ -10,7 +10,7 @@ from pathlib import Path
 
 SIZES = {
     'SandstoneMasonryBlock': [1, 1, 1],
-    'LimestoneMasonryBlock': [1, 1, 1],
+    'BrickMasonryBlock': [1, 1, 1],
     'ConcreteBlock': [1, 1, 1],
     'ConcreteOverhang8x1': [1, 8, 1],
     'ConcreteScaffold3x3': [3, 3, 4],
