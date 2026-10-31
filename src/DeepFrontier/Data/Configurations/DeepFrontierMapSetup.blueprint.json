@@ -1,7 +1,7 @@
 {
   "BuiltinMapSetupSpec": {
-    "SmallMapMaxArea": 11176,
-    "ReferenceSiteArea": 5588,
+    "SmallMapMaxArea": 5966,
+    "ReferenceSiteArea": 2983,
     "DevMaps": [
       "_Mini",
       "_TerrainTest",
@@ -15,12 +15,10 @@
         "Height": 192,
         "TotalHeight": 66,
         "SmallArea": false,
-        "NoDeepMineSite": true,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Beaverome.Sites",
-          "DeepFrontier.MapSetup.Unmet.Beaverome.1",
-          "DeepFrontier.MapSetup.Unmet.Beaverome.2",
-          "DeepFrontier.MapSetup.Unmet.Beaverome.3"
+          "DeepFrontier.MapSetup.Unmet.Beaverome.1"
         ],
         "Placements": [
           {
@@ -84,52 +82,92 @@
             "Amount": 0
           },
           {
-            "Template": "HumanRecordCache",
-            "Label": "Buried records 95 cells south-west of the start",
-            "X": 19,
-            "Y": 20,
-            "Z": 8,
-            "Orientation": "Cw0",
-            "Good": "",
-            "Amount": 0
-          },
-          {
-            "Template": "HumanRecordCache",
-            "Label": "Buried records 83 cells south-west of the start",
-            "X": 19,
-            "Y": 36,
-            "Z": 9,
-            "Orientation": "Cw0",
-            "Good": "",
-            "Amount": 0
-          },
-          {
-            "Template": "HumanRecordCache",
-            "Label": "Buried records 78 cells south-west of the start",
-            "X": 25,
-            "Y": 37,
-            "Z": 11,
-            "Orientation": "Cw0",
-            "Good": "",
-            "Amount": 0
-          },
-          {
-            "Template": "HumanRecordCache",
-            "Label": "Buried records 90 cells south-west of the start",
-            "X": 27,
-            "Y": 20,
-            "Z": 11,
-            "Orientation": "Cw0",
-            "Good": "",
-            "Amount": 0
-          },
-          {
-            "Template": "HumanRecordCache",
-            "Label": "Buried records 86 cells south-west of the start",
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 85 cells north-west of the start)",
             "X": 34,
-            "Y": 20,
-            "Z": 11,
+            "Y": 163,
+            "Z": 12,
             "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 82 cells north-west of the start)",
+            "X": 15,
+            "Y": 141,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 51 cells east of the start)",
+            "X": 128,
+            "Y": 107,
+            "Z": 12,
+            "Orientation": "Cw270",
+            "Good": "DeepOre",
+            "Amount": 8500
+          },
+          {
+            "Template": "DeepOreSource",
+            "Label": "Deep Ore Source (Deep Drill, 43 cells north of the start)",
+            "X": 88,
+            "Y": 130,
+            "Z": 15,
+            "Orientation": "Cw180",
+            "Good": "DeepOre",
+            "Amount": 8500
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 103 cells south-east of the start",
+            "X": 170,
+            "Y": 42,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 94 cells south-east of the start",
+            "X": 164,
+            "Y": 50,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 96 cells south-east of the start",
+            "X": 167,
+            "Y": 52,
+            "Z": 10,
+            "Orientation": "Cw90",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 101 cells south-east of the start",
+            "X": 172,
+            "Y": 50,
+            "Z": 10,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 98 cells south-east of the start",
+            "X": 169,
+            "Y": 53,
+            "Z": 13,
+            "Orientation": "Cw90",
             "Good": "",
             "Amount": 0
           }
@@ -144,7 +182,6 @@
         "SmallArea": false,
         "NoDeepMineSite": false,
         "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Canyon.Sites",
           "DeepFrontier.MapSetup.Unmet.Canyon.1"
         ],
         "Placements": [
@@ -330,30 +367,9 @@
         "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Cliffside.Sites",
-          "DeepFrontier.MapSetup.Unmet.Cliffside.1",
-          "DeepFrontier.MapSetup.Unmet.Cliffside.2"
+          "DeepFrontier.MapSetup.Unmet.Cliffside.1"
         ],
         "Placements": [
-          {
-            "Template": "DeepOreVein",
-            "Label": "Deep Ore Vein (Deep Mine, 21 cells south-west of the start)",
-            "X": 16,
-            "Y": 10,
-            "Z": 4,
-            "Orientation": "Cw0",
-            "Good": "",
-            "Amount": 0
-          },
-          {
-            "Template": "DeepOreVein",
-            "Label": "Deep Ore Vein (Deep Mine, 20 cells west of the start)",
-            "X": 10,
-            "Y": 23,
-            "Z": 4,
-            "Orientation": "Cw0",
-            "Good": "",
-            "Amount": 0
-          },
           {
             "Template": "DeepOreSource",
             "Label": "Deep Ore Source, 61 cells east of the start",
@@ -439,6 +455,86 @@
             "Label": "Sandstone Seam (Sandstone Quarry, 14 cells north-west of the start)",
             "X": 22,
             "Y": 36,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 14 cells north of the start",
+            "X": 38,
+            "Y": 41,
+            "Z": 14,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Ruins 61 cells east of the start",
+            "X": 93,
+            "Y": 37,
+            "Z": 7,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 10 cells north-west of the start",
+            "X": 24,
+            "Y": 32,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records 11 cells north-west of the start",
+            "X": 27,
+            "Y": 37,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "HumanRecordCache",
+            "Label": "Buried records by the start",
+            "X": 30,
+            "Y": 29,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 44 cells east of the start)",
+            "X": 74,
+            "Y": 26,
+            "Z": 2,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 20 cells south-west of the start)",
+            "X": 21,
+            "Y": 10,
+            "Z": 4,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 23 cells west of the start)",
+            "X": 10,
+            "Y": 25,
             "Z": 4,
             "Orientation": "Cw0",
             "Good": "",
@@ -638,7 +734,7 @@
         "Height": 50,
         "TotalHeight": 66,
         "SmallArea": true,
-        "NoDeepMineSite": true,
+        "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Diorama.Sites"
         ],
@@ -780,6 +876,26 @@
             "Y": 2,
             "Z": 5,
             "Orientation": "Cw90",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 13 cells south of the start)",
+            "X": 23,
+            "Y": 16,
+            "Z": 3,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "DeepOreVein",
+            "Label": "Deep Ore Vein (Deep Mine, 18 cells east of the start)",
+            "X": 45,
+            "Y": 27,
+            "Z": 8,
+            "Orientation": "Cw0",
             "Good": "",
             "Amount": 0
           }
@@ -976,7 +1092,6 @@
         "SmallArea": false,
         "NoDeepMineSite": false,
         "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Hollows.Sites",
           "DeepFrontier.MapSetup.Unmet.Hollows.1"
         ],
         "Placements": [
@@ -1362,9 +1477,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Meander.Sites"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "LimestoneOutcrop",
@@ -1547,7 +1660,6 @@
         "SmallArea": false,
         "NoDeepMineSite": false,
         "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.MountainRange.Sites",
           "DeepFrontier.MapSetup.Unmet.MountainRange.1"
         ],
         "Placements": [
@@ -2732,9 +2844,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Spillage.Sites"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "DeepOreVein",
@@ -3109,7 +3219,6 @@
         "SmallArea": false,
         "NoDeepMineSite": false,
         "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.ThousandIslands.Sites",
           "DeepFrontier.MapSetup.Unmet.ThousandIslands.1",
           "DeepFrontier.MapSetup.Unmet.ThousandIslands.2"
         ],
@@ -3295,7 +3404,6 @@
         "SmallArea": false,
         "NoDeepMineSite": false,
         "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Waterfalls.Sites",
           "DeepFrontier.MapSetup.Unmet.Waterfalls.1"
         ],
         "Placements": [

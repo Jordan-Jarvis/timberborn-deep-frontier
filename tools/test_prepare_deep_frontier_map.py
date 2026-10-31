@@ -64,9 +64,11 @@ def overlap(v):
 
 
 def open_margin(v):
+    # The vault's top row (blueprint depth, Cw0) lands in the row just south of the pad: its open S margin.
     pad = site(v, 'LaunchPad.IronTeeth')
     vault = site(v, 'RadioactiveWasteVault.IronTeeth')
-    vault.update(x=pad['x'], y=pad['y'] - 11, z=pad['z'], orientation='Cw0')
+    depth = catalog.get(vault['template'])['BlockObjectSpec']['Size']['Y']
+    vault.update(x=pad['x'], y=pad['y'] - depth, z=pad['z'], orientation='Cw0')
 
 
 def dynamite_outside(v):

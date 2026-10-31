@@ -33,7 +33,6 @@
     {"template": "LaunchPad.IronTeeth", "label": "Launch Pad, 19 cells south-east of the start", "x": 103, "y": 79, "z": 3, "orientation": "Cw0", "margin": 2, "openSides": []},
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 24 cells south-west of the start", "x": 75, "y": 82, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["W"]},
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 47 cells west of the start", "x": 43, "y": 101, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": []},
-    {"template": "RadioactiveWasteRefinery.IronTeeth", "label": "Radioactive Waste Refinery, 65 cells east of the start", "x": 163, "y": 104, "z": 2, "orientation": "Cw270", "margin": 1, "openSides": ["S", "E"]},
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 66 cells south-east of the start", "x": 131, "y": 40, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": ["N"]},
     {"template": "MissionControl.IronTeeth", "label": "Mission Control, 78 cells south-west of the start", "x": 26, "y": 56, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 89 cells north-east of the start", "x": 143, "y": 162, "z": 1, "orientation": "Cw0", "margin": 1, "openSides": ["N"]},
@@ -67,7 +66,9 @@
     {"template": "FishHatchery.IronTeeth", "label": "Fish Hatchery, 80 cells south-west of the start", "x": 39, "y": 38, "z": 6, "orientation": "Cw270", "dynamite": [[33, 38, 2], [38, 38, 1], [38, 39, 1]]},
     {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "label": "Radioactive Sludge Recovery Pump, by the start", "x": 95, "y": 92, "z": 3, "orientation": "Cw180"},
     {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 97 cells east of the start", "x": 187, "y": 80, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": []},
-    {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 10 layers of natural drop, 65 cells north of the start", "x": 96, "y": 161, "z": 10}
+    {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 10 layers of natural drop, 65 cells north of the start", "x": 96, "y": 161, "z": 10},
+    {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 67 cells east of the start", "x": 153, "y": 105, "z": 2, "orientation": "Cw0", "margin": 2, "openSides": ["S", "E"], "maxWaterDistance": 15},
+    {"template": "RadioactiveWasteRefinery.IronTeeth", "label": "Radioactive Waste Refinery, 14 cells south-west of the start", "x": 87, "y": 91, "z": 3, "orientation": "Cw180", "margin": 1, "openSides": ["E"]}
   ],
-  "unmet": [{"item": "shore fishing banks (first FreshFish)", "reason": "On the saved water the hollow rivers are shallow: of 1,288 clean surface water cells only 76 are at least 0.5 deep, and none of them lies one layer below a dry, free bank within the 1.25 reach, so the map has 0 qualifying banks."}, {"item": "NuclearReactor.IronTeeth site (flat)", "reason": "No dry, flat 20x15 footprint exists at any level: the basins and plateaus are terraced, the largest flat dry rectangle at least 15 cells deep is 12x15 and the largest square is 13x13."}]
+  "unmet": [{"item": "shore fishing banks (first FreshFish)", "reason": "On the saved water the hollow rivers are shallow: of 1,288 clean surface water cells only 76 are at least 0.5 deep, and none of them lies one layer below a dry, free bank within the 1.25 reach, so the map has 0 qualifying banks."}]
 }

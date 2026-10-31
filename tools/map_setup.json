@@ -8,7 +8,7 @@
   ],
   "devMapsWhy": "The game's developer test maps (IsDev, empty loc keys; the new-game list shows them only in dev mode). Deep Frontier gives them no setup: a new game on one gets a notification and a log line saying so, and no objects or height. The names are their asset (GameObject) names in resources.assets; prepare_deep_frontier_map.py checks that the sizes match the game's dev maps.",
   "smallMap": {
-    "maxArea": 11176,
+    "maxArea": 5966,
     "referenceVariants": ["plains", "lakes", "terraces"],
     "landShare": [1, 2],
     "deepMineSite": "DeepMine.IronTeeth",
@@ -19,7 +19,7 @@
     "smallIntro": "Small map: {0} has {1} tiles, and the Deep Frontier late game is built for maps of at least {2} tiles.",
     "smallNoDeepMine": "No Deep Mine: the Deep Mine is the only lasting source of deep ore, which the late game and the rocket launches need. Any Deep Ore Sources on this map run out.",
     "smallReasonsHeader": "What this map cannot provide:",
-    "smallSpace": "Little room: the full set of large Deep Frontier sites (the 20 x 15 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about {0} tiles with their margins on a large map.",
+    "smallSpace": "Little room: the full set of large Deep Frontier sites (the 14 x 11 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about {0} tiles with their margins on a large map.",
     "smallHeight": "Build upward: Deep Frontier raises this map's build height to {0} layers (vanilla {1}); on a small map most of the colony has to stack on platforms, which costs more materials.",
     "unmetTitle": "Deep Frontier on {0}: this map cannot provide everything the full Deep Frontier game needs:",
     "smallNoUnmet": "Every Deep Frontier resource and site fits on this map, but with almost no spare room.",

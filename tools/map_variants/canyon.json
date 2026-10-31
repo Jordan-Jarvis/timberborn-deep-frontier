@@ -6,7 +6,7 @@
   "height": {"totalHeight": 66},
   "mapSize": {"x": 128, "y": 128},
   "hardVariant": false,
-  "description": "Deep Frontier new-game setup of the built-in Canyon map: a narrow river canyon between high stepped rims. Two Deep Ore Veins with Deep Mine sites lie on the low benches of the canyon floor (north-west and just south-west of the start), two Deep Ore Sources with Deep Drill sites on the western rim, sandstone and limestone outcrops beside their pits north of the start, five Human Record Caches by the rim ruins, and the launch pad on the north-east rim; no 20x15 reactor footprint exists on this map.",
+  "description": "Deep Frontier new-game setup of the built-in Canyon map: a narrow river canyon between high stepped rims. Two Deep Ore Veins with Deep Mine sites lie on the low benches of the canyon floor (north-west and just south-west of the start), two Deep Ore Sources with Deep Drill sites on the western rim, sandstone and limestone outcrops beside their pits north of the start, five Human Record Caches by the rim ruins, the reactor on the level-5 bench north of the start and the launch pad on the north-east rim.",
   "placements": [
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 1 (Limestone Pit, 12 cells north of the start)", "x": 57, "y": 73, "z": 2},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 2 (Limestone Pit, 12 cells north of the start)", "x": 57, "y": 79, "z": 2},
@@ -48,7 +48,6 @@
     {"template": "Hospital.IronTeeth", "label": "Hospital, 32 cells west of the start", "x": 25, "y": 73, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S"]},
     {"template": "LaunchPad.IronTeeth", "label": "Launch Pad, 63 cells north-east of the start", "x": 95, "y": 124, "z": 14, "orientation": "Cw180", "margin": 2, "openSides": ["E"]},
     {"template": "LimestoneQuarry.IronTeeth", "label": "Limestone Quarry, 42 cells south-east of the start", "x": 82, "y": 21, "z": 7, "orientation": "Cw270", "margin": 1, "openSides": [], "understructure": [77, 24, 7]},
-    {"template": "MissionControl.IronTeeth", "label": "Mission Control, 39 cells north of the start", "x": 41, "y": 95, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 12 cells south-east of the start", "x": 61, "y": 57, "z": 2, "orientation": "Cw90", "margin": 1, "openSides": ["N"]},
     {"template": "RadioactiveWasteRefinery.IronTeeth", "label": "Radioactive Waste Refinery, 55 cells north-west of the start", "x": 29, "y": 99, "z": 3, "orientation": "Cw270", "margin": 1, "openSides": ["N", "W"]},
     {"template": "RadioactiveWasteVault.IronTeeth", "label": "Radioactive Waste Vault, 19 cells west of the start", "x": 37, "y": 71, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
@@ -65,7 +64,9 @@
     {"template": "GroceryStore.IronTeeth", "label": "Grocery Store, 47 cells north-east of the start", "x": 84, "y": 98, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["W"]},
     {"template": "Greenhouse.IronTeeth", "label": "Greenhouse, 54 cells south-east of the start", "x": 86, "y": 21, "z": 2, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 14 cells west of the start", "x": 44, "y": 56, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": []},
-    {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, by the start", "x": 53, "y": 67, "z": 2, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S"]}
+    {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, by the start", "x": 53, "y": 67, "z": 2, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S"]},
+    {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 45 cells north of the start", "x": 40, "y": 112, "z": 5, "orientation": "Cw90", "margin": 2, "openSides": ["N", "S"], "maxWaterDistance": 15},
+    {"template": "MissionControl.IronTeeth", "label": "Mission Control, 23 cells west of the start", "x": 35, "y": 61, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]}
   ],
-  "unmet": [{"item": "shore fishing banks (first FreshFish)", "reason": "No bank qualifies for Gatherer Flag shore fishing in the saved water: the clean water is at most 0.34 deep (ShoreFishingSpec MinimumDepth 0.5, contamination at most 0.01), and every one of the 132 water cells at least 0.5 deep is badwater (contamination 1.0). The first FreshFish needs a clean reach dammed deeper by the player."}, {"item": "NuclearReactor.IronTeeth site (flat)", "reason": "No flat, dry, free 20x15 footprint exists at any level: wherever a flat strip reaches 20 cells it is at most 12 wide (12x21 on the canyon floor, levels 2-3), and the largest flat rectangle with both sides at least 15 is 17x15 (level 2); the canyon floor is cut by the river and the rims are stepped terraces."}]
+  "unmet": [{"item": "shore fishing banks (first FreshFish)", "reason": "No bank qualifies for Gatherer Flag shore fishing in the saved water: the clean water is at most 0.34 deep (ShoreFishingSpec MinimumDepth 0.5, contamination at most 0.01), and every one of the 132 water cells at least 0.5 deep is badwater (contamination 1.0). The first FreshFish needs a clean reach dammed deeper by the player."}]
 }

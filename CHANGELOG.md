@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Maps re-planned for the smaller buildings
+- Every built-in map's sites were searched again for the compacted footprints (Deep Mine and Deep Drill 7x6, quarries 8x6, Nuclear Reactor 14x11).
+- **Beaverome** now has two Deep Mine sites, two Deep Drill sites with a Deep Ore Source each (17,000 deep ore), the Deep Processor, Steel Mill, Mission Control and Launch Pad. It is no longer EXTREMELY difficult; it shows the shorter notice of what it can't provide (quarries, reactor, some plants and civic buildings, renewable scrap).
+- **Diorama** gets two Deep Mine sites and most of the deep industry; **Cliffside** gets the Limestone Quarry, the Launch Pad, five Human Record Caches and the full rocket chain. Both stay EXTREMELY difficult because they are small.
+- **Reactor sites** on Canyon, Craters, Hollows, Mountain Range, Oasis, Pillars, Spillage and Thousand Islands. Only Beaverome, Cliffside and Diorama have none now (was 11 maps).
+- Meander, Waterfalls, Pillars and Thousand Islands get the plants they had no room for.
+- The small-map threshold follows the smaller sites: 5,966 tiles (was 11,176). Diorama and Cliffside are still the only small maps.
+- The four Deep Frontier map files (Plains, Plains Hard, Lakes, Terraces) keep their placements and sites.
+
 ## 0.7.0 (2026-10-30)
 
 ### Tidier build menu (player feedback)

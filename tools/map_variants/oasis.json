@@ -6,7 +6,7 @@
   "height": {"totalHeight": 66},
   "mapSize": {"x": 256, "y": 256},
   "hardVariant": false,
-  "description": "Oasis: a dry, terraced desert around one seep-fed pond beside the start, its other clean springs undrilled Aquifers and its badwater springs dry on the outer terraces; Deep Ore Veins in the East Hollow, West Basin and South Terrace, Deep Ore Sources on the West Bench, South Rise and Far East Flats, the launch pad on the oasis west field, and no reactor or dam site, since no flat 20x15 lies near the pond and no water flows.",
+  "description": "Oasis: a dry, terraced desert around one seep-fed pond beside the start, its other clean springs undrilled Aquifers and its badwater springs dry on the outer terraces; Deep Ore Veins in the East Hollow, West Basin and South Terrace, Deep Ore Sources on the West Bench, South Rise and Far East Flats, the launch pad on the oasis west field, the reactor on the level-4 flat north-east of the start within reach of the pond, and no dam site, since no water flows.",
   "placements": [
     {"template": "DeepOreVein", "label": "East Hollow vein", "x": 155, "y": 139, "z": 3, "orientation": "Cw0"},
     {"template": "DeepOreVein", "label": "West Basin vein", "x": 68, "y": 136, "z": 2, "orientation": "Cw0"},
@@ -68,7 +68,8 @@
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 39 cells south-east of the start", "x": 134, "y": 111, "z": 2, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 83 cells south-east of the start", "x": 171, "y": 61, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["S", "E"]},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 131 cells south of the start", "x": 109, "y": 15, "z": 9, "orientation": "Cw0", "margin": 1, "openSides": []},
-    {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 132 cells south-east of the start", "x": 227, "y": 70, "z": 15, "orientation": "Cw0", "margin": 1, "openSides": ["N", "W"]}
+    {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 132 cells south-east of the start", "x": 227, "y": 70, "z": 15, "orientation": "Cw0", "margin": 1, "openSides": ["N", "W"]},
+    {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 18 cells north-east of the start", "x": 129, "y": 164, "z": 4, "orientation": "Cw90", "margin": 2, "openSides": [], "maxWaterDistance": 15}
   ],
-  "unmet": [{"item": "NuclearReactor.IronTeeth site (flat)", "reason": "No flat 20x15 footprint lies within 15 cells of clean water: the only clean surface water is the 361-cell oasis pond (bed level 1), and the 36 flat dry 20x15 footprints, all on the level-13 and level-16 plateaus, are 100 or more cells from it. The nearest undrilled Aquifer (22, 19, level 6) is 7 cells from the footprint at (1, 0, 16) but 10 levels below it and gives water only through a player-built Aquifer Drill."}, {"item": "ReinforcedHydroTurbine.IronTeeth site (hydro)", "reason": "No water flows on the map: the only surface water is the oasis pond (361 cells, every bed cell at level 1), fed by one WaterSeep (strength 4) that its WaterDepthStrengthModifierSpec stops at 0.8 depth, so the pond has no outflow and no bed drop; the ten Aquifers give water only through player-built Aquifer Drills."}]
+  "unmet": [{"item": "ReinforcedHydroTurbine.IronTeeth site (hydro)", "reason": "No water flows on the map: the only surface water is the oasis pond (361 cells, every bed cell at level 1), fed by one WaterSeep (strength 4) that its WaterDepthStrengthModifierSpec stops at 0.8 depth, so the pond has no outflow and no bed drop; the ten Aquifers give water only through player-built Aquifer Drills."}]
 }
