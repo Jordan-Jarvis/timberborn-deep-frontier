@@ -73,11 +73,17 @@ def cannery(g, parts):
     blk(g, CX0 - .03, CY1 - .03, -.03, CX1 - .03, CY1 + .03, .14, CONCRETE)
     blk(g, CX0 - .05, CY0 - .05, BAY_H, CX1 + .05, CY1 - .05, top, CONCRETE)
     blk(g, CX0 - .05, CY1 - .05, BAY_H, CX1 - .05, CY1 + .05, top, CONCRETE)
-    P.door(g, DOOR_X, CY0, 0, 'Door0')
-    P.native_window(g, 1.5, CY0, .52, .55, 'front', 'factory')
-    P.native_window(g, CX0, 2.5, .52, .6, 'left', 'factory')
-    P.native_window(g, CX1, 3.5, .52, .6, 'right', 'factory')
-    K.lamp(g, DOOR_X - .66, CY0 - .01, .78, face='front')
+    # Brick ground storey (2026-10-30, bricks pass; was cast concrete): brick
+    # courses between the foot and the coping, open at the loading bay, door,
+    # windows and lamp.
+    features = [((BAY0, CY0, 0), (BAY1, CY0 + BAY_D, BAY_H))]
+    box = lambda fn: features.append(P.authored_box(g, fn))
+    box(lambda g: P.door(g, DOOR_X, CY0, 0, 'Door0'))
+    box(lambda g: P.native_window(g, 1.5, CY0, .52, .55, 'front', 'factory'))
+    box(lambda g: P.native_window(g, CX0, 2.5, .52, .6, 'left', 'factory'))
+    box(lambda g: P.native_window(g, CX1, 3.5, .52, .6, 'right', 'factory'))
+    box(lambda g: K.lamp(g, DOOR_X - .66, CY0 - .01, .78, face='front'))
+    P.brick_skin(g, CX0, CY0, CX1, CY1, .14, BAY_H, features=features)
     # Bay lining: steel back plate, side plates and a half-raised roller shutter.
     yb = CY0 + BAY_D
     floor = .14

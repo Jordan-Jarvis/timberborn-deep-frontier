@@ -63,14 +63,19 @@ SLAB = .16
 
 def central(g):
     x0, y0, x1, y1 = CB
-    P.podium(g, x0, y0, x1, y1, 1.0)
+    # Brick ground storey (2026-10-30, bricks pass; was cast concrete with
+    # pilaster joints), open around the windows and where the tower stands.
+    P.podium(g, x0, y0, x1, y1, 1.0, joints=False)
     front = [3.5, 4.25, 6.75, 7.5]
+    features = [((TX - .75, TY0, 0), (TX + .75, TY1, 1.0))]
+    box = lambda fn: features.append(P.authored_box(g, fn))
     for x in front:
-        P.native_window(g, x, y0, .47, .52, 'front', 'factory')
+        box(lambda g, x=x: P.native_window(g, x, y0, .47, .52, 'front', 'factory'))
     for x in (3.5, 4.5, 5.5, 6.5, 7.5):
-        P.native_window(g, x, y1, .47, .52, 'back', 'factory')
+        box(lambda g, x=x: P.native_window(g, x, y1, .47, .52, 'back', 'factory'))
     for y in (2.0, 3.0):
-        P.native_window(g, x1, y, .47, .52, 'right', 'factory')
+        box(lambda g, y=y: P.native_window(g, x1, y, .47, .52, 'right', 'factory'))
+    P.brick_skin(g, x0, y0, x1, y1, .14, .9, faces=('front', 'back', 'right'), features=features)
     u0, u1, v0, v1 = x0 + .05, y0 + .05, x1 - .05, y1 - .05
     P.framed_block(g, u0, u1, v0, v1, 1.0, 2.0, infill=ORANGE, frame=CONCRETE,
                    pitch=(v0 - u0) / 5, corner=.2, post=.12, skip={'front': [(4.6, 6.4)]},
@@ -83,10 +88,15 @@ def central(g):
 
 def tower(g, parts):
     x0, x1 = TX - .75, TX + .75
-    P.podium(g, x0, TY0, x1, TY1, 1.0, skip=[(5.0, 6.0)], foot=False)
-    P.door(g, TX, TY0, 0, 'Door0')
-    K.lamp(g, 4.97, TY0, .5, face='front')
-    K.lamp(g, 6.03, TY0, .5, face='front')
+    # Brick tower base (2026-10-30, bricks pass), open around the door and
+    # lamps; its back half stands inside the central block.
+    P.podium(g, x0, TY0, x1, TY1, 1.0, skip=[(5.0, 6.0)], foot=False, joints=False)
+    features = [(CB[:2] + (0,), CB[2:] + (1.0,))]
+    box = lambda fn: features.append(P.authored_box(g, fn))
+    box(lambda g: P.door(g, TX, TY0, 0, 'Door0'))
+    box(lambda g: K.lamp(g, 4.97, TY0, .5, face='front'))
+    box(lambda g: K.lamp(g, 6.03, TY0, .5, face='front'))
+    P.brick_skin(g, x0, TY0, x1, TY1, .03, .9, faces=('front', 'left', 'right'), features=features)
     sx0, sy0, sx1, sy1 = x0 + .05, TY0 + .05, x1 - .05, TY1 - .05
     P.framed_block(g, sx0, sy0, sx1, sy1, 1.0, 3.0, infill=ORANGE, frame=CONCRETE, pitch=1.4, floors=(2.0,),
                    corner=.22,

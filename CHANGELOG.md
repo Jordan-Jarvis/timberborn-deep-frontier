@@ -22,6 +22,7 @@
 ### Brick art
 - **Brick Block:** the Limestone Masonry Block is now a brick block (4 bricks and 1 cement, 600 science) with eight courses of red brick. Placed limestone blocks load as brick blocks.
 - **Brick plinths** on the Deep Drill pump house and the Deep Processor blower house. The Coal Power Plant's bright concrete ground storey, engine bed and chimney base are dark red brick.
+- **Brick ground storeys** on the Public Health Lab, Technical School (central block and clock-tower base) and Food Packaging Works, and brick walls on the Water Treatment Plant's chemical house. The courses stop around every door, window and lamp.
 - **Limestone outcrops and seams** are grey weathered rock with pale broken faces, instead of white blocks that looked like gems.
 
 ## 0.7.1 (2026-10-30)

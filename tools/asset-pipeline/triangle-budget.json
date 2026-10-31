@@ -346,9 +346,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7648,
-   "vertices": 14314,
-   "construction": 7648,
+   "finished": 9228,
+   "vertices": 17474,
+   "construction": 9228,
    "file": "outputs/lategame-integration/Data/Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.Model.timbermesh"
   },
   "Greenhouse": {
@@ -490,9 +490,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 3866,
-   "vertices": 7426,
-   "construction": 3866,
+   "finished": 5412,
+   "vertices": 10518,
+   "construction": 5412,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.Model.timbermesh"
   },
   "RadioactiveSludgeOutfall": {
@@ -805,9 +805,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7780,
-   "vertices": 14836,
-   "construction": 7780,
+   "finished": 9432,
+   "vertices": 18140,
+   "construction": 9432,
    "file": "outputs/lategame-integration/Data/Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.Model.timbermesh"
   },
   "TownPlaza": {
@@ -832,12 +832,12 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 10738,
-   "vertices": 20514,
-   "construction": 10738,
+   "finished": 11282,
+   "vertices": 21602,
+   "construction": 11282,
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 892670,
+ "totalBlueprintTriangles": 903314,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

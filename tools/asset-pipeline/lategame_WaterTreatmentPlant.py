@@ -178,8 +178,13 @@ def chemical_house(g):
     blk(g, x0 - .05, y1 + .05 - w, top, x1 - .05, y1 + .05, top + Q.CURB, CONCRETE)
     blk(g, x0 - .05, y0 - .05, top, x0 - .05 + w, y1 + .05 - w, top + Q.CURB, CONCRETE)
     blk(g, x0 - .05 + w, y0 - .05, top, x1 - .05, y0 - .05 + w, top + Q.CURB, CONCRETE)
-    blk(g, 3.95, y1, .14, 4.05, y1 + .025, top - .1, CONCRETE)
-    C.native_window(g, 4.5, y1, .52, .55, 'back', 'factory')
+    # Brick walls front and back (2026-10-30, bricks pass; was cast concrete),
+    # open at the back pilaster, window and gas cylinders and where the filter
+    # house and shed meet the right side.
+    features = [((FILTER[0], FILTER[1], 0), (FILTER[2], FILTER[3], ROOF_Z)), ((SHED[0], SHED[1], 0), (SHED[2], SHED[3], ROOF_Z))]
+    box = lambda fn: features.append(C.authored_box(g, fn))
+    box(lambda g: blk(g, 3.95, y1, .14, 4.05, y1 + .025, top - .1, CONCRETE))
+    box(lambda g: C.native_window(g, 4.5, y1, .52, .55, 'back', 'factory'))
     cx, cy = 4.55, 4.55
     K.revolve(g, (cx, cy, top - .02), [(.36, 0), (.36, .2)], CONCRETE, segments=16)
     K.revolve(g, (cx, cy, top + .18), [(.26, 0), (.26, 2.0)], IRON, segments=12)
@@ -190,9 +195,10 @@ def chemical_house(g):
     P.gauge(g, cx - .18, cy - .25, top + 1.0, 'front', .055)
     # Chlorine gas cylinders against the house's back wall.
     for k, x in enumerate((3.3, 3.55, 3.8)):
-        g.cylinder((x, y1 + .1, .45), .09, .8, PAINTED, 'Z', 12)
+        box(lambda g, x=x: g.cylinder((x, y1 + .1, .45), .09, .8, PAINTED, 'Z', 12))
         g.cylinder((x, y1 + .1, .9), .045, .1, BRASS, 'Z', 8)
-    blk(g, 3.12, y1 + .01, .55, 3.98, y1 + .03, .6, IRON)
+    box(lambda g: blk(g, 3.12, y1 + .01, .55, 3.98, y1 + .03, .6, IRON))
+    C.brick_skin(g, x0, y0, x1, y1, .14, top - .1, faces=('front', 'back'), features=features)
     # Dosing line from the tower down into the house's roof.
     P.pipe(g, [(cx - .26, cy, top + 1.3), (cx - .45, cy, top + 1.3), (cx - .45, cy, top - .04)], .04, flanges=False)
 

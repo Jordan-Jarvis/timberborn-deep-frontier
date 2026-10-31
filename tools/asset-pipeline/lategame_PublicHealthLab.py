@@ -58,17 +58,23 @@ OVERHANG = .14
 
 
 def ground_storey(g):
-    P.podium(g, 0, 0, W, D, STOREY, skip=[(DOOR_X - .5, DOOR_X + .5)])
-    P.door(g, DOOR_X, 0, 0, 'Door0')
-    K.lamp(g, DOOR_X - .64, 0, .5, face='front')
-    K.lamp(g, DOOR_X + .64, 0, .5, face='front')
+    # Brick ground storey (2026-10-30, bricks pass; was cast concrete with
+    # pilaster joints): brick courses between the foot and the coping, open
+    # around the door, lamps and windows.
+    P.podium(g, 0, 0, W, D, STOREY, skip=[(DOOR_X - .5, DOOR_X + .5)], joints=False)
+    box = lambda fn: features.append(P.authored_box(g, fn))
+    features = []
+    box(lambda g: P.door(g, DOOR_X, 0, 0, 'Door0'))
+    box(lambda g: K.lamp(g, DOOR_X - .64, 0, .5, face='front'))
+    box(lambda g: K.lamp(g, DOOR_X + .64, 0, .5, face='front'))
     for x in (.5, 1.5, 2.5, 3.5, 5.5):
-        P.native_window(g, x, 0, .47, .55, 'front', 'factory')
+        box(lambda g, x=x: P.native_window(g, x, 0, .47, .55, 'front', 'factory'))
     for x in (.5, 1.5, 2.5, 3.5, 4.5, 5.5):
-        P.native_window(g, x, D, .47, .55, 'back', 'factory')
+        box(lambda g, x=x: P.native_window(g, x, D, .47, .55, 'back', 'factory'))
     for y in (.5, 1.5, 2.5, 3.5):
-        P.native_window(g, 0, y, .47, .55, 'left', 'factory')
-        P.native_window(g, W, y, .47, .55, 'right', 'factory')
+        box(lambda g, y=y: P.native_window(g, 0, y, .47, .55, 'left', 'factory'))
+        box(lambda g, y=y: P.native_window(g, W, y, .47, .55, 'right', 'factory'))
+    P.brick_skin(g, 0, 0, W, D, .14, STOREY - .10, features=features)
 
 
 def upper_storey(g):

@@ -448,3 +448,59 @@ def mansard(g, x0, y0, x1, y1, z, h, inset, *, overhang=.14, deck=IRON):
     K.oriented_polygon(g, hi, (0, 0, 1), deck)
     blk(g, xa + .05, ya + .05, z - .1, xb - .05, yb - .05, z + .002, WOOD)
     return z + h
+
+
+# ------------------------------------------------------------- brick skins
+# Brick skins (2026-10-30, bricks pass): running-bond bricks in the native
+# brick-red plaster (Plaster_Orange.IronTeeth) laid 0.02 proud of a solid wall
+# whose own surface (Plaster_White here) shows as the mortar joints. Doors,
+# windows and lamps on the wall stay clear: each is authored first through
+# authored_box, and every course skips its box (plus a margin) on the face it
+# stands on. Front and back courses run corner to corner; the side courses
+# stop short of them, so no two bricks meet at a corner.
+BRICK_REACH = .3      # a feature within this distance of a face plane opens it
+
+
+def authored_box(g, fn):
+    """Run fn(g) and return the artwork bounding box ((x, y, z), (x, y, z))
+    of the vertices it added."""
+    n0 = len(g.vertices)
+    fn(g)
+    o = g.origin
+    pts = [(-x + o.x, -y + o.y, z + o.z) for x, y, z in g.vertices[n0:]]
+    if not pts:
+        raise ValueError('authored_box: the feature authored no geometry')
+    return (tuple(min(p[i] for p in pts) for i in range(3)), tuple(max(p[i] for p in pts) for i in range(3)))
+
+
+def brick_skin(g, x0, y0, x1, y1, z0, z1, *, faces=('front', 'back', 'left', 'right'), features=(), margin=.03):
+    """Brick courses between z0 and z1 on the named faces of the solid wall
+    block x0..x1, y0..y1, leaving the feature boxes (authored_box) open."""
+    from lategame_mining_parts import _brick_runs, BRICK_COURSE, BRICK_JOINT, BRICK_PROUD, BRICK_EMBED
+    pr, em, j = BRICK_PROUD, BRICK_EMBED, BRICK_JOINT
+    planes = {'front': (1, y0, -1), 'back': (1, y1, 1), 'left': (0, x0, -1), 'right': (0, x1, 1)}
+    runs = {'front': (x0 - pr, x1 + pr), 'back': (x0 - pr, x1 + pr),
+            'left': (y0 + em + j, y1 - em - j), 'right': (y0 + em + j, y1 - em - j)}
+    n = max(2, round((z1 - z0) / BRICK_COURSE))
+    pitch = (z1 - z0) / n
+    for face in faces:
+        k, plane, out = planes[face]
+        u_axis = 1 - k
+        openings = [(lo[u_axis] - margin, hi[u_axis] + margin, lo[2] - margin, hi[2] + margin)
+                    for lo, hi in features if lo[k] <= plane + BRICK_REACH and hi[k] >= plane - BRICK_REACH]
+        na, nb = (plane - pr, plane + em) if out < 0 else (plane - em, plane + pr)
+        for row in range(n):
+            za, zb = z0 + row * pitch + j / 2, z0 + (row + 1) * pitch - j / 2
+            spans = [runs[face]]
+            for ua, ub, oa, ob in openings:
+                if ob <= za or oa >= zb:
+                    continue
+                spans = [piece for a, b in spans for piece in ((a, min(b, ua)), (max(a, ub), b))
+                         if piece[1] - piece[0] > .06]
+            for a, b in spans:
+                for u, v in _brick_runs(a, b, row % 2):
+                    u, v = u + j / 2, v - j / 2
+                    if k == 1:
+                        blk(g, u, na, za, v, nb, zb, ORANGE)
+                    else:
+                        blk(g, na, u, za, nb, v, zb, ORANGE)
