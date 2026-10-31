@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.7.0 (2026-10-30)
+
 ### Tidier build menu (player feedback)
 - **Paths:** platforms, suspension bridges, overhangs and tubeways each get a sub-group. So do Teleporter Station's teleporter and ring, when that mod is installed. The Paths bar goes from about 30 buttons to 14, so opening a sub-group no longer pushes the bar off the screen.
 - **Power:** new sub-groups:

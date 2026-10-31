@@ -1,28 +1,4 @@
 [h2]0.6.0[/h2]
-[h3]Smaller buildings[/h3]
-[list]
-[*]Every Deep Frontier building is rebuilt smaller and lower, to sit better beside vanilla buildings: one layer per floor, far less scaffolding, and no clutter on tiles you could build on. For example the Deep Mine is 7×6×7 (was 10×11×16), the Nuclear Reactor 14×11×11 (was 20×15×22), the Concrete Mixer 4×3×3 (was 7×5×7).
-[*]A mix of real roofs: pitched and gabled roofs in vanilla roof planks and metal sheet, and flat timber, steel and corrugated-metal decks. No more roof vents.
-[*]Every flat roof tile can carry platforms and buildings, and every flat wall and roof takes power shafts, pipes and conveyor belts.
-[*]Power, workers and recipes are unchanged. Buildings that unlock before concrete no longer look like concrete.
-[*][b]Construction costs follow materials:[/b] each building costs what it is visibly made of: planks and logs for timber, metal blocks and steel for metal, limestone or sandstone for masonry, and concrete only where it shows concrete. No building costs a good that needs that building first; the first concrete chain needs no concrete. Concrete-heavy late buildings now need much more concrete.
-[*][b]Existing saves:[/b] placed buildings keep their spot and free the tiles they no longer use. Reconnect pipes on the Concrete Mixer (and its power line), Fishery Works, Bathhouse, Cryogenic Tank Farm and Water Treatment Plant; re-path the Electrolysis Plant, Water Treatment Plant, Waste Refinery and Mission Control; re-place the Hospital (only its centre pavilion remains) and any flipped Deep Mine; rebuild anything that stood on a balcony, terrace or roof that is now lower or pitched.
-[*]Human Record Caches can be surveyed from 7 tiles away (was 4), so caches near a smaller Archive Excavation stay in range.
-[/list]
-[h3]Fewer required mods[/h3]
-[list]
-[*][b]No more crash without the optional mods:[/b] Deep Frontier loads, starts new games and loads saves with only its required mods. Without Power Lines the game used to crash while loading mods.
-[*]Power Lines, Pump to Tank, Flywheels, Teleporter Station, Solar Panel (northforge), Expanded Storage and Powered Tubeway are no longer required. While enabled, Power Lines adds cable attachment points to the Concrete Mixer, Reinforced Hydro Turbine and Materials Laboratory, and Expanded Storage's Pile Module shows Deep Ore and Deep Alloy piles. The others work alongside Deep Frontier as before.
-[*]The build menu shows one Tubeway Station: the vanilla one is hidden in favour of New Building Styles' station. Placed vanilla stations keep working.
-[/list]
-[h3]Tidier build menu[/h3]
-[list]
-[*][b]Paths:[/b] platforms, suspension bridges, overhangs, tubeways and (with Teleporter Station) teleporters each get a sub-group. The bar drops from about 30 buttons to 14 and no longer runs off the screen.
-[*][b]Power:[/b] sub-groups for water power, power shafts, and engines and power plants. With Flywheels installed, there is also a Flywheels sub-group split into inline, horizontal framed and vertical framed.
-[*][b]Landscaping:[/b] sub-groups for dynamite, floodgates and Deep Frontier's masonry and concrete blocks.
-[*][b]Storage:[/b] sorted by type, then by size: piles, warehouses, tanks. Expanded Storage's buildings slot in by size when installed.
-[*]A sub-group for an optional mod appears only when that mod is installed.
-[/list]
 [h3]Technical School[/h3]
 [list]
 [*]Beavers now study in their free time, with no staff. Every adult tries to get educated, and a beaver can learn every profession.
@@ -32,7 +8,7 @@
 [/list]
 [h3]New buildings[/h3]
 [list]
-[*][b]Deep Well[/b]: a small powered drill over a water source, seep or badwater source. It boosts its flow up to 6×, turns seeps into steady sources, uses High-Grade Steel drill bits, and can shut off during radioactive tides. In a drought it runs only on its full 100,000 hp and boosts at most 2×; without that power the source dries up like any other.
+[*][b]Deep Well[/b]: a small powered drill over a water source, seep or badwater source. It boosts its flow up to 6×, turns seeps into steady sources, keeps them flowing in droughts, uses High-Grade Steel drill bits, and can shut off during radioactive tides.
 [*][b]Steel structures[/b]: cantilevers of 10, 12 and 15 tiles, truss bridges of 8, 10, 12 and 15 tiles, stackable steel columns, and 3×3 and 5×5 steel decks that can stand on columns of different heights.
 [/list]
 [h3]Maps[/h3]
@@ -70,13 +46,12 @@
 [*]Late buildings need much more power, rising with their science cost: e.g. Smog Scrubber 2,000 hp, Hospital 11,000, Launch Pad 27,000, Uranium Processing Plant 53,000, Waste Refinery 106,000.
 [*]The Smog Scrubber now cleans all smog within 20 tiles.
 [*]The Deep Drill and Deep Mine wear out High-Grade Steel drill bits (and the mine Concrete shaft lining) while they produce, and stop without them.
-[*]Lubricant is replaced by the vanilla Grease from the Grease Factory: Cryocoolant, Servo bot limbs and bot maintenance now use Grease, and the Chemical Works no longer makes Lubricant. Saves holding Lubricant still load; nothing uses it any more.
 [/list]
 [h3]Other changes[/h3]
 [list]
 [*]Beavers hauling radioactive waste or water have a small chance of being irradiated; bots are immune.
 [*]Storage holding radioactive waste, sludge or contaminated water can no longer be deleted until it is emptied.
-[*]Deep Frontier buildings are grouped into toolbar sub-groups (see Tidier build menu).
+[*]Deep Frontier buildings are grouped into nine toolbar sub-groups.
 [*]43 building models are much lighter (about 30% fewer triangles overall), so the game uses less memory, loads faster and shows placement previews more smoothly.
 [*]Splitting a large power network no longer freezes the game.
 [/list]

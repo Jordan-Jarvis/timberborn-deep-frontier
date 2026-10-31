@@ -1,0 +1,55 @@
+[h2]0.7.0[/h2]
+Thanks for all the feedback on the Workshop page; most of this release comes straight from it.
+
+[h3]Crash fixes[/h3]
+[list]
+[*][b]No more crash without the optional mods.[/b] Deep Frontier crashed on load if Power Lines (or some other listed mods) weren't installed. It now loads with only its required mods.
+[*][b]No more crash on the second game of a session.[/b] Loading a save, going back to the main menu and starting or loading another game crashed in the radiation water shading. Fixed.
+[/list]
+
+[h3]Fewer required mods[/h3]
+[list]
+[*]Power Lines, Pump to Tank, Flywheels, Teleporter Station, Solar Panel (northforge), Expanded Storage and Powered Tubeway are no longer required.
+[*]If you have them, Deep Frontier still works with them: Power Lines can connect to the Concrete Mixer, Materials Laboratory and Reinforced Hydro Turbine, Expanded Storage's Pile Module shows deep ore and deep alloy piles, and their tools get their own build-menu groups. If you don't have them, nothing is missing.
+[*]Only one Tubeway Station shows in the build menu: New Building Styles' station. The vanilla one is hidden (existing ones still work).
+[/list]
+
+[h3]Smaller buildings, real roofs[/h3]
+[list]
+[*]Every Deep Frontier building is rebuilt smaller and lower, to sit better beside vanilla buildings: one layer per floor, far less scaffolding, and no clutter on tiles you could build on. For example the Deep Mine is 7×6×7 (was 10×11×16), the Nuclear Reactor 14×11×11 (was 20×15×22), the Concrete Mixer 4×3×3 (was 7×5×7).
+[*]A mix of real roofs: pitched and gabled roofs in vanilla roof planks and metal sheet, and flat timber, steel and corrugated-metal decks. No more roof vents.
+[*]Every flat roof tile can carry platforms and buildings, and every flat wall and roof takes power shafts, pipes and conveyor belts. The Fishery Works, Materials Laboratory and Hydro Turbine terraces are now player decks too.
+[*]Power, workers and recipes are unchanged. Buildings that unlock before concrete no longer look like concrete.
+[*]Human Record Caches can be surveyed from 7 tiles away (was 4), so caches near the smaller Archive Excavation stay in range.
+[/list]
+
+[h3]Construction costs follow materials[/h3]
+[list]
+[*]Each building costs what it is visibly made of: planks and logs for timber, metal blocks and steel for metal, limestone or sandstone for masonry, and concrete only where it shows concrete.
+[*]No building costs a good that needs that building first: the first concrete chain needs no concrete.
+[*]Concrete-heavy late buildings now need much more concrete (the Nuclear Reactor about 32,000).
+[/list]
+
+[h3]Balance[/h3]
+[list]
+[*][b]Deep Well:[/b] in a drought it runs only on its full 100,000 hp and boosts at most 2× (6× otherwise). Without that power the source dries up like any other.
+[*][b]Grease:[/b] Deep Frontier's Lubricant is gone; everything that used it now takes the game's own Grease (from the vanilla Grease Factory).
+[/list]
+
+[h3]Tidier build menu[/h3]
+[list]
+[*][b]Paths:[/b] platforms, suspension bridges, overhangs, tubeways and (with Teleporter Station) teleporters each get a sub-group. The bar drops from about 30 buttons to 14 and no longer runs off the screen.
+[*][b]Power:[/b] sub-groups for water power, power shafts, and engines and power plants. With Flywheels installed, there is also a Flywheels sub-group.
+[*][b]Landscaping:[/b] sub-groups for dynamite, floodgates and Deep Frontier's masonry and concrete blocks.
+[*][b]Storage:[/b] sorted by type, then by size: piles, warehouses, tanks.
+[/list]
+
+[h3]Existing saves[/h3]
+[list]
+[*]Placed buildings keep their spot and free the tiles they no longer use.
+[*]Reconnect pipes on the Concrete Mixer (and its power line), Fishery Works, Bathhouse, Cryogenic Tank Farm and Water Treatment Plant.
+[*]Re-path the Electrolysis Plant, Water Treatment Plant, Waste Refinery and Mission Control.
+[*]Re-place the Hospital (only its centre pavilion remains) and any flipped Deep Mine.
+[*]Rebuild anything that stood on a balcony, terrace or roof that is now lower or pitched.
+[*]Saves made with optional mods you no longer have still load; the game drops those mods' buildings.
+[/list]

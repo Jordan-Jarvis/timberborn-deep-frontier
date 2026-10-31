@@ -1,9 +1,9 @@
 {
   "Name": "Deep Frontier",
-  "Version": "0.6.0.0",
+  "Version": "0.7.0.0",
   "Id": "DeepFrontier",
   "MinimumGameVersion": "1.1.2.8",
-  "Description": "An industrial frontier expansion for the Iron Teeth: deep ore mining, concrete and steel, coal, oil and nuclear power, radiation and smog, restaurants, hospitals and groceries, and a rocket program. 64 buildings, 55 goods, 75 recipes.",
+  "Description": "An industrial frontier expansion for the Iron Teeth: deep ore mining, concrete and steel, coal, oil and nuclear power, radiation and smog, restaurants, hospitals and groceries, and a rocket program. 81 buildings, 52 goods, 73 recipes.",
   "RequiredMods": [
     { "Id": "Redic.NewStyles", "MinimumVersion": "0.1" },
     { "Id": "Harmony", "MinimumVersion": "2.4.1" },
