@@ -20,15 +20,15 @@ Dimensions below are width × depth × height. Grid blueprints use X/Y/Z in that
 
 | Building | Dimensions | Workers | Demand (hp) | Science / bot science | Construction cost |
 | --- | --- | ---: | ---: | --- | --- |
-| Sandstone Pit | 5 × 5 × 4 | 2 | 0 | 300 / 1,000 | 30 planks, 15 logs, 5 metal blocks |
-| Limestone Pit | 6 × 5 × 4 | 2 | 0 | 300 / 1,000 | 25 planks, 15 logs, 10 metal blocks |
+| Sandstone Pit | 3 × 3 × 3 | 2 | 0 | 300 / 1,000 | 30 planks, 15 logs, 5 gears |
+| Limestone Pit | 3 × 3 × 3 | 2 | 0 | 300 / 1,000 | 25 planks, 15 logs, 5 gears |
 | Sandstone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 425 planks, 110 treated planks, 110 metal blocks, 270 bricks, 320 gears |
 | Limestone Quarry | 11 × 10 × 9 | 4 | 1,500 | 4,000 / 5,000 | 425 planks, 110 treated planks, 110 metal blocks, 320 bricks, 320 gears |
-| Stone Crusher | 6 × 7 × 5 | 2 | 200 | 600 / 1,600 | 45 planks, 25 logs, 20 metal blocks, 35 limestone, 30 gears |
-| Cement Kiln | 9 × 9 × 6 | 2 | 300 | 600 / 1,600 | 50 planks, 25 logs, 20 metal blocks, 95 limestone, 40 gears |
-| Concrete Mixer | 8 × 6 × 7 | 2 | 250 | 1,000 / 2,000 | 90 planks, 35 metal blocks, 60 bricks, 45 limestone, 60 gears |
+| Stone Crusher | 3 × 3 × 3 | 2 | 200 | 600 / 1,600 | 45 planks, 25 logs, 35 limestone, 45 gears |
+| Cement Kiln | 3 × 3 × 3 | 2 | 300 | 600 / 1,600 | 50 planks, 25 logs, 95 limestone, 60 gears |
+| Concrete Mixer | 3 × 2 × 3 | 2 | 250 | 1,000 / 2,000 | 100 planks, 40 metal blocks, 45 bricks, 35 limestone, 60 gears |
 
-Construction costs are the generated ones (2026-10-30). They follow the material cost rule in [progression.md](progression.md#material-cost-rule-2026-10-30): the authored catalog value times its tier factor, recomposed from what each model shows. Masonry is priced as limestone or sandstone; the pits and quarries leave the stone they work unpriced, and no building of the first concrete chain costs concrete or bricks. The kiln moved from cost tier T2 (factor 3) to T1 (factor 2) with its science. Dimensions, workers and power in this table predate the compaction pass.
+Construction costs are the generated ones (2026-10-30). They follow the material cost rule in [progression.md](progression.md#material-cost-rule-2026-10-30): the authored catalog value times its tier factor, recomposed from what each model shows. Masonry is priced as limestone or sandstone; the pits and quarries leave the stone they work unpriced, and no building of the first concrete chain costs concrete or bricks. The kiln moved from cost tier T2 (factor 3) to T1 (factor 2) with its science. The pit, crusher, kiln and mixer rows follow the second shrink pass (2026-11-01); the quarry rows predate the compaction pass.
 
 These dimensions describe current authored registrations. The detailed pit replacements passed source/export checks and native harvesting, hoist animation, pause and exact save/reload/depletion in build 85. Their roofed storerooms and hand hoists follow the mining sheet's isometric views. The 85 profile included global placement/power overrides; support-rule acceptance is being repeated with those disabled. The mixer reference revision passed native placement, production and fresh-process reload in build 79; its previous 3×3×3 prototype is retired. See `tools/STATUS.md` for installed build evidence. Sparse structural occupancy and the separately supported walking decks permit appropriate native paths, platforms and shafts; the table's outer dimensions do not mean every enclosed grid cell is solid.
 

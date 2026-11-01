@@ -27,6 +27,12 @@
 - **Cement Kiln** 3x3 (was 5x3), **Concrete Mixer** 3x2 (was 4x3), **Stone Crusher** 3x3 (was 4x4), **Sandstone and Limestone Pits** 3x3 (were 5x4 and 5x3).
 - Saves: these keep their origin. Re-lay the Grocery Store's path one tile left to its new door; reconnect a Bathhouse pipe at its new inlet.
 
+### Smaller concrete chain (second shrink)
+- **Cement Kiln** is 3x3, 3 high (was 5x3, 4 high): the feed house with its limestone bin and the porch in front of it, the turning drum under its lean-to, and the stone firebox with its fire and stack. Same workers, power, recipes and cost. **Its door moves to the left tile:** reconnect the path to existing kilns.
+- **Concrete Mixer** is 3x2, 3 high (was 4x3): the brick-based operator room with both hoppers and the water tank on its steel roof, the drum pouring into the wet trough beside it. Its water inlet moves to the room's left wall and its Power Lines point to the tank: reconnect them on existing mixers. Same door, workers, power, recipe and cost.
+- **Stone Crusher** is 3x3, 3 high (was 4x4): a closed workshop whose stone roof carries the crushing rolls, the flywheel and the feed hopper. Same door, workers, power, recipe and cost.
+- **Sandstone Pit** and **Limestone Pit** are 3x3, 3 high (were 5x4 and 5x3): store room, stone bin and hoist under one flat roof you can build on. Same door, workers, gathering range and cost.
+
 ## 0.8.1 (2026-10-31)
 
 ### Steel decks on legs
