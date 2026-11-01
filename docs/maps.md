@@ -95,31 +95,23 @@ node tools/validate_map_setup.mjs
 
 A built-in map gets the **EXTREMELY difficult** warning (`BuiltinMapSpec.Small`) when either holds (`tools/map_setup.json` `smallMap`):
 
-- **Small area** (`SmallArea`): its area is below `smallMap.maxArea` = **2,926** cells (11,176 before the 2026-10-30 compaction). The number is derived and checked: the largest area the full-loop sites claim on a reference map (primary footprints plus their listed open margins: Plains 1,463, Terraces 1,381, Lakes 1,341; 5,588 / 5,476 / 5,134 before the compaction) divided by the land share 1/2. Below it the late-game sites alone would cover more than half the map, before terrain, water, farms, forest and homes. The built-in sizes fall into clear groups (2,500; 5,000; 16,384; 36,864–38,400; 65,536), so the rule picks out exactly **Diorama** (50×50) and **Cliffside** (100×50); the 128×128 maps are almost three times larger.
+- **Small area** (`SmallArea`): its area is below `smallMap.maxArea` = **2,434** cells (11,176 before the 2026-10-30 compaction). The number is derived and checked: the largest area the full-loop sites claim on a reference map (primary footprints plus their listed open margins: Plains 1,217, Terraces 1,126, Lakes 1,113 after the 2026-11-01 second shrink; Plains 1,463 / 2,983 before it; 5,588 / 5,476 / 5,134 before the compaction) divided by the land share 1/2. Below it the late-game sites alone would cover more than half the map, before terrain, water, farms, forest and homes. The built-in sizes fall into clear groups (2,500; 5,000; 16,384; 36,864–38,400; 65,536), so the rule picked out exactly **Diorama** (50×50) and **Cliffside** (100×50) until the second shrink; at 2,434 it picks out none; the 128×128 maps are almost three times larger.
 - **No Deep Mine site** (`NoDeepMineSite`): the variant lists no primary site of `smallMap.deepMineSite` (`DeepMine.IronTeeth`, which `builtin` checks is the only building over a Deep Ore Vein). The Deep Mine is the only permanent deep ore, and the finite sources are sized for one of each building, not for the launch program. Since the 2026-10-30 re-plan every built-in map has Deep Mine sites (Beaverome and Diorama gained two each with the 7×6 mine), so no map gets the warning for this reason.
 
-So two maps get the warning: Cliffside and Diorama, both by area. Beaverome no longer does: its only reason was the missing Deep Mine, and it now shows the shorter "cannot provide" notice. The dialog appears once when the game UI appears (`DialogBoxShower`), built from the generated text and the map's own data. The small-area lines appear only on a small map, the Deep Mine line only without a Deep Mine site:
+Since the 2026-11-01 second shrink no built-in map gets the warning: `maxArea` is 2,434, below Diorama (2,500) and Cliffside (5,000), and every variant lists a Deep Mine site. Diorama and Cliffside now show the shorter "cannot provide" notice. Before that, two maps got the warning: Cliffside and Diorama, both by area. Beaverome no longer does: its only reason was the missing Deep Mine, and it now shows the shorter "cannot provide" notice. The dialog appears once when the game UI appears (`DialogBoxShower`), built from the generated text and the map's own data. The small-area lines appear only on a small map, the Deep Mine line only without a Deep Mine site:
 
-Diorama:
-
-```
-Deep Frontier is EXTREMELY difficult on Diorama
-- Small map: Diorama has 50 x 50 = 2500 tiles, and the Deep Frontier late game is built for maps of at least 5966 tiles.
-- Little room: the full set of large Deep Frontier sites (the 14 x 11 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about 2983 tiles with their margins on a large map.
-- Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
-What this map cannot provide:
-- No ready space for: Limestone quarry, Nuclear Reactor, Launch pad, Radioactive waste refinery, Cryogenic liquefaction plant, Radioactive Waste Vault, Rocket assembly hangar. Level ground or build on platforms to make room before you need them.
-```
-
-Cliffside:
+Diorama (since the second shrink):
 
 ```
-Deep Frontier is EXTREMELY difficult on Cliffside
-- Small map: Cliffside has 100 x 50 = 5000 tiles, and the Deep Frontier late game is built for maps of at least 5966 tiles.
-- Little room: the full set of large Deep Frontier sites (the 14 x 11 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about 2983 tiles with their margins on a large map.
-- Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
-What this map cannot provide:
-- No ready space for: Nuclear Reactor, Radioactive waste refinery. Level ground or build on platforms to make room before you need them.
+Deep Frontier on Diorama: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:
+- No ready space for: Limestone quarry, Nuclear Reactor, Cryogenic liquefaction plant. Level ground or build on platforms to make room before you need them.
+```
+
+Cliffside (since the second shrink):
+
+```
+Deep Frontier on Cliffside: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:
+- No ready space for: Nuclear Reactor. Level ground or build on platforms to make room before you need them.
 - Fish: no river here is deep enough beside a dry bank for the Gatherer Flag to catch fish, and you need fish to start the Fish Hatchery, canned fish and fish oil. Dam a clean river until it is at least 0.5 m deep next to the bank.
 ```
 
@@ -127,7 +119,7 @@ A map without the warning but with unmet items gets a shorter dialog (`UnmetTitl
 
 ```
 Deep Frontier on Beaverome: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:
-- No ready space for: Limestone quarry, Sandstone quarry, Radioactive waste refinery, Uranium processing plant, Nuclear Reactor, Radioactive Waste Vault, Rocket assembly hangar. Level ground or build on platforms to make room before you need them.
+- No ready space for: Limestone quarry, Sandstone quarry, Uranium processing plant, Nuclear Reactor. Level ground or build on platforms to make room before you need them.
 - Scrap metal: no reachable Underground Ruins for a Mine, so scrap runs out once the surface ruins are gone. Salvage early and use metal carefully.
 ```
 

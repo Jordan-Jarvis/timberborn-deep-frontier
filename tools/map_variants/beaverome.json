@@ -6,7 +6,7 @@
   "height": {"totalHeight": 66},
   "mapSize": {"x": 192, "y": 192},
   "hardVariant": false,
-  "description": "Beaverome, a bowl of shallow lakes and narrow sloping shores with almost no flat ground: the start shore holds the pits and small workshops, two Deep Ore Veins with Deep Mine sites lie on the level-12 north-west shore, two Deep Ore Sources with Deep Drill sites east and north of the start, the Launch Pad and the Cryogenic Liquefaction Plant fill the only flat strip of 10x9 (level 11, south-west shore), and the five Human Record Caches lie around one Archive Excavation in the south-east; no reactor or quarry fits.",
+  "description": "Beaverome, a bowl of shallow lakes and narrow sloping shores with almost no flat ground: the start shore holds the pits and small workshops, two Deep Ore Veins with Deep Mine sites lie on the level-12 north-west shore, two Deep Ore Sources with Deep Drill sites east and north of the start, the Cryogenic Liquefaction Plant fills the only flat strip of 10x9 (level 11, south-west shore), and the five Human Record Caches lie around one Archive Excavation in the south-east; no reactor or quarry fits.",
   "placements": [
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 1 (Limestone Pit, by the start)", "x": 77, "y": 96, "z": 12},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 2 (Limestone Pit, by the start)", "x": 78, "y": 99, "z": 12},
