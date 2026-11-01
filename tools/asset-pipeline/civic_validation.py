@@ -74,22 +74,23 @@ def validate_civic_walks(ident,model,scene):
                     checked+=1
     sign_clearance=None
     if ident=='Restaurant':
-        # 2026-10-30: the carved sign swings from a gantry on the flat roof.
-        # Its whole swing must stay inside the reserved roof cells (native
-        # 2 <= x < 4, y >= 2, 3 <= z <= 4; source = native - ORIGIN) and clear
-        # the upper gallery's walking headroom (deck 2 + headroom) by .15.
-        from restaurant_structure import ORIGIN
+        # 2026-11-01 (second shrink, 6x5x3): the carved sign swings from a
+        # bracket arm off the front-right deck post, in the free front cell of
+        # the lower dining balcony (native 5 <= x < 6, 0 <= y < 1, between the
+        # deck at layer 1 and the deck beams over it; source = native - ORIGIN),
+        # at least .10 over the deck boards.
+        from restaurant_structure import ORIGIN, DECK_BEAM_UNDERSIDE
         sign=next(o for o in model.objects if o.name=='Restaurant.CarvedSign')
-        low=float('inf');high=float('-inf');nearest_y=float('inf');xs=[]
+        low=float('inf');high=float('-inf');ys=[];xs=[]
         for frame in range(1,scene.frame_end+1):
             scene.frame_set(frame);scene.view_layers[0].update()
             points=[sign.matrix_world@v.co for v in sign.data.vertices]
             low=min(low,min(p.z for p in points));high=max(high,max(p.z for p in points))
-            nearest_y=min(nearest_y,min(-p.y for p in points));xs+=[-p.x for p in points]
-        sign_clearance=low-(2+definition['headroom'])
-        if sign_clearance<.15:raise ValueError('Restaurant sign swing enters the upper gallery headroom')
-        if low<3-.001 or high>4+.001 or nearest_y<2-ORIGIN[1]-.001 or min(xs)<2-ORIGIN[0] or max(xs)>4-ORIGIN[0]:
-            raise ValueError(f'Restaurant sign swing leaves its reserved roof cells: z {low:.3f}..{high:.3f}, source y >= {nearest_y:.3f}')
+            ys+=[-p.y for p in points];xs+=[-p.x for p in points]
+        sign_clearance=low-1
+        if sign_clearance<.10:raise ValueError('Restaurant sign swing is too close to the lower dining deck')
+        if high>1+DECK_BEAM_UNDERSIDE+.001 or min(ys)<0-ORIGIN[1]-.001 or max(ys)>1-ORIGIN[1] or min(xs)<5-ORIGIN[0] or max(xs)>6-ORIGIN[0]:
+            raise ValueError(f'Restaurant sign swing leaves its front cell: z {low:.3f}..{high:.3f}, source x {min(xs):.3f}..{max(xs):.3f}, y {min(ys):.3f}..{max(ys):.3f}')
         scene.frame_set(1);scene.view_layers[0].update()
     return {'scope':'Authored mesh only; native grid paths, stair and platform placement are not verified',
             'animatedSignDeckClearance':sign_clearance,

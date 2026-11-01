@@ -1,0 +1,17 @@
+{
+  "scope": "Before | after | difference sheet (render_budget_views.py, matched cameras) of the second shrink pass: the Restaurant 9x7x5 -> 6x5x3 with the same seven tables and fourteen seats. Blender renders, not game screenshots.",
+  "renders": [
+    {
+      "model": "Restaurant",
+      "source": "src\\DeepFrontier\\Art\\Source\\Restaurant-ReferenceStudy.blend",
+      "sourceSha256": "4d15be26963e5e4c3446d5538c36d834d1f2bf4c307b4eb076bbcfcc9012d6b9",
+      "images": [
+        "Restaurant-shrink2.png"
+      ],
+      "imageSha256": {
+        "Restaurant-shrink2.png": "74b997086f9c2df86f4d651696d4c73e3b23ad0bb7806c98e17963f988eca2df"
+      }
+    }
+  ],
+  "extraImages": []
+}

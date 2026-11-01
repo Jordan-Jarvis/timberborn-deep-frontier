@@ -250,12 +250,15 @@ namespace DeepFrontier.Scripts {
         if(deck.Openings.Length!=0)throw new InvalidOperationException("Restaurant decks must have no rails");
         var stands=CivicFixtureGeometry.DeckStands(spec).Where(c=>c.z>0).ToList();
         var levels=stands.Select(c=>c.z).Distinct().OrderBy(z=>z).ToArray();
-        if(levels.Length<3)throw new InvalidOperationException("Restaurant deck has layers ["+string.Join(",",levels)+"]; this fixture needs a lower and an upper dining balcony and a roof deck");
+        // Since the 2026-11-01 second shrink (6x5x3) the roof decks over the balconies are the
+        // upper dining deck and the roof deck in one layer.
+        if(levels.Length<2)throw new InvalidOperationException("Restaurant deck has layers ["+string.Join(",",levels)+"]; this fixture needs a lower dining balcony and an upper (roof) dining deck");
+        var top=levels[levels.Length-1];
         // Ordinary player Path entities on every exterior deck: every deck stand and every
         // upper door step, and the cells of their layer that take a Path, except one roof cell
         // that carries a stacked platform tower instead.
         var region=CivicFixtureGeometry.DeckRegion(spec,stands.Concat(deck.Doors.Select(d=>d.Exterior).Where(c=>c.z>0)),TakesPath,"Restaurant");
-        var tower=region.Where(c=>c.z==levels[2]&&deck.Doors.All(d=>d.Exterior!=c)).ToArray();
+        var tower=region.Where(c=>c.z==top&&deck.Doors.All(d=>d.Exterior!=c)).ToArray();
         if(tower.Length==0)throw new InvalidOperationException("Restaurant roof deck has no cell besides door cells for the platform tower");
         CivicFixtureGeometry.Road(place,c=>_blockService.GetPathObjectAt(c),_building.TransformCoordinates(spec.Entrance.Coordinates));
         foreach(var c in region.Where(c=>c!=tower[0]))Local("Path",c);
@@ -299,7 +302,7 @@ namespace DeepFrontier.Scripts {
           Local("Platform.IronTeeth",new Vector3Int(right.Outside.x,right.Outside.y,z));
         }
         // Walk: stair foot and head, the left seam, a roof door step, the ground Entrance.
-        var roofStep=deck.Doors.Select(d=>d.Exterior).Where(c=>c.z==levels[2]).ToArray();
+        var roofStep=deck.Doors.Select(d=>d.Exterior).Where(c=>c.z==top).ToArray();
         if(roofStep.Length==0)throw new InvalidOperationException("Restaurant roof deck has no door");
         _deckWalk.AddRange(new[]{_stairCells[0],_stairCells[_stairCells.Count-1],_leftSeamCell,_building.TransformCoordinates(roofStep[0]),
           _building.TransformCoordinates(spec.Entrance.Coordinates)});

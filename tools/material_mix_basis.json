@@ -32,6 +32,18 @@
     "wood": 485.9289
    },
    "measuredAt": "11x8x4 Fishery Works model (d424ef7)"
+  },
+  "Restaurant": {
+   "families": {
+    "brick": 23.208,
+    "concrete": 59.9894,
+    "limestone": 2.9324,
+    "metal": 59.2006,
+    "sandstone": 0.3864,
+    "unpriced": 12.1609,
+    "wood": 532.6612
+   },
+   "measuredAt": "9x7x5 Restaurant model (d424ef7)"
   }
  }
 }

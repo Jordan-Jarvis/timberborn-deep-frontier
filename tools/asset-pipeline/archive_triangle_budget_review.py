@@ -146,6 +146,18 @@ REVIEWS = {
                  'the deck-post footings in the painted brick tile (DFIndustrial06) as flat faces instead of '
                  'modelled Plaster_Orange courses. Blender renders, not game screenshots.',
     },
+    # 2026-11-01 second shrink pass (a YouTuber called it "massive"): 9x7x5 -> 6x5x3.
+    '2026-11-01-shrink2-restaurant': {
+        'folder': '2026-11-01-shrink2-restaurant',
+        'sheets': 'outputs/compaction',
+        'models': {
+            'Restaurant': ('Restaurant', 'Restaurant-shrink2.png'),
+        },
+        'extra': (),
+        'scope': 'Before | after | difference sheet (render_budget_views.py, matched cameras) of the second shrink '
+                 'pass: the Restaurant 9x7x5 -> 6x5x3 with the same seven tables and fourteen seats. Blender '
+                 'renders, not game screenshots.',
+    },
 }
 
 

@@ -162,72 +162,24 @@
       "model": "CoffeeBushMature",
       "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
       "position": [
-        7.415,
-        2.375,
-        1.245
-      ],
-      "scale": 0.29,
-      "yaw": 90
-    },
-    {
-      "name": "NativePlant13",
-      "model": "CoffeeBushMature",
-      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
-      "position": [
-        7.704999999999999,
-        2.615,
+        6.704999999999999,
+        5.175000000000001,
         1.245
       ],
       "scale": 0.29,
       "yaw": 180
     },
     {
-      "name": "NativePlant14",
+      "name": "NativePlant13",
       "model": "CoffeeBushMature",
       "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
       "position": [
-        7.415,
-        3.585,
+        6.705,
+        5.125000000000001,
         1.245
       ],
       "scale": 0.29,
-      "yaw": 0
-    },
-    {
-      "name": "NativePlant15",
-      "model": "CoffeeBushMature",
-      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
-      "position": [
-        7.415,
-        4.115,
-        1.245
-      ],
-      "scale": 0.29,
-      "yaw": 90
-    },
-    {
-      "name": "NativePlant16",
-      "model": "CoffeeBushMature",
-      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
-      "position": [
-        7.415,
-        5.585,
-        1.245
-      ],
-      "scale": 0.29,
-      "yaw": 0
-    },
-    {
-      "name": "NativePlant17",
-      "model": "CoffeeBushMature",
-      "resource": "NaturalResources/Bushes/Coffee/CoffeeBushMature",
-      "position": [
-        7.415,
-        6.114999999999999,
-        1.245
-      ],
-      "scale": 0.29,
-      "yaw": 90
+      "yaw": 270
     }
   ],
   "liquids": []

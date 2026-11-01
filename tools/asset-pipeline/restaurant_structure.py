@@ -15,6 +15,16 @@ roof at 3 (the main roof and the roof terrace bays one continuous slab). The
 gabled roof, dormers and roof lantern are gone; the roof stairhead is one
 layer with a flat cap. Height 9 -> 5.
 
+Second shrink pass (2026-11-01; a YouTuber called it "massive"; user: "shrink
+the buildings down even more"): 9x7x5 -> 6x5x3, same origin, ground door and
+Entrance. Two one-layer storeys: the vestibule and a 5x3 ground hall whose
+east end is the kitchen (bake oven in its back wall) at 0; the 3x3 dining room at 1 with the front dining balcony (three
+tables) and a side balcony over the kitchen (one table); at 2 open flat roof
+decks: the roof over the front balcony (two open-air tables), the main roof
+and the roof over the side balcony (one table), with a one-layer roof
+stairhead. The upper hall, the rear and outer side decks and the 3x3 roof
+terrace are gone. Seven tables and fourteen seats as before. Height 5 -> 3.
+
 This is the authoring contract for meshes, occupied cells and picking volumes.
 Decorative trim, lanterns and furniture retain their independent dimensions.
 """
@@ -22,72 +32,56 @@ Decorative trim, lanterns and furniture retain their independent dimensions.
 # sums exactly to the native rail boundary y=4 (walkway_geometry.run_grid
 # needs exact cell cuts). The 1e-16 artwork offset is immaterial.
 ORIGIN = [-.8, -.8499999999999999, 0]
-SIZE = [9, 7, 5]
+SIZE = [6, 5, 3]
 PLATFORMS = {
     'EntranceVestibuleCap': [0,2,0,1,3,1],
     'DiningFront': [0,0,0,6,2,1],
-    'DiningSideFront': [6,1,0,7,2,1],
-    'DiningSide': [5,2,0,7,7,1],
-    'DiningRear': [1,5,0,5,7,1],
+    # Over the kitchen end of the ground hall.
+    'DiningSide': [4,2,0,6,5,1],
     'UpperDiningFront': [0,0,1,6,2,2],
-    'UpperDiningSideFront': [6,1,1,7,2,2],
-    'UpperDiningSide': [5,2,1,7,7,2],
-    'UpperDiningRear': [1,5,1,5,7,2],
-    # The flat main roof over the upper hall: a cast slab with timber decking,
-    # one level with the roof terrace bays beside it.
-    'MainRoof': [1,2,2,5,5,3],
-    'RoofTerraceInner': [5,2,2,7,5,3],
-    'RoofTerraceOuter': [7,2,2,9,5,3],
+    'UpperDiningSide': [4,2,1,6,5,2],
+    # The flat main roof over the dining room: a cast slab with timber
+    # decking, one level with the open roof decks beside it.
+    'MainRoof': [1,2,1,4,5,2],
 }
 # Explicit short posts: (native occupied tile, corner signs, bottom level).
-# Main rooms and shared beams carry the inner deck edges. The outer roof bay
-# is cantilevered from the inner terrace and has no ground-reaching legs.
+# Main rooms and shared beams carry the inner deck edges; the kitchen walls
+# carry the side balcony.
 SUPPORTS = {
     'EntranceVestibuleCap': [],
     'DiningFront': [([0,0],[-1,-1],0),([3,0],[1,-1],0),([5,0],[1,-1],0)],
-    'DiningSideFront': [([6,1],[1,-1],0)],
-    'DiningSide': [([6,3],[1,1],0),([6,6],[1,1],0)],
-    'DiningRear': [],
+    'DiningSide': [],
     'UpperDiningFront': [([0,0],[-1,-1],1),([3,0],[1,-1],1),([5,0],[1,-1],1)],
-    'UpperDiningSideFront': [([6,1],[1,-1],1)],
-    'UpperDiningSide': [([6,3],[1,1],1),([6,6],[1,1],1)],
-    'UpperDiningRear': [([1,6],[-1,1],1),([4,6],[1,1],1)],
+    'UpperDiningSide': [([5,2],[1,-1],1),([5,4],[1,1],1)],
     'MainRoof': [],
-    'RoofTerraceInner': [([6,2],[1,-1],2),([6,4],[1,1],2)],
-    'RoofTerraceOuter': [],
 }
 ROOMS = {
-    'GroundHall': [1,2,0,5,5,1],
-    'MiddleHall': [1,2,1,5,5,2],
-    'UpperHall': [1,2,2,5,5,3],
+    # The kitchen is the hall's east end (x 4..6) under the side balcony.
+    'GroundHall': [1,2,0,6,5,1],
+    'MiddleHall': [1,2,1,4,5,2],
     'EntranceVestibule': [0,1,0,3,3,1],
-    'Kitchen': [1,5,0,5,7,1],
-    'RoofStairhead': [4,3,3,6,4,4],
+    'RoofStairhead': [2,3,2,4,4,3],
 }
 # Render only exposed facades. Shared room partitions have no mesh, posts or
 # trim. These exact authored spans are independent of native room occupation.
 EXTERIOR_WALLS = {
-    'GroundHall': {'front':[(3,5)],'back':[],'left':[(3,5)],'right':[(2,5)]},
-    'MiddleHall': {'front':[(1,5)],'back':[(1,5)],'left':[(2,5)],'right':[(2,5)]},
-    'UpperHall': {'front':[(1,5)],'back':[(1,5)],'left':[(2,5)],'right':[(2,5)]},
+    'GroundHall': {'front':[(3,6)],'back':[(1,6)],'left':[(3,5)],'right':[(2,5)]},
+    'MiddleHall': {'front':[(1,4)],'back':[(1,4)],'left':[(2,5)],'right':[(2,5)]},
     'EntranceVestibule': {'front':[(0,3)],'back':[(0,1)],'left':[(1,3)],'right':[(1,2)]},
-    'Kitchen': {'front':[],'back':[(1,5)],'left':[(5,7)],'right':[(5,7)]},
 }
 DOORS = {
     'GroundDoor': {'position':[1.5,1,0], 'outward':[0,-1], 'width':1.0},
-    'MiddleDoor': {'position':[3.5,2,1], 'outward':[0,-1], 'width':1.0},
-    'UpperDoor': {'position':[3.5,2,2], 'outward':[0,-1], 'width':1.0},
-    'RoofTerraceDoor': {'position':[6,3.5,3], 'outward':[1,0], 'width':1.0},
+    # Centre tile of the 3-tile dining room front (2026-11-01; was x 3.5).
+    'MiddleDoor': {'position':[2.5,2,1], 'outward':[0,-1], 'width':1.0},
+    'RoofTerraceDoor': {'position':[4,3.5,2], 'outward':[1,0], 'width':1.0},
 }
-# Fixed roof equipment and furniture. Their picking volumes come from the
-# actual parts; these cells are never public paths or stackable roof.
-# 2026-10-30 (user: "no roof vents"; every flat roof tile placeable): the
-# kitchen stack on the stairhead cap went with its reservation, and the upper
-# front furniture row ends at x 5: its last cell (5,0,2) holds no furniture
-# (the second table's chairs end at x 5.0), so it is a free balcony deck cell.
+# Fixed furniture. Their picking volumes come from the actual parts; these
+# cells are never public paths or stackable roof. The upper front furniture
+# row ends at x 5: its last cell (5,0,2) holds no furniture. The side tables
+# stand on x 5, y 2..3 at layers 1 and 2.
 RESERVATIONS = [
     [0,0,1,6,1,2], [0,0,2,5,1,3], # fixed dining furniture, never public paths
-    [6,1,1,7,6,2], # side tables and chairs
+    [5,2,1,6,4,2], [5,2,2,6,4,3], # side tables and chairs
 ]
 # Walking clearance above a deck or floor, below the beams of the deck one
 # layer above (their underside is 0.77 over the floor below).

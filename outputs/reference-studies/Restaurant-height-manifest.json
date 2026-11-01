@@ -3,14 +3,12 @@
   "scope": "Source geometry only; native occupancy and paths not bound",
   "walkableDeckLayers": [
     1,
-    2,
-    3
+    2
   ],
   "entranceLayers": [
     0,
     1,
-    2,
-    3
+    2
   ],
-  "artHeight": 4.03000020980835
+  "artHeight": 3.0
 }

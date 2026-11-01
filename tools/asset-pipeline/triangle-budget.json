@@ -580,9 +580,9 @@
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 12234,
-   "vertices": 24807,
-   "construction": 12234,
+   "finished": 8201,
+   "vertices": 16688,
+   "construction": 8201,
    "file": "outputs/civic-integration/Data/Buildings/Food/Restaurant/Restaurant.IronTeeth.Model.timbermesh"
   },
   "RocketAssemblyHangar": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 772796,
+ "totalBlueprintTriangles": 762948,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

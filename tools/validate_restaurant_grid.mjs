@@ -34,23 +34,25 @@ for(const p of m.parts)for(const box of p.pickingBoxes) {
   pickingBoxes++;
 }
 const supports=Object.values(d.structure.supports).flat();
-check(supports.length===16,'Restaurant must retain sixteen explicitly placed short deck posts');
-check(d.structure.supports.RoofTerraceOuter.length===0,'Cantilevered roof terrace acquired ground-reaching legs');
-for(const [id,bounds] of Object.entries(d.structure.platforms))for(const [cell,corner,bottom] of d.structure.supports[id])check(bounds[5]-bottom<=2,'Deck post extends through multiple storeys '+id);
-// One layer per storey (2026-10-30): the cantilevered roof bay's slab is layer 2.
-for(let z=0;z<2;z++)for(let y=2;y<5;y++)for(let x=7;x<9;x++)check(at([x,y,z]).Occupations==='None','Former roof leg still reserves empty construction space');
-for(let y=2;y<5;y++)for(let x=6;x<9;x++) {
-  check(at([x,y,3]).Occupations==='None','Fixed furniture still consumes the 3x3 roof area');
-  check(at([x,y,2]).Stackable==='BlockObject','Roof tile does not support native construction');
+// 2026-11-01 second shrink (6x5x3): three posts under each front deck and two
+// under the roof over the side balcony; the walls carry every other deck edge.
+check(supports.length===8,'Restaurant must retain eight explicitly placed short deck posts');
+for(const [id,bounds] of Object.entries(d.structure.platforms))for(const [cell,corner,bottom] of d.structure.supports[id])check(bounds[5]-bottom<=1,'Deck post extends through multiple storeys '+id);
+// The open main roof's back row (native x 1..3, y 4) stays clear player space
+// beside the stairhead: no fixed furniture on it, and its roof slab supports
+// native construction.
+for(let x=1;x<4;x++) {
+  check(at([x,4,2]).Occupations==='None','Fixed furniture consumes the open main roof row');
+  check(at([x,4,1]).Stackable==='BlockObject','Main roof tile does not support native construction');
 }
-check(JSON.stringify(d.structure.platforms.RoofTerraceOuter)==='[7,2,2,9,5,3]','Roof slab was enlarged instead of clearing fixed furniture');
+check(JSON.stringify(d.size)==='[6,5,3]','Restaurant registration is not the 6x5x3 second-shrink footprint');
 const levels=[...new Set(b.TransputProviderSpec.Transputs.map(t=>t.Coordinates.Z))].sort((a,b)=>a-b);
 // Shafts meet every flat exterior face (validate_connection_faces.mjs). Since
 // the 2026-10-30 compaction the three storeys are layers 0, 1 and 2 (the roof
 // deck's slab is layer 2 too).
 check([0,1,2].every(z=>levels.includes(z)),'Missing multi-level mechanical faces');
 const report={scope:'Source and blueprint contracts only; native placement/traversal must be tested separately.',
-  doors,structuralParts:m.parts.length,pickingBoxes,shortDeckPosts:supports.length,roofTerraceGroundLegs:0,playerPathCells:d.suggestedPathCells.length,
+  doors,structuralParts:m.parts.length,pickingBoxes,shortDeckPosts:supports.length,playerPathCells:d.suggestedPathCells.length,
   mechanicalFaces:b.TransputProviderSpec.Transputs.length,powerLevels:levels,roadOccupationReservedByBuilding:0};
 await writeFile(new URL('outputs/restaurant-grid-source-checks.json',root),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report));

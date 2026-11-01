@@ -14,7 +14,7 @@ from industrial_facades import extra_materials
 collection=bpy.data.collections.new('Component contract');bpy.context.scene.collection.children.link(collection)
 materials=civic_native_materials(create_reference_materials('kiln')+extra_materials())
 wall=Geometry('Component contract.Architecture');wall.box((0,0,1),(1,.2,2))
-door=recipe('Restaurant','Door.UpperDoor')
+door=recipe('Restaurant','Door.MiddleDoor')
 wall.include_component(door)
 assert wall.components==[{'name':door.name,'faceRange':[6,43]}]
 obj=wall.build(collection,materials,.012,'civic-native')

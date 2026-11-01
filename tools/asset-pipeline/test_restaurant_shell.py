@@ -98,24 +98,25 @@ for ident,walls in EXTERIOR_WALLS.items():
                         probe(ident+'/'+side+'/joint',p,normal,(0,0,slope))
 
 # The rotated rooftop stairhead has a complete exterior on all four sides
-# (one layer tall since the 2026-10-30 compaction).
-for side,axis,plane,a,b,normal in [('front',1,3.85,4.8,6.8,(0,-1,0)),
-        ('back',1,4.85,4.8,6.8,(0,1,0)),('left',0,4.8,3.85,4.85,(-1,0,0)),
-        ('door',0,6.8,3.85,4.85,(1,0,0))]:
+# (one layer tall since the 2026-10-30 compaction; on the layer-2 main roof
+# over native x 2..4 since the 2026-11-01 second shrink).
+for side,axis,plane,a,b,normal in [('front',1,3.85,2.8,4.8,(0,-1,0)),
+        ('back',1,4.85,2.8,4.8,(0,1,0)),('left',0,2.8,3.85,4.85,(-1,0,0)),
+        ('door',0,4.8,3.85,4.85,(1,0,0))]:
     for across in [a+.005,*samples(a,b),b-.005]:
         inset=.06 if across==a+.005 else -.06 if across==b-.005 else 0
         interior=(inset,0,0) if axis==1 else (0,inset,0)
-        for z in samples(3.005,3.995):
+        for z in samples(2.005,2.995):
             p=(across,plane,z) if axis==1 else (plane,across,z)
             probe('RoofStairhead/'+side,p,normal,interior_offset=interior)
 
 # Flat roofs since 2026-10-30: the main roof is a platform (deck joints
 # below); the stairhead's cast cap closes its top and all four edges.
-for x in samples(4.82,6.78):
-    for y in samples(3.87,4.83,.027):probe('StairheadCap/top',(x,y,4.0),(0,0,1))
+for x in samples(2.82,4.78):
+    for y in samples(3.87,4.83,.027):probe('StairheadCap/top',(x,y,3.0),(0,0,1))
 for y,normal in ((3.85,(0,-1,0)),(4.85,(0,1,0))):
-    for x in samples(4.82,6.78,.019):
-        for z in samples(3.865,3.995):probe('StairheadCap/edge',(x,y,z),normal)
+    for x in samples(2.82,4.78,.019):
+        for z in samples(2.865,2.995):probe('StairheadCap/edge',(x,y,z),normal)
 
 # Explicit platform edges and board-joint lines. Testing only the center of
 # each tile missed the previous backing inset and adjoining slab bevel holes.

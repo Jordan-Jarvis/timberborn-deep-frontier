@@ -1,7 +1,7 @@
 {
  "ident": "Restaurant",
  "source": "src/DeepFrontier/Art/Source/Restaurant-ReferenceStudy.blend",
- "sourceSha256": "91e624273539de533b90f50f009e6e1c9d26d7bb5c9e7daebbcf736255ee5e5c",
+ "sourceSha256": "4d15be26963e5e4c3446d5538c36d834d1f2bf4c307b4eb076bbcfcc9012d6b9",
  "frame": 1,
  "layout": "tools/civic-layouts.json",
  "origin": [
@@ -11,10 +11,10 @@
  ],
  "baseZ": 0,
  "footprint": [
-  9,
-  7
+  6,
+  5
  ],
- "height": 5,
+ "height": 3,
  "coordinateSystem": "Native grid XYZ, Z up: authored artwork + registration origin (the late-game registration frame)",
  "smokeEmitters": [],
  "sceneCheck": {

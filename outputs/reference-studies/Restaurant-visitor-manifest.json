@@ -4,23 +4,9 @@
     {
       "id": "MiddleDoor",
       "position": [
-        4.3,
+        3.3,
         2.8499999999999996,
         1
-      ],
-      "outward": [
-        0,
-        -1
-      ],
-      "width": 1.0,
-      "internalConnection": "BuildingInterior"
-    },
-    {
-      "id": "UpperDoor",
-      "position": [
-        4.3,
-        2.8499999999999996,
-        2
       ],
       "outward": [
         0,
@@ -46,9 +32,9 @@
     {
       "id": "RoofTerraceDoor",
       "position": [
-        6.8,
+        4.8,
         4.35,
-        3
+        2
       ],
       "outward": [
         1,
@@ -184,6 +170,66 @@
     {
       "id": "Seat4",
       "position": [
+        6.24,
+        3.35,
+        2.1999999999999997
+      ],
+      "seatSurfaceHeight": 2.1999999999999997,
+      "deckHeight": 2,
+      "facing": [
+        0,
+        1
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          6.075,
+          3.205
+        ],
+        [
+          6.405,
+          3.495
+        ]
+      ],
+      "tableCenter": [
+        6.24,
+        4.0,
+        2.4425
+      ]
+    },
+    {
+      "id": "Seat5",
+      "position": [
+        6.24,
+        4.65,
+        2.1999999999999997
+      ],
+      "seatSurfaceHeight": 2.1999999999999997,
+      "deckHeight": 2,
+      "facing": [
+        0,
+        -1
+      ],
+      "animation": "Sitting",
+      "chairBounds": [
+        [
+          6.075,
+          4.505000000000001
+        ],
+        [
+          6.405,
+          4.795
+        ]
+      ],
+      "tableCenter": [
+        6.24,
+        4.0,
+        2.4425
+      ]
+    },
+    {
+      "id": "Seat6",
+      "position": [
         1.2999999999999998,
         1.55,
         1.2
@@ -212,7 +258,7 @@
       ]
     },
     {
-      "id": "Seat5",
+      "id": "Seat7",
       "position": [
         2.6,
         1.55,
@@ -242,7 +288,7 @@
       ]
     },
     {
-      "id": "Seat6",
+      "id": "Seat8",
       "position": [
         2.95,
         1.55,
@@ -272,7 +318,7 @@
       ]
     },
     {
-      "id": "Seat7",
+      "id": "Seat9",
       "position": [
         4.25,
         1.55,
@@ -302,7 +348,7 @@
       ]
     },
     {
-      "id": "Seat8",
+      "id": "Seat10",
       "position": [
         4.55,
         1.55,
@@ -332,7 +378,7 @@
       ]
     },
     {
-      "id": "Seat9",
+      "id": "Seat11",
       "position": [
         5.8500000000000005,
         1.55,
@@ -362,70 +408,10 @@
       ]
     },
     {
-      "id": "Seat10",
-      "position": [
-        7.04,
-        2.75,
-        1.2
-      ],
-      "seatSurfaceHeight": 1.2,
-      "deckHeight": 1,
-      "facing": [
-        0,
-        1
-      ],
-      "animation": "Sitting",
-      "chairBounds": [
-        [
-          6.875,
-          2.605
-        ],
-        [
-          7.205,
-          2.895
-        ]
-      ],
-      "tableCenter": [
-        7.04,
-        3.4,
-        1.4425000000000001
-      ]
-    },
-    {
-      "id": "Seat11",
-      "position": [
-        7.04,
-        4.05,
-        1.2
-      ],
-      "seatSurfaceHeight": 1.2,
-      "deckHeight": 1,
-      "facing": [
-        0,
-        -1
-      ],
-      "animation": "Sitting",
-      "chairBounds": [
-        [
-          6.875,
-          3.905
-        ],
-        [
-          7.205,
-          4.194999999999999
-        ]
-      ],
-      "tableCenter": [
-        7.04,
-        3.4,
-        1.4425000000000001
-      ]
-    },
-    {
       "id": "Seat12",
       "position": [
-        7.04,
-        4.449999999999999,
+        6.24,
+        3.35,
         1.2
       ],
       "seatSurfaceHeight": 1.2,
@@ -437,25 +423,25 @@
       "animation": "Sitting",
       "chairBounds": [
         [
-          6.875,
-          4.305
+          6.075,
+          3.205
         ],
         [
-          7.205,
-          4.594999999999999
+          6.405,
+          3.495
         ]
       ],
       "tableCenter": [
-        7.04,
-        5.1,
+        6.24,
+        4.0,
         1.4425000000000001
       ]
     },
     {
       "id": "Seat13",
       "position": [
-        7.04,
-        5.75,
+        6.24,
+        4.65,
         1.2
       ],
       "seatSurfaceHeight": 1.2,
@@ -467,17 +453,17 @@
       "animation": "Sitting",
       "chairBounds": [
         [
-          6.875,
-          5.605
+          6.075,
+          4.505000000000001
         ],
         [
-          7.205,
-          5.895
+          6.405,
+          4.795
         ]
       ],
       "tableCenter": [
-        7.04,
-        5.1,
+        6.24,
+        4.0,
         1.4425000000000001
       ]
     }

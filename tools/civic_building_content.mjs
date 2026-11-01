@@ -78,8 +78,11 @@ export async function applyRestaurant(value) {
   delete value.BuildingWalkwaySpec;
   value.PlatformDeckSpec=await read(new URL('outputs/civic-integration/Restaurant-platform-deck.json',root));
   value.TransputProviderSpec={IgnoreRotation:false,Transputs:await wallRoomPowerFaces('Restaurant',layout.structure,layout.size)};
-  // One layer per storey since 2026-10-30: upper dining balcony at 2, lower at 1.
-  const serviceCells=[[0,1,2],[0,1,2],[4,1,2],[4,1,2],[0,1,1],[0,1,1],[2,1,1],[2,1,1],[4,1,1],[4,1,1],[5,2,1],[5,2,1],[5,4,1],[5,4,1]];
+  // Seats in authoring order (civic_isometric_geometry.restaurant, 2026-11-01 6x5x3):
+  // roof decks at 2 (two front tables, one side table), balconies at 1 (three
+  // front tables, one side table). Front tables are served from the lane row
+  // y 1, side tables from the lane column x 4.
+  const serviceCells=[[0,1,2],[0,1,2],[4,1,2],[4,1,2],[4,3,2],[4,3,2],[0,1,1],[0,1,1],[2,1,1],[2,1,1],[4,1,1],[4,1,1],[4,3,1],[4,3,1]];
   const point=cell=>{
     const n=layout.nodes.find(n=>n.cell.every((v,i)=>v===cell[i]));
     if(!n)throw new Error(`No authored restaurant service cell: ${cell}`);

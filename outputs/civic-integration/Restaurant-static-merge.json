@@ -3,51 +3,50 @@
   "targets": [
     "Restaurant"
   ],
-  "joinedObjects": 5,
+  "joinedObjects": 4,
   "objects": [
     "Restaurant.Architecture",
     "Restaurant.Door.GroundDoor",
     "Restaurant.Door.MiddleDoor",
-    "Restaurant.Door.RoofTerraceDoor",
-    "Restaurant.Door.UpperDoor"
+    "Restaurant.Door.RoofTerraceDoor"
   ],
   "nodes": [
     {
       "node": "StaticMerged",
-      "parts": 5,
-      "triangles": 11674,
+      "parts": 4,
+      "triangles": 7743,
       "materials": {
-        "Plaster_White.IronTeeth": 88,
-        "IrregularPlanks_DarkBrown.IronTeeth": 3176,
-        "Plaster_Orange.IronTeeth": 72,
-        "BaseWood_DarkBrown.IronTeeth": 3876,
-        "BaseMetal.IronTeeth": 3354,
+        "Plaster_White.IronTeeth": 54,
+        "IrregularPlanks_DarkBrown.IronTeeth": 1778,
+        "Plaster_Orange.IronTeeth": 52,
+        "BaseWood_DarkBrown.IronTeeth": 2781,
+        "BaseMetal.IronTeeth": 2042,
         "RoofPlanks.IronTeeth": 108,
-        "DFIndustrial06": 144,
+        "DFIndustrial06": 72,
         "DFIndustrial12": 84,
-        "DFIndustrial05": 344,
+        "DFIndustrial05": 362,
         "DFIndustrial04": 140,
         "Details.IronTeeth": 140,
-        "DFIndustrial16": 38,
+        "DFIndustrial16": 30,
         "DFIndustrial14": 60,
         "DFIndustrial15": 30,
-        "IrregularPlanks_MetalForged.IronTeeth": 20
+        "IrregularPlanks_MetalForged.IronTeeth": 10
       }
     },
     {
       "node": "StaticMerged.DFIndustrial08",
       "parts": 1,
-      "triangles": 242,
+      "triangles": 142,
       "materials": {
-        "DFIndustrial08": 242
+        "DFIndustrial08": 142
       }
     },
     {
       "node": "StaticMerged.WindowsAtlas.IronTeeth",
-      "parts": 5,
-      "triangles": 104,
+      "parts": 4,
+      "triangles": 80,
       "materials": {
-        "WindowsAtlas.IronTeeth": 104
+        "WindowsAtlas.IronTeeth": 80
       }
     }
   ],
