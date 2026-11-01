@@ -5,6 +5,7 @@ import bpy
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(Path(__file__).parent))
 from civic_validation import validate_civic_walks
+import fishery_works_geometry  # noqa: F401,E402  registers the FisheryWorks access contract (2026-11-01 shrink)
 parser=argparse.ArgumentParser();parser.add_argument('--models',required=True)
 args=parser.parse_args(sys.argv[sys.argv.index('--')+1:])
 for ident in args.models.split(','):
