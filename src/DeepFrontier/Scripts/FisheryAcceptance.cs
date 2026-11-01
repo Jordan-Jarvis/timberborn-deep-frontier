@@ -278,22 +278,22 @@ namespace DeepFrontier.Scripts {
     }
     private void SetupHatchery(bool seedFish=true) {
       // Exact empty bank surveyed in Reservoir acceptance - verified. The
-      // nursery sits beside the quarry, with a separate six-row water bed under
-      // its compact 7x7 deck (2026-10-26; 8x8 with perimeter docks before).
+      // nursery sits beside the quarry, with a separate four-row water bed under
+      // its 5x5 deck (2026-11-01 shrink; 7x7 from 2026-10-26, 8x8 before).
       HatcheryPond(c=>{
         if(_terrain.GetTerrainHeight(new Vector3Int(c.x,c.y,0))!=3)throw new InvalidOperationException("Hatchery bed requires the surveyed unmodified bank");
         _terrain.UnsetTerrain(c,1);_water.AddCleanWater(c,.8f);
       });
       for(int x=189;x<=193;x++)Create("Path",x,170,3);
-      for(int y=169;y>=164;y--)Create("Path",193,y,3);
+      for(int y=169;y>=162;y--)Create("Path",193,y,3);
       // The deck no longer reaches the bank row (the walkway beside the
       // headhouse is gone): the bank row and its door join the network on the
-      // west, and the rear railing opening behind the centre dock on the north.
+      // west, and the bank behind the centre dock end (y 161) on the north.
       for(int y=155;y<=169;y++)Create("Path",186,y,3);
       // The only access: an ordinary player path on the native Entrance (1,-1,1), the bank cell in
       // front of the door, world (188,155) (tools/native_entrance.mjs). No path on the door cell.
       Create("Path",187,155,3);Create("Path",188,155,3);
-      for(int x=189;x<=193;x++)Create("Path",x,163,3);
+      for(int x=189;x<=193;x++)Create("Path",x,161,3);
       _hatchery=Create("FishHatchery.IronTeeth",187,156,2);
       if(!_hatchery.HasComponent<PlatformDeckSpec>()||_hatchery.HasComponent<BuildingWalkwaySpec>())
         throw new InvalidOperationException("Hatchery deck must use player paths, not built-in outdoor routes");
@@ -302,21 +302,21 @@ namespace DeepFrontier.Scripts {
       // (no post shown) and each of the four deck piles reaches the pond bed.
       var foundation=_hatchery.PositionedBlocks.GetFoundationCoordinates().ToList();
       var supports=_hatchery.GetComponent<AdaptiveSupports>();
-      // AdaptiveSupportsSpec.Columns: the four deck piles, then the six bank posts.
-      if(foundation.Count!=1||foundation[0]!=_hatchery.TransformCoordinates(new Vector3Int(1,0,1))||supports.Probes.Count!=10||!supports.AllColumnsSupported
+      // AdaptiveSupportsSpec.Columns: the four deck piles, then the four bank posts.
+      if(foundation.Count!=1||foundation[0]!=_hatchery.TransformCoordinates(new Vector3Int(1,0,1))||supports.Probes.Count!=8||!supports.AllColumnsSupported
          ||supports.Probes.Take(4).Any(p=>p.Depth<1)||supports.Probes.Skip(4).Any(p=>p.Depth!=0))
         throw new InvalidOperationException($"Hatchery foundation/support contract changed: {foundation.Count} foundation cells, post depths {string.Join(",",supports.Probes.Select(p=>p.Depth))}");
       Debug.Log("[DeepFrontier Fishery] PASS hatchery stands on its door cell; posts "+string.Join(",",supports.Probes.Select(p=>p.Depth)));
       RequireHatcheryPlacement("Path",new Vector3Int(1,2,1),false,"enclosed headhouse");
-      RequireHatcheryPlacement("Path",new Vector3Int(1,5,1),false,"open nursery pen");
-      RequireHatcheryPlacement("Path",new Vector3Int(4,3,1),false,"retained canopy post");
-      RequireHatcheryPlacement("PowerShaft.IronTeeth",new Vector3Int(0,3,1),true,"front walkway shaft");
+      RequireHatcheryPlacement("Path",new Vector3Int(1,4,1),false,"open nursery pen");
+      RequireHatcheryPlacement("Path",new Vector3Int(4,2,1),false,"pump canopy");
+      RequireHatcheryPlacement("PowerShaft.IronTeeth",new Vector3Int(2,3,1),true,"centre dock shaft");
       RequireHatcheryPlacement("Platform.IronTeeth",new Vector3Int(0,0,1),true,"floor-only bank apron");
-      RequireHatcheryPlacement("DoublePlatform.IronTeeth",new Vector3Int(2,6,1),true,"centre dock end");
+      RequireHatcheryPlacement("DoublePlatform.IronTeeth",new Vector3Int(2,4,1),true,"centre dock end");
       // Ground freed by the 2026-10-22 pass (validate_freed_cells.py): bank-row cells that held
       // barrels and sacks (native Floor now), in the compact grid.
       FreedCellProbe.Require(_templates,_validator,_hatchery,
-        new[]{new Vector3Int(2,0,1),new Vector3Int(3,0,1),new Vector3Int(6,0,1)},
+        new[]{new Vector3Int(2,0,1),new Vector3Int(3,0,1)},
         "FishHatchery",message=>Debug.Log("[DeepFrontier Fishery] PASS "+message));
       // A shaft on the bank row below a front headhouse wall face and the generator in
       // front of it, from the installed shaft faces (the open pump canopy has none).
@@ -328,8 +328,8 @@ namespace DeepFrontier.Scripts {
       Create("DevPowerGenerator",hatcheryShaft.Generator.x,hatcheryShaft.Generator.y,hatcheryShaft.Generator.z);
       // A shaft under the centre dock end and a native platform stack above it,
       // over the end path (paths pass under platform legs).
-      Create("PowerShaft.IronTeeth",189,162,2);
-      Create("DoublePlatform.IronTeeth",189,162,3);Create("Platform.IronTeeth",189,162,5);Create("Path",189,162,6);
+      Create("PowerShaft.IronTeeth",189,160,2);
+      Create("DoublePlatform.IronTeeth",189,160,3);Create("Platform.IronTeeth",189,160,5);Create("Path",189,160,6);
       foreach(var cell in HatcheryPathCells().OrderBy(c=>c.y).ThenBy(c=>c.x)) {
         var world=_hatchery.TransformCoordinates(cell);Create("Path",world.x,world.y,world.z);
       }
@@ -347,14 +347,13 @@ namespace DeepFrontier.Scripts {
     // Row y=0 stands on the bank; every other cell stands on a deck slab below
     // the hatchery's BaseZ layer. AquacultureContinuityAcceptance requires
     // them all to survive a fresh-process reload of the saved fixture.
-    // Compact 7x7 deck (2026-10-26): the bank row beside the door, the front
-    // walkway behind the headhouse and the centre dock between the pens.
+    // 5x5 deck (2026-11-01 shrink): the bank row beside the door and the centre
+    // dock between the pens (the front walkway row behind the headhouse went).
     internal static HashSet<Vector3Int> HatcheryPathCells() {
       var paths=new HashSet<Vector3Int>();
       // The door cell (1,0,1) stays unpaved: the hatchery is reached from its Entrance in front of it.
       paths.Add(new Vector3Int(0,0,1));paths.Add(new Vector3Int(2,0,1));
-      for(int x=0;x<=3;x++)paths.Add(new Vector3Int(x,3,1));
-      for(int y=4;y<=6;y++)paths.Add(new Vector3Int(2,y,1));
+      for(int y=3;y<=4;y++)paths.Add(new Vector3Int(2,y,1));
       return paths;
     }
     // Native BlockObjectBatchLoader adds saved objects ordered by
@@ -405,7 +404,7 @@ namespace DeepFrontier.Scripts {
       Debug.Log("[DeepFrontier Fishery] PASS hatchery native site unblocked before assigning workers");
     }
     private void HatcheryPond(Action<Vector3Int> action) {
-      for(int x=187;x<=193;x++)for(int y=157;y<=162;y++)action(new Vector3Int(x,y,2));
+      for(int x=187;x<=191;x++)for(int y=157;y<=160;y++)action(new Vector3Int(x,y,2));
     }
     private void DrainPond() {
       HatcheryPond(c=>{float depth=_waterMap.WaterDepth(c),bad=_waterMap.ColumnContamination(c);_water.RemoveCleanWater(c,depth*(1-bad));_water.RemoveContaminatedWater(c,depth*bad);});

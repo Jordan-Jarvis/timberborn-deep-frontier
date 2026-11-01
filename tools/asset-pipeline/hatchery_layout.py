@@ -11,7 +11,7 @@ H['doorLinks']=DOOR_LINKS
 H['doorNodes']=[[1,1,1]]
 H['localAccess']=[1.5,1,1]
 H['shaftPorts']=SHAFT_PORTS
-H['waterCell']=[1,5,0]
+H['waterCell']=[1,4,0]
 H['staffSlots']=[]
 H['suggestedPathCells']=[list(c) for c in deck_cells()]
 H['buildableCells']=[list(c) for c in deck_cells() if c[1]!=0]

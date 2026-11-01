@@ -8,7 +8,7 @@ from hatchery_structure import SOURCE_ORIGIN,ROOMS,PLATFORMS,SUPPORTS,DOORS,RAIL
 # with a flat cast roof; the roof bearing, gabled roof and roof vent are gone.
 def shell(g):
     room(g,'Headhouse',ROOMS['Headhouse'],SOURCE_ORIGIN,(1.5,1.,1.),
-         exterior={'front':[(0,4)],'back':[(0,4)],'left':[(1,3)],'right':[(1,3)]},wall_style='storey',
+         exterior={'front':[(0,3)],'back':[(0,3)],'left':[(1,3)],'right':[(1,3)]},wall_style='storey',
          plinth=WOOD)   # timber sill band: no concrete before concrete exists (user 2026-10-30)
 
 def lamps(g):
@@ -29,10 +29,11 @@ def roof(g):
 
 def windows(g):
     from architectural_windows import window
-    for x in (2.52,3.35):window(g,*source((x,1.04,1.46)),.50,'front','grand')
-    for x in (.65,2.,3.35):window(g,*source((x,2.96,1.46)),.50,'back','grand')
+    # 3 wide since the 2026-11-01 shrink: one front window right of the door.
+    window(g,*source((2.52,1.04,1.46)),.50,'front','grand')
+    for x in (.62,1.5,2.38):window(g,*source((x,2.96,1.46)),.50,'back','grand')
     window(g,*source((.04,1.85,1.46)),.55,'left','lancet')
-    window(g,*source((3.96,1.85,1.46)),.55,'right','lancet')
+    window(g,*source((2.96,1.85,1.46)),.55,'right','lancet')
 
 # Dock piles are runtime AdaptiveSupports clones of the exported
 # #SupportSegment/#SupportFoot templates (waterside_supports.py); the former

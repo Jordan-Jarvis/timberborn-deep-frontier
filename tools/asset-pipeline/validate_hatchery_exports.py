@@ -17,9 +17,10 @@ names=collections.Counter(n.name for n in model.nodes)
 require(all(v==1 for v in names.values()),'Duplicate model nodes')
 require(payload==(folder/'FishHatchery.IronTeeth.ConstructionStage0.Model.timbermesh').read_bytes(),'Construction model mismatch')
 # Compact early-game footprint since 2026-10-26 (8x8x5 with perimeter docks before).
-# 3 high since the one-layer headhouse and canopy (2026-10-30; was 5).
-require(list(b['BlockObjectSpec']['Size'].values())==[7,7,3] and b['BlockObjectSpec']['BaseZ']==1,'Submerged registration changed')
-W,D=7,7
+# 3 high since the one-layer headhouse and canopy (2026-10-30; was 5); 5x5 since the
+# second shrink pass (2026-11-01; 7x7 before).
+require(list(b['BlockObjectSpec']['Size'].values())==[5,5,3] and b['BlockObjectSpec']['BaseZ']==1,'Submerged registration changed')
+W,D=5,5
 # Native Entrance = the bank-height path cell in front of the door cell (1,0,1) (tools/native_entrance.mjs).
 require(b['BlockObjectSpec']['Entrance']['Coordinates']=={'X':1,'Y':-1,'Z':1},'Entrance is not the bank-height path cell in front of the door')
 require(b['BuildingAccessibleSpec']['LocalAccess']=={'X':1.5,'Y':1,'Z':1},'Workshop final access is not centered on the one-tile bank-height arch')
@@ -29,7 +30,7 @@ require('TickableWaterBuildingSpec' not in b and 'WaterNeederSpec' not in b,'Wat
 work=b['WaterDepthWorkCellsSpec']
 require(work=={'WorkCells':[xyz(c) for c in site['workCells']['cells']],'MinDepth':site['workCells']['minDepth'],
                'MaxDepth':site['workCells']['maxDepth'],'Hysteresis':site['workCells']['hysteresis']},'Pen work cells differ from the waterside contract')
-require(work['WorkCells'][0]=={'X':1,'Y':5,'Z':0},'Contamination sample is not the verified pen probe')
+require(work['WorkCells'][0]=={'X':1,'Y':4,'Z':0},'Contamination sample is not the verified pen probe')
 require(0<work['MinDepth']-work['Hysteresis'] and work['MinDepth']+work['Hysteresis']<work['MaxDepth']-work['Hysteresis'],'Invalid water range')
 supports=b['AdaptiveSupportsSpec']
 require(len(site['supports']['columns'])==4,'The compact deck stands on four piles')
@@ -45,8 +46,9 @@ require(b['BlockObjectNavMeshSettingsSpec']['GenerateFloorsOnStackable'],'Native
 require(not any('Path' in cell['Occupations'] for cell in b['BlockObjectSpec']['Blocks']),'Deck cells reserve player paths')
 require(b['PlatformDeckSpec']['Doors']==[{'Interior':{'X':1,'Y':1,'Z':1},'Exterior':{'X':1,'Y':0,'Z':1}}],'Hatchery native doorway connection changed')
 require(b['PathModelTypeEnforcerSpec']=={'PathModelType':'Roof'},'Bank apron does not request native roof path visuals')
-# 14 suggested path cells plus the interior door node since the compact deck.
-require(len(cells)==15,'Suggested clear deck/door registration mismatch')
+# 6 suggested path cells (four bank cells, two centre-dock cells) plus the interior
+# door node since the 5x5 shrink (14 + 1 on the 7x7 deck).
+require(len(cells)==7,'Suggested clear deck/door registration mismatch')
 for n in layout['nodes']:
     require(n['cell'][2]-1==n['point'][2],'Model/grid height mismatch')
 require(b['PlatformDeckSpec']['Openings']==[],'The hatchery decks have no rails (2026-10-31 roof pass)')
@@ -61,7 +63,7 @@ for x in range(W):
         require(cell(x,0,1)['MatterBelow']=='GroundOrStackable' and [x,0,0] not in site['supports']['bankColumns'],'Door bank cell lost its ground support')
     else:
         require(cell(x,0,1)['MatterBelow']=='Any' and [x,0,0] in site['supports']['bankColumns'],'Bank apron overhang has no adaptive bank post')
-for x in (0,1,2,3,4,6):require(cell(x,0,1)['Occupations']=='Floor','Bank apron must reserve its physical floor but leave player paths available')
+for x in (0,1,2,3):require(cell(x,0,1)['Occupations']=='Floor','Bank apron must reserve its physical floor but leave player paths available')
 for x,y,z in site['supports']['columns']:
     require(cell(x,y,0)['MatterBelow']=='Any' and cell(x,y,0)['Occupations']!='None','Pile does not stand under an over-water deck block')
 require(site['supports']['groundCells']==[[1,0,1]] and sum(1 for v in blocks if v['MatterBelow']!='Any')==1,'Only the door cell may require ground')
@@ -97,12 +99,9 @@ origin=next(n for n in model.nodes if n.name=='IndustrialGridOrigin').position
 for node in (n for n in model.nodes if n.name in ('#SupportSegment','#SupportFoot')):
     require(node.position.y+origin.y<=-2 and 0<=node.position.z+origin.z<=1,'Support template is not parked inside the bank below the front row')
 require(cell(1,2,1)['Occupations']=='All','Headroom can be built inside workroom')
-require(cell(1,5,1)['Occupations']=='None' and cell(1,5,0)['Stackable']=='None','Nursery pen incorrectly supports paths')
-require(cell(4,3,1)['Occupations']=='All' and cell(6,3,1)['Occupations']=='All','Canopy post cells lost reservation')
-require(cell(2,6,0)['Occupations']=='Top, Corners' and cell(2,6,1)['Occupations']=='None','Centre dock end lost usable space above or below')
-# The perimeter docks are gone: no block beyond the pens' outer edges or behind the canopy.
-for x,y in ((5,4),(6,4),(5,6),(6,6)):
-    require(all(cell(x,y,z)['Occupations']=='None' for z in range(3)),'Removed dock cell is registered again')
+require(cell(1,4,1)['Occupations']=='None' and cell(1,4,0)['Stackable']=='None','Nursery pen incorrectly supports paths')
+require(cell(3,2,1)['Occupations']=='All' and cell(4,2,1)['Occupations']=='All','Canopy post cells lost reservation')
+require(cell(2,4,0)['Occupations']=='Top, Corners' and cell(2,4,1)['Occupations']=='None','Centre dock end lost usable space above or below')
 for x,y,z in layout['buildableCells']:
     require(cell(x,y,z-1)['Stackable']=='BlockObject','Clear dock lacks platform support')
 require(not any(n.startswith('Studio.') for n in names),'Preview water shipped in mesh')

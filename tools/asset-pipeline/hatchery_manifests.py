@@ -43,7 +43,8 @@ def write_manifests(output,collection):
             if matches[0]['floorHeight']!=BANK_APRON_SURFACE['nativeFloor'] or matches[0]['wearingSurfaceHeight']!=BANK_APRON_SURFACE['wearingTop'] or matches[0]['backingSurfaceHeight']!=BANK_APRON_SURFACE['backingTop']:
                 raise ValueError('Bank apron surface metadata requires its selected component rebuild: '+name)
     mounts=json.loads(collection.objects['FishHatchery.Headhouse.Windows']['df_window_mounts'])
-    if len(mounts)!=7:raise ValueError('Expected seven explicitly mounted Hatchery windows')
+    # Six since the 3-wide headhouse of the 2026-11-01 shrink (one front window, was two).
+    if len(mounts)!=6:raise ValueError('Expected six explicitly mounted Hatchery windows')
     rails=json.loads(root['df_rail_manifest'])
     if len(rails['runs'])!=len(RAIL_RUNS):raise ValueError('Saved rail source contract is stale')
     for saved,(name,a,b,count) in zip(rails['runs'],RAIL_RUNS,strict=True):

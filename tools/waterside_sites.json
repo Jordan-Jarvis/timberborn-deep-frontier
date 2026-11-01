@@ -2,7 +2,7 @@
   "schema": 1,
   "scope": "Waterside placement contracts consumed by the blueprint generators (AdaptiveSupportsSpec, WaterDepthWorkCellsSpec, MatterBelow) and by export_industrial_models.py (#SupportSegment/#SupportFoot template nodes). Local block coordinates, BaseZ not added.",
   "FishHatchery": {
-    "landCells": "Only the door cell (1,0,1) needs ground or a stackable below (supports.groundCells); it is also the placement cursor cell (CustomPivot). The other six bank-row cells may step down over a lower shore or water, each carried by an adaptive bank post (supports.bankColumns). A flipped hatchery has the mirrored bank cell (5,0) under the cursor (native pivots are not flipped), so on an uneven bank the flipped preview takes that cell's height.",
+    "landCells": "Only the door cell (1,0,1) needs ground or a stackable below (supports.groundCells); it is also the placement cursor cell (CustomPivot). The other four bank-row cells may step down over a lower shore or water, each carried by an adaptive bank post (supports.bankColumns). A flipped hatchery has the mirrored bank cell (3,0) under the cursor (native pivots are not flipped), so on an uneven bank the flipped preview takes that cell's height.",
     "supports": {
       "columns": [
         [
@@ -16,13 +16,13 @@
           0
         ],
         [
-          6,
+          4,
           2,
           0
         ],
         [
           2,
-          5,
+          4,
           0
         ]
       ],
@@ -46,16 +46,6 @@
           4,
           0,
           0
-        ],
-        [
-          5,
-          0,
-          0
-        ],
-        [
-          6,
-          0,
-          0
         ]
       ],
       "groundCells": [
@@ -66,36 +56,36 @@
         ]
       ],
       "maxDepth": 6,
-      "reason": "Four piles under the compact 7x7 deck (2026-10-26; nine under the 8x8 deck with perimeter docks before): three under the headhouse/canopy deck row (x 0, 2, 6 at y 2) and one under the centre dock between the pens. Never in a pen. Column tops are the submerged layer 0 directly below the bank-height deck. Layer 0 is occupied by the deck, so the bed is at least one layer below the bank; the piles reach it at any depth up to six layers, like the native Deep Water Pump intake.",
+      "reason": "Four piles under the 5x5 deck (2026-11-01 second shrink pass; four under the 7x7 deck, nine under the 8x8 deck with perimeter docks before): two under the headhouse deck (x 0 and 2 at y 2), one under the pump canopy deck (x 4, y 2) and one under the centre dock between the pens (y 4). Never in a pen. Column tops are the submerged layer 0 directly below the bank-height deck. Layer 0 is occupied by the deck, so the bed is at least one layer below the bank; the piles reach it at any depth up to six layers, like the native Deep Water Pump intake.",
       "bankReason": "Natural shores are rarely straight across the whole bank row: requiring every bank-row cell on ground at bank height left the Lakes map without a site whose pens reach the water. Bank posts stand under each bank apron except the door cell, top at the terrain row z=0; on a level bank they find the bed at depth 0 and show nothing, so straight-bank placements are unchanged."
     },
     "workCells": {
       "cells": [
         [
           1,
-          5,
+          4,
           0
         ],
         [
           0,
-          5,
+          4,
           0
         ],
         [
           3,
-          5,
+          4,
           0
         ],
         [
           4,
-          5,
+          4,
           0
         ]
       ],
       "minDepth": 0.2,
       "maxDepth": 7.0,
       "hysteresis": 0.05,
-      "reason": "Centre row of both nursery pens. The first cell is the previously verified probe and contamination sample. MinDepth 0.2 / hysteresis 0.05 is the native SwimmingPool rule the hatchery used before: the water surface must stand at least 0.2 above the pen cell's own floor (bank - 0.8), so the cages are actually wet, whatever the bed depth. MaxDepth limits the column's water from its riverbed: 7.0 is one metre beyond the deepest bed the piles can reach, so it trips only when the pens are drowned or sit over a pit deeper than any pile."
+      "reason": "Back row of both 2x2 nursery pens (y 4; the pens moved from y 4..7 to y 3..5 in the 2026-11-01 shrink, and the first cell from (1,5,0) to (1,4,0), the same pen column). The first cell is the probe and contamination sample. MinDepth 0.2 / hysteresis 0.05 is the native SwimmingPool rule the hatchery used before: the water surface must stand at least 0.2 above the pen cell's own floor (bank - 0.8), so the cages are actually wet, whatever the bed depth. MaxDepth limits the column's water from its riverbed: 7.0 is one metre beyond the deepest bed the piles can reach, so it trips only when the pens are drowned or sit over a pit deeper than any pile."
     },
     "templates": {
       "style": "hatchery",

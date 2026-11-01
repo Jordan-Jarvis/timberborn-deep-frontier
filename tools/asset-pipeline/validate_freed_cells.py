@@ -58,11 +58,12 @@ FREED = {
         'outside': 'the two former front rows (fish tables, bins, front basin), the empty right column and the rear supply cells: now outside the 6x5 bounds',
     },
     'Buildings/Food/FishHatchery/FishHatchery.IronTeeth.blueprint.json': {
-        # Bank-row barrels and sacks (2026-10-22), in the compact 7x7 grid
+        # Bank-row barrels and sacks (2026-10-22), in the compact grid
         # (2026-10-26: x moved by -1). The rear dock corners (dock lamps) left
-        # the footprint with the perimeter docks.
-        'cells': [(2, 0, 1), (3, 0, 1), (6, 0, 1)],
-        'outside': 'the perimeter docks (left column, rear row, right dock) and the walkway column beside the headhouse: now outside the 7x7 bounds',
+        # the footprint with the perimeter docks; the third barrel cell (6,0,1)
+        # with the 5x5 shrink (2026-11-01).
+        'cells': [(2, 0, 1), (3, 0, 1)],
+        'outside': 'the perimeter docks, the walkway column beside the headhouse, the front walkway row, the outer canopy column and the rear pen rows: now outside the 5x5 bounds',
     },
     'Buildings/Food/GroceryStore/GroceryStore.IronTeeth.blueprint.json': {
         'cells': [],

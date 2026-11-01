@@ -12,29 +12,35 @@ we should reduce it to one"; flat roofs): the headhouse is one layer tall
 (native z 1..2) under a flat cast roof, and the pump canopy is one layer
 under a flat roof too. The gabled roofs and the roof vent are gone. The 7x7
 footprint, origin, BaseZ, door, pens, decks and rails are unchanged; the
-height is 5 -> 3."""
+height is 5 -> 3.
+
+2026-11-01 second shrink pass (user: shrink the buildings down even more):
+7x7 -> 5x5, same origin, BaseZ, door (1.5,1,1) and Entrance. The headhouse is
+3 wide (x 0..3, was 4), the pump canopy 2 wide (x 3..5, was 3) and both pens
+2x2 (y 3..5, were 2x3 at y 4..7) on either side of the centre dock (x 2). The
+front walkway row behind the headhouse went: the pens and the dock start at
+the headhouse's back wall."""
 ORIGIN=[.2,.75,0]
 BASE_Z=1
 SOURCE_ORIGIN=[.2,.75,1]
-SIZE=[7,7,3]
-ROOMS={'Headhouse':[0,1,1,4,3,2]}
+SIZE=[5,5,3]
+ROOMS={'Headhouse':[0,1,1,3,3,2]}
 PLATFORMS={
-    'MainFrontApron':[0,0,0,5,1,1], 'MainApron':[0,1,0,5,4,1],
-    'CentreDock':[2,4,0,3,7,1],
-    'CanopyFrontApron':[5,0,0,7,1,1], 'CanopyBaseApron':[5,1,0,7,4,1],
+    'MainFrontApron':[0,0,0,3,1,1], 'MainApron':[0,1,0,3,3,1],
+    'CentreDock':[2,3,0,3,5,1],
+    'CanopyFrontApron':[3,0,0,5,1,1], 'CanopyBaseApron':[3,1,0,5,3,1],
 }
 SUPPORTS={name:[] for name in PLATFORMS}
 # The six fixed-length short posts are replaced by AdaptiveSupportsSpec piles
 # (tools/waterside_sites.json) that reach the bed at any depth up to six layers.
 DOORS={'Door0':{'position':[1.5,1,1],'outward':[0,-1],'width':1.0}}
-PENS=[[0,4,0,2,7,1],[3,4,0,5,7,1]]
+PENS=[[0,3,0,2,5,1],[3,3,0,5,5,1]]
 RESERVATIONS=[
     *PENS,
-    [4,1,1,7,3,2],  # one-layer pump canopy and its machinery
-    [4,3,1,5,4,2], [6,3,1,7,4,2], # Retained rear canopy posts and pipe bend.
+    [3,1,1,5,3,2],  # one-layer pump canopy, its posts and machinery
     # Bank-row header tank (the reservoir stock). The barrels and sacks that
     # reserved (3..4,0) and (7,0) went with the forced decoration (2026-10-22).
-    [5,0,1,6,1,2],
+    [4,0,1,5,1,2],
 ]
 DOOR_LINKS=[{'Interior':[1,1,1],'Exterior':[1,0,1]}]
 # Power sockets beyond the headhouse's room faces (grid_structure.roomPowerFaces);
@@ -64,7 +70,7 @@ def source(point):
 # BANK_APRON_SURFACE['wearingTop'] (Z1.020) to clear measured terrain (Z1.010),
 # so its terrain clearance is checked by check_hatchery_ground.py and its
 # floor/headroom by check_hatchery_candidate.py, not as a layer-0 deck gallery.
-GALLERY_ROUTES=[[(0,3),(3,3)],[(2,3),(2,6)]]
+GALLERY_ROUTES=[[(2,3),(2,4)]]
 for _route in GALLERY_ROUTES:
     for (_ax,_ay),(_bx,_by) in zip(_route,_route[1:]):
         if _ax!=_bx and _ay!=_by:raise ValueError('Hatchery gallery routes are axis-aligned cell runs')
@@ -77,7 +83,7 @@ ACCESS={'entrance':list(source(DOORS['Door0']['position'])),'balconyLayers':[0],
         'stairBays':[],'headroom':1.09}
 # Centre dock between the pens; the pen frames' beams sit at its long edges.
 TERRACE={'scope':'Clear centre dock; supported native construction required',
-         'bounds':[1.8,3.25,2.8,6.25],'layer':0,'clearArea':[1.9,3.4,2.6,6.1]}
+         'bounds':[1.8,2.25,2.8,4.25],'layer':0,'clearArea':[1.9,2.4,2.6,4.1]}
 
 def deck_cells():
     cells={(x,y,1) for b in PLATFORMS.values() for x in range(b[0],b[3]) for y in range(b[1],b[4])}

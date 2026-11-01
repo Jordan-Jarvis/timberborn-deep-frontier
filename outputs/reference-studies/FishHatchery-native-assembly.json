@@ -6,7 +6,7 @@
       "model": "SmallTank.IronTeeth",
       "resource": "Buildings/Storage/SmallTank/SmallTank.IronTeeth.Model",
       "position": [
-        5.085,
+        4.055,
         -0.145,
         0
       ],
@@ -19,7 +19,7 @@
       "name": "HatcheryHeaderTank.Water",
       "shape": "SmallLiquidPlane",
       "center": [
-        5.33,
+        4.3,
         0.1
       ],
       "bottom": 0.26754,

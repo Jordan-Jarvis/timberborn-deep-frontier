@@ -215,27 +215,28 @@
   },
   "DeepDrill": {
    "model": "Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.Model",
-   "sha256": "243447419e244fc2a9bb142045abd4932a9245b11a61e85ba2cbb97058373ba9",
+   "sha256": "e52c3325857b7dd7440dc2ab02dfe94b1c63a94487d2ae9521bd0e39e8d7cf23",
    "areas": {
-    "BaseMetal.IronTeeth": 80.6805,
-    "BaseWood_DarkBrown.IronTeeth": 9.1371,
-    "DFIndustrial06": 30.6146,
-    "DFIndustrial08": 0.229,
+    "BaseMetal.IronTeeth": 157.1358,
+    "BaseWood_DarkBrown.IronTeeth": 24.8939,
+    "DFIndustrial06": 83.6398,
+    "DFIndustrial08": 0.4579,
     "DFIndustrial25": 0.0784,
-    "Details.IronTeeth#metal": 3.6523,
-    "IrregularPlanks_DarkBrown.IronTeeth": 26.0249,
-    "IrregularPlanks_MetalForged.IronTeeth": 8.6,
-    "PaintedMetal.IronTeeth": 22.7159,
-    "Plaster_Orange.IronTeeth": 24.6998,
-    "Plaster_White.IronTeeth": 48.0693,
-    "WindowsAtlas.IronTeeth": 1.2094
+    "Details.IronTeeth#metal": 4.2095,
+    "IrregularPlanks_DarkBrown.IronTeeth": 69.1852,
+    "IrregularPlanks_MetalForged.IronTeeth": 19.26,
+    "PaintedMetal.IronTeeth": 30.2847,
+    "Plaster_Orange.IronTeeth": 69.8503,
+    "Plaster_White.IronTeeth": 147.3442,
+    "RoofPlanks.IronTeeth": 15.3377,
+    "WindowsAtlas.IronTeeth": 5.24
    },
    "families": {
-    "brick": 55.3145,
-    "concrete": 48.0693,
-    "metal": 115.6487,
-    "unpriced": 1.5167,
-    "wood": 35.162
+    "brick": 153.4901,
+    "concrete": 147.3442,
+    "metal": 210.89,
+    "unpriced": 5.7763,
+    "wood": 109.4169
    }
   },
   "DeepMine": {
@@ -360,28 +361,28 @@
   },
   "FishHatchery": {
    "model": "Buildings/Food/FishHatchery/FishHatchery.IronTeeth.Model",
-   "sha256": "95420d7b9ef65e72b69c904503a4fddbf3467ec6a5a61c986791dbfffb14d33f",
+   "sha256": "2706d14138f3e1c711c94404be1e9fbcc5d0b0badf2096ba27505972dc0e2d26",
    "areas": {
-    "BaseMetal.IronTeeth": 41.5172,
-    "BaseWood_DarkBrown.IronTeeth": 82.9306,
+    "BaseMetal.IronTeeth": 36.1719,
+    "BaseWood_DarkBrown.IronTeeth": 63.5888,
     "DFIndustrial05": 0.0311,
-    "DFIndustrial08": 0.4355,
+    "DFIndustrial08": 0.3484,
     "DFIndustrial09": 0.0385,
-    "DFIndustrial13": 0.3699,
+    "DFIndustrial13": 0.3658,
     "DFIndustrial25": 0.0017,
-    "Details.IronTeeth#metal": 0.4155,
-    "IrregularPlanks_DarkBrown.IronTeeth": 142.5477,
+    "Details.IronTeeth#metal": 0.4133,
+    "IrregularPlanks_DarkBrown.IronTeeth": 82.3351,
     "IrregularPlanks_MetalForged.IronTeeth": 1.5006,
-    "Plaster_Orange.IronTeeth": 5.476,
+    "Plaster_Orange.IronTeeth": 4.436,
     "RoofPlanks.IronTeeth": 0.8428,
-    "WindowsAtlas.IronTeeth": 1.0836
+    "WindowsAtlas.IronTeeth": 0.9766
    },
    "families": {
-    "brick": 5.476,
+    "brick": 4.436,
     "limestone": 0.0311,
-    "metal": 43.8031,
-    "unpriced": 1.5593,
-    "wood": 226.3211
+    "metal": 38.4515,
+    "unpriced": 1.3653,
+    "wood": 146.7667
    }
   },
   "FisheryWorks": {
@@ -1141,22 +1142,22 @@
   },
   "TownPlaza": {
    "model": "Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.Model",
-   "sha256": "49a67eeda66e75d9d5ef3d1917f7c3388968d70455f0b98b2925817b75ce76cc",
+   "sha256": "dcc88638770a1d8a2dd781149936ef19f693d26a575f04a7177a1a02691c85bd",
    "areas": {
-    "BaseMetal.IronTeeth": 57.3886,
-    "BaseWood_DarkBrown.IronTeeth": 1.0419,
-    "Details.IronTeeth#metal": 0.2709,
-    "Plaster_Orange.IronTeeth": 11.0347,
-    "Plaster_White.IronTeeth": 36.7884,
-    "RoofPlanks.IronTeeth": 2.2621,
-    "WindowsAtlas.IronTeeth": 0.7176
+    "BaseMetal.IronTeeth": 123.7283,
+    "BaseWood_DarkBrown.IronTeeth": 1.2475,
+    "Details.IronTeeth#metal": 0.3363,
+    "Plaster_Orange.IronTeeth": 19.7141,
+    "Plaster_White.IronTeeth": 77.6571,
+    "RoofPlanks.IronTeeth": 8.0709,
+    "WindowsAtlas.IronTeeth": 1.1981
    },
    "families": {
-    "brick": 11.0347,
-    "concrete": 36.7884,
-    "metal": 57.6595,
-    "unpriced": 0.7176,
-    "wood": 3.304
+    "brick": 19.7141,
+    "concrete": 77.6571,
+    "metal": 124.0645,
+    "unpriced": 1.1981,
+    "wood": 9.3184
    }
   },
   "UraniumProcessingPlant": {

@@ -71,30 +71,35 @@ def hatchery(g,parts):
     # building). The two pen openings are not covered by a modelled floor.
     # Dock piles are runtime AdaptiveSupports clones, not fixed scene posts.
     include(g,'Deck.CentreDock')
-    nursery_pen(g,.22,3.58,1.70,6.02)
-    nursery_pen(g,2.80,3.58,4.25,6.02)
+    # 2x2 pens since the 2026-11-01 shrink (were 2x3), right behind the headhouse.
+    nursery_pen(g,.22,2.58,1.70,4.02)
+    nursery_pen(g,2.80,2.58,4.25,4.02)
     # Workshop canopy is lower and narrower than the headhouse roof. Its
     # sealed filter machinery and small tank are native-material equipment.
     # 2026-10-30: one layer tall under a flat roof; the filter drum sits low
     # on its cast base.
     include(g,'Deck.CanopyFrontApron');include(g,'Deck.CanopyBaseApron')
-    for x in (4.55,6.15):
-        for y in (.76,2.62):timber_column(g,x,y,0,.80,.15,collars=False,foot=WOOD)
-    canopy_flat_roof(g,4.35,.54,6.34,2.81,.80)
-    g.box((5.35,1.50,.13),(1.05,.72,.26),WOOD)   # timber sleeper bed under the pump
-    g.box((5.35,1.50,.29),(1.13,.80,.06),IRON)
-    g.cylinder((5.35,1.50,.56),.24,.76,CIVIC_FORGED_PANEL,'X',24)
-    for x in (4.99,5.71):g.ring((x,1.50,.56),.26,.025,.045,IRON,'X',24)
-    g.cylinder((4.93,1.50,.56),.15,.05,BRASS,'X',16)
+    # 2x2 canopy beside the headhouse since the 2026-11-01 shrink (native x
+    # 3..5, y 1..3; was 3x2 with its rear posts out over the pen row): posts
+    # and roof inside its own cells, machinery 1.5 west of where it stood.
+    for x in (3.05,4.55):
+        for y in (.76,2.06):timber_column(g,x,y,0,.80,.15,collars=False,foot=WOOD)
+    canopy_flat_roof(g,2.85,.54,4.75,2.20,.80)
+    g.box((3.85,1.42,.13),(1.05,.72,.26),WOOD)   # timber sleeper bed under the pump
+    g.box((3.85,1.42,.29),(1.13,.80,.06),IRON)
+    g.cylinder((3.85,1.42,.56),.24,.76,CIVIC_FORGED_PANEL,'X',24)
+    for x in (3.49,4.21):g.ring((x,1.42,.56),.26,.025,.045,IRON,'X',24)
+    g.cylinder((3.43,1.42,.56),.15,.05,BRASS,'X',16)
     for i in range(8):
         a=i*math.pi/4
-        g.cylinder((4.89,1.50+math.sin(a)*.19,.56+math.cos(a)*.19),.026,.04,IRON,'X',8)
-    round_pipe(g,[(5.35,1.88,.56),(5.35,2.35,.56),(4.30,2.35,.56),(4.30,2.35,.30)],.055)
-    round_pipe(g,[(5.92,1.50,.40),(6.02,1.50,.40),(6.02,2.83,.40)],.055)
-    gauge(g,5.40,1.10,.14,.09)
+        g.cylinder((3.39,1.42+math.sin(a)*.19,.56+math.cos(a)*.19),.026,.04,IRON,'X',8)
+    round_pipe(g,[(3.85,1.74,.56),(3.85,1.88,.56),(2.95,1.88,.56),(2.95,1.88,.30)],.055)
+    # Feed main to the Timber Pipes port on the canopy's east face (4,2,1).
+    round_pipe(g,[(4.42,1.42,.40),(4.70,1.42,.40),(4.70,1.92,.40)],.055)
+    gauge(g,3.90,1.02,.14,.09)
     # The header tank is the WorkshopReservoir water stock, so it stays.
-    water_barrel(g,'HatcheryHeaderTank',(5.33,.10,0),.49)
-    for x in (4.65,5.30,5.95):wall_lamp(g,x,2.66,.50,'back')
+    water_barrel(g,'HatcheryHeaderTank',(4.30,.10,0),.49)
+    for x in (3.45,4.25):wall_lamp(g,x,2.10,.50,'back')
     # 2026-10-22 (user): no forced decoration beyond the walls. The two
     # barrels and the sacks on the bank row, the net drying frames on the
     # docks and the dock lamps are gone. The bank row itself stays: it is the

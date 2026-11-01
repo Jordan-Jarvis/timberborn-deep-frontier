@@ -9,8 +9,9 @@ const xyz=([X,Y,Z])=>({X,Y,Z});
 
 export function hatcheryBlocks(layout) {
   // 7x7 since the compact early-game footprint (2026-10-26; 8x8x5 before),
-  // 3 high since the one-layer headhouse and canopy (2026-10-30).
-  if(layout.deckMode!=='PlayerPlacedPaths'||layout.baseZ!==1||layout.size.join(',')!=='7,7,3')
+  // 3 high since the one-layer headhouse and canopy (2026-10-30), 5x5 since the
+  // second shrink pass (2026-11-01).
+  if(layout.deckMode!=='PlayerPlacedPaths'||layout.baseZ!==1||layout.size.join(',')!=='5,5,3')
     throw new Error('Hatchery native bank/platform registration changed');
   const blocks=structureBlocks(layout.structure,layout.size);
   const [w,depth]=layout.size;

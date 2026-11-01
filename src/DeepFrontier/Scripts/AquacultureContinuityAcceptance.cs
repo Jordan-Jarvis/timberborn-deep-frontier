@@ -64,7 +64,7 @@ namespace DeepFrontier.Scripts {
     private void RequireSavedHatcheryDeck() {
       var missing=FisheryAcceptance.HatcheryPathCells().Select(c=>_hatchery.TransformCoordinates(c)).Where(c=>!HasFinished("Path",c)).ToList();
       foreach(var (id,z) in new[]{("DoublePlatform.IronTeeth",3),("Platform.IronTeeth",5),("Path",6)})
-        if(!HasFinished(id,new Vector3Int(189,162,z)))missing.Add(new Vector3Int(189,162,z));
+        if(!HasFinished(id,new Vector3Int(189,160,z)))missing.Add(new Vector3Int(189,160,z));
       if(missing.Count>0)throw new InvalidOperationException("Reload deleted hatchery deck objects at "+string.Join(", ",missing));
       Debug.Log("[DeepFrontier Continuity] PASS all "+FisheryAcceptance.HatcheryPathCells().Count+" hatchery deck/bank paths and the dock platform stack survived the fresh-process reload");
     }
