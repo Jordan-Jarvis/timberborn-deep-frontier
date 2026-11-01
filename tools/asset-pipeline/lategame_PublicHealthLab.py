@@ -16,14 +16,20 @@ Roof variety (user, 2026-10-30: "some buildings can have actual roofs", "no
 roof vents"): a teal gabled roof of native roof planks (as on the Iron Teeth
 barracks) instead of a flat deck; no vent shaft or cowls.
 
+Second shrink 2026-11-01 (user: "shrink the buildings down even more"):
+6x4x4 -> 4x3x4, inside the old footprint with the same origin; the same two
+one-layer storeys and teal plank gable over a smaller plan, the roof pitch
+kept (ridge 2.85 instead of 3.15). The door moves to x = 2.5 (Entrance
+(2,-1,0), was (4,-1,0)).
+
 HERO: a pale plaster laboratory in a grey timber frame under a teal plank
 gabled roof, a brass anemometer and a weathervane on the ridge ends.
 ROOF: gabled roof of separate native roof planks (RoofPlanks.IronTeeth) with
 iron battens and ridge cap; grey boarded gable ends.
 
-Plan (6 x 4 tiles; front y = 0; one layer per storey):
+Plan (4 x 3 tiles; front y = 0; one layer per storey):
   - ground storey (layer 0): cast-concrete walls with factory windows and the
-    native door centred on x = 4.5, face on the y = 0 tile edge;
+    native door centred on x = 2.5, face on the y = 0 tile edge;
   - upper storey (layer 1): pale plaster laboratory in a grey timber frame
     with a lancet window in every bay; walls up to layer 2;
   - gabled roof from layer 2, ridge along x.
@@ -42,7 +48,7 @@ import native_building_assets as N
 from lategame_mining_parts import plank_gable
 
 IDENT = 'PublicHealthLab'
-FOOTPRINT = (6, 4)
+FOOTPRINT = (4, 3)
 HEIGHT = 4
 HERO = ('Pale plaster laboratory in a grey timber frame under a teal plank gabled roof, with a brass anemometer '
         'and a weathervane on the ridge.')
@@ -51,9 +57,9 @@ FRAME_END = 121
 W, D = FOOTPRINT
 STOREY = 1.0                    # one layer per storey
 WALL_TOP = 2.0
-DOOR_X = 4.5
+DOOR_X = 2.5
 WALL = (.1, .1, W - .1, D - .1)
-ROOF_RISE = 1.15
+ROOF_RISE = .85                 # 1.15 over the 4-deep plan until 2026-11-01; same pitch
 OVERHANG = .14
 
 
@@ -67,11 +73,11 @@ def ground_storey(g):
     box(lambda g: P.door(g, DOOR_X, 0, 0, 'Door0'))
     box(lambda g: K.lamp(g, DOOR_X - .64, 0, .5, face='front'))
     box(lambda g: K.lamp(g, DOOR_X + .64, 0, .5, face='front'))
-    for x in (.5, 1.5, 2.5, 3.5, 5.5):
+    for x in [i + .5 for i in range(W) if i + .5 != DOOR_X]:
         box(lambda g, x=x: P.native_window(g, x, 0, .47, .55, 'front', 'factory'))
-    for x in (.5, 1.5, 2.5, 3.5, 4.5, 5.5):
+    for x in [i + .5 for i in range(W)]:
         box(lambda g, x=x: P.native_window(g, x, D, .47, .55, 'back', 'factory'))
-    for y in (.5, 1.5, 2.5, 3.5):
+    for y in [i + .5 for i in range(D)]:
         box(lambda g, y=y: P.native_window(g, 0, y, .47, .55, 'left', 'factory'))
         box(lambda g, y=y: P.native_window(g, W, y, .47, .55, 'right', 'factory'))
     P.brick_skin(g, 0, 0, W, D, .14, STOREY - .10, features=features)

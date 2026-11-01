@@ -739,26 +739,26 @@
   },
   "PublicHealthLab": {
    "model": "Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.Model",
-   "sha256": "cc0d8f3d00f31517ed77144cdfda76c8c3c470762f141d860109378ceb6ce836",
+   "sha256": "0389f60b75f296ac2d708713704736ab5acbbbaf366b17f8f75ae810e6d45e51",
    "areas": {
-    "BaseMetal.IronTeeth": 10.9821,
-    "BaseWood_DarkBrown.IronTeeth": 14.5437,
-    "BaseWood_Grey.IronTeeth": 12.7376,
-    "DFIndustrial06": 60.3489,
+    "BaseMetal.IronTeeth": 7.4508,
+    "BaseWood_DarkBrown.IronTeeth": 10.3945,
+    "BaseWood_Grey.IronTeeth": 9.3098,
+    "DFIndustrial06": 37.2324,
     "DFIndustrial08": 0.229,
     "Details.IronTeeth#metal": 0.4302,
-    "IrregularPlanks_Grey.IronTeeth": 12.3003,
+    "IrregularPlanks_Grey.IronTeeth": 6.9042,
     "Plaster_Orange.IronTeeth": 1.068,
-    "Plaster_White.IronTeeth": 124.108,
-    "RoofPlanks.IronTeeth": 75.2385,
-    "WindowsAtlas.IronTeeth": 6.1991
+    "Plaster_White.IronTeeth": 67.708,
+    "RoofPlanks.IronTeeth": 38.679,
+    "WindowsAtlas.IronTeeth": 4.4077
    },
    "families": {
-    "brick": 61.4169,
-    "concrete": 124.108,
-    "metal": 11.4123,
-    "unpriced": 6.4281,
-    "wood": 114.82
+    "brick": 38.3004,
+    "concrete": 67.708,
+    "metal": 7.881,
+    "unpriced": 4.6366,
+    "wood": 65.2875
    }
   },
   "RadioactiveSludgeOutfall": {
@@ -1115,26 +1115,26 @@
   },
   "TechnicalSchool": {
    "model": "Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.Model",
-   "sha256": "5e3aee3fa346092e5dcb8cdffa9d290cafe7c8c46ff1e79c1d43c813312e0e35",
+   "sha256": "3ba4a0198a3af272d449aad2537b7399419e896d424a8f9f222a26a42d259066",
    "areas": {
-    "BaseMetal.IronTeeth": 20.6968,
-    "BaseWood_DarkBrown.IronTeeth": 25.3775,
-    "DFIndustrial06": 76.9167,
-    "DFIndustrial08": 0.229,
-    "Details.IronTeeth#metal": 2.0861,
-    "IrregularPlanks_DarkBrown.IronTeeth": 21.9868,
-    "PaintedMetal.IronTeeth": 5.9528,
+    "BaseMetal.IronTeeth": 11.7268,
+    "BaseWood_DarkBrown.IronTeeth": 13.5843,
+    "DFIndustrial06": 41.1416,
+    "DFIndustrial08": 0.1145,
+    "Details.IronTeeth#metal": 1.0635,
+    "IrregularPlanks_DarkBrown.IronTeeth": 3.9256,
+    "PaintedMetal.IronTeeth": 2.3701,
     "Plaster_Orange.IronTeeth": 1.068,
-    "Plaster_White.IronTeeth": 192.2183,
-    "RoofPlanks.IronTeeth": 60.0008,
-    "WindowsAtlas.IronTeeth": 4.5437
+    "Plaster_White.IronTeeth": 93.8953,
+    "RoofPlanks.IronTeeth": 34.4444,
+    "WindowsAtlas.IronTeeth": 3.003
    },
    "families": {
-    "brick": 77.9847,
-    "concrete": 192.2183,
-    "metal": 28.7357,
-    "unpriced": 4.7726,
-    "wood": 107.3651
+    "brick": 42.2096,
+    "concrete": 93.8953,
+    "metal": 15.1604,
+    "unpriced": 3.1175,
+    "wood": 51.9543
    }
   },
   "TownPlaza": {

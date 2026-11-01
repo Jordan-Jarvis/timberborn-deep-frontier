@@ -2,25 +2,25 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Clock tower on the entrance axis with a four-faced clock stage, lancet belfry and teal pyramid spire with a weathervane.",
   "footprint": [
-    8,
-    4
+    4,
+    3
   ],
-  "heightLayers": 7,
+  "heightLayers": 5,
   "boundsMin": [
-    -0.05,
+    -0.12,
     -0.255,
     -0.03
   ],
   "boundsMax": [
-    8.12,
-    4.1,
-    6.43
+    4.17,
+    3.1,
+    4.94
   ],
   "doors": [
     {
       "id": "Door0",
       "position": [
-        5.5,
+        3.5,
         0.0,
         0
       ],
@@ -46,20 +46,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 4223,
+  "faces": 3156,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1314,
-    "IrregularPlanks_DarkBrown.IronTeeth": 206,
-    "BaseMetal.IronTeeth": 1167,
-    "RoofPlanks.IronTeeth": 249,
-    "DFIndustrial06": 210,
-    "Details.IronTeeth": 444,
-    "accent8": 20,
-    "Plaster_White.IronTeeth": 416,
+    "BaseWood_DarkBrown.IronTeeth": 958,
+    "IrregularPlanks_DarkBrown.IronTeeth": 110,
+    "BaseMetal.IronTeeth": 966,
+    "RoofPlanks.IronTeeth": 201,
+    "DFIndustrial06": 156,
+    "Details.IronTeeth": 404,
+    "accent8": 10,
+    "Plaster_White.IronTeeth": 384,
     "Plaster_Orange.IronTeeth": 7,
-    "WindowsAtlas.IronTeeth": 514,
-    "PaintedMetal.IronTeeth": 112
+    "WindowsAtlas.IronTeeth": 326,
+    "PaintedMetal.IronTeeth": 70
   },
-  "sourceHash": "287f48cd42c2f3a92b5ecc0e1e2d5611ecf6f3086a3e7cc8ebe142af76a0b848",
-  "artHash": "04c8b7ce50888f75ee24aba1f998d6fc7df92f3714046bfe2571cbbeb573a245"
+  "sourceHash": "50dfd3feb644f6253e830b52a3324aeaf7da7b7eb21fc3377b8b6389a1ae1e58",
+  "artHash": "ed692fcd6df0f548a4bc77b35aad9f9ffc4a26023df0e4731c091e416e6d9046"
 }

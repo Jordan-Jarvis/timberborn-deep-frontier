@@ -35,9 +35,19 @@ Plan (8 x 4 tiles; front y = 0; one layer per storey):
     governor and vertical boiler on a low concrete bed;
   - engine house x 0..3, y 2..4: one storey, timber roof deck on layer 1.
 
-Animated (unchanged names and kinds): six clock hands on three faces
-(SPIN_Y / SPIN_X), weathervane (SPIN_Z), engine flywheel (SPIN_X), rocking
-beam (SWAY_X), governor (SPIN_Z).
+Animated (unchanged names): six clock hands on three faces (SPIN_Y /
+SPIN_X), weathervane (SPIN_Z), engine flywheel (SPIN_X), rocking beam
+(SWAY_Y since 2026-11-01: it now rocks along the front row), governor (SPIN_Z).
+
+Second shrink 2026-11-01 (user: "shrink the buildings down even more"):
+8x4x7 -> 4x3x5, inside the old footprint with the same origin. The engine
+house is gone; the central block is the whole back two rows (two one-layer
+storeys of brick with stone dressings under the teal plank gable); the clock
+tower is one tile wide on the front-right corner with the door, shorter
+(clock stage from layer 2.6, spire top 4.55); the demonstration engine stands
+on a bed along the rest of the front row, its flywheel, rocking beam and
+governor scaled to one tile's depth. The door moves to x = 3.5 (Entrance
+(3,-1,0), was (5,-1,0)).
 """
 import math
 
@@ -51,90 +61,88 @@ from lategame_roofdeck_parts import deck_slab
 from lategame_mining_parts import plank_gable
 
 IDENT = 'TechnicalSchool'
-FOOTPRINT = (8, 4)
-HEIGHT = 7
+FOOTPRINT = (4, 3)
+HEIGHT = 5
 HERO = ('Clock tower on the entrance axis with a four-faced clock stage, lancet belfry and teal pyramid spire '
         'with a weathervane.')
 FRAME_END = 121
 
-TX, TY0, TY1 = 5.5, 0.0, 1.5           # tower axis x, front/back y
-CB = (3.0, 1.0, 8.0, 4.0)               # central block
-HOUSE = (0.0, 2.0, 3.0, 4.0)            # engine house
+TX, TY0, TY1 = 3.5, 0.0, 1.25          # tower axis x, front/back y
+TW = .46                                # tower half width (was .75); clear of the block's right face
+CB = (0.0, 1.0, 4.0, 3.0)               # central block
 SLAB = .16
 
 
 def central(g):
     x0, y0, x1, y1 = CB
-    # Brick ground storey (2026-10-30, bricks pass; was cast concrete with
-    # pilaster joints), open around the windows and where the tower stands.
+    # Brick ground storey, open around the windows and where the tower stands.
     P.podium(g, x0, y0, x1, y1, 1.0, joints=False)
-    front = [3.5, 4.25, 6.75, 7.5]
-    features = [((TX - .75, TY0, 0), (TX + .75, TY1, 1.0))]
+    front = [.5, 1.5, 2.5]
+    features = [((TX - TW, TY0, 0), (TX + TW, TY1, 1.0))]
     box = lambda fn: features.append(P.authored_box(g, fn))
     for x in front:
         box(lambda g, x=x: P.native_window(g, x, y0, .47, .52, 'front', 'factory'))
-    for x in (3.5, 4.5, 5.5, 6.5, 7.5):
+    for x in (.5, 1.5, 2.5, 3.5):
         box(lambda g, x=x: P.native_window(g, x, y1, .47, .52, 'back', 'factory'))
-    for y in (2.0, 3.0):
-        box(lambda g, y=y: P.native_window(g, x1, y, .47, .52, 'right', 'factory'))
-    P.brick_skin(g, x0, y0, x1, y1, .14, .9, faces=('front', 'back', 'right'), features=features)
+    box(lambda g: P.native_window(g, x1, 2.0, .47, .52, 'right', 'factory'))
+    box(lambda g: P.native_window(g, x0, 2.0, .47, .52, 'left', 'factory'))
+    P.brick_skin(g, x0, y0, x1, y1, .14, .9, faces=('front', 'back', 'left', 'right'), features=features)
     u0, u1, v0, v1 = x0 + .05, y0 + .05, x1 - .05, y1 - .05
     P.framed_block(g, u0, u1, v0, v1, 1.0, 2.0, infill=BRICK, frame=CONCRETE,   # brick walls, stone dressings (2026-10-31)
-                   pitch=(v0 - u0) / 5, corner=.2, post=.12, skip={'front': [(4.6, 6.4)]},
-                   faces=('front', 'back', 'right'),
+                   pitch=(v0 - u0) / 4, corner=.2, post=.12, skip={'front': [(TX - TW - .1, TX + TW + .1)]},
                    windows={'front': [(x, 1.42, .5, 'grand') for x in front],
-                            'back': [(x, 1.42, .5, 'grand') for x in (3.5, 4.5, 5.5, 6.5, 7.5)],
-                            'right': [(y, 1.42, .5, 'grand') for y in (1.75, 3.25)]})
-    plank_gable(g, u0, v0, u1, v1, 2.0, 3.05, ridge_axis='X', overhang=.15, gable_mat=PLANK, seed=3)
+                            'back': [(x, 1.42, .5, 'grand') for x in (.5, 1.5, 2.5, 3.5)],
+                            'left': [(2.0, 1.42, .5, 'grand')],
+                            'right': [(2.0, 1.42, .5, 'grand')]})
+    plank_gable(g, u0, v0, u1, v1, 2.0, 2.7, ridge_axis='X', overhang=.15, gable_mat=PLANK, seed=3)
 
 
 def tower(g, parts):
-    x0, x1 = TX - .75, TX + .75
-    # Brick tower base (2026-10-30, bricks pass), open around the door and
-    # lamps; its back half stands inside the central block.
-    P.podium(g, x0, TY0, x1, TY1, 1.0, skip=[(5.0, 6.0)], foot=False, joints=False)
+    x0, x1 = TX - TW, TX + TW
+    # Brick tower base, open around the door and lamp; its back stands inside
+    # the central block.
+    P.podium(g, x0, TY0, x1, TY1, 1.0, skip=[(3.0, 4.0)], foot=False, joints=False)
     features = [(CB[:2] + (0,), CB[2:] + (1.0,))]
     box = lambda fn: features.append(P.authored_box(g, fn))
     box(lambda g: P.door(g, TX, TY0, 0, 'Door0'))
-    box(lambda g: K.lamp(g, 4.97, TY0, .5, face='front'))
-    box(lambda g: K.lamp(g, 6.03, TY0, .5, face='front'))
+    box(lambda g: K.lamp(g, 2.92, TY0, .5, face='front'))
     P.brick_skin(g, x0, TY0, x1, TY1, .03, .9, faces=('front', 'left', 'right'), features=features)
     sx0, sy0, sx1, sy1 = x0 + .05, TY0 + .05, x1 - .05, TY1 - .05
-    P.framed_block(g, sx0, sy0, sx1, sy1, 1.0, 3.0, infill=BRICK, frame=CONCRETE, pitch=1.4, floors=(2.0,),
-                   corner=.22,
-                   windows={'front': [(TX, 1.45, .55, 'grand'), (TX, 2.5, .5, 'lancet')],
-                            'left': [(.75, 2.5, .45, 'lancet')],
-                            'right': [(.75, 2.5, .45, 'lancet')],
-                            'back': [(TX, 2.5, .45, 'lancet')]})
+    P.framed_block(g, sx0, sy0, sx1, sy1, 1.0, 2.6, infill=BRICK, frame=CONCRETE, pitch=1.4, floors=(2.0,),
+                   corner=.2,
+                   windows={'front': [(TX, 1.45, .45, 'grand'), (TX, 2.3, .4, 'lancet')],
+                            'left': [(.6, 2.3, .38, 'lancet')],
+                            'right': [(.6, 2.3, .38, 'lancet')]})
     # Clock stage.
-    blk(g, x0 - .08, TY0 - .08, 2.96, x1 + .08, TY1 + .08, 3.04, CONCRETE)
-    cx0, cy0, cx1, cy1 = x0 - .04, TY0 - .04, x1 + .04, TY1 + .04
-    P.framed_block(g, cx0, cy0, cx1, cy1, 3.04, 4.14, infill=CONCRETE, frame=WOOD, pitch=3.0, corner=.2)
-    blk(g, cx0 - .07, cy0 - .07, 4.14, cx1 + .07, cy1 + .07, 4.22, CONCRETE)
-    cz = 3.59
+    blk(g, x0 - .07, TY0 - .07, 2.56, x1 + .07, TY1 + .07, 2.64, CONCRETE)
+    cx0, cy0, cx1, cy1 = x0 - .03, TY0 - .03, x1 + .03, TY1 + .03
+    P.framed_block(g, cx0, cy0, cx1, cy1, 2.64, 3.44, infill=CONCRETE, frame=WOOD, pitch=3.0, corner=.18,
+                   top_rail=False)   # the dial bezels reach the head
+    blk(g, cx0 - .06, cy0 - .06, 3.44, cx1 + .06, cy1 + .06, 3.51, CONCRETE)
+    cz = 3.08
     faces = [('front', (TX, cy0, cz), 'Y', -1, 1), ('back', (TX, cy1, cz), 'Y', 1, None),
              ('left', (cx0, (TY0 + TY1) / 2, cz), 'X', -1, 1), ('right', (cx1, (TY0 + TY1) / 2, cz), 'X', 1, -1)]
     for name, c, axis, s, spin in faces:
-        clock_face(g, parts, name, c, axis, s, spin, k=.84)
+        clock_face(g, parts, name, c, axis, s, spin, k=.58)
     # Belfry with lancets and the pyramid spire.
-    bx0, by0, bx1, by1 = x0 + .1, TY0 + .1, x1 - .1, TY1 - .1
-    P.framed_block(g, bx0, by0, bx1, by1, 4.22, 4.92, infill=BRICK, frame=WOOD, pitch=2.0, corner=.18,
-                   windows={f: [((bx0 + bx1) / 2 if f in ('front', 'back') else (by0 + by1) / 2, 4.57, .5, 'lancet')]
+    bx0, by0, bx1, by1 = x0 + .08, TY0 + .08, x1 - .08, TY1 - .08
+    P.framed_block(g, bx0, by0, bx1, by1, 3.51, 3.95, infill=BRICK, frame=WOOD, pitch=2.0, corner=.16,
+                   windows={f: [((bx0 + bx1) / 2 if f in ('front', 'back') else (by0 + by1) / 2, 3.73, .36, 'lancet')]
                             for f in ('front', 'back', 'left', 'right')})
-    P.pyramid_roof(g, TX, (TY0 + TY1) / 2, .65, 4.92, 1.05, overhang=.14)
-    top = 4.92 + 1.05
+    P.pyramid_roof(g, TX, (TY0 + TY1) / 2, .55, 3.95, .6, overhang=.12)
+    top = 3.95 + .6
     cy = (TY0 + TY1) / 2
-    K.revolve(g, (TX, cy, top - .03), [(.07, 0), (.07, .1), (.11, .15), (.11, .22), (0, .27), (.03, .28), (.03, .38)],
+    K.revolve(g, (TX, cy, top - .03), [(.06, 0), (.06, .08), (.09, .12), (.09, .18), (0, .22), (.025, .23), (.025, .31)],
               BRASS, segments=8)
-    vz = top + .37
+    vz = top + .31
     vane = Geometry('Weathervane', (TX, cy, vz))
-    vane.cylinder((TX, cy, vz - .01), .04, .06, BRASS, 'Z', 8)
-    vane.beam((TX - .3, cy, vz), (TX + .28, cy, vz), .03, mat=IRON)
+    vane.cylinder((TX, cy, vz - .01), .035, .05, BRASS, 'Z', 8)
+    vane.beam((TX - .26, cy, vz), (TX + .24, cy, vz), .025, mat=IRON)
     for order in ((0, 1, 2, 3), (3, 2, 1, 0)):
-        vane.add([(TX - .3, cy, vz - .04), (TX - .12, cy, vz - .04), (TX - .12, cy, vz + .09), (TX - .3, cy, vz + .05)],
+        vane.add([(TX - .26, cy, vz - .035), (TX - .1, cy, vz - .035), (TX - .1, cy, vz + .08), (TX - .26, cy, vz + .045)],
                  [order], IRON)
     for order in ((0, 1, 2), (2, 1, 0)):
-        vane.add([(TX + .28, cy - .05, vz), (TX + .38, cy, vz), (TX + .28, cy + .05, vz)], [order], BRASS)
+        vane.add([(TX + .24, cy - .045, vz), (TX + .33, cy, vz), (TX + .24, cy + .045, vz)], [order], BRASS)
     parts.append((vane, 'SPIN_Z', 1))
 
 
@@ -166,87 +174,58 @@ def clock_face(g, parts, name, c, axis, s, spin, k=1.0):
         parts.append((h, 'SPIN_Y' if axis == 'Y' else 'SPIN_X', turns))
 
 
-def engine_house(g):
-    x0, y0, x1, y1 = HOUSE
-    # Plinth top 0.25: the wall core's 12 mm edge chamfer then sits between the
-    # connection-face measuring rows, so the walls count as flat faces.
-    P.podium(g, x0, y0, x1 - .08, y1, .25, joints=False, foot=False)   # coping clears the block's joint strips
-    u0, v0, u1, v1 = x0 + .05, y0 + .05, x1 - .02, y1 - .05
-    P.framed_block(g, u0, v0, u1, v1, .25, 1.0 - SLAB, infill=BRICK, frame=WOOD, pitch=(u1 - u0) / 3,
-                   faces=('front', 'back', 'left'), corner=.16,
-                   windows={'front': [(x, .52, .42, 'factory') for x in (.55, 1.5, 2.45)],
-                            'back': [(x, .52, .42, 'factory') for x in (.55, 1.5, 2.45)],
-                            'left': [(y, .52, .42, 'factory') for y in (2.55, 3.45)]})
-    # Roof slab (layer 1); it stops at the central block's coping (x 2.95).
-    deck_slab(g, u0 - .05, v0 - .05, CB[0] - .05, v1 + .05, 1.0, 'timber', thickness=SLAB)
-
-
 def engine_yard(g, parts):
-    # Low concrete bed on tiles 0..3 x 0..2 beside the tower front; the
-    # 2026-10-22 engine assembly moved over from the old right-hand yard.
-    blk(g, 0.0, 0.0, 0.0, 2.95, 2.0, .15, CONCRETE)
-    with K.shifted(g, -8.0, -.45):
-        engine(g, parts)
-
-
-def engine(g, parts):
-    # Engine bed split around the flywheel pit (2026-10-22 coordinates).
-    blk(g, 8.25, .5, .1, 9.72, 2.2, .62, CONCRETE)
-    blk(g, 10.1, .9, .1, 10.5, 1.7, .62, CONCRETE)
-    fx, fy, fz, fr = 9.91, 1.3, 1.25, .7
-    for x in (9.74, 10.08):
-        blk(g, x - .05, 1.18, .62, x + .05, 1.42, 1.15, PAINTED)
-        g.cylinder((x, fy, 1.25), .08, .12, IRON, 'X', 10)
+    """The demonstration beam engine on a low concrete bed along the front row
+    (x 0..2.95, y 0..1, beside the tower): rocking beam, flywheel and flyball
+    governor in one tile's depth (2026-11-01; the engine house is gone)."""
+    blk(g, 0.0, 0.02, 0.0, TX - TW - .05, .98, .15, CONCRETE)
+    blk(g, .15, .15, .1, 1.95, .85, .45, CONCRETE)              # engine bed
+    # Flywheel in the y-z plane on the bed's right end.
+    fx, fy, fz, fr = 2.45, .5, .62, .42
+    for x in (2.3, 2.6):
+        blk(g, x - .04, .42, .15, x + .04, .58, .58, PAINTED)
+        g.cylinder((x, fy, fz), .06, .09, IRON, 'X', 10)
     wheel = Geometry('Flywheel', (fx, fy, fz))
-    wheel.ring((fx, fy, fz), fr, .1, .14, IRON, 'X', 16)
-    wheel.ring((fx, fy, fz), fr - .1, .03, .1, BRASS, 'X', 16)
-    wheel.cylinder((fx, fy, fz), .12, .22, IRON, 'X', 12)
-    wheel.cylinder((fx, fy, fz), .045, .5, IRON, 'X', 8)
+    wheel.ring((fx, fy, fz), fr, .07, .1, IRON, 'X', 16)
+    wheel.ring((fx, fy, fz), fr - .07, .025, .07, BRASS, 'X', 16)
+    wheel.cylinder((fx, fy, fz), .09, .16, IRON, 'X', 12)
+    wheel.cylinder((fx, fy, fz), .035, .36, IRON, 'X', 8)
     for i in range(6):
         a = i * math.pi / 3
-        wheel.beam((fx, fy, fz), (fx, fy + math.cos(a) * (fr - .08), fz + math.sin(a) * (fr - .08)), .07, mat=IRON)
+        wheel.beam((fx, fy, fz), (fx, fy + math.cos(a) * (fr - .06), fz + math.sin(a) * (fr - .06)), .05, mat=IRON)
     parts.append((wheel, 'SPIN_X', 1))
-    # Cast-iron columns and the rocking beam (in the flywheel plane).
-    px, py, pz = 9.15, 1.3, 2.2
-    for x in (px - .16, px + .16):
-        blk(g, x - .05, py - .05, .62, x + .05, py + .05, pz - .06, PAINTED)
-        g.beam((x, py - .45, .63), (x, py - .03, pz - .1), .05, mat=PAINTED)
-        g.beam((x, py + .45, .63), (x, py + .03, pz - .1), .05, mat=PAINTED)
-    blk(g, px - .22, py - .07, pz - .1, px + .22, py + .07, pz - .04, IRON)
+    # Cast-iron columns and the rocking beam (along x, rocking in the x-z plane).
+    px, py, pz = 1.05, .5, 1.45
+    for y in (py - .12, py + .12):
+        blk(g, px - .04, y - .04, .45, px + .04, y + .04, pz - .05, PAINTED)
+        g.beam((px - .32, y, .46), (px - .03, y, pz - .08), .04, mat=PAINTED)
+        g.beam((px + .32, y, .46), (px + .03, y, pz - .08), .04, mat=PAINTED)
+    blk(g, px - .06, py - .17, pz - .08, px + .06, py + .17, pz - .03, IRON)
     beam = Geometry('RockingBeam', (px, py, pz))
-    beam.box((px, py, pz), (.08, 1.5, .14), IRON)
-    beam.box((px, py, pz), (.12, .3, .24), PAINTED)
-    beam.cylinder((px, py, pz), .05, .4, BRASS, 'X', 8)
-    beam.box((px, py - .66, pz - .43), (.04, .04, .76), IRON)
-    beam.box((px, py + .7, pz - .38), (.05, .05, .66), IRON)
-    parts.append((beam, 'SWAY_X', .1))
-    # Steam cylinder under the front end of the beam.
-    g.cylinder((px, py - .66, .97), .2, .7, PAINTED, 'Z', 14)
-    for z in (.68, 1.26):
-        g.ring((px, py - .66, z), .23, .04, .05, BRASS, 'Z', 14)
-    g.cylinder((px, py - .66, 1.345), .1, .05, IRON, 'Z', 10)
-    # Crank arm linking the back end down toward the shaft.
-    blk(g, px - .04, py + .7, .62, px + .04, py + .82, .7, IRON)
-    # Flyball governor.
-    blk(g, 8.47, .62, .62, 8.53, .68, 1.5, IRON)
-    gov = Geometry('Governor', (8.5, .65, 1.5))
-    gov.cylinder((8.5, .65, 1.52), .03, .16, BRASS, 'Z', 8)
+    beam.box((px, py, pz), (1.1, .06, .11), IRON)
+    beam.box((px, py, pz), (.22, .09, .18), PAINTED)
+    beam.cylinder((px, py, pz), .04, .3, BRASS, 'Y', 8)
+    beam.box((px - .48, py, pz - .3), (.03, .03, .52), IRON)
+    beam.box((px + .5, py, pz - .27), (.04, .04, .46), IRON)
+    parts.append((beam, 'SWAY_Y', .1))
+    # Steam cylinder under the left end of the beam.
+    g.cylinder((px - .48, py, .7), .15, .5, PAINTED, 'Z', 14)
+    for z in (.48, .92):
+        g.ring((px - .48, py, z), .17, .03, .04, BRASS, 'Z', 14)
+    g.cylinder((px - .48, py, .975), .08, .04, IRON, 'Z', 10)
+    # Flyball governor beside the flywheel.
+    blk(g, 1.93, .27, .45, 1.97, .31, 1.1, IRON)
+    gov = Geometry('Governor', (1.95, .29, 1.1))
+    gov.cylinder((1.95, .29, 1.12), .025, .12, BRASS, 'Z', 8)
     for a in (0, math.pi):
-        b = (8.5 + math.cos(a) * .16, .65 + math.sin(a) * .16, 1.38)
-        gov.beam((8.5, .65, 1.58), b, .015, mat=IRON)
-        K.revolve(gov, (b[0], b[1], b[2] - .05), [(.001, 0), (.05, .02), (.05, .08), (.001, .1)], BRASS, segments=10)
+        b = (1.95 + math.cos(a) * .12, .29 + math.sin(a) * .12, 1.0)
+        gov.beam((1.95, .29, 1.16), b, .012, mat=IRON)
+        K.revolve(gov, (b[0], b[1], b[2] - .04), [(.001, 0), (.04, .015), (.04, .06), (.001, .075)], BRASS, segments=10)
     parts.append((gov, 'SPIN_Z', 3))
-    # Vertical demonstration boiler and steam pipe.
-    K.tank(g, 10.35, 2.0, .15, .26, 1.0, bands=2, roof='dome')
-    # Vent stack without a plume: a steam emitter would bar the engine-house
-    # roof cells beside it from the roof deck (BRIEF: no clutter on buildable space).
-    K.stack(g, 10.35, 2.0, 1.5, .9, emits=None, r=.08, bands=1)
-    P.flanged_pipe(g, [(10.1, 2.0, 1.0), (9.15, 2.0, 1.0), (9.15, .78, 1.0)], .045)
-    P.gauge(g, 10.35, 1.72, .9, 'front')
+    P.gauge(g, .35, .15, .7, 'front')
 
 
 def build(g, parts):
     central(g)
     tower(g, parts)
-    engine_house(g)
     engine_yard(g, parts)

@@ -2,8 +2,8 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Pale plaster laboratory in a grey timber frame under a teal plank gabled roof, with a brass anemometer and a weathervane on the ridge.",
   "footprint": [
-    6,
-    4
+    4,
+    3
   ],
   "heightLayers": 4,
   "boundsMin": [
@@ -12,15 +12,15 @@
     -0.03
   ],
   "boundsMax": [
-    6.06,
-    4.05,
-    3.832
+    4.06,
+    3.05,
+    3.532
   ],
   "doors": [
     {
       "id": "Door0",
       "position": [
-        4.5,
+        2.5,
         0,
         0
       ],
@@ -38,20 +38,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 2605,
+  "faces": 1933,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 816,
+    "BaseWood_DarkBrown.IronTeeth": 588,
     "BaseMetal.IronTeeth": 68,
-    "RoofPlanks.IronTeeth": 276,
-    "DFIndustrial06": 282,
+    "RoofPlanks.IronTeeth": 192,
+    "DFIndustrial06": 222,
     "Details.IronTeeth": 164,
     "accent8": 20,
     "Plaster_White.IronTeeth": 18,
     "Plaster_Orange.IronTeeth": 7,
-    "WindowsAtlas.IronTeeth": 706,
-    "BaseWood_Grey.IronTeeth": 168,
-    "IrregularPlanks_Grey.IronTeeth": 206
+    "WindowsAtlas.IronTeeth": 490,
+    "BaseWood_Grey.IronTeeth": 132,
+    "IrregularPlanks_Grey.IronTeeth": 158
   },
-  "sourceHash": "d7372de8a81a0a7c372089023bf81708d99574eaedd88bdcb3f1c2a78c5ca041",
-  "artHash": "d6fd1a11d93858a3e6c21a21572c933a669d2878caffead94af467da54c54432"
+  "sourceHash": "2426c20254aa81c1ae67b9152bcdbc370bef88ef684ed4359550caede1829e46",
+  "artHash": "b759634a69d650e573a70e50a99f562019515b09083545bd738c90703bcc1915"
 }

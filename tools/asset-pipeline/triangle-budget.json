@@ -490,9 +490,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 4248,
-   "vertices": 8192,
-   "construction": 4248,
+   "finished": 3284,
+   "vertices": 6336,
+   "construction": 3284,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.Model.timbermesh"
   },
   "RadioactiveSludgeOutfall": {
@@ -805,9 +805,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7946,
-   "vertices": 15156,
-   "construction": 7946,
+   "finished": 6062,
+   "vertices": 11640,
+   "construction": 6062,
    "file": "outputs/lategame-integration/Data/Buildings/Science/TechnicalSchool/TechnicalSchool.IronTeeth.Model.timbermesh"
   },
   "TownPlaza": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 747238,
+ "totalBlueprintTriangles": 741542,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

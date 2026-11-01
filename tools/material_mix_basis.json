@@ -155,6 +155,26 @@
     "wood": 3.1933
    },
    "measuredAt": "6x5x3 study (fc1fb48)"
+  },
+  "TechnicalSchool": {
+   "families": {
+    "brick": 77.9847,
+    "concrete": 192.2183,
+    "metal": 28.7357,
+    "unpriced": 4.7726,
+    "wood": 107.3651
+   },
+   "measuredAt": "8x4x7 study (d424ef7)"
+  },
+  "PublicHealthLab": {
+   "families": {
+    "brick": 61.4169,
+    "concrete": 124.108,
+    "metal": 11.4123,
+    "unpriced": 6.4281,
+    "wood": 114.82
+   },
+   "measuredAt": "6x4x4 study (d424ef7)"
   }
  }
 }

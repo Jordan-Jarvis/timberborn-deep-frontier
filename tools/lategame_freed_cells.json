@@ -44,8 +44,8 @@
     12
    ],
    "footprintAfter": [
-    6,
     4,
+    3,
     4
    ],
    "gridOrigin": [
@@ -98,9 +98,9 @@
     14
    ],
    "footprintAfter": [
-    8,
     4,
-    7
+    3,
+    5
    ],
    "gridOrigin": [
     0,

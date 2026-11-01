@@ -46,7 +46,6 @@
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 32 cells west of the start", "x": 97, "y": 39, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["S"]},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 41 cells west of the start", "x": 96, "y": 32, "z": 6, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "Greenhouse.IronTeeth", "label": "Greenhouse, 29 cells north of the start", "x": 135, "y": 69, "z": 5, "orientation": "Cw270", "margin": 1, "openSides": ["N"]},
-    {"template": "TechnicalSchool.IronTeeth", "label": "Technical School, 19 cells east of the start", "x": 153, "y": 43, "z": 6, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 44 cells west of the start", "x": 93, "y": 26, "z": 6, "orientation": "Cw270", "margin": 1, "openSides": ["E"]},
     {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 44 cells east of the start", "x": 172, "y": 56, "z": 7, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 9 cells south-east of the start", "x": 132, "y": 33, "z": 6, "orientation": "Cw0", "margin": 2, "openSides": ["W"], "maxWaterDistance": 15},
