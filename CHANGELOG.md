@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.8.2 (2026-11-01)
+
 - **Radioactive water is less bright:** its yellow and its glow are toned down. Irradiated beavers and soil keep their colours.
 - **Water is blue again** (player report on 0.8.x: water "more like black", badwater much too dark): the radiation shading reset the game's water material to an earlier draw step, so water was drawn before the ground under it was available and came out near-black. It now keeps the game's own setting: clean water, badwater and terrain look as in the base game, and radioactive water shows bright yellow. Restart the game after updating.
 - **Shorter, clearer building tooltips** (player feedback: they took half the screen): every Deep Frontier building description is now one or two short sentences saying what the building is for and the one thing to know before placing it (average 261 → 110 characters, longest 1,112 → 198). Numbers the tooltip already shows (cost, power, workers, recipes) are gone from the text; the pipe note is one short clause everywhere ("Pipes: valve set to Inlet."). The Deep Well now reads "make it flow up to 6 times stronger" instead of "1,667 hp at 1×", and the Human Record Cache says to build an Archive Excavation within 7 tiles. The smog and cryogenic lines in the tooltip are shorter too.
@@ -19,6 +21,11 @@
 
 ### Smaller industry (second shrink)
 - **Steel Mill** is 5x4, 6 high (was 8x6, 8 high): the pulpit and melt hall with the door, the rolling line and teeming ladle under one canopy beside it, and the tall furnace bay along the back with the three electrodes and the flue. Same door, workers, power and recipes; existing mills keep their place, and things built on their old roofs inside the new footprint stay put. Its cost is recomposed from the smaller model (more metal, less concrete).
+
+### Also smaller (second shrink)
+- **Grocery Store** 5x4, 3 high (was 9x6, 5 high), **Fishery Works** 6x5, 3 high (was 11x8, 4 high), **Hospital** 4x4, 4 high (was 4x9, 9 high), **Bathhouse** 4x4, 3 high (was 7x5, 5 high).
+- **Cement Kiln** 3x3 (was 5x3), **Concrete Mixer** 3x2 (was 4x3), **Stone Crusher** 3x3 (was 4x4), **Sandstone and Limestone Pits** 3x3 (were 5x4 and 5x3).
+- Saves: these keep their origin. Re-lay the Grocery Store's path one tile left to its new door; reconnect a Bathhouse pipe at its new inlet.
 
 ## 0.8.1 (2026-10-31)
 

@@ -5,7 +5,7 @@ namespace DeepFrontier.Scripts {
   // first slice's identifiers in one place for adapters and future source-node
   // selection logic.
   public sealed class DeepFrontierRuntime {
-    public const string VerticalSliceVersion = "0.8.1";
+    public const string VerticalSliceVersion = "0.8.2";
     public const string SourceMode = "FiniteStockpileAndPermanentVeinWithIndustrialExpansion";
     public const string DeepOreGoodId = "DeepOre";
     public const string DeepAlloyGoodId = "DeepAlloy";
