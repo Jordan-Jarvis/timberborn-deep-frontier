@@ -263,7 +263,7 @@ export const UI_ROWS = [
   ['Narrative.Cache.WaitingForStorage', 'Survey complete: handing over records as the excavation has storage space ({0} of {1}).'],
   ['Narrative.Cache.Reward', 'Survey reward: {0} {1} and a journal record. Demolishing it before the survey loses its records.'],
   ['Building.HumanRecordCache.DisplayName', 'Human Record Cache'],
-  ['Building.HumanRecordCache.Description', `A sealed human records box. A working Archive Excavation within ${CACHE.spec.SurveyRadius} tiles surveys it for ${CACHE.spec.RewardAmount} recovered artifacts and a Frontier Journal record. It can also be demolished like a relic, losing its records.`],
+  ['Building.HumanRecordCache.Description', `Sealed human records. Build an Archive Excavation within ${CACHE.spec.SurveyRadius} tiles to survey it for ${CACHE.spec.RewardAmount} artifacts and a journal entry; demolishing it destroys them.`],
   ['Building.HumanRecordCache.FlavorDescription', 'Labelled, in three languages: DO NOT OPEN. Open carefully.'],
 ];
 

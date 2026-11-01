@@ -419,18 +419,21 @@ export async function connectionTemplates(dataRoot) {
   return out;
 }
 
-// How to pipe a building, appended once to its description (one shared phrase
-// per direction). Target ports take and give through the extraction valves;
-// a Liquid stockpile's tank ports meet transport pipes directly.
+// How to pipe a building: one short clause appended to its description, the
+// same wording everywhere. Target ports take and give through a Timber Pipes
+// valve against a flat wall (Inlet feeds the building, Outlet drains it); a
+// Liquid stockpile's tank ports meet transport pipes directly.
 export const PIPE_PHRASES = {
-  in: 'Liquids enter through a pipe valve placed against a flat wall, outlet facing the building, with its Inlet switched on.',
-  out: 'Liquids leave through a pipe valve placed against a flat wall, inlet facing the building, with its Outlet switched on.',
-  tank: 'Pipes connect directly to its flat walls, without a valve.',
+  in: 'Pipes: valve set to Inlet.',
+  out: 'Pipes: valve set to Outlet.',
+  both: 'Pipes: valves set to Inlet and Outlet.',
+  tank: 'Pipes: connect directly.',
 };
 export function pipePhrase(state, tank) {
   if (tank) return PIPE_PHRASES.tank;
-  return [state === 'OpenIn' || state === 'Open' ? PIPE_PHRASES.in : null,
-    state === 'OpenOut' || state === 'Open' ? PIPE_PHRASES.out : null].filter(Boolean).join(' ');
+  const phrase = {OpenIn: PIPE_PHRASES.in, OpenOut: PIPE_PHRASES.out, Open: PIPE_PHRASES.both}[state];
+  if (!phrase) throw new Error(`No pipe phrase for port state ${state}`);
+  return phrase;
 }
 
 // One CSV row of enUS.csv: ID,Text,Comment with RFC 4180 quoting.

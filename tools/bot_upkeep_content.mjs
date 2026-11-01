@@ -75,7 +75,6 @@ const csvCell = (value) => {
   return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 };
 const csvRow = (id, text) => [id, text, 'Deep Frontier bot upkeep'].map(csvCell).join(',');
-const fmt = (n) => Number(n.toFixed(2)).toString();
 const listText = (items) => items.length < 3 ? items.join(' and ') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`;
 const pair = (p) => Array.isArray(p) && p.length === 2 && typeof p[0] === 'string' && p[0];
 
@@ -147,10 +146,10 @@ export const upkeepSpec = ({upkeep}, id) => ({
   CapacityPerGood: upkeep.capacityPerGood,
 });
 
-// The sentence appended to the building's description, e.g. "Wears out 0.1 metal block
-// drill bits per hour at full crew and stops without them."
+// The sentence appended to the building's description, e.g. "Wears out metal block
+// drill bits; stops without them." (the rates are in the building panel).
 export const upkeepDescription = ({upkeep: u}, id) =>
-  `Wears out ${listText(u.templates[id].map(([, perHour, role]) => `${fmt(perHour)} ${u.roles[role].description}`))} per hour at full crew and stops without them.`;
+  `Wears out ${listText(u.templates[id].map(([, , role]) => u.roles[role].description))}; stops without them.`;
 
 export const assemblerPatch = ({assembly: a}) => ({ManufactorySpec: {'ProductionRecipeIds#append': [a.recipe]}});
 

@@ -108,7 +108,7 @@ Deep Frontier is EXTREMELY difficult on Diorama
 - Little room: the full set of large Deep Frontier sites (the 14 x 11 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about 2983 tiles with their margins on a large map.
 - Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
 What this map cannot provide:
-- No room for: Limestone quarry, Nuclear Reactor, Launch pad, Radioactive waste refinery, Cryogenic liquefaction plant, Precision machine works, Radioactive Waste Vault, Fishery works, Materials Laboratory, Grocery store, Restaurant, Rocket assembly hangar, Town plaza.
+- No ready space for: Limestone quarry, Nuclear Reactor, Launch pad, Radioactive waste refinery, Cryogenic liquefaction plant, Precision machine works, Radioactive Waste Vault, Fishery works, Materials Laboratory, Grocery store, Restaurant, Rocket assembly hangar, Town plaza. Level ground or build on platforms to make room before you need them.
 ```
 
 Cliffside:
@@ -119,19 +119,24 @@ Deep Frontier is EXTREMELY difficult on Cliffside
 - Little room: the full set of large Deep Frontier sites (the 14 x 11 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about 2983 tiles with their margins on a large map.
 - Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
 What this map cannot provide:
-- No room for: Nuclear Reactor, Radioactive waste refinery, Fishery works, Materials Laboratory, Town plaza, Restaurant, Grocery store.
-- No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.
+- No ready space for: Nuclear Reactor, Radioactive waste refinery, Fishery works, Materials Laboratory, Town plaza, Restaurant, Grocery store. Level ground or build on platforms to make room before you need them.
+- Fish: no river here is deep enough beside a dry bank for the Gatherer Flag to catch fish, and you need fish to start the Fish Hatchery, canned fish and fish oil. Dam a clean river until it is at least 0.5 m deep next to the bank.
 ```
 
 A map without the warning but with unmet items gets a shorter dialog (`UnmetTitle` plus the same lines), for example on Beaverome (192×192):
 
 ```
-Deep Frontier on Beaverome: this map cannot provide everything the full Deep Frontier game needs:
-- No room for: Limestone quarry, Sandstone quarry, Radioactive waste refinery, Uranium processing plant, Nuclear Reactor, Radioactive Waste Vault, Fishery works, Materials Laboratory, Town plaza, Rocket assembly hangar, Restaurant, Grocery store.
-- No reachable Underground Ruins: scrap metal runs out.
+Deep Frontier on Beaverome: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:
+- No ready space for: Limestone quarry, Sandstone quarry, Radioactive waste refinery, Uranium processing plant, Nuclear Reactor, Radioactive Waste Vault, Fishery works, Materials Laboratory, Town plaza, Rocket assembly hangar, Restaurant, Grocery store. Level ground or build on platforms to make room before you need them.
+- Scrap metal: no reachable Underground Ruins for a Mine, so scrap runs out once the surface ruins are gone. Salvage early and use metal carefully.
 ```
 
-or on Canyon: "Deep Frontier on Canyon: this map cannot provide everything the full Deep Frontier game needs: - No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish."
+or on Canyon (each line says what is missing, what it affects and what to do; 2026-11-01, after a player read the old one-line fishing notice as a broken map):
+
+```
+Deep Frontier on Canyon: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:
+- Fish: no river here is deep enough beside a dry bank for the Gatherer Flag to catch fish, and you need fish to start the Fish Hatchery, canned fish and fish oil. Dam a clean river until it is at least 0.5 m deep next to the bank.
+```
 
 ### Per-map setup
 
@@ -170,7 +175,7 @@ Every row passes `builtin` (evidence `outputs/maps/builtin-coverage.json` and th
 - **Diorama**: no launch pad (all 56 10×9 positions overlap the Deep Processor, Steel Mill, Water Treatment Plant, Archive Excavation, mines or drills), and no limestone quarry (every tree-free seam core is under one of those sites).
 - **Shore banks** (7 maps): the saved water is too shallow (or its banks too high) for `ShoreFishingSpec`; damming a river deeper creates banks in play.
 - **Tool changes made for these maps**: badwater counts the outlet of a badwater source with a positive strength (Nomads and Oasis store theirs dry), and a source feeds the surface water its tunnel water reaches (Hollows: `column_components` follows connected water columns underground).
-- In game, every missing building site of a map is folded into one "No room for: …" line with the enUS building names; the other items use the lines in `tools/map_setup.json` `unmetText`.
+- In game, every missing building site of a map is folded into one "No ready space for: …" line with the enUS building names; the other items use the lines in `tools/map_setup.json` `unmetText`.
 
 ### In-game test (user present; startup dialogs need clicking)
 

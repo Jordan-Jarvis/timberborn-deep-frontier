@@ -10,7 +10,7 @@
     "sciencePerWorkingHour": 400,
     "cost": [["Plank", 80], ["Gear", 40], ["MetalBlock", 60], ["Concrete", 120]],
     "recipes": ["MaterialsResearch", "GeochemicalAssay"],
-    "description": "Consumes gears, concrete, metal samples and test water, or assays uranium ore and treatment-plant brine in high-purity water, to develop 400 science per working hour at full productivity. Requires four workers and 600 hp. Water can be piped in (Timber Pipes). Its connected upper terrace supports paths and platforms."
+    "description": "Produces science by testing gears, concrete and metal, or by assaying uranium ore and late-game samples."
   }],
   "recipes": [{
     "id": "MaterialsResearch",

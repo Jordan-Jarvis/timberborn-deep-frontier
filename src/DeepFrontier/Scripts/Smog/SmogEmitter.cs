@@ -107,7 +107,7 @@ namespace DeepFrontier.Scripts {
     // "Smog: -X wellbeing nearby": X from the worst cell it reaches now.
     public IEnumerable<EntityDescription> DescribeEntity() {
       string text;
-      if(!_finished) text=_loc.T("DeepFrontier.Smog.Emitter.Planned",_spec.Sources.Length,Mathf.CeilToInt(MaxRadius),_smog.MaxPenalty);
+      if(!_finished) text=_loc.T("DeepFrontier.Smog.Emitter.Planned",Mathf.CeilToInt(MaxRadius),_smog.MaxPenalty);
       else if(!IsPolluting) text=_loc.T("DeepFrontier.Smog.Emitter.Idle",_spec.Sources.Length,Mathf.CeilToInt(MaxRadius));
       else {
         float worst=EnvelopeCells().Where(_smog.Contains).Select(_smog.IntensityAt).DefaultIfEmpty(0f).Max();

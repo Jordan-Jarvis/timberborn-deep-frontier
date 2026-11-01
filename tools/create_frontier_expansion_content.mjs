@@ -326,15 +326,45 @@ function plannedRow(id, outputPath, template) {
     planned.workers, planned.scienceUnlock, planned.name];
 }
 
-// Authored player-facing text for buildings whose description is more than the
-// generic production line; a description takes the generated power (hp).
-const hpText = (hp) => hp.toLocaleString('en-US');
+// Authored player-facing text, one entry per building: [description, flavor].
+// Descriptions follow the vanilla tooltip (one or two short sentences: what the
+// building is for and the one thing a player must know to place or run it). The
+// native tooltip already lists cost, science, workers, power and recipes, so
+// those numbers stay out of the prose; tools/validate_building_descriptions.mjs
+// checks the length. Later modules extend or replace some of them: the Launch
+// Pad (rocket_program_content.mjs) and the Nuclear Reactor, vault and refinery
+// (meltdown_content.mjs); the Hospital's comes from hospital_building_content.mjs.
+// bot_upkeep_content.mjs and connection_content.mjs append the upkeep and pipe clauses.
+const INDUSTRY_FLAVOR = "The colony's next industrial step is visible in every pipe and belt.";
 const BUILDING_TEXT = {
-  SteelMill: [(hp) => `An electric-arc melt shop and rolling mill. Makes steel from deep iron, coal and limestone flux, and alloy from steel and deep iron. Only 6 trained metallurgists can work here, and the work is extremely dangerous. Requires ${hpText(hp)} hp. Its two smokestacks pollute the air nearby.`,
+  FertilizerWorks: ['Makes fertilizer for the Greenhouse.', INDUSTRY_FLAVOR],
+  FishHatchery: ['Breeds juvenile fish. Build it over a river so its pens stand in clean water; it stops during droughts and badwater.', INDUSTRY_FLAVOR],
+  FisheryWorks: ['Raises fresh fish from juvenile fish, or presses fish into fish oil.', INDUSTRY_FLAVOR],
+  FoodPackagingWorks: ['Cans fresh fish into canned fish that keeps.', INDUSTRY_FLAVOR],
+  PublicHealthLab: ['Makes medicine for the Hospital.', INDUSTRY_FLAVOR],
+  GroceryStore: ['A neighborhood shop for canned fish, rations and fermented food. Staffed and stocked with three or more foods, it gives nearby beavers up to +2 wellbeing.', INDUSTRY_FLAVOR],
+  Restaurant: ['Serves whatever food is stocked and bakes sweet berry cake. A meal of fish, berries, fermented mushrooms and eggplant rations gives Fine Dining.',
+    'A good meal deserves a table, a view and good company.'],
+  Hospital: [null, INDUSTRY_FLAVOR], // HOSPITAL_DESCRIPTION
+  Greenhouse: ['Grows eggplant, kohlrabi and coffee indoors from fertilizer and water, and can raise fish.', INDUSTRY_FLAVOR],
+  ChemicalWorks: ['Makes chemicals, polymer and cryocoolant from crude oil and extract.', INDUSTRY_FLAVOR],
+  PrecisionMachineWorks: ['Builds machine cores, electronics, power modules and bot parts.', INDUSTRY_FLAVOR],
+  WaterTreatmentPlant: ['Purifies water, makes reactor coolant and filter media, and filters badwater.', INDUSTRY_FLAVOR],
+  TechnicalSchool: ['Beavers study here in their free time to become metallurgists, reactor operators or flight engineers. Choose what it teaches in its panel.', INDUSTRY_FLAVOR],
+  UraniumProcessingPlant: ['Turns uranium ore into enriched fuel and reactor power cells.', INDUSTRY_FLAVOR],
+  // Replaced by meltdown_content.mjs (PRODUCER_DESCRIPTIONS) with its risk text.
+  RadioactiveWasteRefinery: ['Refines radioactive waste.', INDUSTRY_FLAVOR],
+  ElectrolysisPlant: ['Splits pure water into hydrogen and oxygen gas.', INDUSTRY_FLAVOR],
+  CryogenicLiquefactionPlant: ['Liquefies hydrogen and oxygen into rocket fuel.', INDUSTRY_FLAVOR],
+  RocketAssemblyHangar: ['Builds rocket airframes and propulsion packages for the Launch Pad.', INDUSTRY_FLAVOR],
+  MissionControl: ['Turns recovered artifacts into guidance computers, mission payloads and telemetry for rocket launches.', INDUSTRY_FLAVOR],
+  // Replaced by rocket_program_content.mjs (GENERIC_PAD_DESCRIPTION).
+  LaunchPad: ["Launches the colony's rockets.", INDUSTRY_FLAVOR],
+  SteelMill: ['Makes steel and alloy from deep iron, coal and limestone. Only trained metallurgists can work here, and the work is dangerous.',
     'Every reactor, rocket and machine core starts as a white-hot pour on this floor.'],
-  ArchiveExcavation: [(hp) => `Opens human ruins anywhere with explosive charges and treated-plank shoring to recover artifacts and their sealed data drives, which Mission Control reads into guidance computers and telemetry. A Human Record Cache within ${CACHE.spec.SurveyRadius} tiles can be surveyed for ${CACHE.spec.RewardAmount} extra artifacts. 4 workers, dangerous work. Requires ${hpText(hp)} hp. Its stove chimney pollutes the air nearby.`,
+  ArchiveExcavation: [`Digs up human artifacts anywhere for Mission Control. Within ${CACHE.spec.SurveyRadius} tiles of a Human Record Cache, it also surveys the cache for bonus artifacts.`,
     'The humans buried their warnings in the strata. Dig carefully.'],
-  CryogenicTankFarm: [(hp) => `Stores up to 2,000 units of one cryogenic fuel, liquid hydrogen or liquid oxygen, delivered and drawn by pipes at its two front sockets or by haulers. Needs ${hpText(hp)} hp to keep the fuel cold: without power the intake closes, and after 12 hours the stored fuel starts to vent.`,
+  CryogenicTankFarm: ['Stores one fuel: liquid hydrogen or liquid oxygen. Needs power to keep it cold; without power the fuel starts to vent.',
     'The coldest place in the colony, kept that way at great expense.'],
 };
 
@@ -717,41 +747,25 @@ for (const [id] of goodDefinitions) {
 for (const definition of buildingDefinitions) {
   const id = definition[0];
   const display = definition[9];
-  const hp = scaledPower(id, definition[6], definition[8]);
   rows.push(csvRow(`Building.${id}.DisplayName`, display));
-  rows.push(csvRow(`Building.${id}.Description`, id === 'Restaurant'
-    ? 'A 400 hp kitchen and dining hall. Workers serve fish, berries and prepared foods at tables, with coffee when stocked and water for thirsty diners. Ferments food and bakes sweet berry cake from berries, corn and water. Cake is cooked and eaten only here. Serves whichever main foods are in stock; a full meal of fish, berries, fermented mushrooms and eggplant rations also gives Fine Dining.'
-    : id === 'FishHatchery'
-    ? 'Breeds juvenile fish from fresh fish, algae and water. Only the front door row needs the bank; the deck stands on piles that reach the riverbed up to 6 m down, and clean water must stand at least 0.2 m up the marked pens. Stops during droughts or badwater contamination. Requires 55 hp.'
-    : id === 'FisheryWorks'
-    ? 'Raises fresh fish from juveniles, algae and delivered water, or presses fish into oil. Its basins reflect stored water and its wheel runs during production. The wheel wing may stand out over water on piles up to 6 m deep. Requires 80 hp.'
-    : id === 'Hospital'
-    ? HOSPITAL_DESCRIPTION
-    : id === 'GroceryStore'
-    ? `Stocks canned fish, eggplant, algae and corn rations, and fermented cassava and soybeans. Two clerks restock 100 of each food. With ${hpText(hp)} hp, an attending clerk and at least three stocked foods, nearby beavers gain up to +2 wellbeing within eight cells. Food remains available during power cuts and off-duty hours.`
-    : Object.hasOwn(BUILDING_TEXT, id) ? BUILDING_TEXT[id][0](hp)
-    : `Deep Frontier ${display.toLowerCase()} production building`));
-  rows.push(csvRow(`Building.${id}.FlavorDescription`, id === 'Restaurant'
-    ? 'A good meal deserves a table, a view and good company.'
-    : Object.hasOwn(BUILDING_TEXT, id) ? BUILDING_TEXT[id][1]
-    : "The colony's next industrial step is visible in every pipe and belt."));
+  if (!Object.hasOwn(BUILDING_TEXT, id)) throw new Error(`No authored description for ${id} (BUILDING_TEXT)`);
+  rows.push(csvRow(`Building.${id}.Description`, id === 'Hospital' ? HOSPITAL_DESCRIPTION : BUILDING_TEXT[id][0]));
+  rows.push(csvRow(`Building.${id}.FlavorDescription`, BUILDING_TEXT[id][1]));
 }
+for (const id of Object.keys(BUILDING_TEXT)) if (!buildingDefinitions.some(([building]) => building === id)) throw new Error(`BUILDING_TEXT names unknown building ${id}`);
 {
-  const smog = await readJson(resolve(root, 'tools', 'smog_content.json'));
-  const pct = (v) => `${Math.round(v * 100)}%`;
   rows.push(csvRow('Building.SmogScrubber.DisplayName', 'Smog scrubber'));
-  const removes = smog.scrubber.reduction === 1 ? 'Removes all' : `Removes ${pct(smog.scrubber.reduction)} of the`;
-  const cap = smog.settings.ScrubberMaxReduction === 1 ? '' : ` Scrubbers and trees together remove at most ${pct(smog.settings.ScrubberMaxReduction)}.`;
-  rows.push(csvRow('Building.SmogScrubber.Description', `${removes} smog within ${smog.scrubber.radius} tiles while powered and not paused.${cap} No workers. Requires ${hpText(scaledPower('SmogScrubber', smog.scrubber.proposed.powerInputHp, progression.implementedBuildingScienceOverrides.SmogScrubber))} hp.`));
+  // Its share and range are in the tooltip's smog section (DeepFrontier.Smog.Scrubber.Planned).
+  rows.push(csvRow('Building.SmogScrubber.Description', 'Cleans smog out of the air around it while powered. No workers.'));
   rows.push(csvRow('Building.SmogScrubber.FlavorDescription', 'What goes up the smokestack comes down in the scrubber.'));
 }
 // Wellbeing attractions: names and needs from frontier_progression.json.
 const WELLBEING_TEXT = {
-  Bathhouse: [(e) => `Steam baths for up to ${e.capacity} beavers: a warm soak, a massage and a wash in one visit (Mud Bath, Massager and Wet Fur). Uses ${e.consumes[0][1]} water per hour, piped in at the boiler-room socket or carried by haulers, and ${hpText(scaledPower(e.id, e.powerDemandHp, e.scienceUnlock))} hp.`,
+  Bathhouse: [() => 'Steam baths: Mud Bath, Massager and Wet Fur in one visit. Uses water.',
     'The boilers run hot so the colony can run warm.'],
-  TownPlaza: [(e) => `A civic square for up to ${e.capacity} beavers, who dance to the bandstand and gather round the fountain (Dance Pit and Campfire). Needs no power or supplies.`,
+  TownPlaza: [() => 'A square where beavers dance and gather (Dance Pit and Campfire). Needs no power or supplies.',
     'Every frontier town needs one place where nothing is being built.'],
-  ObservationDeck: [(e) => `A viewing tower for up to ${e.capacity} beavers on its deck: the climb up the helical stair is exercise and the view is a rooftop terrace (Exercise Plaza and Rooftop Terrace). Paths and platforms may be built on the deck.`,
+  ObservationDeck: [() => 'A viewing tower: the climb counts as Exercise Plaza and the deck as Rooftop Terrace.',
     'From up here, the whole frontier fits in one look.'],
 };
 for (const entry of WELLBEING) {
@@ -764,15 +778,15 @@ for (const id of ['NuclearReactor', 'RadioactiveWasteVault']) {
   const display = id === 'NuclearReactor' ? 'Nuclear Reactor' : 'Radioactive Waste Vault';
   rows.push(csvRow(`Building.${id}.DisplayName`, display));
   rows.push(csvRow(`Building.${id}.Description`, id === 'NuclearReactor'
-    ? 'A 1,000,000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive water that must be shipped off the map.'
-    : 'Locked storage for radioactive waste; the contents must be processed or moved before demolition.'));
+    ? 'Huge power from enriched fuel, run by trained reactor operators.'
+    : 'Stores radioactive waste casks.'));
   rows.push(csvRow(`Building.${id}.FlavorDescription`, 'The frontier makes power and consequences at the same scale.'));
 }
 // Power plants: output, fuel and water rates from frontier_progression.json.
 const POWER_PLANT_TEXT = {
-  CoalPowerPlant: [(e) => `A coal-fired steam plant. Produces ${e.powerOutputHp.toLocaleString('en-US')} hp, day and night, burning ${e.fuelPerHour} coal and ${e.waterPerHour} water per hour while the network draws power. No workers. Its chimney pollutes the air for a wide area while it runs.`,
+  CoalPowerPlant: [() => 'Burns coal and water for power day and night. No workers.',
     'Black smoke, white steam and the hum of every machine in the district.'],
-  OilPowerPlant: [(e) => `An oil-fired turbine plant. Produces ${e.powerOutputHp.toLocaleString('en-US')} hp, day and night, burning ${e.fuelPerHour} crude oil and ${e.waterPerHour} water per hour while the network draws power. No workers. Its two exhaust stacks pollute the air nearby while it runs, less than coal.`,
+  OilPowerPlant: [() => 'Burns crude oil and water for power day and night, with less smog than coal. No workers.',
     'The deep ore gives up its oil, and the oil gives up its fire.'],
 };
 for (const entry of POWER_PLANTS) {

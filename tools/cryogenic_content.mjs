@@ -67,7 +67,7 @@ export const CRYOGENIC_LOCALIZATION = [
   ['DeepFrontier.Cryogenics.Status.WrongNetwork', 'A connected pipe network carries a different fuel or is contaminated and cannot exchange fuel with this tank farm. Liquid hydrogen and liquid oxygen need separate pipe networks; flush contaminated pipes.'],
   ['DeepFrontier.Cryogenics.Status.WrongNetwork.Short', 'Wrong fuel network'],
   ['DeepFrontier.Cryogenics.Notification.Venting', '{0} lost power and is venting cryogenic fuel.'],
-  ['DeepFrontier.Cryogenics.Describe.Rules', 'Cryogenic storage: accepts fuel only while powered. Without power, intake closes at once and stored fuel vents {1} units per hour after {0} hours.'],
+  ['DeepFrontier.Cryogenics.Describe.Rules', 'Takes fuel only while powered. {0} hours after a power cut, it vents {1} fuel per hour.'],
   ['DeepFrontier.Cryogenics.Describe.Holding', 'No power: intake closed. Venting starts in {0} hours.'],
   ['DeepFrontier.Cryogenics.Describe.Venting', 'Venting {0} units per hour; {1} lost since the power failed.'],
 ];

@@ -11,7 +11,7 @@
 import {access, readFile, readdir} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {ANCHOR_BLOCK, CONFIG, DRILL_CELL, DROUGHT_RULE, FULL_BOOST_RATE, HANGING_BLOCK, ICON_PATH, ID, LOCALIZATION, TEMPLATE_PATH} from './deep_well_content.mjs';
+import {ANCHOR_BLOCK, CONFIG, DRILL_CELL, DROUGHT_RULE, DROUGHT_SUMMARY, FULL_BOOST_RATE, HANGING_BLOCK, ICON_PATH, ID, LOCALIZATION, TEMPLATE_PATH} from './deep_well_content.mjs';
 import {catalog, lategameCost, tierForScience} from './lategame_costs.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
@@ -147,12 +147,16 @@ check(drought && Number.isInteger(drought.powerInputHp) && drought.powerInputHp 
   `${ID}: drought.powerInputHp must be whole hp of at least 100,000 and above the full-boost ${CONFIG.powerInputHp} hp`);
 check(drought && Number.isInteger(drought.maxBoost) && drought.maxBoost >= 1 && drought.maxBoost < CONFIG.maxBoost,
   `${ID}: drought.maxBoost must be a whole boost from 1 to below the normal maximum ${CONFIG.maxBoost}`);
-// Players read the rule in the building description and the panel.
+// Players read the rule in the panel and its summary in the building description.
 const locText = new Map(LOCALIZATION);
 const droughtHp = drought.powerInputHp.toLocaleString('en-US');
 check(DROUGHT_RULE.includes(`${droughtHp} hp`) && DROUGHT_RULE.includes(`${drought.maxBoost}×`) && /dries up/.test(DROUGHT_RULE),
   `${ID}: the drought rule text must name ${droughtHp} hp, ${drought.maxBoost}× and that the source dries up`);
-check(locText.get(`Building.${ID}.Description`)?.includes(DROUGHT_RULE), `${ID}: the building description must state the drought rule`);
+check(DROUGHT_SUMMARY.includes(`${droughtHp} hp`) && /dries up/.test(DROUGHT_SUMMARY),
+  `${ID}: the drought summary must name ${droughtHp} hp and that the source dries up`);
+check(locText.get(`Building.${ID}.Description`)?.includes(DROUGHT_SUMMARY), `${ID}: the building description must state the drought summary`);
+// The tooltip names the boost in plain words (players asked what "1×" meant).
+check(!/×/.test(locText.get(`Building.${ID}.Description`) ?? ''), `${ID}: the description must not use the × boost notation`);
 check(!/keeps flowing through drought/i.test(locText.get(`Building.${ID}.Description`) ?? ''), `${ID}: the description still promises flow through droughts`);
 check(locText.get('DeepFrontier.DeepWell.Panel.Drought') === DROUGHT_RULE, `${ID}: the panel's drought line must be the drought rule`);
 check(rows.get(`Building.${ID}.Description`)?.includes(droughtHp), 'enUS.csv: the generated Deep Well description lacks the drought power');

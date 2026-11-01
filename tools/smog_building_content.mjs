@@ -49,15 +49,15 @@ export const SETTINGS_KEYS = ['LightThreshold', 'HeavyThreshold', 'LightNeedId',
   'FieldIntervalHours', 'GrowthIntervalHours'];
 // Panel text used by the C# (keys must match _loc.T calls; validated).
 export const SMOG_LOCALIZATION = [
-  ['DeepFrontier.Smog.Emitter.Planned', 'Smog: {0} smokestack(s) will pollute up to {1} tiles away while working (up to -{2} wellbeing nearby).'],
+  ['DeepFrontier.Smog.Emitter.Planned', 'Smog: up to -{1} wellbeing within {0} tiles while working.'],
   ['DeepFrontier.Smog.Emitter.Idle', 'Smog: idle. Its {0} smokestack(s) pollute up to {1} tiles away while working.'],
   ['DeepFrontier.Smog.Emitter.Active', 'Smog: -{0} wellbeing nearby (up to {1} tiles); crops and trees there grow {2}% slower.'],
-  ['DeepFrontier.Smog.Emitter.Mitigation', 'Keep homes and fields outside the tinted range. Trees and scrubbers clean the air around them.'],
+  ['DeepFrontier.Smog.Emitter.Mitigation', 'Keep homes and fields out of the tinted range; trees and scrubbers clean the air.'],
   ['DeepFrontier.Smog.Building', 'Smog {0}%: beavers here lose {1} wellbeing (up to {2} in heavy smog).'],
   ['DeepFrontier.Smog.Building.Mitigated', 'Trees remove {0}% of the smog here, scrubbers {1}%.'],
   ['DeepFrontier.Smog.Growth', 'Smog {0}%: growing {1}% slower.'],
   ['DeepFrontier.Smog.Greenery', 'Cleans the air: removes {0}% of the smog within {1} tiles.'],
-  ['DeepFrontier.Smog.Scrubber.Planned', 'Smog Scrubber: will remove {0}% of the smog within {1} tiles while powered.'],
+  ['DeepFrontier.Smog.Scrubber.Planned', 'Removes {0}% of the smog within {1} tiles while powered.'],
   ['DeepFrontier.Smog.Scrubber.Active', 'Smog Scrubber: removing {0}% of the smog within {1} tiles.'],
   ['DeepFrontier.Smog.Scrubber.Idle', 'Smog Scrubber: stopped (needs power and must not be paused). Removes {0}% of the smog within {1} tiles.'],
 ];

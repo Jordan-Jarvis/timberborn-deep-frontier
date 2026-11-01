@@ -281,17 +281,17 @@ export function legDeckBlocks(tool) {
 export const HARDPOINT_SLEEVE='#HardpointSleeve';
 export const STEEL_LEG_ROWS=[
   ['DeepFrontier.SteelLegs.Blocked',
-   'A leg runs into something it cannot stand on before it reaches a support: a wall, a smoke stack or a moving part of a building. Move the deck a little.'],
+   'A leg hits a wall, smokestack or moving part before it reaches a support. Move the deck a little.'],
   ['DeepFrontier.RoofHardpoints.SteelOnly',
    'Only steel columns and steel decks can stand on the top of a roof that is not flat. Build paths, platforms and buildings on flat roofs.'],
   ['DeepFrontier.SteelLegs.TooDeep',
    'A leg finds no support within {0} layers below the deck. Point at higher ground or use a lower deck.'],
   ['DeepFrontier.SteelLegs.Columns',
-   'Legs at this spot: {0} steel columns, {1} layers in all. They cost this on top of the deck:'],
+   'Legs here: {0} steel columns, {1} layers. Extra cost:'],
   ['DeepFrontier.SteelLegs.NoColumns',
    'The deck rests directly on supports here, so no columns are needed.'],
   ['DeepFrontier.SteelLegs.PointAt',
-   'Point where the deck should stand. Each corner leg reaches down to the first support, up to {0} layers below the deck.'],
+   'Point where the deck should stand. Legs reach down up to {0} layers.'],
 ];
 
 function legDeckBlueprint(tool,index,built) {

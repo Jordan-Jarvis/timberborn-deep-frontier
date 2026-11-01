@@ -21,7 +21,7 @@
     "smallReasonsHeader": "What this map cannot provide:",
     "smallSpace": "Little room: the full set of large Deep Frontier sites (the 14 x 11 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about {0} tiles with their margins on a large map.",
     "smallHeight": "Build upward: Deep Frontier raises this map's build height to {0} layers (vanilla {1}); on a small map most of the colony has to stack on platforms, which costs more materials.",
-    "unmetTitle": "Deep Frontier on {0}: this map cannot provide everything the full Deep Frontier game needs:",
+    "unmetTitle": "Deep Frontier on {0}: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:",
     "smallNoUnmet": "Every Deep Frontier resource and site fits on this map, but with almost no spare room.",
     "setupFailedTitle": "Deep Frontier could not set up {0}",
     "setupFailed": "{0} Deep Frontier map object(s) could not be placed on {1}; the late game may be missing resources. Details are in the Player.log ([DeepFrontier MapSetup]).",
@@ -31,16 +31,16 @@
   },
   "unmetText": {
     "why": "Player-facing lines for a variant's declared unmet loop items (the variant's 'reason' stays in the JSON, the validation evidence and docs/maps.md). Every missing building site of a map is folded into one line, sites with the buildings' enUS display names; every other item needs its line here, and map_setup_content.mjs fails on an item without one.",
-    "sites": "No room for: {0}.",
+    "sites": "No ready space for: {0}. Level ground or build on platforms to make room before you need them.",
     "items": {
-      "shore fishing banks (first FreshFish)": "No natural shore-fishing banks: dam a river deeper before the Gatherer Flag can catch the first fish.",
-      "irrigated farmland near the start": "Little irrigated farmland near the start.",
-      "trees near the start": "Few trees near the start.",
-      "pines (resin) near the start": "Few pines (resin) near the start.",
-      "Deep Drill sites beside Deep Ore Sources": "No Deep Drill site beside a Deep Ore Source.",
-      "finite deep ore covers one of each building": "Not enough deep ore in Deep Ore Sources to build one of each building up to the Deep Mine.",
-      "Human Record Caches in survey range of an Archive Excavation site": "No Human Record Caches to survey.",
-      "renewable scrap (Underground Ruins for the Efficient Mine)": "No reachable Underground Ruins: scrap metal runs out."
+      "shore fishing banks (first FreshFish)": "Fish: no river here is deep enough beside a dry bank for the Gatherer Flag to catch fish, and you need fish to start the Fish Hatchery, canned fish and fish oil. Dam a clean river until it is at least 0.5 m deep next to the bank.",
+      "irrigated farmland near the start": "Farmland: little irrigated land near the start. Irrigate more land with dams or pumps early so food does not run short.",
+      "trees near the start": "Wood: few trees near the start. Plant a forest early for logs and planks.",
+      "pines (resin) near the start": "Resin: few pines near the start. Plant pines early; their resin makes treated planks.",
+      "Deep Drill sites beside Deep Ore Sources": "Deep ore: no ready space for a Deep Drill beside a Deep Ore Source. Level ground next to one so a drill can start your deep industry.",
+      "finite deep ore covers one of each building": "Deep ore: the Deep Ore Sources run out before you can build one of each deep-ore building. Spend it carefully and get a Deep Mine running early.",
+      "Human Record Caches in survey range of an Archive Excavation site": "Story: no Human Record Caches to survey, so their bonus artifacts and journal entries are missing. The Archive Excavation still digs up artifacts.",
+      "renewable scrap (Underground Ruins for the Efficient Mine)": "Scrap metal: no reachable Underground Ruins for a Mine, so scrap runs out once the surface ruins are gone. Salvage early and use metal carefully."
     }
   }
 }

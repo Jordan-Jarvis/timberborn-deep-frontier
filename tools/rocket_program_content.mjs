@@ -91,11 +91,12 @@ export function missionRecipe(template, mission) {
     Icon: `Sprites/Goods/${mission.icon}Icon`}};
 }
 
-const GENERIC_PAD_DESCRIPTION = 'Deep Frontier launch pad production building';
+// The Launch Pad text create_frontier_expansion_content.mjs writes (BUILDING_TEXT), replaced here.
+const GENERIC_PAD_DESCRIPTION = "Launches the colony's rockets.";
 
 export function localizationRows(powerHp) {
   const rows = [
-    ['Building.LaunchPad.Description', `Launches the colony's rockets. Select a mission in the recipe list: haulers stage one complete rocket (airframes, propulsion, guidance, payload and telemetry) and its liquid hydrogen and oxygen; workers then prepare it under a ${powerHp.toLocaleString('en-US')} hp load. Every launch consumes the whole rocket and fuel, and a launch can fail. Also produces guidance telemetry.`],
+    ['Building.LaunchPad.Description', "Launches the colony's rockets: pick a mission, and haulers bring its rocket parts and fuel. Each launch uses up the whole rocket and can fail."],
     ['RocketProgram.Mission.OrbitalObservatory.DisplayName', 'Orbital Observatory'],
     ['RocketProgram.Mission.OrbitalObservatory.Description', 'First launch: lofts a telescope and archive receiver to read what the old orbital records saw.'],
     ['RocketProgram.Mission.OrbitalObservatory.Success', 'The observatory is in orbit. Its first passes recover fragments of the old orbital records: survey images of this valley before the drought, and a faint green trail of badwater running back to a single source far upriver. The archive now knows where to look.'],

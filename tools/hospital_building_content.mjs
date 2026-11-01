@@ -136,7 +136,7 @@ export async function applyHospital(value) {
 
 // Hospital description and the panel/status rows used by Scripts/Hospital*.cs;
 // create_frontier_expansion_content.mjs writes them with the other rows.
-export const HOSPITAL_DESCRIPTION=`Houses 30 patients, who stay admitted until cured and are fed and watered from its own stock. An assigned crew of six and ${careHp.toLocaleString('en-US')} hp treat injury 80% faster than a medical bed, plus chipped teeth, badwater contamination and 10-day radiation decontamination, day and night. Uses medicine, water and extract while treating or attended. Attending, supplied staff grant neighborhood care up to +2 wellbeing within ten cells.`;
+export const HOSPITAL_DESCRIPTION='Treats injuries, chipped teeth, badwater contamination and radiation day and night. Staffed and supplied, it gives nearby beavers up to +2 wellbeing.';
 export const HOSPITAL_LOCALIZATION=[
   ['DeepFrontier.Hospital.Panel.Title','Hospital'],
   ['DeepFrontier.Hospital.Panel.Patients','Patients admitted: {0} / {1} beds'],

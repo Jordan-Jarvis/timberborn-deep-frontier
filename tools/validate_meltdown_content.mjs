@@ -103,7 +103,7 @@ const lines = new Set(csv.split('\n'));
 const ids = new Map(csv.split('\n').map((line) => [line.split(',')[0], line]));
 for (const [id, text] of localizationRows(tuning.treatmentDays))
   assert(lines.has([id, text, 'Deep Frontier meltdown'].map(csvCell).join(',')), `enUS.csv lacks the authored row ${id}`);
-for (const [id, text] of Object.entries(descriptions(REACTOR_TUNING, leaks, refinery.MechanicalNodeSpec.PowerInput))) {
+for (const [id, text] of Object.entries(descriptions())) {
   // connection_content.mjs appends its shared pipe phrase to piped buildings afterwards.
   const [, described = '', comment] = parseCsvRow(ids.get(`Building.${id}.Description`) ?? '');
   const extra = described.startsWith(text) ? described.slice(text.length).trim() : null;

@@ -218,7 +218,7 @@ export function localizationRows(c, energy) {
   for (const need of allNeeds(c)) rows.push([`Need.${need.id}.DisplayName`, need.name]);
   for (const key of ['charge', 'coolant']) rows.push([`Status.Need.${n[key].id}`, n[key].status], [`Status.Need.${n[key].id}.Short`, n[key].statusShort]);
   rows.push([`Building.${s.id}.DisplayName`, s.name],
-    [`Building.${s.id}.Description`, `Charges two Reactor Bots at once; ordinary bots use the Charging Station. Burns ${fmt(s.fuel[1])} enriched fuel per hour while a bot charges and needs ${s.powerInput.toLocaleString('en-US')} hp. A full charge lasts a Reactor Bot ${fmt(chargeDays)} days. No workers.`],
+    [`Building.${s.id}.Description`, 'Charges two Reactor Bots at once, burning enriched fuel while it charges. Ordinary bots use the Charging Station.'],
     [`Building.${s.id}.FlavorDescription`, s.flavor],
     ['DeepFrontier.ReactorBot.Panel.Title', 'Reactor retrofit'],
     ['DeepFrontier.ReactorBot.Panel.Ordinary', `A ${parts} retrofit makes this bot a Reactor Bot: ${1 + u.carryingCapacityBonus}× load, ${u.speedMultiplier}× speed, ${u.lifespanMultiplier}× lifespan, charged at a ${s.name} every ${fmt(chargeDays)} days. Upkeep: coolant (${coolant.length} kinds) and steel plating from storage.`],

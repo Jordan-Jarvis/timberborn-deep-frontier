@@ -80,17 +80,15 @@ export const LEAK_TUNING = {
 // Exact texts written by tools/create_frontier_expansion_content.mjs; the
 // descriptions below replace them.
 export const PRODUCER_DESCRIPTIONS = {
-  NuclearReactor: 'A 1,000,000 hp reactor that consumes enriched fuel and pipe-fed coolant water. Produces spent-fuel casks and radioactive water that must be shipped off the map.',
-  RadioactiveWasteVault: 'Locked storage for radioactive waste; the contents must be processed or moved before demolition.',
-  RadioactiveWasteRefinery: 'Deep Frontier radioactive waste refinery production building',
+  NuclearReactor: 'Huge power from enriched fuel, run by trained reactor operators.',
+  RadioactiveWasteVault: 'Stores radioactive waste casks.',
+  RadioactiveWasteRefinery: 'Refines radioactive waste.',
 };
 
 export const SPEC_KEYS = {
   ReactorMeltdownSpec: Object.keys(REACTOR_TUNING),
   WasteLeakSpec: ['GoodId', 'Trigger', 'WarningFillFraction', 'LeakIntervalHours', 'GoodsPerLeak', 'SludgeVolumePerGood', 'SoilRadiationPerLeak', 'SoilRadius'],
 };
-
-const pct = (fraction) => Math.round(fraction * 100);
 
 // Reads RadiationTuning constants from the C# source the runtime uses.
 export async function radiationTuning(root = defaultRoot) {
@@ -122,12 +120,13 @@ export function wasteLeakSpecs(batch, volumePerGood) {
   };
 }
 
-export function descriptions(reactor, leaks, refineryPowerHp) {
-  const t = reactor, v = leaks.vault, r = leaks.refinery;
+// The risk a player must know before building, in a sentence each (the tooltip
+// stays vanilla-short; the panel, statuses and docs/meltdown.md give the numbers).
+export function descriptions() {
   return {
-    NuclearReactor: `${PRODUCER_DESCRIPTIONS.NuclearReactor} Its power output falls as its core heats. Without coolant, or with its radioactive waste or radioactive water storage full, a hot core keeps heating, running or stopped, as fast as it cools otherwise, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. Each cycle seals its spent fuel in a cask of Steel and Concrete. Fewer than ${t.MinOperators} trained operators working or overdue maintenance (a ${t.MaintenanceOutageHours}-hour stop every ${t.MaintenanceIntervalHours} running hours, using ${t.MaintenanceGoods.map((g) => `${g.Amount} ${g.Id === 'HighGradeSteel' ? 'Steel' : g.Id}`).join(' and ')}) also heat it while it runs, up to ${pct(t.FaultHeatLimit)}%. At 100% it melts down: the reactor is destroyed, nearby beavers are killed or irradiated and the land and water around it stay radioactive for weeks. Pausing is a safe cold shutdown.`,
-    RadioactiveWasteVault: `${PRODUCER_DESCRIPTIONS.RadioactiveWasteVault} Keep it below full: when full, ${v.GoodsPerLeak} casks breach every ${v.LeakIntervalHours} hours, spilling radioactive water and irradiating the soil within ${v.SoilRadius} tiles, which kills crops.`,
-    RadioactiveWasteRefinery: `Dissolves spent-fuel casks in water into radioactive water and recovered minerals, and cleans contaminated water. Requires ${refineryPowerHp.toLocaleString('en-US')} hp. Casks can also go straight to a Radioactive Waste Export. Haul its radioactive water to a Radioactive Water Outfall or Radioactive Waste Export: when its tanks are full, ${r.GoodsPerLeak} radioactive water leaks every ${r.LeakIntervalHours} hours and irradiates the soil within ${r.SoilRadius} tiles, killing crops. Pausing it seals the tanks.`,
+    NuclearReactor: `${PRODUCER_DESCRIPTIONS.NuclearReactor} It melts down if its coolant water runs out or its waste piles up; pausing is a safe shutdown.`,
+    RadioactiveWasteVault: `${PRODUCER_DESCRIPTIONS.RadioactiveWasteVault} Keep it below full: a full vault leaks and irradiates the ground around it.`,
+    RadioactiveWasteRefinery: 'Turns spent-fuel casks into radioactive water and cleans contaminated water. Full tanks leak, so haul the radioactive water away.',
   };
 }
 
@@ -288,7 +287,7 @@ export async function applyMeltdownContent({root = defaultRoot, dataRoot = resol
   if (lines.at(-1) !== '') fail('enUS.csv must end with a newline');
   lines.pop();
   const index = new Map(lines.map((line, i) => [line.split(',')[0], i]));
-  for (const [id, text] of Object.entries(descriptions(REACTOR_TUNING, leaks, f.MechanicalNodeSpec.PowerInput))) {
+  for (const [id, text] of Object.entries(descriptions())) {
     const key = `Building.${id}.Description`;
     const expected = csvRow(key, PRODUCER_DESCRIPTIONS[id], 'Deep Frontier');
     if (!index.has(key) || lines[index.get(key)] !== expected)
