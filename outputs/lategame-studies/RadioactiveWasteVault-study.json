@@ -2,25 +2,25 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Half-sunk bunker: two battered concrete berm courses stepping up to a ribbed concrete dome, entered through a cast gatehouse, with two turning-cowl vent towers.",
   "footprint": [
-    8,
-    7
+    5,
+    5
   ],
-  "heightLayers": 6,
+  "heightLayers": 5,
   "boundsMin": [
     -0.005,
     -0.105,
     0.0
   ],
   "boundsMax": [
-    8.0,
-    7.0,
-    5.96
+    5.03,
+    5.0,
+    4.72
   ],
   "doors": [
     {
       "id": "Main",
       "position": [
-        4.5,
+        3.5,
         0.15,
         0
       ],
@@ -40,20 +40,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 2060,
+  "faces": 1954,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 68,
-    "IrregularPlanks_DarkBrown.IronTeeth": 168,
-    "BaseMetal.IronTeeth": 1312,
+    "IrregularPlanks_DarkBrown.IronTeeth": 158,
+    "BaseMetal.IronTeeth": 1240,
     "RoofPlanks.IronTeeth": 182,
     "accent8": 10,
     "accent25": 20,
-    "Plaster_White.IronTeeth": 441,
+    "Plaster_White.IronTeeth": 417,
     "Plaster_Orange.IronTeeth": 39,
     "IrregularPlanks_MetalForged.IronTeeth": 30,
     "WindowsAtlas.IronTeeth": 2,
     "PaintedMetal.IronTeeth": 42
   },
-  "sourceHash": "2d2e750cb337a9fd9f533d0c5b2e41fbb69b6db84af6277a45ff4effd99f6dcf",
-  "artHash": "ba3c5df671a060dc9a928da890ef79124475671e2881e28af38d16f5a6b9466a"
+  "sourceHash": "01375fe3f0eb5bb8edca5a9ed749de3af626dc2c6d1b88f11d76be0ff6cf980d",
+  "artHash": "b357b1818fd2678fc460dd8dc277adbd8fcd3e66b9035fed7d3c078038c01ad8"
 }

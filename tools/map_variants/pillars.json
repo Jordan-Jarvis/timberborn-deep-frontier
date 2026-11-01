@@ -55,7 +55,6 @@
     {"template": "FisheryWorks.IronTeeth", "label": "Fishery Works, 30 cells south of the start", "x": 116, "y": 51, "z": 8, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "MaterialsLaboratory.IronTeeth", "label": "Materials Laboratory, 46 cells south of the start", "x": 106, "y": 26, "z": 14, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "Restaurant.IronTeeth", "label": "Restaurant, 9 cells north-west of the start", "x": 97, "y": 78, "z": 13, "orientation": "Cw270", "margin": 1, "openSides": ["S"]},
-    {"template": "RadioactiveWasteVault.IronTeeth", "label": "Radioactive Waste Vault, 97 cells south-east of the start", "x": 191, "y": 36, "z": 8, "orientation": "Cw180", "margin": 1, "openSides": ["N"]},
     {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 25 cells north-east of the start", "x": 119, "y": 91, "z": 13, "orientation": "Cw270", "margin": 2, "openSides": ["N", "S"], "maxWaterDistance": 15},
     {"template": "TechnicalSchool.IronTeeth", "label": "Technical School, 27 cells north of the start", "x": 96, "y": 101, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 57 cells north of the start", "x": 117, "y": 134, "z": 10, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]}

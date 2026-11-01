@@ -47,7 +47,6 @@
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 208 cells north-east of the start", "x": 229, "y": 247, "z": 16, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 72 cells south-west of the start", "x": 46, "y": 45, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for the South-east Isle record caches", "x": 178, "y": 39, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": []},
-    {"template": "RadioactiveWasteVault.IronTeeth", "label": "Radioactive Waste Vault, 57 cells west of the start", "x": 35, "y": 115, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "FisheryWorks.IronTeeth", "label": "Fishery Works, 49 cells west of the start", "x": 39, "y": 88, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "TownPlaza.IronTeeth", "label": "Town Plaza, 71 cells north-east of the start", "x": 147, "y": 135, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "MaterialsLaboratory.IronTeeth", "label": "Materials Laboratory, 68 cells north of the start", "x": 84, "y": 171, "z": 7, "orientation": "Cw90", "margin": 1, "openSides": ["N"]},

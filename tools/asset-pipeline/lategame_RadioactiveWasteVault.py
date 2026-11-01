@@ -11,6 +11,14 @@ footprint with the same origin (the old GRID_ORIGIN corner), door (grid x
 of one layer each instead of three, a lower dome on a short drum, vent towers
 that end 4 layers lower, and a lower plank-gabled gatehouse. The dome is the building's defining silhouette and stays.
 
+Shrunk again 2026-11-01 (user: "we need to shrink the buildings down even
+more"): 8x7x6 -> 5x5x5, inside the old footprint with the same origin. The
+door moves from grid x 4.5 to 3.5 (on the last tile a door has no right
+jamb), so the native entrance moves one tile ((4,-1) -> (3,-1)). The berm
+is 5x4 behind a 3-tile gatehouse on tiles 2..5, the
+dome and drum are smaller, the vent towers stand on the top course's back
+corners and end lower, and the cask port sits in the berm's left face.
+
 HERO: a half-sunk bunker: two battered concrete berm courses stepping up to a
 ribbed concrete dome on a buttressed drum, entered through a cast gatehouse,
 flanked by two ventilation towers with slowly turning cowls.
@@ -37,22 +45,22 @@ from industrial_facades import building_portal
 import lategame_mining_parts as M
 
 IDENT = 'RadioactiveWasteVault'
-FOOTPRINT = (8, 7)
-HEIGHT = 6
+FOOTPRINT = (5, 5)
+HEIGHT = 5
 HERO = ('Half-sunk bunker: two battered concrete berm courses stepping up to a ribbed concrete dome, '
         'entered through a cast gatehouse, with two turning-cowl vent towers.')
 FRAME_END = 121
 
-BERM = (0.0, 1.0, 8.0, 7.0)         # outer foot of the lowest course: tiles 0..8 x 1..7
+BERM = (0.0, 1.0, 5.0, 5.0)         # outer foot of the lowest course: tiles 0..5 x 1..5
 COURSE_H = 1.0                      # one layer per course
 COURSES = 2
-CX, CY = 4.0, 4.0                   # dome centre (berm centre)
-DRUM_R, DOME_R = 1.95, 1.85
-DRUM_H = .6
-DOOR_X = 4.5
-GATE = (3.0, .15, 6.0)              # gatehouse x0, front (door) y .15 off the tile edge, x1
+CX, CY = 2.5, 3.0                   # dome centre (berm centre)
+DRUM_R, DOME_R = 1.0, .95
+DRUM_H = .5
+DOOR_X = 3.5
+GATE = (2.0, .15, 5.0)              # gatehouse x0, front (door) y .15 off the tile edge, x1
 GATE_TOP = 1.84                     # gatehouse roof slab bottom; its top is layer 2
-PORT_Y = (3.4, 4.6)
+PORT_Y = (2.0, 3.0)
 
 
 def berm(g):
@@ -159,47 +167,47 @@ def gatehouse(g, parts):
     bx(g, left, gy0 + .25, 0, right, gy1, dh, CONCRETE)
     bx(g, left + .006, gy0 + .24, .006, right - .006, gy0 + .25, dh - .006, IRON)
     bx(g, gx0, gy1, .03, gx1, gy1 + .8, gtop, CONCRETE)
-    M.plank_gable(g, gx0, gx1, gy0, gy1 + .8, gtop, gtop + .7, ridge_axis='Y', overhang=.12, seed=31)
+    M.plank_gable(g, gx0, gx1 - .05, gy0, gy1 + .8, gtop, gtop + .6, ridge_axis='Y', overhang=.08, seed=31)
     building_portal(g, DOOR_X, gy0 - .12, 0)
     g.doorways.append({'id': 'Main', 'position': [DOOR_X, gy0, 0], 'outward': [0, -1]})
     # Parked lead-sheet blast-door leaves on a steel track.
     f = Facer(gx0, gy0, 0, 'front')
-    for u0 in (.05, gx1 - gx0 - .55):
-        riveted_panel(g, f, u0, u0 + .5, .06, 1.55, 0, .07, FORGED)
-        f.box(g, u0 + .25, .8, .08, .05, 1.3, .02, IRON)
-    bx(g, gx0 - .08, gy0 - .17, 1.6, gx1 + .08, gy0 - .07, 1.72, IRON)
-    trefoil(g, 3.5, gy0, 1.25, face='front', r=.17)
-    lamp(g, DOOR_X + .75, gy0, 1.3, face='front')
+    for u0 in (.05, gx1 - gx0 - .45):
+        riveted_panel(g, f, u0, u0 + .4, .06, 1.45, 0, .07, FORGED)
+        f.box(g, u0 + .2, .75, .08, .05, 1.2, .02, IRON)
+    bx(g, gx0 - .08, gy0 - .17, 1.5, gx1 - .02, gy0 - .07, 1.62, IRON)
+    trefoil(g, 2.75, gy0, 1.3, face='front', r=.15)
+    lamp(g, DOOR_X + .7, gy0, 1.1, face='front')
 
 
 def vent_tower(g, parts, x, y, z0, top, name):
-    h = .4
+    h = .3
     bx(g, x - h, y - h, z0, x + h, y + h, top, CONCRETE)
     for sx in (-1, 1):
         for sy in (-1, 1):
             bx(g, x + sx * h - .05, y + sy * h - .05, z0 + .15, x + sx * h + .05, y + sy * h + .05, top - .1, IRON)
-    bx(g, x - h - .04, y - h - .04, top - 1.4, x + h + .04, y + h + .04, top - 1.2, FORGED)
-    for k in range(4):
-        z = top - .9 + k * .2
+    bx(g, x - h - .04, y - h - .04, top - 1.0, x + h + .04, y + h + .04, top - .85, FORGED)
+    for k in range(3):
+        z = top - .65 + k * .2
         for face in ('front', 'back', 'left', 'right'):
             f = Facer(x + {'left': -h, 'right': h}.get(face, 0), y + {'front': -h, 'back': h}.get(face, 0), 0, face)
             f.box(g, 0, z, .04, 2 * h - .12, .07, .08, IRON)
     bx(g, x - h - .07, y - h - .07, top, x + h + .07, y + h + .07, top + .1, CONCRETE)
     revolve(g, (x, y, top + .1), [(.15, 0), (.15, .24)], IRON, segments=12)
     c = Geometry(name, (x, y, top + .34))
-    revolve(c, (x, y, top + .34), [(.3, 0), (.3, .4)], PAINTED, segments=16)
+    revolve(c, (x, y, top + .34), [(.24, 0), (.24, .32)], PAINTED, segments=16)
     for k in range(8):
         a = k * math.pi / 4
-        obox(c, (x + math.cos(a) * .32, y + math.sin(a) * .32, top + .54), a + .5, .17, .03, .36, IRON)
-    revolve(c, (x, y, top + .74), [(.35, 0), (.35, .04), (.07, .3), (0, .32)], ROOF, segments=16)
-    c.box((x + .4, y, top + .53), (.12, .26, .28), IRON)
+        obox(c, (x + math.cos(a) * .26, y + math.sin(a) * .26, top + .5), a + .5, .14, .03, .28, IRON)
+    revolve(c, (x, y, top + .66), [(.28, 0), (.28, .04), (.06, .24), (0, .26)], ROOF, segments=16)
+    c.box((x + .32, y, top + .49), (.1, .22, .22), IRON)
     parts.append((c, 'SPIN_Z', 1))
     return top + .1
 
 
 def cask_port(g, parts):
     # Shielded port block set into the berm's left face with a forged plug door.
-    px0, px1 = BERM[0] + .3, 1.3
+    px0, px1 = BERM[0] + .3, 1.0
     py0, py1 = PORT_Y
     bx(g, px0, py0, .03, px1, py1, 1.75, CONCRETE)
     bx(g, px0 - .05, py0 - .05, 1.67, px1, py1 + .05, 1.8, CONCRETE)
@@ -216,8 +224,8 @@ def build(g, parts):
     dome_block(g, parts, top)
     gatehouse(g, parts)
     tx0, ty0, tx1, ty1 = rects[-1]
-    for x, ht, name in ((tx0 + .5, 4.4, 'CowlWest'), (tx1 - .5, 4.9, 'CowlEast')):
-        cap = vent_tower(g, parts, x, ty1 - .5, top, ht, name)
-        px, py, pz = beacon(g, x - .34, ty1 - .84, cap)
+    for x, ht, name in ((tx0 + .3, 3.4, 'CowlWest'), (tx1 - .3, 3.8, 'CowlEast')):
+        cap = vent_tower(g, parts, x, ty1 - .3, top, ht, name)
+        px, py, pz = beacon(g, x - .24, ty1 - .54, cap)
         parts.append((beacon_shutter(px, py, pz, name + 'Beacon'), 'SPIN_Z', 2))
     cask_port(g, parts)

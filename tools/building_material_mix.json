@@ -862,26 +862,26 @@
   },
   "RadioactiveWasteVault": {
    "model": "Buildings/Storage/RadioactiveWasteVault/RadioactiveWasteVault.IronTeeth.Model",
-   "sha256": "6f2ad74f6a4c7a01e1b21ea83554774d4cccd359a218a2b046010f8020f61203",
+   "sha256": "7c3520c4e97286de078318460fefdee5a74f67038a9d92e0ab8b3b6ab64aa279",
    "areas": {
-    "BaseMetal.IronTeeth": 51.9798,
-    "BaseWood_DarkBrown.IronTeeth": 4.7338,
+    "BaseMetal.IronTeeth": 38.1545,
+    "BaseWood_DarkBrown.IronTeeth": 4.5734,
     "DFIndustrial08": 0.1145,
     "DFIndustrial25": 0.1567,
-    "IrregularPlanks_DarkBrown.IronTeeth": 6.1872,
-    "IrregularPlanks_MetalForged.IronTeeth": 7.7528,
-    "PaintedMetal.IronTeeth": 2.3346,
-    "Plaster_Orange.IronTeeth": 1.2914,
-    "Plaster_White.IronTeeth": 327.6122,
-    "RoofPlanks.IronTeeth": 19.6435,
+    "IrregularPlanks_DarkBrown.IronTeeth": 5.2183,
+    "IrregularPlanks_MetalForged.IronTeeth": 5.4788,
+    "PaintedMetal.IronTeeth": 1.5552,
+    "Plaster_Orange.IronTeeth": 1.2685,
+    "Plaster_White.IronTeeth": 173.2533,
+    "RoofPlanks.IronTeeth": 17.4333,
     "WindowsAtlas.IronTeeth": 0.3905
    },
    "families": {
-    "brick": 1.2914,
-    "concrete": 327.6122,
-    "metal": 62.0672,
+    "brick": 1.2685,
+    "concrete": 173.2533,
+    "metal": 45.1885,
     "unpriced": 0.6617,
-    "wood": 30.5645
+    "wood": 27.2249
    }
   },
   "ReactorChargingBay": {

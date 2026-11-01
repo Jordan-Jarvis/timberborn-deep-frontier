@@ -134,25 +134,16 @@
     12
    ],
    "footprintAfter": [
-    8,
-    7,
-    6
+    5,
+    5,
+    5
    ],
    "gridOrigin": [
     4,
     2
    ],
-   "outsideCells": 100,
-   "insideCells": [
-    [
-     2,
-     0
-    ],
-    [
-     6,
-     0
-    ]
-   ]
+   "outsideCells": 131,
+   "insideCells": []
   },
   "DeepMine": {
    "footprintBefore": [

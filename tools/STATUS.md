@@ -31,6 +31,13 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - Old saves: a placed Mission Control keeps its origin; its entrance moves 2 tiles (unflipped local x 5 -> 3; flipped local x 2 -> 1, 1 tile). A path that reached the old entrance must be extended. Anything on the old podium terrace outside 5x5 or on the old hall roof must be rebuilt; shafts and pipes on removed walls disconnect.
   - Maps: its flat sites and unmet notes left the 20 variants (below `largeFootprint` 8).
   - Review: `outputs/compaction/MissionControl-shrink2.png`.
+- **Radioactive Waste Vault 8x7x6 -> 5x5x5** (`lategame_RadioactiveWasteVault.py`): berm 5x4 (two one-layer battered courses), dome on its drum at (2.5, 3.0) (drum r 1.95 -> 1.0, dome 1.85 -> .95), vent towers (half-width .3) on the top course's back corners ending at 3.4 / 3.8, cask port in the left berm face on y 2..3, plank-gabled gatehouse on tiles 2..5 with both parked blast-door leaves.
+  - Door: on the last tile (x 4.5) the door has no right jamb, so it moved to x 3.5: entrance (4,-1) -> (3,-1).
+  - Numbers (HEAD -> now): solid cells 104 -> 66; no shafts or pipe ports (no power, as before); flat roof cells 2 -> 0; hardpoints 43 -> 21; triangles 4,578 -> 4,350; same four animated parts. `lategame_freed_cells.json`: footprintAfter 5x5x5, outsideCells 100 -> 131 (13x12 old footprint minus the 5x5), insideCells [] ((2,0) is now under the gatehouse, (6,0) outside the footprint).
+  - Cost: cell basis unchanged; the material rule recomposes: Treated Plank 120 -> 180, Alloy 35 -> 45, Machine Core 70 -> 75, Electronics 5 -> 10, Power Module 5 -> 10, Concrete 6,290 -> 5,690.
+  - Old saves: keeps its origin and stored goods; its entrance moves 1 tile (flipped: local x 3 -> 1, 2 tiles).
+  - Maps: its flat sites and unmet notes left the 20 variants.
+  - Review: `outputs/compaction/RadioactiveWasteVault-shrink2.png`.
 
 ## Second shrink: works and mines (Claude Code session, 2026-11-01, mines shrink agent; Fertilizer Works, Cryogenic Tank Farm, Deep Mine, Sandstone and Limestone Quarries, Deep Drill; each building generated and validated in mirror `shrink-ind` on HEAD + that building, then committed; not built or run in game)
 

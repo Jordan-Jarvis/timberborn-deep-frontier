@@ -1,7 +1,7 @@
 {
   "BuiltinMapSetupSpec": {
-    "SmallMapMaxArea": 5336,
-    "ReferenceSiteArea": 2668,
+    "SmallMapMaxArea": 5048,
+    "ReferenceSiteArea": 2524,
     "DevMaps": [
       "_Mini",
       "_TerrainTest",
