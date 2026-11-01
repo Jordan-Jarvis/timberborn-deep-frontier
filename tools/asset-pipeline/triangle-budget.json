@@ -256,9 +256,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8450,
-   "vertices": 16050,
-   "construction": 8450,
+   "finished": 6464,
+   "vertices": 12232,
+   "construction": 6464,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepDrill/DeepDrill.IronTeeth.Model.timbermesh"
   },
   "DeepMine": {
@@ -814,9 +814,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 4682,
-   "vertices": 9178,
-   "construction": 4682,
+   "finished": 3554,
+   "vertices": 6958,
+   "construction": 3554,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.Model.timbermesh"
   },
   "UraniumProcessingPlant": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 761626,
+ "totalBlueprintTriangles": 755398,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }
