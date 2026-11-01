@@ -247,9 +247,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9432,
-   "vertices": 18128,
-   "construction": 9432,
+   "finished": 7640,
+   "vertices": 14680,
+   "construction": 7640,
    "file": "outputs/lategame-integration/Data/Buildings/Storage/CryogenicTankFarm/CryogenicTankFarm.IronTeeth.Model.timbermesh"
   },
   "DeepDrill": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 844428,
+ "totalBlueprintTriangles": 842636,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

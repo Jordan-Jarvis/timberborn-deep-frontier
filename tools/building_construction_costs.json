@@ -343,7 +343,7 @@
     "NuclearReactor": [["Alloy",595],["MachineCore",480],["Electronics",75],["PowerModule",75],["Concrete",30935],["EnrichedFuel",20],["HighGradeSteel",100]],
     "SteelMill": [["MetalBlock",265],["DeepAlloy",135],["Concrete",870],["Gear",255]],
     "ArchiveExcavation": [["TreatedPlank",240],["Alloy",20],["MachineCore",5],["Concrete",2040],["Brick",825],["Gear",265]],
-    "CryogenicTankFarm": [["TreatedPlank",105],["Alloy",60],["MachineCore",15],["Concrete",2200],["Gear",225]],
+    "CryogenicTankFarm": [["TreatedPlank",175],["Alloy",40],["MachineCore",10],["Concrete",2025],["Brick",300],["Gear",225]],
     "CoalPowerPlant": [["MetalBlock",40],["DeepAlloy",20],["HighGradeSteel",20],["Concrete",65],["Brick",305],["Gear",75]],
     "OilPowerPlant": [["Alloy",45],["MachineCore",19],["Concrete",605],["Gear",100]]
   }

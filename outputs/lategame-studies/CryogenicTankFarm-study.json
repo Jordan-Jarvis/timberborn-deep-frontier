@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Squat frost-white double-walled oxygen tank under a ribbed steel dome, wound by a riveted spiral stair to a roof-edge gallery, with a boil-off vent on its crown.",
+  "hero": "Squat frost-white double-walled oxygen tank under a ribbed steel dome, with a caged ladder to a gallery round its crown and a boil-off vent on top.",
   "footprint": [
-    7,
-    6
+    4,
+    4
   ],
-  "heightLayers": 7,
+  "heightLayers": 5,
   "boundsMin": [
-    -0.1825,
+    -0.1208,
     -0.265,
     -0.03
   ],
   "boundsMax": [
-    7.0,
-    6.0176,
-    6.69
+    4.0,
+    4.02,
+    4.65
   ],
   "doors": [
     {
@@ -40,20 +40,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 4462,
+  "faces": 3635,
   "materialFaces": {
     "BaseWood_DarkBrown.IronTeeth": 476,
     "IrregularPlanks_DarkBrown.IronTeeth": 10,
-    "BaseMetal.IronTeeth": 2105,
+    "BaseMetal.IronTeeth": 1400,
     "RoofPlanks.IronTeeth": 96,
     "Details.IronTeeth": 410,
     "accent8": 10,
     "accent25": 16,
-    "Plaster_White.IronTeeth": 1086,
+    "Plaster_White.IronTeeth": 1026,
     "Plaster_Orange.IronTeeth": 13,
     "WindowsAtlas.IronTeeth": 26,
-    "PaintedMetal.IronTeeth": 358
+    "PaintedMetal.IronTeeth": 296
   },
-  "sourceHash": "a91bafdd03d2790e71cf3cfa248c92aad09a9455c1a4207978a29c2e61fb62a8",
-  "artHash": "fcd5525201e5de52932c9f7d1dbbbcd20bac120d7d08cebea5555f6f91278190"
+  "sourceHash": "fbb6a7346f94e378b22fd261cae9fa8be59ada323ad6b69bf39beaa456684c1c",
+  "artHash": "fa51a206a9dcd09a10569b246ff282874afccbb9955aa5062a4c5a942c55c6ac"
 }

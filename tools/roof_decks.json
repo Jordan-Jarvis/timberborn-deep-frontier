@@ -122,13 +122,6 @@
     2,
     4
    ]
-  ],
-  "CryogenicTankFarm": [
-   [
-    5,
-    2,
-    4
-   ]
   ]
  },
  "buildings": {
@@ -4979,16 +4972,6 @@
      1,
      0,
      1
-    ]
-   ],
-   "excluded": []
-  },
-  "CryogenicTankFarm": {
-   "platformable": [
-    [
-     5,
-     2,
-     3
     ]
    ],
    "excluded": []

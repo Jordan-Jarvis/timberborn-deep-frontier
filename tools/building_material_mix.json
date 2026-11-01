@@ -193,26 +193,26 @@
   },
   "CryogenicTankFarm": {
    "model": "Buildings/Storage/CryogenicTankFarm/CryogenicTankFarm.IronTeeth.Model",
-   "sha256": "ee6e7751efdf3b59810e4172bb664d2a55da299902cc94ba5cdfb89ceb4fdd4b",
+   "sha256": "1dc5bb1c886d1c990be9c652cc7716087d94da240d48b13c629416059b5f342a",
    "areas": {
-    "BaseMetal.IronTeeth": 101.4993,
-    "BaseWood_DarkBrown.IronTeeth": 24.913,
+    "BaseMetal.IronTeeth": 31.7287,
+    "BaseWood_DarkBrown.IronTeeth": 22.6425,
     "DFIndustrial08": 0.1145,
-    "DFIndustrial25": 0.0825,
-    "Details.IronTeeth#metal": 0.9651,
-    "IrregularPlanks_DarkBrown.IronTeeth": 3.8539,
-    "PaintedMetal.IronTeeth": 19.7744,
+    "DFIndustrial25": 0.0821,
+    "Details.IronTeeth#metal": 0.7499,
+    "IrregularPlanks_DarkBrown.IronTeeth": 3.4378,
+    "PaintedMetal.IronTeeth": 10.9898,
     "Plaster_Orange.IronTeeth": 12.3477,
-    "Plaster_White.IronTeeth": 193.7937,
-    "RoofPlanks.IronTeeth": 16.3158,
+    "Plaster_White.IronTeeth": 93.5622,
+    "RoofPlanks.IronTeeth": 14.0671,
     "WindowsAtlas.IronTeeth": 1.0982
    },
    "families": {
     "brick": 12.3477,
-    "concrete": 193.7937,
-    "metal": 122.2388,
-    "unpriced": 1.2952,
-    "wood": 45.0827
+    "concrete": 93.5622,
+    "metal": 43.4684,
+    "unpriced": 1.2947,
+    "wood": 40.1474
    }
   },
   "DeepDrill": {
