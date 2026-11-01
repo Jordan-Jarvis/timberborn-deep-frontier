@@ -796,9 +796,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 8975,
-   "vertices": 18318,
-   "construction": 8975,
+   "finished": 6280,
+   "vertices": 12855,
+   "construction": 6280,
    "file": "src/DeepFrontier/Data/Buildings/Metal/StoneCrusher/StoneCrusher.IronTeeth.Model.timbermesh"
   },
   "TechnicalSchool": {

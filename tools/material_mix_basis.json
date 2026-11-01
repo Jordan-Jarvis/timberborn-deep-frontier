@@ -10,6 +10,16 @@
     "wood": 308.5326
    },
    "measuredAt": "9x6x5 Grocery Market model (d424ef7)"
+  },
+  "StoneCrusher": {
+   "families": {
+    "brick": 1.0799,
+    "limestone": 29.8648,
+    "metal": 64.175,
+    "unpriced": 2.6428,
+    "wood": 110.4913
+   },
+   "measuredAt": "4x4x3 Stone Crusher model (22d396b)"
   }
  }
 }

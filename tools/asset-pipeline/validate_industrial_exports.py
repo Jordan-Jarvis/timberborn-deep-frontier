@@ -12,8 +12,10 @@ for ident,frames in [('StoneCrusher',61),('CementKiln',241),('SandstoneQuarry',4
     model=model_pb2.Model();model.ParseFromString(zlib.decompress((folder/(ident+'.IronTeeth.Model.timbermesh')).read_bytes()))
     names=collections.Counter(n.name for n in model.nodes)
     materials={mesh.material for node in model.nodes for mesh in node.meshes}
-    # The 3x2 mixer (2026-11-01) has no sheet roof: its one roof is riveted steel plate.
-    native_wood={'BaseWood_DarkBrown.IronTeeth','IrregularPlanks_DarkBrown.IronTeeth'}|(set() if ident=='ConcreteMixer' else {'RoofPlanks.IronTeeth'})
+    # No sheet roof since the second shrink pass (2026-11-01): the 3x2
+    # mixer's roof is riveted steel plate, the 3x3 crusher's the flagstone
+    # machine floor.
+    native_wood={'BaseWood_DarkBrown.IronTeeth','IrregularPlanks_DarkBrown.IronTeeth'}|(set() if ident in ('ConcreteMixer','StoneCrusher') else {'RoofPlanks.IronTeeth'})
     assert native_wood<=materials,(ident,materials)
     assert not {'DFIndustrial00','DFIndustrial01','DFIndustrial03'}&materials,(ident,'Custom wood or roof still exported')
     native_uv_vertices=0

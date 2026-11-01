@@ -63,8 +63,9 @@ def decorative_port(d,ident,inside,outside,run):
 # door's entrance is the open cell in front of the footprint edge.
 
 # Crusher artwork = native grid + (1,2): the walls are artwork x 1..5, y 2..6.
-# One layer per storey (2026-10-30): 4x4x3 (was 4x4x5), same origin, door, entrance.
-C=layout([-1,-2,0],[4,4,3],[1,-1,0],[[2.50,2.02,0]],deck_mode='None')
+# One layer per storey (2026-10-30): 4x4x3 (was 4x4x5); 3x3x3 since the
+# second shrink pass (2026-11-01). Same origin, door and entrance.
+C=layout([-1,-2,0],[3,3,3],[1,-1,0],[[2.50,2.02,0]],deck_mode='None')
 ground_door(C,(1.50,.10,0),(0,-1))
 
 # Kiln artwork = native grid - (0,1). 3x3x3 since the second shrink pass

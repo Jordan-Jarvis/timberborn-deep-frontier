@@ -11,12 +11,12 @@ from reference_materials import CIVIC_ORANGE_PANEL
 
 DOORS = {
     'StoneCrusher': {
-        # Native grid XY (crusher layout origin 0,0): centred on tile column 2,
-        # face 0.10 behind the y=2 edge. Surface-only shoulders are on the face,
-        # inset header 0.12 behind it. Explicit returns join the pitched
-        # canopy/eave; a generic horizontal top cap duplicates its underside.
+        # Artwork = native grid + (1,2): centred on grid tile column 1, face
+        # 0.10 behind the grid y=0 edge. Since the 3x3 crusher (2026-11-01)
+        # the door sits in the front wall (no porch): the casing mounts .04
+        # ahead of the wall plane, which closes its reveal (as on the mixer).
         'GroundDoor': {'position': (2.50, 2.10, 0), 'outward': (0, -1), 'transform': 'front',
-            'facade': 'framed', 'panelDepth': .12, 'returnOwnership': 'complete'},
+            'facade': 'framed', 'panelDepth': .04, 'wallPlaneY': 2.14, 'returnOwnership': 'wall'},
     },
     'CementKiln': {
         # Artwork = native grid - (0,1): centred on tile column 0 (grid x .5,
@@ -171,7 +171,7 @@ def _door(model, ident, definition, *, legacy=False):
     else:
         raise ValueError('Unknown authored industrial door transform: '+transform)
     if not legacy:
-        if model=='StoneCrusher':crusher_return_surfaces(g,position)
+        if model=='StoneCrusher' and definition['returnOwnership']=='complete':crusher_return_surfaces(g,position)
         elif definition['returnOwnership']=='kiln-shoulder-strips':kiln_return_strips(g,position)
     return g
 

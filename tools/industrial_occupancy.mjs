@@ -23,10 +23,14 @@ export function industrialBlocks(ident, size) {
   // yard or decoration tiles beyond them); coordinates follow the shrunk
   // registrations in industrial_layouts.py.
   if(ident==='StoneCrusher') {
-    // One-layer workshop under the layer-1 machine floor (2026-10-30, 4x4x3).
-    region([0,0,0,3,3,0],'All'); // workshop housing (walls on the x=0, x=4, y=4 edges), porch, output bin
-    region([0,0,1,3,3,1],'All'); // machine floor: flywheel, rolls, bearings, hopper legs, porch canopy
-    region([0,1,2,3,3,2],'All'); // hopper, flywheel top, roll and hopper roofs
+    // 3x3x3 (2026-11-01, second shrink pass): the closed workshop under the
+    // layer-1 machine floor; flywheel front-left, rolls and their pedestals
+    // in the east two columns, the hopper over them on its end frames.
+    // (0,1,1) and (0,2,1) stay open: an open platform on the floor.
+    region([0,0,0,2,2,0],'All'); // workshop (doorstep (1,0,0))
+    region([0,0,1,2,0,1],'All'); // flywheel, sprockets and chain, front pedestals and frame posts
+    region([1,1,1,2,2,1],'All'); // rolls, rear pedestals and frame posts
+    region([1,0,2,2,2,2],'All'); // hopper
   } else if(ident==='CementKiln') {
     // 3x3x3 (2026-11-01, second shrink pass), grid y = artwork y + 1.
     // No props on open cells: the front row's cells (1,0) and (2,0) are free
