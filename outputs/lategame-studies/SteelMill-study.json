@@ -2,19 +2,19 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Electric-arc melt shop whose three graphite electrodes rise on mast arms through a forged roof penthouse, with a fume duct over the flat roof into a riveted steel flue.",
   "footprint": [
-    8,
-    6
+    5,
+    4
   ],
-  "heightLayers": 8,
+  "heightLayers": 6,
   "boundsMin": [
-    -0.056,
-    -0.135,
+    -0.06,
+    -0.265,
     -0.03
   ],
   "boundsMax": [
-    8.0,
-    6.056,
-    7.96
+    5.045,
+    4.056,
+    6.0
   ],
   "doors": [
     {
@@ -22,7 +22,7 @@
       "position": [
         1.5,
         0.0,
-        0.0
+        0
       ],
       "outward": [
         0,
@@ -31,8 +31,8 @@
     }
   ],
   "animatedParts": [
-    "SteelMill.PulpitBeacon",
     "SteelMill.TapGlow",
+    "SteelMill.PulpitBeacon",
     "SteelMill.Electrodes",
     "SteelMill.TeemingLadle",
     "SteelMill.PourStream",
@@ -49,20 +49,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 3556,
+  "faces": 2495,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 272,
-    "BaseMetal.IronTeeth": 2249,
+    "BaseWood_DarkBrown.IronTeeth": 230,
+    "BaseMetal.IronTeeth": 1851,
     "DFIndustrial06": 6,
-    "Details.IronTeeth": 762,
-    "accent8": 88,
+    "Details.IronTeeth": 360,
+    "accent8": 78,
     "accent25": 10,
-    "Plaster_White.IronTeeth": 264,
+    "Plaster_White.IronTeeth": 174,
     "Plaster_Orange.IronTeeth": 7,
-    "IrregularPlanks_MetalForged.IronTeeth": 186,
-    "WindowsAtlas.IronTeeth": 294,
-    "PaintedMetal.IronTeeth": 552
+    "IrregularPlanks_MetalForged.IronTeeth": 138,
+    "WindowsAtlas.IronTeeth": 245,
+    "PaintedMetal.IronTeeth": 320
   },
-  "sourceHash": "d16f2f627dd50b3c73e32ab36dbda004576c608861eb4f1c11afaf82fd795bcc",
-  "artHash": "1503f3495336f720bd427a2b3ffec955289725214aff77a86cf132c25074358d"
+  "sourceHash": "ef7a108690405d3932c6572b4f5bfa7653f112d9b3701a2dfdd99aa4bbf70de1",
+  "artHash": "aeb68b5c97c417be1e36994e4ec3c29dab69a09a9b2e291f7d3531d01592952c"
 }

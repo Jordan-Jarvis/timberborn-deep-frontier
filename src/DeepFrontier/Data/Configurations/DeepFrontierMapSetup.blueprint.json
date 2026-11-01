@@ -1,7 +1,7 @@
 {
   "BuiltinMapSetupSpec": {
-    "SmallMapMaxArea": 5048,
-    "ReferenceSiteArea": 2524,
+    "SmallMapMaxArea": 4972,
+    "ReferenceSiteArea": 2486,
     "DevMaps": [
       "_Mini",
       "_TerrainTest",
@@ -363,7 +363,7 @@
         "Width": 100,
         "Height": 50,
         "TotalHeight": 66,
-        "SmallArea": true,
+        "SmallArea": false,
         "NoDeepMineSite": false,
         "UnmetLocKeys": [
           "DeepFrontier.MapSetup.Unmet.Cliffside.Sites",

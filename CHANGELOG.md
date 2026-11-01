@@ -17,6 +17,9 @@
 - **Mission Control** is 5x5, 7 high (was 8x7, 9 high): the control hall, the tower with its glazed cab, the observatory dome and the radio dish on one podium. Its door moves two tiles left, under the tower (entrance one tile in front of it). Same workers, power and recipes; build cost lightly rebalanced from its new materials. No reserved map site any more.
 - **Radioactive Waste Vault** is 5x5, 5 high (was 8x7, 6 high): the same half-sunk bunker with its ribbed dome, two turning-cowl vent towers, cask port and gatehouse, at a smaller scale. Its door moves one tile left, to the middle of the gatehouse. Same storage; build cost rebalanced from its new materials (more treated planks, less concrete). No reserved map site any more.
 
+### Smaller industry (second shrink)
+- **Steel Mill** is 5x4, 6 high (was 8x6, 8 high): the pulpit and melt hall with the door, the rolling line and teeming ladle under one canopy beside it, and the tall furnace bay along the back with the three electrodes and the flue. Same door, workers, power and recipes; existing mills keep their place, and things built on their old roofs inside the new footprint stay put. Its cost is recomposed from the smaller model (more metal, less concrete).
+
 ## 0.8.1 (2026-10-31)
 
 ### Steel decks on legs

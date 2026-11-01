@@ -787,9 +787,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 9130,
-   "vertices": 17150,
-   "construction": 9130,
+   "finished": 6708,
+   "vertices": 12440,
+   "construction": 6708,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/SteelMill/SteelMill.IronTeeth.Model.timbermesh"
   },
   "StoneCrusher": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 801394,
+ "totalBlueprintTriangles": 796550,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

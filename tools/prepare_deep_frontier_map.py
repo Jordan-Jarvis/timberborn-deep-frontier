@@ -1083,6 +1083,7 @@ DEEP_DRILL = 'DeepDrill.IronTeeth'
 FLAT_SITE_TEMPLATES = {
     DEEP_DRILL: 'its sites beside the Deep Ore Sources are counted (minDrillSites)',
     'DeepProcessor.IronTeeth': 'the only building that turns DeepOre into products (alloy, coal, oil, uranium)',
+    'SteelMill.IronTeeth': 'the only building that makes Flux, HighGradeSteel and Alloy (deep-industry stage; 5x4 since 2026-11-01)',
     'ArchiveExcavation.IronTeeth': 'Human Record Caches are surveyed from its sites (cache_coverage)',
 }
 SPECIAL_SITE_RULES = (('UnderstructureConstraintSpec', 'understructure'), ('MapEdgeSiteSpec', 'mapEdge'),

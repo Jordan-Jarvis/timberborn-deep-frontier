@@ -1067,26 +1067,26 @@
   },
   "SteelMill": {
    "model": "Buildings/Metal/SteelMill/SteelMill.IronTeeth.Model",
-   "sha256": "80db9b1df097563e8245581f6d3c0474792fc0d363c93897cf693e38e9ec906c",
+   "sha256": "0cd3d2f477130354a180100f1140de5d72659e72489c1a6de816cac40a34abd6",
    "areas": {
-    "BaseMetal.IronTeeth": 217.3753,
-    "BaseWood_DarkBrown.IronTeeth": 2.9481,
-    "DFIndustrial06": 15.8719,
-    "DFIndustrial08": 2.5905,
+    "BaseMetal.IronTeeth": 138.503,
+    "BaseWood_DarkBrown.IronTeeth": 2.1654,
+    "DFIndustrial06": 11.7719,
+    "DFIndustrial08": 1.772,
     "DFIndustrial25": 0.0784,
-    "Details.IronTeeth#metal": 3.7497,
-    "IrregularPlanks_MetalForged.IronTeeth": 183.6337,
-    "PaintedMetal.IronTeeth": 42.1864,
+    "Details.IronTeeth#metal": 0.6466,
+    "IrregularPlanks_MetalForged.IronTeeth": 140.3548,
+    "PaintedMetal.IronTeeth": 29.1631,
     "Plaster_Orange.IronTeeth": 1.068,
-    "Plaster_White.IronTeeth": 221.8092,
-    "WindowsAtlas.IronTeeth": 5.3754
+    "Plaster_White.IronTeeth": 91.3369,
+    "WindowsAtlas.IronTeeth": 2.8128
    },
    "families": {
-    "brick": 16.9399,
-    "concrete": 221.8092,
-    "metal": 446.9451,
-    "unpriced": 8.0443,
-    "wood": 2.9481
+    "brick": 12.8399,
+    "concrete": 91.3369,
+    "metal": 308.6676,
+    "unpriced": 4.6632,
+    "wood": 2.1654
    }
   },
   "StoneCrusher": {
