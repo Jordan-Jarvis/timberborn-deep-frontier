@@ -103,11 +103,25 @@ namespace DeepFrontier.Scripts.Radiation {
     // variant must declare every native property with the same type, and
     // every keyword the native material enables must be compiled for all
     // combinations.
+    //
+    // Render queue: assigning Material.shader drops a material's custom render
+    // queue, so the material then draws at the new shader's queue. Seen in game
+    // (2026-11-01, WaterShadingProbe): the native PhysicalWater_Opaque carries
+    // custom queue 3000 (resources.assets m_CustomRenderQueue; its shader's own
+    // queue is AlphaTest 2450). After the swap it drew at 2450, in URP's opaque
+    // pass, before the camera colour and depth copies that its transparency and
+    // depth tint sample, and clean water and badwater turned near-black. It
+    // stayed at 2450 after the native shader came back, and was blue again only
+    // when the variant was never assigned. Every assignment therefore puts the
+    // native material's queue back. A material whose queue equals the newly
+    // assigned shader's (the terrain at 2450, the transparent water at 3000)
+    // already draws at it and is left untouched, so none gains a custom queue.
     internal sealed class ShaderSwap {
       private const string ErrorShaderName = "Hidden/InternalErrorShader";
       private readonly Material _material;
       private readonly Shader _native, _variant, _errorShader;
       private readonly string[] _keywords;
+      private readonly int _renderQueue;
       private readonly string _materialName, _nativeName, _variantName;
       private bool _applied;
 
@@ -123,6 +137,7 @@ namespace DeepFrontier.Scripts.Radiation {
         _errorShader = Shader.Find(ErrorShaderName);
         if (_errorShader == null) throw new InvalidOperationException($"Unity's {ErrorShaderName} is missing");
         _materialName = material.name; _nativeName = nativeShader; _variantName = variantName;
+        _renderQueue = material.renderQueue;
         for (int i = 0; i < _native.GetPropertyCount(); i++) {
           string name = _native.GetPropertyName(i);
           int index = variant.FindPropertyIndex(name);
@@ -180,6 +195,9 @@ namespace DeepFrontier.Scripts.Radiation {
 
       private void Use(Shader shader) {
         _material.shader = shader;
+        if (_material.renderQueue != _renderQueue) _material.renderQueue = _renderQueue;
+        if (_material.renderQueue != _renderQueue)
+          throw new InvalidOperationException($"{_material.name}: render queue {_material.renderQueue} after the shader change, expected the native {_renderQueue}");
         foreach (var keyword in _keywords) {
           _material.EnableKeyword(keyword);
           if (!_material.IsKeywordEnabled(keyword)) throw new InvalidOperationException($"{_material.name}: keyword {keyword} did not survive the shader change");

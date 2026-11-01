@@ -473,6 +473,11 @@ if (check(soilCs.length > 0, 'RadiationSoil.cs missing')) {
     [/GetPropertyType\(index\) != _native\.GetPropertyType\(i\)/, 'native property types'], [/material\.enabledKeywords/, 'the native material keywords'],
     [/Array\.IndexOf\(compiledKeywords, _keywords\[i\]\) < 0/, 'that enabled keywords are compiled for every combination'], [/variant\.isSupported/, 'GPU support']])
     check(pattern.test(swap), `ShaderSwap must check ${what}`);
+  // Assigning Material.shader drops a custom render queue; the native opaque water's 3000 fell to the
+  // variant's 2450 and drew near-black (seen in game 2026-11-01, tools/start_water_shading.ps1).
+  const use = swap.slice(swap.indexOf('private void Use(Shader shader)'));
+  check(/_renderQueue = material\.renderQueue;/.test(swap) && /_material\.shader = shader;\s*if \(_material\.renderQueue != _renderQueue\) _material\.renderQueue = _renderQueue;/.test(use),
+    'ShaderSwap must record the native render queue and put it back after every shader assignment');
   check(/Graphics\.CopyTexture\(buffer, 0, 0, array, layer, 0\)/.test(shading), 'layers upload through the native buffer + Graphics.CopyTexture path');
   check(/simulation\.VisibleRows, _rowsWithData/.test(shading), 'surfaces must update the radiation rows plus rows still settling');
   check(/Refresh\(settle: false\)/.test(methodBody('RadiationRenderer.cs', 'public void UpdateSingleton()') ?? ''), 'before the first tick the renderer must draw only new simulation states');

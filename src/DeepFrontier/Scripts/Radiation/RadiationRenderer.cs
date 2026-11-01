@@ -49,6 +49,9 @@ namespace DeepFrontier.Scripts.Radiation {
       _assetLoader = assetLoader; _materialRepository = materialRepository; _terrainService = terrainService;
     }
 
+    // The applied swaps, for WaterShadingProbe's native-versus-variant captures.
+    internal IReadOnlyList<RadiationShading.ShaderSwap> Swaps => _swaps;
+
     public void Load() => RadiationShading.Verify();
 
     public void PostLoad() {

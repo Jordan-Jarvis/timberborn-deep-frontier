@@ -21,13 +21,14 @@ namespace DeepFrontier.Scripts {
   // process, as a player who loads a save, returns to the main menu and starts another game.
   //   - Every main menu (IndustrialAcceptanceLoader, frame 30) reads the native water materials
   //     (WaterMeshSpec) and the TerrainURP materials of MaterialCollection Common through the menu's
-  //     own ISpecService, records shader, keywords and every native shader property, and requires the
-  //     first menu's record exactly (the first menu is before any game, so pristine). Then it starts
-  //     the next step, or logs COMPLETE after the last.
+  //     own ISpecService, records shader, render queue, keywords and every native shader property,
+  //     and requires the first menu's record exactly (the first menu is before any game, so pristine).
+  //     Then it starts the next step, or logs COMPLETE after the last.
   //   - Every game scene (frame 60, after the startup panels) requires the Deep Frontier radiation
-  //     variants on those same materials, then returns to the main menu with native
-  //     MainMenuSceneLoader.OpenMainMenu (no autosave). A failed game load crashes, which the watcher
-  //     reports.
+  //     variants on those same materials at the first menu's render queues (a shader change drops a
+  //     custom queue: the native opaque water lost its 3000 to 2450 and drew near-black), then
+  //     returns to the main menu with native MainMenuSceneLoader.OpenMainMenu (no autosave). A failed
+  //     game load crashes, which the watcher reports.
   internal static class SceneCycleAcceptance {
     internal const string Flag = "-deepFrontierSceneCycle";
     internal const string Tag = "[DeepFrontier SceneCycle]";
@@ -84,12 +85,18 @@ namespace DeepFrontier.Scripts {
 
     internal static void GameLoaded(ISpecService specs, MainMenuSceneLoader mainMenu) {
       _games++;
-      foreach (var record in MaterialRecord.ReadAll(specs, game: true)) {
+      var records = MaterialRecord.ReadAll(specs, game: true);
+      for (int i = 0; i < records.Count; i++) {
+        var record = records[i];
         if (record.ShaderName != record.VariantName) {
           Fail("game " + _games + ": " + record.Material + " draws with " + record.ShaderName + ", expected " + record.VariantName);
           return;
         }
-        Debug.Log(Tag + " game " + _games + ": " + record.Material + " draws with " + record.ShaderName);
+        if (record.RenderQueue != _baseline[i].RenderQueue) {
+          Fail("game " + _games + ": " + record.Material + " draws at render queue " + record.RenderQueue + ", the native material at " + _baseline[i].RenderQueue);
+          return;
+        }
+        Debug.Log(Tag + " game " + _games + ": " + record.Material + " draws with " + record.ShaderName + " at render queue " + record.RenderQueue);
       }
       Debug.Log(Tag + " game " + _games + " loaded; returning to the main menu (native OpenMainMenu)");
       mainMenu.OpenMainMenu();
@@ -103,6 +110,7 @@ namespace DeepFrontier.Scripts {
     private sealed class MaterialRecord {
       internal Material Object;
       internal string Material, ShaderName, NativeName, VariantName, Summary;
+      internal int RenderQueue;
       private Shader _shader;
       private string _keywords, _properties;
 
@@ -126,13 +134,14 @@ namespace DeepFrontier.Scripts {
         var shader = material.shader;
         var record = new MaterialRecord {
           Object = material, Material = material.name, ShaderName = shader.name, NativeName = native, VariantName = variant, _shader = shader,
+          RenderQueue = material.renderQueue,
           _keywords = string.Join(" ", material.enabledKeywords.Select(k => k.name).OrderBy(k => k, StringComparer.Ordinal)),
         };
         if (!game) {
           if (shader.name != native) throw new InvalidOperationException(Tag + " " + material.name + " draws with " + shader.name + " in the main menu, expected " + native);
           record._properties = Properties(material, shader);
         }
-        record.Summary = "shader " + record.ShaderName + ", keywords [" + record._keywords + "], " + shader.GetPropertyCount() + " native properties";
+        record.Summary = "shader " + record.ShaderName + ", render queue " + record.RenderQueue + ", keywords [" + record._keywords + "], " + shader.GetPropertyCount() + " native properties";
         return record;
       }
 
@@ -156,6 +165,7 @@ namespace DeepFrontier.Scripts {
 
       internal string DifferenceFrom(MaterialRecord before) {
         if (_shader != before._shader) return "has shader " + ShaderName + " (" + (_shader == null ? "none" : "another object") + "), before any game " + before.ShaderName;
+        if (RenderQueue != before.RenderQueue) return "has render queue " + RenderQueue + ", before any game " + before.RenderQueue;
         if (_keywords != before._keywords) return "has keywords [" + _keywords + "], before any game [" + before._keywords + "]";
         if (_properties != before._properties) return "native property values changed: now " + _properties + "; before any game " + before._properties;
         return null;

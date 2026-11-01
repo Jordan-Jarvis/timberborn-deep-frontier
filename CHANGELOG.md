@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **Water is blue again** (player report on 0.8.x: water "more like black", badwater much too dark): the radiation shading reset the game's water material to an earlier draw step, so water was drawn before the ground under it was available and came out near-black. It now keeps the game's own setting: clean water, badwater and terrain look as in the base game, and radioactive water shows bright yellow. Restart the game after updating.
 - **Shorter, clearer building tooltips** (player feedback: they took half the screen): every Deep Frontier building description is now one or two short sentences saying what the building is for and the one thing to know before placing it (average 261 → 110 characters, longest 1,112 → 198). Numbers the tooltip already shows (cost, power, workers, recipes) are gone from the text; the pipe note is one short clause everywhere ("Pipes: valve set to Inlet."). The Deep Well now reads "make it flow up to 6 times stronger" instead of "1,667 hp at 1×", and the Human Record Cache says to build an Archive Excavation within 7 tiles. The smog and cryogenic lines in the tooltip are shorter too.
 - **New-game map notice** now says plainly what a map is missing, what it affects and what to do, and that the game can still be finished (for example the fishing line on Canyon: dam a clean river to 0.5 m beside a bank so the Gatherer Flag can fish).
 
