@@ -13,6 +13,13 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - Old saves: an unflipped refinery keeps its origin, door and entrance (1,-1) and frees the tiles it no longer uses; a flipped one's entrance moves 4 tiles (local x 7 -> 3). Shafts, pipes and anything built on roof cells that no longer exist (hot-cell roof x 3, the old hall and bund) must be rebuilt.
   - Maps: below `largeFootprint` 8 it needs no site; its flat sites and unmet notes left all 20 variants. `smallMap.maxArea` 5,966 -> 5,776 (Plains 2,888, the largest reference site area, x 2). docs/maps.md numbers are updated at the end of this pass.
   - Review: `outputs/compaction/RadioactiveWasteRefinery-shrink2.png`.
+- **Mission Control 8x7x9 -> 5x5x7** (`lategame_MissionControl.py`): one-storey podium on the whole footprint; two-storey control hall (one layer each, plank gable, ridge 3.84) on tiles 2..5 x 2..5; octagonal tower (apothem .6) through the hall's front wall to the glazed cab (floor 4.35, roof 5.4) with the radar drum and mast (6.6); observatory dome (r .85) at (1.05, 3.9) with its link block; radio dish (R .85) on its pedestal at (1.2, 1.2).
+  - Door: x 5.5 lies outside a 5-wide footprint, so it moved to x 3.5 under the tower (x 4.5 put the portal frame past the corner): entrance (5,-1) -> (3,-1).
+  - Numbers (HEAD -> now): solid cells 221 -> 106; shaft faces 125 -> 62; pipe-port faces 51 -> 32; platformable roof cells 18 -> 5 (podium terrace; every flat roof cell); hardpoints 35 -> 19; triangles 8,085 -> 6,834; same six animated parts.
+  - Cost: cell basis unchanged; material rule recomposes: Treated Plank 240 -> 220, Alloy 25 -> 30, Concrete 3,015 -> 2,955, Brick 385 -> 410. Power 13,000 hp, workers, recipes unchanged.
+  - Old saves: a placed Mission Control keeps its origin; its entrance moves 2 tiles (unflipped local x 5 -> 3; flipped local x 2 -> 1, 1 tile). A path that reached the old entrance must be extended. Anything on the old podium terrace outside 5x5 or on the old hall roof must be rebuilt; shafts and pipes on removed walls disconnect.
+  - Maps: its flat sites and unmet notes left the 20 variants (below `largeFootprint` 8).
+  - Review: `outputs/compaction/MissionControl-shrink2.png`.
 
 ## Second shrink: works and mines (Claude Code session, 2026-11-01, mines shrink agent; Fertilizer Works, Cryogenic Tank Farm, Deep Mine, Sandstone and Limestone Quarries, Deep Drill; each building generated and validated in mirror `shrink-ind` on HEAD + that building, then committed; not built or run in game)
 

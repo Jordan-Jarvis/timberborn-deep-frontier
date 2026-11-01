@@ -621,27 +621,27 @@
   },
   "MissionControl": {
    "model": "Buildings/Science/MissionControl/MissionControl.IronTeeth.Model",
-   "sha256": "ed9043e72b12300f21dbf1b78f88043ee1c5ab8860dc9306df66df8ee312ec14",
+   "sha256": "c55625034d9900a41da41fd3bb0034bf130f43c6d473d7f61aaf3643fac987f1",
    "areas": {
-    "BaseMetal.IronTeeth": 51.1633,
-    "BaseWood_DarkBrown.IronTeeth": 58.867,
+    "BaseMetal.IronTeeth": 34.5122,
+    "BaseWood_DarkBrown.IronTeeth": 36.6494,
     "DFIndustrial08": 0.229,
-    "DFIndustrial25": 0.1594,
-    "Details.IronTeeth#metal": 12.8594,
-    "IrregularPlanks_DarkBrown.IronTeeth": 14.6891,
-    "IrregularPlanks_MetalForged.IronTeeth": 1.8687,
-    "PaintedMetal.IronTeeth": 6.0752,
-    "Plaster_Orange.IronTeeth": 49.593,
-    "Plaster_White.IronTeeth": 436.0261,
-    "RoofPlanks.IronTeeth": 99.0302,
-    "WindowsAtlas.IronTeeth": 9.2725
+    "DFIndustrial25": 0.1591,
+    "Details.IronTeeth#metal": 6.9694,
+    "IrregularPlanks_DarkBrown.IronTeeth": 8.5829,
+    "IrregularPlanks_MetalForged.IronTeeth": 1.4372,
+    "PaintedMetal.IronTeeth": 4.7015,
+    "Plaster_Orange.IronTeeth": 27.94,
+    "Plaster_White.IronTeeth": 224.2468,
+    "RoofPlanks.IronTeeth": 38.2948,
+    "WindowsAtlas.IronTeeth": 6.5939
    },
    "families": {
-    "brick": 49.593,
-    "concrete": 436.0261,
-    "metal": 71.9666,
-    "unpriced": 9.6609,
-    "wood": 172.5863
+    "brick": 27.94,
+    "concrete": 224.2468,
+    "metal": 47.6204,
+    "unpriced": 6.9819,
+    "wood": 83.5271
    }
   },
   "NuclearReactor": {

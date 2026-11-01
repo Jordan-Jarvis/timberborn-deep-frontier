@@ -445,9 +445,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8085,
-   "vertices": 15761,
-   "construction": 8085,
+   "finished": 6834,
+   "vertices": 13322,
+   "construction": 6834,
    "file": "outputs/lategame-integration/Data/Buildings/Science/MissionControl/MissionControl.IronTeeth.Model.timbermesh"
   },
   "NuclearReactor": {

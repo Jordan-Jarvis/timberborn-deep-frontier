@@ -42,7 +42,6 @@
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 83 cells south of the start", "x": 163, "y": 34, "z": 10, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 66 cells south-east of the start", "x": 195, "y": 83, "z": 14, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 68 cells east of the start", "x": 211, "y": 111, "z": 11, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "MissionControl.IronTeeth", "label": "Mission Control, 99 cells east of the start", "x": 242, "y": 106, "z": 15, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 60 cells south-west of the start", "x": 118, "y": 72, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 71 cells north-east of the start", "x": 200, "y": 170, "z": 13, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "LimestoneQuarry.IronTeeth", "label": "Limestone Quarry, 25 cells north of the start", "x": 141, "y": 150, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["S"], "understructure": [142, 143, 6]},

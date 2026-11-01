@@ -34,7 +34,6 @@
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 24 cells south-west of the start", "x": 75, "y": 82, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["W"]},
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 47 cells west of the start", "x": 43, "y": 101, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 66 cells south-east of the start", "x": 131, "y": 40, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": ["N"]},
-    {"template": "MissionControl.IronTeeth", "label": "Mission Control, 78 cells south-west of the start", "x": 26, "y": 56, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 89 cells north-east of the start", "x": 143, "y": 162, "z": 1, "orientation": "Cw0", "margin": 1, "openSides": ["N"]},
     {"template": "Hospital.IronTeeth", "label": "Hospital, 18 cells north-west of the start", "x": 74, "y": 105, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 40 cells north-east of the start", "x": 124, "y": 123, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": []},

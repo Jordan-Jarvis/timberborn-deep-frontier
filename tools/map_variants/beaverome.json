@@ -37,7 +37,6 @@
     {"template": "DeepDrill.IronTeeth", "label": "Deep Drill, 43 cells north of the start", "x": 90, "y": 132, "z": 9, "orientation": "Cw0", "margin": 1, "openSides": ["W"]},
     {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 50 cells north-east of the start", "x": 114, "y": 136, "z": 9, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 75 cells north of the start", "x": 51, "y": 166, "z": 12, "orientation": "Cw90", "margin": 1, "openSides": ["W"]},
-    {"template": "MissionControl.IronTeeth", "label": "Mission Control, 80 cells north-west of the start", "x": 42, "y": 162, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 11 cells north of the start", "x": 82, "y": 100, "z": 12, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 24 cells south-east of the start", "x": 94, "y": 73, "z": 12, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 48 cells north-east of the start", "x": 115, "y": 120, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
