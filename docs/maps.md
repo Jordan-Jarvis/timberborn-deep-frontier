@@ -95,7 +95,7 @@ node tools/validate_map_setup.mjs
 
 A built-in map gets the **EXTREMELY difficult** warning (`BuiltinMapSpec.Small`) when either holds (`tools/map_setup.json` `smallMap`):
 
-- **Small area** (`SmallArea`): its area is below `smallMap.maxArea` = **5,048** cells (11,176 before the 2026-10-30 compaction). The number is derived and checked: the largest area the full-loop sites claim on a reference map (primary footprints plus their listed open margins: Plains 2,524, Terraces 2,386, Lakes 2,250; 5,588 / 5,476 / 5,134 before the compaction) divided by the land share 1/2. Below it the late-game sites alone would cover more than half the map, before terrain, water, farms, forest and homes. The built-in sizes fall into clear groups (2,500; 5,000; 16,384; 36,864–38,400; 65,536), so the rule picks out exactly **Diorama** (50×50) and **Cliffside** (100×50); the 128×128 maps are almost three times larger.
+- **Small area** (`SmallArea`): its area is below `smallMap.maxArea` = **4,012** cells (11,176 before the 2026-10-30 compaction). The number is derived and checked: the largest area the full-loop sites claim on a reference map (primary footprints plus their listed open margins: Plains 2,006, Terraces 1,869, Lakes 1,820; 5,588 / 5,476 / 5,134 before the compaction) divided by the land share 1/2. Below it the late-game sites alone would cover more than half the map, before terrain, water, farms, forest and homes. The built-in sizes fall into clear groups (2,500; 5,000; 16,384; 36,864–38,400; 65,536), so the rule picks out exactly **Diorama** (50×50) and **Cliffside** (100×50); the 128×128 maps are almost three times larger.
 - **No Deep Mine site** (`NoDeepMineSite`): the variant lists no primary site of `smallMap.deepMineSite` (`DeepMine.IronTeeth`, which `builtin` checks is the only building over a Deep Ore Vein). The Deep Mine is the only permanent deep ore, and the finite sources are sized for one of each building, not for the launch program. Since the 2026-10-30 re-plan every built-in map has Deep Mine sites (Beaverome and Diorama gained two each with the 7×6 mine), so no map gets the warning for this reason.
 
 So two maps get the warning: Cliffside and Diorama, both by area. Beaverome no longer does: its only reason was the missing Deep Mine, and it now shows the shorter "cannot provide" notice. The dialog appears once when the game UI appears (`DialogBoxShower`), built from the generated text and the map's own data. The small-area lines appear only on a small map, the Deep Mine line only without a Deep Mine site:
@@ -108,7 +108,7 @@ Deep Frontier is EXTREMELY difficult on Diorama
 - Little room: the full set of large Deep Frontier sites (the 14 x 11 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about 2983 tiles with their margins on a large map.
 - Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
 What this map cannot provide:
-- No ready space for: Limestone quarry, Nuclear Reactor, Launch pad, Radioactive waste refinery, Cryogenic liquefaction plant, Precision machine works, Radioactive Waste Vault, Fishery works, Materials Laboratory, Grocery store, Restaurant, Rocket assembly hangar, Town plaza. Level ground or build on platforms to make room before you need them.
+- No ready space for: Limestone quarry, Nuclear Reactor, Launch pad, Radioactive waste refinery, Cryogenic liquefaction plant, Precision machine works, Radioactive Waste Vault, Fishery works, Materials Laboratory, Grocery store, Restaurant, Rocket assembly hangar. Level ground or build on platforms to make room before you need them.
 ```
 
 Cliffside:
@@ -119,7 +119,7 @@ Deep Frontier is EXTREMELY difficult on Cliffside
 - Little room: the full set of large Deep Frontier sites (the 14 x 11 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about 2983 tiles with their margins on a large map.
 - Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
 What this map cannot provide:
-- No ready space for: Nuclear Reactor, Radioactive waste refinery, Fishery works, Materials Laboratory, Town plaza, Restaurant, Grocery store. Level ground or build on platforms to make room before you need them.
+- No ready space for: Nuclear Reactor, Radioactive waste refinery, Fishery works, Materials Laboratory, Restaurant, Grocery store. Level ground or build on platforms to make room before you need them.
 - Fish: no river here is deep enough beside a dry bank for the Gatherer Flag to catch fish, and you need fish to start the Fish Hatchery, canned fish and fish oil. Dam a clean river until it is at least 0.5 m deep next to the bank.
 ```
 
@@ -127,7 +127,7 @@ A map without the warning but with unmet items gets a shorter dialog (`UnmetTitl
 
 ```
 Deep Frontier on Beaverome: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:
-- No ready space for: Limestone quarry, Sandstone quarry, Radioactive waste refinery, Uranium processing plant, Nuclear Reactor, Radioactive Waste Vault, Fishery works, Materials Laboratory, Town plaza, Rocket assembly hangar, Restaurant, Grocery store. Level ground or build on platforms to make room before you need them.
+- No ready space for: Limestone quarry, Sandstone quarry, Radioactive waste refinery, Uranium processing plant, Nuclear Reactor, Radioactive Waste Vault, Fishery works, Materials Laboratory, Rocket assembly hangar, Restaurant, Grocery store. Level ground or build on platforms to make room before you need them.
 - Scrap metal: no reachable Underground Ruins for a Mine, so scrap runs out once the surface ruins are gone. Salvage early and use metal carefully.
 ```
 
@@ -142,11 +142,11 @@ Deep Frontier on Canyon: this map is short of a few things. You can still play t
 
 | Map | Size | EXTREMELY difficult | Variant | Placements | Sites | Deep Mine sites | Finite DeepOre | Not met on this map (declared `unmet`) |
 |---|---|---|---|---:|---:|---:|---:|---|
-| Beaverome | 192×192 |  | `beaverome` | 15 | 24 | 2 | 17,000 | LimestoneQuarry site (understructure); SandstoneQuarry site (understructure); renewable scrap (Underground Ruins for the Efficient Mine); RadioactiveWasteRefinery site (flat); UraniumProcessingPlant site (flat); NuclearReactor site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); TownPlaza site (flat); RocketAssemblyHangar site (flat); Restaurant site (flat); GroceryStore site (flat) |
+| Beaverome | 192×192 |  | `beaverome` | 15 | 24 | 2 | 17,000 | LimestoneQuarry site (understructure); SandstoneQuarry site (understructure); renewable scrap (Underground Ruins for the Efficient Mine); RadioactiveWasteRefinery site (flat); UraniumProcessingPlant site (flat); NuclearReactor site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); RocketAssemblyHangar site (flat); Restaurant site (flat); GroceryStore site (flat) |
 | Canyon | 128×128 |  | `canyon` | 17 | 40 | 2 | 17,000 | shore fishing banks (first FreshFish) |
-| Cliffside | 100×50 | yes (area) | `cliffside` | 17 | 30 | 2 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat); RadioactiveWasteRefinery site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); TownPlaza site (flat); Restaurant site (flat); GroceryStore site (flat) |
+| Cliffside | 100×50 | yes (area) | `cliffside` | 17 | 30 | 2 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat); RadioactiveWasteRefinery site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); Restaurant site (flat); GroceryStore site (flat) |
 | Craters | 192×192 |  | `craters` | 17 | 35 | 2 | 17,000 | shore fishing banks (first FreshFish); RadioactiveWasteExport site (mapEdge) |
-| Diorama | 50×50 | yes (area) | `diorama` | 16 | 23 | 2 | 17,000 | LimestoneQuarry site (understructure); NuclearReactor site (flat); LaunchPad site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); PrecisionMachineWorks site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); GroceryStore site (flat); Restaurant site (flat); RocketAssemblyHangar site (flat); TownPlaza site (flat) |
+| Diorama | 50×50 | yes (area) | `diorama` | 16 | 23 | 2 | 17,000 | LimestoneQuarry site (understructure); NuclearReactor site (flat); LaunchPad site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); PrecisionMachineWorks site (flat); RadioactiveWasteVault site (flat); FisheryWorks site (flat); MaterialsLaboratory site (flat); GroceryStore site (flat); Restaurant site (flat); RocketAssemblyHangar site (flat) |
 | HelixMountain | 256×256 |  | `helix-mountain` | 17 | 40 | 2 | 17,000 | none |
 | Hollows | 192×192 |  | `hollows` | 18 | 41 | 2 | 18,000 | shore fishing banks (first FreshFish) |
 | Lakes | 256×256 |  | `lakes` | 18 | 41 | 3 | 17,000 | none |
@@ -165,10 +165,10 @@ Deep Frontier on Canyon: this map is short of a few things. You can still play t
 Every row passes `builtin` (evidence `outputs/maps/builtin-coverage.json` and the per-map files). The reasons, with their numbers, are in each variant's `unmet` entries. Notes:
 
 - **Re-plan of 2026-10-30.** After the compaction every map's site search was re-run (`plan`, plus a scratch driver around its `Planner` for the cases `plan` does not cover: a second Deep Mine, a Deep Ore Source beside each new Deep Drill site, reactor sites with `maxWaterDistance` 15, and moving smaller flat sites aside). Changes:
-  - **Beaverome**: two Deep Ore Veins with Deep Mine sites (level-12 north-west shore), two Deep Drill sites with a new Deep Ore Source each (8,500 DeepOre, 17,000 in all), the Deep Processor, Steel Mill, Mission Control, Water Treatment Plant, Electrolysis Plant, Precision Machine Works, Hospital, Launch Pad and Cryogenic Liquefaction Plant. The Launch Pad and the plant now hold the level-11 south-west strip, so the Archive Excavation and its five caches moved to the south-east ruins. The Rocket Assembly Hangar, Restaurant and Grocery Store lost their sites to the mines (the mines have priority). It loses the EXTREMELY difficult warning.
-  - **Diorama**: two Deep Ore Veins with Deep Mine sites (south and east of the start), plus Steel Mill, Mission Control, Uranium Processing Plant, Water Treatment Plant, Electrolysis Plant, Hospital and Technical School (the Deep Processor and the Archive Excavation with its five caches were re-placed); the Restaurant, Town Plaza and Rocket Assembly Hangar lost their sites to the mines. Still small by area.
+  - **Beaverome**: two Deep Ore Veins with Deep Mine sites (level-12 north-west shore), two Deep Drill sites with a new Deep Ore Source each (8,500 DeepOre, 17,000 in all), the Deep Processor, Steel Mill, Mission Control, Water Treatment Plant, Electrolysis Plant, Precision Machine Works, Launch Pad and Cryogenic Liquefaction Plant. The Launch Pad and the plant now hold the level-11 south-west strip, so the Archive Excavation and its five caches moved to the south-east ruins. The Rocket Assembly Hangar, Restaurant and Grocery Store lost their sites to the mines (the mines have priority). It loses the EXTREMELY difficult warning.
+  - **Diorama**: two Deep Ore Veins with Deep Mine sites (south and east of the start), plus Steel Mill, Mission Control, Uranium Processing Plant, Water Treatment Plant, Electrolysis Plant and Technical School (the Deep Processor and the Archive Excavation with its five caches were re-placed); the Restaurant, Town Plaza and Rocket Assembly Hangar lost their sites to the mines. Still small by area.
   - **Cliffside**: Limestone Quarry, Launch Pad, Mission Control, Steel Mill, Uranium Processing Plant, Water Treatment Plant, Electrolysis Plant, Cryogenic Liquefaction Plant, Precision Machine Works, Radioactive Waste Vault and Hospital; two Archive Excavations with five caches (none before). Both mines were re-placed on the plain. The Restaurant and Grocery Store lost their sites. The rocket chain is complete; the reactor is not.
-  - **Reactor sites** (14×11, clean water within 15): Canyon, Craters, Hollows, Mountain Range, Oasis, Pillars, Spillage and Thousand Islands. Where the best position overlapped smaller sites, those were re-placed (Canyon Mission Control; Craters Cryogenic Liquefaction Plant; Hollows, Thousand Islands Radioactive Waste Refinery; Mountain Range Water Treatment Plant; Pillars Technical School, Water Treatment Plant, Hospital).
+  - **Reactor sites** (14×11, clean water within 15): Canyon, Craters, Hollows, Mountain Range, Oasis, Pillars, Spillage and Thousand Islands. Where the best position overlapped smaller sites, those were re-placed (Canyon Mission Control; Craters Cryogenic Liquefaction Plant; Hollows, Thousand Islands Radioactive Waste Refinery; Mountain Range Water Treatment Plant; Pillars Technical School, Water Treatment Plant).
   - **Meander** (Cryogenic Liquefaction Plant, Radioactive Waste Refinery, Water Treatment Plant), **Waterfalls** (Radioactive Waste Refinery), **Pillars** (Hospital) and **Thousand Islands** (Steel Mill) got the plants they had no room for.
 - **No reactor site** on 3 maps: Beaverome and Diorama have no dry, flat 14×11 footprint at any level; on Cliffside all 62 lie on the west plain under the Deep Mines, the Launch Pad and a Deep Drill. The reactor never needs more height: at 66 the highest legal base is 56.
 - **Beaverome**: shallow lakes and sloping shores; the largest dry flat square is 9×9. Only 10 quarry footprints have a tree-free seam core, all under the mine, drill or Mission Control sites, and its two Underground Ruins lie under 6–9 of water.
@@ -249,7 +249,7 @@ A map supports the loop when a player can reach every stage, from the start to t
 | 7 Rocket | Water Treatment Plant → Electrolysis → Cryogenic Liquefaction → Cryogenic Tank Farm; Rocket Assembly Hangar; Mission Control; Launch Pad | flat sites; source-fed clean water (three launches need about 26,400 Water) | sizes, mission recipes | flat sites, `clean water` |
 | 8 Space | every building above | non-overlapping primary sites, door approach free and routable, listed open margins clear of other footprints and placements | — | site checks |
 | — | Fish Hatchery (7×7×5 since 2026-10-26) | door cell on dry ground at the bank level; the other bank cells at or below it (adaptive bank posts); deck blocks above terrain (they may stand in water); each of the four work cells (local y 5) in an open water column whose surface stands ≥ 0.2 above the cell floor (bank − 1) and holding ≤ 7 of water; work cell 0 contamination ≤ 0.05; every pile and bank post reaches the bed within 6; Dynamite allowed on deck cells | `WaterDepthWorkCellsSpec`, `ContaminationBlockableBuilding` | waterside site |
-| — | Fishery Works, Restaurant, Grocery, Town Plaza, Greenhouse, Fertilizer Works, Food Packaging Works, Technical School, Materials Laboratory | flat sites. The fishery's basins are filled by haulers or pipes, so it does not need a shore | size | flat sites |
+| — | Fishery Works, Restaurant, Grocery, Greenhouse, Fertilizer Works, Food Packaging Works, Technical School, Materials Laboratory | flat sites. The fishery's basins are filled by haulers or pipes, so it does not need a shore | size | flat sites |
 
 ### Quantities: is the deep ore enough for a launch program?
 
@@ -437,7 +437,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S32 | PrecisionMachineWorks | Precision Machine Works, 50 cells north of the start | 107, 180, 4 Cw0 | flat | open NSEW (1) | 60 / 6 | 51 |
 | S34 | RadioactiveWasteVault | Radioactive Waste Vault, 39 cells north-west of the start | 92, 150, 3 Cw0 | flat | open NSEW (1) | 37 / 7 | 16 |
 | S35 | FisheryWorks | Fishery Works, 13 cells south-east of the start | 137, 127, 3 Cw0 | flat | open NSEW (1) | 4 / 0 | 0 |
-| S36 | TownPlaza | Town Plaza, 18 cells north of the start | 131, 152, 3 Cw0 | flat | open NSEW (1) | 12 / 0 | 25 |
 | S37 | MaterialsLaboratory | Materials Laboratory, 31 cells south-east of the start | 143, 116, 5 Cw90 | flat | open NSEW (1) | 28 / 0 | 21 |
 | S38 | RocketAssemblyHangar | Rocket Assembly Hangar, 32 cells south-west of the start | 103, 113, 4 Cw0 | flat | open NSEW (1) | 30 / 0 | 0 |
 | S40 | Restaurant | Restaurant, 21 cells east of the start | 148, 135, 3 Cw0 | flat | open NSEW (1) | 15 / 0 | 43 |
@@ -503,7 +502,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S31 | PrecisionMachineWorks | Precision Machine Works, 71 cells west of the start | 30, 159, 3 Cw90 | flat | open NW (1) | 78 / 0 | 57 |
 | S33 | RadioactiveWasteVault | Radioactive Waste Vault, 81 cells west of the start | 17, 136, 3 Cw0 | flat | open N (1) | 76 / 0 | 7 |
 | S34 | FisheryWorks | Fishery Works, 43 cells south-west of the start | 65, 107, 3 Cw90 | flat | open none (1) | 48 / 0 | 28 |
-| S35 | TownPlaza | Town Plaza, 77 cells west of the start | 21, 112, 3 Cw0 | flat | open S (1) | 78 / 0 | 33 |
 | S36 | MaterialsLaboratory | Materials Laboratory, 89 cells west of the start | 16, 131, 4 Cw270 | flat | open N (1) | 83 / 0 | 9 |
 | S37 | RocketAssemblyHangar | Rocket Assembly Hangar, 12 cells east of the start | 109, 137, 2 Cw90 | flat | open S (1) | 4 / 0 | 44 |
 | S39 | Restaurant | Restaurant, 30 cells east of the start | 127, 129, 2 Cw0 | flat | open NSEW (1) | 22 / 5 | 12 |
@@ -570,7 +568,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S32 | PrecisionMachineWorks | Precision Machine Works, 62 cells south of the start | 86, 98, 7 Cw90 | flat | open NSEW (1) | 59 / 7 | 0 |
 | S34 | RadioactiveWasteVault | Radioactive Waste Vault, 84 cells south of the start | 105, 70, 10 Cw0 | flat | open NSEW (1) | 93 / 7 | 27 |
 | S35 | FisheryWorks | Fishery Works, 70 cells west of the start | 9, 145, 3 Cw90 | flat | open NSEW (1) | 72 / 4 | 0 |
-| S36 | TownPlaza | Town Plaza, 80 cells north-west of the start | 35, 218, 16 Cw0 | flat | open NSEW (1) | 96 / 5 | 17 |
 | S37 | MaterialsLaboratory | Materials Laboratory, 66 cells south of the start | 100, 96, 5 Cw90 | flat | open NSEW (1) | 71 / 7 | 0 |
 | S38 | RocketAssemblyHangar | Rocket Assembly Hangar, 39 cells north-east of the start | 92, 193, 6 Cw90 | flat | open NSEW (1) | 35 / 5 | 0 |
 | S40 | Restaurant | Restaurant, 19 cells west of the start | 59, 158, 16 Cw90 | flat | open NSEW (1) | 14 / 0 | 18 |

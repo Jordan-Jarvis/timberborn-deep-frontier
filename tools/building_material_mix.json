@@ -1142,22 +1142,22 @@
   },
   "TownPlaza": {
    "model": "Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.Model",
-   "sha256": "dcc88638770a1d8a2dd781149936ef19f693d26a575f04a7177a1a02691c85bd",
+   "sha256": "49a67eeda66e75d9d5ef3d1917f7c3388968d70455f0b98b2925817b75ce76cc",
    "areas": {
-    "BaseMetal.IronTeeth": 123.7283,
-    "BaseWood_DarkBrown.IronTeeth": 1.2475,
-    "Details.IronTeeth#metal": 0.3363,
-    "Plaster_Orange.IronTeeth": 19.7141,
-    "Plaster_White.IronTeeth": 77.6571,
-    "RoofPlanks.IronTeeth": 8.0709,
-    "WindowsAtlas.IronTeeth": 1.1981
+    "BaseMetal.IronTeeth": 57.3886,
+    "BaseWood_DarkBrown.IronTeeth": 1.0419,
+    "Details.IronTeeth#metal": 0.2709,
+    "Plaster_Orange.IronTeeth": 11.0347,
+    "Plaster_White.IronTeeth": 36.7884,
+    "RoofPlanks.IronTeeth": 2.2621,
+    "WindowsAtlas.IronTeeth": 0.7176
    },
    "families": {
-    "brick": 19.7141,
-    "concrete": 77.6571,
-    "metal": 124.0645,
-    "unpriced": 1.1981,
-    "wood": 9.3184
+    "brick": 11.0347,
+    "concrete": 36.7884,
+    "metal": 57.6595,
+    "unpriced": 0.7176,
+    "wood": 3.304
    }
   },
   "UraniumProcessingPlant": {

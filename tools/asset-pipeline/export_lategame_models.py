@@ -80,24 +80,18 @@ VISITOR_SLOT_KEYWORD = 'Spot'
 
 
 def town_plaza_slots(registration):
-    """The paving ring round the fountain basin (lategame_TownPlaza.FOUNTAIN),
-    facing the jet (FC), on the flag top (FLAG); the door path cell stays free."""
+    """The visitors' places round the fountain (lategame_TownPlaza.VISITOR_PLACES,
+    2026-11-01), facing the jet (FC), on the flag top (FLAG). Each stands on
+    walkable paving, never on a door's path cell."""
     import lategame_TownPlaza as M
-    x0, y0, x1, y1 = M.FOUNTAIN
     walkable = {tuple(c) for c in M.WALKABLE}
     door = {tuple(d['entrance']) for d in registration['doors']}
     slots = []
-    for y in range(y0 - 1, y1 + 1):
-        for x in range(x0 - 1, x1 + 1):
-            if x0 <= x < x1 and y0 <= y < y1:
-                continue
-            cell = (x, y, 0)
-            if cell in door:
-                continue
-            if cell not in walkable:
-                raise ValueError(f'TownPlaza: fountain ring cell {cell} is not walkable paving')
-            cx, cy = x + .5, y + .5
-            slots.append(((cx, cy, M.FLAG), (M.FC[0] - cx, M.FC[1] - cy)))
+    for cx, cy in M.VISITOR_PLACES:
+        cell = (int(cx), int(cy), 0)
+        if cell in door or cell not in walkable:
+            raise ValueError(f'TownPlaza: visitor place {(cx, cy)} is not on free walkable paving')
+        slots.append(((cx, cy, M.FLAG), (M.FC[0] - cx, M.FC[1] - cy)))
     return slots
 
 

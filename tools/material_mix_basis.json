@@ -44,6 +44,37 @@
     "wood": 532.6612
    },
    "measuredAt": "9x7x5 Restaurant model (d424ef7)"
+  },
+  "Hospital": {
+   "families": {
+    "brick": 78.36,
+    "concrete": 83.8636,
+    "limestone": 0.6866,
+    "metal": 70.8271,
+    "unpriced": 23.7622,
+    "wood": 457.6607
+   },
+   "measuredAt": "4x9x9 model (d424ef7)"
+  },
+  "Bathhouse": {
+   "families": {
+    "brick": 50.2418,
+    "concrete": 184.1394,
+    "metal": 37.0714,
+    "unpriced": 9.4395,
+    "wood": 52.1937
+   },
+   "measuredAt": "7x5x5 study (d424ef7)"
+  },
+  "TownPlaza": {
+   "families": {
+    "brick": 19.7141,
+    "concrete": 77.6571,
+    "metal": 124.0645,
+    "unpriced": 1.1981,
+    "wood": 9.3184
+   },
+   "measuredAt": "7x8x4 study (d424ef7)"
   }
  }
 }

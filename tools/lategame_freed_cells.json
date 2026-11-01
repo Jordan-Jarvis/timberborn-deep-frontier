@@ -251,21 +251,16 @@
     6
    ],
    "footprintAfter": [
-    7,
-    8,
-    4
+    5,
+    5,
+    3
    ],
    "gridOrigin": [
     0,
     0
    ],
-   "outsideCells": 0,
-   "insideCells": [
-    [
-     0,
-     7
-    ]
-   ]
+   "outsideCells": 1,
+   "insideCells": []
   },
   "ObservationDeck": {
    "footprintBefore": [

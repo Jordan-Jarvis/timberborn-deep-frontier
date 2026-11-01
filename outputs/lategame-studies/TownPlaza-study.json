@@ -1,27 +1,27 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "The native Fountain of Joy on the square axis, framed by a round iron bandstand under a teal bell roof and the native Iron Teeth beaver statue.",
+  "hero": "The native Fountain of Joy in the middle of the square, with a round iron bandstand kiosk under a teal bell roof and the native Iron Teeth beaver statue.",
   "footprint": [
-    7,
-    8
+    5,
+    5
   ],
-  "heightLayers": 4,
+  "heightLayers": 3,
   "boundsMin": [
     0.02,
     0.02,
     0.0
   ],
   "boundsMax": [
-    6.98,
-    8.05,
-    3.5656
+    5.0544,
+    5.0544,
+    2.9973
   ],
   "doors": [
     {
       "id": "Door0",
       "position": [
         4.5,
-        6,
+        4,
         0
       ],
       "outward": [
@@ -31,11 +31,11 @@
     }
   ],
   "animatedParts": [
-    "TownPlaza.Weathervane",
     "TownPlaza.FlagL0",
     "TownPlaza.FlagL1",
     "TownPlaza.FlagR0",
-    "TownPlaza.FlagR1"
+    "TownPlaza.FlagR1",
+    "TownPlaza.Weathervane"
   ],
   "animationFrames": 121,
   "animationFps": 30,
@@ -45,9 +45,9 @@
       "model": "FountainOfJoy.Folktails",
       "resource": "Buildings/Monuments/FountainOfJoy/FountainOfJoy.Folktails.Model",
       "position": [
-        3.0,
-        2.0,
-        0.22
+        1.0,
+        1.0,
+        0.19
       ],
       "scale": 0.6,
       "yaw": 0
@@ -57,8 +57,8 @@
       "model": "BeaverStatue.IronTeeth",
       "resource": "Buildings/Decoration/BeaverStatue/BeaverStatue.IronTeeth.Model",
       "position": [
-        1.05,
-        1.05,
+        0.04999999999999999,
+        0.04999999999999999,
         0.34
       ],
       "scale": 0.9,
@@ -66,16 +66,16 @@
     }
   ],
   "redicProps": [],
-  "faces": 2112,
+  "faces": 1452,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 104,
-    "BaseMetal.IronTeeth": 1148,
+    "BaseWood_DarkBrown.IronTeeth": 68,
+    "BaseMetal.IronTeeth": 1004,
     "RoofPlanks.IronTeeth": 129,
     "Details.IronTeeth": 192,
-    "Plaster_White.IronTeeth": 366,
-    "Plaster_Orange.IronTeeth": 439,
-    "WindowsAtlas.IronTeeth": 98
+    "Plaster_White.IronTeeth": 126,
+    "Plaster_Orange.IronTeeth": 247,
+    "WindowsAtlas.IronTeeth": 50
   },
-  "sourceHash": "c670a7ea920743d0919725cfda65770ce3070212ba654a61e3ac705f9edd0053",
-  "artHash": "bf06010d1db43ceb51a5cc10e8130da3deb347805ada0ae20a37391487ef573d"
+  "sourceHash": "010c1b410fe7a0e1d2bbc5b9bafb460edc8c1c893f61bb76280c73103aa35a98",
+  "artHash": "e1a4d769639ca0be1821231b5cd83288a2f09b78ebc4ac28788383dd14e2fa99"
 }
