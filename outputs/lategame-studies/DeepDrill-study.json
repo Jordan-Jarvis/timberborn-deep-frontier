@@ -2,19 +2,19 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Boarded, tapered drilling tower on a solid concrete engine room, crowned by a crown block and beacon",
   "footprint": [
-    7,
-    6
+    4,
+    4
   ],
-  "heightLayers": 8,
+  "heightLayers": 7,
   "boundsMin": [
     -0.04,
     -0.135,
     0.0
   ],
   "boundsMax": [
-    7.29,
-    6.0,
-    7.9
+    4.16,
+    4.0,
+    6.4
   ],
   "doors": [
     {
@@ -45,22 +45,21 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 3442,
+  "faces": 2341,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 838,
-    "IrregularPlanks_DarkBrown.IronTeeth": 278,
-    "BaseMetal.IronTeeth": 1714,
-    "RoofPlanks.IronTeeth": 108,
+    "BaseWood_DarkBrown.IronTeeth": 308,
+    "IrregularPlanks_DarkBrown.IronTeeth": 192,
+    "BaseMetal.IronTeeth": 1568,
     "DFIndustrial06": 36,
     "Details.IronTeeth": 498,
-    "accent8": 40,
+    "accent8": 20,
     "accent25": 10,
-    "Plaster_White.IronTeeth": 176,
-    "Plaster_Orange.IronTeeth": 62,
-    "IrregularPlanks_MetalForged.IronTeeth": 36,
-    "WindowsAtlas.IronTeeth": 216,
-    "PaintedMetal.IronTeeth": 368
+    "Plaster_White.IronTeeth": 92,
+    "Plaster_Orange.IronTeeth": 25,
+    "IrregularPlanks_MetalForged.IronTeeth": 24,
+    "WindowsAtlas.IronTeeth": 94,
+    "PaintedMetal.IronTeeth": 348
   },
-  "sourceHash": "72e7631d82c093373a7a1a883fef5f60efd0bc48053b3e08d078e3c968d3d213",
-  "artHash": "78360e9e84b9198976cd9874f799a1220f183a75a004fcc5bd534eb8e572074d"
+  "sourceHash": "1a8725643d41740f99d808e556082b6aa5e437eb5a8e073dce3b11888a3a215d",
+  "artHash": "539b5937ad5af747782e8e29e7e555f223c87dfdec0f67f0697e6de85e62dc4c"
 }

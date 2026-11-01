@@ -4,6 +4,7 @@
 
 ### Smaller works and mines (second shrink)
 - **Sandstone and Limestone Quarries** are 5x5 (were 8x6) and cover their Deep Seam exactly: the stone plinth with the headframe, winding house and sorting line, the operator cabin with the door in the front-left corner and a narrow tool room. **Existing quarries move onto their seam when a save loads** (their door moves: reconnect the path). Same workers, power and output; the cost shifts slightly with the smaller model.
+- **Deep Drill** is 4x4, 7 high (was 7x6, 8 high): the pump house with the door, the engine room under the drill floor with the boarded tower, and the mud pump at the back. Same door, workers, power and drill-bit upkeep; its cost is recomposed from the smaller model.
 
 ## 0.8.2 (2026-11-01)
 
