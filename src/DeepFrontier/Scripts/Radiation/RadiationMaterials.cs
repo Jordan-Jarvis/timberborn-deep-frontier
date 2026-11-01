@@ -13,18 +13,20 @@ namespace DeepFrontier.Scripts.Radiation {
   // Bound in Game and MapEditor.
   public sealed class RadiationMaterials : ILoadableSingleton, IUnloadableSingleton {
     private const string BaseMaterialPath = "Materials/DeepFrontierIndustrial/DFIndustrial18";
-    // The radiation yellow (zombie tint; the bright radioactive water colour).
+    // The radiation yellow (zombie tint).
     internal static readonly Color WaterTintColor = new Color(0.86f, 0.92f, 0.08f, 1f);
     internal static readonly Color SpringColor = new Color(0.80f, 0.87f, 0.10f, 1f);
     internal static readonly Color SpringEmission = new Color(0.42f, 0.52f, 0.02f, 1f);
     // Radioactive water, in place of the native badwater colours of the native
     // WaterContamination subgraph (native: base A 0.02 grey, B rust 0.5/0.12/0.04;
     // detail A/B orange 0.85/0.56/0.33): base colours are the albedo pattern,
-    // detail colours the emissive glow, at about the native glow luminance.
-    internal static readonly Color WaterBaseColorA = new Color(0.50f, 0.56f, 0.04f, 0f);
-    internal static readonly Color WaterBaseColorB = new Color(WaterTintColor.r, WaterTintColor.g, WaterTintColor.b, 0f);
-    internal static readonly Color WaterDetailColorA = new Color(0.55f, 0.68f, 0.12f, 0f);
-    internal static readonly Color WaterDetailColorB = new Color(0.62f, 0.72f, 0.16f, 0f);
+    // detail colours the emissive glow. Toned down after play (user, 2026-11-01:
+    // "a bit too bright"): albedo about 3/4 and glow about 3/5 of the first
+    // colours (base B was the tint yellow 0.86/0.92/0.08).
+    internal static readonly Color WaterBaseColorA = new Color(0.38f, 0.42f, 0.03f, 0f);
+    internal static readonly Color WaterBaseColorB = new Color(0.64f, 0.69f, 0.06f, 0f);
+    internal static readonly Color WaterDetailColorA = new Color(0.33f, 0.41f, 0.07f, 0f);
+    internal static readonly Color WaterDetailColorB = new Color(0.37f, 0.43f, 0.10f, 0f);
     // Irradiated ground: the native soil contamination texture
     // (Environment/Land/Materials/SoilContamination, 1.1.2.8; its opaque veins
     // average NativeSoilVeinColor in sRGB) tinted so the veins show SoilVeinColor.
