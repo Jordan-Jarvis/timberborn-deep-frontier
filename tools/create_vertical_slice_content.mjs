@@ -257,13 +257,15 @@ deepMine.MechanicalConnectorTargetSpec = {};
 deepMine.MechanicalNodeAnimatorSpec = { MinSpeedMultiplier: 0.0 };
 deepMine.Children['#Finished'].TimbermeshSpec.Model = 'Buildings/Metal/DeepMine/DeepMine.IronTeeth.Model';
 useStudyModel(deepMine);
-// Ground core over the vein: tiles x 2-6, y 1-5, under the study's shaft
-// house (lategame_DeepMine.py shaft house x 3-7, y 1-6; shaft at 4.5, 2.4)
-// and the lamp and bath houses' right column. Its four corner cells are
-// building cells, so the vein has a single valid alignment, as under vanilla
-// EfficientMine.
+// Ground core over the vein: the whole 5x5 footprint (second shrink,
+// 2026-11-01: "the thing that sits on top of the permanent veins ... need to
+// fit in 5x5"), every cell a building cell, so the vein has a single valid
+// alignment, as under vanilla EfficientMine; the doorstep is over the vein
+// too and the entrance in front of it. Mines saved with the 10x11 or 7x6
+// footprint (core at local x 2-6, y 1-5) move onto their vein at load
+// (Scripts/MineFootprintSaveMigration.cs).
 await applyLategame(deepMine, 'DeepMine', {
-  understructure: { core: [2, 1, 6, 5], size: [deepOreVein.BlockObjectSpec.Size.X, deepOreVein.BlockObjectSpec.Size.Y] },
+  understructure: { core: [0, 0, 4, 4], size: [deepOreVein.BlockObjectSpec.Size.X, deepOreVein.BlockObjectSpec.Size.Y] },
 });
 await writeJson(resolve(sourceRoot, 'Data', 'Buildings', 'Metal', 'DeepMine', 'DeepMine.IronTeeth.blueprint.json'), deepMine);
 

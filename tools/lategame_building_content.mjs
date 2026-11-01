@@ -106,8 +106,11 @@ export function understructureCore(blocks, [w, h], {core, size}, door, id) {
   const [x0, y0, x1, y1] = core;
   if (!(x0 >= 0 && y0 >= 0 && x1 < w && y1 < h && x0 <= x1 && y0 <= y1)) throw new Error(`${id}: understructure core ${core} lies outside the ${w}×${h} footprint`);
   if (x1 - x0 + 1 !== size[0] || y1 - y0 + 1 !== size[1]) throw new Error(`${id}: understructure core ${core} does not match the ${size.join('×')} marker`);
-  for (const [x, y, z] of [door.doorstep, door.entrance]) {
-    if (z === 0 && x >= x0 && x <= x1 && y >= y0 && y <= y1) throw new Error(`${id}: door cell ${[x, y, z]} lies over the understructure`);
+  // The entrance (the path cell) must be off the marker; the doorstep may
+  // stand over it, Top only, as on vanilla EfficientMine (doorstep (2, 0)
+  // over UndergroundRuins, entrance (2, -1)).
+  for (const [x, y, z] of [door.entrance]) {
+    if (z === 0 && x >= x0 && x <= x1 && y >= y0 && y <= y1) throw new Error(`${id}: entrance ${[x, y, z]} lies over the understructure`);
   }
   let cells = 0;
   for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {

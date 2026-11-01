@@ -23,6 +23,8 @@ namespace DeepFrontier.Scripts {
       RestaurantLateShift.Apply();
       // Coal/Oil Power Plants saved as staffed workshops load as generators (PowerPlantSaveMigration.cs).
       PowerPlantSaveMigration.Apply();
+      // Saved Deep Mines and quarries move onto their deposit with the 5x5 footprint (MineFootprintSaveMigration.cs).
+      MineFootprintSaveMigration.Apply();
       // Touching buildings share their insides (BuildingPassages.cs); the patches are inert until the game binds it.
       BuildingPassagesPatches.Apply();
       // Moddable Recipes 11.0.0 double Enable workaround (InventoryEnableGuard.cs).

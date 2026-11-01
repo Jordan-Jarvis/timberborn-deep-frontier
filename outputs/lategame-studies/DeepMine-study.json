@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Compact plated steel headframe on a low concrete shaft house, both skips in its open front, twin sheaves on top",
+  "hero": "Compact plated steel headframe on a low brick shaft house, both skips in its open front, twin sheaves on top",
   "footprint": [
-    7,
-    6
+    5,
+    5
   ],
-  "heightLayers": 7,
+  "heightLayers": 6,
   "boundsMin": [
     -0.04,
     -0.135,
     0.0
   ],
   "boundsMax": [
-    7.01,
-    6.0,
-    6.37
+    5.01,
+    5.0,
+    5.17
   ],
   "doors": [
     {
@@ -44,21 +44,21 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 2911,
+  "faces": 2287,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 758,
-    "IrregularPlanks_DarkBrown.IronTeeth": 416,
-    "BaseMetal.IronTeeth": 2108,
-    "RoofPlanks.IronTeeth": 132,
+    "BaseWood_DarkBrown.IronTeeth": 458,
+    "IrregularPlanks_DarkBrown.IronTeeth": 338,
+    "BaseMetal.IronTeeth": 1902,
+    "RoofPlanks.IronTeeth": 84,
     "DFIndustrial06": 12,
     "Details.IronTeeth": 304,
-    "accent8": 30,
-    "Plaster_White.IronTeeth": 216,
-    "Plaster_Orange.IronTeeth": 31,
+    "accent8": 20,
+    "Plaster_White.IronTeeth": 180,
+    "Plaster_Orange.IronTeeth": 25,
     "IrregularPlanks_MetalForged.IronTeeth": 18,
-    "WindowsAtlas.IronTeeth": 258,
+    "WindowsAtlas.IronTeeth": 190,
     "PaintedMetal.IronTeeth": 260
   },
-  "sourceHash": "97525afce33df54da042859c249d1089af959d1cc44317da98832bc8745caaf4",
-  "artHash": "04b97e74ef88531269733d6919604750b782b5a4a693796c7dc62fc13a228102"
+  "sourceHash": "e88b82c643731368040434d528f350db43d6caca00cc1a050e508f1401d8df77",
+  "artHash": "a212c3a941030a5cb394c12d3330a0b71c3445496965b69dc1265b3604cf025c"
 }

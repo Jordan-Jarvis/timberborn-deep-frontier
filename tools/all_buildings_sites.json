@@ -36,7 +36,7 @@
   ],
   "negativeAnchor": {"template": "Platform.IronTeeth", "x": 93, "y": 100, "z": 3, "deck": "ConcreteSidePlatform3x3.IronTeeth", "deckAt": [92, 97, 3]},
   "buildings": [
-    {"template": "DeepMine.IronTeeth", "x": 64, "y": 60, "z": 3, "orientation": "Cw0", "understructure": "DeepOreVein", "produces": "DeepOre"},
+    {"template": "DeepMine.IronTeeth", "x": 66, "y": 61, "z": 3, "orientation": "Cw0", "understructure": "DeepOreVein", "produces": "DeepOre"},
     {"template": "SandstoneQuarry.IronTeeth", "x": 82, "y": 60, "z": 3, "orientation": "Cw0", "understructure": "SandstoneSeam", "produces": "Sandstone"},
     {"template": "LimestoneQuarry.IronTeeth", "x": 100, "y": 60, "z": 3, "orientation": "Cw0", "understructure": "LimestoneSeam", "produces": "Limestone"},
     {"template": "FishHatchery.IronTeeth", "x": 120, "y": 80, "z": 2, "orientation": "Cw0", "pit": "pond", "produces": "JuvenileFish"},

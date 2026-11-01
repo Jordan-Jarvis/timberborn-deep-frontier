@@ -355,7 +355,7 @@ At 66 layers the level limit no longer binds (see below), so the "have none" map
 
 `UnderstructureFinder.FindStrict` requires every foundation block whose occupation is exactly Top and/or Corners to stand on the same understructure. The tool reads those blocks from the blueprint, rotated with the site:
 
-- **DeepMine (7×6, was 10×11):** a 25-cell core at local x 2–6, y 1–5 (every core cell is a building cell). For Cw0, mine origin = vein origin − (2, 1).
+- **DeepMine (5×5 since 2026-11-01, was 7×6 and 10×11):** the whole footprint is the vein's 25-cell core (every cell a building cell, the doorstep included). Mine origin = vein origin for Cw0. Variant sites moved by the old core offset, (2, 1) rotated with the site; saved mines move the same way at load (`MineFootprintSaveMigration.cs`).
 - **Sandstone / Limestone Quarry (8×6, was 11×7):** a full 5×5 core at local x 3–7, y 1–5. For Cw0, quarry origin = seam origin − (3, 1).
 
 Each understructure site is checked for:
@@ -410,9 +410,9 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S3 | DeepDrill | Crater Road drill | 163, 128, 4 Cw90 | flat | open NESW (1) | 36 / 0 | 5 |
 | S4 | DeepDrill | North Bank drill | 105, 170, 4 Cw0 | flat | open NESW (1) | 54 / 6 | 16 |
 | S5 | DeepDrill | West Lowlands drill | 8, 80, 2 Cw0 | flat | open NESW (1) | 171 / 2 | 5 |
-| S6 | DeepMine | Crater Rim West mine | 154, 101, 4 Cw0 | understructure | on DeepOreVein 156, 102, 4; open NESW (1) | 44 / 0 | 0 |
-| S7 | DeepMine | Crater Rim East mine | 185, 101, 4 Cw0 | understructure | on DeepOreVein 187, 102, 4; open NESW (1) | 75 / 0 | 0 |
-| S8 | DeepMine | West Lowlands mine | 32, 79, 2 Cw0 | understructure | on DeepOreVein 34, 80, 2; open NESW (1) | 147 / 2 | 0 |
+| S6 | DeepMine | Crater Rim West mine | 156, 102, 4 Cw0 | understructure | on DeepOreVein 156, 102, 4; open NESW (1) | 44 / 0 | 0 |
+| S7 | DeepMine | Crater Rim East mine | 187, 102, 4 Cw0 | understructure | on DeepOreVein 187, 102, 4; open NESW (1) | 75 / 0 | 0 |
+| S8 | DeepMine | West Lowlands mine | 34, 80, 2 Cw0 | understructure | on DeepOreVein 34, 80, 2; open NESW (1) | 147 / 2 | 0 |
 | S9 | LimestonePit | Limestone Pit, 13 cells south of the start | 128, 127, 5 Cw90 | pit | 1800 Limestone in range (3 deposits); open NSEW (1) | 7 / 0 | 1 |
 | S10 | SandstonePit | Sandstone Pit, 13 cells west of the start | 120, 138, 3 Cw180 | pit | 1800 Sandstone in range (3 deposits); open NSEW (1) | 7 / 0 | 11 |
 | S11 | LimestoneQuarry | Limestone Quarry, 45 cells south-west of the start | 99, 108, 3 Cw90 | understructure | on LimestoneSeam 100, 101, 3; open NSEW (1) | 48 / 0 | 0 |
@@ -476,9 +476,9 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S2 | LaunchPad | East Launch Field (east of the river) | 128, 115, 2 Cw0 | flat | open NESW (2) | 25 / 5 | 0 |
 | S3 | DeepDrill | West Clearing drill | 63, 112, 2 Cw0 | flat | open NESW (1) | 34 / 0 | 0 |
 | S4 | DeepDrill | Southeast Lowlands drill | 182, 23, 2 Cw0 | flat | open NESW (1) | 174 / 0 | 5 |
-| S5 | DeepMine | West Bench mine | 19, 147, 3 Cw0 | understructure | on DeepOreVein 21, 148, 3; open NESW (1) | 84 / 0 | 0 |
-| S6 | DeepMine | Slope Ridge mine | 51, 157, 4 Cw0 | understructure | on DeepOreVein 53, 158, 4; open NESW (1) | 62 / 0 | 22 |
-| S7 | DeepMine | Southeast Lowlands mine | 213, 1, 1 Cw0 | understructure | on DeepOreVein 215, 2, 1; open NESW (1) | 225 / 0 | 0 |
+| S5 | DeepMine | West Bench mine | 21, 148, 3 Cw0 | understructure | on DeepOreVein 21, 148, 3; open NESW (1) | 84 / 0 | 0 |
+| S6 | DeepMine | Slope Ridge mine | 53, 158, 4 Cw0 | understructure | on DeepOreVein 53, 158, 4; open NESW (1) | 62 / 0 | 22 |
+| S7 | DeepMine | Southeast Lowlands mine | 215, 2, 1 Cw0 | understructure | on DeepOreVein 215, 2, 1; open NESW (1) | 225 / 0 | 0 |
 | S8 | LimestonePit | Limestone Pit, 12 cells east of the start | 111, 126, 2 Cw0 | pit | 1800 Limestone in range (3 deposits); open NSEW (1) | 6 / 0 | 5 |
 | S9 | SandstonePit | Sandstone Pit, 12 cells north of the start | 101, 144, 3 Cw90 | pit | 1800 Sandstone in range (3 deposits); open NSEW (1) | 6 / 0 | 10 |
 | S10 | LimestoneQuarry | Limestone Quarry, 85 cells south of the start | 96, 50, 1 Cw90 | understructure | on LimestoneSeam 97, 43, 1; open NSEW (1) | 78 / 0 | 0 |
@@ -543,9 +543,9 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S3 | LaunchPad | Starting terrace (alternative; highest legal level) | 86, 154, 15 Cw0 | flat | alternative; open NESW (2) | 1 / 0 | 0 |
 | S4 | DeepDrill | Bench drill | 131, 139, 9 Cw0 | flat | open NESW (1) | 54 / 0 | 0 |
 | S5 | DeepDrill | Basin Rim drill | 155, 102, 11 Cw0 | flat | open NEW (1) | 115 / 0 | 0 |
-| S6 | DeepMine | Lower Basin mine | 167, 113, 3 Cw0 | understructure | on DeepOreVein 169, 114, 3; open NESW (1) | 114 / 0 | 0 |
-| S7 | DeepMine | Ruin Bench mine | 145, 126, 11 Cw0 | understructure | on DeepOreVein 147, 127, 11; open NESW (1) | 79 / 0 | 0 |
-| S8 | DeepMine | Upper Bench mine | 110, 163, 11 Cw0 | understructure | on DeepOreVein 112, 164, 11; open NESW (1) | 30 / 0 | 0 |
+| S6 | DeepMine | Lower Basin mine | 169, 114, 3 Cw0 | understructure | on DeepOreVein 169, 114, 3; open NESW (1) | 114 / 0 | 0 |
+| S7 | DeepMine | Ruin Bench mine | 147, 127, 11 Cw0 | understructure | on DeepOreVein 147, 127, 11; open NESW (1) | 79 / 0 | 0 |
+| S8 | DeepMine | Upper Bench mine | 112, 164, 11 Cw0 | understructure | on DeepOreVein 112, 164, 11; open NESW (1) | 30 / 0 | 0 |
 | S9 | LimestonePit | Limestone Pit, 12 cells north of the start | 81, 168, 15 Cw90 | pit | 1800 Limestone in range (3 deposits); open NSEW (1) | 6 / 0 | 0 |
 | S10 | SandstonePit | Sandstone Pit, 13 cells east of the start | 91, 148, 15 Cw0 | pit | 1800 Sandstone in range (3 deposits); open NSEW (1) | 7 / 0 | 12 |
 | S11 | LimestoneQuarry | Limestone Quarry, 92 cells south-east of the start | 147, 93, 12 Cw0 | understructure | on LimestoneSeam 150, 94, 12; open NSEW (1) | 118 / 0 | 0 |

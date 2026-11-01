@@ -31,9 +31,9 @@
   "sites": [
     {"template": "NuclearReactor.IronTeeth", "label": "West Bank flats (across the river from the start)", "x": 96, "y": 137, "z": 4, "orientation": "Cw90", "margin": 2, "openSides": ["N", "E", "S", "W"], "maxWaterDistance": 15},
     {"template": "LaunchPad.IronTeeth", "label": "North Hollow field", "x": 146, "y": 179, "z": 8, "orientation": "Cw0", "margin": 2, "openSides": ["N", "E", "S", "W"]},
-    {"template": "DeepMine.IronTeeth", "label": "South Bluff mine", "x": 155, "y": 95, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E"], "understructure": [156, 89, 6]},
-    {"template": "DeepMine.IronTeeth", "label": "East Terrace mine", "x": 185, "y": 123, "z": 8, "orientation": "Cw0", "margin": 1, "openSides": ["E"], "understructure": [187, 124, 8]},
-    {"template": "DeepMine.IronTeeth", "label": "North Hollow mine", "x": 162, "y": 158, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": [], "understructure": [164, 159, 6]},
+    {"template": "DeepMine.IronTeeth", "label": "South Bluff mine", "x": 156, "y": 93, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E"], "understructure": [156, 89, 6]},
+    {"template": "DeepMine.IronTeeth", "label": "East Terrace mine", "x": 187, "y": 124, "z": 8, "orientation": "Cw0", "margin": 1, "openSides": ["E"], "understructure": [187, 124, 8]},
+    {"template": "DeepMine.IronTeeth", "label": "North Hollow mine", "x": 164, "y": 159, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": [], "understructure": [164, 159, 6]},
     {"template": "DeepDrill.IronTeeth", "label": "South Riverbank drill", "x": 137, "y": 76, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "DeepDrill.IronTeeth", "label": "North-east Terrace drill", "x": 181, "y": 141, "z": 8, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "DeepDrill.IronTeeth", "label": "East Ridge drill", "x": 195, "y": 108, "z": 11, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},

@@ -28,8 +28,8 @@
   ],
   "sites": [
     {"template": "LaunchPad.IronTeeth", "label": "South Isle launch field", "x": 107, "y": 20, "z": 4, "orientation": "Cw0", "margin": 2, "openSides": []},
-    {"template": "DeepMine.IronTeeth", "label": "Neighbour Isle mine", "x": 111, "y": 127, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": ["E", "W"], "understructure": [112, 121, 5]},
-    {"template": "DeepMine.IronTeeth", "label": "North-east Highland mine", "x": 241, "y": 241, "z": 16, "orientation": "Cw0", "margin": 1, "openSides": [], "understructure": [243, 242, 16]},
+    {"template": "DeepMine.IronTeeth", "label": "Neighbour Isle mine", "x": 112, "y": 125, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": ["E", "W"], "understructure": [112, 121, 5]},
+    {"template": "DeepMine.IronTeeth", "label": "North-east Highland mine", "x": 243, "y": 242, "z": 16, "orientation": "Cw0", "margin": 1, "openSides": [], "understructure": [243, 242, 16]},
     {"template": "DeepDrill.IronTeeth", "label": "South-east Isle drill", "x": 195, "y": 34, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "DeepDrill.IronTeeth", "label": "South-west Isle drill", "x": 65, "y": 37, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "LimestonePit.IronTeeth", "label": "Limestone Pit, 13 cells south of the start", "x": 91, "y": 88, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
