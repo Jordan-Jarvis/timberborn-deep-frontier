@@ -2,19 +2,19 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Battery of three hooped timber-stave silos with teal cone caps, fed by a closed bucket elevator and a covered gallery.",
   "footprint": [
-    7,
-    5
+    4,
+    3
   ],
-  "heightLayers": 7,
+  "heightLayers": 5,
   "boundsMin": [
     -0.06,
     -0.265,
     -0.03
   ],
   "boundsMax": [
-    7.05,
-    5.05,
-    6.87
+    4.05,
+    3.05,
+    4.57
   ],
   "doors": [
     {
@@ -41,21 +41,21 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 2450,
+  "faces": 1974,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 692,
+    "BaseWood_DarkBrown.IronTeeth": 494,
     "IrregularPlanks_DarkBrown.IronTeeth": 108,
-    "BaseMetal.IronTeeth": 1343,
+    "BaseMetal.IronTeeth": 1073,
     "RoofPlanks.IronTeeth": 120,
     "Details.IronTeeth": 240,
-    "accent8": 20,
+    "accent8": 10,
     "accent25": 10,
     "Plaster_Orange.IronTeeth": 13,
     "IrregularPlanks_MetalForged.IronTeeth": 128,
-    "WindowsAtlas.IronTeeth": 98,
-    "PaintedMetal.IronTeeth": 386,
+    "WindowsAtlas.IronTeeth": 70,
+    "PaintedMetal.IronTeeth": 356,
     "IrregularPlanks_Grey.IronTeeth": 12
   },
-  "sourceHash": "6ccb94dc3f2cc18af446982cd419cb2d4e22bf9ae63b59b36af06956087c3c25",
-  "artHash": "7a87507b9de268e18fe6d39cd71555ade281759387b52a24f1443ddcb2be5308"
+  "sourceHash": "cec0304acccbe718c01d737b867b3b80a2d69686ba26eb59ef84f87d5c442444",
+  "artHash": "b46ea0ba9d3ade6c178ced722a2232e5de89b09b5f72f8ccaf1bae1283da1682"
 }

@@ -5,6 +5,9 @@
 - **Shorter, clearer building tooltips** (player feedback: they took half the screen): every Deep Frontier building description is now one or two short sentences saying what the building is for and the one thing to know before placing it (average 261 → 110 characters, longest 1,112 → 198). Numbers the tooltip already shows (cost, power, workers, recipes) are gone from the text; the pipe note is one short clause everywhere ("Pipes: valve set to Inlet."). The Deep Well now reads "make it flow up to 6 times stronger" instead of "1,667 hp at 1×", and the Human Record Cache says to build an Archive Excavation within 7 tiles. The smog and cryogenic lines in the tooltip are shorter too.
 - **New-game map notice** now says plainly what a map is missing, what it affects and what to do, and that the game can still be finished (for example the fishing line on Canyon: dam a clean river to 0.5 m beside a bank so the Gatherer Flag can fish).
 
+### Smaller works and mines (second shrink)
+- **Fertilizer Works** is 4x3, 5 high (was 7x5, 7 high): the two-storey composting hall with its flat timber roof, three silos in a row behind it, and the drier running from the firebox into the bucket elevator in the back corner. Same door, workers, power and recipes; its cost shifts by a few goods (more planks and logs, fewer gears) because the smaller model shows less metal.
+
 ## 0.8.1 (2026-10-31)
 
 ### Steel decks on legs

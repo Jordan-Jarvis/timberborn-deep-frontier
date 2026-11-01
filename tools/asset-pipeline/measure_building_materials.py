@@ -143,6 +143,10 @@ def main():
         ident = bp['TemplateSpec']['TemplateName'].removesuffix('.IronTeeth')
         if not bp.get('BuildingSpec', {}).get('BuildingCost') or ident in structures:
             continue
+        # Steel leg deck tools (structural_building_content.mjs legDeckBlueprints)
+        # place a real deck and columns; they have no model of their own.
+        if 'SteelDeckToolSpec' in bp:
+            continue
         model_name = bp['Children']['#Finished']['TimbermeshSpec']['Model']
         model = DATA / (model_name + '.timbermesh')
         if not model.is_file():

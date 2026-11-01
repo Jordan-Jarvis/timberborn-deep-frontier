@@ -339,26 +339,26 @@
   },
   "FertilizerWorks": {
    "model": "Buildings/Food/FertilizerWorks/FertilizerWorks.IronTeeth.Model",
-   "sha256": "e366da484c20d207941a98664e0231140e19a8e76afe7e6a48b19450590e6814",
+   "sha256": "1281c27fa3ba3c11dba3f7084cccbc5d3d88265a668da9929eea49d271905122",
    "areas": {
-    "BaseMetal.IronTeeth": 107.0242,
-    "BaseWood_DarkBrown.IronTeeth": 112.349,
-    "DFIndustrial08": 0.229,
+    "BaseMetal.IronTeeth": 49.7239,
+    "BaseWood_DarkBrown.IronTeeth": 67.2384,
+    "DFIndustrial08": 0.1145,
     "DFIndustrial25": 0.0784,
-    "Details.IronTeeth#metal": 1.8963,
-    "IrregularPlanks_DarkBrown.IronTeeth": 67.7732,
-    "IrregularPlanks_Grey.IronTeeth": 19.4,
-    "IrregularPlanks_MetalForged.IronTeeth": 44.3148,
-    "PaintedMetal.IronTeeth": 6.6429,
-    "Plaster_Orange.IronTeeth": 12.204,
-    "RoofPlanks.IronTeeth": 13.8375,
-    "WindowsAtlas.IronTeeth": 2.1161
+    "Details.IronTeeth#metal": 1.0063,
+    "IrregularPlanks_DarkBrown.IronTeeth": 36.1968,
+    "IrregularPlanks_Grey.IronTeeth": 12.5952,
+    "IrregularPlanks_MetalForged.IronTeeth": 20.6884,
+    "PaintedMetal.IronTeeth": 3.4468,
+    "Plaster_Orange.IronTeeth": 10.284,
+    "RoofPlanks.IronTeeth": 7.908,
+    "WindowsAtlas.IronTeeth": 1.5028
    },
    "families": {
-    "brick": 12.204,
-    "metal": 159.8783,
-    "unpriced": 2.4235,
-    "wood": 213.3597
+    "brick": 10.284,
+    "metal": 74.8654,
+    "unpriced": 1.6957,
+    "wood": 123.9383
    }
   },
   "FishHatchery": {

@@ -319,9 +319,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 6182,
-   "vertices": 11654,
-   "construction": 6182,
+   "finished": 5176,
+   "vertices": 9770,
+   "construction": 5176,
    "file": "outputs/lategame-integration/Data/Buildings/Food/FertilizerWorks/FertilizerWorks.IronTeeth.Model.timbermesh"
   },
   "FishHatchery": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 845434,
+ "totalBlueprintTriangles": 844428,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }
