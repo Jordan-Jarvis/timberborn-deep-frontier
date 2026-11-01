@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 755398,
+ "totalBlueprintTriangles": 747238,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

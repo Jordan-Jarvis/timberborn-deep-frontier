@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Smaller civic buildings (second shrink)
+- **Restaurant** is 6x5, 3 high (was 9x7, 5 high): the dining room over the hall and kitchen, the front and side dining balconies, and open roof decks with tables on top. All 7 tables and 14 seats stay, sized for seated beavers. Same door and entrance. Paths on its old rear, outer and upper decks and the roof terrace need re-placing.
+- **Materials Laboratory** is 5x4, 3 high (was 10x8, 5 high): the sawtooth testing hall, the entrance annex with an open roof terrace, the press and the instrument tower. Same door, workers, power and recipe.
+- **Fish Hatchery** is 5x5, 3 high (was 7x7): the headhouse, the pump canopy and two 2x2 pens with the dock between them. Same door, pens' water rules, workers and power. Its pens sit one row nearer the bank; reconnect a pipe at its new inlet.
+- **Build costs** of the Grocery Store, Restaurant, Fishery Works, Fish Hatchery and Materials Laboratory are what they were before the shrink.
+
 ### Smaller works and mines (second shrink)
 - **Sandstone and Limestone Quarries** are 5x5 (were 8x6) and cover their Deep Seam exactly: the stone plinth with the headframe, winding house and sorting line, the operator cabin with the door in the front-left corner and a narrow tool room. **Existing quarries move onto their seam when a save loads** (their door moves: reconnect the path). Same workers, power and output; the cost shifts slightly with the smaller model.
 - **Deep Drill** is 4x4, 7 high (was 7x6, 8 high): the pump house with the door, the engine room under the drill floor with the boarded tower, and the mud pump at the back. Same door, workers, power and drill-bit upkeep; its cost is recomposed from the smaller model.
