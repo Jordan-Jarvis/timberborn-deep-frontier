@@ -1,6 +1,6 @@
 {
   "scope": "Candidate export checks; actual native operation remains to test",
-  "modelSha256": "2222563cf400203fd86410320ada1857e888bb63eca470bb6209efe0f435b46d",
+  "modelSha256": "2009f92138f30b1db5383e8af26ef1f5272853d5c4d3f2eb25af4bcda38ef698",
   "nodes": 10,
   "animationTracks": [
     [
@@ -16,10 +16,10 @@
       121
     ]
   ],
-  "nativeUvVertices": 27746,
-  "connectedRouteCells": 14,
+  "nativeUvVertices": 20185,
+  "connectedRouteCells": 2,
   "railOpenings": 0,
-  "terraceSupportCells": 9,
+  "terraceSupportCells": 0,
   "scienceUnlock": 12000,
   "sciencePerBatch": 800,
   "powerDemandHp": 6500,

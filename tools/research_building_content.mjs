@@ -56,22 +56,18 @@ export async function researchContent() {
       }
     };
     // Occupancy follows the registered shell (materials_laboratory_geometry.py):
-    // cast bases on tile edges, upper storeys set back on them.
-    // 2026-10-30 compaction: one-layer cast bases, terrace and records office
-    // at layer 1 under a flat roof, lower sawtooth sheds, tower and press.
-    region([0,0,0],[2,6,0],'All'); // Cast records wing and terrace foundation.
-    region([0,3,1],[2,6,1],'All'); // Enclosed records room under its flat roof.
-    region([3,1,0],[7,7,1],'All'); // Closed testing hall on its cast base (x 3..8, y 1..8).
-    // Sloping roof occupancy follows each sawtooth: the front roof over rows
-    // 1..3, the step facade and rear roof over rows 4..7.
-    for(let x=3;x<=7;x++) {
-      region([x,1,2],[x,3,[3,2,2,2,2][x-3]],'All');
-      region([x,4,2],[x,7,[3,3,3,3,2][x-3]],'All');
-    }
-    region([8,1,0],[9,2,2],'All'); // Test press on its 2x2 plinth.
-    region([8,5,0],[9,6,4],'All'); // Instrument tower on its 2x2 plinth.
-    // No forced decoration beyond the walls (2026-10-22): the outdoor shelves,
-    // planters, barrel and crate are gone; their cells are open ground.
+    // cast bases on tile edges, the upper hall set back on its base.
+    // Second shrink pass (2026-11-01, 10x8x5 -> 5x4x3): entrance annex in
+    // front (its roof the terrace), the sawtooth testing hall on a 3x3 base,
+    // the press and the instrument tower on their plinths in the right column.
+    region([0,0,0],[2,0,0],'All'); // Cast entrance annex; the terrace above it stays free.
+    region([0,1,0],[2,3,1],'All'); // Closed testing hall on its cast base (x 0..3, y 1..4).
+    // Sloping roof occupancy: the front shed over row 1 where it rises above
+    // layer 2 (x 0..1), the step facade and the rear shed over rows 2..3.
+    region([0,1,2],[1,1,2],'All');
+    region([0,2,2],[2,3,2],'All');
+    region([3,0,0],[4,1,2],'All'); // Test press on its 2x2 plinth.
+    region([3,2,0],[4,3,2],'All'); // Instrument tower on its 2x2 plinth.
     const interior=new Set(d.interiorCells.map(c=>c.join(',')));
     // Player-placed-path terrace (2026-10-30): the deck cells stay free; the
     // slab under each is a stackable roof deck (native floors, player paths).
@@ -101,30 +97,32 @@ export async function researchContent() {
     // Access point on the ground door's casing face (tile edge y=0).
     v.BuildingAccessibleSpec={LocalAccess:xyz([1.5,0,0]),ForceOneFinalAccess:false};
     // Only the enclosed interior route is building navigation; the terrace is
-    // walked on native stackable floors and player paths, reached through the
-    // records office door link.
+    // walked on native stackable floors and player paths (no deck door link
+    // since the records office went, 2026-11-01).
     v.BlockObjectNavMeshSettingsSpec={NoAutoWalls:false,GenerateFloorsOnStackable:true,
       EdgeGroups:[...d.edges.filter(([a,c])=>interior.has(a.join(','))&&interior.has(c.join(','))).map(([a,c])=>({Cost:1,Group:{UseGroup:a[2]!==c[2],GroupName:a[2]!==c[2]?'DeepFrontierInterior':''},IsPath:true,
         AddedEdges:[{Start:xyz(a),End:xyz(c),IsTwoWay:true}]})),
-        {Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,AddedEdges:d.doorLinks.map(l=>({Start:xyz(l.Interior),End:xyz(l.Exterior),IsTwoWay:true}))},
+        ...(d.doorLinks.length?[{Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,AddedEdges:d.doorLinks.map(l=>({Start:xyz(l.Interior),End:xyz(l.Exterior),IsTwoWay:true}))}]:[]),
         {Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,AddedEdges:[{Start:xyz(d.entrance),End:xyz(doorOutside),IsTwoWay:true}]}],
       UnblockedCoordinates:[],BlockedEdges:[]};
     v.PlatformDeckSpec=await read(`outputs/research-integration/${b.id}-platform-deck.json`);
     // Shafts only where an authored wall closes the face (measured from the
-    // saved study); the three tested service sockets stay first.
+    // saved study); the two tested service sockets stay first: the hall
+    // base's left socket and its rear face (2026-11-01; the service bay
+    // between the press and the tower went with the 10x8 plan).
     const walls=(await read(`outputs/research-integration/${b.id}-wall-faces.json`)).walls;
     v.TransputProviderSpec={IgnoreRotation:false,Transputs:solidPowerFaces(blocks,d.size,{exclude:[d.entrance,doorOutside],walls,keep:[
-      {Coordinates:xyz([7,4,0]),Directions:'Right, Bottom',ReverseRotation:false},
-      {Coordinates:xyz([0,4,0]),Directions:'Left, Bottom',ReverseRotation:false},
-      {Coordinates:xyz([4,7,0]),Directions:'Up, Bottom',ReverseRotation:false}]})};
-    // Second point: the insulator bracket over the right-side service bay.
+      {Coordinates:xyz([0,2,0]),Directions:'Left, Bottom',ReverseRotation:false},
+      {Coordinates:xyz([1,3,0]),Directions:'Up, Bottom',ReverseRotation:false}]})};
+    // Second point: the insulator bracket on the hall's right wall over the
+    // press plinth (2026-11-01; was over the service bay).
     // Timber Pipes 11.4.0: with no BuildingPipeTargetPortsSpec the default
     // connection provider accepts any face, provided the building holds a
     // liquid good. Recipe Water supplies that; no port is authored, so a pipe
     // may meet any side (the tower's bay socket marks the intended spot).
-    // Heights follow the one-layer bases and the lower insulator bracket (2026-10-30).
+    // First point: the hall base's left side, over the shaft socket.
     // Power Lines (optional mod): returned as its integration modifier below.
-    const integrations={PowerLines:{PowerLineSpec:{ConnectionLocations:[xyz([.18,6.65,.84]),xyz([8.205,3.5,2.06])]}}};
+    const integrations={PowerLines:{PowerLineSpec:{ConnectionLocations:[xyz([.18,2.85,.84]),xyz([3.205,1.85,2.06])]}}};
     v.TransformSlotInitializerSpec={Slots:[{SlotKeyword:'Entrance',Animation:'ForcedIdle',Inanimate:false,RandomizeYRotation:false,WaterSlot:false}]};
     v.PlaceableBlockObjectSpec={ToolGroupId:'Science',ToolOrder:100,ToolShape:'Square',Layout:'Single',
       CustomPivot:{HasCustomPivot:false,Coordinates:xyz([0,0,0])},CanBeAttachedToTerrainSide:false,DevModeTool:false};

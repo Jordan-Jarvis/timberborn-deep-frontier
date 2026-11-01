@@ -436,9 +436,9 @@
    "family": "research",
    "class": "grand",
    "target": 20000,
-   "finished": 15684,
-   "vertices": 32362,
-   "construction": 15684,
+   "finished": 10192,
+   "vertices": 20638,
+   "construction": 10192,
    "file": "outputs/research-integration/Data/Buildings/Science/MaterialsLaboratory/MaterialsLaboratory.IronTeeth.Model.timbermesh"
   },
   "MissionControl": {

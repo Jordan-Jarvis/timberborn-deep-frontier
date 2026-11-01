@@ -37,12 +37,12 @@ assert smoke==[]
 for spec in ('TemplateAttachmentsSpec','WorkshopParticleControllerSpec','SmogEmitterSpec'):
     assert spec not in bp, spec
 def cell(d):return tuple(d[k] for k in ('X','Y','Z'))
-# 10x8 since the outdoor shelves and planters went (2026-10-22); 5 high
-# since the one-layer storeys (2026-10-30).
-assert cell(bp['BlockObjectSpec']['Size'])==(10,8,5)
-blocks=bp['BlockObjectSpec']['Blocks'];assert len(blocks)==400
+# 5x4x3 since the second shrink pass (2026-11-01; 10x8x5 before, 10x8x9
+# before the 2026-10-30 compaction).
+assert cell(bp['BlockObjectSpec']['Size'])==(5,4,3)
+blocks=bp['BlockObjectSpec']['Blocks'];assert len(blocks)==60
 def block(c):
-    x,y,z=c;return blocks[(z*8+y)*10+x]
+    x,y,z=c;return blocks[(z*4+y)*5+x]
 routes={tuple(n['cell']) for n in layout['nodes']};graph={c:set() for c in routes}
 for a,b in layout['edges']:
     a,b=tuple(a),tuple(b);assert a in routes and b in routes
@@ -55,8 +55,8 @@ while pending:
     visited.add(c);pending.extend(graph[c]-visited)
 assert visited==routes and {tuple(c) for c in layout['doorNodes']}<=visited
 # Player-path terrace deck since 2026-10-30 (every flat roof tile placeable):
-# the terrace cells are free over stackable slabs, the rails open on player
-# paths, the records office door is the deck door link.
+# the terrace cells are free over stackable slabs. Since the records office
+# went (2026-11-01) the terrace is the annex roof with no deck door link.
 assert layout['deckMode']=='PlayerPlacedPaths' and 'BuildingWalkwaySpec' not in bp
 interior={tuple(c) for c in layout['interiorCells']}
 for n in layout['nodes']:

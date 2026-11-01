@@ -1,7 +1,7 @@
 {
  "ident": "MaterialsLaboratory",
  "source": "src/DeepFrontier/Art/Source/MaterialsLaboratory-ReferenceStudy.blend",
- "sourceSha256": "675efcde9bbf93efc136b80729da76c66f8e6830fa335145f4814f160ed41100",
+ "sourceSha256": "60eb0fa45bbce679e7d40075e5256e5aa3d69550fe26da958816fa6a9b6f10d5",
  "frame": 1,
  "layout": "tools/research-layouts.json",
  "origin": [
@@ -11,10 +11,10 @@
  ],
  "baseZ": 0,
  "footprint": [
-  10,
-  8
+  5,
+  4
  ],
- "height": 5,
+ "height": 3,
  "coordinateSystem": "Native grid XYZ, Z up: authored artwork + registration origin (the late-game registration frame)",
  "smokeEmitters": [],
  "sceneCheck": {

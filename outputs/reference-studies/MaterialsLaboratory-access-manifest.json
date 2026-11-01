@@ -14,20 +14,6 @@
       ],
       "width": 1.0,
       "internalConnection": "BuildingInterior"
-    },
-    {
-      "id": "TerraceDoor",
-      "position": [
-        1.5,
-        3.0,
-        1
-      ],
-      "outward": [
-        0,
-        -1
-      ],
-      "width": 1.0,
-      "internalConnection": "BuildingInterior"
     }
   ],
   "deckLayer": 2,

@@ -2,7 +2,7 @@
 
 Stepped sawtooth testing halls, enclosed records wing, cast foundations,
 instrument tower and a working screw press. Artwork sets the envelope; no
-top-view or printed footprint is consulted. The public terrace is layer two.
+top-view or printed footprint is consulted. The public terrace is layer one.
 
 2026-10-30 compaction (user: "currently we have two layers between floors,
 we should reduce it to one"; flat roofs): the cast bases are one layer, the
@@ -10,6 +10,13 @@ public terrace is layer one, the records office is one layer under a flat
 cast roof, and the sawtooth testing hall, instrument tower and press are
 lower. The sawtooth sheds stay: they are the laboratory's silhouette.
 10x8x9 -> 10x8x5.
+
+Second shrink pass (2026-11-01, user: "shrink the buildings down even
+more"): 10x8x5 -> 5x4x3. The sawtooth testing hall on a 3x3 cast base, a
+one-tile entrance annex in front of it with the ground door (same door
+cell) and the terrace on its roof, the press and the instrument tower on
+their 2x2 plinths in the right column. The records office and its terrace
+door went; the tower is lower.
 """
 import math
 import random
@@ -33,11 +40,13 @@ from lategame_kit import emitter
 # pipe flanges, lean valve wheels and gauges, 12-24 sides on round parts.
 
 
-def concrete_course(g,x0,y0,x1,y1,top,door=None,cap=True,*,left_wall=True,left_straps=True,front_from=None,back_from=None):
+def concrete_course(g,x0,y0,x1,y1,top,door=None,cap=True,*,left_wall=True,left_straps=True,front_from=None,back_from=None,strap_rows=None):
     """Closed cast shell with narrow recessed joints and steel corner straps.
 
     front_from/back_from start the front/back wall at another x (a plinth
     abutting a neighbour's wall: cover its corner, never share its footprint).
+    strap_rows limits the corner straps to those wall lines (y0 and/or y1),
+    where the other corner meets a neighbouring course's own strap.
     """
     wall_top=top-.16
     for row in range(math.ceil(wall_top/.47)):
@@ -69,7 +78,7 @@ def concrete_course(g,x0,y0,x1,y1,top,door=None,cap=True,*,left_wall=True,left_s
     # two-layer course would overlap there.
     straps=((.45,.46),(top-.4,.46)) if top>=1.5 else ((top/2,min(.46,top-.30)),)
     for x in ((x0,x1) if left_straps else (x1,)):
-        for y in (y0,y1):
+        for y in ((y0,y1) if strap_rows is None else strap_rows):
             for z,h in straps:
                 g.box((x,y,z),(.24,.24,h),IRON)
 
@@ -128,7 +137,9 @@ def slope_facade(g,x0,x1,y,bottom,left,right,seed,tall_windows,outward=-1):
               [(0,1,2,3),(7,6,5,4),(0,4,5,1),(1,5,6,2),(2,6,7,3),(3,7,4,0)],PLANK)
     # The base rail butts between the corner stiles; its end caps do not
     # occupy the same plane as the plank end caps.
-    girder(g,(x0+.11,y-.12,bottom+.04),(x1-.11,y-.12,bottom+.04))
+    # On the low step facade (2026-11-01) the base rail's plates would meet
+    # the top rail's: it has none (it sits behind the front shed roof).
+    girder(g,(x0+.11,y-.12,bottom+.04),(x1-.11,y-.12,bottom+.04),plate_stations=(.12,.88) if bottom<=1 else ())
     girder(g,(x0,y-.12,left-.08),(x1,y-.12,right-.08))
     for i in range(5):
         x=x0+(x1-x0)*i/4
@@ -253,92 +264,75 @@ def specimen_shelf(g,x,y,width=2.8,*,awning_back=None):
 
 
 # Native-grid registration of the shell (art XY = grid XY, origin 0).
-# Cast bases have their outer faces on tile edges; the timber upper hall
-# stands back from its base so its frame, braces and roof trim stay inside
-# the occupied cells (within a 12 cm edge sliver).
-HALL_BASE=(3.0,1.0,8.0,8.0)            # x0,y0,x1,y1 outer faces
-HALL_X0,HALL_X1=3.18,7.85              # upper side board planes
-HALL_FRONT,HALL_STEP,HALL_REAR=1.32,4.30,7.30
-ROOF_X0,ROOF_X1=3.04,7.98
+# Second shrink pass (2026-11-01, 10x8x5 -> 5x4x3): the testing hall stands
+# on a 3x3 cast base (x 0..3, y 1..4) behind a one-tile entrance annex
+# (x 0..3, y 0..1, the ground door and the terrace on its roof); the press
+# and the instrument tower keep their 2x2 plinths in the right column (press
+# in front, y 0..2; tower behind, y 2..4). The timber upper hall stands back
+# from its base so its frame, braces and roof trim stay inside the occupied
+# cells (within a 12 cm edge sliver at the sides, 32/38 cm front and rear).
+HALL_BASE=(0.0,1.0,3.0,4.0)            # x0,y0,x1,y1 outer faces
+HALL_X0,HALL_X1=.18,2.85               # upper side board planes
+HALL_FRONT,HALL_STEP,HALL_REAR=1.32,2.47,3.62
+ROOF_X0,ROOF_X1=.04,2.98
+STEP_BOTTOM=2.05                       # sawtooth step facade sill (was 2.43)
+TOWER_SCALE=.36                        # instrument tower heights (was .62)
 
 
-# One-layer cast base (2026-10-30): the sheds start a layer lower and fall
-# less steeply (were 6.62..4.75 and 7.58..5.71).
+# Lower and shorter sheds (2026-11-01, were 3.10..2.35 and 3.60..2.85 over
+# 4.86): the whole hall stays under three layers.
 def front_roof_z(x):
-    return 3.10+(2.35-3.10)*(x-2.98)/4.86
+    return 2.42+(1.97-2.42)*(x+.02)/2.94
 
 
 def rear_roof_z(x):
-    return 3.60+(2.85-3.60)*(x-2.98)/4.86
+    return 2.90+(2.45-2.90)*(x+.02)/2.94
 
 
-def service_bay(g):
-    """Player service bay between the press and the instrument tower.
+def service_fittings(g):
+    """Power Lines bracket and the Timber Pipes inlet (2026-11-01: the open
+    service bay between the press and the tower went with the 10x8 plan).
 
-    Grid cells (8..9, 3..4, 0..) stay unoccupied for player-built shafts,
-    conveyors and Power Lines. The hall wall facing it carries the native
-    shaft socket (transput (7,4,0) Right), a conveyor intake hatch on cell
-    (7,3,0) and a Power Lines insulator bracket; nothing is built inside it.
-    Every fitting stays within 12 cm of the x=8 tile edge.
+    The insulator bracket stands on the hall's right upper wall over the
+    press plinth's back half (PowerLineSpec point at the top insulator); the
+    water inlet socket is on the tower plinth's rear face. Timber Pipes
+    accepts any face; the socket marks the spot.
     """
-    wall=HALL_BASE[2]         # outer face of the hall's cast base: tile edge x=8
     upper=HALL_X1+.055        # outer face of the upper hall boards
-    # Conveyor intake: steel-framed hatch with a dark recess and a short lip
-    # at belt height, centred on cell (7,3,0)'s right face.
-    g.box((wall+.025,3.5,.47),(.05,.78,.74),IRON)
-    g.box((wall+.056,3.5,.47),(.012,.6,.56),KILN_SOOT)
-    # Rails stand 15 mm proud of the stiles; stile ends sit inside the rails.
-    for z in (.12,.84):g.box((wall+.065,3.5,z),(.08,.86,.06),CIVIC_FORGED_PANEL)
-    for yy in (3.08,3.92):g.box((wall+.06,yy,.48),(.07,.06,.74),CIVIC_FORGED_PANEL)
-    g.box((wall+.06,3.5,.17),(.12,.62,.035),IRON)
-    # Power Lines connection: bracket arm with three insulators on the upper
-    # hall wall (PowerLineSpec point at the top insulator).
-    g.box((upper+.03,3.5,1.75),(.06,.30,.30),IRON)
-    g.beam((upper+.05,3.5,1.75),(upper+.30,3.5,1.75),.07,mat=IRON)
-    for dz in (0,.09,.18):g.cylinder((upper+.30,3.5,1.80+dz),.045,.06,BRASS,'Z',8)
-    g.cylinder((upper+.30,3.5,2.06),.02,.06,IRON,'Z',6)
-    # Water inlet socket on the tower plinth's bay face (the y=5 tile edge),
-    # at ground-pipe height. Timber Pipes accepts any face; this marks the spot.
-    face,wx=5.0,9.6
-    round_pipe(g,[(wx,face+.15,.2),(wx,face-.06,.2)],.08)
-    # Unchanged by the triangle budget: this socket's cell face (9,5,0 Down)
-    # is a registered connection face (measure_connection_faces.py).
-    g.ring((wx,face-.03,.2),.13,.05,.05,BRASS,'Y',16)
-    g.wheel((wx,face-.035,.42),.11,'Y',IRON,BRASS)
-    g.beam((wx,face-.035,.28),(wx,face-.035,.36),.03,mat=IRON)
+    g.box((upper+.03,1.85,1.75),(.06,.30,.30),IRON)
+    g.beam((upper+.05,1.85,1.75),(upper+.30,1.85,1.75),.07,mat=IRON)
+    for dz in (0,.09,.18):g.cylinder((upper+.30,1.85,1.80+dz),.045,.06,BRASS,'Z',8)
+    g.cylinder((upper+.30,1.85,2.06),.02,.06,IRON,'Z',6)
+    face,wx=4.0,4.6
+    round_pipe(g,[(wx,face-.15,.2),(wx,face+.06,.2)],.08)
+    g.ring((wx,face+.03,.2),.13,.05,.05,BRASS,'Y',16)
+    g.wheel((wx,face+.035,.42),.11,'Y',IRON,BRASS)
+    g.beam((wx,face+.035,.28),(wx,face+.035,.36),.03,mat=IRON)
 
 
-def instrument_tower(g,x,y,*,base=None):
-    """Instrument tower on its cast plinth.
+def instrument_tower(g,x,y,*,base):
+    """Instrument tower on its cast plinth, which abuts the hall: no left
+    wall or straps, and its own cap starts where the hall's cap ends.
 
-    `base` gives explicit wall centrelines (x0,y0,x1,y1) for a plinth that
-    abuts the hall: no left wall or straps, and its own cap starts where the
-    hall's cap ends (the hall's x=8 face) so the two tops never overlap.
+    Second shrink pass (2026-11-01): heights over the plinth top scaled
+    TOWER_SCALE (was .62) so the tower stays under three layers; the barrel,
+    bands, ribs, cap and fittings keep their plan proportions. The down pipe
+    on the plinth's front face went (that face now abuts the press plinth).
     """
-    # One-layer plinth (2026-10-30): the barrel, its bands, cap and fittings
-    # keep their proportions, scaled .62 in height from the plinth top.
-    def f(z):return 1+(z-2)*.62
-    if base is None:
-        concrete_course(g,x-.78,y-.78,x+.78,y+.78,1,left_straps=False)
-        front_face=y-.955
-    else:
-        bx0,by0,bx1,by1=base
-        concrete_course(g,bx0,by0,bx1,by1,1,cap=False,left_wall=False,left_straps=False,
-                        front_from=bx0+.075,back_from=bx0+.075)
-        cap_x0,cap_x1=bx0+.075,bx1+.075
-        g.box(((cap_x0+cap_x1)/2,(by0+by1)/2,.92),(cap_x1-cap_x0,by1-by0+.15,.16),CIVIC_CONCRETE)
-        front_face=by0-.075
-    # The barrel stands on the plinth cap (top z=1).
-    # 24 sides (was 32); the hoops lose their buried inner face and their
-    # sixteen 3 cm rivets each (sub-pixel at normal zoom).
-    g.cylinder((x,y,f(4.165)),.61,4.33*.62,IRON,'Z',24)
+    def f(z):return 1+(z-2)*TOWER_SCALE
+    bx0,by0,bx1,by1=base
+    concrete_course(g,bx0,by0,bx1,by1,1,cap=False,left_wall=False,left_straps=False,
+                    front_from=bx0+.075,back_from=bx0+.075,strap_rows=(by1,))
+    cap_x0,cap_x1=bx0+.075,bx1+.075
+    g.box(((cap_x0+cap_x1)/2,(by0+by1)/2,.92),(cap_x1-cap_x0,by1-by0+.15,.16),CIVIC_CONCRETE)
+    g.cylinder((x,y,f(4.165)),.61,4.33*TOWER_SCALE,IRON,'Z',24)
     for z in (2.20,3.15,4.40,5.55,6.20):
         band(g,(x,y,f(z)),.65,.06,.11,BRASS,'Z',24)
     for i in range(12):
         a=i*math.tau/12
         g.beam((x+math.cos(a)*.612,y+math.sin(a)*.612,f(2.36)),
                (x+math.cos(a)*.612,y+math.sin(a)*.612,f(6.10)),.016,mat=BRASS)
-    g.cylinder((x,y,f(6.66)),.91,.42,ROOF,'Z',16,.09)
+    g.cylinder((x,y,f(6.66)),.91,.32,ROOF,'Z',16,.09)
     g.ring((x,y,f(6.36)),.92,.055,.07,IRON,'Z',16)
     for i in range(12):
         a=i*math.tau/12
@@ -348,29 +342,24 @@ def instrument_tower(g,x,y,*,base=None):
         gauge(g,x+.32,y-.65,f(z),r)
     for offset in (-.72,.72):
         flanged_pipe(g,[(x+offset,y-.20,.60),(x+offset,y-.20,f(5.65)),(x+offset*.5,y-.20,f(5.65))],.055)
-        for z in (1.2,2.65,4.9):g.box((x+offset,y-.2,f(z)),(.17,.18,.06),IRON)
+        for z in (2.65,4.9):g.box((x+offset,y-.2,f(z)),(.17,.18,.06),IRON)
         handwheel(g,(x+offset,y-.37,f(2.85)),.13,'Y',IRON,BRASS)
-    # Header pipe runs onto the hall's right eave, just above the rear roof
-    # edge (2.85), clear of its girder.
-    flanged_pipe(g,[(x-.60,y,2.98),(x-1.05,y,2.98),(x-1.05,y-1,2.98)],.11)
-    front=front_face+.02   # half set into the plinth face: flanges stay within 11 cm
-    # Down the plinth's bay face in the x=9 column, high enough to pass over
-    # the water inlet socket.
-    flanged_pipe(g,[(x+.2,y-.60,1.30),(x+.2,front,1.30),(x+.2,front,.75),(x+.95,front,.75)],.085,16)
+    # Header pipe onto the hall's right eave, just above the rear roof edge,
+    # over the rear shed only.
+    zh=rear_roof_z(ROOF_X1)+.13
+    flanged_pipe(g,[(x-.60,y,zh),(x-1.05,y,zh),(x-1.05,y-.5,zh)],.11)
 
 
-def testing_press(g,parts,x,y,*,base=None,flywheel_x=None):
-    # Lower press on a lower plinth (2026-10-30): heights over the plinth
-    # scaled .62 (h), the ram's stroke .14 (animate_press).
+def testing_press(g,parts,x,y,*,base,flywheel_x,flywheel_y):
+    # Heights over the plinth scaled .62 (h), the ram's stroke .14 (animate_press).
     def h(z):return .80+(z-1.55)*.62
-    bx0,by0,bx1,by1=(x-.72,y-.65,x+1,y+.75) if base is None else base
-    # With an explicit base the front wall covers the hall's corner and the
-    # back wall starts at the hall's face.
-    concrete_course(g,bx0,by0,bx1,by1,.80,cap=base is None,left_wall=False,left_straps=False,
-                    back_from=None if base is None else bx0+.075)
-    if base is not None:
-        # Own cap from the hall's x=8 face outward: never inside its wall.
-        g.box(((bx0+.075+bx1+.075)/2,(by0+by1)/2,.80-.08),(bx1-bx0,by1-by0+.15,.16),CIVIC_CONCRETE)
+    bx0,by0,bx1,by1=base
+    # The front wall covers the annex's corner; the back wall starts at the
+    # hall's face.
+    concrete_course(g,bx0,by0,bx1,by1,.80,cap=False,left_wall=False,left_straps=False,
+                    back_from=bx0+.075)
+    # Own cap from the hall's x=3 face outward: never inside its wall.
+    g.box(((bx0+.075+bx1+.075)/2,(by0+by1)/2,.80-.08),(bx1-bx0,by1-by0+.15,.16),CIVIC_CONCRETE)
     for xx in (x-.78,x+.78):
         girder(g,(xx,y-.1,h(1.6)),(xx,y-.1,h(4.56)),.24)
         g.box((xx,y,h(1.62)),(.48,.51,.14),IRON)
@@ -395,59 +384,42 @@ def testing_press(g,parts,x,y,*,base=None,flywheel_x=None):
     parts.append((ram,'LAB_PRESS',1))
     gauge(g,x-.94,y-.18,h(3.22),.12)
     flanged_pipe(g,[(x-.95,y+.25,h(1.8)),(x-.95,y+.25,h(3.8)),(x-.2,y+.25,h(3.8))],.05)
-    fx=x-1.40 if flywheel_x is None else flywheel_x
-    # The flywheel's rim clears the hall's one-layer base cap (top z=1).
-    fz=1.0+.73-.04
-    fly=Geometry('MaterialsLaboratory.Flywheel',(fx,y+.30,fz))
-    fly.wheel((fx,y+.30,fz),.69,'Y',IRON,BRASS)
-    fly.ring((fx,y+.30,fz),.73,.09,.19,IRON,'Y',24)
+    # The flywheel turns inside the testing hall, behind its front glazing,
+    # on the hall floor (the base cap, top z=1); its rim clears the cap.
+    # Radius .50 (was .73) so it stays under the lower front shed roof.
+    fx,fy=flywheel_x,flywheel_y
+    fz=1.0+.50-.04
+    fly=Geometry('MaterialsLaboratory.Flywheel',(fx,fy,fz))
+    fly.wheel((fx,fy,fz),.46,'Y',IRON,BRASS)
+    fly.ring((fx,fy,fz),.50,.065,.19,IRON,'Y',24)
     parts.append((fly,'Y',-1))
-    g.cylinder((fx,y+.43,fz),.10,.57,IRON,'Y',12)
-    for xx in (fx-.25,fx+.25):g.box((xx,y+.48,(1.0+fz)/2),(.15,.30,fz-1.0),IRON)
+    g.cylinder((fx,fy+.13,fz),.10,.57,IRON,'Y',12)
+    for xx in (fx-.20,fx+.20):g.box((xx,fy+.18,(1.0+fz)/2),(.15,.30,fz-1.0),IRON)
 
 
 def laboratory(g,parts):
     rails=RailAssembly('MaterialsLaboratory.Rail',cap_material=IRON)
-    # Cast lower records wing and broad front terrace; no integral stairs.
-    # Outer faces: x=0, y=0.015 (behind the door casing on the y=0 edge),
-    # x=2.975 and y=7.
-    concrete_course(g,.075,.09,2.90,6.925,1,(1.5,1.0,1.0),cap=False)
+    # Cast entrance annex (x 0..3, y 0..1), the terrace on its roof; no
+    # integral stairs. Outer faces: x=0, y=0.015 (behind the door casing on
+    # the y=0 edge), x=2.975 and y=1.
+    concrete_course(g,.075,.09,2.90,.925,1,(1.5,1.0,1.0),cap=False,strap_rows=(.09,))
     # The cast opening and terrace slab already form the reveal and sill, so
     # the portal omits its own cavity faces (no duplicate surfaces). The
     # casing face lies on the y=0 tile edge, centred on tile x=1.
     building_portal(g,1.5,0.0,0,facade='grid')
     g.doorways.append({'id':'GroundDoor','position':[1.5,0.0,0],'outward':[0,-1],'width':1.0,'internalConnection':'BuildingInterior'})
-    # Cast records base: sturdy nine-pane grids front, high archive bands side.
     for x in (.52,2.48):atlas_window(g,x,.015,.48,.44,'front','grid9')
-    for y in (1.45,3.6,5.8):atlas_window(g,0.0,y,.52,.72,'left','band4')
+    atlas_window(g,0.0,.52,.52,.56,'left','band4')
     # Door lamps beside the entrance, arms on the wall face.
     for x in (1.09,1.91):cage_lamp(g,x,-.035,.62)
-    # Floor edges sit on whole cell boundaries, and the nine middle cells stay clear.
-    g.box((1.4975,1.5,.905),(2.995,3,.13),CIVIC_CONCRETE)
-    g.box((1.4875,5.0,.92),(2.975,4.0,.16),CIVIC_CONCRETE)
-    for i in range(14):g.box((.11+i*2.78/13,1.50,.985),(.185,2.85,.03),PLANK)
-    # No terrace rails (2026-10-31 roof pass, user: no railings on the roofs, "like
-    # an actual platform where roads can connect"): the terrace is open to its
-    # tile edges, a one-layer drop as on a vanilla platform.
-    framed_room(g,.27,3.10,2.73,6.55,1,2.0,3,(1.5,1.0,1.0),wall_style='storey')
-    building_portal(g,1.5,3.00,1,facade='grid')
-    g.doorways.append({'id':'TerraceDoor','position':[1.5,3.00,1],'outward':[0,-1],'width':1.0,'internalConnection':'BuildingInterior'})
-    # Flat cast roof (2026-10-30; the gable roof is gone): its top is the
-    # layer-2 cell boundary, its forged fascia on the slab edges.
-    g.box((1.50,4.825,1.94),(2.62,3.61,.12),CIVIC_CONCRETE)
-    for yy in (3.0,6.65):g.box((1.50,yy,1.94),(2.64,.04,.08),IRON)
-    for xx in (.17,2.83):g.box((xx,4.825,1.94),(.04,3.61,.08),IRON)
-    # Records office: lancets either side of the terrace door, framed
-    # crosses along the side.
-    # Centred in framed_room's bays: front posts .27/1.09/1.91/2.73 (door
-    # between), side posts 3.10/4.25/5.40/6.55.
-    for x in (.68,2.32):window(g,x,3.04,1.47,.55,'front','lancet')
-    for y in (3.675,4.825,5.975):atlas_window(g,.21,y,1.50,.40,'left','cross')
-    # The office's two front lamps went (2026-10-30): one layer up they hung
-    # in the terrace's walking headroom.
-    # The roof terrace stays clear, usable space: no planters or decor on its
-    # walkable cells (user rule, 2026-10-21); only wall-mounted lamps above.
-    # Main hall: cast base on the x=3..8, y=1..8 tile edges; enclosed
+    # Terrace: the annex roof, on whole cell boundaries, open to its tile
+    # edges (no rails, 2026-10-31) and clear of decor; a platformable roof
+    # deck in front of the testing hall's glazing.
+    g.box((1.4975,.5,.905),(2.995,1.0,.13),CIVIC_CONCRETE)
+    for i in range(14):g.box((.11+i*2.78/13,.50,.985),(.185,.85,.03),PLANK)
+    # (The records office, its terrace door and flat cast roof went in the
+    # second shrink pass, 2026-11-01.)
+    # Main hall: cast base on the x=0..3, y=1..4 tile edges; enclosed
     # sawtooth upper hall set back on its plinth.
     bx0,by0,bx1,by1=HALL_BASE
     concrete_course(g,bx0+.075,by0+.075,bx1-.075,by1-.075,1)
@@ -456,71 +428,46 @@ def laboratory(g,parts):
     left_front=front_roof_z(HALL_X0)-.032
     left_rear=rear_roof_z(HALL_X0)-.032
     slope_facade(g,HALL_X0,HALL_X1,HALL_FRONT,1,left_front,right_front,220,True)
-    slope_facade(g,HALL_X0,HALL_X1,HALL_STEP,2.43,left_rear,right_rear,221,False)
+    slope_facade(g,HALL_X0,HALL_X1,HALL_STEP,STEP_BOTTOM,left_rear,right_rear,221,False)
     slope_facade(g,HALL_X0,HALL_X1,HALL_REAR,1,left_rear,right_rear,222,True,1)
-    # Side bays are halves of each sawtooth section (equal 1.5 m bays); every
-    # window is centred between its piers.
-    front_stile,rear_stile=HALL_FRONT-.12,HALL_REAR+.12
-    # The rear pier sits 1 cm aft of the bay midpoint so its faces clear the
-    # side-board joints (5.967); windows stay centred in the resulting bays.
-    front_pier,rear_pier=(front_stile+HALL_STEP)/2,(HALL_STEP+rear_stile)/2+.01
-    bays=[(front_stile,front_pier),(front_pier,HALL_STEP),(HALL_STEP,rear_pier),(rear_pier,rear_stile)]
-    centres=[(a+b)/2 for a,b in bays]
+    # One bay per sawtooth section on each side (2026-11-01; two per section
+    # before): the only side pier is the shared one at the step.
+    centres=((HALL_FRONT+HALL_STEP)/2,(HALL_STEP+HALL_REAR)/2)
     for x,height_front,height_back in ((HALL_X0,left_front,left_rear),(HALL_X1,right_front,right_rear)):
-        for ya,yb,h in ((HALL_FRONT,HALL_STEP,height_front),(HALL_STEP,HALL_REAR,height_back)):
+        right=x>(HALL_X0+HALL_X1)/2
+        for (ya,yb,h),yy in zip(((HALL_FRONT,HALL_STEP,height_front),(HALL_STEP,HALL_REAR,height_back)),centres):
             count=math.ceil((yb-ya)/.17)
             for i in range(count):g.box((x,ya+(i+.5)*(yb-ya)/count,(1+h)/2),(.11,(yb-ya)/count,h-1),PLANK)
-            # The shared sawtooth pier is authored once, to the taller roof.
-            # Pier tops stop 15 mm under the boards; girders are 2 cm
-            # narrower than the piers so no side faces coincide.
-            steel_column(g,x,front_pier if ya==HALL_FRONT else rear_pier,1,h-.015,.22)
-            if ya==HALL_STEP:steel_column(g,x,ya,1,2.415,.22)  # just under the step facade, clear of roof bolts
-            girder(g,(x,ya,1.05),(x,yb,1.05),.20)
+            # The shared sawtooth pier stops just under the step facade.
+            if ya==HALL_STEP:steel_column(g,x,ya,1,STEP_BOTTOM-.015,.22)
+            girder(g,(x,ya,1.05),(x,yb,1.05),.20,plate_stations=(.2,.8))  # plates clear of the other section
             # Side eave beams butt against the front/rear frame thickness.
             girder(g,(x,ya+.22,h-.08),(x,yb-.22,h-.08),.20)
-            for yy in (centres[:2] if ya==HALL_FRONT else centres[2:]):
-                # Upper frames fit between the lower window row and the
-                # eave girder plates, with the native aspect ratio retained.
-                atlas_window(g,x+(.055 if x>5 else -.055),yy,h-.40,.30,'right' if x>5 else 'left','porthole',reveal=IRON)
-        if x>5:
-            # Press side: large single panes looking onto the testing press,
-            # one centred in each bay.
-            for yy in centres:atlas_window(g,x+.055,yy,1.50,.48,'right','single')
-            girder(g,(x+.06,HALL_FRONT+.13,1.2),(x+.06,HALL_STEP-.15,2.05),.15)
-        else:
-            # Service side: three-pane verticals centred in the bays, with the
-            # pipe risers between the windows and the piers.
-            for yy in centres:
-                atlas_window(g,x-.055,yy,1.95,.24,'left','triple')
-            for yy in (front_stile+.34,HALL_STEP+.34,rear_stile-.39):
-                flanged_pipe(g,[(x-.18,yy,1.35),(x-.18,yy,2.55),(x-.18,yy+.2,2.55)],.045)
+            if right:
+                # Press side: a large single pane looking onto the press.
+                atlas_window(g,x+.055,yy,1.45,.40,'right','single')
+            else:
+                # Service side: a three-pane vertical, and a porthole under
+                # the eave where the wall is tall enough.
+                atlas_window(g,x-.055,yy,1.55,.24,'left','triple')
+                if h-.28-.13>=1.84:
+                    atlas_window(g,x-.055,yy,h-.28,.26,'left','porthole',reveal=IRON)
+        if not right:
+            # Pipe risers between the windows and the step pier.
+            for yy in (HALL_FRONT+.25,HALL_STEP+.25,HALL_REAR-.25):
+                flanged_pipe(g,[(x-.18,yy,1.35),(x-.18,yy,2.10),(x-.18,yy+.2,2.10)],.045)
     # Sheet joints keep clear of the step facade planes and fasteners.
     shed_roof(g,ROOF_X0,ROOF_X1,HALL_FRONT-.27,HALL_STEP+.266,front_roof_z(ROOF_X0),front_roof_z(ROOF_X1),351)
     shed_roof(g,ROOF_X0,ROOF_X1,HALL_STEP-.22,HALL_REAR+.25,rear_roof_z(ROOF_X0),rear_roof_z(ROOF_X1),352)
-    # (The cowled furnace and kiln-test flues on the sawtooth roofs went, with
-    # their smoke: no roof vents, user 2026-10-30.)
-    # Timber and metal joints remain deliberately legible at normal game zoom.
-    # Interior joints only; the corners carry the cast shell's own straps.
-    for i in range(1,4):
-        x=bx0+.075+(bx1-bx0-.15)*i/4
-        for z in (.30,.72):
-            g.box((x,by0-.025,z),(.15,.06,.30),IRON)
-    # 2026-10-22 (user): no forced decoration beyond the walls. The outdoor
-    # specimen shelves before and behind the hall, the rear planters, the
-    # barrel and the crate are gone; the footprint ends at the hall's rear
-    # cast base (10x9 -> 10x8) and the freed front cells are open ground.
-    instrument_tower(g,9.0,6.0,base=(7.925,5.075,9.925,6.925))
-    testing_press(g,parts,9.0,2.18,base=(7.925,1.075,9.925,2.925),flywheel_x=7.02)
-    # Ground-side shaft socket and a bank of valved services, in relief on
-    # the x=8 face of the cast base (transput (7,4,0) Right).
-    g.cylinder((bx1-.15,4.58,.72),.18,.40,IRON,'X',12)
-    g.ring((bx1+.04,4.58,.72),.27,.07,.07,IRON,'X',12)
-    for y in (4.05,4.40):
-        flanged_pipe(g,[(bx1+.05,y,.40),(bx1+.05,y,2.05),(HALL_X1+.05,y,2.05)],.045)
-        handwheel(g,(bx1+.02,y-.17,.70),.12,'X',IRON,BRASS)
-    for x,y,z in ((8.58,3.0,2.10),(HALL_X1+.06,6.9,2.05),(3.45,HALL_FRONT-.105,2.15),(1.5,6.75,1.62)):
-        cage_lamp(g,x,y,z)
-    service_bay(g)
+    # The press (front) and the instrument tower (rear) on their 2x2 plinths
+    # in the right column (x 3..5), abutting the hall's base.
+    instrument_tower(g,4.0,3.0,base=(2.925,2.075,4.925,3.925))
+    testing_press(g,parts,4.0,1.18,base=(2.925,.075,4.925,1.925),flywheel_x=1.95,flywheel_y=1.75)
+    # Ground-side shaft socket on the hall base's left face (transput (0,2,0)
+    # Left), 1 cm proud of the cast wall.
+    g.cylinder((.14,2.5,.62),.18,.30,IRON,'X',12)
+    cage_lamp(g,HALL_X1+.06,HALL_REAR-.25,1.80)
+    service_fittings(g)
     return rails
 
 

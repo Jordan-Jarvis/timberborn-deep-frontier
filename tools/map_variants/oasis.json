@@ -51,7 +51,6 @@
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 63 cells north of the start", "x": 139, "y": 199, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 47 cells east of the start", "x": 166, "y": 158, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for the record cache 92 cells north of the start", "x": 97, "y": 228, "z": 10, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "MaterialsLaboratory.IronTeeth", "label": "Materials Laboratory, 66 cells north of the start", "x": 121, "y": 205, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "TechnicalSchool.IronTeeth", "label": "Technical School, 35 cells south of the start", "x": 106, "y": 109, "z": 9, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "Greenhouse.IronTeeth", "label": "Greenhouse, 28 cells north-west of the start", "x": 103, "y": 168, "z": 7, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 81 cells west of the start", "x": 44, "y": 118, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},

@@ -111,7 +111,7 @@ namespace DeepFrontier.Scripts {
         _building=Create("MaterialsLaboratory.IronTeeth",159,160,3);
         _building.GetComponent<PausableBuilding>().Pause();
         // The fixture follows the installed laboratory blueprint, not a size
-        // literal (10x8x5 since the 2026-10-30 compaction). Freed ground: every
+        // literal (5x4x3 since the 2026-11-01 shrink). Freed ground: every
         // open ground cell inside the bounds, plus the rear row the 2026-10-22
         // footprint pass dropped (the former footprint ended at local y 8).
         var spec=_building.GetComponent<BlockObjectSpec>();
@@ -126,9 +126,9 @@ namespace DeepFrontier.Scripts {
         var deck=_building.GetComponent<PlatformDeckSpec>();
         Require(deck.Openings.Length==0,"Laboratory terrace must have no rails (2026-10-31 roof pass)");
         var front=_building.TransformCoordinates(Seam("Front",0).Outside);
-        var left=_building.TransformCoordinates(Seam("Left",1).Outside);
+        var left=_building.TransformCoordinates(Seam("Left",0).Outside);
         Require(front.y==entrance.y&&front.z>entrance.z&&left.z==front.z,
-          "Laboratory terrace seams Front0 "+front+" and Left1 "+left+" do not meet one deck above the entrance row "+entrance);
+          "Laboratory terrace seams Front0 "+front+" and Left0 "+left+" do not meet one deck above the entrance row "+entrance);
         for(int y=entrance.y-2;y<=entrance.y;y++)if(!_blocks.GetPathObjectAt(new Vector3Int(173,y,entrance.z)))Create("Path",173,y,entrance.z);
         for(int x=front.x-1;x<173;x++)Create("Path",x,entrance.y,entrance.z);
         // A stair flight climbs north to the Front0 seam's outside cell: one
@@ -157,7 +157,7 @@ namespace DeepFrontier.Scripts {
         var generator=ShaftCell(2);
         _generator=Create("DevPowerGenerator",generator.x,generator.y,generator.z).GetComponent<MechanicalNode>();
         // The terrace is a player-path deck (2026-10-30): the two tested seams need a path on their deck cell.
-        foreach(var seam in new[]{Seam("Front",0),Seam("Left",1)}) {
+        foreach(var seam in new[]{Seam("Front",0),Seam("Left",0)}) {
           var inside=_building.TransformCoordinates(seam.Inside);
           if(!_blocks.GetPathObjectAt(inside))Create("Path",inside.x,inside.y,inside.z);
         }
@@ -213,10 +213,16 @@ namespace DeepFrontier.Scripts {
     }
     // Terrace seams (2026-10-31 roof pass: an open deck, no rails): the front row's edge
     // stands facing -y ("Front", by x) and the left column's facing -x ("Left", by y),
-    // derived from the blueprint's Stackable blocks at the records-office door's layer.
+    // derived from the blueprint's Stackable blocks at the lowest deck layer (the annex
+    // roof; no deck door since the 2026-11-01 shrink).
+    private int DeckLayer() {
+      var stands=CivicFixtureGeometry.DeckStands(_building.GetComponent<BlockObjectSpec>());
+      Require(stands.Count>0,"Laboratory has no stackable roof deck");
+      return stands.Min(c=>c.z);
+    }
     private (Vector3Int Inside,Vector3Int Outside) Seam(string side,int index) {
       var spec=_building.GetComponent<BlockObjectSpec>();
-      int z=_building.GetComponent<PlatformDeckSpec>().Doors[0].Exterior.z;
+      int z=DeckLayer();
       var dir=side=="Front"?new Vector3Int(0,-1,0):new Vector3Int(-1,0,0);
       var seams=CivicFixtureGeometry.DeckSeams(spec,z,dir);
       Require(seams.Count>0,"Laboratory terrace has no "+side+" edge with a free column outside it");
@@ -241,7 +247,7 @@ namespace DeepFrontier.Scripts {
       Require(_building.GetComponent<BuildingSpec>().ScienceCost==12000,"Laboratory must unlock at 12,000 science");
       Require(_building.GetComponent<MechanicalNodeSpec>().PowerInput==6500,"Laboratory demand differs from 6,500 hp");
       Require(_building.GetComponent<MechanicalNode>().Graph==_generator.Graph&&_generator.Graph.PowerSupply>0,"Laboratory shaft does not connect");
-      Port("Front",0,true);Port("Front",1,false);Port("Left",1,true);Port("Left",2,false);
+      Port("Front",0,true);Port("Front",1,false);Port("Left",0,true);
       var entrance=_building.PositionedEntrance.Coordinates;
       Require(_nav.AreConnectedInstant(entrance,DoorCell()),"Ground door lacks its road connection");
       Pass("12,000-science unlock, 6,500 hp connected graph and open terrace seams");
@@ -262,10 +268,9 @@ namespace DeepFrontier.Scripts {
       for(int i=0;i<4;i++)workers[i].EmployAt(_building.GetComponent<Workplace>());
       _walker=workers[4].GetComponent<ControllableCharacter>();_walker.ChangeAnimation("BeaverAdult_idle");
       _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(entrance));
-      // Terrace deck cells, walked as grid cells: the records-office doorstep,
-      // the Left1 edge cell and the Front2 corner.
-      var deck=_building.GetComponent<PlatformDeckSpec>();
-      foreach(var cell in new[]{deck.Doors[0].Exterior,Seam("Left",1).Inside,Seam("Front",2).Inside})
+      // Terrace deck cells, walked as grid cells: the Front1 cell, the Left0
+      // corner and the Front2 corner.
+      foreach(var cell in new[]{Seam("Front",1).Inside,Seam("Left",0).Inside,Seam("Front",2).Inside})
         _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(_building.TransformCoordinates(cell)));
       _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(entrance));
       NextWalk();Phase(_reload?7:1);_speed.ChangeSpeed(3);

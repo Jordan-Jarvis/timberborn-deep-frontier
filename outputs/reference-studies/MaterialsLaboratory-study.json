@@ -1,14 +1,14 @@
 {
   "status": "Blender art study; not exported or installed",
   "boundsMin": [
-    -10.045000076293945,
-    -8.045000076293945,
+    -5.045000076293945,
+    -4.119999885559082,
     0.0
   ],
   "boundsMax": [
-    0.0560000017285347,
+    0.0754999965429306,
     0.23861216008663177,
-    4.172399997711182
+    3.0008163452148438
   ],
   "sourceReference": "docs/art/concepts/Materials Laboratory v1.png",
   "selectedReferenceViews": [

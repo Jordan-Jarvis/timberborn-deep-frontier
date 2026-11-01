@@ -3,7 +3,7 @@
   "buildings": [{
     "id": "MaterialsLaboratory",
     "name": "Materials Laboratory",
-    "size": [10, 8, 5],
+    "size": [5, 4, 3],
     "workers": 4,
     "powerDemandHp": 600,
     "scienceUnlock": 12000,

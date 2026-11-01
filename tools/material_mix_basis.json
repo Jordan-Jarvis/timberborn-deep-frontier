@@ -85,6 +85,16 @@
     "wood": 226.3211
    },
    "measuredAt": "7x7x3 Fish Hatchery model (d424ef7)"
+  },
+  "MaterialsLaboratory": {
+   "families": {
+    "brick": 7.73,
+    "concrete": 255.8109,
+    "metal": 136.4902,
+    "unpriced": 12.1331,
+    "wood": 304.9255
+   },
+   "measuredAt": "10x8x5 Materials Laboratory model (d424ef7)"
   }
  }
 }

@@ -1,17 +1,4 @@
 {
   "Openings": [],
-  "Doors": [
-    {
-      "Interior": {
-        "X": 1,
-        "Y": 3,
-        "Z": 1
-      },
-      "Exterior": {
-        "X": 1,
-        "Y": 2,
-        "Z": 1
-      }
-    }
-  ]
+  "Doors": []
 }

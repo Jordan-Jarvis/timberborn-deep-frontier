@@ -47,9 +47,11 @@ FREED = {
         'outside': 'the two former front rows (planters, sunflowers, canopy footprint), and the rear barrel and supply pile under the removed wings\' back balcony: now outside the 4x4 bounds (4x9 until 2026-11-01)',
     },
     'Buildings/Science/MaterialsLaboratory/MaterialsLaboratory.IronTeeth.blueprint.json': {
-        # Front specimen shelves, rear planters, barrel and crate.
-        'cells': [(x, 0, 0) for x in range(3, 8)] + [(0, 7, 0), (2, 7, 0), (8, 7, 0), (9, 7, 0)],
-        'outside': 'the former rear row (rear specimen shelves): now outside the 10x8 bounds',
+        # Front specimen shelves, rear planters, barrel and crate (2026-10-22):
+        # since the second shrink pass (2026-11-01, 5x4) every one of those
+        # cells is outside the bounds or under the press plinth (3..4, 0).
+        'cells': [],
+        'outside': 'the former front shelves, rear planters, barrel, crate and rear row: now outside the 5x4 bounds (10x8 until 2026-11-01), or under the press plinth',
     },
     'Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.blueprint.json': {
         # The rear supply pile and loose barrel (2026-10-22) are outside the
