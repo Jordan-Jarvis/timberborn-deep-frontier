@@ -25,8 +25,7 @@
 
 ### Also smaller (second shrink)
 - **Grocery Store** 5x4, 3 high (was 9x6, 5 high), **Fishery Works** 6x5, 3 high (was 11x8, 4 high), **Hospital** 4x4, 4 high (was 4x9, 9 high), **Bathhouse** 4x4, 3 high (was 7x5, 5 high).
-- **Cement Kiln** 3x3 (was 5x3), **Concrete Mixer** 3x2 (was 4x3), **Stone Crusher** 3x3 (was 4x4), **Sandstone and Limestone Pits** 3x3 (were 5x4 and 5x3).
-- Saves: these keep their origin. Re-lay the Grocery Store's path one tile left to its new door; reconnect a Bathhouse pipe at its new inlet.
+- Saves: these keep their origin. Re-lay the Grocery Store's path one tile left to its new door; reconnect a Bathhouse pipe at its new inlet. The Cement Kiln's entrance moves to its left column and the Concrete Mixer's water inlet to its left wall: reconnect their path and pipe.
 
 ### Smaller concrete chain (second shrink)
 - **Cement Kiln** is 3x3, 3 high (was 5x3, 4 high): the feed house with its limestone bin and the porch in front of it, the turning drum under its lean-to, and the stone firebox with its fire and stack. Same workers, power, recipes and cost. **Its door moves to the left tile:** reconnect the path to existing kilns.
