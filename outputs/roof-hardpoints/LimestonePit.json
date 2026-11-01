@@ -1,14 +1,8 @@
-{"template":"LimestonePit","model":"Buildings/Metal/LimestonePit/LimestonePit.IronTeeth.Model","export":"src/DeepFrontier/Data/Buildings/Metal/LimestonePit/LimestonePit.IronTeeth.Model.timbermesh","exportSha256":"1676a1af8a0bcb7ee5f80261b41ede8013becac1849b0f86fd65b043ed4af6db","size":[5,3,3],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; the cell is the top cell, a column stands in the cell above","rule":"Top cells (occupied, nothing occupied above in the blueprint); inner box = samples 2..5 of 8 per axis; blocked = static geometry from 0.1 over the cell top up one layer (vertical and horizontal rays); covered = static geometry anywhere above that; animated = animated geometry in the top cell or the cell above","cells":[{"cell":[0,0,1],"blocked":false,"covered":false,"animated":false},
+{"template":"LimestonePit","model":"Buildings/Metal/LimestonePit/LimestonePit.IronTeeth.Model","export":"src/DeepFrontier/Data/Buildings/Metal/LimestonePit/LimestonePit.IronTeeth.Model.timbermesh","exportSha256":"10f72da33c53361b18ae87a46976add03f8f3f0446b69e7960b721e5d5ada7ea","size":[3,3,3],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; the cell is the top cell, a column stands in the cell above","rule":"Top cells (occupied, nothing occupied above in the blueprint); inner box = samples 2..5 of 8 per axis; blocked = static geometry from 0.1 over the cell top up one layer (vertical and horizontal rays); covered = static geometry anywhere above that; animated = animated geometry in the top cell or the cell above","cells":[{"cell":[0,0,1],"blocked":false,"covered":false,"animated":false},
 {"cell":[1,0,1],"blocked":false,"covered":false,"animated":false},
-{"cell":[2,0,1],"blocked":false,"covered":false,"animated":false},
-{"cell":[3,0,1],"blocked":false,"covered":false,"animated":false},
 {"cell":[0,1,1],"blocked":false,"covered":false,"animated":false},
 {"cell":[1,1,1],"blocked":false,"covered":false,"animated":false},
-{"cell":[2,1,1],"blocked":false,"covered":false,"animated":false},
-{"cell":[3,1,1],"blocked":false,"covered":false,"animated":false},
 {"cell":[0,2,1],"blocked":false,"covered":false,"animated":false},
 {"cell":[1,2,1],"blocked":false,"covered":false,"animated":false},
-{"cell":[2,2,1],"blocked":false,"covered":false,"animated":false},
-{"cell":[3,2,1],"blocked":false,"covered":false,"animated":true},
-{"cell":[4,1,2],"blocked":false,"covered":false,"animated":false},
-{"cell":[4,2,2],"blocked":false,"covered":false,"animated":false}]}
+{"cell":[2,1,2],"blocked":false,"covered":false,"animated":false},
+{"cell":[2,2,2],"blocked":false,"covered":false,"animated":false}]}

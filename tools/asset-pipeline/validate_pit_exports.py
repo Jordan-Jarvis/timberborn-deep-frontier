@@ -63,8 +63,8 @@ for ident in ('SandstonePit','LimestonePit'):
         access=blueprint['BuildingAccessibleSpec']['LocalAccess']
         assert access['X']==1.5 and access['Y']==0 and abs(access['Z']+.02)<1e-9,access
         # The free front-right cell: no occupation or matter rule at any layer.
-        free=[blocks[(z*size['Y']+0)*size['X']+4] for z in range(size['Z'])]
-        assert all(b['Occupations']=='None' and b['MatterBelow']=='Any' for b in free),'Free cell (4,0) is blocked'
+        free=[blocks[(z*size['Y']+0)*size['X']+size['X']-1] for z in range(size['Z'])]
+        assert all(b['Occupations']=='None' and b['MatterBelow']=='Any' for b in free),'Free front-right cell is blocked'
     assert blueprint['PathModelTypeEnforcerSpec']=={'PathModelType':'Roof'},'Raised apron would hide a native DirtPath'
     assert blocks[1+size['X']*size['Y']]['Occupations']=='All','Door canopy must be occupied'
     # The one-storey flat roof (2026-10-30) is a platformable roof deck, and the

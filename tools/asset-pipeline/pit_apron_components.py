@@ -2,13 +2,15 @@
 import math
 from frontier_architecture import Geometry, WOOD, PLANK, deck
 
-# Current yard floors, inside the footprints (2026-10-22: no apron beyond the
-# walls). Both end 2 cm inside the rear tile edge; the limestone floor starts
-# at its door's front edge and stops at the hoist column, leaving the free
-# front-right cell (4,0) bare ground.
+# Current yard floors, inside the 3x3 footprints (2026-11-01; artwork =
+# grid - origin). Both end 4 cm inside the side and rear tile edges. The
+# sandstone floor covers the whole yard; the limestone floor starts at its
+# door's front edge and stops at the hoist column (grid x 2.13), so the free
+# front-right cell (2,0) and the ground under the hoisted basket stay bare.
 BOUNDS = {
-    'SandstonePit': (.08, .10, 4.30, 3.98),
-    'LimestonePit': (.08, 1.02, 3.41, 3.98),
+    # (-.50: no board joint falls on the door's centre line, art x .93.)
+    'SandstonePit': (-.50, .04, 2.39, 2.96),
+    'LimestonePit': (-.53, 1.02, 1.56, 3.96),
 }
 # The saved scenes' original zero-top decks, for the one-time split only.
 LEGACY_BOUNDS = {

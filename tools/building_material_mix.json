@@ -539,25 +539,25 @@
   },
   "LimestonePit": {
    "model": "Buildings/Metal/LimestonePit/LimestonePit.IronTeeth.Model",
-   "sha256": "1676a1af8a0bcb7ee5f80261b41ede8013becac1849b0f86fd65b043ed4af6db",
+   "sha256": "10f72da33c53361b18ae87a46976add03f8f3f0446b69e7960b721e5d5ada7ea",
    "areas": {
-    "BaseMetal.IronTeeth": 17.3728,
-    "BaseWood_DarkBrown.IronTeeth": 43.5725,
-    "DFIndustrial05": 10.546,
+    "BaseMetal.IronTeeth": 15.9146,
+    "BaseWood_DarkBrown.IronTeeth": 38.3942,
+    "DFIndustrial05": 8.4569,
     "DFIndustrial08": 0.0871,
-    "DFIndustrial13": 1.5543,
-    "Details.IronTeeth#metal": 0.2631,
-    "IrregularPlanks_DarkBrown.IronTeeth": 76.4299,
-    "IrregularPlanks_MetalForged.IronTeeth": 23.1824,
+    "DFIndustrial13": 1.5879,
+    "Details.IronTeeth#metal": 0.1818,
+    "IrregularPlanks_DarkBrown.IronTeeth": 55.4772,
+    "IrregularPlanks_MetalForged.IronTeeth": 18.8892,
     "Plaster_Orange.IronTeeth": 0.588,
-    "WindowsAtlas.IronTeeth": 1.3176
+    "WindowsAtlas.IronTeeth": 1.0086
    },
    "families": {
     "brick": 0.588,
-    "limestone": 10.546,
-    "metal": 42.3726,
-    "unpriced": 1.4047,
-    "wood": 120.0024
+    "limestone": 8.4569,
+    "metal": 36.5736,
+    "unpriced": 1.0957,
+    "wood": 93.8714
    }
   },
   "LimestoneQuarry": {
@@ -990,26 +990,26 @@
   },
   "SandstonePit": {
    "model": "Buildings/Metal/SandstonePit/SandstonePit.IronTeeth.Model",
-   "sha256": "fd99ca471fecf7354e74845d1ffc338c4e667320a1efa2f0febda0623e5fa53a",
+   "sha256": "1ace03e0d83e647670e4251962075f0289f0c5b09cf93f80a35f0564c548956b",
    "areas": {
-    "BaseMetal.IronTeeth": 24.4943,
-    "BaseWood_DarkBrown.IronTeeth": 52.0762,
-    "DFIndustrial04": 12.2624,
+    "BaseMetal.IronTeeth": 21.0173,
+    "BaseWood_DarkBrown.IronTeeth": 45.7562,
+    "DFIndustrial04": 9.3555,
     "DFIndustrial08": 0.0871,
-    "DFIndustrial13": 2.2229,
-    "Details.IronTeeth#metal": 0.2631,
-    "IrregularPlanks_DarkBrown.IronTeeth": 105.4228,
-    "IrregularPlanks_MetalForged.IronTeeth": 6.48,
+    "DFIndustrial13": 2.2917,
+    "Details.IronTeeth#metal": 0.1818,
+    "IrregularPlanks_DarkBrown.IronTeeth": 62.2609,
+    "IrregularPlanks_MetalForged.IronTeeth": 3.4944,
     "Plaster_Orange.IronTeeth": 0.588,
-    "RoofPlanks.IronTeeth": 16.7024,
-    "WindowsAtlas.IronTeeth": 1.3176
+    "RoofPlanks.IronTeeth": 12.9948,
+    "WindowsAtlas.IronTeeth": 1.0086
    },
    "families": {
     "brick": 0.588,
-    "metal": 33.4603,
-    "sandstone": 12.2624,
-    "unpriced": 1.4047,
-    "wood": 174.2014
+    "metal": 26.9852,
+    "sandstone": 9.3555,
+    "unpriced": 1.0957,
+    "wood": 121.012
    }
   },
   "SandstoneQuarry": {

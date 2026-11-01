@@ -409,9 +409,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 8202,
-   "vertices": 17672,
-   "construction": 8202,
+   "finished": 7219,
+   "vertices": 15638,
+   "construction": 7219,
    "file": "src/DeepFrontier/Data/Buildings/Metal/LimestonePit/LimestonePit.IronTeeth.Model.timbermesh"
   },
   "LimestoneQuarry": {
@@ -616,9 +616,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 10154,
-   "vertices": 22132,
-   "construction": 10154,
+   "finished": 9602,
+   "vertices": 20733,
+   "construction": 9602,
    "file": "src/DeepFrontier/Data/Buildings/Metal/SandstonePit/SandstonePit.IronTeeth.Model.timbermesh"
   },
   "SandstoneQuarry": {

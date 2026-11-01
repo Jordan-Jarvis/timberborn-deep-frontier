@@ -4,28 +4,28 @@
     {
       "building": "SandstonePit",
       "size": {
-        "X": 5,
-        "Y": 4,
-        "Z": 3
-      },
-      "nodes": 9,
-      "animationTracks": 3,
-      "frames": 121,
-      "nativeUvVerticesChecked": 8976,
-      "emptyCells": 16
-    },
-    {
-      "building": "LimestonePit",
-      "size": {
-        "X": 5,
+        "X": 3,
         "Y": 3,
         "Z": 3
       },
       "nodes": 9,
       "animationTracks": 3,
       "frames": 121,
-      "nativeUvVerticesChecked": 7216,
-      "emptyCells": 15
+      "nativeUvVerticesChecked": 8026,
+      "emptyCells": 6
+    },
+    {
+      "building": "LimestonePit",
+      "size": {
+        "X": 3,
+        "Y": 3,
+        "Z": 3
+      },
+      "nodes": 9,
+      "animationTracks": 3,
+      "frames": 121,
+      "nativeUvVerticesChecked": 6430,
+      "emptyCells": 9
     }
   ]
 }

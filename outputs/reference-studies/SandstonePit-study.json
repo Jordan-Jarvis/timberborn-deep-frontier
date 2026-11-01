@@ -1,13 +1,13 @@
 {
   "status": "Blender art study; not exported or installed",
   "boundsMin": [
-    -4.300000190734863,
-    -4.055024147033691,
+    -2.4535000324249268,
+    -3.0985000133514404,
     -0.20999999344348907
   ],
   "boundsMax": [
-    -0.001500000013038516,
-    -0.03150000050663948,
+    0.6685000061988831,
+    0.09849999845027924,
     2.819999933242798
   ],
   "sourceReference": "docs/art/concepts/01-mining-and-sources-concept-v1.png",

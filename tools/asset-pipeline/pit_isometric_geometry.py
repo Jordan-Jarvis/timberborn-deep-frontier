@@ -3,28 +3,33 @@
 No top view or printed tile dimensions are used. Game registration follows the
 finished geometry. The enclosed store room has one ground-level arch.
 
-Compaction pass (2026-10-30): one storey. The store room and working bay
-stand under one flat roof of native roof sheets below layer 2 (the sloped
-2.9-high roof went), and the jib hoist is 1.05 lower with its basket and
-cable lowered together; footprints, doors and animations are unchanged.
+Compaction pass (2026-10-30): one storey under one flat roof below layer 2.
+Second shrink pass (2026-11-01, user: "we need to shrink the buildings down
+even more"): both pits are 3x3x3 (5x4 and 5x3 before). Same plan on both:
+the one-tile store room with its door on grid tile column 1, the bay with the
+stone bin in column 0, both under one flat roof, and the jib hoist in column
+2 (post and winch at the back, its basket hanging over the yard floor in
+front on the sandstone pit, over the open ground of the middle row on the
+limestone pit). The sandstone pit's door stays set back behind its yard row
+(sorting grate and approach floor under the roof); the limestone pit's
+front-right cell is free ground. Authored in native grid XY through PitFrame:
+artwork = grid - registration origin (pit_layouts.py).
 """
 import math
 import random
 
 from frontier_architecture import Geometry, WOOD, PLANK, IRON, SAND, LIME, BRASS, deck, facade_panel
-from industrial_geometry import timber_column, beam_joint, bracket, steel_bolt, sheet_roof
 from industrial_facades import window_y, side_window
 from industrial_door_components import recipe as door_recipe
 from pit_apron_components import recipe as apron_recipe
 # (No native props: the pits' loose barrels were removed, 2026-10-22.)
-from reference_details import cage_lamp
 from industrial_kit import open_beam, wheel, gauge
 from industrial_kit import (timber_column, beam_joint, bracket, steel_bolt, sheet_roof, cage_lamp, band, prism,
                                bolt, square_nut, open_box, rock, rock_heap)
 from reference_materials import CIVIC_FORGED_PANEL
 from industrial_kit import lean_plate_roof
 from walkway_geometry import RailAssembly
-from opaque_shell_geometry import lean_roof_curb
+from factory_registration import RigidPlacement
 
 HOIST_TOP=2.62
 CABLE_BOTTOM=1.73
@@ -33,6 +38,26 @@ CABLE_BOTTOM=1.73
 BEAM_Z=1.78
 WALL_TOP=1.70
 ROOF_Z=1.92
+
+# Plan in native grid XY (both pits).
+SHED_X=(.87,2.12)      # store room posts (column 1); door centred on x 1.5
+SHED_REAR=2.88
+ROOF_X=(.03,2.24)
+ROOF_Y=(.03,2.97)
+FRAME_X=(.12,2.12)     # roof frame posts: the west line and the shed's east line
+FRAME_Y=(.12,2.88)
+HOIST_X,HOIST_BACK=2.64,2.62
+WINCH_Y,WINCH_Z=2.10,1.10
+
+
+class PitFrame:
+    """Grid -> artwork for one pit: artwork = grid - origin (pit_layouts.py)."""
+    def __init__(self,limestone):
+        from pit_layouts import LAYOUTS
+        ox,oy,_=LAYOUTS['LimestonePit' if limestone else 'SandstonePit']['origin']
+        self.offset=(-ox,-oy,0)
+    def __call__(self,x,y):return x+self.offset[0],y+self.offset[1]
+
 
 def stone_bin(g, p, size, stone, seed):
     x,y,z=p;w,d,h=size
@@ -56,135 +81,147 @@ def stone_bin(g, p, size, stone, seed):
             rock(g,(xx,yy,z+h*.78+rng.uniform(0,.12)),(s,s*.85,s*.8),stone,seed+row*5+col)
 
 
-def enclosure(g, *, limestone):
-    # A closed room behind the public ground arch, alongside the working bay.
-    front=1.12
-    for x in (.30,1.55):
-        for y in (front,3.70):
+def enclosure(g, art, A, *, limestone):
+    # A closed room behind the public ground arch, beside the bay. Its front
+    # is the shed's front post line: grid y 1.12 on the sandstone pit (behind
+    # its yard row), .12 on the limestone pit.
+    front=.12 if limestone else 1.12
+    x0,x1=SHED_X
+    for x in (x0,x1):
+        for y in (front,SHED_REAR):
             timber_column(g,x,y,.05,BEAM_Z,.22)
-        outer=x+(-.0375 if x==.30 else .0375)
-        for j in range(17):
-            a=1.07+j*(3.74-1.07)/17;b=1.07+(j+1)*(3.74-1.07)/17
-            facade_panel(g,'X',outer,a,b,0,WALL_TOP,x!=.30,PLANK)
+        outer=x+(-.0375 if x==x0 else .0375)
+        n=max(6,round((SHED_REAR-front)*6))
+        a0,a1=front-.05,SHED_REAR+.04
+        for j in range(n):
+            a=a0+j*(a1-a0)/n;b=a0+(j+1)*(a1-a0)/n
+            facade_panel(g,'X',outer,a,b,0,WALL_TOP,x!=x0,PLANK)
     for j in range(9):
-        a=.2625+j*1.325/9;b=.2625+(j+1)*1.325/9
-        facade_panel(g,'Y',3.74,a,b,0,WALL_TOP,True,PLANK)
+        a=x0-.0375+j*1.325/9;b=x0-.0375+(j+1)*1.325/9
+        facade_panel(g,'Y',SHED_REAR+.04,a,b,0,WALL_TOP,True,PLANK)
     # Door shoulders and a solid head wall to the roof beam.
-    for x in (.33,1.53):
+    for x in (x0+.03,x1-.02):
         g.box((x,front,.50),(.20,.10,1.00),PLANK)
-    facade_panel(g,'Y',1.07,.2625,1.5875,1,WALL_TOP,False,PLANK)
-    g.include_component(door_recipe('LimestonePit' if limestone else 'SandstonePit','Door.PitStoreDoor'))
-    g.doorways.append({"name":"PitStoreDoor","position":[.93,front-.14,0]})
-    for y in (2.05,3.05):
-        side_window(g,.2625,y,.95,.85,'left')
-    window_y(g,.93,3.74,.95,.85,'back')
-    for x in (.30,1.55):
-        g.box((x,2.42,.30),(.12,2.70,.48),CIVIC_FORGED_PANEL)
-    cage_lamp(g,1.42,front-.18,1.30)
-    # (2026-10-22: the limestone pit's side shelter and workbench stood
-    # outside the wall line; removed with their footprint tiles.)
+    facade_panel(g,'Y',front-.05,x0-.0375,x1+.0375,1,WALL_TOP,False,PLANK)
+    ident='LimestonePit' if limestone else 'SandstonePit'
+    art.include_component(door_recipe(ident,'Door.PitStoreDoor'))
+    art.doorways.append({"name":"PitStoreDoor","position":[*A(1.5,front-.14),0]})
+    side_window(art,*A(x0-.0375,(front+SHED_REAR)/2+.10),.95,.85,'left')
+    window_y(art,*A(1.5,SHED_REAR+.04),.95,.85,'back')
+    for x in (x0,x1):
+        g.box((x,(front+SHED_REAR)/2,.30),(.12,SHED_REAR-front-.40,.48),CIVIC_FORGED_PANEL)
+    cage_lamp(g,x1-.13,front-.18,1.30)
+
+
+def sorting_grate(g,p,size,stone):
+    """Sandstone sorting grate on its timber frame and plank tray (yard row)."""
+    x,y=p;w,d=size
+    for xx in (x-w/2,x+w/2):
+        for yy in (y-d/2,y+d/2):
+            timber_column(g,xx,yy,0,.91,.15)
+    for yy in (y-d/2,y+d/2):
+        beam_joint(g,(x-w/2,yy,.91),(x+w/2,yy,.91),.15,.16)
+    for xx in (x-w/2,x+w/2):
+        beam_joint(g,(xx,y-d/2+.08,.91),(xx,y+d/2-.08,.91),.15,.16)
+    n=7
+    for i in range(n):
+        g.box((x-w/2+.06+i*(w-.12)/(n-1),y,.93),(.025,d-.12,.035),IRON)
+    for j in range(6):
+        g.box((x,y-d/2+.08+j*(d-.16)/5,.95),(w-.10,.025,.025),IRON)
+    g.box((x,y,.20),(w-.10,d-.12,.08),PLANK)
+    for yy in (y-d/2+.05,y+d/2-.05):
+        g.box((x,yy,.31),(w,.065,.22),PLANK)
+    for xx in (x-w/2+.04,x+w/2-.04):
+        g.box((xx,y,.31),(.065,d-.10,.22),PLANK)
+    for i in range(9):
+        rock(g,(x-w/2+.16+(i%3)*(w-.32)/2,y-d/2+.16+(i//3)*(d-.32)/2,.32),
+             (.21,.18,.11),stone,1600+i)
+    for i in range(3):
+        rock(g,(x-.20+i*.20,y+.10,1.03),(.19,.16,.15),stone,1640+i)
 
 
 def hoist(g,parts,stone,*,limestone):
-    x=3.70;back=3.60;end=2.35 if limestone else .95;top=HOIST_TOP
+    x=HOIST_X;back=HOIST_BACK;end=1.40 if limestone else .55;top=HOIST_TOP
     # Timber sill under the hoist post: a pit shows only wood and metal (it
     # cannot cost the stone its own chain produces; user 2026-10-30).
-    g.box((x,back,.17),(.60,.62,.34),WOOD)
+    g.box((x,back,.17),(.56,.56,.34),WOOD)
     timber_column(g,x,back,.34,top-.15,.28)
-    beam_joint(g,(x,back+.35,top),(x,end-.18,top),.28,.30)
+    beam_joint(g,(x,back+.30,top),(x,end-.18,top),.28,.30)
     # The jib brace meets the jib clear of the basket's lifted slings.
-    g.beam((x,back,1.50),(x,max(end+.45,2.0),top-.12),.15,mat=WOOD)
-    g.beam((x,back,1.70),(x,back+.40,top),.12,mat=IRON)
+    g.beam((x,back,1.50),(x,max(end+.45,1.75),top-.12),.15,mat=WOOD)
+    g.beam((x,back,1.70),(x,back+.30,top),.12,mat=IRON)
     for yy in (end,back):
         for xx in (x-.18,x+.18):
             g.box((xx,yy,top),(.055,.33,.40),IRON)
         band(g,(x,yy,top),.17,.044,.11,IRON,'X',12,inner=True)
-    # Winding spool, crank, ratchet and continuous cable over both sheaves.
-    pivot=(3.13,3.47,1.40)
-    spool=Geometry('Pit.Winch',pivot)
-    prism(spool,pivot,.16,.65,WOOD,'X',12)
-    for xx in (2.80,3.46):
-        prism(spool,(xx,3.47,1.40),.29,.07,IRON,'X',12)
+    # Winding spool in front of the post, crank on its east side, and the
+    # continuous cable over both sheaves.
+    pivot=(2.52,WINCH_Y,WINCH_Z)
+    spool,node=g.moving_part('Pit.Winch',pivot)
+    prism(spool,pivot,.16,.45,WOOD,'X',12)
+    for xx in (2.30,2.74):
+        prism(spool,(xx,WINCH_Y,WINCH_Z),.29,.06,IRON,'X',12)
     # Each cable turn is its outer surface; between turns the drum shows as the groove.
-    for i in range(15):
-        prism(spool,(2.84+i*.04,3.47,1.40),.18,.028,IRON,'X',12,(False,False))
-    wheel(spool,(2.69,3.47,1.40),.34,'X')
-    spool.beam((2.60,3.47,1.40),(2.60,3.47,1.71),.055,mat=IRON)
-    prism(spool,(2.48,3.47,1.71),.045,.26,WOOD,'X',6)
-    parts.append((spool,'PIT_DRUM',1))
-    for xx,bottom in ((2.75,0),(3.49,.34)):
-        timber_column(g,xx,3.47,bottom,1.40,.16)
-        g.box((xx,3.47,1.4),(.15,.34,.35),IRON)
-    g.beam((3.13,3.47,1.56),(x,back,top+.15),.028,mat=IRON)
+    for i in range(9):
+        prism(spool,(2.36+i*.04,WINCH_Y,WINCH_Z),.18,.028,IRON,'X',12,(False,False))
+    # The handwheel outside the east bearing (no crank: it would pass the
+    # x=3 edge).
+    wheel(spool,(2.92,WINCH_Y,WINCH_Z),.24,'X')
+    parts.append((node,'PIT_DRUM',1))
+    for xx in (2.215,2.83):
+        timber_column(g,xx,WINCH_Y,0,WINCH_Z-.16,.11)
+        g.box((xx,WINCH_Y,WINCH_Z-.08),(.10,.30,.16),IRON)
+    g.beam((2.52,WINCH_Y,WINCH_Z+.16),(x,back,top+.15),.028,mat=IRON)
     g.beam((x,back,top+.15),(x,end,top+.15),.028,mat=IRON)
     # Moving basket and its four sling chains; cable grows from a fixed top.
-    # Basket and cable 0.70 lower than before (the eye stays .04 under the
-    # cable's foot).
-    basket=Geometry('Pit.HoistedBasket',(x,end,.55))
-    stone_bin(basket,(x,end,.55),(.66,.61,.55),stone,1400)
-    for dx in (-.30,.30):
-        for dy in (-.27,.27):
+    p=(x,end,.55)
+    basket,node=g.moving_part('Pit.HoistedBasket',p)
+    # Clear of the roof's east frame post (x 2.12 +.11).
+    stone_bin(basket,p,(.54,.54,.55),stone,1400)
+    for dx in (-.24,.24):
+        for dy in (-.23,.23):
             basket.beam((x+dx,end+dy,1.12),(x,end,1.65),.022,mat=IRON)
     band(basket,(x,end,1.69),.08,.025,.055,IRON,'X',8,inner=True)
-    parts.append((basket,'PIT_BASKET',1))
-    rope=Geometry('Pit.HoistCable',(x,end,top-.10))
+    parts.append((node,'PIT_BASKET',1))
+    p=(x,end,top-.10)
+    rope,node=g.moving_part('Pit.HoistCable',p)
     prism(rope,(x,end,(top-.10+CABLE_BOTTOM)/2),.025,top-.10-CABLE_BOTTOM,IRON,'Z',6)
-    parts.append((rope,'PIT_CABLE',1))
-    # Pegboard and tools on the rear structure.
-    g.box((4.00,back+.08,1.37),(.42,.09,1.20),PLANK)
-    for xx in (3.88,4.08):
-        g.beam((xx,back,.88),(xx,back,1.96),.038,mat=WOOD)
-        g.beam((xx-.15,back,1.82),(xx+.15,back,1.92),.075,.045,IRON)
+    parts.append((node,'PIT_CABLE',1))
 
 
 def mineral_pit(g,parts,*,limestone):
     stone=LIME if limestone else SAND
+    A=PitFrame(limestone)
+    P=RigidPlacement(g,A.offset)
     # Native paths remain at layer zero. The physical timber wearing surface
     # tops out at 20mm, above the native terrain mesh's measured 10mm peaks,
     # without raising the doorway or buried joists.
     g.include_component(apron_recipe('LimestonePit' if limestone else 'SandstonePit'))
-    enclosure(g,limestone=limestone)
-    for x in (2.88,):
-        for y in (1.12,3.70):
-            timber_column(g,x,y,.03,BEAM_Z,.22)
-    for y in (1.12,3.70):
-        beam_joint(g,(.30,y,BEAM_Z),(2.88,y,BEAM_Z),.23,.25)
-    for x in (.30,2.88):
-        beam_joint(g,(x,1.12,BEAM_Z),(x,3.70,BEAM_Z),.18,.24)
-        g.beam((x,3.68,.95),(x,3.05,1.70),.12,mat=WOOD)
+    enclosure(P,g,A,limestone=limestone)
+    # Roof frame: the west posts and the shed's east posts carry the beams
+    # (where the shed has a post on that line, it carries the beam).
+    shed_front=.12 if limestone else 1.12
+    for x in FRAME_X:
+        for y in FRAME_Y:
+            if x==SHED_X[1] and y in (SHED_REAR,shed_front):continue
+            timber_column(P,x,y,.03,BEAM_Z,.22)
+    for y in FRAME_Y:
+        beam_joint(P,(FRAME_X[0],y,BEAM_Z),(FRAME_X[1],y,BEAM_Z),.23,.25)
+    for x in FRAME_X:
+        beam_joint(P,(x,FRAME_Y[0],BEAM_Z),(x,FRAME_Y[1],BEAM_Z),.18,.24)
+    P.beam((FRAME_X[0],FRAME_Y[1]-.02,.95),(FRAME_X[0],FRAME_Y[1]-.65,1.70),.12,mat=WOOD)
     # One flat roof over the store and the bay: native roof sheets on the
     # sandstone pit, riveted steel plate on the limestone pit (roof variety,
     # user 2026-10-30).
     if limestone:
-        lean_plate_roof(g,.13,1.00,3.05,3.86,ROOF_Z,CIVIC_FORGED_PANEL)
+        lean_plate_roof(P,ROOF_X[0],ROOF_Y[0],ROOF_X[1],ROOF_Y[1],ROOF_Z,CIVIC_FORGED_PANEL)
     else:
-        sheet_roof(g,.13,1.00,3.05,3.86,ROOF_Z,ROOF_Z,1502)
-    stone_bin(g,(2.22,2.42,.08),(1.05,1.62,1.02),stone,1510)
-    hoist(g,parts,stone,limestone=limestone)
-    # (2026-10-22: the limestone hand cart, both pits' loose barrels and the
-    # rear plank stack were loose props outside the wall line; removed.)
+        sheet_roof(P,ROOF_X[0],ROOF_Y[0],ROOF_X[1],ROOF_Y[1],ROOF_Z,ROOF_Z,1502)
+    # The bay's stone bin (column 0) and the sandstone yard's sorting grate.
+    stone_bin(P,(.42,1.98,.08),(.58,1.42,1.02),stone,1510)
     if not limestone:
-        for x in (1.78,2.94):
-            for y in (.20,1.22):
-                timber_column(g,x,y,0,.91,.17)
-        for y in (.20,1.22):
-            beam_joint(g,(1.78,y,.91),(2.94,y,.91),.16,.17)
-        for x in (1.78,2.94):
-            beam_joint(g,(x,.28,.91),(x,1.14,.91),.16,.17)
-        for i in range(11):
-            g.box((1.74+i*.109,.71,.93),(.025,.95,.035),IRON)
-        for j in range(9):
-            g.box((2.29,.27+j*.109,.95),(1.16,.025,.025),IRON)
-        g.box((2.29,.71,.20),(1.05,.79,.08),PLANK)
-        for y in (.25,1.17):
-            g.box((2.29,y,.31),(1.18,.065,.22),PLANK)
-        for x in (1.73,2.85):
-            g.box((x,.71,.31),(.065,.855,.22),PLANK)
-        for i in range(16):
-            rock(g,(1.84+(i%4)*.28,.36+(i//4)*.23,.32),
-                 (.23,.20,.12),stone,1600+i)
-        for i in range(3):
-            rock(g,(1.90+i*.27,.95,1.03),(.21,.18,.16),stone,1640+i)
+        sorting_grate(P,(.50,.64),(.56,.62),stone)
+    hoist(P,parts,stone,limestone=limestone)
     return RailAssembly('PitRails')
 
 
