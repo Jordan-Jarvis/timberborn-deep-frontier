@@ -3,31 +3,31 @@
 Reference: the four isometric views and the detail panels of the approved
 concept sheet. The top-down view and its printed tile counts are not used.
 
-Hero element: a long, low two-storey timber market hall whose teal gable
-roof carries a raised, warmly lit clerestory monitor along its ridge.
-Roof type: long gable along X with a central monitor, a front cross-gable,
-dormers, and low pent roofs over the market arcade, the left stall wing and
-the rear loading dock.
+Hero element: a low one-storey timber market hall whose teal gable roof
+carries a raised, warmly lit clerestory monitor along its ridge.
+Roof type: gable along X with a central monitor, and low pent roofs over
+the market arcade and the left stall wing; a striped awning over the stall
+beside the door.
 
 Authored coordinates: one unit is one tile across and one layer up. X runs
 across the front, Y runs back, Z is up; the market front faces -Y.
 
 Grid contract (for gameplay integration):
-  FOOTPRINT       9 x 6 tiles, x 0..9, y 0..6 (the rear dock and water tower
-                  were removed 2026-10-22: no forced decoration beyond walls).
-  Storeys         one layer each since the 2026-10-30 compaction (user:
-                  "currently we have two layers between floors, we should
-                  reduce it to one"): shop floor 0..1, market room 1..2.
-                  The gable roof and its lit monitor stay: they are the
-                  market's defining silhouette and keep it distinct from the
-                  flat-roofed Restaurant.
-  Ground door     x 4.5 on the y = 2 cell boundary, layer 0, opening -Y.
-  Balcony door    x 6.5 on the y = 2 cell boundary, layer 1, opening -Y.
-  Balcony deck    x 6..9, y 1..2, top at layer 1.
-  Hall frame      outer post faces on x = 1, x = 8, y = 2, y = 6.
-  Post lines      arcade front y = 0; stall wing x = 0 (y 1..6).
-  Stair bay       x 8..9, y 2..3: clear for one player-built native stair
-                  rising toward -Y onto the open balcony edge at y = 2.
+  FOOTPRINT       5 x 4 tiles, x 0..5, y 0..4 (second shrink pass,
+                  2026-11-01, was 9 x 6; a YouTuber's first look: "why is
+                  grocery store so massive?"). Same origin; the market
+                  balcony, its stair bay, the upper market room, the
+                  cross-gable and the dormers are gone.
+  Storeys         one: the shop floor, eaves at 1.25. The gable roof and its
+                  lit monitor stay: they are the market's defining
+                  silhouette and keep it distinct from the flat-roofed
+                  Restaurant. Height 3 (was 5).
+  Ground door     x 3.5 on the y = 1 cell boundary, layer 0, opening -Y
+                  (was x 4.5 on y = 2: a door in the last tile of a 4-tile
+                  hall front would cut its corner post).
+  Hall frame      outer post faces on x = 1, x = 5, y = 1, y = 4.
+  Post lines      arcade front y = 0; stall wing x = 0 (y 0..4).
+  Door walk       cell (3, 0) stays clear: the native Entrance path cell.
 """
 import math
 import random
@@ -41,7 +41,7 @@ from native_building_assets import barrel, water_barrel, plant
 from walkway_geometry import RailAssembly
 from lategame_kit import emitter, extrude_profile, revolve
 
-FOOTPRINT = (9, 6)
+FOOTPRINT = (5, 4)
 CREAM = 27        # Plaster_White.IronTeeth: cream awning stripes, painted sign
 ORANGE = 28       # Plaster_Orange.IronTeeth: oranges, carrots, pumpkins
 LIGHTWOOD = 31    # BaseWood_Brown.Folktails: wicker baskets
@@ -79,32 +79,30 @@ SLAB = .08         # roof sheet thickness, normal to the slope
 
 # Main hall and roof. Walls stand on lines set in from the tile edges by
 # half a corner post, so every corner post's outer face is on a tile edge:
-# x = 1 and 8, y = 2 and 6. The base course is flush with those edges.
-EDGE_X0, EDGE_X1, EDGE_Y0, EDGE_Y1 = 1.0, 8.0, 2.0, 6.0
+# x = 1 and 5, y = 1 and 4. The base course is flush with those edges.
+EDGE_X0, EDGE_X1, EDGE_Y0, EDGE_Y1 = 1.0, 5.0, 1.0, 4.0
 HX0, HX1, HY0, HY1 = EDGE_X0 + .12, EDGE_X1 - .12, EDGE_Y0 + .12, EDGE_Y1 - .12
 K = .85                           # main and cross-gable pitch (rise per run)
 VT = SLAB * math.sqrt(1 + K * K)  # vertical slab thickness
-WALL_TOP = 1.98                   # roof top surface above the eave wall lines
+WALL_TOP = 1.25                   # roof top surface above the eave wall lines (one storey, 2026-11-01; was 1.98)
 RIDGE_Y = (HY0 + HY1) / 2
 RIDGE_TOP = WALL_TOP + K * (RIDGE_Y - HY0)
-EAVE_OH, GABLE_OH = .20, .105  # gable slab ends 15 mm inside the frame edges; barges reach the edge
-# EAVE_OH .20 (was .30) since the 2026-10-30 compaction: the eaves are at layer 1
-# now; with their fascia boards they stay within the 0.15 registration inset
-# of the front and back rows, which stay free at that layer.
+EAVE_OH, GABLE_OH = .15, .105  # gable slab ends 15 mm inside the frame edges; barges reach the edge
+# EAVE_OH .15 (was .20, .30 before 2026-10-30): the front eave clears the
+# arcade pent and the awning below it, and with its fascia stays inside the
+# 0.15 registration inset of the front row.
 POST_C, POST_M = .24, .20         # corner and bay posts
 GIRT_D = .16                      # girt depth across the wall
-FLOOR_GIRT, TOP_PLATE = (.93, .12), (1.83, .12)
+TOP_PLATE = (1.10, .12)           # one storey: the floor girt went with the market room
 DOOR_H = .78                      # timber door leaf height in a one-layer storey
-MON_X0, MON_X1, MON_Y0, MON_Y1 = 3.0, 6.0, 3.5, 4.5
+MON_X0, MON_X1, MON_Y0, MON_Y1 = 2.0, 4.0, 2.0, 3.0
+PENT_TOP = .98                    # arcade and stall-wing pents where they meet the hall, under its eaves
+CARGO_X = 2.85                    # rear cargo doors (centre)
 
 ACCESS = {
     'footprint': list(FOOTPRINT),
-    'doors': [{'id': 'MainDoor', 'cell': [4, 1], 'position': [4.5, 2.0, 0], 'outward': [0, -1]},
-              {'id': 'BalconyDoor', 'cell': [6, 1], 'position': [6.5, 2.0, 1], 'outward': [0, -1]}],
-    'balcony': {'layer': 1, 'bounds': [6.0, 1.0, 9.0, 2.0],
-                'openEdges': [{'from': [8.0, 2.0], 'to': [9.0, 2.0], 'for': 'player stairs'}]},
-    'stairBay': {'bounds': [8, 2, 9, 3], 'rise': 'one native stair: layer 0 entered from y=3..4, layer 1 at y=2'},
-    'groundWalk': {'mainDoorApproach': [4.0, 0.0, 5.0, 2.0], 'stairApproach': [8.0, 3.0, 9.0, 4.0]},
+    'doors': [{'id': 'MainDoor', 'cell': [3, 0], 'position': [3.5, 1.0, 0], 'outward': [0, -1]}],
+    'groundWalk': {'mainDoorApproach': [3.0, 0.0, 4.0, 1.0]},
     'internalStairs': False,
     'frameEdges': {'x': [EDGE_X0, EDGE_X1], 'y': [EDGE_Y0, EDGE_Y1]},
 }
@@ -326,16 +324,16 @@ def corner_plates(g, x, y, z, sx, sy, h=.30):
 
 
 def frame_wall(g, axis, plane, a, b, posts):
-    """Dark structural frame on a wall line: posts, floor girt and top plate.
+    """Dark structural frame on a wall line: posts and the top plate.
     `posts` are (u, bottom, top, width) along the wall."""
     for u, bottom, top, w in posts:
         p = (u, plane) if axis == 'X' else (plane, u)
         g.box((p[0], p[1], (bottom + top) / 2), (w, w, top - bottom), WOOD)
-    for zc, h in (FLOOR_GIRT, TOP_PLATE):
-        lo, hi = a + .09, b - .09
-        c = ((lo + hi) / 2, plane) if axis == 'X' else (plane, (lo + hi) / 2)
-        size = (hi - lo, GIRT_D, h) if axis == 'X' else (GIRT_D, hi - lo, h)
-        g.box((c[0], c[1], zc), size, WOOD)
+    zc, h = TOP_PLATE
+    lo, hi = a + .09, b - .09
+    c = ((lo + hi) / 2, plane) if axis == 'X' else (plane, (lo + hi) / 2)
+    size = (hi - lo, GIRT_D, h) if axis == 'X' else (GIRT_D, hi - lo, h)
+    g.box((c[0], c[1], zc), size, WOOD)
 
 
 def course(g, axis, edge, out, a, b, gaps=()):
@@ -621,80 +619,52 @@ def herb_bunch(g, x, y, top, kind, seed):
 # ------------------------------------------------------------------ building parts
 
 def hall(g):
-    """Two-storey timber hall: board skins, concrete course, frame, windows."""
-    door, bdoor = (4.0, 5.0, 0, DOOR_H), (6.0, 7.0, 1, 1 + DOOR_H)
+    """One-storey timber hall: board skins, concrete course, frame, windows
+    (second shrink pass, 2026-11-01: the market room above went)."""
+    door = (3.0, 4.0, 0, DOOR_H)
     eave_wall = TOP_PLATE[0] + .11
-    # Front skin: eave walls either side of the cross-gable bay.
-    wall(g, 'X', HY0, -1, HX0, 5.5, 0, eave_wall, [door])
-    wall(g, 'X', HY0, -1, 5.5, 7.5, 0, TOP_PLATE[0] + .07, [bdoor])
-    wall(g, 'X', HY0, -1, 7.5, HX1, 0, eave_wall)
+    wall(g, 'X', HY0, -1, HX0, HX1, 0, eave_wall, [door])
     wall(g, 'X', HY1, 1, HX0, HX1, 0, eave_wall)
     und = lambda y: top_main(y) - VT + .03
     for x, out in ((HX0, -1), (HX1, 1)):
         gable(g, 'Y', x, out, [(HY0, 0), (HY1, 0), (HY1, und(HY1)), (RIDGE_Y, und(RIDGE_Y)), (HY0, und(HY0))])
-    # Timber doorways close the two one-tile door holes.
-    timber_door(g, 4.5, 0)
-    timber_door(g, 6.5, 1)
-    g.doorways.append({'id': 'MainDoor', 'position': [4.5, HY0, 0], 'outward': [0, -1],
-                       'width': 1.0, 'internalConnection': 'BuildingInterior'})
-    g.doorways.append({'id': 'BalconyDoor', 'position': [6.5, HY0, 1], 'outward': [0, -1],
+    # A timber doorway closes the one-tile door hole.
+    timber_door(g, 3.5, 0)
+    g.doorways.append({'id': 'MainDoor', 'position': [3.5, HY0, 0], 'outward': [0, -1],
                        'width': 1.0, 'internalConnection': 'BuildingInterior'})
     # Late-game cast base course; cut at the door recess and the cargo door.
-    course(g, 'X', EDGE_Y0, -1, EDGE_X0, EDGE_X1, [(3.98, 5.02)])
-    course(g, 'X', EDGE_Y1, 1, EDGE_X0, EDGE_X1, [(2.845, 4.005)])
+    course(g, 'X', EDGE_Y0, -1, EDGE_X0, EDGE_X1, [(2.98, 4.02)])
+    course(g, 'X', EDGE_Y1, 1, EDGE_X0, EDGE_X1, [(CARGO_X - .58, CARGO_X + .58)])
     for x, out in ((EDGE_X0, -1), (EDGE_X1, 1)):
         course(g, 'Y', x, out, EDGE_Y0 + .19, EDGE_Y1 - .19)
-    # Frame. Ground posts flank the door recess with 15 mm of clearance.
+    # Frame. Posts flank the door recess with 15 mm of clearance.
     c, m = POST_C, POST_M
     corner_top = TOP_PLATE[0] + .05
-    up0, up1 = FLOOR_GIRT[0] + .05, TOP_PLATE[0] - .03
+    post_top = TOP_PLATE[0] - .03
     # Corner posts stand on the course; their outer faces are the tile edges.
     front = [(HX0, .22, corner_top, c), (HX1, .22, corner_top, c)]
-    front += [(u, .20, FLOOR_GIRT[0] - .04, m) for u in (2.70, 3.875, 5.125, 6.30, 7.15)]
-    front += [(u, up0, up1, m) for u in (2.75, 4.10, 5.52, 7.50)]
+    front += [(u, .20, post_top, m) for u in (2.0, 2.875, 4.125)]
     frame_wall(g, 'X', HY0, HX0, HX1, front)
     back = [(HX0, .22, corner_top, c), (HX1, .22, corner_top, c)]
-    back += [(u, .20, FLOOR_GIRT[0] - .04, m) for u in (2.75, 4.10, 5.45, 6.80)]
-    back += [(u, up0, up1, m) for u in (2.75, 4.10, 5.45, 6.80)]
+    back += [(u, .20, post_top, m) for u in (2.12, 3.62)]
     frame_wall(g, 'X', HY1, HX0, HX1, back)
     for x in (HX0, HX1):
-        frame_wall(g, 'Y', x, HY0, HY1, [(RIDGE_Y, .20, FLOOR_GIRT[0] - .04, m), (RIDGE_Y, up0, up1, m)])
-    # Folded plates at the frame corners; the balcony, the stall wing and
-    # the tank tower own the other three lower joints.
-    for x, sx in ((HX0, -1), (HX1, 1)):
-        for y, sy in ((HY0, -1), (HY1, 1)):
-            for z in (FLOOR_GIRT[0], TOP_PLATE[0] - .22):
-                if z < 1 and (sx > 0 or sy < 0):
-                    continue
-                corner_plates(g, x, y, z, sx, sy, .22)
-    # One-layer storeys (2026-10-30): each window row sits in its storey's
-    # skin between the base course or floor girt and the girt above.
-    # Ground storey: lit shop windows inside the arcade; grids elsewhere.
-    for x, w in ((2.05, .44), (3.29, .40), (5.71, .44), (6.72, .40), (7.50, .34)):
+        frame_wall(g, 'Y', x, HY0, HY1, [(RIDGE_Y, .20, post_top, m)])
+    # Folded plates at the two free frame corners; the stall wing owns the left.
+    for y, sy in ((HY0, -1), (HY1, 1)):
+        corner_plates(g, HX1, y, TOP_PLATE[0] - .22, 1, sy, .22)
+    # Lit shop windows inside the arcade; grids and singles elsewhere.
+    for x, w in ((1.56, .44), (2.44, .40), (4.50, .34)):
         atlas_window(g, x, HY0, .55, w, 'front', 'grid9')
-    for y in (3.0, 5.0):
+    for y in (1.85, 3.15):
         atlas_window(g, HX1, y, .55, .44, 'right', 'grid9')
         atlas_window(g, HX0, y, .55, .40, 'left', 'single')
-    for x in (2.075, 4.775, 7.33):
-        atlas_window(g, x, HY1, .55, .44, 'back', 'grid9')
-    # Upper storey: grand market-room windows at the front, lancets on the
-    # sides, triples at the back, slits beside the balcony door. The flower
-    # boxes under the front windows went with the two-layer storey: the
-    # arcade roof now meets the wall just under their sills.
-    for x in (2.075, 3.425, 4.75):
-        native_window(g, x, HY0, 1.42, .66, 'front', 'grand')
-    for x in (5.75, 7.25):
-        atlas_window(g, x, HY0, 1.40, .17, 'front', 'slit')
-    for y in (3.0, 5.0):
-        native_window(g, HX0, y, 1.40, .70, 'left', 'lancet')
-    for y in (3.45, 5.25):   # right side: clear of the stair bay (y 2..3)
-        native_window(g, HX1, y, 1.40, .70, 'right', 'lancet')
-    for x in (2.075, 3.425, 4.775, 7.33):
-        atlas_window(g, x, HY1, 1.40, .26, 'back', 'triple')
+    for x, w in ((1.62, .44), (4.35, .40)):
+        atlas_window(g, x, HY1, .55, w, 'back', 'grid9')
     for x, face_name in ((HX0, 'left'), (HX1, 'right')):
         atlas_window(g, x, RIDGE_Y, WALL_TOP + .58, .40, face_name, 'porthole')
     # Door lanterns on the flanking posts, beside the door head.
-    for x in (3.875, 5.125):
+    for x in (2.875, 4.125):
         post_lamp(g, x, HY0 - m / 2, .52, (0, -1))
 
 
@@ -731,19 +701,16 @@ def timber_door(g, cx, z0):
 
 
 def back_doors(g):
-    """Closed timber cargo doors at the dock. The hoist door above went with
-    the two-layer storey (2026-10-30): the hoist beam spans that wall now."""
-    for cx, z0, z1 in ((3.425, 0, .80),):
+    """Closed timber cargo doors at the hoist."""
+    for cx, z0, z1 in ((CARGO_X, 0, .80),):
         for dx in (-.255, .255):
             g.box((cx + dx, HY1 + .02, (z0 + z1) / 2), (.49, .06, z1 - z0), PLANK)
             for zz in (z0 + .18, z1 - .18):
                 g.box((cx + dx, HY1 + .062, zz), (.42, .025, .07), IRON)
         for xx in (cx - .54, cx + .54):
-            # Jambs stand 1 cm proud of the frame posts' rear faces (shared plane
-            # once the bevel modifier is gone).
+            # Jambs stand 1 cm proud of the frame posts' rear faces.
             g.box((xx, HY1 + .045, (z0 + z1) / 2 + .03), (.08, .10, z1 - z0 + .06), WOOD)
-        # Lintel 1 cm proud of the frame posts' rear faces (shared plane once
-        # the bevel modifier is gone).
+        # Lintel 1 cm proud of the frame posts' rear faces.
         g.box((cx, HY1 + .05, z1 + .08), (1.18, .12, .12), WOOD)
 
 
@@ -753,12 +720,8 @@ def main_roof(g):
     gx0, gx1 = HX0 - GABLE_OH, HX1 + GABLE_OH
     W = (RIDGE_Y - ye0) * s
     e = top_main(ye0)
-    # Front slope in three pieces: the cross-gable owns the middle eave.
-    slab(g, (gx0, ye0, e), (1, 0, 0), (0, 1, K), 5.5 - gx0, W)
-    slab(g, (5.5, HY0 + .05, top_main(HY0 + .05)), (1, 0, 0), (0, 1, K), 2.0, (RIDGE_Y - HY0 - .05) * s)
-    slab(g, (7.5, ye0, e), (1, 0, 0), (0, 1, K), gx1 - 7.5, W)
+    slab(g, (gx0, ye0, e), (1, 0, 0), (0, 1, K), gx1 - gx0, W)
     slab(g, (gx0, ye1, e), (1, 0, 0), (0, -1, K), gx1 - gx0, W)
-    # Barge boards along both gables.
     # Barge boards enclose each slab end; the pair is offset 14 mm so the
     # two boards never share a plane where they meet at the ridge.
     for gx, inward in ((EDGE_X0, 1), (EDGE_X1, -1)):
@@ -770,39 +733,20 @@ def main_roof(g):
         g.box(((x0 + x1) / 2, RIDGE_Y, RIDGE_TOP - .02), (x1 - x0, .16, .14), WOOD)
     for x in (EDGE_X0 + .03, EDGE_X1 - .03):
         g.box((x, RIDGE_Y, RIDGE_TOP - .03), (.16, .30, .28), IRON)
-    # Eave fascia boards (the cross-gable covers the front middle).
-    for y, x0, x1 in ((ye0 - .035, gx0, 5.2), (ye1 + .035, gx0, gx1)):
-        g.box(((x0 + x1) / 2, y, e - .085), (x1 - x0, .07, .16), WOOD)
-    for x, y in ((EDGE_X0 + .03, ye0 - .03), (EDGE_X0 + .03, ye1 + .03), (EDGE_X1 - .03, ye1 + .03)):
-        g.box((x, y, e - .07), (.16, .16, .24), IRON)
-
-
-def cross_gable(g):
-    """Front cross-gable over the balcony bay, valley-jointed into the roof."""
-    s = math.sqrt(1 + K * K)
-    ridge = WALL_TOP + K * 1.0
-    eave = WALL_TOP - K * EAVE_OH
-    for x, sdir in ((5.5 - EAVE_OH, 1), (7.5 + EAVE_OH, -1)):
-        slab(g, (x, HY0 - EAVE_OH, eave), (0, 1, 0), (sdir, 0, K), 1.35, (1 + EAVE_OH) * s)
-    und = lambda x: WALL_TOP + K * (1 - abs(x - 6.5)) - VT + .03
-    gable(g, 'X', HY0, -1, [(5.5, TOP_PLATE[0] + .07), (7.5, TOP_PLATE[0] + .07), (7.5, und(7.5)), (6.5, und(6.5)), (5.5, und(5.5))])
-    native_window(g, 6.5, HY0, WALL_TOP + .36, .55, 'front', 'diamond')
-    ye = HY0 - EAVE_OH - .03
-    for xe, off in ((5.5 - EAVE_OH, 0), (7.5 + EAVE_OH, .016)):
-        member(g, (xe, ye - off, eave - SLAB / 2 + .012), (6.5, ye - off, ridge - SLAB / 2 + .012), .08, .20, WOOD)
-    g.box((6.5, ye + .01, ridge - .03), (.30, .16, .28), IRON)
-    g.box((6.5, (ye + 3.02) / 2, ridge - .02), (.16, 3.02 - ye, .14), WOOD)
-    # Dark timber valley boards over each roof intersection.
-    for x0 in (5.5 - EAVE_OH, 7.5 + EAVE_OH):
-        member(g, (x0, HY0 - EAVE_OH, eave + .035), (6.5, HY0 + 1.0, ridge + .035), .16, .05, WOOD)
+    # Eave fascia boards and iron caps at the four eave corners.
+    for y in (ye0 - .035, ye1 + .035):
+        g.box(((gx0 + gx1) / 2, y, e - .085), (gx1 - gx0, .07, .16), WOOD)
+    for x in (EDGE_X0 + .03, EDGE_X1 - .03):
+        for y in (ye0 - .03, ye1 + .03):
+            g.box((x, y, e - .07), (.16, .16, .24), IRON)
 
 
 def monitor(g):
     """Raised clerestory along the ridge with a row of lit windows."""
     x0, x1, y0, y1 = MON_X0, MON_X1, MON_Y0, MON_Y1
-    # Lower clerestory for the one-layer hall (2026-10-30): .70 above the
-    # roof (was 1.18), one row of lit grids.
-    base, top, mk = top_main(y0) - .18, top_main(y0) + .70, .8
+    # .52 above the roof (was .70) with a flatter cap (.6): the one-storey
+    # hall stays three layers tall (2026-11-01).
+    base, top, mk = top_main(y0) - .18, top_main(y0) + .52, .6
     mvt = SLAB * math.sqrt(1 + mk * mk)
     ridge = top + mk * (y1 - y0) / 2
     wall(g, 'X', y0, -1, x0, x1, base, top - .05)
@@ -814,9 +758,9 @@ def monitor(g):
         for y in (y0, y1):
             g.box((x, y, (base + top - .08) / 2), (.16, .16, top - .08 - base), WOOD)
     for y, face_name in ((y0, 'front'), (y1, 'back')):
-        for dx in (-1.08, -.42, .42, 1.08):
-            atlas_window(g, xm + dx, y, top_main(y0) + .40, .34, face_name, 'grid9')
-        g.box((xm, y, top_main(y0) + .12), (x1 - x0 - .16, .12, .20), WOOD)
+        for dx in (-.5, .5):
+            atlas_window(g, xm + dx, y, top_main(y0) + .27, .30, face_name, 'grid9')
+        g.box((xm, y, top_main(y0) + .06), (x1 - x0 - .16, .12, .10), WOOD)
     s = math.sqrt(1 + mk * mk)
     for y, sdir in ((y0 - .18, 1), (y1 + .18, -1)):
         slab(g, (x0 - .15, y, top - .18 * mk), (1, 0, 0), (0, sdir, mk), x1 - x0 + .3, ((y1 - y0) / 2 + .18) * s)
@@ -831,9 +775,8 @@ def monitor(g):
 
 def roof_battens(g):
     """Dark cover battens down the main slopes, as on the concept roof."""
-    s = math.sqrt(1 + K * K)
-    for x, sdir, y_end in ((3.55, 1, MON_Y0), (4.75, 1, MON_Y0), (1.45, 1, RIDGE_Y),
-                           (3.55, -1, MON_Y1), (4.75, -1, MON_Y1), (6.45, -1, RIDGE_Y), (7.62, -1, RIDGE_Y)):
+    for x, sdir, y_end in ((1.50, 1, RIDGE_Y), (2.55, 1, MON_Y0), (3.45, 1, MON_Y0), (4.50, 1, RIDGE_Y),
+                           (1.50, -1, RIDGE_Y), (2.55, -1, MON_Y1), (3.45, -1, MON_Y1), (4.50, -1, RIDGE_Y)):
         ye = HY0 - EAVE_OH if sdir > 0 else HY1 + EAVE_OH
         n = Vector((0, -K * sdir, 1)).normalized()
         a = Vector((x, ye, top_main(ye))) + n * .02
@@ -842,35 +785,6 @@ def roof_battens(g):
             b = b + Vector((0, -.05 * sdir, -.05 * K))
         d = (b - a) / 2
         obox(g, (a + b) / 2, d, (.05, 0, 0), n * .035, WOOD)
-
-
-def dormer(g, xc, front, sdir):
-    """Small gabled dormer on the main roof; sdir=+1 front slope, -1 rear."""
-    dk = .8
-    yf = front
-    rf = top_main(yf)
-    top = rf + .52
-    ridge = top + .4 * dk
-    dvt = SLAB * math.sqrt(1 + dk * dk)
-    gable(g, 'X', yf, -sdir, [(xc - .4, rf - .15), (xc + .4, rf - .15), (xc + .4, top - .07),
-                              (xc, ridge - dvt + .03), (xc - .4, top - .07)])
-    rise = (top + .08 - WALL_TOP) / K
-    yb = HY0 + rise if sdir > 0 else HY1 - rise
-    for x, out in ((xc - .4, -1), (xc + .4, 1)):
-        gable(g, 'Y', x, out, [(yf, rf - .15), (yb, top - .07), (yf, top - .07)])
-    for x in (xc - .4, xc + .4):
-        g.box((x, yf, (rf - .05 + top - .09) / 2), (.11, .11, top - .09 - rf + .05), WOOD)
-    atlas_window(g, xc, yf, rf + .28, .40, 'front' if sdir > 0 else 'back', 'cross')
-    s = math.sqrt(1 + dk * dk)
-    rise = (ridge + .08 - WALL_TOP) / K
-    yend = HY0 + rise if sdir > 0 else HY1 - rise
-    y0 = yf - .15 * sdir
-    for x, d in ((xc - .52, 1), (xc + .52, -1)):
-        slab(g, (x, y0, top - .12 * dk), (0, sdir, 0), (d, 0, dk), abs(yend - y0), .52 * s)
-    for x, off in ((xc - .54, 0), (xc + .54, .016)):
-        yb2 = y0 - (.02 + off) * sdir
-        member(g, (x, yb2, top - .12 * dk - SLAB / 2 + .01), (xc, yb2, ridge - SLAB / 2 + .01), .06, .15, WOOD)
-    g.box((xc, y0 - .02 * sdir, ridge - .03), (.20, .14, .20), IRON)
 
 
 def chimney(g, x, y):
@@ -889,52 +803,36 @@ def chimney(g, x, y):
 
 def arcade(g):
     """Front market arcade: a pent roof on a post line whose outer faces are
-    on y = 0, the striped awning over the stall beside the entrance walk,
-    and a skirt roof in front of the balcony. The walk x 4..5 stays open."""
-    # One-layer storeys (2026-10-30): the pents meet the wall just above
-    # the floor girt and fall gently (k .12) to keep stall headroom.
+    on y = 0 (x 1..3, beside the stall wing), and the striped awning over the
+    stall on x 4..5. The door walk x 3..4 stays open."""
+    # The pent meets the wall under the hall's front eave and falls gently.
     k = .12
     s = math.sqrt(1 + k * k)
     pvt = SLAB * s
     def pent_top(y):
-        return 1.06 - k * (HY0 - y)
-    # Left pent: posts on x = 1, 2.5 and 4 (outer faces on 1 and 4).
-    x0, x1 = 1.02, 3.98
+        return PENT_TOP - k * (HY0 - y)
+    # Posts on x = 1 (shared with the stall wing) and 3 (outer faces on 1 and 3).
+    x0, x1 = 1.02, 2.98
     slab(g, (x0, 0.0, pent_top(0.0)), (1, 0, 0), (0, 1, k), x1 - x0, (HY0 + .06) * s)
     beam_top = pent_top(.10) - pvt + .012
     g.box(((x0 + x1) / 2, .10, beam_top - .075), (x1 - x0 - .04, .16, .15), WOOD)
-    for x, fx in ((1.10, -1), (2.50, 0), (3.90, 1)):
+    for x, fx in ((1.10, -1), (2.90, 1)):
         free_post(g, x, .10, beam_top - .10, .20, fx, -1)
         for d in (-1, 1):
             if x0 < x + d * .42 < x1:
                 member(g, (x, .10, beam_top - .40), (x + d * .32, .10, beam_top - .14), .08, .08, WOOD)
         g.box((x, -.008, beam_top - .30), (.16, .016, .16), IRON)
     g.box(((x0 + x1) / 2, -.02, pent_top(0.0) - .085), (x1 - x0, .04, .16), WOOD)
-    for x in (1.80, 3.20):
-        lantern(g, x, .10, beam_top - .15, .02)
-    # The herb bunches hung into the display rows once the pent came down.
-    # Skirt pent in front of the balcony: posts on x = 6 and 8, front y = 0.
-    def skirt_top(y):
-        return .86 - k * (1.0 - y)
-    sx0, sx1 = 6.02, 7.98
-    slab(g, (sx0, 0.0, skirt_top(0.0)), (1, 0, 0), (0, 1, k), sx1 - sx0, 1.06 * s)
-    sb = skirt_top(.10) - pvt + .012
-    g.box(((sx0 + sx1) / 2, .10, sb - .075), (sx1 - sx0 - .04, .16, .15), WOOD)
-    for x, fx in ((6.10, -1), (7.90, 1)):
-        free_post(g, x, .10, sb - .10, .20, fx, -1)
-        g.box((x, -.008, sb - .30), (.16, .016, .16), IRON)
-    g.box(((sx0 + sx1) / 2, -.02, skirt_top(0.0) - .085), (sx1 - sx0, .04, .16), WOOD)
-    # The skirt lantern went: its overflow crate stands under it since 2026-10-30.
+    lantern(g, 2.05, .10, beam_top - .15, .02)
     striped_awning(g)
 
 
 def striped_awning(g):
-    """Red-and-cream striped awning on iron rods over the stall at x 5..6,
-    beside (not over) the entrance walk."""
-    x0, x1 = 5.0, 6.0
-    # Flatter since the 2026-10-30 compaction: it meets the wall under the
-    # floor girt (.87) and clears the algae stand below.
-    top = [(.50, .74), (.95, .77), (1.45, .81), (HY0 - .02, .86)]
+    """Red-and-cream striped awning on iron rods over the stall at x 4..5,
+    beside (not over) the door walk."""
+    x0, x1 = 4.0, 5.0
+    # Under the hall's front eave; it clears the algae stand below.
+    top = [(.25, .72), (.55, .75), (.85, .80), (HY0 - .02, .84)]
     t = .025
     prof = [(y, z - t) for y, z in top] + [(y, z) for y, z in reversed(top)]
     n = 4
@@ -945,93 +843,63 @@ def striped_awning(g):
         first = len(g.faces)
         extrude_profile(g, prof, a, b, mat, axis='X')
         # Scalloped valance: each stripe ends in a rounded tongue.
-        g.box(((a + b) / 2, .497, .67), (b - a, .022, .12), mat)
-        g.cylinder(((a + b) / 2, .497, .61), (b - a) / 2 - .002, .010, mat, 'Y', 10)
+        g.box(((a + b) / 2, .247, .65), (b - a, .022, .12), mat)
+        g.cylinder(((a + b) / 2, .247, .59), (b - a) / 2 - .002, .010, mat, 'Y', 10)
         paint(g, first, mat, RED if i % 2 == 0 else WHOLE)
-    # Front bar, side rods and tension rods to the wall (real steel joints).
-    g.box(((x0 + x1) / 2, .535, .70), (x1 - x0 - .02, .04, .04), WOOD)
-    # The right tension rod anchors short of the balcony door jamb, in the
-    # upper storey's skin above the floor girt.
+    # Front bar, side rods and tension rods to the wall (real steel joints),
+    # anchored in the skin under the top plate.
+    g.box(((x0 + x1) / 2, .285, .68), (x1 - x0 - .02, .04, .04), WOOD)
     for x, xa in ((x0 + .032, x0 + .032), (x1 - .032, x1 - .20)):
-        member(g, (x, .52, .71), (x, HY0 - .01, .84), .03, .03, IRON)
-        member(g, (x, .54, .73), (xa, HY0 - .01, 1.08), .022, .022, IRON)
-        g.box((xa, HY0 - .03, 1.08), (.10, .05, .12), IRON)
-
-
-def balcony(g, rails):
-    """Upper-floor balcony, x 6..9, y 1..2, top at layer 1 (one-layer
-    storeys since 2026-10-30); open to the player stair on its back edge
-    x 8..9."""
-    top = 1.0
-    rows = [1.0 + i / 6 for i in range(7)]
-    for y0, y1 in zip(rows, rows[1:]):
-        for xa, xb in ((6.0, 7.5), (7.5, 9.0)):
-            g.box(((xa + xb) / 2, (y0 + y1) / 2, top - .05), (xb - xa - .008, y1 - y0 - .008, .10), PLANK)
-    # Strip from the deck edge back to the wall skin, beside the door sill.
-    g.box(((7.0 + 7.75) / 2, (EDGE_Y0 + HY0) / 2, top - .05), (.75 - .008, HY0 - EDGE_Y0 - .004, .10), PLANK)
-    # Rim beam on the front posts; rear beam against the hall frame.
-    g.box((7.5, 1.10, top - .17), (2.92, .16, .14), WOOD)
-    g.box((7.5, 1.935, top - .17), (2.96, .11, .14), WOOD)
-    for x in (6.35, 7.0, 7.75, 8.40):
-        g.box((x, 1.525, top - .165), (.10, .71, .13), WOOD)
-    for x, y, fx, fy in ((6.10, 1.10, -1, -1), (7.50, 1.10, 0, -1), (8.90, 1.10, 1, -1), (8.90, 1.90, 1, 1)):
-        free_post(g, x, y, top - .23, .20, fx, fy)
-    for x, d in ((6.10, 1), (7.50, -1), (7.50, 1), (8.90, -1)):
-        member(g, (x, 1.10, top - .58), (x + d * .32, 1.10, top - .26), .08, .08, WOOD)
-    for x in (6.10, 7.50, 8.90):
-        g.box((x, .992, top - .38), (.16, .016, .16), IRON)
-    # No rails and no flower boxes on the deck (2026-10-31 roof pass, user: no
-    # railings on the roofs, "like an actual platform where roads can connect"):
-    # the balcony is open to its tile edges and every deck cell stays clear.
-    lantern(g, 6.80, 1.10, top - .24, .02)
-    lantern(g, 8.20, 1.10, top - .24, .02)
+        member(g, (x, .27, .69), (x, HY0 - .01, .82), .03, .03, IRON)
+        member(g, (x, .29, .71), (xa, HY0 - .01, .96), .022, .022, IRON)
+        g.box((xa, HY0 - .03, .96), (.10, .05, .12), IRON)
 
 
 def stall_wing(g, parts):
-    """Low lean-to stall wing on x 0..1, y 1..6, with its own pent roof and
-    the hanging basket sign. Outer post faces on x = 0, y = 1 and y = 6."""
-    # Meets the hall wall just above the floor girt (one-layer storeys,
-    # 2026-10-30) and falls gently over the crock shelves.
+    """Low lean-to stall wing on x 0..1, y 0..4, with its own pent roof and
+    the hanging basket sign. Outer post faces on x = 0, y = 0 and y = 4."""
+    # Meets the hall wall under the gable overhang and falls gently over the
+    # display steps and crock shelves.
     k = .15
     s = math.sqrt(1 + k * k)
     lvt = SLAB * s
-    y0, y1 = 1.0, 6.0
+    y0, y1 = 0.0, 4.0
     def top(x):
-        return 1.06 - k * (HX0 - x)
-    slab(g, (0.0, y0 - .05, top(0.0)), (0, 1, 0), (1, 0, k), y1 - y0 + .10, (HX0 + .06) * s)
+        return PENT_TOP - k * (HX0 - x)
+    # The slab stops 15 mm short of the back wall line: the hall's corner
+    # post owns that plane.
+    slab(g, (0.0, y0, top(0.0)), (0, 1, 0), (1, 0, k), y1 - y0 - .015, (HX0 + .06) * s)
     under = lambda x: top(x) - lvt
-    free_post(g, .10, 1.10, under(.10) - .10, .20, -1, -1)
-    free_post(g, .10, 3.50, under(.10) - .10, .20, -1, 0)
-    free_post(g, .10, 5.90, under(.10) - .10, .20, -1, 1)
-    free_post(g, 1.10, 1.10, under(1.10) - .10, .20, 0, -1)
+    free_post(g, .10, .10, under(.10) - .10, .20, -1, -1)
+    free_post(g, .10, 2.00, under(.10) - .10, .20, -1, 0)
+    free_post(g, .10, 3.90, under(.10) - .10, .20, -1, 1)
     g.box((.10, (y0 + .02 + y1 - .02) / 2, under(.10) - .068), (.16, y1 - y0 - .04, .14), WOOD)
     g.box((1.10, (y0 + .02 + EDGE_Y0 + .10) / 2, under(1.10) - .068), (.13, EDGE_Y0 + .08 - y0, .14), WOOD)
-    for y in (1.10, 5.90):
+    for y in (.10, 3.90):
         member(g, (.05, y, under(.05) - .07), (HX0 + .05, y, under(HX0 + .05) - .07), .12, .13, WOOD)
-    g.box((-.02, (y0 + y1) / 2, top(0.0) - .085), (.04, y1 - y0 + .10, .16), WOOD)
+    g.box((-.02, (y0 + y1) / 2, top(0.0) - .085), (.04, y1 - y0, .16), WOOD)
     # Rear board wall closes the wing on the hall's back wall line.
     gable(g, 'X', HY1, 1, [(.10, 0), (HX0, 0), (HX0, under(HX0) + .03), (.10, under(.10) + .03)])
-    for y in (2.30, 4.70):
+    for y in (1.40, 3.40):
         lantern(g, .10, y, under(.10) - .138, .02)
-    # Hanging basket sign under the wing's outer beam, inside the wing's own
-    # cells (2026-10-30, no-clutter rule: it hung on an arm over the open
-    # cell in front of the wing).
-    pivot = (.10, 1.85, under(.10) - .138)
+    # Hanging basket sign under the wing's outer beam, between the two crock
+    # shelves, inside the wing's own cells.
+    pivot = (.10, 2.55, under(.10) - .138)
     sign = Geometry('GroceryMarket.BasketSign', pivot)
     basket_sign(sign, *pivot)
     parts.append((sign, 'SWAY', .05))
 
 
 def basket_sign(m, x, y, hang):
-    """Double-faced carved board with a painted basket emblem (smaller since
-    the 2026-10-30 compaction: it hangs under a one-layer wing roof)."""
-    s = .85
-    zc = hang - .38
-    # Three chain links (was four): the board's top bar stays clear below them.
-    for dy in (-.15, .15):
+    """Double-faced carved board with a painted basket emblem (smaller again
+    in 2026-11-01: it hangs under the one-storey wing roof)."""
+    s = .65
+    zc = hang - .30
+    # Three chain links: the board's top bar stays clear below them.
+    for dy in (-.12, .12):
         for i in range(3):
             m.ring((x, y + dy, hang - .040 - i * .048), .024, .008, .012, IRON, 'Y' if i % 2 else 'X', 6)
-    boards, width, height = 5, .50, .40
+    boards, width, height = 5, .40, .32
     for i in range(boards):
         yy = y - width / 2 + (i + .5) * width / boards
         m.box((x, yy, zc), (.06, width / boards - .006, height), PLANK)
@@ -1045,7 +913,7 @@ def basket_sign(m, x, y, hang):
         def stroke(a, b, w, relief):
             first = len(m.faces)
             c = x + side * (.03 + relief / 2 - .003)
-            member(m, (c, y + a[0] * s, zc + a[1] * s), (c, y + b[0] * s, zc + b[1] * s), relief + .006, w * s, CREAM)
+            member(m, (c, y + a[0] * s, zc + .012 + a[1] * s), (c, y + b[0] * s, zc + .012 + b[1] * s), relief + .006, w * s, CREAM)
             paint(m, first, CREAM, WHOLE)
         body = [(-.15, .0), (.15, .0), (.11, -.17), (-.11, -.17)]
         for i, (a, b) in enumerate(zip(body, body[1:] + body[:1])):
@@ -1060,36 +928,32 @@ def basket_sign(m, x, y, hang):
 
 
 def dock(g, parts):
-    """Rear hoist under the hall's back eave over the cargo doors.
+    """Rear hoist under the hall's back eave beside the cargo doors.
 
-    2026-10-22 (user): no forced decoration beyond the walls. The pent-roofed
-    loading dock on its row of posts, its lanterns, sacks, crates and barrels
-    and the water tower are gone, and the footprint ends at the hall's back
-    wall (9x7 -> 9x6). The hoist stays: it hangs from the eave, 0.17 off the
-    wall, and occupies no ground tile."""
-    # Hoist beam under the rear eave, a turning pulley and a rising load.
-    # Under the lower rear eave of the one-layer hall (2026-10-30).
-    hx, wheel_z, r = 6.125, 1.24, .12
+    It hangs from the eave, 0.17 off the back wall, and occupies no ground
+    tile. Lower and shorter since 2026-11-01 (one-storey hall)."""
+    hx, beam_z, r = 3.95, .86, .10
+    wheel_z = beam_z - .23
     wy = HY1 + .17
-    member(g, (hx, HY1 - .05, 1.47), (hx, HY1 + EAVE_OH - .01, 1.47), .16, .18, WOOD)
-    g.box((hx, HY1 + .03, 1.47), (.24, .04, .32), IRON)
+    member(g, (hx, HY1 - .05, beam_z), (hx, HY1 + EAVE_OH - .01, beam_z), .16, .18, WOOD)
+    g.box((hx, HY1 + .03, beam_z), (.24, .04, .32), IRON)
     for dx in (-.06, .06):
-        g.box((hx + dx, wy, 1.36), (.02, .12, .22), IRON)
+        g.box((hx + dx, wy, beam_z - .11), (.02, .12, .22), IRON)
     g.cylinder((hx, wy, wheel_z), .025, .16, IRON, 'X', 8)
     wheel = Geometry('GroceryMarket.HoistPulley', (hx, wy, wheel_z))
-    wheel.ring((hx, wy, wheel_z), r, .035, .07, IRON, 'X', 16)
-    wheel.cylinder((hx, wy, wheel_z), .045, .09, IRON, 'X', 10)
+    wheel.ring((hx, wy, wheel_z), r, .03, .07, IRON, 'X', 16)
+    wheel.cylinder((hx, wy, wheel_z), .04, .09, IRON, 'X', 10)
     for i in range(6):
         a = i * math.pi / 3
         member(wheel, (hx, wy, wheel_z), (hx, wy + math.cos(a) * (r - .03), wheel_z + math.sin(a) * (r - .03)),
-               .025, .025, WOOD, up=(1, 0, 0))
-    travel, low_top = .40, .62
+               .022, .022, WOOD, up=(1, 0, 0))
+    travel, low_top = .14, .36
     rope = Geometry('GroceryMarket.HoistRope', (hx, wy + r, wheel_z))
     rope.box((hx, wy + r, (wheel_z + low_top + .08) / 2), (.022, .022, wheel_z - low_top - .08), WOOD)
     load = Geometry('GroceryMarket.HoistLoad', (hx, wy + r, low_top))
-    for dy in (-.14, .14):
+    for dy in (-.11, .11):
         member(load, (hx, wy + r, low_top + .08), (hx, wy + r + dy, low_top - .02), .016, .016, WOOD, up=(1, 0, 0))
-    crate(load, hx, wy + r, low_top - .36, .42, .34, .34, 'cabbage', 77)
+    crate(load, hx, wy + r, low_top - .26, .30, .26, .24, 'cabbage', 77)
     parts.append((wheel, 'HOIST_WHEEL', (travel, r)))
     parts.append((rope, 'HOIST_ROPE', (travel, wheel_z - low_top - .08)))
     parts.append((load, 'HOIST_LOAD', travel))
@@ -1231,44 +1095,34 @@ def check_stock(g):
 def front_goods(g):
     """Storefront stock: the six foods the shop sells, each in its own
     display group and three fill stages (see GroceryStockDisplay.cs). Empty
-    displays leave their trays, steps and crates bare. A few produce baskets
-    and barrels stay as decor. The walk to the main door (x 4..5, y 0..2)
-    stays clear."""
-    # Left arcade, three steps: canned fish (left), packaged food (right).
-    riser(g, 1.30, 3.70, 1.04, 1.44, .28)
-    riser(g, 1.30, 3.70, 1.46, 1.96, .56)
-    for food, x0, x1, seed in (('CannedFish', 1.34, 2.46, 10), ('EggplantRation', 2.54, 3.66, 30)):
-        stocked_tray(g, food, x0, x1, .60, .96, 0.0, seed)
-        stocked_tray(g, food, x0, x1, 1.06, 1.42, .28, seed + 3)
-        stocked_tray(g, food, x0, x1, 1.50, 1.86, .56, seed + 6)
-    # Overflow out in the light in front of the posts at full stock.
-    stocked_crate(g, 'CannedFish', 2.00, .20, 0, .40, .28, .22, 120, stages=(3,), brace=True)
-    stocked_crate(g, 'EggplantRation', 3.35, .20, 0, .44, .28, .22, 122, stages=(3,))
-    basket(g, 1.55, .20, 0, .11, 'apple', 121)
-    basket(g, 2.90, .20, 0, .11, 'tomato', 123)
-    # Awning stall (x 5..6): algae ration bundles stacked on the table.
-    stand(g, 5.10, 5.90, .60, 1.80, .32)
+    displays leave their trays, steps and crates bare. A barrel and a basket
+    stay as decor under the awning. The door walk (x 3..4, y 0..1) stays
+    clear. Since 2026-11-01 every group fits one front row or the stall wing
+    of the 5 x 4 market."""
+    # Canned fish (under the wing) and packaged food (under the pent): three
+    # steps each, behind the post footings (y .36) and in front of the base
+    # course (y 1.0).
+    for food, x0, x1, seed in (('CannedFish', .22, .98, 10), ('EggplantRation', 1.22, 2.02, 30)):
+        riser(g, x0, x1, .60, .78, .20)
+        riser(g, x0, x1, .80, .98, .40)
+        stocked_tray(g, food, x0 + .02, x1 - .02, .39, .58, 0.0, seed)
+        stocked_tray(g, food, x0 + .02, x1 - .02, .61, .77, .20, seed + 3)
+        stocked_tray(g, food, x0 + .02, x1 - .02, .81, .97, .40, seed + 6)
+    # Under the pent beside the door walk: corn ration bundles in two tilted
+    # crates, with an overflow crate in front at full stock.
+    for i, x in enumerate((2.24, 2.60)):
+        stocked_crate(g, 'CornRation', x, .72, 0, .34, .26, .24, 60 + i, brace=i % 2 == 1)
+    stocked_crate(g, 'CornRation', 2.42, .32, 0, .40, .26, .20, 126, stages=(3,), brace=True)
+    # Awning stall (x 4..5): algae ration bundles stacked on the table.
+    stand(g, 4.10, 4.90, .45, .98, .32)
     for n in range(1, STOCK_STAGES + 1):
-        heap(stock(g, 'AlgaeRation', n), algae, 5.13, 5.87, .63, 1.77, .32 + (n - 1) * .052, n, .17, .14, 40 + 100 * n)
-    produce_barrel(g, 5.22, .24, 'apple', 52, .17, .40)
-    basket(g, 5.72, .22, 0, .11, 'berry', 53)
-    # Under the skirt roof: corn ration bundles in four tilted crates, with
-    # an overflow crate out in front at full stock.
-    for i, x in enumerate((6.30, 6.76, 7.22, 7.68)):
-        stocked_crate(g, 'CornRation', x, .70, 0, .44, .26, .26, 60 + i, brace=i % 2 == 1)
-    stocked_crate(g, 'CornRation', 7.00, .19, 0, .44, .26, .22, 126, stages=(3,), brace=True)
-    basket(g, 6.55, .20, 0, .11, 'berry', 125)
-    # Under the balcony: decor baskets and a sack stack.
-    stand(g, 6.32, 7.25, 1.42, 1.86, .40)
-    for i, (x, kind) in enumerate(((6.55, 'apple'), (7.02, 'onion'))):
-        basket(g, x, 1.64, .40, .16, kind, 70 + i)
-    sack_stack(g, 7.70, 1.68, 'Y', 80, .13, .32)
+        heap(stock(g, 'AlgaeRation', n), algae, 4.13, 4.87, .48, .95, .32 + (n - 1) * .052, n, .17, .14, 40 + 100 * n)
+    produce_barrel(g, 4.25, .22, 'apple', 52, .15, .36)
+    basket(g, 4.72, .20, 0, .10, 'berry', 53)
     # Stall wing: fermented cassava crocks (front) and soybean jars (back)
     # on stepped shelves facing the side street.
-    crock_shelf(g, 'FermentedCassava', 1.45, 3.25, 90)
-    crock_shelf(g, 'FermentedSoybean', 3.75, 5.55, 95)
-    # The cassava overflow crate, basket and sack that stood on the open cell
-    # in front of the stall wing are gone (2026-10-30, no-clutter rule).
+    crock_shelf(g, 'FermentedCassava', 1.15, 2.30, 90)
+    crock_shelf(g, 'FermentedSoybean', 2.80, 3.85, 95)
     check_stock(g)
 
 
@@ -1277,14 +1131,9 @@ def grocery_market(g, parts):
     hall(g)
     back_doors(g)
     main_roof(g)
-    cross_gable(g)
     monitor(g)
     roof_battens(g)
-    dormer(g, 2.40, 2.50, 1)
-    dormer(g, 2.40, 5.50, -1)
-    # (The rear-slope flue went: no roof vents, user 2026-10-30.)
     arcade(g)
-    balcony(g, rails)
     stall_wing(g, parts)
     dock(g, parts)
     front_goods(g)

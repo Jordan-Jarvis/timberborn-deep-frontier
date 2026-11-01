@@ -464,28 +464,28 @@
   },
   "GroceryStore": {
    "model": "Buildings/Food/GroceryStore/GroceryStore.IronTeeth.Model",
-   "sha256": "044100069df692c5026be8f4fc1ca56b40e2b884ce3ff213ec9af52646881ee2",
+   "sha256": "9e6e041aadca8f79f4d12fff334a1e634168099ce95b891793df2091054dc188",
    "areas": {
-    "BaseMetal.IronTeeth": 14.8584,
-    "BaseWood_Brown.Folktails": 1.7418,
-    "BaseWood_DarkBrown.IronTeeth": 129.1861,
-    "DFIndustrial08": 0.8,
-    "Details.IronTeeth#metal": 0.211,
-    "Details.IronTeeth#unpriced": 11.1856,
-    "Details.IronTeeth#wood": 5.1191,
-    "IrregularPlanks_DarkBrown.IronTeeth": 107.128,
-    "IrregularPlanks_MetalForged.IronTeeth": 54.6456,
-    "Plaster_Orange.IronTeeth": 3.5606,
-    "Plaster_White.IronTeeth": 34.0822,
-    "RoofPlanks.IronTeeth": 65.3575,
-    "WindowsAtlas.IronTeeth": 5.596
+    "BaseMetal.IronTeeth": 8.0315,
+    "BaseWood_Brown.Folktails": 0.3716,
+    "BaseWood_DarkBrown.IronTeeth": 59.2362,
+    "DFIndustrial08": 0.5,
+    "Details.IronTeeth#metal": 0.1675,
+    "Details.IronTeeth#unpriced": 4.2173,
+    "Details.IronTeeth#wood": 2.0803,
+    "IrregularPlanks_DarkBrown.IronTeeth": 42.7179,
+    "IrregularPlanks_MetalForged.IronTeeth": 23.0464,
+    "Plaster_Orange.IronTeeth": 1.7875,
+    "Plaster_White.IronTeeth": 17.596,
+    "RoofPlanks.IronTeeth": 26.6759,
+    "WindowsAtlas.IronTeeth": 2.21
    },
    "families": {
-    "brick": 3.5606,
-    "concrete": 34.0822,
-    "metal": 69.715,
-    "unpriced": 17.5816,
-    "wood": 308.5326
+    "brick": 1.7875,
+    "concrete": 17.596,
+    "metal": 31.2454,
+    "unpriced": 6.9273,
+    "wood": 131.0819
    }
   },
   "Hospital": {

@@ -78,6 +78,19 @@ export const materialMix = MIX.buildings;
 for (const [id, entry] of Object.entries(materialMix)) {
   for (const f of Object.keys(entry.families)) if (![...FAMILIES, 'unpriced'].includes(f)) throw new Error(`${MIX_PATH} ${id}: unknown family ${f}`);
 }
+// Second shrink pass (2026-11-01, "keep each building's cost unchanged"): a
+// building shrunk in that pass keeps the material families its pre-shrink model
+// showed (tools/material_mix_basis.json), so its family shares and cost stay as
+// they were. The measured mix above still records the shipped model (stale-mix
+// audit). One key per building; agents add only their own keys.
+const MIX_BASIS_PATH = 'tools/material_mix_basis.json';
+const MIX_BASIS = readJson(MIX_BASIS_PATH).basis;
+for (const [id, entry] of Object.entries(MIX_BASIS)) {
+  if (!Object.hasOwn(materialMix, id)) throw new Error(`${MIX_BASIS_PATH} ${id}: no measured material mix for this building`);
+  if (!entry.measuredAt || !entry.families) throw new Error(`${MIX_BASIS_PATH} ${id}: needs families and measuredAt`);
+  for (const f of Object.keys(entry.families)) if (![...FAMILIES, 'unpriced'].includes(f)) throw new Error(`${MIX_BASIS_PATH} ${id}: unknown family ${f}`);
+}
+export const pricedFamilies = (id) => (MIX_BASIS[id] ?? materialMix[id]).families;
 
 // Embodied recipe effort (materialRule.value) over a set of recipes: primary
 // and map-gathered goods count primaryGood (liquids liquidGood), each recipe
@@ -165,7 +178,7 @@ export function materialComposition(id, rows, science, tierName) {
   if (!templates) throw new Error(`${id}: unknown tier ${tierName}`);
   const {available, producesDeposit} = world(id, science);
   const value = (g) => materialValue(id, science, g);
-  const area = Object.fromEntries(FAMILIES.map((f) => [f, materialMix[id].families[f] ?? 0]));
+  const area = Object.fromEntries(FAMILIES.map((f) => [f, pricedFamilies(id)[f] ?? 0]));
   const goodsOf = (f) => Object.entries(templates[f]).filter(([g]) => available.has(g));
   const failures = [], unpriced = [], folded = [];
   for (const f of FAMILIES) {

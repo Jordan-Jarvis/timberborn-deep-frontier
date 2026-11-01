@@ -79,10 +79,10 @@ namespace DeepFrontier.Scripts {
         var n=_entities.Entities.Single(e=>e.EntityId.ToString()==resident.EntityId).GetComponent<NeedManager>();
         foreach(var need in resident.Needs)Require(Math.Abs(n.GetNeedPoints(need.Name)-need.Points)<.0001f,"Saved neighborhood points differ");
       }
-      // Grocery Market access (GroceryAcceptance.RequireMarketLayout): the saved door walk,
-      // stair foot and balcony deck paths must reconnect after the reload.
+      // Grocery Market access (GroceryAcceptance.RequireMarketLayout): the saved door walk
+      // to the Entrance must reconnect after the reload.
       GroceryAcceptance.RequireMarketAccess(_building,_nav,GroceryAcceptance.RequireMarketLayout(_templates));
-      Pass("fresh-process identity, pause, exact food stocks, consumer permissions, resident needs and connected door and balcony paths");
+      Pass("fresh-process identity, pause, exact food stocks, consumer permissions, resident needs and connected door path");
       var workers=_entities.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>())
         .Where(w=>w.WorkerType=="Beaver").ToArray();
       Require(workers.Length>=3,"Need two clerks and one test shopper");

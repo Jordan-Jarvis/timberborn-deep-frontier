@@ -9,7 +9,7 @@ doorstep, native Entrance path cell and face offset. Writes
 (named after the study, so the outgoing GroceryStore data stays intact until
 the generator switches over)
 for export_lategame_models.py and grocery_building_content.mjs. The access
-contract (balcony, stair bay, door walk) is carried through and checked here.
+contract (the door walk) is carried through and checked here.
 
 Run: blender -b --python-exit-code 1 --python register_grocery_market.py
 """
@@ -27,7 +27,7 @@ import grocery_market_geometry as source
 from render_grocery_market_study import FRAMES, FPS, IDENT as STUDY
 
 IDENT = 'GroceryStore'
-HEIGHT = 5   # chimney cap at 4.46 (one-layer storeys, 2026-10-30; was 8)
+HEIGHT = 3   # monitor ridge cap at 2.91 (one storey, 2026-11-01; was 5, 8 before 2026-10-30)
 
 
 def art_hash():
@@ -53,16 +53,13 @@ def main():
     reg['smokeEmitters'] = smoke_emitters(module, static, parts)
     access = source.ACCESS
     occupied = {tuple(c) for c in reg['occupied']}
-    # The access contract is part of the design: the door walk and the stair
-    # bay must stay clear for player paths and native stairs.
+    # The access contract is part of the design: the door walk must stay
+    # clear for the native Entrance path cell.
     x0, y0, x1, y1 = access['groundWalk']['mainDoorApproach']
     walk = {(x, y, z) for x in range(int(x0), int(x1)) for y in range(int(y0), int(y1)) for z in (0, 1)}
-    bx0, by0, bx1, by1 = access['stairBay']['bounds']
-    bay = {(x, y, z) for x in range(bx0, bx1) for y in range(by0, by1) for z in (0, 1)}
-    for name, cells in (('main door walk', walk), ('stair bay', bay)):
-        blocked = sorted(cells & occupied)
-        if blocked:
-            raise ValueError(f'{IDENT}: {name} cells occupied by the art: {blocked}')
+    blocked = sorted(walk & occupied)
+    if blocked:
+        raise ValueError(f'{IDENT}: main door walk cells occupied by the art: {blocked}')
     animated = [geo.name for geo, kind, _ in parts]
     out = dict(reg, ident=IDENT, study=STUDY, frameEnd=FRAMES, fps=FPS, animatedParts=animated,
                access=access, artHash=art_hash())

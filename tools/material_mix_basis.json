@@ -1,0 +1,15 @@
+{
+ "_comment": "Second shrink pass (2026-11-01, user: shrink the buildings; brief: keep each building's cost unchanged). tools/material_costs.mjs prices a building from the material families of its exported model (tools/building_material_mix.json). A building shrunk in that pass keeps the families its pre-shrink model showed here, so its family shares and its cost stay as they were. Each entry: the families of the old building_material_mix.json row (git) and the model they were measured on. One key per building; agents add or edit only their own keys.",
+ "basis": {
+  "GroceryStore": {
+   "families": {
+    "brick": 3.5606,
+    "concrete": 34.0822,
+    "metal": 69.715,
+    "unpriced": 17.5816,
+    "wood": 308.5326
+   },
+   "measuredAt": "9x6x5 Grocery Market model (d424ef7)"
+  }
+ }
+}

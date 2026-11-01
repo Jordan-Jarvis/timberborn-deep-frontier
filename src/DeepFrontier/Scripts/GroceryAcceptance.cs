@@ -81,21 +81,16 @@ namespace DeepFrontier.Scripts {
       foreach(var e in _entities.Entities.Where(e=>e.HasComponent<Workplace>()&&e.HasComponent<PausableBuilding>()))e.GetComponent<PausableBuilding>().Pause();
       _layout=RequireMarketLayout(_templates);
       _building=Create("GroceryStore.IronTeeth",Origin.x,Origin.y,Origin.z);_shop=_building.GetComponent<GroceryStore>();
-      // Freed ground (2026-10-22): the former rear row y 6 (loading dock, its goods and the
-      // water tower) left the 9x6 bounds; nothing inside the bounds was freed.
+      // Freed ground: the old 9x6 market (and its rear row y 6, freed 2026-10-22) outside the
+      // 5x4 market of the 2026-11-01 shrink.
       var size=_building.GetComponent<BlockObjectSpec>().Size;
       FreedCellProbe.Require(_templates,_validator,_building,FreedCellProbe.Outside(0,8,0,6,size),"GroceryStore",Pass);
       CivicFixtureGeometry.Place place=(id,c,o)=>Create(id,c.x,c.y,c.z,o);
-      // The road and the open door walk to the Entrance, the ground walk to the stair approach,
-      // one vanilla stair per balcony layer in the stair bay, then paths on the balcony deck.
+      // The road and the open door walk to the Entrance (one storey: no balcony since 2026-11-01).
       CivicFixtureGeometry.Road(place,c=>_blocks.GetPathObjectAt(c),_building.TransformCoordinates(_layout.Entrance));
-      foreach(var c in _layout.EastWalk)Local("Path",c);
-      CivicFixtureGeometry.Flight(place,_building.TransformCoordinates(_layout.StairHead),-_layout.Climb,Origin.z,pad:false);
-      foreach(var c in _layout.Balcony)Local("Path",c);
       // Shafts meet authored walls only: a shaft line out of the lowest wall face clear of the
-      // door walk, stair bay, ground walk and balcony.
-      var access=new HashSet<Vector2Int>(_layout.DoorWalk.Concat(_layout.EastWalk).Concat(_layout.Bay).Concat(_layout.Balcony)
-        .Append(_layout.StairFoot).Select(c=>new Vector2Int(c.x,c.y)));
+      // door walk.
+      var access=new HashSet<Vector2Int>(_layout.DoorWalk.Select(c=>new Vector2Int(c.x,c.y)));
       var face=CivicFixtureGeometry.ShaftFace(_building.GetComponent<BlockObjectSpec>(),_building.GetComponent<TransputProviderSpec>(),
         c=>access.Contains(new Vector2Int(c.x,c.y)),"GroceryStore");
       _generator=CivicFixtureGeometry.ShaftLine(place,_building,face,1)[0];
@@ -108,7 +103,7 @@ namespace DeepFrontier.Scripts {
         var inventory=warehouse.GetComponent<Stockpile>().Inventory;
         inventory.GiveExisting(new GoodAmount(foods[i],30));_donors.Add(inventory);
       }
-      Pass("native placement, door approach, balcony stairs and deck paths, wall-face shaft and six separate food donors");
+      Pass("native placement, door approach, wall-face shaft and six separate food donors");
       // Begin with actual food only in the native donor warehouses. Every unit
       // reaching the empty grocery must be carried through normal hauling.
       foreach(var e in _entities.Entities.Where(e=>e.HasComponent<NeedManager>())) {
@@ -125,7 +120,7 @@ namespace DeepFrontier.Scripts {
     private void Start() {
       Require(_building.GetComponent<MechanicalNode>().PowerEfficiency==1,"Grocery lacks its full 3,900 hp");
       RequireMarketAccess(_building,_nav,_layout);
-      Pass("road, main-door entrance, stair foot and balcony deck paths form one native navigation network");
+      Pass("road and main-door entrance form one native navigation network");
       var workers=_entities.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>()).Where(w=>w.WorkerType=="Beaver").ToArray();
       Require(workers.Length>=3,"Grocery fixture needs two clerks and a shopper");
       foreach(var worker in workers)worker.Unemploy();
@@ -200,10 +195,9 @@ namespace DeepFrontier.Scripts {
           Pass("native restocking restores the neighborhood bonus");
           _building.GetComponent<PausableBuilding>().Pause();
           _observer.GetComponent<Worker>().Unemploy();
-          // Market access cells (all player paths): the main-door walk to the Entrance, the stair
-          // foot, the balcony at the stair head and at the balcony door, then the road.
-          foreach(var c in _layout.DoorWalk.OrderBy(c=>c.y).Concat(new[]{_layout.StairFoot,_layout.StairHead,_layout.BalconyDoor,
-            _layout.Entrance+new Vector3Int(0,-_layout.Entrance.y-1,0)}))_walkTargets.Enqueue(c);
+          // Market access cells (all player paths): the main-door walk to the Entrance, then the road.
+          foreach(var c in _layout.DoorWalk.OrderBy(c=>c.y).Concat(new[]{_layout.Entrance+new Vector3Int(0,-_layout.Entrance.y-1,0)}))
+            _walkTargets.Enqueue(c);
           Phase(9);NextWalk();
         } else if(_phase==9&&Vector3.Distance(_observer.Transform.position,_target)<.18f) {
           Pass("actual shopper reached "+_localTarget);
@@ -224,12 +218,11 @@ namespace DeepFrontier.Scripts {
     // Grocery Market access in local cells, read from its registration (the "doors" and "access"
     // of outputs/lategame-studies/GroceryMarket-registration.json, from which
     // tools/grocery_building_content.mjs generates the blueprint) and checked against the
-    // installed blueprint: the open door walk to the native Entrance, the balcony deck (player
-    // paths on its Stackable support, BalconyDoor) and the open stair bay entered from the
-    // ground. No built-in walkway and no deck spec.
+    // installed blueprint: the open door walk to the native Entrance. One storey since the
+    // 2026-11-01 shrink (no balcony or stair bay). No built-in walkway and no deck spec.
     internal sealed class MarketLayout {
-      public Vector3Int Entrance,BalconyDoor,StairHead,StairFoot,Climb;
-      public Vector3Int[] DoorWalk,Balcony,Bay,EastWalk;
+      public Vector3Int Entrance;
+      public Vector3Int[] DoorWalk;
     }
     private static string RegistrationPath=>Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
       "TimberbornModding","outputs","lategame-studies","GroceryMarket-registration.json");
@@ -249,41 +242,23 @@ namespace DeepFrontier.Scripts {
       }
       JToken Door(string id)=>reg["doors"].Single(d=>(string)d["id"]==id);
       var access=reg["access"];
-      var layout=new MarketLayout{Entrance=Cell(Door("MainDoor")["entrance"]),BalconyDoor=Cell(Door("BalconyDoor")["entrance"])};
+      var layout=new MarketLayout{Entrance=Cell(Door("MainDoor")["entrance"])};
       var footprint=reg["footprint"];
       if(Whole(footprint[0])!=spec.Size.x||Whole(footprint[1])!=spec.Size.y||layout.Entrance!=spec.Entrance.Coordinates)
         throw new InvalidOperationException("Installed GroceryStore is "+spec.Size+" with entrance "+spec.Entrance.Coordinates+
           "; its registration has footprint "+footprint.ToString(Newtonsoft.Json.Formatting.None)+" and MainDoor entrance "+layout.Entrance+". Regenerate the Grocery Store.");
-      int layer=Whole(access["balcony"]["layer"]);
-      layout.Balcony=Rect(access["balcony"]["bounds"],layer);
-      layout.Bay=Rect(access["stairBay"]["bounds"],0);
+      if(access["balcony"]!=null||access["stairBay"]!=null)throw new InvalidOperationException("Grocery registration still declares a balcony or stair bay");
       layout.DoorWalk=Rect(access["groundWalk"]["mainDoorApproach"],0);
-      var foot=Rect(access["groundWalk"]["stairApproach"],0);
-      // The stair head is the balcony cell beside the bay; one stair per layer leads away from it.
-      var heads=layout.Balcony.Where(b=>layout.Bay.Any(s=>Math.Abs(s.x-b.x)+Math.Abs(s.y-b.y)==1)).ToArray();
-      if(heads.Length!=1||layout.Bay.Length!=layer||foot.Length!=1)
-        throw new InvalidOperationException("Grocery registration stair bay "+layout.Bay.Length+" cells, balcony layer "+layer+", "+heads.Length+" stair heads, "+foot.Length+" stair approach cells; this fixture needs one stair per layer from one approach cell to one balcony cell");
-      layout.StairHead=heads[0];
-      var first=layout.Bay.Single(s=>Math.Abs(s.x-heads[0].x)+Math.Abs(s.y-heads[0].y)==1);
-      layout.Climb=new Vector3Int(heads[0].x-first.x,heads[0].y-first.y,0);
-      layout.StairFoot=foot[0];
-      var expectedFoot=heads[0]-layout.Climb*(layer+1);expectedFoot.z=0;
-      if(layout.StairFoot!=expectedFoot)throw new InvalidOperationException("Grocery stair approach "+layout.StairFoot+" is not at the foot "+expectedFoot+" of a straight flight to "+heads[0]);
       // The open door walk is the road's column from the road row to the Entrance (CivicFixtureGeometry.Road).
       var column=Enumerable.Range(0,layout.Entrance.y+1).Select(y=>new Vector3Int(layout.Entrance.x,y,0));
       if(!new HashSet<Vector3Int>(layout.DoorWalk).SetEquals(column))
         throw new InvalidOperationException("Grocery main-door approach is not the straight walk from the front edge to the Entrance "+layout.Entrance);
-      // Ground walk to the stair approach: up the first column east of it from the road row, which
-      // must lie outside the footprint.
-      int east=layout.StairFoot.x+1;
-      if(east<spec.Size.x)throw new InvalidOperationException("Grocery stair approach "+layout.StairFoot+" has no free column east of it outside the footprint");
-      layout.EastWalk=Enumerable.Range(0,layout.StairFoot.y+1).Select(y=>new Vector3Int(east,y,0)).ToArray();
       return layout;
     }
-    // Road, main-door Entrance, stair foot, stair head and balcony door in one native navigation network.
+    // Road and main-door Entrance in one native navigation network.
     internal static void RequireMarketAccess(BlockObject building,INavMeshService nav,MarketLayout layout) {
       var road=building.TransformCoordinates(layout.Entrance+new Vector3Int(0,-layout.Entrance.y-1,0));
-      foreach(var local in new[]{layout.Entrance,layout.StairFoot,layout.StairHead,layout.BalconyDoor}) {
+      foreach(var local in new[]{layout.Entrance}) {
         var cell=building.TransformCoordinates(local);
         if(!nav.AreConnectedInstant(road,cell)||!nav.AreConnectedInstant(cell,road))
           throw new InvalidOperationException("Grocery Market access cell "+local+" (world "+cell+") is not connected to the road "+road);

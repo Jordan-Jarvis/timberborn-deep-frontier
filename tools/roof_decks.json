@@ -75,25 +75,6 @@
     4
    ]
   ],
-  "NuclearReactor": [
-   [
-    3,
-    1,
-    1
-   ],
-   [
-    3,
-    2,
-    1
-   ]
-  ],
-  "MissionControl": [
-   [
-    1,
-    6,
-    1
-   ]
-  ],
   "UraniumProcessingPlant": [
    [
     0,
@@ -111,6 +92,18 @@
     1
    ]
   ],
+  "NuclearReactor": [
+   [
+    3,
+    1,
+    1
+   ],
+   [
+    3,
+    2,
+    1
+   ]
+  ],
   "OilPowerPlant": [
    [
     3,
@@ -121,6 +114,13 @@
     4,
     2,
     4
+   ]
+  ],
+  "MissionControl": [
+   [
+    1,
+    6,
+    1
    ]
   ]
  },
@@ -406,34 +406,15 @@
    ],
    "excluded": []
   },
-  "GroceryStore": {
+  "Greenhouse": {
    "platformable": [
     [
-     5,
-     1,
-     0
-    ],
-    [
-     7,
-     1,
-     0
-    ],
-    [
-     8,
-     1,
+     6,
+     2,
      0
     ]
    ],
-   "excluded": [
-    {
-     "cell": [
-      6,
-      1,
-      0
-     ],
-     "reason": "enclosed, or a door, entrance or walkway cell above"
-    }
-   ]
+   "excluded": []
   },
   "Restaurant": {
    "platformable": [
@@ -1298,6 +1279,51 @@
    ],
    "excluded": []
   },
+  "LimestonePit": {
+   "platformable": [
+    [
+     1,
+     0,
+     1
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     0,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     2,
+     1,
+     1
+    ],
+    [
+     3,
+     1,
+     1
+    ],
+    [
+     1,
+     2,
+     1
+    ],
+    [
+     2,
+     2,
+     1
+    ]
+   ],
+   "excluded": []
+  },
   "LimestoneQuarry": {
    "platformable": [
     [
@@ -1478,6 +1504,130 @@
     [
      2,
      2,
+     1
+    ]
+   ],
+   "excluded": []
+  },
+  "RocketAssemblyHangar": {
+   "platformable": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     1
+    ],
+    [
+     0,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     2,
+     1
+    ],
+    [
+     0,
+     3,
+     1
+    ],
+    [
+     1,
+     3,
+     1
+    ],
+    [
+     0,
+     4,
+     1
+    ],
+    [
+     1,
+     4,
+     1
+    ],
+    [
+     0,
+     5,
+     1
+    ],
+    [
+     1,
+     5,
+     1
+    ],
+    [
+     1,
+     6,
+     1
+    ]
+   ],
+   "excluded": [
+    {
+     "cell": [
+      0,
+      6,
+      1
+     ],
+     "reason": "a registered room, walkway, deck or machinery cell of the building above"
+    }
+   ]
+  },
+  "SandstonePit": {
+   "platformable": [
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     2,
+     1,
+     1
+    ],
+    [
+     3,
+     1,
+     1
+    ],
+    [
+     1,
+     2,
+     1
+    ],
+    [
+     2,
+     2,
+     1
+    ],
+    [
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     3,
+     1
+    ],
+    [
+     2,
+     3,
      1
     ]
    ],
@@ -2034,6 +2184,16 @@
      4,
      3,
      4
+    ]
+   ],
+   "excluded": []
+  },
+  "BrickMasonryBlock": {
+   "platformable": [
+    [
+     0,
+     0,
+     0
     ]
    ],
    "excluded": []
@@ -3158,16 +3318,6 @@
     [
      4,
      4,
-     0
-    ]
-   ],
-   "excluded": []
-  },
-  "BrickMasonryBlock": {
-   "platformable": [
-    [
-     0,
-     0,
      0
     ]
    ],
@@ -4351,6 +4501,56 @@
    ],
    "excluded": []
   },
+  "RadioactiveWasteExport": {
+   "platformable": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     1
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     0,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     2,
+     1,
+     1
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     2,
+     1
+    ],
+    [
+     2,
+     2,
+     1
+    ]
+   ],
+   "excluded": []
+  },
   "WaterTreatmentPlant": {
    "platformable": [
     [
@@ -4736,235 +4936,6 @@
      "reason": "enclosed, or a door, entrance or walkway cell above"
     }
    ]
-  },
-  "SandstonePit": {
-   "platformable": [
-    [
-     1,
-     1,
-     1
-    ],
-    [
-     2,
-     1,
-     1
-    ],
-    [
-     3,
-     1,
-     1
-    ],
-    [
-     1,
-     2,
-     1
-    ],
-    [
-     2,
-     2,
-     1
-    ],
-    [
-     3,
-     2,
-     1
-    ],
-    [
-     1,
-     3,
-     1
-    ],
-    [
-     2,
-     3,
-     1
-    ]
-   ],
-   "excluded": []
-  },
-  "LimestonePit": {
-   "platformable": [
-    [
-     1,
-     0,
-     1
-    ],
-    [
-     2,
-     0,
-     1
-    ],
-    [
-     3,
-     0,
-     1
-    ],
-    [
-     1,
-     1,
-     1
-    ],
-    [
-     2,
-     1,
-     1
-    ],
-    [
-     3,
-     1,
-     1
-    ],
-    [
-     1,
-     2,
-     1
-    ],
-    [
-     2,
-     2,
-     1
-    ]
-   ],
-   "excluded": []
-  },
-  "Greenhouse": {
-   "platformable": [
-    [
-     6,
-     2,
-     0
-    ]
-   ],
-   "excluded": []
-  },
-  "RocketAssemblyHangar": {
-   "platformable": [
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     1,
-     0,
-     1
-    ],
-    [
-     0,
-     1,
-     1
-    ],
-    [
-     1,
-     1,
-     1
-    ],
-    [
-     0,
-     2,
-     1
-    ],
-    [
-     1,
-     2,
-     1
-    ],
-    [
-     0,
-     3,
-     1
-    ],
-    [
-     1,
-     3,
-     1
-    ],
-    [
-     0,
-     4,
-     1
-    ],
-    [
-     1,
-     4,
-     1
-    ],
-    [
-     0,
-     5,
-     1
-    ],
-    [
-     1,
-     5,
-     1
-    ],
-    [
-     1,
-     6,
-     1
-    ]
-   ],
-   "excluded": [
-    {
-     "cell": [
-      0,
-      6,
-      1
-     ],
-     "reason": "a registered room, walkway, deck or machinery cell of the building above"
-    }
-   ]
-  },
-  "RadioactiveWasteExport": {
-   "platformable": [
-    [
-     0,
-     0,
-     1
-    ],
-    [
-     1,
-     0,
-     1
-    ],
-    [
-     2,
-     0,
-     1
-    ],
-    [
-     0,
-     1,
-     1
-    ],
-    [
-     1,
-     1,
-     1
-    ],
-    [
-     2,
-     1,
-     1
-    ],
-    [
-     0,
-     2,
-     1
-    ],
-    [
-     1,
-     2,
-     1
-    ],
-    [
-     2,
-     2,
-     1
-    ]
-   ],
-   "excluded": []
   },
   "SmogScrubber": {
    "platformable": [

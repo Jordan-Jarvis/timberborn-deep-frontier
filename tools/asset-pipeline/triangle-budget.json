@@ -364,9 +364,9 @@
    "family": "grocery",
    "class": "grand",
    "target": 20000,
-   "finished": 18304,
-   "vertices": 38846,
-   "construction": 18304,
+   "finished": 8453,
+   "vertices": 17449,
+   "construction": 8453,
    "file": "outputs/lategame-integration/Data/Buildings/Food/GroceryStore/GroceryStore.IronTeeth.Model.timbermesh"
   },
   "Hospital": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 842636,
+ "totalBlueprintTriangles": 815418,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

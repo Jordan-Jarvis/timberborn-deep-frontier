@@ -14,8 +14,8 @@ const shop=(await read(new URL('tools/frontier_progression.json',root))).grocery
 // The approved Grocery Market hall (grocery_market_geometry.py). Its grid
 // registration comes from the authored parts (register_grocery_market.py):
 // solid cells, the native Entrance path cell in front of the main door, and
-// the access contract. The balcony deck takes player paths and the stair bay
-// takes native stairs; the market hall itself is not walked through.
+// the access contract. Since the 2026-11-01 shrink (9x6 -> 5x4) the market has
+// one storey and no balcony; the hall itself is not walked through.
 export async function applyGroceryStore(value) {
   for(const key of ['ManufactorySpec','WorkshopSpec','SimpleManufactoryBehaviorsSpec',
     'WorkshopAnimationControllerSpec','WorkplaceIlluminatorSpec','WorkplaceSlotManagerSpec',
@@ -27,17 +27,7 @@ export async function applyGroceryStore(value) {
   if(!door||door.position[2]!==0||door.faceOffset>.25)throw new Error('Grocery main door is not a registered ground door');
   if(blocks[index(door.doorstep)].Occupations!=='All')throw new Error('Grocery doorstep is not a building cell');
   if(blocks[index(door.entrance)].Occupations!=='None')throw new Error('Grocery entrance path cell is occupied');
-  // Balcony deck: cells on its whole-tile area at the deck layer are free for
-  // player paths; the deck structure below carries them.
-  const balcony=reg.access.balcony,[bx0,by0,bx1,by1]=balcony.bounds,layer=balcony.layer;
-  if([bx0,by0,bx1,by1].some(v=>!Number.isInteger(v)))throw new Error('Grocery balcony is not on whole tiles: '+balcony.bounds);
-  for(let y=by0;y<by1;y++)for(let x=bx0;x<bx1;x++) {
-    blocks[index([x,y,layer])].Occupations='None';
-    blocks[index([x,y,layer])].MatterBelow='Any';
-    const support=blocks[index([x,y,layer-1])];
-    if(support.Occupations!=='All')throw new Error(`Grocery balcony lacks deck structure under ${[x,y,layer]}`);
-    support.Stackable='BlockObject';
-  }
+  if(reg.access.balcony||reg.access.stairBay)throw new Error('Grocery registration still declares a balcony or stair bay');
   value.BlockObjectSpec={Size:xyz(size),Blocks:blocks,Entrance:{HasEntrance:true,Coordinates:xyz(door.entrance)},BaseZ:0,Overridable:false,Flippable:true};
   const [dx,dy,dz]=door.position;
   value.BuildingAccessibleSpec={LocalAccess:xyz([dx,dz,dy]),ForceOneFinalAccess:false};

@@ -1,11 +1,11 @@
 {
-  "status": "Source/export checks passed; native shoppers, balcony paths and service pending",
-  "sourceSha256": "b8719924c2b2d67def7071b629a8bacfc32153434c69e69bade2be48958b9193",
-  "exportSha256": "044100069df692c5026be8f4fc1ca56b40e2b884ce3ff213ec9af52646881ee2",
+  "status": "Source/export checks passed; native shoppers and service pending",
+  "sourceSha256": "405693c51ed41c17fe551752453fbe987d87b63819088fcb7610eb1e24eb90da",
+  "exportSha256": "9e6e041aadca8f79f4d12fff334a1e634168099ce95b891793df2091054dc188",
   "size": [
-    9,
-    6,
-    5
+    5,
+    4,
+    3
   ],
   "nodes": 26,
   "animatedTracks": [
@@ -16,23 +16,9 @@
   ],
   "nativeProps": 0,
   "entrance": [
-    4,
-    1,
+    3,
+    0,
     0
-  ],
-  "balconyPathCells": [
-    [
-      6,
-      1
-    ],
-    [
-      7,
-      1
-    ],
-    [
-      8,
-      1
-    ]
   ],
   "workers": 2,
   "hpDemand": 3900,
@@ -48,8 +34,8 @@
   ],
   "capacityPerFood": 100,
   "clerkCell": [
-    4,
-    1,
+    3,
+    0,
     0
   ],
   "stockStageNodes": [

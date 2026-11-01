@@ -78,15 +78,8 @@ require(clerk['Y'] == 0 and clerk['X'] % 1 == .5 and clerk['Z'] % 1 == .5, 'Cler
 require(0 <= clerk_cell[0] < w and 0 <= clerk_cell[1] < d, 'Clerk cell outside the footprint: '+str(clerk_cell))
 require(blocks[index(*clerk_cell)]['Occupations'] == 'None', 'Clerk cell is not free: '+str(clerk_cell))
 require(sum(abs(a - b) for a, b in zip(clerk_cell, door['entrance'])) <= 1, 'Clerk cell is not on the entrance route: '+str(clerk_cell))
-bx0, by0, bx1, by1 = reg['access']['stairBay']['bounds']
-require(all(blocks[index(x, y, z)]['Occupations'] == 'None' for x in range(bx0, bx1) for y in range(by0, by1) for z in (0, 1)),
-        'Stair bay is blocked')
-balcony = reg['access']['balcony']
-cx0, cy0, cx1, cy1 = (int(v) for v in balcony['bounds'])
-deck = [(x, y) for x in range(cx0, cx1) for y in range(cy0, cy1)]
-for x, y in deck:
-    require(blocks[index(x, y, balcony['layer'])]['Occupations'] == 'None', 'Balcony path cell is occupied')
-    require(blocks[index(x, y, balcony['layer']-1)]['Stackable'] == 'BlockObject', 'Balcony lacks native path support')
+# One storey since the 2026-11-01 shrink (9x6 -> 5x4): no balcony, no stair bay.
+require('balcony' not in reg['access'] and 'stairBay' not in reg['access'], 'Grocery registration still declares a balcony or stair bay')
 require(not {'ManufactorySpec', 'WorkshopSpec', 'AttractionSpec', 'StatusHidingEnterableSpec'} & blueprint.keys(), 'Grocery retains factory/attraction behaviors')
 shop = read('tools/frontier_progression.json')['groceryStore']
 require(blueprint['GroceryStoreSpec']['Foods'] == shop['stock'], 'Assortment differs from canonical data')
@@ -96,11 +89,11 @@ require(blueprint['MechanicalNodeSpec'] == {'PowerInput': 3900, 'PowerOutput': 0
 require(blueprint['BuildingSpec']['ScienceCost'] == 6000, 'Initial science balance differs')
 require(blueprint['WorkplaceSpec']['MaxWorkers'] == 2, 'Clerk capacity differs')
 require(blueprint['GroceryStoreSpec']['MinimumStockedFoodTypes'] == 3, 'Stocked-service threshold differs')
-report = {'status': 'Source/export checks passed; native shoppers, balcony paths and service pending',
+report = {'status': 'Source/export checks passed; native shoppers and service pending',
           'sourceSha256': hashlib.sha256((ROOT/'src/DeepFrontier/Art/Source/GroceryMarket-ReferenceStudy.blend').read_bytes()).hexdigest(),
           'exportSha256': hashlib.sha256(payload).hexdigest(), 'size': [w, d, h],
           'nodes': len(model.nodes), 'animatedTracks': sorted(animated), 'nativeProps': len(assembly['props']),
-          'entrance': door['entrance'], 'balconyPathCells': deck, 'workers': 2, 'hpDemand': 3900, 'hpOutput': 0,
+          'entrance': door['entrance'], 'workers': 2, 'hpDemand': 3900, 'hpOutput': 0,
           'science': 6000, 'foods': shop['stock'], 'capacityPerFood': 100,
           'clerkCell': clerk_cell, 'stockStageNodes': stock_nodes, 'stockDisplay': blueprint['GroceryStockDisplaySpec']}
 (ROOT/'outputs/civic-integration/grocery-static-checks.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
