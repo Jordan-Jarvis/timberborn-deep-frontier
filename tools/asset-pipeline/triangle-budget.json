@@ -535,9 +535,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 7962,
-   "vertices": 14996,
-   "construction": 7962,
+   "finished": 6120,
+   "vertices": 11430,
+   "construction": 6120,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.Model.timbermesh"
   },
   "RadioactiveWasteVault": {

@@ -49,7 +49,6 @@
     {"template": "LaunchPad.IronTeeth", "label": "Launch Pad, 63 cells north-east of the start", "x": 95, "y": 124, "z": 14, "orientation": "Cw180", "margin": 2, "openSides": ["E"]},
     {"template": "LimestoneQuarry.IronTeeth", "label": "Limestone Quarry, 42 cells south-east of the start", "x": 82, "y": 21, "z": 7, "orientation": "Cw270", "margin": 1, "openSides": [], "understructure": [77, 24, 7]},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 12 cells south-east of the start", "x": 61, "y": 57, "z": 2, "orientation": "Cw90", "margin": 1, "openSides": ["N"]},
-    {"template": "RadioactiveWasteRefinery.IronTeeth", "label": "Radioactive Waste Refinery, 55 cells north-west of the start", "x": 29, "y": 99, "z": 3, "orientation": "Cw270", "margin": 1, "openSides": ["N", "W"]},
     {"template": "RadioactiveWasteVault.IronTeeth", "label": "Radioactive Waste Vault, 19 cells west of the start", "x": 37, "y": 71, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "SandstoneQuarry.IronTeeth", "label": "Sandstone Quarry, 11 cells east of the start", "x": 75, "y": 70, "z": 2, "orientation": "Cw180", "margin": 1, "openSides": ["S", "W"], "understructure": [68, 65, 2]},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 57 cells north of the start", "x": 75, "y": 114, "z": 14, "orientation": "Cw270", "margin": 1, "openSides": ["N"]},

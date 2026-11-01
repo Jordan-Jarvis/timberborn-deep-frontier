@@ -31,7 +31,6 @@
     {"template": "SandstonePit.IronTeeth", "label": "Sandstone Pit, 13 cells east of the start", "x": 116, "y": 76, "z": 14, "orientation": "Cw180", "margin": 1, "openSides": ["W"]},
     {"template": "LaunchPad.IronTeeth", "label": "Launch Pad, 24 cells north-west of the start", "x": 86, "y": 92, "z": 12, "orientation": "Cw0", "margin": 2, "openSides": []},
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 101 cells south-east of the start", "x": 180, "y": 16, "z": 8, "orientation": "Cw0", "margin": 1, "openSides": []},
-    {"template": "RadioactiveWasteRefinery.IronTeeth", "label": "Radioactive Waste Refinery, 110 cells south-east of the start", "x": 181, "y": 11, "z": 10, "orientation": "Cw90", "margin": 1, "openSides": ["N", "W"]},
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 140 cells north-west of the start", "x": 8, "y": 191, "z": 10, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 87 cells south-east of the start", "x": 155, "y": 0, "z": 16, "orientation": "Cw270", "margin": 1, "openSides": [], "understructure": [150, 2, 16]},
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 125 cells north-west of the start", "x": 48, "y": 182, "z": 14, "orientation": "Cw270", "margin": 1, "openSides": [], "understructure": [43, 184, 14]},

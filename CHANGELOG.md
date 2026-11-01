@@ -8,6 +8,9 @@
 ### Smaller works and mines (second shrink)
 - **Fertilizer Works** is 4x3, 5 high (was 7x5, 7 high): the two-storey composting hall with its flat timber roof, three silos in a row behind it, and the drier running from the firebox into the bucket elevator in the back corner. Same door, workers, power and recipes; its cost shifts by a few goods (more planks and logs, fewer gears) because the smaller model shows less metal.
 
+### Smaller late-game buildings (second shrink)
+- **Radioactive Waste Refinery** is 5x5, 5 high (was 9x7, 7 high): the shielded hot cells, the cooling pond with its cask crane, the vitrification hall with the glowing furnace and canister turntable, and the two dissolver tanks, packed into one compact block. Same door, workers, power and recipes. Its build cost is rebalanced from its new materials (more concrete, less brick). It no longer needs a reserved site on the built-in maps.
+
 ## 0.8.1 (2026-10-31)
 
 ### Steel decks on legs

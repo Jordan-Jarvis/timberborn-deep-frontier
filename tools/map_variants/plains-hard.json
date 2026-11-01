@@ -53,7 +53,6 @@
     {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 7 layers of natural drop, 113 cells north of the start", "x": 109, "y": 249, "z": 3},
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 35 cells east of the start", "x": 160, "y": 130, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 53 cells south of the start", "x": 117, "y": 81, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "RadioactiveWasteRefinery.IronTeeth", "label": "Radioactive Waste Refinery, 56 cells south-east of the start", "x": 165, "y": 94, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 38 cells north-east of the start", "x": 149, "y": 174, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "MissionControl.IronTeeth", "label": "Mission Control, 64 cells south of the start", "x": 106, "y": 83, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 53 cells west of the start", "x": 75, "y": 151, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},

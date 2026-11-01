@@ -839,26 +839,26 @@
   },
   "RadioactiveWasteRefinery": {
    "model": "Buildings/Metal/RadioactiveWasteRefinery/RadioactiveWasteRefinery.IronTeeth.Model",
-   "sha256": "9c990ac09750b9b6809873cc5ed368417db84318cef3fa94000427dc3c10f73b",
+   "sha256": "f165a082949e54cf1b76397884e634b759b88440320c381990dd95629e5c6aa7",
    "areas": {
-    "BaseMetal.IronTeeth": 169.875,
-    "BaseWood_DarkBrown.IronTeeth": 1.5902,
-    "DFIndustrial08": 0.7257,
-    "DFIndustrial25": 0.1673,
-    "Details.IronTeeth#metal": 5.5388,
-    "IrregularPlanks_MetalForged.IronTeeth": 23.1772,
-    "PaintedMetal.IronTeeth": 70.0445,
-    "Plaster_Orange.IronTeeth": 83.5405,
-    "Plaster_White.IronTeeth": 420.463,
-    "Water": 5.76,
-    "WindowsAtlas.IronTeeth": 2.151
+    "BaseMetal.IronTeeth": 63.5145,
+    "BaseWood_DarkBrown.IronTeeth": 1.1724,
+    "DFIndustrial08": 0.5913,
+    "DFIndustrial25": 0.1661,
+    "Details.IronTeeth#metal": 3.6455,
+    "IrregularPlanks_MetalForged.IronTeeth": 12.2343,
+    "PaintedMetal.IronTeeth": 27.4809,
+    "Plaster_Orange.IronTeeth": 19.0833,
+    "Plaster_White.IronTeeth": 211.9783,
+    "Water": 2.025,
+    "WindowsAtlas.IronTeeth": 1.015
    },
    "families": {
-    "brick": 83.5405,
-    "concrete": 420.463,
-    "metal": 268.6355,
-    "unpriced": 8.804,
-    "wood": 1.5902
+    "brick": 19.0833,
+    "concrete": 211.9783,
+    "metal": 106.8751,
+    "unpriced": 3.7974,
+    "wood": 1.1724
    }
   },
   "RadioactiveWasteVault": {

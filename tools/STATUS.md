@@ -4,6 +4,16 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Second shrink: late-game buildings (Claude Code session, 2026-11-01, late-game shrink agent; Radioactive Waste Refinery, Mission Control, Radioactive Waste Vault, Rocket Assembly Hangar, Launch Pad, Radioactive Waste Export, Reinforced Hydro Turbine; each building generated and validated in mirror `shrink-late` on HEAD + that building, then committed; not built or run in game)
+
+- **Why:** the user, after a YouTuber called several buildings "massive": "we need to shrink the buildings down even more". Rules: `outputs/compaction/BRIEF.md` plus the second-pass brief (targets per building, one layer per floor, same origin and entrance where possible, cost basis unchanged).
+- **Radioactive Waste Refinery 9x7x7 -> 5x5x5** (`lategame_RadioactiveWasteRefinery.py`): 3x3 hot cells with the door and roof hatch, 2x2 cooling pond (pump on its back wall), 2x2 vitrification hall under a corrugated-metal gable with the furnace mouth and canister turntable facing the 3x2 dissolver bund, stack from the ground through a one-layer filter house; the cask crane runs one layer lower (girder 3.9-4.28, lift 2.32). Process platform and canister rack removed.
+  - Numbers (HEAD -> now): solid cells 187 -> 83; shaft faces 152 -> 57; pipe-port faces 69 -> 25; platformable roof cells 20 -> 7 (every flat roof cell not under the crane pedestal or hatch); hardpoints 43 -> 16; triangles 7,962 -> 6,120; same ten animated parts; steam emitter (4.5, 4.5, 4.7).
+  - Cost: cell basis unchanged; the material rule recomposes from the re-measured mix: Concrete 7,210 -> 8,310, Brick 1,600 -> 835, Alloy 130 -> 120, Machine Core 115 -> 110, Electronics 20 -> 15, Power Module 20 -> 15. Power 106,000 hp, 6 workers, recipes unchanged.
+  - Old saves: an unflipped refinery keeps its origin, door and entrance (1,-1) and frees the tiles it no longer uses; a flipped one's entrance moves 4 tiles (local x 7 -> 3). Shafts, pipes and anything built on roof cells that no longer exist (hot-cell roof x 3, the old hall and bund) must be rebuilt.
+  - Maps: below `largeFootprint` 8 it needs no site; its flat sites and unmet notes left all 20 variants. `smallMap.maxArea` 5,966 -> 5,776 (Plains 2,888, the largest reference site area, x 2). docs/maps.md numbers are updated at the end of this pass.
+  - Review: `outputs/compaction/RadioactiveWasteRefinery-shrink2.png`.
+
 ## Second shrink: works and mines (Claude Code session, 2026-11-01, mines shrink agent; Fertilizer Works, Cryogenic Tank Farm, Deep Mine, Sandstone and Limestone Quarries, Deep Drill; each building generated and validated in mirror `shrink-ind` on HEAD + that building, then committed; not built or run in game)
 
 - **Why:** a YouTuber's first look at 0.8.x called the Fertilizer Works and the Cryogenic Tank Farm "massive" ("why is it so massive?"); the user: "we need to shrink the buildings down even more" and "the thing that sits on top of the permanent veins and the limestone and sandstone all need to fit in 5x5". Shared brief: `outputs/compaction/BRIEF.md` plus the second-pass brief (heights one layer per floor, roofs open platforms, costs, recipes, power and crew unchanged).

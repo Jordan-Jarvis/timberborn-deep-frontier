@@ -62,8 +62,7 @@
     {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 27 cells north-east of the start", "x": 105, "y": 119, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for the Lagoon Isle record caches", "x": 166, "y": 170, "z": 8, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 38 cells north-east of the start", "x": 118, "y": 127, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 182 cells north-east of the start", "x": 213, "y": 224, "z": 6, "orientation": "Cw0", "margin": 2, "openSides": ["N", "S", "E"], "maxWaterDistance": 15},
-    {"template": "RadioactiveWasteRefinery.IronTeeth", "label": "Radioactive Waste Refinery, 39 cells east of the start", "x": 127, "y": 90, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": ["S", "E"]}
+    {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 182 cells north-east of the start", "x": 213, "y": 224, "z": 6, "orientation": "Cw0", "margin": 2, "openSides": ["N", "S", "E"], "maxWaterDistance": 15}
   ],
   "unmet": [{"item": "trees near the start", "reason": "The start island (548 dry cells, x 81-104, y 83-110) is the only land within route 60 that needs no bridge: it holds 172 trees (min 200). Every other island lies across open water (the nearest is 3 water cells away), so the count cannot be reached without bridging."}, {"item": "irrigated farmland near the start", "reason": "The start island is the only land within route 60 that needs no bridge: it has 149 dry, flat, free cells within 4 of clean water (min 150)."}]
 }
