@@ -350,7 +350,7 @@ The first audit found the whole late game unreachable: no building ran Flux, Hig
 |---|---|---|---:|---:|---:|---|---|
 | SteelMill | Flux, HighGradeSteel, Alloy | 12x10x16 | 6 | 3,100 hp (authored 2,500; power rule) | 4,500 | T3 | Metal 40 |
 | ArchiveExcavation | RecoveredArtifact, ArchiveData; proposed placement over vanilla UndergroundRuins | 10x9x10 | 4 | 5,200 hp (authored 400; power rule) | 9,000 | T4 | Science 46 |
-| CryogenicTankFarm | Pipe-fed Liquid storage for LiquidHydrogen or LiquidOxygen (one selected good per farm, 2,000 capacity) | 10x10x8 | 0 | 6,500 hp (authored 1,000; power rule) | 12,000 | T4 | Storage 90 |
+| CryogenicTankFarm | Pipe-fed Liquid storage for LiquidHydrogen or LiquidOxygen (one selected good per farm, 2,000 capacity) | 4x4x5 | 0 | 6,500 hp (authored 1,000; power rule) | 12,000 | T4 | Storage 90 |
 
 ### Decisions applied (2026-10-21, second round)
 
@@ -579,12 +579,12 @@ Still open:
 
 | Row | ID | Building | Size: workbook → blueprint | Science: workbook → blueprint |
 |---:|---|---|---|---|
-| 3 | B002 | Fertilizer Works | 3×3×2 → 9×8×13 | 180 → 350 |
+| 3 | B002 | Fertilizer Works | 3×3×2 → 9×8×13 → 7×5×7 (compaction) → 4×3×5 (second shrink, 2026-11-01) | 180 → 350 |
 | 4 | B003 | Greenhouse | 3×4×2 → 9×7×9 | 120 → 600 |
 | 22 | B021 | Polymer and Chemical Works | 6×8×4 → 10×9×14 | 1,200 → 4,000 |
 | 23 | B022 | Precision Machine Works | 5×6×4 → 11×9×14 | 1,100 → 5,000 |
 | 24 | B023 | Water Treatment Plant | 4×5×3 → 12×11×13 | 420 → 1,800 |
-| 27 | B026 | Deep Drill | 4×4×5 → 11×9×16 → 7×6×8 (compaction, 2026-10-30) | unchanged |
+| 27 | B026 | Deep Drill | 4×4×5 → 11×9×16 → 7×6×8 (compaction, 2026-10-30) → 4×4×7 (second shrink, 2026-11-01) | unchanged |
 | 32 | B031 | Nuclear Reactor | 4×4×5 → 20×15×22 | unchanged |
 | 33 | B032 | Uranium Processing Plant | 5×6×4 → 12×11×14 | 12,000 → 9,000 |
 | 34 | B033 | Electrolysis Plant | 4×5×4 → 12×9×12 | 9,000 → 10,000 |
@@ -595,7 +595,7 @@ Still open:
 | 40 | B039 | Radioactive Waste Vault | 4×4×3 → 13×12×12 | unchanged |
 | 41 | B040 | Technical School | 4×4×3 → 11×6×14 | 1,800 → 2,200 |
 | 42 | B041 | Radioactive Waste Refinery | 5×6×4 → 12×11×12 | 16,000 → 12,000 |
-| 43 | B042 | Deep Mine | 5×5×4 → 12×11×16 → 7×6×7 (compaction, 2026-10-30) | unchanged |
+| 43 | B042 | Deep Mine | 5×5×4 → 12×11×16 → 7×6×7 (compaction, 2026-10-30) → 5×5×6 on its vein (second shrink, 2026-11-01) | unchanged |
 
 Other changes to the workbook:
 
