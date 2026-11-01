@@ -14,31 +14,36 @@ high and the beacon mast is shorter. Roof variety (user, 2026-10-30: "some
 buildings can have actual roofs"): the stairhead keeps a low teal pyramid
 roof in the native roof planks and the kiosk a plank gable.
 
+Second shrink 2026-11-01 (user: "shrink the buildings down even more"):
+6x6x10 -> 3x3x8. The same tapering tube and open helical stair (16 treads to
+a landing at layer 3) now carry a 3 x 3 open concrete deck at layer 5 on a
+smaller corbel and four web brackets; the stairhead is one tile in the
+middle of the deck with the deck door on its front, the telescope on the
+front edge and the beacon mast on its pyramid. The ticket kiosk became a
+one-tile vestibule with the ground door against the tube's foot, under a
+small hipped roof. Ground door at x = 1.5 (Entrance (1,-1,0), was (2,-1,0)).
+20 visitor places on the deck round the stairhead.
+
 HERO: a tapering riveted steel tube column wrapped by an open helical stair,
-carrying a broad square deck on a solid concrete corbel, open edge to edge
-(no railing: user, 2026-10-31, "lets remove the railings ... I want it to be
-like an actual platform"), a brass telescope on a pedestal at the front edge
-and a beacon mast on the stairhead. Distinct from the launch gantries (no
-lattice) and from MissionControl's glazed cab (the deck is open).
+carrying a square open deck on a solid concrete corbel (no railing: user,
+2026-10-31), a brass telescope on a pedestal at the front edge and a beacon
+mast on the stairhead.
 ROOF: open concrete deck (a roof terrace); low teal pyramid roof (native roof
-planks) on the stairhead; dark plank gable on the kiosk; conical cap on the
+planks) on the stairhead; small hipped roof on the vestibule; conical cap on the
 beacon.
 
-Plan (6 x 6 tiles; front y = 0):
-  - Ground: ticket kiosk on tiles x 2..4, y 0..1 (door centred on x = 2.5,
-    face on the y = 0 tile edge; ticket window at x = 3.5), one layer under a
-    plank gable; concrete footing ring and the flared foot of the tube at
-    (3, 3).
-  - Helical stair: 26 riveted treads, 20 degrees and 0.19 layers apart, from
-    the ground to a grated landing at exactly layer 5 round the tube.
-  - Capital drum (layers 5..7) houses the upper stair and carries the corbel.
-  - Deck: 6 x 6 concrete slab, top exactly layer 7. The slab is 0.2 thick so
-    it claims layer 6 (the support layer) under every deck cell; layer-7
-    cells stay free except the 2 x 2 stairhead. The deck is open edge to edge
-    (no railing, user 2026-10-31); the telescope pedestal stands in the front
-    cells' outer band, so no deck cell is blocked.
-  - Stairhead (x 2..4, y 2..4), one layer, with the deck door centred on
-    x = 2.5, face on the y = 2 tile edge, at layer 7.
+Plan (3 x 3 tiles; front y = 0):
+  - Ground: vestibule on tile x 1, y 0 (door centred on x = 1.5, face on the
+    y = 0 tile edge), one layer under a small hipped roof, against the flared foot
+    of the tube at (1.5, 1.5) on its concrete footing ring.
+  - Helical stair: 15 riveted treads, 22 degrees and 0.19 layers apart, from
+    the ground to a grated landing at exactly layer 3 round the tube.
+  - Capital drum (layers 3..5) houses the upper stair and carries the corbel.
+  - Deck: 3 x 3 concrete slab, top exactly layer 5. The slab is 0.2 thick so
+    it claims layer 4 under every deck cell; layer-5 cells stay free except
+    the stairhead tile.
+  - Stairhead (x 1..2, y 1..2), one layer, with the deck door centred on
+    x = 1.5, face on the y = 1 tile edge, at layer 5.
 
 Animated: telescope (CUSTOM_YAW_OSC pan), beacon shutter (SPIN_Z),
 anemometer (SPIN_Z).
@@ -58,31 +63,56 @@ import civic_wellbeing_parts as W
 from civic_wellbeing_parts import animate  # noqa: F401  (CUSTOM_ kinds)
 
 IDENT = 'ObservationDeck'
-FOOTPRINT = (6, 6)
-HEIGHT = 10
+FOOTPRINT = (3, 3)
+HEIGHT = 8
+N = 3                  # deck size in tiles
 FRAME_END = 121
 HERO = ('Tapering riveted steel tube wrapped by an open helical stair, carrying a broad open square deck on a '
         'solid concrete corbel, with a brass telescope and a beacon mast.')
 
-CX, CY = 3.0, 3.0
-LANDING = 5            # whole layer: top of the stair, round the tube
-DECK = 7               # whole layer: walking surface of the deck
+CX, CY = 1.5, 1.5
+LANDING = 3            # whole layer: top of the stair, round the tube
+DECK = 5               # whole layer: walking surface of the deck
 SLAB = .2
 DRUM_R = .95
 STAIR_OUT = 1.44
-TREADS = 26
-STEP = math.radians(20)
-THETA0 = math.radians(-60)
-DOOR_X = 2.5
-STAIRHEAD = (2.0, 2.0, 4.0, 4.0)
+TREADS = 16
+STEP = math.radians(22)
+THETA0 = math.radians(-30)
+DOOR_X = 1.5
+STAIRHEAD = (1.0, 1.0, 2.0, 2.0)
 # Roof-terrace registration: the free deck cells at layer 7; their support
 # is the slab, which occupies the layer-11 cell below each of them.
 TERRACE = {'layer': DECK, 'supportLayer': DECK - 1,
-           'cells': [[x, y, DECK] for y in range(6) for x in range(6)
+           'cells': [[x, y, DECK] for y in range(N) for x in range(N)
                      if not (STAIRHEAD[0] <= x < STAIRHEAD[2] and STAIRHEAD[1] <= y < STAIRHEAD[3])],
            'door': 'DeckDoor'}
 
 TUBE = [(.25, 1.0), (.85, .8), (1.45, .7), (LANDING, .55)]
+# The 20 visitors' places (capacity unchanged): three along the outer edge of
+# each side cell round the stairhead (the deck door's step too, by its outer
+# edge) and two on each corner cell.
+DOOR_STEP = (1, 0)
+
+
+def _visitor_places():
+    places = []
+    for x, y, _ in TERRACE['cells']:
+        dx, dy = x + .5 - CX, y + .5 - CY
+        ox, oy = x + .5 + .25 * (dx > 0) - .25 * (dx < 0), y + .5 + .25 * (dy > 0) - .25 * (dy < 0)
+        along = (1, 0) if dy else (0, 1)
+        corner = dx and dy
+        offsets = (-.2, .2) if corner else (-.28, 0, .28)
+        if corner:
+            along = (1, 0)
+        if (x, y) == DOOR_STEP:
+            oy = y + .3
+        for o in offsets:
+            places.append((ox + along[0] * o, oy + along[1] * o))
+    return places
+
+
+VISITOR_PLACES = _visitor_places()
 
 
 def tube_r(z):
@@ -162,32 +192,32 @@ def stair(g):
 
 def deck(g, parts):
     z = DECK
-    blk(g, 0, 0, z - SLAB, 6, 6, z - .02, CONCRETE)
-    # Deck flags, one per cell with 12 mm seams; top exactly layer 12.
-    for x in range(6):
-        for y in range(6):
+    blk(g, 0, 0, z - SLAB, N, N, z - .02, CONCRETE)
+    # Deck flags, one per cell with 12 mm seams; top exactly the deck layer.
+    for x in range(N):
+        for y in range(N):
             if STAIRHEAD[0] <= x < STAIRHEAD[2] and STAIRHEAD[1] <= y < STAIRHEAD[3]:
                 continue
             blk(g, x + .006, y + .006, z - .025, x + .994, y + .994, z, CONCRETE)
     # Iron fascia channel round the slab edge (non-overlapping corners).
     f, zb, zt = .03, z - SLAB - .1, z - .03
-    blk(g, -f, -f, zb, 6 + f, 0, zt, IRON)
-    blk(g, -f, 6, zb, 6 + f, 6 + f, zt, IRON)
-    blk(g, -f, 0, zb, 0, 6, zt, IRON)
-    blk(g, 6, 0, zb, 6 + f, 6, zt, IRON)
+    blk(g, -f, -f, zb, N + f, 0, zt, IRON)
+    blk(g, -f, N, zb, N + f, N + f, zt, IRON)
+    blk(g, -f, 0, zb, 0, N, zt, IRON)
+    blk(g, N, 0, zb, N + f, N, zt, IRON)
     # Edge girders under the slab, set in from the edge.
     gb, gt = z - SLAB - .32, z - SLAB - .01
-    blk(g, .1, .1, gb, 5.9, .32, gt, IRON)
-    blk(g, .1, 5.68, gb, 5.9, 5.9, gt, IRON)
-    blk(g, .1, .32, gb, .32, 5.68, gt, IRON)
-    blk(g, 5.68, .32, gb, 5.9, 5.68, gt, IRON)
+    blk(g, .1, .1, gb, N - .1, .3, gt, IRON)
+    blk(g, .1, N - .3, gb, N - .1, N - .1, gt, IRON)
+    blk(g, .1, .3, gb, .3, N - .3, gt, IRON)
+    blk(g, N - .3, .3, gb, N - .1, N - .3, gt, IRON)
     # Solid concrete corbel flaring from the drum to an iron ring band under
     # the slab, and four solid web brackets out to the slab corners.
     cz0, cz1 = LANDING + .9, z - SLAB - .02
-    K.revolve(g, (CX, CY, cz0), [(DRUM_R - .02, 0), (DRUM_R + .25, .35), (2.05, cz1 - cz0 - .12),
-                                  (2.05, cz1 - cz0)], CONCRETE, segments=16)
-    K.band(g, (CX, CY, 0), 2.05, cz1 - .12, .1, IRON, segments=16, proud=.03)
-    r0, r1 = .9, 2.79 * math.sqrt(2) - .12
+    K.revolve(g, (CX, CY, cz0), [(DRUM_R - .02, 0), (DRUM_R + .15, .3), (1.3, cz1 - cz0 - .12),
+                                  (1.3, cz1 - cz0)], CONCRETE, segments=16)
+    K.band(g, (CX, CY, 0), 1.3, cz1 - .12, .1, IRON, segments=16, proud=.03)
+    r0, r1 = .9, (N / 2 - .21) * math.sqrt(2) - .12
     prof = [(r0, LANDING + .6), (r1, gb + .02), (r1, gt - .01), (r0, gt - .01)]   # counter-clockwise in (r, z)
     for k in range(4):
         a = math.pi / 4 + k * math.pi / 2
@@ -208,11 +238,11 @@ def deck(g, parts):
 
 def telescope(g, parts):
     """Brass telescope on a steel pedestal standing on the deck's front edge
-    at the x = 3 grid line, within the roof cells' outer band (0.31 from
+    at the x = 2 grid line, within the roof cells' outer band (0.31 from
     every cell edge), so both deck cells stay placeable. Its tube swings at
     the same height it had on the old railing."""
     z = DECK
-    tx, ty, tz = 3.0, .15, z + .87
+    tx, ty, tz = 2.0, .15, z + .87
     # Base plate and post start 15 mm down in the deck flags (above the slab under them).
     g.cylinder((tx, ty, z + .0125), .11, .055, IRON, 'Z', 10)
     g.cylinder((tx, ty, (z - .015 + tz + .12) / 2), .05, tz + .135 - z, IRON, 'Z', 10)
@@ -229,32 +259,32 @@ def telescope(g, parts):
 def stairhead(g, parts):
     x0, y0, x1, y1 = STAIRHEAD
     z = DECK
-    P.framed_block(g, x0, y0, x1, y1, z, z + 1.0, infill=ORANGE, frame=WOOD, pitch=2.0, corner=.16,
+    P.framed_block(g, x0, y0, x1, y1, z, z + 1.0, infill=ORANGE, frame=WOOD, pitch=2.0, corner=.12,
                    skip={'front': [(DOOR_X - .5, DOOR_X + .5)]},
-                   windows={'left': [(3.0, z + .45, .5, 'lancet')], 'right': [(3.0, z + .45, .5, 'lancet')],
-                            'back': [(2.5, z + .45, .5, 'lancet'), (3.5, z + .45, .5, 'lancet')]})
+                   windows={'left': [(1.5, z + .45, .4, 'lancet')], 'right': [(1.5, z + .45, .4, 'lancet')],
+                            'back': [(1.5, z + .45, .4, 'lancet')]})
     # The portal's recess floor would lie on the deck top: seat it on a 12 mm
     # iron sill instead; the door is still registered at layer 12.
     from industrial_facades import building_portal
     blk(g, DOOR_X - .49, y0 - .14, z - .03, DOOR_X + .49, y0 + .02, z + .005, IRON)
     building_portal(g, DOOR_X, y0 - .135, z + .012)
     g.doorways.append({'id': 'DeckDoor', 'position': [DOOR_X, y0, z], 'outward': [0, -1]})
-    A.atlas_window(g, 3.5, y0, z + .45, .3, 'front', 'porthole')
     blk(g, x0 - .06, y0 - .06, z + 1.0, x1 + .06, y1 + .06, z + 1.06, CONCRETE)
-    P.pyramid_roof(g, (x0 + x1) / 2, (y0 + y1) / 2, 1.0, z + 1.06, .55, overhang=.12)
+    P.pyramid_roof(g, (x0 + x1) / 2, (y0 + y1) / 2, .5, z + 1.06, .4, overhang=.1)
     # Beacon mast with an anemometer arm on the pyramid's apex.
-    mz0 = z + 1.06 + .55
-    K.revolve(g, (CX, CY, mz0 - .04), [(.08, 0), (.065, .15), (.05, .74)], IRON, segments=10)
-    pivot = K.beacon(g, CX, CY, mz0 + .7)
+    mz0 = z + 1.06 + .4
+    K.revolve(g, (CX, CY, mz0 - .04), [(.07, 0), (.055, .12), (.045, .5)], IRON, segments=10)
+    pivot = K.beacon(g, CX, CY, mz0 + .46)
     parts.append((K.beacon_shutter(*pivot, 'ObservationDeck.BeaconShutter'), 'SPIN_Z', 2))
-    g.beam((CX, CY, mz0 + .4), (CX + .38, CY, mz0 + .4), .03, mat=IRON)
-    g.cylinder((CX + .38, CY, mz0 + .46), .02, .12, IRON, 'Z', 8)
-    an = Geometry('ObservationDeck.Anemometer', (CX + .38, CY, mz0 + .54))
-    an.cylinder((CX + .38, CY, mz0 + .53), .035, .05, BRASS, 'Z', 8)
+    ar = .32
+    g.beam((CX, CY, mz0 + .3), (CX + ar, CY, mz0 + .3), .03, mat=IRON)
+    g.cylinder((CX + ar, CY, mz0 + .36), .02, .12, IRON, 'Z', 8)
+    an = Geometry('ObservationDeck.Anemometer', (CX + ar, CY, mz0 + .44))
+    an.cylinder((CX + ar, CY, mz0 + .43), .035, .05, BRASS, 'Z', 8)
     for i in range(3):
         a = i * 2 * math.pi / 3
-        tip = (CX + .38 + math.cos(a) * .2, CY + math.sin(a) * .2, mz0 + .545)
-        an.beam((CX + .38, CY, mz0 + .54), (tip[0], tip[1], mz0 + .54), .02, mat=IRON)   # tops clear of the hub top
+        tip = (CX + ar + math.cos(a) * .18, CY + math.sin(a) * .18, mz0 + .445)
+        an.beam((CX + ar, CY, mz0 + .44), (tip[0], tip[1], mz0 + .44), .02, mat=IRON)   # tops clear of the hub top
         K.revolve(an, (tip[0], tip[1], tip[2] - .04), [(.001, 0), (.055, .03), (.055, .07), (.001, .085)], BRASS,
                   segments=8)
     parts.append((an, 'SPIN_Z', 2))
@@ -263,17 +293,15 @@ def stairhead(g, parts):
 # ---------------------------------------------------------------- ground
 
 def kiosk(g):
-    x0, y0, x1, y1 = 2.0, 0.0, 4.0, 1.0
-    P.podium(g, x0, y0, x1, y1, .12, joints=False, foot=False, skip=[(DOOR_X - .5, DOOR_X + .5)])
-    P.framed_block(g, x0 + .05, y0 + .05, x1 - .05, y1 - .05, .12, 1.0, infill=ORANGE, frame=WOOD, pitch=1.0,
-                   corner=.14, skip={'front': [(DOOR_X - .5, DOOR_X + .5)]},
-                   windows={'left': [(.5, .5, .4, 'lancet')], 'right': [(.5, .5, .4, 'lancet')]})
+    """One-tile vestibule with the ground door, against the tube's foot, under
+    a small hipped roof (the ticket kiosk until 2026-11-01)."""
+    x0, y0, x1, y1 = 1.0, 0.0, 2.0, .62
+    P.podium(g, x0, y0, x1, y1, .12, joints=False, foot=False, skip=[(DOOR_X - .5, DOOR_X + .5)], base=-.02)   # underside clear of the footing ring's (z 0)
+    P.framed_block(g, x0 + .05, y0 + .05, x1 - .05, y1, .12, 1.0, infill=ORANGE, frame=WOOD, pitch=1.0,
+                   corner=.12, faces=('front', 'left', 'right'), skip={'front': [(DOOR_X - .5, DOOR_X + .5)]})
     P.door(g, DOOR_X, y0, 0, 'Door0')
-    # Ticket window with a counter and an iron awning.
-    A.atlas_window(g, 3.5, y0 + .05, .5, .36, 'front', 'cross')
-    blk(g, 3.22, y0 - .1, -.03, 3.78, y0 - .005, .35, WOOD)     # ticket counter
-    plank_gable(g, x0 + .05, x1 - .05, y0 + .05, y1 - .05, 1.0, 1.5, ridge_axis='X', overhang=.1, seed=4)
-    K.lamp(g, 3.08, y0 + .05, .52, face='front')
+    P.hip_roof(g, x0 + .05, y0 + .05, x1 - .05, y1 - .02, 1.0, .22, overhang=.06)
+    K.lamp(g, .9, y0 + .05, .52, face='front')
 
 
 def build(g, parts):

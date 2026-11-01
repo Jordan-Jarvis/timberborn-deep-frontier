@@ -17,6 +17,15 @@
 - **Radioactive Waste Export** is 4x3 (was 6x5): the lead-clad fill house, the cask car and the dispatch gate on the map-edge side. Its pipe inlet is now on the fill house front, right of the door. It still has to touch the map edge; Craters now has a place for it.
 - **Build costs of the shrunk late-game buildings** (Radioactive Waste Refinery, Mission Control, Radioactive Waste Vault, Rocket Assembly Hangar, Launch Pad) are back to what they were before the shrink.
 
+### Smaller wellbeing, science and food buildings (second shrink)
+- **Town Plaza** is 5x5, 3 high (was 7x8, 4 high): the fountain in the middle of the square, a one-tile bandstand kiosk on the back corner, the statue on the front corner, the flags round the fountain.
+- **Technical School** is 4x3, 5 high (was 8x4, 7 high): the school hall, a slimmer clock tower with the door on the front corner and the demonstration engine along the front.
+- **Public Health Lab** is 4x3, 4 high (was 6x4).
+- **Greenhouse** is 6x3, 5 high (was 9x3): one glazed wing beside the domed palm pavilion, with the boiler house behind the wing.
+- **Observation Deck** is 3x3, 8 high (was 6x6, 10 high): the same tube and spiral stair with a smaller open deck.
+- Saves: these keep their origin. Re-lay the path to the moved doors of the Town Plaza (in front of the kiosk), Technical School and Public Health Lab (two tiles left) and Observation Deck (one tile left); clear anything placed behind a Greenhouse's left wing.
+- The Hospital and Bathhouse cost the same goods as before the shrink again (0.8.2 briefly shifted some of their Brick to Concrete and planks).
+
 ## 0.8.2 (2026-11-01)
 
 - **Radioactive water is less bright:** its yellow and its glow are toned down. Irradiated beavers and soil keep their colours.

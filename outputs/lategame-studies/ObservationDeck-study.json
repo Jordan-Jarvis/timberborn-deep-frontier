@@ -2,27 +2,27 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Tapering riveted steel tube wrapped by an open helical stair, carrying a broad open square deck on a solid concrete corbel, with a brass telescope and a beacon mast.",
   "footprint": [
-    6,
-    6
+    3,
+    3
   ],
-  "heightLayers": 10,
+  "heightLayers": 8,
   "boundsMin": [
     -0.03,
     -0.205,
-    -0.03
+    -0.02
   ],
   "boundsMax": [
-    6.03,
-    6.03,
-    9.63
+    3.03,
+    3.03,
+    7.24
   ],
   "doors": [
     {
       "id": "DeckDoor",
       "position": [
-        2.5,
-        2.0,
-        7
+        1.5,
+        1.0,
+        5
       ],
       "outward": [
         0,
@@ -32,7 +32,7 @@
     {
       "id": "Door0",
       "position": [
-        2.5,
+        1.5,
         0.0,
         0
       ],
@@ -51,20 +51,19 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 2458,
+  "faces": 1587,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 426,
-    "IrregularPlanks_DarkBrown.IronTeeth": 48,
-    "BaseMetal.IronTeeth": 1193,
-    "RoofPlanks.IronTeeth": 105,
+    "BaseWood_DarkBrown.IronTeeth": 286,
+    "BaseMetal.IronTeeth": 863,
+    "RoofPlanks.IronTeeth": 18,
     "Details.IronTeeth": 148,
     "accent8": 10,
     "accent25": 10,
-    "Plaster_White.IronTeeth": 300,
+    "Plaster_White.IronTeeth": 156,
     "Plaster_Orange.IronTeeth": 26,
-    "IrregularPlanks_MetalForged.IronTeeth": 266,
-    "WindowsAtlas.IronTeeth": 126
+    "IrregularPlanks_MetalForged.IronTeeth": 206,
+    "WindowsAtlas.IronTeeth": 64
   },
-  "sourceHash": "b5a595f6e0e879d36dc175079e66adec3d3b33b694a82fb8c2c5a5761c546f05",
-  "artHash": "b577dbf95fc5b8b15b2850c0000554660fd9a1fd9f4c55da667521ac607a46e7"
+  "sourceHash": "7b8f85dc942dcfa7cfc920c9103b6d8909e2627c5154553f5dac9bef712dc046",
+  "artHash": "e81978814f697070f5c1ed11a656b914484676bf27af932a47a35eea8a0a92a7"
 }

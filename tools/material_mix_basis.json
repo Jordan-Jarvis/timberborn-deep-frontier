@@ -175,6 +175,25 @@
     "wood": 114.82
    },
    "measuredAt": "6x4x4 study (d424ef7)"
+  },
+  "Greenhouse": {
+   "families": {
+    "brick": 4.6584,
+    "metal": 259.2023,
+    "unpriced": 13.1454,
+    "wood": 29.1879
+   },
+   "measuredAt": "9x3x5 study (d424ef7)"
+  },
+  "ObservationDeck": {
+   "families": {
+    "brick": 16.9903,
+    "concrete": 182.478,
+    "metal": 191.2839,
+    "unpriced": 1.539,
+    "wood": 37.0053
+   },
+   "measuredAt": "6x6x10 study (d424ef7)"
   }
  }
 }

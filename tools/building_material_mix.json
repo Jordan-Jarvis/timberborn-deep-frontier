@@ -441,22 +441,22 @@
   },
   "Greenhouse": {
    "model": "Buildings/Food/Greenhouse/Greenhouse.IronTeeth.Model",
-   "sha256": "8275c3ace6339ec68b11823299afedda5e9b7083416076c154628867ee5a829c",
+   "sha256": "217d1e4b61cfe2997e3312432a468ebaa9cf267a9bcc065b71d658f46d7e7e77",
    "areas": {
-    "BaseMetal.IronTeeth": 107.6915,
-    "BaseWood_DarkBrown.IronTeeth": 27.0019,
+    "BaseMetal.IronTeeth": 78.9906,
+    "BaseWood_DarkBrown.IronTeeth": 26.0033,
     "DFIndustrial08": 0.1145,
-    "Details.IronTeeth#metal": 1.9497,
-    "PaintedMetal.IronTeeth": 149.561,
+    "Details.IronTeeth#metal": 1.5272,
+    "PaintedMetal.IronTeeth": 122.0091,
     "Plaster_Orange.IronTeeth": 4.6584,
     "RoofPlanks.IronTeeth": 2.1861,
-    "WindowsAtlas.IronTeeth": 13.0309
+    "WindowsAtlas.IronTeeth": 9.2372
    },
    "families": {
     "brick": 4.6584,
-    "metal": 259.2023,
-    "unpriced": 13.1454,
-    "wood": 29.1879
+    "metal": 202.5269,
+    "unpriced": 9.3517,
+    "wood": 28.1893
    }
   },
   "GroceryStore": {
@@ -666,26 +666,25 @@
   },
   "ObservationDeck": {
    "model": "Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.Model",
-   "sha256": "f7d58b362f4be70167d4df78a03bde5199c852735124564fd793866dbac97093",
+   "sha256": "99231cb150e74e76b69b056cbc681af0ebb372dc0aef53c923f3ec1b4afe8f8b",
    "areas": {
-    "BaseMetal.IronTeeth": 141.502,
-    "BaseWood_DarkBrown.IronTeeth": 15.574,
+    "BaseMetal.IronTeeth": 77.2699,
+    "BaseWood_DarkBrown.IronTeeth": 9.5727,
     "DFIndustrial08": 0.1145,
     "DFIndustrial25": 0.0784,
     "Details.IronTeeth#metal": 0.3873,
-    "IrregularPlanks_DarkBrown.IronTeeth": 1.4131,
-    "IrregularPlanks_MetalForged.IronTeeth": 49.3947,
-    "Plaster_Orange.IronTeeth": 16.9903,
-    "Plaster_White.IronTeeth": 182.478,
-    "RoofPlanks.IronTeeth": 20.0182,
-    "WindowsAtlas.IronTeeth": 1.3461
+    "IrregularPlanks_MetalForged.IronTeeth": 33.3615,
+    "Plaster_Orange.IronTeeth": 9.3463,
+    "Plaster_White.IronTeeth": 65.6646,
+    "RoofPlanks.IronTeeth": 5.1207,
+    "WindowsAtlas.IronTeeth": 0.9066
    },
    "families": {
-    "brick": 16.9903,
-    "concrete": 182.478,
-    "metal": 191.2839,
-    "unpriced": 1.539,
-    "wood": 37.0053
+    "brick": 9.3463,
+    "concrete": 65.6646,
+    "metal": 111.0187,
+    "unpriced": 1.0995,
+    "wood": 14.6934
    }
   },
   "OilPowerPlant": {

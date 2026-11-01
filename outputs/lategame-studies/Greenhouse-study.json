@@ -2,7 +2,7 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Square glazed palm pavilion crowned by a two-tier faceted octagonal glass dome, glazed lantern and weathervane.",
   "footprint": [
-    9,
+    6,
     3
   ],
   "heightLayers": 5,
@@ -12,7 +12,7 @@
     -0.03
   ],
   "boundsMax": [
-    9.19,
+    6.19,
     3.07,
     4.73
   ],
@@ -40,17 +40,17 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 4220,
+  "faces": 3549,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1460,
-    "BaseMetal.IronTeeth": 674,
+    "BaseWood_DarkBrown.IronTeeth": 1412,
+    "BaseMetal.IronTeeth": 598,
     "RoofPlanks.IronTeeth": 25,
-    "Details.IronTeeth": 508,
+    "Details.IronTeeth": 397,
     "accent8": 10,
     "Plaster_Orange.IronTeeth": 13,
-    "WindowsAtlas.IronTeeth": 1102,
-    "PaintedMetal.IronTeeth": 650
+    "WindowsAtlas.IronTeeth": 798,
+    "PaintedMetal.IronTeeth": 518
   },
-  "sourceHash": "af53c03dc4b08e6ec589c09709a05eab0bb559458033b2b478abcc9ace86b79b",
-  "artHash": "b63544b359ca62d71b2a9f20176b74508d9ef6681ac47f3615226f40e3d09cad"
+  "sourceHash": "e48e884a10452f366aa852dbd20a3213c1978463d52eba291f451de02478a926",
+  "artHash": "89b5ee585c19d0360b1ffeed12d93719576532ccfdad70036201fca83e350ba4"
 }

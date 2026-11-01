@@ -96,18 +96,18 @@ def town_plaza_slots(registration):
 
 
 def observation_deck_slots(registration):
-    """The outer ring of the layer-12 deck (lategame_ObservationDeck.TERRACE),
-    each visitor facing out over the rail."""
+    """The visitors' places on the deck round the stairhead
+    (lategame_ObservationDeck.VISITOR_PLACES, 2026-11-01), each on a free cell
+    over the deck slab, facing out from the tower."""
     import lategame_ObservationDeck as M
     w, h = registration['footprint']
     occupied = {tuple(c) for c in registration['occupied']}
+    terrace = {tuple(c) for c in M.TERRACE['cells']}
     slots = []
-    for x, y, z in M.TERRACE['cells']:
-        if (x, y, z) in occupied or (x, y, z - 1) not in occupied:
-            raise ValueError(f'ObservationDeck: terrace cell {(x, y, z)} is not a free cell on the deck slab')
-        if x not in (0, w - 1) and y not in (0, h - 1):
-            continue
-        cx, cy = x + .5, y + .5
+    for cx, cy in M.VISITOR_PLACES:
+        x, y, z = int(cx), int(cy), M.DECK
+        if (x, y, z) not in terrace or (x, y, z) in occupied or (x, y, z - 1) not in occupied:
+            raise ValueError(f'ObservationDeck: visitor place {(cx, cy)} is not on a free cell over the deck slab')
         slots.append(((cx, cy, float(M.DECK)), (cx - w / 2, cy - h / 2)))
     return slots
 

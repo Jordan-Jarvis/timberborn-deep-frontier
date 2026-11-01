@@ -62,7 +62,7 @@
     9
    ],
    "footprintAfter": [
-    9,
+    6,
     3,
     5
    ],
@@ -269,33 +269,16 @@
     16
    ],
    "footprintAfter": [
-    6,
-    6,
-    10
+    3,
+    3,
+    8
    ],
    "gridOrigin": [
     0,
     0
    ],
-   "outsideCells": 0,
-   "insideCells": [
-    [
-     0,
-     0
-    ],
-    [
-     0,
-     5
-    ],
-    [
-     5,
-     0
-    ],
-    [
-     5,
-     5
-    ]
-   ]
+   "outsideCells": 4,
+   "insideCells": []
   }
  }
 }

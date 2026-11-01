@@ -42,7 +42,6 @@
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 48 cells north-east of the start", "x": 115, "y": 120, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 103 cells south-east of the start", "x": 166, "y": 44, "z": 10, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 80 cells south-west of the start", "x": 26, "y": 36, "z": 11, "orientation": "Cw90", "margin": 1, "openSides": []},
-    {"template": "Greenhouse.IronTeeth", "label": "Greenhouse, 64 cells west of the start", "x": 19, "y": 77, "z": 11, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 55 cells west of the start", "x": 25, "y": 99, "z": 11, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 50 cells east of the start", "x": 129, "y": 95, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]}
   ],

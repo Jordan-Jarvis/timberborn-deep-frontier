@@ -19,6 +19,13 @@ Roof variety (user, 2026-10-30: "no roof vents"): the hinged ridge vent flaps
 on the wing roofs are gone, the boiler-house roof deck is painted metal and
 the boiler stack rises from the ground in its back wall, not from the roof.
 
+Second shrink 2026-11-01 (user: "shrink the buildings down even more"):
+9x3x5 -> 6x3x5, inside the old footprint with the same origin, door and
+native entrance (4,-1,0). The right wing is gone: the palm pavilion now
+closes the right end with its own glazed side and the second gable fan; the
+boiler house and the pump plinth moved into the strip behind the left wing
+(x 1..3 and 0..1), so every tile of the footprint is building.
+
 HERO: a square glazed palm pavilion crowned by a two-tier faceted octagonal
 glass dome, a glazed lantern and a weathervane.
 ROOF: glazed ridge roofs on the two wings and the faceted glass dome on the
@@ -27,14 +34,13 @@ roof deck on the boiler house. All glazing is native factory/grand window assemb
 seated on an opaque steel host plane (sloped facets use the same native
 assemblies, re-oriented onto the facet plane).
 
-Plan (9 x 3 tiles; front y = 0):
-  - pavilion x 3..6, y 0..3 on a concrete podium; the native door centred on
-    x = 4.5 with its face on the y = 0 tile edge;
-  - glazed wings x 0..3 and 6..9, y 0..2;
-  - behind the right wing (y 2..3): boiler house with the smoke stack (x 6..8)
-    and the circulating pump on its plinth (x 8..9); the
-    strip behind the left wing holds only the heating main on the wing wall,
-    so its cells stay free.
+Plan (6 x 3 tiles; front y = 0):
+  - pavilion x 3..6, y 0..3 on a cast-iron podium; the native door centred on
+    x = 4.5 with its face on the y = 0 tile edge; glazed right side with a
+    circulating fan;
+  - glazed wing x 0..3, y 0..2;
+  - behind the wing (y 2..3): boiler house with the smoke stack (x 1..3) and
+    the circulating pump on its plinth (x 0..1).
 
 Animated (unchanged names and kinds): two gable circulating fans (SPIN_X),
 weathervane (SPIN_Z), boiler
@@ -51,7 +57,7 @@ import native_building_assets as N
 from lategame_roofdeck_parts import deck_slab
 
 IDENT = 'Greenhouse'
-FOOTPRINT = (9, 3)
+FOOTPRINT = (6, 3)
 HEIGHT = 5
 HERO = 'Square glazed palm pavilion crowned by a two-tier faceted octagonal glass dome, glazed lantern and weathervane.'
 FRAME_END = 121
@@ -71,12 +77,13 @@ def pavilion(g):
     P.podium(g, PX0 - .05, PY0 - .05, PX1 + .05, PY1 + .05, .3, joints=False, mat=PAINTED)   # cast-iron base
     xs = [PX0 + (PX1 - PX0) * (i + .5) / 3 for i in range(3)]
     P.framed_block(g, PX0, PY0, PX1, PY1, .3, PTOP, infill=IRON, frame=PAINTED, pitch=.93, floors=(1.2,),
-                   faces=('front', 'back'),
+                   faces=('front', 'back', 'right'),
                    windows={'front': [(PX0 + .43, .7, .5, 'grand'), (PX1 - .43, .7, .5, 'grand')] +
                                      [(x, 1.6, .5, 'grand') for x in xs],
-                            'back': [(x, z, .5, 'grand') for x in xs for z in (.7, 1.6)]})
-    # Side faces above the wing roofs: posts only.
-    for x, s in ((PX0, -1), (PX1, 1)):
+                            'back': [(x, z, .5, 'grand') for x in xs for z in (.7, 1.6)],
+                            'right': [(y, z, .5, 'grand') for y in (PY0 + .43, PY1 - .43) for z in (.7, 1.6)]})
+    # Left side above the wing roof: posts only.
+    for x, s in ((PX0, -1),):
         for y in (PY0 + .2, PY1 - .2):
             blk(g, min(x, x + s * .055), y - .055, .3, max(x, x + s * .055), y + .055, PTOP - .02, PAINTED)
     # Native door in the pavilion podium face, on the footprint edge.
@@ -174,41 +181,46 @@ def wing(g, parts, x0, x1, side):
     parts.append((fan, 'SPIN_X', 2 * side))
 
 
+def side_fan(g, parts):
+    """Circulating fan in the pavilion's glazed right side (the right wing's
+    gable fan until 2026-11-01; same node name)."""
+    fx, fy, fz = PX1 + .06, PCY, 1.15
+    g.ring((fx + .04, fy, fz), .36, .06, .08, IRON, 'X', 16)
+    g.ring((fx + .04, fy, fz), .26, .03, .06, BRASS, 'X', 12)
+    g.cylinder((fx + .06, fy, fz), .06, .12, IRON, 'X', 10)
+    fan = K.fan('GableFanR', fx + .13, fy, fz, .31, axis='X', blades=6)
+    parts.append((fan, 'SPIN_X', 2))
+
+
 def boiler_house(g, parts):
-    """Boiler house behind the right wing (x 6..8, y 2..3), one layer with a
-    flat roof, the smoke stack and a coal bunker beside it."""
-    x0, y0, x1, y1 = 6.0, 2.0, 8.0, 3.0
+    """Boiler house behind the wing (x 1..3, y 2..3), one layer with a flat
+    painted-metal roof deck and the smoke stack rising from its back wall."""
+    x0, y0, x1, y1 = 1.0, 2.0, 3.0, 3.0
     P.podium(g, x0, y0, x1, y1, .2, joints=False, foot=False, mat=WOOD)
-    # x0 + .13: its corner posts clear the pavilion's back corner post (x 6.035).
-    P.framed_block(g, x0 + .13, y0 + .05, x1 - .05, y1 - .05, .2, .84, infill=ORANGE, pitch=.95,
-                   windows={'back': [(6.5, .5, .45, 'factory'), (7.5, .5, .45, 'factory')]})
+    # x1 - .13: its corner posts clear the pavilion's back corner post (x 2.965).
+    P.framed_block(g, x0 + .05, y0 + .05, x1 - .13, y1 - .05, .2, .84, infill=ORANGE, pitch=.95,
+                   windows={'back': [(1.5, .5, .45, 'factory'), (2.4, .5, .45, 'factory')]})
     deck_slab(g, x0, y0, x1, y1, 1.0, 'painted', base=WOOD)
     # Boiler stack rising from the plinth in the back wall (not from the roof),
     # its mouth above layer 4 so the smoke does not bar the roof deck.
-    K.stack(g, 7.45, 2.72, .1, 4.2, emits='smoke', r=.18)
-    # Heating main from the boiler house along the right wing's back wall.
-    P.flanged_pipe(g, [(x0 + .05, 2.3, .4), (6.2, 2.3, .4), (6.2, 2.07, .4)], .05)
+    K.stack(g, 1.55, 2.72, .1, 4.2, emits='smoke', r=.18)
 
 
 def pump(g, parts):
-    """Circulating pump with flywheel on a full-tile concrete plinth beside the
-    boiler house (tile x 8..9, y 2..3), piped into its wall; the boiler-house
-    roof stays a clear roof deck and nothing stands on the open strip behind
-    the left wing (BRIEF: no clutter on buildable space). The heating main
-    runs along that wing's back wall, within 0.15 of it, so it claims no cell."""
-    blk(g, 8.0, 2.0, -.03, 9.0, 3.0, .3, WOOD)          # timber plinth
-    blk(g, 8.04, 2.04, .3, 8.96, 2.96, .36, IRON)
-    px, py, base = 8.35, 2.5, .36
+    """Circulating pump with flywheel on a full-tile timber plinth at the end
+    of the boiler house (tile x 0..1, y 2..3), piped into its wall."""
+    blk(g, 0.0, 2.0, -.03, 1.0, 3.0, .3, WOOD)          # timber plinth
+    blk(g, .04, 2.04, .3, .96, 2.96, .36, IRON)
+    px, py, base = .65, 2.5, .36
     blk(g, px - .2, py - .2, base - .03, px + .2, py + .2, base + .22, PAINTED)
     blk(g, px - .22, py - .22, base + .22, px + .22, py + .22, base + .29, IRON)
     g.cylinder((px, py, base + .5), .14, .44, PAINTED, 'Z', 12)
     g.ring((px, py, base + .72), .17, .045, .05, BRASS, 'Z', 12)
-    wheel = Geometry('PumpFlywheel', (px + .3, py, base + .5))
-    K.wheel(wheel, (px + .3, py, base + .5), .24, 'X')
+    wheel = Geometry('PumpFlywheel', (px - .3, py, base + .5))
+    K.wheel(wheel, (px - .3, py, base + .5), .24, 'X')
     parts.append((wheel, 'SPIN_X', 1))
-    g.cylinder((px + .19, py, base + .5), .04, .22, IRON, 'X', 8)
-    P.flanged_pipe(g, [(px, py - .17, base + .5), (px, 2.2, base + .5), (7.97, 2.2, base + .5)], .045)
-    P.flanged_pipe(g, [(.4, 2.06, .55), (2.95, 2.06, .55)], .05)
+    g.cylinder((px - .19, py, base + .5), .04, .22, IRON, 'X', 8)
+    P.flanged_pipe(g, [(px, py - .17, base + .5), (px, 2.2, base + .5), (1.03, 2.2, base + .5)], .045)
 
 
 def build(g, parts):
@@ -216,6 +228,6 @@ def build(g, parts):
     parts.append((vane, 'SPIN_Z', 1))
     # Wing walls run .1 into the pavilion so their inner corner posts are buried.
     wing(g, parts, .05, PX0 + .1, -1)
-    wing(g, parts, PX1 - .1, 8.95, 1)
+    side_fan(g, parts)
     boiler_house(g, parts)
     pump(g, parts)
