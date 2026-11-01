@@ -1,26 +1,26 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Long north-light sawtooth machine hall with an open belt bay and a travelling crane over its yard, with a square brick chimney bound in iron.",
+  "hero": "North-light sawtooth machine hall with an open belt bay and a travelling crane over its yard, with a square brick chimney bound in iron.",
   "footprint": [
-    9,
-    5
+    5,
+    4
   ],
-  "heightLayers": 7,
+  "heightLayers": 3,
   "boundsMin": [
     -0.1,
     -0.265,
     -0.03
   ],
   "boundsMax": [
-    9.0771,
-    5.0644,
-    6.64
+    5.0771,
+    4.0644,
+    2.97
   ],
   "doors": [
     {
       "id": "Entrance",
       "position": [
-        8.5,
+        4.5,
         0.0,
         0
       ],
@@ -43,22 +43,22 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 3334,
+  "faces": 2680,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1142,
+    "BaseWood_DarkBrown.IronTeeth": 896,
     "IrregularPlanks_DarkBrown.IronTeeth": 48,
-    "BaseMetal.IronTeeth": 864,
-    "RoofPlanks.IronTeeth": 360,
-    "DFIndustrial06": 81,
+    "BaseMetal.IronTeeth": 810,
+    "RoofPlanks.IronTeeth": 240,
+    "DFIndustrial06": 75,
     "Details.IronTeeth": 96,
     "accent8": 36,
-    "Plaster_White.IronTeeth": 156,
+    "Plaster_White.IronTeeth": 138,
     "Plaster_Orange.IronTeeth": 13,
-    "IrregularPlanks_MetalForged.IronTeeth": 24,
-    "WindowsAtlas.IronTeeth": 706,
+    "IrregularPlanks_MetalForged.IronTeeth": 30,
+    "WindowsAtlas.IronTeeth": 490,
     "PaintedMetal.IronTeeth": 432,
     "IrregularPlanks_Grey.IronTeeth": 12
   },
-  "sourceHash": "d7e21da5150e1e55b613a13aefe64afa9b32de4174f7f6665daabda96e1e5061",
-  "artHash": "bceec98e41df90ece75f5817008478d4bc64aa94700acbeb8725e1fced2b4efb"
+  "sourceHash": "d3cba5d89277f75e7b79e750a5e99d8dd7261c20e7a9fc19f9455dc98d188ce5",
+  "artHash": "5d6a1713ac6040e7eddeb858002d96d4ae237a0326b23965950bd8890655fd0d"
 }

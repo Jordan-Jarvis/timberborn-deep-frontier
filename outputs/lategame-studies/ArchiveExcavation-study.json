@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Excavation pit exposing a giant rusted human cogwheel half-buried beside a broken fluted column, laid out with string lines and worked by a steel tripod derrick and hoist bucket.",
+  "hero": "Excavation pit exposing a giant rusted human cogwheel half-buried beside a broken fluted column, worked by a steel tripod derrick and hoist bucket.",
   "footprint": [
-    7,
-    6
+    4,
+    4
   ],
-  "heightLayers": 6,
+  "heightLayers": 3,
   "boundsMin": [
-    -0.102,
-    -0.0,
+    -0.069,
+    0.865,
     -0.03
   ],
   "boundsMax": [
-    7.0,
-    6.056,
-    5.12
+    4.0,
+    4.06,
+    2.98
   ],
   "doors": [
     {
@@ -45,22 +45,22 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 3723,
+  "faces": 2552,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 786,
-    "IrregularPlanks_DarkBrown.IronTeeth": 260,
-    "BaseMetal.IronTeeth": 1099,
-    "RoofPlanks.IronTeeth": 180,
+    "BaseWood_DarkBrown.IronTeeth": 352,
+    "IrregularPlanks_DarkBrown.IronTeeth": 72,
+    "BaseMetal.IronTeeth": 1015,
+    "RoofPlanks.IronTeeth": 144,
     "Details.IronTeeth": 12,
     "accent25": 10,
-    "Plaster_White.IronTeeth": 577,
-    "Plaster_Orange.IronTeeth": 25,
+    "Plaster_White.IronTeeth": 409,
+    "Plaster_Orange.IronTeeth": 19,
     "IrregularPlanks_MetalForged.IronTeeth": 18,
-    "WindowsAtlas.IronTeeth": 177,
-    "PaintedMetal.IronTeeth": 346,
+    "WindowsAtlas.IronTeeth": 58,
+    "PaintedMetal.IronTeeth": 298,
     "BaseWood_Grey.IronTeeth": 126,
-    "IrregularPlanks_Grey.IronTeeth": 895
+    "IrregularPlanks_Grey.IronTeeth": 735
   },
-  "sourceHash": "f907d2a8f93c42183df95f161bfe2f361c5c21feca8425ba0335ca5a4aefa8e2",
-  "artHash": "4cd09ae1c44ec1e3e728058f9b6d0bb3d08ad23696a10c6d19bddc1f06fc8783"
+  "sourceHash": "f47a34a3c3eaa15d5e042636cc5184e2438b69f1d69780df7a5bb15c3e762803",
+  "artHash": "9f6d855cdf33d23e6cae8fbafc6494601f8c1369d57bbda024fa93b3eade6eb1"
 }

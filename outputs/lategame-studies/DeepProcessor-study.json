@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Riveted blast furnace on a low hearth podium, charged by a plated vertical skip hoist, with stoves and a casting bay",
+  "hero": "Riveted blast furnace on a brick hearth, charged by a plated vertical skip hoist, with squat stoves and a casting bay",
   "footprint": [
-    7,
-    6
+    5,
+    4
   ],
-  "heightLayers": 8,
+  "heightLayers": 6,
   "boundsMin": [
     -0.1,
-    -0.135,
-    0.0
+    -0.265,
+    -0.03
   ],
   "boundsMax": [
-    7.05,
-    6.05,
-    7.9
+    5.0125,
+    4.02,
+    5.55
   ],
   "doors": [
     {
@@ -22,7 +22,7 @@
       "position": [
         1.5,
         0.0,
-        0.0
+        0
       ],
       "outward": [
         0,
@@ -41,19 +41,20 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 2489,
+  "faces": 2077,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 338,
-    "BaseMetal.IronTeeth": 1623,
-    "DFIndustrial06": 36,
-    "Details.IronTeeth": 138,
-    "accent8": 94,
-    "Plaster_White.IronTeeth": 108,
-    "Plaster_Orange.IronTeeth": 31,
+    "BaseWood_DarkBrown.IronTeeth": 332,
+    "IrregularPlanks_DarkBrown.IronTeeth": 24,
+    "BaseMetal.IronTeeth": 1309,
+    "DFIndustrial06": 12,
+    "Details.IronTeeth": 98,
+    "accent8": 74,
+    "Plaster_White.IronTeeth": 134,
+    "Plaster_Orange.IronTeeth": 7,
     "IrregularPlanks_MetalForged.IronTeeth": 60,
-    "WindowsAtlas.IronTeeth": 50,
-    "PaintedMetal.IronTeeth": 474
+    "WindowsAtlas.IronTeeth": 42,
+    "PaintedMetal.IronTeeth": 402
   },
-  "sourceHash": "0d8c614b19b10cd9e1285f92a27cf3e923d7c04543d207f1e4136c0ba2f2886c",
-  "artHash": "c253b338600c385be7a405f5eadbe98b23db68cfab6565c6a32cd774ffa78757"
+  "sourceHash": "e1c3baffeb4fef94e53d5f42b76ee0a189a7a365f6554cdd8d839c2e56abcb7c",
+  "artHash": "a52a79ef33cf50b12425846036f542639e11e5ef7546ab9478e5ba95a6133dc3"
 }

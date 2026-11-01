@@ -194,6 +194,66 @@
     "wood": 37.0053
    },
    "measuredAt": "6x6x10 study (d424ef7)"
+  },
+  "SteelMill": {
+   "families": {
+    "brick": 16.9399,
+    "concrete": 221.8092,
+    "metal": 446.9451,
+    "unpriced": 8.0443,
+    "wood": 2.9481
+   },
+   "measuredAt": "8x6x8 study (1364df0)"
+  },
+  "DeepProcessor": {
+   "families": {
+    "brick": 83.3735,
+    "concrete": 87.098,
+    "metal": 321.4347,
+    "unpriced": 3.4225,
+    "wood": 11.6906
+   },
+   "measuredAt": "7x6x8 study (1364df0)"
+  },
+  "PrecisionMachineWorks": {
+   "families": {
+    "brick": 79.0601,
+    "concrete": 216.0638,
+    "metal": 144.7457,
+    "unpriced": 9.415,
+    "wood": 188.5548
+   },
+   "measuredAt": "9x5x7 study (1364df0)"
+  },
+  "FoodPackagingWorks": {
+   "families": {
+    "brick": 106.7066,
+    "concrete": 147.3315,
+    "metal": 156.091,
+    "unpriced": 7.9183,
+    "wood": 62.5368
+   },
+   "measuredAt": "7x5x7 study (1364df0)"
+  },
+  "ChemicalWorks": {
+   "families": {
+    "brick": 1.068,
+    "concrete": 115.5314,
+    "metal": 244.9343,
+    "unpriced": 3.9075,
+    "wood": 2.0607
+   },
+   "measuredAt": "5x5x8 study (1364df0)"
+  },
+  "ArchiveExcavation": {
+   "families": {
+    "brick": 69.0918,
+    "concrete": 191.1535,
+    "metal": 43.1631,
+    "unpriced": 6.9301,
+    "wood": 111.8681
+   },
+   "measuredAt": "7x6x6 study (1364df0)"
   }
  }
 }

@@ -48,7 +48,6 @@
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 44 cells south-east of the start", "x": 88, "y": 28, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "LimestoneQuarry.IronTeeth", "label": "Limestone Quarry, 49 cells south of the start", "x": 77, "y": 19, "z": 1, "orientation": "Cw270", "margin": 1, "openSides": [], "understructure": [73, 19, 1]},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 18 cells north of the start", "x": 66, "y": 90, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
-    {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 36 cells south-east of the start", "x": 91, "y": 47, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "SandstoneQuarry.IronTeeth", "label": "Sandstone Quarry, 72 cells south-west of the start", "x": 45, "y": 6, "z": 16, "orientation": "Cw180", "margin": 1, "openSides": ["S"], "understructure": [41, 2, 16]},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 17 cells north-west of the start", "x": 54, "y": 85, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": ["S"]},
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 28 cells south-west of the start", "x": 55, "y": 58, "z": 5, "orientation": "Cw180", "margin": 1, "openSides": []},

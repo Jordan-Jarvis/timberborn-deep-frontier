@@ -26,6 +26,14 @@
 - Saves: these keep their origin. Re-lay the path to the moved doors of the Town Plaza (in front of the kiosk), Technical School and Public Health Lab (two tiles left) and Observation Deck (one tile left); clear anything placed behind a Greenhouse's left wing.
 - The Hospital and Bathhouse cost the same goods as before the shrink again (0.8.2 briefly shifted some of their Brick to Concrete and planks).
 
+### Smaller industry (second shrink, continued)
+- **Deep Ore Processor** is 5x4, 6 high (was 7x6, 8 high): the blower house with the door, the stoves in an open shed behind it, the casting bay beside it, and the furnace, skip hoist and chimney together in the back corner. Same door, workers, power and recipes; existing processors keep their place. Same build cost.
+- **Precision Machine Works** is 5x4, 3 high (was 9x5, 7 high): the sawtooth machine shop with its open belt bay, the gate office, and a small crane yard with the steam hammer and the chimney. Its door moved from the right end of the front to the middle (tile 4): reconnect the path on existing works. It no longer needs a reserved site on the built-in maps. Same workers, power and recipes; same build cost.
+- **Food Packaging Works** is 4x3, 4 high (was 7x5, 7 high): the retorts and their crane, the three-storey cannery with its loading bay and roof lantern, and one boiler with a small boiler house and stack. The warehouse and the conveyor bridge are gone. Same door, workers, power and recipes; same build cost.
+- **Chemical Works** is 4x3, 5 high (was 5x5, 8 high): the reactor hall with the door and the three reactors beside it, and in the back the flare, a shorter fractionating column and a small cooler house. Same door, workers, power and recipes; same build cost.
+- **Archive Excavation** is 4x4, 3 high (was 7x6, 6 high), with the front row still open in front of the door: the archive hall, a small sieving shed, the stack tower, and a smaller dig behind the hall with the cogwheel, the broken column and a shorter derrick. Same door, workers, power and recipes; record caches can now be surveyed from 10 tiles away (was 7), so every cache an existing excavation reached stays in reach. Same build cost.
+- **Steel Mill**: its build cost is back to the amounts it had before the shrink (0.8.2 listed a recomposed cost).
+
 ## 0.8.2 (2026-11-01)
 
 - **Radioactive water is less bright:** its yellow and its glow are toned down. Irradiated beavers and soil keep their colours.

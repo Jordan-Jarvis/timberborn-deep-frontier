@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "A seven-layer riveted fractionating column with a ring platform and a caged ladder, its vapour line dropping to a fin-fan cooler on the flat hall roof, beside a flare stack with a live flame.",
+  "hero": "A riveted fractionating column with a ring platform and a ladder, its vapour line dropping to a fin-fan cooler house, beside a flare stack with a live flame.",
   "footprint": [
-    5,
-    5
+    4,
+    3
   ],
-  "heightLayers": 8,
+  "heightLayers": 5,
   "boundsMin": [
     -0.06,
     -0.265,
     -0.03
   ],
   "boundsMax": [
-    5.12,
-    5.06,
-    7.62
+    4.05,
+    3.06,
+    4.97
   ],
   "doors": [
     {
@@ -43,19 +43,19 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 3399,
+  "faces": 2553,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 236,
-    "BaseMetal.IronTeeth": 2060,
-    "Details.IronTeeth": 222,
-    "accent8": 53,
+    "BaseWood_DarkBrown.IronTeeth": 128,
+    "BaseMetal.IronTeeth": 1640,
+    "Details.IronTeeth": 182,
+    "accent8": 43,
     "accent25": 66,
-    "Plaster_White.IronTeeth": 216,
+    "Plaster_White.IronTeeth": 210,
     "Plaster_Orange.IronTeeth": 7,
     "IrregularPlanks_MetalForged.IronTeeth": 26,
-    "WindowsAtlas.IronTeeth": 274,
-    "PaintedMetal.IronTeeth": 684
+    "WindowsAtlas.IronTeeth": 130,
+    "PaintedMetal.IronTeeth": 566
   },
-  "sourceHash": "7a4b801ffb1816d8ed1185e2791d5ba277fe73ad4bb2a4ad0e08b0c5e683c8f0",
-  "artHash": "5266ee4eb12014014e2b07d2d7f6af3ac4579c67348633ae58329b58fe54c807"
+  "sourceHash": "30f6ea19874d20caceceba858889119a8705d59dd8b93a3c7f3c0511dcd492ec",
+  "artHash": "c87efd8ef85f4aaa88203a66e5e255a2dcece110f4653d6761ec680391317a78"
 }

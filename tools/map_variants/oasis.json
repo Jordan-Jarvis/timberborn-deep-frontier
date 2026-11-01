@@ -48,7 +48,6 @@
     {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "label": "Radioactive Sludge Recovery Pump, by the start", "x": 126, "y": 137, "z": 2, "orientation": "Cw180"},
     {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 110 cells north of the start", "x": 123, "y": 255, "z": 16, "orientation": "Cw90", "margin": 1, "openSides": ["S", "E", "W"]},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 63 cells north of the start", "x": 139, "y": 199, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
-    {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 47 cells east of the start", "x": 166, "y": 158, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for the record cache 92 cells north of the start", "x": 97, "y": 228, "z": 10, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 81 cells west of the start", "x": 44, "y": 118, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 81 cells west of the start", "x": 41, "y": 145, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},

@@ -57,7 +57,7 @@ export const CACHE = {
   // its old footprint (at most 3 tiles per axis): every cache the old excavation reached stays in range.
   // Survey and reward follow the Archive Excavation's artifact recipe since ArchiveData was retired (2026-10-30
   // bricks pass, tools/content_policy.json migratedGoods): 12 artifacts are the 6 archive data a survey gave.
-  spec: {SurveyRecipeId: 'RecoveredArtifact', SurveyRadius: 7, SurveyHours: 24, RewardGoodId: 'RecoveredArtifact', RewardAmount: 12},
+  spec: {SurveyRecipeId: 'RecoveredArtifact', SurveyRadius: 10, SurveyHours: 24, RewardGoodId: 'RecoveredArtifact', RewardAmount: 12},
 };
 
 const T = (name) => `${name}.IronTeeth`;

@@ -1,20 +1,20 @@
 {
   "status": "Blender late-game art study; not exported or installed",
-  "hero": "Riveted-steel cannery hall of three storeys crowned by a glazed monitor lantern, beside a tall boiler stack.",
+  "hero": "Riveted-steel cannery hall of three storeys crowned by a glazed monitor lantern, beside its retorts and a small boiler house with a stack.",
   "footprint": [
-    7,
-    5
+    4,
+    3
   ],
-  "heightLayers": 7,
+  "heightLayers": 4,
   "boundsMin": [
-    -0.06,
+    -0.05,
     -0.265,
     -0.03
   ],
   "boundsMax": [
-    7.09,
-    5.09,
-    6.75
+    4.0737,
+    3.06,
+    4.0
   ],
   "doors": [
     {
@@ -33,29 +33,29 @@
   "animatedParts": [
     "SeamerTurret",
     "CanningLine",
+    "BridgeCrates",
     "RetortHook",
-    "FeedPumpRod",
-    "BridgeCrates"
+    "FeedPumpRod"
   ],
   "animationFrames": 121,
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 4211,
+  "faces": 2468,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 1124,
-    "IrregularPlanks_DarkBrown.IronTeeth": 48,
-    "BaseMetal.IronTeeth": 1273,
+    "BaseWood_DarkBrown.IronTeeth": 344,
+    "IrregularPlanks_DarkBrown.IronTeeth": 12,
+    "BaseMetal.IronTeeth": 1002,
     "RoofPlanks.IronTeeth": 9,
-    "DFIndustrial06": 168,
-    "Details.IronTeeth": 542,
-    "accent8": 20,
-    "Plaster_White.IronTeeth": 230,
-    "Plaster_Orange.IronTeeth": 13,
+    "DFIndustrial06": 84,
+    "Details.IronTeeth": 464,
+    "accent8": 10,
+    "Plaster_White.IronTeeth": 136,
+    "Plaster_Orange.IronTeeth": 7,
     "IrregularPlanks_MetalForged.IronTeeth": 24,
-    "WindowsAtlas.IronTeeth": 674,
-    "PaintedMetal.IronTeeth": 304
+    "WindowsAtlas.IronTeeth": 326,
+    "PaintedMetal.IronTeeth": 236
   },
-  "sourceHash": "835164288a9a50556c3b1d110a4bac120e5b1854392cec2f74b15a885e333ad9",
-  "artHash": "c534ecfcb557e24e3ebfe94b707e786a024372c97920c09d9c40afaefa554e54"
+  "sourceHash": "79b822e516f8a9436c47718eae37630943acb8809fe915cf26c58056bdfb91fa",
+  "artHash": "8982a80aea815872321e0c1f7e5acd14e949c4640f398ecc28cc15fc9f37c0e0"
 }

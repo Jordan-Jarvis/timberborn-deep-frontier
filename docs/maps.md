@@ -108,7 +108,7 @@ Deep Frontier is EXTREMELY difficult on Diorama
 - Little room: the full set of large Deep Frontier sites (the 14 x 11 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about 2983 tiles with their margins on a large map.
 - Build upward: Deep Frontier raises this map's build height to 66 layers (vanilla 33); on a small map most of the colony has to stack on platforms, which costs more materials.
 What this map cannot provide:
-- No ready space for: Limestone quarry, Nuclear Reactor, Launch pad, Radioactive waste refinery, Cryogenic liquefaction plant, Precision machine works, Radioactive Waste Vault, Rocket assembly hangar. Level ground or build on platforms to make room before you need them.
+- No ready space for: Limestone quarry, Nuclear Reactor, Launch pad, Radioactive waste refinery, Cryogenic liquefaction plant, Radioactive Waste Vault, Rocket assembly hangar. Level ground or build on platforms to make room before you need them.
 ```
 
 Cliffside:
@@ -146,7 +146,7 @@ Deep Frontier on Canyon: this map is short of a few things. You can still play t
 | Canyon | 128×128 |  | `canyon` | 17 | 40 | 2 | 17,000 | shore fishing banks (first FreshFish) |
 | Cliffside | 100×50 | yes (area) | `cliffside` | 17 | 30 | 2 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat); RadioactiveWasteRefinery site (flat) |
 | Craters | 192×192 |  | `craters` | 17 | 35 | 2 | 17,000 | shore fishing banks (first FreshFish); RadioactiveWasteExport site (mapEdge) |
-| Diorama | 50×50 | yes (area) | `diorama` | 16 | 23 | 2 | 17,000 | LimestoneQuarry site (understructure); NuclearReactor site (flat); LaunchPad site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); PrecisionMachineWorks site (flat); RadioactiveWasteVault site (flat); RocketAssemblyHangar site (flat) |
+| Diorama | 50×50 | yes (area) | `diorama` | 16 | 23 | 2 | 17,000 | LimestoneQuarry site (understructure); NuclearReactor site (flat); LaunchPad site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); RadioactiveWasteVault site (flat); RocketAssemblyHangar site (flat) |
 | HelixMountain | 256×256 |  | `helix-mountain` | 17 | 40 | 2 | 17,000 | none |
 | Hollows | 192×192 |  | `hollows` | 18 | 41 | 2 | 18,000 | shore fishing banks (first FreshFish) |
 | Lakes | 256×256 |  | `lakes` | 18 | 41 | 3 | 17,000 | none |
@@ -234,13 +234,13 @@ A map supports the loop when a player can reach every stage, from the start to t
 | 2 Construction | Sandstone / Limestone Quarry (renewable stone for cement, bricks, concrete) | a placed `SandstoneSeam` / `LimestoneSeam` (5×5) under the quarry's 5×5 Top core (the whole 5×5 footprint since 2026-11-01; local x 3–7, y 1–5 of the 8×6 and 11×7 footprints before) | `UnderstructureConstraintSpec` | understructure site |
 | 3 Deep industry | Deep Drill (DeepOre from a finite source) | ≥ 2 flat 4×4 drill sites (the blueprint's footprint; 7×6 before 2026-11-01) within 25 cells of a `DeepOreSource` (Pileable, ≤ `StockpileSpec.MaxCapacity` 10,000, consumed by a DeepDrill recipe); the sources beside a checked drill site hold ≥ the DeepOre of one of each building + `finiteDeepOreMargin` 5% (10,979 → 11,528 after the 2026-10-30 cost re-composition; 15,608 → 16,389 before) | `StockpileSpec`, DeepDrill recipes, `ProgramModel` | `Deep Drill sites`, `finite deep ore` |
 | 3 Deep industry | Deep Mine (permanent DeepOre: coal, oil, deep alloy, uranium for the rest of the game) | ≥ 2 `DeepOreVein`s each under a checked mine site (25-cell core at local x 2–6, y 1–5) | `UnderstructureConstraintSpec` | understructure sites (min 2) |
-| 3 Deep industry | Deep Ore Processor, Steel Mill (flux, high-grade steel, alloy), Precision Machine Works | flat sites | size | flat sites |
+| 3 Deep industry | Deep Ore Processor, Steel Mill (flux, high-grade steel, alloy) | flat sites | size | flat sites |
 | 3 Deep industry | metal (MetalBlock = 2 ScrapMetal; MetalPart) | ruin scrap plus ≥ 1 reachable `UndergroundRuins` for the renewable Efficient Mine; ruins alone (16,125–23,730) are less than one of each building (47,564), let alone with three launches (63,398) | vanilla `RuinSpec`, `EfficientMine` | `renewable scrap` |
 | 4 Power | Coal and Oil Power Plant | flat sites (fuel from the Deep Ore Processor, water) | `GoodPoweredGeneratorSpec` | flat sites |
 | 4 Power | Reinforced Hydro Turbine | a source-fed river cell with ≥ 1 layer of natural bed drop within 12 wet cells (the dam supplies the rest of the head) | `HydroTurbineSpec` | dam site |
 | 4 Power | Nuclear Reactor (3 ReactorCoolantWater/h from pumped water) | flat 14×11 site (20×15 before the compaction), top layer < 66, clean water within 15 cells | `ReactorMeltdownSpec`, `maxWaterDistance` | flat site |
 | 5 Narrative | chapters: an investigation building, 20 DeepAlloy, PureWater + Chemical, 6, 20 and 40 RecoveredArtifact + Mission Control, the three launches | the sites, deep ore, clean water and badwater above, and pines | `DeepFrontierNarrative` stages | the rows they rely on |
-| 5 Narrative | the five "Record Cache" discoveries (`CachesSurveyed` 1–5) | ≥ 5 `HumanRecordCache`s, each within `SurveyRadius` 7 (Chebyshev, ±7 layers) of the occupied cells of a checked Archive Excavation site | `HumanRecordCacheSpec`, narrative settings | `caches in survey range` |
+| 5 Narrative | the five "Record Cache" discoveries (`CachesSurveyed` 1–5) | ≥ 5 `HumanRecordCache`s, each within `SurveyRadius` 10 (Chebyshev, ±10 layers) of the occupied cells of a checked Archive Excavation site | `HumanRecordCacheSpec`, narrative settings | `caches in survey range` |
 | 6 Nuclear | DeepUranium (UraniumOre from DeepOre) | deep ore (stage 3) | recipes | stage 3 rows |
 | 6 Nuclear | Uranium Processing Plant, Waste Vault, Waste Refinery | flat sites | size | flat sites |
 | 6 Nuclear | Radioactive Waste Export (sludge and contaminated water leave the map) | flat 6×5 site with an occupied block on the map edge, reachable | `MapEdgeSiteSpec`, `MapEdgeSite.TouchesMapEdge` | map-edge site |
@@ -434,7 +434,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S27 | SteelMill | Steel Mill, 53 cells west of the start | 75, 151, 3 Cw0 | flat | open NSEW (1) | 52 / 9 | 9 |
 | S28 | DeepProcessor | Deep Processor, 39 cells north of the start | 122, 172, 3 Cw0 | flat | open NSEW (1) | 37 / 6 | 13 |
 | S31 | ElectrolysisPlant | Electrolysis Plant, 47 cells north-west of the start | 95, 178, 4 Cw90 | flat | open NSEW (1) | 66 / 6 | 52 |
-| S32 | PrecisionMachineWorks | Precision Machine Works, 50 cells north of the start | 107, 180, 4 Cw0 | flat | open NSEW (1) | 60 / 6 | 51 |
 | S34 | RadioactiveWasteVault | Radioactive Waste Vault, 39 cells north-west of the start | 92, 150, 3 Cw0 | flat | open NSEW (1) | 37 / 7 | 16 |
 | S38 | RocketAssemblyHangar | Rocket Assembly Hangar, 32 cells south-west of the start | 103, 113, 4 Cw0 | flat | open NSEW (1) | 30 / 0 | 0 |
 | S47 | OilPowerPlant | Oil Power Plant, 29 cells south-east of the start | 155, 123, 4 Cw0 | flat | open NSEW (1) | 28 / 0 | 19 |
@@ -493,7 +492,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S26 | SteelMill | Steel Mill, 70 cells south of the start | 70, 60, 4 Cw0 | flat | open S (1) | 77 / 0 | 33 |
 | S27 | DeepProcessor | Deep Processor, 90 cells west of the start | 16, 120, 4 Cw270 | flat | open S (1) | 83 / 0 | 8 |
 | S30 | ElectrolysisPlant | Electrolysis Plant, 35 cells north-west of the start | 85, 162, 3 Cw180 | flat | open W (1) | 34 / 0 | 39 |
-| S31 | PrecisionMachineWorks | Precision Machine Works, 71 cells west of the start | 30, 159, 3 Cw90 | flat | open NW (1) | 78 / 0 | 57 |
 | S33 | RadioactiveWasteVault | Radioactive Waste Vault, 81 cells west of the start | 17, 136, 3 Cw0 | flat | open N (1) | 76 / 0 | 7 |
 | S37 | RocketAssemblyHangar | Rocket Assembly Hangar, 12 cells east of the start | 109, 137, 2 Cw90 | flat | open S (1) | 4 / 0 | 44 |
 | S46 | OilPowerPlant | Oil Power Plant, 53 cells south-west of the start | 58, 93, 4 Cw0 | flat | open NSEW (1) | 66 / 0 | 6 |
@@ -553,7 +551,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S27 | SteelMill | Steel Mill, 78 cells west of the start | 1, 172, 10 Cw0 | flat | open NSEW (1) | 81 / 5 | 28 |
 | S28 | DeepProcessor | Deep Processor, 59 cells north-east of the start | 130, 174, 15 Cw0 | flat | open NSEW (1) | 61 / 0 | 29 |
 | S31 | ElectrolysisPlant | Electrolysis Plant, 76 cells north of the start | 103, 221, 14 Cw0 | flat | open NSEW (1) | 81 / 5 | 31 |
-| S32 | PrecisionMachineWorks | Precision Machine Works, 62 cells south of the start | 86, 98, 7 Cw90 | flat | open NSEW (1) | 59 / 7 | 0 |
 | S34 | RadioactiveWasteVault | Radioactive Waste Vault, 84 cells south of the start | 105, 70, 10 Cw0 | flat | open NSEW (1) | 93 / 7 | 27 |
 | S38 | RocketAssemblyHangar | Rocket Assembly Hangar, 39 cells north-east of the start | 92, 193, 6 Cw90 | flat | open NSEW (1) | 35 / 5 | 0 |
 | S47 | OilPowerPlant | Oil Power Plant, 18 cells south of the start | 80, 134, 15 Cw0 | flat | open NSEW (1) | 13 / 0 | 0 |
@@ -566,7 +563,7 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 Every map now places five caches, one per "Record Cache" discovery (`CachesSurveyed` 1–5 in `DeepFrontierNarrative`).
 
 - Each cache stands beside vanilla ruins, except the "Buried records" caches of Beaverome and Cliffside, which stand beside an Archive Excavation site: only one (Beaverome) or two (Cliffside) ruin clusters have room for an excavation.
-- Each is within the survey radius of a checked Archive Excavation site (7×6×6 since the compaction; 10×9×11 before): `HumanRecordCacheSpec.SurveyRadius` 7 tiles Chebyshev and 7 layers from the site's occupied cells. Most maps give each cache its own site; Beaverome, Craters and Diorama group all five around one site, Cliffside, Pillars and Thousand Islands around two, Waterfalls around four.
+- Each is within the survey radius of a checked Archive Excavation site (4×4×3 since the second shrink, 7×6×6 after the first compaction, 10×9×11 before): `HumanRecordCacheSpec.SurveyRadius` 10 tiles Chebyshev and 10 layers (7 before the second shrink; 10 keeps every cache the 7×6 excavation reached) from the site's occupied cells. Most maps give each cache its own site; Beaverome, Craters and Diorama group all five around one site, Cliffside, Pillars and Thousand Islands around two, Waterfalls around four.
 - The cache saves its survey state only once a survey starts, so a placed cache needs only `BlockObject`.
 
 ## Water, treatment and contamination

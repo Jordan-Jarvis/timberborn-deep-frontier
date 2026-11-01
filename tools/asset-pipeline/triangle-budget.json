@@ -40,9 +40,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8776,
-   "vertices": 17030,
-   "construction": 8776,
+   "finished": 6474,
+   "vertices": 12548,
+   "construction": 6474,
    "file": "outputs/lategame-integration/Data/Buildings/Science/ArchiveExcavation/ArchiveExcavation.IronTeeth.Model.timbermesh"
   },
   "Bathhouse": {
@@ -76,9 +76,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 7924,
-   "vertices": 14792,
-   "construction": 7924,
+   "finished": 6264,
+   "vertices": 11684,
+   "construction": 6264,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/ChemicalWorks/ChemicalWorks.IronTeeth.Model.timbermesh"
   },
   "CoalPowerPlant": {
@@ -292,9 +292,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 6614,
-   "vertices": 12086,
-   "construction": 6614,
+   "finished": 5124,
+   "vertices": 9444,
+   "construction": 5124,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/DeepProcessor/DeepProcessor.IronTeeth.Model.timbermesh"
   },
   "DeepWell": {
@@ -346,9 +346,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 7816,
-   "vertices": 14638,
-   "construction": 7816,
+   "finished": 5076,
+   "vertices": 9504,
+   "construction": 5076,
    "file": "outputs/lategame-integration/Data/Buildings/Food/FoodPackagingWorks/FoodPackagingWorks.IronTeeth.Model.timbermesh"
   },
   "Greenhouse": {
@@ -481,9 +481,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 6902,
-   "vertices": 12912,
-   "construction": 6902,
+   "finished": 5986,
+   "vertices": 11248,
+   "construction": 5986,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.Model.timbermesh"
   },
   "PublicHealthLab": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 735970,
+ "totalBlueprintTriangles": 717754,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

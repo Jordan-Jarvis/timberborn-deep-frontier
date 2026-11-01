@@ -8,7 +8,7 @@
   ],
   "devMapsWhy": "The game's developer test maps (IsDev, empty loc keys; the new-game list shows them only in dev mode). Deep Frontier gives them no setup: a new game on one gets a notification and a log line saying so, and no objects or height. The names are their asset (GameObject) names in resources.assets; prepare_deep_frontier_map.py checks that the sizes match the game's dev maps.",
   "smallMap": {
-    "maxArea": 2926,
+    "maxArea": 2434,
     "referenceVariants": ["plains", "lakes", "terraces"],
     "landShare": [1, 2],
     "deepMineSite": "DeepMine.IronTeeth",
