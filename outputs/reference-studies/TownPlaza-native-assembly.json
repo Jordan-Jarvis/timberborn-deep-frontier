@@ -6,9 +6,9 @@
       "model": "FountainOfJoy.Folktails",
       "resource": "Buildings/Monuments/FountainOfJoy/FountainOfJoy.Folktails.Model",
       "position": [
-        3.0,
-        2.0,
-        0.22
+        1.0,
+        1.0,
+        0.19
       ],
       "scale": 0.6,
       "yaw": 0
@@ -18,8 +18,8 @@
       "model": "BeaverStatue.IronTeeth",
       "resource": "Buildings/Decoration/BeaverStatue/BeaverStatue.IronTeeth.Model",
       "position": [
-        1.05,
-        1.05,
+        0.04999999999999999,
+        0.04999999999999999,
         0.34
       ],
       "scale": 0.9,
