@@ -35,6 +35,9 @@
 - **Archive Excavation** is 4x4, 3 high (was 7x6, 6 high), with the front row still open in front of the door: the archive hall, a small sieving shed, the stack tower, and a smaller dig behind the hall with the cogwheel, the broken column and a shorter derrick. Same door, workers, power and recipes; record caches can now be surveyed from 10 tiles away (was 7), so every cache an existing excavation reached stays in reach. Same build cost.
 - **Steel Mill**: its build cost is back to the amounts it had before the shrink (0.8.2 listed a recomposed cost).
 
+### Maps
+- **No built-in map gets the EXTREMELY difficult warning any more.** With the smaller buildings the late-game sites fit on Diorama too, so like Cliffside and Beaverome it gets the shorter notice that lists what the map lacks: on Diorama no ready site for the Nuclear Reactor, Limestone Quarry or Cryogenic Liquefaction Plant. Diorama, Cliffside and Beaverome remain the hardest maps (none has a ready reactor site).
+
 ## 0.8.2 (2026-11-01)
 
 - **Radioactive water is less bright:** its yellow and its glow are toned down. Irradiated beavers and soil keep their colours.

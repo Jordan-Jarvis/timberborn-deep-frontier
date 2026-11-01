@@ -134,27 +134,27 @@ Deep Frontier on Canyon: this map is short of a few things. You can still play t
 
 | Map | Size | EXTREMELY difficult | Variant | Placements | Sites | Deep Mine sites | Finite DeepOre | Not met on this map (declared `unmet`) |
 |---|---|---|---|---:|---:|---:|---:|---|
-| Beaverome | 192×192 |  | `beaverome` | 15 | 24 | 2 | 17,000 | LimestoneQuarry site (understructure); SandstoneQuarry site (understructure); renewable scrap (Underground Ruins for the Efficient Mine); RadioactiveWasteRefinery site (flat); UraniumProcessingPlant site (flat); NuclearReactor site (flat); RadioactiveWasteVault site (flat); RocketAssemblyHangar site (flat) |
-| Canyon | 128×128 |  | `canyon` | 17 | 40 | 2 | 17,000 | shore fishing banks (first FreshFish) |
-| Cliffside | 100×50 | yes (area) | `cliffside` | 17 | 30 | 2 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat); RadioactiveWasteRefinery site (flat) |
-| Craters | 192×192 |  | `craters` | 17 | 35 | 2 | 17,000 | shore fishing banks (first FreshFish); RadioactiveWasteExport site (mapEdge) |
-| Diorama | 50×50 | yes (area) | `diorama` | 16 | 23 | 2 | 17,000 | LimestoneQuarry site (understructure); NuclearReactor site (flat); LaunchPad site (flat); RadioactiveWasteRefinery site (flat); CryogenicLiquefactionPlant site (flat); RadioactiveWasteVault site (flat); RocketAssemblyHangar site (flat) |
-| HelixMountain | 256×256 |  | `helix-mountain` | 17 | 40 | 2 | 17,000 | none |
-| Hollows | 192×192 |  | `hollows` | 18 | 41 | 2 | 18,000 | shore fishing banks (first FreshFish) |
-| Lakes | 256×256 |  | `lakes` | 18 | 41 | 3 | 17,000 | none |
-| Meander | 128×128 |  | `meander` | 17 | 40 | 2 | 17,000 | none |
-| MountainRange | 256×150 |  | `mountain-range` | 17 | 40 | 2 | 17,000 | shore fishing banks (first FreshFish) |
-| Nomads | 256×256 |  | `nomads` | 19 | 42 | 3 | 18,000 | shore fishing banks (first FreshFish) |
-| Oasis | 256×256 |  | `oasis` | 19 | 41 | 3 | 18,000 | ReinforcedHydroTurbine site (hydro) |
-| Pillars | 192×192 |  | `pillars` | 17 | 36 | 2 | 17,000 | irrigated farmland near the start; ReinforcedHydroTurbine site (hydro) |
-| Plains | 256×256 |  | `plains` | 19 | 42 | 3 | 18,000 | none |
-| Pressure | 256×256 |  | `pressure` | 19 | 42 | 3 | 18,000 | trees near the start; pines (resin) near the start; irrigated farmland near the start |
-| Spillage | 256×150 |  | `spillage` | 17 | 40 | 2 | 17,000 | none |
-| Terraces | 256×256 |  | `terraces` | 18 | 43 | 3 | 17,000 | none |
-| ThousandIslands | 256×256 |  | `thousand-islands` | 17 | 37 | 2 | 17,000 | trees near the start; irrigated farmland near the start |
-| Waterfalls | 128×128 |  | `waterfalls` | 17 | 39 | 2 | 17,000 | shore fishing banks (first FreshFish) |
+| Beaverome | 192×192 |  | `beaverome` | 15 | 18 | 2 | 17,000 | LimestoneQuarry site (understructure); SandstoneQuarry site (understructure); renewable scrap (Underground Ruins for the Efficient Mine); UraniumProcessingPlant site (flat); NuclearReactor site (flat) |
+| Canyon | 128×128 |  | `canyon` | 17 | 26 | 2 | 17,000 | shore fishing banks (first FreshFish) |
+| Cliffside | 100×50 |  | `cliffside` | 17 | 22 | 2 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
+| Craters | 192×192 |  | `craters` | 17 | 22 | 2 | 17,000 | shore fishing banks (first FreshFish) |
+| Diorama | 50×50 |  | `diorama` | 16 | 19 | 2 | 17,000 | LimestoneQuarry site (understructure); NuclearReactor site (flat); CryogenicLiquefactionPlant site (flat) |
+| HelixMountain | 256×256 |  | `helix-mountain` | 17 | 26 | 2 | 17,000 | none |
+| Hollows | 192×192 |  | `hollows` | 18 | 27 | 2 | 18,000 | shore fishing banks (first FreshFish) |
+| Lakes | 256×256 |  | `lakes` | 18 | 27 | 3 | 17,000 | none |
+| Meander | 128×128 |  | `meander` | 17 | 26 | 2 | 17,000 | none |
+| MountainRange | 256×150 |  | `mountain-range` | 17 | 26 | 2 | 17,000 | shore fishing banks (first FreshFish) |
+| Nomads | 256×256 |  | `nomads` | 19 | 28 | 3 | 18,000 | shore fishing banks (first FreshFish) |
+| Oasis | 256×256 |  | `oasis` | 19 | 27 | 3 | 18,000 | ReinforcedHydroTurbine site (hydro) |
+| Pillars | 192×192 |  | `pillars` | 17 | 22 | 2 | 17,000 | irrigated farmland near the start; ReinforcedHydroTurbine site (hydro) |
+| Plains | 256×256 |  | `plains` | 19 | 28 | 3 | 18,000 | none |
+| Pressure | 256×256 |  | `pressure` | 19 | 28 | 3 | 18,000 | trees near the start; pines (resin) near the start; irrigated farmland near the start |
+| Spillage | 256×150 |  | `spillage` | 17 | 26 | 2 | 17,000 | none |
+| Terraces | 256×256 |  | `terraces` | 18 | 28 | 3 | 17,000 | none |
+| ThousandIslands | 256×256 |  | `thousand-islands` | 17 | 23 | 2 | 17,000 | trees near the start; irrigated farmland near the start |
+| Waterfalls | 128×128 |  | `waterfalls` | 17 | 25 | 2 | 17,000 | shore fishing banks (first FreshFish) |
 
-Every row passes `builtin` (evidence `outputs/maps/builtin-coverage.json` and the per-map files). The reasons, with their numbers, are in each variant's `unmet` entries. Notes:
+Every row passes `builtin` (counts after the 2026-11-01 second shrink; no map is small or lacks a Deep Mine site; evidence `outputs/maps/builtin-coverage.json` and the per-map files). The reasons, with their numbers, are in each variant's `unmet` entries. Notes:
 
 - **Re-plan of 2026-10-30.** After the compaction every map's site search was re-run (`plan`, plus a scratch driver around its `Planner` for the cases `plan` does not cover: a second Deep Mine, a Deep Ore Source beside each new Deep Drill site, reactor sites with `maxWaterDistance` 15, and moving smaller flat sites aside). Changes:
   - **Beaverome**: two Deep Ore Veins with Deep Mine sites (level-12 north-west shore), two Deep Drill sites with a new Deep Ore Source each (8,500 DeepOre, 17,000 in all), the Deep Processor, Steel Mill, Mission Control, Water Treatment Plant, Electrolysis Plant, Precision Machine Works, Launch Pad and Cryogenic Liquefaction Plant. The Launch Pad and the plant now hold the level-11 south-west strip, so the Archive Excavation and its five caches moved to the south-east ruins. The Rocket Assembly Hangar, Restaurant and Grocery Store lost their sites to the mines (the mines have priority). It loses the EXTREMELY difficult warning.
@@ -164,7 +164,7 @@ Every row passes `builtin` (evidence `outputs/maps/builtin-coverage.json` and th
   - **Meander** (Cryogenic Liquefaction Plant, Radioactive Waste Refinery, Water Treatment Plant), **Waterfalls** (Radioactive Waste Refinery), **Pillars** (Hospital) and **Thousand Islands** (Steel Mill) got the plants they had no room for.
 - **No reactor site** on 3 maps: Beaverome and Diorama have no dry, flat 14×11 footprint at any level; on Cliffside all 62 lie on the west plain under the Deep Mines, the Launch Pad and a Deep Drill. The reactor never needs more height: at 66 the highest legal base is 56.
 - **Beaverome**: shallow lakes and sloping shores; the largest dry flat square is 9×9. Only 10 quarry footprints have a tree-free seam core, all under the mine, drill or Mission Control sites, and its two Underground Ruins lie under 6–9 of water.
-- **Diorama**: no launch pad (all 56 10×9 positions overlap the Deep Processor, Steel Mill, Water Treatment Plant, Archive Excavation, mines or drills), and no limestone quarry (every tree-free seam core is under one of those sites).
+- **Diorama**: no limestone quarry (every tree-free seam core is under the Deep Processor, Steel Mill, Water Treatment Plant, Archive Excavation, mines or drills) and no Cryogenic Liquefaction Plant (all 406 8×6 positions overlap a placed site). Since the second shrink the Launch Pad, Radioactive Waste Refinery, Radioactive Waste Vault and Rocket Assembly Hangar need no reserved site on any map.
 - **Shore banks** (7 maps): the saved water is too shallow (or its banks too high) for `ShoreFishingSpec`; damming a river deeper creates banks in play.
 - **Tool changes made for these maps**: badwater counts the outlet of a badwater source with a positive strength (Nomads and Oasis store theirs dry), and a source feeds the surface water its tunnel water reaches (Hollows: `column_components` follows connected water columns underground).
 - In game, every missing building site of a map is folded into one "No ready space for: …" line with the enUS building names; the other items use the lines in `tools/map_setup.json` `unmetText`.

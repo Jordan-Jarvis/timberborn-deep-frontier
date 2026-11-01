@@ -19,7 +19,7 @@
     "smallIntro": "Small map: {0} has {1} tiles, and the Deep Frontier late game is built for maps of at least {2} tiles.",
     "smallNoDeepMine": "No Deep Mine: the Deep Mine is the only lasting source of deep ore, which the late game and the rocket launches need. Any Deep Ore Sources on this map run out.",
     "smallReasonsHeader": "What this map cannot provide:",
-    "smallSpace": "Little room: the full set of large Deep Frontier sites (the 14 x 11 Nuclear Reactor, the Launch Pad, Deep Mines and Drills, processing plants) covers about {0} tiles with their margins on a large map.",
+    "smallSpace": "Little room: the full set of Deep Frontier sites (the 14 x 11 Nuclear Reactor, the uranium, water and cryogenic plants, Deep Mines and Drills) covers about {0} tiles with their margins on a large map.",
     "smallHeight": "Build upward: Deep Frontier raises this map's build height to {0} layers (vanilla {1}); on a small map most of the colony has to stack on platforms, which costs more materials.",
     "unmetTitle": "Deep Frontier on {0}: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:",
     "smallNoUnmet": "Every Deep Frontier resource and site fits on this map, but with almost no spare room.",

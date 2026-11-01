@@ -53,8 +53,9 @@ export const CACHE = {
   icon: 'MapEditor/Objects/HumanRecordCache/HumanRecordCacheIcon',
   toolGroup: 'MapEditorObjects',
   toolOrder: 1450,
-  // Radius 7 (was 4) since the 2026-10-30 compaction trimmed the Archive Excavation from 10x9 to 7x6 inside
-  // its old footprint (at most 3 tiles per axis): every cache the old excavation reached stays in range.
+  // Radius 10 (7 after the 2026-10-30 compaction, 4 before) since the 2026-11-01 second shrink trimmed the
+  // Archive Excavation from 7x6 to 4x4 inside its old footprint (at most 3 tiles per axis): every cache the
+  // old excavation reached stays in range.
   // Survey and reward follow the Archive Excavation's artifact recipe since ArchiveData was retired (2026-10-30
   // bricks pass, tools/content_policy.json migratedGoods): 12 artifacts are the 6 archive data a survey gave.
   spec: {SurveyRecipeId: 'RecoveredArtifact', SurveyRadius: 10, SurveyHours: 24, RewardGoodId: 'RecoveredArtifact', RewardAmount: 12},
