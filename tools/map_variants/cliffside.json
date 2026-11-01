@@ -6,7 +6,7 @@
   "height": {"totalHeight": 66},
   "mapSize": {"x": 100, "y": 50},
   "hardVariant": false,
-  "description": "Cliffside (100x50): a wide level-4 plain west of the start between sea cliffs and highland terraces; both Deep Ore Veins with Deep Mine sites, a Deep Drill, the Launch Pad and the sandstone quarry lie on that plain, the Deep Processor on the level-14 highland, the second Deep Ore Source with its drill on the north-east level-2 terrace, and five Human Record Caches around two Archive Excavations; no reactor fits beside the mines and the pad.",
+  "description": "Cliffside (100x50): a wide level-4 plain west of the start between sea cliffs and highland terraces; the Nuclear Reactor stands on flat ground in the middle of that plain beside the river, one Deep Ore Vein with its Deep Mine at the plain's west end and the other on the level-8 bench east of the river, a Deep Drill and the sandstone quarry on the plain, the Deep Processor on the level-14 highland, the second Deep Ore Source with its drill on the north-east level-2 terrace, and five Human Record Caches around two Archive Excavations; the only fishable bay has banks too high above its water until a dam raises it.",
   "placements": [
     {"template": "DeepOreSource", "label": "Deep Ore Source, 61 cells east of the start", "x": 94, "y": 34, "z": 8, "good": "DeepOre", "amount": 8500},
     {"template": "DeepOreSource", "label": "Deep Ore Source, 27 cells south-west of the start", "x": 12, "y": 12, "z": 4, "good": "DeepOre", "amount": 8500},
@@ -23,8 +23,8 @@
     {"template": "HumanRecordCache", "label": "Buried records 11 cells north-west of the start", "x": 27, "y": 37, "z": 4, "orientation": "Cw0"},
     {"template": "HumanRecordCache", "label": "Buried records by the start", "x": 30, "y": 29, "z": 4, "orientation": "Cw0"},
     {"template": "LimestoneSeam", "label": "Limestone Seam (Limestone Quarry, 44 cells east of the start)", "x": 74, "y": 26, "z": 2, "orientation": "Cw0"},
-    {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 20 cells south-west of the start)", "x": 21, "y": 10, "z": 4, "orientation": "Cw0"},
-    {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 23 cells west of the start)", "x": 10, "y": 25, "z": 4, "orientation": "Cw0"}
+    {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 23 cells west of the start)", "x": 10, "y": 25, "z": 4, "orientation": "Cw0"},
+    {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 28 cells east of the start)", "x": 60, "y": 25, "z": 8, "orientation": "Cw0"}
   ],
   "sites": [
     {"template": "DeepDrill.IronTeeth", "label": "Deep Drill, 54 cells east of the start", "x": 83, "y": 26, "z": 2, "orientation": "Cw0", "margin": 1, "openSides": []},
@@ -40,7 +40,6 @@
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 14 cells north of the start", "x": 27, "y": 31, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 61 cells east of the start", "x": 82, "y": 43, "z": 9, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E"]},
     {"template": "LimestoneQuarry.IronTeeth", "label": "Limestone Quarry, 44 cells east of the start", "x": 78, "y": 30, "z": 2, "orientation": "Cw180", "margin": 1, "openSides": ["E"], "understructure": [74, 26, 2]},
-    {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 20 cells south-west of the start", "x": 21, "y": 10, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "W"], "understructure": [21, 10, 4]},
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 23 cells west of the start", "x": 10, "y": 25, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E"], "understructure": [10, 25, 4]},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 39 cells south-east of the start", "x": 61, "y": 1, "z": 2, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 45 cells east of the start", "x": 73, "y": 39, "z": 11, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
@@ -48,7 +47,9 @@
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 19 cells east of the start", "x": 49, "y": 30, "z": 14, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 45 cells east of the start", "x": 75, "y": 19, "z": 1, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 25 cells south of the start", "x": 29, "y": 5, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 24 cells north-west of the start", "x": 17, "y": 45, "z": 14, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]}
+    {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 24 cells north-west of the start", "x": 17, "y": 45, "z": 14, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
+    {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 18 cells south-west of the start", "x": 15, "y": 24, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"], "maxWaterDistance": 15},
+    {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 28 cells east of the start", "x": 60, "y": 25, "z": 8, "orientation": "Cw0", "margin": 1, "openSides": ["S", "E"], "understructure": [60, 25, 8]}
   ],
-  "unmet": [{"item": "shore fishing banks (first FreshFish)", "reason": "No bank satisfies ShoreFishing on the saved water: the only clean water at least 0.5 deep (51 cells, the bay at x46-58 y7-12, bed level 0, surface at most 0.53) is bordered by level-2 banks, 1.48 above the surface, beyond MaximumReachDown 1.25; all other clean water is shallower than 0.5. A player dam that raises the bay by about 0.25 would create banks."}, {"item": "NuclearReactor.IronTeeth site (flat)", "reason": "The 14x11 footprint fits at only 62 positions, all on the west level-4 plain (x 8-32, y 0-30), which holds both Deep Mine sites, the Launch Pad and a Deep Drill; every position overlaps one of them."}]
+  "unmet": [{"item": "shore fishing banks (first FreshFish)", "reason": "No bank satisfies ShoreFishing on the saved water: the only clean water at least 0.5 deep (51 cells, the bay at x46-58 y7-12, bed level 0, surface at most 0.53) is bordered by level-2 banks, 1.48 above the surface, beyond MaximumReachDown 1.25; all other clean water is shallower than 0.5. A player dam that raises the bay by about 0.25 would create banks."}]
 }

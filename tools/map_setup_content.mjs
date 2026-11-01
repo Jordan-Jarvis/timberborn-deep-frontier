@@ -27,6 +27,8 @@ export const MAP_SETUP_FILES = {
   localization: 'Localizations/enUS.csv',
 };
 export const LOC_PREFIX = 'DeepFrontier.MapSetup.';
+// Vanilla resources (the same tree tools/progression_data.mjs reads).
+const VANILLA_RESOURCES = 'vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources';
 const ORIENTATIONS = ['Cw0', 'Cw90', 'Cw180', 'Cw270'];
 const PLACEMENT_KEYS = new Set(['template', 'label', 'x', 'y', 'z', 'orientation', 'good', 'amount', 'radioactivePerHour']);
 // Loc keys the runtime uses (Scripts/MapSetup/BuiltinMapSetup.cs MapSetupLoc), from tools/map_setup.json text.
@@ -67,8 +69,10 @@ export async function readSources(root = defaultRoot) {
   return {setup, variants};
 }
 
-// Template name -> blueprint of the mod's MapEditor Common collection.
-async function mapEditorTemplates(dataRoot) {
+// Template name -> blueprint of every object a variant may place: the mod's MapEditor Common collection,
+// plus the vanilla map-editor objects tools/map_setup.json vanillaMapObjects lists (each must be in the
+// game's own Common collection, read from the vanilla resources in vendor/).
+async function mapEditorTemplates(root, dataRoot, setup) {
   const collection = await readJson(resolve(dataRoot, MAP_SETUP_FILES.mapCollection));
   const paths = collection.TemplateCollectionSpec?.['Blueprints#append'];
   if (!Array.isArray(paths)) fail(`${MAP_SETUP_FILES.mapCollection} has no Blueprints#append list`);
@@ -79,13 +83,28 @@ async function mapEditorTemplates(dataRoot) {
     if (!name) fail(`${path} has no TemplateSpec.TemplateName`);
     templates.set(name, blueprint);
   }
+  const allowed = setup.vanillaMapObjects?.templates;
+  if (!Array.isArray(allowed)) fail('tools/map_setup.json vanillaMapObjects.templates must be a list');
+  const vanillaRoot = resolve(root, VANILLA_RESOURCES);
+  const vanilla = (await readJson(resolve(vanillaRoot, MAP_SETUP_FILES.mapCollection))).TemplateCollectionSpec;
+  if (vanilla?.CollectionId !== 'Common' || !Array.isArray(vanilla.Blueprints)) fail(`vanilla ${MAP_SETUP_FILES.mapCollection} is not the Common collection`);
+  const vanillaNames = new Map();
+  for (const path of vanilla.Blueprints) {
+    const blueprint = await readJson(resolve(vanillaRoot, `${path}.json`));
+    vanillaNames.set(blueprint.TemplateSpec?.TemplateName, blueprint);
+  }
+  for (const name of allowed) {
+    if (!vanillaNames.has(name)) fail(`tools/map_setup.json vanillaMapObjects: ${name} is not in the game's ${MAP_SETUP_FILES.mapCollection}`);
+    if (templates.has(name)) fail(`tools/map_setup.json vanillaMapObjects: ${name} is already a mod MapEditor object`);
+    templates.set(name, vanillaNames.get(name));
+  }
   return templates;
 }
 
 // The BuiltinMapSetupSpec and its localization rows, derived from the sources.
 export async function mapSetupContent({root = defaultRoot, dataRoot = resolve(root, 'src', 'DeepFrontier', 'Data')} = {}) {
   const {setup, variants} = await readSources(root);
-  const templates = await mapEditorTemplates(dataRoot);
+  const templates = await mapEditorTemplates(root, dataRoot, setup);
   const names = await displayNames(dataRoot);
   const unmetText = setup.unmetText;
   if (typeof unmetText?.sites !== 'string' || !unmetText.sites.includes('{0}') || typeof unmetText.items !== 'object')
@@ -116,7 +135,7 @@ export async function mapSetupContent({root = defaultRoot, dataRoot = resolve(ro
       const unknown = Object.keys(p).filter((k) => !PLACEMENT_KEYS.has(k));
       if (unknown.length) fail(`${v.file} placement ${index}: unknown keys ${unknown.join(', ')}`);
       const blueprint = templates.get(p.template);
-      if (!blueprint) fail(`${v.file} placement ${index}: ${p.template} is not in ${MAP_SETUP_FILES.mapCollection}`);
+      if (!blueprint) fail(`${v.file} placement ${index}: ${p.template} is not in ${MAP_SETUP_FILES.mapCollection} or tools/map_setup.json vanillaMapObjects`);
       if (blueprint.RadioactiveWaterSourceSpec || p.radioactivePerHour !== undefined)
         fail(`${v.file} placement ${index}: a radioactive spring is a hard-variant object; built-in new games never get one`);
       const orientation = p.orientation ?? 'Cw0';

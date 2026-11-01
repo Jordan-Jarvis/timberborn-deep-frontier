@@ -16,10 +16,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Beaverome.Sites",
-          "DeepFrontier.MapSetup.Unmet.Beaverome.1"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "LimestoneOutcrop",
@@ -168,6 +165,36 @@
             "Y": 53,
             "Z": 13,
             "Orientation": "Cw90",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 13 cells south of the start)",
+            "X": 83,
+            "Y": 79,
+            "Z": 12,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "SandstoneSeam",
+            "Label": "Sandstone Seam (Sandstone Quarry, 49 cells south of the start)",
+            "X": 95,
+            "Y": 45,
+            "Z": 13,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "UndergroundRuins",
+            "Label": "Underground Ruins (Efficient Mine, 47 cells north-east of the start)",
+            "X": 116,
+            "Y": 120,
+            "Z": 12,
+            "Orientation": "Cw0",
             "Good": "",
             "Amount": 0
           }
@@ -366,7 +393,6 @@
         "SmallArea": false,
         "NoDeepMineSite": false,
         "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Cliffside.Sites",
           "DeepFrontier.MapSetup.Unmet.Cliffside.1"
         ],
         "Placements": [
@@ -522,9 +548,9 @@
           },
           {
             "Template": "DeepOreVein",
-            "Label": "Deep Ore Vein (Deep Mine, 20 cells south-west of the start)",
-            "X": 21,
-            "Y": 10,
+            "Label": "Deep Ore Vein (Deep Mine, 23 cells west of the start)",
+            "X": 10,
+            "Y": 25,
             "Z": 4,
             "Orientation": "Cw0",
             "Good": "",
@@ -532,10 +558,10 @@
           },
           {
             "Template": "DeepOreVein",
-            "Label": "Deep Ore Vein (Deep Mine, 23 cells west of the start)",
-            "X": 10,
+            "Label": "Deep Ore Vein (Deep Mine, 28 cells east of the start)",
+            "X": 60,
             "Y": 25,
-            "Z": 4,
+            "Z": 8,
             "Orientation": "Cw0",
             "Good": "",
             "Amount": 0
@@ -734,9 +760,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Diorama.Sites"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "DeepOreSource",
@@ -894,6 +918,16 @@
             "X": 45,
             "Y": 27,
             "Z": 8,
+            "Orientation": "Cw0",
+            "Good": "",
+            "Amount": 0
+          },
+          {
+            "Template": "LimestoneSeam",
+            "Label": "Limestone Seam (Limestone Quarry, 25 cells south-east of the start)",
+            "X": 45,
+            "Y": 10,
+            "Z": 6,
             "Orientation": "Cw0",
             "Good": "",
             "Amount": 0

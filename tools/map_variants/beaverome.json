@@ -6,7 +6,7 @@
   "height": {"totalHeight": 66},
   "mapSize": {"x": 192, "y": 192},
   "hardVariant": false,
-  "description": "Beaverome, a bowl of shallow lakes and narrow sloping shores with almost no flat ground: the start shore holds the pits and small workshops, two Deep Ore Veins with Deep Mine sites lie on the level-12 north-west shore, two Deep Ore Sources with Deep Drill sites east and north of the start, the Cryogenic Liquefaction Plant fills the only flat strip of 10x9 (level 11, south-west shore), and the five Human Record Caches lie around one Archive Excavation in the south-east; no reactor or quarry fits.",
+  "description": "Beaverome (192x192), a bowl of shallow lakes and narrow sloping shores with little flat ground: the start shore holds the pits, the limestone quarry and small workshops, the sandstone quarry lies on the level-13 south shore, two Deep Ore Veins with Deep Mine sites on the level-12 north-west shore, two Deep Ore Sources with Deep Drill sites east and north of the start, an Underground Ruins on the level-12 north-east shore for the Efficient Mine (both of the map's own lie under 6 to 9 m of lake water), the Nuclear Reactor on the level-11 south-west shore on 39 platform blocks beside the Cryogenic Liquefaction Plant, and the five Human Record Caches around one Archive Excavation in the south-east.",
   "placements": [
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 1 (Limestone Pit, by the start)", "x": 77, "y": 96, "z": 12},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 2 (Limestone Pit, by the start)", "x": 78, "y": 99, "z": 12},
@@ -22,7 +22,10 @@
     {"template": "HumanRecordCache", "label": "Buried records 94 cells south-east of the start", "x": 164, "y": 50, "z": 10, "orientation": "Cw0"},
     {"template": "HumanRecordCache", "label": "Buried records 96 cells south-east of the start", "x": 167, "y": 52, "z": 10, "orientation": "Cw90"},
     {"template": "HumanRecordCache", "label": "Buried records 101 cells south-east of the start", "x": 172, "y": 50, "z": 10, "orientation": "Cw0"},
-    {"template": "HumanRecordCache", "label": "Buried records 98 cells south-east of the start", "x": 169, "y": 53, "z": 13, "orientation": "Cw90"}
+    {"template": "HumanRecordCache", "label": "Buried records 98 cells south-east of the start", "x": 169, "y": 53, "z": 13, "orientation": "Cw90"},
+    {"template": "LimestoneSeam", "label": "Limestone Seam (Limestone Quarry, 13 cells south of the start)", "x": 83, "y": 79, "z": 12, "orientation": "Cw0"},
+    {"template": "SandstoneSeam", "label": "Sandstone Seam (Sandstone Quarry, 49 cells south of the start)", "x": 95, "y": 45, "z": 13, "orientation": "Cw0"},
+    {"template": "UndergroundRuins", "label": "Underground Ruins (Efficient Mine, 47 cells north-east of the start)", "x": 116, "y": 120, "z": 12, "orientation": "Cw0"}
   ],
   "sites": [
     {"template": "LimestonePit.IronTeeth", "label": "Limestone Pit, by the start", "x": 80, "y": 98, "z": 12, "orientation": "Cw90", "margin": 1, "openSides": ["N", "W"]},
@@ -42,7 +45,11 @@
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 103 cells south-east of the start", "x": 166, "y": 44, "z": 10, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 80 cells south-west of the start", "x": 26, "y": 36, "z": 11, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 55 cells west of the start", "x": 25, "y": 99, "z": 11, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 50 cells east of the start", "x": 129, "y": 95, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]}
+    {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 50 cells east of the start", "x": 129, "y": 95, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
+    {"template": "LimestoneQuarry.IronTeeth", "label": "Limestone Quarry, 13 cells south of the start", "x": 83, "y": 79, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["S", "W"], "understructure": [83, 79, 12]},
+    {"template": "SandstoneQuarry.IronTeeth", "label": "Sandstone Quarry, 49 cells south of the start", "x": 95, "y": 45, "z": 13, "orientation": "Cw0", "margin": 1, "openSides": ["S"], "understructure": [95, 45, 13]},
+    {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 88 cells south-west of the start (on 39 platform blocks)", "x": 37, "y": 26, "z": 11, "orientation": "Cw180", "margin": 1, "openSides": ["S", "W"], "platformBlocks": 39, "maxWaterDistance": 15},
+    {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 80 cells north-west of the start", "x": 42, "y": 162, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["E"]}
   ],
-  "unmet": [{"item": "LimestoneQuarry.IronTeeth site (understructure)", "reason": "Measured with the 8x6 quarry (5x5 over its seam since 2026-11-01; the limit is the tree-free seam core, which is the same 5x5): the 8x6 quarry footprint is flat and dry at 342 positions (levels 9-12, both orientations), but only 10 of them (level 12) have a 5x5 seam core free of trees and succulents, and a placed seam cannot overlap natural objects; all 10 overlap the Deep Mine, Deep Drill or Mission Control sites, which take priority."}, {"item": "SandstoneQuarry.IronTeeth site (understructure)", "reason": "Measured with the 8x6 quarry (5x5 over its seam since 2026-11-01; the limit is the tree-free seam core, which is the same 5x5): the 8x6 quarry footprint is flat and dry at 342 positions (levels 9-12, both orientations), but only 10 of them (level 12) have a 5x5 seam core free of trees and succulents, and a placed seam cannot overlap natural objects; all 10 overlap the Deep Mine, Deep Drill or Mission Control sites, which take priority."}, {"item": "renewable scrap (Underground Ruins for the Efficient Mine)", "reason": "Both Underground Ruins, at (117, 41, 3) and (149, 137, 0), lie on lake beds under 6.2 and 8.6 of water; no dry cell borders either of them."}, {"item": "UraniumProcessingPlant.IronTeeth site (flat)", "reason": "The 8x7 footprint fits at 100 positions on the empty map (levels 11 and 12): the level-11 south-west shore strip under the Launch Pad and the Cryogenic Liquefaction Plant, and level-12 pockets taken by Mission Control, the Deep Drills, the Steel Mill and the Deep Mines; every one overlaps one of these sites."}, {"item": "NuclearReactor.IronTeeth site (flat)", "reason": "No dry, flat 14x11 footprint exists at any level: the largest flat dry square is 9x9 (level 11, south-west shore)."}]
+  "unmet": []
 }

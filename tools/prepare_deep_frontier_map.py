@@ -4,9 +4,11 @@ A variant is described by tools/map_variants/<id>.json: the source map, the
 output name/description, the height (Map Transformer MapHeight), explicit
 map-object placements (any template of the mod's MapEditor Common collection:
 veins, ore sources, outcrops, seams, Human Record Caches, the hard variant's
-spring) and a checked site for every building of the Iron Teeth building
-collection that needs one (site_rule). The script copies the source map,
-resizes its height as Map Transformer does, appends the placements, writes the
+spring; or a vanilla map-editor object listed in tools/map_setup.json
+vanillaMapObjects: Underground Ruins) and a checked site for every building of
+the Iron Teeth building collection that needs one (site_rule). A flat site may
+stand raised on stackable supports ("platformBlocks", platform_fill). The
+script copies the source map, resizes its height as Map Transformer does, appends the placements, writes the
 .timber and validates the result statically against the source terrain, water
 and entities, the mod's collections and the full-loop requirements
 (loop_coverage; docs/maps.md "Full game loop"). Nothing here normalizes or
@@ -86,6 +88,9 @@ RESOURCES_ASSETS = GAME / 'Timberborn_Data/resources.assets'
 BLUEPRINTS_ZIP = GAME / 'Timberborn_Data/StreamingAssets/Modding/Blueprints.zip'
 MOD_DATA = ROOT / 'src/DeepFrontier/Data'
 MAP_EDITOR_COLLECTION = MOD_DATA / 'TemplateCollections/TemplateCollection.MapEditor.Common.blueprint.json'
+VANILLA_MAP_EDITOR_COLLECTION = 'TemplateCollections/TemplateCollection.MapEditor.Common.blueprint.json'   # in Blueprints.zip
+# Built-in setup settings; also lists the vanilla map-editor objects a variant may place (vanillaMapObjects).
+MAP_SETUP = ROOT / 'tools/map_setup.json'
 MOD_MANIFEST = ROOT / 'src/DeepFrontier/manifest.json'
 DEPENDENCY_MANIFESTS = ROOT / 'tools/installed_dependency_manifests_1_1.json'
 ENTRY_ORDER = ['map_metadata.json', 'map_thumbnail.jpg', 'version.txt', 'world.json']
@@ -305,8 +310,10 @@ class TemplateCatalog:
         self.blueprints[name] = blueprint
         self.origin[name] = origin
 
-    @staticmethod
-    def _map_editor_collection():
+    def _map_editor_collection(self):
+        """TemplateName -> collection entry of every object a variant may place: the mod's MapEditor Common
+        objects, plus the vanilla map-editor objects listed in tools/map_setup.json vanillaMapObjects (each
+        must be in the game's own Common collection)."""
         spec = read_json(MAP_EDITOR_COLLECTION)['TemplateCollectionSpec']
         if spec['CollectionId'] != 'Common':
             fail(f'{MAP_EDITOR_COLLECTION} is not the Common collection')
@@ -316,6 +323,18 @@ class TemplateCatalog:
             if not path.is_file():
                 fail(f'MapEditor collection entry {entry} has no blueprint file {path}')
             result[read_json(path)['TemplateSpec']['TemplateName']] = entry
+        with zipfile.ZipFile(BLUEPRINTS_ZIP) as archive:
+            vanilla = read_json(archive.read(VANILLA_MAP_EDITOR_COLLECTION))['TemplateCollectionSpec']
+        if vanilla['CollectionId'] != 'Common':
+            fail(f'{VANILLA_MAP_EDITOR_COLLECTION} is not the Common collection')
+        entries = {f'vanilla:{entry}.json': entry for entry in vanilla['Blueprints']}
+        for name in read_json(MAP_SETUP)['vanillaMapObjects']['templates']:
+            entry = entries.get(self.origin.get(name))
+            if entry is None:
+                fail(f'{MAP_SETUP} vanillaMapObjects: {name} is not in the game\'s {VANILLA_MAP_EDITOR_COLLECTION}')
+            if name in result:
+                fail(f'{MAP_SETUP} vanillaMapObjects: {name} is already a mod MapEditor object')
+            result[name] = entry
         return result
 
     @staticmethod
@@ -705,15 +724,19 @@ def footprint(blocks, coordinates, orientation='Cw0', flipped=False):
     return {(x, y) for x, y, _ in blocks.occupied_cells(coordinates, orientation, flipped)}
 
 
-def site_problems(model, cells, level, placed_columns):
-    """Problems for a building footprint resting on terrain level `level`."""
+def site_problems(model, cells, level, placed_columns, raised=False):
+    """Problems for a building footprint resting on terrain level `level`. `raised`: the footprint
+    stands at `level` on stackable supports the player builds first (a flat site's "platformBlocks"),
+    so terrain may lie below the level but never above it."""
     problems = []
     trees = 0
     for x, y in sorted(cells):
         if not (0 <= x < model.sx and 0 <= y < model.sy):
             problems.append(f'({x},{y}) outside the map')
             continue
-        if model.height[y, x] != level:
+        if raised and model.height[y, x] > level:
+            problems.append(f'({x},{y}) terrain {model.height[y, x]} is above the raised level {level}')
+        elif not raised and model.height[y, x] != level:
             problems.append(f'({x},{y}) terrain {model.height[y, x]} != {level}')
         elif not model.contiguous[y, x]:
             problems.append(f'({x},{y}) has an overhang/gap')
@@ -815,7 +838,8 @@ def render_preview(model, path, marks=(), legend=()):
 
 PLACEMENT_COLOURS = {'DeepOreVein': (255, 190, 0), 'DeepOreSource': (255, 255, 0), 'RadioactiveSpringSource': (170, 255, 0),
                      'SandstoneOutcrop': (235, 150, 80), 'LimestoneOutcrop': (235, 235, 205), 'SandstoneSeam': (235, 150, 80),
-                     'LimestoneSeam': (235, 235, 205), 'HumanRecordCache': (255, 255, 255)}
+                     'LimestoneSeam': (235, 235, 205), 'HumanRecordCache': (255, 255, 255),
+                     'UndergroundRuins': (150, 150, 170)}
 STAGE_COLOURS = {'construction': (235, 170, 110), 'deepIndustry': (255, 130, 0), 'power': (255, 70, 255),
                  'narrative': (150, 200, 255), 'nuclear': (170, 255, 0), 'rocket': (0, 255, 255), 'space': (255, 255, 255)}
 
@@ -936,7 +960,7 @@ def building_blocks(catalog, template):
 def new_entity(placement, catalog, variant_id, index):
     template = placement['template']
     if template not in catalog.map_editor_common:
-        fail(f'{template} is not in the mod MapEditor Common collection')
+        fail(f'{template} is not a placeable map object (mod MapEditor Common collection or {MAP_SETUP.name} vanillaMapObjects)')
     entity_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f'deep-frontier-map/{variant_id}/{index}/{template}'))
     block_object = {'Coordinates': {'X': placement['x'], 'Y': placement['y'], 'Z': placement['z']}}
     orientation = placement.get('orientation', 'Cw0')
@@ -1099,6 +1123,9 @@ SITE_KEYS = {
     'hydro': {'template', 'label', 'x', 'y', 'z'},
 }
 OPTIONAL_SITE_KEYS = {'maxWaterDistance', 'alternative', 'dynamite'}
+# A flat site may stand raised on stackable supports (platform_fill); understructure, pit and map-edge
+# buildings keep their own ground rules (their deposits and edges are real ground).
+RULE_OPTIONAL_SITE_KEYS = {'flat': {'platformBlocks'}}
 LOOP_STAGES = [
     ('start', 'Start-game resources'),
     ('construction', 'Construction materials'),
@@ -1299,19 +1326,53 @@ def source_strength_by_component(model, catalog):
     return strength
 
 
+def platform_fill(model, blocks, site):
+    """(problems, report) of a raised flat site ("platformBlocks"): the building stands at the site level
+    on stackable supports the player builds first. Native MatterBelowValidator (Timberborn.BlockSystem,
+    1.1.2.8) accepts a GroundOrStackable block at ground level or on a Stackable block directly below
+    (StackableBelow); Any needs nothing; Ground needs terrain, so such a foundation cannot be raised.
+    Counted as one 1x1x1 stackable block (the Concrete Block) per layer under every foundation block
+    that needs matter below; scaffolds and decks cover the same cells with fewer pieces."""
+    declared = site['platformBlocks']
+    if not isinstance(declared, int) or isinstance(declared, bool) or declared < 1:
+        fail(f'site {site["label"]}: platformBlocks must be a positive integer (omit it for a site on flat ground)')
+    coordinates = (site['x'], site['y'], site['z'])
+    problems, layers = [], []
+    for x, y, z, block in blocks.positioned(coordinates, site['orientation']):
+        if z != coordinates[2] - blocks.base_z or block['MatterBelow'] == 'Any':
+            continue
+        if block['MatterBelow'] != 'GroundOrStackable':
+            problems.append(f'foundation block ({x},{y},{z}) needs {block["MatterBelow"]} below and cannot stand on platforms')
+            continue
+        if 0 <= x < model.sx and 0 <= y < model.sy and model.height[y, x] <= site['z']:
+            layers.append(site['z'] - int(model.height[y, x]))
+    needed = sum(layers)
+    if needed != declared:
+        problems.append(f'platform blocks {needed} != declared {declared}')
+    return problems, {'blocks': needed, 'supportCells': len(layers), 'raisedCells': sum(1 for n in layers if n),
+                      'maxLayers': max(layers, default=0)}
+
+
 def check_flat_site(model, blocks, site, placed_columns, exclude=frozenset()):
-    """Flat, dry, free footprint (trees allowed), top layer inside the map and the listed open margins."""
+    """Flat, dry, free footprint (trees allowed), top layer inside the map and the listed open margins.
+    A site with "platformBlocks" is raised (platform_fill): footprint, margins and door approach may lie
+    below the site level, never above it."""
     coordinates = (site['x'], site['y'], site['z'])
     orientation = site['orientation']
+    raised = 'platformBlocks' in site
     columns = {k: v for k, v in placed_columns.items() if k not in exclude}
     all_cells = blocks.columns(coordinates, orientation)
-    problems, trees = site_problems(model, all_cells, site['z'], columns)
+    problems, trees = site_problems(model, all_cells, site['z'], columns, raised)
+    platform = None
+    if raised:
+        fill_problems, platform = platform_fill(model, blocks, site)
+        problems += fill_problems
     top = site['z'] - blocks.base_z + blocks.top_occupied_layer()
     if top >= model.total_height:
         problems.append(f'top occupied layer z={top} >= total height {model.total_height}')
     margin = site['margin']
-    margin_problems, _ = site_problems(model, ring(all_cells, margin), site['z'], placed_columns)
-    side_problems = {side: len(site_problems(model, strip, site['z'], placed_columns)[0])
+    margin_problems, _ = site_problems(model, ring(all_cells, margin), site['z'], placed_columns, raised)
+    side_problems = {side: len(site_problems(model, strip, site['z'], placed_columns, raised)[0])
                      for side, strip in side_strips(all_cells, margin).items()}
     for side in site['openSides']:
         if side_problems[side]:
@@ -1320,6 +1381,8 @@ def check_flat_site(model, blocks, site, placed_columns, exclude=frozenset()):
                           max(x for x, _ in all_cells), max(y for _, y in all_cells)],
             'topOccupiedZ': top, 'treesToClear': trees, 'margin': margin,
             'marginCellsNotFlat': len(margin_problems), 'openSides': site['openSides'], 'sideProblems': side_problems}
+    if platform is not None:
+        info['platform'] = platform
     return problems, info, all_cells
 
 
@@ -1330,7 +1393,7 @@ def check_door(model, blocks, site, placed_columns):
         return [], None
     problems = []
     ax, ay, az = approach
-    door_problems, _ = site_problems(model, {(ax, ay)}, az, placed_columns)
+    door_problems, _ = site_problems(model, {(ax, ay)}, az, placed_columns, 'platformBlocks' in site)
     if door_problems:
         problems.append(f'door approach {approach} is blocked: {door_problems}')
     length, _ = model.route()
@@ -1598,7 +1661,7 @@ def check_sites(model, catalog, variant, records, placed, placed_columns, requir
         rule = required[template]
         keys = set(site)
         missing = SITE_KEYS[rule] - keys
-        unknown = keys - SITE_KEYS[rule] - OPTIONAL_SITE_KEYS
+        unknown = keys - SITE_KEYS[rule] - OPTIONAL_SITE_KEYS - RULE_OPTIONAL_SITE_KEYS.get(rule, set())
         if missing or unknown:
             fail(f'{variant["id"]} site {site["label"]} ({rule}): missing {sorted(missing)}, unknown {sorted(unknown)}')
         problems, info, cells = check_site(model, catalog, site, records, placed, placed_columns, requirements, rule)
@@ -1952,9 +2015,12 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
          f'building up to the {mines[0]} ({mine_science} science, ore renewable after it) needs '
          f'{int(round(collection_ore))}, {finite_needed} with the {requirements["finiteDeepOreMargin"]:.0%} margin')
     reachable_ruins = [u for u in resources['undergroundRuins'] if u['routeFromStart'] is not None]
+    placed_ruins = placed_ruin_mines(model, catalog, records, site_reports)
+    workable = [u for u in placed_ruins if u['ok']]
     need('deepIndustry', 'renewable scrap (Underground Ruins for the Efficient Mine)',
-         len(reachable_ruins) >= requirements['minUndergroundRuinsReachable'],
-         f'{len(reachable_ruins)} reachable Underground Ruins; ruins hold {resources["ruinScrap"]} scrap, one of each building '
+         len(reachable_ruins) + len(workable) >= requirements['minUndergroundRuinsReachable'],
+         f'{len(reachable_ruins)} reachable Underground Ruins of the map, {len(workable)} of {len(placed_ruins)} placed ones '
+         f'with an Efficient Mine site; ruins hold {resources["ruinScrap"]} scrap, one of each building '
          f'needs {int(round(construction.get("ScrapMetal", 0)))}')
 
     # Every building that needs a site has a checked one (understructures: the policy minimum).
@@ -1991,10 +2057,46 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
     errors = [f'loop coverage [{i["stage"]}] {i["item"]}: {i["detail"]}' for i in items if not i['ok']]
     stages = [{'id': sid, 'title': title, 'ok': all(i['ok'] for i in items if i['stage'] == sid),
                'items': [i for i in items if i['stage'] == sid]} for sid, title in LOOP_STAGES]
-    report = {'stages': stages, 'startResources': resources, 'caches': caches,
+    report = {'stages': stages, 'startResources': resources, 'caches': caches, 'placedUndergroundRuins': placed_ruins,
               'program': {'missions': missions, 'allMissions': total, 'oneOfEachBuilding': rounded(construction),
                           'finiteDeepOre': finite, 'finiteDeepOreNeeded': finite_needed}}
     return report, errors
+
+
+def placed_ruin_mines(model, catalog, records, site_reports):
+    """Placed Underground Ruins (tools/map_setup.json vanillaMapObjects) and whether the vanilla Iron Teeth
+    mine can work them: the placement itself passed check_object and has a route (ground under every
+    block, ContinuousTerrainConstraint, no tree or other object), and the mine, whose ground core covers
+    the 5x5 ruins exactly, has a door approach on dry, free ground at the ruins' level outside every
+    primary site in at least one orientation."""
+    ruins = [r for r in records if r['template'] == 'UndergroundRuins']
+    if not ruins:
+        return []
+    mines = sorted(t for t, b in catalog.blueprints.items() if t.endswith('.IronTeeth') and 'UndergroundRuins'
+                   in b.get('UnderstructureConstraintSpec', {}).get('UnderstructureTemplateNames', []))
+    if len(mines) != 1:
+        fail(f'Expected one Iron Teeth building over UndergroundRuins, found {mines}')
+    blocks = Blocks(catalog.get(mines[0])['BlockObjectSpec'])
+    claimed = set()
+    for info in site_reports:
+        if not info['alternative'] and info['rule'] != 'hydro':
+            claimed |= set(info['_cells'])
+    placed_columns = {cell for r in records for cell in r['cells']}
+    result = []
+    for record in ruins:
+        x, y, z = record['coordinates']
+        corner = (min(cx for cx, _ in record['cells']), min(cy for _, cy in record['cells']))
+        doors = []
+        for orientation in ORIENTATIONS:
+            coordinates = mine_coordinates(blocks, corner, z, orientation)
+            if blocks.columns(coordinates, orientation) != record['cells']:
+                continue
+            door = approach_cell(blocks, coordinates, orientation)
+            if door and door[:2] not in claimed and not site_problems(model, {door[:2]}, door[2], placed_columns)[0]:
+                doors.append({'orientation': orientation, 'mineAt': list(coordinates), 'door': list(door)})
+        result.append({'label': record['placement']['label'], 'at': [x, y, z], 'mine': mines[0],
+                       'placementOk': record['ok'], 'mineSites': doors, 'ok': record['ok'] and bool(doors)})
+    return result
 
 
 def validate_content(variant, catalog, source, added):
@@ -2013,7 +2115,7 @@ def validate_content(variant, catalog, source, added):
         if template != placement['template']:
             problems.append(f'entity template {template} != placement {placement["template"]}')
         if template not in catalog.map_editor_common:
-            problems.append(f'{template} is not in TemplateCollection.MapEditor.Common')
+            problems.append(f'{template} is not a placeable map object (mod MapEditor Common collection or {MAP_SETUP.name} vanillaMapObjects)')
         blueprint = catalog.get(template)
         blocks = Blocks(blueprint['BlockObjectSpec'])
         c = entity['Components']['BlockObject']['Coordinates']
@@ -2268,7 +2370,6 @@ def build(variant_paths, catalog, out_dir=None, write=True):
 # generated from the same variant JSON by tools/map_setup_content.mjs; this command validates the
 # variant against the state the runtime produces.
 
-MAP_SETUP = ROOT / 'tools/map_setup.json'
 VARIANTS_DIR = ROOT / 'tools/map_variants'
 
 

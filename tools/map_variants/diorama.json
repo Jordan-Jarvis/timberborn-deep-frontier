@@ -6,7 +6,7 @@
   "height": {"totalHeight": 66},
   "mapSize": {"x": 50, "y": 50},
   "hardVariant": false,
-  "description": "Diorama (50x50): a river valley between forested level-2 to level-6 terraces; two Deep Ore Veins with Deep Mine sites south and east of the start, Deep Ore Sources with Deep Drill sites on the south-east level-4 bench and the east level-6 terrace, the Deep Processor and Steel Mill in the south level-3 pocket, the sandstone quarry on the central level-3 strip, five record caches around the Archive Excavation at the south edge; no reactor or launch pad fits.",
+  "description": "Diorama (50x50): a river valley between forested level-2 to level-6 terraces; two Deep Ore Veins with Deep Mine sites south and east of the start, Deep Ore Sources with Deep Drill sites on the south-east level-4 bench and the east level-6 terrace, the sandstone quarry on the central level-3 strip and the limestone quarry on the east level-6 terrace, five record caches around the Archive Excavation at the south edge; the Nuclear Reactor fills the forested south level-3 pocket (one low cell takes a platform block), the Deep Processor and Steel Mill sit on the east terraces and the Cryogenic Liquefaction Plant in the level-2 south-west corner.",
   "placements": [
     {"template": "DeepOreSource", "label": "Deep Ore Source, 16 cells south-east of the start", "x": 39, "y": 18, "z": 6, "good": "DeepOre", "amount": 8500},
     {"template": "DeepOreSource", "label": "Deep Ore Source, 14 cells south of the start", "x": 28, "y": 16, "z": 4, "good": "DeepOre", "amount": 8500},
@@ -23,13 +23,13 @@
     {"template": "HumanRecordCache", "label": "Human Record Cache 4, 31 cells south-east of the start", "x": 44, "y": 3, "z": 5, "orientation": "Cw0"},
     {"template": "HumanRecordCache", "label": "Human Record Cache 5, 33 cells south-east of the start", "x": 45, "y": 2, "z": 5, "orientation": "Cw90"},
     {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 13 cells south of the start)", "x": 23, "y": 16, "z": 3, "orientation": "Cw0"},
-    {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 18 cells east of the start)", "x": 45, "y": 27, "z": 8, "orientation": "Cw0"}
+    {"template": "DeepOreVein", "label": "Deep Ore Vein (Deep Mine, 18 cells east of the start)", "x": 45, "y": 27, "z": 8, "orientation": "Cw0"},
+    {"template": "LimestoneSeam", "label": "Limestone Seam (Limestone Quarry, 25 cells south-east of the start)", "x": 45, "y": 10, "z": 6, "orientation": "Cw0"}
   ],
   "sites": [
     {"template": "DeepDrill.IronTeeth", "label": "Deep Drill, 19 cells south-east of the start", "x": 41, "y": 24, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "DeepDrill.IronTeeth", "label": "Deep Drill, 16 cells south of the start", "x": 30, "y": 20, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "SandstoneQuarry.IronTeeth", "label": "Sandstone Quarry, by the start", "x": 23, "y": 26, "z": 3, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S"], "understructure": [23, 22, 3]},
-    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 31 cells south-west of the start", "x": 18, "y": 2, "z": 2, "orientation": "Cw180", "margin": 1, "openSides": ["N"]},
     {"template": "FishHatchery.IronTeeth", "label": "Fish Hatchery, 25 cells south-west of the start (10 one-layer Dynamite charges on the bank)", "x": 15, "y": 9, "z": 2, "orientation": "Cw270", "dynamite": [[13, 9, 1], [13, 10, 1], [13, 11, 1], [13, 12, 1], [14, 9, 1], [14, 10, 1], [14, 11, 1], [14, 12, 1], [14, 13, 1], [15, 13, 1]]},
     {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "label": "Radioactive Sludge Recovery Pump, 29 cells south-west of the start", "x": 2, "y": 19, "z": 3, "orientation": "Cw90"},
     {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 13 layers of natural drop, 17 cells north-east of the start", "x": 36, "y": 45, "z": 2},
@@ -38,13 +38,17 @@
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 13 cells south of the start", "x": 23, "y": 16, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "W"], "understructure": [23, 16, 3]},
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 18 cells east of the start", "x": 45, "y": 31, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": ["N"], "understructure": [45, 27, 8]},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Human Record Cache 1, 33 cells south-east of the start", "x": 32, "y": 1, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E"]},
-    {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 20 cells south of the start", "x": 20, "y": 8, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 27 cells south of the start", "x": 21, "y": 1, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, by the start", "x": 24, "y": 31, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E"]},
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 20 cells south of the start", "x": 31, "y": 9, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["S", "E"]},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 10 cells east of the start", "x": 35, "y": 30, "z": 8, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 19 cells south-west of the start", "x": 10, "y": 19, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 17 cells south-east of the start", "x": 39, "y": 17, "z": 4, "orientation": "Cw180", "margin": 1, "openSides": []}
+    {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 17 cells south-east of the start", "x": 39, "y": 17, "z": 4, "orientation": "Cw180", "margin": 1, "openSides": []},
+    {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 24 cells south of the start (on 1 platform block)", "x": 28, "y": 0, "z": 3, "orientation": "Cw270", "margin": 1, "openSides": ["W"], "platformBlocks": 1, "maxWaterDistance": 15},
+    {"template": "LimestoneQuarry.IronTeeth", "label": "Limestone Quarry, 25 cells south-east of the start", "x": 45, "y": 14, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["N"], "understructure": [45, 10, 6]},
+    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 20 cells east of the start", "x": 46, "y": 22, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": ["S", "W"]},
+    {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 35 cells south-west of the start", "x": 2, "y": 9, "z": 2, "orientation": "Cw90", "margin": 1, "openSides": ["S", "W"]},
+    {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 20 cells south-east of the start", "x": 43, "y": 16, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
+    {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 26 cells south of the start", "x": 37, "y": 4, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]}
   ],
-  "unmet": [{"item": "LimestoneQuarry.IronTeeth site (understructure)", "reason": "Measured with the 8x6 quarry (5x5 over its seam since 2026-11-01; the limit is the tree-free seam core, which is the same 5x5): the 8x6 quarry footprint is flat and dry at 800 positions (both orientations), but only 85 of them (84 on level 3, 1 on level 8) have a 5x5 seam core free of trees, and a placed seam cannot overlap natural objects; all 85 overlap the Deep Mine, Deep Processor, Deep Drill, Steel Mill, Water Treatment Plant or Archive Excavation sites, which take priority."}, {"item": "NuclearReactor.IronTeeth site (flat)", "reason": "No dry, flat 14x11 footprint exists at any level: 11 cells deep, flat dry rectangles reach at most 11 wide (level 3), and the largest flat dry square is 11x11."}, {"item": "CryogenicLiquefactionPlant.IronTeeth site (flat)", "reason": "The 8x6 footprint fits at 406 positions on the empty map, every one overlapping a placed site (mostly the Deep Processor, Water Treatment Plant, Steel Mill, Archive Excavation, the drills and the mines)."}]
+  "unmet": []
 }

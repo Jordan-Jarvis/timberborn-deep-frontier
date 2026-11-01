@@ -7,6 +7,10 @@
     {"name": "_WaterPerformanceTest", "width": 256, "height": 256}
   ],
   "devMapsWhy": "The game's developer test maps (IsDev, empty loc keys; the new-game list shows them only in dev mode). Deep Frontier gives them no setup: a new game on one gets a notification and a log line saying so, and no objects or height. The names are their asset (GameObject) names in resources.assets; prepare_deep_frontier_map.py checks that the sizes match the game's dev maps.",
+  "vanillaMapObjects": {
+    "templates": ["UndergroundRuins"],
+    "why": "Vanilla map-editor objects (the game's TemplateCollection.MapEditor.Common) a variant may place besides the mod's own MapEditor objects. BuiltinMapSetup places every object through the map editor's native preview and placer, whichever collection it comes from; this list keeps the validated set explicit (prepare_deep_frontier_map.py and map_setup_content.mjs fail on any other vanilla object, and on a name that is not in the game's collection). UndergroundRuins: the vanilla Efficient Mine (5x5, ground core over the 5x5 ruins) is the only renewable scrap metal (ScrapMetal recipes from Treated Planks), and Metal Blocks are made only from scrap; a map whose own Underground Ruins cannot be reached gets one on dry, flat ground (Beaverome: both of its ruins lie on lake beds under 6 to 9 m of water)."
+  },
   "smallMap": {
     "maxArea": 2434,
     "referenceVariants": ["plains", "lakes", "terraces"],

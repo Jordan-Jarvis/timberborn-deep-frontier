@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Diorama, Cliffside and Beaverome can finish the game
+- **Diorama** now gets a Limestone Seam for the Limestone Quarry (east terrace), and has room for the Nuclear Reactor (the forested pocket south of the start; one low cell needs a Concrete Block under it) and the Cryogenic Liquefaction Plant. It no longer shows a "short of" notice.
+- **Cliffside** has flat room for the Nuclear Reactor on the plain west of the start: one Deep Ore Vein moved to the bench east of the river. Only the fishing notice remains (dam the deep bay a little higher).
+- **Beaverome** now gets both quarry seams, an **Underground Ruins on dry land** for the Efficient Mine (its own two lie under deep lake water, so scrap no longer runs out), and has room for the Uranium Processing Plant and the Nuclear Reactor (south-west shore, on about 40 Concrete Blocks). It no longer shows a "short of" notice.
+- These changes apply to new games; existing saves keep their map objects.
+- Map checks: a large building's site may now stand on platforms, counted block by block, because the reactor and plants stand on any stackable block as well as ground. Deep Mine veins and quarry seams stay real ground.
+
 ### Smaller civic buildings (second shrink)
 - **Restaurant** is 6x5, 3 high (was 9x7, 5 high): the dining room over the hall and kitchen, the front and side dining balconies, and open roof decks with tables on top. All 7 tables and 14 seats stay, sized for seated beavers. Same door and entrance. Paths on its old rear, outer and upper decks and the roof terrace need re-placing.
 - **Materials Laboratory** is 5x4, 3 high (was 10x8, 5 high): the sawtooth testing hall, the entrance annex with an open roof terrace, the press and the instrument tower. Same door, workers, power and recipe.

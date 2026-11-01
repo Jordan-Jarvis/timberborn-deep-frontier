@@ -1,5 +1,7 @@
 # Deep Frontier map variants
 
+Status 2026-11-01 (small maps): Diorama, Cliffside and Beaverome now provide every full-loop item except Cliffside's fishing banks (a player dam creates them). Two rule changes, both with source evidence (see "Data and validation"): a flat site may stand **raised on platforms** (`platformBlocks`), and a variant may place the vanilla **Underground Ruins** (`tools/map_setup.json` `vanillaMapObjects`). Diorama gained the Nuclear Reactor (1 platform block), the Limestone Quarry and the Cryogenic Liquefaction Plant; Cliffside the reactor on flat ground (one Deep Ore Vein moved to make room); Beaverome both quarries, the Uranium Processing Plant, the reactor (39 platform blocks) and an Underground Ruins for the Efficient Mine. All 19 built-in variants pass `builtin`; nothing of this pass has been loaded in the game.
+
 Status 2026-10-30 (0.7.1): the four map files were rebuilt with `build` for 0.7.1.0. Only `map_metadata.json` changed: the description names Deep Frontier 0.7.1.0 and its ten required mods (it listed 0.6.0.0 and 17). `world.json` is byte-identical to the previous build. All four pass `build` and `validate` with 0 errors. `build` writes them to `C:\Users\Jordan\Documents\Timberborn\Maps\` (each variant's `output.directory`) and its evidence to `outputs/maps/`. The mod package (`src/DeepFrontier`, staged and built by the official Mod Builder) contains no `.timber`, so these files are not shipped with the Workshop item. None of the rebuilt files has been loaded in the game.
 
 Status 2026-10-30 (after the compaction pass): the built-in variants were re-planned for the smaller footprints (Deep Mine and Deep Drill 7×6, quarries 8×6, reactor 14×11). Beaverome and Diorama now have two Deep Mine sites each, Beaverome also two Deep Drill sites beside new Deep Ore Sources, eight maps gained a reactor site (Canyon, Craters, Hollows, Mountain Range, Oasis, Pillars, Spillage, Thousand Islands), and Meander, Waterfalls, Pillars and Thousand Islands gained the plants they had no room for. `smallMap.maxArea` is re-derived (5,966). The Plains, Plains Hard, Lakes and Terraces variants did not change. Nothing of this pass has been loaded in the game.
@@ -28,7 +30,7 @@ python tools/prepare_deep_frontier_map.py build tools/map_variants/plains.json t
 python tools/prepare_deep_frontier_map.py validate tools/map_variants/plains.json tools/map_variants/plains-hard.json tools/map_variants/lakes.json tools/map_variants/terraces.json   # re-read the written files only
 python tools/prepare_deep_frontier_map.py plan tools/map_variants/lakes.json --out lakes-plan.json   # propose what a variant still lacks
 python tools/prepare_deep_frontier_map.py suggest builtin:Waterfalls --png out.png # candidate sites for a new map
-python tools/test_prepare_deep_frontier_map.py                                    # 17 injected faults must each fail
+python tools/test_prepare_deep_frontier_map.py                                    # 21 injected faults must each fail
 pwsh tools/start_map_loop_test.ps1 -Label <label>                                 # in-game proof, game closed, user present
 ```
 
@@ -73,6 +75,8 @@ One JSON per map stays the only source: `tools/map_variants/<id>.json`. The defa
 
 - **Runtime-only variants** (`"output": null`) are never written as `.timber`. Their `height` has only `totalHeight`; `mapSize` records the map size.
 - **`unmet`**: `[{"item", "reason"}]` lists loop-coverage items the map physically cannot provide. `builtin` fails unless the failing items equal the declared ones exactly; placement and site problems can never be declared. The reason (with numbers) stays in the JSON, the evidence and this document; the in-game line comes from `tools/map_setup.json` `unmetText`.
+- **Raised flat sites** (`"platformBlocks": N`, flat-rule sites only; 2026-11-01). The building stands at the site level on stackable supports the player builds first, so its footprint, margins and door approach may lie below that level but never above it (still dry, free and without an overhang). N is the exact count of 1×1×1 stackable blocks (the Concrete Block: 12 Concrete and 3 Sandstone, 1,200 science) under every foundation block that needs matter below, one per missing layer; `builtin` fails on any other count, and a site that is already flat must omit the key. Concrete scaffolds (3×3 to 5×5, 1 to 3 high) and steel leg decks cover the same cells with fewer pieces. Source evidence (Timberborn 1.1.2.8, `Timberborn.BlockSystem.MatterBelowValidator`, decompiled): `GroundOrStackable` is valid `AtGroundLevel || StackableBelow`, `Any` needs nothing, `Ground` needs terrain. Every flat-rule building (reactor, plants, Deep Processor, Steel Mill, Deep Drill, Archive Excavation, power plants) has only `GroundOrStackable` and `Any` foundation blocks, and the mod's only placement validator that looks below a foundation (`RoofHardpointValidator`) refuses roof hardpoints, not platforms. A raised site whose building has a `Ground` foundation block is a site problem. Understructure (Deep Mine, quarries), pit and map-edge sites cannot carry the key (unknown-key error): their veins, seams, outcrops and edges stay real ground.
+- **Vanilla map objects** (`tools/map_setup.json` `vanillaMapObjects`; 2026-11-01): besides the mod's MapEditor objects, a variant may place the vanilla objects listed there, each checked to be in the game's own `TemplateCollection.MapEditor.Common` (Python reads Blueprints.zip, `map_setup_content.mjs` the vanilla resources in `vendor/`). `BuiltinMapSetup` already places any template by name through the map editor's native preview and placer. The list is `UndergroundRuins`: the vanilla Efficient Mine (5×5 ground core over the 5×5 ruins) is the only renewable scrap, and Metal Blocks are made only from scrap. A placed ruin counts for *renewable scrap* when the placement passes (ground under every block, `ContinuousTerrainConstraint`, no tree) and the mine has a door approach on dry, free ground outside every site in at least one orientation (`placedUndergroundRuins` in the evidence).
 - **Accepted gaps** (`tools/map_loop_requirements.json` `acceptedGaps`): coverage items accepted on every map until a design decision, printed on every run. None since 2026-10-30. The last one, *finite deep ore covers one of each building*, is now a requirement: the drillable sources must hold the DeepOre of one of each building plus `finiteDeepOreMargin` (5%), and a map that cannot must declare it `unmet` (none since the 2026-10-30 re-plan; Beaverome declared it before it had Deep Drill sites).
 - **Generated data**: `tools/map_setup_content.mjs` (the last step of canonical generation, `create_vertical_slice_content.mjs`) writes `Configurations/DeepFrontierMapSetup.blueprint.json` (`BuiltinMapSetupSpec`: per map the name, size, total height, the two warning flags `SmallArea` and `NoDeepMineSite`, unmet text keys and placements) and the `DeepFrontier.MapSetup.*` rows of `enUS.csv`, from the variants and `tools/map_setup.json` (dev maps, small-map rule, dialog text).
 - **Checks**:
@@ -98,29 +102,13 @@ A built-in map gets the **EXTREMELY difficult** warning (`BuiltinMapSpec.Small`)
 - **Small area** (`SmallArea`): its area is below `smallMap.maxArea` = **2,434** cells (11,176 before the 2026-10-30 compaction). The number is derived and checked: the largest area the full-loop sites claim on a reference map (primary footprints plus their listed open margins: Plains 1,217, Terraces 1,126, Lakes 1,113 after the 2026-11-01 second shrink; Plains 1,463 / 2,983 before it; 5,588 / 5,476 / 5,134 before the compaction) divided by the land share 1/2. Below it the late-game sites alone would cover more than half the map, before terrain, water, farms, forest and homes. The built-in sizes fall into clear groups (2,500; 5,000; 16,384; 36,864–38,400; 65,536), so the rule picked out exactly **Diorama** (50×50) and **Cliffside** (100×50) until the second shrink; at 2,434 it picks out none; the 128×128 maps are almost three times larger.
 - **No Deep Mine site** (`NoDeepMineSite`): the variant lists no primary site of `smallMap.deepMineSite` (`DeepMine.IronTeeth`, which `builtin` checks is the only building over a Deep Ore Vein). The Deep Mine is the only permanent deep ore, and the finite sources are sized for one of each building, not for the launch program. Since the 2026-10-30 re-plan every built-in map has Deep Mine sites (Beaverome and Diorama gained two each with the 7×6 mine), so no map gets the warning for this reason.
 
-Since the 2026-11-01 second shrink no built-in map gets the warning: `maxArea` is 2,434, below Diorama (2,500) and Cliffside (5,000), and every variant lists a Deep Mine site. Diorama and Cliffside now show the shorter "cannot provide" notice. Before that, two maps got the warning: Cliffside and Diorama, both by area. Beaverome no longer does: its only reason was the missing Deep Mine, and it now shows the shorter "cannot provide" notice. The dialog appears once when the game UI appears (`DialogBoxShower`), built from the generated text and the map's own data. The small-area lines appear only on a small map, the Deep Mine line only without a Deep Mine site:
+Since the 2026-11-01 second shrink no built-in map gets the warning: `maxArea` is 2,434, below Diorama (2,500) and Cliffside (5,000), and every variant lists a Deep Mine site. Before that, two maps got the warning: Cliffside and Diorama, both by area; Beaverome lost it on 2026-10-30, when it gained Deep Mine sites. The dialog appears once when the game UI appears (`DialogBoxShower`), built from the generated text and the map's own data. The small-area lines appear only on a small map, the Deep Mine line only without a Deep Mine site.
 
-Diorama (since the second shrink):
-
-```
-Deep Frontier on Diorama: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:
-- No ready space for: Limestone quarry, Nuclear Reactor, Cryogenic liquefaction plant. Level ground or build on platforms to make room before you need them.
-```
-
-Cliffside (since the second shrink):
+Since the 2026-11-01 small-maps pass, Diorama and Beaverome have nothing unmet and show no dialog at all (they showed "No ready space for" lines for the quarries, the reactor and two plants, and Beaverome the scrap line). A map without the warning but with unmet items gets a shorter dialog (`UnmetTitle` plus one line per item), for example on Cliffside (100×50):
 
 ```
 Deep Frontier on Cliffside: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:
-- No ready space for: Nuclear Reactor. Level ground or build on platforms to make room before you need them.
 - Fish: no river here is deep enough beside a dry bank for the Gatherer Flag to catch fish, and you need fish to start the Fish Hatchery, canned fish and fish oil. Dam a clean river until it is at least 0.5 m deep next to the bank.
-```
-
-A map without the warning but with unmet items gets a shorter dialog (`UnmetTitle` plus the same lines), for example on Beaverome (192×192):
-
-```
-Deep Frontier on Beaverome: this map is short of a few things. You can still play the whole game; here is what is missing, what it affects and what to do:
-- No ready space for: Limestone quarry, Sandstone quarry, Uranium processing plant, Nuclear Reactor. Level ground or build on platforms to make room before you need them.
-- Scrap metal: no reachable Underground Ruins for a Mine, so scrap runs out once the surface ruins are gone. Salvage early and use metal carefully.
 ```
 
 or on Canyon (each line says what is missing, what it affects and what to do; 2026-11-01, after a player read the old one-line fishing notice as a broken map):
@@ -134,11 +122,11 @@ Deep Frontier on Canyon: this map is short of a few things. You can still play t
 
 | Map | Size | EXTREMELY difficult | Variant | Placements | Sites | Deep Mine sites | Finite DeepOre | Not met on this map (declared `unmet`) |
 |---|---|---|---|---:|---:|---:|---:|---|
-| Beaverome | 192×192 |  | `beaverome` | 15 | 18 | 2 | 17,000 | LimestoneQuarry site (understructure); SandstoneQuarry site (understructure); renewable scrap (Underground Ruins for the Efficient Mine); UraniumProcessingPlant site (flat); NuclearReactor site (flat) |
+| Beaverome | 192×192 |  | `beaverome` | 18 | 22 | 2 | 17,000 | none |
 | Canyon | 128×128 |  | `canyon` | 17 | 26 | 2 | 17,000 | shore fishing banks (first FreshFish) |
-| Cliffside | 100×50 |  | `cliffside` | 17 | 22 | 2 | 17,000 | shore fishing banks (first FreshFish); NuclearReactor site (flat) |
+| Cliffside | 100×50 |  | `cliffside` | 17 | 23 | 2 | 17,000 | shore fishing banks (first FreshFish) |
 | Craters | 192×192 |  | `craters` | 17 | 22 | 2 | 17,000 | shore fishing banks (first FreshFish) |
-| Diorama | 50×50 |  | `diorama` | 16 | 19 | 2 | 17,000 | LimestoneQuarry site (understructure); NuclearReactor site (flat); CryogenicLiquefactionPlant site (flat) |
+| Diorama | 50×50 |  | `diorama` | 17 | 22 | 2 | 17,000 | none |
 | HelixMountain | 256×256 |  | `helix-mountain` | 17 | 26 | 2 | 17,000 | none |
 | Hollows | 192×192 |  | `hollows` | 18 | 27 | 2 | 18,000 | shore fishing banks (first FreshFish) |
 | Lakes | 256×256 |  | `lakes` | 18 | 27 | 3 | 17,000 | none |
@@ -154,7 +142,7 @@ Deep Frontier on Canyon: this map is short of a few things. You can still play t
 | ThousandIslands | 256×256 |  | `thousand-islands` | 17 | 23 | 2 | 17,000 | trees near the start; irrigated farmland near the start |
 | Waterfalls | 128×128 |  | `waterfalls` | 17 | 25 | 2 | 17,000 | shore fishing banks (first FreshFish) |
 
-Every row passes `builtin` (counts after the 2026-11-01 second shrink; no map is small or lacks a Deep Mine site; evidence `outputs/maps/builtin-coverage.json` and the per-map files). The reasons, with their numbers, are in each variant's `unmet` entries. Notes:
+Every row passes `builtin` (counts after the 2026-11-01 second shrink and, for Beaverome, Cliffside and Diorama, the small-maps pass; no map is small or lacks a Deep Mine site; evidence `outputs/maps/builtin-coverage.json` and the per-map files). The reasons, with their numbers, are in each variant's `unmet` entries. Notes:
 
 - **Re-plan of 2026-10-30.** After the compaction every map's site search was re-run (`plan`, plus a scratch driver around its `Planner` for the cases `plan` does not cover: a second Deep Mine, a Deep Ore Source beside each new Deep Drill site, reactor sites with `maxWaterDistance` 15, and moving smaller flat sites aside). Changes:
   - **Beaverome**: two Deep Ore Veins with Deep Mine sites (level-12 north-west shore), two Deep Drill sites with a new Deep Ore Source each (8,500 DeepOre, 17,000 in all), the Deep Processor, Steel Mill, Mission Control, Water Treatment Plant, Electrolysis Plant, Precision Machine Works, Launch Pad and Cryogenic Liquefaction Plant. The Launch Pad and the plant now hold the level-11 south-west strip, so the Archive Excavation and its five caches moved to the south-east ruins. The Rocket Assembly Hangar, Restaurant and Grocery Store lost their sites to the mines (the mines have priority). It loses the EXTREMELY difficult warning.
@@ -162,9 +150,11 @@ Every row passes `builtin` (counts after the 2026-11-01 second shrink; no map is
   - **Cliffside**: Limestone Quarry, Launch Pad, Mission Control, Steel Mill, Uranium Processing Plant, Water Treatment Plant, Electrolysis Plant, Cryogenic Liquefaction Plant, Precision Machine Works, Radioactive Waste Vault and Hospital; two Archive Excavations with five caches (none before). Both mines were re-placed on the plain. The Restaurant and Grocery Store lost their sites. The rocket chain is complete; the reactor is not.
   - **Reactor sites** (14×11, clean water within 15): Canyon, Craters, Hollows, Mountain Range, Oasis, Pillars, Spillage and Thousand Islands. Where the best position overlapped smaller sites, those were re-placed (Canyon Mission Control; Craters Cryogenic Liquefaction Plant; Hollows, Thousand Islands Radioactive Waste Refinery; Mountain Range Water Treatment Plant; Pillars Technical School, Water Treatment Plant).
   - **Meander** (Cryogenic Liquefaction Plant, Radioactive Waste Refinery, Water Treatment Plant), **Waterfalls** (Radioactive Waste Refinery), **Pillars** (Hospital) and **Thousand Islands** (Steel Mill) got the plants they had no room for.
-- **No reactor site** on 3 maps: Beaverome and Diorama have no dry, flat 14×11 footprint at any level; on Cliffside all 62 lie on the west plain under the Deep Mines, the Launch Pad and a Deep Drill. The reactor never needs more height: at 66 the highest legal base is 56.
-- **Beaverome**: shallow lakes and sloping shores; the largest dry flat square is 9×9. Only 10 quarry footprints have a tree-free seam core, all under the mine, drill or Mission Control sites, and its two Underground Ruins lie under 6–9 of water.
-- **Diorama**: no limestone quarry (every tree-free seam core is under the Deep Processor, Steel Mill, Water Treatment Plant, Archive Excavation, mines or drills) and no Cryogenic Liquefaction Plant (all 406 8×6 positions overlap a placed site). Since the second shrink the Launch Pad, Radioactive Waste Refinery, Radioactive Waste Vault and Rocket Assembly Hangar need no reserved site on any map.
+- **Small-maps pass of 2026-11-01** (Beaverome, Cliffside, Diorama; the stale reasons were measured with the 8×6 quarries and the reserved Launch Pad site, both gone with the second shrink). Searched with a scratch driver around `Planner` plus `site_check`, fewest platform blocks first, then route:
+  - **Diorama**: the Nuclear Reactor takes the forested level-3 pocket south of the start, (28, 0, 3) Cw270 (x 18–28, y 0–13), clean water 1 cell away, 98 trees to clear; one of its 137 supported cells is a level-2 cell, so it stands on **1 platform block**. No dry, flat 14×11 exists (flat rectangles reach 11 wide). The Deep Processor and Steel Mill moved off that pocket to the east terraces (43, 16, 6) and (37, 4, 4), the Radioactive Waste Export to the east edge (46, 22, 6). The Limestone Quarry stands on a new Limestone Seam on the east level-6 terrace (seam (45, 10, 6): the only tree-free, flat seam spot outside the other sites; the others lie under the Uranium Processing Plant by the start). The Cryogenic Liquefaction Plant fits again in the level-2 south-west corner (2, 9, 2).
+  - **Cliffside**: the reactor stands on **flat ground** in the middle of the west level-4 plain, (15, 24, 4) Cw90 (x 15–25, y 11–24), all four sides open, water 1 cell away, no trees. The Deep Ore Vein that lay there, (21, 10, 4), moved with its Deep Mine to the level-8 bench east of the river, (60, 25, 8) (28 cells east of the start; the only nearer spots are right beside the start). Fishing stays declared (see Shore banks).
+  - **Beaverome**: 239 tree-free flat 5×5 seam positions exist now. The Limestone Quarry is 13 cells south of the start (seam (83, 79, 12)), the Sandstone Quarry on the level-13 south shore (seam (95, 45, 13)). The Uranium Processing Plant fits on the level-12 north-west shore (42, 162, 12). The reactor stands on the level-11 south-west shore beside the Cryogenic Liquefaction Plant, (37, 26, 11) Cw180, water 0 cells away, on **39 platform blocks** (28 raised cells, at most 3 layers); the largest dry flat square is 9×9. Its two Underground Ruins lie under 6.2 and 8.6 of lake water, so an **Underground Ruins** is placed on the level-12 north-east shore (116, 120, 12), 47 cells from the start, where the Efficient Mine fits in two orientations.
+- **Raised sites elsewhere**: no other map uses `platformBlocks`; their flat sites are unchanged. The reactor never needs more height: at 66 the highest legal base is 56. Since the second shrink the Launch Pad, Radioactive Waste Refinery, Radioactive Waste Vault and Rocket Assembly Hangar need no reserved site on any map.
 - **Shore banks** (7 maps): the saved water is too shallow (or its banks too high) for `ShoreFishingSpec`; damming a river deeper creates banks in play.
 - **Tool changes made for these maps**: badwater counts the outlet of a badwater source with a positive strength (Nomads and Oasis store theirs dry), and a source feeds the surface water its tunnel water reaches (Hollows: `column_components` follows connected water columns underground).
 - In game, every missing building site of a map is folded into one "No ready space for: …" line with the enUS building names; the other items use the lines in `tools/map_setup.json` `unmetText`.
@@ -177,8 +167,8 @@ Build the mod with the official Mod Builder first (canonical generation must hav
 2. **Objects.** Look at the coordinates from `tools/map_variants/plains.json`: the three veins and seams sit on the ground, each Deep Ore Source shows its 4,500 / 6,000 / 7,500 DeepOre, the outcrops 600, the caches are unsurveyed. The starting building and beavers spawned normally.
 3. **Height.** The layer slicer reaches 65; a platform stack can be built to z = 65 and a block at z = 66 is refused.
 4. **Exactly once.** Save, return to the menu and load the save: no new `MapSetup` placement lines, the objects are not duplicated, and the height is still 66 (Map Transformer's log line `Terrain = 23, Total = 66`).
-5. **Diorama, new game.** The EXTREMELY difficult dialog appears once with the text above; the log lists every placement. Load its save: no dialog.
-6. **Beaverome, new game.** No EXTREMELY difficult dialog (it has Deep Mine sites since 2026-10-30): the shorter "cannot provide" dialog above appears, and the two veins, two Deep Ore Sources (8,500 each) and five caches are placed.
+5. **Diorama, new game.** No dialog (nothing unmet since the small-maps pass); the log lists 17 placements, the Limestone Seam at (45, 10, 6) among them. Optional: build the Nuclear Reactor at (28, 0, 3) rotated Cw270 after one Concrete Block at the low cell, to see the raised site accepted natively (the preview refuses it without the block). Load its save: no dialog.
+6. **Beaverome, new game.** No dialog: the two veins, two Deep Ore Sources (8,500 each), both seams, five caches and the vanilla Underground Ruins at (116, 120, 12) are placed (18 placements). The Efficient Mine can be placed on the ruins. On Cliffside the fishing dialog alone appears.
 7. **One map with unmet items and no warning** (see the table): the shorter dialog appears.
 8. **A shipped variant file** (`Deep Frontier - Lakes`): no `MapSetup` placement lines (outcome `UserMap`), the map's own objects are there as before.
 9. **An existing save** from before this build loads with no `MapSetup` lines and no dialog.
@@ -261,7 +251,7 @@ From the recipes (`loopCoverage.program` in the evidence):
 - Each failed launch consumes the whole rocket (base failure 30–40%, reduced by Mission Control and flight heritage to a 5% floor).
 - Oil plants burn 2 Crude Oil per working hour (0.67 DeepOre).
 - **The launch program therefore still depends on the permanent Deep Mines.** Every built-in map now has at least the two veins with checked mine sites that the rule requires (Lakes, Nomads, Oasis, Plains, Pressure and Terraces have three).
-- Scrap follows the same pattern: ruins hold 16,125–23,730, while one of each building alone needs 47,564. The Efficient Mine on Underground Ruins is required. Every map except Beaverome has at least one reachable (Beaverome's two lie under water and are declared unmet).
+- Scrap follows the same pattern: ruins hold 16,125–23,730, while one of each building alone needs 47,564. The Efficient Mine on Underground Ruins is required. Every map has at least one reachable: Beaverome's own two lie under water, so the setup places one on dry ground (2026-11-01).
 - Stone: three 600-yield outcrops per mineral (1,800) cover the 1,723 sandstone / 1,266 limestone needed before the quarries (4,000 science) about 1.04–1.4 times over (sandstone carries the bricks, kiln dirt and concrete rubble since the 2026-10-30 bricks pass). The quarries are permanent.
 
 ### Audit: gaps before and after (2026-10-24)
@@ -633,7 +623,7 @@ Contamination stays a consequence of play. Radioactive water comes from reactor 
 - **Full-loop coverage.** The eight stages of the requirement matrix. The evidence lists each item with its value and threshold (`loopCoverage.stages`), plus the start-resource survey, cache coverage and the raw-material program.
 - **Description.** It names Deep Frontier and every required mod of the manifest (`compose_description`).
 - **Compatibility.** All four files open with .NET `System.IO.Compression.ZipFile`, the API family the game's `SaveReader` uses.
-- **Negative tests** (`tools/test_prepare_deep_frontier_map.py`, 17 cases on Plains, all caught; builds go to a temporary folder). Each injected fault fails with the expected error:
+- **Negative tests** (`tools/test_prepare_deep_frontier_map.py`, 21 cases on Plains, all caught; builds go to a temporary folder). Each injected fault fails with the expected error:
   - no sandstone outcrops;
   - a pit away from its outcrops;
   - no limestone seam;
@@ -650,7 +640,13 @@ Contamination stays a consequence of play. Radioactive water comes from reactor 
   - one vein only;
   - no steel mill site;
   - an outcrop over water;
-  - a site for a building that needs none.
+  - a site for a building that needs none;
+  - a flat site declaring platform blocks it does not need;
+  - a raised site below its own terrain;
+  - platform blocks under a quarry (understructure);
+  - a vanilla map object not listed in `vanillaMapObjects`.
+
+  2026-11-01: the pit, open-margin, hatchery and finite-ore cases were repaired (they named the Restaurant, Launch Pad and Waste Vault sites removed by the second shrink, a hatchery shift that stays in water at 5×5, and 3 × 500 DeepOre, which now exceeds the 1,432 needed).
 
   The older harness cases (vein in water, wrong good, over capacity, mine off its vein, reactor too far from water, spring in a default variant, template outside the collection) are still enforced by the same code paths.
 

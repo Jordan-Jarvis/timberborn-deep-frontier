@@ -50,8 +50,12 @@ def cache_without_site(v):
 
 
 def hatchery_off_water(v):
+    # The hatchery takes the coal plant's dry, flat site, far from any water (a shift of a few cells
+    # along the shore keeps the 5x5 pens in water).
     s = site(v, 'FishHatchery.IronTeeth')
-    s['x'] += 6
+    other = site(v, 'CoalPowerPlant.IronTeeth')
+    s.update(x=other['x'], y=other['y'], z=other['z'])
+    drop_sites(v, 'CoalPowerPlant.IronTeeth')
 
 
 def quarry_wrong_seam(v):
@@ -63,12 +67,19 @@ def overlap(v):
     b.update(x=a['x'] + 2, y=a['y'] + 2, z=a['z'], orientation=a['orientation'])
 
 
+def footprint_corner(s):
+    cells = m.building_blocks(catalog, s['template']).columns((s['x'], s['y'], s['z']), s['orientation'])
+    return min(x for x, _ in cells), min(y for _, y in cells)
+
+
 def open_margin(v):
-    # The vault's top row (blueprint depth, Cw0) lands in the row just south of the pad: its open S margin.
-    pad = site(v, 'LaunchPad.IronTeeth')
-    vault = site(v, 'RadioactiveWasteVault.IronTeeth')
-    depth = catalog.get(vault['template'])['BlockObjectSpec']['Size']['Y']
-    vault.update(x=pad['x'], y=pad['y'] - depth, z=pad['z'], orientation='Cw0')
+    # The coal plant's top row (blueprint depth, Cw0) lands in the row just south of the steel mill:
+    # its open S margin.
+    mill = site(v, 'SteelMill.IronTeeth')
+    plant = site(v, 'CoalPowerPlant.IronTeeth')
+    depth = catalog.get(plant['template'])['BlockObjectSpec']['Size']['Y']
+    x, y = footprint_corner(mill)
+    plant.update(x=x, y=y - depth, z=mill['z'], orientation='Cw0')
 
 
 def dynamite_outside(v):
@@ -81,7 +92,7 @@ def dynamite_outside(v):
 def poor_sources(v):
     for p in v['placements']:
         if p['template'] == 'DeepOreSource':
-            p['amount'] = 500
+            p['amount'] = 100   # 300 in all; the buildings up to the Deep Mine need about 1,400
 
 
 def dry_dam(v):
@@ -90,10 +101,35 @@ def dry_dam(v):
 
 
 def pit_far(v):
+    # The pit takes the corner of the Electrolysis Plant's footprint (flat, far from the outcrops).
     pit = site(v, 'SandstonePit.IronTeeth')
-    other = site(v, 'Restaurant.IronTeeth')
-    pit.update(x=other['x'], y=other['y'], z=other['z'])
-    drop_sites(v, 'Restaurant.IronTeeth')
+    other = site(v, 'ElectrolysisPlant.IronTeeth')
+    x, y = footprint_corner(other)
+    pit.update(x=x, y=y, z=other['z'], orientation='Cw0')
+    drop_sites(v, 'ElectrolysisPlant.IronTeeth')
+
+
+def platforms_miscounted(v):
+    # A flat site on level ground declares platform blocks it does not need.
+    site(v, 'SteelMill.IronTeeth')['platformBlocks'] = 5
+
+
+def raised_below_terrain(v):
+    # A raised site may stand above its terrain, never inside it.
+    s = site(v, 'SteelMill.IronTeeth')
+    s['z'] -= 1
+    s['platformBlocks'] = 1
+
+
+def platforms_under_quarry(v):
+    # Understructure buildings stand on their real ground deposit: no platform key.
+    site(v, 'LimestoneQuarry.IronTeeth')['platformBlocks'] = 3
+
+
+def vanilla_object_not_listed(v):
+    # Only the vanilla map-editor objects of tools/map_setup.json vanillaMapObjects may be placed.
+    s = site(v, 'SteelMill.IronTeeth')
+    v['placements'].append({'template': 'Blockage', 'label': 'blockage', 'x': s['x'], 'y': s['y'] - 3, 'z': s['z']})
 
 
 def one_vein(v):
@@ -136,6 +172,10 @@ CASES = [
     ('no steel mill site', lambda v: drop_sites(v, 'SteelMill.IronTeeth'), 'SteelMill.IronTeeth site (flat): 0 checked sites'),
     ('outcrop over water', outcrop_in_water, 'SandstoneOutcrop@'),
     ('site of a building that needs none', bad_template, 'MapError'),
+    ('platform blocks miscounted', platforms_miscounted, 'platform blocks 0 != declared 5'),
+    ('raised site below its terrain', raised_below_terrain, 'is above the raised level'),
+    ('platforms under a quarry', platforms_under_quarry, 'MapError'),
+    ('vanilla object not in vanillaMapObjects', vanilla_object_not_listed, 'MapError'),
 ]
 
 failures = 0
