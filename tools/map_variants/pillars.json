@@ -43,7 +43,7 @@
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Buried records 82 cells south-east of the start", "x": 169, "y": 13, "z": 8, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "FishHatchery.IronTeeth", "label": "Fish Hatchery, 20 cells north of the start", "x": 99, "y": 99, "z": 12, "orientation": "Cw90", "dynamite": [[100, 98, 1], [100, 99, 1], [101, 99, 1], [102, 99, 1]]},
     {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "label": "Radioactive Sludge Recovery Pump, 14 cells north of the start", "x": 97, "y": 91, "z": 12, "orientation": "Cw90"},
-    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 76 cells south of the start", "x": 87, "y": 4, "z": 12, "orientation": "Cw180", "margin": 1, "openSides": []},
+    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 76 cells south of the start", "x": 87, "y": 2, "z": 12, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 81 cells south-east of the start", "x": 143, "y": 9, "z": 15, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "OilPowerPlant.IronTeeth", "label": "Oil Power Plant, 43 cells east of the start", "x": 146, "y": 80, "z": 12, "orientation": "Cw270", "margin": 1, "openSides": []},
     {"template": "CoalPowerPlant.IronTeeth", "label": "Coal Power Plant, 16 cells south of the start", "x": 103, "y": 63, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": ["S"]},

@@ -32,7 +32,7 @@
     {"template": "SandstonePit.IronTeeth", "label": "Sandstone Pit, 13 cells west of the start", "x": 57, "y": 69, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "FishHatchery.IronTeeth", "label": "Fish Hatchery, 20 cells west of the start", "x": 49, "y": 65, "z": 5, "orientation": "Cw0", "dynamite": [[49, 66, 1], [49, 67, 1]]},
     {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "label": "Radioactive Sludge Recovery Pump, 11 cells south of the start", "x": 72, "y": 60, "z": 5, "orientation": "Cw180"},
-    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 55 cells north of the start", "x": 65, "y": 123, "z": 16, "orientation": "Cw0", "margin": 1, "openSides": ["W"]},
+    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 55 cells north of the start", "x": 65, "y": 125, "z": 16, "orientation": "Cw0", "margin": 1, "openSides": ["W"]},
     {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 5 layers of natural drop, 34 cells north of the start", "x": 62, "y": 102, "z": 9},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 41 cells east of the start", "x": 104, "y": 58, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 45 cells north of the start", "x": 45, "y": 125, "z": 16, "orientation": "Cw90", "margin": 1, "openSides": []},

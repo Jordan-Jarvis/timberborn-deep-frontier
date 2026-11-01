@@ -47,7 +47,7 @@
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 110 cells south-west of the start", "x": 70, "y": 53, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E"]},
     {"template": "FishHatchery.IronTeeth", "label": "Fish Hatchery, 21 cells north-east of the start", "x": 145, "y": 147, "z": 3, "orientation": "Cw0"},
     {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "label": "Radioactive Sludge Recovery Pump, 17 cells north of the start", "x": 128, "y": 154, "z": 3, "orientation": "Cw270"},
-    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 145 cells south of the start", "x": 180, "y": 5, "z": 11, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E", "W"]},
+    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 145 cells south of the start", "x": 180, "y": 3, "z": 11, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E", "W"]},
     {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 7 layers of natural drop, 113 cells north of the start", "x": 109, "y": 249, "z": 3},
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 35 cells east of the start", "x": 160, "y": 130, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 53 cells south of the start", "x": 117, "y": 81, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},

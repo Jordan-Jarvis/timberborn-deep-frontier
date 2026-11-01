@@ -27,6 +27,7 @@
     {"template": "LimestoneSeam", "label": "Limestone Seam (Limestone Quarry, 27 cells west of the start)", "x": 103, "y": 43, "z": 5, "orientation": "Cw0"}
   ],
   "sites": [
+    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, in the north-edge notch", "x": 94, "y": 189, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["S"]},
     {"template": "LimestonePit.IronTeeth", "label": "Limestone Pit, 14 cells north of the start", "x": 135, "y": 56, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "SandstonePit.IronTeeth", "label": "Sandstone Pit, 11 cells north of the start", "x": 127, "y": 56, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": ["N", "W"]},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 44 cells north-east of the start", "x": 165, "y": 72, "z": 7, "orientation": "Cw90", "margin": 1, "openSides": []},
@@ -51,5 +52,5 @@
     {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 9 cells south-east of the start", "x": 132, "y": 33, "z": 6, "orientation": "Cw0", "margin": 2, "openSides": ["W"], "maxWaterDistance": 15},
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 22 cells north-west of the start", "x": 111, "y": 59, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]}
   ],
-  "unmet": [{"item": "shore fishing banks (first FreshFish)", "reason": "On the saved water only 2 bank cells on the whole map border clean water at least 0.5 deep (the nearest at route 91 with 5 bridge cells); the clean river and crater lakes are shallower everywhere else."}, {"item": "RadioactiveWasteExport.IronTeeth site (mapEdge)", "reason": "No 6x5 footprint touching the map edge is flat with a same-level door approach: the map border is sloped or wet everywhere except a 7x5 level-4 notch at x 93-99, y 187-191, whose door cells (y 186) stand one layer higher; the two flat edge spots at x 186-191, y 5-9 are under the source river."}]
+  "unmet": [{"item": "shore fishing banks (first FreshFish)", "reason": "On the saved water only 2 bank cells on the whole map border clean water at least 0.5 deep (the nearest at route 91 with 5 bridge cells); the clean river and crater lakes are shallower everywhere else."}]
 }

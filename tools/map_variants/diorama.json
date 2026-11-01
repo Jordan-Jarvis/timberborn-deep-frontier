@@ -29,7 +29,7 @@
     {"template": "DeepDrill.IronTeeth", "label": "Deep Drill, 19 cells south-east of the start", "x": 41, "y": 24, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "DeepDrill.IronTeeth", "label": "Deep Drill, 16 cells south of the start", "x": 30, "y": 20, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "SandstoneQuarry.IronTeeth", "label": "Sandstone Quarry, by the start", "x": 23, "y": 26, "z": 3, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S"], "understructure": [23, 22, 3]},
-    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 31 cells south-west of the start", "x": 18, "y": 4, "z": 2, "orientation": "Cw180", "margin": 1, "openSides": ["N"]},
+    {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 31 cells south-west of the start", "x": 18, "y": 2, "z": 2, "orientation": "Cw180", "margin": 1, "openSides": ["N"]},
     {"template": "FishHatchery.IronTeeth", "label": "Fish Hatchery, 25 cells south-west of the start (10 one-layer Dynamite charges on the bank)", "x": 15, "y": 9, "z": 2, "orientation": "Cw270", "dynamite": [[13, 9, 1], [13, 10, 1], [13, 11, 1], [13, 12, 1], [14, 9, 1], [14, 10, 1], [14, 11, 1], [14, 12, 1], [14, 13, 1], [15, 13, 1]]},
     {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "label": "Radioactive Sludge Recovery Pump, 29 cells south-west of the start", "x": 2, "y": 19, "z": 3, "orientation": "Cw90"},
     {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 13 layers of natural drop, 17 cells north-east of the start", "x": 36, "y": 45, "z": 2},

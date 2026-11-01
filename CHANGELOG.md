@@ -14,6 +14,7 @@
 
 ### Smaller late-game buildings (second shrink, continued)
 - **Launch Pad** is 7x7, 9 high (was 10x9, 12 high): the rocket is a little smaller and still stands whole on its mount over the flame trench, beside the service tower with its swing arms and crew cabin. The Rocket Assembly Hangar builds the same rocket. The blockhouse door moves three tiles left (still at the deck's front corner). Launches, missions and power are unchanged. No reserved map site any more.
+- **Radioactive Waste Export** is 4x3 (was 6x5): the lead-clad fill house, the cask car and the dispatch gate on the map-edge side. Its pipe inlet is now on the fill house front, right of the door. It still has to touch the map edge; Craters now has a place for it.
 - **Build costs of the shrunk late-game buildings** (Radioactive Waste Refinery, Mission Control, Radioactive Waste Vault, Rocket Assembly Hangar, Launch Pad) are back to what they were before the shrink.
 
 ## 0.8.2 (2026-11-01)

@@ -2,19 +2,19 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Lead-lined cask car on rails running from a steel filling gantry out through a hazard-striped dispatch gate on the map-edge side.",
   "footprint": [
-    6,
-    5
+    4,
+    3
   ],
   "heightLayers": 3,
   "boundsMin": [
     -0.0,
-    -0.035,
+    -0.1075,
     -0.02
   ],
   "boundsMax": [
-    6.0,
-    5.0,
-    2.74
+    4.03,
+    3.0,
+    2.7
   ],
   "doors": [
     {
@@ -39,19 +39,19 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 1392,
+  "faces": 1232,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 138,
-    "BaseMetal.IronTeeth": 855,
+    "BaseWood_DarkBrown.IronTeeth": 102,
+    "BaseMetal.IronTeeth": 789,
     "Details.IronTeeth": 176,
-    "accent8": 20,
+    "accent8": 10,
     "accent25": 16,
-    "Plaster_White.IronTeeth": 244,
-    "Plaster_Orange.IronTeeth": 207,
+    "Plaster_White.IronTeeth": 226,
+    "Plaster_Orange.IronTeeth": 177,
     "IrregularPlanks_MetalForged.IronTeeth": 12,
     "WindowsAtlas.IronTeeth": 22,
     "PaintedMetal.IronTeeth": 74
   },
-  "sourceHash": "94746fdba1742f3f2c9b362fe167c1cb639618379e00701150345340f6a391f6",
-  "artHash": "18f598d040bae0b62116b06ad99da93f8151efdbf04ce8ac076ef02f9ee080db"
+  "sourceHash": "082e045197e1e8069cd17c9e71f1c7301cd7e906acb7b6467fcef1b1484e8952",
+  "artHash": "b4a79b9439b84e92ccb95d80464c7f28bb201841f6bb9d3907f974b60e55f715"
 }

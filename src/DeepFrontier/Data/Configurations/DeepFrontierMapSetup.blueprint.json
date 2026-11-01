@@ -1,7 +1,7 @@
 {
   "BuiltinMapSetupSpec": {
-    "SmallMapMaxArea": 3076,
-    "ReferenceSiteArea": 1538,
+    "SmallMapMaxArea": 3028,
+    "ReferenceSiteArea": 1514,
     "DevMaps": [
       "_Mini",
       "_TerrainTest",
@@ -551,7 +551,6 @@
         "SmallArea": false,
         "NoDeepMineSite": false,
         "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Craters.Sites",
           "DeepFrontier.MapSetup.Unmet.Craters.1"
         ],
         "Placements": [
