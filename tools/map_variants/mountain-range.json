@@ -49,7 +49,6 @@
     {"template": "CryogenicLiquefactionPlant.IronTeeth", "label": "Cryogenic Liquefaction Plant, 121 cells north-east of the start", "x": 147, "y": 140, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E"]},
     {"template": "SteelMill.IronTeeth", "label": "Steel Mill, 81 cells east of the start", "x": 156, "y": 57, "z": 4, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},
     {"template": "DeepProcessor.IronTeeth", "label": "Deep Processor, 65 cells south-east of the start", "x": 126, "y": 2, "z": 3, "orientation": "Cw270", "margin": 1, "openSides": ["S"]},
-    {"template": "Hospital.IronTeeth", "label": "Hospital, 44 cells south-west of the start", "x": 49, "y": 7, "z": 1, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 128 cells north-east of the start", "x": 159, "y": 139, "z": 5, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E", "W"]},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 56 cells north-east of the start", "x": 97, "y": 88, "z": 16, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
     {"template": "RadioactiveWasteVault.IronTeeth", "label": "Radioactive Waste Vault, 140 cells north-east of the start", "x": 194, "y": 105, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E", "W"]},

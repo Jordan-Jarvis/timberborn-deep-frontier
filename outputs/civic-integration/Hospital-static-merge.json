@@ -3,45 +3,42 @@
   "targets": [
     "Hospital"
   ],
-  "joinedObjects": 5,
+  "joinedObjects": 3,
   "objects": [
     "Hospital.Architecture",
     "Hospital.Door.GroundDoor",
-    "Hospital.Door.RearDeckDoor",
-    "Hospital.Door.RearWardDoor",
     "Hospital.Door.RoofTerraceDoor"
   ],
   "nodes": [
     {
       "node": "StaticMerged",
-      "parts": 5,
-      "triangles": 8713,
+      "parts": 3,
+      "triangles": 4594,
       "materials": {
-        "Plaster_White.IronTeeth": 350,
-        "IrregularPlanks_DarkBrown.IronTeeth": 1070,
-        "Plaster_Orange.IronTeeth": 68,
-        "IrregularPlanks_MetalForged.IronTeeth": 32,
-        "BaseWood_DarkBrown.IronTeeth": 3150,
-        "BaseMetal.IronTeeth": 3555,
-        "RoofPlanks.IronTeeth": 442,
-        "DFIndustrial05": 22,
+        "Plaster_White.IronTeeth": 184,
+        "IrregularPlanks_DarkBrown.IronTeeth": 544,
+        "Plaster_Orange.IronTeeth": 36,
+        "BaseWood_DarkBrown.IronTeeth": 1834,
+        "BaseMetal.IronTeeth": 1678,
+        "RoofPlanks.IronTeeth": 270,
+        "DFIndustrial05": 24,
         "Details.IronTeeth": 24
       }
     },
     {
       "node": "StaticMerged.DFIndustrial08",
       "parts": 1,
-      "triangles": 200,
+      "triangles": 40,
       "materials": {
-        "DFIndustrial08": 200
+        "DFIndustrial08": 40
       }
     },
     {
       "node": "StaticMerged.WindowsAtlas.IronTeeth",
-      "parts": 5,
-      "triangles": 766,
+      "parts": 3,
+      "triangles": 484,
       "materials": {
-        "WindowsAtlas.IronTeeth": 766
+        "WindowsAtlas.IronTeeth": 484
       }
     }
   ],

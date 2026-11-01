@@ -44,7 +44,7 @@ FREED = {
         # native x 4..7 of that frame (ORIGIN x -4), so all three are now
         # outside its bounds and no freed cell is inside.
         'cells': [],
-        'outside': 'the two former front rows (planters, sunflowers, canopy footprint), and the rear barrel and supply pile under the removed wings\' back balcony: now outside the 4x9 bounds',
+        'outside': 'the two former front rows (planters, sunflowers, canopy footprint), and the rear barrel and supply pile under the removed wings\' back balcony: now outside the 4x4 bounds (4x9 until 2026-11-01)',
     },
     'Buildings/Science/MaterialsLaboratory/MaterialsLaboratory.IronTeeth.blueprint.json': {
         # Front specimen shelves, rear planters, barrel and crate.

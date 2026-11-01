@@ -92,8 +92,8 @@ namespace DeepFrontier.Scripts {
       foreach(var e in _registry.Entities.Where(e=>e.HasComponent<Workplace>()&&e.HasComponent<PausableBuilding>()))e.GetComponent<PausableBuilding>().Pause();
       // The hospital stands at the fixture origin; its road, deck paths, stairs, shaft line and
       // rail seam below follow the installed blueprint (CivicFixtureGeometry), not a size literal
-      // (4x9x9 since the 2026-10-30 compaction: the central pavilion, rear decks at layers 2 and 4,
-      // roof garden at 6).
+      // (4x4x4 since the 2026-11-01 second shrink: two one-layer wards, a front gable and the
+      // roof garden at layer 2 beside a one-tile stairhead; 4x9x9 with rear decks before).
       _building=Create("Hospital.IronTeeth",Origin.x,Origin.y,Origin.z);_hospital=_building.GetComponent<Hospital>();
       _supplies=_building.GetComponent<GoodConsumingBuilding>();_ward=_building.GetComponent<Enterable>();
       var spec=_building.GetComponent<BlockObjectSpec>();var deck=_building.GetComponent<PlatformDeckSpec>();

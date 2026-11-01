@@ -1,7 +1,7 @@
 {
  "ident": "Hospital",
  "source": "src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend",
- "sourceSha256": "25be7296c9afdf8c36bf37a9cd5aa1824e2fa1071f6e605a66f1285cd4e7535f",
+ "sourceSha256": "764b73ce6eb7139bfc79db7d0aa1f5634715338104d86f07b2e453e300ebc5a0",
  "frame": 1,
  "layout": "tools/civic-layouts.json",
  "origin": [
@@ -12,9 +12,9 @@
  "baseZ": 0,
  "footprint": [
   4,
-  9
+  4
  ],
- "height": 9,
+ "height": 4,
  "coordinateSystem": "Native grid XYZ, Z up: authored artwork + registration origin (the late-game registration frame)",
  "smokeEmitters": [],
  "sceneCheck": {

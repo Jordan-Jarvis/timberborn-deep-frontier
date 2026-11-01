@@ -2,13 +2,13 @@
   "status": "Blender art study; not exported or installed",
   "boundsMin": [
     -9.300999641418457,
-    -11.0,
+    -6.10099983215332,
     0.0
   ],
   "boundsMax": [
     -4.698999881744385,
     -1.6399999856948853,
-    8.5649995803833
+    3.815000057220459
   ],
   "sourceReference": "docs/art/concepts/Hospital.png",
   "selectedReferenceViews": [

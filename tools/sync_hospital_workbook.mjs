@@ -32,9 +32,10 @@ for (const [name, target] of Object.entries(targets)) {
 if (mode === 'apply') {
   const blueprint = JSON.parse(await fs.readFile(`${root}src/DeepFrontier/Data/Buildings/Wellbeing/Hospital/Hospital.IronTeeth.blueprint.json`, 'utf8'));
   const size = blueprint.BlockObjectSpec.Size;
-  // The 4x9x9 pavilion since 2026-10-30; open decks with no rails since 2026-10-31.
-  if (size.X !== 4 || size.Y !== 9 || size.Z !== 9 || blueprint.PlatformDeckSpec.Openings.length !== 0) {
-    throw new Error('Hospital canonical 4x9x9 / no-rail package has not been generated.');
+  // The 4x9x9 pavilion since 2026-10-30; open decks with no rails since 2026-10-31;
+  // 4x4x4 since the second shrink pass (2026-11-01).
+  if (size.X !== 4 || size.Y !== 4 || size.Z !== 4 || blueprint.PlatformDeckSpec.Openings.length !== 0) {
+    throw new Error('Hospital canonical 4x4x4 / no-rail package has not been generated.');
   }
   const {hospitalBuildingUpdates, hospitalTransport, hospitalSource} = await import('./hospital_workbook.mjs');
   const changes = [];

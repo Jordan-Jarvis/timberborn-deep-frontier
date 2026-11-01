@@ -7,6 +7,11 @@ There are no interior floors, furniture or rooms visible behind the windows.
 just keeping the center." The pavilion's artwork is unchanged; the ward
 wings, ward roofs and flues, front ward balconies and the rear balcony ends
 are removed. Source coordinates are unchanged (hospital_structure.ORIGIN).
+
+2026-11-01 (second shrink pass): 4x4x4. Two one-layer storeys (`storey`
+walls, half-scale windows), a front-facing gabled roof over the front half
+with the medical cross in its gable, the concrete roof garden at layer 2 over
+the back half and a one-layer stairhead on the back-right corner.
 """
 import math
 import random
@@ -70,6 +75,10 @@ def hospital_room(g,name,door_id=None):
     from building_components import recipe
     b=ROOMS[name];x0,y0,z0,x1,y1,z1=b
     d=DOORS[door_id] if door_id else None
+    # One-layer storeys (2026-11-01): the storey infill and door lamps under
+    # the room's head fascia, as civic component_doorway_storey.
+    style='storey' if z1-z0==1 else 'banded'
+    lamp_z=.36 if z1-z0==1 else 1.20
     rear=d is not None and d['outward']==[0,1]
     part=Geometry('Hospital '+name)
     if rear:
@@ -87,10 +96,10 @@ def hospital_room(g,name,door_id=None):
         # No joined ends since the wards were removed (2026-10-30).
         joins={}
         grid_room(part,name,[0,0,0,w,depth,height],[0,0,0],(cx,1),exterior=converted,
-                  joined_ends=joins,joined_post_inset=.008 if joins else 0.0)
+                  joined_ends=joins,joined_post_inset=.008 if joins else 0.0,wall_style=style)
         # Portals are independent assets; keep their neighboring lamps in the
         # existing ward decoration so a door edit does not regenerate it.
-        for dx in (-.62,.62):wall_lamp(part,cx+dx,.17,1.20)
+        for dx in (-.62,.62):wall_lamp(part,cx+dx,.17,lamp_z)
         if name=='RoofStairhead':glazing(part,.5,.04,1.43,.72,style='diamond')
         # Native bounds -> source artwork coordinates (source = native - ORIGIN).
         sx1,sy1,sz0=source((x1,y1,z0))
@@ -100,10 +109,12 @@ def hospital_room(g,name,door_id=None):
     else:
         joins={}
         grid_room(part,name,b,ORIGIN,(d['position'][0],1) if d else None,exterior=EXTERIOR_WALLS[name],joined_ends=joins,
-                  joined_post_inset=.008)
-        if d:
+                  joined_post_inset=.008,wall_style=style)
+        if d and x1-x0>1:
+            # A one-tile stairhead (2026-11-01) has no wall beside its door
+            # for the lamps.
             x,y,z=source(d['position'])
-            for dx in (-.62,.62):wall_lamp(part,x+dx,y+.17,z+1.20)
+            for dx in (-.62,.62):wall_lamp(part,x+dx,y+.17,z+lamp_z)
         append_transformed(g,part,lambda p:p)
         g.structural_parts.extend(part.structural_parts)
     if d:
@@ -156,63 +167,62 @@ def medical_banner(g,parts,x,y,z):
     g.beam((x,y+.033,z+.73),(x,y+.56,z+.73),.065,mat=IRON)
 
 
+def medical_banner_storey(g,parts,x,y,z):
+    """medical_banner for a one-layer storey (2026-11-01): the same insignia
+    at .55 scale under the storey's head fascia; same node name."""
+    s=.55
+    m=Geometry('Hospital.WardBanner'+str(x),(x,y,z+.72*s))
+    m.box((x,y,z),(.40*s,.045,1.20*s),ROOF)
+    m.add([(x-.20*s,y,z-.60*s),(x+.20*s,y,z-.60*s),(x,y,z-.78*s)],[(0,1,2)],ROOF)
+    m.beam((x,y-.03,z-.35*s),(x,y-.03,z+.43*s),.028*s,mat=LIME)
+    for i in range(8):
+        a=i*math.pi/2;b=(i+1)*math.pi/2
+        m.beam((x+math.sin(a)*.08*s,y-.035,z+(-.32+i*.08)*s),
+               (x+math.sin(b)*.08*s,y-.035,z+(-.32+(i+1)*.08)*s),.021*s,mat=LIME)
+    parts.append((m,'SWAY',.009))
+    g.beam((x-.29*s,y,z+.73*s),(x+.29*s,y,z+.73*s),.065*s,mat=BRASS)
+    g.beam((x,y+.033,z+.73*s),(x,y+.35,z+.73*s),.065*s,mat=IRON)
+
+
 def hospital(g,parts):
+    """4x4x4 (2026-11-01). Source coordinates: native + (5,2,0)."""
     from civic_isometric_geometry import (
-        gabled_roof,roof_bearing,glazing,planter,wall_lamp,framed_cross,
-        chimney,supply_pile,awning,CIVIC_TERRACES)
+        gabled_roof,roof_bearing,glazing,wall_lamp,framed_cross,CIVIC_TERRACES)
     r=RailAssembly('WalkwayRail.Hospital')
-    entrances={'CentralLower':'GroundDoor','CentralMiddle':'RearDeckDoor','CentralUpper':'RearWardDoor','RoofStairhead':'RoofTerraceDoor'}
+    entrances={'CentralLower':'GroundDoor','RoofStairhead':'RoofTerraceDoor'}
     for name in ROOMS:hospital_room(g,name,entrances.get(name))
 
-    roof_bearing(g,5,2,9,6,6,6.15)
-    transverse_roof(g,4.84,1.84,9.16,6.00,6.15,7.70,732)
-    # The main cross and paired lancets identify the medical entrance from
-    # a distance. These are original native window meshes and exact UVs.
-    framed_cross(g,7.0,1.89,3.23)
-    for x in (5.65,6.50,8.50):glazing(g,x,2.04,1.10,1.35,style='lancet')
-    for x in (5.85,8.15):glazing(g,x,2.04,3.10,1.45,style='lancet')
-    # Banners hang 0.25 off the facade (was 0.54), inside the overhang allowance.
-    for x in (5.18,8.82):medical_banner(g,parts,x,1.75,3.16)
-    for x in (6.0,8.0):glazing(g,x,2.04,5.10,1.50,style='grand')
-    glazing(g,7.0,2.04,5.10,1.30,style='lancet')
-    # Rear care wing: a different window rhythm around the upper access door.
+    # Front-facing gable over the front half (native y 0..2): the ridge runs
+    # front to back at native x 2, eaves overhang the side walls by .16 and
+    # the gable stands .04 ahead of the front wall. Its back end meets the
+    # roof garden at native y 2, as the transverse roof met it before.
+    roof_bearing(g,5,2,9,4,2,2.15)
+    gabled_roof(g,4.84,1.96,9.16,4.00,2.15,3.70,732)
+    # The medical cross identifies the entrance from a distance, in the gable.
+    framed_cross(g,7.0,1.86,2.76)
+    # Ground storey (layer 0): door at source x 7.5 (7.0..8.0), lamps at
+    # 6.88 and 8.12; half-scale windows as on the other one-layer storeys.
+    for x in (5.75,6.40,8.60):glazing(g,x,2.04,.48,.50,style='factory')
+    # Upper ward storey (layer 1).
+    for x in (5.70,6.35,7.65,8.30):glazing(g,x,2.04,1.46,.50,style='lancet')
+    glazing(g,7.0,2.04,1.46,.50,style='grand')
+    for x in (5.18,8.82):medical_banner_storey(g,parts,x,1.75,1.45)
+    # Rear care wing rhythm, and the side lancets on both storeys.
     for x in (5.8,7.0,8.2):
-        glazing(g,x,9.96,1.08,1.40,'back','factory')
-        if x!=7.0:glazing(g,x,9.96,5.10,1.30,'back','lancet')
-    # Layer 2 has the back-balcony door at source x 7.5 (7.0..8.0) with its
-    # lamps at 6.88 and 8.12; the windows stand clear of both.
-    glazing(g,5.95,9.96,3.08,1.40,'back','factory')
-    glazing(g,8.50,9.96,3.08,1.20,'back','lancet')
+        glazing(g,x,5.96,.48,.50,'back','factory')
+        glazing(g,x,5.96,1.46,.50,'back','lancet')
     for x,face in ((5.04,'left'),(8.96,'right')):
-        for y in (2.50,6.75,8.05,9.25):glazing(g,x,y,5.05,1.30,face,'lancet')
-        # The lower two storeys' side walls faced the wards until 2026-10-30;
-        # they carry the upper storey's lancet rhythm now.
-        for z in (1.10,3.10):
-            for y in (2.50,6.75,8.05,9.25):glazing(g,x,y,z,1.30,face,'lancet')
+        for y in (3.0,4.0,5.0):
+            for z in (.48,1.46):glazing(g,x,y,z,.50,face,'lancet')
 
     for name,b in PLATFORMS.items():
         # 10 mm board relief: 4 mm sat on the strict 0.004 overlap tolerance.
         grid_platform(g,name,b,ORIGIN,SUPPORTS[name],CIVIC_CONCRETE if name=='RoofGarden' else PLANK,board_relief=.010)
-    # No deck rails (2026-10-31 roof pass, user: no railings on the roofs, "like
-    # an actual platform where roads can connect"): the rear decks and the roof
-    # garden are open to their tile edges.
-    # Access house closes the central rear roof, with a small metal cap and
-    # a proper opaque attic accent above its one-tile native arch.
-    roof_bearing(g,7,6,8,7,8,8.05)
-    gabled_roof(g,6.96,6.04,8.04,6.96,8.05,8.45,748)
+    # No deck rails (2026-10-31 roof pass): the roof garden is open to its
+    # tile edges. The stairhead closes with a small gabled cap.
+    roof_bearing(g,8,5,9,6,3,3.05)
+    gabled_roof(g,7.96,5.04,9.04,5.96,3.05,3.45,748)
     CIVIC_TERRACES['Hospital']['accessDoor']=g.doorways[-1]
-    # The ward steriliser flues went with the wings and the last steam flue
-    # through the transverse roof went too (2026-10-30, user: "no roof vents").
-
-    # 2026-10-22 (user): no forced decoration beyond the walls. The facade
-    # planters, the rear supply pile and barrel are gone, and the footprint
-    # ends at the pavilion front wall (source y 2). The entrance canopy is a
-    # vanilla-sized overhang: 0.25 deep, no ground tile, still over the door.
-    entrance_canopy(g,6.20,1.75,8.80,2.0,1.66,1.82)
-    for x in (5.45,8.55):wall_lamp(g,x,10.0,1.35,'back')
-    # External clean-water line and steel ventilation equipment reinforce the
-    # hospital's function and distinguish it from public dining architecture.
-    for x in (5.2,8.8):
-        round_pipe(g,[(x,10.12,.40),(x,10.12,1.55),(x,10.12,3.75)],.055)
-        for z in (.6,1.5,2.7,3.5):g.box((x,10.12,z),(.15,.14,.06),IRON)
+    # A vanilla-sized entrance canopy, 0.25 deep, over the one-layer door.
+    entrance_canopy(g,6.20,1.75,8.80,2.0,.90,.98)
     return r

@@ -373,9 +373,9 @@
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 10887,
-   "vertices": 23866,
-   "construction": 10887,
+   "finished": 5332,
+   "vertices": 11234,
+   "construction": 5332,
    "file": "outputs/civic-integration/Data/Buildings/Wellbeing/Hospital/Hospital.IronTeeth.Model.timbermesh"
   },
   "HumanRecordCache": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 815418,
+ "totalBlueprintTriangles": 804308,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

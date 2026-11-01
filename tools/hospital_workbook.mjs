@@ -17,12 +17,12 @@ export const hospitalBuildingUpdates=new Map([['B011',{
   'Flags':`${p.patientCapacity} patients; staff use no patient slots; player-placed paths; ${layout.nodes.length} authored access cells; open decks with no rails; native F mirroring`,
   'Recipe names':'None; native per-hour supply consumption','Source':source,'Data status':p.requirementStatus,
   'Role':'Treat injuries, chipped teeth and badwater contamination; staffed neighborhood care',
-  'Stackable':'Clear 4x3 roof construction area','Stacking rule':'Clear 4x3 roof area at layer 6; player-placed paths; native support/collision; no layer cap',
+  'Stackable':'Open 4x2 roof garden (3x2 clear beside the stairhead)','Stacking rule':'Roof garden at layer 2; player-placed paths; native support/collision; no layer cap',
   'Conveyor-only solids':'No','Pipe ports':'Water inventory; pipe transfer unverified','Power mode':'Grid',
   'Unlock prerequisites':`${p.scienceUnlock} science; concrete, treated planks, metal, gears; medicine, water and extract deliveries`,
   'Inputs':`${inputs} per operating hour; ${p.supplyBufferHours}-hour buffer`,
   'Outputs':'Native condition recovery; Public Healthcare neighborhood wellbeing','Waste / side effect':'None',
-  'Placement':'Two ward wings and a central pavilion; four one-tile doors connect through enclosed interiors to player-built paths at 0/2/4/6',
+  'Placement':'Compact 4x4 two-storey pavilion; two one-tile doors (ground and roof garden at layer 2) connect through enclosed interiors to player-built paths',
   'Player cue':'Care panel shows patient occupancy, attending staff and care availability','Status':p.requirementStatus,
   'Notes':`Full staff and power target 1.8x Medical Bed injury recovery during treatment. Native treatment replaces passive healing on those ticks. ${p.areaRadius}-cell native area radius; +${p.areaWellbeingPoints} wellbeing cap. ${p.supplyPolicy} ${p.balanceStatus}`
 }]]);
@@ -45,7 +45,7 @@ export const hospitalProgressionUpdates=new Map([['G005',{
 }]]);
 export const hospitalTransport=['T018','Iron Teeth','Hospital supplies and access','Native hauling; player-placed deck paths',
   'Medicine; Water; Extract',null,b.MechanicalNodeSpec.PowerInput,'Ground entrance; native power shaft; six attending staff',
-  'Four doors at 0/2/4/6; galleries at 2/4; clear 4x3 roof area at 6',`${p.areaRadius}-cell native area effect`,
+  'Two doors at 0/2; roof garden at layer 2',`${p.areaRadius}-cell native area effect`,
   'Sustain ward care and nearby wellbeing',`${p.supplyBufferHours}-hour input buffer; actual attending staff`,
   'Pipes and belts require runtime checks','Native Enterable, Attraction, GoodConsumingBuilding and RangedEffectBuilding',
   'Native support and collision; no artificial layer cap',source,p.requirementStatus];

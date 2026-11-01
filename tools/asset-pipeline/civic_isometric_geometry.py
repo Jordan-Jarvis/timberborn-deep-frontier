@@ -112,11 +112,11 @@ from lategame_kit import emitter
 # must clear these lanes; these are geometry checks, not a native navmesh claim.
 CIVIC_ACCESS={
     'FishHatchery':HATCHERY_ACCESS,
-    'Hospital':{'entrance':[7.5,2,0], 'balconyLayers':[2,4], 'headroom':1.09,
-                'routes':[[(5.5,10.5),(8.5,10.5)]],
-                # Source coordinates (native + 5 in X since the wings were
-                # removed, 2026-10-30): one bay behind the rear deck.
-                'stairBays':[[5,11,6,13]]},
+    # 2026-11-01 (4x4x4): the walk check covers the layer-2 roof garden's
+    # two rows (source = native + (5,2)).
+    'Hospital':{'entrance':[7.5,2,0], 'balconyLayers':[2], 'headroom':1.09,
+                'routes':[[(5.5,4.5),(8.5,4.5)],[(5.5,5.5),(7.5,5.5)]],
+                'stairBays':[[5,6,6,8]]},
     # 2026-10-30: one layer per storey; walking clearance stops under the
     # beams of the deck one layer above (restaurant_structure.HEADROOM).
     'Restaurant':{'entrance':[2.3,1.85,0], 'balconyLayers':[1,2], 'headroom':RESTAURANT_HEADROOM,
@@ -136,7 +136,7 @@ CIVIC_ACCESS={
 # during game integration, not inferred by shrinking the art to a tile count.
 CIVIC_TERRACES={
     'FishHatchery':HATCHERY_TERRACE,
-    'Hospital':{'bounds':[5,6,9,10], 'layer':6, 'clearArea':[5.3,7.3,8.7,9.7]},
+    'Hospital':{'bounds':[5,4,9,6], 'layer':2, 'clearArea':[5.3,4.3,7.7,5.7]},
     'Restaurant':{'bounds':[5.8,2.85,9.8,5.85], 'layer':3, 'clearArea':[7.05,3.10,9.55,5.60]},
     'GroceryStore':{'bounds':[6.48,3.25,9.68,6.15], 'layer':6, 'clearArea':[7.2,3.7,9.2,5.7]},
     'FisheryWorks':{'bounds':[-1.25,4.00,1.40,7.10], 'layer':1, 'clearArea':[-.95,4.45,.65,6.15]},

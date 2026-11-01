@@ -21,7 +21,10 @@ require(not any(name.startswith('#Slot#Seat') for name in names),'Hospital patie
 native={'BaseWood_DarkBrown.IronTeeth','IrregularPlanks_DarkBrown.IronTeeth','RoofPlanks.IronTeeth',
         'BaseMetal.IronTeeth','Details.IronTeeth','Plaster_White.IronTeeth',
         'Plaster_Orange.IronTeeth','IrregularPlanks_MetalForged.IronTeeth'}
-require(native<={m.material for n in model.nodes for m in n.meshes},'Missing original civic palette')
+# The one-layer storeys (2026-11-01, 4x4x4) drop the two-layer wall's forged
+# head band, so the forged planks are allowed but no longer required.
+required=native-{'IrregularPlanks_MetalForged.IronTeeth'}
+require(required<={m.material for n in model.nodes for m in n.meshes},'Missing original civic palette')
 uv_count=0
 for n in model.nodes:
     meshes=[m for m in n.meshes if m.material in native]
@@ -42,7 +45,8 @@ require(all(not any(p['name'] in n for n in names) for p in assembly['props']),'
 require('NativeBuildingPropsSpec' not in blueprint and len(assembly['props'])==0,'Native prop binding mismatch')
 # 2026-10-21: front/back balconies only; each ward and the back balcony has its own door.
 # Since the wings were removed (2026-10-30): ground, rear deck, rear ward and roof garden doors.
-require('BuildingWalkwaySpec' not in blueprint and len(blueprint['PlatformDeckSpec']['Doors'])==4,'Hospital must use player roads and four internal doors')
+# 4x4x4 since 2026-11-01: the ground door and the roof garden stairhead door.
+require('BuildingWalkwaySpec' not in blueprint and len(blueprint['PlatformDeckSpec']['Doors'])==2,'Hospital must use player roads and two internal doors')
 require(blueprint['PlatformDeckSpec']['Openings']==[],'The Hospital decks have no rails (2026-10-31 roof pass)')
 require(not any(n.startswith(('WalkwayRail','WalkwayGroup')) for n in names),'Railing node exported')
 cells={tuple(n['cell']) for n in layout['nodes']};graph={c:set() for c in cells}
@@ -55,8 +59,8 @@ while queue:
     c=queue.pop()
     if c in seen:continue
     seen.add(c);queue.extend(graph[c]-seen)
-require(seen==cells and len(cells)==37,'Disconnected hospital doors/galleries')
-require({c[2] for c in layout['doorNodes']}=={0,2,4,6},'Existing doors were moved')
+require(seen==cells and len(cells)==14,'Disconnected hospital doors/roof garden')
+require({c[2] for c in layout['doorNodes']}=={0,2},'Existing doors were moved')
 w,d,h=layout['size'];blocks=blueprint['BlockObjectSpec']['Blocks']
 require(len(blocks)==w*d*h,'Occupation extent mismatch')
 # The footprint ends at the walls (2026-10-22): every ground cell outside the
@@ -70,7 +74,7 @@ for y in range(d):
 for x,y,z in layout['buildableCells']:
     require(blocks[((z-1)*d+y)*w+x]['Stackable']=='BlockObject','Roof terrace has no native support')
     require(blocks[(z*d+y)*w+x]['Occupations']=='None','Fixed object consumes clear hospital roof space')
-require(len(layout['buildableCells'])==12,'The central four-by-three roof garden must stay clear')
+require(len(layout['buildableCells'])==6,'The three-by-two roof garden beside the stairhead must stay clear')
 require(blueprint['BlockObjectSpec']['Flippable'],'Hospital must offer native mirroring')
 require('ManufactorySpec' not in blueprint and 'WorkshopSpec' not in blueprint,'Hospital retains factory behavior')
 require('FixedSlotManagerSpec' not in blueprint and 'WorkplaceSlotManagerSpec' not in blueprint,'Staff/patient capacity must not share restaurant slots')
@@ -101,7 +105,7 @@ require(blueprint['HospitalSpec']['WardWorkPosition']=={'X':2.5,'Y':0,'Z':3.5},'
 report={'status':'Source/export checks passed; native runtime acceptance pending','size':[w,d,h],
         'sourceSha256':hashlib.sha256((ROOT/'src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend').read_bytes()).hexdigest(),
         'exportSha256':hashlib.sha256(payload).hexdigest(),'nodes':len(model.nodes),'nativeUvVertices':uv_count,
-        'routes':len(cells),'openings':42,'doors':6,'doorLevels':[0,2,4,6],'nativeProps':0,'bannerTracks':2,
+        'routes':len(cells),'openings':0,'doors':2,'doorLevels':[0,2],'nativeProps':0,'bannerTracks':2,
         'patients':30,'workers':6,'patientMeals':meals,'hpDemand':11000,'hpOutput':0,'science':25000,'treatmentEffects':effects}
 (ROOT/'outputs/civic-integration/hospital-static-checks.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 print(json.dumps(report,indent=2))

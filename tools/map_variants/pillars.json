@@ -58,8 +58,7 @@
     {"template": "RadioactiveWasteVault.IronTeeth", "label": "Radioactive Waste Vault, 97 cells south-east of the start", "x": 191, "y": 36, "z": 8, "orientation": "Cw180", "margin": 1, "openSides": ["N"]},
     {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 25 cells north-east of the start", "x": 119, "y": 91, "z": 13, "orientation": "Cw270", "margin": 2, "openSides": ["N", "S"], "maxWaterDistance": 15},
     {"template": "TechnicalSchool.IronTeeth", "label": "Technical School, 27 cells north of the start", "x": 96, "y": 101, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 57 cells north of the start", "x": 117, "y": 134, "z": 10, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "Hospital.IronTeeth", "label": "Hospital, 24 cells south of the start", "x": 101, "y": 48, "z": 8, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]}
+    {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 57 cells north of the start", "x": 117, "y": 134, "z": 10, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]}
   ],
   "unmet": [{"item": "irrigated farmland near the start", "reason": "The only clean water within route 60 of the start is the pond of the seep at (103, 93) (strength 1); within 4 cells of it lie 168 dry cells, but 77 of them are forest, leaving 91 free cells (min 150). Every other clean water body is a seep pond on another pillar beyond the badwater channels."}, {"item": "ReinforcedHydroTurbine.IronTeeth site (hydro)", "reason": "No source-fed water has any natural bed drop: the four seep ponds each lie on one bed level (11, 12, 13, 13) and the badwater channel network fed by the eight badwater sources lies entirely on level 0."}]
 }

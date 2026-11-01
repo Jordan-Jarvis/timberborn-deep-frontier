@@ -95,7 +95,7 @@ node tools/validate_map_setup.mjs
 
 A built-in map gets the **EXTREMELY difficult** warning (`BuiltinMapSpec.Small`) when either holds (`tools/map_setup.json` `smallMap`):
 
-- **Small area** (`SmallArea`): its area is below `smallMap.maxArea` = **5,966** cells (11,176 before the 2026-10-30 compaction). The number is derived and checked: the largest area the full-loop sites claim on a reference map (primary footprints plus their listed open margins: Plains 2,983, Terraces 2,865, Lakes 2,687; 5,588 / 5,476 / 5,134 before the compaction) divided by the land share 1/2. Below it the late-game sites alone would cover more than half the map, before terrain, water, farms, forest and homes. The built-in sizes fall into clear groups (2,500; 5,000; 16,384; 36,864–38,400; 65,536), so the rule picks out exactly **Diorama** (50×50) and **Cliffside** (100×50); the 128×128 maps are almost three times larger.
+- **Small area** (`SmallArea`): its area is below `smallMap.maxArea` = **5,358** cells (11,176 before the 2026-10-30 compaction). The number is derived and checked: the largest area the full-loop sites claim on a reference map (primary footprints plus their listed open margins: Plains 2,679, Terraces 2,538, Lakes 2,383; 5,588 / 5,476 / 5,134 before the compaction) divided by the land share 1/2. Below it the late-game sites alone would cover more than half the map, before terrain, water, farms, forest and homes. The built-in sizes fall into clear groups (2,500; 5,000; 16,384; 36,864–38,400; 65,536), so the rule picks out exactly **Diorama** (50×50) and **Cliffside** (100×50); the 128×128 maps are almost three times larger.
 - **No Deep Mine site** (`NoDeepMineSite`): the variant lists no primary site of `smallMap.deepMineSite` (`DeepMine.IronTeeth`, which `builtin` checks is the only building over a Deep Ore Vein). The Deep Mine is the only permanent deep ore, and the finite sources are sized for one of each building, not for the launch program. Since the 2026-10-30 re-plan every built-in map has Deep Mine sites (Beaverome and Diorama gained two each with the 7×6 mine), so no map gets the warning for this reason.
 
 So two maps get the warning: Cliffside and Diorama, both by area. Beaverome no longer does: its only reason was the missing Deep Mine, and it now shows the shorter "cannot provide" notice. The dialog appears once when the game UI appears (`DialogBoxShower`), built from the generated text and the map's own data. The small-area lines appear only on a small map, the Deep Mine line only without a Deep Mine site:
@@ -249,7 +249,7 @@ A map supports the loop when a player can reach every stage, from the start to t
 | 7 Rocket | Water Treatment Plant → Electrolysis → Cryogenic Liquefaction → Cryogenic Tank Farm; Rocket Assembly Hangar; Mission Control; Launch Pad | flat sites; source-fed clean water (three launches need about 26,400 Water) | sizes, mission recipes | flat sites, `clean water` |
 | 8 Space | every building above | non-overlapping primary sites, door approach free and routable, listed open margins clear of other footprints and placements | — | site checks |
 | — | Fish Hatchery (7×7×5 since 2026-10-26) | door cell on dry ground at the bank level; the other bank cells at or below it (adaptive bank posts); deck blocks above terrain (they may stand in water); each of the four work cells (local y 5) in an open water column whose surface stands ≥ 0.2 above the cell floor (bank − 1) and holding ≤ 7 of water; work cell 0 contamination ≤ 0.05; every pile and bank post reaches the bed within 6; Dynamite allowed on deck cells | `WaterDepthWorkCellsSpec`, `ContaminationBlockableBuilding` | waterside site |
-| — | Fishery Works, Restaurant, Grocery, Hospital, Town Plaza, Greenhouse, Fertilizer Works, Food Packaging Works, Technical School, Materials Laboratory | flat sites. The fishery's basins are filled by haulers or pipes, so it does not need a shore | size | flat sites |
+| — | Fishery Works, Restaurant, Grocery, Town Plaza, Greenhouse, Fertilizer Works, Food Packaging Works, Technical School, Materials Laboratory | flat sites. The fishery's basins are filled by haulers or pipes, so it does not need a shore | size | flat sites |
 
 ### Quantities: is the deep ore enough for a launch program?
 
@@ -433,7 +433,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S26 | MissionControl | Mission Control, 64 cells south of the start | 106, 83, 4 Cw90 | flat | open NSEW (1) | 63 / 0 | 12 |
 | S27 | SteelMill | Steel Mill, 53 cells west of the start | 75, 151, 3 Cw0 | flat | open NSEW (1) | 52 / 9 | 9 |
 | S28 | DeepProcessor | Deep Processor, 39 cells north of the start | 122, 172, 3 Cw0 | flat | open NSEW (1) | 37 / 6 | 13 |
-| S30 | Hospital | Hospital, 64 cells south of the start | 117, 71, 4 Cw0 | flat | open NSEW (1) | 55 / 0 | 34 |
 | S31 | ElectrolysisPlant | Electrolysis Plant, 47 cells north-west of the start | 95, 178, 4 Cw90 | flat | open NSEW (1) | 66 / 6 | 52 |
 | S32 | PrecisionMachineWorks | Precision Machine Works, 50 cells north of the start | 107, 180, 4 Cw0 | flat | open NSEW (1) | 60 / 6 | 51 |
 | S34 | RadioactiveWasteVault | Radioactive Waste Vault, 39 cells north-west of the start | 92, 150, 3 Cw0 | flat | open NSEW (1) | 37 / 7 | 16 |
@@ -500,7 +499,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S25 | MissionControl | Mission Control, 77 cells south of the start | 106, 59, 2 Cw90 | flat | open NSEW (1) | 70 / 0 | 50 |
 | S26 | SteelMill | Steel Mill, 70 cells south of the start | 70, 60, 4 Cw0 | flat | open S (1) | 77 / 0 | 33 |
 | S27 | DeepProcessor | Deep Processor, 90 cells west of the start | 16, 120, 4 Cw270 | flat | open S (1) | 83 / 0 | 8 |
-| S29 | Hospital | Hospital, 77 cells north of the start | 69, 198, 4 Cw0 | flat | open NSEW (1) | 84 / 3 | 15 |
 | S30 | ElectrolysisPlant | Electrolysis Plant, 35 cells north-west of the start | 85, 162, 3 Cw180 | flat | open W (1) | 34 / 0 | 39 |
 | S31 | PrecisionMachineWorks | Precision Machine Works, 71 cells west of the start | 30, 159, 3 Cw90 | flat | open NW (1) | 78 / 0 | 57 |
 | S33 | RadioactiveWasteVault | Radioactive Waste Vault, 81 cells west of the start | 17, 136, 3 Cw0 | flat | open N (1) | 76 / 0 | 7 |
@@ -568,7 +566,6 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S26 | MissionControl | Mission Control, 55 cells north-east of the start | 104, 197, 6 Cw0 | flat | open NSEW (1) | 58 / 5 | 27 |
 | S27 | SteelMill | Steel Mill, 78 cells west of the start | 1, 172, 10 Cw0 | flat | open NSEW (1) | 81 / 5 | 28 |
 | S28 | DeepProcessor | Deep Processor, 59 cells north-east of the start | 130, 174, 15 Cw0 | flat | open NSEW (1) | 61 / 0 | 29 |
-| S30 | Hospital | Hospital, 56 cells east of the start | 130, 162, 13 Cw0 | flat | open NSEW (1) | 49 / 0 | 11 |
 | S31 | ElectrolysisPlant | Electrolysis Plant, 76 cells north of the start | 103, 221, 14 Cw0 | flat | open NSEW (1) | 81 / 5 | 31 |
 | S32 | PrecisionMachineWorks | Precision Machine Works, 62 cells south of the start | 86, 98, 7 Cw90 | flat | open NSEW (1) | 59 / 7 | 0 |
 | S34 | RadioactiveWasteVault | Radioactive Waste Vault, 84 cells south of the start | 105, 70, 10 Cw0 | flat | open NSEW (1) | 93 / 7 | 27 |
