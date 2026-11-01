@@ -19,11 +19,12 @@ DOORS = {
             'facade': 'framed', 'panelDepth': .12, 'returnOwnership': 'complete'},
     },
     'CementKiln': {
-        # Artwork = native grid - (1,2): centred on tile column 4 (grid x 4.5),
-        # face 0.14 behind the grid y=1 edge. The header .12 behind the face
-        # retains the recess. Shoulder-box ends occupy .01..09 behind the face
-        # / Z=.08..1, so only the exposed strips are ours.
-        'GroundDoor': {'position': (3.50, -.86, 0), 'outward': (0, -1), 'transform': 'front',
+        # Artwork = native grid - (0,1): centred on tile column 0 (grid x .5,
+        # 3x3 kiln since 2026-11-01), face 0.14 behind the grid y=0 edge. The
+        # header .12 behind the face retains the recess. The porch's inward
+        # reveal panels cover .01..09 behind the face / Z=.08..1, so only the
+        # exposed strips are ours.
+        'GroundDoor': {'position': (.50, -.86, 0), 'outward': (0, -1), 'transform': 'front',
             'facade': 'framed', 'panelDepth': .12, 'returnOwnership': 'kiln-shoulder-strips'},
     },
     'ConcreteMixer': {

@@ -230,7 +230,9 @@ namespace DeepFrontier.Scripts {
     // outputs/freed-cells.json): StoneCrusher 6x7, CementKiln 9x9, quarries 11x10.
     private static readonly Dictionary<string,(int,int,int,int)> FormerFootprint=new() {
       {"StoneCrusher.IronTeeth",(-2,3,-1,5)},
-      {"CementKiln.IronTeeth",(-4,4,0,8)},
+      // The 3x3 kiln's door is on its tile column 0 (column 3 before
+      // 2026-11-01), so the same former cells sit 3 further right of it.
+      {"CementKiln.IronTeeth",(-1,7,0,8)},
       {"SandstoneQuarry.IronTeeth",(-1,9,-1,8)},
       {"LimestoneQuarry.IronTeeth",(-1,9,-1,8)}};
     private BlockObject CreateFactory(int index) {

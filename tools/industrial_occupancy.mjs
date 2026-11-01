@@ -28,14 +28,14 @@ export function industrialBlocks(ident, size) {
     region([0,0,1,3,3,1],'All'); // machine floor: flywheel, rolls, bearings, hopper legs, porch canopy
     region([0,1,2,3,3,2],'All'); // hopper, flywheel top, roll and hopper roofs
   } else if(ident==='CementKiln') {
-    // Compact 5x3x4 (2026-10-30), grid y = artwork y + 1.
-    // No props on open cells (2026-10-30): the front row's other ground
-    // cells are free; the firebox crown's cell above is left open.
-    region([3,0,0,3,0,0],'All'); // porch and doorstep (3,0,0)
-    region([2,0,1,4,0,1],'All'); // porch canopy and its eaves
-    region([0,1,0,4,2,1],'All'); // feed house, drum hall, firebox and crown
-    region([0,1,2,3,2,2],'All'); // feed house top, hall roof
-    region([4,2,2,4,2,3],'All'); // chimney stack and damper
+    // 3x3x3 (2026-11-01, second shrink pass), grid y = artwork y + 1.
+    // No props on open cells: the front row's cells (1,0) and (2,0) are free
+    // (stoking yard and view onto the drive); the firebox crown's cell above
+    // (2,1,2) is left open.
+    region([0,0,0,0,0,1],'All'); // porch and doorstep (0,0,0), porch canopy
+    region([0,1,0,2,2,1],'All'); // feed house, drum hall, firebox and crown
+    region([0,1,2,1,2,2],'All'); // feed house top and bin, hall roof
+    region([2,2,2,2,2,2],'All'); // chimney stack and damper
   } else if(ident==='ConcreteMixer') {
     // Compact 4x3x3 (2026-10-30).
     region([0,0,0,3,2,1],'All'); // operator room and canopy (doorstep (1,0,0)), drum, drive, tray, tank pedestal

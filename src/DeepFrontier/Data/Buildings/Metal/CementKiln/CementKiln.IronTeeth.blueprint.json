@@ -67,35 +67,21 @@
   },
   "BlockObjectSpec": {
     "Size": {
-      "X": 5,
+      "X": 3,
       "Y": 3,
-      "Z": 4
+      "Z": 3
     },
     "Blocks": [
       {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -150,30 +136,9 @@
         "Underground": false
       },
       {
-        "MatterBelow": "GroundOrStackable",
+        "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -187,41 +152,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -270,34 +200,6 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
         "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
@@ -333,20 +235,6 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
         "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
@@ -363,125 +251,6 @@
         "MatterBelow": "Any",
         "Occupations": "All",
         "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -496,7 +265,7 @@
     "Entrance": {
       "HasEntrance": true,
       "Coordinates": {
-        "X": 3,
+        "X": 0,
         "Y": -1,
         "Z": 0
       }
@@ -507,7 +276,7 @@
   },
   "BuildingAccessibleSpec": {
     "LocalAccess": {
-      "X": 3.5,
+      "X": 0.5,
       "Y": 0,
       "Z": 0.06000000000000005
     },
@@ -552,11 +321,11 @@
     "Transputs": [
       {
         "Coordinates": {
-          "X": 3,
+          "X": 0,
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Left, Right, Bottom",
+        "Directions": "Left, Bottom",
         "ReverseRotation": false
       },
       {
@@ -565,7 +334,7 @@
           "Y": 1,
           "Z": 0
         },
-        "Directions": "Left, Down, Bottom",
+        "Directions": "Left, Bottom",
         "ReverseRotation": false
       },
       {
@@ -580,24 +349,6 @@
       {
         "Coordinates": {
           "X": 2,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
           "Y": 1,
           "Z": 0
         },
@@ -628,24 +379,6 @@
           "Y": 2,
           "Z": 0
         },
-        "Directions": "Up, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Up, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 2,
-          "Z": 0
-        },
         "Directions": "Right, Up, Bottom",
         "ReverseRotation": false
       },
@@ -655,12 +388,12 @@
           "Y": 1,
           "Z": 1
         },
-        "Directions": "Left, Down",
+        "Directions": "Left",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 4,
+          "X": 2,
           "Y": 1,
           "Z": 1
         },
@@ -691,52 +424,16 @@
           "Y": 2,
           "Z": 1
         },
-        "Directions": "Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 2,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 2,
-          "Z": 1
-        },
         "Directions": "Right, Up",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 1,
-          "Z": 2
-        },
-        "Directions": "Left, Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 2,
-          "Z": 2
-        },
-        "Directions": "Left, Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
+          "X": 2,
           "Y": 1,
           "Z": 1
         },
-        "Directions": "Top",
+        "Directions": "Down, Top",
         "ReverseRotation": false
       }
     ]
@@ -751,7 +448,7 @@
         "BoxColliders": [
           {
             "Center": {
-              "X": 3.5,
+              "X": 0.5,
               "Y": 0.5,
               "Z": 0.5
             },
@@ -799,30 +496,6 @@
           },
           {
             "Center": {
-              "X": 3.5,
-              "Y": 0.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 0.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
               "X": 0.5,
               "Y": 0.5,
               "Z": 2.5
@@ -859,55 +532,7 @@
           },
           {
             "Center": {
-              "X": 3.5,
-              "Y": 0.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 0.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 2.5,
-              "Y": 1.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 3.5,
-              "Y": 1.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
+              "X": 0.5,
               "Y": 1.5,
               "Z": 0.5
             },
@@ -955,30 +580,6 @@
           },
           {
             "Center": {
-              "X": 3.5,
-              "Y": 1.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 1.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
               "X": 0.5,
               "Y": 1.5,
               "Z": 2.5
@@ -1015,30 +616,6 @@
           },
           {
             "Center": {
-              "X": 3.5,
-              "Y": 1.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 1.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
               "X": 0.5,
               "Y": 2.5,
               "Z": 1.5
@@ -1052,30 +629,6 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 2.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 2.5,
-              "Y": 2.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 3.5,
               "Y": 2.5,
               "Z": 1.5
             },
@@ -1113,42 +666,6 @@
             "Center": {
               "X": 2.5,
               "Y": 2.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 3.5,
-              "Y": 2.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 2.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 3.5,
               "Z": 2.5
             },
             "Size": {
@@ -1172,7 +689,7 @@
             "BoxColliders": [
               {
                 "Center": {
-                  "X": 3.5,
+                  "X": 0.5,
                   "Y": 0.5,
                   "Z": 0.5
                 },
@@ -1220,30 +737,6 @@
               },
               {
                 "Center": {
-                  "X": 3.5,
-                  "Y": 0.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 0.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
                   "X": 0.5,
                   "Y": 0.5,
                   "Z": 2.5
@@ -1280,55 +773,7 @@
               },
               {
                 "Center": {
-                  "X": 3.5,
-                  "Y": 0.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 0.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 2.5,
-                  "Y": 1.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 1.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
+                  "X": 0.5,
                   "Y": 1.5,
                   "Z": 0.5
                 },
@@ -1376,30 +821,6 @@
               },
               {
                 "Center": {
-                  "X": 3.5,
-                  "Y": 1.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 1.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
                   "X": 0.5,
                   "Y": 1.5,
                   "Z": 2.5
@@ -1436,30 +857,6 @@
               },
               {
                 "Center": {
-                  "X": 3.5,
-                  "Y": 1.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 1.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
                   "X": 0.5,
                   "Y": 2.5,
                   "Z": 1.5
@@ -1473,30 +870,6 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 2.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 2.5,
-                  "Y": 2.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
                   "Y": 2.5,
                   "Z": 1.5
                 },
@@ -1534,42 +907,6 @@
                 "Center": {
                   "X": 2.5,
                   "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 3.5,
                   "Z": 2.5
                 },
                 "Size": {
@@ -1609,8 +946,8 @@
         "Prefab": "Buildings/Metal/Smelter/SmelterSmoke",
         "Parent": "#Finished",
         "Position": {
-          "X": 4.5,
-          "Y": 3.94,
+          "X": 2.5,
+          "Y": 2.99,
           "Z": 2.45
         },
         "Rotation": {
@@ -1669,17 +1006,7 @@
   "RoofHardpointsSpec": {
     "Cells": [
       {
-        "X": 2,
-        "Y": 0,
-        "Z": 1
-      },
-      {
-        "X": 3,
-        "Y": 0,
-        "Z": 1
-      },
-      {
-        "X": 4,
+        "X": 0,
         "Y": 0,
         "Z": 1
       },
@@ -1694,32 +1021,12 @@
         "Z": 2
       },
       {
-        "X": 2,
-        "Y": 1,
-        "Z": 2
-      },
-      {
-        "X": 3,
-        "Y": 1,
-        "Z": 2
-      },
-      {
         "X": 0,
         "Y": 2,
         "Z": 2
       },
       {
         "X": 1,
-        "Y": 2,
-        "Z": 2
-      },
-      {
-        "X": 2,
-        "Y": 2,
-        "Z": 2
-      },
-      {
-        "X": 3,
         "Y": 2,
         "Z": 2
       }
@@ -1729,11 +1036,11 @@
     "Ports": [
       {
         "Coordinates": {
-          "X": 3,
+          "X": 0,
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Left, Right",
+        "Directions": "Left",
         "State": "OpenIn"
       },
       {
@@ -1742,12 +1049,12 @@
           "Y": 1,
           "Z": 0
         },
-        "Directions": "Left, Down",
+        "Directions": "Left",
         "State": "OpenIn"
       },
       {
         "Coordinates": {
-          "X": 4,
+          "X": 2,
           "Y": 1,
           "Z": 0
         },
@@ -1778,24 +1085,6 @@
           "Y": 2,
           "Z": 0
         },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 2,
-          "Z": 0
-        },
         "Directions": "Right, Up",
         "State": "OpenIn"
       },
@@ -1805,16 +1094,16 @@
           "Y": 1,
           "Z": 1
         },
-        "Directions": "Left, Down",
+        "Directions": "Left",
         "State": "OpenIn"
       },
       {
         "Coordinates": {
-          "X": 4,
+          "X": 2,
           "Y": 1,
           "Z": 1
         },
-        "Directions": "Right",
+        "Directions": "Right, Down",
         "State": "OpenIn"
       },
       {
@@ -1841,43 +1130,7 @@
           "Y": 2,
           "Z": 1
         },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 2,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 2,
-          "Z": 1
-        },
         "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 1,
-          "Z": 2
-        },
-        "Directions": "Left, Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 2,
-          "Z": 2
-        },
-        "Directions": "Left, Up",
         "State": "OpenIn"
       }
     ]
@@ -1887,9 +1140,9 @@
     "Sources": [
       {
         "Position": {
-          "X": 4.5,
+          "X": 2.5,
           "Y": 2.45,
-          "Z": 3.94
+          "Z": 2.99
         },
         "Radius": 6,
         "Strength": 0.35

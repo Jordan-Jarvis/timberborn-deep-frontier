@@ -67,9 +67,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 5259,
-   "vertices": 10851,
-   "construction": 5259,
+   "finished": 4172,
+   "vertices": 8573,
+   "construction": 4172,
    "file": "src/DeepFrontier/Data/Buildings/Metal/CementKiln/CementKiln.IronTeeth.Model.timbermesh"
   },
   "ChemicalWorks": {

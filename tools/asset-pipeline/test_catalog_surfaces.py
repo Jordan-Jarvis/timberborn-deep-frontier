@@ -99,14 +99,15 @@ check('mixer operator room',operator_room,[
 # boards y 3.07..5.78, z .26..0.78.
 check('crusher right wall',crusher_facades,[
     ((4.96,3.20,.30),(0,2.50,0),(0,0,.40),(1,0,0),301,51)])
-# Compact 5x3x4 kiln (2026-10-30): feed-house skin 0.04 inside its corner
-# posts, drum-hall rear wall 0.10 inside the y=2 edge (artwork units).
+# 3x3x3 kiln (2026-11-01): feed-house skin 0.04 inside its corner posts
+# (skin to 2.26), drum-hall rear wall 0.10 inside the y=2 edge (to 2.135),
+# artwork units.
 check('kiln feed house walls',kiln_feed_house,[
-    ((.04,.20,.30),(0,1.60,0),(0,0,2.2),(-1,0,0),301,101),
-    ((.18,.04,.30),(.64,0,0),(0,0,2.2),(0,-1,0),151,101),
-    ((.18,1.96,.30),(.64,0,0),(0,0,2.2),(0,1,0),151,101)])
+    ((.04,.20,.30),(0,1.60,0),(0,0,1.9),(-1,0,0),301,101),
+    ((.18,.04,.30),(.64,0,0),(0,0,1.9),(0,-1,0),151,101),
+    ((.18,1.96,.30),(.64,0,0),(0,0,1.9),(0,1,0),151,101)])
 check('kiln drum hall rear wall',kiln_hall,[
-    ((1.05,1.90,.30),(2.90,0,0),(0,0,1.9),(0,1,0),301,101)])
+    ((1.05,1.90,.30),(.90,0,0),(0,0,1.7),(0,1,0),101,101)])
 # Compact quarry (2026-10-30): tool room skin 0.04 inside its corner posts
 # on the plinth (walls 1.0..1.98), artwork units.
 check('quarry tool room walls',quarry_tool_room,[
@@ -120,9 +121,10 @@ check('quarry ground cabin',quarry_cabin,[
 check('crusher porch header and side curb',crusher_porch,[
     ((.61,.39,1.01),(1.0,0,0),(0,0,.1),(0,-1,0),151,31),
     ((.525,.48,1.10),(0,.46,0),(0,0,.05),(-1,0,0),151,31)])
+# The 3x3 kiln's porch fills grid tile (0,0) in front of the feed house.
 check('kiln porch header and side curb',kiln_porch,[
-    ((2.99,-.79,1.01),(.92,0,0),(0,0,.09),(0,-1,0),151,31),
-    ((2.95,-.68,1.10),(0,.85,0),(0,0,.05),(-1,0,0),151,31)])
+    ((.04,-.79,1.01),(.92,0,0),(0,0,.09),(0,-1,0),151,31),
+    ((-.05,-.68,1.10),(0,.65,0),(0,0,.05),(-1,0,0),151,31)])
 check('hydro concrete conduit joints',cast_conduit,[
     ((.08,.18,.45),(0,5.64,0),(0,0,.42),(-1,0,0),601,31),
     ((2.55,.18,2.839),(0,5.64,0),(.10,0,-.03),(0,0,1),601,11)])

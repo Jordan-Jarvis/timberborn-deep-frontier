@@ -1,21 +1,21 @@
-"""Cement kiln, compact 5x3 workshop (2026-10-30 compaction pass).
+"""Cement kiln, 3x3 workshop (2026-11-01 second shrink pass).
 
-Steam Workshop feedback: the buildings exceeded Timberborn's scale. The user
-kept the textures and asked for less scaffolding and size. The 7x5x6 kiln
-with its open trestle deck, raised feed tower and walk-height drum hall
-becomes a 5x3x4 ground-level workshop with the same parts, in the same
-materials and atlas regions:
+A YouTuber's first look called several Deep Frontier buildings "massive";
+the user: "we need to shrink the buildings down even more". The 5x3x4 kiln
+(2026-10-30 compaction) becomes a 3x3x3 workshop with the same parts, in the
+same materials and atlas regions:
 
-- a closed plank feed house with an open limestone bin on top (grid x 0),
-- the rotary drum, its tyres, carrier rollers and drive pinion, on low stone
-  plinths under a lean-to roof whose rear wall is closed (grid x 1..3),
-- the masonry firebox with its arched fire, grate and chimney (grid x 4),
-- the one-tile porch and door (grid x 3, unchanged native door contract).
-No props stand on otherwise open cells (user rule, 2026-10-30): the front
-row's other ground cells are open buildable ground.
+- the closed plank feed house with its open limestone bin (grid x 0, rows
+  1..2), its one-tile porch and door in front of it (grid x 0, row 0),
+- the rotary drum, its ring gear, two tyres and four carrier rollers on one
+  low stone plinth under a lean-to roof whose rear wall is closed (grid x 1),
+  the drive pinion and flywheel on a shaft out of the feed house,
+- the masonry firebox with its arched fire, grate and chimney (grid x 2).
+The front row's other two cells (x 1..2, row 0) are open buildable ground:
+the stoking yard in front of the fire and the view onto the drive.
 
 Artwork X/Y = native grid X/Y minus the layout origin (0,1): artwork x is
-grid x, artwork y is grid y - 1. The footprint is artwork x 0..5, y -1..2.
+grid x, artwork y is grid y - 1. The footprint is artwork x 0..3, y -1..2.
 Outer masses sit on those tile lines. No walkways, decks or balconies.
 """
 import math
@@ -33,39 +33,43 @@ from reference_materials import (CRUSHER_STEEL,KILN_STONE,KILN_STONE_LIGHT,KILN_
 
 # Drum axis (artwork). Its feed end is inside the feed house (x<1), its
 # firing end inside the firebox's west wall (x>4); x 1..4 is in view.
-DRUM_X0,DRUM_X1=.90,4.10
+DRUM_X0,DRUM_X1=.90,2.10
 DRUM_Y,DRUM_Z=1.00,1.15
-TYRES=(2.05,3.55)
-RING_X=1.30
-# The porch and door: one tile wide (grid x 3..4), the native door centred on
-# it with its face 0.14 behind the front tile edge (artwork y=-1).
-ROOM_X0,ROOM_X1=3.0,4.0
-ROOM_BACK=.28
-DOOR_X,DOOR_Y=3.50,-.86
+TYRES=(1.48,1.82)
+RING_X=1.10
+# Drive flywheel on the pinion shaft, between the ring gear and the plinth.
+WHEEL_X=1.235
+# The porch and door: one tile wide (grid x 0..1, row 0), the native door
+# centred on it with its face 0.14 behind the front tile edge (artwork
+# y=-1). The porch's back is the feed house's front (artwork y=0).
+ROOM_X0,ROOM_X1=0.0,1.0
+ROOM_BACK=.0
+DOOR_X,DOOR_Y=.50,-.86
 # Hall roof (lean-to, low at the front): its eave beams and corner shoes stay
 # inside the y=0 and y=2 lines.
-HALL_X0,HALL_X1=1.0,4.0
+HALL_X0,HALL_X1=1.0,2.0
 HALL_Y0,HALL_Y1=.07,1.88
-HALL_Z0,HALL_Z1=2.30,2.60
+HALL_Z0,HALL_Z1=2.00,2.25
 # Feed house (grid x 0, rows 1..2): corner posts on the tile lines, plank
 # skin 0.04 inside them, open limestone bin at the top.
-HOUSE_TOP=2.70
+HOUSE_TOP=2.40
 # Firebox masonry (grid x 4, rows 1..2) and chimney.
-FIRE_X0,FIRE_X1=4.0,5.0
-FIRE_CX=4.5
+FIRE_X0,FIRE_X1=2.0,3.0
+FIRE_CX=2.5
 CROWN_TOP=1.985
-STACK_X,STACK_Y,STACK_TOP=4.5,1.45,3.85
+# The stack's collar (top +.09) stays under layer 3.
+STACK_X,STACK_Y,STACK_TOP=2.5,1.45,2.90
 
 
 def kiln_barrel(g,p):
     # Eight .40 courses of curved plates on a 16-sided core, two wearing
     # tyres and a 24-tooth drive ring, all one rotating part.
     x,y,z=p
-    length=DRUM_X1-DRUM_X0;courses=8;pitch=length/courses
+    length=DRUM_X1-DRUM_X0;courses=3;pitch=length/courses
     prism(g,p,.492,length,IRON,'X',16)
     for course in range(courses):
         xa=DRUM_X0+course*pitch;xb=xa+pitch-.013
-        radius=(.497,.516,.523,.523,.523,.523,.516,.497)[course]
+        radius=(.516,.523,.516)[course]
         for sector in range(16):
             a0=(sector+.025)*math.tau/16;a1=(sector+.975)*math.tau/16
             vertices=[(xx,y+math.cos(a)*rr,z+math.sin(a)*rr)
@@ -74,9 +78,10 @@ def kiln_barrel(g,p):
     for xx in TYRES:
         band(g,(xx,y,z),.59,.082,.17,IRON,'X',16)
     # A bolted inspection cover travels with the shell.
-    xx=2.80
+    # Between the ring gear and the first tyre.
+    xx=1.28
     verts=[(a,y+math.cos(b)*.548,z+math.sin(b)*.548)
-           for a in (xx-.16,xx+.16) for b in (math.pi-.22,math.pi+.22)]
+           for a in (xx-.10,xx+.10) for b in (math.pi-.22,math.pi+.22)]
     g.add(verts,[(0,1,3,2),(2,3,1,0)],IRON)
     band(g,(RING_X,y,z),.56,.07,.085,IRON,'X',24)
     for i in range(24):
@@ -85,34 +90,34 @@ def kiln_barrel(g,p):
                   (RING_X,y+math.cos(a)*.605,z+math.sin(a)*.605),.072,.055,IRON)
 
 
-def bearing(g,x,y,z):
-    g.box((x,y,z-.11),(.16,.30,.10),IRON)
+def bearing(g,x,y,z,w=.16):
+    g.box((x,y,z-.11),(w,.30,.10),IRON)
     # The journal stands 1 cm proud of both block faces.
-    prism(g,(x,y,z),.11,.18,IRON,'X',6)
+    prism(g,(x,y,z),.11,w+.02,IRON,'X',6)
 
 
 def mechanics(g,parts):
-    p=(2.50,DRUM_Y,DRUM_Z);m,node=g.moving_part('ReferenceKilnBarrel',p)
+    p=((DRUM_X0+DRUM_X1)/2,DRUM_Y,DRUM_Z);m,node=g.moving_part('ReferenceKilnBarrel',p)
     kiln_barrel(m,p);parts.append((node,'X',1))
-    # Carrier rollers on stone plinths, tangent to the tyres (.62 lateral,
-    # .51 below the axis).
+    # Carrier rollers on one stone plinth, tangent to the tyres (.62
+    # lateral, .51 below the axis).
+    masonry(g,((TYRES[0]+TYRES[1])/2,DRUM_Y,.18),(TYRES[1]-TYRES[0]+.30,1.62,.36),0)
     for j,x in enumerate(TYRES):
-        masonry(g,(x,DRUM_Y,.18),(.50,1.62,.36),j)
         for k,dy in enumerate((-.62,.62)):
             y=DRUM_Y+dy;zr=DRUM_Z-.51
-            g.box((x,y,.42),(.46,.38,.12),WOOD)
-            for xx in (x-.20,x+.20):bearing(g,xx,y,zr)
+            g.box((x,y,.42),(.28,.38,.12),WOOD)
+            for xx in (x-.13,x+.13):bearing(g,xx,y,zr,.06)
             q=(x,y,zr);m,node=g.moving_part(f'ReferenceKilnSupport{j+1}{k+1}',q)
-            prism(m,q,.19,.22,IRON,'X',10)
+            prism(m,q,.19,.20,IRON,'X',10)
             # Visible keyed wheel face makes its rotation legible.
             for i in range(3):
-                a=i*math.tau/3;square_nut(m,(x-.13,y+math.cos(a)*.12,zr+math.sin(a)*.12),'X',.015,-1)
+                a=i*math.tau/3;square_nut(m,(x-.12,y+math.cos(a)*.12,zr+math.sin(a)*.12),'X',.015,-1)
             parts.append((node,'X',-3))
         # Screw adjuster on the forward saddle.
-        prism(g,(x,DRUM_Y-.95,.42),.034,.18,IRON,'Y',6)
-        g.cylinder((x,DRUM_Y-1.05,.42),.062,.055,IRON,'Y',6)
-    # Drive: pinion on the ring gear, a short shaft on one stone-seated
-    # bearing and the flywheel, in front of the drum between ring and tyre.
+        prism(g,(x,DRUM_Y-.88,.42),.034,.14,IRON,'Y',6)
+        g.cylinder((x,DRUM_Y-.97,.42),.062,.055,IRON,'Y',6)
+    # Drive: pinion on the ring gear and the flywheel on one shaft that
+    # comes out of the feed house's east wall, in front of the drum.
     py,pz=DRUM_Y-.68,DRUM_Z-.42
     p=(RING_X,py,pz);m,node=g.moving_part('ReferenceKilnPinion',p)
     prism(m,p,.164,.12,IRON,'X',12)
@@ -120,24 +125,23 @@ def mechanics(g,parts):
         a=i*math.tau/12
         open_beam(m,(p[0],p[1]+math.cos(a)*.15,p[2]+math.sin(a)*.15),
                   (p[0],p[1]+math.cos(a)*.199,p[2]+math.sin(a)*.199),.068,.051,IRON)
-    prism(m,(1.525,py,pz),.065,.45,CRUSHER_STEEL,'X',6)
+    prism(m,(1.10,py,pz),.065,.34,CRUSHER_STEEL,'X',6)
     parts.append((node,'X',-3))
-    masonry(g,(1.50,py,.29),(.20,.34,.58),3)
-    bearing(g,1.50,py,pz)
-    p=(1.75,py,pz);m,node=g.moving_part('ReferenceKilnDriveWheel',p)
+    p=(WHEEL_X,py,pz);m,node=g.moving_part('ReferenceKilnDriveWheel',p)
     band(m,p,.32,.07,.095,IRON,'X',16,inner=True)
-    prism(m,p,.095,.18,IRON,'X',8)
+    prism(m,p,.095,.10,IRON,'X',8)
     for i in range(6):
-        a=i*math.pi/3;m.beam(p,(1.75,py+math.cos(a)*.28,pz+math.sin(a)*.28),.057,mat=IRON)
+        a=i*math.pi/3;m.beam(p,(WHEEL_X,py+math.cos(a)*.28,pz+math.sin(a)*.28),.057,mat=IRON)
     parts.append((node,'X',-3))
 
 
-def masonry(g,p,size,index):
+def masonry(g,p,size,index,skip=('-z',)):
     # Small authored differences keep masonry from reading as a perfect tile grid.
     rng=random.Random(round(p[0]*1000+p[1]*390+p[2]*167))
     size=tuple(v-rng.uniform(.001,.012) for v in size)
-    # Its underside lies on the course below.
-    open_box(g,p,size,KILN_STONE_LIGHT if index%7==0 else KILN_STONE,('-z',))
+    # Its underside lies on the course below; skip also names the faces that
+    # lie against a neighbouring stone, the crown or the closed fire chamber.
+    open_box(g,p,size,KILN_STONE_LIGHT if index%7==0 else KILN_STONE,skip)
 
 
 def arch(g,cx,y,cz,inner,outer):
@@ -160,22 +164,31 @@ def flame(g,p,h,seed):
 
 
 def firebox(g,parts):
-    """Masonry box on the tile lines x 4..5, y 0..2: arched fire opening in
+    """Masonry box on the tile lines x 2..3, y 0..2: arched fire opening in
     the front face, the drum's firing end entering the west wall, the stack
     on the crown."""
     cx=FIRE_CX
+    # Only the stone faces that can be seen are built (3x3 kiln, 2026-11-01):
+    # the courses' tops lie under the next course or the crown, the rear
+    # wall's inner face is behind the soot, and stones meet their neighbours
+    # end to end. The side walls' inner faces line the fire chamber seen
+    # through the arch. (The measured material mix and so the
+    # cost counts what is built.)
     for row in range(8):
         z=.115+row*.23
-        # Front pillars either side of the arch.
-        for xx in (4.10,4.90):masonry(g,(xx,.145,z),(.20,.29,.214),row)
-        # Side walls: three stretchers per course.
-        for xx in (4.11,4.89):
-            for j in range(4):masonry(g,(xx,.50375+j*.4275,z),(.22,.4275,.214),row+j)
+        # Front pillars either side of the arch: their backs meet the side walls.
+        for xx in (2.10,2.90):masonry(g,(xx,.145,z),(.20,.29,.214),row,('-z','+z','+y'))
+        # Side walls: four stretchers per course.
+        for xx in (2.11,2.89):
+            for j in range(4):
+                # The first stone meets the pillar, the last ends on the rear face.
+                ends=('-y',)+(('+y',) if j<3 else ())
+                masonry(g,(xx,.50375+j*.4275,z),(.22,.4275,.214),row+j,('-z','+z')+ends)
         # Rear wall between the side walls.
-        for i in range(2):masonry(g,(4.36+i*.28,1.885,z),(.28,.23,.214),row+i)
+        for i in range(2):masonry(g,(2.36+i*.28,1.885,z),(.28,.23,.214),row+i,('-z','+z','-y','-x','+x'))
     # Courses over the arch, between the pillars.
     for row,z in enumerate((1.475,1.705)):
-        for i in range(3):masonry(g,(4.30+i*.20,.145,z),(.20,.29,.215),row+i)
+        for i in range(3):masonry(g,(2.30+i*.20,.145,z),(.20,.29,.215),row+i,('-z','+z','+y','-x','+x'))
     arch(g,cx,.115,.90,.30,.44)
     # Soot at the back of the fire chamber.
     g.box((cx,.80,.74),(.56,.09,1.40),KILN_SOOT)
@@ -183,24 +196,24 @@ def firebox(g,parts):
     g.box((cx,.55,.33),(.56,.42,.14),KILN_SOOT)
     # Crown: two rows of long slabs.
     for j in range(2):
-        for i in range(3):masonry(g,(4.167+i*.333,.5+j*1.0,1.91),(.323,.99,.15),i+j*3)
+        for i in range(3):masonry(g,(2.167+i*.333,.5+j*1.0,1.91),(.323,.99,.15),i+j*3)
     for i in range(3):
-        rock(g,(4.30+i*.20,.40+(i%2)*.10,.47),(.22,.18,.13),KILN_EMBER,1100+i)
-    for i,(x,yy,h) in enumerate(((4.33,.40,.32),(4.50,.46,.44),(4.67,.40,.30))):
+        rock(g,(2.30+i*.20,.40+(i%2)*.10,.47),(.22,.18,.13),KILN_EMBER,1100+i)
+    for i,(x,yy,h) in enumerate(((2.33,.40,.32),(2.50,.46,.44),(2.67,.40,.30))):
         p=(x,yy,.50);m,node=g.moving_part('ReferenceKilnFire'+str(i+1),p)
         flame(m,p,h,1200+i);parts.append((node,'FLAME',i))
     # Ash-pit grate and retaining bands below the fire bed; the jamb irons
     # and the register above the arch sit proud of the stone face.
-    for x in (4.26,4.38,4.50,4.62,4.74):g.box((x,-.01,.22),(.026,.04,.34),IRON)
+    for x in (2.26,2.38,2.50,2.62,2.74):g.box((x,-.01,.22),(.026,.04,.34),IRON)
     for z in (.10,.36):g.box((cx,-.02,z),(.58,.05,.05),IRON)
-    for x in (4.04,4.96):
+    for x in (2.04,2.96):
         g.box((x,-.0175,.80),(.08,.035,1.40),IRON)
     g.box((cx,-.0375,1.47),(.70,.075,.24),IRON)
     g.box((cx,-.085,1.47),(.36,.028,.14),KILN_SHELL)
     # Gauges on the firebox's west face, read from the porch side.
     for y in (.45,.75):
-        prism(g,(3.97,y,1.60),.07,.06,BRASS,'X',8,(True,False))
-        prism(g,(3.937,y,1.60),.055,.015,LIME,'X',8,(True,False))
+        prism(g,(1.97,y,1.60),.07,.06,BRASS,'X',8,(True,False))
+        prism(g,(1.937,y,1.60),.055,.015,LIME,'X',8,(True,False))
 
 
 def chimney(g):
@@ -225,10 +238,10 @@ def chimney(g):
     # Kiln firing smoke at the top of the collar (top-.02+.22/2; no geometry).
     g.emitter('smoke',x,y,top+.09,.175)
     # Hand-operated damper on the stack's west side.
-    prism(g,(x-.30,y,2.95),.045,.22,IRON,'X',6)
-    band(g,(x-.44,y,2.95),.14,.03,.045,IRON,'X',8,inner=True)
+    prism(g,(x-.30,y,2.50),.045,.22,IRON,'X',6)
+    band(g,(x-.44,y,2.50),.14,.03,.045,IRON,'X',8,inner=True)
     for i in range(4):
-        a=i*math.pi/2;g.beam((x-.44,y,2.95),(x-.44,y+math.cos(a)*.12,2.95+math.sin(a)*.12),.022,mat=IRON)
+        a=i*math.pi/2;g.beam((x-.44,y,2.50),(x-.44,y+math.cos(a)*.12,2.50+math.sin(a)*.12),.022,mat=IRON)
 
 
 def feed_house(g):
@@ -262,60 +275,56 @@ def feed_house(g):
     for i in range(6):
         s=rng.uniform(.26,.34)
         rock(g,(rng.uniform(.30,.70),.32+i*.27+rng.uniform(-.04,.04),top+.09+rng.uniform(0,.05)),(s,s*.82,s*.70),LIME,701+i)
-    # A window on the front face (a west-face casing would stand outside the
-    # x=0 edge); the drum's feed end enters the east face, with a feed-gate
-    # linkage beside it.
-    window_y(g,.5,.04,1.30,.7)
-    g.box((.985,.36,1.55),(.03,.30,.20),IRON)
-    prism(g,(1.06,.36,1.55),.045,.15,IRON,'X',6)
-    band(g,(1.14,.36,1.55),.14,.027,.04,IRON,'X',8,inner=True)
+    # A window on the front face above the porch roof (a west-face casing
+    # would stand outside the x=0 edge); the drum's feed end and the drive
+    # shaft enter the east face, with a feed-gate linkage beside them.
+    window_y(g,.5,.04,1.78,.55)
+    g.box((.985,1.72,.62),(.03,.30,.20),IRON)
+    prism(g,(1.06,1.72,.62),.045,.15,IRON,'X',6)
+    band(g,(1.14,1.72,.62),.14,.027,.04,IRON,'X',8,inner=True)
     for a in (0,math.pi/2,math.pi,math.pi*1.5):
-        g.beam((1.14,.36,1.55),(1.14,.36+math.cos(a)*.125,1.55+math.sin(a)*.125),.022,mat=IRON)
+        g.beam((1.14,1.72,.62),(1.14,1.72+math.cos(a)*.125,.62+math.sin(a)*.125),.022,mat=IRON)
 
 
 def hall(g):
     """Lean-to roof over the drum between feed house and firebox, carried by
-    their walls and one front post; closed plank rear wall."""
+    their walls; closed plank rear wall."""
     sheet_roof(g,HALL_X0,HALL_Y0,HALL_X1,HALL_Y1,HALL_Z0,HALL_Z1,521)
-    eave_bottom=HALL_Z0-.055-.08
-    timber_column(g,2.55,.10,0,eave_bottom,.19,top_collar_only=True)
-    for x in (2.95,2.15):g.beam((2.55,.10,eave_bottom-.55),(x,.10,eave_bottom+.05),.10,mat=WOOD)
     rear_bottom=HALL_Z1-.055-.08
-    # The rear wall stands 0.10 inside the y=2 edge so its windows' casings
-    # stay inside the footprint.
-    open_box(g,(2.51,1.85,.11),(3.02,.14,.22),KILN_STONE,('-z',))
-    wall(g,1.0,1.865,4.02,rear_bottom+.02,.22)
-    window_y(g,2.0,1.90,1.05,.75,'back')
-    window_y(g,3.10,1.90,1.05,.75,'back')
+    # The rear wall stands 0.10 inside the y=2 edge so its window's casing
+    # stays inside the footprint.
+    open_box(g,(1.51,1.85,.11),(1.02,.14,.22),KILN_STONE,('-z',))
+    wall(g,1.0,1.865,2.02,rear_bottom+.02,.22)
+    window_y(g,1.5,1.90,1.05,.75,'back')
     # A repaired roof sheet with lapped edge and folded seams.
-    x0,x1,y0,y1=3.10,3.62,.70,1.30
+    x0,x1,y0,y1=1.30,1.70,.70,1.30
     slope=(HALL_Z1-HALL_Z0)/(HALL_Y1-HALL_Y0)
     points=[(x,y,HALL_Z0+(y-HALL_Y0)*slope+.045) for x,y in ((x0,y0),(x1,y0),(x1,y1),(x0,y1))]
     g.add(points,[(0,1,2,3)],KILN_SHELL)
     for a,b in ((points[0],points[3]),(points[1],points[2])):g.beam(a,b,.025,.018,KILN_RUST)
-    # Caged lights under the eave.
-    cage_lamp(g,2.55,-.01,1.62)
 
 
 def porch(g):
     # Entrance floor 0, canopy underside 1. The pitched canopy is not a
-    # walking surface. The porch closes behind on y=ROOM_BACK (the drum hall).
-    # The canopy rests on the porch's side walls (no posts in the
-    # neighbouring cells).
+    # walking surface. The porch fills its tile (grid x 0, row 0); its back
+    # is the feed house's front wall. The door casing spans the tile, so
+    # the reveals are closed by inward panels just inside the side-wall
+    # planes (shoulder boxes would stand outside the x=0 edge).
     g.include_component(door_recipe('CementKiln','Door.GroundDoor'))
-    for x in (DOOR_X-.555,DOOR_X+.555):g.box((x,DOOR_Y+.05,ENTRY_Z+.58),(.11,.08,1.00),PLANK)
+    for x,positive in ((DOOR_X-.496,True),(DOOR_X+.496,False)):
+        facade_panel(g,'X',x,DOOR_Y+.01,DOOR_Y+.09,ENTRY_Z+.08,ENTRY_Z+1.0,positive,PLANK)
     # Eave and corner shoes stay inside the front tile edge (artwork y=-1).
     # The eave beam's underside stays 5 mm above the door insert's top cap.
-    sheet_roof(g,DOOR_X-.62,DOOR_Y-.03,DOOR_X+.62,ROOM_BACK,PORCH_Z+.14,PORCH_Z+.38,235)
-    for x in (ROOM_X0,ROOM_X1):
-        g.beam((x,DOOR_Y+.01,PORCH_Z+.10),(x,ROOM_BACK-.02,PORCH_Z+.10),.12,mat=WOOD)
-    # Side walls meet the door insert edges and the porch's back wall.
+    sheet_roof(g,ROOM_X0+.06,DOOR_Y-.03,ROOM_X1-.06,ROOM_BACK,PORCH_Z+.14,PORCH_Z+.38,235)
+    # Canopy beams 1.5 cm inside the side-wall planes.
+    for x in (ROOM_X0+.065,ROOM_X1-.065):
+        g.beam((x,DOOR_Y+.01,PORCH_Z+.10),(x,ROOM_BACK-.02,PORCH_Z+.10),.10,mat=WOOD)
+    # Side walls meet the door insert edges and the feed house.
     for x,positive in ((ROOM_X0,False),(ROOM_X1,True)):
         facade_panel(g,'X',x,DOOR_Y-.03,ROOM_BACK,ENTRY_Z,ENTRY_Z+1.08,positive,PLANK)
-    facade_panel(g,'Y',ROOM_BACK,ROOM_X0,ROOM_X1,ENTRY_Z,ENTRY_Z+1.08,True,PLANK)
     facade_panel(g,'Y',DOOR_Y+.12,ROOM_X0,ROOM_X1,ENTRY_Z+1,ENTRY_Z+1.08,False,PLANK)
     lean_roof_curb(g,ROOM_X0,DOOR_Y,ROOM_X1,ROOM_BACK,ENTRY_Z+1.08,ENTRY_Z+1.08,DOOR_Y-.03,ROOM_BACK,PORCH_Z+.14,PORCH_Z+.38,.0225)
-    cage_lamp(g,DOOR_X+.46,-.78,PORCH_Z-.18)
+    cage_lamp(g,DOOR_X+.40,-.78,PORCH_Z-.18)
 
 
 def kiln(g,parts):

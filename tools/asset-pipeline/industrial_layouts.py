@@ -67,10 +67,12 @@ def decorative_port(d,ident,inside,outside,run):
 C=layout([-1,-2,0],[4,4,3],[1,-1,0],[[2.50,2.02,0]],deck_mode='None')
 ground_door(C,(1.50,.10,0),(0,-1))
 
-# Kiln artwork = native grid - (0,1). Compact 5x3x4 (2026-10-30): the old
-# 7x5x6 registration's origin, entrance and door are kept.
-K=layout([0,1,0],[5,3,4],[3,-1,0],[[3.50,-.94,0]],deck_mode='None')
-ground_door(K,(3.50,.14,0),(0,-1))
+# Kiln artwork = native grid - (0,1). 3x3x3 since the second shrink pass
+# (2026-11-01; 5x3x4 before, 7x5x6 originally): same origin; the porch and
+# door moved to tile column 0 (the old door column 3 is outside the 3-wide
+# footprint), so the entrance is (0,-1,0) (was (3,-1,0)).
+K=layout([0,1,0],[3,3,3],[0,-1,0],[[.50,-.94,0]],deck_mode='None')
+ground_door(K,(.50,.14,0),(0,-1))
 
 # Quarry artwork = native grid + (0,1). Compact 8x6x5 (2026-10-30): the old
 # 11x7x9 origin, entrance, door and 5x5 seam cells (grid x 3..7, y 1..5) are

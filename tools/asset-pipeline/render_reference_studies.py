@@ -228,10 +228,8 @@ def render_model(ident,cli):
         light.rotation_euler=(center-light.location).to_track_quat('-Z','Y').to_euler()
     if ident=='CementKiln':
         # Studio illumination of authored lanterns and embers, not runtime effects.
-        for x,y,z,energy in ((1.58,1.02,2.58,7),(5.65,1.02,2.56,9),
-                             (.20,.03,.84,4),(4.60,.03,.84,4),
-                             (1.58,3.52,2.72,7),(5.65,3.52,2.81,8),
-                             (6.16,.99,.78,16)):
+        # 3x3 kiln (2026-11-01): porch lamp and fire.
+        for x,y,z,energy in ((.90,-.90,.84,4),(2.50,-.20,.62,16)):
             bpy.ops.object.light_add(type='POINT',location=(-x,-y,z));light=bpy.context.object;move(light)
             light.data.energy=energy;light.data.color=(1,.26,.025);light.data.shadow_soft_size=.12
     bpy.ops.mesh.primitive_plane_add(size=200,location=(0,0,-1.04 if ident=='FishHatchery' else -.04));ground=bpy.context.object;move(ground)

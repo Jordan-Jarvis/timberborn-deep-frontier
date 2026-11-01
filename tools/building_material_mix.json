@@ -62,32 +62,32 @@
   },
   "CementKiln": {
    "model": "Buildings/Metal/CementKiln/CementKiln.IronTeeth.Model",
-   "sha256": "b571ab5a2872da7529c1c63d3cc2ddad52a96792aec9a8deec3ffcc6f0cee674",
+   "sha256": "683bfd348ef7b388a5e6483b6744a03642e832925437638856e7139e83fe07a7",
    "areas": {
-    "BaseMetal.IronTeeth": 32.1718,
-    "BaseWood_DarkBrown.IronTeeth": 28.3824,
-    "DFIndustrial05": 1.9147,
-    "DFIndustrial08": 0.1555,
-    "DFIndustrial13": 0.2446,
-    "DFIndustrial14": 37.3484,
-    "DFIndustrial15": 9.0293,
+    "BaseMetal.IronTeeth": 21.5155,
+    "BaseWood_DarkBrown.IronTeeth": 18.8289,
+    "DFIndustrial05": 1.9134,
+    "DFIndustrial08": 0.0778,
+    "DFIndustrial13": 0.2127,
+    "DFIndustrial14": 19.1943,
+    "DFIndustrial15": 6.4327,
     "DFIndustrial16": 2.838,
     "DFIndustrial17": 0.1829,
     "DFIndustrial18": 0.455,
-    "DFIndustrial20": 9.8522,
-    "DFIndustrial21": 0.1064,
+    "DFIndustrial20": 3.892,
+    "DFIndustrial21": 0.106,
     "Details.IronTeeth#metal": 0.0792,
-    "IrregularPlanks_DarkBrown.IronTeeth": 30.0194,
+    "IrregularPlanks_DarkBrown.IronTeeth": 16.3771,
     "Plaster_Orange.IronTeeth": 0.9208,
-    "RoofPlanks.IronTeeth": 6.9851,
-    "WindowsAtlas.IronTeeth": 1.0813
+    "RoofPlanks.IronTeeth": 2.6384,
+    "WindowsAtlas.IronTeeth": 0.7605
    },
    "families": {
     "brick": 0.9208,
-    "limestone": 48.2924,
-    "metal": 42.4542,
-    "unpriced": 4.7127,
-    "wood": 65.3869
+    "limestone": 27.5403,
+    "metal": 25.8052,
+    "unpriced": 4.3141,
+    "wood": 37.8443
    }
   },
   "ChemicalWorks": {
