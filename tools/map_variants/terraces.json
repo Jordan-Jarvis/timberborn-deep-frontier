@@ -29,8 +29,6 @@
   ],
   "sites": [
     {"template": "NuclearReactor.IronTeeth", "label": "Western Valley floor (river-side, below the starting terrace)", "x": 36, "y": 161, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["N", "W"], "maxWaterDistance": 15},
-    {"template": "LaunchPad.IronTeeth", "label": "North-west terrace above the valley", "x": 40, "y": 127, "z": 12, "orientation": "Cw0", "margin": 2, "openSides": ["N", "S", "W"]},
-    {"template": "LaunchPad.IronTeeth", "label": "Starting terrace (alternative; highest legal level)", "x": 86, "y": 154, "z": 15, "orientation": "Cw0", "margin": 2, "openSides": ["N", "E", "S", "W"], "alternative": true},
     {"template": "DeepDrill.IronTeeth", "label": "Bench drill", "x": 131, "y": 139, "z": 9, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "DeepDrill.IronTeeth", "label": "Basin Rim drill", "x": 155, "y": 102, "z": 11, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "W"]},
     {"template": "DeepMine.IronTeeth", "label": "Lower Basin mine", "x": 169, "y": 114, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"], "understructure": [169, 114, 3]},

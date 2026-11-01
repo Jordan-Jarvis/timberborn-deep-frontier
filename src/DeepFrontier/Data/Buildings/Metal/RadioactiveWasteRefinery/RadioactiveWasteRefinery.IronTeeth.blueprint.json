@@ -5,27 +5,27 @@
     "BuildingCost": [
       {
         "Id": "Alloy",
-        "Amount": 120
+        "Amount": 130
       },
       {
         "Id": "MachineCore",
-        "Amount": 110
+        "Amount": 115
       },
       {
         "Id": "Electronics",
-        "Amount": 15
+        "Amount": 20
       },
       {
         "Id": "PowerModule",
-        "Amount": 15
+        "Amount": 20
       },
       {
         "Id": "Concrete",
-        "Amount": 8310
+        "Amount": 7210
       },
       {
         "Id": "Brick",
-        "Amount": 835
+        "Amount": 1600
       }
     ],
     "ScienceCost": 500000,

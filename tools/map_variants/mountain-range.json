@@ -27,7 +27,6 @@
     {"template": "HumanRecordCache", "label": "Ruins 90 cells north-east of the start", "x": 106, "y": 128, "z": 7, "orientation": "Cw0"}
   ],
   "sites": [
-    {"template": "LaunchPad.IronTeeth", "label": "South valley terrace", "x": 60, "y": 16, "z": 4, "orientation": "Cw0", "margin": 2, "openSides": ["N", "S"]},
     {"template": "DeepDrill.IronTeeth", "label": "East bench drill", "x": 100, "y": 32, "z": 6, "orientation": "Cw270", "margin": 1, "openSides": ["E", "S"]},
     {"template": "DeepDrill.IronTeeth", "label": "North bench drill", "x": 56, "y": 121, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E", "W"]},
     {"template": "DeepMine.IronTeeth", "label": "North highland mine", "x": 75, "y": 91, "z": 13, "orientation": "Cw180", "margin": 1, "openSides": ["N", "S", "W"], "understructure": [71, 87, 13]},

@@ -95,6 +95,66 @@
     "wood": 304.9255
    },
    "measuredAt": "10x8x5 Materials Laboratory model (d424ef7)"
+  },
+  "LaunchPad": {
+   "families": {
+    "brick": 4.6183,
+    "concrete": 369.1973,
+    "metal": 251.7503,
+    "unpriced": 27.0743,
+    "wood": 56.4484
+   },
+   "measuredAt": "10x9x12 study (fc1fb48)"
+  },
+  "RadioactiveWasteRefinery": {
+   "families": {
+    "brick": 83.5405,
+    "concrete": 420.463,
+    "metal": 268.6355,
+    "unpriced": 8.804,
+    "wood": 1.5902
+   },
+   "measuredAt": "9x7x7 study (22d396b)"
+  },
+  "MissionControl": {
+   "families": {
+    "brick": 49.593,
+    "concrete": 436.0261,
+    "metal": 71.9666,
+    "unpriced": 9.6609,
+    "wood": 172.5863
+   },
+   "measuredAt": "8x7x9 study (27ee17d)"
+  },
+  "RadioactiveWasteVault": {
+   "families": {
+    "brick": 1.2914,
+    "concrete": 327.6122,
+    "metal": 62.0672,
+    "unpriced": 0.6617,
+    "wood": 30.5645
+   },
+   "measuredAt": "8x7x6 study (c2253df)"
+  },
+  "RocketAssemblyHangar": {
+   "families": {
+    "brick": 180.5448,
+    "concrete": 187.2309,
+    "metal": 744.7111,
+    "unpriced": 10.3502,
+    "wood": 187.3564
+   },
+   "measuredAt": "7x8x9 study (3f43d39)"
+  },
+  "RadioactiveWasteExport": {
+   "families": {
+    "brick": 4.5167,
+    "concrete": 124.1567,
+    "metal": 51.8226,
+    "unpriced": 1.1561,
+    "wood": 3.1933
+   },
+   "measuredAt": "6x5x3 study (fc1fb48)"
   }
  }
 }

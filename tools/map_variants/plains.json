@@ -30,7 +30,6 @@
   ],
   "sites": [
     {"template": "NuclearReactor.IronTeeth", "label": "North Bank plain", "x": 111, "y": 192, "z": 3, "orientation": "Cw0", "margin": 2, "openSides": ["N", "E", "S", "W"], "maxWaterDistance": 15},
-    {"template": "LaunchPad.IronTeeth", "label": "North Bank plain, west of the reactor", "x": 94, "y": 192, "z": 3, "orientation": "Cw0", "margin": 2, "openSides": ["N", "E", "S", "W"]},
     {"template": "DeepDrill.IronTeeth", "label": "Crater Road drill", "x": 163, "y": 128, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "DeepDrill.IronTeeth", "label": "North Bank drill", "x": 105, "y": 170, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "DeepDrill.IronTeeth", "label": "West Lowlands drill", "x": 8, "y": 80, "z": 2, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},

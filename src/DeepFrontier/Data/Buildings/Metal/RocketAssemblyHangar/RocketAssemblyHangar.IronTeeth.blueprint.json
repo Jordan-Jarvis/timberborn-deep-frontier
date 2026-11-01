@@ -5,31 +5,31 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 490
+        "Amount": 465
       },
       {
         "Id": "Alloy",
-        "Amount": 240
+        "Amount": 265
       },
       {
         "Id": "MachineCore",
-        "Amount": 160
+        "Amount": 165
       },
       {
         "Id": "Electronics",
-        "Amount": 30
+        "Amount": 35
       },
       {
         "Id": "PowerModule",
-        "Amount": 30
+        "Amount": 35
       },
       {
         "Id": "Concrete",
-        "Amount": 3135
+        "Amount": 2340
       },
       {
         "Id": "Brick",
-        "Amount": 2570
+        "Amount": 2515
       }
     ],
     "ScienceCost": 50000,

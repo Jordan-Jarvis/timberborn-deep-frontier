@@ -391,9 +391,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 8754,
-   "vertices": 16492,
-   "construction": 8754,
+   "finished": 8460,
+   "vertices": 15912,
+   "construction": 8460,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/LaunchPad/LaunchPad.IronTeeth.Model.timbermesh"
   },
   "LimestoneOutcrop": {

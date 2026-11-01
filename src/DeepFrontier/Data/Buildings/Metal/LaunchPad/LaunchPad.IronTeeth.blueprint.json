@@ -73,9 +73,9 @@
   },
   "BlockObjectSpec": {
     "Size": {
-      "X": 10,
-      "Y": 9,
-      "Z": 12
+      "X": 7,
+      "Y": 7,
+      "Z": 9
     },
     "Blocks": [
       {
@@ -93,20 +93,6 @@
         "Underground": false
       },
       {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "BlockObject",
@@ -117,13 +103,6 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -144,13 +123,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -166,13 +138,6 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -187,20 +152,6 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -236,13 +187,6 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -257,83 +201,6 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -355,13 +222,6 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -376,13 +236,6 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -411,20 +264,6 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -446,13 +285,6 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -516,34 +348,6 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -551,4345 +355,89 @@
         "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
         "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "Any",
+        "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "Any",
+        "MatterBelow": "GroundOrStackable",
         "Occupations": "All",
-        "Stackable": "None",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -4924,14 +472,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -4952,35 +500,35 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5001,22 +549,22 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -5036,28 +584,28 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5085,28 +633,28 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5267,14 +815,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5316,14 +864,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5379,28 +927,28 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5435,7 +983,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5498,7 +1046,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5512,14 +1060,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5610,15 +1158,15 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -5659,15 +1207,15 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -5722,28 +1270,28 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -5771,28 +1319,28 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -6058,7 +1606,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -6073,27 +1621,20 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "BlockObject",
+        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -6121,7 +1662,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -6143,14 +1684,14 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "BlockObject",
+        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
+        "Occupations": "None",
+        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -6415,28 +1956,28 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -6464,28 +2005,28 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -6688,15 +2229,15 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
+        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
+        "Occupations": "None",
+        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -6766,20 +2307,20 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "BlockObject",
+        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -6807,28 +2348,28 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -7101,29 +2642,29 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -7150,29 +2691,29 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -7313,13 +2854,6 @@
         "MatterBelow": "Any",
         "Occupations": "None",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -7383,13 +2917,6 @@
         "MatterBelow": "Any",
         "Occupations": "None",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -7642,7 +3169,7 @@
     "Entrance": {
       "HasEntrance": true,
       "Coordinates": {
-        "X": 9,
+        "X": 6,
         "Y": 0,
         "Z": 0
       }
@@ -7653,7 +3180,7 @@
   },
   "BuildingAccessibleSpec": {
     "LocalAccess": {
-      "X": 9.5,
+      "X": 6.5,
       "Y": 0,
       "Z": 1
     },
@@ -7697,6 +3224,15 @@
     "Transputs": [
       {
         "Coordinates": {
+          "X": 2,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Bottom",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 3,
           "Y": 0,
           "Z": 0
@@ -7706,25 +3242,7 @@
       },
       {
         "Coordinates": {
-          "X": 4,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
           "X": 5,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
           "Y": 0,
           "Z": 0
         },
@@ -7755,7 +3273,7 @@
           "Y": 1,
           "Z": 0
         },
-        "Directions": "Down, Bottom",
+        "Directions": "Bottom",
         "ReverseRotation": false
       },
       {
@@ -7770,24 +3288,6 @@
       {
         "Coordinates": {
           "X": 4,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
           "Y": 1,
           "Z": 0
         },
@@ -7796,16 +3296,7 @@
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Down, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
+          "X": 5,
           "Y": 1,
           "Z": 0
         },
@@ -7814,7 +3305,7 @@
       },
       {
         "Coordinates": {
-          "X": 9,
+          "X": 6,
           "Y": 1,
           "Z": 0
         },
@@ -7881,33 +3372,6 @@
           "Y": 2,
           "Z": 0
         },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 2,
-          "Z": 0
-        },
         "Directions": "Right, Bottom",
         "ReverseRotation": false
       },
@@ -7968,33 +3432,6 @@
       {
         "Coordinates": {
           "X": 6,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
           "Y": 3,
           "Z": 0
         },
@@ -8061,33 +3498,6 @@
           "Y": 4,
           "Z": 0
         },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 4,
-          "Z": 0
-        },
         "Directions": "Right, Bottom",
         "ReverseRotation": false
       },
@@ -8151,33 +3561,6 @@
           "Y": 5,
           "Z": 0
         },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 5,
-          "Z": 0
-        },
         "Directions": "Right, Bottom",
         "ReverseRotation": false
       },
@@ -8185,186 +3568,6 @@
         "Coordinates": {
           "X": 0,
           "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Left, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Right, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Left, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Right, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 8,
           "Z": 0
         },
         "Directions": "Left, Up, Bottom",
@@ -8373,7 +3576,7 @@
       {
         "Coordinates": {
           "X": 1,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Up, Bottom",
@@ -8382,7 +3585,7 @@
       {
         "Coordinates": {
           "X": 2,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Up, Bottom",
@@ -8391,7 +3594,7 @@
       {
         "Coordinates": {
           "X": 3,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Up, Bottom",
@@ -8400,7 +3603,7 @@
       {
         "Coordinates": {
           "X": 4,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Up, Bottom",
@@ -8409,7 +3612,7 @@
       {
         "Coordinates": {
           "X": 5,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Up, Bottom",
@@ -8418,34 +3621,7 @@
       {
         "Coordinates": {
           "X": 6,
-          "Y": 8,
-          "Z": 0
-        },
-        "Directions": "Up, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 8,
-          "Z": 0
-        },
-        "Directions": "Up, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 8,
-          "Z": 0
-        },
-        "Directions": "Up, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Right, Up, Bottom",
@@ -8453,92 +3629,11 @@
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 2
+          "X": 2,
+          "Y": 1,
+          "Z": 0
         },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 3
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 4
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 5
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 6
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 6
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 7
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 7
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 8
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 8
-        },
-        "Directions": "Right",
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
@@ -8552,17 +3647,8 @@
       },
       {
         "Coordinates": {
-          "X": 4,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 1,
+          "X": 2,
+          "Y": 2,
           "Z": 0
         },
         "Directions": "Top",
@@ -8579,26 +3665,8 @@
       },
       {
         "Coordinates": {
-          "X": 4,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
           "X": 0,
-          "Y": 4,
+          "Y": 3,
           "Z": 0
         },
         "Directions": "Top",
@@ -8607,178 +3675,7 @@
       {
         "Coordinates": {
           "X": 1,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 7,
+          "Y": 3,
           "Z": 0
         },
         "Directions": "Top",
@@ -8787,34 +3684,7 @@
       {
         "Coordinates": {
           "X": 6,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 7,
+          "Y": 3,
           "Z": 0
         },
         "Directions": "Top",
@@ -8823,7 +3693,7 @@
       {
         "Coordinates": {
           "X": 0,
-          "Y": 8,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Top",
@@ -8832,43 +3702,7 @@
       {
         "Coordinates": {
           "X": 1,
-          "Y": 8,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 8,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 8,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 8,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 8,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Top",
@@ -8877,7 +3711,7 @@
       {
         "Coordinates": {
           "X": 6,
-          "Y": 8,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Top",
@@ -8885,8 +3719,8 @@
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 8,
+          "X": 0,
+          "Y": 5,
           "Z": 0
         },
         "Directions": "Top",
@@ -8894,8 +3728,8 @@
       },
       {
         "Coordinates": {
-          "X": 8,
-          "Y": 8,
+          "X": 1,
+          "Y": 5,
           "Z": 0
         },
         "Directions": "Top",
@@ -8903,8 +3737,8 @@
       },
       {
         "Coordinates": {
-          "X": 9,
-          "Y": 8,
+          "X": 2,
+          "Y": 5,
           "Z": 0
         },
         "Directions": "Top",
@@ -8912,128 +3746,83 @@
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 2
-        },
-        "Directions": "Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 3
-        },
-        "Directions": "Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
+          "X": 3,
           "Y": 5,
-          "Z": 3
+          "Z": 0
         },
-        "Directions": "Up",
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 4
-        },
-        "Directions": "Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
+          "X": 6,
           "Y": 5,
-          "Z": 4
+          "Z": 0
         },
-        "Directions": "Up",
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 5
+          "X": 0,
+          "Y": 6,
+          "Z": 0
         },
-        "Directions": "Up",
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 6
+          "X": 1,
+          "Y": 6,
+          "Z": 0
         },
-        "Directions": "Down",
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 6
+          "X": 2,
+          "Y": 6,
+          "Z": 0
         },
-        "Directions": "Up",
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 7
+          "X": 3,
+          "Y": 6,
+          "Z": 0
         },
-        "Directions": "Down",
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 7
+          "X": 4,
+          "Y": 6,
+          "Z": 0
         },
-        "Directions": "Up",
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 8
+          "X": 5,
+          "Y": 6,
+          "Z": 0
         },
-        "Directions": "Down",
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 8
+          "X": 6,
+          "Y": 6,
+          "Z": 0
         },
-        "Directions": "Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 9
-        },
-        "Directions": "Down, Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 9
-        },
-        "Directions": "Up, Top",
+        "Directions": "Top",
         "ReverseRotation": false
       }
     ]
@@ -9048,241 +3837,97 @@
         "BoxColliders": [
           {
             "Center": {
-              "X": 4.5,
-              "Y": 0.5,
-              "Z": 4.5
-            },
-            "Size": {
               "X": 3,
-              "Y": 1,
-              "Z": 9
-            }
-          },
-          {
-            "Center": {
-              "X": 8.5,
               "Y": 0.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 9
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 0.5,
-              "Z": 5
-            },
-            "Size": {
-              "X": 3,
-              "Y": 1,
-              "Z": 8
-            }
-          },
-          {
-            "Center": {
-              "X": 7,
-              "Y": 0.5,
-              "Z": 5
+              "Z": 3.5
             },
             "Size": {
               "X": 2,
               "Y": 1,
-              "Z": 8
-            }
-          },
-          {
-            "Center": {
-              "X": 9.5,
-              "Y": 0.5,
-              "Z": 5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 8
-            }
-          },
-          {
-            "Center": {
-              "X": 8,
-              "Y": 1.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 4,
-              "Y": 1,
-              "Z": 3
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 1.5,
-              "Z": 5
-            },
-            "Size": {
-              "X": 3,
-              "Y": 1,
-              "Z": 4
-            }
-          },
-          {
-            "Center": {
-              "X": 7,
-              "Y": 1.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 2,
-              "Y": 1,
-              "Z": 3
-            }
-          },
-          {
-            "Center": {
-              "X": 7,
-              "Y": 2.5,
-              "Z": 6.5
-            },
-            "Size": {
-              "X": 2,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 2.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 3,
-              "Y": 3,
-              "Z": 3
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 3,
-              "Z": 5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 2,
-              "Z": 4
-            }
-          },
-          {
-            "Center": {
-              "X": 3.5,
-              "Y": 3,
-              "Z": 5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 2,
-              "Z": 2
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 3,
-              "Z": 5
-            },
-            "Size": {
-              "X": 3,
-              "Y": 2,
-              "Z": 2
+              "Z": 7
             }
           },
           {
             "Center": {
               "X": 5.5,
-              "Y": 5.5,
-              "Z": 5
+              "Y": 0.5,
+              "Z": 3.5
             },
             "Size": {
-              "X": 5,
+              "X": 1,
+              "Y": 1,
+              "Z": 7
+            }
+          },
+          {
+            "Center": {
+              "X": 1,
+              "Y": 0.5,
+              "Z": 4
+            },
+            "Size": {
+              "X": 2,
+              "Y": 1,
+              "Z": 6
+            }
+          },
+          {
+            "Center": {
+              "X": 4.5,
+              "Y": 0.5,
+              "Z": 4
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 6
+            }
+          },
+          {
+            "Center": {
+              "X": 6.5,
+              "Y": 0.5,
+              "Z": 4
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 6
+            }
+          },
+          {
+            "Center": {
+              "X": 5.5,
+              "Y": 1.5,
+              "Z": 2
+            },
+            "Size": {
+              "X": 3,
+              "Y": 1,
+              "Z": 2
+            }
+          },
+          {
+            "Center": {
+              "X": 1,
+              "Y": 2.5,
+              "Z": 2
+            },
+            "Size": {
+              "X": 2,
               "Y": 3,
               "Z": 2
             }
           },
           {
             "Center": {
-              "X": 6,
-              "Y": 7.5,
-              "Z": 5
+              "X": 4,
+              "Y": 4.5,
+              "Z": 4
             },
             "Size": {
               "X": 4,
-              "Y": 1,
-              "Z": 2
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 8.5,
-              "Z": 5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 2
-            }
-          },
-          {
-            "Center": {
-              "X": 7,
-              "Y": 8.5,
-              "Z": 5
-            },
-            "Size": {
-              "X": 2,
-              "Y": 1,
-              "Z": 2
-            }
-          },
-          {
-            "Center": {
-              "X": 6,
-              "Y": 9.5,
-              "Z": 5
-            },
-            "Size": {
-              "X": 4,
-              "Y": 1,
-              "Z": 2
-            }
-          },
-          {
-            "Center": {
-              "X": 5,
-              "Y": 10.5,
-              "Z": 5
-            },
-            "Size": {
-              "X": 2,
-              "Y": 1,
-              "Z": 2
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 11.5,
-              "Z": 5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
+              "Y": 7,
               "Z": 2
             }
           }
@@ -9302,241 +3947,97 @@
             "BoxColliders": [
               {
                 "Center": {
-                  "X": 4.5,
-                  "Y": 0.5,
-                  "Z": 4.5
-                },
-                "Size": {
                   "X": 3,
-                  "Y": 1,
-                  "Z": 9
-                }
-              },
-              {
-                "Center": {
-                  "X": 8.5,
                   "Y": 0.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 9
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 0.5,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 8
-                }
-              },
-              {
-                "Center": {
-                  "X": 7,
-                  "Y": 0.5,
-                  "Z": 5
+                  "Z": 3.5
                 },
                 "Size": {
                   "X": 2,
                   "Y": 1,
-                  "Z": 8
-                }
-              },
-              {
-                "Center": {
-                  "X": 9.5,
-                  "Y": 0.5,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 8
-                }
-              },
-              {
-                "Center": {
-                  "X": 8,
-                  "Y": 1.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 4,
-                  "Y": 1,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 1.5,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 4
-                }
-              },
-              {
-                "Center": {
-                  "X": 7,
-                  "Y": 1.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 7,
-                  "Y": 2.5,
-                  "Z": 6.5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 3,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 3,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 2,
-                  "Z": 4
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 3,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 2,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 3,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 2,
-                  "Z": 2
+                  "Z": 7
                 }
               },
               {
                 "Center": {
                   "X": 5.5,
-                  "Y": 5.5,
-                  "Z": 5
+                  "Y": 0.5,
+                  "Z": 3.5
                 },
                 "Size": {
-                  "X": 5,
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 7
+                }
+              },
+              {
+                "Center": {
+                  "X": 1,
+                  "Y": 0.5,
+                  "Z": 4
+                },
+                "Size": {
+                  "X": 2,
+                  "Y": 1,
+                  "Z": 6
+                }
+              },
+              {
+                "Center": {
+                  "X": 4.5,
+                  "Y": 0.5,
+                  "Z": 4
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 6
+                }
+              },
+              {
+                "Center": {
+                  "X": 6.5,
+                  "Y": 0.5,
+                  "Z": 4
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 6
+                }
+              },
+              {
+                "Center": {
+                  "X": 5.5,
+                  "Y": 1.5,
+                  "Z": 2
+                },
+                "Size": {
+                  "X": 3,
+                  "Y": 1,
+                  "Z": 2
+                }
+              },
+              {
+                "Center": {
+                  "X": 1,
+                  "Y": 2.5,
+                  "Z": 2
+                },
+                "Size": {
+                  "X": 2,
                   "Y": 3,
                   "Z": 2
                 }
               },
               {
                 "Center": {
-                  "X": 6,
-                  "Y": 7.5,
-                  "Z": 5
+                  "X": 4,
+                  "Y": 4.5,
+                  "Z": 4
                 },
                 "Size": {
                   "X": 4,
-                  "Y": 1,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 8.5,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 7,
-                  "Y": 8.5,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 6,
-                  "Y": 9.5,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 4,
-                  "Y": 1,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 5,
-                  "Y": 10.5,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 11.5,
-                  "Z": 5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
+                  "Y": 7,
                   "Z": 2
                 }
               }
@@ -9654,109 +4155,49 @@
   "RoofHardpointsSpec": {
     "Cells": [
       {
+        "X": 2,
+        "Y": 0,
+        "Z": 0
+      },
+      {
         "X": 3,
+        "Y": 0,
+        "Z": 0
+      },
+      {
+        "X": 5,
         "Y": 0,
         "Z": 0
       },
       {
         "X": 4,
-        "Y": 0,
-        "Z": 0
-      },
-      {
-        "X": 5,
-        "Y": 0,
-        "Z": 0
-      },
-      {
-        "X": 8,
-        "Y": 0,
-        "Z": 0
-      },
-      {
-        "X": 6,
         "Y": 1,
-        "Z": 1
-      },
-      {
-        "X": 7,
-        "Y": 1,
-        "Z": 1
-      },
-      {
-        "X": 8,
-        "Y": 1,
-        "Z": 1
-      },
-      {
-        "X": 9,
-        "Y": 1,
-        "Z": 1
-      },
-      {
-        "X": 6,
-        "Y": 2,
-        "Z": 1
-      },
-      {
-        "X": 7,
-        "Y": 2,
-        "Z": 1
-      },
-      {
-        "X": 8,
-        "Y": 2,
-        "Z": 1
-      },
-      {
-        "X": 9,
-        "Y": 2,
-        "Z": 1
-      },
-      {
-        "X": 3,
-        "Y": 3,
         "Z": 1
       },
       {
         "X": 5,
-        "Y": 3,
+        "Y": 1,
         "Z": 1
       },
       {
         "X": 6,
-        "Y": 3,
+        "Y": 1,
         "Z": 1
       },
       {
-        "X": 7,
-        "Y": 3,
-        "Z": 1
-      },
-      {
-        "X": 8,
-        "Y": 3,
-        "Z": 1
-      },
-      {
-        "X": 9,
-        "Y": 3,
-        "Z": 1
-      },
-      {
-        "X": 3,
-        "Y": 6,
+        "X": 4,
+        "Y": 2,
         "Z": 1
       },
       {
         "X": 5,
-        "Y": 6,
+        "Y": 2,
         "Z": 1
       },
       {
         "X": 6,
-        "Y": 6,
-        "Z": 2
+        "Y": 2,
+        "Z": 1
       },
       {
         "X": 0,
@@ -9765,11 +4206,6 @@
       },
       {
         "X": 1,
-        "Y": 1,
-        "Z": 3
-      },
-      {
-        "X": 2,
         "Y": 1,
         "Z": 3
       },
@@ -9785,73 +4221,43 @@
       },
       {
         "X": 2,
-        "Y": 2,
-        "Z": 3
+        "Y": 3,
+        "Z": 7
       },
       {
-        "X": 0,
+        "X": 3,
         "Y": 3,
-        "Z": 3
+        "Z": 7
       },
       {
-        "X": 1,
+        "X": 4,
         "Y": 3,
-        "Z": 3
+        "Z": 7
+      },
+      {
+        "X": 5,
+        "Y": 3,
+        "Z": 7
       },
       {
         "X": 2,
-        "Y": 3,
-        "Z": 3
-      },
-      {
-        "X": 4,
-        "Y": 3,
-        "Z": 3
-      },
-      {
-        "X": 4,
-        "Y": 6,
-        "Z": 3
+        "Y": 4,
+        "Z": 7
       },
       {
         "X": 3,
         "Y": 4,
-        "Z": 6
-      },
-      {
-        "X": 3,
-        "Y": 5,
-        "Z": 6
-      },
-      {
-        "X": 6,
-        "Y": 4,
-        "Z": 9
-      },
-      {
-        "X": 6,
-        "Y": 5,
-        "Z": 9
-      },
-      {
-        "X": 5,
-        "Y": 4,
-        "Z": 10
-      },
-      {
-        "X": 5,
-        "Y": 5,
-        "Z": 10
+        "Z": 7
       },
       {
         "X": 4,
         "Y": 4,
-        "Z": 11
+        "Z": 7
       },
       {
-        "X": 4,
-        "Y": 5,
-        "Z": 11
+        "X": 5,
+        "Y": 4,
+        "Z": 7
       }
     ]
   },
@@ -9877,43 +4283,25 @@
       },
       {
         "Coordinates": {
-          "X": 2,
+          "X": 4,
           "Y": 1,
           "Z": 0
         },
         "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 2,
+          "Z": 0
+        },
+        "Directions": "Left",
         "State": "OpenIn"
       },
       {
         "Coordinates": {
           "X": 6,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 9,
           "Y": 2,
           "Z": 0
         },
@@ -9931,7 +4319,7 @@
       },
       {
         "Coordinates": {
-          "X": 9,
+          "X": 6,
           "Y": 3,
           "Z": 0
         },
@@ -9949,7 +4337,7 @@
       },
       {
         "Coordinates": {
-          "X": 9,
+          "X": 6,
           "Y": 4,
           "Z": 0
         },
@@ -9967,7 +4355,7 @@
       },
       {
         "Coordinates": {
-          "X": 9,
+          "X": 6,
           "Y": 5,
           "Z": 0
         },
@@ -9978,42 +4366,6 @@
         "Coordinates": {
           "X": 0,
           "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 6,
-          "Z": 0
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 7,
-          "Z": 0
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 8,
           "Z": 0
         },
         "Directions": "Left, Up",
@@ -10022,7 +4374,7 @@
       {
         "Coordinates": {
           "X": 1,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Up",
@@ -10031,7 +4383,7 @@
       {
         "Coordinates": {
           "X": 2,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Up",
@@ -10040,7 +4392,7 @@
       {
         "Coordinates": {
           "X": 3,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Up",
@@ -10049,7 +4401,7 @@
       {
         "Coordinates": {
           "X": 4,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Up",
@@ -10058,7 +4410,7 @@
       {
         "Coordinates": {
           "X": 5,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Up",
@@ -10067,178 +4419,16 @@
       {
         "Coordinates": {
           "X": 6,
-          "Y": 8,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 8,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 8,
-          "Y": 8,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 9,
-          "Y": 8,
+          "Y": 6,
           "Z": 0
         },
         "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 2
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 3
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 3
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 4
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 4
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 5
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 6
-        },
-        "Directions": "Right, Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 6
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 7
-        },
-        "Directions": "Right, Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 7
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 8
-        },
-        "Directions": "Right, Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 8
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 9
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
-          "Z": 9
-        },
-        "Directions": "Up",
         "State": "OpenIn"
       }
     ]
   },
   "StatusIconAnchorSpec": {
-    "Height": 12.7
+    "Height": 8.7
   },
   "PowerConnectionStatusSpec": {}
 }

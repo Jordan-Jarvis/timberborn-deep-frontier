@@ -6,6 +6,10 @@
 - **Sandstone and Limestone Quarries** are 5x5 (were 8x6) and cover their Deep Seam exactly: the stone plinth with the headframe, winding house and sorting line, the operator cabin with the door in the front-left corner and a narrow tool room. **Existing quarries move onto their seam when a save loads** (their door moves: reconnect the path). Same workers, power and output; the cost shifts slightly with the smaller model.
 - **Deep Drill** is 4x4, 7 high (was 7x6, 8 high): the pump house with the door, the engine room under the drill floor with the boarded tower, and the mud pump at the back. Same door, workers, power and drill-bit upkeep; its cost is recomposed from the smaller model.
 
+### Smaller late-game buildings (second shrink, continued)
+- **Launch Pad** is 7x7, 9 high (was 10x9, 12 high): the rocket is a little smaller and still stands whole on its mount over the flame trench, beside the service tower with its swing arms and crew cabin. The Rocket Assembly Hangar builds the same rocket. The blockhouse door moves three tiles left (still at the deck's front corner). Launches, missions and power are unchanged. No reserved map site any more.
+- **Build costs of the shrunk late-game buildings** (Radioactive Waste Refinery, Mission Control, Radioactive Waste Vault, Rocket Assembly Hangar, Launch Pad) are back to what they were before the shrink.
+
 ## 0.8.2 (2026-11-01)
 
 - **Radioactive water is less bright:** its yellow and its glow are toned down. Irradiated beavers and soil keep their colours.

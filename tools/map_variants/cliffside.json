@@ -37,7 +37,6 @@
     {"template": "RadioactiveSludgeRecoveryPump.IronTeeth", "label": "Radioactive Sludge Recovery Pump, by the start", "x": 32, "y": 26, "z": 4, "orientation": "Cw270"},
     {"template": "RadioactiveWasteExport.IronTeeth", "label": "Radioactive Waste Export, 19 cells north of the start", "x": 30, "y": 49, "z": 14, "orientation": "Cw90", "margin": 1, "openSides": ["E", "S"]},
     {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 2 layers of natural drop, 19 cells south-east of the start", "x": 45, "y": 12, "z": 2},
-    {"template": "LaunchPad.IronTeeth", "label": "Launch Pad, 14 cells south-west of the start", "x": 17, "y": 17, "z": 4, "orientation": "Cw0", "margin": 2, "openSides": ["S", "W"]},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 14 cells north of the start", "x": 27, "y": 31, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 61 cells east of the start", "x": 82, "y": 43, "z": 9, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E"]},
     {"template": "LimestoneQuarry.IronTeeth", "label": "Limestone Quarry, 44 cells east of the start", "x": 78, "y": 30, "z": 2, "orientation": "Cw180", "margin": 1, "openSides": ["E"], "understructure": [74, 26, 2]},

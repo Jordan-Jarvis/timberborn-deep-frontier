@@ -27,7 +27,6 @@
     {"template": "HumanRecordCache", "label": "Ruins 104 cells south-east of the start", "x": 176, "y": 18, "z": 11, "orientation": "Cw0"}
   ],
   "sites": [
-    {"template": "LaunchPad.IronTeeth", "label": "South-east plateau (the only reactor-sized flat, 26 cells from water)", "x": 148, "y": 10, "z": 9, "orientation": "Cw0", "margin": 2, "openSides": ["N", "E", "S"]},
     {"template": "DeepDrill.IronTeeth", "label": "South ridge drill", "x": 107, "y": 29, "z": 7, "orientation": "Cw270", "margin": 1, "openSides": ["E", "S"]},
     {"template": "DeepDrill.IronTeeth", "label": "East highland drill", "x": 175, "y": 69, "z": 13, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "DeepMine.IronTeeth", "label": "North-east terrace mine", "x": 131, "y": 117, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S"], "understructure": [131, 117, 6]},

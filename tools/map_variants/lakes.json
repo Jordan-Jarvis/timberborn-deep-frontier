@@ -29,7 +29,6 @@
   ],
   "sites": [
     {"template": "NuclearReactor.IronTeeth", "label": "Reactor Island (north shore of the central lake)", "x": 79, "y": 189, "z": 3, "orientation": "Cw90", "margin": 2, "openSides": ["N", "E", "S", "W"], "maxWaterDistance": 15},
-    {"template": "LaunchPad.IronTeeth", "label": "East Launch Field (east of the river)", "x": 128, "y": 115, "z": 2, "orientation": "Cw0", "margin": 2, "openSides": ["N", "E", "S", "W"]},
     {"template": "DeepDrill.IronTeeth", "label": "West Clearing drill", "x": 63, "y": 112, "z": 2, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "DeepDrill.IronTeeth", "label": "Southeast Lowlands drill", "x": 182, "y": 23, "z": 2, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"]},
     {"template": "DeepMine.IronTeeth", "label": "West Bench mine", "x": 21, "y": 148, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["N", "E", "S", "W"], "understructure": [21, 148, 3]},

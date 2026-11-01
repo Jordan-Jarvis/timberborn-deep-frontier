@@ -30,7 +30,6 @@
   ],
   "sites": [
     {"template": "NuclearReactor.IronTeeth", "label": "East Plateau", "x": 166, "y": 154, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E", "S", "W"], "maxWaterDistance": 15},
-    {"template": "LaunchPad.IronTeeth", "label": "West Shore field", "x": 99, "y": 153, "z": 4, "orientation": "Cw0", "margin": 2, "openSides": []},
     {"template": "DeepMine.IronTeeth", "label": "South Basin mine", "x": 120, "y": 127, "z": 3, "orientation": "Cw180", "margin": 1, "openSides": ["E"], "understructure": [116, 123, 3]},
     {"template": "DeepMine.IronTeeth", "label": "North Rise mine", "x": 142, "y": 192, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": [], "understructure": [142, 188, 6]},
     {"template": "DeepMine.IronTeeth", "label": "South-east Gorge mine", "x": 213, "y": 97, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["S"], "understructure": [213, 93, 6]},

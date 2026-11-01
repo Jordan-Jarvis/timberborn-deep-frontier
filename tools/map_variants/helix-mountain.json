@@ -28,7 +28,6 @@
   ],
   "sites": [
     {"template": "NuclearReactor.IronTeeth", "label": "North-east summit plateau", "x": 235, "y": 245, "z": 16, "orientation": "Cw90", "margin": 1, "openSides": ["E", "S", "W"], "maxWaterDistance": 15},
-    {"template": "LaunchPad.IronTeeth", "label": "North terrace beyond the helix", "x": 137, "y": 194, "z": 4, "orientation": "Cw0", "margin": 2, "openSides": ["W"]},
     {"template": "DeepDrill.IronTeeth", "label": "South bank drill", "x": 120, "y": 22, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": ["W"]},
     {"template": "DeepDrill.IronTeeth", "label": "East terrace drill", "x": 217, "y": 159, "z": 3, "orientation": "Cw0", "margin": 1, "openSides": ["E"]},
     {"template": "DeepMine.IronTeeth", "label": "West bench mine", "x": 107, "y": 62, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": ["S", "W"], "understructure": [107, 62, 6]},

@@ -5,11 +5,11 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 220
+        "Amount": 240
       },
       {
         "Id": "Alloy",
-        "Amount": 30
+        "Amount": 25
       },
       {
         "Id": "MachineCore",
@@ -17,11 +17,11 @@
       },
       {
         "Id": "Concrete",
-        "Amount": 2955
+        "Amount": 3015
       },
       {
         "Id": "Brick",
-        "Amount": 410
+        "Amount": 385
       },
       {
         "Id": "Gear",

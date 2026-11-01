@@ -29,7 +29,6 @@
     {"template": "HumanRecordCache", "label": "Ruins 132 cells south-east of the start", "x": 240, "y": 81, "z": 16, "orientation": "Cw0"}
   ],
   "sites": [
-    {"template": "LaunchPad.IronTeeth", "label": "Oasis west field", "x": 104, "y": 120, "z": 4, "orientation": "Cw0", "margin": 2, "openSides": ["S"]},
     {"template": "DeepMine.IronTeeth", "label": "East Hollow mine", "x": 155, "y": 143, "z": 3, "orientation": "Cw90", "margin": 1, "openSides": ["E"], "understructure": [155, 139, 3]},
     {"template": "DeepMine.IronTeeth", "label": "West Basin mine", "x": 72, "y": 140, "z": 2, "orientation": "Cw180", "margin": 1, "openSides": ["S", "W"], "understructure": [68, 136, 2]},
     {"template": "DeepMine.IronTeeth", "label": "South Terrace mine", "x": 156, "y": 90, "z": 7, "orientation": "Cw90", "margin": 1, "openSides": [], "understructure": [156, 86, 7]},
