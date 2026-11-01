@@ -35,29 +35,28 @@
   },
   "Bathhouse": {
    "model": "Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.Model",
-   "sha256": "684bc1c6000da3dbde50d052ac518ce05817fc9a8057a2d100b49b256a78eb08",
+   "sha256": "bfa4cd0660eede8c143b64ab1838737008e3ff09636c09fcff95d16cb4bee050",
    "areas": {
-    "BaseMetal.IronTeeth": 20.1726,
-    "BaseWood_DarkBrown.IronTeeth": 6.7178,
-    "DFIndustrial06": 40.9363,
-    "DFIndustrial08": 0.229,
-    "Details.IronTeeth#metal": 2.023,
-    "IrregularPlanks_DarkBrown.IronTeeth": 12.9622,
-    "IrregularPlanks_Grey.IronTeeth": 11.8397,
-    "IrregularPlanks_MetalForged.IronTeeth": 13.867,
-    "PaintedMetal.IronTeeth": 1.0087,
-    "Plaster_Orange.IronTeeth": 9.3055,
-    "Plaster_White.IronTeeth": 184.1394,
-    "RoofPlanks.IronTeeth": 20.6739,
+    "BaseMetal.IronTeeth": 12.3108,
+    "BaseWood_DarkBrown.IronTeeth": 1.6066,
+    "DFIndustrial06": 17.2564,
+    "DFIndustrial08": 0.1145,
+    "Details.IronTeeth#metal": 1.2642,
+    "IrregularPlanks_DarkBrown.IronTeeth": 8.6222,
+    "IrregularPlanks_MetalForged.IronTeeth": 0.6038,
+    "PaintedMetal.IronTeeth": 0.7274,
+    "Plaster_Orange.IronTeeth": 4.9636,
+    "Plaster_White.IronTeeth": 101.6508,
+    "RoofPlanks.IronTeeth": 9.4648,
     "Water": 4.1655,
-    "WindowsAtlas.IronTeeth": 5.045
+    "WindowsAtlas.IronTeeth": 2.2261
    },
    "families": {
-    "brick": 50.2418,
-    "concrete": 184.1394,
-    "metal": 37.0714,
-    "unpriced": 9.4395,
-    "wood": 52.1937
+    "brick": 22.22,
+    "concrete": 101.6508,
+    "metal": 14.9062,
+    "unpriced": 6.5061,
+    "wood": 19.6935
    }
   },
   "CementKiln": {
@@ -489,27 +488,26 @@
   },
   "Hospital": {
    "model": "Buildings/Wellbeing/Hospital/Hospital.IronTeeth.Model",
-   "sha256": "7334f57f973fd89104bd6616cedbcddc68642b32576311a2a9dd7c52c1496d21",
+   "sha256": "a7339e1a65c7993f695f6edd94beddd26e7fc51b5baae0ee53eaeb19ac78b0fe",
    "areas": {
-    "BaseMetal.IronTeeth": 67.0086,
-    "BaseWood_DarkBrown.IronTeeth": 281.3585,
-    "DFIndustrial05": 0.6866,
-    "DFIndustrial08": 0.8711,
-    "Details.IronTeeth#metal": 0.3185,
-    "IrregularPlanks_DarkBrown.IronTeeth": 94.8001,
-    "IrregularPlanks_MetalForged.IronTeeth": 3.5,
-    "Plaster_Orange.IronTeeth": 78.36,
-    "Plaster_White.IronTeeth": 83.8636,
-    "RoofPlanks.IronTeeth": 81.5022,
-    "WindowsAtlas.IronTeeth": 22.8912
+    "BaseMetal.IronTeeth": 35.8301,
+    "BaseWood_DarkBrown.IronTeeth": 99.7042,
+    "DFIndustrial05": 0.5857,
+    "DFIndustrial08": 0.1742,
+    "Details.IronTeeth#metal": 0.0963,
+    "IrregularPlanks_DarkBrown.IronTeeth": 41.5705,
+    "Plaster_Orange.IronTeeth": 14.096,
+    "Plaster_White.IronTeeth": 36.176,
+    "RoofPlanks.IronTeeth": 41.196,
+    "WindowsAtlas.IronTeeth": 2.939
    },
    "families": {
-    "brick": 78.36,
-    "concrete": 83.8636,
-    "limestone": 0.6866,
-    "metal": 70.8271,
-    "unpriced": 23.7622,
-    "wood": 457.6607
+    "brick": 14.096,
+    "concrete": 36.176,
+    "limestone": 0.5857,
+    "metal": 35.9264,
+    "unpriced": 3.1132,
+    "wood": 182.4707
    }
   },
   "LaunchPad": {

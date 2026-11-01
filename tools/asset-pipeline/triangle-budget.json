@@ -49,9 +49,9 @@
    "family": "lategame",
    "class": "workshop",
    "target": 12000,
-   "finished": 6980,
-   "vertices": 13552,
-   "construction": 6980,
+   "finished": 6118,
+   "vertices": 11924,
+   "construction": 6118,
    "file": "outputs/lategame-integration/Data/Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.Model.timbermesh"
   },
   "BrickMasonryBlock": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 803118,
+ "totalBlueprintTriangles": 801394,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }
