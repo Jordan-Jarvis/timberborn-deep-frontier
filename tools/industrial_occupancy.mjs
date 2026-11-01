@@ -37,9 +37,13 @@ export function industrialBlocks(ident, size) {
     region([0,1,2,1,2,2],'All'); // feed house top and bin, hall roof
     region([2,2,2,2,2,2],'All'); // chimney stack and damper
   } else if(ident==='ConcreteMixer') {
-    // Compact 4x3x3 (2026-10-30).
-    region([0,0,0,3,2,1],'All'); // operator room and canopy (doorstep (1,0,0)), drum, drive, tray, tank pedestal
-    region([0,1,2,3,2,2],'All'); // hoppers on the room roof, their chutes, drum crown, header tank
+    // 3x2x3 (2026-11-01, second shrink pass).
+    region([0,0,0,1,1,1],'All'); // operator room (doorstep (1,0,0))
+    region([2,0,0,2,0,0],'All'); // wet trough on its brick base, discharge chute
+    region([2,1,0,2,1,1],'All'); // drum, rollers and piers, drive pedestal and flywheel
+    region([0,0,2,0,0,2],'All'); // header tank on the roof
+    region([0,1,2,2,1,2],'All'); // hoppers on the roof, their chutes over the drum
+    // (1,0,2): open roof platform; (2,0,1..2): open above the trough.
   } else if(ident==='MineralQuarry') {
     // Compact 8x6x5 (2026-10-30), grid y = artwork y - 1. Stone plinth and
     // the ground front row (water tank, cabin and doorstep (1,0,0), stone bin);

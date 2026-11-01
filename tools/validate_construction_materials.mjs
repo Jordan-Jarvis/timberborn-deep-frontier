@@ -57,19 +57,20 @@ for (const entry of catalog.buildings) {
   }
   if (entry.kind === 'quarry') assert.deepEqual(value.UnderstructureConstraintSpec.UnderstructureTemplateNames, [entry.source]);
   if (entry.id === 'ConcreteMixer') {
-    // Compact 4x3x3 mixer (2026-10-30): the riser reaches the ground on the
-    // header-tank pedestal's east face, cell (3,2); the power-line insulator
-    // is on the pedestal cap's rear-right corner. The tested inlet stays
-    // first; the other flat exterior faces follow (validate_connection_faces.mjs).
+    // 3x2x3 mixer (2026-11-01): the riser to the roof header tank reaches
+    // the ground on the room's west wall, cell (0,1); the power-line
+    // insulator is on the tank's bearing plate, front-left corner. The tested
+    // inlet stays first; the other flat exterior faces follow
+    // (validate_connection_faces.mjs).
     assert.deepEqual(value.BuildingPipeTargetPortsSpec.Ports[0],
-      {Coordinates:{X:3,Y:2,Z:0},Directions:'Right',State:'OpenIn'});
-    const portBlock=value.BlockObjectSpec.Blocks[2*size.X+3];
+      {Coordinates:{X:0,Y:1,Z:0},Directions:'Left',State:'OpenIn'});
+    const portBlock=value.BlockObjectSpec.Blocks[1*size.X+0];
     assert.notEqual(portBlock.Occupations,'None','Mixer service inlet requires an occupied frame cell');
     // Power Lines is optional: its attachment point is the mixer's integration modifier, never a blueprint spec.
     assert(!value.PowerLineSpec,'Mixer blueprint must not carry the optional PowerLineSpec');
     const line = await read(data, 'Integrations/PowerLines/ConcreteMixer.IronTeeth.json');
     assert.equal(line.Blueprint,'Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.blueprint');
-    assert.deepEqual(line.Modifier,{PowerLineSpec:{ConnectionLocations:[{X:3.9,Y:2.9,Z:1.32}]}});
+    assert.deepEqual(line.Modifier,{PowerLineSpec:{ConnectionLocations:[{X:.27,Y:.3,Z:2.29}]}});
     // A navmesh spec may only switch on native floors over platformable roofs (roof_deck_content.mjs).
     const nav=value.BlockObjectNavMeshSettingsSpec;
     assert(!value.BuildingWalkwaySpec && (!nav || !(nav.EdgeGroups.length || nav.UnblockedCoordinates.length || nav.BlockedEdges.length)),'Mixer has no walkway data');

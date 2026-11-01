@@ -82,8 +82,9 @@ ground_door(Q,(1.50,.14,0),(0,-1))
 
 # Native entrance = the path cell in front of the door (vanilla convention);
 # the door cell (1,0,0) is the occupied doorstep.
-# Compact 4x3x3 (2026-10-30): the old 7x5x7 origin, entrance and door kept.
-M=layout([0,0,0],[4,3,3],[1,-1,0],[[1.50,.04,0]],deck_mode='None')
+# 3x2x3 since the second shrink pass (2026-11-01; 4x3x3 before, 7x5x7
+# originally): origin, entrance and door kept.
+M=layout([0,0,0],[3,2,3],[1,-1,0],[[1.50,.04,0]],deck_mode='None')
 ground_door(M,(1.50,.12,0),(0,-1))
 
 LAYOUTS={'StoneCrusher':C,'CementKiln':K,'MineralQuarry':Q,'ConcreteMixer':M}

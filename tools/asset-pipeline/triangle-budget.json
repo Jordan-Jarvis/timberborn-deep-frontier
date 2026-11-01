@@ -103,9 +103,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 5272,
-   "vertices": 11024,
-   "construction": 5272,
+   "finished": 4625,
+   "vertices": 9572,
+   "construction": 4625,
    "file": "src/DeepFrontier/Data/Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model.timbermesh"
   },
   "ConcreteOverflowDam": {

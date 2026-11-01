@@ -140,32 +140,31 @@
   },
   "ConcreteMixer": {
    "model": "Buildings/Metal/ConcreteMixer/ConcreteMixer.IronTeeth.Model",
-   "sha256": "b7ac42f75d045ccfce416e5aea607eec1c803807080d927c9f2811c0dfac6f4a",
+   "sha256": "d5a9c5ce61ab0b5303e96dac234ea153d9da03df8cd55b2f0686628ae5a13ebd",
    "areas": {
-    "BaseMetal.IronTeeth": 27.5609,
-    "BaseWood_DarkBrown.IronTeeth": 17.4303,
-    "DFIndustrial06": 13.5386,
-    "DFIndustrial08": 0.1555,
-    "DFIndustrial09": 0.0487,
-    "DFIndustrial13": 2.4567,
-    "DFIndustrial14": 4.876,
-    "DFIndustrial15": 3.9448,
-    "DFIndustrial19": 3.4921,
-    "DFIndustrial24": 4.4422,
-    "DFIndustrial25": 0.0048,
-    "Details.IronTeeth#metal": 0.5813,
-    "IrregularPlanks_DarkBrown.IronTeeth": 36.3986,
-    "IrregularPlanks_MetalForged.IronTeeth": 9.368,
+    "BaseMetal.IronTeeth": 20.9257,
+    "BaseWood_DarkBrown.IronTeeth": 7.6911,
+    "DFIndustrial06": 9.4945,
+    "DFIndustrial08": 0.0778,
+    "DFIndustrial09": 0.0193,
+    "DFIndustrial13": 1.6779,
+    "DFIndustrial14": 4.0446,
+    "DFIndustrial15": 1.9558,
+    "DFIndustrial19": 1.5235,
+    "DFIndustrial24": 7.0743,
+    "DFIndustrial25": 0.0021,
+    "Details.IronTeeth#metal": 0.3497,
+    "IrregularPlanks_DarkBrown.IronTeeth": 32.9525,
+    "IrregularPlanks_MetalForged.IronTeeth": 4.0282,
     "Plaster_Orange.IronTeeth": 0.588,
-    "RoofPlanks.IronTeeth": 1.5436,
-    "WindowsAtlas.IronTeeth": 1.3914
+    "WindowsAtlas.IronTeeth": 0.6739
    },
    "families": {
-    "brick": 14.1266,
-    "limestone": 8.8208,
-    "metal": 39.9669,
-    "unpriced": 9.5348,
-    "wood": 55.3726
+    "brick": 10.0825,
+    "limestone": 6.0004,
+    "metal": 26.9815,
+    "unpriced": 9.3708,
+    "wood": 40.6436
    }
   },
   "CryogenicLiquefactionPlant": {

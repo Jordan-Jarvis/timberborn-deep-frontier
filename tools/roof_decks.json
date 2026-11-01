@@ -739,6 +739,16 @@
    ],
    "excluded": []
   },
+  "ConcreteMixer": {
+   "platformable": [
+    [
+     1,
+     0,
+     1
+    ]
+   ],
+   "excluded": []
+  },
   "CryogenicLiquefactionPlant": {
    "platformable": [
     [

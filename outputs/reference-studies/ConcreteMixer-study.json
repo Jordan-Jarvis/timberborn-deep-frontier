@@ -1,14 +1,14 @@
 {
   "status": "Blender art study; not exported or installed",
   "boundsMin": [
-    -4.0,
-    -3.0,
+    -2.995082378387451,
+    -2.0299999713897705,
     0.0
   ],
   "boundsMax": [
-    0.0006291387253440917,
-    0.0,
-    2.8399999141693115
+    0.03999999910593033,
+    0.06361215561628342,
+    3.01202392578125
   ],
   "sourceReference": "docs/art/concepts/02-concrete-production-concept-v1.png",
   "selectedReferenceViews": [

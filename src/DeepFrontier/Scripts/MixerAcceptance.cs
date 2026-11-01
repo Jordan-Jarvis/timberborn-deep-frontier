@@ -114,7 +114,7 @@ namespace DeepFrontier.Scripts {
         _building=Create("ConcreteMixer.IronTeeth",159,160,3);
         _building.GetComponent<PausableBuilding>().Pause();
         // The fixture follows the installed mixer blueprint, not a size literal
-        // (compact 4x3x3 since 2026-10-30, same origin and entrance). Freed
+        // (3x2x3 since 2026-11-01, 4x3x3 before; same origin and entrance). Freed
         // ground, checked before the fixture builds beside it: the open ground
         // cells inside the bounds and the former 8x6 footprint (local frame
         // unchanged since then) outside them (outputs/freed-cells.json).
