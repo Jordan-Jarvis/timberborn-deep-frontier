@@ -25,8 +25,8 @@
     1.4700000286102295
   ],
   "collectionBin": [
-    7.25,
-    1.6,
+    7.3,
+    2.62,
     1.0
   ],
   "cycleSeconds": 16,
@@ -41,8 +41,8 @@
     {
       "section": "front operator cabin",
       "position": [
-        1.5,
-        1.06,
+        3.5,
+        2.06,
         0
       ],
       "facing": [

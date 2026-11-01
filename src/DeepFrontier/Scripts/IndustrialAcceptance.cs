@@ -233,8 +233,10 @@ namespace DeepFrontier.Scripts {
       // The 3x3 kiln's door is on its tile column 0 (column 3 before
       // 2026-11-01), so the same former cells sit 3 further right of it.
       {"CementKiln.IronTeeth",(-1,7,0,8)},
-      {"SandstoneQuarry.IronTeeth",(-1,9,-1,8)},
-      {"LimestoneQuarry.IronTeeth",(-1,9,-1,8)}};
+      // The 5x5 quarry's door is in old local (4,1) (old door (1,0) before
+      // 2026-11-01), so the same former cells sit 2 left and 1 lower of it.
+      {"SandstoneQuarry.IronTeeth",(-3,7,-2,7)},
+      {"LimestoneQuarry.IronTeeth",(-3,7,-2,7)}};
     private BlockObject CreateFactory(int index) {
       var (name,_,orientation,_)=Layout[index];
       var c=Origin(index);var b=Create(name,c.x,c.y,c.z,orientation);

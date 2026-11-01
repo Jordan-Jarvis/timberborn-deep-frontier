@@ -418,9 +418,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 6229,
-   "vertices": 13115,
-   "construction": 6229,
+   "finished": 5790,
+   "vertices": 12153,
+   "construction": 5790,
    "file": "src/DeepFrontier/Data/Buildings/Metal/LimestoneQuarry/LimestoneQuarry.IronTeeth.Model.timbermesh"
   },
   "LimestoneSeam": {
@@ -625,9 +625,9 @@
    "family": "industrial",
    "class": "workshop",
    "target": 12000,
-   "finished": 6229,
-   "vertices": 13115,
-   "construction": 6229,
+   "finished": 5790,
+   "vertices": 12153,
+   "construction": 5790,
    "file": "src/DeepFrontier/Data/Buildings/Metal/SandstoneQuarry/SandstoneQuarry.IronTeeth.Model.timbermesh"
   },
   "SandstoneSeam": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 773674,
+ "totalBlueprintTriangles": 772796,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

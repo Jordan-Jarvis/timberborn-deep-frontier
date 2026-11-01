@@ -88,7 +88,7 @@ def check_powerhouse_mount():
 def main():
     rows=[check_mount('ConcreteMixer','MixerOperatorDoor',.16,(1.65,.50,0)),
           check_mount('ReinforcedHydroTurbine','HydroWorkshopDoor',6.04,(6.35,6.24,2)),
-          check_mount('MineralQuarry','GroundDoor',1.18,(1.37,1.35,0))]
+          check_mount('MineralQuarry','GroundDoor',2.18,(1.37,1.35,0))]
     check_powerhouse_mount()
     report={'scope':'Only individual portal recipes; no source-scene generation/save/export/render.',
             'hydroSourceLocalPlacementAndIdlePoint':'passed','doors':rows}

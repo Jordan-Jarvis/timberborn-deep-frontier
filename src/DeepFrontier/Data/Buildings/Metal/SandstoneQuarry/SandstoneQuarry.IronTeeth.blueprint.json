@@ -5,7 +5,7 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 320
+        "Amount": 315
       },
       {
         "Id": "TreatedPlank",
@@ -13,15 +13,15 @@
       },
       {
         "Id": "MetalBlock",
-        "Amount": 60
+        "Amount": 70
       },
       {
         "Id": "DeepAlloy",
-        "Amount": 30
+        "Amount": 35
       },
       {
         "Id": "Brick",
-        "Amount": 205
+        "Amount": 160
       },
       {
         "Id": "Gear",
@@ -74,110 +74,12 @@
   },
   "BlockObjectSpec": {
     "Size": {
-      "X": 8,
-      "Y": 6,
+      "X": 5,
+      "Y": 5,
       "Z": 5
     },
     "Blocks": [
       {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Ground",
-        "Occupations": "Top",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Ground",
-        "Occupations": "Top",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Ground",
-        "Occupations": "Top",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
         "MatterBelow": "Ground",
         "Occupations": "Top",
         "Stackable": "None",
@@ -187,27 +89,6 @@
       {
         "MatterBelow": "Ground",
         "Occupations": "Top",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
         "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
@@ -248,34 +129,6 @@
         "Underground": false
       },
       {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Ground",
-        "Occupations": "Top",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
         "MatterBelow": "Ground",
         "Occupations": "Top",
         "Stackable": "None",
@@ -304,23 +157,9 @@
         "Underground": false
       },
       {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
+        "MatterBelow": "Ground",
+        "Occupations": "Top",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -355,27 +194,27 @@
       {
         "MatterBelow": "Ground",
         "Occupations": "Top",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
+        "MatterBelow": "Ground",
+        "Occupations": "Top",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "GroundOrStackable",
-        "Occupations": "All",
+        "MatterBelow": "Ground",
+        "Occupations": "Top",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Ground",
+        "Occupations": "Top",
         "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
@@ -417,85 +256,8 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
         "Occupations": "All",
         "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -543,20 +305,6 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
         "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
@@ -572,41 +320,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -655,42 +368,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -795,14 +473,7 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -810,63 +481,7 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -908,69 +523,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
         "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
@@ -991,20 +543,6 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
         "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
@@ -1014,27 +552,6 @@
         "MatterBelow": "Any",
         "Occupations": "All",
         "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -1131,77 +648,14 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
+        "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1243,83 +697,6 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
         "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
@@ -1349,125 +726,6 @@
       {
         "MatterBelow": "Any",
         "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
@@ -1579,83 +837,6 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "All",
-        "Stackable": "BlockObject",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
         "Occupations": "None",
         "Stackable": "None",
         "OccupyAllBelow": false,
@@ -1691,6 +872,27 @@
       },
       {
         "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "None",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
         "Occupations": "All",
         "Stackable": "BlockObject",
         "OccupyAllBelow": false,
@@ -1698,15 +900,8 @@
       },
       {
         "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
-        "OccupyAllBelow": false,
-        "Underground": false
-      },
-      {
-        "MatterBelow": "Any",
-        "Occupations": "None",
-        "Stackable": "None",
+        "Occupations": "All",
+        "Stackable": "BlockObject",
         "OccupyAllBelow": false,
         "Underground": false
       },
@@ -1763,7 +958,7 @@
     "Entrance": {
       "HasEntrance": true,
       "Coordinates": {
-        "X": 1,
+        "X": 0,
         "Y": -1,
         "Z": 0
       }
@@ -1774,7 +969,7 @@
   },
   "BuildingAccessibleSpec": {
     "LocalAccess": {
-      "X": 1.5,
+      "X": 0.5,
       "Y": 0,
       "Z": 0.06000000000000005
     },
@@ -1826,7 +1021,307 @@
           {
             "Center": {
               "X": 0.5,
-              "Y": 0.5,
+              "Y": 0.94,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 1.5,
+              "Y": 0.94,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 2.5,
+              "Y": 0.94,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 3.5,
+              "Y": 0.94,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 4.5,
+              "Y": 0.94,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 1.5,
+              "Y": 0.94,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 2.5,
+              "Y": 0.94,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 3.5,
+              "Y": 0.94,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 4.5,
+              "Y": 0.94,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 2.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 1.5,
+              "Y": 0.94,
+              "Z": 2.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 2.5,
+              "Y": 0.94,
+              "Z": 2.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 3.5,
+              "Y": 0.94,
+              "Z": 2.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 4.5,
+              "Y": 0.94,
+              "Z": 2.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 3.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 1.5,
+              "Y": 0.94,
+              "Z": 3.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 2.5,
+              "Y": 0.94,
+              "Z": 3.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 3.5,
+              "Y": 0.94,
+              "Z": 3.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 4.5,
+              "Y": 0.94,
+              "Z": 3.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.94,
+              "Z": 4.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 1.5,
+              "Y": 0.94,
+              "Z": 4.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 2.5,
+              "Y": 0.94,
+              "Z": 4.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 3.5,
+              "Y": 0.94,
+              "Z": 4.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 4.5,
+              "Y": 0.94,
+              "Z": 4.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.12,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 1.5,
               "Z": 0.5
             },
             "Size": {
@@ -1837,9 +1332,45 @@
           },
           {
             "Center": {
-              "X": 1.5,
-              "Y": 0.5,
+              "X": 3.5,
+              "Y": 1.5,
               "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 4.5,
+              "Y": 1.5,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 1.5,
+              "Z": 1.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 1.5,
+              "Y": 1.5,
+              "Z": 1.5
             },
             "Size": {
               "X": 1,
@@ -1850,103 +1381,7 @@
           {
             "Center": {
               "X": 2.5,
-              "Y": 0.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 3.5,
-              "Y": 0.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 0.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 0.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 0.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 0.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 0.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 0.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 2.5,
-              "Y": 0.5,
+              "Y": 1.5,
               "Z": 1.5
             },
             "Size": {
@@ -1958,67 +1393,31 @@
           {
             "Center": {
               "X": 3.5,
-              "Y": 0.94,
+              "Y": 1.5,
               "Z": 1.5
             },
             "Size": {
               "X": 1,
-              "Y": 0.12,
+              "Y": 1,
               "Z": 1
             }
           },
           {
             "Center": {
               "X": 4.5,
-              "Y": 0.94,
+              "Y": 1.5,
               "Z": 1.5
             },
             "Size": {
               "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 0.94,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 0.94,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 0.94,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
+              "Y": 1,
               "Z": 1
             }
           },
           {
             "Center": {
               "X": 0.5,
-              "Y": 0.5,
+              "Y": 1.5,
               "Z": 2.5
             },
             "Size": {
@@ -2030,7 +1429,7 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 0.5,
+              "Y": 1.5,
               "Z": 2.5
             },
             "Size": {
@@ -2042,7 +1441,7 @@
           {
             "Center": {
               "X": 2.5,
-              "Y": 0.5,
+              "Y": 1.5,
               "Z": 2.5
             },
             "Size": {
@@ -2054,67 +1453,31 @@
           {
             "Center": {
               "X": 3.5,
-              "Y": 0.94,
+              "Y": 1.5,
               "Z": 2.5
             },
             "Size": {
               "X": 1,
-              "Y": 0.12,
+              "Y": 1,
               "Z": 1
             }
           },
           {
             "Center": {
               "X": 4.5,
-              "Y": 0.94,
+              "Y": 1.5,
               "Z": 2.5
             },
             "Size": {
               "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 0.94,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 0.94,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 0.94,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
+              "Y": 1,
               "Z": 1
             }
           },
           {
             "Center": {
               "X": 0.5,
-              "Y": 0.5,
+              "Y": 1.5,
               "Z": 3.5
             },
             "Size": {
@@ -2126,7 +1489,7 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 0.5,
+              "Y": 1.5,
               "Z": 3.5
             },
             "Size": {
@@ -2138,7 +1501,7 @@
           {
             "Center": {
               "X": 2.5,
-              "Y": 0.5,
+              "Y": 1.5,
               "Z": 3.5
             },
             "Size": {
@@ -2150,67 +1513,19 @@
           {
             "Center": {
               "X": 3.5,
-              "Y": 0.94,
+              "Y": 1.5,
               "Z": 3.5
             },
             "Size": {
               "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 0.94,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 0.94,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 0.94,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 0.94,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
+              "Y": 1,
               "Z": 1
             }
           },
           {
             "Center": {
               "X": 0.5,
-              "Y": 0.5,
+              "Y": 1.5,
               "Z": 4.5
             },
             "Size": {
@@ -2222,7 +1537,7 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 0.5,
+              "Y": 1.5,
               "Z": 4.5
             },
             "Size": {
@@ -2234,7 +1549,7 @@
           {
             "Center": {
               "X": 2.5,
-              "Y": 0.5,
+              "Y": 1.5,
               "Z": 4.5
             },
             "Size": {
@@ -2246,68 +1561,8 @@
           {
             "Center": {
               "X": 3.5,
-              "Y": 0.94,
+              "Y": 1.5,
               "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 0.94,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 0.94,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 0.94,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 0.94,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 0.5,
-              "Z": 5.5
             },
             "Size": {
               "X": 1,
@@ -2318,8 +1573,8 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 0.5,
-              "Z": 5.5
+              "Y": 2.5,
+              "Z": 1.5
             },
             "Size": {
               "X": 1,
@@ -2330,8 +1585,8 @@
           {
             "Center": {
               "X": 2.5,
-              "Y": 0.5,
-              "Z": 5.5
+              "Y": 2.5,
+              "Z": 1.5
             },
             "Size": {
               "X": 1,
@@ -2342,103 +1597,7 @@
           {
             "Center": {
               "X": 3.5,
-              "Y": 0.94,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 0.94,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 0.94,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 0.94,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 0.94,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 0.12,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 1.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 1.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 1.5,
-              "Z": 0.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 1.5,
+              "Y": 2.5,
               "Z": 1.5
             },
             "Size": {
@@ -2450,43 +1609,7 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 1.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 1.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 1.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 1.5,
+              "Y": 2.5,
               "Z": 2.5
             },
             "Size": {
@@ -2497,153 +1620,9 @@
           },
           {
             "Center": {
-              "X": 1.5,
-              "Y": 1.5,
+              "X": 2.5,
+              "Y": 2.5,
               "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 1.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 1.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 1.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 1.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 1.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 1.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 1.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 1.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 1.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
-              "Y": 1.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 1.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 1.5,
-              "Z": 4.5
             },
             "Size": {
               "X": 1,
@@ -2654,8 +1633,8 @@
           {
             "Center": {
               "X": 3.5,
-              "Y": 1.5,
-              "Z": 4.5
+              "Y": 2.5,
+              "Z": 2.5
             },
             "Size": {
               "X": 1,
@@ -2666,32 +1645,8 @@
           {
             "Center": {
               "X": 4.5,
-              "Y": 1.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 1.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 1.5,
-              "Z": 4.5
+              "Y": 2.5,
+              "Z": 2.5
             },
             "Size": {
               "X": 1,
@@ -2702,8 +1657,8 @@
           {
             "Center": {
               "X": 0.5,
-              "Y": 1.5,
-              "Z": 5.5
+              "Y": 2.5,
+              "Z": 3.5
             },
             "Size": {
               "X": 1,
@@ -2714,8 +1669,20 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 1.5,
-              "Z": 5.5
+              "Y": 2.5,
+              "Z": 3.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 2.5,
+              "Y": 2.5,
+              "Z": 3.5
             },
             "Size": {
               "X": 1,
@@ -2726,198 +1693,6 @@
           {
             "Center": {
               "X": 3.5,
-              "Y": 1.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 1.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 1.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 1.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 2.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 2.5,
-              "Z": 1.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 2.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 2.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 2.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 2.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 2.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 2.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 1.5,
-              "Y": 2.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 2.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 2.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 2.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 7.5,
               "Y": 2.5,
               "Z": 3.5
             },
@@ -2942,6 +1717,18 @@
           {
             "Center": {
               "X": 1.5,
+              "Y": 2.5,
+              "Z": 4.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          {
+            "Center": {
+              "X": 2.5,
               "Y": 2.5,
               "Z": 4.5
             },
@@ -2965,9 +1752,9 @@
           },
           {
             "Center": {
-              "X": 4.5,
-              "Y": 2.5,
-              "Z": 4.5
+              "X": 1.5,
+              "Y": 3.5,
+              "Z": 1.5
             },
             "Size": {
               "X": 1,
@@ -2977,33 +1764,9 @@
           },
           {
             "Center": {
-              "X": 5.5,
-              "Y": 2.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 2.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 0.5,
-              "Y": 2.5,
-              "Z": 5.5
+              "X": 2.5,
+              "Y": 3.5,
+              "Z": 1.5
             },
             "Size": {
               "X": 1,
@@ -3014,66 +1777,6 @@
           {
             "Center": {
               "X": 1.5,
-              "Y": 2.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 3.5,
-              "Y": 2.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 2.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 2.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 2.5,
-              "Z": 5.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
               "Y": 3.5,
               "Z": 2.5
             },
@@ -3085,7 +1788,7 @@
           },
           {
             "Center": {
-              "X": 5.5,
+              "X": 2.5,
               "Y": 3.5,
               "Z": 2.5
             },
@@ -3097,19 +1800,7 @@
           },
           {
             "Center": {
-              "X": 6.5,
-              "Y": 3.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
+              "X": 1.5,
               "Y": 3.5,
               "Z": 3.5
             },
@@ -3121,7 +1812,7 @@
           },
           {
             "Center": {
-              "X": 5.5,
+              "X": 2.5,
               "Y": 3.5,
               "Z": 3.5
             },
@@ -3133,9 +1824,9 @@
           },
           {
             "Center": {
-              "X": 6.5,
-              "Y": 3.5,
-              "Z": 3.5
+              "X": 1.5,
+              "Y": 4.5,
+              "Z": 1.5
             },
             "Size": {
               "X": 1,
@@ -3145,9 +1836,9 @@
           },
           {
             "Center": {
-              "X": 4.5,
-              "Y": 3.5,
-              "Z": 4.5
+              "X": 2.5,
+              "Y": 4.5,
+              "Z": 1.5
             },
             "Size": {
               "X": 1,
@@ -3157,31 +1848,7 @@
           },
           {
             "Center": {
-              "X": 5.5,
-              "Y": 3.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 3.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
+              "X": 1.5,
               "Y": 4.5,
               "Z": 2.5
             },
@@ -3193,7 +1860,7 @@
           },
           {
             "Center": {
-              "X": 5.5,
+              "X": 2.5,
               "Y": 4.5,
               "Z": 2.5
             },
@@ -3205,19 +1872,7 @@
           },
           {
             "Center": {
-              "X": 6.5,
-              "Y": 4.5,
-              "Z": 2.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
+              "X": 1.5,
               "Y": 4.5,
               "Z": 3.5
             },
@@ -3229,57 +1884,9 @@
           },
           {
             "Center": {
-              "X": 5.5,
+              "X": 2.5,
               "Y": 4.5,
               "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 4.5,
-              "Z": 3.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 4.5,
-              "Y": 4.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 5.5,
-              "Y": 4.5,
-              "Z": 4.5
-            },
-            "Size": {
-              "X": 1,
-              "Y": 1,
-              "Z": 1
-            }
-          },
-          {
-            "Center": {
-              "X": 6.5,
-              "Y": 4.5,
-              "Z": 4.5
             },
             "Size": {
               "X": 1,
@@ -3310,7 +1917,307 @@
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 0.5,
+                  "Y": 0.94,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 0.94,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.5,
+                  "Y": 0.94,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 3.5,
+                  "Y": 0.94,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 4.5,
+                  "Y": 0.94,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 0.94,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.5,
+                  "Y": 0.94,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 3.5,
+                  "Y": 0.94,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 4.5,
+                  "Y": 0.94,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 0.94,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.5,
+                  "Y": 0.94,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 3.5,
+                  "Y": 0.94,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 4.5,
+                  "Y": 0.94,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 0.94,
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.5,
+                  "Y": 0.94,
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 3.5,
+                  "Y": 0.94,
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 4.5,
+                  "Y": 0.94,
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.94,
+                  "Z": 4.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 0.94,
+                  "Z": 4.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.5,
+                  "Y": 0.94,
+                  "Z": 4.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 3.5,
+                  "Y": 0.94,
+                  "Z": 4.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 4.5,
+                  "Y": 0.94,
+                  "Z": 4.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.12,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 1.5,
                   "Z": 0.5
                 },
                 "Size": {
@@ -3321,9 +2228,45 @@
               },
               {
                 "Center": {
-                  "X": 1.5,
-                  "Y": 0.5,
+                  "X": 3.5,
+                  "Y": 1.5,
                   "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 4.5,
+                  "Y": 1.5,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 1.5,
+                  "Z": 1.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 1.5,
+                  "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
@@ -3334,103 +2277,7 @@
               {
                 "Center": {
                   "X": 2.5,
-                  "Y": 0.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 0.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 0.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 0.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 0.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 0.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 0.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 0.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 2.5,
-                  "Y": 0.5,
+                  "Y": 1.5,
                   "Z": 1.5
                 },
                 "Size": {
@@ -3442,67 +2289,31 @@
               {
                 "Center": {
                   "X": 3.5,
-                  "Y": 0.94,
+                  "Y": 1.5,
                   "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 0.12,
+                  "Y": 1,
                   "Z": 1
                 }
               },
               {
                 "Center": {
                   "X": 4.5,
-                  "Y": 0.94,
+                  "Y": 1.5,
                   "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 0.94,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 0.94,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 0.94,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
+                  "Y": 1,
                   "Z": 1
                 }
               },
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 0.5,
+                  "Y": 1.5,
                   "Z": 2.5
                 },
                 "Size": {
@@ -3514,7 +2325,7 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 0.5,
+                  "Y": 1.5,
                   "Z": 2.5
                 },
                 "Size": {
@@ -3526,7 +2337,7 @@
               {
                 "Center": {
                   "X": 2.5,
-                  "Y": 0.5,
+                  "Y": 1.5,
                   "Z": 2.5
                 },
                 "Size": {
@@ -3538,67 +2349,31 @@
               {
                 "Center": {
                   "X": 3.5,
-                  "Y": 0.94,
+                  "Y": 1.5,
                   "Z": 2.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 0.12,
+                  "Y": 1,
                   "Z": 1
                 }
               },
               {
                 "Center": {
                   "X": 4.5,
-                  "Y": 0.94,
+                  "Y": 1.5,
                   "Z": 2.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 0.94,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 0.94,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 0.94,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
+                  "Y": 1,
                   "Z": 1
                 }
               },
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 0.5,
+                  "Y": 1.5,
                   "Z": 3.5
                 },
                 "Size": {
@@ -3610,7 +2385,7 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 0.5,
+                  "Y": 1.5,
                   "Z": 3.5
                 },
                 "Size": {
@@ -3622,7 +2397,7 @@
               {
                 "Center": {
                   "X": 2.5,
-                  "Y": 0.5,
+                  "Y": 1.5,
                   "Z": 3.5
                 },
                 "Size": {
@@ -3634,67 +2409,19 @@
               {
                 "Center": {
                   "X": 3.5,
-                  "Y": 0.94,
+                  "Y": 1.5,
                   "Z": 3.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 0.94,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 0.94,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 0.94,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 0.94,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
+                  "Y": 1,
                   "Z": 1
                 }
               },
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 0.5,
+                  "Y": 1.5,
                   "Z": 4.5
                 },
                 "Size": {
@@ -3706,7 +2433,7 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 0.5,
+                  "Y": 1.5,
                   "Z": 4.5
                 },
                 "Size": {
@@ -3718,7 +2445,7 @@
               {
                 "Center": {
                   "X": 2.5,
-                  "Y": 0.5,
+                  "Y": 1.5,
                   "Z": 4.5
                 },
                 "Size": {
@@ -3730,68 +2457,8 @@
               {
                 "Center": {
                   "X": 3.5,
-                  "Y": 0.94,
+                  "Y": 1.5,
                   "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 0.94,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 0.94,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 0.94,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 0.94,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 0.5,
-                  "Z": 5.5
                 },
                 "Size": {
                   "X": 1,
@@ -3802,8 +2469,8 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 0.5,
-                  "Z": 5.5
+                  "Y": 2.5,
+                  "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
@@ -3814,8 +2481,8 @@
               {
                 "Center": {
                   "X": 2.5,
-                  "Y": 0.5,
-                  "Z": 5.5
+                  "Y": 2.5,
+                  "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
@@ -3826,103 +2493,7 @@
               {
                 "Center": {
                   "X": 3.5,
-                  "Y": 0.94,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 0.94,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 0.94,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 0.94,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 0.94,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 1.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 1.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 1.5,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 1.5,
+                  "Y": 2.5,
                   "Z": 1.5
                 },
                 "Size": {
@@ -3934,43 +2505,7 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 1.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 1.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 1.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 1.5,
+                  "Y": 2.5,
                   "Z": 2.5
                 },
                 "Size": {
@@ -3981,153 +2516,9 @@
               },
               {
                 "Center": {
-                  "X": 1.5,
-                  "Y": 1.5,
+                  "X": 2.5,
+                  "Y": 2.5,
                   "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 1.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 1.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 1.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 1.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 1.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 1.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 1.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 1.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 1.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 1.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 1.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 1.5,
-                  "Z": 4.5
                 },
                 "Size": {
                   "X": 1,
@@ -4138,8 +2529,8 @@
               {
                 "Center": {
                   "X": 3.5,
-                  "Y": 1.5,
-                  "Z": 4.5
+                  "Y": 2.5,
+                  "Z": 2.5
                 },
                 "Size": {
                   "X": 1,
@@ -4150,32 +2541,8 @@
               {
                 "Center": {
                   "X": 4.5,
-                  "Y": 1.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 1.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 1.5,
-                  "Z": 4.5
+                  "Y": 2.5,
+                  "Z": 2.5
                 },
                 "Size": {
                   "X": 1,
@@ -4186,8 +2553,8 @@
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 1.5,
-                  "Z": 5.5
+                  "Y": 2.5,
+                  "Z": 3.5
                 },
                 "Size": {
                   "X": 1,
@@ -4198,8 +2565,20 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 1.5,
-                  "Z": 5.5
+                  "Y": 2.5,
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.5,
+                  "Y": 2.5,
+                  "Z": 3.5
                 },
                 "Size": {
                   "X": 1,
@@ -4210,198 +2589,6 @@
               {
                 "Center": {
                   "X": 3.5,
-                  "Y": 1.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 1.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 1.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 1.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 2.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 2.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 2.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 2.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 2.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
                   "Y": 2.5,
                   "Z": 3.5
                 },
@@ -4426,6 +2613,18 @@
               {
                 "Center": {
                   "X": 1.5,
+                  "Y": 2.5,
+                  "Z": 4.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 2.5,
                   "Y": 2.5,
                   "Z": 4.5
                 },
@@ -4449,9 +2648,9 @@
               },
               {
                 "Center": {
-                  "X": 4.5,
-                  "Y": 2.5,
-                  "Z": 4.5
+                  "X": 1.5,
+                  "Y": 3.5,
+                  "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
@@ -4461,33 +2660,9 @@
               },
               {
                 "Center": {
-                  "X": 5.5,
-                  "Y": 2.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 2.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 2.5,
-                  "Z": 5.5
+                  "X": 2.5,
+                  "Y": 3.5,
+                  "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
@@ -4498,66 +2673,6 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 2.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 2.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 2.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 2.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 2.5,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
                   "Y": 3.5,
                   "Z": 2.5
                 },
@@ -4569,7 +2684,7 @@
               },
               {
                 "Center": {
-                  "X": 5.5,
+                  "X": 2.5,
                   "Y": 3.5,
                   "Z": 2.5
                 },
@@ -4581,19 +2696,7 @@
               },
               {
                 "Center": {
-                  "X": 6.5,
-                  "Y": 3.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
+                  "X": 1.5,
                   "Y": 3.5,
                   "Z": 3.5
                 },
@@ -4605,7 +2708,7 @@
               },
               {
                 "Center": {
-                  "X": 5.5,
+                  "X": 2.5,
                   "Y": 3.5,
                   "Z": 3.5
                 },
@@ -4617,9 +2720,9 @@
               },
               {
                 "Center": {
-                  "X": 6.5,
-                  "Y": 3.5,
-                  "Z": 3.5
+                  "X": 1.5,
+                  "Y": 4.5,
+                  "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
@@ -4629,9 +2732,9 @@
               },
               {
                 "Center": {
-                  "X": 4.5,
-                  "Y": 3.5,
-                  "Z": 4.5
+                  "X": 2.5,
+                  "Y": 4.5,
+                  "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
@@ -4641,31 +2744,7 @@
               },
               {
                 "Center": {
-                  "X": 5.5,
-                  "Y": 3.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 3.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
+                  "X": 1.5,
                   "Y": 4.5,
                   "Z": 2.5
                 },
@@ -4677,7 +2756,7 @@
               },
               {
                 "Center": {
-                  "X": 5.5,
+                  "X": 2.5,
                   "Y": 4.5,
                   "Z": 2.5
                 },
@@ -4689,19 +2768,7 @@
               },
               {
                 "Center": {
-                  "X": 6.5,
-                  "Y": 4.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
+                  "X": 1.5,
                   "Y": 4.5,
                   "Z": 3.5
                 },
@@ -4713,57 +2780,9 @@
               },
               {
                 "Center": {
-                  "X": 5.5,
+                  "X": 2.5,
                   "Y": 4.5,
                   "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 4.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 4.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5.5,
-                  "Y": 4.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6.5,
-                  "Y": 4.5,
-                  "Z": 4.5
                 },
                 "Size": {
                   "X": 1,
@@ -4795,10 +2814,109 @@
       {
         "Coordinates": {
           "X": 0,
+          "Y": 1,
+          "Z": 1
+        },
+        "Directions": "Left",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 2,
+          "Z": 1
+        },
+        "Directions": "Left",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 3,
+          "Z": 1
+        },
+        "Directions": "Left",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Left, Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Right, Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Left, Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Right, Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 0,
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Left, Down, Bottom",
+        "Directions": "Left, Bottom",
         "ReverseRotation": false
       },
       {
@@ -4807,7 +2925,7 @@
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Bottom",
+        "Directions": "Left, Down, Bottom, Top",
         "ReverseRotation": false
       },
       {
@@ -4816,7 +2934,7 @@
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Down, Bottom",
+        "Directions": "Down, Bottom, Top",
         "ReverseRotation": false
       },
       {
@@ -4831,33 +2949,6 @@
       {
         "Coordinates": {
           "X": 4,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Down, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Down, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Down, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
           "Y": 0,
           "Z": 0
         },
@@ -4870,7 +2961,7 @@
           "Y": 1,
           "Z": 0
         },
-        "Directions": "Left, Bottom",
+        "Directions": "Left, Down, Bottom",
         "ReverseRotation": false
       },
       {
@@ -4893,6 +2984,24 @@
       },
       {
         "Coordinates": {
+          "X": 3,
+          "Y": 1,
+          "Z": 0
+        },
+        "Directions": "Bottom",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 1,
+          "Z": 0
+        },
+        "Directions": "Right, Bottom",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 0,
           "Y": 2,
           "Z": 0
@@ -4916,6 +3025,24 @@
           "Z": 0
         },
         "Directions": "Bottom",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 2,
+          "Z": 0
+        },
+        "Directions": "Bottom",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 2,
+          "Z": 0
+        },
+        "Directions": "Right, Bottom",
         "ReverseRotation": false
       },
       {
@@ -4947,17 +3074,8 @@
       },
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Left, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 4,
+          "X": 3,
+          "Y": 3,
           "Z": 0
         },
         "Directions": "Bottom",
@@ -4965,17 +3083,17 @@
       },
       {
         "Coordinates": {
-          "X": 2,
-          "Y": 4,
+          "X": 4,
+          "Y": 3,
           "Z": 0
         },
-        "Directions": "Bottom",
+        "Directions": "Right, Bottom, Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
           "X": 0,
-          "Y": 5,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Left, Up, Bottom",
@@ -4984,7 +3102,7 @@
       {
         "Coordinates": {
           "X": 1,
-          "Y": 5,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Up, Bottom",
@@ -4993,7 +3111,7 @@
       {
         "Coordinates": {
           "X": 2,
-          "Y": 5,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Up, Bottom",
@@ -5001,440 +3119,8 @@
       },
       {
         "Coordinates": {
-          "X": 0,
-          "Y": 1,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 1,
-          "Z": 1
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 2,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 2,
-          "Z": 1
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 3,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 3,
-          "Z": 1
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 4,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 4,
-          "Z": 1
-        },
-        "Directions": "Right",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Left, Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Right, Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Left, Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Right, Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Left, Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Right, Up",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Bottom, Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Bottom, Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Bottom, Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 1,
-          "Z": 0
-        },
-        "Directions": "Right, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Bottom, Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 2,
-          "Z": 0
-        },
-        "Directions": "Right, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Bottom, Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 3,
-          "Z": 0
-        },
-        "Directions": "Right, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
           "X": 3,
           "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Right, Bottom, Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 5,
           "Z": 0
         },
         "Directions": "Up, Bottom",
@@ -5443,34 +3129,7 @@
       {
         "Coordinates": {
           "X": 4,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up, Bottom",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Right, Up, Bottom, Top",
@@ -5478,26 +3137,35 @@
       },
       {
         "Coordinates": {
-          "X": 4,
-          "Y": 3,
-          "Z": 1
+          "X": 0,
+          "Y": 4,
+          "Z": 2
         },
-        "Directions": "Left",
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
-          "X": 4,
-          "Y": 3,
+          "X": 1,
+          "Y": 4,
           "Z": 2
         },
-        "Directions": "Left",
+        "Directions": "Top",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Top",
         "ReverseRotation": false
       },
       {
         "Coordinates": {
           "X": 3,
-          "Y": 5,
+          "Y": 4,
           "Z": 2
         },
         "Directions": "Top",
@@ -5505,35 +3173,8 @@
       },
       {
         "Coordinates": {
-          "X": 4,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Top",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 2,
+          "X": 1,
+          "Y": 1,
           "Z": 3
         },
         "Directions": "Down",
@@ -5541,20 +3182,11 @@
       },
       {
         "Coordinates": {
-          "X": 5,
-          "Y": 2,
+          "X": 2,
+          "Y": 1,
           "Z": 3
         },
         "Directions": "Down",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 3,
-          "Z": 3
-        },
-        "Directions": "Left",
         "ReverseRotation": false
       }
     ]
@@ -5577,9 +3209,9 @@
       {
         "Node": "QuarryWaterBarrel",
         "Position": {
-          "X": 3.1750000000000003,
+          "X": 0.17500000000000027,
           "Y": 1,
-          "Z": 5.2749999999999995
+          "Z": 4.2749999999999995
         },
         "Rotation": {
           "X": 0,
@@ -5604,9 +3236,9 @@
         "Node": "QuarryWaterBarrel.Water",
         "Mesh": "StockpileGoodModels/SmallLiquidPlane",
         "Position": {
-          "X": 3.45,
+          "X": 0.4500000000000002,
           "Y": 0,
-          "Z": 5.55
+          "Z": 4.55
         },
         "Scale": {
           "X": 0.55,
@@ -5652,128 +3284,68 @@
   "RoofHardpointsSpec": {
     "Cells": [
       {
-        "X": 1,
+        "X": 0,
         "Y": 0,
         "Z": 1
       },
       {
-        "X": 6,
+        "X": 3,
         "Y": 0,
         "Z": 1
       },
       {
-        "X": 7,
-        "Y": 0,
-        "Z": 1
-      },
-      {
-        "X": 6,
+        "X": 3,
         "Y": 1,
-        "Z": 1
-      },
-      {
-        "X": 0,
-        "Y": 1,
-        "Z": 2
-      },
-      {
-        "X": 1,
-        "Y": 1,
-        "Z": 2
-      },
-      {
-        "X": 0,
-        "Y": 2,
-        "Z": 2
-      },
-      {
-        "X": 1,
-        "Y": 2,
-        "Z": 2
-      },
-      {
-        "X": 0,
-        "Y": 3,
-        "Z": 2
-      },
-      {
-        "X": 1,
-        "Y": 3,
-        "Z": 2
-      },
-      {
-        "X": 7,
-        "Y": 3,
-        "Z": 2
-      },
-      {
-        "X": 0,
-        "Y": 4,
-        "Z": 2
-      },
-      {
-        "X": 1,
-        "Y": 4,
         "Z": 2
       },
       {
         "X": 3,
-        "Y": 4,
+        "Y": 2,
+        "Z": 2
+      },
+      {
+        "X": 4,
+        "Y": 2,
         "Z": 2
       },
       {
         "X": 0,
-        "Y": 5,
+        "Y": 3,
+        "Z": 2
+      },
+      {
+        "X": 3,
+        "Y": 3,
         "Z": 2
       },
       {
         "X": 1,
-        "Y": 5,
-        "Z": 2
+        "Y": 1,
+        "Z": 4
       },
       {
-        "X": 4,
+        "X": 2,
+        "Y": 1,
+        "Z": 4
+      },
+      {
+        "X": 1,
         "Y": 2,
         "Z": 4
       },
       {
-        "X": 5,
+        "X": 2,
         "Y": 2,
         "Z": 4
       },
       {
-        "X": 6,
-        "Y": 2,
-        "Z": 4
-      },
-      {
-        "X": 4,
+        "X": 1,
         "Y": 3,
         "Z": 4
       },
       {
-        "X": 5,
+        "X": 2,
         "Y": 3,
-        "Z": 4
-      },
-      {
-        "X": 6,
-        "Y": 3,
-        "Z": 4
-      },
-      {
-        "X": 4,
-        "Y": 4,
-        "Z": 4
-      },
-      {
-        "X": 5,
-        "Y": 4,
-        "Z": 4
-      },
-      {
-        "X": 6,
-        "Y": 4,
         "Z": 4
       }
     ]
@@ -5783,6 +3355,15 @@
       {
         "Coordinates": {
           "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Directions": "Left",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 1,
           "Y": 0,
           "Z": 0
         },
@@ -5813,33 +3394,6 @@
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 0,
-          "Z": 0
-        },
-        "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 0,
-          "Z": 0
-        },
         "Directions": "Right, Down",
         "State": "OpenIn"
       },
@@ -5849,12 +3403,12 @@
           "Y": 1,
           "Z": 0
         },
-        "Directions": "Left",
+        "Directions": "Left, Down",
         "State": "OpenIn"
       },
       {
         "Coordinates": {
-          "X": 7,
+          "X": 4,
           "Y": 1,
           "Z": 0
         },
@@ -5872,7 +3426,7 @@
       },
       {
         "Coordinates": {
-          "X": 7,
+          "X": 4,
           "Y": 2,
           "Z": 0
         },
@@ -5890,7 +3444,7 @@
       },
       {
         "Coordinates": {
-          "X": 7,
+          "X": 4,
           "Y": 3,
           "Z": 0
         },
@@ -5903,31 +3457,13 @@
           "Y": 4,
           "Z": 0
         },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 4,
-          "Z": 0
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 5,
-          "Z": 0
-        },
         "Directions": "Left, Up",
         "State": "OpenIn"
       },
       {
         "Coordinates": {
           "X": 1,
-          "Y": 5,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Up",
@@ -5936,7 +3472,7 @@
       {
         "Coordinates": {
           "X": 2,
-          "Y": 5,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Up",
@@ -5945,7 +3481,7 @@
       {
         "Coordinates": {
           "X": 3,
-          "Y": 5,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Up",
@@ -5954,34 +3490,7 @@
       {
         "Coordinates": {
           "X": 4,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 5,
-          "Z": 0
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 7,
-          "Y": 5,
+          "Y": 4,
           "Z": 0
         },
         "Directions": "Right, Up",
@@ -5998,179 +3507,98 @@
       },
       {
         "Coordinates": {
+          "X": 0,
+          "Y": 2,
+          "Z": 1
+        },
+        "Directions": "Left",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 3,
+          "Z": 1
+        },
+        "Directions": "Left",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Left, Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 4,
+          "Z": 1
+        },
+        "Directions": "Right, Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Left, Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 3,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Right, Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
           "X": 1,
           "Y": 1,
-          "Z": 1
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 2,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 2,
-          "Z": 1
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 3,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 3,
-          "Z": 1
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 3,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 4,
-          "Z": 1
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 4,
-          "Z": 1
-        },
-        "Directions": "Right",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 0,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Left, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 1,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Left, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 5,
-          "Z": 1
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 3,
-          "Z": 2
-        },
-        "Directions": "Left",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 3,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Left, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 5,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 6,
-          "Y": 5,
-          "Z": 2
-        },
-        "Directions": "Right, Up",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 2,
           "Z": 3
         },
         "Directions": "Down",
@@ -6178,20 +3606,11 @@
       },
       {
         "Coordinates": {
-          "X": 5,
-          "Y": 2,
+          "X": 2,
+          "Y": 1,
           "Z": 3
         },
         "Directions": "Down",
-        "State": "OpenIn"
-      },
-      {
-        "Coordinates": {
-          "X": 4,
-          "Y": 3,
-          "Z": 3
-        },
-        "Directions": "Left",
         "State": "OpenIn"
       }
     ]

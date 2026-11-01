@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Smaller works and mines (second shrink)
+- **Sandstone and Limestone Quarries** are 5x5 (were 8x6) and cover their Deep Seam exactly: the stone plinth with the headframe, winding house and sorting line, the operator cabin with the door in the front-left corner and a narrow tool room. **Existing quarries move onto their seam when a save loads** (their door moves: reconnect the path). Same workers, power and output; the cost shifts slightly with the smaller model.
+
 ## 0.8.2 (2026-11-01)
 
 - **Radioactive water is less bright:** its yellow and its glow are toned down. Irradiated beavers and soil keep their colours.

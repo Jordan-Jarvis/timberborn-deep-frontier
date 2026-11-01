@@ -1,4 +1,16 @@
-"""Permanent quarry, compact 8x6x5 (2026-10-30 compaction pass).
+"""Permanent quarry, 5x5x5 over its Deep Seam (second shrink pass, 2026-11-01).
+
+User: "the thing that sits on top of the permanent veins and the limestone
+and sandstone all need to fit in 5x5". The footprint is now exactly the 5x5
+seam (artwork x 3..8, y 2..7; native grid = artwork - (3,2)): the stone
+plinth, collar, headframe, winding house and the receiver, belt and screen
+keep their artwork positions; the operator cabin with the native door now
+stands in the plinth's front-left corner tile over the seam, the tool room is
+one tile wide on the plinth's west edge beside the headframe, and the stone
+tray sits under the screen on the plinth. Saved quarries are moved onto their
+seam at load (Scripts/MineFootprintSaveMigration.cs).
+
+Before (compact 8x6x5, 2026-10-30 compaction pass):
 
 Steam Workshop feedback: the buildings exceeded Timberborn's scale. The user
 kept the textures and asked for less scaffolding and size; the mines get
@@ -14,10 +26,9 @@ mast and two upper workshops becomes a solid stone plinth with:
 - the front operator cabin with the native door, a flat-roofed tool room and
   supplies on the plinth's west side, the native water tank in front.
 
-The origin, entrance and the 5x5 seam foundation cells (grid x 3..7,
-y 1..5) are those of the old registration, so a saved quarry stays over its
-seam. Artwork coordinates: native grid = artwork + (0,-1); the footprint is
-artwork x 0..8, y 1..7. No walkable decks, galleries or ladders.
+All 25 ground cells are building cells over the seam (Top on Ground, as
+under vanilla EfficientMine), the doorstep included; the entrance is the cell
+in front of the cabin door. No walkable decks, galleries or ladders.
 """
 import math
 import random
@@ -50,13 +61,16 @@ POSTS_Y=(3.33,5.07)
 HEAD_Z=4.12
 GUIDES_X=(4.62,5.58)
 GUIDE_Y=4.80
-# Ground cabin: door centred on grid x=1.5, facade 0.18 behind artwork y=1.
-CABIN_X,CABIN_FRONT=1.50,1.18
+# Ground cabin: door centred on grid x=.5 (artwork 3.5), facade 0.18 behind
+# the footprint's front edge (artwork y=2).
+CABIN_X,CABIN_FRONT=3.50,2.18
+CABIN_HALF=.48
+CABIN_BACK=3.055
 
 ACCESS={
     'plinthTop':PLINTH_TOP,
     'walkableDecks':'None; the quarry is not climbed (no ladder mast since 2026-10-30)',
-    'groundDoor':[CABIN_X,1.14,QUARRY_ENTRANCE],
+    'groundDoor':[CABIN_X,CABIN_FRONT-.04,QUARRY_ENTRANCE],
     'hoistExclusion':[COLLAR[0],COLLAR[1],COLLAR[2],COLLAR[3]],
     'status':'Authored clearance and motion contract; not native navigation or gameplay verification'
 }
@@ -93,16 +107,14 @@ def flat_roof(g,x0,y0,x1,y1,top,seed):
 
 
 def foundation(g):
-    # One stone plinth, top at layer 1, around the collar opening; the cabin
-    # stands in front of it on the ground. Outer faces are on tile edges.
+    # One stone plinth, top at layer 1, round the collar opening and the
+    # cabin in its front-left tile. Outer faces are on the seam's tile edges.
     cx0,cy0,cx1,cy1=COLLAR
-    plinth(g,0,2.06,cx0,7.0,PLINTH_TOP,brick=('left','back'))
-    plinth(g,cx1,2.06,8.0,7.0,PLINTH_TOP,brick=('right','back'))
-    plinth(g,cx0,2.06,cx1,cy0,PLINTH_TOP)
+    plinth(g,4.04,2.0,8.0,cy0,PLINTH_TOP,brick=('front','right'))
+    plinth(g,3.0,CABIN_BACK+.005,4.04,7.0,PLINTH_TOP,brick=('left','back'))
+    plinth(g,4.04,cy0,cx0,7.0,PLINTH_TOP,brick=('back',))
+    plinth(g,cx1,cy0,8.0,7.0,PLINTH_TOP,brick=('right','back'))
     plinth(g,cx0,cy1,cx1,7.0,PLINTH_TOP,brick=('back',))
-    # Front strip either side of the cabin (the stone tray stands on it).
-    plinth(g,0,1.0,.905,2.06,PLINTH_TOP,brick=('front','left'))
-    plinth(g,2.10,1.0,8.0,2.06,PLINTH_TOP,brick=('front','right'))
     # The lined collar: stone blocks against the plinth's inner faces, the
     # dark shaft floor and a timber collar frame on the plinth top.
     g.box(((cx0+cx1)/2,(cy0+cy1)/2,.065),(cx1-cx0,cy1-cy0,.10),KILN_SOOT)
@@ -269,7 +281,7 @@ def machinery(g,parts):
 
 def sorting(g,parts):
     x,y,z=BIN
-    bin(g,(x,y,z+.02),(1.30,.90,.18),SAND,738)
+    bin(g,(x,y,z+.02),(.62,.90,.18),SAND,738)
     # Suspended vibrating screen between the belt foot and the discharge.
     p=(7.30,2.80,1.35);m=Geometry('Quarry.SortingSieve',p)
     for xx in (6.88,7.72):m.beam((xx,3.20,1.45),(xx,2.45,1.25),.06,.07,IRON)
@@ -283,57 +295,54 @@ def sorting(g,parts):
 
 
 def cabin(g):
-    # Ground operator cabin in front of the plinth. Its door is centred on grid
-    # tile column 1 with the face 0.14 behind the grid y=0 edge (artwork y=1).
+    # Ground operator cabin in the plinth's front-left tile. Its door is
+    # centred on grid tile column 0 with the face 0.14 behind the front edge.
     cx,front=CABIN_X,CABIN_FRONT
-    x0,x1=cx-.595,cx+.595
-    for x in (x0-.02,x1+.03):timber_column(g,x,front+.07,QUARRY_ENTRANCE,1.34,.16)
+    x0,x1=cx-CABIN_HALF,cx+CABIN_HALF
+    back=CABIN_BACK
+    for x in (x0+.07,x1-.07):timber_column(g,x,front+.07,QUARRY_ENTRANCE,1.34,.16)
     for j in range(8):
-        a=x0+j*1.19/8;b=x0+(j+1)*1.19/8
-        facade_panel(g,'Y',2.055,a,b,QUARRY_ENTRANCE,1.35,True,PLANK)
+        a=x0+j*(x1-x0)/8;b=x0+(j+1)*(x1-x0)/8
+        facade_panel(g,'Y',back,a,b,1.0,1.35,True,PLANK)
     for lo,hi in ((cx-.54,cx-.50),(cx+.50,cx+.54)):
         facade_panel(g,'Y',front,lo,hi,QUARRY_ENTRANCE,1.26,False,PLANK)
     wall(g,cx-.50,front,cx+.50,1.26,QUARRY_ENTRANCE+1.0)
     g.include_component(door_recipe('MineralQuarry','Door.GroundDoor'))
-    def cabin_top(y):return 1.30+(1.57-1.30)*(y-(front-.07))/(2.12-(front-.07))-.0225
+    def cabin_top(y):return 1.30+(1.57-1.30)*(y-(front-.07))/(back+.065-(front-.07))-.0225
     for x,positive in ((x0,False),(x1,True)):
-        g.add([(x,front,QUARRY_ENTRANCE),(x,2.055,QUARRY_ENTRANCE),
-               (x,2.055,cabin_top(2.055)),(x,front,cabin_top(front))],
+        g.add([(x,front,QUARRY_ENTRANCE),(x,back,QUARRY_ENTRANCE),
+               (x,back,cabin_top(back)),(x,front,cabin_top(front))],
               [(0,1,2,3) if positive else (3,2,1,0)],PLANK)
     facade_panel(g,'Y',front,x0,x1,1.26,cabin_top(front),False,PLANK)
-    facade_panel(g,'Y',2.055,x0,x1,1.35,cabin_top(2.055),True,PLANK)
-    sheet_roof(g,x0-.14,front-.07,x1+.13,2.12,1.30,1.57,712)
-    cage_lamp(g,x1-.03,front+.02,.94)
-    g.box((cx,1.075,QUARRY_ENTRANCE-.045),(.75,.15,.15),WOOD)
+    facade_panel(g,'Y',back,x0,x1,1.35,cabin_top(back),True,PLANK)
+    sheet_roof(g,x0-.01,front-.07,x1+.01,back+.065,1.30,1.57,712)
+    cage_lamp(g,x1-.12,front+.02,.94)
+    g.box((cx,front-.105,QUARRY_ENTRANCE-.045),(.75,.15,.15),WOOD)
 
 
 def tool_room(g):
-    """Flat-roofed tool room on the plinth's west side (artwork x 0..2,
-    y 2.3..5), one layer high: corner posts on the tile lines, plank skin
-    0.04 inside them."""
-    x0,x1,y0,y1=0.0,2.0,2.30,7.0
+    """Flat-roofed tool room on the plinth's west edge beside the headframe
+    (artwork x 3..4, y 3.2..5.5), one layer high: corner posts on the tile
+    lines, plank skin 0.04 inside them."""
+    x0,x1,y0,y1=3.0,4.0,3.20,5.50
     top=2.10
     for x in (x0+.08,x1-.08):
         for y in (y0+.08,y1-.08):g.box((x,y,(PLINTH_TOP+top-.12)/2),(.16,.16,top-.12-PLINTH_TOP),WOOD)
-    count=20
+    count=10
     for x,inner in ((x0+.0775,'+x'),(x1-.0775,'-x')):
         for j in range(count):
             y=y0+.16+(j+.5)*(y1-y0-.32)/count
             skin_board(g,(x,y,(PLINTH_TOP+top-.12)/2),(.075,(y1-y0-.32)/count,top-.12-PLINTH_TOP),'Y',j,count,PLANK,inner)
     for y,inner in ((y0+.0775,'+y'),(y1-.0775,'-y')):
-        count=8
+        count=4
         for j in range(count):
             x=x0+.16+(j+.5)*(x1-x0-.32)/count
             skin_board(g,(x,y,(PLINTH_TOP+top-.12)/2),((x1-x0-.32)/count,.075,top-.12-PLINTH_TOP),'X',j,count,PLANK,inner)
-    # Two sheet runs (a single 4.5-long run stretches the native sheet
-    # strips); the rear run steps up 4 cm, its eave 2 cm behind the front's.
-    sheet_roof(g,x0+.11,y0+.11,x1-.11,4.64,top,top,732)
-    sheet_roof(g,x0+.13,4.66,x1-.13,y1-.11,top+.04,top+.04,733)
-    # Front and east windows only: a west or rear casing would stand outside
-    # the footprint edge.
-    for x in (.62,1.38):window_y(g,x,y0+.04,1.40,.70)
-    for y in (3.60,5.70):side_window(g,x1-.04,y,1.40,.80,'right')
-    cage_lamp(g,1.65,y0+.04,1.85)
+    sheet_roof(g,x0+.11,y0+.11,x1-.11,y1-.11,top,top,732)
+    # Front window only: a west casing would stand outside the footprint
+    # edge and the east wall faces the headframe posts.
+    window_y(g,(x0+x1)/2,y0+.04,1.40,.70)
+    cage_lamp(g,x1-.2,y0+.04,1.85)
 
 
 def supplies(g):

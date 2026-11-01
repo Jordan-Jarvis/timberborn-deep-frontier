@@ -1,8 +1,9 @@
-"""Quarry visual material handling (compact 8x6x5 quarry, 2026-10-30).
+"""Quarry visual material handling (5x5x5 quarry over its seam, 2026-11-01;
+compact 8x6x5 from 2026-10-30).
 
 Internal belts and ore are original animated artwork, not Conveyor Belt entities.
 Authored directions and openings join the bucket, receiver, screen and stock bin.
-Artwork coordinates: native grid = artwork + (0,-1) (industrial_layouts.Q).
+Artwork coordinates: native grid = artwork - (3,2) (industrial_layouts.Q).
 """
 import math
 import random
@@ -20,8 +21,8 @@ BELT_B=Vector((7.30,3.40,1.47))
 BELT_R=.105
 BELT_SLATS=16
 RECEIVER=(6.00,4.20,2.40)
-# The shallow stone tray stands on the plinth's front strip under the screen.
-BIN=(7.25,1.60,1.0)
+# The shallow stone tray stands on the plinth under the screen (5x5, 2026-11-01).
+BIN=(7.30,2.62,1.0)
 PROCESS={
     'scope':'Visual process choreography; no item creation or dependency belt entities',
     'route':['lift bucket','side tipping receiver','gravity chute',
@@ -33,7 +34,7 @@ PROCESS={
     'enclosedSections':['front operator cabin','left tool room','rear winding house (open toward the headframe)'],
     'interiors':'Closed opaque facades; no visible interiors or character props',
     'doorwayIdleAnchors':[
-        {'section':'front operator cabin','position':[1.50,1.06,0],'facing':[0,-1,0]}],
+        {'section':'front operator cabin','position':[3.50,2.06,0],'facing':[0,-1,0]}],
     'doorwayStatus':'The ground cabin door is the only door; its native slot is exported',
     'artDirection':'Worn timber and teal metal on a stone plinth, restrained cyan instrumentation'
 }
@@ -120,8 +121,8 @@ def material_flow(g,parts):
         parts.append((cleat,'BELT_SLAT',i/BELT_SLATS))
     # Screen feed and discharge connect directly into the stone bin.
     chute(g,(7.30,3.30,1.50),(7.30,3.14,1.42),.80,.12)
-    # Discharge from the screen's foot into the stone tray.
-    chute(g,(7.30,2.42,1.24),(7.25,2.10,1.21),1.00,.10)
+    # Discharge from the screen's foot into the stone tray below it.
+    chute(g,(7.30,2.44,1.24),(7.30,2.30,1.22),.56,.08)
     for i in range(6):
         pebble=Geometry(f'Quarry.PourStone{i:02d}')
         rock(pebble,(0,0,0),(.10,.09,.075),SAND,311+i)

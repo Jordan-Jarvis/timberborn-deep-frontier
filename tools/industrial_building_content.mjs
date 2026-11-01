@@ -83,9 +83,9 @@ export function industrialBlockSpec(ident,d){
     blocks[index([d.entrance[0],y,0])].MatterBelow='Any';
   }
   if(ident==='MineralQuarry'){
-    // Exactly one native 5x5 seam under the extraction core. Outer foundations
-    // remain regular ground foundations, rather than requiring a 10x10 seam.
-    for(let y=1;y<6;y++)for(let x=3;x<8;x++){
+    // Exactly one native 5x5 seam under the whole 5x5 footprint (second
+    // shrink, 2026-11-01).
+    for(let y=0;y<5;y++)for(let x=0;x<5;x++){
       blocks[index([x,y,0])].Occupations='Top';blocks[index([x,y,0])].MatterBelow='Ground';
     }
   }

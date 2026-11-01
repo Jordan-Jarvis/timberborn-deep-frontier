@@ -356,7 +356,7 @@ At 66 layers the level limit no longer binds (see below), so the "have none" map
 `UnderstructureFinder.FindStrict` requires every foundation block whose occupation is exactly Top and/or Corners to stand on the same understructure. The tool reads those blocks from the blueprint, rotated with the site:
 
 - **DeepMine (5×5 since 2026-11-01, was 7×6 and 10×11):** the whole footprint is the vein's 25-cell core (every cell a building cell, the doorstep included). Mine origin = vein origin for Cw0. Variant sites moved by the old core offset, (2, 1) rotated with the site; saved mines move the same way at load (`MineFootprintSaveMigration.cs`).
-- **Sandstone / Limestone Quarry (8×6, was 11×7):** a full 5×5 core at local x 3–7, y 1–5. For Cw0, quarry origin = seam origin − (3, 1).
+- **Sandstone / Limestone Quarry (5×5 since 2026-11-01, was 8×6 and 11×7):** the whole footprint is the seam's 5×5 core (the doorstep included). Quarry origin = seam origin for Cw0. Variant sites moved by the old core offset, (3, 1) rotated with the site; saved quarries move the same way at load (`MineFootprintSaveMigration.cs`).
 
 Each understructure site is checked for:
 
@@ -415,8 +415,8 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S8 | DeepMine | West Lowlands mine | 34, 80, 2 Cw0 | understructure | on DeepOreVein 34, 80, 2; open NESW (1) | 147 / 2 | 0 |
 | S9 | LimestonePit | Limestone Pit, 13 cells south of the start | 128, 127, 5 Cw90 | pit | 1800 Limestone in range (3 deposits); open NSEW (1) | 7 / 0 | 1 |
 | S10 | SandstonePit | Sandstone Pit, 13 cells west of the start | 120, 138, 3 Cw180 | pit | 1800 Sandstone in range (3 deposits); open NSEW (1) | 7 / 0 | 11 |
-| S11 | LimestoneQuarry | Limestone Quarry, 45 cells south-west of the start | 99, 108, 3 Cw90 | understructure | on LimestoneSeam 100, 101, 3; open NSEW (1) | 48 / 0 | 0 |
-| S12 | SandstoneQuarry | Sandstone Quarry, 46 cells south-east of the start | 165, 116, 4 Cw90 | understructure | on SandstoneSeam 166, 109, 4; open NSEW (1) | 50 / 0 | 2 |
+| S11 | LimestoneQuarry | Limestone Quarry, 45 cells south-west of the start | 100, 105, 3 Cw90 | understructure | on LimestoneSeam 100, 101, 3; open NSEW (1) | 48 / 0 | 0 |
+| S12 | SandstoneQuarry | Sandstone Quarry, 46 cells south-east of the start | 166, 113, 4 Cw90 | understructure | on SandstoneSeam 166, 109, 4; open NSEW (1) | 50 / 0 | 2 |
 | S13 | ArchiveExcavation | Archive Excavation for Crater Rim ruins | 145, 79, 4 Cw0 | flat | open N (1) | 60 / 2 | 22 |
 | S14 | ArchiveExcavation | Archive Excavation for North ruins | 182, 180, 6 Cw0 | flat | open none (1) | 90 / 5 | 0 |
 | S15 | ArchiveExcavation | Archive Excavation for Ruins 78 cells north-west of the start | 74, 184, 3 Cw0 | flat | open SE (1) | 98 / 8 | 0 |
@@ -481,8 +481,8 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S7 | DeepMine | Southeast Lowlands mine | 215, 2, 1 Cw0 | understructure | on DeepOreVein 215, 2, 1; open NESW (1) | 225 / 0 | 0 |
 | S8 | LimestonePit | Limestone Pit, 12 cells east of the start | 111, 126, 2 Cw0 | pit | 1800 Limestone in range (3 deposits); open NSEW (1) | 6 / 0 | 5 |
 | S9 | SandstonePit | Sandstone Pit, 12 cells north of the start | 101, 144, 3 Cw90 | pit | 1800 Sandstone in range (3 deposits); open NSEW (1) | 6 / 0 | 10 |
-| S10 | LimestoneQuarry | Limestone Quarry, 85 cells south of the start | 96, 50, 1 Cw90 | understructure | on LimestoneSeam 97, 43, 1; open NSEW (1) | 78 / 0 | 0 |
-| S11 | SandstoneQuarry | Sandstone Quarry, 97 cells south of the start | 91, 30, 1 Cw0 | understructure | on SandstoneSeam 94, 31, 1; open NSEW (1) | 92 / 0 | 0 |
+| S10 | LimestoneQuarry | Limestone Quarry, 85 cells south of the start | 97, 47, 1 Cw90 | understructure | on LimestoneSeam 97, 43, 1; open NSEW (1) | 78 / 0 | 0 |
+| S11 | SandstoneQuarry | Sandstone Quarry, 97 cells south of the start | 94, 31, 1 Cw0 | understructure | on SandstoneSeam 94, 31, 1; open NSEW (1) | 92 / 0 | 0 |
 | S12 | ArchiveExcavation | Archive Excavation for West ruins | 38, 116, 4 Cw0 | flat | open E (1) | 56 / 0 | 3 |
 | S13 | ArchiveExcavation | Archive Excavation for North river ruins | 114, 171, 3 Cw0 | flat | open none (1) | 59 / 5 | 21 |
 | S14 | ArchiveExcavation | Archive Excavation for East terrace ruins | 150, 109, 3 Cw0 | flat | open NE (1) | 56 / 5 | 17 |
@@ -548,8 +548,8 @@ Coordinates are map (x, y, z); z is the surface level the object stands on.
 | S8 | DeepMine | Upper Bench mine | 112, 164, 11 Cw0 | understructure | on DeepOreVein 112, 164, 11; open NESW (1) | 30 / 0 | 0 |
 | S9 | LimestonePit | Limestone Pit, 12 cells north of the start | 81, 168, 15 Cw90 | pit | 1800 Limestone in range (3 deposits); open NSEW (1) | 6 / 0 | 0 |
 | S10 | SandstonePit | Sandstone Pit, 13 cells east of the start | 91, 148, 15 Cw0 | pit | 1800 Sandstone in range (3 deposits); open NSEW (1) | 7 / 0 | 12 |
-| S11 | LimestoneQuarry | Limestone Quarry, 92 cells south-east of the start | 147, 93, 12 Cw0 | understructure | on LimestoneSeam 150, 94, 12; open NSEW (1) | 118 / 0 | 0 |
-| S12 | SandstoneQuarry | Sandstone Quarry, 107 cells east of the start | 178, 121, 3 Cw90 | understructure | on SandstoneSeam 179, 114, 3; open NSEW (1) | 127 / 0 | 0 |
+| S11 | LimestoneQuarry | Limestone Quarry, 92 cells south-east of the start | 150, 94, 12 Cw0 | understructure | on LimestoneSeam 150, 94, 12; open NSEW (1) | 118 / 0 | 0 |
+| S12 | SandstoneQuarry | Sandstone Quarry, 107 cells east of the start | 179, 118, 3 Cw90 | understructure | on SandstoneSeam 179, 114, 3; open NSEW (1) | 127 / 0 | 0 |
 | S13 | ArchiveExcavation | Archive Excavation for Bench ruins | 136, 152, 13 Cw0 | flat | open NEW (1) | 51 / 0 | 15 |
 | S14 | ArchiveExcavation | Archive Excavation for Valley-top ruins | 51, 191, 8 Cw0 | flat | open E (1) | 52 / 5 | 0 |
 | S15 | ArchiveExcavation | Archive Excavation for Ruins 93 cells south-east of the start | 131, 89, 15 Cw0 | flat | open N (1) | 104 / 0 | 23 |

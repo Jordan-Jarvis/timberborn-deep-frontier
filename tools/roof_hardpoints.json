@@ -1915,42 +1915,27 @@
   "LimestoneQuarry": {
    "hardpoints": [
     [
-     1,
+     0,
      0,
      1
     ],
     [
-     6,
+     3,
      0,
      1
     ],
     [
-     7,
-     0,
-     1
-    ],
-    [
-     6,
-     1,
-     1
-    ],
-    [
-     0,
+     3,
      1,
      2
     ],
     [
-     1,
-     1,
-     2
-    ],
-    [
-     0,
+     3,
      2,
      2
     ],
     [
-     1,
+     4,
      2,
      2
     ],
@@ -1960,90 +1945,61 @@
      2
     ],
     [
-     1,
      3,
-     2
-    ],
-    [
-     7,
      3,
-     2
-    ],
-    [
-     0,
-     4,
      2
     ],
     [
      1,
-     4,
-     2
+     1,
+     4
     ],
     [
-     3,
-     4,
-     2
-    ],
-    [
-     0,
-     5,
-     2
+     2,
+     1,
+     4
     ],
     [
      1,
-     5,
-     2
-    ],
-    [
-     4,
      2,
      4
     ],
     [
-     5,
+     2,
      2,
      4
     ],
     [
-     6,
+     1,
+     3,
+     4
+    ],
+    [
      2,
-     4
-    ],
-    [
-     4,
      3,
-     4
-    ],
-    [
-     5,
-     3,
-     4
-    ],
-    [
-     6,
-     3,
-     4
-    ],
-    [
-     4,
-     4,
-     4
-    ],
-    [
-     5,
-     4,
-     4
-    ],
-    [
-     6,
-     4,
      4
     ]
    ],
    "excluded": [
     {
      "cell": [
-      7,
+      4,
+      0,
+      1
+     ],
+     "reason": "animated part in the top cell or the cell above"
+    },
+    {
+     "cell": [
+      0,
+      1,
+      1
+     ],
+     "reason": "building geometry in the middle of the cell above"
+    },
+    {
+     "cell": [
+      4,
       1,
       1
      ],
@@ -2051,11 +2007,11 @@
     },
     {
      "cell": [
-      7,
+      0,
       2,
       1
      ],
-     "reason": "animated part in the top cell or the cell above"
+     "reason": "building geometry in the middle of the cell above"
     }
    ]
   },
@@ -2560,42 +2516,27 @@
   "SandstoneQuarry": {
    "hardpoints": [
     [
-     1,
+     0,
      0,
      1
     ],
     [
-     6,
+     3,
      0,
      1
     ],
     [
-     7,
-     0,
-     1
-    ],
-    [
-     6,
-     1,
-     1
-    ],
-    [
-     0,
+     3,
      1,
      2
     ],
     [
-     1,
-     1,
-     2
-    ],
-    [
-     0,
+     3,
      2,
      2
     ],
     [
-     1,
+     4,
      2,
      2
     ],
@@ -2605,90 +2546,61 @@
      2
     ],
     [
-     1,
      3,
-     2
-    ],
-    [
-     7,
      3,
-     2
-    ],
-    [
-     0,
-     4,
      2
     ],
     [
      1,
-     4,
-     2
+     1,
+     4
     ],
     [
-     3,
-     4,
-     2
-    ],
-    [
-     0,
-     5,
-     2
+     2,
+     1,
+     4
     ],
     [
      1,
-     5,
-     2
-    ],
-    [
-     4,
      2,
      4
     ],
     [
-     5,
+     2,
      2,
      4
     ],
     [
-     6,
+     1,
+     3,
+     4
+    ],
+    [
      2,
-     4
-    ],
-    [
-     4,
      3,
-     4
-    ],
-    [
-     5,
-     3,
-     4
-    ],
-    [
-     6,
-     3,
-     4
-    ],
-    [
-     4,
-     4,
-     4
-    ],
-    [
-     5,
-     4,
-     4
-    ],
-    [
-     6,
-     4,
      4
     ]
    ],
    "excluded": [
     {
      "cell": [
-      7,
+      4,
+      0,
+      1
+     ],
+     "reason": "animated part in the top cell or the cell above"
+    },
+    {
+     "cell": [
+      0,
+      1,
+      1
+     ],
+     "reason": "building geometry in the middle of the cell above"
+    },
+    {
+     "cell": [
+      4,
       1,
       1
      ],
@@ -2696,11 +2608,11 @@
     },
     {
      "cell": [
-      7,
+      0,
       2,
       1
      ],
-     "reason": "animated part in the top cell or the cell above"
+     "reason": "building geometry in the middle of the cell above"
     }
    ]
   },

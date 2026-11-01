@@ -49,22 +49,22 @@ export function industrialBlocks(ident, size) {
     region([0,1,2,2,1,2],'All'); // hoppers on the roof, their chutes over the drum
     // (1,0,2): open roof platform; (2,0,1..2): open above the trough.
   } else if(ident==='MineralQuarry') {
-    // Compact 8x6x5 (2026-10-30), grid y = artwork y - 1. Stone plinth and
-    // the ground front row (water tank, cabin and doorstep (1,0,0), stone bin);
-    // the cabin roof, supply bins and spoil heap on the front strip; the tool
-    // room; the supply pipe; the boarded headframe with receiver and sheave;
-    // the winding house; the belt, screen and drives.
-    region([0,0,0,7,5,0],'All');
-    region([1,0,1,1,0,1],'All'); // cabin roof
-    region([6,0,1,7,0,1],'All'); // stone tray
-    region([0,1,1,1,5,2],'All');
-    region([4,2,1,6,4,4],'All');
-    region([3,4,1,6,5,2],'All');
-    region([6,1,1,7,3,1],'All');region([7,3,2,7,3,2],'All');
-    // Only these 25 foundations require one native 5x5 seam (the old
-    // registration's cells, so a saved quarry stays over its seam).
-    region([3,1,0,7,5,0],'Top');
-    for(let y=1;y<6;y++)for(let x=3;x<8;x++)blocks[y*w+x].MatterBelow='Ground';
+    // 5x5x5 over its seam (2026-11-01, second shrink), grid = artwork - (3,2).
+    // Stone plinth and the cabin with its doorstep (0,0,0) on the ground; the
+    // cabin roof; the tool room on the west edge; the boarded headframe and
+    // sheave; the receiver; the winding house; the belt, screen, stone tray
+    // and drives on the east side.
+    region([0,0,0,4,4,0],'All');
+    region([0,0,1,0,0,1],'All'); // cabin roof
+    region([0,1,1,0,3,1],'All'); // tool room
+    region([1,1,1,2,3,4],'All'); // headframe, guides, sheave
+    region([3,1,1,3,2,2],'All'); // receiver
+    region([0,3,1,3,4,2],'All'); // winding house
+    region([3,0,1,4,2,1],'All');region([4,2,2,4,2,2],'All'); // belt, screen, tray, drives
+    // Every foundation stands on the one native 5x5 seam (Top on Ground);
+    // saved quarries move onto it at load (MineFootprintSaveMigration.cs).
+    region([0,0,0,4,4,0],'Top');
+    for(let y=0;y<5;y++)for(let x=0;x<5;x++)blocks[y*w+x].MatterBelow='Ground';
   } else throw new Error(`No structural occupation authored for ${ident}`);
   return blocks;
 }

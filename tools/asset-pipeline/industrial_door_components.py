@@ -35,11 +35,12 @@ DOORS = {
             'facade': 'framed', 'panelDepth': .04, 'wallPlaneY': .16, 'returnOwnership': 'wall'},
     },
     'MineralQuarry': {
-        # Each casing mounts .04 ahead of its actual facade. Ground cabin:
-        # artwork = grid - (0,1); centred on grid tile column 1, face 0.14
-        # behind the grid y=2 edge; shoulders meet the header at Y=1.18.
-        'GroundDoor': {'position': (1.50, 1.14, 0), 'outward': (0, -1), 'transform': 'front',
-            'facade': 'framed', 'panelDepth': .04, 'wallPlaneY': 1.18, 'returnOwnership': 'wall'},
+        # Each casing mounts .04 ahead of its actual facade. Ground cabin
+        # (5x5 quarry, 2026-11-01): artwork = grid + (3,2); centred on grid
+        # tile column 0, face 0.14 behind the front edge (artwork y=2);
+        # shoulders meet the header at Y=2.18.
+        'GroundDoor': {'position': (3.50, 2.14, 0), 'outward': (0, -1), 'transform': 'front',
+            'facade': 'framed', 'panelDepth': .04, 'wallPlaneY': 2.18, 'returnOwnership': 'wall'},
         # (The two upper workshop doors and the control-room door went with
         # the compact 8x6x5 quarry, 2026-10-30.)
     },

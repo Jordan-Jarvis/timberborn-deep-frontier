@@ -75,11 +75,13 @@ ground_door(C,(1.50,.10,0),(0,-1))
 K=layout([0,1,0],[3,3,3],[0,-1,0],[[.50,-.94,0]],deck_mode='None')
 ground_door(K,(.50,.14,0),(0,-1))
 
-# Quarry artwork = native grid + (0,1). Compact 8x6x5 (2026-10-30): the old
-# 11x7x9 origin, entrance, door and 5x5 seam cells (grid x 3..7, y 1..5) are
-# kept; the ground cabin door is the only door.
-Q=layout([0,-1,0],[8,6,5],[1,-1,0],[[1.50,1.06,0]],deck_mode='None')
-ground_door(Q,(1.50,.14,0),(0,-1))
+# Quarry: 5x5x5 since the second shrink pass (2026-11-01; compact 8x6x5
+# from 2026-10-30, 11x7x9 before): the footprint is exactly the 5x5 seam,
+# the old grid x 3..7, y 1..5, so artwork = native grid + (3,2). The ground
+# cabin door, the only door, is in the front-left tile (entrance (0,-1,0)).
+# Saved quarries move onto their seam at load (MineFootprintSaveMigration.cs).
+Q=layout([-3,-2,0],[5,5,5],[0,-1,0],[[3.50,2.06,0]],deck_mode='None')
+ground_door(Q,(.50,.14,0),(0,-1))
 
 # Native entrance = the path cell in front of the door (vanilla convention);
 # the door cell (1,0,0) is the occupied doorstep.
