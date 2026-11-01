@@ -3,45 +3,44 @@
   "targets": [
     "FisheryWorks"
   ],
-  "joinedObjects": 4,
+  "joinedObjects": 3,
   "objects": [
     "FisheryWorks.Architecture",
     "FisheryWorks.Door.Door0",
-    "FisheryWorks.Door.Door1",
-    "FisheryWorks.Door.RoofTerraceDoor"
+    "FisheryWorks.Door.Door1"
   ],
   "nodes": [
     {
       "node": "StaticMerged",
-      "parts": 4,
-      "triangles": 10885,
+      "parts": 3,
+      "triangles": 4914,
       "materials": {
-        "Plaster_White.IronTeeth": 50,
-        "Plaster_Orange.IronTeeth": 52,
-        "IrregularPlanks_MetalForged.IronTeeth": 82,
-        "BaseWood_DarkBrown.IronTeeth": 2186,
-        "BaseMetal.IronTeeth": 3569,
-        "IrregularPlanks_DarkBrown.IronTeeth": 1924,
-        "RoofPlanks.IronTeeth": 426,
-        "DFIndustrial06": 168,
-        "DFIndustrial12": 2268,
+        "Plaster_White.IronTeeth": 16,
+        "Plaster_Orange.IronTeeth": 22,
+        "IrregularPlanks_MetalForged.IronTeeth": 30,
+        "BaseWood_DarkBrown.IronTeeth": 1132,
+        "BaseMetal.IronTeeth": 1826,
+        "IrregularPlanks_DarkBrown.IronTeeth": 804,
+        "DFIndustrial06": 72,
+        "RoofPlanks.IronTeeth": 156,
+        "DFIndustrial12": 696,
         "Details.IronTeeth": 160
       }
     },
     {
       "node": "StaticMerged.DFIndustrial08",
       "parts": 1,
-      "triangles": 220,
+      "triangles": 80,
       "materials": {
-        "DFIndustrial08": 220
+        "DFIndustrial08": 80
       }
     },
     {
       "node": "StaticMerged.WindowsAtlas.IronTeeth",
-      "parts": 4,
-      "triangles": 232,
+      "parts": 3,
+      "triangles": 198,
       "materials": {
-        "WindowsAtlas.IronTeeth": 232
+        "WindowsAtlas.IronTeeth": 198
       }
     }
   ],

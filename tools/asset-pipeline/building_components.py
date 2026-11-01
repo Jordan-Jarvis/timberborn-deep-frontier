@@ -19,10 +19,10 @@ DOOR_LAYOUTS={
     'Hospital':(HOSPITAL_DOORS,HOSPITAL_ORIGIN),
     'FishHatchery':({'Door0':{'position':[1.3,.25,0],'outward':[0,-1]}},[0,0,0]),
     'FisheryWorks':({
-        # One layer per storey since 2026-10-30: the upper doors are at 1.
-        'Door0':{'position':[3.90,3.12,1],'outward':[0,-1],'panelDepth':.10},
-        'Door1':{'position':[2.0,1.55,0],'outward':[0,-1],'panelDepth':.11},
-        'RoofTerraceDoor':{'position':[1.22,5.55,1],'outward':[-1,0],'panelDepth':.09},
+        # Second shrink pass (2026-11-01, fishery_works_geometry.py, native
+        # grid coordinates): the ground door and the upper hall door, both x 3.5.
+        'Door0':{'position':[3.5,1.94,1],'outward':[0,-1],'panelDepth':.10},
+        'Door1':{'position':[3.5,.09,0],'outward':[0,-1],'panelDepth':.11},
     },[0,0,0]),
     'GroceryStore':({
         'Door0':{'position':[4.08,2.87,2],'outward':[0,-1],'panelDepth':.10},
@@ -36,10 +36,10 @@ FACADES={'Restaurant':'grid','Hospital':'grid','FishHatchery':'grid',
 LEGACY_FACADES={name:'recessed' for name in DOOR_LAYOUTS}
 UV_PROFILES={name:'civic-native' for name in DOOR_LAYOUTS}
 # Exported model coordinates, distinct from worker idle or native BaseZ cells.
-# FisheryWorks: its layout origin (fishery_layout.py); y -2 since the
-# 12x10 -> 11x8 footprint (2026-10-22).
+# FisheryWorks: its layout origin (fishery_layout.py): the art is authored
+# in native grid coordinates since the second shrink pass (2026-11-01).
 EXPORT_OFFSETS={'Restaurant':[0,0,0],'Hospital':[0,0,0],
-                'FishHatchery':[.2,.75,0],'FisheryWorks':[1.25,-1.30,0],
+                'FishHatchery':[.2,.75,0],'FisheryWorks':[0,0,0],
                 'GroceryStore':[.4,0,0]}
 _industrial_layouts={**INDUSTRIAL_LAYOUTS,**PIT_LAYOUTS,**HYDRO_LAYOUTS}
 for _model in industrial.MODELS:

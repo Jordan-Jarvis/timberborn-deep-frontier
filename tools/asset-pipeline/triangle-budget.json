@@ -337,9 +337,9 @@
    "family": "civic",
    "class": "grand",
    "target": 20000,
-   "finished": 15278,
-   "vertices": 33359,
-   "construction": 15278,
+   "finished": 6331,
+   "vertices": 12932,
+   "construction": 6331,
    "file": "outputs/civic-integration/Data/Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.Model.timbermesh"
   },
   "FoodPackagingWorks": {
@@ -838,6 +838,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 796550,
+ "totalBlueprintTriangles": 773674,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

@@ -2,24 +2,10 @@
   "scope": "Authored door and seating positions; native visitor behavior not integrated",
   "doors": [
     {
-      "id": "Door0",
-      "position": [
-        3.9,
-        3.12,
-        1
-      ],
-      "outward": [
-        0,
-        -1
-      ],
-      "width": 1.0,
-      "internalConnection": "BuildingInterior"
-    },
-    {
       "id": "Door1",
       "position": [
-        2.0,
-        1.55,
+        3.5,
+        0.09,
         0
       ],
       "outward": [
@@ -30,15 +16,15 @@
       "internalConnection": "BuildingInterior"
     },
     {
-      "id": "RoofTerraceDoor",
+      "id": "Door0",
       "position": [
-        1.22,
-        5.55,
+        3.5,
+        1.94,
         1
       ],
       "outward": [
-        -1,
-        0
+        0,
+        -1
       ],
       "width": 1.0,
       "internalConnection": "BuildingInterior"

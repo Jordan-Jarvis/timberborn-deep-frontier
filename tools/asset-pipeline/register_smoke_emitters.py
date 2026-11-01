@@ -43,7 +43,8 @@ FLUELESS = frozenset({'Restaurant', 'Hospital', 'FisheryWorks', 'MaterialsLabora
 
 
 def models():
-    from civic_isometric_geometry import restaurant, hospital, fishery
+    from civic_isometric_geometry import restaurant, hospital
+    from fishery_works_geometry import fishery
     from kiln_isometric_geometry import kiln
     from materials_laboratory_geometry import laboratory
     civic = ('tools/civic-layouts.json', 'outputs/civic-integration')

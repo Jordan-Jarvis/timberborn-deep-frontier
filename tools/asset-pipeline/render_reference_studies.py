@@ -19,6 +19,7 @@ from quarry_process_details import animate_process,PROCESS
 from industrial_facades import extra_materials
 from industrial_levels import LEVELS
 from civic_isometric_geometry import hospital,restaurant,grocery,fishery,CIVIC_ACCESS,CIVIC_TERRACES
+from fishery_works_geometry import fishery  # FisheryWorks since the second shrink pass (2026-11-01)
 from hatchery_isometric_geometry import hatchery
 from pit_isometric_geometry import sandstone_pit,limestone_pit,animate_pit
 from structural_geometry import MODELS as STRUCTURAL_MODELS

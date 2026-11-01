@@ -52,9 +52,10 @@ FREED = {
         'outside': 'the former rear row (rear specimen shelves): now outside the 10x8 bounds',
     },
     'Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.blueprint.json': {
-        # Rear supply pile and loose barrel beside the kept water tanks.
-        'cells': [(5, 7, 0), (6, 7, 0), (7, 7, 0)],
-        'outside': 'the two former front rows (fish tables, bins, front basin) and the empty right column: now outside the 11x8 bounds',
+        # The rear supply pile and loose barrel (2026-10-22) are outside the
+        # 6x5 bounds of the second shrink pass (2026-11-01).
+        'cells': [],
+        'outside': 'the two former front rows (fish tables, bins, front basin), the empty right column and the rear supply cells: now outside the 6x5 bounds',
     },
     'Buildings/Food/FishHatchery/FishHatchery.IronTeeth.blueprint.json': {
         # Bank-row barrels and sacks (2026-10-22), in the compact 7x7 grid

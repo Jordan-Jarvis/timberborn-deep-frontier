@@ -20,6 +20,18 @@
     "wood": 110.4913
    },
    "measuredAt": "4x4x3 Stone Crusher model (22d396b)"
+  },
+  "FisheryWorks": {
+   "families": {
+    "brick": 25.2672,
+    "concrete": 9.8556,
+    "limestone": 0.0971,
+    "metal": 100.438,
+    "sandstone": 0.3907,
+    "unpriced": 7.4998,
+    "wood": 485.9289
+   },
+   "measuredAt": "11x8x4 Fishery Works model (d424ef7)"
   }
  }
 }

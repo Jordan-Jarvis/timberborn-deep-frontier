@@ -41,28 +41,20 @@ export async function applyFishery(value) {
     }
   };
   // Occupation describes actual rooms, slab supports and machinery; it does
-  // not fill the registration envelope, especially below the roof terrace.
-  // 2026-10-22: the footprint ends at the walls (12x10 -> 11x8, native y 2
-  // less). The front basin and the rear stock are gone; the two rear water
-  // tanks stay as the pipe inlet.
-  // 2026-10-30 compaction: one layer per storey (galleries and the upper
-  // hall at layer 1, the long roof lower, 11x8x7 -> 11x8x4); the rear water
-  // tanks stand under the rear gallery (no-clutter rule).
-  region([2,1,0],[8,6,0],'Top, Corners'); // Gallery slabs on their corner posts.
-  region([2,1,0],[7,5,0],'All'); // Lower processing hall.
-  region([3,1,1],[7,5,1],'All'); // Set-back upper hall.
-  region([2,0,0],[4,2,0],'All'); // Enclosed entrance vestibule.
-  region([2,0,1],[4,1,1],'All'); // Low entrance roof.
-  region([2,1,2],[7,6,2],'All'); // Main roof.
-  region([4,1,3],[5,6,3],'All'); // Main roof ridge.
-  region([0,2,0],[2,5,0],'All'); // One-storey warehouse and roof slab.
-  region([2,3,1],[3,4,2],'All'); // Terrace door house and its roof.
-  region([9,0,0],[10,5,0],'All'); // Low water basins.
-  region([9,2,1],[10,5,2],'All'); // Native wheel and upper header.
-  region([3,6,0],[4,6,0],'All'); // Rear water tanks under the gallery: the pipe inlet.
-  region([8,6,0],[8,6,1],'Corners'); // Hoist mast outside the walking lane.
-  region([8,6,2],[10,6,2],'All');
-  // Player-placed-path galleries and roof terrace (2026-10-30, user: every
+  // not fill the registration envelope.
+  // Second shrink pass (2026-11-01): 11x8x4 -> 6x5x3 (fishery_works_geometry.py,
+  // grid coordinates). Water wing on the left (x 0..1), the lower hall x 2..5
+  // with its deck roof at layer 1, the upper hall x 2..4 behind it.
+  region([0,0,0],[1,4,0],'All'); // Long and small basins (the crane mast stands in (1,0)).
+  region([0,2,1],[1,4,1],'All'); // Native wheel, cascade and header basin.
+  region([0,3,2],[1,4,2],'All'); // Header basin rim.
+  region([1,0,1],[1,0,1],'Corners'); // Crane mast beside the small basin.
+  region([0,0,2],[1,0,2],'All'); // Crane jib.
+  region([2,0,0],[5,3,0],'All'); // Lower processing hall under its deck roof.
+  region([2,4,0],[4,4,0],'All'); // Undercroft: the water tanks (the pipe inlet), posts and net.
+  region([2,2,1],[4,4,1],'All'); // Upper hall.
+  region([2,2,2],[4,4,2],'All'); // Its long gabled roof.
+  // Player-placed-path deck on the lower hall's roof (2026-10-30, user: every
   // flat roof tile placeable like a platform): the deck cells stay free and
   // the slab under each is a stackable roof deck.
   if(d.deckMode!=='PlayerPlacedPaths')throw new Error('Fishery galleries must be player-path decks');
@@ -77,7 +69,7 @@ export async function applyFishery(value) {
     }
   }
   for(const cell of d.buildableCells)blocks[index([cell[0],cell[1],cell[2]-1])].Stackable='BlockObject';
-  // Waterside flume wing: the wheel and both long basins may overhang a lower
+  // Waterside flume wing: the wheel and both basins (x 0..1) may overhang a lower
   // bank or water on adaptive piles. Everything else, including the ground
   // door, vestibule and entrance, still needs ground or a stackable below.
   const site=(await read('tools/waterside_sites.json')).FisheryWorks;
@@ -85,7 +77,7 @@ export async function applyFishery(value) {
   const wing=new Set(site.supports.groundOptionalCells.map(c=>c.join(',')));
   for(const key of wing) {
     const [x,y,z]=key.split(',').map(Number),b=blocks[index([x,y,z])];
-    if(z!==0||b.MatterBelow!=='GroundOrStackable'||b.Occupations!=='All'||x<9)
+    if(z!==0||b.MatterBelow!=='GroundOrStackable'||b.Occupations!=='All'||x>1)
       throw new Error('Fishery waterside wing must be the occupied ground-layer basin cells: '+key);
     b.MatterBelow='Any';
   }
@@ -100,7 +92,7 @@ export async function applyFishery(value) {
   // Entrance was the door cell itself and the player's path showed no connection to the door.
   const door=d.entrance,entrance=nativeEntrance('FisheryWorks',door,d.size,blocks);
   value.BlockObjectSpec={Size:xyz(d.size),Blocks:blocks,Entrance:{HasEntrance:true,Coordinates:xyz(entrance)},BaseZ:0,Overridable:false,Flippable:true};
-  value.BuildingAccessibleSpec={LocalAccess:xyz([3.25,0,.25]),ForceOneFinalAccess:false};
+  value.BuildingAccessibleSpec={LocalAccess:xyz([3.5,0,.25]),ForceOneFinalAccess:false};
   value.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
   value.Children['#Finished'].CollidersSpec=industrialColliders(blocks,d.size,d.baseZ);
   value.Children['#Unfinished']={Children:{ConstructionStage0:{TimbermeshSpec:{Model:'Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.ConstructionStage0.Model'},CollidersSpec:industrialColliders(blocks,d.size,d.baseZ)}}};
@@ -115,8 +107,7 @@ export async function applyFishery(value) {
   value.PlatformDeckSpec=await read('outputs/civic-integration/FisheryWorks-platform-deck.json');
   // Shafts may meet any solid wall; the tested sockets stay first.
   {value.TransputProviderSpec={IgnoreRotation:false,Transputs:solidPowerFaces(blocks,d.size,{exclude:[door,entrance],keep:[
-    {Coordinates:xyz([0,3,0]),Directions:'Left, Bottom',ReverseRotation:false},
-    {Coordinates:xyz([6,5,0]),Directions:'Up, Bottom',ReverseRotation:false}
+    {Coordinates:xyz([5,2,0]),Directions:'Right, Bottom',ReverseRotation:false}
   ]})};}
   value.BuildingPipeTargetPortsSpec=(await read('tools/aquaculture_pipe_ports.json')).FisheryWorks;
   value.TransformSlotInitializerSpec={Slots:[{SlotKeyword:'Entrance',Animation:'ForcedIdle',Inanimate:false,RandomizeYRotation:false,WaterSlot:false}]};

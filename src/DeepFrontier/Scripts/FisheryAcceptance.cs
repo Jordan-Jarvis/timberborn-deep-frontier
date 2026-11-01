@@ -93,14 +93,15 @@ namespace DeepFrontier.Scripts {
       } else {
         foreach(var e in _registry.Entities.Where(e=>e.HasComponent<Workplace>()&&e.HasComponent<PausableBuilding>()))e.GetComponent<PausableBuilding>().Pause();
         // Fishery Works at (159,162,3), Cw0 unflipped. The fixture follows the installed
-        // blueprint, not a size literal (11x8x4 since the 2026-10-30 compaction): ordinary
+        // blueprint, not a size literal (6x5x3 since the 2026-11-01 shrink): ordinary
         // player paths join its native Entrance (the path cell in front of the ground door,
         // tools/native_entrance.mjs) to the road row; nothing else gives ground access.
         _building=Create("FisheryWorks.IronTeeth",159,162,3);_building.GetComponent<PausableBuilding>().Pause();
-        // Freed ground, checked before the fixture builds on it: the rear supply cells inside
-        // the bounds (validate_freed_cells.py), the two former front rows and the right column.
+        // Freed ground, checked before the fixture builds on it: the old 11x8 works outside
+        // the 6x5 one (2026-11-01), the two former front rows and the right column.
+        var size=_building.GetComponent<BlockObjectSpec>().Size;
         FreedCellProbe.Require(_templates,_validator,_building,
-          FreedCellProbe.Rect(5,7,7,7).Concat(FreedCellProbe.Rect(0,11,-2,-1)).Concat(FreedCellProbe.Rect(11,11,0,7)),
+          FreedCellProbe.Outside(0,10,0,7,size).Concat(FreedCellProbe.Rect(0,11,-2,-1)).Concat(FreedCellProbe.Rect(11,11,0,7)),
           "FisheryWorks",message=>Debug.Log("[DeepFrontier Fishery] PASS "+message));
         var entrance=_building.PositionedEntrance.Coordinates;
         if(entrance.z!=Ground||entrance.y<=RoadY||entrance.x>=RoadX)
@@ -112,10 +113,10 @@ namespace DeepFrontier.Scripts {
         for(int x=174;x<=188;x++)Create("Path",x,170,Ground);
         var line=ShaftLine(_building);
         Create("PowerShaft.IronTeeth",line.Shaft.x,line.Shaft.y,line.Shaft.z);Create("DevPowerGenerator",line.Generator.x,line.Generator.y,line.Generator.z);
-        // A native platform stack on the first free warehouse-terrace deck cell.
+        // A native platform stack on the first free deck cell.
         var stack=_building.TransformCoordinates(TerraceBuildCells()[0]);
         Create("DoublePlatform.IronTeeth",stack.x,stack.y,stack.z);Create("Platform.IronTeeth",stack.x,stack.y,stack.z+2);Create("Path",stack.x,stack.y,stack.z+3);
-        Debug.Log("[DeepFrontier Fishery] PASS native terrace platform stack");
+        Debug.Log("[DeepFrontier Fishery] PASS native deck platform stack");
         // A native water-filled pond in the disposable fixture. Its banks and
         // four-by-four bed are outside the earlier quarry's occupied footprint.
         for(int x=189;x<=192;x++)for(int y=166;y<=169;y++) {
@@ -245,26 +246,25 @@ namespace DeepFrontier.Scripts {
         SetupAccess();
         // Player-path decks (2026-10-30), open since 2026-10-31 (no rails): the two
         // tested seams get a path on their deck cell.
-        foreach(var seam in new[]{FrontSeam(),TerraceSeam(0)}) {
+        foreach(var seam in new[]{FrontSeam(),SideSeam(0)}) {
           var inside=_building.TransformCoordinates(seam.Inside);
           if(!_blocks.GetPathObjectAt(inside))Create("Path",inside.x,inside.y,inside.z);
         }
         _shorePhase=9;
       } else if(_shorePhase==9&&_frame>=_shoreFrame+120) {
         if(_building.GetComponent<PlatformDeckSpec>().Openings.Length!=0)throw new InvalidOperationException("Fishery decks must have no rails");
-        CheckSeam(FrontSeam(),true);CheckSeam(TerraceSeam(0),true);CheckSeam(TerraceSeam(-1),false);
+        CheckSeam(FrontSeam(),true);CheckSeam(SideSeam(0),true);CheckSeam(SideSeam(1),false);
         var worker=_registry.Entities.Where(e=>e.HasComponent<Worker>()).Select(e=>e.GetComponent<Worker>()).First(w=>w.WorkerType=="Beaver"&&w.Workplace!=_flag.GetComponent<Workplace>());
         worker.Unemploy();_walker=worker.GetComponent<ControllableCharacter>();_walker.ChangeAnimation("BeaverAdult_idle");
         _walkBuilding=_building;
-        // From the road below the gallery stairs onto the gallery, through both upper doors
-        // and the hall to the warehouse terrace, then down to the road in front of the Entrance.
+        // From the road below the deck stairs onto the deck, through the upper hall door,
+        // back out to the deck's east edge, then down to the road in front of the Entrance.
         var deck=_building.GetComponent<PlatformDeckSpec>();
         var front=FrontSeam();var access=GalleryStairs();
-        var galleryDoor=deck.Doors.Single(d=>d.Exterior==front.Inside);
-        var terraceDoor=deck.Doors.Single(d=>d.Exterior!=front.Inside);
+        var hallDoor=deck.Doors.Single();
         var entrance=_building.PositionedEntrance.Coordinates;
-        foreach(var cell in new[]{new Vector3Int(access.Approach.x,RoadY,Ground),_building.TransformCoordinates(front.Inside),_building.TransformCoordinates(galleryDoor.Interior),
-          _building.TransformCoordinates(terraceDoor.Interior),_building.TransformCoordinates(TerraceSeam(0).Inside),new Vector3Int(entrance.x,RoadY,Ground)})
+        foreach(var cell in new[]{new Vector3Int(access.Approach.x,RoadY,Ground),_building.TransformCoordinates(front.Inside),_building.TransformCoordinates(hallDoor.Interior),
+          _building.TransformCoordinates(SideSeam(0).Inside),new Vector3Int(entrance.x,RoadY,Ground)})
           _walkTargets.Enqueue(cell);
         _camera.MoveTargetTo(new Vector3(166,7,164));_camera.SetZoomLevel(20,0);_shorePhase=10;NextTarget();
       } else if(_shorePhase==10&&Vector3.Distance(_walker.Transform.position,_walkWorld)<.18f) {
@@ -496,12 +496,12 @@ namespace DeepFrontier.Scripts {
         for(int z=Ground;z<cell.z;z++)Create("Platform.IronTeeth",cell.x,cell.y,z);
         Create("Stairs.IronTeeth",cell.x,cell.y,cell.z,climb);
       }
-      foreach(var seam in new[]{FrontSeam(),TerraceSeam(0)}) {
+      foreach(var seam in new[]{FrontSeam(),SideSeam(0)}) {
         var outside=_building.TransformCoordinates(seam.Outside);
         for(int z=Ground;z<outside.z;z++)Create("Platform.IronTeeth",outside.x,outside.y,z);
         Create("Path",outside.x,outside.y,outside.z);
       }
-      // The terrace supports native construction: a platform and path on the next free deck
+      // The deck supports native construction: a platform and path on the next free deck
       // cell (the saved stack now fills the first), clear of the door and the opening cells.
       var platform=_building.TransformCoordinates(TerraceBuildCells()[0]);
       Create("Platform.IronTeeth",platform.x,platform.y,platform.z);Create("Path",platform.x,platform.y,platform.z+1);
@@ -517,33 +517,35 @@ namespace DeepFrontier.Scripts {
       }
       _shoreFrame=_frame;
     }
-    // Open-deck seams (2026-10-31 roof pass: no deck rails). The front seam: the gallery
-    // door's exterior stand and the cell south of it (the old FishFront8). The terrace
-    // seams: the warehouse terrace's west edge at the terrace door's row (dy 0, the old
-    // FishRoofLeft6) and the row south of it (dy -1, the old FishRoofLeft5).
+    // Open-deck seams (2026-10-31 roof pass: no deck rails). Since the 2026-11-01 shrink the
+    // deck is the lower hall's flat roof. The front seam: from the upper hall door's exterior
+    // stand straight to the deck's front edge and the free cell beyond it. The side seams:
+    // the deck's east edge, row by row from the front (0: laid with a path, 1: left bare).
     private (Vector3Int Inside,Vector3Int Outside) FrontSeam() {
       var spec=_building.GetComponent<BlockObjectSpec>();var stands=CivicFixtureGeometry.DeckStands(spec);
-      var found=_building.GetComponent<PlatformDeckSpec>().Doors.Select(d=>d.Exterior)
-        .Where(c=>stands.Contains(c)&&CivicFixtureGeometry.FreeColumn(CivicFixtureGeometry.Blocks(spec),c+new Vector3Int(0,-1,0))).ToArray();
-      if(found.Length!=1)throw new InvalidOperationException("Fishery needs exactly one deck door exterior on the front edge, found "+found.Length);
-      return (found[0],found[0]+new Vector3Int(0,-1,0));
+      var blocks=CivicFixtureGeometry.Blocks(spec);var down=new Vector3Int(0,-1,0);
+      var c=_building.GetComponent<PlatformDeckSpec>().Doors.Single().Exterior;
+      if(!stands.Contains(c))throw new InvalidOperationException("Fishery deck door exterior "+c+" is not a deck stand");
+      while(stands.Contains(c+down))c+=down;
+      if(!CivicFixtureGeometry.FreeColumn(blocks,c+down))throw new InvalidOperationException("Fishery deck front edge "+c+" has no free cell south of it");
+      return (c,c+down);
     }
-    private (Vector3Int Inside,Vector3Int Outside) TerraceSeam(int dy) {
+    private (Vector3Int Inside,Vector3Int Outside) SideSeam(int row) {
       var spec=_building.GetComponent<BlockObjectSpec>();var front=FrontSeam();
-      var door=_building.GetComponent<PlatformDeckSpec>().Doors.Single(d=>d.Exterior!=front.Inside).Exterior;
-      var found=CivicFixtureGeometry.DeckSeams(spec,door.z,new Vector3Int(-1,0,0)).Where(s=>s.Inside.y==door.y+dy).OrderBy(s=>s.Inside.x).ToArray();
-      if(found.Length==0)throw new InvalidOperationException("Fishery terrace has no west edge at row "+(door.y+dy));
-      return found[0];
+      var found=CivicFixtureGeometry.DeckSeams(spec,front.Inside.z,new Vector3Int(1,0,0)).OrderBy(s=>s.Inside.y).ToArray();
+      if(found.Length<=row)throw new InvalidOperationException("Fishery deck has "+found.Length+" east-edge seams; this fixture needs "+(row+1));
+      return found[row];
     }
     // The Fishery's shaft line: a vanilla shaft on its first transput face (which must face
-    // Left, the fixture's west side) and the developer generator beyond it. Shared with
+    // Right, the fixture's east side toward the road column; the water wing is on the west
+    // since the 2026-11-01 shrink) and the developer generator beyond it. Shared with
     // AquacultureContinuityAcceptance, which finds the saved generator here.
     internal static (Vector3Int Shaft,Vector3Int Generator) ShaftLine(BlockObject fishery) {
       var face=fishery.GetComponent<TransputProviderSpec>().Transputs[0];
-      if(!face.Directions.ToString().Split(',').Select(d=>d.Trim()).Contains("Left"))
-        throw new InvalidOperationException("Fishery's first shaft face "+face.Coordinates+" "+face.Directions+" does not face Left, where this fixture's shaft line runs");
-      var shaft=fishery.TransformCoordinates(face.Coordinates)+new Vector3Int(-1,0,0);
-      return (shaft,shaft+new Vector3Int(-1,0,0));
+      if(!face.Directions.ToString().Split(',').Select(d=>d.Trim()).Contains("Right"))
+        throw new InvalidOperationException("Fishery's first shaft face "+face.Coordinates+" "+face.Directions+" does not face Right, where this fixture's shaft line runs");
+      var shaft=fishery.TransformCoordinates(face.Coordinates)+new Vector3Int(1,0,0);
+      return (shaft,shaft+new Vector3Int(1,0,0));
     }
     // The hatchery's shaft line: a vanilla shaft on the bank-row cell in front of the first
     // shaft face that faces Down (local -y, the bank side) from a front headhouse wall cell
@@ -572,27 +574,27 @@ namespace DeepFrontier.Scripts {
       if(approach.y<=RoadY)throw new InvalidOperationException("Front seam stairs at "+outside+" reach past the road row y "+RoadY);
       return (stairs,approach);
     }
-    // Free warehouse-terrace deck cells (local) that take a native Platform, flooded from the
-    // terrace door's exterior over the building's own bounds; minus the door exterior and the
-    // tested seams' inside cells, ordered by row then column.
+    // Free deck cells (local) that take a native Platform, flooded from the upper hall
+    // door's exterior over the building's own bounds; minus the door exterior and the tested
+    // seams' inside cells, ordered by row then column.
     private List<Vector3Int> TerraceBuildCells() {
       var deck=_building.GetComponent<PlatformDeckSpec>();
-      var door=deck.Doors.Single(d=>d.Exterior!=FrontSeam().Inside).Exterior;
+      var door=deck.Doors.Single().Exterior;
       var size=_building.GetComponent<BlockObjectSpec>().Size;
       var template=_templates.GetAll<TemplateSpec>().Single(t=>t.TemplateName=="Platform.IronTeeth");
       var platform=_templates.GetAll<BlockObjectSpec>().Single(s=>s.Blueprint==template.Blueprint);
       bool Deck(Vector3Int c)=>c.x>=0&&c.y>=0&&c.x<size.x&&c.y<size.y
         &&_validator.BlocksValid(platform,new Placement(_building.TransformCoordinates(c),Orientation.Cw0,FlipMode.Unflipped));
-      if(!Deck(door))throw new InvalidOperationException("Fishery terrace door exterior "+door+" is not a free deck cell");
+      if(!Deck(door))throw new InvalidOperationException("Fishery deck door exterior "+door+" is not a free deck cell");
       var cells=new HashSet<Vector3Int>{door};var open=new Queue<Vector3Int>(cells);
       while(open.Count>0) {
         var c=open.Dequeue();
         foreach(var n in new[]{c+Vector3Int.right,c+Vector3Int.left,c+Vector3Int.up,c+Vector3Int.down})
           if(!cells.Contains(n)&&Deck(n)){cells.Add(n);open.Enqueue(n);}
       }
-      var reserved=new HashSet<Vector3Int>{door,FrontSeam().Inside,TerraceSeam(0).Inside,TerraceSeam(-1).Inside};
+      var reserved=new HashSet<Vector3Int>{door,FrontSeam().Inside,SideSeam(0).Inside,SideSeam(1).Inside};
       var result=cells.Where(c=>!reserved.Contains(c)).OrderBy(c=>c.y).ThenBy(c=>c.x).ToList();
-      if(result.Count==0)throw new InvalidOperationException("Fishery terrace offers no free deck cell besides its door and tested seams for this fixture's platforms");
+      if(result.Count==0)throw new InvalidOperationException("Fishery deck offers no free deck cell besides its door and tested seams for this fixture's platforms");
       return result;
     }
     private void RequireHatcheryPlacement(string id,Vector3Int cell,bool expected,string purpose) {

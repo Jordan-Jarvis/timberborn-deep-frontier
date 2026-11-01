@@ -53,7 +53,6 @@
     {"template": "ElectrolysisPlant.IronTeeth", "label": "Electrolysis Plant, 59 cells north-east of the start", "x": 183, "y": 171, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 64 cells south-west of the start", "x": 91, "y": 90, "z": 8, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 79 cells north-west of the start", "x": 79, "y": 161, "z": 5, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
-    {"template": "FisheryWorks.IronTeeth", "label": "Fishery Works, 61 cells south of the start", "x": 168, "y": 68, "z": 11, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "TownPlaza.IronTeeth", "label": "Town Plaza, 96 cells south of the start", "x": 164, "y": 22, "z": 11, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "MaterialsLaboratory.IronTeeth", "label": "Materials Laboratory, 60 cells south of the start", "x": 152, "y": 57, "z": 7, "orientation": "Cw0", "margin": 1, "openSides": ["N", "S", "E", "W"]},
     {"template": "RocketAssemblyHangar.IronTeeth", "label": "Rocket Assembly Hangar, 50 cells south-east of the start", "x": 169, "y": 80, "z": 9, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"]},

@@ -16,10 +16,11 @@ names=collections.Counter(n.name for n in model.nodes)
 xyz_=lambda c:{'X':c[0],'Y':c[1],'Z':c[2]}
 blocks_=None
 require(all(n==1 for n in names.values()),'Duplicate fishery mesh nodes')
-# 11x8 since the forced front/rear decoration went (2026-10-22).
-# One layer per storey since 2026-10-30 (was 11x8x7).
-require([blueprint['BlockObjectSpec']['Size'][axis] for axis in ('X','Y','Z')]==[11,8,4],'Waterfront Fishery registration changed')
-require(len(blueprint['BlockObjectSpec']['Blocks'])==11*8*4,'Incomplete occupied-cell specification')
+# 6x5x3 since the second shrink pass (2026-11-01; 11x8x4 before, 11x8x7
+# before the 2026-10-30 compaction, 12x10 before 2026-10-22).
+W,D,H=6,5,3
+require([blueprint['BlockObjectSpec']['Size'][axis] for axis in ('X','Y','Z')]==[W,D,H],'Waterfront Fishery registration changed')
+require(len(blueprint['BlockObjectSpec']['Blocks'])==W*D*H,'Incomplete occupied-cell specification')
 blocks_=blueprint['BlockObjectSpec']['Blocks']
 cells={tuple(n['cell']) for n in layout['nodes']};graph={n:set() for n in cells}
 for a,b in layout['edges']:
@@ -32,9 +33,9 @@ while queue:
     if cell in visited:continue
     visited.add(cell);queue.extend(graph[cell]-visited)
 require(visited==cells,'Disconnected fishery routes')
-require(len(layout['doorNodes'])==3 and {c[2] for c in layout['doorNodes']}=={0,1},'Waterfront doorway contract changed')
+require(len(layout['doorNodes'])==2 and {c[2] for c in layout['doorNodes']}=={0,1},'Waterfront doorway contract changed')
 # Player-placed-path decks since 2026-10-30 (every flat roof tile placeable):
-# no built-in walkway; the two upper doors are the deck door links. No rails
+# no built-in walkway; the upper hall door is the deck door link. No rails
 # since the 2026-10-31 roof pass.
 require(layout['deckMode']=='PlayerPlacedPaths' and 'BuildingWalkwaySpec' not in blueprint,'Fishery decks must be player-path decks')
 deck=blueprint['PlatformDeckSpec']
@@ -45,8 +46,8 @@ interior={tuple(c) for c in layout['interiorCells']}
 for n in layout['nodes']:
     c=tuple(n['cell'])
     if c in interior or c[2]==0:continue
-    require(blocks_[(c[2]*8+c[1])*11+c[0]]['Occupations'] in ('None','Corners'),'Deck cell is occupied: '+str(c))
-    require(blocks_[((c[2]-1)*8+c[1])*11+c[0]]['Stackable']=='BlockObject','Deck slab is not stackable: '+str(c))
+    require(blocks_[(c[2]*D+c[1])*W+c[0]]['Occupations'] in ('None','Corners'),'Deck cell is occupied: '+str(c))
+    require(blocks_[((c[2]-1)*D+c[1])*W+c[0]]['Stackable']=='BlockObject','Deck slab is not stackable: '+str(c))
 require(blueprint['BlockObjectNavMeshSettingsSpec']['GenerateFloorsOnStackable'],'Deck floors need GenerateFloorsOnStackable')
 site=read('tools/waterside_sites.json')['FisheryWorks']
 xyz=lambda c:{'X':c[0],'Y':c[1],'Z':c[2]}
@@ -54,15 +55,15 @@ require(site['workCells'] is None and 'WaterDepthWorkCellsSpec' not in blueprint
 require(blueprint['AdaptiveSupportsSpec']=={'Columns':[xyz(c) for c in site['supports']['columns']],'MaxDepth':site['supports']['maxDepth'],
     'SegmentNodeName':'#SupportSegment','FootNodeName':'#SupportFoot'},'Wing piles differ from the waterside contract')
 require(names['#SupportSegment']==1 and names['#SupportFoot']==1,'Exported model lacks exactly one support segment/foot template')
-blocks=blueprint['BlockObjectSpec']['Blocks'];cellAt=lambda x,y,z:blocks[(z*8+y)*11+x]
+blocks=blueprint['BlockObjectSpec']['Blocks'];cellAt=lambda x,y,z:blocks[(z*D+y)*W+x]
 wing={tuple(c) for c in site['supports']['groundOptionalCells']}
 for x,y,z in wing:require(z==0 and cellAt(x,y,z)['MatterBelow']=='Any' and cellAt(x,y,z)['Occupations']=='All','Wing cell is not an occupied ground-optional basin cell')
-# 67 ground cells (the 74 of build 54 less the front basin's 4 and the rear
-# stock's 3 beside the kept water tanks, 2026-10-22) less the 11 wing cells.
-# 65: the two rear water tanks moved under the rear gallery (2026-10-30).
-require(sum(1 for b in blocks if b['MatterBelow']=='GroundOrStackable')==65-len(wing),'Fishery ground contract changed outside the wing')
+# 29 occupied ground cells since the second shrink pass (2026-11-01): the 10
+# wing cells, the 16 of the lower hall and the 3 of the undercroft; cell (5,4)
+# behind the hall is free. Less the 9 ground-optional wing cells.
+require(sum(1 for b in blocks if b['MatterBelow']=='GroundOrStackable')==29-len(wing),'Fishery ground contract changed outside the wing')
 for x,y,z in site['supports']['columns']:require(z==-1 and (x,y,0) in wing,'Pile is not directly below a wing cell')
-for cell in ((3,0,0),(9,0,0),(8,6,0)):require(cellAt(*cell)['MatterBelow']=='GroundOrStackable','Door vestibule, gallery post or hoist left the land: '+str(cell))
+for cell in ((3,0,0),(1,0,0),(3,4,0)):require(cellAt(*cell)['MatterBelow']=='GroundOrStackable','Door cell, crane mast or water tanks left the land: '+str(cell))
 origin=next(n for n in model.nodes if n.name=='IndustrialGridOrigin').position
 for node in (n for n in model.nodes if n.name in ('#SupportSegment','#SupportFoot')):
     require(node.position.y+origin.y<=-2,'Support template is not parked underground')
@@ -99,6 +100,6 @@ for node in model.nodes:
             uv_count+=1
 report={'scope':'Source/export and blueprint checks only; runtime results are separate','modelSha256':hashlib.sha256(payload).hexdigest(),
     'nodes':len(model.nodes),'nativeUvVertices':uv_count,'connectedRouteCells':len(cells),'openings':len(layout['ports']),
-    'doors':[0,2],'waterSurfaces':5,'waterCapacity':90,'nativeProps':len(assembly['props']),'animationTracks':tracks}
+    'doors':[0,1],'waterSurfaces':5,'waterCapacity':90,'nativeProps':len(assembly['props']),'animationTracks':tracks}
 (ROOT/'outputs/civic-integration/fishery-static-checks.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report))
