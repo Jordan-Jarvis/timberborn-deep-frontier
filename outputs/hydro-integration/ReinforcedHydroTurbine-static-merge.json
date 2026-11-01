@@ -3,52 +3,8 @@
   "targets": [
     "ReinforcedHydroTurbine"
   ],
-  "joinedObjects": 2,
-  "objects": [
-    "ReinforcedHydroTurbine.Architecture",
-    "ReinforcedHydroTurbine.Door.HydroWorkshopDoor"
-  ],
-  "nodes": [
-    {
-      "node": "StaticMerged",
-      "parts": 2,
-      "triangles": 8756,
-      "materials": {
-        "Plaster_White.IronTeeth": 1502,
-        "BaseMetal.IronTeeth": 5654,
-        "DFIndustrial13": 82,
-        "IrregularPlanks_DarkBrown.IronTeeth": 524,
-        "IrregularPlanks_MetalForged.IronTeeth": 30,
-        "BaseWood_DarkBrown.IronTeeth": 632,
-        "RoofPlanks.IronTeeth": 292,
-        "DFIndustrial25": 34,
-        "Plaster_Orange.IronTeeth": 6
-      }
-    },
-    {
-      "node": "StaticMerged.DFIndustrial08",
-      "parts": 1,
-      "triangles": 40,
-      "materials": {
-        "DFIndustrial08": 40
-      }
-    },
-    {
-      "node": "StaticMerged.DFIndustrial09",
-      "parts": 1,
-      "triangles": 176,
-      "materials": {
-        "DFIndustrial09": 176
-      }
-    },
-    {
-      "node": "StaticMerged.WindowsAtlas.IronTeeth",
-      "parts": 2,
-      "triangles": 22,
-      "materials": {
-        "WindowsAtlas.IronTeeth": 22
-      }
-    }
-  ],
+  "joinedObjects": 0,
+  "objects": [],
+  "nodes": [],
   "railGroups": {}
 }

@@ -27,17 +27,16 @@ assert bp['MechanicalNodeSpec']['PowerInput']==0
 assert not any(k in bp for k in ('WaterWheelSpec','WaterPoweredGeneratorSpec','ManufactorySpec','WorkplaceSpec'))
 def cell(value):
     return tuple(value[k] for k in ('X','Y','Z'))
-# One-storey workshop since the 2026-10-30 compaction (8x10x7 -> 8x10x6).
-assert cell(bp['BlockObjectSpec']['Size'])==(8,10,6)
+# 8x10x7 -> 8x10x6 (2026-10-30 compaction) -> 4x6x6 (2026-11-01 second shrink):
+# the footprint is the conduit and dam cap; the powerhouse stands over the
+# downstream conduit. The dam continuation beside the cap (x >= 4) lies
+# outside the footprint, free for the player's own dam blocks.
+assert cell(bp['BlockObjectSpec']['Size'])==(4,6,6)
 blocks=bp['BlockObjectSpec']['Blocks']
-assert len(blocks)==8*10*6
+assert len(blocks)==4*6*6
 def block(c):
     x,y,z=c
-    return blocks[(z*10+y)*8+x]
-for x in range(4,8):
-    for y in (2,3):
-        for z in range(6):
-            assert block((x,y,z))['Occupations']=='None','Dam continuation blocked'
+    return blocks[(z*6+y)*4+x]
 routes={tuple(n['cell']) for n in layout['nodes']}
 graph={c:set() for c in routes}
 for a,b in layout['edges']:
@@ -52,8 +51,8 @@ while pending:
     if c in visited:continue
     visited.add(c);pending.extend(graph[c]-visited)
 assert visited==routes
-# Player-path terrace deck since 2026-10-30 (every flat roof tile placeable):
-# the lane cells are free over stackable foundation roofs, with no door links.
+# Player-path deck since 2026-10-30 (every flat roof tile placeable): the lane
+# cells are free over the stackable powerhouse roof, with no door links.
 assert layout['deckMode']=='PlayerPlacedPaths' and 'BuildingWalkwaySpec' not in bp and not layout['doorLinks']
 for c in routes:
     assert block(c)['Occupations']=='None',c

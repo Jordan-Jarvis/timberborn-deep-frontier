@@ -32,13 +32,13 @@ for obj in collection.objects:
                 assert valid_native_uv(obj.material_slots[face.material_index].material.name,obj.data.uv_layers.active.data[i].uv), obj.name
                 uv_corners+=1
 tree=BVHTree.FromPolygons(vertices,faces)
+# The player-path deck on the powerhouse roof (2026-11-01 second shrink,
+# tiles 0..4 x 4..6, top layer 5), less the 0.2 body radius at its edges.
 routes=[
-    ((4.5,4.5,2),(7.5,4.5,2)),
-    ((7.5,4.5,2),(7.5,9.5,2)),
-    ((7.5,9.5,2),(4.5,9.5,2)),
-    # Door spur up to the casing face (y=6) less the 0.2 body radius; the
-    # forward sample then reaches the face, not the native lintel inside it.
-    ((6.5,4.5,2),(6.5,5.8,2)),
+    ((.5,4.5,5),(3.5,4.5,5)),
+    ((.5,5.5,5),(3.5,5.5,5)),
+    ((.5,4.5,5),(.5,5.5,5)),
+    ((3.5,4.5,5),(3.5,5.5,5)),
 ]
 failures=[];route_samples=0
 for a,b in routes:

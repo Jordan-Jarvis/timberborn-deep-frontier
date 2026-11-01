@@ -188,7 +188,7 @@ def render_model(ident,cli):
         (output/(ident+'-rail-manifest.json')).write_text(json.dumps(rail_assembly.manifest(),indent=2)+'\n')
         (output/(ident+'-access-manifest.json')).write_text(json.dumps({
             'scope':'Source art only; water, supports, navigation and gameplay not registered',
-            'doors':static.doorways,'deckLayer':2,'capLayer':6,
+            'doors':static.doorways,'deckLayer':5,'capLayer':6,
             'externalStairs':'Player-built native stairs',
             'runtimeWater':'Native world water; no authored substitute water mesh',
         },indent=2)+'\n')

@@ -30,19 +30,11 @@ export async function hydroBlueprint() {
   region([0,0,0],[3,5,2],'All'); // Conduit casing and rotating machinery.
   region([0,2,3],[3,3,5],'All'); // Concrete dam cap.
   region([1,1,2],[2,1,5],'All'); // Existing gate lead screw and handwheel.
-  region([4,4,0],[7,9,1],'All'); // Downstream workshop foundation.
-  // One-storey workshop (2026-10-30 compaction) under its plank gable
-  // (eave 3.86, ridge 4.76; outline on the tile edges x 4..7, y 6..9).
-  region([4,6,2],[6,8,4],'All'); // Enclosed workshop and its roof.
-  // The roof's eave ring: its beams, corner brackets and gable cladding
-  // stand 15-22 cm beyond the tile edges, one layer lower than before.
-  region([3,6,3],[3,8,3],'All'); // Left eave over the conduit side.
-  region([4,5,3],[6,5,4],'All'); // Front eave and gable over the terrace lane.
-  region([4,9,3],[6,9,3],'All'); // Rear eave over the rear lane.
-  region([5,9,4],[5,9,4],'All'); // Rear gable apex.
-  region([7,6,3],[7,8,3],'All'); // Right eave over the side lane.
-  region([4,5,2],[5,5,3],'All'); // Generator housing and coupling.
-  region([4,4,3],[5,4,3],'All'); // Generator casing above the front lane.
+  // 2026-11-01 second shrink (8x10x6 -> 4x6x6): the downstream foundation and
+  // its workshop beside the conduit are gone. The powerhouse (enclosed
+  // generator house and open generator bay) stands on the headwall over the
+  // downstream conduit, behind the cap, under a flat roof whose top is layer 5.
+  region([0,4,3],[3,5,4],'All'); // Powerhouse and its roof.
   for(let y=0;y<h;y++)for(let x=0;x<w;x++)
     if(x!==1&&x!==2&&blocks[index([x,y,0])].Occupations!=='None')
       blocks[index([x,y,0])].MatterBelow='GroundOrStackable';
@@ -60,7 +52,6 @@ export async function hydroBlueprint() {
   const solid=[];
   for(const x of [0,3])for(let y=0;y<6;y++)for(let z=0;z<2;z++)solid.push([x,y,z]);
   for(let x=0;x<4;x++)for(const y of [2,3])for(let z=2;z<6;z++)solid.push([x,y,z]);
-  for(let x=4;x<8;x++)for(let y=4;y<10;y++)for(let z=0;z<2;z++)solid.push([x,y,z]);
   const planes=[];
   for(const x of [1,2])for(let y=0;y<6;y++)for(const z of [0,2])planes.push(xyz([x,y,z]));
   const model=`Buildings/Power/${b.id}/${b.id}.IronTeeth`;
@@ -98,11 +89,7 @@ export async function hydroBlueprint() {
   // saved study); the tested sockets stay first.
   const walls=(await read('outputs/hydro-integration/ReinforcedHydroTurbine-wall-faces.json')).walls;
   {const E=v.BlockObjectSpec.Entrance?.Coordinates,ex=E?[[E.X,E.Y,E.Z],[E.X,E.Y-1,E.Z]]:[];
-  v.TransputProviderSpec={Transputs:solidPowerFaces(blocks,d.size,{exclude:ex,walls,keep:[
-    {Coordinates:xyz([7,7,0]),Directions:'Right, Bottom',ReverseRotation:false},
-    {Coordinates:xyz([6,9,0]),Directions:'Up, Bottom',ReverseRotation:false},
-    {Coordinates:xyz([6,4,0]),Directions:'Down, Bottom',ReverseRotation:false}
-  ]})};}
+  v.TransputProviderSpec={Transputs:solidPowerFaces(blocks,d.size,{exclude:ex,walls,keep:[]})};} // The in-game-tested sockets were on the removed foundation.
   v.PlaceableBlockObjectSpec={ToolGroupId:'Power',ToolOrder:240,ToolShape:'Square',Layout:'Single',
     CustomPivot:{HasCustomPivot:true,Coordinates:xyz([2,3.5,0])},
     CanBeAttachedToTerrainSide:false,DevModeTool:false};
@@ -116,7 +103,7 @@ export async function hydroBlueprint() {
       TimbermeshSpec:{Model:model+'.ConstructionStage0.Model'},CollidersSpec:colliders}}}};
   // Power Lines attachment (optional mod): its integration modifier, not a blueprint spec.
   return {id:b.id,path:model+'.blueprint.json',blueprint:v,
-    integrations:{PowerLines:{PowerLineSpec:{ConnectionLocations:[xyz([7.97,9.97,1.90])]}}},rows:[
+    integrations:{PowerLines:{PowerLineSpec:{ConnectionLocations:[xyz([3.97,5.97,4.90])]}}},rows:[
     [`Building.${b.id}.DisplayName`,b.name],
     [`Building.${b.id}.Description`,b.description],
     [`Building.${b.id}.FlavorDescription`,'A river, given a useful job.'],

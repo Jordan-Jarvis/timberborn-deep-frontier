@@ -904,27 +904,23 @@
   },
   "ReinforcedHydroTurbine": {
    "model": "Buildings/Power/ReinforcedHydroTurbine/ReinforcedHydroTurbine.IronTeeth.Model",
-   "sha256": "36c9b357afda531729d18cedde099916cb6328291d5cd01788ec99fbacbb6119",
+   "sha256": "1867054df293cf5e75a6b80c9d4937789ff94acce04fefa4ead106b1f2f22a4d",
    "areas": {
-    "BaseMetal.IronTeeth": 141.6593,
-    "BaseWood_DarkBrown.IronTeeth": 47.5366,
-    "DFIndustrial08": 0.1742,
-    "DFIndustrial09": 0.2383,
-    "DFIndustrial13": 0.101,
-    "DFIndustrial25": 0.0078,
-    "IrregularPlanks_DarkBrown.IronTeeth": 27.6761,
-    "IrregularPlanks_MetalForged.IronTeeth": 16.4902,
-    "Plaster_Orange.IronTeeth": 0.588,
-    "Plaster_White.IronTeeth": 428.3992,
-    "RoofPlanks.IronTeeth": 35.9836,
-    "WindowsAtlas.IronTeeth": 1.7593
+    "BaseMetal.IronTeeth": 113.1864,
+    "BaseWood_DarkBrown.IronTeeth": 19.3925,
+    "DFIndustrial08": 0.0871,
+    "DFIndustrial09": 0.0844,
+    "DFIndustrial13": 0.0922,
+    "IrregularPlanks_DarkBrown.IronTeeth": 4.8124,
+    "IrregularPlanks_MetalForged.IronTeeth": 9.4628,
+    "Plaster_White.IronTeeth": 221.9147,
+    "WindowsAtlas.IronTeeth": 0.7218
    },
    "families": {
-    "brick": 0.588,
-    "concrete": 428.3992,
-    "metal": 158.2504,
-    "unpriced": 2.1796,
-    "wood": 111.1962
+    "concrete": 221.9147,
+    "metal": 122.7414,
+    "unpriced": 0.8933,
+    "wood": 24.2049
    }
   },
   "Restaurant": {

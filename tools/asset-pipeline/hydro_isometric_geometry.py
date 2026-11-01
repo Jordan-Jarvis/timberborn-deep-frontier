@@ -10,6 +10,18 @@ and the service terrace with its built-in walkways are gameplay and stay
 exactly as they were. The workshop on the terrace is one storey (layer 2 to
 3.84) under its plank gable roof (roof-variety pass: a real pitched roof, no
 dormer, no roof vent), so nothing rises above the dam cap.
+
+Shrunk again 2026-11-01 (user: "we need to shrink the buildings down even
+more"): 8x10x6 -> 4x6x6. The conduit, the dam cap (support surface at layer
+6), the gates, intakes, outlets and every water cell are unchanged. The
+downstream foundation, its terrace and the gabled workshop beside the
+conduit (tiles 4..8 x 4..10) are gone: a cast headwall now closes the
+casing's crown over the downstream lanes, and on it, behind the cap, an
+enclosed generator house and an open generator bay share a flat concrete
+roof whose top is layer 5 (the player-path deck). The generator turns to run
+downstream; the dam continuation beside the cap stays outside the footprint
+for the player's own dam blocks, as before. The workshop door went with the
+workshop (the turbine has no workers or entrance).
 """
 import math
 
@@ -118,35 +130,33 @@ def dam_cap(g):
     handwheel(g,(2.0,1.63,5.08),.38,'Y',IRON,IRON)
     g.box((2.0,1.83,2.74),(.51,.37,.43),IRON)
     gauge(g,2.0,1.61,2.75,.14,rim_material=IRON)
-    # Back pressure lines and removable inspection panels.
-    for x in (.55,3.45):
-        round_pipe(g,[(x,4.065,2.5),(x,4.065,4.85),
-                      (x,4.065,5.25),(2.0,4.065,5.25)],.055)
-        for z in (2.9,4.35):
-            g.box((x,4.05,z),(.22,.14,.11),IRON)
+    # (The back pressure lines and inspection panels on the y=4 face went in the
+    # 2026-11-01 shrink: the powerhouse now stands against that face.)
 
 
 def generator(g,parts):
-    # Exposed shaft/coupler carries the motion; housing and bearings stay still.
-    p=(3.82,1.36,2.78)
-    machinery_shell(g,p,[(-.76,.44),(-.61,.59),(.43,.59),(.64,.39)],'X',24,fastener_material=IRON)
-    for x in (3.13,4.27):
-        g.box((x,1.36,2.17),(.40,.95,.32),CIVIC_CONCRETE)
-        g.box((x,1.36,2.35),(.44,.99,.07),IRON)
-    # Seven cooling fins at twice the pitch (was fourteen), 24 sides like the
-    # shell, without the inner face that lies inside it.
-    for i in range(7):
-        x=3.3+i*.138
-        band(g,(x,1.36,2.78),.615,.032,.027,IRON,'X',24)
-    for y in (.91,1.81):
-        round_pipe(g,[(3.31,y,2.59),(3.31,y,3.30),(4.10,y,3.30)],.047)
-    rotor=Geometry('Hydro.GeneratorCoupling',(4.7,1.36,2.78))
-    rotor.cylinder((4.60,1.36,2.78),.14,.72,IRON,'X',12)
-    for x in (4.43,4.83):
-        rotor.cylinder((x,1.36,2.78),.29,.10,IRON,'X',16)
-    parts.append((rotor,'X',1))
-    g.box((4.91,1.36,2.35),(.15,.63,.65),IRON)
-    g.ring((4.91,1.36,2.78),.25,.12,.12,IRON,'X',16)
+    # In the open generator bay at the right of the powerhouse, its axis running
+    # downstream. The exposed shaft/coupler carries the motion; housing and
+    # bearings stay still.
+    p=(GEN_X,4.72,3.62)
+    machinery_shell(g,p,[(-.58,.34),(-.47,.46),(.33,.46),(.5,.3)],'Y',24,fastener_material=IRON)
+    for y in (4.4,5.0):
+        g.box((GEN_X,y,3.13),(.78,.3,.26),CIVIC_CONCRETE)
+        g.box((GEN_X,y,3.29),(.82,.34,.06),IRON)
+    # Five cooling fins, 24 sides like the shell, without the inner face.
+    for i in range(5):
+        band(g,(GEN_X,4.4+i*.13,3.62),.48,.03,.025,IRON,'Y',24)
+    for x in (GEN_X-.36,GEN_X+.36):
+        round_pipe(g,[(x,4.3,3.4),(x,4.3,4.05),(x,4.95,4.05)],.04)
+    rotor=Geometry('Hydro.GeneratorCoupling',(GEN_X,5.5,3.62))
+    rotor.cylinder((GEN_X,5.47,3.62),.11,.5,IRON,'Y',12)
+    for y in (5.33,5.63):
+        rotor.cylinder((GEN_X,y,3.62),.23,.08,IRON,'Y',16)
+    parts.append((rotor,'Y',1))
+    g.box((GEN_X,5.8,3.31),(.5,.12,.62),IRON)
+    g.ring((GEN_X,5.8,3.62),.2,.1,.13,IRON,'Y',16)
+
+
 def runner(parts):
     # A visible turbine rotor inside the downstream mouth, mechanically linked
     # by its own authored loop. Runtime will drive both from measured operation.
@@ -164,119 +174,51 @@ def runner(parts):
     parts.append((runner,'Y',1))
 
 
-# Workshop frame in powerhouse-local coordinates (+1, +4 to the native grid).
-# Post outer faces sit on the x=4, y=6 and y=9 tile edges with the cladding
-# 6 cm inside them. On the right the cladding itself lies on the x=7 edge, so
-# the door insert (tile x=6.5, filling 6..7) closes flush against the side
-# wall; those posts stand 4 cm proud. Bays are thirds of the frame, and every
-# window is centred in its bay between posts.
-WS_X0,WS_Y0,WS_X1,WS_Y1=3.10,2.10,5.94,4.90
-WS_TOP=3.84            # one storey on the layer-2 terrace; roof top on layer 4
-WS_DOOR_X=5.5          # native tile x=6.5, face on the y=6 edge
-WS_BAYS=3
+# Powerhouse (2026-11-01 second shrink): on a concrete headwall over the
+# downstream conduit (tiles 0..4 x 4..6), behind the dam cap's y=4 face. An
+# enclosed generator house on the left, the open generator bay on the right,
+# both under one flat concrete roof whose top is layer 5: the player-path deck.
+PH_Y0,PH_Y1=4.0,5.98     # the casing's last arch band stands 2 cm proud at y=6
+HEAD_TOP=3.0             # headwall top and powerhouse floor (layer 3)
+PH_TOP=4.84              # roof slab bottom; its top is layer 5
+WS_X0,WS_X1=.06,2.5      # enclosed generator house
+GEN_X=3.25               # generator axis in the open bay (x 2.5..4)
 
 
-def _bay_centres(a,b):
-    return [a+(b-a)*(i+.5)/WS_BAYS for i in range(WS_BAYS)]
+def headwall(g):
+    # Solid cast headwall closing the casing's crown over the downstream lanes;
+    # the lanes and the arch below it stay open (inner crown 2.02).
+    g.box((2.0,(PH_Y0+PH_Y1)/2,(2.05+HEAD_TOP)/2),(4.0,PH_Y1-PH_Y0,HEAD_TOP-2.05),CIVIC_CONCRETE)
+    for x in (.25,3.75):   # spandrel walls over the arch shoulders
+        g.box((x,(PH_Y0+PH_Y1)/2,(.36+2.05)/2),(.5,PH_Y1-PH_Y0,2.05-.36),CIVIC_CONCRETE)
+    for z in (2.3,2.75):
+        g.box((2.0,PH_Y1+.004,z),(3.85,.008,.012),IRON)
 
 
-def workshop(g):
-    front,side=_bay_centres(WS_X0,WS_X1),_bay_centres(WS_Y0,WS_Y1)
-    front_wall,right_wall,rear_wall=WS_Y0-.06,WS_X1+.06,WS_Y1+.06
-    framed_room(g,WS_X0,WS_Y0,WS_X1,WS_Y1,2,WS_TOP,WS_BAYS,
-                front_door=(WS_DOOR_X,1.0,1.0),infill=CIVIC_FORGED_PANEL)
-    g.include_component(hydro_workshop_door())
-    g.doorways.append({'name':'HydroWorkshopDoor','position':[WS_DOOR_X,WS_Y0-.10,2]})
-    window_y(g,front[0],front_wall,2.95,.8)
-    for y in (side[0],side[2]):
-        side_window(g,right_wall,y,2.95,.8)
-    for x in (front[0],front[2]):
-        window_y(g,x,rear_wall,2.95,.8,'back')
-    roof_bearing(g,WS_X0,WS_Y0,WS_X1,WS_Y1,WS_TOP,WS_TOP+.02)
-    # The eave outline lies on the workshop's tile edges (x=4..7, y=6..9),
-    # as before the compaction; 27 cm sheets.
-    gabled_roof(g,WS_X0-.11,WS_Y0-.11,WS_X1+.055,WS_Y1+.11,WS_TOP+.02,WS_TOP+.92,228,sheet=.27)
-    # (No roof props: every flat roof cell stays a roof deck, user 2026-10-30.)
-    # Door lamps: arms meet the cladding, lamps stay over the door path cell.
-    cage_lamp(g,WS_DOOR_X-.64,front_wall-.05,3.07)
-    cage_lamp(g,WS_DOOR_X+.38,front_wall-.05,3.07)
-    # Flush control cabinet under the first rear window, clear of the lane.
-    g.box((front[0],rear_wall-.015,2.71),(.57,.09,1.10),CIVIC_FORGED_PANEL)
-    # Cooling grille centred in the middle bay of the right wall.
-    g.box((right_wall+.005,side[1],2.86),(.10,.90,.80),IRON)
-    for i in range(8):
-        g.box((right_wall+.055,side[1],2.55+i*.085),(.035,.77,.035),IRON)
-    # Instrument loop and gauges framing the front window.
-    cx=front[0]
-    round_pipe(g,[(cx-.30,front_wall-.15,2.62),(cx-.30,front_wall-.15,3.55),
-                  (cx+.86,front_wall-.15,3.55),(cx+.86,front_wall-.15,2.6)],.047)
-    for x in (cx-.16,cx+.16):
-        gauge(g,x,front_wall-.21,3.38,.1,rim_material=IRON)
-    g.box((front[1],front_wall-.145,2.55),(.36,.29,.50),IRON)
-    gauge(g,front[1],front_wall-.31,2.60,.12,rim_material=IRON)
-
-
-def append_powerhouse(architecture,powerhouse,*,sideways,downstream):
-    """Place the authored subassembly and retain its named component ownership."""
-    existing={part['name'] for part in architecture.components}
-    if existing.intersection(part['name'] for part in powerhouse.components):
-        raise ValueError('Duplicate powerhouse component ownership')
-    base=len(architecture.vertices)
-    first_face=len(architecture.faces)
-    architecture.vertices.extend((x-sideways,y-downstream,z) for x,y,z in powerhouse.vertices)
-    architecture.faces.extend(tuple(base+i for i in f) for f in powerhouse.faces)
-    architecture.materials.extend(powerhouse.materials)
-    architecture.face_uvs.extend(powerhouse.face_uvs)
-    architecture.face_sources.extend(powerhouse.face_sources)
-    for part in powerhouse.components:
-        architecture.components.append({'name':part['name'],
-            'faceRange':[first_face+i for i in part['faceRange']]})
-    for door in powerhouse.doorways:
-        x,y,z=door['position']
-        architecture.doorways.append({**door,'position':[x+sideways,y+downstream,z]})
+def powerhouse(g):
+    framed_room(g,WS_X0,PH_Y0+.06,WS_X1,PH_Y1-.06,HEAD_TOP,PH_TOP,2,infill=CIVIC_FORGED_PANEL)
+    rear=PH_Y1-.02
+    for x in (WS_X0+(WS_X1-WS_X0)*.25,WS_X0+(WS_X1-WS_X0)*.75):
+        window_y(g,x,rear,3.95,.75,'back')
+    side_window(g,WS_X0-.02,5.0,3.95,.75,'left')
+    # Generator bay: two corner posts carry the roof; the bay stays open on its
+    # right and downstream sides so the generator and coupling read.
+    for y in (PH_Y0+.1,PH_Y1-.1):
+        g.box((3.9,y,(HEAD_TOP+PH_TOP)/2),(.16,.16,PH_TOP-HEAD_TOP),IRON)
+    g.box((3.9,(PH_Y0+PH_Y1)/2,PH_TOP-.08),(.14,PH_Y1-PH_Y0-.36,.12),IRON)
+    cage_lamp(g,WS_X1+.09,5.0,4.2)
+    # Flat concrete roof, open edge to edge: the turbine's player-path deck.
+    g.box((2.0,(PH_Y0+PH_Y1)/2,PH_TOP+.08),(4.0,PH_Y1-PH_Y0,.16),CIVIC_CONCRETE)
+    for z in (PH_TOP+.03,):
+        g.box((2.0,PH_Y1+.004,z),(3.9,.008,.012),IRON)
 
 
 def hydro(g,parts):
     rails=RailAssembly('HydroRails',cap_material=IRON)
     cast_conduit(g);dam_cap(g)
     runner(parts)
-    # The powerhouse is an explicit downstream subassembly. Its front is
-    # behind the dam's y=2..4 seal, leaving the wall continuation buildable.
-    # This is an authored rigid placement, never fitting or rescaling the mesh.
-    architecture=g
-    g=Geometry('Hydro.Powerhouse')
-    powerhouse_parts=[]
-    # Solid workshop foundation, with a layer-two walkable service terrace.
-    for x in range(3,7):
-        for y in range(6):
-            g.box((x+.5,y+.5,1),(.989,.989,2),CIVIC_CONCRETE)
-    for y,out in ((.0015,-1),(5.9985,1)):
-        for z in (.5,1.0,1.5):
-            g.box((5,y,z),(3.97,.012,.012),IRON)
-        for x in (3.25,4.5,5.5,6.75):
-            for z in (.28,1.72):g.cylinder((x,y+out*.0055,z),.035,.015,IRON,'Y',6)
-    # (The iron edge angles standing 4 cm proud along the open deck edges went in
-    # the 2026-10-31 roof pass: the terrace is a plain platform edge to edge.)
-    generator(g,powerhouse_parts);workshop(g)
-    # No terrace rails (2026-10-31 roof pass, user: no railings on the roofs, "like
-    # an actual platform where roads can connect"): paths run off the terrace onto
-    # a neighbouring turbine or platform at any edge.
-    # Flush service hatch does not obstruct the terrace or imply a second door:
-    # 4.5 mm proud, so the walking surface stays on the whole layer.
-    g.box((5.68,.58,2.00225),(.64,.64,.0045),IRON)
-    downstream=4.0
-    sideways=1.0
-    append_powerhouse(architecture,g,sideways=sideways,downstream=downstream)
-    for part,axis,speed in powerhouse_parts:
-        part.origin.x+=sideways
-        part.origin.y+=downstream
-        parts.append((part,axis,speed))
-    for rail in rails.meshes:
-        rail.vertices=[(x-sideways,y-downstream,z) for x,y,z in rail.vertices]
-    for run in rails.runs:
-        for panel in run['panels']:
-            panel['start'][0]+=sideways
-            panel['end'][0]+=sideways
-            panel['start'][1]+=downstream
-            panel['end'][1]+=downstream
+    headwall(g)
+    generator(g,parts);powerhouse(g)
+    # No terrace rails or roof props: paths run off the roof deck onto a
+    # neighbouring turbine or platform at any edge.
     return rails

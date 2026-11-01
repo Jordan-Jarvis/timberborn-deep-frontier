@@ -8,11 +8,14 @@ from industrial_layouts import layout,grid_lane,lane
 # deck (PlatformDeckSpec), no longer a built-in walkway. The turbine has no
 # workers and no enclosed door, so the deck has no door links; players lay
 # ordinary paths across it (and onto neighbouring turbines) as on any roof.
-TURBINE=layout([0,0,0],[8,10,6],[6,5,2],[],deck_mode='PlayerPlacedPaths')
-grid_lane(TURBINE,[(x,4,2) for x in range(4,8)])
-grid_lane(TURBINE,[(7,y,2) for y in range(4,10)])
-grid_lane(TURBINE,[(x,9,2) for x in range(4,8)])
-lane(TURBINE,[(6,4,2),(6,5,2)],[(6.5,4.5,2),(6.5,5.5,2)])
+# 2026-11-01 second shrink (8x10x6 -> 4x6x6): the foundation terrace beside the
+# conduit is gone; the deck is the powerhouse's flat roof over the downstream
+# conduit (tiles 0..4 x 4..6, top layer 5), beside the layer-6 dam cap.
+TURBINE=layout([0,0,0],[4,6,6],[0,4,5],[],deck_mode='PlayerPlacedPaths')
+grid_lane(TURBINE,[(x,4,5) for x in range(4)])
+grid_lane(TURBINE,[(x,5,5) for x in range(4)])
+grid_lane(TURBINE,[(0,4,5),(0,5,5)])
+grid_lane(TURBINE,[(3,4,5),(3,5,5)])
 # 2026-10-31 roof pass: the terrace has no rails, so no rail openings ('ports').
 TURBINE['interiorCells']=[]
 TURBINE['doorLinks']=[]

@@ -179,13 +179,13 @@ namespace DeepFrontier.Scripts {
         var cap=turbine.TransformCoordinates(new Vector3Int(capColumn.x,capColumn.y,capTop));
         Create("DoublePlatform.IronTeeth",cap.x,cap.y,cap.z);Create("Platform.IronTeeth",cap.x,cap.y,cap.z+2);
         Create("Path",cap.x,cap.y,cap.z+3);
-        // A stair flight climbs north to the Right7 edge's outside cell: one
+        // A stair flight climbs north to the Right5 edge's outside cell: one
         // stair per deck level, each on a platform stack, then a platform stack
         // with a path on the outside cell itself.
         Require(deck.Openings.Length==0,"Turbine terrace must have no rails (2026-10-31 roof pass)");
-        var rail=turbine.TransformCoordinates(Edge(turbine,"Right",7).Outside);
+        var rail=turbine.TransformCoordinates(Edge(turbine,"Right",5).Outside);
         int levels=rail.z-Anchor.z;
-        Require(levels>0,"Turbine Right7 edge "+rail+" is not above the fixture ground");
+        Require(levels>0,"Turbine Right5 edge "+rail+" is not above the fixture ground");
         for(int k=0;k<levels;k++) {
           int y=rail.y-levels+k;
           for(int z=Anchor.z;z<Anchor.z+k;z++)Create("Platform.IronTeeth",rail.x,y,z);
@@ -194,7 +194,7 @@ namespace DeepFrontier.Scripts {
         for(int z=Anchor.z;z<rail.z;z++)Create("Platform.IronTeeth",rail.x,rail.y,z);
         Create("Path",rail.x,rail.y,rail.z);
         // The terrace is a player-path deck (2026-10-30): the tested edge gets a path on its deck cell.
-        {var inside=turbine.TransformCoordinates(Edge(turbine,"Right",7).Inside);if(!_blocks.GetPathObjectAt(inside))Create("Path",inside.x,inside.y,inside.z);}
+        {var inside=turbine.TransformCoordinates(Edge(turbine,"Right",5).Inside);if(!_blocks.GetPathObjectAt(inside))Create("Path",inside.x,inside.y,inside.z);}
         // The shaft meets the first transput's horizontal face, under the edge's platform stack.
         var transput=turbine.GetComponent<TransputProviderSpec>().Transputs[0];
         var step=transput.Directions.ToString().Split(',').Select(d=>d.Trim()).Select(d=>
@@ -203,12 +203,12 @@ namespace DeepFrontier.Scripts {
         Require(step!=Vector3Int.zero,"Turbine transput "+transput.Coordinates+" has no horizontal face");
         var shaft=turbine.TransformCoordinates(transput.Coordinates+step);
         Create("PowerShaft.IronTeeth",shaft.x,shaft.y,shaft.z);
-        // A two-platform stack on a terrace deck cell: Front7's, which the
-        // lowered workshop (8x10x6 since 2026-10-30) leaves two clear layers above.
-        var stackLocal=Edge(turbine,"Front",7).Inside;
+        // A two-platform stack on a deck cell: Front1's on the powerhouse roof
+        // (4x6x6 since the 2026-11-01 second shrink), one layer under the size top.
+        var stackLocal=Edge(turbine,"Front",1).Inside;
         Require(!blocks[stackLocal]&&!blocks[stackLocal+Vector3Int.forward]&&
           (stackLocal.z+2>=spec.Size.z||!blocks[stackLocal+Vector3Int.forward*2]),
-          "Turbine Front7 deck cell "+stackLocal+" lacks two clear layers for the deck platform stack");
+          "Turbine Front1 deck cell "+stackLocal+" lacks two clear layers for the deck platform stack");
         var stack=turbine.TransformCoordinates(stackLocal);
         Create("Platform.IronTeeth",stack.x,stack.y,stack.z);Create("Platform.IronTeeth",stack.x,stack.y,stack.z+1);
         Create("Lever.IronTeeth",shaft.x+1,shaft.y+1,shaft.z);
@@ -271,7 +271,7 @@ namespace DeepFrontier.Scripts {
     }
     private void CheckConnections() {
       Require(_shaft.Graph==_building.GetComponent<MechanicalNode>().Graph,"Native shaft graph did not connect");
-      Port("Right",7,true);Port("Right",6,false);
+      Port("Right",5,true);Port("Right",4,false);
       Pass("shaft connects; paths join across the open terrace edge; native stairs and deck/cap platform stacks fit");
     }
     private void CheckGeneration(float minimum) {
@@ -298,12 +298,12 @@ namespace DeepFrontier.Scripts {
         .Select(e=>e.GetComponent<ControllableCharacter>()).First();
       _walker.GetComponent<Worker>().Unemploy();_walker.ChangeAnimation("BeaverAdult_idle");
       // From the foot of the stair flight (the ground cell before its first
-      // stair) over the terrace deck cells, walked as grid cells: the Right7
-      // edge cell and the far rear and front corners (Rear4, Front4).
-      var rail=_building.TransformCoordinates(Edge(_building,"Right",7).Outside);
+      // stair) over the terrace deck cells, walked as grid cells: the Right5
+      // edge cell and the far rear and front corners (Rear1, Front2).
+      var rail=_building.TransformCoordinates(Edge(_building,"Right",5).Outside);
       var foot=new Vector3Int(rail.x,rail.y-(rail.z-Anchor.z)-1,Anchor.z);
       _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(foot));
-      foreach(var (side,along) in new[]{("Right",7),("Rear",4),("Front",4)})
+      foreach(var (side,along) in new[]{("Right",5),("Rear",1),("Front",2)})
         _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(_building.TransformCoordinates(Edge(_building,side,along).Inside)));
       _destinations.Enqueue(NavigationCoordinateSystem.GridToWorld(foot));
       NextWalk();

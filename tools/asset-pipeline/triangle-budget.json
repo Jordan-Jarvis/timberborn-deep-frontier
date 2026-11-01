@@ -571,9 +571,9 @@
    "family": "hydro",
    "class": "grand",
    "target": 20000,
-   "finished": 11320,
-   "vertices": 24388,
-   "construction": 11320,
+   "finished": 5751,
+   "vertices": 11682,
+   "construction": 5751,
    "file": "outputs/hydro-integration/Data/Buildings/Power/ReinforcedHydroTurbine/ReinforcedHydroTurbine.IronTeeth.Model.timbermesh"
   },
   "Restaurant": {
