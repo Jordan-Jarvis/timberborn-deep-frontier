@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.8.1 (2026-10-31)
+
 ### Steel decks on legs
 - **New: Steel deck 3×3 and 5×5 on legs**, each 1, 2, 3 or 4 layers high (Paths → Steel structures). Point at a spot and the deck appears that high above it, with a steel column under each corner that reaches down to the first support: the ground (also under water), a platform or the roof of a building. Every leg finds its own height, so the deck stays level over slopes, terraces and water.
 - **One click places everything.** The preview shows the exact columns that will be built. Builders put up the columns first, then the deck. A leg can be up to 12 layers long; longer legs are two stacked columns.
