@@ -2,19 +2,19 @@
   "status": "Blender late-game art study; not exported or installed",
   "hero": "Barrel-vaulted assembly hall with riveted sliding doors ajar on a rocket stage",
   "footprint": [
-    7,
-    8
+    6,
+    6
   ],
-  "heightLayers": 9,
+  "heightLayers": 7,
   "boundsMin": [
     -0.0669,
     -0.29,
     -0.035
   ],
   "boundsMax": [
-    7.05,
-    8.05,
-    8.92
+    6.05,
+    6.05,
+    6.62
   ],
   "doors": [
     {
@@ -41,22 +41,22 @@
   "animationFps": 30,
   "nativeProps": [],
   "redicProps": [],
-  "faces": 2769,
+  "faces": 2485,
   "materialFaces": {
-    "BaseWood_DarkBrown.IronTeeth": 818,
+    "BaseWood_DarkBrown.IronTeeth": 716,
     "IrregularPlanks_DarkBrown.IronTeeth": 48,
-    "BaseMetal.IronTeeth": 1110,
+    "BaseMetal.IronTeeth": 1086,
     "RoofPlanks.IronTeeth": 28,
     "Details.IronTeeth": 90,
     "accent8": 60,
     "accent25": 26,
-    "Plaster_White.IronTeeth": 112,
-    "Plaster_Orange.IronTeeth": 93,
-    "IrregularPlanks_MetalForged.IronTeeth": 84,
-    "WindowsAtlas.IronTeeth": 478,
+    "Plaster_White.IronTeeth": 106,
+    "Plaster_Orange.IronTeeth": 81,
+    "IrregularPlanks_MetalForged.IronTeeth": 72,
+    "WindowsAtlas.IronTeeth": 350,
     "PaintedMetal.IronTeeth": 82,
-    "IrregularPlanks_Grey.IronTeeth": 48
+    "IrregularPlanks_Grey.IronTeeth": 36
   },
-  "sourceHash": "d00e2558097c95c848373ce34ffcdaf505588a950e7252ac532ac96916ba4075",
-  "artHash": "3b7eed39ce82d9fd1878a9ed8f67c8fd85ac90c4d6c4750df2cc1b31a20dd598"
+  "sourceHash": "3c45d763b50cd3b868b9819c5f667e67d5e3b18e04d66dd1c246ba73d792772b",
+  "artHash": "95565f4fb48ab698c5f44116f00269eccf089e9d60d9861b45cd661f6f0201e2"
 }

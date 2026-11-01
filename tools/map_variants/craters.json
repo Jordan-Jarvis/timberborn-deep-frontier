@@ -47,7 +47,6 @@
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 10 cells south-west of the start", "x": 120, "y": 32, "z": 6, "orientation": "Cw0", "margin": 1, "openSides": []},
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 32 cells west of the start", "x": 97, "y": 39, "z": 6, "orientation": "Cw90", "margin": 1, "openSides": ["S"]},
     {"template": "PrecisionMachineWorks.IronTeeth", "label": "Precision Machine Works, 41 cells west of the start", "x": 96, "y": 32, "z": 6, "orientation": "Cw270", "margin": 1, "openSides": []},
-    {"template": "RocketAssemblyHangar.IronTeeth", "label": "Rocket Assembly Hangar, 30 cells north of the start", "x": 123, "y": 69, "z": 4, "orientation": "Cw0", "margin": 1, "openSides": ["W"]},
     {"template": "TownPlaza.IronTeeth", "label": "Town Plaza, 102 cells west of the start", "x": 32, "y": 15, "z": 15, "orientation": "Cw90", "margin": 1, "openSides": []},
     {"template": "Greenhouse.IronTeeth", "label": "Greenhouse, 29 cells north of the start", "x": 135, "y": 69, "z": 5, "orientation": "Cw270", "margin": 1, "openSides": ["N"]},
     {"template": "Restaurant.IronTeeth", "label": "Restaurant, 26 cells south-east of the start", "x": 147, "y": 23, "z": 7, "orientation": "Cw180", "margin": 1, "openSides": ["E"]},

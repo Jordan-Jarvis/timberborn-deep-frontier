@@ -1448,18 +1448,8 @@
      1
     ],
     [
-     0,
-     5,
-     1
-    ],
-    [
      1,
      5,
-     1
-    ],
-    [
-     1,
-     6,
      1
     ]
    ],
@@ -1467,7 +1457,7 @@
     {
      "cell": [
       0,
-      6,
+      5,
       1
      ],
      "reason": "a registered room, walkway, deck or machinery cell of the building above"

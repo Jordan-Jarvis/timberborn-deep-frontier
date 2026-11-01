@@ -589,9 +589,9 @@
    "family": "lategame",
    "class": "grand",
    "target": 20000,
-   "finished": 5970,
-   "vertices": 10896,
-   "construction": 5970,
+   "finished": 5518,
+   "vertices": 10026,
+   "construction": 5518,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/RocketAssemblyHangar/RocketAssemblyHangar.IronTeeth.Model.timbermesh"
   },
   "SandstoneMasonryBlock": {

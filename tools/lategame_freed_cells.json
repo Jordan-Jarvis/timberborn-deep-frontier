@@ -116,15 +116,15 @@
     14
    ],
    "footprintAfter": [
-    7,
-    8,
-    9
+    6,
+    6,
+    7
    ],
    "gridOrigin": [
     0,
     3
    ],
-   "outsideCells": 88,
+   "outsideCells": 108,
    "insideCells": []
   },
   "RadioactiveWasteVault": {

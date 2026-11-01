@@ -964,28 +964,28 @@
   },
   "RocketAssemblyHangar": {
    "model": "Buildings/Metal/RocketAssemblyHangar/RocketAssemblyHangar.IronTeeth.Model",
-   "sha256": "0e8a07029b8c7bcfb6552512083ae567a045766e625eb9933c3f4bb41325fdb9",
+   "sha256": "8b64cf482157d4f305821b6f9214c03e5bc0d2d481329d9124425fefae304bc3",
    "areas": {
-    "BaseMetal.IronTeeth": 639.4448,
-    "BaseWood_DarkBrown.IronTeeth": 11.7434,
+    "BaseMetal.IronTeeth": 365.8557,
+    "BaseWood_DarkBrown.IronTeeth": 8.6382,
     "DFIndustrial08": 0.6869,
-    "DFIndustrial25": 0.16,
-    "Details.IronTeeth#metal": 14.5134,
-    "IrregularPlanks_DarkBrown.IronTeeth": 33.818,
-    "IrregularPlanks_Grey.IronTeeth": 37.5316,
-    "IrregularPlanks_MetalForged.IronTeeth": 77.5878,
-    "PaintedMetal.IronTeeth": 13.1651,
-    "Plaster_Orange.IronTeeth": 180.5448,
-    "Plaster_White.IronTeeth": 187.2309,
-    "RoofPlanks.IronTeeth": 104.2634,
-    "WindowsAtlas.IronTeeth": 9.5033
+    "DFIndustrial25": 0.1567,
+    "Details.IronTeeth#metal": 7.2499,
+    "IrregularPlanks_DarkBrown.IronTeeth": 29.078,
+    "IrregularPlanks_Grey.IronTeeth": 20.3968,
+    "IrregularPlanks_MetalForged.IronTeeth": 32.2458,
+    "PaintedMetal.IronTeeth": 7.0324,
+    "Plaster_Orange.IronTeeth": 113.6508,
+    "Plaster_White.IronTeeth": 154.5893,
+    "RoofPlanks.IronTeeth": 63.0817,
+    "WindowsAtlas.IronTeeth": 4.964
    },
    "families": {
-    "brick": 180.5448,
-    "concrete": 187.2309,
-    "metal": 744.7111,
-    "unpriced": 10.3502,
-    "wood": 187.3564
+    "brick": 113.6508,
+    "concrete": 154.5893,
+    "metal": 412.3839,
+    "unpriced": 5.8076,
+    "wood": 121.1947
    }
   },
   "SandstonePit": {

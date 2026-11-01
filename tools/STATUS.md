@@ -63,6 +63,12 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
   - Old saves: keeps its origin and stored goods; its entrance moves 1 tile (flipped: local x 3 -> 1, 2 tiles).
   - Maps: its flat sites and unmet notes left the 20 variants.
   - Review: `outputs/compaction/RadioactiveWasteVault-shrink2.png`.
+- **Rocket Assembly Hangar 7x8x9 -> 6x6x7** (`lategame_RocketAssemblyHangar.py`): barrel-vaulted hall on x 2..5.88 (spring 5.0, rise 1.1; forged lower tier to 2.8, orange upper tier), sliding doors (right leaf ajar, SLIDE_X) on the bay x 3.25..4.85, 1.6 deep, holding the first stage of the Launch Pad rocket at its new 0.55 scale (radius .47, top 3.3) on its dolly with the hoist hook above; workshop on tiles 0..2 x 0..6 under its timber deck (top layer 2), forge flue from the ground in its left wall (smoke at (0.14, 5.3, 3.3); `smog_content.json` follows the registration).
+  - Numbers (HEAD -> now): solid cells 387 -> 174; shaft faces 250 -> 145; no pipe ports (as before); platformable roof cells 13 -> 11 (1 excluded beside the flue, as before); hardpoints 41 -> 25; triangles 5,970 -> 5,518; same three animated parts. `lategame_freed_cells.json`: footprintAfter 6x6x7, outsideCells 88 -> 108.
+  - Cost: cell basis unchanged; material rule recomposes: Concrete 2,340 -> 3,135, Treated Plank 465 -> 490, Brick 2,515 -> 2,570, Alloy 265 -> 240, Machine Core 165 -> 160, Electronics 35 -> 30, Power Module 35 -> 30. Power 19,000 hp, workers, recipes unchanged.
+  - Old saves: same origin, door and entrance; a flipped hangar's entrance moves 1 tile (local x 5 -> 4). Anything on the workshop deck's old back row (y 6) must be rebuilt; shafts on removed walls disconnect.
+  - Maps: its flat sites and unmet notes left the 20 variants.
+  - Review: `outputs/compaction/RocketAssemblyHangar-shrink2.png`.
 
 ## Second shrink: works and mines (Claude Code session, 2026-11-01, mines shrink agent; Fertilizer Works, Cryogenic Tank Farm, Deep Mine, Sandstone and Limestone Quarries, Deep Drill; each building generated and validated in mirror `shrink-ind` on HEAD + that building, then committed; not built or run in game)
 
