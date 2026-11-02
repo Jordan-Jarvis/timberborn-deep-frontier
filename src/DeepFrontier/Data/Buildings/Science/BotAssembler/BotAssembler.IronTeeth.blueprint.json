@@ -3,5 +3,8 @@
     "ProductionRecipeIds#append": [
       "IndustrialBot"
     ]
+  },
+  "LabeledEntitySpec": {
+    "DescriptionLocKey": "Building.BotAssembler.DeepFrontierDescription"
   }
 }

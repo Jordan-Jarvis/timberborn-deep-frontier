@@ -2678,6 +2678,10 @@
     [
      "PowerModule",
      1
+    ],
+    [
+     "HighGradeSteel",
+     2
     ]
    ],
    "hours": 24,

@@ -839,6 +839,7 @@ DeepFrontier.Workforce.FatalAccident,{0} was killed in an industrial accident at
 DeepFrontier.Workforce.Bot.Wearing,Wearing out {0} times faster at the {1}.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Bot.Assigned,Assigned to the {1}: wears out {0} times faster inside.,Deep Frontier workforce risks
 Recipe.IndustrialBot.DisplayName,Industrial bot,Deep Frontier bot upkeep
+Building.BotAssembler.DeepFrontierDescription,"Assembles bots from a chassis, four limbs and a head. Industrial bots are the same bots, built three times faster from late-game parts, a power module and steel.",Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Panel.Title,Bot maintenance,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Panel.Bots,Bots assigned: {0}. Serviced: {1}.,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Panel.NoBots,No bots assigned: maintenance goods are stocked only while bots work here.,Deep Frontier bot upkeep

@@ -69,14 +69,15 @@
     }
   },
   "botAssembly": {
-    "$comment": "Industrial bot: a second product-less recipe at the vanilla Bot Assembler (same-path patch, tools/bot_upkeep_content.mjs). It builds the ordinary Iron Teeth bot (native BotFactory has a single BotSpec template) three times faster than the native 72 h recipe, from Precision Machine Works parts and a power module battery pack. vanillaRecipeIcon: With two recipes the assembler shows the recipe dropdown, which vanilla never does; Moddable Recipes' dropdown reads every recipe's Icon.Asset, and vanilla Recipe.Bot.IronTeeth has no Icon (NullReferenceException on selecting the assembler, player report 2026-11-02). A same-path patch gives the vanilla recipe the assembler's own icon.",
+    "$comment": "Industrial bot: a second product-less recipe at the vanilla Bot Assembler (same-path patch, tools/bot_upkeep_content.mjs). It builds the ordinary Iron Teeth bot (native BotFactory has a single BotSpec template) three times faster than the native 72 h recipe, from Precision Machine Works parts, a power module battery pack and steel. assemblerDescription replaces the Bot Assembler description (its own loc key, set by the same-path patch) so players can see what the second recipe does. vanillaRecipeIcon: With two recipes the assembler shows the recipe dropdown, which vanilla never does; Moddable Recipes' dropdown reads every recipe's Icon.Asset, and vanilla Recipe.Bot.IronTeeth has no Icon (NullReferenceException on selecting the assembler, player report 2026-11-02). A same-path patch gives the vanilla recipe the assembler's own icon.",
     "vanillaRecipeIcon": "Buildings/Science/BotAssembler/BotAssemblerIcon",
     "recipe": "IndustrialBot",
     "displayName": "Industrial bot",
     "hours": 24,
     "cyclesCapacity": 2,
     "icon": "Sprites/Goods/PowerModuleIcon",
-    "ingredients": [["BotChassis", 1], ["BotLimb", 4], ["BotHead", 1], ["PowerModule", 1]]
+    "ingredients": [["BotChassis", 1], ["BotLimb", 4], ["BotHead", 1], ["PowerModule", 1], ["HighGradeSteel", 2]],
+    "assemblerDescription": "Assembles bots from a chassis, four limbs and a head. Industrial bots are the same bots, built three times faster from late-game parts, a power module and steel."
   },
   "templates": {
     "Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.blueprint": { "danger": "Extreme", "workers": "specialists", "discipline": "Nuclear", "reason": "Reactor control: trained operators only; no bots in the control room." },

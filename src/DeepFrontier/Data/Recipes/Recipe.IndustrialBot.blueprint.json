@@ -20,6 +20,10 @@
       {
         "Id": "PowerModule",
         "Amount": 1
+      },
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 2
       }
     ],
     "Products": [],

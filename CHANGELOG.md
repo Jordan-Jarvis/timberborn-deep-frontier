@@ -4,6 +4,7 @@
 
 ### Fixes
 - **Selecting the Bot Assembler no longer freezes the game.** Deep Frontier adds a second recipe (Industrial bot), so the assembler shows a recipe list, and the base game's own bot recipe had no icon for that list (player report: a NullReferenceException and a soft-lock on selecting the Bot Assembler). The base recipe now uses the Bot Assembler's icon.
+- **Industrial bots need steel:** the Bot Assembler's Industrial bot recipe now also takes 2 steel, and the assembler's description says what the recipe is: the same bots, built three times faster from late-game parts, a power module and steel.
 
 ## 0.8.3 (2026-11-01)
 

@@ -30,6 +30,9 @@
 //   provider reads every recipe's Icon.Asset; the vanilla recipe has none
 //   (botAssembly.vanillaRecipeIcon gives it the assembler's icon). A whole
 //   blueprint, not a partial patch: every Recipes/ file is read as a full recipe.
+// - The assembler patch also points LabeledEntitySpec.DescriptionLocKey at
+//   Building.BotAssembler.DeepFrontierDescription (botAssembly.assemblerDescription),
+//   so the tooltip says what the industrial bot recipe is.
 // - DeepFrontier.BotUpkeep.* and DeepFrontier.WorkplaceUpkeep.* localization rows.
 // - The upkeep sentence (upkeepDescription) appended to each workplaceUpkeep
 //   building's description, as the connection step appends its pipe phrase;
@@ -128,6 +131,7 @@ export function checkBotUpkeepConfig({maintenance: m, assembly: a, upkeep: u}) {
     // Shown in the assembler's native recipe dropdown beside the vanilla recipe.
     if (!/^Sprites\/Goods\/\w+Icon$/.test(a.icon ?? '')) errors.push('botAssembly.icon must be a Sprites/Goods/<Name>Icon sprite');
     if (!a.vanillaRecipeIcon) errors.push('botAssembly.vanillaRecipeIcon is required (the vanilla bot recipe has no icon for the recipe dropdown)');
+    if (!a.assemblerDescription || a.assemblerDescription.length > 200) errors.push('botAssembly.assemblerDescription is required, at most 200 characters');
     if (!Array.isArray(a.ingredients) || !a.ingredients.length || a.ingredients.some((i) => !pair(i) || !Number.isInteger(i[1]) || i[1] <= 0)
         || new Set(a.ingredients.map((i) => i[0])).size !== a.ingredients.length)
       errors.push('botAssembly.ingredients must be distinct [good, positive integer] pairs');
@@ -157,7 +161,9 @@ export const upkeepSpec = ({upkeep}, id) => ({
 export const upkeepDescription = ({upkeep: u}, id) =>
   `Uses up ${listText(u.templates[id].map(([, , role]) => u.roles[role].description))}; stops without them.`;
 
-export const assemblerPatch = ({assembly: a}) => ({ManufactorySpec: {'ProductionRecipeIds#append': [a.recipe]}});
+export const ASSEMBLER_DESCRIPTION_KEY = 'Building.BotAssembler.DeepFrontierDescription';
+export const assemblerPatch = ({assembly: a}) => ({ManufactorySpec: {'ProductionRecipeIds#append': [a.recipe]},
+  LabeledEntitySpec: {DescriptionLocKey: ASSEMBLER_DESCRIPTION_KEY}});
 export const vanillaRecipeWithIcon = (template, {assembly: a}) => ({...template, RecipeSpec: {...template.RecipeSpec, Icon: a.vanillaRecipeIcon}});
 
 export function assemblyRecipe(template, {assembly: a}) {
@@ -181,7 +187,7 @@ export function assemblyRecipe(template, {assembly: a}) {
   };
 }
 
-export const localizationRows = ({assembly: a, upkeep: u}) => [[`Recipe.${a.recipe}.DisplayName`, a.displayName], ...Object.entries(TEXTS),
+export const localizationRows = ({assembly: a, upkeep: u}) => [[`Recipe.${a.recipe}.DisplayName`, a.displayName], [ASSEMBLER_DESCRIPTION_KEY, a.assemblerDescription], ...Object.entries(TEXTS),
   ...Object.entries(u.roles).flatMap(([role, t]) => [[roleKey(role, 'Name'), t.name], [roleKey(role, 'Status'), t.status], [roleKey(role, 'Status.Short'), t.short]])];
 
 export async function planBotUpkeep({root = defaultRoot, dataRoot = resolve(root, 'src', 'DeepFrontier', 'Data')} = {}) {
