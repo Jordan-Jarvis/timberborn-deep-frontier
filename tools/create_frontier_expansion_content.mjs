@@ -800,7 +800,10 @@ for (const id of Object.keys(BUILDING_TEXT)) if (!buildingDefinitions.some(([bui
   // Fisher Flag (fishery_building_content.mjs authorFisherFlag): the first step of the fish chain,
   // named and worded after the vanilla flags ("Employs a lumberjack that cuts trees.").
   rows.push(csvRow('Building.FisherFlag.DisplayName', 'Fisher Flag'));
-  rows.push(csvRow('Building.FisherFlag.Description', 'Employs a fisher who catches fresh fish from the shore, where the water is clean and deep enough.'));
+  // The numbers are the fishing rule itself (tools/aquaculture.json fisherFlag.spec).
+  const fishing = JSON.parse(await readFile(resolve(root, 'tools', 'aquaculture.json'), 'utf8')).fisherFlag.spec;
+  rows.push(csvRow('Building.FisherFlag.Description',
+    `Employs a fisher who catches fresh fish from the shore, where clean water at least ${fishing.MinimumDepth} m deep lies no more than ${fishing.MaximumReachDown} m below the bank.`));
   rows.push(csvRow('Building.FisherFlag.FlavorDescription', 'A quiet bank, a long wait and a longer story about the one that got away.'));
 }
 {

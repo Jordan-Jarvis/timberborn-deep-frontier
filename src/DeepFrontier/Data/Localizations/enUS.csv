@@ -168,7 +168,7 @@ Building.CryogenicTankFarm.DisplayName,Cryogenic Tank Farm,Deep Frontier
 Building.CryogenicTankFarm.Description,"Stores one fuel: liquid hydrogen or liquid oxygen. It takes fuel only while powered; without power the fuel starts to vent. Pipes: connect directly, no valve.",Deep Frontier
 Building.CryogenicTankFarm.FlavorDescription,"The coldest place in the colony, kept that way at great expense.",Deep Frontier
 Building.FisherFlag.DisplayName,Fisher Flag,Deep Frontier
-Building.FisherFlag.Description,"Employs a fisher who catches fresh fish from the shore, where the water is clean and deep enough.",Deep Frontier
+Building.FisherFlag.Description,"Employs a fisher who catches fresh fish from the shore, where clean water at least 0.5 m deep lies no more than 1.25 m below the bank.",Deep Frontier
 Building.FisherFlag.FlavorDescription,"A quiet bank, a long wait and a longer story about the one that got away.",Deep Frontier
 Building.SmogScrubber.DisplayName,Smog Scrubber,Deep Frontier
 Building.SmogScrubber.Description,Cleans smog out of the air around it while powered. No workers.,Deep Frontier
