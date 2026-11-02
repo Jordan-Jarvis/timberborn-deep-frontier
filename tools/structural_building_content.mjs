@@ -232,8 +232,13 @@ function bridgePath(v,span) {
 // Localization for src/DeepFrontier/Scripts/AnchoredDecks (AnchoredDeckLoc).
 export const ANCHORED_DECK_ROWS=[
   ['DeepFrontier.AnchoredDeck.RequiresAnchor',
-   'Must hang from the side of a reinforced dam block, level with its top. Point at the top of the dam block to place it.'],
+   'Must hang from the side of a Reinforced Dam Block, level with its top. Point at the top of the dam block to place it.'],
 ];
+// Each catalog structure carries its flavor line (size variants of one family share it).
+export function flavorOf(b) {
+  if(typeof b.flavor!=='string'||!b.flavor)throw new Error(`structural_content.json ${b.id} needs its flavor line`);
+  return b.flavor;
+}
 
 // Steel decks on legs (catalog.legDecks; docs/platforms-design.md, slice 2):
 // placement tools that are never entities. SteelDeckPlacer (C#,
@@ -421,7 +426,7 @@ export async function structuralBlueprints() {
     const rows=[
       [`Building.${b.id}.DisplayName`,b.name],
       [`Building.${b.id}.Description`,b.description],
-      [`Building.${b.id}.FlavorDescription`,'Room for the next layer of the colony.'],
+      [`Building.${b.id}.FlavorDescription`,flavorOf(b)],
     ];
     // The anchor rule's placement message ships once, with the first anchor.
     if(b===anchors[0])rows.push(...ANCHORED_DECK_ROWS);

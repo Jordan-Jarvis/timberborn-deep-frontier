@@ -30,7 +30,7 @@ export const MAIN_SHARE = 0.3;
 export const CENTRE_REACH = 1;
 // PowerConnectionLoc (Scripts/PowerConnectionStatus.cs).
 export const POWER_LOC = {
-  'DeepFrontier.Power.Status.NotConnected': 'Not connected to a power source. Connect it to a generator with shafts or power lines.',
+  'DeepFrontier.Power.Status.NotConnected': 'Not connected to a power source. Connect it to a generator with power shafts or power lines.',
   'DeepFrontier.Power.Status.NotConnected.Short': 'Not connected to power',
 };
 export const LOCALIZATION_FILE = 'Localizations/enUS.csv';

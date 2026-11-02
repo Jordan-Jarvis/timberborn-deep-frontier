@@ -1,6 +1,6 @@
 {
   "id": "ReinforcedHydroTurbine",
-  "name": "Reinforced hydroelectric turbine",
+  "name": "Reinforced Hydroelectric Turbine",
   "status": "Installed; native high-head main 100 and fresh-process reload 101 passed. Two wet outlet cells, 3 m³/s total and 40,000 hp maximum (9,600 hp when tested). Extended hydraulics and pump-loop balance pending.",
   "size": [4, 6, 6],
   "science": 8000,
@@ -11,6 +11,6 @@
   "maxGeneratingHead": 16,
   "animationSpeedMultiplier": 4,
   "loopingSound": "Gristmill",
-  "description": "A dam outlet that makes power from the water flowing through it. Set the flow in its panel; more flow and a higher drop give more power.",
+  "description": "A dam outlet that makes power from the water flowing through it: build it into a dam with its intake upstream. More flow and a higher drop give more power.",
   "balanceStatus": "ratedHp is the maximum, at maxDischarge and maxGeneratingHead; each lane makes ratedHp / (maxDischarge x maxGeneratingHead) = 833.33 hp per m³/s per layer of head (200 before the 2026-10-29 buff from 9,600 to 40,000 hp; discharge and head limits unchanged): 37,500 hp at 3 m³/s combined discharge and 15 layers of upstream-to-downstream head; 40,000 hp maximum at 16 layers. Each water lane receives half the total discharge limit. The requested coefficient exceeds the idealized Timber Pipes pump energy bound; actual dependency pump-loop balance remains unresolved."
 }

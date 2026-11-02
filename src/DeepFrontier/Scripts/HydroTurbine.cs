@@ -200,8 +200,8 @@ namespace DeepFrontier.Scripts {
       AvailableHead=ActualFlow>0?AvailableHead/ActualFlow:Mathf.Max(UpstreamHeight-DownstreamHeight,0);
       if(_gateClosed) {ActualFlow=0;SetOutput(0);State=_pausable.Paused?"Paused":"Closed";}
       else if(!intakeWet) {SetOutput(0);State="Dry intake";}
-      else if(AvailableHead<=0) {SetOutput(0);State="No forward water head";}
-      else if(ActualFlow<=0) {SetOutput(0);State="No forward discharge";}
+      else if(AvailableHead<=0) {SetOutput(0);State="No drop: the outlet water is as high as the intake";}
+      else if(ActualFlow<=0) {SetOutput(0);State="No water flowing through";}
       else {SetOutput(hp);State="Generating";}
     }
     private void SetOutput(float hp) {

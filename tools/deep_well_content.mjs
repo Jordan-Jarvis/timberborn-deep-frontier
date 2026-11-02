@@ -62,11 +62,11 @@ const hp = (value) => value.toLocaleString('en-US');
 const drought = CONFIG.drought;
 // The drought rule as players read it in the panel, and its one-clause summary
 // in the building description (the tooltip stays vanilla-short).
-export const DROUGHT_RULE = `In a drought it runs only on its full ${hp(drought.powerInputHp)} hp, at any boost, and drives the source at most ${drought.maxBoost}×; short of full power it stops and the source dries up like any other.`;
+export const DROUGHT_RULE = `In a drought it runs only on its full ${hp(drought.powerInputHp)} hp, at any boost, and drives the source at most ${drought.maxBoost} times as strong; short of full power it stops and the source dries up like any other.`;
 export const DROUGHT_SUMMARY = `In a drought it needs ${hp(drought.powerInputHp)} hp or the source dries up.`;
 export const LOCALIZATION = [
   [`Building.${ID}.DisplayName`, 'Deep Well'],
-  [`Building.${ID}.Description`, `Place its drill over a water source, seep or badwater source to make it flow up to ${CONFIG.maxBoost} times stronger. ${DROUGHT_SUMMARY}`],
+  [`Building.${ID}.Description`, `Build its drill over a water source, seep or badwater source to make it flow up to ${CONFIG.maxBoost} times stronger. It uses steel as drill bits. ${DROUGHT_SUMMARY}`],
   [`Building.${ID}.FlavorDescription`, 'When the river runs dry, drill deeper.'],
   ['DeepFrontier.DeepWell.Placement.NoSource', 'The drill must stand over a water source, water seep or badwater source.'],
   ['DeepFrontier.DeepWell.Placement.SourceTaken', 'Another Deep Well already drives this water source.'],
@@ -75,16 +75,16 @@ export const LOCALIZATION = [
   ['DeepFrontier.DeepWell.Status.NoDrillBits.Short', 'No drill bits'],
   ['DeepFrontier.DeepWell.Status.NoSource', 'The water source under the drill is gone.'],
   ['DeepFrontier.DeepWell.Status.NoSource.Short', 'No water source'],
-  ['DeepFrontier.DeepWell.Panel.Title', 'Deep well'],
+  ['DeepFrontier.DeepWell.Panel.Title', 'Deep Well'],
   ['DeepFrontier.DeepWell.Panel.Boost', 'Source boost'],
-  ['DeepFrontier.DeepWell.Panel.BoostValue', '{0}×'],
+  ['DeepFrontier.DeepWell.Panel.BoostValue', '{0}x'],
   ['DeepFrontier.DeepWell.Panel.ShutOffDuringTide', 'Shut the source off during the radioactive tide'],
   ['DeepFrontier.DeepWell.Panel.Demand', 'Power at this boost: {0} hp'],
   ['DeepFrontier.DeepWell.Panel.DrillBits', 'Drill bits: {0} per hour, {1} hours in stock'],
   ['DeepFrontier.DeepWell.Panel.Source', 'Source strength: {0} set, {1} now'],
   ['DeepFrontier.DeepWell.Panel.Seep', 'A seep: while the well runs it pours like a normal source.'],
   ['DeepFrontier.DeepWell.Panel.Drought', DROUGHT_RULE],
-  ['DeepFrontier.DeepWell.Panel.Capped', `Limited by the source maximum of ${CONFIG.maxWaterSourceStrengthPerCell} per cell.`],
+  ['DeepFrontier.DeepWell.Panel.Capped', `Capped: a water source cannot be stronger than ${CONFIG.maxWaterSourceStrengthPerCell} per tile.`],
   ['DeepFrontier.DeepWell.State.UnderConstruction', 'Under construction.'],
   ['DeepFrontier.DeepWell.State.NoSource', 'No water source under the drill.'],
   ['DeepFrontier.DeepWell.State.Paused', 'Paused: the source flows as normal.'],
@@ -93,8 +93,8 @@ export const LOCALIZATION = [
   ['DeepFrontier.DeepWell.State.NoDrillBits', 'Waiting for drill bits: the source flows as normal.'],
   ['DeepFrontier.DeepWell.State.NoPower', 'No power: the source flows as normal.'],
   ['DeepFrontier.DeepWell.State.DroughtNoPower', `Drought: short of its full ${hp(drought.powerInputHp)} hp, so the source is dry. Pause the well to free the power.`],
-  ['DeepFrontier.DeepWell.State.Boosting', 'Driving the source at {0}×.'],
-  ['DeepFrontier.DeepWell.State.DroughtBoosting', `Drought: keeping the source flowing at {0}× (at most ${drought.maxBoost}×).`],
+  ['DeepFrontier.DeepWell.State.Boosting', 'Driving the source at {0}x its strength.'],
+  ['DeepFrontier.DeepWell.State.DroughtBoosting', `Drought: keeping the source flowing at {0}x its strength (at most ${drought.maxBoost}x).`],
 ];
 
 function removeSpecs(value, keys) {

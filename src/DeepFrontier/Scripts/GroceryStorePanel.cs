@@ -17,7 +17,7 @@ namespace DeepFrontier.Scripts {
     private Label _staff,_assortment,_service;
     public GroceryStorePanel(InformationalRowsFactory inventoryRows) {_inventoryRows=inventoryRows;}
     protected override void InitializePanel() {
-      panel.AddGameLabel("Grocery store",bold:true);
+      panel.AddGameLabel("Grocery Store",bold:true);
       _staff=panel.AddGameLabel();_assortment=panel.AddGameLabel();
       _service=panel.AddGameLabel();_service.style.whiteSpace=WhiteSpace.Normal;
       _stockRoot=new VisualElement();panel.Add(_stockRoot);

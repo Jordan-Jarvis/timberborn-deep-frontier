@@ -110,7 +110,7 @@ namespace DeepFrontier.Scripts {
     private string State() {
       if(!component.Enabled)return "Under construction";
       if(component.GetComponent<PausableBuilding>().Paused)return "Paused";
-      if(!component.GetComponent<MechanicalBuilding>().ActiveAndPowered)return "Requires shaft power";
+      if(!component.GetComponent<MechanicalBuilding>().ActiveAndPowered)return "Needs power";
       if(!component.GetComponent<BlockableObject>().IsUnblocked)return "Building blocked — check its warnings";
       if(component.Workplace.NumberOfAssignedWorkers==0)return "Waiting for staff";
       if(!component.StaffOnDuty)return "Closed outside working hours";

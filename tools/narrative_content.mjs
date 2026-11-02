@@ -77,14 +77,14 @@ export const STAGES = [
       targets: [T('PublicHealthLab'), T('WaterTreatmentPlant'), T('DeepDrill'), T('ChemicalWorks')],
       variants: {
         [T('PublicHealthLab')]: "The health lab's first badwater samples were meant to help the sick. The chemists came back with puzzled faces and a very long list of things that should not be in a river.",
-        [T('WaterTreatmentPlant')]: "The treatment plant's first filter cakes came out of the press the wrong colour. The exact same wrong colour, every single time.",
+        [T('WaterTreatmentPlant')]: "The treatment plant's first filter cakes came out of the press the wrong color. The exact same wrong color, every single time.",
         [T('DeepDrill')]: 'The drill crew brought up a core with something round and hollow inside it: a pipe, far older than the colony and far too big for beavers.',
         [T('ChemicalWorks')]: 'The chemists who turn badwater into feedstock noticed that it splits the same way, batch after batch, like a recipe someone followed carefully.',
       }}]},
   {id: 'UnderTheValley', science: 1000,
     title: 'Under the Valley',
-    objective: 'Reach the deep sector: refine 20 deep iron at a Deep Processor.',
-    hint: 'The Deep Drill brings up deep ore from a deep ore source; the Deep Processor turns ore and water into deep iron, coal, crude oil and uranium ore.',
+    objective: 'Reach the deep sector: refine 20 deep iron at a Deep Ore Processor.',
+    hint: 'The Deep Drill brings up deep ore from a Deep Ore Source; the Deep Ore Processor turns deep ore into deep iron, coal, crude oil and uranium ore.',
     story: [
       'The deep sector is not empty. Below the old riverbed run tunnels lined with enormous pipes, all of them stamped with the same three letters, VWA, and all of them heading upriver.',
       'Painted on one pipe, with increasing underlining: NOT FOR DRINKING. Someone long ago took that very seriously.',
@@ -92,23 +92,23 @@ export const STAGES = [
     requirements: [{kind: 'GoodProduced', amount: 20, label: 'Deep iron refined', targets: ['DeepAlloy']}]},
   {id: 'WhatTheWaterCarries', science: 1500,
     title: 'What the Water Carries',
-    objective: 'Trace what the water carries: purify 80 pure water and make 10 chemical.',
-    hint: 'Water Treatment Plants make pure water from water and filter media. Chemical Works make chemical from crude oil and extract (the Centrifuge distils extract from badwater), or from the treatment plant\'s brine.',
+    objective: 'Trace what the water carries: make 80 pure water and 10 chemicals.',
+    hint: 'Water Treatment Plants make pure water from water and filter media. Chemical Works make chemicals from crude oil and extract (the Centrifuge distills extract from badwater), or from the treatment plant\'s concentrated waste.',
     story: [
       'Side by side, the filter residue and the chemical feedstock tell the same story. Badwater is a mixture: fine grit from deep rock, a stubborn green dye and a dozen compounds nothing in nature bothers to make.',
       'It is not a disease. It is runoff. Somewhere upriver, something is still leaking what the old deep pipes once carried, and the colony is going to find out what.',
     ],
     requirements: [
-      {kind: 'GoodProduced', amount: 80, label: 'Pure water purified', targets: ['PureWater']},
-      {kind: 'GoodProduced', amount: 10, label: 'Chemical made', targets: ['Chemical']},
+      {kind: 'GoodProduced', amount: 80, label: 'Pure water made', targets: ['PureWater']},
+      {kind: 'GoodProduced', amount: 10, label: 'Chemicals made', targets: ['Chemical']},
     ]},
   {id: 'OpenTheRuins', science: 2000,
     title: 'Open the Ruins',
     objective: 'Open the human ruins: recover 6 artifacts at an Archive Excavation.',
-    hint: 'The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. Any Human Record Cache on the map can be surveyed by a nearby excavation for extra artifacts.',
+    hint: `The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. An excavation within ${CACHE.spec.SurveyRadius} tiles of a Human Record Cache also surveys it for extra artifacts.`,
     story: [
       'The first finds are small and baffling: a hard hat big enough to bathe a kit in, a mug reading WORLD\'S OKAYEST ENGINEER, and a sign that says HOLDING STATION 3 - AUTHORIZED PERSONNEL ONLY.',
-      'Underneath, in smaller letters: UNAUTHORIZED PERSONNEL ALSO ONLY. The humans, it turns out, had a sense of humour. They also had sealed data drives, which the excavation crews are now carefully drying out.',
+      'Underneath, in smaller letters: UNAUTHORIZED PERSONNEL ALSO ONLY. The humans, it turns out, had a sense of humor. They also had sealed data drives, which the excavation crews are now carefully drying out.',
     ],
     requirements: [{kind: 'GoodProduced', amount: 6, label: 'Artifacts recovered', targets: ['RecoveredArtifact']}]},
   {id: 'TheArchiveWakes', science: 3000,
@@ -137,7 +137,7 @@ export const STAGES = [
   {id: 'EyesAbove', science: 0,
     title: 'Eyes Above',
     objective: 'Launch the Orbital Observatory from a Launch Pad.',
-    hint: 'A launch needs airframes, propulsion, guidance computers, telemetry and liquid hydrogen and oxygen. A staffed Mission Control lowers the risk. Nuclear power helps but is not required.',
+    hint: 'A launch needs rocket airframes, propulsion packages, guidance computers, recovered telemetry, liquid hydrogen and liquid oxygen, and flight engineers from a Technical School to staff the pad. A staffed Mission Control lowers the risk. Nuclear power helps but is not required.',
     story: [
       'Laid over the Authority\'s maps, the orbital images settle the question. Every badwater spring in the valley sits on the line of an old pipe, and every pipe leads back to the Holding.',
       'The badtides line up too: they arrive on the same schedule the last shift set for the flush valves. The humans never turned the Holding off. There was simply nobody left to give further notice.',
@@ -181,9 +181,9 @@ export const DISCOVERIES = [
     requirements: [{kind: 'BuildingFinished', amount: 1, label: 'Hospital finished', targets: [T('Hospital')]}]},
   {id: 'CleanerThanTheRiver', science: 250,
     title: 'Cleaner Than the River',
-    objective: 'Purify 500 pure water.',
+    objective: 'Make 500 pure water.',
     story: ['Five hundred barrels of water cleaner than the river has been in living memory. The treatment crews have started tasting it competitively.'],
-    requirements: [{kind: 'GoodProduced', amount: 500, label: 'Pure water purified', targets: ['PureWater']}]},
+    requirements: [{kind: 'GoodProduced', amount: 500, label: 'Pure water made', targets: ['PureWater']}]},
   {id: 'HoldingOurOwn', science: 250,
     title: 'Holding Our Own',
     objective: 'Finish a Radioactive Waste Vault.',
@@ -191,9 +191,9 @@ export const DISCOVERIES = [
     requirements: [{kind: 'BuildingFinished', amount: 1, label: 'Radioactive Waste Vault finished', targets: [T('RadioactiveWasteVault')]}]},
   {id: 'CleanHands', science: 250,
     title: 'Clean Hands',
-    objective: 'Decontaminate water once at a Radioactive Waste Refinery.',
+    objective: 'Clean contaminated water once at a Radioactive Waste Refinery.',
     story: ['The first barrel of contaminated water made drinkable again. It is a small barrel, and the colony is very proud of it.'],
-    requirements: [{kind: 'RecipeCompleted', amount: 1, label: 'Water decontaminated', targets: ['DecontaminateWater']}]},
+    requirements: [{kind: 'RecipeCompleted', amount: 1, label: 'Contaminated water cleaned', targets: ['DecontaminateWater']}]},
   ...[
     ['CacheRoster', 'Record Cache: Shift Roster', 'A shift roster from Holding Station 3. The names have faded, but one column, headed BROUGHT SNACKS, is ticked every single day by the same person.'],
     ['CacheDrawing', "Record Cache: A Child's Drawing", 'A drawing of the river, a sun, a very tall house and a small round animal with a flat tail. The label underneath says FRIEND.'],
@@ -224,7 +224,7 @@ export const ENDINGS = [
     description: 'Guide future settlers: clean-water maps, treatment designs and the safe routes the colony learned, so others can build where the land has healed.',
     epilogue: [
       'The beacon does not ask anyone to come. It simply explains, very clearly, where the water is clean, how to keep it that way and which roots are the tastiest.',
-      'Somewhere, someday, a small band of travellers will follow it over the ridge and find a valley already waiting for them.',
+      'Somewhere, someday, a small band of travelers will follow it over the ridge and find a valley already waiting for them.',
     ]},
 ];
 
@@ -264,8 +264,8 @@ export const UI_ROWS = [
   ['Narrative.Cache.WaitingForStorage', 'Survey complete: handing over records as the excavation has storage space ({0} of {1}).'],
   ['Narrative.Cache.Reward', 'Survey reward: {0} {1} and a journal record. Demolishing it before the survey loses its records.'],
   ['Building.HumanRecordCache.DisplayName', 'Human Record Cache'],
-  ['Building.HumanRecordCache.Description', `Sealed human records. Build an Archive Excavation within ${CACHE.spec.SurveyRadius} tiles to survey it for ${CACHE.spec.RewardAmount} artifacts and a journal entry; demolishing it destroys them.`],
-  ['Building.HumanRecordCache.FlavorDescription', 'Labelled, in three languages: DO NOT OPEN. Open carefully.'],
+  ['Building.HumanRecordCache.Description', `Sealed human records. Build an Archive Excavation within ${CACHE.spec.SurveyRadius} tiles to survey it for ${CACHE.spec.RewardAmount} recovered artifacts and a journal entry; demolishing it destroys them.`],
+  ['Building.HumanRecordCache.FlavorDescription', 'Labeled, in three languages: DO NOT OPEN. Open carefully.'],
 ];
 
 const stageKey = (kind, id, suffix) => `Narrative.${kind}.${id}.${suffix}`;

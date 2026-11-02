@@ -1,19 +1,19 @@
 ID,Text,Comment
 Building.DeepDrill.DisplayName,Deep Drill,Deep Frontier
-Building.DeepDrill.Description,Drills deep ore out of a nearby Deep Ore Source until the deposit runs out. Wears out metal block drill bits; stops without them. Pipes: valve set to Inlet.,Deep Frontier
-Building.DeepDrill.FlavorDescription,The first boring machine turns a finite deposit into a surface supply chain.,Deep Frontier
+Building.DeepDrill.Description,Draws deep ore from Deep Ore Sources in its district until they run out. Uses up metal blocks as drill bits; stops without them. Pipes: valve set to Fill.,Deep Frontier
+Building.DeepDrill.FlavorDescription,The first machine to bore into the deep sector. It will not be the last.,Deep Frontier
 Building.DeepMine.DisplayName,Deep Mine,Deep Frontier
-Building.DeepMine.Description,Mines deep ore without end. Build it over a Deep Ore Vein. Wears out steel drill bits and concrete shaft lining; stops without them. Pipes: valve set to Inlet.,Deep Frontier
+Building.DeepMine.Description,Mines deep ore without end. Build it over a Deep Ore Vein. Uses up steel as drill bits and concrete as shaft lining; stops without them. Pipes: valve set to Fill.,Deep Frontier
 Building.DeepMine.FlavorDescription,The vein is endless; the power bill is not.,Deep Frontier
 Building.DeepProcessor.DisplayName,Deep Ore Processor,Deep Frontier
-Building.DeepProcessor.Description,"Refines deep ore into deep iron, coal, crude oil and uranium ore. Pipes: valves set to Inlet and Outlet.",Deep Frontier
+Building.DeepProcessor.Description,"Refines deep ore into deep iron, coal, crude oil and uranium ore. Pipes: valves set to Fill and Extract.",Deep Frontier
 Building.DeepProcessor.FlavorDescription,The ore is useless until the surface factory learns how to tame it.,Deep Frontier
 Building.DeepOreSource.DisplayName,Deep Ore Source,Deep Frontier
-Building.DeepOreSource.Description,"A finite deposit of deep ore for a Deep Drill built nearby. In the map editor, fill it with deep ore.",Deep Frontier
+Building.DeepOreSource.Description,A finite deposit of deep ore. Deep Drills in the same district draw from it until it is empty.,Deep Frontier
 Building.DeepOreSource.FlavorDescription,"Once it is dug out, it is gone.",Deep Frontier
 Building.DeepOreVein.DisplayName,Deep Ore Vein,Deep Frontier
 Building.DeepOreVein.Description,An endless vein of deep ore. Build a Deep Mine over it.,Deep Frontier
-Building.DeepOreVein.FlavorDescription,"This geological seam is inexhaustible, but reaching it requires an industrial mine.",Deep Frontier
+Building.DeepOreVein.FlavorDescription,It never runs out. Reaching it is the hard part.,Deep Frontier
 Good.DeepOre.DisplayName,Deep ore,Deep Frontier
 Good.DeepOre.PluralDisplayName,Deep ore,Deep Frontier
 Good.DeepAlloy.DisplayName,Deep iron,Deep Frontier
@@ -21,23 +21,23 @@ Good.DeepAlloy.PluralDisplayName,Deep iron,Deep Frontier
 Good.Coal.DisplayName,Coal,Deep Frontier
 Good.Coal.PluralDisplayName,Coal,Deep Frontier
 Good.Chemical.DisplayName,Chemical,Deep Frontier
-Good.Chemical.PluralDisplayName,Chemical,Deep Frontier
-Good.RecoveredArtifact.DisplayName,Recovered Artifact,Deep Frontier
-Good.RecoveredArtifact.PluralDisplayName,Recovered Artifact,Deep Frontier
+Good.Chemical.PluralDisplayName,Chemicals,Deep Frontier
+Good.RecoveredArtifact.DisplayName,Recovered artifact,Deep Frontier
+Good.RecoveredArtifact.PluralDisplayName,Recovered artifacts,Deep Frontier
 Good.Fertilizer.DisplayName,Fertilizer,Deep Frontier
 Good.Fertilizer.PluralDisplayName,Fertilizer,Deep Frontier
-Good.FreshFish.DisplayName,Fresh Fish,Deep Frontier
-Good.FreshFish.PluralDisplayName,Fresh Fish,Deep Frontier
-Good.JuvenileFish.DisplayName,Juvenile Fish,Deep Frontier
-Good.JuvenileFish.PluralDisplayName,Juvenile Fish,Deep Frontier
-Good.FishOil.DisplayName,Fish Oil,Deep Frontier
-Good.FishOil.PluralDisplayName,Fish Oil,Deep Frontier
-Good.CannedFish.DisplayName,Canned Fish,Deep Frontier
-Good.CannedFish.PluralDisplayName,Canned Fish,Deep Frontier
+Good.FreshFish.DisplayName,Fresh fish,Deep Frontier
+Good.FreshFish.PluralDisplayName,Fresh fish,Deep Frontier
+Good.JuvenileFish.DisplayName,Juvenile fish,Deep Frontier
+Good.JuvenileFish.PluralDisplayName,Juvenile fish,Deep Frontier
+Good.FishOil.DisplayName,Fish oil,Deep Frontier
+Good.FishOil.PluralDisplayName,Fish oil,Deep Frontier
+Good.CannedFish.DisplayName,Canned fish,Deep Frontier
+Good.CannedFish.PluralDisplayName,Canned fish,Deep Frontier
 Good.Medicine.DisplayName,Medicine,Deep Frontier
 Good.Medicine.PluralDisplayName,Medicine,Deep Frontier
-Good.SweetBerryCake.DisplayName,Sweet Berry Cake,Deep Frontier
-Good.SweetBerryCake.PluralDisplayName,Sweet Berry Cake,Deep Frontier
+Good.SweetBerryCake.DisplayName,Sweet berry cake,Deep Frontier
+Good.SweetBerryCake.PluralDisplayName,Sweet berry cakes,Deep Frontier
 Good.HighGradeSteel.DisplayName,Steel,Deep Frontier
 Good.HighGradeSteel.PluralDisplayName,Steel,Deep Frontier
 Good.Alloy.DisplayName,Alloy,Deep Frontier
@@ -46,197 +46,158 @@ Good.Polymer.DisplayName,Polymer,Deep Frontier
 Good.Polymer.PluralDisplayName,Polymer,Deep Frontier
 Good.Lubricant.DisplayName,Lubricant,Deep Frontier
 Good.Lubricant.PluralDisplayName,Lubricant,Deep Frontier
-Good.MachineCore.DisplayName,Machine Core,Deep Frontier
-Good.MachineCore.PluralDisplayName,Machine Core,Deep Frontier
-Good.PowerModule.DisplayName,Power Module,Deep Frontier
-Good.PowerModule.PluralDisplayName,Power Module,Deep Frontier
-Good.FilterMedia.DisplayName,Filter Media,Deep Frontier
-Good.FilterMedia.PluralDisplayName,Filter Media,Deep Frontier
-Good.ConcentratedWaste.DisplayName,Concentrated Waste,Deep Frontier
-Good.ConcentratedWaste.PluralDisplayName,Concentrated Waste,Deep Frontier
-Good.CrudeOil.DisplayName,Crude Oil,Deep Frontier
-Good.CrudeOil.PluralDisplayName,Crude Oil,Deep Frontier
-Good.UraniumOre.DisplayName,Uranium Ore,Deep Frontier
-Good.UraniumOre.PluralDisplayName,Uranium Ore,Deep Frontier
+Good.MachineCore.DisplayName,Machine core,Deep Frontier
+Good.MachineCore.PluralDisplayName,Machine cores,Deep Frontier
+Good.PowerModule.DisplayName,Power module,Deep Frontier
+Good.PowerModule.PluralDisplayName,Power modules,Deep Frontier
+Good.FilterMedia.DisplayName,Filter media,Deep Frontier
+Good.FilterMedia.PluralDisplayName,Filter media,Deep Frontier
+Good.ConcentratedWaste.DisplayName,Concentrated waste,Deep Frontier
+Good.ConcentratedWaste.PluralDisplayName,Concentrated waste,Deep Frontier
+Good.CrudeOil.DisplayName,Crude oil,Deep Frontier
+Good.CrudeOil.PluralDisplayName,Crude oil,Deep Frontier
+Good.UraniumOre.DisplayName,Uranium ore,Deep Frontier
+Good.UraniumOre.PluralDisplayName,Uranium ore,Deep Frontier
 Good.Yellowcake.DisplayName,Yellowcake,Deep Frontier
 Good.Yellowcake.PluralDisplayName,Yellowcake,Deep Frontier
-Good.EnrichedFuel.DisplayName,Enriched Fuel,Deep Frontier
-Good.EnrichedFuel.PluralDisplayName,Enriched Fuel,Deep Frontier
-Good.PureWater.DisplayName,Pure Water,Deep Frontier
-Good.PureWater.PluralDisplayName,Pure Water,Deep Frontier
-Good.HydrogenGas.DisplayName,Hydrogen Gas,Deep Frontier
-Good.HydrogenGas.PluralDisplayName,Hydrogen Gas,Deep Frontier
-Good.OxygenGas.DisplayName,Oxygen Gas,Deep Frontier
-Good.OxygenGas.PluralDisplayName,Oxygen Gas,Deep Frontier
-Good.LiquidHydrogen.DisplayName,Liquid Hydrogen,Deep Frontier
-Good.LiquidHydrogen.PluralDisplayName,Liquid Hydrogen,Deep Frontier
-Good.LiquidOxygen.DisplayName,Liquid Oxygen,Deep Frontier
-Good.LiquidOxygen.PluralDisplayName,Liquid Oxygen,Deep Frontier
+Good.EnrichedFuel.DisplayName,Enriched fuel,Deep Frontier
+Good.EnrichedFuel.PluralDisplayName,Enriched fuel,Deep Frontier
+Good.PureWater.DisplayName,Pure water,Deep Frontier
+Good.PureWater.PluralDisplayName,Pure water,Deep Frontier
+Good.HydrogenGas.DisplayName,Hydrogen gas,Deep Frontier
+Good.HydrogenGas.PluralDisplayName,Hydrogen gas,Deep Frontier
+Good.OxygenGas.DisplayName,Oxygen gas,Deep Frontier
+Good.OxygenGas.PluralDisplayName,Oxygen gas,Deep Frontier
+Good.LiquidHydrogen.DisplayName,Liquid hydrogen,Deep Frontier
+Good.LiquidHydrogen.PluralDisplayName,Liquid hydrogen,Deep Frontier
+Good.LiquidOxygen.DisplayName,Liquid oxygen,Deep Frontier
+Good.LiquidOxygen.PluralDisplayName,Liquid oxygen,Deep Frontier
 Good.Cryocoolant.DisplayName,Cryocoolant,Deep Frontier
 Good.Cryocoolant.PluralDisplayName,Cryocoolant,Deep Frontier
-Good.RadioactiveWaste.DisplayName,Radioactive Waste,Deep Frontier
-Good.RadioactiveWaste.PluralDisplayName,Radioactive Waste,Deep Frontier
-Good.RocketAirframe.DisplayName,Rocket Airframe,Deep Frontier
-Good.RocketAirframe.PluralDisplayName,Rocket Airframe,Deep Frontier
-Good.PropulsionPackage.DisplayName,Propulsion Package,Deep Frontier
-Good.PropulsionPackage.PluralDisplayName,Propulsion Package,Deep Frontier
-Good.GuidanceComputer.DisplayName,Guidance Computer,Deep Frontier
-Good.GuidanceComputer.PluralDisplayName,Guidance Computer,Deep Frontier
-Good.MissionPayload.DisplayName,Mission Payload,Deep Frontier
-Good.MissionPayload.PluralDisplayName,Mission Payload,Deep Frontier
-Good.RecoveredTelemetry.DisplayName,Recovered Telemetry,Deep Frontier
-Good.RecoveredTelemetry.PluralDisplayName,Recovered Telemetry,Deep Frontier
-Good.IndustrialLicense.DisplayName,Industrial License,Deep Frontier
-Good.IndustrialLicense.PluralDisplayName,Industrial License,Deep Frontier
-Good.SpecialistLicense.DisplayName,Specialist License,Deep Frontier
-Good.SpecialistLicense.PluralDisplayName,Specialist License,Deep Frontier
-Good.FlightLicense.DisplayName,Flight License,Deep Frontier
-Good.FlightLicense.PluralDisplayName,Flight License,Deep Frontier
+Good.RadioactiveWaste.DisplayName,Radioactive waste,Deep Frontier
+Good.RadioactiveWaste.PluralDisplayName,Radioactive waste,Deep Frontier
+Good.RocketAirframe.DisplayName,Rocket airframe,Deep Frontier
+Good.RocketAirframe.PluralDisplayName,Rocket airframes,Deep Frontier
+Good.PropulsionPackage.DisplayName,Propulsion package,Deep Frontier
+Good.PropulsionPackage.PluralDisplayName,Propulsion packages,Deep Frontier
+Good.GuidanceComputer.DisplayName,Guidance computer,Deep Frontier
+Good.GuidanceComputer.PluralDisplayName,Guidance computers,Deep Frontier
+Good.MissionPayload.DisplayName,Mission payload,Deep Frontier
+Good.MissionPayload.PluralDisplayName,Mission payloads,Deep Frontier
+Good.RecoveredTelemetry.DisplayName,Recovered telemetry,Deep Frontier
+Good.RecoveredTelemetry.PluralDisplayName,Recovered telemetry,Deep Frontier
+Good.IndustrialLicense.DisplayName,Industrial license,Deep Frontier
+Good.IndustrialLicense.PluralDisplayName,Industrial licenses,Deep Frontier
+Good.SpecialistLicense.DisplayName,Specialist license,Deep Frontier
+Good.SpecialistLicense.PluralDisplayName,Specialist licenses,Deep Frontier
+Good.FlightLicense.DisplayName,Flight license,Deep Frontier
+Good.FlightLicense.PluralDisplayName,Flight licenses,Deep Frontier
 Good.Electronics.DisplayName,Electronics,Deep Frontier
 Good.Electronics.PluralDisplayName,Electronics,Deep Frontier
-Good.ReactorCoolantWater.DisplayName,Reactor Coolant Water,Deep Frontier
-Good.ReactorCoolantWater.PluralDisplayName,Reactor Coolant Water,Deep Frontier
-Good.RecoveredMinerals.DisplayName,Recovered Minerals,Deep Frontier
-Good.RecoveredMinerals.PluralDisplayName,Recovered Minerals,Deep Frontier
-Building.FertilizerWorks.DisplayName,Fertilizer works,Deep Frontier
-Building.FertilizerWorks.Description,Makes fertilizer for the Greenhouse. Pipes: valve set to Inlet.,Deep Frontier
-Building.FertilizerWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.FishHatchery.DisplayName,Fish hatchery,Deep Frontier
-Building.FishHatchery.Description,Breeds juvenile fish. Build it over a river so its pens stand in clean water; it stops during droughts and badwater. Pipes: valve set to Inlet.,Deep Frontier
-Building.FishHatchery.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.FisheryWorks.DisplayName,Fishery works,Deep Frontier
-Building.FisheryWorks.Description,"Raises fresh fish from juvenile fish, or presses fish into fish oil. Pipes: valves set to Inlet and Outlet.",Deep Frontier
-Building.FisheryWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.FoodPackagingWorks.DisplayName,Food packaging works,Deep Frontier
-Building.FoodPackagingWorks.Description,Cans fresh fish into canned fish that keeps. Pipes: valve set to Inlet.,Deep Frontier
-Building.FoodPackagingWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.PublicHealthLab.DisplayName,Public health lab,Deep Frontier
-Building.PublicHealthLab.Description,Makes medicine for the Hospital. Pipes: valve set to Inlet.,Deep Frontier
-Building.PublicHealthLab.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.GroceryStore.DisplayName,Grocery store,Deep Frontier
+Good.ReactorCoolantWater.DisplayName,Reactor coolant water,Deep Frontier
+Good.ReactorCoolantWater.PluralDisplayName,Reactor coolant water,Deep Frontier
+Good.RecoveredMinerals.DisplayName,Recovered minerals,Deep Frontier
+Good.RecoveredMinerals.PluralDisplayName,Recovered minerals,Deep Frontier
+Building.FertilizerWorks.DisplayName,Fertilizer Works,Deep Frontier
+Building.FertilizerWorks.Description,Makes fertilizer from logs and algae for the Greenhouse. Pipes: valve set to Fill.,Deep Frontier
+Building.FertilizerWorks.FlavorDescription,Logs and algae go in. Nobody asks about the smell.,Deep Frontier
+Building.FishHatchery.DisplayName,Fish Hatchery,Deep Frontier
+Building.FishHatchery.Description,Breeds juvenile fish. Build it over a river: its pens need clean water and stop if they dry out or turn to badwater. Pipes: valve set to Fill.,Deep Frontier
+Building.FishHatchery.FlavorDescription,Thousands of tiny fish and one very patient beaver.,Deep Frontier
+Building.FisheryWorks.DisplayName,Fishery Works,Deep Frontier
+Building.FisheryWorks.Description,"Grows juvenile fish into fresh fish, or presses fresh fish into fish oil. Pipes: valves set to Fill and Extract.",Deep Frontier
+Building.FisheryWorks.FlavorDescription,"Grow them big, then press the rest for oil.",Deep Frontier
+Building.FoodPackagingWorks.DisplayName,Food Packaging Works,Deep Frontier
+Building.FoodPackagingWorks.Description,Cans fresh fish with fish oil in metal tins. Canned fish feeds beavers and stocks the Grocery Store. Pipes: valve set to Fill.,Deep Frontier
+Building.FoodPackagingWorks.FlavorDescription,"Fish in a tin: the frontier lunch, whether it likes it or not.",Deep Frontier
+Building.PublicHealthLab.DisplayName,Public Health Lab,Deep Frontier
+Building.PublicHealthLab.Description,Makes medicine from mushrooms and algae for the Hospital and the Technical School. Pipes: valve set to Fill.,Deep Frontier
+Building.PublicHealthLab.FlavorDescription,"Mushrooms, algae and a great deal of careful stirring.",Deep Frontier
+Building.GroceryStore.DisplayName,Grocery Store,Deep Frontier
 Building.GroceryStore.Description,"A neighborhood shop for canned fish, rations and fermented food. Staffed and stocked with three or more foods, it gives nearby beavers up to +2 wellbeing.",Deep Frontier
-Building.GroceryStore.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.GroceryStore.FlavorDescription,"Everything a busy beaver needs, two paws from home.",Deep Frontier
 Building.Restaurant.DisplayName,Restaurant,Deep Frontier
-Building.Restaurant.Description,"Serves whatever food is stocked and bakes sweet berry cake. A meal of fish, berries, fermented mushrooms and eggplant rations gives Fine Dining. Pipes: valve set to Inlet.",Deep Frontier
+Building.Restaurant.Description,"Serves food at its tables and makes sweet berry cake and fermented food. A meal of fresh fish, berries, fermented mushrooms and an eggplant ration gives Fine dining. Pipes: valve set to Fill.",Deep Frontier
 Building.Restaurant.FlavorDescription,"A good meal deserves a table, a view and good company.",Deep Frontier
 Building.Hospital.DisplayName,Hospital,Deep Frontier
-Building.Hospital.Description,"Treats injuries, chipped teeth, badwater contamination and radiation day and night. Staffed and supplied, it gives nearby beavers up to +2 wellbeing. Pipes: valve set to Inlet.",Deep Frontier
-Building.Hospital.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
+Building.Hospital.Description,"Treats injuries, chipped teeth, badwater contamination and radiation sickness day and night. Staffed and supplied, it gives nearby beavers up to +2 wellbeing. Pipes: valve set to Fill.",Deep Frontier
+Building.Hospital.FlavorDescription,"Rest, clean water and a very strict ward nurse.",Deep Frontier
 Building.Greenhouse.DisplayName,Greenhouse,Deep Frontier
-Building.Greenhouse.Description,"Grows eggplant, kohlrabi and coffee indoors from fertilizer and water, and can raise fish. Pipes: valve set to Inlet.",Deep Frontier
-Building.Greenhouse.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.ChemicalWorks.DisplayName,Chemical works,Deep Frontier
-Building.ChemicalWorks.Description,"Makes chemicals, polymer and cryocoolant from crude oil and extract. Pipes: valves set to Inlet and Outlet.",Deep Frontier
-Building.ChemicalWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.PrecisionMachineWorks.DisplayName,Precision machine works,Deep Frontier
-Building.PrecisionMachineWorks.Description,"Builds machine cores, electronics, power modules and bot parts. Pipes: valve set to Inlet.",Deep Frontier
-Building.PrecisionMachineWorks.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.WaterTreatmentPlant.DisplayName,Water treatment plant,Deep Frontier
-Building.WaterTreatmentPlant.Description,"Purifies water, makes reactor coolant and filter media, and filters badwater. Pipes: valves set to Inlet and Outlet.",Deep Frontier
-Building.WaterTreatmentPlant.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.TechnicalSchool.DisplayName,Technical school,Deep Frontier
-Building.TechnicalSchool.Description,"Beavers study here in their free time to become metallurgists, reactor operators or flight engineers. Choose what it teaches in its panel.",Deep Frontier
-Building.TechnicalSchool.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.UraniumProcessingPlant.DisplayName,Uranium processing plant,Deep Frontier
-Building.UraniumProcessingPlant.Description,Turns uranium ore into enriched fuel and reactor power cells. Pipes: valve set to Inlet.,Deep Frontier
-Building.UraniumProcessingPlant.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.RadioactiveWasteRefinery.DisplayName,Radioactive waste refinery,Deep Frontier
-Building.RadioactiveWasteRefinery.Description,"Turns spent-fuel casks into radioactive water and cleans contaminated water. Full tanks leak, so haul the radioactive water away. Pipes: valves set to Inlet and Outlet.",Deep Frontier
-Building.RadioactiveWasteRefinery.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.ElectrolysisPlant.DisplayName,Electrolysis plant,Deep Frontier
-Building.ElectrolysisPlant.Description,Splits pure water into hydrogen and oxygen gas. Pipes: valves set to Inlet and Outlet.,Deep Frontier
-Building.ElectrolysisPlant.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.CryogenicLiquefactionPlant.DisplayName,Cryogenic liquefaction plant,Deep Frontier
-Building.CryogenicLiquefactionPlant.Description,Liquefies hydrogen and oxygen into rocket fuel. Pipes: valves set to Inlet and Outlet.,Deep Frontier
-Building.CryogenicLiquefactionPlant.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.RocketAssemblyHangar.DisplayName,Rocket assembly hangar,Deep Frontier
+Building.Greenhouse.Description,"Grows eggplants, kohlrabi and coffee beans indoors with fertilizer. Aquaponics also raises fresh fish from juvenile fish. Pipes: valve set to Fill.",Deep Frontier
+Building.Greenhouse.FlavorDescription,"Summer all year round, under glass.",Deep Frontier
+Building.ChemicalWorks.DisplayName,Chemical Works,Deep Frontier
+Building.ChemicalWorks.Description,"Makes chemicals and polymer from crude oil and extract, and cryocoolant from polymer and grease. Pipes: valves set to Fill and Extract.",Deep Frontier
+Building.ChemicalWorks.FlavorDescription,"Oil and extract go in, chemistry comes out, and the smell stays.",Deep Frontier
+Building.PrecisionMachineWorks.DisplayName,Precision Machine Works,Deep Frontier
+Building.PrecisionMachineWorks.Description,"Builds machine cores, electronics, power modules, bot parts and reinforced bot frames. Pipes: valve set to Fill.",Deep Frontier
+Building.PrecisionMachineWorks.FlavorDescription,"Measure twice, file once, and never sneeze near the electronics.",Deep Frontier
+Building.WaterTreatmentPlant.DisplayName,Water Treatment Plant,Deep Frontier
+Building.WaterTreatmentPlant.Description,"Filters water into pure water, leaving concentrated waste, and makes filter media and reactor coolant water. Pipes: valves set to Fill and Extract.",Deep Frontier
+Building.WaterTreatmentPlant.FlavorDescription,"Every barrel tested, every filter changed on time.",Deep Frontier
+Building.TechnicalSchool.DisplayName,Technical School,Deep Frontier
+Building.TechnicalSchool.Description,"Beavers study here in their free time to become metallurgists, reactor operators or flight engineers. Each school teaches one, chosen in its panel.",Deep Frontier
+Building.TechnicalSchool.FlavorDescription,Night classes for beavers who want a dangerous job done properly.,Deep Frontier
+Building.UraniumProcessingPlant.DisplayName,Uranium Processing Plant,Deep Frontier
+Building.UraniumProcessingPlant.Description,"Turns uranium ore into enriched fuel and reactor power cells, and reprocesses spent fuel. Its fuel leaves radioactive waste. Pipes: valve set to Fill.",Deep Frontier
+Building.UraniumProcessingPlant.FlavorDescription,"Yellowcake is not for eating, however much it looks like it.",Deep Frontier
+Building.RadioactiveWasteRefinery.DisplayName,Radioactive Waste Refinery,Deep Frontier
+Building.RadioactiveWasteRefinery.Description,"Turns radioactive waste into radioactive water, cleans contaminated water and filters badwater. Haul its output away: full tanks leak. Pipes: valves set to Fill and Extract.",Deep Frontier
+Building.RadioactiveWasteRefinery.FlavorDescription,It turns a problem you store into a problem you can ship.,Deep Frontier
+Building.ElectrolysisPlant.DisplayName,Electrolysis Plant,Deep Frontier
+Building.ElectrolysisPlant.Description,Splits pure water into hydrogen gas and oxygen gas. Pipes: valves set to Fill and Extract.,Deep Frontier
+Building.ElectrolysisPlant.FlavorDescription,Water goes in. Two very excitable gases come out.,Deep Frontier
+Building.CryogenicLiquefactionPlant.DisplayName,Cryogenic Liquefaction Plant,Deep Frontier
+Building.CryogenicLiquefactionPlant.Description,"Chills hydrogen and oxygen gas with cryocoolant into liquid hydrogen and liquid oxygen, the rocket fuel. Pipes: valves set to Fill and Extract.",Deep Frontier
+Building.CryogenicLiquefactionPlant.FlavorDescription,So cold that the frost has frost.,Deep Frontier
+Building.RocketAssemblyHangar.DisplayName,Rocket Assembly Hangar,Deep Frontier
 Building.RocketAssemblyHangar.Description,Builds rocket airframes and propulsion packages for the Launch Pad.,Deep Frontier
-Building.RocketAssemblyHangar.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.MissionControl.DisplayName,Mission control,Deep Frontier
-Building.MissionControl.Description,"Turns recovered artifacts into guidance computers, mission payloads and telemetry for rocket launches. Pipes: valve set to Inlet.",Deep Frontier
-Building.MissionControl.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.LaunchPad.DisplayName,Launch pad,Deep Frontier
-Building.LaunchPad.Description,"Launches the colony's rockets: pick a mission, and haulers bring its rocket parts and fuel. Each launch uses up the whole rocket and can fail. Pipes: valve set to Inlet.",Deep Frontier rocket program
-Building.LaunchPad.FlavorDescription,The colony's next industrial step is visible in every pipe and belt.,Deep Frontier
-Building.SteelMill.DisplayName,Steel mill,Deep Frontier
+Building.RocketAssemblyHangar.FlavorDescription,"The tallest thing the colony has ever built, one piece at a time.",Deep Frontier
+Building.MissionControl.DisplayName,Mission Control,Deep Frontier
+Building.MissionControl.Description,"Turns recovered artifacts into guidance computers, mission payloads and telemetry. Staffed and powered, it lowers the launch risk. Pipes: valve set to Fill.",Deep Frontier
+Building.MissionControl.FlavorDescription,"Old human drives, new beaver math and a lot of coffee.",Deep Frontier
+Building.LaunchPad.DisplayName,Launch Pad,Deep Frontier
+Building.LaunchPad.Description,"Launches the colony's rockets, staffed by trained flight engineers. Pick a mission as its recipe; each launch uses up the rocket and its fuel, and can fail. Pipes: valve set to Fill.",Deep Frontier rocket program
+Building.LaunchPad.FlavorDescription,"Everything the colony has learned, pointed at the sky.",Deep Frontier
+Building.SteelMill.DisplayName,Steel Mill,Deep Frontier
 Building.SteelMill.Description,"Makes steel and alloy from deep iron, coal and limestone. Only trained metallurgists can work here, and the work is dangerous.",Deep Frontier
 Building.SteelMill.FlavorDescription,"Every reactor, rocket and machine core starts as a white-hot pour on this floor.",Deep Frontier
-Building.ArchiveExcavation.DisplayName,Archive excavation,Deep Frontier
-Building.ArchiveExcavation.Description,"Digs up human artifacts anywhere for Mission Control. Within 10 tiles of a Human Record Cache, it also surveys the cache for bonus artifacts.",Deep Frontier
+Building.ArchiveExcavation.DisplayName,Archive Excavation,Deep Frontier
+Building.ArchiveExcavation.Description,"Digs up recovered artifacts anywhere with explosives. Within 10 tiles of a Human Record Cache, it also surveys the cache for 12 more.",Deep Frontier
 Building.ArchiveExcavation.FlavorDescription,The humans buried their warnings in the strata. Dig carefully.,Deep Frontier
-Building.CryogenicTankFarm.DisplayName,Cryogenic tank farm,Deep Frontier
-Building.CryogenicTankFarm.Description,Stores one fuel: liquid hydrogen or liquid oxygen. Needs power to keep it cold; without power the fuel starts to vent. Pipes: connect directly.,Deep Frontier
+Building.CryogenicTankFarm.DisplayName,Cryogenic Tank Farm,Deep Frontier
+Building.CryogenicTankFarm.Description,"Stores one fuel: liquid hydrogen or liquid oxygen. It takes fuel only while powered; without power the fuel starts to vent. Pipes: connect directly, no valve.",Deep Frontier
 Building.CryogenicTankFarm.FlavorDescription,"The coldest place in the colony, kept that way at great expense.",Deep Frontier
-Building.SmogScrubber.DisplayName,Smog scrubber,Deep Frontier
+Building.SmogScrubber.DisplayName,Smog Scrubber,Deep Frontier
 Building.SmogScrubber.Description,Cleans smog out of the air around it while powered. No workers.,Deep Frontier
 Building.SmogScrubber.FlavorDescription,What goes up the smokestack comes down in the scrubber.,Deep Frontier
 Building.Bathhouse.DisplayName,Bathhouse,Deep Frontier
-Building.Bathhouse.Description,"Steam baths: Mud Bath, Massager and Wet Fur in one visit. Uses water. Pipes: valve set to Inlet.",Deep Frontier
+Building.Bathhouse.Description,"Steam baths that count as a Mud Bath and a Massager and give Wet fur, all in one visit. Uses water. Pipes: valve set to Fill.",Deep Frontier
 Building.Bathhouse.FlavorDescription,The boilers run hot so the colony can run warm.,Deep Frontier
-Building.TownPlaza.DisplayName,Town plaza,Deep Frontier
-Building.TownPlaza.Description,A square where beavers dance and gather (Dance Pit and Campfire). Needs no power or supplies.,Deep Frontier
+Building.TownPlaza.DisplayName,Town Plaza,Deep Frontier
+Building.TownPlaza.Description,A square where beavers dance and gather: it counts as a Dance Pit and a Campfire. Needs no power or supplies.,Deep Frontier
 Building.TownPlaza.FlavorDescription,Every frontier town needs one place where nothing is being built.,Deep Frontier
-Building.ObservationDeck.DisplayName,Observation deck,Deep Frontier
-Building.ObservationDeck.Description,A viewing tower: the climb counts as Exercise Plaza and the deck as Rooftop Terrace.,Deep Frontier
+Building.ObservationDeck.DisplayName,Observation Deck,Deep Frontier
+Building.ObservationDeck.Description,A viewing tower: the climb counts as an Exercise Plaza and the deck as a Rooftop Terrace.,Deep Frontier
 Building.ObservationDeck.FlavorDescription,"From up here, the whole frontier fits in one look.",Deep Frontier
 Building.NuclearReactor.DisplayName,Nuclear Reactor,Deep Frontier
-Building.NuclearReactor.Description,"Huge power from enriched fuel, run by trained reactor operators. It melts down if its coolant water runs out or its waste piles up; pausing is a safe shutdown. Pipes: valves set to Inlet and Outlet.",Deep Frontier
+Building.NuclearReactor.Description,"Huge power from enriched fuel, run by trained reactor operators. It melts down if its coolant water runs out or its waste is not hauled away; pausing it is safe. Pipes: valves set to Fill and Extract.",Deep Frontier
 Building.NuclearReactor.FlavorDescription,The frontier makes power and consequences at the same scale.,Deep Frontier
 Building.RadioactiveWasteVault.DisplayName,Radioactive Waste Vault,Deep Frontier
-Building.RadioactiveWasteVault.Description,Stores radioactive waste casks. Keep it below full: a full vault leaks and irradiates the ground around it.,Deep Frontier
-Building.RadioactiveWasteVault.FlavorDescription,The frontier makes power and consequences at the same scale.,Deep Frontier
-Building.CoalPowerPlant.DisplayName,Coal power plant,Deep Frontier
-Building.CoalPowerPlant.Description,Burns coal and water for power day and night. No workers. Pipes: valve set to Inlet.,Deep Frontier
+Building.RadioactiveWasteVault.Description,Stores radioactive waste. Keep it below full: a full vault leaks radioactive water and irradiates the ground around it.,Deep Frontier
+Building.RadioactiveWasteVault.FlavorDescription,"Labeled, logged and never, ever full.",Deep Frontier
+Building.CoalPowerPlant.DisplayName,Coal Power Plant,Deep Frontier
+Building.CoalPowerPlant.Description,Burns coal and water for power day and night. No workers. Pipes: valve set to Fill.,Deep Frontier
 Building.CoalPowerPlant.FlavorDescription,"Black smoke, white steam and the hum of every machine in the district.",Deep Frontier
-Building.OilPowerPlant.DisplayName,Oil power plant,Deep Frontier
-Building.OilPowerPlant.Description,"Burns crude oil and water for power day and night, with less smog than coal. No workers. Pipes: valve set to Inlet.",Deep Frontier
+Building.OilPowerPlant.DisplayName,Oil Power Plant,Deep Frontier
+Building.OilPowerPlant.Description,"Burns crude oil and water for power day and night, with less smog than coal. No workers. Pipes: valve set to Fill.",Deep Frontier
 Building.OilPowerPlant.FlavorDescription,"The deep ore gives up its oil, and the oil gives up its fire.",Deep Frontier
-Recipe.SweetBerryCake.DisplayName,Sweet Berry Cake,Deep Frontier
-Recipe.Fertilizer.DisplayName,Fertilizer,Deep Frontier
-Recipe.JuvenileFish.DisplayName,Juvenile Fish,Deep Frontier
-Recipe.FreshFish.DisplayName,Fresh Fish,Deep Frontier
-Recipe.FishOil.DisplayName,Fish Oil,Deep Frontier
-Recipe.CannedFish.DisplayName,Canned Fish,Deep Frontier
-Recipe.GreenhouseEggplant.DisplayName,Greenhouse Eggplant,Deep Frontier
-Recipe.GreenhouseKohlrabi.DisplayName,Greenhouse Kohlrabi,Deep Frontier
-Recipe.GreenhouseCoffee.DisplayName,Greenhouse Coffee,Deep Frontier
-Recipe.Medicine.DisplayName,Medicine,Deep Frontier
-Recipe.HighGradeSteel.DisplayName,Steel,Deep Frontier
-Recipe.Alloy.DisplayName,Alloy,Deep Frontier
-Recipe.Chemical.DisplayName,Chemical,Deep Frontier
-Recipe.Polymer.DisplayName,Polymer,Deep Frontier
-Recipe.MachineCore.DisplayName,Machine Core,Deep Frontier
-Recipe.Electronics.DisplayName,Electronics,Deep Frontier
-Recipe.PowerModule.DisplayName,Power Module,Deep Frontier
-Recipe.FilterMedia.DisplayName,Filter Media,Deep Frontier
-Recipe.PureWater.DisplayName,Pure Water,Deep Frontier
-Recipe.ReactorCoolantWater.DisplayName,Reactor Coolant Water,Deep Frontier
-Recipe.DeepCoal.DisplayName,Deep Coal,Deep Frontier
-Recipe.DeepOil.DisplayName,Deep Oil,Deep Frontier
-Recipe.DeepUranium.DisplayName,Deep Uranium,Deep Frontier
-Recipe.Yellowcake.DisplayName,Yellowcake,Deep Frontier
-Recipe.EnrichedFuel.DisplayName,Enriched Fuel,Deep Frontier
-Recipe.Cryocoolant.DisplayName,Cryocoolant,Deep Frontier
-Recipe.Electrolysis.DisplayName,Electrolysis,Deep Frontier
-Recipe.Liquefaction.DisplayName,Liquefaction,Deep Frontier
-Recipe.RocketAirframe.DisplayName,Rocket Airframe,Deep Frontier
-Recipe.PropulsionPackage.DisplayName,Propulsion Package,Deep Frontier
-Recipe.GuidanceComputer.DisplayName,Guidance Computer,Deep Frontier
-Recipe.MissionPayload.DisplayName,Mission Payload,Deep Frontier
-Recipe.NuclearWaste.DisplayName,Nuclear Waste,Deep Frontier
-Recipe.WasteRefining.DisplayName,Waste Refining,Deep Frontier
-Recipe.DecontaminateWater.DisplayName,Decontaminate Water,Deep Frontier
-Recipe.GuidanceTelemetry.DisplayName,Guidance Telemetry,Deep Frontier
-Recipe.RecoveredArtifact.DisplayName,Recovered Artifact,Deep Frontier
-Recipe.CarbonFilterMedia.DisplayName,Activated carbon filters,Deep Frontier
-Recipe.BrineChemical.DisplayName,Chemical from brine,Deep Frontier
-Recipe.GreenhouseAquaponics.DisplayName,Aquaponic kohlrabi and fish,Deep Frontier
-Recipe.ReinforcedBotChassis.DisplayName,Reinforced Bot Chassis,Deep Frontier
-Recipe.ServoBotLimbs.DisplayName,Servo Bot Limbs,Deep Frontier
-Recipe.BotCortex.DisplayName,Bot Cortex,Deep Frontier
-Recipe.FuelReprocessing.DisplayName,Spent fuel reprocessing,Deep Frontier
-Recipe.ContaminatedWaterRefining.DisplayName,Waste refining with contaminated water,Deep Frontier
-Recipe.BadwaterFiltering.DisplayName,Badwater filtering,Deep Frontier
+Recipe.CarbonFilterMedia.DisplayName,Filter media from coal,Deep Frontier
+Recipe.BrineChemical.DisplayName,Chemicals from concentrated waste,Deep Frontier
+Recipe.GreenhouseAquaponics.DisplayName,Kohlrabi and fresh fish,Deep Frontier
+Recipe.FuelReprocessing.DisplayName,Enriched fuel from radioactive waste,Deep Frontier
+Recipe.ContaminatedWaterRefining.DisplayName,Radioactive water from contaminated water,Deep Frontier
+Recipe.DecontaminateWater.DisplayName,Water from contaminated water,Deep Frontier
+Recipe.BadwaterFiltering.DisplayName,Water from badwater,Deep Frontier
 Need.PublicHealthcare.DisplayName,Public healthcare,Deep Frontier
 DeepFrontier.Hospital.Panel.Title,Hospital,Deep Frontier
 DeepFrontier.Hospital.Panel.Patients,Patients admitted: {0} / {1} beds,Deep Frontier
@@ -249,7 +210,7 @@ DeepFrontier.Hospital.Panel.NoPower,Care stopped: check power and building warni
 DeepFrontier.Hospital.Panel.NoCrew,Closed: no ward crew assigned,Deep Frontier
 DeepFrontier.Hospital.Panel.NoMeals,Closed: a patient is starving or dehydrated and the food or water stock is empty,Deep Frontier
 DeepFrontier.Hospital.Panel.NoSupplies,"Waiting for medicine, water and extract",Deep Frontier
-DeepFrontier.Hospital.Panel.Treating,"Patients stay until cured of injury, chipped teeth, badwater contamination and radiation. Treatment: {0}% (crew strength)",Deep Frontier
+DeepFrontier.Hospital.Panel.Treating,"Patients stay until cured of injury, chipped teeth, badwater contamination and radiation sickness. Treatment speed: {0}% (set by its staffing)",Deep Frontier
 DeepFrontier.Hospital.Panel.AreaActive,Neighborhood care active (+2 wellbeing),Deep Frontier
 DeepFrontier.Hospital.Panel.AreaInactive,Neighborhood care inactive,Deep Frontier
 DeepFrontier.Hospital.Status.MealsLow,Patient food or water is running low.,Deep Frontier
@@ -260,9 +221,9 @@ DeepFrontier.Need.FineDining,Fine dining,Deep Frontier
 Need.NeighborhoodGroceries.DisplayName,Neighborhood groceries,Deep Frontier
 DeepFrontier.Waterside.SupportTooDeep,A support post would need more than {0} m to reach the ground or riverbed.,Deep Frontier waterside placement error; {0} = AdaptiveSupportsSpec.MaxDepth
 DeepFrontier.Waterside.SupportOutsideMap,A support post would stand outside the map.,Deep Frontier waterside placement error: a support column lies outside the map
-DeepFrontier.Waterside.WorkCellsTooShallow,Water does not reach {0} marked working cell(s): the surface must stand at least {1} m above their floor.,Deep Frontier waterside preview warning; {0} = cell count; {1} = MinDepth
-DeepFrontier.Waterside.WorkCellsTooDeep,Too deep under {0} marked working cell(s): at most {1} m of water is allowed.,Deep Frontier waterside preview warning; {0} = cell count; {1} = MaxDepth
-DeepFrontier.Waterside.Status.WaterTooDeep,The water under the working area is too deep.,Deep Frontier waterside building status
+DeepFrontier.Waterside.WorkCellsTooShallow,{0} pen tile(s) are too shallow: the water there must be at least {1} m deep.,Deep Frontier waterside preview warning; {0} = cell count; {1} = MinDepth
+DeepFrontier.Waterside.WorkCellsTooDeep,{0} pen tile(s) are too deep: at most {1} m of water is allowed there.,Deep Frontier waterside preview warning; {0} = cell count; {1} = MaxDepth
+DeepFrontier.Waterside.Status.WaterTooDeep,The water under the pens is too deep.,Deep Frontier waterside building status
 DeepFrontier.Waterside.Status.WaterTooDeep.Short,Water too deep,Deep Frontier waterside building status alert
 RocketProgram.Mission.OrbitalObservatory.DisplayName,Orbital Observatory,Deep Frontier rocket program
 RocketProgram.Mission.OrbitalObservatory.Description,First launch: lofts a telescope and archive receiver to read what the old orbital records saw.,Deep Frontier rocket program
@@ -270,7 +231,7 @@ RocketProgram.Mission.OrbitalObservatory.Success,"The observatory is in orbit. I
 RocketProgram.Mission.OrbitalObservatory.Failure,Debris rained over the flame trench; the observatory was lost with its rocket and fuel.,Deep Frontier rocket program
 RocketProgram.Mission.RecoveryProbe.DisplayName,Recovery Probe,Deep Frontier rocket program
 RocketProgram.Mission.RecoveryProbe.Description,Second launch: sends a probe to a derelict orbital station to bring back its data core.,Deep Frontier rocket program
-RocketProgram.Mission.RecoveryProbe.Success,The probe docked with a silent human station and returned its data core. Among the corrupted files are intact fabrication notes and a map of the treatment works that once held the badwater back. The industrial frontier has its next blueprint.,Deep Frontier rocket program
+RocketProgram.Mission.RecoveryProbe.Success,The probe docked with a silent human station and returned its data core. Among the corrupted files are intact fabrication notes and a map of the treatment works that once held the badwater back. The industrial frontier has its next design.,Deep Frontier rocket program
 RocketProgram.Mission.RecoveryProbe.Failure,The probe never reached the station; the rocket broke up on ascent.,Deep Frontier rocket program
 RocketProgram.Mission.LongRangeBeacon.DisplayName,Long-Range Beacon,Deep Frontier rocket program
 RocketProgram.Mission.LongRangeBeacon.Description,Final launch: places a long-lived beacon carrying the colony's archive and a standing signal.,Deep Frontier rocket program
@@ -279,38 +240,38 @@ RocketProgram.Mission.LongRangeBeacon.Failure,The beacon was lost on ascent. The
 RocketProgram.Status.Locked,Mission locked: {0} must succeed first,Deep Frontier rocket program
 RocketProgram.Status.Completed,{0} is already complete; select another mission,Deep Frontier rocket program
 RocketProgram.Status.Refurbishing,Launch pad refurbishing after a failed launch,Deep Frontier rocket program
-RocketProgram.Notification.Scrubbed,Launch scrubbed: {0} destacked; its parts and fuel were returned to the pad,Deep Frontier rocket program
+RocketProgram.Notification.Scrubbed,Launch called off: {0} was taken apart and its parts and fuel returned to the pad,Deep Frontier rocket program
 RocketProgram.Notification.Liftoff,Liftoff: {0} ({1}% failure risk),Deep Frontier rocket program
 RocketProgram.Notification.Success,Mission success: {0},Deep Frontier rocket program
 RocketProgram.Notification.Failure,Launch failure: {0} was lost ({1}% risk). The rocket and its fuel are gone and the pad needs {2} hours of refurbishment.,Deep Frontier rocket program
 RocketProgram.Notification.Refurbished,Launch pad refurbished and ready,Deep Frontier rocket program
-RocketProgram.Reward,Success reward: {0} science and a permanent +{1} wellbeing for beavers within {2} tiles of the pad while it is on a powered grid (pausing or automation do not remove it),Deep Frontier rocket program
+RocketProgram.Reward,Success reward: {0} science and a permanent +{1} wellbeing for beavers within {2} tiles of the pad while it is connected to power (pausing or automation do not remove it),Deep Frontier rocket program
 RocketProgram.Panel.LegacyActive,Mission legacy: {0} completed missions give wellbeing within {1} tiles,Deep Frontier rocket program
-RocketProgram.Panel.LegacyUnpowered,Mission legacy paused: connect the pad to a powered grid to restore wellbeing from {0} completed missions within {1} tiles,Deep Frontier rocket program
+RocketProgram.Panel.LegacyUnpowered,Mission legacy paused: connect the pad to power to restore wellbeing from {0} completed missions within {1} tiles,Deep Frontier rocket program
 RocketProgram.Panel.Title,Rocket program,Deep Frontier rocket program
 RocketProgram.Panel.MissionCompleted,{0}: completed,Deep Frontier rocket program
 RocketProgram.Panel.MissionLocked,{0}: locked (requires {1}),Deep Frontier rocket program
 RocketProgram.Panel.MissionAvailable,{0}: available,Deep Frontier rocket program
-RocketProgram.Panel.RocketStacked,Rocket stacked and fuelled on the pad,Deep Frontier rocket program
+RocketProgram.Panel.RocketStacked,Rocket assembled and fueled on the pad,Deep Frontier rocket program
 RocketProgram.Panel.Odds,Failure chance at liftoff: {0}% (mission base {1}%),Deep Frontier rocket program
-RocketProgram.Panel.OddsMissionControl,"Operating Mission Control (staffed, powered): -{0}% of -{1}%",Deep Frontier rocket program
+RocketProgram.Panel.OddsMissionControl,Mission Control (staffed and powered): -{0}% (up to -{1}%),Deep Frontier rocket program
 RocketProgram.Panel.OddsHeritage,Flight heritage: -{0}% after {1} launches,Deep Frontier rocket program
 RocketProgram.Panel.OddsFloor,Risk never falls below {0}%,Deep Frontier rocket program
-RocketProgram.Panel.Stakes,Parts and fuel are loaded when preparation starts; changing the mission before liftoff returns them to the pad. Liftoff holds until the grid delivers full launch power. A failed launch destroys the rocket and its fuel and closes the pad for {0} hours of refurbishment.,Deep Frontier rocket program
+RocketProgram.Panel.Stakes,Parts and fuel are loaded when preparation starts; changing the mission before liftoff returns them to the pad. Liftoff waits until the pad gets its full launch power. A failed launch destroys the rocket and its fuel and closes the pad for {0} hours of refurbishment.,Deep Frontier rocket program
 RocketProgram.Panel.FinalMission,Final mission: success completes the colony's story.,Deep Frontier rocket program
 RocketProgram.Panel.NoLaunches,No launches yet,Deep Frontier rocket program
 RocketProgram.Panel.LastSuccess,Last launch: {0} succeeded ({1}% risk),Deep Frontier rocket program
 RocketProgram.Panel.LastFailure,Last launch: {0} failed ({1}% risk),Deep Frontier rocket program
 RocketProgram.Stage.UnderConstruction,Under construction,Deep Frontier rocket program
-RocketProgram.Stage.NoMission,"Select a mission, or guidance telemetry, in the recipe list",Deep Frontier rocket program
-RocketProgram.Stage.Telemetry,Producing guidance telemetry,Deep Frontier rocket program
+RocketProgram.Stage.NoMission,"Select a mission, or recovered telemetry, in the recipe list",Deep Frontier rocket program
+RocketProgram.Stage.Telemetry,Producing recovered telemetry,Deep Frontier rocket program
 RocketProgram.Stage.InFlight,{0} in flight,Deep Frontier rocket program
 RocketProgram.Stage.Refurbishing,Refurbishing after a failed launch: {0} hours left,Deep Frontier rocket program
 RocketProgram.Stage.Blocked,Paused or blocked by automation: no launch work,Deep Frontier rocket program
 RocketProgram.Stage.MissionCompleted,The selected mission is already complete,Deep Frontier rocket program
 RocketProgram.Stage.MissionLocked,The selected mission is locked,Deep Frontier rocket program
 RocketProgram.Stage.MissionInFlightElsewhere,The selected mission is in flight from another pad,Deep Frontier rocket program
-RocketProgram.Stage.Staging,Staging the rocket: waiting for every part and the full fuel load,Deep Frontier rocket program
+RocketProgram.Stage.Staging,Assembling the rocket: waiting for every part and the full fuel load,Deep Frontier rocket program
 RocketProgram.Stage.Preparing,Launch preparation: {0}%,Deep Frontier rocket program
 RocketProgram.Stage.HoldingForPower,Countdown hold at {0}%: liftoff needs full launch power,Deep Frontier rocket program
 Recipe.RocketMission.OrbitalObservatory,Launch: Orbital Observatory,Deep Frontier rocket program
@@ -341,7 +302,7 @@ DeepFrontier.Meltdown.Notification.MaintenanceDone,Reactor maintenance completed
 DeepFrontier.Meltdown.Notification.Meltdown,"REACTOR MELTDOWN: the Nuclear Reactor was destroyed. {0} killed, {1} irradiated.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Dialog.Title,Reactor meltdown,Deep Frontier meltdown
 DeepFrontier.Meltdown.Dialog.Casualties,"The core melted down and destroyed the Nuclear Reactor. {0} were killed and {1} beavers were irradiated; irradiated beavers need 10 days of hospital care, and untreated radiation sickness is fatal.",Deep Frontier meltdown
-DeepFrontier.Meltdown.Dialog.Contamination,"Radioactive water is pouring from the ruin and will keep flowing for {0} days. Soil and water within {1} tiles are contaminated: crops there die, pumps refuse contaminated water and beavers who walk in are irradiated. Clean up with Radioactive Water Recovery Pumps and ship it off the map.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Dialog.Contamination,"Radioactive water is pouring from the ruin and will keep flowing for {0} days. Soil and water within {1} tiles turn radioactive: crops there die, pumps there stop and beavers who walk in are irradiated. Clean up with Radioactive Water Recovery Pumps and ship the water off the map at a Radioactive Waste Export.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Dialog.ShowSite,Show the site,Deep Frontier meltdown
 DeepFrontier.Meltdown.DeathMessage,{0} was killed in the reactor meltdown.,Deep Frontier meltdown
 DeepFrontier.Meltdown.Cause.Coolant,coolant dry,Deep Frontier meltdown
@@ -378,17 +339,17 @@ DeepFrontier.Meltdown.Panel.RestartButton,Restart reactor,Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.RestartBlocked,Restart possible once core heat is at or below {0}%.,Deep Frontier meltdown
 DeepFrontier.WasteLeak.StorageFull.Status.Warning,"Nearly full of radioactive waste: once full, casks breach every {0} hours.",Deep Frontier meltdown
 DeepFrontier.WasteLeak.StorageFull.Status.Leaking,"Full: radioactive waste casks are breaching and leaking radioactive water. Export, refine or move the waste.",Deep Frontier meltdown
-DeepFrontier.WasteLeak.StorageFull.Status.Leaking.Short,Waste vault leaking,Deep Frontier meltdown
+DeepFrontier.WasteLeak.StorageFull.Status.Leaking.Short,Vault leaking,Deep Frontier meltdown
 DeepFrontier.WasteLeak.StorageFull.Notification.Warning,"Radioactive Waste Vault {0}% full: once full, its casks breach and leak.",Deep Frontier meltdown
 DeepFrontier.WasteLeak.StorageFull.Notification.Full,Radioactive Waste Vault full: {0} casks will breach in {1} hours unless waste is refined or moved.,Deep Frontier meltdown
 DeepFrontier.WasteLeak.StorageFull.Notification.Leak,"Radioactive Waste Vault leak: {0} casks breached, spilling radioactive water and irradiating the soil around the vault.",Deep Frontier meltdown
 DeepFrontier.WasteLeak.StorageFull.Panel.Rules,"When full, {0} casks breach every {1} hours: their waste spills out as radioactive water and irradiates the soil within {2} tiles, killing crops there.",Deep Frontier meltdown
 DeepFrontier.WasteLeak.OutputBlocked.Status.Warning,"Radioactive water tanks nearly full: once full, radioactive water leaks every {0} hours.",Deep Frontier meltdown
 DeepFrontier.WasteLeak.OutputBlocked.Status.Leaking,Radioactive water tanks full: radioactive water is leaking. Haul it to a Radioactive Water Outfall or Radioactive Waste Export.,Deep Frontier meltdown
-DeepFrontier.WasteLeak.OutputBlocked.Status.Leaking.Short,Waste refinery leaking,Deep Frontier meltdown
-DeepFrontier.WasteLeak.OutputBlocked.Notification.Warning,Waste refinery radioactive water tanks {0}% full: haul it away before they leak.,Deep Frontier meltdown
-DeepFrontier.WasteLeak.OutputBlocked.Notification.Full,Waste refinery radioactive water tanks full: {0} radioactive water will leak in {1} hours.,Deep Frontier meltdown
-DeepFrontier.WasteLeak.OutputBlocked.Notification.Leak,Waste refinery leak: {0} radioactive water spilled around the refinery.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Status.Leaking.Short,Refinery leaking,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Notification.Warning,Radioactive Waste Refinery tanks {0}% full: haul the radioactive water away before they leak.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Notification.Full,Radioactive Waste Refinery tanks full: {0} radioactive water will leak in {1} hours.,Deep Frontier meltdown
+DeepFrontier.WasteLeak.OutputBlocked.Notification.Leak,Radioactive Waste Refinery leak: {0} radioactive water spilled around the refinery.,Deep Frontier meltdown
 DeepFrontier.WasteLeak.OutputBlocked.Panel.Rules,"When its radioactive water tanks are full, {0} radioactive water leaks every {1} hours and irradiates the soil within {2} tiles, killing crops there. Pausing it seals the tanks.",Deep Frontier meltdown
 DeepFrontier.WasteLeak.Panel.Title,Radioactive containment,Deep Frontier meltdown
 DeepFrontier.WasteLeak.Panel.Fill,{0}: {1} / {2} ({3}%),Deep Frontier meltdown
@@ -404,27 +365,27 @@ Narrative.Stage.NotNatural.Story.1,"Every beaver knows badwater: green, sour, an
 Narrative.Stage.NotNatural.Story.2,"The colony is no longer sure the old stories are right. Badwater behaves the same everywhere, in every spring and every badtide, as if it were made to a recipe. Somebody, it seems, wrote that recipe down.",Deep Frontier narrative
 Narrative.Stage.NotNatural.Requirement.1,Investigation building finished,Deep Frontier narrative
 Narrative.Stage.NotNatural.Variant.PublicHealthLab,The health lab's first badwater samples were meant to help the sick. The chemists came back with puzzled faces and a very long list of things that should not be in a river.,Deep Frontier narrative
-Narrative.Stage.NotNatural.Variant.WaterTreatmentPlant,"The treatment plant's first filter cakes came out of the press the wrong colour. The exact same wrong colour, every single time.",Deep Frontier narrative
+Narrative.Stage.NotNatural.Variant.WaterTreatmentPlant,"The treatment plant's first filter cakes came out of the press the wrong color. The exact same wrong color, every single time.",Deep Frontier narrative
 Narrative.Stage.NotNatural.Variant.DeepDrill,"The drill crew brought up a core with something round and hollow inside it: a pipe, far older than the colony and far too big for beavers.",Deep Frontier narrative
 Narrative.Stage.NotNatural.Variant.ChemicalWorks,"The chemists who turn badwater into feedstock noticed that it splits the same way, batch after batch, like a recipe someone followed carefully.",Deep Frontier narrative
 Narrative.Stage.UnderTheValley.Title,Under the Valley,Deep Frontier narrative
-Narrative.Stage.UnderTheValley.Objective,Reach the deep sector: refine 20 deep iron at a Deep Processor.,Deep Frontier narrative
-Narrative.Stage.UnderTheValley.Hint,"The Deep Drill brings up deep ore from a deep ore source; the Deep Processor turns ore and water into deep iron, coal, crude oil and uranium ore.",Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Objective,Reach the deep sector: refine 20 deep iron at a Deep Ore Processor.,Deep Frontier narrative
+Narrative.Stage.UnderTheValley.Hint,"The Deep Drill brings up deep ore from a Deep Ore Source; the Deep Ore Processor turns deep ore into deep iron, coal, crude oil and uranium ore.",Deep Frontier narrative
 Narrative.Stage.UnderTheValley.Story.1,"The deep sector is not empty. Below the old riverbed run tunnels lined with enormous pipes, all of them stamped with the same three letters, VWA, and all of them heading upriver.",Deep Frontier narrative
 Narrative.Stage.UnderTheValley.Story.2,"Painted on one pipe, with increasing underlining: NOT FOR DRINKING. Someone long ago took that very seriously.",Deep Frontier narrative
 Narrative.Stage.UnderTheValley.Requirement.1,Deep iron refined,Deep Frontier narrative
 Narrative.Stage.WhatTheWaterCarries.Title,What the Water Carries,Deep Frontier narrative
-Narrative.Stage.WhatTheWaterCarries.Objective,Trace what the water carries: purify 80 pure water and make 10 chemical.,Deep Frontier narrative
-Narrative.Stage.WhatTheWaterCarries.Hint,"Water Treatment Plants make pure water from water and filter media. Chemical Works make chemical from crude oil and extract (the Centrifuge distils extract from badwater), or from the treatment plant's brine.",Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Objective,Trace what the water carries: make 80 pure water and 10 chemicals.,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Hint,"Water Treatment Plants make pure water from water and filter media. Chemical Works make chemicals from crude oil and extract (the Centrifuge distills extract from badwater), or from the treatment plant's concentrated waste.",Deep Frontier narrative
 Narrative.Stage.WhatTheWaterCarries.Story.1,"Side by side, the filter residue and the chemical feedstock tell the same story. Badwater is a mixture: fine grit from deep rock, a stubborn green dye and a dozen compounds nothing in nature bothers to make.",Deep Frontier narrative
 Narrative.Stage.WhatTheWaterCarries.Story.2,"It is not a disease. It is runoff. Somewhere upriver, something is still leaking what the old deep pipes once carried, and the colony is going to find out what.",Deep Frontier narrative
-Narrative.Stage.WhatTheWaterCarries.Requirement.1,Pure water purified,Deep Frontier narrative
-Narrative.Stage.WhatTheWaterCarries.Requirement.2,Chemical made,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Requirement.1,Pure water made,Deep Frontier narrative
+Narrative.Stage.WhatTheWaterCarries.Requirement.2,Chemicals made,Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Title,Open the Ruins,Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Objective,Open the human ruins: recover 6 artifacts at an Archive Excavation.,Deep Frontier narrative
-Narrative.Stage.OpenTheRuins.Hint,"The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. Any Human Record Cache on the map can be surveyed by a nearby excavation for extra artifacts.",Deep Frontier narrative
+Narrative.Stage.OpenTheRuins.Hint,"The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. An excavation within 10 tiles of a Human Record Cache also surveys it for extra artifacts.",Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Story.1,"The first finds are small and baffling: a hard hat big enough to bathe a kit in, a mug reading WORLD'S OKAYEST ENGINEER, and a sign that says HOLDING STATION 3 - AUTHORIZED PERSONNEL ONLY.",Deep Frontier narrative
-Narrative.Stage.OpenTheRuins.Story.2,"Underneath, in smaller letters: UNAUTHORIZED PERSONNEL ALSO ONLY. The humans, it turns out, had a sense of humour. They also had sealed data drives, which the excavation crews are now carefully drying out.",Deep Frontier narrative
+Narrative.Stage.OpenTheRuins.Story.2,"Underneath, in smaller letters: UNAUTHORIZED PERSONNEL ALSO ONLY. The humans, it turns out, had a sense of humor. They also had sealed data drives, which the excavation crews are now carefully drying out.",Deep Frontier narrative
 Narrative.Stage.OpenTheRuins.Requirement.1,Artifacts recovered,Deep Frontier narrative
 Narrative.Stage.TheArchiveWakes.Title,The Archive Wakes,Deep Frontier narrative
 Narrative.Stage.TheArchiveWakes.Objective,Wake the archive: recover 20 artifacts in total.,Deep Frontier narrative
@@ -443,7 +404,7 @@ Narrative.Stage.TheLastShift.Requirement.1,Artifacts recovered,Deep Frontier nar
 Narrative.Stage.TheLastShift.Requirement.2,Mission Control finished,Deep Frontier narrative
 Narrative.Stage.EyesAbove.Title,Eyes Above,Deep Frontier narrative
 Narrative.Stage.EyesAbove.Objective,Launch the Orbital Observatory from a Launch Pad.,Deep Frontier narrative
-Narrative.Stage.EyesAbove.Hint,"A launch needs airframes, propulsion, guidance computers, telemetry and liquid hydrogen and oxygen. A staffed Mission Control lowers the risk. Nuclear power helps but is not required.",Deep Frontier narrative
+Narrative.Stage.EyesAbove.Hint,"A launch needs rocket airframes, propulsion packages, guidance computers, recovered telemetry, liquid hydrogen and liquid oxygen, and flight engineers from a Technical School to staff the pad. A staffed Mission Control lowers the risk. Nuclear power helps but is not required.",Deep Frontier narrative
 Narrative.Stage.EyesAbove.Story.1,"Laid over the Authority's maps, the orbital images settle the question. Every badwater spring in the valley sits on the line of an old pipe, and every pipe leads back to the Holding.",Deep Frontier narrative
 Narrative.Stage.EyesAbove.Story.2,The badtides line up too: they arrive on the same schedule the last shift set for the flush valves. The humans never turned the Holding off. There was simply nobody left to give further notice.,Deep Frontier narrative
 Narrative.Stage.EyesAbove.Requirement.1,Orbital Observatory mission,Deep Frontier narrative
@@ -470,17 +431,17 @@ Narrative.Discovery.ClinicLog.Objective,Finish a Hospital.,Deep Frontier narrati
 Narrative.Discovery.ClinicLog.Story.1,"The hospital keeps a ledger of every badwater patient. After a season, the doctors notice the bad days arrive in a rhythm, like a schedule nobody remembers setting.",Deep Frontier narrative
 Narrative.Discovery.ClinicLog.Requirement.1,Hospital finished,Deep Frontier narrative
 Narrative.Discovery.CleanerThanTheRiver.Title,Cleaner Than the River,Deep Frontier narrative
-Narrative.Discovery.CleanerThanTheRiver.Objective,Purify 500 pure water.,Deep Frontier narrative
+Narrative.Discovery.CleanerThanTheRiver.Objective,Make 500 pure water.,Deep Frontier narrative
 Narrative.Discovery.CleanerThanTheRiver.Story.1,Five hundred barrels of water cleaner than the river has been in living memory. The treatment crews have started tasting it competitively.,Deep Frontier narrative
-Narrative.Discovery.CleanerThanTheRiver.Requirement.1,Pure water purified,Deep Frontier narrative
+Narrative.Discovery.CleanerThanTheRiver.Requirement.1,Pure water made,Deep Frontier narrative
 Narrative.Discovery.HoldingOurOwn.Title,Holding Our Own,Deep Frontier narrative
 Narrative.Discovery.HoldingOurOwn.Objective,Finish a Radioactive Waste Vault.,Deep Frontier narrative
 Narrative.Discovery.HoldingOurOwn.Story.1,"The colony now keeps a holding of its own. Unlike the humans' Holding, this one has a label, a ledger and a beaver whose whole job is reading both.",Deep Frontier narrative
 Narrative.Discovery.HoldingOurOwn.Requirement.1,Radioactive Waste Vault finished,Deep Frontier narrative
 Narrative.Discovery.CleanHands.Title,Clean Hands,Deep Frontier narrative
-Narrative.Discovery.CleanHands.Objective,Decontaminate water once at a Radioactive Waste Refinery.,Deep Frontier narrative
+Narrative.Discovery.CleanHands.Objective,Clean contaminated water once at a Radioactive Waste Refinery.,Deep Frontier narrative
 Narrative.Discovery.CleanHands.Story.1,"The first barrel of contaminated water made drinkable again. It is a small barrel, and the colony is very proud of it.",Deep Frontier narrative
-Narrative.Discovery.CleanHands.Requirement.1,Water decontaminated,Deep Frontier narrative
+Narrative.Discovery.CleanHands.Requirement.1,Contaminated water cleaned,Deep Frontier narrative
 Narrative.Discovery.CacheRoster.Title,Record Cache: Shift Roster,Deep Frontier narrative
 Narrative.Discovery.CacheRoster.Objective,Survey 1 Human Record Cache from an Archive Excavation.,Deep Frontier narrative
 Narrative.Discovery.CacheRoster.Story.1,"A shift roster from Holding Station 3. The names have faded, but one column, headed BROUGHT SNACKS, is ticked every single day by the same person.",Deep Frontier narrative
@@ -512,7 +473,7 @@ Narrative.Ending.Archive.Epilogue.2,"If anyone ever wonders how a valley went dr
 Narrative.Ending.Settlement.Title,The Map Home,Deep Frontier narrative
 Narrative.Ending.Settlement.Description,"Guide future settlers: clean-water maps, treatment designs and the safe routes the colony learned, so others can build where the land has healed.",Deep Frontier narrative
 Narrative.Ending.Settlement.Epilogue.1,"The beacon does not ask anyone to come. It simply explains, very clearly, where the water is clean, how to keep it that way and which roots are the tastiest.",Deep Frontier narrative
-Narrative.Ending.Settlement.Epilogue.2,"Somewhere, someday, a small band of travellers will follow it over the ridge and find a valley already waiting for them.",Deep Frontier narrative
+Narrative.Ending.Settlement.Epilogue.2,"Somewhere, someday, a small band of travelers will follow it over the ridge and find a valley already waiting for them.",Deep Frontier narrative
 Narrative.Notification.Chapter,Frontier Journal: {0},Deep Frontier narrative
 Narrative.Notification.Discovery,Discovery: {0},Deep Frontier narrative
 Narrative.Notification.Choose,The beacon is ready to carry a message: choose it in the Frontier Journal.,Deep Frontier narrative
@@ -547,8 +508,8 @@ Narrative.Cache.Surveying,Surveying: {0}%,Deep Frontier narrative
 Narrative.Cache.WaitingForStorage,Survey complete: handing over records as the excavation has storage space ({0} of {1}).,Deep Frontier narrative
 Narrative.Cache.Reward,Survey reward: {0} {1} and a journal record. Demolishing it before the survey loses its records.,Deep Frontier narrative
 Building.HumanRecordCache.DisplayName,Human Record Cache,Deep Frontier narrative
-Building.HumanRecordCache.Description,Sealed human records. Build an Archive Excavation within 10 tiles to survey it for 12 artifacts and a journal entry; demolishing it destroys them.,Deep Frontier narrative
-Building.HumanRecordCache.FlavorDescription,"Labelled, in three languages: DO NOT OPEN. Open carefully.",Deep Frontier narrative
+Building.HumanRecordCache.Description,Sealed human records. Build an Archive Excavation within 10 tiles to survey it for 12 recovered artifacts and a journal entry; demolishing it destroys them.,Deep Frontier narrative
+Building.HumanRecordCache.FlavorDescription,"Labeled, in three languages: DO NOT OPEN. Open carefully.",Deep Frontier narrative
 DeepFrontier.Weather.RadioactiveTide,Radioactive tide,Deep Frontier
 DeepFrontier.Weather.Notification.RadioactiveTideApproaching,Radioactive tide approaching,Deep Frontier
 DeepFrontier.Weather.Notification.RadioactiveTideInProgress,Radioactive tide in progress,Deep Frontier
@@ -583,134 +544,134 @@ Good.Cement.DisplayName,Cement,Deep Frontier construction materials
 Good.Cement.PluralDisplayName,Cement,Deep Frontier construction materials
 Good.Concrete.DisplayName,Concrete,Deep Frontier construction materials
 Good.Concrete.PluralDisplayName,Concrete,Deep Frontier construction materials
-Recipe.SandstoneExtraction.DisplayName,Extract sandstone,Deep Frontier construction materials
-Recipe.LimestoneExtraction.DisplayName,Extract limestone,Deep Frontier construction materials
-Recipe.BrickEarth.DisplayName,Grind brick earth,Deep Frontier construction materials
-Recipe.FireBricks.DisplayName,Fire bricks,Deep Frontier construction materials
-Recipe.Cement.DisplayName,Fire cement,Deep Frontier construction materials
-Recipe.Concrete.DisplayName,Mix concrete,Deep Frontier construction materials
-Building.SandstonePit.DisplayName,Sandstone pit,Deep Frontier construction materials
-Building.SandstonePit.Description,Digs sandstone from outcrops within walking range until they run out. A Sandstone Quarry later gives an endless supply.,Deep Frontier construction materials
-Building.SandstonePit.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Building.LimestonePit.DisplayName,Limestone pit,Deep Frontier construction materials
-Building.LimestonePit.Description,Digs limestone from outcrops within walking range until they run out. A Limestone Quarry later gives an endless supply.,Deep Frontier construction materials
-Building.LimestonePit.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Building.SandstoneQuarry.DisplayName,Sandstone quarry,Deep Frontier construction materials
-Building.SandstoneQuarry.Description,Quarries sandstone without end. Build it over a Deep Sandstone Seam. Pipes: valve set to Inlet.,Deep Frontier construction materials
-Building.SandstoneQuarry.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Building.LimestoneQuarry.DisplayName,Limestone quarry,Deep Frontier construction materials
-Building.LimestoneQuarry.Description,Quarries limestone without end. Build it over a Deep Limestone Seam. Pipes: valve set to Inlet.,Deep Frontier construction materials
-Building.LimestoneQuarry.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Building.StoneCrusher.DisplayName,Stone crusher,Deep Frontier construction materials
-Building.StoneCrusher.Description,Grinds sandstone into dirt (brick earth) for the Cement Kiln.,Deep Frontier construction materials
-Building.StoneCrusher.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Building.CementKiln.DisplayName,Cement kiln,Deep Frontier construction materials
-Building.CementKiln.Description,"Fires dirt into bricks, and limestone with brick into cement. Pipes: valve set to Inlet.",Deep Frontier construction materials
-Building.CementKiln.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Building.ConcreteMixer.DisplayName,Concrete mixer,Deep Frontier construction materials
-Building.ConcreteMixer.Description,"Mixes sandstone, cement and water into concrete. Pipes: valve set to Inlet.",Deep Frontier construction materials
-Building.ConcreteMixer.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Building.SandstoneMasonryBlock.DisplayName,Sandstone masonry block,Deep Frontier construction materials
+Recipe.SandstoneExtraction.DisplayName,Sandstone,Deep Frontier construction materials
+Recipe.LimestoneExtraction.DisplayName,Limestone,Deep Frontier construction materials
+Recipe.BrickEarth.DisplayName,Dirt,Deep Frontier construction materials
+Recipe.FireBricks.DisplayName,Bricks,Deep Frontier construction materials
+Recipe.Cement.DisplayName,Cement,Deep Frontier construction materials
+Recipe.Concrete.DisplayName,Concrete,Deep Frontier construction materials
+Building.SandstonePit.DisplayName,Sandstone Pit,Deep Frontier construction materials
+Building.SandstonePit.Description,Digs sandstone from outcrops within its range until they run out. A Sandstone Quarry later gives an endless supply.,Deep Frontier construction materials
+Building.SandstonePit.FlavorDescription,"Soft stone, hard work.",Deep Frontier construction materials
+Building.LimestonePit.DisplayName,Limestone Pit,Deep Frontier construction materials
+Building.LimestonePit.Description,Digs limestone from outcrops within its range until they run out. A Limestone Quarry later gives an endless supply.,Deep Frontier construction materials
+Building.LimestonePit.FlavorDescription,Every bucket of limestone is a future bag of cement.,Deep Frontier construction materials
+Building.SandstoneQuarry.DisplayName,Sandstone Quarry,Deep Frontier construction materials
+Building.SandstoneQuarry.Description,Quarries sandstone without end. Build it over a Deep Sandstone Seam. Pipes: valve set to Fill.,Deep Frontier construction materials
+Building.SandstoneQuarry.FlavorDescription,The seam goes deeper than anyone has dared to dig.,Deep Frontier construction materials
+Building.LimestoneQuarry.DisplayName,Limestone Quarry,Deep Frontier construction materials
+Building.LimestoneQuarry.Description,Quarries limestone without end. Build it over a Deep Limestone Seam. Pipes: valve set to Fill.,Deep Frontier construction materials
+Building.LimestoneQuarry.FlavorDescription,"Old sea floor, new town square.",Deep Frontier construction materials
+Building.StoneCrusher.DisplayName,Stone Crusher,Deep Frontier construction materials
+Building.StoneCrusher.Description,Grinds sandstone into dirt for the Cement Kiln to fire into bricks.,Deep Frontier construction materials
+Building.StoneCrusher.FlavorDescription,Rocks go in loud and come out quiet.,Deep Frontier construction materials
+Building.CementKiln.DisplayName,Cement Kiln,Deep Frontier construction materials
+Building.CementKiln.Description,"Burns logs to fire dirt into bricks, and limestone with bricks into cement. Pipes: valve set to Fill.",Deep Frontier construction materials
+Building.CementKiln.FlavorDescription,"Hot enough to bake bricks, and the crew's lunch.",Deep Frontier construction materials
+Building.ConcreteMixer.DisplayName,Concrete Mixer,Deep Frontier construction materials
+Building.ConcreteMixer.Description,"Mixes sandstone, cement and water into concrete. Pipes: valve set to Fill.",Deep Frontier construction materials
+Building.ConcreteMixer.FlavorDescription,"Keep it turning, or keep a chisel handy.",Deep Frontier construction materials
+Building.SandstoneMasonryBlock.DisplayName,Sandstone Masonry Block,Deep Frontier construction materials
 Building.SandstoneMasonryBlock.Description,Mortared sandstone block. Holds back water and supports construction on top.,Deep Frontier construction materials
-Building.SandstoneMasonryBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.BrickMasonryBlock.DisplayName,Brick block,Deep Frontier construction materials
+Building.SandstoneMasonryBlock.FlavorDescription,Stack them right and the river has to ask permission.,Deep Frontier construction materials
+Building.BrickMasonryBlock.DisplayName,Brick Block,Deep Frontier construction materials
 Building.BrickMasonryBlock.Description,Brick block laid in cement. Holds back water and supports construction on top.,Deep Frontier construction materials
-Building.BrickMasonryBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteBlock.DisplayName,Concrete levee block,Deep Frontier construction materials
-Building.ConcreteBlock.Description,Cast concrete block. Holds back water and supports buildings.,Deep Frontier construction materials
-Building.ConcreteBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteOverhang8x1.DisplayName,Reinforced overhang 8×1,Deep Frontier construction materials
+Building.BrickMasonryBlock.FlavorDescription,"Fired, stacked and mortared: the river can knock all it likes.",Deep Frontier construction materials
+Building.ConcreteBlock.DisplayName,Concrete Levee Block,Deep Frontier construction materials
+Building.ConcreteBlock.Description,Cast concrete block. Holds back water and supports construction on top.,Deep Frontier construction materials
+Building.ConcreteBlock.FlavorDescription,"Poured once, there for good.",Deep Frontier construction materials
+Building.ConcreteOverhang8x1.DisplayName,Reinforced Overhang 8x1,Deep Frontier construction materials
 Building.ConcreteOverhang8x1.Description,One anchor tile carries seven overhanging tiles. Supports construction on top.,Deep Frontier construction materials
-Building.ConcreteOverhang8x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteScaffold3x3.DisplayName,Concrete platform 3×3 (3 high),Deep Frontier construction materials
+Building.ConcreteOverhang8x1.FlavorDescription,One good anchor and a lot of nerve.,Deep Frontier construction materials
+Building.ConcreteScaffold3x3.DisplayName,Concrete Platform 3x3 (3 high),Deep Frontier construction materials
 Building.ConcreteScaffold3x3.Description,"A deck on four corner legs with a clear bay underneath for paths, power shafts and tubeways. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteScaffold3x3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ReinforcedDamBlock.DisplayName,Reinforced dam block,Deep Frontier construction materials
-Building.ReinforcedDamBlock.Description,Holds back water and supports construction. Concrete side platforms can hang from its side.,Deep Frontier construction materials
-Building.ReinforcedDamBlock.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-DeepFrontier.AnchoredDeck.RequiresAnchor,"Must hang from the side of a reinforced dam block, level with its top. Point at the top of the dam block to place it.",Deep Frontier construction materials
-Building.ConcreteOverflowDam.DisplayName,Concrete overflow dam,Deep Frontier construction materials
-Building.ConcreteOverflowDam.Description,Holds water to 0.65 of its height and lets the rest spill over. Its deck supports construction.,Deep Frontier construction materials
-Building.ConcreteOverflowDam.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteScaffold3x3H1.DisplayName,Concrete platform 3×3 (1 high),Deep Frontier construction materials
+Building.ConcreteScaffold3x3.FlavorDescription,"Four legs, one deck and plenty of room underneath.",Deep Frontier construction materials
+Building.ReinforcedDamBlock.DisplayName,Reinforced Dam Block,Deep Frontier construction materials
+Building.ReinforcedDamBlock.Description,Holds back water and supports construction on top. Concrete Side Platforms can hang from its sides.,Deep Frontier construction materials
+Building.ReinforcedDamBlock.FlavorDescription,"Built to hold a river, and a platform or two on the side.",Deep Frontier construction materials
+DeepFrontier.AnchoredDeck.RequiresAnchor,"Must hang from the side of a Reinforced Dam Block, level with its top. Point at the top of the dam block to place it.",Deep Frontier construction materials
+Building.ConcreteOverflowDam.DisplayName,Concrete Overflow Dam,Deep Frontier construction materials
+Building.ConcreteOverflowDam.Description,Holds water up to 0.65 m and lets the rest spill over the top. Supports construction on top.,Deep Frontier construction materials
+Building.ConcreteOverflowDam.FlavorDescription,Keeps the pond full and lets the rest go over the top.,Deep Frontier construction materials
+Building.ConcreteScaffold3x3H1.DisplayName,Concrete Platform 3x3 (1 high),Deep Frontier construction materials
 Building.ConcreteScaffold3x3H1.Description,"A deck on four corner legs with a clear bay underneath for paths, power shafts and tubeways. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteScaffold3x3H1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteScaffold3x3H2.DisplayName,Concrete platform 3×3 (2 high),Deep Frontier construction materials
+Building.ConcreteScaffold3x3H1.FlavorDescription,"Four legs, one deck and plenty of room underneath.",Deep Frontier construction materials
+Building.ConcreteScaffold3x3H2.DisplayName,Concrete Platform 3x3 (2 high),Deep Frontier construction materials
 Building.ConcreteScaffold3x3H2.Description,"A deck on four corner legs with a clear bay underneath for paths, power shafts and tubeways. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteScaffold3x3H2.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteScaffold4x4H1.DisplayName,Concrete platform 4×4 (1 high),Deep Frontier construction materials
+Building.ConcreteScaffold3x3H2.FlavorDescription,"Four legs, one deck and plenty of room underneath.",Deep Frontier construction materials
+Building.ConcreteScaffold4x4H1.DisplayName,Concrete Platform 4x4 (1 high),Deep Frontier construction materials
 Building.ConcreteScaffold4x4H1.Description,"A deck on four corner legs with a clear bay underneath for paths, power shafts and tubeways. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteScaffold4x4H1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteScaffold4x4H2.DisplayName,Concrete platform 4×4 (2 high),Deep Frontier construction materials
+Building.ConcreteScaffold4x4H1.FlavorDescription,"Four legs, one deck and plenty of room underneath.",Deep Frontier construction materials
+Building.ConcreteScaffold4x4H2.DisplayName,Concrete Platform 4x4 (2 high),Deep Frontier construction materials
 Building.ConcreteScaffold4x4H2.Description,"A deck on four corner legs with a clear bay underneath for paths, power shafts and tubeways. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteScaffold4x4H2.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteScaffold4x4H3.DisplayName,Concrete platform 4×4 (3 high),Deep Frontier construction materials
+Building.ConcreteScaffold4x4H2.FlavorDescription,"Four legs, one deck and plenty of room underneath.",Deep Frontier construction materials
+Building.ConcreteScaffold4x4H3.DisplayName,Concrete Platform 4x4 (3 high),Deep Frontier construction materials
 Building.ConcreteScaffold4x4H3.Description,"A deck on four corner legs with a clear bay underneath for paths, power shafts and tubeways. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteScaffold4x4H3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteScaffold5x5H1.DisplayName,Concrete platform 5×5 (1 high),Deep Frontier construction materials
+Building.ConcreteScaffold4x4H3.FlavorDescription,"Four legs, one deck and plenty of room underneath.",Deep Frontier construction materials
+Building.ConcreteScaffold5x5H1.DisplayName,Concrete Platform 5x5 (1 high),Deep Frontier construction materials
 Building.ConcreteScaffold5x5H1.Description,"A deck on four corner legs with a clear bay underneath for paths, power shafts and tubeways. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteScaffold5x5H1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteScaffold5x5H2.DisplayName,Concrete platform 5×5 (2 high),Deep Frontier construction materials
+Building.ConcreteScaffold5x5H1.FlavorDescription,"Four legs, one deck and plenty of room underneath.",Deep Frontier construction materials
+Building.ConcreteScaffold5x5H2.DisplayName,Concrete Platform 5x5 (2 high),Deep Frontier construction materials
 Building.ConcreteScaffold5x5H2.Description,"A deck on four corner legs with a clear bay underneath for paths, power shafts and tubeways. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteScaffold5x5H2.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteScaffold5x5H3.DisplayName,Concrete platform 5×5 (3 high),Deep Frontier construction materials
+Building.ConcreteScaffold5x5H2.FlavorDescription,"Four legs, one deck and plenty of room underneath.",Deep Frontier construction materials
+Building.ConcreteScaffold5x5H3.DisplayName,Concrete Platform 5x5 (3 high),Deep Frontier construction materials
 Building.ConcreteScaffold5x5H3.Description,"A deck on four corner legs with a clear bay underneath for paths, power shafts and tubeways. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteScaffold5x5H3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteSidePlatform3x3.DisplayName,Concrete side platform 3×3,Deep Frontier construction materials
+Building.ConcreteScaffold5x5H3.FlavorDescription,"Four legs, one deck and plenty of room underneath.",Deep Frontier construction materials
+Building.ConcreteSidePlatform3x3.DisplayName,Concrete Side Platform 3x3,Deep Frontier construction materials
 Building.ConcreteSidePlatform3x3.Description,"Hangs from the side of a Reinforced Dam Block, level with its top, with nothing underneath. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteSidePlatform3x3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteSidePlatform4x4.DisplayName,Concrete side platform 4×4,Deep Frontier construction materials
+Building.ConcreteSidePlatform3x3.FlavorDescription,Hangs off the dam with nothing below but water and confidence.,Deep Frontier construction materials
+Building.ConcreteSidePlatform4x4.DisplayName,Concrete Side Platform 4x4,Deep Frontier construction materials
 Building.ConcreteSidePlatform4x4.Description,"Hangs from the side of a Reinforced Dam Block, level with its top, with nothing underneath. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteSidePlatform4x4.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.ConcreteSidePlatform5x5.DisplayName,Concrete side platform 5×5,Deep Frontier construction materials
+Building.ConcreteSidePlatform4x4.FlavorDescription,Hangs off the dam with nothing below but water and confidence.,Deep Frontier construction materials
+Building.ConcreteSidePlatform5x5.DisplayName,Concrete Side Platform 5x5,Deep Frontier construction materials
 Building.ConcreteSidePlatform5x5.Description,"Hangs from the side of a Reinforced Dam Block, level with its top, with nothing underneath. Supports construction on top.",Deep Frontier construction materials
-Building.ConcreteSidePlatform5x5.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelCantilever10x1.DisplayName,Steel cantilever 10×1,Deep Frontier construction materials
+Building.ConcreteSidePlatform5x5.FlavorDescription,Hangs off the dam with nothing below but water and confidence.,Deep Frontier construction materials
+Building.SteelCantilever10x1.DisplayName,Steel Cantilever 10x1,Deep Frontier construction materials
 Building.SteelCantilever10x1.Description,One anchor tile on the ground or a platform carries 9 overhanging tiles. Supports construction on top.,Deep Frontier construction materials
-Building.SteelCantilever10x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelCantilever12x1.DisplayName,Steel cantilever 12×1,Deep Frontier construction materials
+Building.SteelCantilever10x1.FlavorDescription,Steel reaches where concrete would snap.,Deep Frontier construction materials
+Building.SteelCantilever12x1.DisplayName,Steel Cantilever 12x1,Deep Frontier construction materials
 Building.SteelCantilever12x1.Description,Two anchor tiles on the ground or a platform carry 10 overhanging tiles. Supports construction on top.,Deep Frontier construction materials
-Building.SteelCantilever12x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelCantilever15x1.DisplayName,Steel cantilever 15×1,Deep Frontier construction materials
+Building.SteelCantilever12x1.FlavorDescription,Steel reaches where concrete would snap.,Deep Frontier construction materials
+Building.SteelCantilever15x1.DisplayName,Steel Cantilever 15x1,Deep Frontier construction materials
 Building.SteelCantilever15x1.Description,Three anchor tiles on the ground or a platform carry 12 overhanging tiles. Supports construction on top.,Deep Frontier construction materials
-Building.SteelCantilever15x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelBridge8x1.DisplayName,Steel truss bridge 8×1,Deep Frontier construction materials
+Building.SteelCantilever15x1.FlavorDescription,Steel reaches where concrete would snap.,Deep Frontier construction materials
+Building.SteelBridge8x1.DisplayName,Steel Truss Bridge 8x1,Deep Frontier construction materials
 Building.SteelBridge8x1.Description,"Spans exactly 8 tiles: the near end needs ground or a platform, and the far end must meet a path at the same height.",Deep Frontier construction materials
-Building.SteelBridge8x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelBridge10x1.DisplayName,Steel truss bridge 10×1,Deep Frontier construction materials
+Building.SteelBridge8x1.FlavorDescription,The far bank is only far until the steel arrives.,Deep Frontier construction materials
+Building.SteelBridge10x1.DisplayName,Steel Truss Bridge 10x1,Deep Frontier construction materials
 Building.SteelBridge10x1.Description,"Spans exactly 10 tiles: the near end needs ground or a platform, and the far end must meet a path at the same height.",Deep Frontier construction materials
-Building.SteelBridge10x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelBridge12x1.DisplayName,Steel truss bridge 12×1,Deep Frontier construction materials
+Building.SteelBridge10x1.FlavorDescription,The far bank is only far until the steel arrives.,Deep Frontier construction materials
+Building.SteelBridge12x1.DisplayName,Steel Truss Bridge 12x1,Deep Frontier construction materials
 Building.SteelBridge12x1.Description,"Spans exactly 12 tiles: the near end needs ground or a platform, and the far end must meet a path at the same height.",Deep Frontier construction materials
-Building.SteelBridge12x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelBridge15x1.DisplayName,Steel truss bridge 15×1,Deep Frontier construction materials
+Building.SteelBridge12x1.FlavorDescription,The far bank is only far until the steel arrives.,Deep Frontier construction materials
+Building.SteelBridge15x1.DisplayName,Steel Truss Bridge 15x1,Deep Frontier construction materials
 Building.SteelBridge15x1.Description,"Spans exactly 15 tiles: the near end needs ground or a platform, and the far end must meet a path at the same height.",Deep Frontier construction materials
-Building.SteelBridge15x1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelColumnH1.DisplayName,Steel column (1 high),Deep Frontier construction materials
+Building.SteelBridge15x1.FlavorDescription,The far bank is only far until the steel arrives.,Deep Frontier construction materials
+Building.SteelColumnH1.DisplayName,Steel Column (1 high),Deep Frontier construction materials
 Building.SteelColumnH1.Description,"Stack it, or stand it on the ground, a platform or a roof; steel decks rest on its cap.",Deep Frontier construction materials
-Building.SteelColumnH1.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelColumnH2.DisplayName,Steel column (2 high),Deep Frontier construction materials
+Building.SteelColumnH1.FlavorDescription,Steel stands tall where timber would bow.,Deep Frontier construction materials
+Building.SteelColumnH2.DisplayName,Steel Column (2 high),Deep Frontier construction materials
 Building.SteelColumnH2.Description,"Stack it, or stand it on the ground, a platform or a roof; steel decks rest on its cap.",Deep Frontier construction materials
-Building.SteelColumnH2.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelColumnH3.DisplayName,Steel column (3 high),Deep Frontier construction materials
+Building.SteelColumnH2.FlavorDescription,Steel stands tall where timber would bow.,Deep Frontier construction materials
+Building.SteelColumnH3.DisplayName,Steel Column (3 high),Deep Frontier construction materials
 Building.SteelColumnH3.Description,"Stack it, or stand it on the ground, a platform or a roof; steel decks rest on its cap.",Deep Frontier construction materials
-Building.SteelColumnH3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelColumnH4.DisplayName,Steel column (4 high),Deep Frontier construction materials
+Building.SteelColumnH3.FlavorDescription,Steel stands tall where timber would bow.,Deep Frontier construction materials
+Building.SteelColumnH4.DisplayName,Steel Column (4 high),Deep Frontier construction materials
 Building.SteelColumnH4.Description,"Stack it, or stand it on the ground, a platform or a roof; steel decks rest on its cap.",Deep Frontier construction materials
-Building.SteelColumnH4.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelColumnH5.DisplayName,Steel column (5 high),Deep Frontier construction materials
+Building.SteelColumnH4.FlavorDescription,Steel stands tall where timber would bow.,Deep Frontier construction materials
+Building.SteelColumnH5.DisplayName,Steel Column (5 high),Deep Frontier construction materials
 Building.SteelColumnH5.Description,"Stack it, or stand it on the ground, a platform or a roof; steel decks rest on its cap.",Deep Frontier construction materials
-Building.SteelColumnH5.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelColumnH6.DisplayName,Steel column (6 high),Deep Frontier construction materials
+Building.SteelColumnH5.FlavorDescription,Steel stands tall where timber would bow.,Deep Frontier construction materials
+Building.SteelColumnH6.DisplayName,Steel Column (6 high),Deep Frontier construction materials
 Building.SteelColumnH6.Description,"Stack it, or stand it on the ground, a platform or a roof; steel decks rest on its cap.",Deep Frontier construction materials
-Building.SteelColumnH6.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelDeck3x3.DisplayName,Steel deck 3×3,Deep Frontier construction materials
+Building.SteelColumnH6.FlavorDescription,Steel stands tall where timber would bow.,Deep Frontier construction materials
+Building.SteelDeck3x3.DisplayName,Steel Deck 3x3,Deep Frontier construction materials
 Building.SteelDeck3x3.Description,"Rests only on its four corners: the ground, platforms or steel columns of any height. Supports construction on top.",Deep Frontier construction materials
-Building.SteelDeck3x3.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelDeck5x5.DisplayName,Steel deck 5×5,Deep Frontier construction materials
+Building.SteelDeck3x3.FlavorDescription,"Four corners, no excuses.",Deep Frontier construction materials
+Building.SteelDeck5x5.DisplayName,Steel Deck 5x5,Deep Frontier construction materials
 Building.SteelDeck5x5.Description,"Rests only on its four corners: the ground, platforms or steel columns of any height. Supports construction on top.",Deep Frontier construction materials
-Building.SteelDeck5x5.FlavorDescription,Room for the next layer of the colony.,Deep Frontier construction materials
-Building.SteelLegDeck3x3H1.DisplayName,Steel deck 3×3 on legs (1 high),Deep Frontier construction materials
+Building.SteelDeck5x5.FlavorDescription,"Four corners, no excuses.",Deep Frontier construction materials
+Building.SteelLegDeck3x3H1.DisplayName,Steel Deck 3x3 on Legs (1 high),Deep Frontier construction materials
 Building.SteelLegDeck3x3H1.Description,"Places the deck 1 layer up, with steel columns under each corner down to the first support. The columns cost extra.",Deep Frontier construction materials
 Building.SteelLegDeck3x3H1.FlavorDescription,Steel legs find their own footing.,Deep Frontier construction materials
 DeepFrontier.SteelLegs.Blocked,"A leg hits a wall, smokestack or moving part before it reaches a support. Move the deck a little.",Deep Frontier construction materials
@@ -719,75 +680,75 @@ DeepFrontier.SteelLegs.TooDeep,A leg finds no support within {0} layers below th
 DeepFrontier.SteelLegs.Columns,"Legs here: {0} steel columns, {1} layers. Extra cost:",Deep Frontier construction materials
 DeepFrontier.SteelLegs.NoColumns,"The deck rests directly on supports here, so no columns are needed.",Deep Frontier construction materials
 DeepFrontier.SteelLegs.PointAt,Point where the deck should stand. Legs reach down up to {0} layers.,Deep Frontier construction materials
-Building.SteelLegDeck3x3H2.DisplayName,Steel deck 3×3 on legs (2 high),Deep Frontier construction materials
+Building.SteelLegDeck3x3H2.DisplayName,Steel Deck 3x3 on Legs (2 high),Deep Frontier construction materials
 Building.SteelLegDeck3x3H2.Description,"Places the deck 2 layers up, with steel columns under each corner down to the first support. The columns cost extra.",Deep Frontier construction materials
 Building.SteelLegDeck3x3H2.FlavorDescription,Steel legs find their own footing.,Deep Frontier construction materials
-Building.SteelLegDeck3x3H3.DisplayName,Steel deck 3×3 on legs (3 high),Deep Frontier construction materials
+Building.SteelLegDeck3x3H3.DisplayName,Steel Deck 3x3 on Legs (3 high),Deep Frontier construction materials
 Building.SteelLegDeck3x3H3.Description,"Places the deck 3 layers up, with steel columns under each corner down to the first support. The columns cost extra.",Deep Frontier construction materials
 Building.SteelLegDeck3x3H3.FlavorDescription,Steel legs find their own footing.,Deep Frontier construction materials
-Building.SteelLegDeck3x3H4.DisplayName,Steel deck 3×3 on legs (4 high),Deep Frontier construction materials
+Building.SteelLegDeck3x3H4.DisplayName,Steel Deck 3x3 on Legs (4 high),Deep Frontier construction materials
 Building.SteelLegDeck3x3H4.Description,"Places the deck 4 layers up, with steel columns under each corner down to the first support. The columns cost extra.",Deep Frontier construction materials
 Building.SteelLegDeck3x3H4.FlavorDescription,Steel legs find their own footing.,Deep Frontier construction materials
-Building.SteelLegDeck5x5H1.DisplayName,Steel deck 5×5 on legs (1 high),Deep Frontier construction materials
+Building.SteelLegDeck5x5H1.DisplayName,Steel Deck 5x5 on Legs (1 high),Deep Frontier construction materials
 Building.SteelLegDeck5x5H1.Description,"Places the deck 1 layer up, with steel columns under each corner down to the first support. The columns cost extra.",Deep Frontier construction materials
 Building.SteelLegDeck5x5H1.FlavorDescription,Steel legs find their own footing.,Deep Frontier construction materials
-Building.SteelLegDeck5x5H2.DisplayName,Steel deck 5×5 on legs (2 high),Deep Frontier construction materials
+Building.SteelLegDeck5x5H2.DisplayName,Steel Deck 5x5 on Legs (2 high),Deep Frontier construction materials
 Building.SteelLegDeck5x5H2.Description,"Places the deck 2 layers up, with steel columns under each corner down to the first support. The columns cost extra.",Deep Frontier construction materials
 Building.SteelLegDeck5x5H2.FlavorDescription,Steel legs find their own footing.,Deep Frontier construction materials
-Building.SteelLegDeck5x5H3.DisplayName,Steel deck 5×5 on legs (3 high),Deep Frontier construction materials
+Building.SteelLegDeck5x5H3.DisplayName,Steel Deck 5x5 on Legs (3 high),Deep Frontier construction materials
 Building.SteelLegDeck5x5H3.Description,"Places the deck 3 layers up, with steel columns under each corner down to the first support. The columns cost extra.",Deep Frontier construction materials
 Building.SteelLegDeck5x5H3.FlavorDescription,Steel legs find their own footing.,Deep Frontier construction materials
-Building.SteelLegDeck5x5H4.DisplayName,Steel deck 5×5 on legs (4 high),Deep Frontier construction materials
+Building.SteelLegDeck5x5H4.DisplayName,Steel Deck 5x5 on Legs (4 high),Deep Frontier construction materials
 Building.SteelLegDeck5x5H4.Description,"Places the deck 4 layers up, with steel columns under each corner down to the first support. The columns cost extra.",Deep Frontier construction materials
 Building.SteelLegDeck5x5H4.FlavorDescription,Steel legs find their own footing.,Deep Frontier construction materials
-Building.ReinforcedHydroTurbine.DisplayName,Reinforced hydroelectric turbine,Deep Frontier construction materials
-Building.ReinforcedHydroTurbine.Description,A dam outlet that makes power from the water flowing through it. Set the flow in its panel; more flow and a higher drop give more power.,Deep Frontier construction materials
+Building.ReinforcedHydroTurbine.DisplayName,Reinforced Hydroelectric Turbine,Deep Frontier construction materials
+Building.ReinforcedHydroTurbine.Description,A dam outlet that makes power from the water flowing through it: build it into a dam with its intake upstream. More flow and a higher drop give more power.,Deep Frontier construction materials
 Building.ReinforcedHydroTurbine.FlavorDescription,"A river, given a useful job.",Deep Frontier construction materials
 Building.MaterialsLaboratory.DisplayName,Materials Laboratory,Deep Frontier construction materials
-Building.MaterialsLaboratory.Description,"Produces science by testing gears, concrete and metal, or by assaying uranium ore and late-game samples. Pipes: valve set to Inlet.",Deep Frontier construction materials
+Building.MaterialsLaboratory.Description,"Produces science by testing gears, concrete and metal blocks, or by assaying uranium ore and other late-game samples. Pipes: valve set to Fill.",Deep Frontier construction materials
 Building.MaterialsLaboratory.FlavorDescription,Break a few samples. Build a better future.,Deep Frontier construction materials
 Recipe.MaterialsResearch.DisplayName,Materials research,Deep Frontier construction materials
 Recipe.GeochemicalAssay.DisplayName,Geochemical assays,Deep Frontier construction materials
-Building.SandstoneOutcrop.DisplayName,Sandstone outcrop,Deep Frontier construction materials
-Building.SandstoneOutcrop.Description,A finite sandstone deposit. A Sandstone Pit nearby digs it out.,Deep Frontier construction materials
-Building.SandstoneOutcrop.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Building.LimestoneOutcrop.DisplayName,Limestone outcrop,Deep Frontier construction materials
-Building.LimestoneOutcrop.Description,A finite limestone deposit. A Limestone Pit nearby digs it out.,Deep Frontier construction materials
-Building.LimestoneOutcrop.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Building.SandstoneSeam.DisplayName,Deep sandstone seam,Deep Frontier construction materials
+Building.SandstoneOutcrop.DisplayName,Sandstone Outcrop,Deep Frontier construction materials
+Building.SandstoneOutcrop.Description,A finite sandstone deposit. A Sandstone Pit in range digs it out.,Deep Frontier construction materials
+Building.SandstoneOutcrop.FlavorDescription,"Easy to dig, and gone before you know it.",Deep Frontier construction materials
+Building.LimestoneOutcrop.DisplayName,Limestone Outcrop,Deep Frontier construction materials
+Building.LimestoneOutcrop.Description,A finite limestone deposit. A Limestone Pit in range digs it out.,Deep Frontier construction materials
+Building.LimestoneOutcrop.FlavorDescription,"Shells of creatures long gone, waiting to become cement.",Deep Frontier construction materials
+Building.SandstoneSeam.DisplayName,Deep Sandstone Seam,Deep Frontier construction materials
 Building.SandstoneSeam.Description,An endless sandstone seam. Build a Sandstone Quarry over it.,Deep Frontier construction materials
-Building.SandstoneSeam.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Building.LimestoneSeam.DisplayName,Deep limestone seam,Deep Frontier construction materials
+Building.SandstoneSeam.FlavorDescription,Sandstone all the way down.,Deep Frontier construction materials
+Building.LimestoneSeam.DisplayName,Deep Limestone Seam,Deep Frontier construction materials
 Building.LimestoneSeam.Description,An endless limestone seam. Build a Limestone Quarry over it.,Deep Frontier construction materials
-Building.LimestoneSeam.FlavorDescription,The next age begins with a solid foundation.,Deep Frontier construction materials
-Good.RadioactiveSludge.DisplayName,Radioactive Water,Deep Frontier
-Good.RadioactiveSludge.PluralDisplayName,Radioactive Water,Deep Frontier
-Good.ContaminatedWater.DisplayName,Contaminated Water,Deep Frontier
-Good.ContaminatedWater.PluralDisplayName,Contaminated Water,Deep Frontier
-Need.Irradiation.DisplayName,Radioactive Zombie,Deep Frontier
-Status.Need.Irradiation,"Radioactive Zombie: shambles slowly, eats and drinks twice as much and cannot work. Needs 10 days of hospital care; untreated radiation sickness is fatal after 8 days.",Deep Frontier
-Status.Need.Irradiation.Short,Radioactive Zombie,Deep Frontier
-DeepFrontier.Radiation.Zombie.Subtitle,{0} · Radioactive Zombie,Deep Frontier
+Building.LimestoneSeam.FlavorDescription,An ancient sea left plenty behind.,Deep Frontier construction materials
+Good.RadioactiveSludge.DisplayName,Radioactive water,Deep Frontier
+Good.RadioactiveSludge.PluralDisplayName,Radioactive water,Deep Frontier
+Good.ContaminatedWater.DisplayName,Contaminated water,Deep Frontier
+Good.ContaminatedWater.PluralDisplayName,Contaminated water,Deep Frontier
+Need.Irradiation.DisplayName,Radioactive zombie,Deep Frontier
+Status.Need.Irradiation,"Radioactive zombie: shambles slowly, eats and drinks twice as much and cannot work. Needs 10 days of hospital care; untreated radiation sickness is fatal after 8 days.",Deep Frontier
+Status.Need.Irradiation.Short,Radioactive zombie,Deep Frontier
+DeepFrontier.Radiation.Zombie.Subtitle,{0} · Radioactive zombie,Deep Frontier
 DeepFrontier.Radiation.Zombie.Countdown,Dies in {0} days without hospital treatment.,Deep Frontier
 DeepFrontier.Radiation.Zombie.CountdownPaused,Hospital care has paused the radiation sickness: {0} days left untreated.,Deep Frontier
 DeepFrontier.Radiation.Zombie.Flavor,"Glows faintly, eats for two, works for nobody.",Deep Frontier
-DeepFrontier.Radiation.Zombie.Dying,Radioactive Zombie: dies in under 2 days without hospital treatment.,Deep Frontier
+DeepFrontier.Radiation.Zombie.Dying,Radioactive zombie: dies in under 2 days without hospital treatment.,Deep Frontier
 DeepFrontier.Radiation.Zombie.Dying.Short,Zombie dying,Deep Frontier
 Building.RadioactiveWasteExport.DisplayName,Radioactive Waste Export,Deep Frontier
-Building.RadioactiveWasteExport.Description,"Ships radioactive waste, radioactive water and contaminated water off the map for good. Its gate must sit on the map edge. Pipes: valve set to Inlet.",Deep Frontier
+Building.RadioactiveWasteExport.Description,"Ships radioactive waste, radioactive water and contaminated water off the map for good. Its gate must sit on the map edge. Pipes: valve set to Fill.",Deep Frontier
 Building.RadioactiveWasteExport.FlavorDescription,"Somewhere downstream, it is somebody else's problem.",Deep Frontier
 Building.RadioactiveSludgeOutfall.DisplayName,Radioactive Water Outfall,Deep Frontier
-Building.RadioactiveSludgeOutfall.Description,"Dumps radioactive water into the world, where it stops pumps and irradiates beavers and ground until it flows off an open map edge. Pipes: valve set to Inlet.",Deep Frontier
+Building.RadioactiveSludgeOutfall.Description,"Pours radioactive water out onto the map. Until it flows off the map edge, it stops pumps and irradiates beavers and the ground. Pipes: valve set to Fill.",Deep Frontier
 Building.RadioactiveSludgeOutfall.FlavorDescription,Out of sight is not out of the river.,Deep Frontier
 Building.RadioactiveSludgeRecoveryPump.DisplayName,Radioactive Water Recovery Pump,Deep Frontier
-Building.RadioactiveSludgeRecoveryPump.Description,Pumps radioactivity out of the water and barrels it for export. The middle of its back deck must stand over open water. Pipes: valve set to Outlet.,Deep Frontier
+Building.RadioactiveSludgeRecoveryPump.Description,Draws radioactivity out of rivers and lakes into barrels of radioactive water for export. The middle of its back edge must stand over water. Pipes: valve set to Extract.,Deep Frontier
 Building.RadioactiveSludgeRecoveryPump.FlavorDescription,The cleanup always takes longer than the spill.,Deep Frontier
 DeepFrontier.Radiation.Status.PumpBlocked,"Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.",Deep Frontier
 DeepFrontier.Radiation.Status.PumpBlocked.Short,Radiation detected,Deep Frontier
 DeepFrontier.Radiation.Status.StorageIrradiated,Stored water is irradiated and undrinkable.,Deep Frontier
 DeepFrontier.Radiation.DeletionBlocker.HazardousStock,"Holds radioactive waste, radioactive water or contaminated water. Empty it first: move the contents to other storage, or refine or export them.",Deep Frontier
 DeepFrontier.Radiation.Status.NoRadiation,No radioactive water at the intake.,Deep Frontier
-DeepFrontier.Radiation.WaterShares,"Water at the intake: {0}% fresh, {1}% bad, {2}% radioactive.",Deep Frontier
+DeepFrontier.Radiation.WaterShares,"Water at the intake: {0}% clean, {1}% badwater, {2}% radioactive.",Deep Frontier
 DeepFrontier.Radiation.Status.OutletBlocked,The outlet is blocked.,Deep Frontier
 DeepFrontier.Radiation.Placement.NotAtMapEdge,Must touch the map edge.,Deep Frontier
 DeepFrontier.Radiation.DeathMessage,{0} the radioactive zombie fell apart from untreated radiation sickness.,Deep Frontier
@@ -798,7 +759,7 @@ Building.RadioactiveSpring.Description,A natural spring of radioactive water. It
 Building.RadioactiveSpringSource.DisplayName,Radioactive Spring,Deep Frontier
 Building.RadioactiveSpringSource.Description,A natural spring of radioactive water. Its strength works like a water source; 0 stops it.,Deep Frontier
 Building.DeepWell.DisplayName,Deep Well,Deep Frontier
-Building.DeepWell.Description,"Place its drill over a water source, seep or badwater source to make it flow up to 6 times stronger. In a drought it needs 100,000 hp or the source dries up.",Deep Frontier
+Building.DeepWell.Description,"Build its drill over a water source, seep or badwater source to make it flow up to 6 times stronger. It uses steel as drill bits. In a drought it needs 100,000 hp or the source dries up.",Deep Frontier
 Building.DeepWell.FlavorDescription,"When the river runs dry, drill deeper.",Deep Frontier
 DeepFrontier.DeepWell.Placement.NoSource,"The drill must stand over a water source, water seep or badwater source.",Deep Frontier
 DeepFrontier.DeepWell.Placement.SourceTaken,Another Deep Well already drives this water source.,Deep Frontier
@@ -807,16 +768,16 @@ DeepFrontier.DeepWell.Status.NoDrillBits,No drill bits: the well needs steel to 
 DeepFrontier.DeepWell.Status.NoDrillBits.Short,No drill bits,Deep Frontier
 DeepFrontier.DeepWell.Status.NoSource,The water source under the drill is gone.,Deep Frontier
 DeepFrontier.DeepWell.Status.NoSource.Short,No water source,Deep Frontier
-DeepFrontier.DeepWell.Panel.Title,Deep well,Deep Frontier
+DeepFrontier.DeepWell.Panel.Title,Deep Well,Deep Frontier
 DeepFrontier.DeepWell.Panel.Boost,Source boost,Deep Frontier
-DeepFrontier.DeepWell.Panel.BoostValue,{0}×,Deep Frontier
+DeepFrontier.DeepWell.Panel.BoostValue,{0}x,Deep Frontier
 DeepFrontier.DeepWell.Panel.ShutOffDuringTide,Shut the source off during the radioactive tide,Deep Frontier
 DeepFrontier.DeepWell.Panel.Demand,Power at this boost: {0} hp,Deep Frontier
 DeepFrontier.DeepWell.Panel.DrillBits,"Drill bits: {0} per hour, {1} hours in stock",Deep Frontier
 DeepFrontier.DeepWell.Panel.Source,"Source strength: {0} set, {1} now",Deep Frontier
 DeepFrontier.DeepWell.Panel.Seep,A seep: while the well runs it pours like a normal source.,Deep Frontier
-DeepFrontier.DeepWell.Panel.Drought,"In a drought it runs only on its full 100,000 hp, at any boost, and drives the source at most 2×; short of full power it stops and the source dries up like any other.",Deep Frontier
-DeepFrontier.DeepWell.Panel.Capped,Limited by the source maximum of 8 per cell.,Deep Frontier
+DeepFrontier.DeepWell.Panel.Drought,"In a drought it runs only on its full 100,000 hp, at any boost, and drives the source at most 2 times as strong; short of full power it stops and the source dries up like any other.",Deep Frontier
+DeepFrontier.DeepWell.Panel.Capped,Capped: a water source cannot be stronger than 8 per tile.,Deep Frontier
 DeepFrontier.DeepWell.State.UnderConstruction,Under construction.,Deep Frontier
 DeepFrontier.DeepWell.State.NoSource,No water source under the drill.,Deep Frontier
 DeepFrontier.DeepWell.State.Paused,Paused: the source flows as normal.,Deep Frontier
@@ -825,8 +786,8 @@ DeepFrontier.DeepWell.State.SourceDormant,The source has not started flowing yet
 DeepFrontier.DeepWell.State.NoDrillBits,Waiting for drill bits: the source flows as normal.,Deep Frontier
 DeepFrontier.DeepWell.State.NoPower,No power: the source flows as normal.,Deep Frontier
 DeepFrontier.DeepWell.State.DroughtNoPower,"Drought: short of its full 100,000 hp, so the source is dry. Pause the well to free the power.",Deep Frontier
-DeepFrontier.DeepWell.State.Boosting,Driving the source at {0}×.,Deep Frontier
-DeepFrontier.DeepWell.State.DroughtBoosting,Drought: keeping the source flowing at {0}× (at most 2×).,Deep Frontier
+DeepFrontier.DeepWell.State.Boosting,Driving the source at {0}x its strength.,Deep Frontier
+DeepFrontier.DeepWell.State.DroughtBoosting,Drought: keeping the source flowing at {0}x its strength (at most 2x).,Deep Frontier
 DeepFrontier.ContaminationSensor.Substance,Measures,Deep Frontier
 DeepFrontier.ContaminationSensor.Substance.Badwater,Badwater,Deep Frontier
 DeepFrontier.ContaminationSensor.Substance.Radiation,Radiation,Deep Frontier
@@ -846,14 +807,14 @@ Need.StudyMetallurgy.DisplayName,Metallurgy studies,Deep Frontier workforce risk
 Need.StudyNuclear.DisplayName,Reactor studies,Deep Frontier workforce risks
 Need.StudyFlight.DisplayName,Flight studies,Deep Frontier workforce risks
 DeepFrontier.Workforce.Panel.Title,Workforce risks,Deep Frontier workforce risks
-DeepFrontier.Workforce.Panel.InjuryRisk,Injury risk: {0}. About {1}% per worker-hour while working; strained/exhausted workers face {2} times that.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Panel.InjuryRisk,Injury risk: {0}. About {1}% per worker-hour while working; strained or exhausted workers face {2} times that.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Panel.InjuriesDisabled,Injury risk: {0}. Injuries are switched off in this game's settings.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Panel.InjurySeverity,An accident takes {0} days to heal without a hospital; {1}% of accidents are fatal.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Panel.Crew,"Crew at the last check: {0} fit, {1} strained (low wellbeing or tired), {2} exhausted.",Deep Frontier workforce risks
 DeepFrontier.Workforce.Panel.Record,"Accidents here: {0} injured, {1} killed.",Deep Frontier workforce risks
-DeepFrontier.Workforce.Panel.BotWear,Bots wear out {0}× faster while working here.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Panel.BotWear,Bots wear out {0} times faster while working here.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Panel.BotsNotAllowed,Bots are not allowed here.,Deep Frontier workforce risks
-DeepFrontier.Workforce.Status.Exhausted,Exhausted workers: injury risk ×{0},Deep Frontier workforce risks
+DeepFrontier.Workforce.Status.Exhausted,Exhausted workers: {0} times the injury risk,Deep Frontier workforce risks
 DeepFrontier.Workforce.Specialists.Title,Specialist crew,Deep Frontier workforce risks
 DeepFrontier.Workforce.Specialists.Required,Only trained {0} can work here.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Specialists.Staffing,Posts filled: {0}. Unassigned {2} in this district: {1}.,Deep Frontier workforce risks
@@ -875,16 +836,16 @@ DeepFrontier.Workforce.Trait.Training,Studying: {0},Deep Frontier workforce risk
 DeepFrontier.Workforce.Notification.Graduated,{0} graduated as a {1}.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Notification.SkillLost,"Skill lost: {0}, a {1}, has died. {2} left.",Deep Frontier workforce risks
 DeepFrontier.Workforce.FatalAccident,{0} was killed in an industrial accident at the {1}.,Deep Frontier workforce risks
-DeepFrontier.Workforce.Bot.Wearing,Wearing out {0}× faster at the {1}.,Deep Frontier workforce risks
-DeepFrontier.Workforce.Bot.Assigned,Assigned to the {1}: wears out {0}× faster inside.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Bot.Wearing,Wearing out {0} times faster at the {1}.,Deep Frontier workforce risks
+DeepFrontier.Workforce.Bot.Assigned,Assigned to the {1}: wears out {0} times faster inside.,Deep Frontier workforce risks
 Recipe.IndustrialBot.DisplayName,Industrial bot,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Panel.Title,Bot maintenance,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Panel.Bots,Bots assigned: {0}. Serviced: {1}.,Deep Frontier bot upkeep
-DeepFrontier.BotUpkeep.Panel.NoBots,No bots assigned: maintenance oil is only stocked while bots work here.,Deep Frontier bot upkeep
-DeepFrontier.BotUpkeep.Panel.Good,{0}: {1} in stock. A bot serviced with it wears out {2}× here.,Deep Frontier bot upkeep
-DeepFrontier.BotUpkeep.Panel.Dose,"One dose lasts {0} hours of work here; unserviced bots wear out {1}×. Bots take the first oil in stock, in the order listed.",Deep Frontier bot upkeep
-DeepFrontier.BotUpkeep.Bot.Serviced,Serviced with {0}: wears out {1}× here for {2} more hours.,Deep Frontier bot upkeep
-DeepFrontier.BotUpkeep.Bot.Unserviced,Not serviced: stock maintenance oil at the {0} to slow wear.,Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Panel.NoBots,No bots assigned: maintenance goods are stocked only while bots work here.,Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Panel.Good,{0}: {1} in stock. A bot serviced with it wears out {2} times as fast here.,Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Panel.Dose,"One dose lasts {0} hours of work here; unserviced bots wear out {1} times as fast. Bots take the first good in stock, in the order listed.",Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Bot.Serviced,Serviced with {0}: wears out {1} times as fast here for {2} more hours.,Deep Frontier bot upkeep
+DeepFrontier.BotUpkeep.Bot.Unserviced,Not serviced: stock maintenance goods at the {0} to slow its wear.,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.Panel.Title,Upkeep,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.Panel.GoodName,{0} ({1}),Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.Panel.Good,"{0}: {1} in stock, {2} used per hour at full crew.",Deep Frontier bot upkeep
@@ -898,10 +859,10 @@ DeepFrontier.WorkplaceUpkeep.SteelDrillBits.Status.Short,No drill bits,Deep Fron
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Name,Shaft lining,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Status,Waiting for shaft lining: production has stopped until haulers bring concrete.,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Status.Short,No shaft lining,Deep Frontier bot upkeep
-Good.ReinforcedBotFrame.DisplayName,Reinforced Bot Frame,Deep Frontier reactor bots
-Good.ReinforcedBotFrame.PluralDisplayName,Reinforced Bot Frames,Deep Frontier reactor bots
-Good.ReactorPowerCell.DisplayName,Reactor Power Cell,Deep Frontier reactor bots
-Good.ReactorPowerCell.PluralDisplayName,Reactor Power Cells,Deep Frontier reactor bots
+Good.ReinforcedBotFrame.DisplayName,Reinforced bot frame,Deep Frontier reactor bots
+Good.ReinforcedBotFrame.PluralDisplayName,Reinforced bot frames,Deep Frontier reactor bots
+Good.ReactorPowerCell.DisplayName,Reactor power cell,Deep Frontier reactor bots
+Good.ReactorPowerCell.PluralDisplayName,Reactor power cells,Deep Frontier reactor bots
 Need.ReactorRetrofitFrame.DisplayName,Retrofit: reinforced frame,Deep Frontier reactor bots
 Need.ReactorRetrofitCell.DisplayName,Retrofit: reactor power cell,Deep Frontier reactor bots
 Need.ReactorCharge.DisplayName,Reactor charge,Deep Frontier reactor bots
@@ -915,10 +876,10 @@ Building.ReactorChargingBay.DisplayName,Reactor Charging Bay,Deep Frontier react
 Building.ReactorChargingBay.Description,"Charges two Reactor Bots at once, burning enriched fuel while it charges. Ordinary bots use the Charging Station.",Deep Frontier reactor bots
 Building.ReactorChargingBay.FlavorDescription,"Two hours on the cradle, a week on the job.",Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Title,Reactor retrofit,Deep Frontier reactor bots
-DeepFrontier.ReactorBot.Panel.Ordinary,"A Reinforced Bot Frame and Reactor Power Cell retrofit makes this bot a Reactor Bot: 5× load, 4× speed, 10× lifespan, charged at a Reactor Charging Bay every 6.9 days. Upkeep: coolant (2 kinds) and steel plating from storage.",Deep Frontier reactor bots
-DeepFrontier.ReactorBot.Panel.Queued,Retrofit queued: the bot fetches a Reinforced Bot Frame and Reactor Power Cell from storage as soon as its district stocks them.,Deep Frontier reactor bots
-DeepFrontier.ReactorBot.Panel.Upgraded,"Reactor Bot: 5× load, 4× speed, wears out 10× slower. Charges at a Reactor Charging Bay.",Deep Frontier reactor bots
-DeepFrontier.ReactorBot.Panel.Unplated,No steel plating: wearing out 5× faster until it takes steel or alloy.,Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Ordinary,"Retrofit with a reinforced bot frame and a reactor power cell to make this bot a Reactor Bot: 5 times the load, 4 times the speed and 10 times the lifespan. It charges at a Reactor Charging Bay every 6.9 days and takes reactor coolant water or cryocoolant and steel or alloy from storage.",Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Queued,Retrofit queued: the bot fetches a reinforced bot frame and a reactor power cell from storage as soon as its district stocks them.,Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Upgraded,"Reactor Bot: 5 times the load and 4 times the speed, and it wears out 10 times slower. Charges at a Reactor Charging Bay.",Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Unplated,No plating: wearing out 5 times faster until it takes steel or alloy from storage.,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Queue,Retrofit to Reactor Bot,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Cancel,Cancel retrofit,Deep Frontier reactor bots
 ToolGroups.DeepFrontierDeepMining,Deep mining,Deep Frontier toolbar group
@@ -931,7 +892,7 @@ ToolGroups.DeepFrontierTeleporters,Teleporters,Deep Frontier toolbar group
 ToolGroups.DeepFrontierTubeways,Tubeways,Deep Frontier toolbar group
 ToolGroups.DeepFrontierSuspensionBridges,Suspension bridges,Deep Frontier toolbar group
 ToolGroups.DeepFrontierOverhangs,Overhangs,Deep Frontier toolbar group
-ToolGroups.DeepFrontierConcreteScaffolds,Concrete scaffolds,Deep Frontier toolbar group
+ToolGroups.DeepFrontierConcreteScaffolds,Concrete platforms,Deep Frontier toolbar group
 ToolGroups.DeepFrontierConcretePlatforms,Concrete side platforms,Deep Frontier toolbar group
 ToolGroups.DeepFrontierSteelStructures,Steel structures,Deep Frontier toolbar group
 ToolGroups.DeepFrontierWaterPower,Water power,Deep Frontier toolbar group
@@ -943,7 +904,7 @@ ToolGroups.DeepFrontierDynamite,Dynamite,Deep Frontier toolbar group
 ToolGroups.DeepFrontierMasonryBlocks,Masonry and concrete,Deep Frontier toolbar group
 ToolGroups.DeepFrontierRadioactiveWaste,Radioactive waste,Deep Frontier toolbar group
 ToolGroups.DeepFrontierCivicServices,Civic services,Deep Frontier toolbar group
-DeepFrontier.Power.Status.NotConnected,Not connected to a power source. Connect it to a generator with shafts or power lines.,Deep Frontier
+DeepFrontier.Power.Status.NotConnected,Not connected to a power source. Connect it to a generator with power shafts or power lines.,Deep Frontier
 DeepFrontier.Power.Status.NotConnected.Short,Not connected to power,Deep Frontier
 DeepFrontier.MapSetup.SmallTitle,Deep Frontier is EXTREMELY difficult on {0},Deep Frontier map setup
 DeepFrontier.MapSetup.SmallIntro,"Small map: {0} has {1} tiles, and the Deep Frontier late game is built for maps of at least {2} tiles.",Deep Frontier map setup

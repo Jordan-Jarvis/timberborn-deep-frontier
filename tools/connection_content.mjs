@@ -421,13 +421,15 @@ export async function connectionTemplates(dataRoot) {
 
 // How to pipe a building: one short clause appended to its description, the
 // same wording everywhere. Target ports take and give through a Timber Pipes
-// valve against a flat wall (Inlet feeds the building, Outlet drains it); a
-// Liquid stockpile's tank ports meet transport pipes directly.
+// One-way Valve (or One-way Elbow) against a flat wall; the valve's panel names its two modes
+// "Fill" (feeds the building, port state OpenIn) and "Extract" (drains it,
+// OpenOut) (Timber Pipes 11.4 enUS LV.TPi.ValveInlet / ValveOutlet). A Liquid
+// stockpile's tank ports meet transport pipes directly.
 export const PIPE_PHRASES = {
-  in: 'Pipes: valve set to Inlet.',
-  out: 'Pipes: valve set to Outlet.',
-  both: 'Pipes: valves set to Inlet and Outlet.',
-  tank: 'Pipes: connect directly.',
+  in: 'Pipes: valve set to Fill.',
+  out: 'Pipes: valve set to Extract.',
+  both: 'Pipes: valves set to Fill and Extract.',
+  tank: 'Pipes: connect directly, no valve.',
 };
 export function pipePhrase(state, tank) {
   if (tank) return PIPE_PHRASES.tank;

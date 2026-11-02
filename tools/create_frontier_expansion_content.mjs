@@ -259,12 +259,13 @@ for (const planned of progression.plannedBuildings) {
 // product with another recipe of the same building; the others show their
 // product's plural name.
 const RECIPE_NAMES = {
-  CarbonFilterMedia: 'Activated carbon filters',
-  BrineChemical: 'Chemical from brine',
-  GreenhouseAquaponics: 'Aquaponic kohlrabi and fish',
-  FuelReprocessing: 'Spent fuel reprocessing',
-  ContaminatedWaterRefining: 'Waste refining with contaminated water',
-  BadwaterFiltering: 'Badwater filtering',
+  CarbonFilterMedia: 'Filter media from coal',
+  BrineChemical: 'Chemicals from concentrated waste',
+  GreenhouseAquaponics: 'Kohlrabi and fresh fish',
+  FuelReprocessing: 'Enriched fuel from radioactive waste',
+  ContaminatedWaterRefining: 'Radioactive water from contaminated water',
+  DecontaminateWater: 'Water from contaminated water',
+  BadwaterFiltering: 'Water from badwater',
 };
 for (const id of Object.keys(RECIPE_NAMES)) if (!recipeDefinitions.some(([recipe]) => recipe === id)) throw new Error(`RECIPE_NAMES names undefined recipe ${id}`);
 
@@ -289,26 +290,26 @@ async function makeRecipe([id, outputLabel, hours, ingredients, products, iconId
 }
 
 const buildingDefinitions = [
-  ['FertilizerWorks', 'Buildings/Food/FertilizerWorks', 'OilPress', 'Fertilizer', 'Food', 32, 80, 2, 350, 'Fertilizer works'],
-  ['FishHatchery', 'Buildings/Food/FishHatchery', 'HydroponicGarden', 'JuvenileFish', 'Food', 33, 55, 2, 600, 'Fish hatchery'],
-  ['FisheryWorks', 'Buildings/Food/FisheryWorks', 'FoodFactory', 'FreshFish,FishOil', 'Food', 34, 80, 3, 900, 'Fishery works'],
-  ['FoodPackagingWorks', 'Buildings/Food/FoodPackagingWorks', 'FoodFactory', 'CannedFish', 'Food', 35, 140, 3, 1400, 'Food packaging works'],
-  ['PublicHealthLab', 'Buildings/Wellbeing/PublicHealthLab', 'OilPress', 'Medicine', 'Wellbeing', 36, 100, 3, 1000, 'Public health lab'],
-  ['GroceryStore', 'Buildings/Food/GroceryStore', 'FoodFactory', '', 'Wellbeing', 37, progression.groceryStore.powerDemandHp, progression.groceryStore.workers, progression.groceryStore.scienceUnlock, 'Grocery store'],
+  ['FertilizerWorks', 'Buildings/Food/FertilizerWorks', 'OilPress', 'Fertilizer', 'Food', 32, 80, 2, 350, 'Fertilizer Works'],
+  ['FishHatchery', 'Buildings/Food/FishHatchery', 'HydroponicGarden', 'JuvenileFish', 'Food', 33, 55, 2, 600, 'Fish Hatchery'],
+  ['FisheryWorks', 'Buildings/Food/FisheryWorks', 'FoodFactory', 'FreshFish,FishOil', 'Food', 34, 80, 3, 900, 'Fishery Works'],
+  ['FoodPackagingWorks', 'Buildings/Food/FoodPackagingWorks', 'FoodFactory', 'CannedFish', 'Food', 35, 140, 3, 1400, 'Food Packaging Works'],
+  ['PublicHealthLab', 'Buildings/Wellbeing/PublicHealthLab', 'OilPress', 'Medicine', 'Wellbeing', 36, 100, 3, 1000, 'Public Health Lab'],
+  ['GroceryStore', 'Buildings/Food/GroceryStore', 'FoodFactory', '', 'Wellbeing', 37, progression.groceryStore.powerDemandHp, progression.groceryStore.workers, progression.groceryStore.scienceUnlock, 'Grocery Store'],
   ['Restaurant', 'Buildings/Food/Restaurant', 'FoodFactory', progression.restaurant.kitchenRecipes.join(','), 'Wellbeing', 38, progression.restaurant.powerDemandHp, 4, 1000, 'Restaurant'],
   ['Hospital', 'Buildings/Wellbeing/Hospital', 'FoodFactory', '', 'Wellbeing', 39, progression.hospital.powerDemandHp, progression.hospital.workers, progression.hospital.scienceUnlock, 'Hospital'],
   ['Greenhouse', 'Buildings/Food/Greenhouse', 'HydroponicGarden', 'GreenhouseEggplant,GreenhouseKohlrabi,GreenhouseCoffee,GreenhouseAquaponics', 'Food', 40, 35, 1, 600, 'Greenhouse'],
-  ['ChemicalWorks', 'Buildings/Metal/ChemicalWorks', 'Smelter', 'Chemical,BrineChemical,Polymer,Cryocoolant', 'Metal', 41, 3500, 8, 4000, 'Chemical works'],
-  ['PrecisionMachineWorks', 'Buildings/Metal/PrecisionMachineWorks', 'BotPartFactory', 'MachineCore,Electronics,PowerModule,ReinforcedBotChassis,ServoBotLimbs,BotCortex', 'Metal', 42, 2200, 6, 5000, 'Precision machine works'],
-  ['WaterTreatmentPlant', 'Buildings/Water/WaterTreatmentPlant', 'Centrifuge', 'PureWater,ReactorCoolantWater,FilterMedia,CarbonFilterMedia', 'Water', 43, 500, 4, 1800, 'Water treatment plant'],
-  ['TechnicalSchool', 'Buildings/Science/TechnicalSchool', 'Inventor', '', 'Science', 44, 300, 4, 2200, 'Technical school'],
-  ['UraniumProcessingPlant', 'Buildings/Metal/UraniumProcessingPlant', 'Centrifuge', 'Yellowcake,EnrichedFuel,FuelReprocessing', 'Metal', 45, 5000, 6, progression.implementedBuildingScienceOverrides.UraniumProcessingPlant, 'Uranium processing plant'],
-  ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,BadwaterFiltering', 'Metal', 46, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive waste refinery'],
-  ['ElectrolysisPlant', 'Buildings/Metal/ElectrolysisPlant', 'Centrifuge', 'Electrolysis', 'Metal', 47, 6000, 5, 10000, 'Electrolysis plant'],
-  ['CryogenicLiquefactionPlant', 'Buildings/Metal/CryogenicLiquefactionPlant', 'Centrifuge', 'Liquefaction', 'Metal', 48, 10000, 6, 12000, 'Cryogenic liquefaction plant'],
-  ['RocketAssemblyHangar', 'Buildings/Metal/RocketAssemblyHangar', 'FoodFactory', 'RocketAirframe,PropulsionPackage', 'Metal', 49, 12000, 10, 50000, 'Rocket assembly hangar'],
-  ['MissionControl', 'Buildings/Science/MissionControl', 'Inventor', 'GuidanceComputer,MissionPayload,GuidanceTelemetry', 'Science', 110, 1500, 4, 30000, 'Mission control'],
-  ['LaunchPad', 'Buildings/Metal/LaunchPad', 'FoodFactory', 'GuidanceTelemetry', 'Metal', 51, 25000, 8, 80000, 'Launch pad'],
+  ['ChemicalWorks', 'Buildings/Metal/ChemicalWorks', 'Smelter', 'Chemical,BrineChemical,Polymer,Cryocoolant', 'Metal', 41, 3500, 8, 4000, 'Chemical Works'],
+  ['PrecisionMachineWorks', 'Buildings/Metal/PrecisionMachineWorks', 'BotPartFactory', 'MachineCore,Electronics,PowerModule,ReinforcedBotChassis,ServoBotLimbs,BotCortex', 'Metal', 42, 2200, 6, 5000, 'Precision Machine Works'],
+  ['WaterTreatmentPlant', 'Buildings/Water/WaterTreatmentPlant', 'Centrifuge', 'PureWater,ReactorCoolantWater,FilterMedia,CarbonFilterMedia', 'Water', 43, 500, 4, 1800, 'Water Treatment Plant'],
+  ['TechnicalSchool', 'Buildings/Science/TechnicalSchool', 'Inventor', '', 'Science', 44, 300, 4, 2200, 'Technical School'],
+  ['UraniumProcessingPlant', 'Buildings/Metal/UraniumProcessingPlant', 'Centrifuge', 'Yellowcake,EnrichedFuel,FuelReprocessing', 'Metal', 45, 5000, 6, progression.implementedBuildingScienceOverrides.UraniumProcessingPlant, 'Uranium Processing Plant'],
+  ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,BadwaterFiltering', 'Metal', 46, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive Waste Refinery'],
+  ['ElectrolysisPlant', 'Buildings/Metal/ElectrolysisPlant', 'Centrifuge', 'Electrolysis', 'Metal', 47, 6000, 5, 10000, 'Electrolysis Plant'],
+  ['CryogenicLiquefactionPlant', 'Buildings/Metal/CryogenicLiquefactionPlant', 'Centrifuge', 'Liquefaction', 'Metal', 48, 10000, 6, 12000, 'Cryogenic Liquefaction Plant'],
+  ['RocketAssemblyHangar', 'Buildings/Metal/RocketAssemblyHangar', 'FoodFactory', 'RocketAirframe,PropulsionPackage', 'Metal', 49, 12000, 10, 50000, 'Rocket Assembly Hangar'],
+  ['MissionControl', 'Buildings/Science/MissionControl', 'Inventor', 'GuidanceComputer,MissionPayload,GuidanceTelemetry', 'Science', 110, 1500, 4, 30000, 'Mission Control'],
+  ['LaunchPad', 'Buildings/Metal/LaunchPad', 'FoodFactory', 'GuidanceTelemetry', 'Metal', 51, 25000, 8, 80000, 'Launch Pad'],
   // Planned buildings integrated from their late-game studies (build 122):
   // recipes, menu, power, workers and science come from their
   // frontier_progression.json plannedBuildings entry.
@@ -335,36 +336,54 @@ function plannedRow(id, outputPath, template) {
 // Pad (rocket_program_content.mjs) and the Nuclear Reactor, vault and refinery
 // (meltdown_content.mjs); the Hospital's comes from hospital_building_content.mjs.
 // bot_upkeep_content.mjs and connection_content.mjs append the upkeep and pipe clauses.
-const INDUSTRY_FLAVOR = "The colony's next industrial step is visible in every pipe and belt.";
+// Flavor lines are one per building, in the vanilla manner (a wry line about the
+// place, not a rule); tools/validate_building_descriptions.mjs rejects a flavor
+// shared by two different buildings.
 const BUILDING_TEXT = {
-  FertilizerWorks: ['Makes fertilizer for the Greenhouse.', INDUSTRY_FLAVOR],
-  FishHatchery: ['Breeds juvenile fish. Build it over a river so its pens stand in clean water; it stops during droughts and badwater.', INDUSTRY_FLAVOR],
-  FisheryWorks: ['Raises fresh fish from juvenile fish, or presses fish into fish oil.', INDUSTRY_FLAVOR],
-  FoodPackagingWorks: ['Cans fresh fish into canned fish that keeps.', INDUSTRY_FLAVOR],
-  PublicHealthLab: ['Makes medicine for the Hospital.', INDUSTRY_FLAVOR],
-  GroceryStore: ['A neighborhood shop for canned fish, rations and fermented food. Staffed and stocked with three or more foods, it gives nearby beavers up to +2 wellbeing.', INDUSTRY_FLAVOR],
-  Restaurant: ['Serves whatever food is stocked and bakes sweet berry cake. A meal of fish, berries, fermented mushrooms and eggplant rations gives Fine Dining.',
+  FertilizerWorks: ['Makes fertilizer from logs and algae for the Greenhouse.',
+    'Logs and algae go in. Nobody asks about the smell.'],
+  FishHatchery: ['Breeds juvenile fish. Build it over a river: its pens need clean water and stop if they dry out or turn to badwater.',
+    'Thousands of tiny fish and one very patient beaver.'],
+  FisheryWorks: ['Grows juvenile fish into fresh fish, or presses fresh fish into fish oil.',
+    'Grow them big, then press the rest for oil.'],
+  FoodPackagingWorks: ['Cans fresh fish with fish oil in metal tins. Canned fish feeds beavers and stocks the Grocery Store.',
+    'Fish in a tin: the frontier lunch, whether it likes it or not.'],
+  PublicHealthLab: ['Makes medicine from mushrooms and algae for the Hospital and the Technical School.',
+    'Mushrooms, algae and a great deal of careful stirring.'],
+  GroceryStore: ['A neighborhood shop for canned fish, rations and fermented food. Staffed and stocked with three or more foods, it gives nearby beavers up to +2 wellbeing.',
+    'Everything a busy beaver needs, two paws from home.'],
+  Restaurant: ['Serves food at its tables and makes sweet berry cake and fermented food. A meal of fresh fish, berries, fermented mushrooms and an eggplant ration gives Fine dining.',
     'A good meal deserves a table, a view and good company.'],
-  Hospital: [null, INDUSTRY_FLAVOR], // HOSPITAL_DESCRIPTION
-  Greenhouse: ['Grows eggplant, kohlrabi and coffee indoors from fertilizer and water, and can raise fish.', INDUSTRY_FLAVOR],
-  ChemicalWorks: ['Makes chemicals, polymer and cryocoolant from crude oil and extract.', INDUSTRY_FLAVOR],
-  PrecisionMachineWorks: ['Builds machine cores, electronics, power modules and bot parts.', INDUSTRY_FLAVOR],
-  WaterTreatmentPlant: ['Purifies water, makes reactor coolant and filter media, and filters badwater.', INDUSTRY_FLAVOR],
-  TechnicalSchool: ['Beavers study here in their free time to become metallurgists, reactor operators or flight engineers. Choose what it teaches in its panel.', INDUSTRY_FLAVOR],
-  UraniumProcessingPlant: ['Turns uranium ore into enriched fuel and reactor power cells.', INDUSTRY_FLAVOR],
+  Hospital: [null, 'Rest, clean water and a very strict ward nurse.'], // HOSPITAL_DESCRIPTION
+  Greenhouse: ['Grows eggplants, kohlrabi and coffee beans indoors with fertilizer. Aquaponics also raises fresh fish from juvenile fish.',
+    'Summer all year round, under glass.'],
+  ChemicalWorks: ['Makes chemicals and polymer from crude oil and extract, and cryocoolant from polymer and grease.',
+    'Oil and extract go in, chemistry comes out, and the smell stays.'],
+  PrecisionMachineWorks: ['Builds machine cores, electronics, power modules, bot parts and reinforced bot frames.',
+    'Measure twice, file once, and never sneeze near the electronics.'],
+  WaterTreatmentPlant: ['Filters water into pure water, leaving concentrated waste, and makes filter media and reactor coolant water.',
+    'Every barrel tested, every filter changed on time.'],
+  TechnicalSchool: ['Beavers study here in their free time to become metallurgists, reactor operators or flight engineers. Each school teaches one, chosen in its panel.',
+    'Night classes for beavers who want a dangerous job done properly.'],
+  UraniumProcessingPlant: ['Turns uranium ore into enriched fuel and reactor power cells, and reprocesses spent fuel. Its fuel leaves radioactive waste.',
+    'Yellowcake is not for eating, however much it looks like it.'],
   // Replaced by meltdown_content.mjs (PRODUCER_DESCRIPTIONS) with its risk text.
-  RadioactiveWasteRefinery: ['Refines radioactive waste.', INDUSTRY_FLAVOR],
-  ElectrolysisPlant: ['Splits pure water into hydrogen and oxygen gas.', INDUSTRY_FLAVOR],
-  CryogenicLiquefactionPlant: ['Liquefies hydrogen and oxygen into rocket fuel.', INDUSTRY_FLAVOR],
-  RocketAssemblyHangar: ['Builds rocket airframes and propulsion packages for the Launch Pad.', INDUSTRY_FLAVOR],
-  MissionControl: ['Turns recovered artifacts into guidance computers, mission payloads and telemetry for rocket launches.', INDUSTRY_FLAVOR],
+  RadioactiveWasteRefinery: ['Refines radioactive waste.', 'It turns a problem you store into a problem you can ship.'],
+  ElectrolysisPlant: ['Splits pure water into hydrogen gas and oxygen gas.',
+    'Water goes in. Two very excitable gases come out.'],
+  CryogenicLiquefactionPlant: ['Chills hydrogen and oxygen gas with cryocoolant into liquid hydrogen and liquid oxygen, the rocket fuel.',
+    'So cold that the frost has frost.'],
+  RocketAssemblyHangar: ['Builds rocket airframes and propulsion packages for the Launch Pad.',
+    'The tallest thing the colony has ever built, one piece at a time.'],
+  MissionControl: ['Turns recovered artifacts into guidance computers, mission payloads and telemetry. Staffed and powered, it lowers the launch risk.',
+    'Old human drives, new beaver math and a lot of coffee.'],
   // Replaced by rocket_program_content.mjs (GENERIC_PAD_DESCRIPTION).
-  LaunchPad: ["Launches the colony's rockets.", INDUSTRY_FLAVOR],
+  LaunchPad: ["Launches the colony's rockets.", 'Everything the colony has learned, pointed at the sky.'],
   SteelMill: ['Makes steel and alloy from deep iron, coal and limestone. Only trained metallurgists can work here, and the work is dangerous.',
     'Every reactor, rocket and machine core starts as a white-hot pour on this floor.'],
-  ArchiveExcavation: [`Digs up human artifacts anywhere for Mission Control. Within ${CACHE.spec.SurveyRadius} tiles of a Human Record Cache, it also surveys the cache for bonus artifacts.`,
+  ArchiveExcavation: [`Digs up recovered artifacts anywhere with explosives. Within ${CACHE.spec.SurveyRadius} tiles of a Human Record Cache, it also surveys the cache for ${CACHE.spec.RewardAmount} more.`,
     'The humans buried their warnings in the strata. Dig carefully.'],
-  CryogenicTankFarm: ['Stores one fuel: liquid hydrogen or liquid oxygen. Needs power to keep it cold; without power the fuel starts to vent.',
+  CryogenicTankFarm: ['Stores one fuel: liquid hydrogen or liquid oxygen. It takes fuel only while powered; without power the fuel starts to vent.',
     'The coldest place in the colony, kept that way at great expense.'],
 };
 
@@ -735,14 +754,38 @@ const csvCell = (value) => {
   return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 };
 const csvRow = (id, text, comment = 'Deep Frontier') => [id, text, comment].map(csvCell).join(',');
-// Display names that differ from the id (progression sets 2026-10-31: the id
-// HighGradeSteel stays, so saves are unaffected).
-const GOOD_DISPLAY_NAMES = {HighGradeSteel: 'Steel'};
+// Good names, [singular, plural], in the vanilla style: sentence case, with a
+// plural for countable goods (vanilla "Metal block" / "Metal blocks"). The ids
+// stay (HighGradeSteel is shown as Steel since the progression sets of
+// 2026-10-31), so saves are unaffected. Recipes without an authored name show
+// their product's plural.
+const GOOD_DISPLAY_NAMES = {
+  Coal: ['Coal', 'Coal'], Chemical: ['Chemical', 'Chemicals'],
+  RecoveredArtifact: ['Recovered artifact', 'Recovered artifacts'], Fertilizer: ['Fertilizer', 'Fertilizer'],
+  FreshFish: ['Fresh fish', 'Fresh fish'], JuvenileFish: ['Juvenile fish', 'Juvenile fish'], FishOil: ['Fish oil', 'Fish oil'],
+  CannedFish: ['Canned fish', 'Canned fish'], Medicine: ['Medicine', 'Medicine'],
+  SweetBerryCake: ['Sweet berry cake', 'Sweet berry cakes'], HighGradeSteel: ['Steel', 'Steel'], Alloy: ['Alloy', 'Alloy'],
+  Polymer: ['Polymer', 'Polymer'], Lubricant: ['Lubricant', 'Lubricant'],
+  MachineCore: ['Machine core', 'Machine cores'], PowerModule: ['Power module', 'Power modules'],
+  FilterMedia: ['Filter media', 'Filter media'], ConcentratedWaste: ['Concentrated waste', 'Concentrated waste'],
+  CrudeOil: ['Crude oil', 'Crude oil'], UraniumOre: ['Uranium ore', 'Uranium ore'], Yellowcake: ['Yellowcake', 'Yellowcake'],
+  EnrichedFuel: ['Enriched fuel', 'Enriched fuel'], PureWater: ['Pure water', 'Pure water'],
+  HydrogenGas: ['Hydrogen gas', 'Hydrogen gas'], OxygenGas: ['Oxygen gas', 'Oxygen gas'],
+  LiquidHydrogen: ['Liquid hydrogen', 'Liquid hydrogen'], LiquidOxygen: ['Liquid oxygen', 'Liquid oxygen'],
+  Cryocoolant: ['Cryocoolant', 'Cryocoolant'], RadioactiveWaste: ['Radioactive waste', 'Radioactive waste'],
+  RocketAirframe: ['Rocket airframe', 'Rocket airframes'], PropulsionPackage: ['Propulsion package', 'Propulsion packages'],
+  GuidanceComputer: ['Guidance computer', 'Guidance computers'], MissionPayload: ['Mission payload', 'Mission payloads'],
+  RecoveredTelemetry: ['Recovered telemetry', 'Recovered telemetry'],
+  IndustrialLicense: ['Industrial license', 'Industrial licenses'], SpecialistLicense: ['Specialist license', 'Specialist licenses'],
+  FlightLicense: ['Flight license', 'Flight licenses'], Electronics: ['Electronics', 'Electronics'],
+  ReactorCoolantWater: ['Reactor coolant water', 'Reactor coolant water'], RecoveredMinerals: ['Recovered minerals', 'Recovered minerals'],
+};
 for (const id of Object.keys(GOOD_DISPLAY_NAMES)) if (!goodDefinitions.some(([good]) => good === id)) throw new Error(`GOOD_DISPLAY_NAMES names undefined good ${id}`);
 for (const [id] of goodDefinitions) {
-  const display = GOOD_DISPLAY_NAMES[id] ?? id.replace(/([A-Z])/g, ' $1').trim();
-  rows.push(csvRow(`Good.${id}.DisplayName`, display));
-  rows.push(csvRow(`Good.${id}.PluralDisplayName`, display));
+  if (!Object.hasOwn(GOOD_DISPLAY_NAMES, id)) throw new Error(`No display name for good ${id} (GOOD_DISPLAY_NAMES)`);
+  const [singular, plural] = GOOD_DISPLAY_NAMES[id];
+  rows.push(csvRow(`Good.${id}.DisplayName`, singular));
+  rows.push(csvRow(`Good.${id}.PluralDisplayName`, plural));
 }
 for (const definition of buildingDefinitions) {
   const id = definition[0];
@@ -754,18 +797,18 @@ for (const definition of buildingDefinitions) {
 }
 for (const id of Object.keys(BUILDING_TEXT)) if (!buildingDefinitions.some(([building]) => building === id)) throw new Error(`BUILDING_TEXT names unknown building ${id}`);
 {
-  rows.push(csvRow('Building.SmogScrubber.DisplayName', 'Smog scrubber'));
+  rows.push(csvRow('Building.SmogScrubber.DisplayName', 'Smog Scrubber'));
   // Its share and range are in the tooltip's smog section (DeepFrontier.Smog.Scrubber.Planned).
   rows.push(csvRow('Building.SmogScrubber.Description', 'Cleans smog out of the air around it while powered. No workers.'));
   rows.push(csvRow('Building.SmogScrubber.FlavorDescription', 'What goes up the smokestack comes down in the scrubber.'));
 }
 // Wellbeing attractions: names and needs from frontier_progression.json.
 const WELLBEING_TEXT = {
-  Bathhouse: [() => 'Steam baths: Mud Bath, Massager and Wet Fur in one visit. Uses water.',
+  Bathhouse: [() => 'Steam baths that count as a Mud Bath and a Massager and give Wet fur, all in one visit. Uses water.',
     'The boilers run hot so the colony can run warm.'],
-  TownPlaza: [() => 'A square where beavers dance and gather (Dance Pit and Campfire). Needs no power or supplies.',
+  TownPlaza: [() => 'A square where beavers dance and gather: it counts as a Dance Pit and a Campfire. Needs no power or supplies.',
     'Every frontier town needs one place where nothing is being built.'],
-  ObservationDeck: [() => 'A viewing tower: the climb counts as Exercise Plaza and the deck as Rooftop Terrace.',
+  ObservationDeck: [() => 'A viewing tower: the climb counts as an Exercise Plaza and the deck as a Rooftop Terrace.',
     'From up here, the whole frontier fits in one look.'],
 };
 for (const entry of WELLBEING) {
@@ -779,8 +822,10 @@ for (const id of ['NuclearReactor', 'RadioactiveWasteVault']) {
   rows.push(csvRow(`Building.${id}.DisplayName`, display));
   rows.push(csvRow(`Building.${id}.Description`, id === 'NuclearReactor'
     ? 'Huge power from enriched fuel, run by trained reactor operators.'
-    : 'Stores radioactive waste casks.'));
-  rows.push(csvRow(`Building.${id}.FlavorDescription`, 'The frontier makes power and consequences at the same scale.'));
+    : 'Stores radioactive waste.'));
+  rows.push(csvRow(`Building.${id}.FlavorDescription`, id === 'NuclearReactor'
+    ? 'The frontier makes power and consequences at the same scale.'
+    : 'Labeled, logged and never, ever full.'));
 }
 // Power plants: output, fuel and water rates from frontier_progression.json.
 const POWER_PLANT_TEXT = {
@@ -795,7 +840,8 @@ for (const entry of POWER_PLANTS) {
   rows.push(csvRow(`Building.${entry.id}.Description`, POWER_PLANT_TEXT[entry.id][0](entry)));
   rows.push(csvRow(`Building.${entry.id}.FlavorDescription`, POWER_PLANT_TEXT[entry.id][1]));
 }
-for (const [id] of recipeDefinitions) rows.push(csvRow(`Recipe.${id}.DisplayName`, Object.hasOwn(RECIPE_NAMES, id) ? RECIPE_NAMES[id] : GOOD_DISPLAY_NAMES[id] ?? id.replace(/([A-Z])/g, ' $1').trim()));
+// Only recipes with an authored name read a Recipe.<id>.DisplayName row (makeRecipe).
+for (const [id, name] of Object.entries(RECIPE_NAMES)) rows.push(csvRow(`Recipe.${id}.DisplayName`, name));
 rows.push(csvRow('Need.PublicHealthcare.DisplayName','Public healthcare'));
 for (const [id, text] of HOSPITAL_LOCALIZATION) rows.push(csvRow(id, text));
 for (const [id, text] of RESTAURANT_LOCALIZATION) rows.push(csvRow(id, text));

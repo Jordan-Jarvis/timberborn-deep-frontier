@@ -14,7 +14,7 @@ namespace DeepFrontier.Scripts {
     public override void ShowFragment(BaseComponent entity) {base.ShowFragment(entity);UpdateFragment();}
     public override void UpdateFragment() {
       if(!component)return;_mode.SetValueWithoutNotify(component.FishingSelected);
-      _status.text=$"{component.State}\n1 fish per {component.Spec.CatchHours} base working hours, plus travel. Requires reachable clean water; droughts and contamination stop fishing.";
+      _status.text=$"{component.State}\n1 fresh fish per {component.Spec.CatchHours} working hours, plus walking. Needs clean water that beavers can reach; droughts and badwater stop fishing.";
     }
   }
   [Context("Game")]

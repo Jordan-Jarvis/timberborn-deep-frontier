@@ -55,9 +55,11 @@ function describe(entry, tokens) {
     return tokens[key].toLocaleString('en-US');
   });
 }
-function label(id, name, description, icon) {
+// Each catalog building and source carries its own flavor line (one per building).
+function label(id, name, description, icon, flavor) {
+  if (typeof flavor !== 'string' || !flavor) throw new Error(`construction_materials.json ${id} needs its flavor line`);
   rows.push([`Building.${id}.DisplayName`, name], [`Building.${id}.Description`, description],
-    [`Building.${id}.FlavorDescription`, 'The next age begins with a solid foundation.']);
+    [`Building.${id}.FlavorDescription`, flavor]);
   return { DisplayNameLocKey: `Building.${id}.DisplayName`, DescriptionLocKey: `Building.${id}.Description`,
     FlavorDescriptionLocKey: `Building.${id}.FlavorDescription`, Icon: icon };
 }
@@ -118,7 +120,7 @@ for (const building of catalog.buildings) {
   Object.assign(value.WorkplaceSpec, { MaxWorkers: building.workers, DefaultWorkers: building.workers,
     WorkerTypeUnlockCosts: [{ WorkerType: 'Bot', ScienceCost: building.botScience }] });
   Object.assign(value.PlaceableBlockObjectSpec, { ToolGroupId: 'Metal', ToolOrder: 70 + catalog.buildings.indexOf(building), Layout: 'Single' });
-  value.LabeledEntitySpec = label(id, building.name, describe(building, kind === 'pit' ? {} : {hp: generatedHp(building)}), `Buildings/Metal/${id}/Icon`);
+  value.LabeledEntitySpec = label(id, building.name, describe(building, kind === 'pit' ? {} : {hp: generatedHp(building)}), `Buildings/Metal/${id}/Icon`, building.flavor);
   if (kind === 'pit') {
     delete value.ScavengerSpec;
     value.MineralPitSpec = { GoodId: building.good };
@@ -209,7 +211,7 @@ for (const source of catalog.sources) {
     ToolOrder: 1020 + catalog.sources.indexOf(source), Layout: 'Single', DevModeTool: true });
   const quarries = catalog.buildings.filter((b) => b.kind === 'quarry' && b.source === source.id);
   if (source.kind === 'permanent' && quarries.length !== 1) throw new Error(`${source.id}: expected one quarry built over it, found ${quarries.length}`);
-  value.LabeledEntitySpec = label(source.id, source.name, describe(source, quarries.length ? {quarryHp: generatedHp(quarries[0])} : {}), `${path}Icon`);
+  value.LabeledEntitySpec = label(source.id, source.name, describe(source, quarries.length ? {quarryHp: generatedHp(quarries[0])} : {}), `${path}Icon`, source.flavor);
   value.BlockObjectModelSpec = { FullModelName: '#Models', UncoveredModelName: '', UndergroundModelName: '', UndergroundModelDepth: 0 };
   // Own models and colliders that fit them (tools/map_objects.json): the seams
   // are 0.3 high understructures under a quarry, not full-layer boxes.

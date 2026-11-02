@@ -37,7 +37,7 @@ export const NEED = 'Irradiation';
 // stays 0.1 below a contaminated beaver with any shared bonus until both
 // reach the floor.
 export const ZOMBIE_MOVEMENT_DELTA = -0.8;
-export const ZOMBIE_NAME = 'Radioactive Zombie';
+export const ZOMBIE_NAME = 'Radioactive zombie';
 export const VOLUME_PER_GOOD = 0.2;         // radioactive volume (r * water volume) per RadioactiveSludge good
 // Recovery pump: native water it may pump per recipe cycle (0.5 h) to find the
 // 0.2 radioactive volume of one good; 4 is pure radioactive water down to r = 0.05.
@@ -94,15 +94,15 @@ export const RADIATION_RECIPES = [
 // Tank surfaces: sludge uses the native yellow-green Biofuel liquid (it read as
 // golden canola oil in tanks); contaminated water keeps the canola material.
 const GOODS = [
-  {id: SLUDGE, order: 10190, color: {r: 0.80, g: 0.87, b: 0.10, a: 1}, name: 'Radioactive Water', material: 'Materials/Goods/BioFuel'},
-  {id: CONTAMINATED_WATER, order: 10200, color: {r: 0.62, g: 0.72, b: 0.18, a: 1}, name: 'Contaminated Water', material: 'Materials/Goods/CanolaOil'},
+  {id: SLUDGE, order: 10190, color: {r: 0.80, g: 0.87, b: 0.10, a: 1}, name: 'Radioactive water', material: 'Materials/Goods/BioFuel'},
+  {id: CONTAMINATED_WATER, order: 10200, color: {r: 0.62, g: 0.72, b: 0.18, a: 1}, name: 'Contaminated water', material: 'Materials/Goods/CanolaOil'},
 ];
 
 const LOCALIZATION = [
-  [`Good.${SLUDGE}.DisplayName`, 'Radioactive Water'],
-  [`Good.${SLUDGE}.PluralDisplayName`, 'Radioactive Water'],
-  [`Good.${CONTAMINATED_WATER}.DisplayName`, 'Contaminated Water'],
-  [`Good.${CONTAMINATED_WATER}.PluralDisplayName`, 'Contaminated Water'],
+  [`Good.${SLUDGE}.DisplayName`, 'Radioactive water'],
+  [`Good.${SLUDGE}.PluralDisplayName`, 'Radioactive water'],
+  [`Good.${CONTAMINATED_WATER}.DisplayName`, 'Contaminated water'],
+  [`Good.${CONTAMINATED_WATER}.PluralDisplayName`, 'Contaminated water'],
   [`Need.${NEED}.DisplayName`, ZOMBIE_NAME],
   [`Status.Need.${NEED}`, `${ZOMBIE_NAME}: shambles slowly, eats and drinks twice as much and cannot work. Needs 10 days of hospital care; untreated radiation sickness is fatal after 8 days.`],
   [`Status.Need.${NEED}.Short`, ZOMBIE_NAME],
@@ -116,17 +116,17 @@ const LOCALIZATION = [
   ['Building.RadioactiveWasteExport.Description', 'Ships radioactive waste, radioactive water and contaminated water off the map for good. Its gate must sit on the map edge.'],
   ['Building.RadioactiveWasteExport.FlavorDescription', 'Somewhere downstream, it is somebody else\'s problem.'],
   ['Building.RadioactiveSludgeOutfall.DisplayName', 'Radioactive Water Outfall'],
-  ['Building.RadioactiveSludgeOutfall.Description', 'Dumps radioactive water into the world, where it stops pumps and irradiates beavers and ground until it flows off an open map edge.'],
+  ['Building.RadioactiveSludgeOutfall.Description', 'Pours radioactive water out onto the map. Until it flows off the map edge, it stops pumps and irradiates beavers and the ground.'],
   ['Building.RadioactiveSludgeOutfall.FlavorDescription', 'Out of sight is not out of the river.'],
   ['Building.RadioactiveSludgeRecoveryPump.DisplayName', 'Radioactive Water Recovery Pump'],
-  ['Building.RadioactiveSludgeRecoveryPump.Description', 'Pumps radioactivity out of the water and barrels it for export. The middle of its back deck must stand over open water.'],
+  ['Building.RadioactiveSludgeRecoveryPump.Description', 'Draws radioactivity out of rivers and lakes into barrels of radioactive water for export. The middle of its back edge must stand over water.'],
   ['Building.RadioactiveSludgeRecoveryPump.FlavorDescription', 'The cleanup always takes longer than the spill.'],
   ['DeepFrontier.Radiation.Status.PumpBlocked', 'Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.'],
   ['DeepFrontier.Radiation.Status.PumpBlocked.Short', 'Radiation detected'],
   ['DeepFrontier.Radiation.Status.StorageIrradiated', 'Stored water is irradiated and undrinkable.'],
   ['DeepFrontier.Radiation.DeletionBlocker.HazardousStock', 'Holds radioactive waste, radioactive water or contaminated water. Empty it first: move the contents to other storage, or refine or export them.'],
   ['DeepFrontier.Radiation.Status.NoRadiation', 'No radioactive water at the intake.'],
-  ['DeepFrontier.Radiation.WaterShares', 'Water at the intake: {0}% fresh, {1}% bad, {2}% radioactive.'],
+  ['DeepFrontier.Radiation.WaterShares', 'Water at the intake: {0}% clean, {1}% badwater, {2}% radioactive.'],
   ['DeepFrontier.Radiation.Status.OutletBlocked', 'The outlet is blocked.'],
   ['DeepFrontier.Radiation.Placement.NotAtMapEdge', 'Must touch the map edge.'],
   ['DeepFrontier.Radiation.DeathMessage', '{0} the radioactive zombie fell apart from untreated radiation sickness.'],

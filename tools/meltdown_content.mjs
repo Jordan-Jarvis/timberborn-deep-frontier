@@ -81,7 +81,7 @@ export const LEAK_TUNING = {
 // descriptions below replace them.
 export const PRODUCER_DESCRIPTIONS = {
   NuclearReactor: 'Huge power from enriched fuel, run by trained reactor operators.',
-  RadioactiveWasteVault: 'Stores radioactive waste casks.',
+  RadioactiveWasteVault: 'Stores radioactive waste.',
   RadioactiveWasteRefinery: 'Refines radioactive waste.',
 };
 
@@ -124,9 +124,9 @@ export function wasteLeakSpecs(batch, volumePerGood) {
 // stays vanilla-short; the panel, statuses and docs/meltdown.md give the numbers).
 export function descriptions() {
   return {
-    NuclearReactor: `${PRODUCER_DESCRIPTIONS.NuclearReactor} It melts down if its coolant water runs out or its waste piles up; pausing is a safe shutdown.`,
-    RadioactiveWasteVault: `${PRODUCER_DESCRIPTIONS.RadioactiveWasteVault} Keep it below full: a full vault leaks and irradiates the ground around it.`,
-    RadioactiveWasteRefinery: 'Turns spent-fuel casks into radioactive water and cleans contaminated water. Full tanks leak, so haul the radioactive water away.',
+    NuclearReactor: `${PRODUCER_DESCRIPTIONS.NuclearReactor} It melts down if its coolant water runs out or its waste is not hauled away; pausing it is safe.`,
+    RadioactiveWasteVault: `${PRODUCER_DESCRIPTIONS.RadioactiveWasteVault} Keep it below full: a full vault leaks radioactive water and irradiates the ground around it.`,
+    RadioactiveWasteRefinery: 'Turns radioactive waste into radioactive water, cleans contaminated water and filters badwater. Haul its output away: full tanks leak.',
   };
 }
 
@@ -156,7 +156,7 @@ export function localizationRows(treatmentDays) {
     ['DeepFrontier.Meltdown.Notification.Meltdown', 'REACTOR MELTDOWN: the Nuclear Reactor was destroyed. {0} killed, {1} irradiated.'],
     ['DeepFrontier.Meltdown.Dialog.Title', 'Reactor meltdown'],
     ['DeepFrontier.Meltdown.Dialog.Casualties', `The core melted down and destroyed the Nuclear Reactor. {0} were killed and {1} beavers were irradiated; irradiated beavers need ${treatmentDays} days of hospital care, and untreated radiation sickness is fatal.`],
-    ['DeepFrontier.Meltdown.Dialog.Contamination', 'Radioactive water is pouring from the ruin and will keep flowing for {0} days. Soil and water within {1} tiles are contaminated: crops there die, pumps refuse contaminated water and beavers who walk in are irradiated. Clean up with Radioactive Water Recovery Pumps and ship it off the map.'],
+    ['DeepFrontier.Meltdown.Dialog.Contamination', 'Radioactive water is pouring from the ruin and will keep flowing for {0} days. Soil and water within {1} tiles turn radioactive: crops there die, pumps there stop and beavers who walk in are irradiated. Clean up with Radioactive Water Recovery Pumps and ship the water off the map at a Radioactive Waste Export.'],
     ['DeepFrontier.Meltdown.Dialog.ShowSite', 'Show the site'],
     ['DeepFrontier.Meltdown.DeathMessage', '{0} was killed in the reactor meltdown.'],
     ['DeepFrontier.Meltdown.Cause.Coolant', 'coolant dry'],
@@ -194,7 +194,7 @@ export function localizationRows(treatmentDays) {
     ...leak('StorageFull', [
       ['.Status.Warning', 'Nearly full of radioactive waste: once full, casks breach every {0} hours.'],
       ['.Status.Leaking', 'Full: radioactive waste casks are breaching and leaking radioactive water. Export, refine or move the waste.'],
-      ['.Status.Leaking.Short', 'Waste vault leaking'],
+      ['.Status.Leaking.Short', 'Vault leaking'],
       ['.Notification.Warning', 'Radioactive Waste Vault {0}% full: once full, its casks breach and leak.'],
       ['.Notification.Full', 'Radioactive Waste Vault full: {0} casks will breach in {1} hours unless waste is refined or moved.'],
       ['.Notification.Leak', 'Radioactive Waste Vault leak: {0} casks breached, spilling radioactive water and irradiating the soil around the vault.'],
@@ -203,10 +203,10 @@ export function localizationRows(treatmentDays) {
     ...leak('OutputBlocked', [
       ['.Status.Warning', 'Radioactive water tanks nearly full: once full, radioactive water leaks every {0} hours.'],
       ['.Status.Leaking', 'Radioactive water tanks full: radioactive water is leaking. Haul it to a Radioactive Water Outfall or Radioactive Waste Export.'],
-      ['.Status.Leaking.Short', 'Waste refinery leaking'],
-      ['.Notification.Warning', 'Waste refinery radioactive water tanks {0}% full: haul it away before they leak.'],
-      ['.Notification.Full', 'Waste refinery radioactive water tanks full: {0} radioactive water will leak in {1} hours.'],
-      ['.Notification.Leak', 'Waste refinery leak: {0} radioactive water spilled around the refinery.'],
+      ['.Status.Leaking.Short', 'Refinery leaking'],
+      ['.Notification.Warning', 'Radioactive Waste Refinery tanks {0}% full: haul the radioactive water away before they leak.'],
+      ['.Notification.Full', 'Radioactive Waste Refinery tanks full: {0} radioactive water will leak in {1} hours.'],
+      ['.Notification.Leak', 'Radioactive Waste Refinery leak: {0} radioactive water spilled around the refinery.'],
       ['.Panel.Rules', 'When its radioactive water tanks are full, {0} radioactive water leaks every {1} hours and irradiates the soil within {2} tiles, killing crops there. Pausing it seals the tanks.'],
     ]),
     ['DeepFrontier.WasteLeak.Panel.Title', 'Radioactive containment'],

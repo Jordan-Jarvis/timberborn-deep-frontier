@@ -34,11 +34,11 @@
   },
   "$parts": "A queued bot is retrofitted by taking one Reinforced Bot Frame and one Reactor Power Cell from storage (each fills its retrofit need); the upgrade applies when every retrofit need is full. Second use of both parts: the Reactor Charging Bay construction gate (tools/building_construction_costs.json lategameGates).",
   "parts": [
-    {"id": "ReinforcedBotFrame", "name": "Reinforced Bot Frame", "plural": "Reinforced Bot Frames",
+    {"id": "ReinforcedBotFrame", "name": "Reinforced bot frame", "plural": "Reinforced bot frames",
      "building": "Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.blueprint",
      "hours": 8, "ingredients": [["HighGradeSteel", 8], ["Alloy", 4], ["MachineCore", 1], ["BotChassis", 1]], "products": 1,
      "order": 5145, "color": [0.36, 0.40]},
-    {"id": "ReactorPowerCell", "name": "Reactor Power Cell", "plural": "Reactor Power Cells",
+    {"id": "ReactorPowerCell", "name": "Reactor power cell", "plural": "Reactor power cells",
      "building": "Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.blueprint",
      "hours": 6, "ingredients": [["EnrichedFuel", 1], ["PowerModule", 2], ["Electronics", 2], ["Cryocoolant", 2]], "products": 1,
      "order": 5195, "color": [0.78, 0.50]}

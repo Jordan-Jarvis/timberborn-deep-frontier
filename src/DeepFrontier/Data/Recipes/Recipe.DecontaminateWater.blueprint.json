@@ -2,7 +2,7 @@
   "RecipeSpec": {
     "Id": "DecontaminateWater",
     "BackwardCompatibleIds": [],
-    "DisplayLocKey": "Good.Water.PluralDisplayName",
+    "DisplayLocKey": "Recipe.DecontaminateWater.DisplayName",
     "CycleDurationInHours": 4,
     "Ingredients": [
       {

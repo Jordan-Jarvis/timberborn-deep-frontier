@@ -10,7 +10,7 @@
     "sciencePerWorkingHour": 400,
     "cost": [["Plank", 80], ["Gear", 40], ["MetalBlock", 60], ["Concrete", 120]],
     "recipes": ["MaterialsResearch", "GeochemicalAssay"],
-    "description": "Produces science by testing gears, concrete and metal, or by assaying uranium ore and late-game samples."
+    "description": "Produces science by testing gears, concrete and metal blocks, or by assaying uranium ore and other late-game samples."
   }],
   "recipes": [{
     "id": "MaterialsResearch",

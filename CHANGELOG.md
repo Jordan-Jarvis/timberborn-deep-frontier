@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Clearer texts
+- **Pipe hints name the valve modes you actually see.** Timber Pipes valves are set to "Fill" or "Extract", so building tooltips now say "Pipes: valve set to Fill." (or Extract) instead of Inlet and Outlet.
+- **Fixed wrong or stale tooltips:** the Water Treatment Plant no longer claims to filter badwater (the Radioactive Waste Refinery does); the Deep Drill draws from Deep Ore Sources anywhere in its district, not only nearby; the Launch Pad says it needs trained flight engineers; Mission Control says it lowers the launch risk; the Deep Well says it uses steel as drill bits; the Uranium Processing Plant says its fuel leaves radioactive waste; the journal names the Deep Ore Processor and concentrated waste (not "brine"), and the launch hint mentions flight engineers.
+- **Names follow the base game's style:** buildings in Title Case ("Cement Kiln", "Concrete Platform 3x3 (3 high)"), goods in sentence case with plurals ("Machine core" / "Machine cores", "Fresh fish"). The concrete platform toolbar group is now "Concrete platforms", like the buildings in it. Recipes with a shared product say what they use ("Water from badwater", "Chemicals from concentrated waste").
+- **Every building has its own flavor line** (twenty shared "next industrial step" and "solid foundation" placeholders are gone).
+- Plain words in panels: no "×" (bots "wear out 4 times faster"), hatchery "pen tiles" instead of "marked working cells", the turbine panel shows the flow, both water levels and the drop, and US spelling throughout.
+
 ### Second shrink checked in game: fixes
 - **Deep Mine and the Sandstone and Limestone Quarries work again.** On their new 5x5 footprints the doorstep stands on the vein or seam, and beavers could not walk in: the buildings showed "not connected to any district" and never produced. The entrance now leads in the way it does on the base game's Efficient Mine.
 - **Old saves keep their buildings.** A smaller building could lose its place on load to a path a player had laid on ground the old building left free (the Grocery Store's old doorstep, the Town Plaza's open corner, a free strip of the Fishery Works). The game then deleted the building. Now the building loads first and the overlapping path or object is removed instead, listed in the game's loading notice. A 0.6 save that lost its Grocery Store, Town Plaza and Fishery Works keeps all three.

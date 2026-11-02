@@ -211,8 +211,14 @@ export function stationComponents(c, slots) {
 export function localizationRows(c, energy) {
   const n = c.needs, u = c.upgrade, s = c.station;
   const chargeDays = 1 / -chargeDailyDelta(c, energy);
-  const parts = c.parts.filter((p) => (c.consumption[p.id] ?? []).some(([need]) => n.retrofit.some((r) => r.id === need))).map((p) => p.name).join(' and ');
-  const coolant = Object.entries(c.consumption).filter(([, e]) => e.some(([id]) => id === n.coolant.id)).map(([g]) => g);
+  const parts = c.parts.filter((p) => (c.consumption[p.id] ?? []).some(([need]) => n.retrofit.some((r) => r.id === need))).map((p) => `a ${p.name.toLowerCase()}`).join(' and ');
+  // Goods a bot takes for a need, by their in-game names (lowercase, mid-sentence).
+  const GOOD_NAMES = {ReactorCoolantWater: 'reactor coolant water', Cryocoolant: 'cryocoolant', HighGradeSteel: 'steel', Alloy: 'alloy'};
+  const goodsFor = (needId) => Object.entries(c.consumption).filter(([, e]) => e.some(([id]) => id === needId)).map(([g]) => {
+    if (!Object.hasOwn(GOOD_NAMES, g)) throw new Error(`super bots: no in-game name for ${g} (GOOD_NAMES)`);
+    return GOOD_NAMES[g];
+  }).join(' or ');
+  const coolant = goodsFor(n.coolant.id), plating = goodsFor(n.plating.id);
   const rows = [];
   for (const p of c.parts) rows.push([`Good.${p.id}.DisplayName`, p.name], [`Good.${p.id}.PluralDisplayName`, p.plural]);
   for (const need of allNeeds(c)) rows.push([`Need.${need.id}.DisplayName`, need.name]);
@@ -221,10 +227,10 @@ export function localizationRows(c, energy) {
     [`Building.${s.id}.Description`, 'Charges two Reactor Bots at once, burning enriched fuel while it charges. Ordinary bots use the Charging Station.'],
     [`Building.${s.id}.FlavorDescription`, s.flavor],
     ['DeepFrontier.ReactorBot.Panel.Title', 'Reactor retrofit'],
-    ['DeepFrontier.ReactorBot.Panel.Ordinary', `A ${parts} retrofit makes this bot a Reactor Bot: ${1 + u.carryingCapacityBonus}× load, ${u.speedMultiplier}× speed, ${u.lifespanMultiplier}× lifespan, charged at a ${s.name} every ${fmt(chargeDays)} days. Upkeep: coolant (${coolant.length} kinds) and steel plating from storage.`],
-    ['DeepFrontier.ReactorBot.Panel.Queued', `Retrofit queued: the bot fetches a ${parts} from storage as soon as its district stocks them.`],
-    ['DeepFrontier.ReactorBot.Panel.Upgraded', `Reactor Bot: ${1 + u.carryingCapacityBonus}× load, ${u.speedMultiplier}× speed, wears out ${u.lifespanMultiplier}× slower. Charges at a ${s.name}.`],
-    ['DeepFrontier.ReactorBot.Panel.Unplated', `No steel plating: wearing out ${u.unplatedWearMultiplier}× faster until it takes steel or alloy.`],
+    ['DeepFrontier.ReactorBot.Panel.Ordinary', `Retrofit with ${parts} to make this bot a Reactor Bot: ${1 + u.carryingCapacityBonus} times the load, ${u.speedMultiplier} times the speed and ${u.lifespanMultiplier} times the lifespan. It charges at a ${s.name} every ${fmt(chargeDays)} days and takes ${coolant} and ${plating} from storage.`],
+    ['DeepFrontier.ReactorBot.Panel.Queued', `Retrofit queued: the bot fetches ${parts} from storage as soon as its district stocks them.`],
+    ['DeepFrontier.ReactorBot.Panel.Upgraded', `Reactor Bot: ${1 + u.carryingCapacityBonus} times the load and ${u.speedMultiplier} times the speed, and it wears out ${u.lifespanMultiplier} times slower. Charges at a ${s.name}.`],
+    ['DeepFrontier.ReactorBot.Panel.Unplated', `No plating: wearing out ${u.unplatedWearMultiplier} times faster until it takes ${plating} from storage.`],
     ['DeepFrontier.ReactorBot.Panel.Queue', 'Retrofit to Reactor Bot'],
     ['DeepFrontier.ReactorBot.Panel.Cancel', 'Cancel retrofit']);
   return rows;

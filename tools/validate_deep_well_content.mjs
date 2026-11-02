@@ -150,13 +150,15 @@ check(drought && Number.isInteger(drought.maxBoost) && drought.maxBoost >= 1 && 
 // Players read the rule in the panel and its summary in the building description.
 const locText = new Map(LOCALIZATION);
 const droughtHp = drought.powerInputHp.toLocaleString('en-US');
-check(DROUGHT_RULE.includes(`${droughtHp} hp`) && DROUGHT_RULE.includes(`${drought.maxBoost}×`) && /dries up/.test(DROUGHT_RULE),
-  `${ID}: the drought rule text must name ${droughtHp} hp, ${drought.maxBoost}× and that the source dries up`);
+check(DROUGHT_RULE.includes(`${droughtHp} hp`) && DROUGHT_RULE.includes(`${drought.maxBoost} times`) && /dries up/.test(DROUGHT_RULE),
+  `${ID}: the drought rule text must name ${droughtHp} hp, ${drought.maxBoost} times and that the source dries up`);
 check(DROUGHT_SUMMARY.includes(`${droughtHp} hp`) && /dries up/.test(DROUGHT_SUMMARY),
   `${ID}: the drought summary must name ${droughtHp} hp and that the source dries up`);
 check(locText.get(`Building.${ID}.Description`)?.includes(DROUGHT_SUMMARY), `${ID}: the building description must state the drought summary`);
 // The tooltip names the boost in plain words (players asked what "1×" meant).
 check(!/×/.test(locText.get(`Building.${ID}.Description`) ?? ''), `${ID}: the description must not use the × boost notation`);
+check([...locText.values()].every((text) => !/×/.test(text)), `${ID}: no Deep Well text uses the × sign (the panel writes boosts as 2x)`);
+check(/steel/.test(locText.get(`Building.${ID}.Description`) ?? ''), `${ID}: the description must say it uses steel as drill bits`);
 check(!/keeps flowing through drought/i.test(locText.get(`Building.${ID}.Description`) ?? ''), `${ID}: the description still promises flow through droughts`);
 check(locText.get('DeepFrontier.DeepWell.Panel.Drought') === DROUGHT_RULE, `${ID}: the panel's drought line must be the drought rule`);
 check(rows.get(`Building.${ID}.Description`)?.includes(droughtHp), 'enUS.csv: the generated Deep Well description lacks the drought power');

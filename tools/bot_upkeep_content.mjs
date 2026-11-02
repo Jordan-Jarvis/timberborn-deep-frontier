@@ -51,11 +51,11 @@ const COLLECTION = 'TemplateCollections/TemplateCollection.Buildings.IronTeeth.b
 export const TEXTS = {
   'DeepFrontier.BotUpkeep.Panel.Title': 'Bot maintenance',
   'DeepFrontier.BotUpkeep.Panel.Bots': 'Bots assigned: {0}. Serviced: {1}.',
-  'DeepFrontier.BotUpkeep.Panel.NoBots': 'No bots assigned: maintenance oil is only stocked while bots work here.',
-  'DeepFrontier.BotUpkeep.Panel.Good': '{0}: {1} in stock. A bot serviced with it wears out {2}× here.',
-  'DeepFrontier.BotUpkeep.Panel.Dose': 'One dose lasts {0} hours of work here; unserviced bots wear out {1}×. Bots take the first oil in stock, in the order listed.',
-  'DeepFrontier.BotUpkeep.Bot.Serviced': 'Serviced with {0}: wears out {1}× here for {2} more hours.',
-  'DeepFrontier.BotUpkeep.Bot.Unserviced': 'Not serviced: stock maintenance oil at the {0} to slow wear.',
+  'DeepFrontier.BotUpkeep.Panel.NoBots': 'No bots assigned: maintenance goods are stocked only while bots work here.',
+  'DeepFrontier.BotUpkeep.Panel.Good': '{0}: {1} in stock. A bot serviced with it wears out {2} times as fast here.',
+  'DeepFrontier.BotUpkeep.Panel.Dose': 'One dose lasts {0} hours of work here; unserviced bots wear out {1} times as fast. Bots take the first good in stock, in the order listed.',
+  'DeepFrontier.BotUpkeep.Bot.Serviced': 'Serviced with {0}: wears out {1} times as fast here for {2} more hours.',
+  'DeepFrontier.BotUpkeep.Bot.Unserviced': 'Not serviced: stock maintenance goods at the {0} to slow its wear.',
   'DeepFrontier.WorkplaceUpkeep.Panel.Title': 'Upkeep',
   'DeepFrontier.WorkplaceUpkeep.Panel.GoodName': '{0} ({1})',
   'DeepFrontier.WorkplaceUpkeep.Panel.Good': '{0}: {1} in stock, {2} used per hour at full crew.',
@@ -149,7 +149,7 @@ export const upkeepSpec = ({upkeep}, id) => ({
 // The sentence appended to the building's description, e.g. "Wears out metal block
 // drill bits; stops without them." (the rates are in the building panel).
 export const upkeepDescription = ({upkeep: u}, id) =>
-  `Wears out ${listText(u.templates[id].map(([, , role]) => u.roles[role].description))}; stops without them.`;
+  `Uses up ${listText(u.templates[id].map(([, , role]) => u.roles[role].description))}; stops without them.`;
 
 export const assemblerPatch = ({assembly: a}) => ({ManufactorySpec: {'ProductionRecipeIds#append': [a.recipe]}});
 

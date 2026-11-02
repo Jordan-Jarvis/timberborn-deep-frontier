@@ -136,7 +136,7 @@ export async function applyHospital(value) {
 
 // Hospital description and the panel/status rows used by Scripts/Hospital*.cs;
 // create_frontier_expansion_content.mjs writes them with the other rows.
-export const HOSPITAL_DESCRIPTION='Treats injuries, chipped teeth, badwater contamination and radiation day and night. Staffed and supplied, it gives nearby beavers up to +2 wellbeing.';
+export const HOSPITAL_DESCRIPTION='Treats injuries, chipped teeth, badwater contamination and radiation sickness day and night. Staffed and supplied, it gives nearby beavers up to +2 wellbeing.';
 export const HOSPITAL_LOCALIZATION=[
   ['DeepFrontier.Hospital.Panel.Title','Hospital'],
   ['DeepFrontier.Hospital.Panel.Patients','Patients admitted: {0} / {1} beds'],
@@ -149,7 +149,7 @@ export const HOSPITAL_LOCALIZATION=[
   ['DeepFrontier.Hospital.Panel.NoCrew','Closed: no ward crew assigned'],
   ['DeepFrontier.Hospital.Panel.NoMeals','Closed: a patient is starving or dehydrated and the food or water stock is empty'],
   ['DeepFrontier.Hospital.Panel.NoSupplies','Waiting for medicine, water and extract'],
-  ['DeepFrontier.Hospital.Panel.Treating','Patients stay until cured of injury, chipped teeth, badwater contamination and radiation. Treatment: {0}% (crew strength)'],
+  ['DeepFrontier.Hospital.Panel.Treating','Patients stay until cured of injury, chipped teeth, badwater contamination and radiation sickness. Treatment speed: {0}% (set by its staffing)'],
   ['DeepFrontier.Hospital.Panel.AreaActive','Neighborhood care active (+2 wellbeing)'],
   ['DeepFrontier.Hospital.Panel.AreaInactive','Neighborhood care inactive'],
   ['DeepFrontier.Hospital.Status.MealsLow','Patient food or water is running low.'],

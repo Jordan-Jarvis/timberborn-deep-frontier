@@ -73,7 +73,7 @@
         "SuspensionBridge5x1.IronTeeth", "SuspensionBridge6x1.IronTeeth"] },
     "DeepFrontierOverhangs": { "parent": "Paths", "order": 80, "name": "Overhangs", "icon": "Overhang3x1.IronTeeth",
       "claims": ["Overhang2x1.IronTeeth", "Overhang3x1.IronTeeth", "Overhang4x1.IronTeeth", "Overhang5x1.IronTeeth", "Overhang6x1.IronTeeth"] },
-    "DeepFrontierConcreteScaffolds": { "parent": "Paths", "order": 100, "name": "Concrete scaffolds", "icon": "ConcreteScaffold4x4H2",
+    "DeepFrontierConcreteScaffolds": { "parent": "Paths", "order": 100, "name": "Concrete platforms", "icon": "ConcreteScaffold4x4H2",
       "templates": ["ConcreteScaffold3x3", "ConcreteScaffold3x3H1", "ConcreteScaffold3x3H2", "ConcreteScaffold4x4H1", "ConcreteScaffold4x4H2",
         "ConcreteScaffold4x4H3", "ConcreteScaffold5x5H1", "ConcreteScaffold5x5H2", "ConcreteScaffold5x5H3", "ConcreteOverhang8x1"] },
     "DeepFrontierConcretePlatforms": { "parent": "Paths", "order": 110, "name": "Concrete side platforms", "icon": "ConcreteSidePlatform4x4",

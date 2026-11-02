@@ -59,14 +59,14 @@ export const dangerKey = (tier) => `DeepFrontier.Workforce.Danger.${tier}`;
 // Fixed texts used by the runtime (WorkforcePanels.cs and components).
 export const TEXTS = {
   'DeepFrontier.Workforce.Panel.Title': 'Workforce risks',
-  'DeepFrontier.Workforce.Panel.InjuryRisk': 'Injury risk: {0}. About {1}% per worker-hour while working; strained/exhausted workers face {2} times that.',
+  'DeepFrontier.Workforce.Panel.InjuryRisk': 'Injury risk: {0}. About {1}% per worker-hour while working; strained or exhausted workers face {2} times that.',
   'DeepFrontier.Workforce.Panel.InjuriesDisabled': 'Injury risk: {0}. Injuries are switched off in this game\'s settings.',
   'DeepFrontier.Workforce.Panel.InjurySeverity': 'An accident takes {0} days to heal without a hospital; {1}% of accidents are fatal.',
   'DeepFrontier.Workforce.Panel.Crew': 'Crew at the last check: {0} fit, {1} strained (low wellbeing or tired), {2} exhausted.',
   'DeepFrontier.Workforce.Panel.Record': 'Accidents here: {0} injured, {1} killed.',
-  'DeepFrontier.Workforce.Panel.BotWear': 'Bots wear out {0}× faster while working here.',
+  'DeepFrontier.Workforce.Panel.BotWear': 'Bots wear out {0} times faster while working here.',
   'DeepFrontier.Workforce.Panel.BotsNotAllowed': 'Bots are not allowed here.',
-  'DeepFrontier.Workforce.Status.Exhausted': 'Exhausted workers: injury risk ×{0}',
+  'DeepFrontier.Workforce.Status.Exhausted': 'Exhausted workers: {0} times the injury risk',
   'DeepFrontier.Workforce.Specialists.Title': 'Specialist crew',
   'DeepFrontier.Workforce.Specialists.Required': 'Only trained {0} can work here.',
   'DeepFrontier.Workforce.Specialists.Staffing': 'Posts filled: {0}. Unassigned {2} in this district: {1}.',
@@ -88,8 +88,8 @@ export const TEXTS = {
   'DeepFrontier.Workforce.Notification.Graduated': '{0} graduated as a {1}.',
   'DeepFrontier.Workforce.Notification.SkillLost': 'Skill lost: {0}, a {1}, has died. {2} left.',
   'DeepFrontier.Workforce.FatalAccident': '{0} was killed in an industrial accident at the {1}.',
-  'DeepFrontier.Workforce.Bot.Wearing': 'Wearing out {0}× faster at the {1}.',
-  'DeepFrontier.Workforce.Bot.Assigned': 'Assigned to the {1}: wears out {0}× faster inside.',
+  'DeepFrontier.Workforce.Bot.Wearing': 'Wearing out {0} times faster at the {1}.',
+  'DeepFrontier.Workforce.Bot.Assigned': 'Assigned to the {1}: wears out {0} times faster inside.',
 };
 
 export async function loadWorkforceConfig(root = defaultRoot) {

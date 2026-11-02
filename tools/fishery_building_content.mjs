@@ -19,9 +19,9 @@ export async function authorShoreFishing() {
 export const WATERSIDE_ROWS=[
   ['DeepFrontier.Waterside.SupportTooDeep','A support post would need more than {0} m to reach the ground or riverbed.','Deep Frontier waterside placement error; {0} = AdaptiveSupportsSpec.MaxDepth'],
   ['DeepFrontier.Waterside.SupportOutsideMap','A support post would stand outside the map.','Deep Frontier waterside placement error: a support column lies outside the map'],
-  ['DeepFrontier.Waterside.WorkCellsTooShallow','Water does not reach {0} marked working cell(s): the surface must stand at least {1} m above their floor.','Deep Frontier waterside preview warning; {0} = cell count; {1} = MinDepth'],
-  ['DeepFrontier.Waterside.WorkCellsTooDeep','Too deep under {0} marked working cell(s): at most {1} m of water is allowed.','Deep Frontier waterside preview warning; {0} = cell count; {1} = MaxDepth'],
-  ['DeepFrontier.Waterside.Status.WaterTooDeep','The water under the working area is too deep.','Deep Frontier waterside building status'],
+  ['DeepFrontier.Waterside.WorkCellsTooShallow','{0} pen tile(s) are too shallow: the water there must be at least {1} m deep.','Deep Frontier waterside preview warning; {0} = cell count; {1} = MinDepth'],
+  ['DeepFrontier.Waterside.WorkCellsTooDeep','{0} pen tile(s) are too deep: at most {1} m of water is allowed there.','Deep Frontier waterside preview warning; {0} = cell count; {1} = MaxDepth'],
+  ['DeepFrontier.Waterside.Status.WaterTooDeep','The water under the pens is too deep.','Deep Frontier waterside building status'],
   ['DeepFrontier.Waterside.Status.WaterTooDeep.Short','Water too deep','Deep Frontier waterside building status alert'],
 ];
 

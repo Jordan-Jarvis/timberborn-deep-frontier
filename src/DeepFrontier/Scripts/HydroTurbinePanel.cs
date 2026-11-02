@@ -10,8 +10,8 @@ namespace DeepFrontier.Scripts {
     private Toggle _closed;
     private Label _status;
     protected override void InitializePanel() {
-      panel.AddGameLabel("Dam turbine",bold:true);
-      panel.AddGameLabel("Discharge limit");
+      panel.AddGameLabel("Turbine",bold:true);
+      panel.AddGameLabel("Flow limit");
       _limit=panel.AddSlider();
       _limit.Slider.showInputField=true;
       _limit.AddEndLabel("m³/s");
@@ -30,10 +30,10 @@ namespace DeepFrontier.Scripts {
       if(!component)return;
       _limit.SetValueWithoutNotify(component.DischargeLimit);
       _closed.SetValueWithoutNotify(component.ManuallyClosed);
-      _status.text=$"{component.State}\nMeasured total flow: {component.ActualFlow:0.000} m³/s"+
-        $"\nUpstream water level: {component.UpstreamHeight:0.00} layers"+
-        $"\nOutlet pressure level: {component.DownstreamHeight:0.00} layers"+
-        $"\nAvailable head: {component.AvailableHead:0.00} layers";
+      _status.text=$"{component.State}\nFlow through the turbine: {component.ActualFlow:0.000} m³/s"+
+        $"\nWater level at the intake: {component.UpstreamHeight:0.00} layers"+
+        $"\nWater level at the outlet: {component.DownstreamHeight:0.00} layers"+
+        $"\nDrop: {component.AvailableHead:0.00} layers";
     }
   }
   [Context("Game")]
