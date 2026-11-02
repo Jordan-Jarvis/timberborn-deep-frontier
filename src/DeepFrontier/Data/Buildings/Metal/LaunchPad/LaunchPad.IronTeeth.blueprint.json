@@ -28,7 +28,7 @@
         "Amount": 8705
       }
     ],
-    "ScienceCost": 80000,
+    "ScienceCost": 200000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -3188,7 +3188,7 @@
   },
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 27000,
+    "PowerInput": 53000,
     "IsShaft": false
   },
   "PlaceableBlockObjectSpec": {

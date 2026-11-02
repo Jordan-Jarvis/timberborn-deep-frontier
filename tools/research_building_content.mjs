@@ -124,7 +124,7 @@ export async function researchContent() {
     // Power Lines (optional mod): returned as its integration modifier below.
     const integrations={PowerLines:{PowerLineSpec:{ConnectionLocations:[xyz([.18,2.85,.84]),xyz([3.205,1.85,2.06])]}}};
     v.TransformSlotInitializerSpec={Slots:[{SlotKeyword:'Entrance',Animation:'ForcedIdle',Inanimate:false,RandomizeYRotation:false,WaterSlot:false}]};
-    v.PlaceableBlockObjectSpec={ToolGroupId:'Science',ToolOrder:100,ToolShape:'Square',Layout:'Single',
+    v.PlaceableBlockObjectSpec={ToolGroupId:'Science',ToolOrder:94,ToolShape:'Square',Layout:'Single',
       CustomPivot:{HasCustomPivot:false,Coordinates:xyz([0,0,0])},CanBeAttachedToTerrainSide:false,DevModeTool:false};
     v.LabeledEntitySpec={DisplayNameLocKey:`Building.${b.id}.DisplayName`,DescriptionLocKey:`Building.${b.id}.Description`,
       FlavorDescriptionLocKey:`Building.${b.id}.FlavorDescription`,Icon:`Buildings/Science/${b.id}/Icon`};

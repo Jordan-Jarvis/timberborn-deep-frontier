@@ -12,7 +12,7 @@
         "Amount": 96
       }
     ],
-    "ScienceCost": 7000,
+    "ScienceCost": 17500,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": true,
     "DrawRangeBoundsOnIt": false
@@ -102,7 +102,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Paths",
-    "ToolOrder": 230,
+    "ToolOrder": 221,
     "ToolShape": "Square",
     "Layout": "Rectangle",
     "CustomPivot": {
@@ -435,6 +435,30 @@
         ],
         "SphereColliders": [],
         "CapsuleColliders": []
+      },
+      "Children": {
+        "#HardpointSleeve": {
+          "TransformSpec": {
+            "Position": {
+              "X": 0,
+              "Y": -1,
+              "Z": 0
+            },
+            "Rotation": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "Scale": {
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            }
+          },
+          "TimbermeshSpec": {
+            "Model": "Buildings/Platforms/SteelColumnH1/SteelColumnH1.IronTeeth.Model"
+          }
+        }
       }
     },
     "#Unfinished": {
@@ -752,5 +776,9 @@
         }
       }
     }
+  },
+  "SteelSupportSpec": {},
+  "HardpointSleeveSpec": {
+    "NodeName": "#HardpointSleeve"
   }
 }

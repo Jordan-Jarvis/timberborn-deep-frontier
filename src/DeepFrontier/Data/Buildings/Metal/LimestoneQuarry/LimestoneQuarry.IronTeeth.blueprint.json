@@ -28,7 +28,7 @@
         "Amount": 320
       }
     ],
-    "ScienceCost": 4000,
+    "ScienceCost": 9000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -49,7 +49,7 @@
     "WorkerTypeUnlockCosts": [
       {
         "WorkerType": "Bot",
-        "ScienceCost": 5000
+        "ScienceCost": 10000
       }
     ]
   },
@@ -977,7 +977,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierQuarrying",
-    "ToolOrder": 73,
+    "ToolOrder": 76,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {
@@ -2799,7 +2799,7 @@
     }
   },
   "MechanicalNodeSpec": {
-    "PowerInput": 2800,
+    "PowerInput": 5200,
     "PowerOutput": 0,
     "IsShaft": false
   },

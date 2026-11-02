@@ -32,7 +32,7 @@
         "Amount": 15
       }
     ],
-    "ScienceCost": 30000,
+    "ScienceCost": 75000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -129,7 +129,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Water",
-    "ToolOrder": 90,
+    "ToolOrder": 110,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

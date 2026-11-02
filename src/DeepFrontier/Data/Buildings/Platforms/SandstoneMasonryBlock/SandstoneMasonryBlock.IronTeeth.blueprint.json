@@ -67,7 +67,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierMasonryBlocks",
-    "ToolOrder": 200,
+    "ToolOrder": 201,
     "ToolShape": "Square",
     "Layout": "Rectangle",
     "CustomPivot": {

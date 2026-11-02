@@ -444,7 +444,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Food",
-    "ToolOrder": 35,
+    "ToolOrder": 114,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

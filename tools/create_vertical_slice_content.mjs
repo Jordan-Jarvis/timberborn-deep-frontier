@@ -225,14 +225,14 @@ deepMine.BuildingSpec = {
   ...deepMine.BuildingSpec,
   SelectionSoundName: 'Mine',
   LoopingSoundName: 'GearWorkshop',
-  BuildingCost: await ruleCost('DeepMine', 6000),
-  ScienceCost: 6000,
+  BuildingCost: await ruleCost('DeepMine', 15000),
+  ScienceCost: 15000,
 };
 deepMine.WorkplaceSpec = {
   ...deepMine.WorkplaceSpec,
   MaxWorkers: 6,
   DefaultWorkers: 6,
-  WorkerTypeUnlockCosts: [{ WorkerType: 'Bot', ScienceCost: 6000 }],
+  WorkerTypeUnlockCosts: [{ WorkerType: 'Bot', ScienceCost: 15000 }],
 };
 deepMine.ManufactorySpec = { ProductionRecipeIds: ['DeepOre.Mine'] };
 deepMine.TemplateSpec = {

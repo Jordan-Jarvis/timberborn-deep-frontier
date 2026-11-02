@@ -28,7 +28,7 @@
         "Amount": 270
       }
     ],
-    "ScienceCost": 10000,
+    "ScienceCost": 30000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -49,7 +49,7 @@
     "WorkerTypeUnlockCosts": [
       {
         "WorkerType": "Bot",
-        "ScienceCost": 11000
+        "ScienceCost": 31000
       }
     ]
   },
@@ -1776,7 +1776,7 @@
   },
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 6000,
+    "PowerInput": 13000,
     "IsShaft": false
   },
   "MechanicalBuildingSpec": {},

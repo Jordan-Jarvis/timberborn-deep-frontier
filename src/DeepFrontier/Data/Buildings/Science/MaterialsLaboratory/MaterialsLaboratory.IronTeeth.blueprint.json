@@ -4,24 +4,32 @@
     "LoopingSoundName": "Inventor",
     "BuildingCost": [
       {
+        "Id": "Plank",
+        "Amount": 190
+      },
+      {
         "Id": "TreatedPlank",
-        "Amount": 245
+        "Amount": 95
       },
       {
-        "Id": "Alloy",
-        "Amount": 25
+        "Id": "MetalBlock",
+        "Amount": 35
       },
       {
-        "Id": "MachineCore",
-        "Amount": 10
+        "Id": "DeepAlloy",
+        "Amount": 20
+      },
+      {
+        "Id": "HighGradeSteel",
+        "Amount": 20
       },
       {
         "Id": "Concrete",
-        "Amount": 1035
+        "Amount": 690
       },
       {
         "Id": "Gear",
-        "Amount": 240
+        "Amount": 160
       }
     ],
     "ScienceCost": 12000,
@@ -519,7 +527,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Science",
-    "ToolOrder": 100,
+    "ToolOrder": 94,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

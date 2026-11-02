@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierRocketry",
-    "Order": 140,
+    "Order": 50,
     "NameLocKey": "ToolGroups.DeepFrontierRocketry",
     "Icon": "Buildings/Metal/LaunchPad/Icon",
     "FallbackGroup": false

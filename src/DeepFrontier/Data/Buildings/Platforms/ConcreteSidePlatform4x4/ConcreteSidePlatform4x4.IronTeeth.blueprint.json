@@ -16,7 +16,7 @@
         "Amount": 64
       }
     ],
-    "ScienceCost": 8000,
+    "ScienceCost": 20000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": true,
     "DrawRangeBoundsOnIt": true
@@ -414,7 +414,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierConcretePlatforms",
-    "ToolOrder": 216,
+    "ToolOrder": 223,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

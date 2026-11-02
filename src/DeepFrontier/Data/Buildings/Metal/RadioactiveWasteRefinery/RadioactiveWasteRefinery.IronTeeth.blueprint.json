@@ -28,7 +28,7 @@
         "Amount": 1600
       }
     ],
-    "ScienceCost": 500000,
+    "ScienceCost": 600000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -49,7 +49,7 @@
     "WorkerTypeUnlockCosts": [
       {
         "WorkerType": "Bot",
-        "ScienceCost": 501000
+        "ScienceCost": 601000
       }
     ]
   },
@@ -971,13 +971,13 @@
   },
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 106000,
+    "PowerInput": 122000,
     "IsShaft": false
   },
   "MechanicalBuildingSpec": {},
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierNuclearFuel",
-    "ToolOrder": 46,
+    "ToolOrder": 47,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

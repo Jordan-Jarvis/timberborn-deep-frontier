@@ -290,26 +290,26 @@ async function makeRecipe([id, outputLabel, hours, ingredients, products, iconId
 }
 
 const buildingDefinitions = [
-  ['FertilizerWorks', 'Buildings/Food/FertilizerWorks', 'OilPress', 'Fertilizer', 'Food', 32, 80, 2, 350, 'Fertilizer Works'],
-  ['FishHatchery', 'Buildings/Food/FishHatchery', 'HydroponicGarden', 'JuvenileFish', 'Food', 33, 55, 2, 600, 'Fish Hatchery'],
-  ['FisheryWorks', 'Buildings/Food/FisheryWorks', 'FoodFactory', 'FreshFish,FishOil', 'Food', 34, 80, 3, 900, 'Fishery Works'],
-  ['FoodPackagingWorks', 'Buildings/Food/FoodPackagingWorks', 'FoodFactory', 'CannedFish', 'Food', 35, 140, 3, 1400, 'Food Packaging Works'],
+  ['FertilizerWorks', 'Buildings/Food/FertilizerWorks', 'OilPress', 'Fertilizer', 'Food', 105, 80, 2, 350, 'Fertilizer Works'],
+  ['FishHatchery', 'Buildings/Food/FishHatchery', 'HydroponicGarden', 'JuvenileFish', 'Food', 111, 55, 2, 600, 'Fish Hatchery'],
+  ['FisheryWorks', 'Buildings/Food/FisheryWorks', 'FoodFactory', 'FreshFish,FishOil', 'Food', 113, 80, 3, 900, 'Fishery Works'],
+  ['FoodPackagingWorks', 'Buildings/Food/FoodPackagingWorks', 'FoodFactory', 'CannedFish', 'Food', 114, 140, 3, 1400, 'Food Packaging Works'],
   ['PublicHealthLab', 'Buildings/Wellbeing/PublicHealthLab', 'OilPress', 'Medicine', 'Wellbeing', 36, 100, 3, 1000, 'Public Health Lab'],
-  ['GroceryStore', 'Buildings/Food/GroceryStore', 'FoodFactory', '', 'Wellbeing', 37, progression.groceryStore.powerDemandHp, progression.groceryStore.workers, progression.groceryStore.scienceUnlock, 'Grocery Store'],
-  ['Restaurant', 'Buildings/Food/Restaurant', 'FoodFactory', progression.restaurant.kitchenRecipes.join(','), 'Wellbeing', 38, progression.restaurant.powerDemandHp, 4, 1000, 'Restaurant'],
-  ['Hospital', 'Buildings/Wellbeing/Hospital', 'FoodFactory', '', 'Wellbeing', 39, progression.hospital.powerDemandHp, progression.hospital.workers, progression.hospital.scienceUnlock, 'Hospital'],
-  ['Greenhouse', 'Buildings/Food/Greenhouse', 'HydroponicGarden', 'GreenhouseEggplant,GreenhouseKohlrabi,GreenhouseCoffee,GreenhouseAquaponics', 'Food', 40, 35, 1, 600, 'Greenhouse'],
-  ['ChemicalWorks', 'Buildings/Metal/ChemicalWorks', 'Smelter', 'Chemical,BrineChemical,Polymer,Cryocoolant', 'Metal', 41, 3500, 8, 4000, 'Chemical Works'],
-  ['PrecisionMachineWorks', 'Buildings/Metal/PrecisionMachineWorks', 'BotPartFactory', 'MachineCore,Electronics,PowerModule,ReinforcedBotChassis,ServoBotLimbs,BotCortex', 'Metal', 42, 2200, 6, 5000, 'Precision Machine Works'],
+  ['GroceryStore', 'Buildings/Food/GroceryStore', 'FoodFactory', '', 'Wellbeing', 39, progression.groceryStore.powerDemandHp, progression.groceryStore.workers, progression.groceryStore.scienceUnlock, 'Grocery Store'],
+  ['Restaurant', 'Buildings/Food/Restaurant', 'FoodFactory', progression.restaurant.kitchenRecipes.join(','), 'Wellbeing', 37, progression.restaurant.powerDemandHp, 4, 1000, 'Restaurant'],
+  ['Hospital', 'Buildings/Wellbeing/Hospital', 'FoodFactory', '', 'Wellbeing', 40, progression.hospital.powerDemandHp, progression.hospital.workers, progression.hospital.scienceUnlock, 'Hospital'],
+  ['Greenhouse', 'Buildings/Food/Greenhouse', 'HydroponicGarden', 'GreenhouseEggplant,GreenhouseKohlrabi,GreenhouseCoffee,GreenhouseAquaponics', 'Food', 112, 35, 1, 600, 'Greenhouse'],
+  ['ChemicalWorks', 'Buildings/Metal/ChemicalWorks', 'Smelter', 'Chemical,BrineChemical,Polymer,Cryocoolant', 'Metal', 40, 3500, 8, 9000, 'Chemical Works'],
+  ['PrecisionMachineWorks', 'Buildings/Metal/PrecisionMachineWorks', 'BotPartFactory', 'MachineCore,Electronics,PowerModule,ReinforcedBotChassis,ServoBotLimbs,BotCortex', 'Metal', 42, 2200, 6, 12000, 'Precision Machine Works'],
   ['WaterTreatmentPlant', 'Buildings/Water/WaterTreatmentPlant', 'Centrifuge', 'PureWater,ReactorCoolantWater,FilterMedia,CarbonFilterMedia', 'Water', 43, 500, 4, 1800, 'Water Treatment Plant'],
-  ['TechnicalSchool', 'Buildings/Science/TechnicalSchool', 'Inventor', '', 'Science', 44, 300, 4, 2200, 'Technical School'],
+  ['TechnicalSchool', 'Buildings/Science/TechnicalSchool', 'Inventor', '', 'Science', 92, 300, 4, 2200, 'Technical School'],
   ['UraniumProcessingPlant', 'Buildings/Metal/UraniumProcessingPlant', 'Centrifuge', 'Yellowcake,EnrichedFuel,FuelReprocessing', 'Metal', 45, 5000, 6, progression.implementedBuildingScienceOverrides.UraniumProcessingPlant, 'Uranium Processing Plant'],
-  ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,BadwaterFiltering', 'Metal', 46, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive Waste Refinery'],
-  ['ElectrolysisPlant', 'Buildings/Metal/ElectrolysisPlant', 'Centrifuge', 'Electrolysis', 'Metal', 47, 6000, 5, 10000, 'Electrolysis Plant'],
-  ['CryogenicLiquefactionPlant', 'Buildings/Metal/CryogenicLiquefactionPlant', 'Centrifuge', 'Liquefaction', 'Metal', 48, 10000, 6, 12000, 'Cryogenic Liquefaction Plant'],
-  ['RocketAssemblyHangar', 'Buildings/Metal/RocketAssemblyHangar', 'FoodFactory', 'RocketAirframe,PropulsionPackage', 'Metal', 49, 12000, 10, 50000, 'Rocket Assembly Hangar'],
-  ['MissionControl', 'Buildings/Science/MissionControl', 'Inventor', 'GuidanceComputer,MissionPayload,GuidanceTelemetry', 'Science', 110, 1500, 4, 30000, 'Mission Control'],
-  ['LaunchPad', 'Buildings/Metal/LaunchPad', 'FoodFactory', 'GuidanceTelemetry', 'Metal', 51, 25000, 8, 80000, 'Launch Pad'],
+  ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,BadwaterFiltering', 'Metal', 47, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive Waste Refinery'],
+  ['ElectrolysisPlant', 'Buildings/Metal/ElectrolysisPlant', 'Centrifuge', 'Electrolysis', 'Metal', 47, 6000, 5, 30000, 'Electrolysis Plant'],
+  ['CryogenicLiquefactionPlant', 'Buildings/Metal/CryogenicLiquefactionPlant', 'Centrifuge', 'Liquefaction', 'Metal', 48, 10000, 6, 40000, 'Cryogenic Liquefaction Plant'],
+  ['RocketAssemblyHangar', 'Buildings/Metal/RocketAssemblyHangar', 'FoodFactory', 'RocketAirframe,PropulsionPackage', 'Metal', 50, 12000, 10, 125000, 'Rocket Assembly Hangar'],
+  ['MissionControl', 'Buildings/Science/MissionControl', 'Inventor', 'GuidanceComputer,MissionPayload,GuidanceTelemetry', 'Science', 49, 1500, 4, 75000, 'Mission Control'],
+  ['LaunchPad', 'Buildings/Metal/LaunchPad', 'FoodFactory', 'GuidanceTelemetry', 'Metal', 51, 25000, 8, 200000, 'Launch Pad'],
   // Planned buildings integrated from their late-game studies (build 122):
   // recipes, menu, power, workers and science come from their
   // frontier_progression.json plannedBuildings entry.
@@ -700,7 +700,7 @@ async function makeVault() {
   const vaultScience = progression.implementedBuildingScienceOverrides.RadioactiveWasteVault;
   value.BuildingSpec = { ...value.BuildingSpec, BuildingCost: (await lategameCost('RadioactiveWasteVault', vaultScience)).map(([Id, Amount]) => ({ Id, Amount })), ScienceCost: vaultScience };
   value.TemplateSpec = { ...value.TemplateSpec, TemplateName: 'RadioactiveWasteVault.IronTeeth', BackwardCompatibleTemplateNames: [] };
-  value.PlaceableBlockObjectSpec = { ...value.PlaceableBlockObjectSpec, ToolGroupId: 'Storage', ToolOrder: 61 };
+  value.PlaceableBlockObjectSpec = { ...value.PlaceableBlockObjectSpec, ToolGroupId: 'Water', ToolOrder: 61 };
   value.StockpileSpec = { ...value.StockpileSpec, MaxCapacity: 1600, WhitelistedGoodType: 'Box' };
   setLabels(value, 'RadioactiveWasteVault', 'Buildings/Storage/RadioactiveWasteVault');
   setModels(value, 'RadioactiveWasteVault', 'Buildings/Storage/RadioactiveWasteVault');

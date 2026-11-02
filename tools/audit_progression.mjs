@@ -27,6 +27,11 @@
 //   and fuel). The cheapest such route wins; availability is that route's
 //   largest single unlock ("gate") and the summed science of the distinct
 //   unlocks on that route ("cumulative").
+// - Stage order (science curve 2026-11-01): the Nuclear Reactor unlocks above
+//   every other player building; each Deep Frontier power plant out-produces
+//   every generator unlocked at or before it; each progression ladder's step is
+//   available no earlier than the step it consumes. The toolbar's left-to-right
+//   order is tools/validate_tool_order.mjs.
 // It does not model rates, workforce, power supply, map placement or runtime.
 //
 // Usage: node tools/audit_progression.mjs [dataRoot]   (default src/DeepFrontier/Data)
@@ -269,6 +274,42 @@ const power = rows.filter((r) => r.powerIn > 0).map((r) => {
     generatorsNeeded: Math.ceil(r.powerIn / best.hp)};
 });
 for (const p of power) if (p.generatorsNeeded > 10) warn('power-gap', p);
+
+// 6. Stage order (science curve, docs/progression.md "Science curve (2026-11-01)").
+// - The Nuclear Reactor is the single last unlock: every other player building,
+//   vanilla or Deep Frontier, unlocks below it (so does everything it depends on).
+const players = [...buildings.values()].filter((b) => b.bp.PlaceableBlockObjectSpec && !b.bp.PlaceableBlockObjectSpec.DevModeTool);
+const reactor = buildings.get('NuclearReactor.IronTeeth');
+if (!reactor) fail('reactor-missing', {building: 'NuclearReactor.IronTeeth'});
+else {
+  const notBelow = players.filter((b) => b !== reactor && b.science >= reactor.science).map((b) => `${b.id} (${b.science})`);
+  if (notBelow.length) fail('reactor-not-last', {reactor: reactor.science, buildings: notBelow});
+}
+// - Power plants climb: each Deep Frontier generator out-produces every generator
+//   that unlocks before it, so a stronger plant never comes earlier.
+const plants = generators.filter((g) => buildings.get(g.id).origin === 'DeepFrontier');
+for (const plant of plants) {
+  const stronger = generators.filter((g) => g.id !== plant.id && g.science <= plant.science && g.hp >= plant.hp);
+  if (stronger.length) fail('power-plant-order', {plant: plant.id, science: plant.science, hp: plant.hp,
+    notWeaker: stronger.map((g) => `${g.id} (${g.science} science, ${g.hp} hp)`)});
+}
+// - Each progression ladder (user 2026-10-31, docs/progression.md "Progression
+//   sets") is available step by step: a step never before the one it consumes.
+const LADDERS = {
+  masonry: ['Sandstone', 'Brick', 'Cement', 'Concrete'],
+  deepMetal: ['DeepOre', 'DeepAlloy', 'HighGradeSteel', 'Alloy'],
+  chemistry: ['CrudeOil', 'Chemical', 'Polymer'],
+  machinery: ['Gear', 'MachineCore', 'Electronics', 'PowerModule'],
+  water: ['Water', 'PureWater', 'ReactorCoolantWater'],
+  nuclear: ['UraniumOre', 'Yellowcake', 'EnrichedFuel', 'ReactorPowerCell'],
+};
+for (const [ladder, steps] of Object.entries(LADDERS)) {
+  for (let i = 1; i < steps.length; i++) {
+    const [before, after] = [avail.get(steps[i - 1]), avail.get(steps[i])];
+    if (!before || !after) fail('ladder-unavailable', {ladder, goods: [steps[i - 1], steps[i]].filter((g) => !avail.has(g))});
+    else if (after.gate < before.gate) fail('ladder-order', {ladder, step: steps[i], availableAt: after.gate, previous: steps[i - 1], previousAt: before.gate});
+  }
+}
 
 const report = {checkedAt: new Date().toISOString(), data: relative(root, data),
   model: 'Static reachability; gate = largest single unlock on the cheapest route; cumulative = summed science of its distinct unlocks. No rates, workforce, power supply, map placement or runtime behaviour.',

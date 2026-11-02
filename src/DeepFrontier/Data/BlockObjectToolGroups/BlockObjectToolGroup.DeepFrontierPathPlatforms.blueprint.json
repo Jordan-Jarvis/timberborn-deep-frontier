@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierPathPlatforms",
-    "Order": 40,
+    "Order": 25,
     "NameLocKey": "ToolGroups.DeepFrontierPathPlatforms",
     "Icon": "Buildings/Paths/Platform/PlatformIcon",
     "FallbackGroup": false

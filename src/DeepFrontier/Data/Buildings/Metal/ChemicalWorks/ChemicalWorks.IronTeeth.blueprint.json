@@ -20,7 +20,7 @@
         "Amount": 200
       }
     ],
-    "ScienceCost": 4000,
+    "ScienceCost": 9000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -41,7 +41,7 @@
     "WorkerTypeUnlockCosts": [
       {
         "WorkerType": "Bot",
-        "ScienceCost": 5000
+        "ScienceCost": 10000
       }
     ]
   },
@@ -517,7 +517,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierHeavyIndustry",
-    "ToolOrder": 41,
+    "ToolOrder": 40,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {
@@ -541,7 +541,7 @@
   "MechanicalBuildingSpec": {},
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 3500,
+    "PowerInput": 5200,
     "IsShaft": false
   },
   "WorkshopAnimationControllerSpec": {},

@@ -67,7 +67,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Landscaping",
-    "ToolOrder": 205,
+    "ToolOrder": 204,
     "ToolShape": "Square",
     "Layout": "Rectangle",
     "CustomPivot": {

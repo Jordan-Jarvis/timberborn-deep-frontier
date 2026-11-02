@@ -28,7 +28,7 @@
         "Amount": 6290
       }
     ],
-    "ScienceCost": 200000,
+    "ScienceCost": 300000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -969,7 +969,7 @@
     "BlockedEdges": []
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Storage",
+    "ToolGroupId": "DeepFrontierRadioactiveWaste",
     "ToolOrder": 61,
     "ToolShape": "Square",
     "Layout": "Single",

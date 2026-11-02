@@ -12,11 +12,32 @@ const layouts=JSON.parse(await readFile(new URL('tools/structural-layouts.json',
 const nativeRoot=new URL('vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources/',root);
 const xyz=([X,Y,Z])=>({X,Y,Z});
 
+// Menu order follows the unlock (user 2026-11-01: tools left to right in the
+// order they unlock; checked by tools/validate_tool_order.mjs): every structure
+// and leg deck tool is ranked by science, then footprint area, then height, then
+// catalog position, and gets ToolOrder 200 + rank. A leg deck tool shows its
+// deck's science on an n×n×(clearance+1) footprint, so it follows its deck.
+function structuralToolOrders() {
+  const entries=catalog.buildings.map((b,index)=>({id:b.id,science:b.science,size:b.size,index}));
+  for(const [i,tool] of catalog.legDecks.tools.entries()) {
+    const deck=catalog.buildings.find(b=>b.id===tool.deck);
+    if(!deck)throw new Error(`${tool.id}: unknown deck ${tool.deck}`);
+    entries.push({id:tool.id,science:deck.science,size:[deck.size[0],deck.size[1],tool.clearance+1],index:catalog.buildings.length+i});
+  }
+  const area=(e)=>e.size[0]*e.size[1];
+  entries.sort((a,b)=>a.science-b.science||area(a)-area(b)||a.size[2]-b.size[2]||a.index-b.index);
+  return new Map(entries.map((e,rank)=>[e.id,200+rank]));
+}
+const TOOL_ORDERS=structuralToolOrders();
+
 // Concrete platforms: an n×n deck (n = 3, 4 or 5) on four corner legs
 // H = 1, 2 or 3 layers high, size [n, n, H+1]. The cost and science scale with
-// k = n² + H: k × (3 Concrete, 2 Metal block, 1 Gear) and 500 × k science.
-// Each deck cell and each leg layer carries the same 3:2:1 bill, which
-// reproduces the original 3×3, 3-high platform exactly (k = 12: 36/24/12, 6000).
+// k = n² + H: k × (3 Concrete, 2 Metal block, 1 Gear) and 1,250 × k science
+// (500 × k until the 2026-11-01 science curve raised the transition and
+// frontier unlocks 2.5x; 1,250 keeps k <= 16 in the transition tier and
+// k >= 17 in the frontier tier, as before). Each deck cell and each leg layer
+// carries the same 3:2:1 bill, which reproduces the original 3×3, 3-high
+// platform exactly (k = 12: 36/24/12).
 const SCAFFOLD_SPANS=[3,4,5],SCAFFOLD_LEGS=[1,2,3];
 export function scaffoldLegs(building) {
   const [w,h,layers]=building.size;
@@ -27,7 +48,7 @@ export function scaffoldLegs(building) {
   if(building.id!==expectedId)throw new Error(`Scaffold ${building.id} must be named ${expectedId}`);
   const k=w*w+legs;
   const cost=[['Concrete',3*k],['MetalBlock',2*k],['Gear',k]];
-  if(JSON.stringify(building.cost)!==JSON.stringify(cost)||building.science!==500*k)
+  if(JSON.stringify(building.cost)!==JSON.stringify(cost)||building.science!==1250*k)
     throw new Error(`Scaffold ${building.id} cost/science differs from k=${k} formula`);
   return legs;
 }
@@ -49,7 +70,7 @@ export function scaffoldLegs(building) {
 // anchor's "object atop" deletion blocker. AnchoredDeckValidator (C#) narrows
 // the stackable anchor to deckAnchor structures. Costs follow the platform
 // formula with no leg layers: k = n², k × (3 Concrete, 2 Metal block, 1 Gear),
-// 500 × k science.
+// 1,250 × k science.
 export function sideDeckSpan(building) {
   const [width,depth,layers]=building.size;
   const n=depth-1;
@@ -64,7 +85,7 @@ export function sideDeckAnchor(building) {
     throw new Error(`Side platform ${building.id} must be named ConcreteSidePlatform${n}x${n}`);
   const k=n*n;
   const cost=[['Concrete',3*k],['MetalBlock',2*k],['Gear',k]];
-  if(JSON.stringify(building.cost)!==JSON.stringify(cost)||building.science!==500*k)
+  if(JSON.stringify(building.cost)!==JSON.stringify(cost)||building.science!==1250*k)
     throw new Error(`Side platform ${building.id} cost/science differs from k=${k} formula`);
   return [Math.floor(n/2),n,0];
 }
@@ -88,17 +109,20 @@ export function overhangContract(building) {
   }
   if(STEEL_CANTILEVERS[length]!==anchors||building.id!==`SteelCantilever${length}x1`)
     throw new Error(`Overhang ${building.id} is not a steel cantilever ${Object.entries(STEEL_CANTILEVERS).map(([n,a])=>`${n}×1/${a}`).join(', ')}`);
-  steelCost(building,{steel:4*length,concrete:3*length+12*anchors,science:1000*length});
+  steelCost(building,{steel:4*length,concrete:3*length+12*anchors,science:2500*length});
   return {length,anchors};
 }
 
 // Steel structures (High-Grade Steel from the steel mill, plus Concrete):
 // deliberately heavy late-game costs, set per piece in structural_content.json
 // and checked here against these formulas.
-//   cantilever N×1, A anchors: 8N steel, 6N + 24A concrete, 1000N science
-//   bridge, N span tiles:      10N steel, 48 + 4N concrete, 800N science
-//   column, H layers:          10H steel, 12 + 6H concrete, 4000 + 500H science
-//   deck n×n:                  6n² steel, 4n² + 40 concrete, 600n² science
+//   cantilever N×1, A anchors: 8N steel, 6N + 24A concrete, 2500N science
+//   bridge, N span tiles:      10N steel, 48 + 4N concrete, 2000N science
+//   column, H layers:          10H steel, 12 + 6H concrete, 10000 + 1250H science
+//   deck n×n:                  6n² steel, 4n² + 40 concrete, 1500n² science
+// Science is 2.5x the formulas before the 2026-11-01 science curve: every
+// piece keeps its tier, and the shortest column (11,250) unlocks after the
+// 10,000-science Steel Mill that makes its steel.
 // Base costs; scaledCost multiplies them by the science tier's costFactor
 // (halved on 2026-10-29 once the x2..x8 factors landed).
 function steelCost(building,{steel,concrete,science}) {
@@ -119,7 +143,7 @@ export function bridgeSpan(building) {
   const span=depth-1;
   if(w!==1||layers!==1||!STEEL_BRIDGE_SPANS.includes(span)||building.id!==`SteelBridge${span}x1`)
     throw new Error('Steel bridge geometry contract changed: '+building.id);
-  steelCost(building,{steel:5*span,concrete:24+2*span,science:800*span});
+  steelCost(building,{steel:5*span,concrete:24+2*span,science:2000*span});
   return span;
 }
 
@@ -131,7 +155,7 @@ export function columnHeight(building) {
   const [w,h,height]=building.size;
   if(w!==1||h!==1||!STEEL_COLUMN_HEIGHTS.includes(height)||building.id!==`SteelColumnH${height}`)
     throw new Error('Steel column geometry contract changed: '+building.id);
-  steelCost(building,{steel:5*height,concrete:6+3*height,science:4000+500*height});
+  steelCost(building,{steel:5*height,concrete:6+3*height,science:10000+1250*height});
   return height;
 }
 
@@ -144,7 +168,7 @@ export function deckSpan(building) {
   const [n,depth,layers]=building.size;
   if(n!==depth||layers!==1||!STEEL_DECK_SPANS.includes(n)||building.id!==`SteelDeck${n}x${n}`)
     throw new Error('Steel deck geometry contract changed: '+building.id);
-  steelCost(building,{steel:3*n*n,concrete:2*n*n+20,science:600*n*n});
+  steelCost(building,{steel:3*n*n,concrete:2*n*n+20,science:1500*n*n});
   return n;
 }
 
@@ -308,7 +332,7 @@ function legDeckBlueprint(tool,index,built) {
   // The tool's cost panel shows the deck's own bill; the columns of the spot
   // under the cursor are added live by the placer.
   v.BlockObjectSpec={...v.BlockObjectSpec,Size:xyz([n,n,clearance+1]),Blocks:legDeckBlocks(tool)};
-  v.PlaceableBlockObjectSpec.ToolOrder=200+catalog.buildings.length+index;
+  v.PlaceableBlockObjectSpec.ToolOrder=TOOL_ORDERS.get(tool.id);
   v.LabeledEntitySpec={
     DisplayNameLocKey:`Building.${tool.id}.DisplayName`,
     DescriptionLocKey:`Building.${tool.id}.Description`,
@@ -382,7 +406,7 @@ export async function structuralBlueprints() {
     v.BlockObjectSpec={Size:xyz(b.size),Blocks:blocks,
       Entrance:{HasEntrance:false,Coordinates:xyz([0,0,0])},BaseZ:baseZ,Overridable:false,Flippable:true};
     const placement=v.PlaceableBlockObjectSpec;
-    placement.ToolOrder=200+index;
+    placement.ToolOrder=TOOL_ORDERS.get(b.id);
     if(b.kind==='scaffold'||b.kind==='sidedeck')placement.Layout='Single';
     if(b.kind==='sidedeck') {
       // The cursor cell is the anchor: hovering a dam top hangs the deck beside it.

@@ -12,7 +12,7 @@
         "Amount": 60
       }
     ],
-    "ScienceCost": 5500,
+    "ScienceCost": 13750,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": true,
     "DrawRangeBoundsOnIt": false
@@ -81,7 +81,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierSteelStructures",
-    "ToolOrder": 227,
+    "ToolOrder": 215,
     "ToolShape": "Square",
     "Layout": "Rectangle",
     "CustomPivot": {

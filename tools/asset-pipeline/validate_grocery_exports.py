@@ -2,6 +2,7 @@
 import collections
 import hashlib
 import json
+import math
 import sys
 import zlib
 from pathlib import Path
@@ -84,9 +85,14 @@ require(not {'ManufactorySpec', 'WorkshopSpec', 'AttractionSpec', 'StatusHidingE
 shop = read('tools/frontier_progression.json')['groceryStore']
 require(blueprint['GroceryStoreSpec']['Foods'] == shop['stock'], 'Assortment differs from canonical data')
 require(blueprint['GroceryStoreSpec']['CapacityPerFood'] == 100 and len(shop['stock']) == 6, 'Shelf capacities differ')
-# 3,900 hp: the late-game power rule's floor at 6,000 science (authored 100).
-require(blueprint['MechanicalNodeSpec'] == {'PowerInput': 3900, 'PowerOutput': 0, 'IsShaft': False}, 'Grocery hp roles differ')
-require(blueprint['BuildingSpec']['ScienceCost'] == 6000, 'Initial science balance differs')
+# The authored 100 hp goes through the late-game power rule at the catalogued science
+# (tools/lategame_costs.mjs powerFloor; 7,700 hp at 15,000 since the 2026-11-01 science curve).
+rule = read('tools/building_construction_costs.json')['lategameRule']['power']
+raw = rule['referenceHp'] * (shop['scienceUnlock'] / rule['referenceScience']) ** rule['exponent']
+step = rule['rounding']['step'] if raw < rule['rounding']['largeFrom'] else rule['rounding']['largeStep']
+power = max(shop['powerDemandHp'], math.floor(raw / step + 0.5) * step)
+require(blueprint['MechanicalNodeSpec'] == {'PowerInput': power, 'PowerOutput': 0, 'IsShaft': False}, 'Grocery hp roles differ')
+require(blueprint['BuildingSpec']['ScienceCost'] == shop['scienceUnlock'], 'Science differs from the catalog')
 require(blueprint['WorkplaceSpec']['MaxWorkers'] == 2, 'Clerk capacity differs')
 require(blueprint['GroceryStoreSpec']['MinimumStockedFoodTypes'] == 3, 'Stocked-service threshold differs')
 report = {'status': 'Source/export checks passed; native shoppers and service pending',

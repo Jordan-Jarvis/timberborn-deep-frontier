@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierFlywheels",
-    "Order": 70,
+    "Order": 55,
     "NameLocKey": "ToolGroups.DeepFrontierFlywheels",
     "Icon": "Battery.Flywheels/MediumFlywheel/MediumFlywheelIcon",
     "FallbackGroup": false
@@ -14,25 +14,25 @@
   "ToolGroupChildrenSpec": {
     "ChildrenToolsTemplateNames": [
       "SmallFlywheel.IronTeeth",
-      "MediumFlywheel.IronTeeth",
-      "LargeFlywheel.IronTeeth",
       "SmallVerticalFramedFlywheel.IronTeeth",
-      "MediumVerticalFramedFlywheel.IronTeeth",
-      "LargeVerticalFramedFlywheel.IronTeeth",
       "SmallHorizontalFramedFlywheel.IronTeeth",
+      "MediumFlywheel.IronTeeth",
+      "MediumVerticalFramedFlywheel.IronTeeth",
       "MediumHorizontalFramedFlywheel.IronTeeth",
+      "LargeFlywheel.IronTeeth",
+      "LargeVerticalFramedFlywheel.IronTeeth",
       "LargeHorizontalFramedFlywheel.IronTeeth"
     ],
     "DoNotIncludePlaceableToolGroup": true,
     "ChildrenOrderedIds": [
       "SmallFlywheel.IronTeeth",
-      "MediumFlywheel.IronTeeth",
-      "LargeFlywheel.IronTeeth",
       "SmallVerticalFramedFlywheel.IronTeeth",
-      "MediumVerticalFramedFlywheel.IronTeeth",
-      "LargeVerticalFramedFlywheel.IronTeeth",
       "SmallHorizontalFramedFlywheel.IronTeeth",
+      "MediumFlywheel.IronTeeth",
+      "MediumVerticalFramedFlywheel.IronTeeth",
       "MediumHorizontalFramedFlywheel.IronTeeth",
+      "LargeFlywheel.IronTeeth",
+      "LargeVerticalFramedFlywheel.IronTeeth",
       "LargeHorizontalFramedFlywheel.IronTeeth"
     ]
   }

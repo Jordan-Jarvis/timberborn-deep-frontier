@@ -1,6 +1,7 @@
 import { access, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { scaledPower } from './lategame_costs.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const sourceRoot = resolve(root, 'src', 'DeepFrontier');
@@ -94,7 +95,8 @@ assert(drill.WorkplaceSpec.MaxWorkers === 3, 'Deep Drill worker count changed un
 assert(drill.MechanicalNodeSpec.PowerInput === 1000 && drill.MechanicalNodeSpec.PowerOutput === 0, 'Deep Drill power contract is invalid.');
 assert(drill.ManufactorySpec.ProductionRecipeIds.includes('DeepOre'), 'Deep Drill is not wired to the DeepOre recipe.');
 assert(mine.WorkplaceSpec.MaxWorkers === 6, 'Deep Mine worker count changed unexpectedly.');
-assert(mine.MechanicalNodeSpec.PowerInput === 4000 && mine.MechanicalNodeSpec.PowerOutput === 0, 'Deep Mine power contract is invalid.');
+// The Deep Mine's authored 4,000 hp goes through the power rule at its science (docs/progression.md).
+assert(mine.MechanicalNodeSpec.PowerInput === scaledPower('DeepMine', 4000, mine.BuildingSpec.ScienceCost) && mine.MechanicalNodeSpec.PowerOutput === 0, 'Deep Mine power contract is invalid.');
 assert(mine.ManufactorySpec.ProductionRecipeIds.includes('DeepOre.Mine'), 'Deep Mine is not wired to the permanent DeepOre.Mine recipe.');
 assert(mine.UnderstructureConstraintSpec.UnderstructureTemplateNames.includes('DeepOreVein'), 'Deep Mine must require a DeepOreVein understructure.');
 assert(processor.MechanicalNodeSpec.PowerInput === 500 && processor.MechanicalNodeSpec.PowerOutput === 0, 'Deep Processor power contract is invalid.');

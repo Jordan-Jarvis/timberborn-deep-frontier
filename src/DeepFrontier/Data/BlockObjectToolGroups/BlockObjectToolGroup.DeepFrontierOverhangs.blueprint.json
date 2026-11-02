@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierOverhangs",
-    "Order": 80,
+    "Order": 70,
     "NameLocKey": "ToolGroups.DeepFrontierOverhangs",
     "Icon": "Buildings/Paths/Overhang3x1/Overhang3x1Icon",
     "FallbackGroup": false

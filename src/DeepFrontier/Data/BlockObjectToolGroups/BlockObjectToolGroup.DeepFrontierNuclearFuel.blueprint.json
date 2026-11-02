@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierNuclearFuel",
-    "Order": 130,
+    "Order": 60,
     "NameLocKey": "ToolGroups.DeepFrontierNuclearFuel",
     "Icon": "Buildings/Metal/UraniumProcessingPlant/Icon",
     "FallbackGroup": false

@@ -32,7 +32,7 @@
         "Amount": 2515
       }
     ],
-    "ScienceCost": 50000,
+    "ScienceCost": 125000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -53,7 +53,7 @@
     "WorkerTypeUnlockCosts": [
       {
         "WorkerType": "Bot",
-        "ScienceCost": 51000
+        "ScienceCost": 126000
       }
     ]
   },
@@ -1872,12 +1872,12 @@
   },
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 19000,
+    "PowerInput": 38000,
     "IsShaft": false
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierRocketry",
-    "ToolOrder": 49,
+    "ToolOrder": 50,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

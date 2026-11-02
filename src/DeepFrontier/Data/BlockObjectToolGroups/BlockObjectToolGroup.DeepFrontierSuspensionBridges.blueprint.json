@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierSuspensionBridges",
-    "Order": 70,
+    "Order": 26,
     "NameLocKey": "ToolGroups.DeepFrontierSuspensionBridges",
     "Icon": "Buildings/Paths/SuspensionBridge3x1/SuspensionBridge3x1Icon",
     "FallbackGroup": false

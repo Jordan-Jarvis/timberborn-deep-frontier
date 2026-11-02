@@ -16,7 +16,7 @@
         "Amount": 150
       }
     ],
-    "ScienceCost": 12500,
+    "ScienceCost": 31250,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": true,
     "DrawRangeBoundsOnIt": true
@@ -484,7 +484,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Paths",
-    "ToolOrder": 217,
+    "ToolOrder": 231,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

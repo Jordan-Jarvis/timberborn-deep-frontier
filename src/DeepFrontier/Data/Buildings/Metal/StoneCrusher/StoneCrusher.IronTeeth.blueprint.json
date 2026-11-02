@@ -283,7 +283,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierQuarrying",
-    "ToolOrder": 74,
+    "ToolOrder": 72,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

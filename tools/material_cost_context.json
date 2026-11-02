@@ -115,7 +115,7 @@
    "devOnly": false
   },
   "ArchiveExcavation.IronTeeth": {
-   "science": 9000,
+   "science": 25000,
    "recipes": [
     "RecoveredArtifact"
    ],
@@ -137,7 +137,7 @@
    "devOnly": false
   },
   "Bathhouse.IronTeeth": {
-   "science": 6000,
+   "science": 15000,
    "recipes": [],
    "devOnly": false
   },
@@ -224,7 +224,7 @@
    "devOnly": false
   },
   "ChemicalWorks.IronTeeth": {
-   "science": 4000,
+   "science": 9000,
    "recipes": [
     "Chemical",
     "BrineChemical",
@@ -244,7 +244,7 @@
    "devOnly": false
   },
   "CoalPowerPlant.IronTeeth": {
-   "science": 4500,
+   "science": 10000,
    "recipes": [],
    "devOnly": false
   },
@@ -283,67 +283,67 @@
    "devOnly": false
   },
   "ConcreteOverhang8x1.IronTeeth": {
-   "science": 5000,
+   "science": 12500,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold3x3.IronTeeth": {
-   "science": 6000,
+   "science": 15000,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold3x3H1.IronTeeth": {
-   "science": 5000,
+   "science": 12500,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold3x3H2.IronTeeth": {
-   "science": 5500,
+   "science": 13750,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold4x4H1.IronTeeth": {
-   "science": 8500,
+   "science": 21250,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold4x4H2.IronTeeth": {
-   "science": 9000,
+   "science": 22500,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold4x4H3.IronTeeth": {
-   "science": 9500,
+   "science": 23750,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold5x5H1.IronTeeth": {
-   "science": 13000,
+   "science": 32500,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold5x5H2.IronTeeth": {
-   "science": 13500,
+   "science": 33750,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold5x5H3.IronTeeth": {
-   "science": 14000,
+   "science": 35000,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteSidePlatform3x3.IronTeeth": {
-   "science": 4500,
+   "science": 11250,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteSidePlatform4x4.IronTeeth": {
-   "science": 8000,
+   "science": 20000,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteSidePlatform5x5.IronTeeth": {
-   "science": 12500,
+   "science": 31250,
    "recipes": [],
    "devOnly": false
   },
@@ -358,14 +358,14 @@
    "devOnly": false
   },
   "CryogenicLiquefactionPlant.IronTeeth": {
-   "science": 12000,
+   "science": 40000,
    "recipes": [
     "Liquefaction"
    ],
    "devOnly": false
   },
   "CryogenicTankFarm.IronTeeth": {
-   "science": 12000,
+   "science": 40000,
    "recipes": [],
    "devOnly": false
   },
@@ -409,7 +409,7 @@
    "devOnly": false
   },
   "DeepMine.IronTeeth": {
-   "science": 6000,
+   "science": 15000,
    "recipes": [
     "DeepOre.Mine"
    ],
@@ -433,7 +433,7 @@
    "devOnly": false
   },
   "DeepWell.IronTeeth": {
-   "science": 30000,
+   "science": 75000,
    "recipes": [],
    "devOnly": false
   },
@@ -526,7 +526,7 @@
    "devOnly": false
   },
   "ElectrolysisPlant.IronTeeth": {
-   "science": 10000,
+   "science": 30000,
    "recipes": [
     "Electrolysis"
    ],
@@ -672,7 +672,7 @@
    "devOnly": false
   },
   "GroceryStore.IronTeeth": {
-   "science": 6000,
+   "science": 15000,
    "recipes": [],
    "devOnly": false
   },
@@ -682,7 +682,7 @@
    "devOnly": false
   },
   "Hospital.IronTeeth": {
-   "science": 25000,
+   "science": 50000,
    "recipes": [],
    "devOnly": false
   },
@@ -789,7 +789,7 @@
    "devOnly": false
   },
   "LaunchPad.IronTeeth": {
-   "science": 80000,
+   "science": 200000,
    "recipes": [
     "GuidanceTelemetry",
     "RocketMission.OrbitalObservatory",
@@ -814,7 +814,7 @@
    "devOnly": false
   },
   "LimestoneQuarry.IronTeeth": {
-   "science": 4000,
+   "science": 9000,
    "recipes": [
     "LimestoneExtraction"
    ],
@@ -881,7 +881,7 @@
    "devOnly": false
   },
   "MissionControl.IronTeeth": {
-   "science": 30000,
+   "science": 75000,
    "recipes": [
     "GuidanceComputer",
     "MissionPayload",
@@ -914,12 +914,12 @@
    "devOnly": false
   },
   "ObservationDeck.IronTeeth": {
-   "science": 9500,
+   "science": 27500,
    "recipes": [],
    "devOnly": false
   },
   "OilPowerPlant.IronTeeth": {
-   "science": 11000,
+   "science": 35000,
    "recipes": [],
    "devOnly": false
   },
@@ -986,7 +986,7 @@
    "devOnly": false
   },
   "PrecisionMachineWorks.IronTeeth": {
-   "science": 5000,
+   "science": 12000,
    "recipes": [
     "MachineCore",
     "Electronics",
@@ -1006,14 +1006,14 @@
    "devOnly": false
   },
   "RadioactiveSludgeOutfall.IronTeeth": {
-   "science": 200000,
+   "science": 300000,
    "recipes": [
     "ReleaseRadioactiveSludge"
    ],
    "devOnly": false
   },
   "RadioactiveSludgeRecoveryPump.IronTeeth": {
-   "science": 200000,
+   "science": 300000,
    "recipes": [
     "RecoverRadioactiveSludge"
    ],
@@ -1025,7 +1025,7 @@
    "devOnly": true
   },
   "RadioactiveWasteExport.IronTeeth": {
-   "science": 200000,
+   "science": 300000,
    "recipes": [
     "ExportRadioactiveWaste",
     "ExportRadioactiveSludge",
@@ -1034,7 +1034,7 @@
    "devOnly": false
   },
   "RadioactiveWasteRefinery.IronTeeth": {
-   "science": 500000,
+   "science": 600000,
    "recipes": [
     "WasteRefining",
     "ContaminatedWaterRefining",
@@ -1044,12 +1044,12 @@
    "devOnly": false
   },
   "RadioactiveWasteVault.IronTeeth": {
-   "science": 200000,
+   "science": 300000,
    "recipes": [],
    "devOnly": false
   },
   "ReactorChargingBay.IronTeeth": {
-   "science": 250000,
+   "science": 400000,
    "recipes": [],
    "devOnly": false
   },
@@ -1059,7 +1059,7 @@
    "devOnly": false
   },
   "ReinforcedHydroTurbine.IronTeeth": {
-   "science": 8000,
+   "science": 20000,
    "recipes": [],
    "devOnly": false
   },
@@ -1084,7 +1084,7 @@
    "devOnly": false
   },
   "RocketAssemblyHangar.IronTeeth": {
-   "science": 50000,
+   "science": 125000,
    "recipes": [
     "RocketAirframe",
     "PropulsionPackage"
@@ -1137,7 +1137,7 @@
    "devOnly": false
   },
   "SandstoneQuarry.IronTeeth": {
-   "science": 4000,
+   "science": 9000,
    "recipes": [
     "SandstoneExtraction"
    ],
@@ -1216,122 +1216,122 @@
    "devOnly": false
   },
   "SteelBridge10x1.IronTeeth": {
-   "science": 8000,
+   "science": 20000,
    "recipes": [],
    "devOnly": false
   },
   "SteelBridge12x1.IronTeeth": {
-   "science": 9600,
+   "science": 24000,
    "recipes": [],
    "devOnly": false
   },
   "SteelBridge15x1.IronTeeth": {
-   "science": 12000,
+   "science": 30000,
    "recipes": [],
    "devOnly": false
   },
   "SteelBridge8x1.IronTeeth": {
-   "science": 6400,
+   "science": 16000,
    "recipes": [],
    "devOnly": false
   },
   "SteelCantilever10x1.IronTeeth": {
-   "science": 10000,
+   "science": 25000,
    "recipes": [],
    "devOnly": false
   },
   "SteelCantilever12x1.IronTeeth": {
-   "science": 12000,
+   "science": 30000,
    "recipes": [],
    "devOnly": false
   },
   "SteelCantilever15x1.IronTeeth": {
-   "science": 15000,
+   "science": 37500,
    "recipes": [],
    "devOnly": false
   },
   "SteelColumnH1.IronTeeth": {
-   "science": 4500,
+   "science": 11250,
    "recipes": [],
    "devOnly": false
   },
   "SteelColumnH2.IronTeeth": {
-   "science": 5000,
+   "science": 12500,
    "recipes": [],
    "devOnly": false
   },
   "SteelColumnH3.IronTeeth": {
-   "science": 5500,
+   "science": 13750,
    "recipes": [],
    "devOnly": false
   },
   "SteelColumnH4.IronTeeth": {
-   "science": 6000,
+   "science": 15000,
    "recipes": [],
    "devOnly": false
   },
   "SteelColumnH5.IronTeeth": {
-   "science": 6500,
+   "science": 16250,
    "recipes": [],
    "devOnly": false
   },
   "SteelColumnH6.IronTeeth": {
-   "science": 7000,
+   "science": 17500,
    "recipes": [],
    "devOnly": false
   },
   "SteelDeck3x3.IronTeeth": {
-   "science": 5400,
+   "science": 13500,
    "recipes": [],
    "devOnly": false
   },
   "SteelDeck5x5.IronTeeth": {
-   "science": 15000,
+   "science": 37500,
    "recipes": [],
    "devOnly": false
   },
   "SteelLegDeck3x3H1.IronTeeth": {
-   "science": 5400,
+   "science": 13500,
    "recipes": [],
    "devOnly": false
   },
   "SteelLegDeck3x3H2.IronTeeth": {
-   "science": 5400,
+   "science": 13500,
    "recipes": [],
    "devOnly": false
   },
   "SteelLegDeck3x3H3.IronTeeth": {
-   "science": 5400,
+   "science": 13500,
    "recipes": [],
    "devOnly": false
   },
   "SteelLegDeck3x3H4.IronTeeth": {
-   "science": 5400,
+   "science": 13500,
    "recipes": [],
    "devOnly": false
   },
   "SteelLegDeck5x5H1.IronTeeth": {
-   "science": 15000,
+   "science": 37500,
    "recipes": [],
    "devOnly": false
   },
   "SteelLegDeck5x5H2.IronTeeth": {
-   "science": 15000,
+   "science": 37500,
    "recipes": [],
    "devOnly": false
   },
   "SteelLegDeck5x5H3.IronTeeth": {
-   "science": 15000,
+   "science": 37500,
    "recipes": [],
    "devOnly": false
   },
   "SteelLegDeck5x5H4.IronTeeth": {
-   "science": 15000,
+   "science": 37500,
    "recipes": [],
    "devOnly": false
   },
   "SteelMill.IronTeeth": {
-   "science": 4500,
+   "science": 10000,
    "recipes": [
     "HighGradeSteel",
     "Alloy"
@@ -1416,7 +1416,7 @@
    "devOnly": false
   },
   "TownPlaza.IronTeeth": {
-   "science": 5000,
+   "science": 12000,
    "recipes": [],
    "devOnly": false
   },
@@ -1456,7 +1456,7 @@
    "devOnly": false
   },
   "UraniumProcessingPlant.IronTeeth": {
-   "science": 200000,
+   "science": 300000,
    "recipes": [
     "Yellowcake",
     "EnrichedFuel",

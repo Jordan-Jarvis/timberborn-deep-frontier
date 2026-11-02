@@ -32,7 +32,7 @@
         "Amount": 2
       }
     ],
-    "ScienceCost": 250000,
+    "ScienceCost": 400000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": true
@@ -234,8 +234,8 @@
     "ForceOneFinalAccess": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "Science",
-    "ToolOrder": 71,
+    "ToolGroupId": "DeepFrontierNuclearFuel",
+    "ToolOrder": 46,
     "ToolShape": "Square",
     "Layout": "SideLine",
     "CustomPivot": {

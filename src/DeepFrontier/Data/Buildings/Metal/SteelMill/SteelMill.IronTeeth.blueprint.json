@@ -20,7 +20,7 @@
         "Amount": 255
       }
     ],
-    "ScienceCost": 4500,
+    "ScienceCost": 10000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -930,7 +930,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierHeavyIndustry",
-    "ToolOrder": 40,
+    "ToolOrder": 41,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {
@@ -954,7 +954,7 @@
   "MechanicalBuildingSpec": {},
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 3100,
+    "PowerInput": 5700,
     "IsShaft": false
   },
   "WorkshopAnimationControllerSpec": {},

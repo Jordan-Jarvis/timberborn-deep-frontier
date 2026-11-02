@@ -8,27 +8,27 @@ User request: "we need our own progression sets", ladders like vanilla Iron Teet
 
 | Ladder | Step | Building (science) | Recipe |
 |---|---|---|---|
-| Deep metal | Deep Ore | Deep Drill (1,000; finite source), Deep Mine (6,000; vein) | gathered |
+| Deep metal | Deep Ore | Deep Drill (1,000; finite source), Deep Mine (15,000; vein) | gathered |
 | | Deep Iron | Deep Ore Processor (1,200) | 2 Deep Ore + 1 Water + 1 Metal Part → 1, 1.5 h |
-| | Steel | Steel Mill (4,500) | **2 Deep Iron** + 2 Coal + 1 Limestone → 2, 4 h (was 4 Metal Block; value 11.8 → 11.4) |
-| | Alloy | Steel Mill (4,500) | 2 Steel + 1 Deep Iron → 2, 1.5 h |
+| | Steel | Steel Mill (10,000) | **2 Deep Iron** + 2 Coal + 1 Limestone → 2, 4 h (was 4 Metal Block; value 11.8 → 11.4) |
+| | Alloy | Steel Mill (10,000) | 2 Steel + 1 Deep Iron → 2, 1.5 h |
 | Chemistry | Crude Oil | Deep Ore Processor (1,200) | 1 Deep Ore + 3 Water → 6, 2 h |
-| | Chemical | Chemical Works (4,000) | **2 Crude Oil** + 1 Extract → 2, 2 h (was 4 Badwater; value 3.12 unchanged). Chemical from brine stays: 3 Concentrated Waste + 1 Extract → 2 |
-| | Polymer | Chemical Works (4,000) | 3 Crude Oil + 1 Chemical + 2 Water → 3, 3 h |
-| Masonry | Sandstone, Limestone | pits (300), quarries (4,000) | gathered |
+| | Chemical | Chemical Works (9,000) | **2 Crude Oil** + 1 Extract → 2, 2 h (was 4 Badwater; value 3.12 unchanged). Chemical from brine stays: 3 Concentrated Waste + 1 Extract → 2 |
+| | Polymer | Chemical Works (9,000) | 3 Crude Oil + 1 Chemical + 2 Water → 3, 3 h |
+| Masonry | Sandstone, Limestone | pits (300), quarries (9,000) | gathered |
 | | Brick | Stone Crusher, Cement Kiln (600) | 3 Sandstone → 8 Dirt; 4 Dirt + 1 Water → 4 Brick |
 | | Cement | Cement Kiln (600) | **3 Limestone + 1 Brick** → 2, 2 h, 1 Log (crushed brick in lime mortar; was 3 Limestone + 1 Dirt, 2026-10-31: masonry is a strict ladder, Brick → Cement → Concrete, with the same Dirt per Cement) |
 | | Concrete | Concrete Mixer (1,000) | 3 Sandstone + 2 Cement + 4 Water → 8 |
 | Machinery | Gear | vanilla Gear Workshop (100) | 1 Plank → 1 |
-| | Machine Core | Precision Machine Works (5,000) | 2 Alloy + 1 Polymer + 2 Gear + 1 Deep Iron → 1, 2 h |
-| | Electronics | Precision Machine Works (5,000) | 1 Machine Core + 2 Metal Part + 1 Polymer → 1, 2 h |
-| | Power Module | Precision Machine Works (5,000) | 1 Electronics + 1 Alloy + 2 Metal Part + 1 Coal → 1, 2 h |
+| | Machine Core | Precision Machine Works (12,000) | 2 Alloy + 1 Polymer + 2 Gear + 1 Deep Iron → 1, 2 h |
+| | Electronics | Precision Machine Works (12,000) | 1 Machine Core + 2 Metal Part + 1 Polymer → 1, 2 h |
+| | Power Module | Precision Machine Works (12,000) | 1 Electronics + 1 Alloy + 2 Metal Part + 1 Coal → 1, 2 h |
 | Water | Pure Water | Water Treatment Plant (1,800) | 10 Water + 1 Filter Media → 8 (+1 Concentrated Waste), 8 h |
-| | Reactor Coolant | Water Treatment Plant (1,800; Cryocoolant from 4,000) | 4 Pure Water + 1 Filter Media + 1 Cryocoolant → 4, 4 h |
+| | Reactor Coolant | Water Treatment Plant (1,800; Cryocoolant from 9,000) | 4 Pure Water + 1 Filter Media + 1 Cryocoolant → 4, 4 h |
 | Nuclear | Uranium Ore | Deep Ore Processor (1,200) | 2 Deep Ore + 4 Water → 1, 3 h |
-| | Yellowcake | Uranium Processing Plant (200,000) | 3 Uranium Ore + 1 Chemical + 2 Water + 1 Oxygen → 2, 2 h |
-| | Enriched Fuel | Uranium Processing Plant (200,000) | 2 Yellowcake + 1 Machine Core + 1 Power Module + 1 Hydrogen → 1 (+1 waste), 1 h |
-| | Reactor Power Cell | Uranium Processing Plant (200,000) | 1 Enriched Fuel + 2 Power Module + 2 Electronics + 2 Cryocoolant → 1, 6 h |
+| | Yellowcake | Uranium Processing Plant (300,000) | 3 Uranium Ore + 1 Chemical + 2 Water + 1 Oxygen → 2, 2 h |
+| | Enriched Fuel | Uranium Processing Plant (300,000) | 2 Yellowcake + 1 Machine Core + 1 Power Module + 1 Hydrogen → 1 (+1 waste), 1 h |
+| | Reactor Power Cell | Uranium Processing Plant (300,000) | 1 Enriched Fuel + 2 Power Module + 2 Electronics + 2 Cryocoolant → 1, 6 h |
 
 Badwater keeps its uses: vanilla Extract (Centrifuge), which every Chemical recipe needs, and Badwater filtering at the Radioactive Waste Refinery. Metal Block loses Steel and gains the Deep Drill's drill bits. The Deep Drill (1,000) used to wear Steel bits that only exist from 4,500, and Steel now needs drilled ore, so the drill now wears 0.1 Metal Block per full-crew hour. The Deep Mine and the Deep Well keep Steel bits.
 
@@ -38,17 +38,115 @@ Badwater keeps its uses: vanilla Extract (Centrifuge), which every Chemical reci
 |---|---|---|---|---|---|
 | Early (T1) | ≤ 600 | 2 Plank : 1 Log | Gear | Brick, pit stone | Gear |
 | Industrial (T2) | ≤ 3,000 | Plank | 2 Metal Block : 1 Deep Iron | Concrete, Brick | Gear |
-| Transition (T3) | ≤ 8,000 | 2 Plank : 1 Treated Plank | 2 Metal Block : 1 Deep Iron : 1 Steel | Concrete, Brick | Gear |
-| Frontier (T4) | ≤ 30,000 | Treated Plank | 4 Alloy : 1 Machine Core | Concrete, Brick | Gear |
+| Transition (T3) | ≤ 20,000 (8,000 until 2026-11-01) | 2 Plank : 1 Treated Plank | 2 Metal Block : 1 Deep Iron : 1 Steel | Concrete, Brick | Gear |
+| Frontier (T4) | ≤ 75,000 (30,000 until 2026-11-01) | Treated Plank | 4 Alloy : 1 Machine Core | Concrete, Brick | Gear |
 | Endgame (T5) | above | Treated Plank | 8 Alloy : 1 Machine Core : 1 Electronics : 1 Power Module | Concrete, Brick | Machine Core |
 
-Availability still decides per building. Deep Iron appears from 1,200 science (not on the Deep Ore Processor itself), Steel from 4,500 (not on the Steel Mill), and Electronics and Power Modules from 5,000. Bootstrap is unchanged: the first concrete chain stays concrete-free, and no building needs a good it is needed to make (`audit_progression.mjs`: 0 failures). The audit checks a family priced in a machinery good against the others, since its value cannot be told apart from the fixed amount; late-game rule buildings are still compared with the rule exactly.
+Availability still decides per building. Deep Iron appears from 1,200 science (not on the Deep Ore Processor itself), Steel from 10,000 (not on the Steel Mill), and Electronics and Power Modules from 12,000 (4,500 and 5,000 before the 2026-11-01 science curve). Bootstrap is unchanged: the first concrete chain stays concrete-free, and no building needs a good it is needed to make (`audit_progression.mjs`: 0 failures). The audit checks a family priced in a machinery good against the others, since its value cannot be told apart from the fixed amount; late-game rule buildings are still compared with the rule exactly.
 
 Totals over every Deep Frontier building (81 blueprints, structures included), before → after: Metal Block 9,535 → 4,280, Steel 5,411 → 3,346 (structures and gates; no longer a T4/T5 family good), Plank 3,310 → 2,820, Treated Plank 2,897 → 3,067, Deep Iron 455 → 550, Alloy 1,770 → 1,815, Machine Core 954 → 1,279, Electronics 0 → 205, Power Module 0 → 205, Gear 6,622 → 6,782, Concrete 101,805 → 100,355, Brick 9,128 → 9,023. The embodied value of each cost stays within a few percent (a value-preserving swap rounded up to 5). Small endgame buildings rise most, because each of four metal goods has a minimum of 5: Sludge Outfall and Recovery Pump ×1.7, Reactor Charging Bay ×1.4.
 
 **Stone budget** (`prepare_deep_frontier_map.py builtin`): unchanged at 1,213 Limestone and 1,689 Sandstone of the 1,800 in pit range. The sets swap goods inside the wood and metal families, not the stone shares.
 
-**Finite deep ore.** Steel, Alloy, Machine Core, Electronics and Power Module now all embody deep ore, so one of each building in the whole collection needs about 24,500 Deep Ore, against the 17,000-18,000 the built-in maps hold. The map check (`finiteDeepOreMargin`) now counts the buildings up to and including the Deep Mine (6,000), because ore is renewable after it. They need 1,290 Deep Ore (1,355 with the 5% margin). Drill-bit upkeep until then takes no deep ore: the check fails if the Deep Drill's bits ever embody it.
+**Finite deep ore.** Steel, Alloy, Machine Core, Electronics and Power Module now all embody deep ore, so one of each building in the whole collection needs about 24,500 Deep Ore, against the 17,000-18,000 the built-in maps hold. The map check (`finiteDeepOreMargin`) now counts the buildings up to and including the Deep Mine (15,000 since the 2026-11-01 science curve; 6,000 before), because ore is renewable after it. They need 1,450 Deep Ore (1,523 with the 5% margin; 1,363 before the curve, which now puts the 12,000 Materials Laboratory below the mine) against 18,000 in the built-in sources. Drill-bit upkeep until then takes no deep ore: the check fails if the Deep Drill's bits ever embody it.
+
+## Science curve and menu order (2026-11-01)
+
+User requests: "Did we make sure our tech progression is clear and easy and the menu items are ordered correctly to guide them for buildings from left to right?"; "remember to update the science requirements for the later stage buildings and power plants and everything. The nuclear reactor is the last one."; "Right now it is relatively low, aside from the one plant." This supersedes the [Science curve (2026-10-29)](#science-curve-2026-10-29) where they differ. Static authoring and checks only; not played in game.
+
+### Stages
+
+Early and industrial unlocks (up to 2,500) stay near vanilla Iron Teeth (its tree tops out at 20,000 for the Earth Repopulator, most of it under 4,000). Each later stage climbs on its own band, the order inside every stage is unchanged, and the 1,000,000 Nuclear Reactor stays the single last unlock. The 12,000 Materials Laboratory (400 science per working hour) keeps its unlock, so it is now the stepping stone at the start of the transition stage instead of a frontier building.
+
+| Stage (cost tier) | Science | Buildings (before → after) |
+|---|---|---|
+| Early (T1) | ≤ 600 | unchanged |
+| Industrial (T2) | ≤ 3,000 | unchanged (up to the 2,500 Smog Scrubber) |
+| Transition (T3) | ≤ 20,000 (was ≤ 8,000) | Chemical Works 4,000 → 9,000; Sandstone and Limestone Quarry 4,000 → 9,000; Steel Mill 4,500 → 10,000; **Coal Power Plant 4,500 → 10,000**; Precision Machine Works 5,000 → 12,000; Town Plaza 5,000 → 12,000; Materials Laboratory 12,000 (unchanged); Deep Mine 6,000 → 15,000; Grocery Store 6,000 → 15,000; Bathhouse 6,000 → 15,000; **Reinforced Hydro Turbine 8,000 → 20,000** |
+| Frontier (T4) | ≤ 75,000 (was ≤ 30,000) | Archive Excavation 9,000 → 25,000; Observation Deck 9,500 → 27,500; Electrolysis Plant 10,000 → 30,000; **Oil Power Plant 11,000 → 35,000**; Cryogenic Liquefaction Plant 12,000 → 40,000; Cryogenic Tank Farm 12,000 → 40,000; Hospital 25,000 → 50,000; Mission Control 30,000 → 75,000; Deep Well 30,000 → 75,000 |
+| Launch program (T5) | above | Rocket Assembly Hangar 50,000 → 125,000; Launch Pad 80,000 → 200,000 |
+| Nuclear (T5) | above | Uranium Processing Plant, Radioactive Waste Vault, Radioactive Waste Export, Sludge Outfall and Sludge Recovery Pump 200,000 → 300,000; Reactor Charging Bay 250,000 → 400,000; Radioactive Waste Refinery 500,000 → 600,000; **Nuclear Reactor 1,000,000 (unchanged, last)** |
+
+The power plants climb with their output: Coal 25,000 hp at 10,000, Hydro Turbine 40,000 hp at 20,000, Oil 90,000 hp at 35,000, Reactor 1,000,000 hp at 1,000,000. The Coal Power Plant unlocks with the Steel Mill, one step after the Chemical Works and quarries (5,200 hp each, ten Large Water Wheels until then).
+
+Structures keep their tier: every structural science formula is 2.5 times what it was (`structural_building_content.mjs`): concrete platforms (scaffolds) and side platforms 1,250 × k (k = n² + legs: 11,250-35,000), the Reinforced Overhang 8x1 12,500, steel columns 10,000 + 1,250 H (11,250-17,500, so the shortest unlocks after the Steel Mill that makes its steel), steel decks 1,500 n² (13,500 and 37,500, with their leg-deck tools), steel bridges 2,000 N (16,000-30,000) and steel cantilevers 2,500 N (25,000-37,500). Bot unlocks that follow the building moved with it: science + 1,000 for the expansion buildings and the quarries, equal to the science for the Deep Mine.
+
+Sources: `frontier_progression.json` (`implementedBuildingScienceOverrides`, `nuclearScienceRule`, hospital, grocery, planned buildings, late-game wellbeing, power plants), `create_frontier_expansion_content.mjs` rows, `create_vertical_slice_content.mjs` (Deep Mine), `construction_materials.json` (quarries), `hydro_content.json`, `deep_well_content.json`, `super_bots.json`, `radiation_content.mjs`, `structural_content.json` and the formulas, and the tier bands in `building_construction_costs.json`. The narrative hints quote the new Chemical Works, Archive Excavation and Mission Control unlocks.
+
+### What moved with the science
+
+- **Construction costs are held.** The T3 and T4 bands moved with the curve (T3 ≤ 20,000, T4 ≤ 75,000), and every building keeps its order against every building that makes goods, so each one keeps its tier and its material world. Canonical generation changes no construction cost except one: the **Materials Laboratory**, which stays at 12,000 and so moves from T4 to T3: 245 Treated Plank, 25 Alloy, 10 Machine Core, 1,035 Concrete, 240 Gear → 190 Plank, 95 Treated Plank, 35 Metal Block, 20 Deep Iron, 20 Steel, 690 Concrete, 160 Gear (cost factor 4 instead of 6, transition-stage goods).
+- **Power draws follow the existing power rule** (floor = 2,000 × (science / 2,500)^0.75, unchanged), so they rise with the science: Chemical Works 3,500 → 5,200 hp, quarries 2,800 → 5,200, Steel Mill 3,100 → 5,700, Precision Machine Works 3,400 → 6,500, Deep Mine 4,000 → 7,700, Grocery Store and Bathhouse 3,900 → 7,700, Archive Excavation 5,200 → 11,000, Electrolysis Plant 6,000 → 13,000, Cryogenic Liquefaction Plant 10,000 → 16,000, Cryogenic Tank Farm 6,500 → 16,000, Hospital 11,000 → 19,000, Mission Control 13,000 → 26,000, Rocket Assembly Hangar 19,000 → 38,000, Launch Pad 27,000 → 53,000, Uranium Processing Plant 53,000 → 73,000, Radioactive Waste Refinery 106,000 → 122,000. The Deep Well and the Reactor Charging Bay stay exempt; generator outputs are unchanged. The whole launch program (cryogenic line, hangar, mission control, pad) now draws about 162,000 hp, two oil plants.
+- **Map budgets** (`prepare_deep_frontier_map.py builtin`): the stone budget up to the quarries is unchanged (1,028 Limestone, 1,574 Sandstone of 1,800 on Plains); the finite deep ore up to the Deep Mine rises from 1,363 to 1,450 (the laboratory now unlocks before the mine), against 18,000 in the sources. Every built-in map passes.
+
+### Science economy and time to unlock
+
+Rates: Inventor 1 science per working hour (one worker); Numbercruncher (1,500) 10 per hour, no workers, 500 hp, so 240 a day while powered; Materials Laboratory 400 per working hour, four workers, 6,500 hp, so 6,400 a day over 16 working hours, consuming 32 Gear, 16 Concrete, 8 Metal Block and 8 Water a day (the geochemical assay is the same rate on frontier samples). Rocket missions pay 100,000 and 250,000 once. Science is spent on each unlock, so a stage costs the sum of what the player buys in it.
+
+| Phase | Producers assumed | Science a day | Before: science, days | After: science, days |
+|---|---|---:|---:|---:|
+| Save for the Materials Laboratory | 6 Numbercrunchers | 1,440 | 12,000, 8.3 | 12,000, 8.3 |
+| Rest of the transition stage (11 buildings) | 2 laboratories + crunchers | 14,240 | 57,000, 4.0 | 136,000, 9.6 |
+| Frontier (9 buildings) | 4 laboratories + crunchers | 27,040 | 148,500, 5.5 | 397,500, 14.7 |
+| Launch program (2 buildings) | 6 laboratories + crunchers | 39,840 | 130,000, 3.3 | 325,000, 8.2 |
+| Nuclear, the reactor's needs (plant, export, refinery, reactor), less the 350,000 the missions pay | 8 laboratories + crunchers | 52,640 | 1,550,000, 29.4 | 1,850,000, 35.1 |
+| Nuclear, every building | same | 52,640 | 2,400,000, 45.6 | 3,150,000, 59.8 |
+
+From the first Numbercruncher stage to the reactor, buying every non-structure building on the way and the reactor's own needs, research takes about 76 days instead of 50, at a realistic build-up of laboratories (each is 6,500 hp and four workers; eight draw 52,000 hp, one oil plant or two coal plants). The laboratory stays a fast route: it costs 12,000 and runs on early goods. The Hospital (50,000) comes about three weeks of game days after the first laboratory; the radioactive tide cannot start before cycle 15.
+
+### Menu order
+
+Left to right is the unlock order (`tools/validate_tool_order.mjs`, a validate_all check; `tools/tool_groups.json` `$comment`):
+
+- inside a Deep Frontier group every tool, vanilla and other-mod claims included, follows science ascending; on a tie a tool whose products another consumes comes first, then the smaller footprint, then the lower one;
+- a sub-group sits among its parent's buttons by its earliest unlock, at a place with the fewest science inversions against the vanilla and other-mod buttons, which keep their own order; Deep Frontier tools in native groups follow the same rule.
+
+The structure and quarrying generators rank their tools by science (`structural_building_content.mjs`, `create_construction_material_content.mjs`); the other generators author the order. The Reactor Charging Bay moved from Science to **Nuclear fuel** (Uranium Processing Plant, Charging Bay, Waste Refinery) and the Radioactive Waste Vault from Storage to **Radioactive waste** (Recovery Pump, Outfall, Export, Vault). No group was added. The external mods' science is in `tool_groups.json` `externalMods`, checked against the installed loose blueprints by `validate_tool_groups.mjs` (Flywheels read with UnityPy). The power shafts sort at 25, before the Lantern that Power Lines moves into Power at 29.
+
+| Group | Left to right (science; ▸ sub-group, vanilla or other mod in italics) |
+|---|---|
+| Metal | *Scavenger Flag 0, Metalsmith 150, Smelter 300*, ▸Quarries and cement 300, ▸Deep mining 1,000, *Efficient Mine 4,000*, ▸Heavy industry 9,000, ▸Rocketry 75,000, ▸Nuclear fuel 300,000 |
+| Quarries and cement | Sandstone Pit 300, Limestone Pit 300, Stone Crusher 600, Cement Kiln 600, Concrete Mixer 1,000, Sandstone Quarry 9,000, Limestone Quarry 9,000 |
+| Deep mining | Deep Drill 1,000, Deep Ore Processor 1,200, Deep Mine 15,000 |
+| Heavy industry | Chemical Works 9,000, Steel Mill 10,000, Precision Machine Works 12,000, Electrolysis Plant 30,000, Cryogenic Liquefaction Plant 40,000 |
+| Rocketry | Mission Control 75,000, Rocket Assembly Hangar 125,000, Launch Pad 200,000 |
+| Nuclear fuel | Uranium Processing Plant 300,000, Reactor Charging Bay 400,000, Radioactive Waste Refinery 600,000 |
+| Food | *Gatherer Flag 0, Farmhouse 0, Fermenter 0, Oil Press 120, Hydroponic Garden 200, Food Factory 300*, Fertilizer Works 350, *Coffee Brewery 500*, Fish Hatchery 600, Greenhouse 600, Fishery Works 900, Food Packaging Works 1,400 |
+| Science | *Inventor 0, Numbercruncher 1,500, Bot Part Factory 500, Bot Assembler 750, Charging Station 200, Control Tower 1,000, Grease Factory 2,000*, Technical School 2,200, Materials Laboratory 12,000, Archive Excavation 25,000 |
+| Storage | *Small and Large Industrial Pile 0, Pile Module 650, Grand Underground Pile 3,500, Small and Medium Warehouse 0, Large Warehouse 250, Storage Module 750, Grand Warehouse 2,500, Small Tank 0, Medium Tank 120, Large Tank 600, Tank Module 1,050, Grand Tank 3,000*, Cryogenic Tank Farm 40,000 |
+| Water | *Deep Water Pump 0, Deep Badwater Pump 250, Discharge 250*, Water Treatment Plant 1,800, *Deep Mechanical Pump 2,000, Compact Mechanical Pump 4,000, Centrifuge 600, Badwater Pressurizer 4,000, Aquifer Drill 400*, Deep Well 75,000, ▸Radioactive waste 300,000 |
+| Radioactive waste | Sludge Recovery Pump 300,000, Sludge Outfall 300,000, Radioactive Waste Export 300,000, Radioactive Waste Vault 300,000 |
+| Wellbeing | *Campfire … Detailer 1,000* (vanilla order), ▸Civic services 1,000, *Motivatorium 1,200, Mud Bath 1,800*, Smog Scrubber 2,500, Town Plaza 12,000, Observation Deck 27,500 |
+| Civic services | Public Health Lab 1,000, Restaurant 1,000, Bathhouse 15,000, Grocery Store 15,000, Hospital 50,000 |
+| Power | ▸Water power 0, *Large Power Wheel 0*, ▸Power shafts 0, ▸Engines and power plants 160, ▸Flywheels 300, *Gravity Battery 400* |
+| Water power | *Compact Water Wheel 0, Large Water Wheel 200*, Reinforced Hydro Turbine 20,000 |
+| Power shafts | *Power Shaft 0, Vertical Power Shaft 40, Impermeable Power Shaft 300, Clutch 400* |
+| Engines and power plants | *Geothermal Engine 160, Solar Panel 250, Steam Engine 400, Steam Plant 400*, Coal Power Plant 10,000, Oil Power Plant 35,000, Nuclear Reactor 1,000,000 |
+| Flywheels | *Small 300, Small Horizontal Framed 800, Small Vertical Framed 800, Medium 1,000, Medium Horizontal and Vertical Framed 2,500, Large 5,000, Large Horizontal and Vertical Framed 10,000* (display names) |
+| Paths | *Path 0, Stairs 70*, ▸Platforms 100, ▸Suspension bridges 150, *Spiral Stairs 350, Gate 200, Airlock 300*, ▸Overhangs 350, ▸Tubeways 500, ▸Teleporters 5,000, ▸Concrete side platforms 11,250, ▸Steel structures 11,250, ▸Concrete platforms 12,500 |
+| Platforms, Suspension bridges, Overhangs, Tubeways, Teleporters | vanilla or mod order, already ascending |
+| Concrete side platforms | 3×3 11,250, 4×4 20,000, 5×5 31,250 |
+| Steel structures | Steel Column (1 high) 11,250, (2 high) 12,500, Steel Deck 3x3 13,500, Steel Deck 3x3 on Legs (1-4 high) 13,500, Steel Column (3 high) 13,750, (4 high) 15,000, Steel Truss Bridge 8x1 16,000, Steel Column (5 high) 16,250, (6 high) 17,500, Steel Truss Bridge 10x1 20,000, 12x1 24,000, Steel Cantilever 10x1 25,000, 12x1 30,000, Steel Truss Bridge 15x1 30,000, Steel Cantilever 15x1 37,500, Steel Deck 5x5 37,500, Steel Deck 5x5 on Legs (1-4 high) 37,500 |
+| Concrete platforms | Reinforced Overhang 8x1 12,500, Concrete Platform 3x3 (1 high) 12,500, (2 high) 13,750, (3 high) 15,000, 4x4 (1-3 high) 21,250-23,750, 5x5 (1-3 high) 32,500-35,000 |
+| Landscaping | *Dam 0, Levee 120*, ▸Floodgates 150, *Fill Valve 300, Throttling Valve 500, Impermeable Floor 200, Irrigation Barrier 400, Explosives Factory 400*, ▸Dynamite 600, ▸Masonry and concrete 600, *Tunnel 2,000, Dirt Excavator 2,000, Terrain Block 2,000* |
+| Masonry and concrete | Brick Block 600, Sandstone Masonry Block 900, Concrete Levee Block 1,200, Concrete Overflow Dam 1,500, Reinforced Dam Block 2,200 |
+
+### Checks
+
+- `tools/validate_tool_order.mjs` fails on a group out of science order (with the tie rule), a sub-group or Deep Frontier tool away from its fewest-inversion place, or two children sharing an order value. It fails on the data before this change (177 errors) and passes after it.
+- `tools/audit_progression.mjs` adds the stage checks: the reactor unlocks above every other player building (`reactor-not-last`); each Deep Frontier power plant out-produces every generator unlocked at or before it (`power-plant-order`); each progression ladder's step is available no earlier than the step it consumes (`ladder-order`). The unlock-order check (a building before its construction goods or every recipe's inputs) is unchanged and passes: no building broke it before the curve, and the steel structures and the laboratory's cost were kept clear of it.
+
+### Proposed, not made
+
+| Building | Now | Proposal | Reason |
+|---|---:|---|---|
+| Radioactive Sludge Recovery Pump, Sludge Outfall | 300,000 | 50,000 (with the Hospital; T4 cost) | Radioactive tides can start at cycle 15, long before the nuclear stage; these two clean tide water and need nothing nuclear. |
+| Rocket missions (payout) | 100,000 and 250,000 | 250,000 and 500,000 | The launch unlocks (Mission Control, Hangar, Launch Pad) now cost 400,000; the payouts no longer cover them as the 2026-10-29 curve intended. |
+| Grocery Store | 15,000 | 3,000 (T2 cost) | It sells Canned Fish (1,400) and vanilla staples; nothing in it needs the transition stage. |
+| Concrete platforms and side platforms | 11,250-35,000 | keep 2.5×, or 500 × k again with a lower tier cost | They follow the curve to hold their tier; they are construction pieces made of early goods. |
+| Water Treatment Plant | 1,800 | keep | Its Reactor Coolant recipe needs Cryocoolant (9,000), a later extra recipe (audit warning); Pure Water runs at its unlock. |
+| Public Health Lab 1,000 / Hospital 50,000 | | keep | The Hospital is a frontier building; Medicine comes first by design. |
+| Mission Control 75,000 / Rocket Assembly Hangar 125,000 | | keep | Mission Control comes first in the story (chapter 6 asks for it). |
 
 ## Tools
 
@@ -58,6 +156,7 @@ Totals over every Deep Frontier building (81 blueprints, structures included), b
 | `python tools/asset-pipeline/measure_building_materials.py [dataRoot]` | Measures each building's visible material mix from its exported model into `tools/building_material_mix.json` (see Material cost rule). |
 | `node tools/material_costs.mjs --write\|--check [dataRoot]` | Records (or checks) the value table and producer graph of the generated data that the material cost rule uses, in `tools/material_cost_context.json`. |
 | `node tools/audit_progression.mjs [dataRoot]` | Static progression audit of the generated data (vanilla Iron Teeth plus Deep Frontier). Writes `outputs/progression-audit.json` and exits 1 on any failure. |
+| `node tools/validate_tool_order.mjs [dataRoot] [--print]` | Toolbar order: left to right is the unlock order (see Science curve and menu order). `--print` lists every checked group left to right. |
 | `node tools/audit_item_uses.mjs` | Existing check that every new good has enough downstream uses. It does not check whether a good can be produced. It counts recipes appended to vanilla buildings, bot assembly and bot maintenance (see Second uses). |
 | `node tools/validate_bot_upkeep.mjs [dataRoot]` | Static check of bot maintenance and the industrial bot (catalog, runtime records, generated data, automation declarations). |
 
@@ -80,6 +179,7 @@ Totals over every Deep Frontier building (81 blueprints, structures included), b
   - two player tools on the same `ToolGroupId#ToolOrder`;
   - a late-game blueprint whose cost differs from the rule;
   - a late-game building whose science falls outside its tier's band;
+  - a player building at or above the Nuclear Reactor's science, a Deep Frontier power plant that does not out-produce every generator unlocked at or before it, or a progression-ladder step available before the step it consumes (2026-11-01);
   - a building that unlocks before one of its construction goods, or before any of its recipes can run;
   - a bootstrap cycle: a construction good that cannot be produced without the building itself, or only by buildings unlocked after it;
   - a cost that breaks the material cost rule, a stale mix or context record, or a family the rule could not price ("concrete shown before Concrete exists");
@@ -107,8 +207,8 @@ Applies to every building in `tools/lategame_batches.json` `integrated`. All 20 
 |---|---|---|---:|---|
 | T1 | ≤ 600 | Productive settlement | 0 (pre-concrete) | 30 Plank, 12 Gear, 6 Metal Block |
 | T2 | ≤ 3,000 | Industrial city | 0.75 | 25 Plank, 10 Gear, 8 Metal Block |
-| T3 | ≤ 8,000 | Wonder transition | 1 | 20 Plank, 12 Gear, 12 Metal Block, 5 Treated Plank |
-| T4 | ≤ 30,000 | Frontier | 1.5 | 15 Metal Block, 8 Gear, 8 Treated Plank, 3 Deep Alloy |
+| T3 | ≤ 20,000 (8,000 until 2026-11-01) | Wonder transition | 1 | 20 Plank, 12 Gear, 12 Metal Block, 5 Treated Plank |
+| T4 | ≤ 75,000 (30,000 until 2026-11-01) | Frontier | 1.5 | 15 Metal Block, 8 Gear, 8 Treated Plank, 3 Deep Alloy |
 | T5 | above | Launch program and reactor | 3 | 10 High-grade Steel, 8 Alloy, 2 Machine Core, 8 Metal Block |
 
 Each tier uses goods the chain can already make at that stage. T4 uses the frontier's own refined metal, DeepAlloy, which also gives DeepAlloy real construction uses. T5 uses the premium metals. The nuclear reactor is the largest building at 2,543 built cells and 261 ground cells, so it comes out at 1,500 units. That is 2.4 times the next building, which makes it the endgame showpiece through size alone, with no special multiplier.
@@ -309,6 +409,8 @@ With the same change the generators were buffed (authored outputs, fuel unchange
 
 ## Science curve (2026-10-29)
 
+Superseded on 2026-11-01 by [Science curve and menu order](#science-curve-and-menu-order-2026-11-01): the transition, frontier, launch and nuclear unlocks below are raised there, and the laboratory became a transition-stage building.
+
 User decision: the late-game unlocks climb steeply towards the 1,000,000-science reactor, so players build the Materials Laboratory (400 science per working hour against the Numbercruncher's 10) as the stepping stone. The laboratory (12,000), everything below it and every building that makes the goods its recipes consume keep their science. The Materials Research recipe needs Gear, Concrete, Metal Block and Water; the Geochemical Assay needs UraniumOre, ConcentratedWaste, ReactorCoolantWater, LiquidHydrogen and LiquidOxygen; all of them are available at 12,000. Source: `frontier_progression.json` (`implementedBuildingScienceOverrides`, `nuclearScienceRule`), `create_frontier_expansion_content.mjs` (rocket rows), `radiation_content.mjs` (sludge buildings).
 
 | Building | Before | Now |
@@ -442,6 +544,8 @@ The audit now fails when a building unlocks before any of its construction goods
   - Public Health Lab 900 -> 1,000, to match concrete.
 
 ### Menus
+
+Superseded on 2026-11-01 by the left-to-right unlock order ([Menu order](#menu-order)).
 
 Fixed: Nuclear Reactor Power 60 -> 250 (it collided with the Gravity Battery), Mission Control Science 50 -> 110 (it collided with the Bot Part Factory).
 

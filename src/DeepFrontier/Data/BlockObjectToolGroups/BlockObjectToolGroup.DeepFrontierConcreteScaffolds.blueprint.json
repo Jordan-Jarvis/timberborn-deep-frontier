@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierConcreteScaffolds",
-    "Order": 100,
+    "Order": 120,
     "NameLocKey": "ToolGroups.DeepFrontierConcreteScaffolds",
     "Icon": "Buildings/Platforms/ConcreteScaffold4x4H2/Icon",
     "FallbackGroup": false

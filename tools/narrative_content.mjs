@@ -68,7 +68,7 @@ export const STAGES = [
   {id: 'NotNatural', science: 500,
     title: 'Something in the Water',
     objective: 'Study the badwater: finish a Public Health Lab, a Water Treatment Plant, a Deep Drill or a Chemical Works.',
-    hint: 'Public Health Lab (Wellbeing, 1,000 science), Deep Drill (Metal, 1,000), Water Treatment Plant (Water, 1,800) or Chemical Works (Metal, 4,000). Any one will do.',
+    hint: 'Public Health Lab (Wellbeing, 1,000 science), Deep Drill (Metal, 1,000), Water Treatment Plant (Water, 1,800) or Chemical Works (Metal, 9,000). Any one will do.',
     story: [
       'Every beaver knows badwater: green, sour, and best admired from a distance. The old stories call it a sickness of the land.',
       'The colony is no longer sure the old stories are right. Badwater behaves the same everywhere, in every spring and every badtide, as if it were made to a recipe. Somebody, it seems, wrote that recipe down.',
@@ -105,7 +105,7 @@ export const STAGES = [
   {id: 'OpenTheRuins', science: 2000,
     title: 'Open the Ruins',
     objective: 'Open the human ruins: recover 6 artifacts at an Archive Excavation.',
-    hint: `The Archive Excavation (Science menu, 9,000 science) opens human ruins with explosives and treated planks. An excavation within ${CACHE.spec.SurveyRadius} tiles of a Human Record Cache also surveys it for extra artifacts.`,
+    hint: `The Archive Excavation (Science menu, 25,000 science) opens human ruins with explosives and treated planks. An excavation within ${CACHE.spec.SurveyRadius} tiles of a Human Record Cache also surveys it for extra artifacts.`,
     story: [
       'The first finds are small and baffling: a hard hat big enough to bathe a kit in, a mug reading WORLD\'S OKAYEST ENGINEER, and a sign that says HOLDING STATION 3 - AUTHORIZED PERSONNEL ONLY.',
       'Underneath, in smaller letters: UNAUTHORIZED PERSONNEL ALSO ONLY. The humans, it turns out, had a sense of humor. They also had sealed data drives, which the excavation crews are now carefully drying out.',
@@ -124,7 +124,7 @@ export const STAGES = [
   {id: 'TheLastShift', science: 5000,
     title: 'The Last Shift',
     objective: "Read the last shift's records: recover 40 artifacts in total and finish a Mission Control.",
-    hint: 'Mission Control unlocks at 30,000 science. It reads the artifacts\' drives into guidance computers and telemetry, so keep them coming.',
+    hint: 'Mission Control unlocks at 75,000 science. It reads the artifacts\' drives into guidance computers and telemetry, so keep them coming.',
     story: [
       'The newest drives are the saddest and the tidiest. The rains failed, then the wells, then the harvests. The humans decided to leave the valley for now and follow the rain north. Nobody wrote down when now would end.',
       'The last shift did its best. It set the treatment works to automatic, put the Holding\'s flush valves on a schedule to run until further notice, and switched off the lights. No further notice was ever given.',

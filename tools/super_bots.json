@@ -52,9 +52,9 @@
     "powerInput": 5000,
     "fuel": ["EnrichedFuel", 0.2],
     "fullInventoryWorkHours": 50,
-    "science": 250000,
-    "toolGroup": "Science",
-    "toolOrder": 71,
+    "science": 400000,
+    "toolGroup": "Metal",
+    "toolOrder": 46,
     "flavor": "Two hours on the cradle, a week on the job."
   }
 }

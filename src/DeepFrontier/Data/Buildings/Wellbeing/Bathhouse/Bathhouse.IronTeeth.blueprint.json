@@ -36,7 +36,7 @@
         "Amount": 100
       }
     ],
-    "ScienceCost": 6000,
+    "ScienceCost": 15000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -448,7 +448,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierCivicServices",
-    "ToolOrder": 155,
+    "ToolOrder": 38,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {
@@ -471,7 +471,7 @@
   "MechanicalBuildingSpec": {},
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 3900,
+    "PowerInput": 7700,
     "IsShaft": false
   },
   "EnterableIlluminatorSpec": {},

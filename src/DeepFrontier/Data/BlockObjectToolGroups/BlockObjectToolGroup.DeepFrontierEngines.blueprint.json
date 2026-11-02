@@ -13,17 +13,17 @@
   },
   "ToolGroupChildrenSpec": {
     "ChildrenToolsTemplateNames": [
-      "SteamEngine.IronTeeth",
-      "SteamPlant.IronTeeth",
       "GeothermalEngine.IronTeeth",
-      "SolarPanel.IronTeeth"
+      "SolarPanel.IronTeeth",
+      "SteamEngine.IronTeeth",
+      "SteamPlant.IronTeeth"
     ],
     "DoNotIncludePlaceableToolGroup": true,
     "ChildrenOrderedIds": [
-      "SteamEngine.IronTeeth",
-      "SteamPlant.IronTeeth",
       "GeothermalEngine.IronTeeth",
       "SolarPanel.IronTeeth",
+      "SteamEngine.IronTeeth",
+      "SteamPlant.IronTeeth",
       "CoalPowerPlant.IronTeeth",
       "OilPowerPlant.IronTeeth",
       "NuclearReactor.IronTeeth"

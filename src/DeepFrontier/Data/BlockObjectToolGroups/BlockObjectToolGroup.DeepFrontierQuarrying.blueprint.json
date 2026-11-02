@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierQuarrying",
-    "Order": 110,
+    "Order": 21,
     "NameLocKey": "ToolGroups.DeepFrontierQuarrying",
     "Icon": "Buildings/Metal/LimestoneQuarry/Icon",
     "FallbackGroup": false

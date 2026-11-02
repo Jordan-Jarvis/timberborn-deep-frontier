@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierPowerShafts",
-    "Order": 30,
+    "Order": 25,
     "NameLocKey": "ToolGroups.DeepFrontierPowerShafts",
     "Icon": "Buildings/Power/PowerShaft/PowerShaftIcon",
     "FallbackGroup": false

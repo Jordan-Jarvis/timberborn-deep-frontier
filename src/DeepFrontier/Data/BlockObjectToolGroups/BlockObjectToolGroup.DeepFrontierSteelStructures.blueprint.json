@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierSteelStructures",
-    "Order": 120,
+    "Order": 110,
     "NameLocKey": "ToolGroups.DeepFrontierSteelStructures",
     "Icon": "Buildings/Platforms/SteelDeck5x5/Icon",
     "FallbackGroup": false

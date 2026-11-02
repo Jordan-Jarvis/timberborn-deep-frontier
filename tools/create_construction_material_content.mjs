@@ -103,6 +103,9 @@ for (const recipe of catalog.recipes) {
   await write(`Recipes/Recipe.${recipe.id}.blueprint.json`, value);
 }
 const buildingPaths = [];
+// Menu order follows the unlock (tools/validate_tool_order.mjs): by science, then
+// catalog position (the catalog lists the stone crusher before the kiln it feeds).
+const unlockOrder = [...catalog.buildings].sort((a, b) => a.science - b.science || catalog.buildings.indexOf(a) - catalog.buildings.indexOf(b));
 for (const building of catalog.buildings) {
   const { id, kind, size } = building;
   let template;
@@ -119,7 +122,7 @@ for (const building of catalog.buildings) {
   value.BuildingSpec.ScienceCost = building.science;
   Object.assign(value.WorkplaceSpec, { MaxWorkers: building.workers, DefaultWorkers: building.workers,
     WorkerTypeUnlockCosts: [{ WorkerType: 'Bot', ScienceCost: building.botScience }] });
-  Object.assign(value.PlaceableBlockObjectSpec, { ToolGroupId: 'Metal', ToolOrder: 70 + catalog.buildings.indexOf(building), Layout: 'Single' });
+  Object.assign(value.PlaceableBlockObjectSpec, { ToolGroupId: 'Metal', ToolOrder: 70 + unlockOrder.indexOf(building), Layout: 'Single' });
   value.LabeledEntitySpec = label(id, building.name, describe(building, kind === 'pit' ? {} : {hp: generatedHp(building)}), `Buildings/Metal/${id}/Icon`, building.flavor);
   if (kind === 'pit') {
     delete value.ScavengerSpec;

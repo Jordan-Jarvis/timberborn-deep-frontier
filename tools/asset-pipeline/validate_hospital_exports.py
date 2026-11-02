@@ -80,9 +80,15 @@ require('ManufactorySpec' not in blueprint and 'WorkshopSpec' not in blueprint,'
 require('FixedSlotManagerSpec' not in blueprint and 'WorkplaceSlotManagerSpec' not in blueprint,'Staff/patient capacity must not share restaurant slots')
 require('StatusHidingEnterableSpec' not in blueprint,'Workplace already supplies the one native IStatusHider')
 require(blueprint['EnterableSpec']['CapacityFinished']==30,'Patient capacity differs')
-# 11,000 hp: the late-game power rule's floor at 25,000 science (authored 600).
-require(blueprint['MechanicalNodeSpec']=={'PowerInput':11000,'PowerOutput':0,'IsShaft':False},'Hospital hp roles differ')
-require(blueprint['BuildingSpec']['ScienceCost']==25000,'Initial science balance differs')
+# The authored 600 hp goes through the late-game power rule at the catalogued science
+# (tools/lategame_costs.mjs powerFloor; 19,000 hp at 50,000 since the 2026-11-01 science curve).
+care=json.loads((ROOT/'tools/frontier_progression.json').read_text(encoding='utf-8'))['hospital']
+rule=read('tools/building_construction_costs.json')['lategameRule']['power']
+raw=rule['referenceHp']*(care['scienceUnlock']/rule['referenceScience'])**rule['exponent']
+step=rule['rounding']['step'] if raw<rule['rounding']['largeFrom'] else rule['rounding']['largeStep']
+power=max(care['powerDemandHp'],math.floor(raw/step+.5)*step)
+require(blueprint['MechanicalNodeSpec']=={'PowerInput':power,'PowerOutput':0,'IsShaft':False},'Hospital hp roles differ')
+require(blueprint['BuildingSpec']['ScienceCost']==care['scienceUnlock'],'Science differs from the catalog')
 effects={e['NeedId']:e for e in blueprint['AttractionSpec']['Effects']}
 # Radiation adds its 10-day Irradiation treatment (tools/radiation_content.mjs).
 require(set(effects)=={'Injury','ChippedTeeth','BadwaterContamination','Irradiation'},'Wrong native conditions')
@@ -91,7 +97,6 @@ require(effects['Irradiation']['PointsPerHour']>0,'Irradiation treatment must re
 # SatisfyToMaxValue need is full: all effects carry it, so patients stay until cured.
 require(all(e['SatisfyToMaxValue'] for e in effects.values()),'Every treatment must keep patients admitted until cured (all-or-none SatisfyToMaxValue)')
 meals=blueprint.get('HospitalPantrySpec')
-care=json.loads((ROOT/'tools/frontier_progression.json').read_text(encoding='utf-8'))['hospital']
 vanilla=ROOT/'vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources'
 thirst=-json.loads((vanilla/'Needs/Need.Beaver.Thirst.blueprint.json').read_text(encoding='utf-8-sig'))['NeedSpec']['DailyDelta']
 quench=[e['Points'] for e in json.loads((vanilla/'Goods/Good.Water.blueprint.json').read_text(encoding='utf-8-sig'))['GoodSpec']['ConsumptionEffects'] if e['NeedId']=='Thirst']
@@ -106,6 +111,6 @@ report={'status':'Source/export checks passed; native runtime acceptance pending
         'sourceSha256':hashlib.sha256((ROOT/'src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend').read_bytes()).hexdigest(),
         'exportSha256':hashlib.sha256(payload).hexdigest(),'nodes':len(model.nodes),'nativeUvVertices':uv_count,
         'routes':len(cells),'openings':0,'doors':2,'doorLevels':[0,2],'nativeProps':0,'bannerTracks':2,
-        'patients':30,'workers':6,'patientMeals':meals,'hpDemand':11000,'hpOutput':0,'science':25000,'treatmentEffects':effects}
+        'patients':30,'workers':6,'patientMeals':meals,'hpDemand':power,'hpOutput':0,'science':care['scienceUnlock'],'treatmentEffects':effects}
 (ROOT/'outputs/civic-integration/hospital-static-checks.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 print(json.dumps(report,indent=2))

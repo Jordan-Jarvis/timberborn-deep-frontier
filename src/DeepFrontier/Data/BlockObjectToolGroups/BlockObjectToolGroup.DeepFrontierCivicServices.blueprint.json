@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierCivicServices",
-    "Order": 100,
+    "Order": 135,
     "NameLocKey": "ToolGroups.DeepFrontierCivicServices",
     "Icon": "Buildings/Wellbeing/Hospital/Icon",
     "FallbackGroup": false

@@ -28,7 +28,7 @@
         "Amount": 225
       }
     ],
-    "ScienceCost": 12000,
+    "ScienceCost": 40000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -847,7 +847,7 @@
   },
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 6500,
+    "PowerInput": 16000,
     "IsShaft": false
   },
   "MechanicalBuildingSpec": {},

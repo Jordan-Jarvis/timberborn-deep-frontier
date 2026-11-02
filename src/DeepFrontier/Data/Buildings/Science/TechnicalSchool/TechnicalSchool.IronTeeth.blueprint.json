@@ -504,7 +504,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Science",
-    "ToolOrder": 44,
+    "ToolOrder": 92,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

@@ -28,7 +28,7 @@
         "Amount": 265
       }
     ],
-    "ScienceCost": 9000,
+    "ScienceCost": 25000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -49,7 +49,7 @@
     "WorkerTypeUnlockCosts": [
       {
         "WorkerType": "Bot",
-        "ScienceCost": 10000
+        "ScienceCost": 26000
       }
     ]
   },
@@ -438,7 +438,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Science",
-    "ToolOrder": 46,
+    "ToolOrder": 96,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {
@@ -462,7 +462,7 @@
   "MechanicalBuildingSpec": {},
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
-    "PowerInput": 5200,
+    "PowerInput": 11000,
     "IsShaft": false
   },
   "WorkshopAnimationControllerSpec": {},

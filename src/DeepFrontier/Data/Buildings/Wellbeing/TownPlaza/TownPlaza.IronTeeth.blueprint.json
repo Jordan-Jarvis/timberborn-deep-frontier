@@ -28,7 +28,7 @@
         "Amount": 35
       }
     ],
-    "ScienceCost": 5000,
+    "ScienceCost": 12000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": true
@@ -624,7 +624,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Wellbeing",
-    "ToolOrder": 105,
+    "ToolOrder": 161,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {
