@@ -13,7 +13,10 @@ define:
                      as (Geometry, kind, value) tuples; see ANIMATION_KINDS.
 
 Optional: `animate(obj, kind, value, frame_end)` for custom kinds that start
-with 'CUSTOM_'.
+with 'CUSTOM_'. `DOORLESS = True` declares a building that nobody enters (a
+storage module that only stacks on or stands beside its core): it records
+no doorway, its registration carries `doorless: true` and an empty `doors`
+list, and the exporter adds no entrance slot. Every other check applies.
 
 The scene saves as src/DeepFrontier/Art/Source/<Ident>-ReferenceStudy.blend with
 collection <Ident>.ReferenceStudy, so `zfight_audit.py --models <Ident>` checks
@@ -384,8 +387,11 @@ def registration(module, geometries, doorways):
                           for u in samples for v in samples)
             if covered >= WALL_COVER * 16:
                 wall_faces.append([x, y, z, name])
-    return {'footprint': [fx, fy], 'height': fz, 'occupied': sorted(list(c) for c in occupied),
-            'partsOutsideFootprint': outside, 'doors': doors, 'wallFaces': wall_faces}
+    record = {'footprint': [fx, fy], 'height': fz, 'occupied': sorted(list(c) for c in occupied),
+              'partsOutsideFootprint': outside, 'doors': doors, 'wallFaces': wall_faces}
+    if getattr(module, 'DOORLESS', False):
+        record['doorless'] = True
+    return record
 
 
 def smoke_emitters(module, static, parts):
@@ -519,7 +525,10 @@ def build_model(ident):
         problems.append(f'below ground: z min {lo.z:.2f}')
     if hi.z > module.HEIGHT + .02:
         problems.append(f'above HEIGHT {module.HEIGHT}: z max {hi.z:.2f}')
-    if not static.doorways:
+    if getattr(module, 'DOORLESS', False):
+        if static.doorways:
+            problems.append(f'DOORLESS study records doorways {[d.get("id") for d in static.doorways]}')
+    elif not static.doorways:
         problems.append('no doorway recorded in g.doorways')
     for d in static.doorways:
         x, y, z = d['position']

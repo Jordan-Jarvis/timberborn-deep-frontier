@@ -894,6 +894,11 @@
    ],
    "devOnly": false
   },
+  "ModularWarehouse.IronTeeth": {
+   "science": 400,
+   "recipes": [],
+   "devOnly": false
+  },
   "Motivatorium.IronTeeth": {
    "science": 1200,
    "recipes": [],
@@ -1477,6 +1482,11 @@
   },
   "VerticalTubeway.IronTeeth": {
    "science": 600,
+   "recipes": [],
+   "devOnly": false
+  },
+  "WarehouseModule.IronTeeth": {
+   "science": 450,
    "recipes": [],
    "devOnly": false
   },

@@ -695,6 +695,48 @@ async function makePowerPlant(entry) {
   return `${outputPath}/${id}.IronTeeth.blueprint`;
 }
 
+// Modular Warehouse (frontier_progression.json modularWarehouse; behaviour in
+// Scripts/ModularStorage): the core haulers use and the Warehouse Module that
+// attaches to it, both from the vanilla Large Warehouse without its native
+// single-good stockpile and its box columns (the studies show their own
+// crates). The core's ModularWarehouseSpec gives the slots and its own
+// capacity; a module (WarehouseModuleSpec) adds capacity and a slot, holds no
+// goods and has no door, so it loses the warehouse's entrance, access and
+// enterable specs (lategame_building_content.mjs doorless). Unpowered and
+// worker-free, as the vanilla warehouses. Costs come from the late-game rule
+// (T1, early goods) like the Smog Scrubber's.
+const MODULAR = progression.modularWarehouse;
+async function makeModularStorage(entry, specs, doorless) {
+  const {id, template, toolGroup, scienceUnlock: science, toolOrder} = entry;
+  if (template !== 'LargeWarehouse' || toolGroup !== 'Storage') throw new Error(`${id}: modular storage clones the vanilla Large Warehouse into Storage`);
+  if (!LATEGAME.has(id)) throw new Error(`${id}: its study is not integrated (tools/lategame_batches.json)`);
+  const outputPath = `Buildings/Storage/${id}`;
+  const value = clone(await readJson(vanilla('Buildings/Storage/LargeWarehouse/LargeWarehouse.IronTeeth.blueprint.json')));
+  removeTemplateSpecs(value, ['StockpileSpec', 'StockpileGoodColumnVisualizerSpec'], id);
+  if (doorless) removeTemplateSpecs(value, ['EnterableSpec', 'BuildingAccessibleSpec'], id);
+  if (value.MechanicalNodeSpec || value.WorkplaceSpec) throw new Error(`${id}: the Large Warehouse template gained power or workers`);
+  value.BuildingSpec = {...value.BuildingSpec, BuildingCost: (await lategameCost(id, science)).map(([Id, Amount]) => ({Id, Amount})), ScienceCost: science};
+  value.TemplateSpec = {...value.TemplateSpec, TemplateName: `${id}.IronTeeth`, BackwardCompatibleTemplateNames: []};
+  value.PlaceableBlockObjectSpec = {...value.PlaceableBlockObjectSpec, ToolGroupId: 'Storage', ToolOrder: toolOrder, DevModeTool: false};
+  Object.assign(value, specs);
+  setLabels(value, id, outputPath);
+  setModels(value, id, outputPath);
+  await applyLategame(value, id, doorless ? {doorless: true} : {});
+  await writeJson(data(...outputPath.split('/'), `${id}.IronTeeth.blueprint.json`), value);
+  return `${outputPath}/${id}.IronTeeth.blueprint`;
+}
+async function makeModularWarehouse() {
+  const {core} = MODULAR;
+  if (!Number.isInteger(core.maxSlots) || core.maxSlots < 1 || !Number.isInteger(core.capacity) || core.capacity < 1 || core.goodType !== 'Box')
+    throw new Error('ModularWarehouse: modularWarehouse.core needs whole positive maxSlots and capacity of Box goods');
+  return makeModularStorage(core, {ModularWarehouseSpec: {MaxSlots: core.maxSlots, CoreCapacity: core.capacity, GoodType: core.goodType}}, false);
+}
+async function makeWarehouseModule() {
+  const {module} = MODULAR;
+  if (!Number.isInteger(module.capacity) || module.capacity < 1) throw new Error('WarehouseModule: modularWarehouse.module needs a whole positive capacity');
+  return makeModularStorage(module, {WarehouseModuleSpec: {Capacity: module.capacity}}, true);
+}
+
 async function makeVault() {
   const value = clone(await readJson(vanilla('Buildings/Storage/LargeWarehouse/LargeWarehouse.IronTeeth.blueprint.json')));
   const vaultScience = progression.implementedBuildingScienceOverrides.RadioactiveWasteVault;
@@ -727,6 +769,8 @@ buildingBlueprints.push(await makeReactor());
 for (const entry of POWER_PLANTS) buildingBlueprints.push(await makePowerPlant(entry));
 buildingBlueprints.push(await makeVault());
 buildingBlueprints.push(await makeScrubber());
+buildingBlueprints.push(await makeModularWarehouse());
+buildingBlueprints.push(await makeWarehouseModule());
 for (const entry of WELLBEING) buildingBlueprints.push(await makeAttraction(entry));
 
 const collectionPath = data('GoodCollections', 'GoodCollection.IronTeeth.blueprint.json');
@@ -807,6 +851,18 @@ for (const id of Object.keys(BUILDING_TEXT)) if (!buildingDefinitions.some(([bui
   rows.push(csvRow('Building.FisherFlag.FlavorDescription', 'A quiet bank, a long wait and a longer story about the one that got away.'));
 }
 {
+  // Modular Warehouse and Warehouse Module, and the two lines their panel and status show.
+  const {core, module} = MODULAR;
+  rows.push(csvRow(`Building.${core.id}.DisplayName`, core.name));
+  rows.push(csvRow(`Building.${core.id}.Description`,
+    `Stores up to ${core.maxSlots} goods, each in its own slot with its own warehouse settings. Each attached ${module.name} adds a slot and storage.`));
+  rows.push(csvRow(`Building.${core.id}.FlavorDescription`, 'One door, one ledger and a beaver who knows where everything is.'));
+  rows.push(csvRow(`Building.${module.id}.DisplayName`, module.name));
+  rows.push(csvRow(`Building.${module.id}.Description`,
+    `Adds storage and a slot to a ${core.name} when built beside it, on top of it, or on another attached module.`));
+  rows.push(csvRow(`Building.${module.id}.FlavorDescription`, 'Another floor of crates, and the ledger grows a page.'));
+  rows.push(csvRow('DeepFrontier.ModularWarehouse.Network', 'Modules: {0}. Capacity: {1}'));
+  rows.push(csvRow('DeepFrontier.ModularWarehouse.ModuleUnattached', `Not attached to a ${core.name}`));
   rows.push(csvRow('Building.SmogScrubber.DisplayName', 'Smog Scrubber'));
   // Its share and range are in the tooltip's smog section (DeepFrontier.Smog.Scrubber.Planned).
   rows.push(csvRow('Building.SmogScrubber.Description', 'Cleans smog out of the air around it while powered. No workers.'));

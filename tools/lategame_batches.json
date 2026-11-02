@@ -33,6 +33,8 @@
     "CoalPowerPlant",
     "OilPowerPlant",
     "DeepWell",
-    "ReactorChargingBay"
+    "ReactorChargingBay",
+    "ModularWarehouse",
+    "WarehouseModule"
   ]
 }

@@ -45,6 +45,8 @@ const buildings = {
   SteelMill: 'Buildings/Metal/SteelMill/Icon.png',
   ArchiveExcavation: 'Buildings/Science/ArchiveExcavation/Icon.png',
   CryogenicTankFarm: 'Buildings/Storage/CryogenicTankFarm/Icon.png',
+  ModularWarehouse: 'Buildings/Storage/ModularWarehouse/Icon.png',
+  WarehouseModule: 'Buildings/Storage/WarehouseModule/Icon.png',
   SmogScrubber: 'Buildings/Wellbeing/SmogScrubber/Icon.png',
   Bathhouse: 'Buildings/Wellbeing/Bathhouse/Icon.png',
   TownPlaza: 'Buildings/Wellbeing/TownPlaza/Icon.png',

@@ -779,6 +779,8 @@ namespace DeepFrontier.Scripts {
       if(s.HasPipes)Guard(s,"pipe valve target",()=>CheckValveTarget(s));
     }
     private void AcceptsGoods(Subject s,Inventory inventory) {
+      var warehouse=s.Building.GetComponent<ModularStorage.ModularWarehouse>();
+      if(warehouse){WarehouseSlots(s,warehouse,inventory);return;}
       var expected=new List<string>();
       var m=s.Manufactory;
       if(m&&m.HasCurrentRecipe) {
@@ -808,6 +810,49 @@ namespace DeepFrontier.Scripts {
       missing.AddRange(oils.Where(g=>!inventory.InputGoods.Contains(g)).Select(g=>g+"(maintenance oil not registered)"));
       Record(s,"inventory accepts goods",missing.Count==0,(missing.Count==0?"accepts ":"missing ["+string.Join(",",missing)+"] of ")+string.Join(",",expected.Concat(oils))+
         " in "+inventory.ComponentName+(m&&m.HasCurrentRecipe?" (recipe "+m.CurrentRecipe.Id+")":""));
+    }
+
+    // Modular Warehouse: the native inventory's limits follow the slots (ModularWarehouse.AllowedAmount). With the
+    // network of four modules applied for the probe (ModularWarehouse.SetNetwork, as ModularWarehouseNetwork does),
+    // each of the five open slots takes its share of the capacity and every other good 0; an Empty slot allows 0
+    // (native unwanted stock); a slot switched to another good keeps the old stock as leftovers, which take the new
+    // good's room until they leave; closing slots (fewer modules) clears their goods. The network, slots and stock
+    // are restored afterwards.
+    private void WarehouseSlots(Subject s,ModularStorage.ModularWarehouse warehouse,Inventory inventory) {
+      var goods=inventory.AllowedGoods.Select(g=>g.StorableGood.GoodId).ToList();
+      Require(goods.Count>warehouse.MaxSlots,"the warehouse inventory takes "+goods.Count+" goods for "+warehouse.MaxSlots+" slots");
+      var spec=s.Building.GetComponent<ModularStorage.ModularWarehouseSpec>();
+      int modules=warehouse.Modules,capacity=warehouse.NetworkCapacity,probe=spec.CoreCapacity*5;
+      var problems=new List<string>();
+      void Expect(string what,int actual,int wanted){if(actual!=wanted)problems.Add(what+" "+actual+" (expected "+wanted+")");}
+      warehouse.SetNetwork(4,probe);
+      Expect("open slots with 4 modules",warehouse.ActiveSlots,Math.Min(warehouse.MaxSlots,5));
+      for(int i=0;i<warehouse.ActiveSlots;i++)warehouse.SetGood(i,goods[i]);
+      int share=probe/warehouse.ActiveSlots;
+      for(int i=0;i<warehouse.ActiveSlots;i++)Expect("limit "+goods[i],inventory.LimitedAmount(goods[i]),warehouse.SlotCapacity(i));
+      Expect("share",warehouse.SlotCapacity(warehouse.ActiveSlots-1),share);
+      var other=goods[warehouse.MaxSlots];
+      Expect("limit unselected "+other,inventory.LimitedAmount(other),0);
+      warehouse.SetMode(0,ModularStorage.WarehouseSlotMode.Empty);
+      Expect("limit Empty slot "+goods[0],inventory.LimitedAmount(goods[0]),0);
+      warehouse.SetMode(0,ModularStorage.WarehouseSlotMode.Accept);
+      inventory.GiveExisting(new GoodAmount(goods[0],10));
+      warehouse.SetGood(0,other);
+      Expect("leftover "+goods[0]+" unwanted, limit",inventory.LimitedAmount(goods[0]),0);
+      Expect("new good "+other+" beside 10 leftovers, limit",inventory.LimitedAmount(other),warehouse.SlotCapacity(0)-10);
+      if(!inventory.HasUnwantedStock)problems.Add("leftover "+goods[0]+" is not native unwanted stock");
+      inventory.TakeExisting(new GoodAmount(goods[0],10));
+      Expect("new good "+other+" after the leftovers left, limit",inventory.LimitedAmount(other),warehouse.SlotCapacity(0));
+      warehouse.SetNetwork(0,spec.CoreCapacity);
+      Expect("open slots without modules",warehouse.ActiveSlots,1);
+      Expect("closed slot cleared",warehouse.GoodIn(1)==null?0:1,0);
+      Expect("limit of a closed slot's good "+goods[1],inventory.LimitedAmount(goods[1]),0);
+      Expect("core alone, limit "+other,inventory.LimitedAmount(other),spec.CoreCapacity);
+      warehouse.SetGood(0,null);
+      warehouse.SetNetwork(modules,capacity);
+      Record(s,"warehouse slots partition the inventory",problems.Count==0,problems.Count==0
+        ?"4 modules: "+warehouse.MaxSlots+" slots of "+share+"; Empty, leftovers, closing slots and the core alone as designed"
+        :string.Join("; ",problems));
     }
 
     // ---------- pipes ----------

@@ -121,7 +121,7 @@
   "nativeOrders": {
     "Storage": [
       "SmallIndustrialPile.IronTeeth", "LargeIndustrialPile.IronTeeth", "PileModule.IronTeeth", "GrandUndergroundPile.IronTeeth",
-      "SmallWarehouse.IronTeeth", "MediumWarehouse.IronTeeth", "LargeWarehouse.IronTeeth", "StorageModule.IronTeeth", "GrandWarehouse.IronTeeth",
+      "SmallWarehouse.IronTeeth", "MediumWarehouse.IronTeeth", "LargeWarehouse.IronTeeth", "ModularWarehouse.IronTeeth", "WarehouseModule.IronTeeth", "StorageModule.IronTeeth", "GrandWarehouse.IronTeeth",
       "SmallTank.IronTeeth", "MediumTank.IronTeeth", "LargeTank.IronTeeth", "TankModule.IronTeeth", "GrandTank.IronTeeth", "CryogenicTankFarm.IronTeeth"]
   }
 }

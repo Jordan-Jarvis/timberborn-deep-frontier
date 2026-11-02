@@ -32,7 +32,7 @@ const NATIVE_INVENTORIES = ['GoodConsumingBuildingSpec', 'StockpileSpec', 'Firew
   'SimpleOutputInventorySpec', 'WonderInventorySpec', 'DistrictCrossingSpec'];
 // ManufactorySpec owns one when Manufactory.NeedsInventory: any recipe with fuel, ingredients or products.
 // Deep Frontier components that add an inventory: C# subject -> spec it is decorated on.
-const MOD_INVENTORIES = {GroceryStore: 'GroceryStoreSpec'};
+const MOD_INVENTORIES = {GroceryStore: 'GroceryStoreSpec', ModularWarehouse: 'ModularWarehouseSpec'};
 // Specs whose goods live in another component's inventory (never a second
 // one): Hospital patient meals in the GoodConsumingBuilding inventory
 // (HospitalPantryInventory.cs), bot maintenance oils and workplace upkeep

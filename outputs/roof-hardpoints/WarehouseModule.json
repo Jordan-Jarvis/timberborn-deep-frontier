@@ -1,0 +1,9 @@
+{"template":"WarehouseModule","model":"Buildings/Storage/WarehouseModule/WarehouseModule.IronTeeth.Model","export":"outputs/lategame-integration/Data/Buildings/Storage/WarehouseModule/WarehouseModule.IronTeeth.Model.timbermesh","exportSha256":"947a2331175b7e6c4a2d7550d1ef720d17f338aa81a5320925621221555a6d7e","size":[3,3,1],"baseZ":0,"coordinateSystem":"Native grid XYZ, Z up, blueprint block indices; the cell is the top cell, a column stands in the cell above","rule":"Top cells (occupied, nothing occupied above in the blueprint); inner box = samples 2..5 of 8 per axis; blocked = static geometry from 0.1 over the cell top up one layer (vertical and horizontal rays); covered = static geometry anywhere above that; animated = animated geometry in the top cell or the cell above","cells":[{"cell":[0,0,0],"blocked":false,"covered":false,"animated":false},
+{"cell":[1,0,0],"blocked":false,"covered":false,"animated":false},
+{"cell":[2,0,0],"blocked":false,"covered":false,"animated":false},
+{"cell":[0,1,0],"blocked":false,"covered":false,"animated":false},
+{"cell":[1,1,0],"blocked":false,"covered":false,"animated":false},
+{"cell":[2,1,0],"blocked":false,"covered":false,"animated":false},
+{"cell":[0,2,0],"blocked":false,"covered":false,"animated":false},
+{"cell":[1,2,0],"blocked":false,"covered":false,"animated":false},
+{"cell":[2,2,0],"blocked":false,"covered":false,"animated":false}]}

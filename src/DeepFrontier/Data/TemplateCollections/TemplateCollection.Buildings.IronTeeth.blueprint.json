@@ -34,6 +34,8 @@
       "Buildings/Power/OilPowerPlant/OilPowerPlant.IronTeeth.blueprint",
       "Buildings/Storage/RadioactiveWasteVault/RadioactiveWasteVault.IronTeeth.blueprint",
       "Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.blueprint",
+      "Buildings/Storage/ModularWarehouse/ModularWarehouse.IronTeeth.blueprint",
+      "Buildings/Storage/WarehouseModule/WarehouseModule.IronTeeth.blueprint",
       "Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.blueprint",
       "Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.blueprint",
       "Buildings/Wellbeing/ObservationDeck/ObservationDeck.IronTeeth.blueprint",

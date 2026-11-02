@@ -72,7 +72,7 @@ OWNERS = {
         'Bathhouse', 'Greenhouse', 'TechnicalSchool', 'CoalPowerPlant', 'OilPowerPlant', 'DeepWell')},
     **{name: ('lategame', 'small', LATE) for name in (
         'SmogScrubber', 'RadioactiveWasteExport', 'RadioactiveSludgeRecoveryPump', 'RadioactiveSludgeOutfall',
-        'ReactorChargingBay')},
+        'ReactorChargingBay', 'ModularWarehouse', 'WarehouseModule')},
     **{name: ('industrial', 'workshop', None) for name in (
         'CementKiln', 'ConcreteMixer', 'StoneCrusher', 'SandstoneQuarry', 'LimestoneQuarry',
         'SandstonePit', 'LimestonePit')},

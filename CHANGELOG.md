@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Modular Warehouse: one door, several goods, stackable modules
+- **New Modular Warehouse and Warehouse Module in the Storage menu** (player request), right after the Large Warehouse, at 400 and 450 science. Both are timber buildings that need no power or workers. The Modular Warehouse costs 100 planks, 60 logs and 15 gears; each module 80 planks, 60 logs and 5 gears.
+- **The Modular Warehouse is the one door haulers use.** Build Warehouse Modules beside it, on top of it, or beside or on top of another attached module, and they join its storage. The district sees one storage point holding several goods.
+- **Slots:** the Modular Warehouse alone stores one good (600). Each attached module adds 600 storage and one more slot, up to 5 slots; further modules add storage only. The storage is shared equally between the slots: with 9 modules it stores 5 goods of 1,200 each.
+- **Each slot works like its own warehouse:** pick its good with the usual warehouse picker and give it the usual Accept, Obtain, Supply or Empty setting. A good can be in only one slot. Haulers, laborers and conveyor belts use it like any warehouse, and beavers eat and drink from it.
+- **Removing a module never destroys goods:** they are all kept in the Modular Warehouse. Its storage shrinks, and what no longer fits (and the good of a slot that closes) is carried to your other storage. A module that is not attached shows a "Not attached to a Modular Warehouse" status.
+
 - **The Reactor Bot overheating warning now says it will leak radiation:** "Reactor Bot is overheating and will leak radiation".
 
 ### Planters skip irradiated ground

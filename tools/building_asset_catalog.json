@@ -1022,6 +1022,30 @@
       "artStage": "detailed"
     },
     {
+      "building": "ModularWarehouse",
+      "template": "ModularWarehouse.IronTeeth",
+      "blueprint": "src/DeepFrontier/Data/Buildings/Storage/ModularWarehouse/ModularWarehouse.IronTeeth.blueprint.json",
+      "model": "ModularWarehouse",
+      "sourceScene": "src/DeepFrontier/Art/Source/ModularWarehouse-ReferenceStudy.blend",
+      "collection": "ModularWarehouse.ReferenceStudy",
+      "geometry": "tools/asset-pipeline/lategame_ModularWarehouse.py",
+      "generator": "tools/asset-pipeline/render_lategame_studies.py",
+      "exporter": "tools/asset-pipeline/export_lategame_models.py",
+      "artStage": "detailed"
+    },
+    {
+      "building": "WarehouseModule",
+      "template": "WarehouseModule.IronTeeth",
+      "blueprint": "src/DeepFrontier/Data/Buildings/Storage/WarehouseModule/WarehouseModule.IronTeeth.blueprint.json",
+      "model": "WarehouseModule",
+      "sourceScene": "src/DeepFrontier/Art/Source/WarehouseModule-ReferenceStudy.blend",
+      "collection": "WarehouseModule.ReferenceStudy",
+      "geometry": "tools/asset-pipeline/lategame_WarehouseModule.py",
+      "generator": "tools/asset-pipeline/render_lategame_studies.py",
+      "exporter": "tools/asset-pipeline/export_lategame_models.py",
+      "artStage": "detailed"
+    },
+    {
       "building": "SmogScrubber",
       "template": "SmogScrubber.IronTeeth",
       "blueprint": "src/DeepFrontier/Data/Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.blueprint.json",

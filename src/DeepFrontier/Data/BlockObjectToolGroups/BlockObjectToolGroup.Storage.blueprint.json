@@ -8,6 +8,8 @@
       "SmallWarehouse.IronTeeth",
       "MediumWarehouse.IronTeeth",
       "LargeWarehouse.IronTeeth",
+      "ModularWarehouse.IronTeeth",
+      "WarehouseModule.IronTeeth",
       "StorageModule.IronTeeth",
       "GrandWarehouse.IronTeeth",
       "SmallTank.IronTeeth",

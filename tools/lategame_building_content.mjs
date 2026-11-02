@@ -20,6 +20,9 @@
 // - Template navmesh edges describe the template's interior and are rejected.
 // - A building with UnderstructureConstraintSpec declares the ground core that
 //   stands over its map marker (see understructureCore below).
+// - A doorless building (option doorless: the Warehouse Module, which nobody
+//   enters) records no door in its study and has no native Entrance,
+//   BuildingAccessibleSpec or EnterableSpec, as the vanilla platforms.
 import {copyFile, mkdir, readFile, writeFile} from 'node:fs/promises';
 import {dirname, sep} from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
@@ -156,7 +159,7 @@ export function groundOverhangs(blocks, [w, h], cells, door, id) {
   return cells.length;
 }
 
-export async function lategameBlueprint(value, id, {understructure, terrace, overhangs} = {}) {
+export async function lategameBlueprint(value, id, {understructure, terrace, overhangs, doorless} = {}) {
   if (!LATEGAME.has(id)) throw new Error('Not an integrated late-game building: ' + id);
   if (Boolean(understructure) !== Boolean(value.UnderstructureConstraintSpec)) {
     throw new Error(`${id}: an understructure core and UnderstructureConstraintSpec must be declared together`);
@@ -178,19 +181,28 @@ export async function lategameBlueprint(value, id, {understructure, terrace, ove
     Object.assign(b, {MatterBelow: 'Any', Occupations: 'None', Stackable: 'None'});
   }
   const inside = ([x, y, z]) => x >= 0 && y >= 0 && z >= 0 && x < w && y < h && z < layers;
-  const door = registration.doors.find((d) => d.position[2] === 0);
-  if (!door) throw new Error(id + ': no ground door registered');
-  if (door.faceOffset > MAX_DOOR_OFFSET) throw new Error(`${id}: door face sits ${door.faceOffset} tiles behind its cell edge`);
-  if (!inside(door.doorstep) || blocks[index(door.doorstep)].Occupations !== 'All') throw new Error(`${id}: doorstep ${door.doorstep} is not a building cell`);
-  if (inside(door.entrance) && blocks[index(door.entrance)].Occupations !== 'None') throw new Error(`${id}: entrance path cell ${door.entrance} is occupied`);
+  let door = null;
+  if (doorless) {
+    if (registration.doorless !== true || registration.doors.length) throw new Error(`${id}: a doorless building needs a DOORLESS study that records no doors`);
+    if (value.BuildingAccessibleSpec || value.EnterableSpec || understructure) throw new Error(`${id}: a doorless building has no access, enterable or understructure specs`);
+  } else {
+    door = registration.doors.find((d) => d.position[2] === 0);
+    if (!door) throw new Error(id + ': no ground door registered');
+    if (door.faceOffset > MAX_DOOR_OFFSET) throw new Error(`${id}: door face sits ${door.faceOffset} tiles behind its cell edge`);
+    if (!inside(door.doorstep) || blocks[index(door.doorstep)].Occupations !== 'All') throw new Error(`${id}: doorstep ${door.doorstep} is not a building cell`);
+    if (inside(door.entrance) && blocks[index(door.entrance)].Occupations !== 'None') throw new Error(`${id}: entrance path cell ${door.entrance} is occupied`);
+  }
 
-  value.BlockObjectSpec = {Size: xyz(size), Blocks: blocks, Entrance: {HasEntrance: true, Coordinates: xyz(door.entrance)},
+  value.BlockObjectSpec = {Size: xyz(size), Blocks: blocks,
+    Entrance: door ? {HasEntrance: true, Coordinates: xyz(door.entrance)} : {HasEntrance: false, Coordinates: xyz([0, 0, 0])},
     BaseZ: 0, Overridable: false, Flippable: true};
-  const [dx, dy, dz] = door.position;
-  value.BuildingAccessibleSpec = {...value.BuildingAccessibleSpec, LocalAccess: xyz([dx, dz, dy]), ForceOneFinalAccess: false};
+  if (door) {
+    const [dx, dy, dz] = door.position;
+    value.BuildingAccessibleSpec = {...value.BuildingAccessibleSpec, LocalAccess: xyz([dx, dz, dy]), ForceOneFinalAccess: false};
+  }
   if (value.MechanicalNodeSpec) {
     value.TransputProviderSpec = {IgnoreRotation: false,
-      Transputs: wallTransputs(solidPowerFaces(blocks, size, {exclude: [door.entrance, door.doorstep]}), registration)};
+      Transputs: wallTransputs(solidPowerFaces(blocks, size, {exclude: door ? [door.entrance, door.doorstep] : []}), registration)};
   }
   const model = value.Children['#Finished'].TimbermeshSpec.Model;
   if (!model.endsWith(`/${id}.IronTeeth.Model`)) throw new Error(`${id}: unexpected model path ${model}`);
@@ -222,6 +234,7 @@ export async function lategameBlueprint(value, id, {understructure, terrace, ove
     }
   }
   const terraceCells = terrace ? roofTerrace(blocks, size, terrace, id) : 0;
+  if (overhangs && !door) throw new Error(`${id}: ground overhangs are checked against a door`);
   const overhangCells = overhangs ? groundOverhangs(blocks, size, overhangs, door, id) : 0;
   // Every study animates its machinery. Workshops run it with the native
   // controller (moving while they work); native good-powered generators with
@@ -236,7 +249,7 @@ export async function lategameBlueprint(value, id, {understructure, terrace, ove
   // Vanilla smoke/steam at the study's flue mouths (registration smokeEmitters).
   const smoke = applyVanillaSmoke(value, registration, id);
   await applyNativeBuildingAssembly(value, id, [0, 0, 0], {goodId: 'Water', flowNodes: [], wheelNodes: []});
-  return {size, entrance: door.entrance, doorstep: door.doorstep, model, stage, understructureCells, terraceCells, overhangCells, smoke};
+  return {size, entrance: door?.entrance ?? null, doorstep: door?.doorstep ?? null, model, stage, understructureCells, terraceCells, overhangCells, smoke};
 }
 
 // Values recorded in a late-game study module (tools/asset-pipeline/

@@ -459,6 +459,15 @@
    "construction": 6834,
    "file": "outputs/lategame-integration/Data/Buildings/Science/MissionControl/MissionControl.IronTeeth.Model.timbermesh"
   },
+  "ModularWarehouse": {
+   "family": "lategame",
+   "class": "small",
+   "target": 8000,
+   "finished": 2182,
+   "vertices": 4332,
+   "construction": 2182,
+   "file": "outputs/lategame-integration/Data/Buildings/Storage/ModularWarehouse/ModularWarehouse.IronTeeth.Model.timbermesh"
+  },
   "NuclearReactor": {
    "family": "lategame",
    "class": "grand",
@@ -837,6 +846,15 @@
    "construction": 8072,
    "file": "outputs/lategame-integration/Data/Buildings/Metal/UraniumProcessingPlant/UraniumProcessingPlant.IronTeeth.Model.timbermesh"
   },
+  "WarehouseModule": {
+   "family": "lategame",
+   "class": "small",
+   "target": 8000,
+   "finished": 1342,
+   "vertices": 2656,
+   "construction": 1342,
+   "file": "outputs/lategame-integration/Data/Buildings/Storage/WarehouseModule/WarehouseModule.IronTeeth.Model.timbermesh"
+  },
   "WaterTreatmentPlant": {
    "family": "lategame",
    "class": "grand",
@@ -847,6 +865,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 718652,
+ "totalBlueprintTriangles": 717722,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

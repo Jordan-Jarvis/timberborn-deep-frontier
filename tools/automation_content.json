@@ -586,6 +586,14 @@
         "MechanicalBuildingSpec"
       ]
     },
+    "Buildings/Storage/ModularWarehouse/ModularWarehouse.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Storage/LargeWarehouse/LargeWarehouse.IronTeeth.blueprint"
+    },
+    "Buildings/Storage/WarehouseModule/WarehouseModule.IronTeeth.blueprint": {
+      "role": "none",
+      "precedent": "Buildings/Storage/LargeWarehouse/LargeWarehouse.IronTeeth.blueprint"
+    },
     "Buildings/Storage/CryogenicTankFarm/CryogenicTankFarm.IronTeeth.blueprint": {
       "role": "pausable",
       "sources": [

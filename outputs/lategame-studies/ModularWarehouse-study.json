@@ -1,0 +1,54 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Two-storey timber storehouse with a rope-and-pulley hoist jutting over its double plank door and a chalk ledger board beside it.",
+  "footprint": [
+    3,
+    3
+  ],
+  "heightLayers": 2,
+  "boundsMin": [
+    -0.0,
+    -0.296,
+    -0.03
+  ],
+  "boundsMax": [
+    3.0,
+    3.0,
+    2.0
+  ],
+  "doors": [
+    {
+      "id": "Door0",
+      "position": [
+        1.5,
+        0.0,
+        0
+      ],
+      "outward": [
+        0,
+        -1
+      ]
+    }
+  ],
+  "animatedParts": [
+    "ModularWarehouse.Pulley",
+    "ModularWarehouse.Load",
+    "ModularWarehouse.Lantern"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 1229,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 540,
+    "IrregularPlanks_DarkBrown.IronTeeth": 96,
+    "BaseMetal.IronTeeth": 106,
+    "accent8": 10,
+    "WindowsAtlas.IronTeeth": 7,
+    "BaseWood_Brown.Folktails": 24,
+    "IrregularPlanks_Grey.IronTeeth": 552
+  },
+  "sourceHash": "2c3af5d7514e8faa5533f5354ee7e6c60441d8959e53d38e108f71d827c56473",
+  "artHash": "ceb391a4a73c6c69faf9ff0eea0c503fdc6d53b66a0591320ccdc3eb9b223d73"
+}

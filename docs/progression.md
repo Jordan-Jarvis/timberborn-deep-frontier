@@ -116,7 +116,7 @@ The structure and quarrying generators rank their tools by science (`structural_
 | Nuclear fuel | Uranium Processing Plant 300,000, Radioactive Waste Refinery 600,000 |
 | Food | *Gatherer Flag 0*, Fisher Flag 0, *Farmhouse 0, Fermenter 0, Oil Press 120, Hydroponic Garden 200, Food Factory 300*, Fertilizer Works 350, *Coffee Brewery 500*, Fish Hatchery 600, Greenhouse 600, Fishery Works 900, Food Packaging Works 1,400 |
 | Science | *Inventor 0, Numbercruncher 1,500, Bot Part Factory 500, Bot Assembler 750, Charging Station 200*, Reactor Charging Bay 400,000 (upgrade of the Charging Station), *Control Tower 1,000, Grease Factory 2,000*, Technical School 2,200, Materials Laboratory 12,000, Archive Excavation 25,000 |
-| Storage | *Small and Large Industrial Pile 0, Pile Module 650, Grand Underground Pile 3,500, Small and Medium Warehouse 0, Large Warehouse 250, Storage Module 750, Grand Warehouse 2,500, Small Tank 0, Medium Tank 120, Large Tank 600, Tank Module 1,050, Grand Tank 3,000*, Cryogenic Tank Farm 40,000 |
+| Storage | *Small and Large Industrial Pile 0, Pile Module 650, Grand Underground Pile 3,500, Small and Medium Warehouse 0, Large Warehouse 250*, Modular Warehouse 400, Warehouse Module 450, *Storage Module 750, Grand Warehouse 2,500, Small Tank 0, Medium Tank 120, Large Tank 600, Tank Module 1,050, Grand Tank 3,000*, Cryogenic Tank Farm 40,000 |
 | Water | *Deep Water Pump 0, Deep Badwater Pump 250, Discharge 250*, Water Treatment Plant 1,800, *Deep Mechanical Pump 2,000, Compact Mechanical Pump 4,000, Centrifuge 600, Badwater Pressurizer 4,000, Aquifer Drill 400*, ▸Radioactive waste 50,000, Deep Well 75,000 |
 | Radioactive waste | Radioactive Water Recovery Pump 50,000, Radioactive Water Outfall 50,000, Radioactive Waste Export 300,000, Radioactive Waste Vault 300,000 |
 | Wellbeing | *Campfire … Detailer 1,000* (vanilla order), ▸Civic services 1,000, *Motivatorium 1,200, Mud Bath 1,800*, Smog Scrubber 2,500, Town Plaza 12,000, Observation Deck 27,500 |
@@ -150,6 +150,24 @@ The structure and quarrying generators rank their tools by science (`structural_
 | Water Treatment Plant | 1,800 | keep | | Its Reactor Coolant recipe needs Cryocoolant (9,000), a later extra recipe (audit warning); Pure Water runs at its unlock. |
 | Public Health Lab 1,000 / Hospital 50,000 | | keep | | The Hospital is a frontier building; Medicine comes first by design. |
 | Mission Control 75,000 / Rocket Assembly Hangar 125,000 | | keep | | Mission Control comes first in the story (chapter 6 asks for it). |
+
+## Modular Warehouse (2026-11-02)
+
+User request: a big storage that holds several goods with their own settings ("maybe we can do 5 items. That way the menu system doesn't get clogged"), then, as the design: early game, no power, one entrance with storage modules attached to it and stacked on it. Static authoring and checks only; not played in game.
+
+| | Modular Warehouse (core) | Warehouse Module |
+|---|---|---|
+| Menu, science (stage) | Storage, after the Large Warehouse; 400 (early, T1) | right of the core; 450 (T1) |
+| Size | 3x3, 2 high, door in front | 3x3, 1 high, no door |
+| Storage | 600 and 1 slot; at most 5 slots | +600 and +1 slot (up to 5) when attached |
+| Cost | 100 Plank, 60 Log, 15 Gear | 80 Plank, 60 Log, 5 Gear |
+| Power, workers | none | none |
+
+- **Attachment:** a finished module joins a finished core when it touches it, or an attached module, face to face (side by side on one layer, or stacked on its top); diagonal contact does not count. A module touching two networks joins the nearer core. The core holds the network's only inventory, so haulers, laborers, belts and needs use one storage point.
+- **Slots:** open slots = 1 + attached modules, at most 5; the capacity (600 + 600 per module) is shared equally by the open slots. Each slot is a warehouse of its own: one good (not in two slots) and the native Accept / Obtain / Supply / Empty setting.
+- **Capacity basis:** the vanilla Large Warehouse holds 1,200 in 3x3x2 at 250 science (67 per cell, 60 Log + 80 Plank). A module holds 600 in 3x3x1 (67 per cell; `validate_modular_warehouse.mjs` fails a denser module). A core with four modules stores 3,000 (5 x 600); with nine, 5 x 1,200.
+- **Costs:** the late-game size rule (both are integrated studies, tier T1) gives a 3x3 early building only 15-20 Plank, 10 Log and 5 Gear, far below the vanilla warehouses. `lategameGates` adds the rest so each costs about what the vanilla warehouses cost for its capacity, times the T1 cost factor 2 (60 Log + 80 Plank per 1,200 at vanilla rates): core +50 Log, +80 Plank, +10 Gear; module +50 Log, +65 Plank. The material rule still composes the rule part from the models (timber, iron straps priced as Gear; no brick or concrete, which do not exist at 400 science).
+- **Removing a module** lowers the capacity; stock above the new shares, and the good of a slot that closes (its good is cleared), become native unwanted stock and are carried to other storage. Goods never sit in a module. Deleting the core recovers its goods natively.
 
 ## Tools
 

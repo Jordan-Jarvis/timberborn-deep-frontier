@@ -1,0 +1,39 @@
+{
+  "status": "Blender late-game art study; not exported or installed",
+  "hero": "Slatted timber crib bound with iron corner straps, crates and barrels showing between its plank slats, with a pulley and hook in a front niche.",
+  "footprint": [
+    3,
+    3
+  ],
+  "heightLayers": 1,
+  "boundsMin": [
+    -0.0,
+    -0.0,
+    0.0
+  ],
+  "boundsMax": [
+    3.0,
+    3.0,
+    1.0
+  ],
+  "doors": [],
+  "animatedParts": [
+    "WarehouseModule.Pulley",
+    "WarehouseModule.Hook"
+  ],
+  "animationFrames": 121,
+  "animationFps": 30,
+  "nativeProps": [],
+  "redicProps": [],
+  "faces": 628,
+  "materialFaces": {
+    "BaseWood_DarkBrown.IronTeeth": 128,
+    "IrregularPlanks_DarkBrown.IronTeeth": 78,
+    "BaseMetal.IronTeeth": 202,
+    "BaseWood_Brown.Folktails": 36,
+    "BaseWood_Grey.IronTeeth": 34,
+    "IrregularPlanks_Grey.IronTeeth": 210
+  },
+  "sourceHash": "e8f9b7898e471dd9d9b0e3d09acd3872596dec8077abe55a31d58ec67cb54fe9",
+  "artHash": "4fe7fef84c912782911939faa802722a7428147731b7419a419d1ed0538fd9cb"
+}

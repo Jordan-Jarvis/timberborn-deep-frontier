@@ -433,6 +433,16 @@
       "selection": "Tank", "looping": "", "loopDriver": "none", "family": "storage",
       "comment": "LargeTank template, storage without a workshop (integrated build 122). Native Tank selection. No native loop driver tracks its powered holding state, so it has no loop."
     },
+    "ModularWarehouse": {
+      "template": "Buildings/Storage/ModularWarehouse/ModularWarehouse.IronTeeth.blueprint",
+      "selection": "Warehouse", "looping": "", "loopDriver": "none", "family": "storage",
+      "comment": "LargeWarehouse template without its native stockpile (ModularWarehouseSpec, the core of the modular warehouse). Native Warehouse selection, as the vanilla warehouses play. No workshop, attraction or generator drives a loop, so it has none."
+    },
+    "WarehouseModule": {
+      "template": "Buildings/Storage/WarehouseModule/WarehouseModule.IronTeeth.blueprint",
+      "selection": "Warehouse", "looping": "", "loopDriver": "none", "family": "storage",
+      "comment": "LargeWarehouse template without stockpile or door (WarehouseModuleSpec: storage added to an attached Modular Warehouse). Native Warehouse selection; no loop driver."
+    },
     "SmogScrubber": {
       "template": "Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.blueprint",
       "selection": "WindTunnel", "looping": "", "loopDriver": "none", "family": "pump/water",

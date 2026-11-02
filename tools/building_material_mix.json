@@ -654,6 +654,24 @@
     "wood": 83.5271
    }
   },
+  "ModularWarehouse": {
+   "model": "Buildings/Storage/ModularWarehouse/ModularWarehouse.IronTeeth.Model",
+   "sha256": "03a5e5a1ea8637ef1a5cb0167ea7b63aff8b554d04ce41187a79a2fb16a3d5ee",
+   "areas": {
+    "BaseMetal.IronTeeth": 0.3082,
+    "BaseWood_Brown.Folktails": 0.8335,
+    "BaseWood_DarkBrown.IronTeeth": 55.4792,
+    "DFIndustrial08": 0.0335,
+    "IrregularPlanks_DarkBrown.IronTeeth": 42.1643,
+    "IrregularPlanks_Grey.IronTeeth": 16.9186,
+    "WindowsAtlas.IronTeeth": 1.062
+   },
+   "families": {
+    "metal": 0.3082,
+    "unpriced": 1.0955,
+    "wood": 115.3956
+   }
+  },
   "NuclearReactor": {
    "model": "Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.Model",
    "sha256": "010e45ee7990d20f15b2a7c674e5b597e16b356bf5663508e7ddf6fb2705e80b",
@@ -1189,6 +1207,22 @@
     "metal": 313.4064,
     "unpriced": 5.1617,
     "wood": 7.817
+   }
+  },
+  "WarehouseModule": {
+   "model": "Buildings/Storage/WarehouseModule/WarehouseModule.IronTeeth.Model",
+   "sha256": "947a2331175b7e6c4a2d7550d1ef720d17f338aa81a5320925621221555a6d7e",
+   "areas": {
+    "BaseMetal.IronTeeth": 1.0012,
+    "BaseWood_Brown.Folktails": 0.5937,
+    "BaseWood_DarkBrown.IronTeeth": 44.0853,
+    "BaseWood_Grey.IronTeeth": 0.5223,
+    "IrregularPlanks_DarkBrown.IronTeeth": 29.524,
+    "IrregularPlanks_Grey.IronTeeth": 10.9846
+   },
+   "families": {
+    "metal": 1.0012,
+    "wood": 85.7099
    }
   },
   "WaterTreatmentPlant": {

@@ -1,0 +1,140 @@
+{
+ "footprint": [
+  3,
+  3
+ ],
+ "height": 1,
+ "occupied": [
+  [
+   0,
+   0,
+   0
+  ],
+  [
+   0,
+   1,
+   0
+  ],
+  [
+   0,
+   2,
+   0
+  ],
+  [
+   1,
+   0,
+   0
+  ],
+  [
+   1,
+   1,
+   0
+  ],
+  [
+   1,
+   2,
+   0
+  ],
+  [
+   2,
+   0,
+   0
+  ],
+  [
+   2,
+   1,
+   0
+  ],
+  [
+   2,
+   2,
+   0
+  ]
+ ],
+ "partsOutsideFootprint": 0,
+ "doors": [],
+ "wallFaces": [
+  [
+   0,
+   0,
+   0,
+   "Left"
+  ],
+  [
+   0,
+   0,
+   0,
+   "Down"
+  ],
+  [
+   0,
+   1,
+   0,
+   "Left"
+  ],
+  [
+   0,
+   2,
+   0,
+   "Left"
+  ],
+  [
+   0,
+   2,
+   0,
+   "Up"
+  ],
+  [
+   1,
+   0,
+   0,
+   "Down"
+  ],
+  [
+   1,
+   2,
+   0,
+   "Up"
+  ],
+  [
+   2,
+   0,
+   0,
+   "Right"
+  ],
+  [
+   2,
+   0,
+   0,
+   "Down"
+  ],
+  [
+   2,
+   1,
+   0,
+   "Right"
+  ],
+  [
+   2,
+   2,
+   0,
+   "Right"
+  ],
+  [
+   2,
+   2,
+   0,
+   "Up"
+  ]
+ ],
+ "doorless": true,
+ "smokeEmitters": [],
+ "ident": "WarehouseModule",
+ "frameEnd": 121,
+ "fps": 30,
+ "animatedParts": [
+  "WarehouseModule.Pulley",
+  "WarehouseModule.Hook"
+ ],
+ "sourceHash": "e8f9b7898e471dd9d9b0e3d09acd3872596dec8077abe55a31d58ec67cb54fe9"
+}

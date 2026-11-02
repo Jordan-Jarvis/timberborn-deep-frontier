@@ -5,7 +5,7 @@
     "foundation": "Concrete = groundCells (occupied cells on layer 0) x tier.concretePerGroundCell",
     "superstructure": "each good = builtCells (all occupied cells) / 100 x tier.per100BuiltCells[good]",
     "rounding": "nearest multiple of 5, minimum 5",
-    "gate": "lategameGates adds explicit goods that prove the previous stage on top of the rule: DeepMine DeepAlloy (finite drill phase), Greenhouse Fertilizer (fertilizer works; bed soil; Compost until the 2026-10-30 bricks pass), NuclearReactor EnrichedFuel (first core load) and 100 extra HighGradeSteel (containment; replaced RecoveredMinerals on 2026-10-29), OilPowerPlant MachineCore (turbine governors from the precision works, after the oil chain feeds polymer)",
+    "gate": "lategameGates adds explicit goods that prove the previous stage on top of the rule: DeepMine DeepAlloy (finite drill phase), Greenhouse Fertilizer (fertilizer works; bed soil; Compost until the 2026-10-30 bricks pass), NuclearReactor EnrichedFuel (first core load) and 100 extra HighGradeSteel (containment; replaced RecoveredMinerals on 2026-10-29), OilPowerPlant MachineCore (turbine governors from the precision works, after the oil chain feeds polymer), ModularWarehouse and WarehouseModule Log, Plank and Gear (storage priced like the vanilla warehouses for its capacity, 60 Log + 80 Plank per 1,200 times the T1 cost factor: the size rule prices a 3x3 early building far below them)",
     "tierBand": "tier is fixed by the science unlock: the first tier whose scienceMax is at least the building's science (null = no upper bound)",
     "power": {
       "rule": "every Deep Frontier power consumer (MechanicalNodeSpec.PowerInput > 0) unlocked at scienceMin science or more draws max(authored base, floor); floor = referenceHp x (science / referenceScience) ^ exponent (5.65 x science^0.75), rounded to the nearest rounding.step, or rounding.largeStep from rounding.largeFrom hp; each generator applies it with scaledPower (tools/lategame_costs.mjs) and tools/validate_power_rule.mjs checks the generated blueprints; generators (PowerOutput) are outside the rule",
@@ -65,7 +65,9 @@
     "CoalPowerPlant": "T3",
     "OilPowerPlant": "T4",
     "DeepWell": "T4",
-    "ReactorChargingBay": "T5"
+    "ReactorChargingBay": "T5",
+    "ModularWarehouse": "T1",
+    "WarehouseModule": "T1"
   },
   "lategameGates": {
     "DeepMine": [["DeepAlloy",20]],
@@ -73,7 +75,9 @@
     "NuclearReactor": [["EnrichedFuel",20],["HighGradeSteel",100]],
     "OilPowerPlant": [["MachineCore",4]],
     "DeepWell": [["MetalBlock",200],["Gear",150],["HighGradeSteel",60],["MachineCore",10],["DeepAlloy",15],["Concrete",40]],
-    "ReactorChargingBay": [["ReinforcedBotFrame",2],["ReactorPowerCell",2]]
+    "ReactorChargingBay": [["ReinforcedBotFrame",2],["ReactorPowerCell",2]],
+    "ModularWarehouse": [["Log",50],["Plank",80],["Gear",10]],
+    "WarehouseModule": [["Log",50],["Plank",65]]
   },
   "materialRule": {
     "scope": "Every Deep Frontier building with a BuildingSpec except the structural modules of tools/structural_content.json (named for and priced in their material). Late-game rule rows (lategameCost) and authored costs (buildingCost) both pass through materialCost (tools/material_costs.mjs); gates are added afterwards, unchanged.",

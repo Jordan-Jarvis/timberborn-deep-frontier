@@ -68,6 +68,8 @@ DECLARED_MODELS = {
     'CoalPowerPlant': 'Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.Model',
     'OilPowerPlant': 'Buildings/Power/OilPowerPlant/OilPowerPlant.IronTeeth.Model',
     'DeepWell': 'Buildings/Water/DeepWell/DeepWell.IronTeeth.Model',
+    'ModularWarehouse': 'Buildings/Storage/ModularWarehouse/ModularWarehouse.IronTeeth.Model',
+    'WarehouseModule': 'Buildings/Storage/WarehouseModule/WarehouseModule.IronTeeth.Model',
 }
 
 # Visitor slots of the open-air wellbeing attractions: native slot empties
@@ -199,9 +201,13 @@ def export_model(ident):
     for obj in collection.all_objects:
         if 'liquid_surface' in obj and [m.name for m in obj.data.materials] != ['Water']:
             raise ValueError(f'{ident}/{obj.name}: water surfaces must use the native Water material')
-    # Native worker idle slots just inside each ground door.
+    # Native worker idle slots just inside each ground door. A DOORLESS study
+    # (render_lategame_studies.py: nobody enters it) has none.
     ground = [d for d in registration['doors'] if d['position'][2] == 0]
-    if not ground:
+    if registration.get('doorless'):
+        if registration['doors']:
+            raise ValueError(f'{ident}: a doorless registration lists doors')
+    elif not ground:
         raise ValueError(f'{ident}: no ground door registered')
     for i, door in enumerate(ground):
         x, y, z = door['position']

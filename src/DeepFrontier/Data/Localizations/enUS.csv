@@ -170,6 +170,14 @@ Building.CryogenicTankFarm.FlavorDescription,"The coldest place in the colony, k
 Building.FisherFlag.DisplayName,Fisher Flag,Deep Frontier
 Building.FisherFlag.Description,"Employs a fisher who catches fresh fish from the shore, where clean water at least 0.5 m deep lies no more than 1.25 m below the bank.",Deep Frontier
 Building.FisherFlag.FlavorDescription,"A quiet bank, a long wait and a longer story about the one that got away.",Deep Frontier
+Building.ModularWarehouse.DisplayName,Modular Warehouse,Deep Frontier
+Building.ModularWarehouse.Description,"Stores up to 5 goods, each in its own slot with its own warehouse settings. Each attached Warehouse Module adds a slot and storage.",Deep Frontier
+Building.ModularWarehouse.FlavorDescription,"One door, one ledger and a beaver who knows where everything is.",Deep Frontier
+Building.WarehouseModule.DisplayName,Warehouse Module,Deep Frontier
+Building.WarehouseModule.Description,"Adds storage and a slot to a Modular Warehouse when built beside it, on top of it, or on another attached module.",Deep Frontier
+Building.WarehouseModule.FlavorDescription,"Another floor of crates, and the ledger grows a page.",Deep Frontier
+DeepFrontier.ModularWarehouse.Network,Modules: {0}. Capacity: {1},Deep Frontier
+DeepFrontier.ModularWarehouse.ModuleUnattached,Not attached to a Modular Warehouse,Deep Frontier
 Building.SmogScrubber.DisplayName,Smog Scrubber,Deep Frontier
 Building.SmogScrubber.Description,Cleans smog out of the air around it while powered. No workers.,Deep Frontier
 Building.SmogScrubber.FlavorDescription,What goes up the smokestack comes down in the scrubber.,Deep Frontier
