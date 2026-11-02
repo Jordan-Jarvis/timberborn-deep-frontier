@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.8.5 (2026-11-02)
+
 ### Reactor meltdowns leave a flooded crater and flatten everything nearby
 - **A meltdown now blasts a crater where the reactor stood** (player request): an oval bowl about 18 by 15 tiles, 4 layers deep in the middle and 1 at the rim. It never digs through the bottom layer of the map.
 - **Every building and structure within 6 tiles of the reactor is destroyed** (player request): buildings, paths, platforms, stairs, decks and anything else built, along with whatever stood on them, the way explosions destroy things in the base game. Goods stored in them drop to the ground nearby. Trees and ruins are left standing (the radiation kills the trees).
@@ -27,7 +29,6 @@
 - **Each slot works like its own warehouse:** pick its good with the usual warehouse picker and give it the usual Accept, Obtain, Supply or Empty setting. A good can be in only one slot. Haulers, laborers and conveyor belts use it like any warehouse, and beavers eat and drink from it.
 - **Removing a module never destroys goods:** they are all kept in the Modular Warehouse. Its storage shrinks, and what no longer fits (and the good of a slot that closes) is carried to your other storage. A module that is not attached shows a "Not attached to a Modular Warehouse" status.
 
-- **The Reactor Bot overheating warning now says it will leak radiation:** "Reactor Bot is overheating and will leak radiation".
 
 ### Planters skip irradiated ground
 - **Farmers and foresters no longer replant irradiated ground over and over** (player report). Before, a farmer replaced a dead crop on irradiated (yellow-green) ground, the new crop died at once, and the farmer replanted it again, never moving on. Now planters skip irradiated ground and work the good ground instead, as they already skip badwater-contaminated soil.
@@ -39,6 +40,7 @@
 - **Reactor Bots now work at a base 500% speed** (player request), up from 100%: production, construction, planting, harvesting, cutting and demolition, and their work animations speed up to match. Wellbeing bonuses still add on top, as for any bot.
 - **A Reactor Bot that overheats for more than 6 hours, or goes without plating for more than a day, leaks radioactive water** where it stands, or out of the door of the building it works in: a tenth of a unit an hour, until it has coolant and plating again.
 - It is ordinary radioactive water: pumps that draw it stop, stored water it reaches is contaminated, the ground turns yellow and plants on it die, and beavers who walk or wade through it are irradiated.
+- **The Reactor Bot overheating warning now says it will leak radiation:** "Reactor Bot is overheating and will leak radiation".
 
 ### Reactor Bot workplaces: a third worker type
 - **Every workplace's worker toggle now has a third button, Reactor Bots, furthest right** (player request), in the building panel and the batch control window. The modes are separate:
