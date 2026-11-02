@@ -9,6 +9,7 @@ using Timberborn.Localization;
 using Timberborn.StatusSystem;
 using Timberborn.TickSystem;
 using Timberborn.WorkSystem;
+using DeepFrontier.Scripts.SuperBots;
 
 namespace DeepFrontier.Scripts {
   // A workplace only trained specialists of one discipline may staff. The
@@ -16,6 +17,10 @@ namespace DeepFrontier.Scripts {
   // patches); SpecialistStaffing fills its native Workplace instead, so the
   // native desired-worker controls, priority, overstaffing release, work
   // refusal (injury), unreachable release and save/reload stay native.
+  // Set to Reactor Bots (ReactorBotWorkplace, user 2026-11-02: Reactor Bots at
+  // any building), it is a Reactor Bot workplace: ReactorBotStaffing staffs it
+  // and SpecialistStaffing leaves it alone. The specialist rule is the rule for
+  // beaver crews.
   internal sealed class SpecialistWorkplace : BaseComponent, IAwakableComponent, IInitializableEntity, IFinishedStateListener {
     private readonly SpecialistStaffing _staffing;
     private readonly WorkforceSettings _settings;
@@ -27,6 +32,8 @@ namespace DeepFrontier.Scripts {
     public Workplace Workplace { get; private set; }
     public WorkplacePriority Priority { get; private set; }
     public DistrictBuilding DistrictBuilding { get; private set; }
+    public ReactorBotWorkplace Reactor { get; private set; }
+    public bool ReactorBots=>Reactor.ReactorMode;
     // Unassigned specialists of this discipline in the district after the last staffing pass.
     public int AvailableSpecialists { get; private set; }
 
@@ -39,8 +46,9 @@ namespace DeepFrontier.Scripts {
       Workplace=GetComponent<Workplace>();
       Priority=GetComponent<WorkplacePriority>();
       DistrictBuilding=GetComponent<DistrictBuilding>();
+      Reactor=GetComponent<ReactorBotWorkplace>();
       var workplace=GetComponent<WorkplaceSpec>();
-      if(!Workplace||!Priority||!DistrictBuilding||workplace==null)
+      if(!Workplace||!Priority||!DistrictBuilding||!Reactor||workplace==null)
         throw new InvalidOperationException($"{Name}: a specialist workplace must be a native district workplace");
       if(!workplace.DisallowOtherWorkerTypes||workplace.DefaultWorkerType!="Beaver"||workplace.WorkerTypeUnlockCosts.Length>0)
         throw new InvalidOperationException($"{Name}: specialists are beavers; the workplace must be beaver-only with no bot unlock");
@@ -69,6 +77,12 @@ namespace DeepFrontier.Scripts {
     public bool Accepts(Worker worker) {
       var trait=worker.GetComponent<SpecialistTrait>();
       return trait&&trait.Has(Discipline);
+    }
+
+    internal void ClearStatus() {
+      AvailableSpecialists=0;
+      _noneStatus.Deactivate();
+      _shortStatus.Deactivate();
     }
 
     internal void UpdateStatus(int available) {
@@ -101,6 +115,7 @@ namespace DeepFrontier.Scripts {
     public void Tick() {
       if(_workplaces.Count==0)return;
       foreach(var workplace in _workplaces.OrderByDescending(w=>w.Priority.Priority)) {
+        if(workplace.ReactorBots) {workplace.ClearStatus();continue;} // staffed by ReactorBotStaffing
         ReleaseUnqualified(workplace);
         while(workplace.Workplace.Understaffed) {
           var candidate=FindCandidate(workplace);

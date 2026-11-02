@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Bindito.Core;
 using Timberborn.BaseComponentSystem;
+using Timberborn.CoreUI;
 using Timberborn.EntityPanelSystem;
 using Timberborn.GameDistricts;
 using Timberborn.Localization;
 using Timberborn.WorkSystem;
+using DeepFrontier.Scripts.SuperBots;
 using TimberUi.CommonUi;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -35,8 +37,10 @@ namespace DeepFrontier.Scripts {
       _severity.text=_loc.T("DeepFrontier.Workforce.Panel.InjurySeverity",days,Mathf.RoundToInt(spec.FatalAccidentChance*100f));
       _crew.text=_loc.T("DeepFrontier.Workforce.Panel.Crew",component.FitWorkers,component.StrainedWorkers,component.ExhaustedWorkers);
       _record.text=_loc.T("DeepFrontier.Workforce.Panel.Record",component.Injuries,component.Fatalities);
-      _bots.text=component.GetComponent<WorkplaceSpec>().DisallowOtherWorkerTypes
-        ?_loc.T("DeepFrontier.Workforce.Panel.BotsNotAllowed")
+      // Set to Reactor Bots, any workplace takes bots (ReactorBotWorkplace); beaver-only ones declare no bot wear.
+      var reactorBots=component.GetComponent<ReactorBotWorkplace>().ReactorMode;
+      _bots.text=reactorBots&&!(spec.BotWearMultiplier>1f)?_loc.T("DeepFrontier.ReactorBotWorkplace.NoBotWear")
+        :!reactorBots&&component.GetComponent<WorkplaceSpec>().DisallowOtherWorkerTypes?_loc.T("DeepFrontier.Workforce.Panel.BotsNotAllowed")
         :_loc.T("DeepFrontier.Workforce.Panel.BotWear",spec.BotWearMultiplier.ToString("0.#"));
     }
   }
@@ -56,7 +60,10 @@ namespace DeepFrontier.Scripts {
       if(!component)return;
       var discipline=_settings.Discipline(component.Discipline);
       var plural=_loc.T(discipline.PluralDisplayNameLocKey);
-      _required.text=_loc.T("DeepFrontier.Workforce.Specialists.Required",plural);
+      var reactorBots=component.ReactorBots;
+      _required.text=reactorBots?_loc.T("DeepFrontier.ReactorBotWorkplace.InsteadOfSpecialists",plural):_loc.T("DeepFrontier.Workforce.Specialists.Required",plural);
+      _staffing.ToggleDisplayStyle(!reactorBots);
+      _advice.ToggleDisplayStyle(!reactorBots);
       var workplace=component.Workplace;
       _staffing.text=_loc.T("DeepFrontier.Workforce.Specialists.Staffing",
         $"{workplace.NumberOfAssignedWorkers}/{workplace.DesiredWorkers}",component.AvailableSpecialists,plural);

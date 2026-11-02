@@ -26,6 +26,56 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 - **Offline renders** (game model and textures read at render time, never committed; Blender Cycles on the RTX 2060 with OptiX, BotURP emulated: base x tint, emission x 2 + 0.35 x tint): `outputs/reactor-bot-skin/reactor-bot-skin-sheet.png` (day and night: ordinary bot with cyan eyes; Reactor Bot plated, near-black gunmetal with radioactive-yellow eyes; unplated, the vanilla light body with yellow eyes).
 - **In game, to check:** a Reactor Bot (assembled or retrofitted, and one loaded from a save) has yellow eyes and a dark body by day and night; one out of plating shows the light body with yellow eyes, dark again after it takes steel; ordinary bots unchanged; the Bot Assembler dropdown shows "Reactor bot"; a save made with the assembler on the old recipe loads with "Reactor bot" selected. First Reactor Bot in a session: the textures are built once (expect a short hitch).
 
+## Reactor Bot workplaces: a third worker type (Beaver | Bot | Reactor Bot), exclusive, at any building (Claude Code session, 2026-11-02, bot-light agent; mirror `botwork` on HEAD e06b3f4 (rebased on 725574a, which changed only the release files) + this change; compile-checked; patches verified in the game's Mono against the shipped DLLs; not built or run in game)
+
+- **User** (Option 1 of `docs/worker-types-study.md`, with the answers to its decision points):
+  1. Reactor Bots work only at Reactor Bot workplaces, and Bot workplaces take ordinary bots only.
+  2. The Reactor Bot option costs 3x the workplace's bot unlock.
+  3. Reactor Bots are allowed at ANY building.
+  4. The District Center's default gets the third option.
+- **Design and evidence** (decompiled 1.1.2.8): `docs/worker-types-study.md` "What was built". In short:
+  - **The mode.** A workplace set to Reactor Bots keeps the native type Bot and a saved Deep Frontier flag (`ReactorBotWorkplace`, decorated on every `WorkplaceWorkerType`).
+    - On beaver-only workplaces, or where bots are still locked, the Bot type is set without the native allowed/unlocked checks (`NativeWorkerTypeAccess`: release the workers, set the type, raise `WorkerTypeChanged`, mark it chosen).
+    - Turning the mode off puts back a type the workplace may natively have.
+  - **Staffing.** `ReactorBotStaffing` (the `SpecialistStaffing` pattern) staffs Reactor Bot workplaces with Reactor Bots of the district, by priority, and releases Reactor Bots from every other workplace.
+  - **Specialists.** The Reactor Bot mode wins: `SpecialistStaffing` skips such a workplace and clears its statuses, and the panels say Reactor Bots work there. Reason: the user's "ANY building"; the specialist rule is the rule for beaver crews; the unlock price is the gate.
+  - **Unlock.** `ReactorBotWorkplaceUnlocks` keeps its own saved singleton.
+    - Cost: 3 x the native Bot cost. Without one: 3 x (science + 1,000), e.g. District Center 3,000, Restaurant 6,000, Steel Mill 33,000, Hospital 153,000, Launch Pad 603,000, Nuclear Reactor 3,003,000.
+    - Flow: the native unlock flow (InstantUnlock key, native dialog box, native locked tooltip) with "Reactor Bots" texts.
+  - **District default.** `ReactorBotDistrictDefault` holds a saved flag with the native default set to Bot.
+  - **Light.** Green while set to Reactor Bots (priority 30). The earlier "any working Reactor Bot" rule is no longer needed, since only Reactor Bots work there.
+- **Harmony** (`ReactorBotWorkplacePatches.cs`, editor-guarded, every target and member checked at mod start):
+  1. `WorkerTypeToggle.Initialize` postfix: the third button in the entity panel and the batch control window.
+  2. `DistrictCenterFragment.InitializeFragment` postfix: the third button for the district default.
+  3. `UnemployedWorkers.UpdateUnemployedState` prefix: Reactor Bots stay out of the native hiring pool.
+  4. `PriorityOrderedWorkplaces.GetHighestPriorityUnderstaffedWorkplace` and `GetLowestPriorityStaffedWorkplace` postfixes: native skips Reactor Bot workplaces.
+  5. `WorkplaceWorkerType.SetWorkerTypeToDistrict` prefix and postfix: the district's Reactor Bot default.
+- **Files:**
+  - `src/DeepFrontier/Scripts/SuperBots/`: `ReactorBotWorkplace.cs`, `ReactorBotStaffing.cs`, `ReactorBotWorkplaceUnlocks.cs`, `ReactorBotWorkplacePatches.cs`, and `ReactorBotWorkplaceLight.cs` (reworked);
+  - `Scripts/Workforce/SpecialistWorkplace.cs` and `WorkforcePanels.cs` (hand-over and panel texts);
+  - `tools/reactor_bot_workplaces.json`, `tools/reactor_bot_workplace_content.mjs` and `tools/validate_reactor_bot_workplaces.mjs`, replacing the `reactor_bot_workplace_light*` trio;
+  - `Data/Configurations/DeepFrontierReactorBotWorkplaces.blueprint.json` (replaces `DeepFrontierReactorBotColors`), and six `enUS.csv` rows.
+  - `ReactorBot.cs`, `ReactorBotConfigurator.cs` and `super_bots.json` are untouched. New components subscribe to native events in `InitializeEntity`, per the coordinator's rule; the validator checks this.
+- **Checks:**
+  - **Compile.** `tools/compile-check`: 0 errors.
+  - **Generation.** Canonical generation in the mirror changes exactly the singleton (renamed) and the six localization rows.
+  - **Validator.** `validate_reactor_bot_workplaces.mjs` passes. It covers the catalog, the generated data, the unlock rule over 70 Iron Teeth workplaces, the runtime (decorators, bindings, light rule, staffing, specialist hand-over, localization keys, no event subscription in `Awake`, the guarded Harmony file) and the native contract decompiled from the plugin assemblies. It fails on seven mutations: light priority 20, the specialist hand-over removed, a subscription in `Awake`, the guard removed, an unknown localization key, multiplier 0, and a stale `DeepFrontierReactorBotColors` file.
+  - **Mono harness.** A scratch host in the game's Mono 6.13 against the shipped DLLs ran `ReactorBotWorkplacePatches.Apply`: verification passed, the six methods patched with every parameter injection resolved, the second call was a no-op, and the patched `PriorityOrderedWorkplaces` ran on a native instance. It caught a cast bug first: `SortedList` values implement `IList<T>`, not `IList`.
+  - **validate_all.** `-Only` reactor_bot_workplaces, super_bots, workforce_risks, component_lifecycle, editor_guards, automation_content, vertical_slice_content, bot_upkeep, building_descriptions and load_order: 10/10. Full `validate_all -SkipBlender`: 68 of 70 pass (`no-game-assets` needs git and passes on this commit's private index; `audit-item-uses` is report-only).
+- **In game, to check (not run; the user was playing):**
+  1. Load a save with Reactor Bots (dev mode can finish a Reactor bot recipe at the Bot Assembler).
+  2. **Toggle.** Select a Smelter: the toggle reads Beaver | Bot | Reactor Bot (green bot icon, locked).
+     - Hover the lock: "Unlock this workplace for Reactor Bots." with the cost (3x its bot unlock, 3,000 for a Smelter).
+     - Click it: the confirmation dialog, then science is deducted and the button is active.
+     - Reactor Bots arrive, ordinary bots leave, and the windows glow neon green while they work.
+  3. **Bot workplaces.** Set another workplace to Bot: only ordinary bots come. A Reactor Bot that was working at a bot workplace in the save leaves it.
+  4. **Beaver-only building.** Set a Restaurant (6,000) to Reactor Bots: Reactor Bots serve. Switch it back to Beaver: beavers return, and Bot stays disabled.
+  5. **Specialist building.** Set the Nuclear Reactor or Steel Mill to Reactor Bots: the specialist panel says Reactor Bots work there and the "no specialists" status clears. Switch back: specialists return.
+  6. **District Center.** Set its default to Reactor Bot, then place a Smelter (Reactor Bots unlocked) and a Gear Workshop (not unlocked): the Smelter starts as Reactor Bots, the Gear Workshop as Bot where its bots are unlocked, otherwise Beaver.
+  7. **Batch control.** The workplace tab shows three buttons that work; the hotkey cycles them.
+  8. **Saves.** Save and reload: the modes, unlocks, crews and light persist. Load the save without Deep Frontier: those workplaces are bot workplaces.
+  9. **Copy settings** from a Reactor Bot workplace to another of the same kind carries the mode.
+
 ## Neon green workplace windows while Reactor Bots work; worker-type study (Claude Code session, 2026-11-02, bot-light agent; mirror `botwork` on HEAD cb8fb87 + this change; compile-checked; not built or run in game)
 
 - **User:** "We have blue windows when the bots are doing stuff, we should make it neon green when nuclear bots do things." Also asked what a third worker-type option (Reactor Bots, furthest right) would take: a study, not an implementation (`docs/worker-types-study.md`).

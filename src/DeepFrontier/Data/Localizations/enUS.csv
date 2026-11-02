@@ -883,6 +883,12 @@ DeepFrontier.ReactorBot.Panel.Upgraded,"Reactor Bot: 5 times the load and 4 time
 DeepFrontier.ReactorBot.Panel.Unplated,No plating: wearing out 5 times faster until it takes steel or alloy from storage.,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Queue,Retrofit to Reactor Bot,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Cancel,Cancel retrofit,Deep Frontier reactor bots
+DeepFrontier.WorkerType.ReactorBot,Reactor Bots,Deep Frontier Reactor Bot workplaces
+DeepFrontier.WorkerType.ReactorBot.Unlock.Tooltip,Unlock this workplace for Reactor Bots.,Deep Frontier Reactor Bot workplaces
+DeepFrontier.WorkerType.ReactorBot.Unlock.Prompt,Are you sure you want to unlock this workplace for Reactor Bots? It costs {0} Science Points.,Deep Frontier Reactor Bot workplaces
+DeepFrontier.WorkerType.ReactorBot.Unlock.CantUnlock,"Can't unlock this workplace for Reactor Bots, not enough Science Points.",Deep Frontier Reactor Bot workplaces
+DeepFrontier.ReactorBotWorkplace.NoBotWear,Bots do not wear out faster here.,Deep Frontier Reactor Bot workplaces
+DeepFrontier.ReactorBotWorkplace.InsteadOfSpecialists,Set to Reactor Bots: they work here instead of trained {0}.,Deep Frontier Reactor Bot workplaces
 ToolGroups.DeepFrontierQuarrying,Quarries and cement,Deep Frontier toolbar group
 ToolGroups.DeepFrontierDeepMining,Deep mining,Deep Frontier toolbar group
 ToolGroups.DeepFrontierHeavyIndustry,Heavy industry,Deep Frontier toolbar group

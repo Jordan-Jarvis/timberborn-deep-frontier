@@ -1,16 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Bindito.Core;
 using Timberborn.BaseComponentSystem;
-using Timberborn.BlueprintSystem;
+using Timberborn.EntitySystem;
 using Timberborn.Illumination;
-using Timberborn.SingletonSystem;
-using Timberborn.TemplateInstantiation;
-using Timberborn.TickSystem;
-using Timberborn.WorkSystem;
-using Timberborn.WorkSystemUI;
-using UnityEngine;
 
 namespace DeepFrontier.Scripts.SuperBots {
   // Neon green workplace windows while Reactor Bots work there (user
@@ -23,103 +14,41 @@ namespace DeepFrontier.Scripts.SuperBots {
   // (DefaultIlluminatorColor 10, TubeIlluminator 40, the player's own colour
   // CustomizableIlluminator 100).
   //
-  // Rule: this light, decorated on every WorkplaceIlluminator, sets the Reactor
-  // Bot colour at priority 30 while at least one Reactor Bot assigned to the
-  // workplace has its job running (the native lights-on test, Worker.JobRunning,
-  // narrowed to Reactor Bots), and clears it otherwise, which leaves the native
-  // bot blue. A mixed crew shows green while a Reactor Bot is among those
-  // working. Beaver workplaces never have bots (Workplace.AssignWorker throws on
-  // a worker-type mismatch). A player's custom light colour still wins.
-  //
-  // Ticks late (ILateTickable): after the entity's WorkplaceIlluminator, so the
-  // tick that switches the lights on also sets the colour. Nothing is saved:
-  // assignments are replayed on load (Worker.InitializeEntity -> AssignWorker
-  // raises WorkerAssigned after every entity's Awake), and the colour follows
-  // on the first tick.
-  internal sealed class ReactorBotWorkplaceLight : TickableComponent, IAwakableComponent, ILateTickable {
-    // Checked against the native priorities by tools/validate_reactor_bot_workplace_light.mjs.
+  // Rule: the worker-type modes are exclusive, so only Reactor Bots work at a
+  // workplace set to Reactor Bots (ReactorBotWorkplace) and Reactor Bots work
+  // nowhere else. This light, decorated on every WorkplaceIlluminator, sets the
+  // Reactor Bot colour at priority 30 while the workplace is set to Reactor
+  // Bots and clears it otherwise; the lights still go on and off natively
+  // (while a worker, here a Reactor Bot, is working). Above the bot blue, below
+  // a player's custom colour. Nothing is saved: the mode is.
+  internal sealed class ReactorBotWorkplaceLight : BaseComponent, IAwakableComponent, IInitializableEntity {
+    // Checked against the native priorities by tools/validate_reactor_bot_workplaces.mjs.
     internal const int ColorizerPriority=30;
 
-    private readonly ReactorBotColors _colors;
-    private readonly List<(Worker Worker, ReactorBot Bot)> _bots=new();
+    private readonly ReactorBotWorkplaceSettings _settings;
+    private ReactorBotWorkplace _workplace;
     private IlluminatorColorizer _colorizer;
-    private bool _green;
 
-    public ReactorBotWorkplaceLight(ReactorBotColors colors) {
-      _colors=colors;
+    public ReactorBotWorkplaceLight(ReactorBotWorkplaceSettings settings) {
+      _settings=settings;
     }
 
     public void Awake() {
-      var workplace=GetComponent<Workplace>();
+      _workplace=GetComponent<ReactorBotWorkplace>();
       var illuminator=GetComponent<Illuminator>();
-      if(!workplace||!illuminator)throw new InvalidOperationException($"{Name}: a Reactor Bot workplace light needs the native Workplace and Illuminator of its WorkplaceIlluminator");
+      if(!_workplace||!illuminator)throw new InvalidOperationException($"{Name}: a Reactor Bot workplace light needs the Reactor Bot workplace and the native Illuminator of its WorkplaceIlluminator");
       _colorizer=illuminator.CreateColorizer(ColorizerPriority);
-      workplace.WorkerAssigned+=OnWorkerAssigned;
-      workplace.WorkerUnassigned+=OnWorkerUnassigned;
     }
 
-    public override void Tick() {
-      var green=false;
-      for(var i=0;i<_bots.Count&&!green;i++)green=_bots[i].Bot.IsReactor&&_bots[i].Worker.JobRunning;
-      if(green==_green)return;
-      _green=green;
-      if(green)_colorizer.SetColor(_colors.WorkplaceColor);
+    // After loading: the loaded or duplicated mode, then its changes.
+    public void InitializeEntity() {
+      Apply();
+      _workplace.ModeChanged+=(_,_)=>Apply();
+    }
+
+    private void Apply() {
+      if(_workplace.ReactorMode)_colorizer.SetColor(_settings.WorkplaceColor);
       else _colorizer.ClearColor();
-    }
-
-    // Every bot carries ReactorBot (decorated on BotSpec); beavers do not.
-    private void OnWorkerAssigned(object sender, WorkerChangedEventArgs e) {
-      var bot=e.Worker.GetComponent<ReactorBot>();
-      if(bot)_bots.Add((e.Worker,bot));
-    }
-
-    private void OnWorkerUnassigned(object sender, WorkerChangedEventArgs e) {
-      _bots.RemoveAll(b=>b.Worker==e.Worker);
-    }
-  }
-
-  // The Reactor Bot workplace colour id (written by
-  // tools/reactor_bot_workplace_light_content.mjs as
-  // Data/Configurations/DeepFrontierReactorBotColors.blueprint.json), as native
-  // BotColorsSpec names the bot blue.
-  internal record FrontierReactorBotColorsSpec : ComponentSpec {
-    [Serialize] public string WorkplaceColorId { get; init; }
-  }
-
-  // As native BotColors: the colour is looked up once through IlluminationService.
-  internal sealed class ReactorBotColors : ILoadableSingleton {
-    private readonly ISpecService _specs;
-    private readonly IlluminationService _illumination;
-
-    public Color WorkplaceColor { get; private set; }
-
-    public ReactorBotColors(ISpecService specs, IlluminationService illumination) {
-      _specs=specs;_illumination=illumination;
-    }
-
-    public void Load() {
-      var spec=_specs.GetSingleSpec<FrontierReactorBotColorsSpec>();
-      // Native FindColorById only warns on an unknown id; require the generated colour.
-      if(!_specs.GetSpecs<IlluminationColorSpec>().Any(c=>c.Id==spec.WorkplaceColorId))
-        throw new InvalidOperationException($"Reactor Bot workplace light: illumination colour {spec.WorkplaceColorId} is not generated");
-      WorkplaceColor=_illumination.FindColorById(spec.WorkplaceColorId);
-    }
-  }
-
-  // Discovered like the mod's other per-feature configurators.
-  [Context("Game")]
-  public sealed class ReactorBotWorkplaceLightConfigurator : Configurator {
-    protected override void Configure() {
-      Bind<ReactorBotColors>().AsSingleton();
-      Bind<ReactorBotWorkplaceLight>().AsTransient();
-      MultiBind<TemplateModule>().ToProvider(Provide).AsSingleton();
-    }
-
-    // Beside native WorkerTypeIlluminator, on the same subject.
-    private static TemplateModule Provide() {
-      var builder=new TemplateModule.Builder();
-      builder.AddDecorator<WorkplaceIlluminator,ReactorBotWorkplaceLight>();
-      return builder.Build();
     }
   }
 }

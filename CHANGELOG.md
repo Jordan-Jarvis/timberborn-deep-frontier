@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Reactor Bot workplaces: a third worker type
+- **Every workplace's worker toggle now has a third button, Reactor Bots, furthest right** (player request), in the building panel and the batch control window. The modes are separate:
+  - Beaver workplaces take beavers.
+  - **Bot workplaces now take ordinary bots only.**
+  - Reactor Bot workplaces take Reactor Bots only.
+- **Each workplace unlocks Reactor Bots with science**, like the bot unlock: 3 times its bot unlock (Smelter 3,000, Precision Machine Works 39,000).
+  - A building with no bot unlock pays 3 times (its science cost + 1,000). This covers beaver-only and specialist buildings, the District Center and the flags: District Center 3,000, Restaurant 6,000, Steel Mill 33,000, Hospital 153,000, Launch Pad 603,000, Nuclear Reactor 3,003,000.
+  - Hold the game's instant-unlock key to skip the cost, as for bots.
+- **Any building can be set to Reactor Bots**, including beaver-only buildings and the specialist buildings (Steel Mill, Launch Pad, Nuclear Reactor). At a specialist building the Reactor Bots replace the trained crew; switch it back to beavers to use specialists again.
+- **District Center:** the default worker type for new buildings has the same third option. New buildings in that district start set to Reactor Bots where that option is unlocked; elsewhere they start as bot workplaces.
+- **Neon green windows:** a workplace set to Reactor Bots glows neon green while they work, where bot workplaces glow blue. A light colour you picked yourself still takes priority.
+- **Existing saves:** Reactor Bots working at bot workplaces leave them and wait until a workplace is set to Reactor Bots, as does a bot that finishes its retrofit. Set a few workplaces to Reactor Bots after loading.
+- Without Deep Frontier, a Reactor Bot workplace loads as a bot workplace (as a beaver workplace where bots are not allowed or not unlocked).
+
 ## 0.8.4 (2026-11-02)
 
 ### Neon green windows where Reactor Bots work
