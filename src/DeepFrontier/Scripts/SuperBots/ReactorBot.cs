@@ -26,9 +26,9 @@ namespace DeepFrontier.Scripts.SuperBots {
   //             (ReactorBotAssembler) is born in this state, its reactor
   //             needs full, as a finished retrofit leaves it.
   //
-  // Skin (ReactorBotSkin): radioactive-yellow eyes, and dark plating while the
-  // plating need is favourable (the vanilla light body, still with yellow
-  // eyes, while unplated), set on the body material through the native
+  // Skin (ReactorBotSkin): neon-yellow glowing eyes and joint seams, and dark
+  // plating while the plating need is favourable (the vanilla light body,
+  // still glowing, while unplated), set on the body material through the native
   // CharacterMaterialModifier. A colour-named bot keeps its native CitizenTint
   // on top. The native illumination colour (MaterialColorer) is set to the
   // eye colour as vanilla BotIlluminationController sets the bot's; the
@@ -107,7 +107,7 @@ namespace DeepFrontier.Scripts.SuperBots {
     public float LifespanMultiplier=>IsReactor?Spec.LifespanMultiplier:1f;
 
     // Dark plating while plated, the vanilla body while unplated (on upgrade
-    // and when the plating need changes); the yellow eyes stay either way.
+    // and when the plating need changes); the glow stays either way.
     private void ApplyPlating()=>_material.SetTexture(ReactorBotSkin.BaseMapId,IsPlated?_textures.Plated:_textures.Unplated);
 
     private void OnNeedChangedIsFavorable(object sender, NeedChangedIsFavorableEventArgs e) {
@@ -157,8 +157,11 @@ namespace DeepFrontier.Scripts.SuperBots {
       _materialColorer.SetLightingColor(this,_settings.IlluminationColor);
       _materialColorer.EnableLighting(this);
       if(_textures==null) {
-        // The body renderer native CharacterMaterialModifier edits (its Awake takes the same one).
-        _textures=_skin.For(GetComponentInChildren<Renderer>(includeInactive:true).sharedMaterial);
+        // The body renderer native CharacterMaterialModifier edits (its Awake takes the same one) and its mesh.
+        var body=GetComponentInChildren<Renderer>(includeInactive:true);
+        var filter=body.GetComponent<MeshFilter>();
+        if(!filter)throw new InvalidOperationException($"{Name}: the bot body renderer {body.name} has no MeshFilter");
+        _textures=_skin.For(body.sharedMaterial,filter.sharedMesh);
         _material.SetTexture(ReactorBotSkin.EmissionMapId,_textures.Emission);
       }
       ApplyPlating();

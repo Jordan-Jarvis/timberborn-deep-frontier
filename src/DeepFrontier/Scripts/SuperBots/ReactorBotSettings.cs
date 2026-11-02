@@ -35,12 +35,27 @@ namespace DeepFrontier.Scripts.SuperBots {
     [Serialize] public float UnplatedWearMultiplier { get; init; }
     // Native bot illumination colour (MaterialColorer), as vanilla BotIlluminationController sets it.
     [Serialize] public string IlluminationColorId { get; init; }
-    // Skin (ReactorBotSkin): eye colour (gamma space), and the dark plating curve
-    // (c/255)^DarkPlatingGamma x DarkPlatingScale x DarkPlatingColor per channel.
-    [Serialize] public Color EyeColor { get; init; }
+    // Skin (ReactorBotSkin). Glow: the neon colour (gamma space) of the eyes and the
+    // joint seams, painted on the base map and, times GlowIntensity (linear, above
+    // 1 so it glows), in the HDR emission map. Joint seams: within GlowRim of
+    // another mesh part, near a joint pivot, scaled by GlowJointGain.
+    [Serialize] public Color GlowColor { get; init; }
+    [Serialize] public float GlowIntensity { get; init; }
+    [Serialize] public float GlowRim { get; init; }
+    [Serialize] public float GlowJointGain { get; init; }
+    [Serialize] public ImmutableArray<FrontierReactorBotGlowJointSpec> GlowJoints { get; init; }
+    // Dark plating: (c/255)^DarkPlatingGamma x DarkPlatingScale x DarkPlatingColor per channel.
     [Serialize] public float DarkPlatingGamma { get; init; }
     [Serialize] public float DarkPlatingScale { get; init; }
     [Serialize] public Color DarkPlatingColor { get; init; }
+  }
+
+  // A joint whose seams glow: its pivot in the bot body mesh's bind pose (model
+  // space, as the mesh's vertices) and the radius around it that may glow.
+  internal record FrontierReactorBotGlowJointSpec {
+    [Serialize] public string Name { get; init; }
+    [Serialize] public Vector3 Pivot { get; init; }
+    [Serialize] public float Radius { get; init; }
   }
 
   internal sealed class ReactorBotSettings : ILoadableSingleton, IPostLoadableSingleton {
@@ -63,7 +78,9 @@ namespace DeepFrontier.Scripts.SuperBots {
         throw new InvalidOperationException("Reactor bots: the charge and plating needs must be reactor needs");
       if(!(Spec.CarryingCapacityBonus>0f&&Spec.SpeedMultiplier>1f&&Spec.LifespanMultiplier>1f&&Spec.UnplatedWearMultiplier>1f))
         throw new InvalidOperationException("Reactor bots: invalid buff values in the settings");
-      if(!(Spec.DarkPlatingGamma>=1f&&Spec.DarkPlatingScale>0f&&Spec.DarkPlatingScale<1f&&Spec.EyeColor.maxColorComponent>0f&&Spec.DarkPlatingColor.maxColorComponent<=1f))
+      if(!(Spec.DarkPlatingGamma>=1f&&Spec.DarkPlatingScale>0f&&Spec.DarkPlatingScale<1f&&Spec.DarkPlatingColor.maxColorComponent<=1f
+           &&Spec.GlowColor.maxColorComponent>0f&&Spec.GlowIntensity>=1f&&Spec.GlowRim>0f&&Spec.GlowJointGain>0f
+           &&!Spec.GlowJoints.IsDefaultOrEmpty&&Spec.GlowJoints.All(j=>!string.IsNullOrEmpty(j.Name)&&j.Radius>0f)))
         throw new InvalidOperationException("Reactor bots: invalid skin values in the settings");
       // Native FindColorById only warns on an unknown id; require the generated colour.
       if(!_specs.GetSpecs<IlluminationColorSpec>().Any(c=>c.Id==Spec.IlluminationColorId))

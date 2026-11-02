@@ -11,7 +11,7 @@
 // Writes:
 // - Configurations/DeepFrontierReactorBots.blueprint.json: the singleton
 //   FrontierReactorBotSettingsSpec the runtime reads (buffs, need ids, skin:
-//   eye colour and dark plating curve for ReactorBotSkin).
+//   glow colour, intensity, joint seams and dark plating curve for ReactorBotSkin).
 // - The Bot needs (retrofit parts, charge, coolant, plating) and their
 //   NeedCollection entries. The runtime switches them per bot with native
 //   NeedManager.EnableNeed/DisableNeed: ordinary bots keep only vanilla Energy.
@@ -86,10 +86,17 @@ export function checkSuperBotConfig(c) {
     if (!Array.isArray(u.replacedNeeds) || !u.replacedNeeds.length) errors.push('upgrade.replacedNeeds must list the vanilla needs a Reactor Bot loses');
     if (!u.noChargeAnimation) errors.push('upgrade.noChargeAnimation is required');
     if (!/^[A-Za-z]+$/.test(u.illumination?.id ?? '') || !isColor(u.illumination?.color)) errors.push('upgrade.illumination needs an id and an rgba colour');
-    if (!isColor(u.eyeColor) || !(Math.max(u.eyeColor.r, u.eyeColor.g, u.eyeColor.b) > 0)) errors.push('upgrade.eyeColor must be a visible rgba colour');
+    const g = u.glow;
+    if (!isColor(g?.color) || !(g.intensity >= 1) || !(g.rim > 0) || !(g.jointGain > 0)) errors.push('upgrade.glow needs an rgba colour, intensity >= 1, rim > 0 and jointGain > 0');
+    if (!Array.isArray(g?.joints) || !g.joints.length) errors.push('upgrade.glow.joints must list the joints whose seams glow');
+    for (const j of g?.joints ?? []) {
+      if (!/^[A-Z][A-Za-z]+$/.test(j.name ?? '') || !Array.isArray(j.pivot) || j.pivot.length !== 3 || j.pivot.some((v) => typeof v !== 'number') || !(j.radius > 0))
+        errors.push(`upgrade.glow.joints ${j.name}: a PascalCase name, a [x, y, z] pivot and a positive radius are required`);
+      if (j.mirrorX && !(j.pivot[0] > 0)) errors.push(`upgrade.glow.joints ${j.name}: a mirrored joint is declared on the +x side`);
+    }
     const p = u.darkPlating;
     if (!(p?.gamma >= 1 && p.scale > 0 && p.scale < 1 && isColor(p.color))) errors.push('upgrade.darkPlating needs gamma >= 1, scale in (0, 1) and an rgba colour');
-    if (u.tint !== undefined) errors.push('upgrade.tint is retired: the skin is ReactorBotSkin (eyeColor, darkPlating)');
+    for (const retired of ['tint', 'eyeColor']) if (u[retired] !== undefined) errors.push(`upgrade.${retired} is retired: the skin is ReactorBotSkin (glow, darkPlating)`);
   }
   for (const key of ['charge', 'coolant', 'plating']) {
     if (!/^[A-Z][A-Za-z]+$/.test(n?.[key]?.id ?? '') || !n[key].name) errors.push(`needs.${key} needs a PascalCase id and a name`);
@@ -133,6 +140,12 @@ export function checkSuperBotConfig(c) {
 // Daily delta of the vanilla need the charge need replaces, scaled.
 export const chargeDailyDelta = (config, energy) => energy.NeedSpec.DailyDelta * config.needs.charge.energyFactor;
 
+// Glow joints as the runtime reads them: a mirrored joint (declared on +x) gives Name.R and Name.L.
+export const glowJoints = (c) => c.upgrade.glow.joints.flatMap((j) => {
+  const at = (name, [x, y, z]) => ({Name: name, Pivot: {X: x, Y: y, Z: z}, Radius: j.radius});
+  return j.mirrorX ? [at(`${j.name}.R`, j.pivot), at(`${j.name}.L`, [-j.pivot[0], j.pivot[1], j.pivot[2]])] : [at(j.name, j.pivot)];
+});
+
 export function settingsBlueprint(c) {
   const n = c.needs, u = c.upgrade;
   return {[SETTINGS_SPEC]: {
@@ -147,7 +160,11 @@ export function settingsBlueprint(c) {
     LifespanMultiplier: u.lifespanMultiplier,
     UnplatedWearMultiplier: u.unplatedWearMultiplier,
     IlluminationColorId: u.illumination.id,
-    EyeColor: {...u.eyeColor},
+    GlowColor: {...u.glow.color},
+    GlowIntensity: u.glow.intensity,
+    GlowRim: u.glow.rim,
+    GlowJointGain: u.glow.jointGain,
+    GlowJoints: glowJoints(c),
     DarkPlatingGamma: u.darkPlating.gamma,
     DarkPlatingScale: u.darkPlating.scale,
     DarkPlatingColor: {...u.darkPlating.color},

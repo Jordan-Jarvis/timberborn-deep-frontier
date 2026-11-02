@@ -8,15 +8,16 @@
 // - that the runtime settings record serializes exactly what the generator writes;
 // - that the panel's localization keys are generated;
 // - the native contracts the design relies on;
-// - the skin: the eyes are the mod's radiation yellow (RadiationMaterials.WaterTintColor), the
-//   BotURP texture names ReactorBotSkin sets match the official shader graph, no native texture
-//   setter replaces them, and the dark plating follows the plating need;
+// - the skin: the glow is a neon yellow of the radiation hue (RadiationMaterials.WaterTintColor,
+//   within 5 degrees, at full saturation and value) written to an HDR emission map, the joint seams
+//   come from the body mesh, the BotURP texture names ReactorBotSkin sets match the official shader
+//   graph, no native texture setter replaces them, and the dark plating follows the plating need;
 // - when generated: the settings, needs, goods, recipes, manufactories, upkeep effects, light colour, charging bay, collections, icons, localization and its automation declaration.
 // Exits 1 on any error. Runtime behaviour is verified in game, not here.
 import {readFile, access} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {loadSuperBotConfig, checkSuperBotConfig, settingsBlueprint, needBlueprints, partGood, partRecipe, consumptionEffects,
+import {loadSuperBotConfig, checkSuperBotConfig, settingsBlueprint, glowJoints, needBlueprints, partGood, partRecipe, consumptionEffects,
   illuminationBlueprint, stationComponents, localizationRows, chargeDailyDelta, allNeeds, PANEL_KEYS, SETTINGS_PATH, SETTINGS_SPEC} from './super_bot_content.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
@@ -53,11 +54,29 @@ if (!reactorBot.includes('_material.SetTexture(ReactorBotSkin.BaseMapId,IsPlated
 const radiation = await readFile(resolve(root, 'src', 'DeepFrontier', 'Scripts', 'Radiation', 'RadiationMaterials.cs'), 'utf8');
 const yellow = radiation.match(/\bWaterTintColor = new Color\(([\d.]+)f, ([\d.]+)f, ([\d.]+)f,/)?.slice(1).map(Number);
 if (!yellow) errors.push('runtime: RadiationMaterials.WaterTintColor (the radiation yellow) not found');
-for (const [key, c] of [['eyeColor', config.upgrade.eyeColor], ['illumination.color', config.upgrade.illumination.color]])
-  if (yellow && c && !same(yellow, [c.r, c.g, c.b])) errors.push(`catalog: upgrade.${key} ${[c.r, c.g, c.b]} must be the radiation yellow RadiationMaterials.WaterTintColor ${yellow}`);
+// Neon: the radiation yellow's hue (within 5 degrees) at full saturation and value (user 2026-11-02: "neon yellow, bright yellow").
+const hue = ([r, g, b]) => {
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+  if (d === 0) return NaN;
+  const h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return (h * 60 + 360) % 360;
+};
+const glow = config.upgrade.glow?.color;
+if (yellow && glow) {
+  const rgb = [glow.r, glow.g, glow.b];
+  if (!(Math.abs(hue(rgb) - hue(yellow)) <= 5)) errors.push(`catalog: upgrade.glow.color hue ${hue(rgb).toFixed(1)} must be within 5 degrees of the radiation yellow's ${hue(yellow).toFixed(1)} (RadiationMaterials.WaterTintColor)`);
+  if (Math.max(...rgb) !== 1 || Math.min(...rgb) !== 0) errors.push(`catalog: upgrade.glow.color ${rgb} must be neon: full value (a channel at 1) and full saturation (a channel at 0)`);
+  const light = config.upgrade.illumination.color;
+  if (!same([light.r, light.g, light.b], rgb)) errors.push('catalog: upgrade.illumination.color must be the glow colour');
+}
+const jointNames = glowJoints(config).map((j) => j.Name);
+if (new Set(jointNames).size !== jointNames.length) errors.push(`catalog: upgrade.glow.joints give duplicate names (${jointNames})`);
 // BotURP: the reference names of Base Map and Emission Map (official shader graph) are what ReactorBotSkin sets.
 const graph = await readFile(resolve(vanilla, 'Shaders', 'BotURP.shadergraph'), 'utf8');
 const skin = await readFile(resolve(scripts, 'ReactorBotSkin.cs'), 'utf8');
+// HDR glow (a half-float linear emission map can exceed 1) and the joint seams from the body mesh.
+if (!skin.includes('new Texture2D(width,height,TextureFormat.RGBAHalf,true,true)')) errors.push('runtime: ReactorBotSkin no longer writes the glow to a linear half-float emission map');
+if (!reactorBot.includes('_skin.For(body.sharedMaterial,filter.sharedMesh)')) errors.push('runtime: ReactorBot no longer gives the skin the bot body mesh for the joint seams');
 for (const [display, reference, constant] of [['Base Map', '_BaseMap', 'BaseMapProperty'], ['Emission Map', '_BaseMap_1', 'EmissionMapProperty']]) {
   if (!new RegExp(`"m_Name": "${display}"[\\s\\S]{0,600}?"m_OverrideReferenceName": "${reference}"`).test(graph)) errors.push(`native: BotURP.shadergraph ${display} is no longer ${reference}`);
   if (!skin.includes(`${constant}="${reference}"`)) errors.push(`runtime: ReactorBotSkin.${constant} must be "${reference}"`);

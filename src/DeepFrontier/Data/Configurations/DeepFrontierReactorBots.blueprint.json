@@ -20,12 +20,125 @@
     "LifespanMultiplier": 10,
     "UnplatedWearMultiplier": 5,
     "IlluminationColorId": "DeepFrontierReactorBot",
-    "EyeColor": {
-      "r": 0.86,
-      "g": 0.92,
-      "b": 0.08,
+    "GlowColor": {
+      "r": 0.93,
+      "g": 1,
+      "b": 0,
       "a": 1
     },
+    "GlowIntensity": 2,
+    "GlowRim": 0.025,
+    "GlowJointGain": 1.4,
+    "GlowJoints": [
+      {
+        "Name": "Neck",
+        "Pivot": {
+          "X": 0,
+          "Y": 0.49,
+          "Z": 0.1
+        },
+        "Radius": 0.07
+      },
+      {
+        "Name": "Shoulder.R",
+        "Pivot": {
+          "X": 0.135,
+          "Y": 0.356,
+          "Z": 0.069
+        },
+        "Radius": 0.08
+      },
+      {
+        "Name": "Shoulder.L",
+        "Pivot": {
+          "X": -0.135,
+          "Y": 0.356,
+          "Z": 0.069
+        },
+        "Radius": 0.08
+      },
+      {
+        "Name": "Elbow.R",
+        "Pivot": {
+          "X": 0.205,
+          "Y": 0.332,
+          "Z": 0.1
+        },
+        "Radius": 0.07
+      },
+      {
+        "Name": "Elbow.L",
+        "Pivot": {
+          "X": -0.205,
+          "Y": 0.332,
+          "Z": 0.1
+        },
+        "Radius": 0.07
+      },
+      {
+        "Name": "Hip.R",
+        "Pivot": {
+          "X": 0.144,
+          "Y": 0.29,
+          "Z": 0.05
+        },
+        "Radius": 0.07
+      },
+      {
+        "Name": "Hip.L",
+        "Pivot": {
+          "X": -0.144,
+          "Y": 0.29,
+          "Z": 0.05
+        },
+        "Radius": 0.07
+      },
+      {
+        "Name": "Knee.R",
+        "Pivot": {
+          "X": 0.12,
+          "Y": 0.133,
+          "Z": 0.169
+        },
+        "Radius": 0.08
+      },
+      {
+        "Name": "Knee.L",
+        "Pivot": {
+          "X": -0.12,
+          "Y": 0.133,
+          "Z": 0.169
+        },
+        "Radius": 0.08
+      },
+      {
+        "Name": "Ankle.R",
+        "Pivot": {
+          "X": 0.145,
+          "Y": 0.063,
+          "Z": 0.002
+        },
+        "Radius": 0.06
+      },
+      {
+        "Name": "Ankle.L",
+        "Pivot": {
+          "X": -0.145,
+          "Y": 0.063,
+          "Z": 0.002
+        },
+        "Radius": 0.06
+      },
+      {
+        "Name": "TailRoot",
+        "Pivot": {
+          "X": 0,
+          "Y": 0.19,
+          "Z": -0.13
+        },
+        "Radius": 0.07
+      }
+    ],
     "DarkPlatingGamma": 1.8,
     "DarkPlatingScale": 0.57,
     "DarkPlatingColor": {
