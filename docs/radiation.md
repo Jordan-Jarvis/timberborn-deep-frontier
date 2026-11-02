@@ -153,16 +153,24 @@ User rule 2026-10-22: "Irradiated ground should kill plants immediately."
   - the tick ground becomes irradiated under a standing plant. `RadiationSimulation.KillOnIrradiatedGround` runs after `Rescan` on the rows holding soil radiation or banks, and checks a slot when it turns irradiated or its column geometry changes;
   - when a plant is planted or spawns there (`IrradiatedGroundDeath.PostInitializeEntity`, after every native `InitializeEntity`);
   - natural spreading never seeds irradiated ground (`IrradiatedGroundSpawnValidator`, as native `ContaminatedNaturalResourceSpawnValidator` does for badwater soil).
-- **Planting warning:** the planting tooltip and plant panel say plants there die immediately. Planting stays allowed.
+- **Planters skip irradiated ground** (`IrradiatedPlantingSpots.cs`, 2026-11-02; user report: farmers replanted dead crops on irradiated ground, the crop died at once, and they replanted it again forever instead of moving on).
+  - Native rule (decompiled `Timberborn.Planting` 1.1.2.8): every planter (farmhouses, foresters) picks its spot with `PlantingSpotFinder.FindClosest`, which keeps a marked spot only if the private `CanPlantAt` passes: the prioritized plantable, `PlantingSoilValidator.Validate` (soil moist, or dry for arid plants, and not `ISoilContaminationService.SoilIsContaminated`), the building's `IPlantingSpotValidator`, the floodable water depth and `SpawnValidationService.IsUnobstructed`. The planting tool (`PlantingAreaValidator`) checks only obstruction, so badwater-contaminated or dry soil stays marked, planters skip it and planting resumes by itself when the soil recovers.
+  - Irradiated ground now gets the same rule: one Harmony postfix on `PlantingSpotFinder.CanPlantAt` refuses a spot where `RadiationSimulation.IsIrradiatedGround` is true, the same call that kills a plant planted there. One threshold, soil and bank layer, Radioactive Tide water included.
+  - Why a patch: the soil rule is hard-coded. `PlantingSoilValidator` is an internal singleton with a non-virtual `Validate`; `IPlantingSpotValidator` is the planter building's own single component (`FarmHouse`, `Forester`), read with `GetComponent`, which throws when a second component implements it; `ISoilContaminationService` is the badwater field every native system reads; `ISpawnValidator` is consulted only by natural spreading.
+  - The postfix reaches the rule through the planter itself: `IrradiatedPlantingSpots` is decorated on `PlantablePrioritizer`, where native `PlantingSpotFinder` is decorated, with `RadiationSimulation` injected. No static state. Mod start verifies the native contract and throws on a changed game: `CanPlantAt` exceeds the Mono inline limit (120 IL bytes), calls `PlantingSoilValidator.Validate` (which calls `SoilIsContaminated` and `SoilIsMoist`), is called from `GetClosestOrDefault`, `FindClosest` is called from `PlanterWorkplaceBehavior.Decide` and `PlantBehavior.ReserveCoordinates`, and `PlantingConfigurator` decorates `PlantingSpotFinder` on `PlantablePrioritizer`.
+  - Marks stay: the player can mark irradiated ground, and planting resumes on its own once the ground is clean. While no marked spot is plantable the planters harvest or idle, as for contaminated soil (native `PlanterBuildingStatusUpdater` does not test soil, so no new status).
+  - Plants killed while growing stay dead in place, as after a badwater death. Crops are `RemoveOnCut`, so native `EmptyDeadNaturalResourceOverrider` makes a dead crop overridable at once; that is why a farmer could plant straight over it, and now plants over it only once the ground is clean. A forester set to replant dead trees demolishes and replants them (`PlanterWorkplaceBehavior`, after `FindClosest`) also only once the ground is clean. Nothing replants on irradiated ground.
+  - A planter that reserved its spot before the ground turned irradiated still plants it once (native planters do not re-check a reserved spot); that plant dies and the spot is skipped from then on.
+- **Planting warning:** the planting tooltip and plant panel say plants there die immediately and planters skip that ground until it is clean. Marking it for planting stays allowed.
 - **Affected area:**
   - under radioactive water from r = 0.0125 (4r = 0.05);
   - on banks within 7 tiles of r ≥ 0.25 water;
   - within 3 tiles of r = 0.1;
   - the 100% tide kills plants under and beside its water, like any pure radioactive water;
   - deposits (evaporation, spills, meltdown and waste-leak soil) kill wherever they reach 0.05.
-- **Recovery:** rinsing (5.2 h) or bank clearing below 0.05 stops the killing at once. Replanting then survives.
+- **Recovery:** rinsing (5.2 h) or bank clearing below 0.05 stops the killing at once. Planters resume on the marked spots by themselves and the new plants survive.
 - **Saves:** no new data. Plants on irradiated ground in an old save die on the first tick.
-- **Cost:** one block lookup per slot when it turns irradiated, on tracked rows only. No per-plant work.
+- **Cost:** one block lookup per slot when it turns irradiated, on tracked rows only. No per-plant work. Planting: one component lookup and one slot lookup per candidate spot that already passed every native test.
 
 ### Reactor Bot leaks (`Scripts/SuperBots/ReactorBotLeak.cs`)
 

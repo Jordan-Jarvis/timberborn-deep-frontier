@@ -4,6 +4,12 @@
 
 - **The Reactor Bot overheating warning now says it will leak radiation:** "Reactor Bot is overheating and will leak radiation".
 
+### Planters skip irradiated ground
+- **Farmers and foresters no longer replant irradiated ground over and over** (player report). Before, a farmer replaced a dead crop on irradiated (yellow-green) ground, the new crop died at once, and the farmer replanted it again, never moving on. Now planters skip irradiated ground and work the good ground instead, as they already skip badwater-contaminated soil.
+- **Your fields stay marked.** Planting there resumes by itself once the ground is clean. You can still mark irradiated ground for planting.
+- Plants killed by radiation stay dead where they died until then, and are replanted once the ground is clean.
+- The planting tooltip now says so: "Planters skip that ground until it is clean."
+
 ### Reactor Bots work five times as fast, and leak when neglected
 - **Reactor Bots now work at a base 500% speed** (player request), up from 100%: production, construction, planting, harvesting, cutting and demolition, and their work animations speed up to match. Wellbeing bonuses still add on top, as for any bot.
 - **A Reactor Bot that overheats for more than 6 hours, or goes without plating for more than a day, leaks radioactive water** where it stands, or out of the door of the building it works in: a tenth of a unit an hour, until it has coolant and plating again.

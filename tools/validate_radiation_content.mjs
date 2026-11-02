@@ -9,6 +9,7 @@
 // Exits 1 on any failure. Static evidence only: nothing here proves runtime
 // behaviour; see the in-game acceptance assertions in the radiation report.
 import {readFile, access, readdir} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
 import {resolve, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {RADIATION_BUILDINGS, RADIATION_RECIPES, RADIATION_SPRINGS, SPRING_SPEC, SPRING_RADIOACTIVE_PER_HOUR, RECOVERY_MAX_WATER_PER_CYCLE,
@@ -314,6 +315,54 @@ check(!/FindOldContaining\(oldCount, floor\)/.test(reconcile) && /_oldSoilMoved\
     && /new ComponentKey\("DeepFrontier\.RadiationFloraDose"\)/.test(plants) && /public void Save\(IEntitySaver entitySaver\) \{ \}/.test(plants),
     'new plants on irradiated ground die in PostInitializeEntity; legacy flora-dose data is read and discarded; nothing is saved');
   check(/if \(_loaded != null\) return false;/.test(methodBody('RadiationSimulation.cs', 'internal bool IsIrradiatedGround(') ?? ''), 'before a save is applied the first tick, not plant initialization, decides');
+}
+// Planters skip irradiated ground (IrradiatedPlantingSpots.cs, user report
+// 2026-11-02: farmers replanted dead crops there forever). The native soil rule
+// is hard-coded in PlantingSpotFinder.CanPlantAt (PlantingSoilValidator), so one
+// verified postfix there adds the same test that kills a plant planted there.
+{
+  const radConfig = csharp['RadiationConfigurator.cs'] ?? '';
+  const spots = csharp['IrradiatedPlantingSpots.cs'] ?? '';
+  check(spots !== '', 'IrradiatedPlantingSpots.cs missing (planters must skip irradiated ground)');
+  check(/Bind<IrradiatedPlantingSpots>\(\)\.AsTransient\(\);/.test(radConfig) && /AddDecorator<PlantablePrioritizer, IrradiatedPlantingSpots>\(\);/.test(radConfig),
+    'IrradiatedPlantingSpots must be bound and decorated on PlantablePrioritizer (where native PlantingSpotFinder is decorated), Game context');
+  check(/internal sealed class IrradiatedPlantingSpots : BaseComponent \{/.test(spots)
+    && /internal bool CanPlantAt\(Vector3Int coordinates\) => !_simulation\.IsIrradiatedGround\(coordinates\);/.test(spots),
+    'a planting spot is refused exactly where IrradiatedGroundDeath kills (RadiationSimulation.IsIrradiatedGround, no second threshold)');
+  const guard = spots.indexOf('#if !UNITY_EDITOR');
+  check(guard > 0 && !/Harmony/.test(spots.slice(0, guard).replace(/\/\/.*$/gm, '')) && spots.trimEnd().endsWith('#endif'),
+    'the planting patch must sit inside #if !UNITY_EDITOR (the component stays outside for the configurator)');
+  check(/IrradiatedPlantingNative\.Verify\(\);\s*new Harmony\(HarmonyId\)\.CreateClassProcessor\(typeof\(IrradiatedPlantingSpotsPatch\)\)\.Patch\(\);/.test(spots)
+    && /internal sealed class IrradiatedPlantingModStarter : IModStarter/.test(spots), 'the planting patch is applied at mod start after the native contract is verified');
+  const verify = methodBody('IrradiatedPlantingSpots.cs', 'public static void Verify()') ?? '';
+  check(/NativeIl\.Inlinable\(canPlantAt\)/.test(verify) && /Require\(canPlantAt, soilValidate\)/.test(verify) && /Require\(closestOrDefault, canPlantAt\)/.test(verify)
+    && /typeof\(PlantablePrioritizer\), typeof\(PlantingSpotFinder\)/.test(verify) && /SoilIsContaminated/.test(verify),
+    'Verify must check CanPlantAt is not inlinable, calls the native soil rule, is reached from FindClosest, and PlantingSpotFinder sits on PlantablePrioritizer');
+  check(/private static MethodBase TargetMethod\(\) => IrradiatedPlantingNative\.CanPlantAt\(\);/.test(spots), 'the postfix targets PlantingSpotFinder.CanPlantAt');
+  const postfix = methodBody('IrradiatedPlantingSpots.cs', 'private static void Postfix(') ?? '';
+  check(/^\s*if \(!__result\) return;/.test(postfix) && /__instance\.GetComponent<IrradiatedPlantingSpots>\(\)/.test(postfix)
+    && /throw new InvalidOperationException/.test(postfix) && /__result = spots\.CanPlantAt\(__0\.Coordinates\);/.test(postfix),
+    'the postfix only refuses spots every native condition accepted, reaches the rule through the planter entity and fails without it');
+  // Load-order rule (coordinator 2026-11-02): nothing in a patch depends on a singleton's Load.
+  check(!/\bCurrent\b|static\s+RadiationSimulation|\bLoad\(/.test(spots.replace(/\/\/.*$/gm, '')), 'the planting patch must not use static singleton state or a Load');
+  // Native contract (decompiled from the project's Timberborn plugin assemblies).
+  const plugins = resolve(root, 'vendor', 'timberborn-modding', 'Assets', 'Plugins', 'Timberborn');
+  let planting = '';
+  try {
+    planting = execFileSync(resolve(root, 'tools', 'dotnet', 'ilspycmd.exe'), [resolve(plugins, 'Timberborn.Planting.dll'), '-r', plugins], {encoding: 'utf8', maxBuffer: 64 << 20}).replace(/\r\n/g, '\n');
+  } catch (error) { fail(`Timberborn.Planting.dll: decompilation failed (${error.message.split('\n')[0]})`); }
+  const nativeClass = name => { const start = planting.indexOf(`class ${name}`); return start < 0 ? '' : planting.slice(start, planting.indexOf('\n\t}\n', start)); };
+  for (const [text, what] of [
+    ['if (num2 < num && CanPlantAt(plantingCoordinate, prioritizedPlantableSpec))', 'PlantingSpotFinder.GetClosestOrDefault keeps a spot only if CanPlantAt passes'],
+    ['if (!_plantingSoilValidator.Validate(plantingSpot))', 'CanPlantAt applies the native soil rule (PlantingSoilValidator)'],
+    ['return !_soilContaminationService.SoilIsContaminated(coordinates);', 'the native soil rule refuses badwater-contaminated soil'],
+    ['_plantingSpotValidator = GetComponent<IPlantingSpotValidator>();', 'IPlantingSpotValidator is the planter building\'s single component'],
+    ['builder.AddDecorator<PlantablePrioritizer, PlantingSpotFinder>();', 'PlantingSpotFinder is decorated on PlantablePrioritizer'],
+    ['_worker.Workplace.GetComponent<PlantingSpotFinder>().FindClosest(position)', 'PlantBehavior reserves its spot with PlantingSpotFinder.FindClosest'],
+    ['_plantingSpotFinder.FindClosest(agent.Transform.position)', 'PlanterWorkplaceBehavior picks its spot with PlantingSpotFinder.FindClosest'],
+  ]) check(planting.includes(text), `native planting contract changed: ${what}`);
+  const area = nativeClass('PlantingAreaValidator');
+  check(area !== '' && !/Soil/.test(area), 'native contract changed: the planting tool (PlantingAreaValidator) marks spots without a soil test, so irradiated ground stays markable');
 }
 // Soil (RadiationSoil.cs): radioactive water never irrigates, irradiates the
 // ground in the native soil-contamination pattern, and washes out of
@@ -668,6 +717,7 @@ check(/IEntityBadge/.test(zombie) && /_entityPanel\.ReloadDescription\(_entity\)
 check(/_loc\.T\(RadiationLoc\.DeathMessage, GetComponent<Character>\(\)\.FirstName\)/.test(exposure) && /^\{0\}.*zombie/.test(csvText('DeepFrontier.Radiation.DeathMessage') ?? ''), 'death message must name the beaver as a radioactive zombie');
 for (const key of ['DeepFrontier.Radiation.Zombie.Countdown', 'DeepFrontier.Radiation.Zombie.CountdownPaused', 'DeepFrontier.Radiation.Zombie.Subtitle'])
   check((csvText(key) ?? '').includes('{0}'), `${key} must take its {0} argument`);
+check(/Planters skip/.test(csvText('DeepFrontier.Radiation.Planting.Warning') ?? ''), 'the planting warning must say planters skip irradiated ground');
 
 // --- production chain (owned by the progression generator)
 const producers = [];

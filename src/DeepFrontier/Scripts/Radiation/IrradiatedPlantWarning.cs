@@ -33,9 +33,12 @@ namespace DeepFrontier.Scripts.Radiation {
   // - natural spreading does not seed irradiated ground at all
   //   (IrradiatedGroundSpawnValidator, as native ContaminatedNaturalResourceSpawnValidator
   //   keeps plants off contaminated soil).
+  // Planters skip irradiated ground as they skip contaminated soil, so they do
+  // not replant a crop that would die at once (IrradiatedPlantingSpots.cs).
 
-  // Planting on irradiated ground stays allowed (user decision); this makes the
-  // consequence visible. Decorated on every PlantableSpec (crops and trees):
+  // Marking irradiated ground for planting stays allowed (user decision): the
+  // marks wait, planters skip them until the ground is clean, and this makes the
+  // reason visible. Decorated on every PlantableSpec (crops and trees):
   // native PlantableDescriber builds the planting tool's tooltip from the
   // template preview's describers, and the entity panel shows the same section.
   internal sealed class IrradiatedPlantWarning : BaseComponent, IEntityDescriber {

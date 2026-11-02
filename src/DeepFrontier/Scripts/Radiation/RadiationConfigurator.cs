@@ -29,6 +29,7 @@ namespace DeepFrontier.Scripts.Radiation {
       Bind<MapEdgeSite>().AsTransient();
       Bind<IrradiatedPlantWarning>().AsTransient();
       Bind<IrradiatedGroundDeath>().AsTransient();
+      Bind<IrradiatedPlantingSpots>().AsTransient();
       MultiBind<ISpawnValidator>().To<IrradiatedGroundSpawnValidator>().AsSingleton();
       Bind<RadioactiveWaterSource>().AsTransient();
       MultiBind<TemplateModule>().ToProvider(Provide).AsSingleton();
@@ -46,6 +47,9 @@ namespace DeepFrontier.Scripts.Radiation {
       builder.AddDecorator<MapEdgeSiteSpec, MapEdgeSite>();
       builder.AddDecorator<PlantableSpec, IrradiatedPlantWarning>();
       builder.AddDecorator<NaturalResourceSpec, IrradiatedGroundDeath>();
+      // Planters skip irradiated ground (IrradiatedPlantingSpots.cs); native
+      // PlantingSpotFinder is decorated on PlantablePrioritizer too.
+      builder.AddDecorator<PlantablePrioritizer, IrradiatedPlantingSpots>();
       builder.AddDecorator<RadioactiveWaterSourceSpec, RadioactiveWaterSource>();
       return builder.Build();
     }
