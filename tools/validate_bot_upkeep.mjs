@@ -15,7 +15,7 @@
 import {readFile, access} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {loadBotUpkeepConfig, checkBotUpkeepConfig, maintainedTemplates, maintenanceSpec, assemblerPatch, assemblyRecipe,
+import {loadBotUpkeepConfig, checkBotUpkeepConfig, maintainedTemplates, maintenanceSpec, assemblerPatch, vanillaRecipeWithIcon, assemblyRecipe,
   localizationRows, TEXTS, MAINTENANCE_SPEC, ASSEMBLER, RECIPE_TEMPLATE, UPKEEP_SPEC, upkeepTemplates, upkeepSpec, upkeepDescription} from './bot_upkeep_content.mjs';
 import {parseCsvRow} from './connection_content.mjs';
 
@@ -99,6 +99,9 @@ if (applied) {
   if (!same(await readJson(recipePath), assemblyRecipe(template, config))) errors.push(`Recipe.${config.assembly.recipe} differs from the catalog`);
   const patchPath = resolve(dataRoot, `${ASSEMBLER}.json`);
   if (!await exists(patchPath) || !same(await readJson(patchPath), assemblerPatch(config))) errors.push(`${ASSEMBLER}: same-path patch missing or different`);
+  // The vanilla bot recipe needs an icon once the assembler shows a recipe dropdown (Moddable Recipes reads Icon.Asset).
+  const vanillaRecipePath = resolve(dataRoot, RECIPE_TEMPLATE);
+  if (!await exists(vanillaRecipePath) || !same(await readJson(vanillaRecipePath), vanillaRecipeWithIcon(template, config))) errors.push(`${RECIPE_TEMPLATE}: must be the vanilla recipe with the assembler icon`);
   for (const [key] of localizationRows(config)) if (!csv.includes(`\n${key},`)) errors.push(`enUS.csv lacks ${key}`);
 }
 

@@ -1,6 +1,6 @@
 import {access, readFile, readdir, writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
-import {resolve, relative} from 'node:path';
+import {basename, resolve, relative} from 'node:path';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const data=resolve(root,'src/DeepFrontier/Data');
 const vanilla=resolve(root,'vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources');
@@ -33,9 +33,12 @@ const launchRecipes=new Set();
 const botRecipes=new Set();
 const generatorRecipes=new Set();
 const recipes=new Map();
+const vanillaRecipeFiles=new Set();
 for(const directory of [resolve(vanilla,'Recipes'),resolve(data,'Recipes')])for(const p of await files(directory)){
-  const value=(await read(p)).RecipeSpec;
-  if(recipes.has(value.Id))throw Error('Duplicate recipe definition: '+value.Id);
+  const value=(await read(p)).RecipeSpec, mod=directory.startsWith(data), name=basename(p);
+  // A mod file at a vanilla recipe's path replaces it (the game's same-path rule).
+  if(recipes.has(value.Id)&&!(mod&&vanillaRecipeFiles.has(name)))throw Error('Duplicate recipe definition: '+value.Id);
+  if(!mod)vanillaRecipeFiles.add(name);
   recipes.set(value.Id,{value,path:relative(root,p)});
 }
 for(const blueprint of buildingCollection.TemplateCollectionSpec['Blueprints#append']){

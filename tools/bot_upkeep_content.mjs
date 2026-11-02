@@ -25,6 +25,11 @@
 // - The vanilla Bot Assembler same-path patch
 //   {ManufactorySpec: {"ProductionRecipeIds#append": [recipe]}}: native
 //   blueprint array overlay, as the mod's GoodCollection and NeedCollection.
+// - Recipe.Bot.IronTeeth: the vanilla recipe, unchanged except its Icon. With a
+//   second recipe the assembler shows a recipe dropdown, whose Moddable Recipes
+//   provider reads every recipe's Icon.Asset; the vanilla recipe has none
+//   (botAssembly.vanillaRecipeIcon gives it the assembler's icon). A whole
+//   blueprint, not a partial patch: every Recipes/ file is read as a full recipe.
 // - DeepFrontier.BotUpkeep.* and DeepFrontier.WorkplaceUpkeep.* localization rows.
 // - The upkeep sentence (upkeepDescription) appended to each workplaceUpkeep
 //   building's description, as the connection step appends its pipe phrase;
@@ -122,6 +127,7 @@ export function checkBotUpkeepConfig({maintenance: m, assembly: a, upkeep: u}) {
     if (!Number.isInteger(a.cyclesCapacity) || a.cyclesCapacity < 1) errors.push('botAssembly.cyclesCapacity must be a positive integer');
     // Shown in the assembler's native recipe dropdown beside the vanilla recipe.
     if (!/^Sprites\/Goods\/\w+Icon$/.test(a.icon ?? '')) errors.push('botAssembly.icon must be a Sprites/Goods/<Name>Icon sprite');
+    if (!a.vanillaRecipeIcon) errors.push('botAssembly.vanillaRecipeIcon is required (the vanilla bot recipe has no icon for the recipe dropdown)');
     if (!Array.isArray(a.ingredients) || !a.ingredients.length || a.ingredients.some((i) => !pair(i) || !Number.isInteger(i[1]) || i[1] <= 0)
         || new Set(a.ingredients.map((i) => i[0])).size !== a.ingredients.length)
       errors.push('botAssembly.ingredients must be distinct [good, positive integer] pairs');
@@ -152,6 +158,7 @@ export const upkeepDescription = ({upkeep: u}, id) =>
   `Uses up ${listText(u.templates[id].map(([, , role]) => u.roles[role].description))}; stops without them.`;
 
 export const assemblerPatch = ({assembly: a}) => ({ManufactorySpec: {'ProductionRecipeIds#append': [a.recipe]}});
+export const vanillaRecipeWithIcon = (template, {assembly: a}) => ({...template, RecipeSpec: {...template.RecipeSpec, Icon: a.vanillaRecipeIcon}});
 
 export function assemblyRecipe(template, {assembly: a}) {
   return {
@@ -229,6 +236,9 @@ export async function planBotUpkeep({root = defaultRoot, dataRoot = resolve(root
   else if (assembler.ManufactorySpec.ProductionRecipeIds.includes(config.assembly.recipe)) errors.push(`vanilla ${ASSEMBLER} already runs ${config.assembly.recipe}`);
   const template = await readJson(resolve(vanilla, RECIPE_TEMPLATE));
   if (template.RecipeSpec.Products.length) errors.push('vanilla Recipe.Bot.IronTeeth is no longer product-less');
+  if (template.RecipeSpec.Icon !== '') errors.push('vanilla Recipe.Bot.IronTeeth now has an Icon: drop the botAssembly.vanillaRecipeIcon patch');
+  if (assembler.BuildingSpec && (assembler.LabeledEntitySpec?.Icon ?? '') !== config.assembly.vanillaRecipeIcon)
+    errors.push(`botAssembly.vanillaRecipeIcon must be the vanilla assembler's own icon (${assembler.LabeledEntitySpec?.Icon})`);
   if (await exists(resolve(vanilla, 'Recipes', `Recipe.${config.assembly.recipe}.blueprint.json`))) errors.push(`recipe id ${config.assembly.recipe} is a vanilla recipe`);
   for (const [good] of config.assembly.ingredients) if (!await goodExists(good)) errors.push(`bot assembly ingredient ${good} is not a vanilla or generated good`);
   if (!await exists(resolve(dataRoot, `${config.assembly.icon}.png`))) errors.push(`bot assembly icon ${config.assembly.icon}.png is not generated`);
@@ -251,13 +261,14 @@ export async function planBotUpkeep({root = defaultRoot, dataRoot = resolve(root
   }
   return {config, changed, upkept, errors, lines, rows, localizationPath,
     recipe: {path: resolve(dataRoot, 'Recipes', `Recipe.${config.assembly.recipe}.blueprint.json`), blueprint: assemblyRecipe(template, config)},
-    patch: {path: resolve(dataRoot, `${ASSEMBLER}.json`), blueprint: assemblerPatch(config)}};
+    patch: {path: resolve(dataRoot, `${ASSEMBLER}.json`), blueprint: assemblerPatch(config)},
+    vanillaRecipe: {path: resolve(dataRoot, RECIPE_TEMPLATE), blueprint: vanillaRecipeWithIcon(template, config)}};
 }
 
 export async function applyBotUpkeep({root = defaultRoot, dataRoot = resolve(root, 'src', 'DeepFrontier', 'Data')} = {}) {
-  const {config, changed, upkept, errors, lines, rows, localizationPath, recipe, patch} = await planBotUpkeep({root, dataRoot});
+  const {config, changed, upkept, errors, lines, rows, localizationPath, recipe, patch, vanillaRecipe} = await planBotUpkeep({root, dataRoot});
   if (errors.length) throw new Error(`Bot upkeep: generation stopped:\n  ${errors.join('\n  ')}`);
-  for (const {path, blueprint} of [...changed, recipe, patch]) await writeJson(path, blueprint);
+  for (const {path, blueprint} of [...changed, recipe, patch, vanillaRecipe]) await writeJson(path, blueprint);
   lines.pop();
   for (const [id, text] of rows) lines.push(csvRow(id, text));
   await writeFile(localizationPath, `${lines.join('\n')}\n`, 'utf8');

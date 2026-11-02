@@ -4,7 +4,7 @@
 // map-gathered goods; and the per-building bootstrap reachability.
 import {access, readFile, readdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
-import {resolve} from 'node:path';
+import {basename, resolve} from 'node:path';
 
 export const root = fileURLToPath(new URL('../', import.meta.url));
 export const vanillaRoot = resolve(root, 'vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources');
@@ -67,12 +67,18 @@ export async function loadProgressionData(data) {
   const recipes = new Map();
   const recipeFiles = async (dir) => (await readdir(dir)).filter((n) => n.endsWith('.blueprint.json')).map((n) => resolve(dir, n));
   const modRecipeIds = new Set();
+  const vanillaRecipeFiles = new Set();
   for (const [dir, mod] of [[resolve(vanillaRoot, 'Recipes'), false], [resolve(data, 'Recipes'), true]]) {
     for (const path of await recipeFiles(dir)) {
       const r = (await read(path)).RecipeSpec;
-      if (recipes.has(r.Id)) throw new Error(`Duplicate recipe ${r.Id}`);
+      const name = basename(path);
+      // A mod file at a vanilla recipe's path replaces it (the game's same-path rule),
+      // e.g. Recipe.Bot.IronTeeth with an icon (tools/bot_upkeep_content.mjs).
+      const replacesVanilla = mod && vanillaRecipeFiles.has(name);
+      if (recipes.has(r.Id) && !replacesVanilla) throw new Error(`Duplicate recipe ${r.Id}`);
       recipes.set(r.Id, r);
-      if (mod) modRecipeIds.add(r.Id);
+      if (!mod) vanillaRecipeFiles.add(name);
+      else if (!replacesVanilla) modRecipeIds.add(r.Id);
     }
   }
   // Iron Teeth goods: the vanilla Common + IronTeeth collections and the mod's
