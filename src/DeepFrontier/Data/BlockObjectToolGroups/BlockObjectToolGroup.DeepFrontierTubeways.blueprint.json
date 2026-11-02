@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierTubeways",
-    "Order": 71,
+    "Order": 51,
     "NameLocKey": "ToolGroups.DeepFrontierTubeways",
     "Icon": "Buildings/Paths/Tubeway/TubewayIcon",
     "FallbackGroup": false

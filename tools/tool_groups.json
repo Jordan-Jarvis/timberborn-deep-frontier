@@ -8,27 +8,29 @@
     "Left to right is the unlock order (user 2026-11-01; tools/validate_tool_order.mjs): inside a Deep Frontier group every tool, claims included, follows science ascending (ties: a tool whose products another tool consumes comes first, then the smaller footprint, then the lower one); a group's order puts it among its parent's buttons by its earliest unlock, at a place with the fewest science inversions against the vanilla and other-mod buttons there, whose own order is kept. Deep Frontier tools placed in a native group follow the same rule.",
     "upgrades: a Deep Frontier building that upgrades another, by template name without the faction suffix -> the full template name of the building it upgrades (user 2026-11-02: the Reactor Charging Bay right next to the Charging Station). Its producer puts it in the base building's tool group with an order that stands it immediately to the base's right, and it is not listed in any group here. tools/validate_tool_order.mjs requires that adjacency and leaves the upgrade out of the science-order rules (its unlock still comes from its science); every other tool keeps them.",
     "nativeOrders: the complete order of a native group's tools, written as a same-path partial of that group's blueprint, {ToolGroupChildrenSpec: {ChildrenOrderedIds#append: [...]}} (ids get 10, 20, ...; #append keeps other mods' entries).",
-    "externalMods: the non-Deep Frontier, non-vanilla templates claimed or ordered here, with the installed package they were read from, and each template's tool group, science (BuildingSpec.ScienceCost, for the menu order) and icon. optional mods are not in the manifest's RequiredMods. Flywheels keeps its blueprints in its asset bundle (read with UnityPy from AssetBundles/flywheels_win at 4.1.1.15): its template names swap Horizontal and Vertical against the display names, so the groups follow the display names."
+    "related: tools and sub-groups that belong together (player feedback 2026-11-02: the tubeway station beside the Tubeways group; Explosives Factory, Dynamite, Tunnel). Each entry names a toolbar group and its children (template names with the faction suffix, or sub-group ids) in the order they must stand: next to each other, left to right as listed. tools/validate_tool_order.mjs requires that and leaves the listed Deep Frontier children out of the science-order rules; every other child keeps them and may not stand between them. An upgrade (below) is the same rule for a pair: the base building, then its upgrade.",
+    "externalMods: the non-Deep Frontier, non-vanilla templates claimed, ordered or kept together here, with the installed package they were read from, and each template's tool group, science (BuildingSpec.ScienceCost), ToolOrder (the menu order of an unclaimed one) and icon. optional mods are not in the manifest's RequiredMods. Flywheels keeps its blueprints in its asset bundle (read with UnityPy from AssetBundles/flywheels_win at 4.1.1.15): its template names swap Horizontal and Vertical against the display names, so the groups follow the display names."
   ],
   "externalMods": {
     "Redic.NewStyles": { "workshopId": "3723883597", "version": "0.1", "optional": false, "blueprints": "loose",
       "templates": {
-        "SteamPlant.IronTeeth": { "toolGroup": "Power", "science": 400, "icon": "Buildings/Power/SteamPlantIcon" } } },
+        "SteamPlant.IronTeeth": { "toolGroup": "Power", "science": 400, "toolOrder": 50, "icon": "Buildings/Power/SteamPlantIcon" },
+        "TubewayStop.IronTeeth": { "toolGroup": "Paths", "science": 700, "toolOrder": 50, "icon": "Buildings/Tubeway/TubewayStopIcon" } } },
     "othermod.TeleporterStation": { "workshopId": "3813842276", "version": "0.5.1", "optional": true, "blueprints": "loose",
       "templates": {
-        "Teleporter.IronTeeth": { "toolGroup": "Paths", "science": 5000, "icon": "Buildings/Paths/Teleporter/TeleporterIcon" },
-        "TeleporterRing.IronTeeth": { "toolGroup": "Paths", "science": 5000, "icon": "Buildings/Paths/Ring/RingIcon" } } },
+        "Teleporter.IronTeeth": { "toolGroup": "Paths", "science": 5000, "toolOrder": 48, "icon": "Buildings/Paths/Teleporter/TeleporterIcon" },
+        "TeleporterRing.IronTeeth": { "toolGroup": "Paths", "science": 5000, "toolOrder": 49, "icon": "Buildings/Paths/Ring/RingIcon" } } },
     "northforge.solarpanel": { "workshopId": "3801036916", "version": "1.0.2", "optional": true, "blueprints": "loose",
       "templates": {
-        "SolarPanel.IronTeeth": { "toolGroup": "Power", "science": 250, "icon": "Sprites/Buildings/Power/SolarPanel/SolarPanelIcon" } } },
+        "SolarPanel.IronTeeth": { "toolGroup": "Power", "science": 250, "toolOrder": 90, "icon": "Sprites/Buildings/Power/SolarPanel/SolarPanelIcon" } } },
     "MauricioBedoya.ExpandedStorage": { "workshopId": "3795292508", "version": "1.0.1", "optional": true, "blueprints": "loose",
       "templates": {
-        "PileModule.IronTeeth": { "toolGroup": "Storage", "science": 650, "icon": "Buildings/Storage/PileModule/PileModuleIcon" },
-        "GrandUndergroundPile.IronTeeth": { "toolGroup": "Storage", "science": 3500, "icon": "Buildings/Storage/GrandUndergroundPile/GrandUndergroundPileIcon" },
-        "StorageModule.IronTeeth": { "toolGroup": "Storage", "science": 750, "icon": "Buildings/Storage/StorageModule/StorageModuleIcon" },
-        "GrandWarehouse.IronTeeth": { "toolGroup": "Storage", "science": 2500, "icon": "Buildings/Storage/GrandWarehouse/GrandWarehouseIcon" },
-        "TankModule.IronTeeth": { "toolGroup": "Storage", "science": 1050, "icon": "Buildings/Storage/TankModule/TankModuleIcon" },
-        "GrandTank.IronTeeth": { "toolGroup": "Storage", "science": 3000, "icon": "Buildings/Storage/GrandTank/GrandTankIcon" } } },
+        "PileModule.IronTeeth": { "toolGroup": "Storage", "science": 650, "toolOrder": 35, "icon": "Buildings/Storage/PileModule/PileModuleIcon" },
+        "GrandUndergroundPile.IronTeeth": { "toolGroup": "Storage", "science": 3500, "toolOrder": 23, "icon": "Buildings/Storage/GrandUndergroundPile/GrandUndergroundPileIcon" },
+        "StorageModule.IronTeeth": { "toolGroup": "Storage", "science": 750, "toolOrder": 45, "icon": "Buildings/Storage/StorageModule/StorageModuleIcon" },
+        "GrandWarehouse.IronTeeth": { "toolGroup": "Storage", "science": 2500, "toolOrder": 55, "icon": "Buildings/Storage/GrandWarehouse/GrandWarehouseIcon" },
+        "TankModule.IronTeeth": { "toolGroup": "Storage", "science": 1050, "toolOrder": 75, "icon": "Buildings/Storage/TankModule/TankModuleIcon" },
+        "GrandTank.IronTeeth": { "toolGroup": "Storage", "science": 3000, "toolOrder": 85, "icon": "Buildings/Storage/GrandTank/GrandTankIcon" } } },
     "Battery.Flywheels": { "workshopId": "3322428023", "version": "4.1.1.15", "optional": true, "blueprints": "assetBundle",
       "collection": [
         "Battery.Flywheels/SmallFlywheel/SmallFlywheel.IronTeeth.blueprint",
@@ -43,15 +45,15 @@
         "Battery.Flywheels/MediumVerticalJunction/MediumVerticalJunction.IronTeeth.blueprint",
         "Battery.Flywheels/LargeVerticalJunction/LargeVerticalJunction.IronTeeth.blueprint"],
       "templates": {
-        "SmallFlywheel.IronTeeth": { "toolGroup": "Power", "science": 300, "icon": "Battery.Flywheels/SmallFlywheel/SmallFlywheelIcon" },
-        "MediumFlywheel.IronTeeth": { "toolGroup": "Power", "science": 1000, "icon": "Battery.Flywheels/MediumFlywheel/MediumFlywheelIcon" },
-        "LargeFlywheel.IronTeeth": { "toolGroup": "Power", "science": 5000, "icon": "Battery.Flywheels/LargeFlywheel/LargeFlywheelIcon" },
-        "SmallVerticalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 800, "icon": "Battery.Flywheels/SmallHorizontalFramedFlywheel/SmallHorizontalFramedFlywheelIcon" },
-        "MediumVerticalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 2500, "icon": "Battery.Flywheels/MediumHorizontalFramedFlywheel/MediumHorizontalFramedFlywheelIcon" },
-        "LargeVerticalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 10000, "icon": "Battery.Flywheels/LargeHorizontalFramedFlywheel/LargeHorizontalFramedFlywheelIcon" },
-        "SmallHorizontalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 800, "icon": "Battery.Flywheels/SmallVerticalFramedFlywheel/SmallVerticalFramedFlywheelIcon" },
-        "MediumHorizontalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 2500, "icon": "Battery.Flywheels/MediumVerticalFramedFlywheel/MediumVerticalFramedFlywheelIcon" },
-        "LargeHorizontalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 10000, "icon": "Battery.Flywheels/LargeVerticalFramedFlywheel/LargeVerticalFramedFlywheelIcon" } } }
+        "SmallFlywheel.IronTeeth": { "toolGroup": "Power", "science": 300, "toolOrder": 70, "icon": "Battery.Flywheels/SmallFlywheel/SmallFlywheelIcon" },
+        "MediumFlywheel.IronTeeth": { "toolGroup": "Power", "science": 1000, "toolOrder": 71, "icon": "Battery.Flywheels/MediumFlywheel/MediumFlywheelIcon" },
+        "LargeFlywheel.IronTeeth": { "toolGroup": "Power", "science": 5000, "toolOrder": 72, "icon": "Battery.Flywheels/LargeFlywheel/LargeFlywheelIcon" },
+        "SmallVerticalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 800, "toolOrder": 73, "icon": "Battery.Flywheels/SmallHorizontalFramedFlywheel/SmallHorizontalFramedFlywheelIcon" },
+        "MediumVerticalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 2500, "toolOrder": 74, "icon": "Battery.Flywheels/MediumHorizontalFramedFlywheel/MediumHorizontalFramedFlywheelIcon" },
+        "LargeVerticalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 10000, "toolOrder": 75, "icon": "Battery.Flywheels/LargeHorizontalFramedFlywheel/LargeHorizontalFramedFlywheelIcon" },
+        "SmallHorizontalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 800, "toolOrder": 76, "icon": "Battery.Flywheels/SmallVerticalFramedFlywheel/SmallVerticalFramedFlywheelIcon" },
+        "MediumHorizontalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 2500, "toolOrder": 77, "icon": "Battery.Flywheels/MediumVerticalFramedFlywheel/MediumVerticalFramedFlywheelIcon" },
+        "LargeHorizontalFramedFlywheel.IronTeeth": { "toolGroup": "Power", "science": 10000, "toolOrder": 78, "icon": "Battery.Flywheels/LargeVerticalFramedFlywheel/LargeVerticalFramedFlywheelIcon" } } }
   },
   "groups": {
     "DeepFrontierQuarrying": { "parent": "Metal", "order": 21, "name": "Quarries and cement", "icon": "LimestoneQuarry",
@@ -71,7 +73,7 @@
         "SuspensionBridge5x1.IronTeeth", "SuspensionBridge6x1.IronTeeth"] },
     "DeepFrontierOverhangs": { "parent": "Paths", "order": 70, "name": "Overhangs", "icon": "Overhang3x1.IronTeeth",
       "claims": ["Overhang2x1.IronTeeth", "Overhang3x1.IronTeeth", "Overhang4x1.IronTeeth", "Overhang5x1.IronTeeth", "Overhang6x1.IronTeeth"] },
-    "DeepFrontierTubeways": { "parent": "Paths", "order": 71, "name": "Tubeways", "icon": "Tubeway.IronTeeth",
+    "DeepFrontierTubeways": { "parent": "Paths", "order": 51, "name": "Tubeways", "icon": "Tubeway.IronTeeth",
       "claims": ["Tubeway.IronTeeth", "VerticalTubeway.IronTeeth", "ImpermeableTubeway.IronTeeth"] },
     "DeepFrontierTeleporters": { "parent": "Paths", "order": 74, "name": "Teleporters", "icon": "Teleporter.IronTeeth",
       "claims": ["Teleporter.IronTeeth", "TeleporterRing.IronTeeth"] },
@@ -100,13 +102,19 @@
       "claims": ["Floodgate.IronTeeth", "DoubleFloodgate.IronTeeth", "TripleFloodgate.IronTeeth"] },
     "DeepFrontierDynamite": { "parent": "Landscaping", "order": 80, "name": "Dynamite", "icon": "Dynamite.IronTeeth",
       "claims": ["Dynamite.IronTeeth", "DoubleDynamite.IronTeeth", "TripleDynamite.IronTeeth"] },
-    "DeepFrontierMasonryBlocks": { "parent": "Landscaping", "order": 81, "name": "Masonry and concrete", "icon": "ConcreteBlock",
+    "DeepFrontierMasonryBlocks": { "parent": "Landscaping", "order": 65, "name": "Masonry and concrete", "icon": "ConcreteBlock",
       "templates": ["BrickMasonryBlock", "SandstoneMasonryBlock", "ConcreteBlock", "ConcreteOverflowDam", "ReinforcedDamBlock"] },
     "DeepFrontierRadioactiveWaste": { "parent": "Water", "order": 105, "name": "Radioactive waste", "icon": "RadioactiveWasteExport",
       "templates": ["RadioactiveSludgeRecoveryPump", "RadioactiveSludgeOutfall", "RadioactiveWasteExport", "RadioactiveWasteVault"] },
     "DeepFrontierCivicServices": { "parent": "Wellbeing", "order": 135, "name": "Civic services", "icon": "Hospital",
       "templates": ["PublicHealthLab", "Restaurant", "GroceryStore", "Bathhouse", "Hospital"] }
   },
+  "related": [
+    { "group": "Paths", "children": ["TubewayStop.IronTeeth", "DeepFrontierTubeways"],
+      "reason": "The tubeway station and the tubeways it serves (player feedback 2026-11-02)." },
+    { "group": "Landscaping", "children": ["ExplosivesFactory.IronTeeth", "DeepFrontierDynamite", "Tunnel.IronTeeth"],
+      "reason": "Explosives, the dynamite that uses them and the tunnel blasted with them (player feedback 2026-11-02)." }
+  ],
   "upgrades": {
     "ReactorChargingBay": "ChargingStation.IronTeeth"
   },

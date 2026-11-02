@@ -4,6 +4,13 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Menu order: related tools stand together (Claude Code session, 2026-11-02, tool-order agent; generated and validated in mirror `toolorder` on HEAD 283306f; not built or run in game)
+
+- **Player feedback (screenshot):** the Tubeway Station stood apart from the Tubeways group in Paths; Explosives Factory, Dynamite and Tunnel were split by the Masonry and concrete group in Landscaping.
+- **Rule:** `tools/tool_groups.json` `related` declares clusters of tools and sub-groups that stand next to each other in the listed order; the existing `upgrades` (Reactor Charging Bay after the Charging Station) is the same rule for a pair. `tools/validate_tool_order.mjs` checks every cluster, leaves its Deep Frontier children out of the science rules, and seeks every other child's fewest-inversion place among places that do not split a cluster. Unclaimed other-mod tools now carry their installed ToolOrder in `externalMods` (checked by `validate_tool_groups.mjs`); Redic.NewStyles' Tubeway Stop (the visible station; the vanilla one is hidden) is catalogued.
+- **Order changes:** Tubeways group order 71 -> 51 (right after the Tubeway Stop, 50); Masonry and concrete 81 -> 65 (after the Irrigation Barrier, before the Explosives Factory). The other menus were reviewed for split related tools; none needed a change (the Fish Hatchery feeds both the Greenhouse and the Fishery Works, so it stays in science order).
+- **Checks (mirror on 283306f + this change):** canonical generation changes only the two group blueprints; `validate_tool_order` fails on the previous data (both clusters split) and passes now; `validate_tool_groups`, `audit_progression` pass; full `validate_all -SkipBlender` 68 of 70 pass (`audit-item-uses` report-only; `no-game-assets` needs git and passes on this commit's index).
+
 ## Reactor Bots: 500% working speed, and radioactive leaks when overheated or unplated (Claude Code session, 2026-11-02, botleak agent; mirror `botleak` on HEAD e5e0f6e + this change; compile-checked; not built or run in game)
 
 - **User:** "Can we make the nuclear bots work at 500% working speed base? If they overheat or go unmaintained for too long then they can leak radioactive water on the ground."

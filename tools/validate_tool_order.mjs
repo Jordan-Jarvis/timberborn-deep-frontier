@@ -24,10 +24,14 @@
 //   to its left with more science, or to its right with less; equal science is neutral).
 // - Two children of a checked group never share an order value (the native sort would
 //   break the tie arbitrarily).
-// - Declared upgrades (tools/tool_groups.json upgrades; user 2026-11-02: the Reactor
-//   Charging Bay right next to the Charging Station) stand immediately to the right of the
-//   building they upgrade, in its group. That is their whole order rule: they are left out
-//   of the science rules above, which every other tool keeps.
+// - Declared related children (tools/tool_groups.json related; player feedback 2026-11-02:
+//   the tubeway station beside the Tubeways group; Explosives Factory, Dynamite, Tunnel) stand
+//   next to each other, left to right in the declared order, in the declared group. A
+//   declared upgrade (tools/tool_groups.json upgrades; user 2026-11-02: the Reactor Charging
+//   Bay right next to the Charging Station) is the same rule for the pair base, upgrade, in
+//   the group that holds the upgrade. The Deep Frontier children of such a cluster are left
+//   out of the science rules above; every other child keeps them, and its fewest-inversion
+//   place is sought among the places that do not split a cluster.
 // Unlocking before construction goods or recipe inputs is tools/audit_progression.mjs's
 // unlock-order check, with the reactor and power-plant order checks.
 import {readFile, readdir, access} from 'node:fs/promises';
@@ -48,8 +52,13 @@ const errors = [];
 
 const config = await readJson(resolve(root, CONFIG));
 const {buildings, recipes} = await loadProgressionData(dataRoot);
-// upgrade template name (with the faction suffix) -> the template it upgrades
-const upgrades = new Map(Object.entries(config.upgrades).map(([template, base]) => [`${template}.IronTeeth`, base]));
+// Clusters of children that stand together, left to right: declared related children (in
+// their group) and upgrades (the base, then the upgrade, in the group that holds the upgrade).
+const clusters = [
+  ...config.related.map((r) => ({label: `related ${r.children.join(', ')}`, group: r.group, children: r.children})),
+  ...Object.entries(config.upgrades).map(([template, base]) => ({label: `upgrade ${template}`, group: null, upgrade: `${template}.IronTeeth`, children: [base, `${template}.IronTeeth`]})),
+];
+for (const c of clusters) if (c.children.length < 2 || new Set(c.children).size !== c.children.length) errors.push(`${c.label}: needs two or more distinct children`);
 
 // ---- Tools: vanilla (Iron Teeth and Common collections), Deep Frontier, catalogued other mods ----
 const tools = new Map();   // template name -> {name, origin, group, order, science, size, products, consumes}
@@ -73,8 +82,8 @@ for (const b of buildings.values()) {
 }
 for (const [modId, mod] of Object.entries(config.externalMods)) {
   for (const [name, tool] of Object.entries(mod.templates)) {
-    if (!Number.isInteger(tool.science)) { errors.push(`externalMods ${modId}: ${name} needs its science`); continue; }
-    tools.set(name, {name, origin: modId, group: tool.toolGroup, order: null, science: tool.science, size: null, products: new Set(), consumes: new Set()});
+    if (!Number.isInteger(tool.science) || !Number.isInteger(tool.toolOrder)) { errors.push(`externalMods ${modId}: ${name} needs its science and toolOrder`); continue; }
+    tools.set(name, {name, origin: modId, group: tool.toolGroup, order: tool.toolOrder, science: tool.science, size: null, products: new Set(), consumes: new Set()});
   }
 }
 
@@ -152,46 +161,54 @@ function checkAscending(groupId, list) {
 
 const report = {};
 const checked = [...groups.values()].filter((g) => g.deepFrontier || childrenOf(g.id).some(deepFrontierChild));
-const placedUpgrades = new Set();
+const placedClusters = new Set();
 for (const group of checked) {
   const all = childrenOf(group.id);
   report[group.id] = all.map(label);
   for (let i = 1; i < all.length; i++)
     if (all[i].key === all[i - 1].key) errors.push(`${group.id}: ${all[i - 1].id} and ${all[i].id} share order ${all[i].key}`);
-  const isUpgrade = (child) => child.kind === 'tool' && upgrades.has(child.id);
-  for (const [i, child] of all.entries()) {
-    if (!isUpgrade(child)) continue;
-    placedUpgrades.add(child.id);
-    const base = upgrades.get(child.id);
-    const at = all.findIndex((c) => c.kind === 'tool' && c.id === base);
-    if (at < 0) errors.push(`${group.id}: ${child.id} upgrades ${base}, which is not in this group`);
-    else if (at !== i - 1) errors.push(`${group.id}: ${child.id} must stand immediately right of ${base}, which it upgrades (it stands at ${i + 1}, ${base} at ${at + 1})`);
+  // Clusters in this group: declared for it, or an upgrade that stands in it.
+  const here = clusters.filter((c) => c.group ? c.group === group.id : all.some((child) => child.kind === 'tool' && child.id === c.upgrade));
+  const clusterOf = new Map();   // child id -> cluster
+  for (const c of here) {
+    placedClusters.add(c);
+    const at = c.children.map((id) => all.findIndex((child) => child.id === id));
+    const missing = c.children.filter((_, k) => at[k] < 0);
+    if (missing.length) { errors.push(`${group.id}: ${c.label}: ${missing.join(', ')} not in this group`); continue; }
+    if (at.some((index, k) => k > 0 && index !== at[k - 1] + 1))
+      errors.push(`${group.id}: ${c.label}: must stand next to each other in this order (they stand at ${at.map((index) => index + 1).join(', ')})`);
+    for (const id of c.children) clusterOf.set(id, c);
   }
-  const list = all.filter((child) => !isUpgrade(child));
+  // Deep Frontier children of a cluster follow the cluster, not the science rules.
+  const exempt = (child) => clusterOf.has(child.id) && deepFrontierChild(child);
+  const list = all.filter((child) => !exempt(child));
   if (group.deepFrontier) { checkAscending(group.id, list); continue; }
   const own = list.filter(deepFrontierChild);
   checkAscending(group.id, own);
-  // Inversions of a Deep Frontier child against the native buttons, if it stood before fixed[p].
+  // Inversions of a Deep Frontier child against the native buttons, if it stood before fixed[p];
+  // a place between two native buttons of one cluster would split it.
   const fixed = list.filter((child) => !deepFrontierChild(child) && scienceOf(child) !== null);
   const inversions = (s, p) => fixed.slice(0, p).filter((c) => scienceOf(c) > s).length + fixed.slice(p).filter((c) => scienceOf(c) < s).length;
+  const splits = (p) => p > 0 && p < fixed.length && clusterOf.has(fixed[p - 1].id) && clusterOf.get(fixed[p - 1].id) === clusterOf.get(fixed[p].id);
+  const allowed = [...Array(fixed.length + 1).keys()].filter((p) => !splits(p));
   for (const child of own) {
     const s = scienceOf(child);
     if (s === null) continue;
     const at = fixed.filter((c) => c.key < child.key).length;
-    const best = Math.min(...fixed.map((_, p) => inversions(s, p)), inversions(s, fixed.length));
+    const best = Math.min(...allowed.map((p) => inversions(s, p)));
     if (inversions(s, at) > best) {
-      const places = [...Array(fixed.length + 1).keys()].filter((p) => inversions(s, p) === best)
+      const places = allowed.filter((p) => inversions(s, p) === best)
         .map((p) => p === 0 ? `before ${fixed[0].id}` : p === fixed.length ? `after ${fixed.at(-1).id}` : `between ${fixed[p - 1].id} and ${fixed[p].id}`);
       errors.push(`${group.id}: ${label(child)} has ${inversions(s, at)} science inversions where it stands, ${best} ${places.join(' or ')}`);
     }
   }
 }
 
-for (const name of upgrades.keys()) if (!placedUpgrades.has(name)) errors.push(`upgrades: ${name} is in no toolbar group that holds Deep Frontier tools`);
+for (const c of clusters) if (!placedClusters.has(c)) errors.push(`${c.label}: in no toolbar group that holds Deep Frontier tools`);
 
 if (print) for (const [id, row] of Object.entries(report)) console.log(`${id}: ${row.join(', ')}`);
 if (errors.length) {
   console.error(`Tool order validation failed (${errors.length}):\n  ${errors.join('\n  ')}`);
   process.exit(1);
 }
-console.log(JSON.stringify({status: 'tool-order-valid', groups: checked.length, upgrades: Object.fromEntries(upgrades), data: posix(relative(root, dataRoot))}));
+console.log(JSON.stringify({status: 'tool-order-valid', groups: checked.length, clusters: clusters.map((c) => c.children.map((id) => id.replace(/\.IronTeeth$/, '')).join(' > ')), data: posix(relative(root, dataRoot))}));
