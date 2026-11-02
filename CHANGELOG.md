@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Dependencies
+- **Mod Settings (eMka) is no longer required.** Deep Frontier has no settings page any more (the radioactive tide settings moved to the new-game screen). Timber Pipes and Conveyor Belts still require it themselves.
+
 ### Radioactive tide settings on the new-game screen
 - **Radioactive tides are now chosen when you start a game, next to droughts and badtides.** Easy, Normal and Hard each bring their own: Easy from cycle 25, 15% of cycles, 2-4 days; Normal from cycle 15, 25%, 3-6 days (as before); Hard from cycle 10, 35%, 5-10 days.
 - **Customize** shows "Radioactive tides" (on or off), "Cycles without radioactive tide", "Radioactive tide chance" and "Radioactive tide duration" right under the badtide settings, filled in from the mode you picked.

@@ -9,7 +9,6 @@
     { "Id": "Harmony", "MinimumVersion": "2.4.1" },
     { "Id": "ModdableTimberborn", "MinimumVersion": "11.1.3" },
     { "Id": "ModdableToolGroups", "MinimumVersion": "11.0.0" },
-    { "Id": "eMka.ModSettings", "MinimumVersion": "1.1.1.0" },
     { "Id": "TimberUi", "MinimumVersion": "11.0.1" },
     { "Id": "ModdableRecipes", "MinimumVersion": "11.0.0" },
     { "Id": "TimberPipes", "MinimumVersion": "11.4.0" },
