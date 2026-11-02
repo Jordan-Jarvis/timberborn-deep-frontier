@@ -10,7 +10,8 @@
 //
 // Writes:
 // - Configurations/DeepFrontierReactorBots.blueprint.json: the singleton
-//   FrontierReactorBotSettingsSpec the runtime reads (buffs, need ids, skin).
+//   FrontierReactorBotSettingsSpec the runtime reads (buffs, need ids, skin:
+//   eye colour and dark plating curve for ReactorBotSkin).
 // - The Bot needs (retrofit parts, charge, coolant, plating) and their
 //   NeedCollection entries. The runtime switches them per bot with native
 //   NeedManager.EnableNeed/DisableNeed: ordinary bots keep only vanilla Energy.
@@ -85,7 +86,10 @@ export function checkSuperBotConfig(c) {
     if (!Array.isArray(u.replacedNeeds) || !u.replacedNeeds.length) errors.push('upgrade.replacedNeeds must list the vanilla needs a Reactor Bot loses');
     if (!u.noChargeAnimation) errors.push('upgrade.noChargeAnimation is required');
     if (!/^[A-Za-z]+$/.test(u.illumination?.id ?? '') || !isColor(u.illumination?.color)) errors.push('upgrade.illumination needs an id and an rgba colour');
-    if (!isColor(u.tint)) errors.push('upgrade.tint must be an rgba colour');
+    if (!isColor(u.eyeColor) || !(Math.max(u.eyeColor.r, u.eyeColor.g, u.eyeColor.b) > 0)) errors.push('upgrade.eyeColor must be a visible rgba colour');
+    const p = u.darkPlating;
+    if (!(p?.gamma >= 1 && p.scale > 0 && p.scale < 1 && isColor(p.color))) errors.push('upgrade.darkPlating needs gamma >= 1, scale in (0, 1) and an rgba colour');
+    if (u.tint !== undefined) errors.push('upgrade.tint is retired: the skin is ReactorBotSkin (eyeColor, darkPlating)');
   }
   for (const key of ['charge', 'coolant', 'plating']) {
     if (!/^[A-Z][A-Za-z]+$/.test(n?.[key]?.id ?? '') || !n[key].name) errors.push(`needs.${key} needs a PascalCase id and a name`);
@@ -143,7 +147,10 @@ export function settingsBlueprint(c) {
     LifespanMultiplier: u.lifespanMultiplier,
     UnplatedWearMultiplier: u.unplatedWearMultiplier,
     IlluminationColorId: u.illumination.id,
-    Tint: {...u.tint},
+    EyeColor: {...u.eyeColor},
+    DarkPlatingGamma: u.darkPlating.gamma,
+    DarkPlatingScale: u.darkPlating.scale,
+    DarkPlatingColor: {...u.darkPlating.color},
   }};
 }
 

@@ -9,7 +9,7 @@ using Timberborn.Workshops;
 
 namespace DeepFrontier.Scripts.SuperBots {
   // A Bot Assembler recipe whose bot comes out as a Reactor Bot (the
-  // Industrial bot recipe, tools/workforce_risks.json botAssembly; written on
+  // "Reactor bot" recipe, id IndustrialBot, tools/workforce_risks.json botAssembly; written on
   // the vanilla assembler's same-path patch by tools/bot_upkeep_content.mjs).
   internal record FrontierReactorBotAssemblySpec : ComponentSpec {
     [Serialize] public string RecipeId { get; init; }

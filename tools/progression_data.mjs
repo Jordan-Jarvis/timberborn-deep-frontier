@@ -48,7 +48,7 @@ export async function loadProgressionData(data) {
     }
   }
   // Vanilla templates patched by a same-path Deep Frontier blueprint (native
-  // array overlay, e.g. the Bot Assembler's industrial bot): the recipes they
+  // array overlay, e.g. the Bot Assembler's Reactor bot recipe): the recipes they
   // append run there.
   for (const b of buildings.values()) {
     if (b.origin !== 'vanilla') continue;

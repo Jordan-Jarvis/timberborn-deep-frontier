@@ -1,4 +1,4 @@
-// Bot upkeep: late-game industrial bot assembly, bot maintenance and
+// Bot upkeep: late-game Reactor bot assembly, bot maintenance and
 // workplace upkeep (tools/workforce_risks.json botAssembly, botMaintenance and
 // workplaceUpkeep).
 //
@@ -24,7 +24,7 @@
 //   The native BotManufactory (1.1.2.8) spawns
 //   the faction's single BotSpec template whenever any assembler recipe
 //   finishes (BotFactory.Load uses TemplateService.GetSingle<BotSpec>); no
-//   second bot template exists. The industrial bot is that bot born as a
+//   second bot template exists. The Reactor bot recipe (id IndustrialBot) makes that bot born as a
 //   Reactor Bot (tools/super_bots.json upgrade): the patch below declares the
 //   recipe in FrontierReactorBotAssemblySpec, and the runtime
 //   (Scripts/SuperBots/ReactorBotAssembly.cs) sets the new bot's Reactor Bot
@@ -41,7 +41,7 @@
 //   blueprint, not a partial patch: every Recipes/ file is read as a full recipe.
 // - The assembler patch also points LabeledEntitySpec.DescriptionLocKey at
 //   Building.BotAssembler.DeepFrontierDescription (botAssembly.assemblerDescription),
-//   so the tooltip says what the industrial bot recipe is.
+//   so the tooltip says what the Reactor bot recipe takes.
 // - DeepFrontier.BotUpkeep.* and DeepFrontier.WorkplaceUpkeep.* localization rows.
 // - The upkeep sentence (upkeepDescription) appended to each workplaceUpkeep
 //   building's description, as the connection step appends its pipe phrase;

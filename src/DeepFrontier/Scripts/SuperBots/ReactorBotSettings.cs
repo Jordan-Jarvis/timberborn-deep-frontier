@@ -33,8 +33,14 @@ namespace DeepFrontier.Scripts.SuperBots {
     // Divides every deterioration tick (native, workplace and unplated wear).
     [Serialize] public float LifespanMultiplier { get; init; }
     [Serialize] public float UnplatedWearMultiplier { get; init; }
+    // Native bot illumination colour (MaterialColorer), as vanilla BotIlluminationController sets it.
     [Serialize] public string IlluminationColorId { get; init; }
-    [Serialize] public Color Tint { get; init; }
+    // Skin (ReactorBotSkin): eye colour (gamma space), and the dark plating curve
+    // (c/255)^DarkPlatingGamma x DarkPlatingScale x DarkPlatingColor per channel.
+    [Serialize] public Color EyeColor { get; init; }
+    [Serialize] public float DarkPlatingGamma { get; init; }
+    [Serialize] public float DarkPlatingScale { get; init; }
+    [Serialize] public Color DarkPlatingColor { get; init; }
   }
 
   internal sealed class ReactorBotSettings : ILoadableSingleton, IPostLoadableSingleton {
@@ -57,6 +63,8 @@ namespace DeepFrontier.Scripts.SuperBots {
         throw new InvalidOperationException("Reactor bots: the charge and plating needs must be reactor needs");
       if(!(Spec.CarryingCapacityBonus>0f&&Spec.SpeedMultiplier>1f&&Spec.LifespanMultiplier>1f&&Spec.UnplatedWearMultiplier>1f))
         throw new InvalidOperationException("Reactor bots: invalid buff values in the settings");
+      if(!(Spec.DarkPlatingGamma>=1f&&Spec.DarkPlatingScale>0f&&Spec.DarkPlatingScale<1f&&Spec.EyeColor.maxColorComponent>0f&&Spec.DarkPlatingColor.maxColorComponent<=1f))
+        throw new InvalidOperationException("Reactor bots: invalid skin values in the settings");
       // Native FindColorById only warns on an unknown id; require the generated colour.
       if(!_specs.GetSpecs<IlluminationColorSpec>().Any(c=>c.Id==Spec.IlluminationColorId))
         throw new InvalidOperationException($"Reactor bots: illumination colour {Spec.IlluminationColorId} is not generated");

@@ -4,14 +4,12 @@ using Timberborn.BaseComponentSystem;
 using Timberborn.BonusSystem;
 using Timberborn.CharacterModelSystem;
 using Timberborn.Characters;
-using Timberborn.CoreUI;
-using Timberborn.EntityNaming;
 using Timberborn.EntitySystem;
-using Timberborn.GameDistricts;
 using Timberborn.NeedSystem;
 using Timberborn.Persistence;
 using Timberborn.Rendering;
 using Timberborn.WorldPersistence;
+using UnityEngine;
 
 namespace DeepFrontier.Scripts.SuperBots {
   // In-place Reactor Bot upgrade, decorated on every bot (BotSpec). The bot
@@ -28,8 +26,13 @@ namespace DeepFrontier.Scripts.SuperBots {
   //             (ReactorBotAssembler) is born in this state, its reactor
   //             needs full, as a finished retrofit leaves it.
   //
-  // Skin: the reactor illumination (eyes and lamps) and, while the plating
-  // need is favourable, the steel plating tint.
+  // Skin (ReactorBotSkin): radioactive-yellow eyes, and dark plating while the
+  // plating need is favourable (the vanilla light body, still with yellow
+  // eyes, while unplated), set on the body material through the native
+  // CharacterMaterialModifier. A colour-named bot keeps its native CitizenTint
+  // on top. The native illumination colour (MaterialColorer) is set to the
+  // eye colour as vanilla BotIlluminationController sets the bot's; the
+  // BotURP body material does not read it.
   //
   // Need switches follow native ContaminationNeedEnabler (ResetNeed then
   // DisableNeed in InitializeEntity); Need.Enabled is not saved, so they are
@@ -44,10 +47,12 @@ namespace DeepFrontier.Scripts.SuperBots {
     private readonly ReactorBotSettings _settings;
     private readonly MaterialColorer _materialColorer;
     private readonly ReactorBotAssemblyLine _assembly;
+    private readonly ReactorBotSkin _skin;
     private NeedManager _needs;
     private BonusManager _bonuses;
-    private CharacterTint _tint;
+    private CharacterMaterialModifier _material;
     private CharacterAnimator _animator;
+    private ReactorBotSkin.Textures _textures;
     private bool _buffed;
 
     public State Current { get; private set; }
@@ -56,16 +61,16 @@ namespace DeepFrontier.Scripts.SuperBots {
     public float SpeedMultiplier=>IsReactor?Spec.SpeedMultiplier:1f;
     private FrontierReactorBotSettingsSpec Spec=>_settings.Spec;
 
-    public ReactorBot(ReactorBotSettings settings, MaterialColorer materialColorer, ReactorBotAssemblyLine assembly) {
-      _settings=settings;_materialColorer=materialColorer;_assembly=assembly;
+    public ReactorBot(ReactorBotSettings settings, MaterialColorer materialColorer, ReactorBotAssemblyLine assembly, ReactorBotSkin skin) {
+      _settings=settings;_materialColorer=materialColorer;_assembly=assembly;_skin=skin;
     }
 
     public void Awake() {
       _needs=GetComponent<NeedManager>();
       _bonuses=GetComponent<BonusManager>();
-      _tint=GetComponent<CharacterTint>();
+      _material=GetComponent<CharacterMaterialModifier>();
       _animator=GetComponent<CharacterAnimator>();
-      if(!_needs||!_bonuses||!_tint||!_animator)throw new InvalidOperationException($"{Name}: a Reactor Bot needs native NeedManager, BonusManager, CharacterTint and CharacterAnimator");
+      if(!_needs||!_bonuses||!_material||!_animator)throw new InvalidOperationException($"{Name}: a Reactor Bot needs native NeedManager, BonusManager, CharacterMaterialModifier and CharacterAnimator");
       _needs.NeedChangedIsFavorable+=OnNeedChangedIsFavorable;
       _needs.NeedChangedCriticalState+=OnNeedChangedCriticalState;
     }
@@ -101,22 +106,12 @@ namespace DeepFrontier.Scripts.SuperBots {
     public float PlatingWearMultiplier=>IsPlated?1f:Spec.UnplatedWearMultiplier;
     public float LifespanMultiplier=>IsReactor?Spec.LifespanMultiplier:1f;
 
-    // Steel plating tint while plated, none while unplated, unless the player
-    // named the bot or its district after a colour (native CitizenTint then
-    // owns the tint); called after every native CitizenTint.UpdateTint
-    // (ReactorBotPatches), on upgrade and when the plating need changes.
-    public void ApplyTint() {
-      if(!IsReactor)return;
-      var citizen=GetComponent<Citizen>();
-      var name=GetComponent<NamedEntity>().EntityName;
-      var district=citizen&&citizen.HasAssignedDistrict?citizen.AssignedDistrict.DistrictName:string.Empty;
-      if(ColorParser.TryGetColorFromText(name,out _)||ColorParser.TryGetColorFromText(district,out _))return;
-      if(IsPlated)_tint.SetTint(Spec.Tint);
-      else _tint.DisableTint();
-    }
+    // Dark plating while plated, the vanilla body while unplated (on upgrade
+    // and when the plating need changes); the yellow eyes stay either way.
+    private void ApplyPlating()=>_material.SetTexture(ReactorBotSkin.BaseMapId,IsPlated?_textures.Plated:_textures.Unplated);
 
     private void OnNeedChangedIsFavorable(object sender, NeedChangedIsFavorableEventArgs e) {
-      if(IsReactor&&e.NeedSpec.Id==Spec.PlatingNeedId) { ApplyTint(); return; }
+      if(IsReactor&&e.NeedSpec.Id==Spec.PlatingNeedId) { ApplyPlating(); return; }
       if(Current!=State.Queued||!Spec.RetrofitNeedIds.Contains(e.NeedSpec.Id))return;
       foreach(var id in Spec.RetrofitNeedIds)if(!_needs.NeedIsFavorable(id))return;
       Current=State.Reactor;
@@ -161,7 +156,12 @@ namespace DeepFrontier.Scripts.SuperBots {
       }
       _materialColorer.SetLightingColor(this,_settings.IlluminationColor);
       _materialColorer.EnableLighting(this);
-      ApplyTint();
+      if(_textures==null) {
+        // The body renderer native CharacterMaterialModifier edits (its Awake takes the same one).
+        _textures=_skin.For(GetComponentInChildren<Renderer>(includeInactive:true).sharedMaterial);
+        _material.SetTexture(ReactorBotSkin.EmissionMapId,_textures.Emission);
+      }
+      ApplyPlating();
     }
 
     public void Save(IEntitySaver saver) {

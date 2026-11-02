@@ -9,6 +9,7 @@ namespace DeepFrontier.Scripts.SuperBots {
     protected override void Configure() {
       Bind<ReactorBotSettings>().AsSingleton();
       Bind<ReactorBotAssemblyLine>().AsSingleton();
+      Bind<ReactorBotSkin>().AsSingleton();
       Bind<ReactorBot>().AsTransient();
       Bind<ReactorBotAssembler>().AsTransient();
       MultiBind<TemplateModule>().ToProvider(Provide).AsSingleton();

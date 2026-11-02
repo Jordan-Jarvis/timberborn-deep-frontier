@@ -1,7 +1,7 @@
 // Static checks for bot upkeep (tools/workforce_risks.json botMaintenance,
 // botAssembly and workplaceUpkeep, tools/bot_upkeep_content.mjs,
 // Scripts/Workforce/BotMaintenance.cs, WorkplaceUpkeep.cs, BotWear.cs and
-// BotUpkeepPanels.cs; the industrial bot's Reactor Bot birth in
+// BotUpkeepPanels.cs; the Reactor bot recipe's Reactor Bot birth in
 // Scripts/SuperBots/ReactorBotAssembly.cs).
 //
 //   node tools/validate_bot_upkeep.mjs [dataRoot]
@@ -10,7 +10,7 @@
 // match what the generator writes, the generated data (exact maintenance spec
 // on every open bot-wear workplace and nowhere else, exact upkeep spec on every
 // workplaceUpkeep template and nowhere else, its upkeep sentence in that
-// building's description, the industrial bot recipe and the
+// building's description, the Reactor bot recipe (id IndustrialBot) and the
 // vanilla Bot Assembler patch) and the automation declarations. Exits 1 on
 // any error. Runtime behaviour is verified in game, not here.
 import {readFile, access} from 'node:fs/promises';
@@ -55,7 +55,7 @@ if (!/AddDecorator<FrontierBotMaintenanceSpec,BotMaintenance>\(\)/.test(source))
 if (!/AddDecorator<FrontierWorkplaceUpkeepSpec,WorkplaceUpkeep>\(\)/.test(upkeepSource)) errors.push('runtime: WorkplaceUpkeep is not decorated on FrontierWorkplaceUpkeepSpec');
 if (!/AddDecorator<FrontierReactorBotAssemblySpec,ReactorBotAssembler>\(\)/.test(await readFile(resolve(superBots, 'ReactorBotConfigurator.cs'), 'utf8')))
   errors.push('runtime: ReactorBotAssembler is not decorated on FrontierReactorBotAssemblySpec');
-// The industrial bot's Reactor Bot birth: announced before the native BotManufactory handler
+// The Reactor bot recipe's Reactor Bot birth: announced before the native BotManufactory handler
 // (subscribed in Awake; BotManufactory subscribes in InitializeEntity), checked after it.
 for (const needle of ['public void Awake()', '_manufactory.ProductionFinished+=BeforeBotManufactory;', 'public void PostInitializeEntity()', '_manufactory.ProductionFinished+=AfterBotManufactory;', 'birth.EventToPost is not BotManufacturedEvent'])
   if (!assemblySource.includes(needle)) errors.push(`runtime: ReactorBotAssembly.cs lacks "${needle}"`);
@@ -70,7 +70,7 @@ for (const [, key] of panels.matchAll(/"(DeepFrontier\.(?:BotUpkeep|WorkplaceUpk
 for (const [key, text] of Object.entries(TEXTS))
   if ([...text.matchAll(/\{(\d)\}/g)].some((m) => Number(m[1]) > 2)) errors.push(`localization ${key}: ILoc.T takes at most three parameters`);
 
-// Native contract the industrial bot relies on.
+// Native contract the Reactor bot recipe relies on.
 const assembler = await readJson(resolve(vanilla, `${ASSEMBLER}.json`));
 if (!assembler.BotManufactorySpec) errors.push(`native: ${ASSEMBLER} has no BotManufactorySpec`);
 const template = await readJson(resolve(vanilla, RECIPE_TEMPLATE));

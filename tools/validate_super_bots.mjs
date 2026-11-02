@@ -8,8 +8,9 @@
 // - that the runtime settings record serializes exactly what the generator writes;
 // - that the panel's localization keys are generated;
 // - the native contracts the design relies on;
-// - the skin: the eyes are the mod's softened radiation yellow (RadiationMaterials.WaterBaseColorB)
-//   and the steel plating tint follows the plating need;
+// - the skin: the eyes are the mod's radiation yellow (RadiationMaterials.WaterTintColor), the
+//   BotURP texture names ReactorBotSkin sets match the official shader graph, no native texture
+//   setter replaces them, and the dark plating follows the plating need;
 // - when generated: the settings, needs, goods, recipes, manufactories, upkeep effects, light colour, charging bay, collections, icons, localization and its automation declaration.
 // Exits 1 on any error. Runtime behaviour is verified in game, not here.
 import {readFile, access} from 'node:fs/promises';
@@ -46,19 +47,29 @@ const rowKeys = new Set(rows.map(([k]) => k));
 for (const [, key] of panel.matchAll(/"(DeepFrontier\.ReactorBot\.[A-Za-z.]+)"/g)) if (!rowKeys.has(key)) errors.push(`runtime: ReactorBotPanel.cs uses ${key}, which the generator does not write`);
 for (const key of PANEL_KEYS) if (!panel.includes(`"${key}"`)) errors.push(`runtime: ${key} is generated but unused by ReactorBotPanel.cs`);
 const reactorBot = await readFile(resolve(scripts, 'ReactorBot.cs'), 'utf8');
-if (!reactorBot.includes('if(IsPlated)_tint.SetTint(Spec.Tint);') || !reactorBot.includes('e.NeedSpec.Id==Spec.PlatingNeedId) { ApplyTint();'))
-  errors.push('runtime: ReactorBot no longer shows the steel plating tint only while plated');
+if (!reactorBot.includes('_material.SetTexture(ReactorBotSkin.BaseMapId,IsPlated?_textures.Plated:_textures.Unplated)') || !reactorBot.includes('e.NeedSpec.Id==Spec.PlatingNeedId) { ApplyPlating();')
+    || !reactorBot.includes('_material.SetTexture(ReactorBotSkin.EmissionMapId,_textures.Emission)'))
+  errors.push('runtime: ReactorBot no longer sets the yellow eyes and swaps the dark plating with the plating need');
 const radiation = await readFile(resolve(root, 'src', 'DeepFrontier', 'Scripts', 'Radiation', 'RadiationMaterials.cs'), 'utf8');
-const yellow = radiation.match(/\bWaterBaseColorB = new Color\(([\d.]+)f, ([\d.]+)f, ([\d.]+)f,/)?.slice(1).map(Number);
-const eyes = config.upgrade.illumination.color;
-if (!yellow) errors.push('runtime: RadiationMaterials.WaterBaseColorB (the softened radiation yellow) not found');
-else if (!same(yellow, [eyes.r, eyes.g, eyes.b])) errors.push(`catalog: upgrade.illumination ${[eyes.r, eyes.g, eyes.b]} must be the radiation yellow RadiationMaterials.WaterBaseColorB ${yellow}`);
+const yellow = radiation.match(/\bWaterTintColor = new Color\(([\d.]+)f, ([\d.]+)f, ([\d.]+)f,/)?.slice(1).map(Number);
+if (!yellow) errors.push('runtime: RadiationMaterials.WaterTintColor (the radiation yellow) not found');
+for (const [key, c] of [['eyeColor', config.upgrade.eyeColor], ['illumination.color', config.upgrade.illumination.color]])
+  if (yellow && c && !same(yellow, [c.r, c.g, c.b])) errors.push(`catalog: upgrade.${key} ${[c.r, c.g, c.b]} must be the radiation yellow RadiationMaterials.WaterTintColor ${yellow}`);
+// BotURP: the reference names of Base Map and Emission Map (official shader graph) are what ReactorBotSkin sets.
+const graph = await readFile(resolve(vanilla, 'Shaders', 'BotURP.shadergraph'), 'utf8');
+const skin = await readFile(resolve(scripts, 'ReactorBotSkin.cs'), 'utf8');
+for (const [display, reference, constant] of [['Base Map', '_BaseMap', 'BaseMapProperty'], ['Emission Map', '_BaseMap_1', 'EmissionMapProperty']]) {
+  if (!new RegExp(`"m_Name": "${display}"[\\s\\S]{0,600}?"m_OverrideReferenceName": "${reference}"`).test(graph)) errors.push(`native: BotURP.shadergraph ${display} is no longer ${reference}`);
+  if (!skin.includes(`${constant}="${reference}"`)) errors.push(`runtime: ReactorBotSkin.${constant} must be "${reference}"`);
+}
 const patches = await readFile(resolve(scripts, 'ReactorBotPatches.cs'), 'utf8');
-for (const target of ['WalkerSpeedManager),nameof(WalkerSpeedManager.Tick)', 'Deteriorable),nameof(Deteriorable.Tick)', 'CitizenTint),nameof(CitizenTint.UpdateTint)'])
+for (const target of ['WalkerSpeedManager),nameof(WalkerSpeedManager.Tick)', 'Deteriorable),nameof(Deteriorable.Tick)'])
   if (!patches.includes(target)) errors.push(`runtime: ReactorBotPatches.cs no longer patches ${target}`);
 
 // Native contracts.
 const bot = await readJson(resolve(vanilla, 'Characters', 'Bot', 'Bot.IronTeeth.blueprint.json'));
+// Native CharacterTextureSetter would replace the body textures in PostInitializeEntity.
+if (bot.CharacterTextureSetterSpec) errors.push('native: the vanilla bot now has a CharacterTextureSetterSpec, which would replace the Reactor Bot skin');
 if (!bot.BotSpec || bot.CriticalNeedStateAnimationSpec?.NeedId !== config.upgrade.replacedNeeds[0] || bot.CriticalNeedStateAnimationSpec?.Animation !== config.upgrade.noChargeAnimation)
   errors.push('native: the vanilla bot template no longer drives the catalog noChargeAnimation from the replaced need');
 const speed = await readJson(resolve(vanilla, 'BonusTypes', 'BonusType.MovementSpeed.blueprint.json')).catch(() => null);
