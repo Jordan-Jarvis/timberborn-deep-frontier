@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **The Reactor Bot overheating warning now says it will leak radiation:** "Reactor Bot is overheating and will leak radiation".
+
 ### Reactor Bots work five times as fast, and leak when neglected
 - **Reactor Bots now work at a base 500% speed** (player request), up from 100%: production, construction, planting, harvesting, cutting and demolition, and their work animations speed up to match. Wellbeing bonuses still add on top, as for any bot.
 - **A Reactor Bot that overheats for more than 6 hours, or goes without plating for more than a day, leaks radioactive water** where it stands, or out of the door of the building it works in: a tenth of a unit an hour, until it has coolant and plating again.

@@ -28,7 +28,7 @@
                "status": "Reactor charge depleted: needs a Reactor Charging Bay.", "statusShort": "Reactor Bot is out of charge"},
     "coolant": {"id": "ReactorBotCoolant", "name": "Coolant", "dailyDelta": -0.25, "hoursWarningThreshold": 12,
                 "unfavorableWellbeing": -3, "sprite": "OutOfEnergy",
-                "status": "Overheating: needs reactor coolant water or cryocoolant from storage.", "statusShort": "Reactor Bot is overheating"},
+                "status": "Overheating, and leaking radiation if it stays hot: needs reactor coolant water or cryocoolant from storage.", "statusShort": "Reactor Bot is overheating and will leak radiation"},
     "plating": {"id": "ReactorBotPlating", "name": "Steel plating", "dailyDelta": -0.1, "hoursWarningThreshold": 24,
                 "unfavorableWellbeing": -2}
   },

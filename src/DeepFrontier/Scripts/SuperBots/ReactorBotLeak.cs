@@ -25,7 +25,7 @@ namespace DeepFrontier.Scripts.SuperBots {
   //
   // Conditions, read from native need states every tick:
   //   overheated:   the coolant need is in its native critical state (points at
-  //                 0: the "Reactor Bot is overheating" status) for longer than
+  //                 0: the "Reactor Bot is overheating and will leak radiation" status) for longer than
   //                 OverheatHours;
   //   unmaintained: the plating need is exhausted (ReactorBot.IsPlated false:
   //                 the panel's "No plating" line) for longer than

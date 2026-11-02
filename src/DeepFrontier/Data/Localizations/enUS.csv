@@ -871,8 +871,8 @@ Need.ReactorBotCoolant.DisplayName,Coolant,Deep Frontier reactor bots
 Need.ReactorBotPlating.DisplayName,Steel plating,Deep Frontier reactor bots
 Status.Need.ReactorCharge,Reactor charge depleted: needs a Reactor Charging Bay.,Deep Frontier reactor bots
 Status.Need.ReactorCharge.Short,Reactor Bot is out of charge,Deep Frontier reactor bots
-Status.Need.ReactorBotCoolant,Overheating: needs reactor coolant water or cryocoolant from storage.,Deep Frontier reactor bots
-Status.Need.ReactorBotCoolant.Short,Reactor Bot is overheating,Deep Frontier reactor bots
+Status.Need.ReactorBotCoolant,"Overheating, and leaking radiation if it stays hot: needs reactor coolant water or cryocoolant from storage.",Deep Frontier reactor bots
+Status.Need.ReactorBotCoolant.Short,Reactor Bot is overheating and will leak radiation,Deep Frontier reactor bots
 Building.ReactorChargingBay.DisplayName,Reactor Charging Bay,Deep Frontier reactor bots
 Building.ReactorChargingBay.Description,"Charges two Reactor Bots at once, burning enriched fuel while it charges. Ordinary bots use the Charging Station.",Deep Frontier reactor bots
 Building.ReactorChargingBay.FlavorDescription,"Two hours on the cradle, a week on the job.",Deep Frontier reactor bots
