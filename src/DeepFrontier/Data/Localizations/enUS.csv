@@ -517,19 +517,16 @@ DeepFrontier.Weather.RadioactiveTideStartedNotification,Radioactive tide started
 DeepFrontier.Weather.RadioactiveTideEndedNotification,Radioactive tide ended,Deep Frontier
 DeepFrontier.Weather.RadioactiveTideApproachingDescription,For {0} days the water of every water source will be partly radioactive. Store clean water: pumps stop wherever radiation reaches them.,Deep Frontier
 DeepFrontier.Weather.RadioactiveTideStartedDescription,"Water sources are releasing radioactive water. It stays after the tide until it drains off the map, decays, dries into irradiated ground or is pumped out.",Deep Frontier
-DeepFrontier.RadioactiveTide.Settings.Header,Radioactive tide,Deep Frontier
+DeepFrontier.NewGame.CyclesWithoutRadioactiveTide,Cycles without radioactive tide,Deep Frontier
+DeepFrontier.NewGame.RadioactiveTideChance,Radioactive tide chance,Deep Frontier
+DeepFrontier.NewGame.RadioactiveTideDuration,Radioactive tide duration,Deep Frontier
 DeepFrontier.RadioactiveTide.Settings.Enabled,Radioactive tides,Deep Frontier
-DeepFrontier.RadioactiveTide.Settings.Enabled.Tooltip,"A late-game hazardous season that can replace a drought or badtide: water keeps flowing, but the water of every source is partly radioactive.",Deep Frontier
 DeepFrontier.RadioactiveTide.Settings.MinCycle,Earliest cycle,Deep Frontier
-DeepFrontier.RadioactiveTide.Settings.MinCycle.Tooltip,No radioactive tide happens before this cycle.,Deep Frontier
 DeepFrontier.RadioactiveTide.Settings.Chance,Chance per cycle (%),Deep Frontier
-DeepFrontier.RadioactiveTide.Settings.Chance.Tooltip,Chance that a cycle's hazardous season is a radioactive tide. Never two cycles in a row.,Deep Frontier
 DeepFrontier.RadioactiveTide.Settings.MinDuration,Shortest tide (days),Deep Frontier
-DeepFrontier.RadioactiveTide.Settings.MinDuration.Tooltip,Must not be longer than the longest tide.,Deep Frontier
 DeepFrontier.RadioactiveTide.Settings.MaxDuration,Longest tide (days),Deep Frontier
-DeepFrontier.RadioactiveTide.Settings.MaxDuration.Tooltip,Must not be shorter than the shortest tide.,Deep Frontier
 DeepFrontier.Weather.RadioactiveTideDescription,"Hazardous weather (Deep Frontier). Water keeps flowing, but part of the water of every water source is radioactive. It stays after the tide until it drains off the map, decays, dries into irradiated ground or is pumped out. Pumps stop wherever radiation reaches them.",Deep Frontier
-DeepFrontier.RadioactiveTide.Settings.EnabledDesc,Whether radioactive tides can happen in this save. New saves start from the Deep Frontier mod settings.,Deep Frontier
+DeepFrontier.RadioactiveTide.Settings.EnabledDesc,Whether radioactive tides can happen in this save. A new game starts with the settings chosen on the new-game screen.,Deep Frontier
 DeepFrontier.RadioactiveTide.Settings.MinCycleDesc,No radioactive tide happens before this cycle.,Deep Frontier
 DeepFrontier.RadioactiveTide.Settings.ChanceDesc,"Chance that a hazardous season is a radioactive tide instead of the other hazardous weathers. A percentage, not a weight. Never two cycles in a row.",Deep Frontier
 DeepFrontier.RadioactiveTide.Settings.MinDurationDesc,Shortest radioactive tide in days. Must not be longer than the longest tide.,Deep Frontier

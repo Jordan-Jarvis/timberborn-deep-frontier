@@ -21,9 +21,18 @@
 //   build packages it as *.dll.ModdableWeathers.optional.
 //
 // Checks:
-// - RadioactiveTideTuning.cs: defaults inside their slider ranges, the
-//   user-requested defaults (enabled, earliest cycle 15), the cooldown, a
-//   positive sludge rate, distinct unstyled CSS classes.
+// - RadioactiveTideTuning.cs: the per-game ranges (cycles without tide from
+//   EarliestCycle - 1), the 0.8.3 defaults kept for older saves (enabled,
+//   from cycle 15, 25%, 3-6 days) inside those ranges and their former
+//   mod-settings keys, the cooldown, the tide share, distinct unstyled CSS
+//   classes.
+// - Game-mode presets (user request 2026-11-02: radioactive tide settings on
+//   the native Easy/Normal/Hard game modes and the custom mode):
+//   NewGameModes/GameMode.{Easy,Normal,Hard}.blueprint.json equal the
+//   module's RadioactiveTideGameModeSpec overlays, one per vanilla game mode,
+//   with exactly the record's [Serialize] fields, values in range, Normal
+//   (the vanilla default mode) equal to the 0.8.3 defaults, Easy later,
+//   rarer and shorter, Hard earlier, more frequent and longer.
 // - Localization: every RadioactiveTideLoc key is a module row and appears
 //   exactly once in Localizations/enUS.csv with the module text.
 // - Configurations/Sun.blueprint.json: exactly one RadioactiveTideWeather fog
@@ -35,18 +44,19 @@
 //   the native badtide art's size, the native sidecar, re-rendered from that
 //   art byte-for-byte, and used by both the vanilla UI and the Moddable
 //   Weathers spec (never the badtide sprites themselves).
-// - C#: every HazardousWeatherUIHelper getter is answered, Harmony and
-//   ModSettings code is excluded from the Unity editor compile, the settings
-//   owner uses the manifest id, the configurators have the right contexts,
-//   the manifest requires Harmony and eMka.ModSettings, the expansion
-//   generator imports the module once, docs carry the default numbers.
+// - C#: every HazardousWeatherUIHelper getter is answered, Harmony code is
+//   excluded from the Unity editor compile, no radioactive tide code uses
+//   eMka.ModSettings any more, the new-game patch verifies the native members
+//   before patching, the configurators have the right contexts and bindings,
+//   the manifest requires Harmony, the expansion generator imports the module
+//   once, docs carry the preset table and the tide share.
 import {readFile, readdir, access} from 'node:fs/promises';
 import {resolve, relative} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import sharp from 'sharp';
 import {
-  BANNER_ART, DAY_STAGES, FOGS, FOG_DENSITY, ICON_META, LOCALIZATION, MODDABLE_SKY_STAGES, TIDE_FILES, VANILLA_SUN,
-  moddableWeatherSpec, readTideTuning, renderBannerArt, renderTideIcon,
+  BANNER_ART, DAY_STAGES, FOGS, FOG_DENSITY, GAME_MODE_PRESETS, ICON_META, LOCALIZATION, MODDABLE_SKY_STAGES, TIDE_FILES, VANILLA_SUN,
+  checkVanillaGameModes, gameModeFile, gameModeOverlay, moddableWeatherSpec, readTideTuning, renderBannerArt, renderTideIcon,
 } from './radioactive_tide_content.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
@@ -86,18 +96,26 @@ const read = async (path) => {
 const tuning = await readTideTuning();
 const t = (name) => tuning.get(`RadioactiveTideTuning.${name}`);
 check(tuning.weatherId === 'RadioactiveTideWeather', `WeatherId is ${tuning.weatherId}`);
-check(t('DefaultEnabled') === true, 'the tide must be enabled by default (user request: an option the player can turn off)');
-check(t('DefaultMinCycle') === 15, `default earliest cycle is ${t('DefaultMinCycle')}, user requested 15`);
-check(t('EarliestCycle') === 2 && t('MinCycleLowest') === t('EarliestCycle'), 'the earliest-cycle slider must start at cycle 2 (cycle 1 is chosen before settings load)');
+check(t('LegacyEnabled') === true, 'saves from before per-game settings default to tides on (0.8.3 default)');
+check(t('LegacyMinCycle') === 15, `the 0.8.3 earliest cycle is ${t('LegacyMinCycle')}, user requested 15`);
+check(t('EarliestCycle') === 2 && t('CyclesWithoutTideLowest') === t('EarliestCycle') - 1, 'cycles without radioactive tide must start at 1 (cycle 1 is chosen while the game loads)');
 for (const [value, low, high, name] of [
-  [t('DefaultMinCycle'), t('MinCycleLowest'), t('MinCycleHighest'), 'earliest cycle'],
-  [t('DefaultChancePercent'), t('ChancePercentLowest'), t('ChancePercentHighest'), 'chance'],
-  [t('DefaultMinDurationDays'), t('DurationLowest'), t('DurationHighest'), 'shortest tide'],
-  [t('DefaultMaxDurationDays'), t('DurationLowest'), t('DurationHighest'), 'longest tide'],
-]) check(Number.isInteger(value) && low <= value && value <= high, `default ${name} ${value} outside ${low}..${high}`);
-check(t('DefaultMinDurationDays') <= t('DefaultMaxDurationDays'), 'default shortest tide exceeds the longest');
+  [t('LegacyMinCycle') - 1, t('CyclesWithoutTideLowest'), t('CyclesWithoutTideHighest'), '0.8.3 cycles without tide'],
+  [t('LegacyChancePercent'), t('ChancePercentLowest'), t('ChancePercentHighest'), '0.8.3 chance'],
+  [t('LegacyMinDurationDays'), t('DurationLowest'), t('DurationHighest'), '0.8.3 shortest tide'],
+  [t('LegacyMaxDurationDays'), t('DurationLowest'), t('DurationHighest'), '0.8.3 longest tide'],
+]) check(Number.isInteger(value) && low <= value && value <= high, `${name} ${value} outside ${low}..${high}`);
+check(t('LegacyMinDurationDays') <= t('LegacyMaxDurationDays'), '0.8.3 shortest tide exceeds the longest');
 check(t('DurationLowest') >= 1, 'a tide must last at least one day');
 check(t('ChancePercentLowest') >= 1 && t('ChancePercentHighest') === 100, 'chance range must be 1..100 %');
+// The former eMka.ModSettings owner RadioactiveTideSettings stored its five
+// properties as ModSetting.<ModId>.RadioactiveTideSettings.<property> (ModSettings.Core 1.1.1.0).
+{
+  const manifestId = JSON.parse(await readFile(resolve(root, 'src', 'DeepFrontier', 'manifest.json'), 'utf8')).Id;
+  for (const [name, property] of [['LegacyEnabledKey', 'TideEnabled'], ['LegacyMinCycleKey', 'TideMinCycle'], ['LegacyChancePercentKey', 'TideChancePercent'],
+    ['LegacyMinDurationKey', 'TideMinDurationDays'], ['LegacyMaxDurationKey', 'TideMaxDurationDays']])
+    check(t(name) === `ModSetting.${manifestId}.RadioactiveTideSettings.${property}`, `RadioactiveTideTuning.${name} is ${t(name)}`);
+}
 check(t('CooldownCycles') >= 1, 'two tides must never be consecutive');
 // The tide share must land clearly above the radiation cutoff (RadiationTuning.DetectionLimit:
 // shares below it are gone), and both emission paths must set exactly that share.
@@ -120,6 +138,43 @@ check(`${t('ProgressSpritePath')}.png` === TIDE_FILES.progress, `ProgressSpriteP
 check(`${t('NotificationSpritePath')}.png` === TIDE_FILES.notification, `NotificationSpritePath must be the tide's own art ${TIDE_FILES.notification}`);
 check(t('ModdableProgressSpritePath') === t('ProgressSpritePath') && t('ModdableNotificationSpritePath') === t('NotificationSpritePath'),
   'with Moddable Weathers the tide must use its own progress and banner art, not the badtide sprites');
+
+// --- game-mode presets -------------------------------------------------------
+{
+  const vanillaModes = await checkVanillaGameModes().catch(error => { failures.push(error.message); return null; });
+  const specSource = await read(resolve(scripts, 'RadioactiveTideGameModeSpec.cs')) ?? '';
+  const recordBody = specSource.match(/public record RadioactiveTideGameModeSpec : ComponentSpec \{([\s\S]*?)\n  \}/)?.[1] ?? '';
+  const fields = [...recordBody.matchAll(/\[Serialize\]\s*public (\S+) (\w+) \{ get; init; \}/g)].map(m => [m[2], m[1]]);
+  check(JSON.stringify(fields) === JSON.stringify([['Enabled', 'bool'], ['CyclesWithoutTide', 'int'], ['ChancePercent', 'int'], ['Duration', 'MinMaxSpec<int>']]),
+    `RadioactiveTideGameModeSpec fields are ${JSON.stringify(fields)}`);
+  const inRange = (value, low, high) => Number.isInteger(value) && low <= value && value <= high;
+  for (const [mode, preset] of Object.entries(GAME_MODE_PRESETS)) {
+    check(JSON.stringify(Object.keys(preset)) === JSON.stringify(fields.map(([name]) => name)), `${mode} preset fields ${Object.keys(preset)} differ from the record`);
+    check(typeof preset.Enabled === 'boolean', `${mode} preset Enabled must be a bool`);
+    check(JSON.stringify(Object.keys(preset.Duration ?? {})) === '["Min","Max"]', `${mode} preset Duration must be a MinMaxSpec {Min, Max}`);
+    check(inRange(preset.CyclesWithoutTide, t('CyclesWithoutTideLowest'), t('CyclesWithoutTideHighest')), `${mode} cycles without tide ${preset.CyclesWithoutTide} out of range`);
+    check(inRange(preset.ChancePercent, t('ChancePercentLowest'), t('ChancePercentHighest')), `${mode} chance ${preset.ChancePercent} out of range`);
+    check(inRange(preset.Duration?.Min, t('DurationLowest'), t('DurationHighest')) && inRange(preset.Duration?.Max, t('DurationLowest'), t('DurationHighest'))
+      && preset.Duration.Min <= preset.Duration.Max, `${mode} duration ${JSON.stringify(preset.Duration)} invalid`);
+    const overlay = await read(resolve(dataRoot, gameModeFile(mode)));
+    if (overlay) check(JSON.stringify(JSON.parse(overlay)) === JSON.stringify(gameModeOverlay(mode)), `${gameModeFile(mode)} differs from the module's preset; regenerate it`);
+    if (vanillaModes) check(vanillaModes[mode]?.DisplayNameLocKey === `NewGameConfigurationPanel.${mode}`, `vanilla ${gameModeFile(mode)} is not the ${mode} mode`);
+  }
+  const extra = (await readdir(resolve(dataRoot, 'NewGameModes')).catch(() => [])).filter(f => !Object.keys(GAME_MODE_PRESETS).some(mode => gameModeFile(mode) === `NewGameModes/${f}`));
+  check(extra.length === 0, `unexpected files in NewGameModes: ${extra.join(', ')}`);
+  const {Easy: easy, Normal: normal, Hard: hard} = GAME_MODE_PRESETS;
+  if (vanillaModes) {
+    check(vanillaModes.Normal?.IsDefault === true && !vanillaModes.Easy?.IsDefault && !vanillaModes.Hard?.IsDefault, 'Normal must be the vanilla default game mode');
+    check(vanillaModes.Easy?.Order < vanillaModes.Normal?.Order && vanillaModes.Normal?.Order < vanillaModes.Hard?.Order, 'vanilla game mode order is no longer Easy, Normal, Hard');
+  }
+  check(normal.Enabled === t('LegacyEnabled') && normal.CyclesWithoutTide + 1 === t('LegacyMinCycle') && normal.ChancePercent === t('LegacyChancePercent')
+    && normal.Duration.Min === t('LegacyMinDurationDays') && normal.Duration.Max === t('LegacyMaxDurationDays'),
+    'the Normal preset must keep the 0.8.3 defaults (RadioactiveTideTuning.Legacy*)');
+  check(easy.Enabled && easy.CyclesWithoutTide > normal.CyclesWithoutTide && easy.ChancePercent < normal.ChancePercent
+    && easy.Duration.Min <= normal.Duration.Min && easy.Duration.Max < normal.Duration.Max, 'Easy must bring tides later, more rarely and shorter than Normal');
+  check(hard.Enabled && hard.CyclesWithoutTide < normal.CyclesWithoutTide && hard.ChancePercent > normal.ChancePercent
+    && hard.Duration.Min >= normal.Duration.Min && hard.Duration.Max > normal.Duration.Max, 'Hard must bring tides earlier, more often and longer than Normal');
+}
 
 // --- localization ---------------------------------------------------------
 const rows = new Map(LOCALIZATION);
@@ -192,7 +247,9 @@ for (const [key, source] of BANNER_ART) {
 // --- C# and wiring ----------------------------------------------------------
 const ui = await read(resolve(scripts, 'RadioactiveTideUi.cs'));
 const patches = await read(resolve(scripts, 'RadioactiveTidePatches.cs'));
-const settings = await read(resolve(scripts, 'RadioactiveTideSettings.cs'));
+const newGamePatch = await read(resolve(scripts, 'RadioactiveTideNewGamePatch.cs'));
+const newGameSettings = await read(resolve(scripts, 'RadioactiveTideNewGameSettings.cs'));
+const gameSettings = await read(resolve(scripts, 'RadioactiveTideGameSettings.cs'));
 const configurator = await read(resolve(scripts, 'RadioactiveTideConfigurator.cs'));
 const manifest = JSON.parse(await readFile(resolve(root, 'src', 'DeepFrontier', 'manifest.json'), 'utf8'));
 const helperGetters = ['NameLocKey', 'ApproachingLocKey', 'InProgressLocKey', 'StartedNotificationLocKey', 'EndedNotificationLocKey',
@@ -209,22 +266,47 @@ if (patches) {
     check(new RegExp(`CreateClassProcessor\\(typeof\\(${patch}\\)\\)\\.Patch\\(\\)`).test(patches) && patches.includes(`class ${patch}`), `patch ${patch} is not defined and applied`);
   check(/RadioactiveTidePatchTargets\.Verify\(\);\s*RadioactiveTideNative\.Verify\(\);\s*var harmony/.test(patches), 'native members must be verified before patching');
 }
-if (settings) {
-  check(settings.trimStart().startsWith('#if !UNITY_EDITOR') && settings.trimEnd().endsWith('#endif'), 'ModSettings code must be excluded from the Unity editor compile');
-  check(settings.includes(`ModId => "${manifest.Id}"`), `settings owner ModId must be the manifest id ${manifest.Id}`);
-  check(/\[Context\("MainMenu"\)\]\s*\[Context\("Game"\)\]\s*public sealed class RadioactiveTideSettingsConfigurator/.test(settings), 'settings must be bound in MainMenu and Game');
-  check(!/ChangeableOn/.test(settings), 'settings stay main-menu only (ModSettings default)');
+check(!(await readdir(scripts)).includes('RadioactiveTideSettings.cs'), 'the eMka.ModSettings tide options (RadioactiveTideSettings.cs) are replaced by the per-game settings');
+for (const path of await csFiles(scripts)) {
+  const text = await readFile(path, 'utf8');
+  check(!/\busing\s+ModSettings\b|\bModSettings\.(Core|Common)\b|ModSettingsOwner/.test(text.replace(/\/\/.*$/gm, '')), `${relative(root, path)} still uses eMka.ModSettings`);
 }
-if (configurator) check(/\[Context\("Game"\)\]\s*public sealed class RadioactiveTideConfigurator/.test(configurator), 'RadioactiveTideConfigurator must be [Context("Game")]');
-for (const id of ['Harmony', 'eMka.ModSettings']) check(manifest.RequiredMods.some(m => m.Id === id), `manifest must require ${id}`);
+if (newGamePatch) {
+  check(newGamePatch.trimStart().startsWith('#if !UNITY_EDITOR') && newGamePatch.trimEnd().endsWith('#endif'), 'the new-game Harmony patch must be excluded from the Unity editor compile');
+  check(/RadioactiveTideNewGameNative\.Verify\(\);\s*new Harmony\(HarmonyId\)\.Patch\(RadioactiveTideNewGameNative\.CustomTryGetValidatedGameMode\(\)/.test(newGamePatch),
+    'the new-game patch must verify the native members, then postfix CustomNewGameModeController.TryGetValidatedGameMode');
+  check(/class RadioactiveTideNewGameModStarter : IModStarter/.test(newGamePatch) && !/ModdableWeathersLoaded/.test(newGamePatch), 'the new-game patch applies at mod start with or without Moddable Weathers');
+}
+if (newGameSettings) {
+  for (const key of ['SettingEnabled', 'NewGameCyclesWithout', 'NewGameChance', 'NewGameDuration'])
+    check(newGameSettings.includes(`RadioactiveTideLoc.${key}`), `the new-game rows do not use RadioactiveTideLoc.${key}`);
+  for (const [name, low, high] of [['_cyclesWithout', 'CyclesWithoutTideLowest', 'CyclesWithoutTideHighest'], ['_chance', 'ChancePercentLowest', 'ChancePercentHighest'],
+    ['_minDuration', 'DurationLowest', 'DurationHighest'], ['_maxDuration', 'DurationLowest', 'DurationHighest']])
+    check(new RegExp(`TextFields\\.InitializeIntegerField\\(${name}, RadioactiveTideTuning\\.\\w+,\\s*RadioactiveTideTuning\\.${low}, RadioactiveTideTuning\\.${high},`).test(newGameSettings),
+      `the new-game field ${name} must clamp to ${low}..${high}`);
+}
+if (gameSettings) {
+  check(gameSettings.includes('new SingletonKey("DeepFrontier.RadioactiveTideSettings")'), 'per-game settings must save under DeepFrontier.RadioactiveTideSettings');
+  check(/RadioactiveTideGameModes\.Require\(parameters\.NewGameConfiguration\.GameMode/.test(gameSettings), 'a new game must read the tide settings of its GameModeSpec');
+}
+if (configurator) {
+  check(/\[Context\("Game"\)\]\s*public sealed class RadioactiveTideConfigurator/.test(configurator), 'RadioactiveTideConfigurator must be [Context("Game")]');
+  check(configurator.includes('Bind<IRadioactiveTideSettings>().ToExisting<RadioactiveTideGameSettings>();'), 'the vanilla path must bind the per-game settings');
+  check(/\[Context\("MainMenu"\)\]\s*public sealed class RadioactiveTideNewGameConfigurator[\s\S]*?Bind<RadioactiveTideNewGameSettings>\(\)\.AsSingleton\(\);/.test(configurator),
+    'the new-game rows must be bound in the MainMenu context');
+}
+check(manifest.RequiredMods.some(m => m.Id === 'Harmony'), 'manifest must require Harmony');
 const expansion = await read(resolve(root, 'tools', 'create_frontier_expansion_content.mjs'));
 if (expansion) check((expansion.match(/import\('\.\/radioactive_tide_content\.mjs'\)\)\.applyRadioactiveTide\(\)/g) ?? []).length === 1, 'the expansion generator must import the module exactly once');
 const docs = await read(resolve(root, 'docs', 'radiation.md'));
 if (docs) {
   const section = docs.slice(docs.indexOf('## Radioactive tide'));
   check(docs.includes('## Radioactive tide'), 'docs/radiation.md lacks the Radioactive tide section');
-  for (const value of [String(t('DefaultMinCycle')), `${t('DefaultChancePercent')}%`, `${t('DefaultMinDurationDays')}–${t('DefaultMaxDurationDays')} days`, `${Math.round(t('SourceRadioactiveShare') * 100)}%`])
-    check(section.includes(value), `docs/radiation.md Radioactive tide section does not state ${value}`);
+  check(section.includes(`${Math.round(t('SourceRadioactiveShare') * 100)}%`), 'docs/radiation.md Radioactive tide section does not state the tide share');
+  for (const [mode, p] of Object.entries(GAME_MODE_PRESETS)) {
+    const row = `| ${mode} | ${p.Enabled ? 'on' : 'off'} | ${p.CyclesWithoutTide} (from cycle ${p.CyclesWithoutTide + 1}) | ${p.ChancePercent}% | ${p.Duration.Min}–${p.Duration.Max} days |`;
+    check(section.includes(row), `docs/radiation.md Radioactive tide section lacks the preset row "${row}"`);
+  }
 }
 
 // --- Moddable Weathers (optional dependency) --------------------------------
@@ -273,6 +355,8 @@ check(bridgeWeather.includes('public override string Id => RadioactiveTideTuning
 const bridgeSettings = bridgeSources.get('RadioactiveTideModdableWeatherSettings.cs') ?? '';
 const settingLabels = [...bridgeSettings.matchAll(/\[Description\(RadioactiveTideLoc\.(\w+)\)\]\s*public (bool|int) (\w+) \{ get; set; \}/g)];
 check(settingLabels.map(m => m[3]).join() === 'Enabled,StartCycle,ChancePercent,MinDurationDays,MaxDurationDays', `Moddable Weathers settings properties are ${settingLabels.map(m => m[3]).join()}`);
+check(/public void InitializeNewValuesTo\(GameModeSpec gameMode\) \{\s*var values = RadioactiveTideStartingValues\.Resolve\(/.test(bridgeSettings)
+  && bridgeSettings.includes('StartCycle = values.CyclesWithoutTide + 1;'), 'Moddable Weathers must seed the per-save tide settings from RadioactiveTideStartingValues (the same source as the vanilla path)');
 check(settingLabels[0]?.[2] === 'bool' && settingLabels[0]?.[3] === 'Enabled', 'the enable toggle must be the bool property "Enabled" (Moddable Weathers IsEnabledProperty)');
 for (const [, name] of settingLabels) {
   const key = loc(name);
@@ -320,6 +404,15 @@ if (nativeDir) {
   check(sun.includes('Weather fog settings not found for'), 'native Sun fog lookup changed');
   const merger = await n('Timberborn.SerializationSystem/Timberborn.SerializationSystem/JsonMerger.cs');
   check(merger.includes('ProcessArrayTokens(item.Value, keyword, arrayModifications)'), 'native JsonMerger no longer recurses into nested objects for #append');
+  const gameModeSpec = await n('Timberborn.NewGameConfigurationSystem/Timberborn.NewGameConfigurationSystem/GameModeSpec.cs');
+  check(/public record GameModeSpec : ComponentSpec/.test(gameModeSpec) && gameModeSpec.includes('public float ChanceForBadtide { get; init; }'), 'native GameModeSpec changed');
+  const custom = await n('Timberborn.MainMenuPanels/Timberborn.MainMenuPanels/CustomNewGameModeController.cs');
+  check(custom.includes('public bool TryGetValidatedGameMode(out GameModeSpec gameMode)') && custom.includes('return new GameModeSpec'), 'native CustomNewGameModeController no longer builds the custom mode in TryGetValidatedGameMode');
+  const panel = await n('Timberborn.MainMenuPanels/Timberborn.MainMenuPanels/NewGameModePanel.cs');
+  check(panel.includes('_gameSceneLoader.StartNewGame(new NewGameConfiguration(_factionSpec.Id, _map.MapFileReference, gameMode, string.Empty));'), 'native NewGameModePanel.StartNewGame changed');
+  const badtide = await n('Timberborn.HazardousWeatherSystem/Timberborn.HazardousWeatherSystem/BadtideWeather.cs');
+  check(badtide.includes('Initialize(sceneParameters.NewGameConfiguration.GameMode);') && badtide.includes('Initialize(_gameModeSpecService.GetDefaultSpec());'),
+    "native BadtideWeather no longer reads a new game's GameModeSpec (and the default mode for older saves)");
   const config = await n('Timberborn.HazardousWeatherSystem/Timberborn.HazardousWeatherSystem/HazardousWeatherSystemConfigurator.cs');
   check(!/MultiBind<IHazardousWeather>/.test(config), 'native now multi-binds IHazardousWeather: re-evaluate the selection patch');
 }
@@ -344,4 +437,4 @@ if (failures.length) {
   console.error(`Radioactive tide validation FAILED (${failures.length}):\n - ${failures.join('\n - ')}`);
   process.exit(1);
 }
-console.log(`Radioactive tide content valid: ${LOCALIZATION.length} localization rows, ${DAY_STAGES.length} sky fogs, 46 px icon, tide banner art, ${helperGetters.length} UI getters, Moddable Weathers spec + ${bridgeFiles.length} optional-assembly files${nativeDir ? ', native evidence re-checked' : ''}${moddableWeathersDir ? ', checked against installed Moddable Weathers' : ''} (${dataRoot}).`);
+console.log(`Radioactive tide content valid: ${LOCALIZATION.length} localization rows, ${DAY_STAGES.length} sky fogs, ${Object.keys(GAME_MODE_PRESETS).length} game-mode presets, 46 px icon, tide banner art, ${helperGetters.length} UI getters, Moddable Weathers spec + ${bridgeFiles.length} optional-assembly files${nativeDir ? ', native evidence re-checked' : ''}${moddableWeathersDir ? ', checked against installed Moddable Weathers' : ''} (${dataRoot}).`);

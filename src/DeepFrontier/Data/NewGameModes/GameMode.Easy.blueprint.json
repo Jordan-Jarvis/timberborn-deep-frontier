@@ -1,0 +1,11 @@
+{
+  "RadioactiveTideGameModeSpec": {
+    "Enabled": true,
+    "CyclesWithoutTide": 24,
+    "ChancePercent": 15,
+    "Duration": {
+      "Min": 2,
+      "Max": 4
+    }
+  }
+}

@@ -301,15 +301,17 @@ Status 2026-10-22: source written, compile-checked and generated in a scratch co
 
 User request: a contaminated weather "like badtide but with the radioactive waste", only after at least 15 cycles, and an option the player can turn off.
 
+User request 2026-11-02: the radioactive tide settings belong on the new-game screen with the native badtide settings ("badtide percent chance and first bad tide and drought duration etc.... we should add radioactive tide settings into there as well"), for Easy, Normal and Hard.
+
 ### Behaviour and numbers
 
 | Item | Value |
 |---|---|
 | Weather id | `RadioactiveTideWeather` (third native `IHazardousWeather`) |
-| Earliest cycle | 15 by default (setting 2–100) |
-| Chance | 25% per cycle by default (setting 1–100%), tested after the native drought/badtide roll and replacing it |
+| Settings | per game, chosen on the native new-game screen (next section); Normal: from cycle 15, 25% per cycle, 3–6 days |
+| Chance | per cycle, tested after the native drought/badtide roll and replacing it |
 | Consecutive tides | never: a tide cannot follow a tide (`CooldownCycles` 1) |
-| Duration | 3–6 days by default, uniform whole days (settings 1–30 each; shortest ≤ longest, else loading or the next cycle throws) |
+| Duration | uniform whole days between the game's shortest and longest tide |
 | Emission | 100% of the source's own non-bad water (`SourceRadioactiveShare` 1, as a badtide makes source water fully bad): 19.2 radioactive water units per game hour per unit of current strength from a clean source |
 | Water | sources keep flowing; all of their non-bad water is radioactive (a badwater source keeps its bad share). They are neither dried (drought) nor turned bad (badtide) |
 | Sky | yellow-green fog per day stage at the native density 0.003 |
@@ -325,8 +327,42 @@ User request: a contaminated weather "like badtide but with the radioactive wast
 - **Which sources.** Every native water source: `RadioactiveTideService.Tick` sets `IRadiationService.SetSourceRadioactiveShare`, and the native `UpdateWaterSourcesTask` adds the water. `CurrentStrength` already applies the native modifiers, so closed regulators, unpowered aquifer drills and weather-gated badtide drains release nothing.
 - **Emission choice.** A share of the native source water rather than `AddContinuousSource`, so it follows live strength changes, stops exactly when the cycle ends (share 0) and is never saved twice.
 - **Afterwards.** The radioactive water stays: it drains off open map edges, decays with the 365-day half-life, leaves irradiated ground where it dries, or is recovered by the Sludge Recovery Pump. Pumps refuse to run wherever radiation reaches their intake.
-- **Settings.** The options use eMka.ModSettings (Deep Frontier → "Radioactive tide": enabled, earliest cycle, chance %, shortest and longest tide). They are global and changeable in the main menu only. Each cycle's selection reads them live. A tide that is already chosen continues if the option is later turned off.
-- **Dev mode.** "Deep Frontier: radioactive tide next cycle" forces the next cycle's tide. It ignores the earliest cycle, the chance and the cooldown, and is not saved.
+- **Dev mode.** "Deep Frontier: radioactive tide next cycle" forces the next cycle's tide. It ignores the cycles without tide, the chance and the cooldown, and is not saved. It refuses while tides are off in the game.
+
+### Settings per game: the new-game screen (since 2026-11-02)
+
+Status: compile-checked (also against the shipped, non-publicized assemblies), generated and validated in mirror `tidemode`. Not built, not seen in game.
+
+The settings sit with the native weather settings and work like them:
+
+| Mode | Radioactive tides | Cycles without radioactive tide | Radioactive tide chance | Radioactive tide duration |
+|---|---|---|---|---|
+| Easy | on | 24 (from cycle 25) | 15% | 2–4 days |
+| Normal | on | 14 (from cycle 15) | 25% | 3–6 days |
+| Hard | on | 9 (from cycle 10) | 35% | 5–10 days |
+
+- Normal keeps the 0.8.3 defaults; Easy brings tides later, more rarely and shorter, Hard earlier, more often and longer. The tide replaces the cycle's drought or badtide, so a Hard tide is still shorter than the Hard drought (15–30 days) it replaces.
+- **Presets** are data: `Data/NewGameModes/GameMode.{Easy,Normal,Hard}.blueprint.json` add a `RadioactiveTideGameModeSpec` (`Enabled`, `CyclesWithoutTide`, `ChancePercent`, `Duration {Min, Max}`) to each native game-mode blueprint. Written by `tools/radioactive_tide_content.mjs` (`GAME_MODE_PRESETS`).
+- **Custom mode.** "Customize" shows "Radioactive tides" (toggle) and, while it is on, "Cycles without radioactive tide", "Radioactive tide chance" (%) and "Radioactive tide duration" (*x* to *y* days), right after the native badtide rows and filled from the selected preset like the native fields. Ranges: cycles without 1–99, chance 1–100%, durations 1–30 days. Fields clamp on leaving them (native `TextFields`); a shortest tide longer than the longest is marked red and keeps Start disabled, like the native duration rows. A switched-off section is not checked (native rule).
+- **Meaning.** Tides can come in the cycles after "Cycles without radioactive tide", as badtides do after the native "Cycles without badtide". Cycle 1 never has a tide.
+- **Stored per game.** A new game reads the settings from its game mode once, then saves them in singleton `DeepFrontier.RadioactiveTideSettings` (`Enabled`, `CyclesWithoutTide`, `ChancePercent`, `MinDurationDays`, `MaxDurationDays`). They cannot change during the game, like the native weather settings. The game logs `[DeepFrontier] Radioactive tide settings: ...` with their source.
+- **Older saves** (0.8.3 and before) have no per-game settings. They keep the values the player had in the former Deep Frontier mod settings: eMka.ModSettings stored them in the native settings store (PlayerPrefs) under `ModSetting.DeepFrontier.RadioactiveTideSettings.TideEnabled`, `TideMinCycle`, `TideChancePercent`, `TideMinDurationDays` and `TideMaxDurationDays`. A key never changed reads as the old default (on, from cycle 15, 25%, 3–6 days), which equals Normal. The values are saved with the game at its next save.
+- **The Mod Settings page is gone.** The per-game settings replace all five global options, so Deep Frontier's eMka.ModSettings "Radioactive tide" page and `RadioactiveTideSettings.cs` were removed. No other Deep Frontier code uses eMka.ModSettings; it stays a required mod in the manifest until its removal is decided.
+- **Moddable Weathers.** With it, Moddable Weathers' per-save tide settings (its Weather Settings dialog) are the game's only tide settings; `RadioactiveTideGameSettings` is not bound. They are seeded once per save from the same source the vanilla path uses (`RadioactiveTideStartingValues`): the save's own vanilla tide settings (a save played without Moddable Weathers), else the new game's mode, else the former mod settings. The dialog keeps "Earliest cycle", which is cycles without + 1. A save played with Moddable Weathers and then loaded without it takes the former mod settings, as Moddable Weathers keeps its own weather settings.
+
+#### Native mechanism (Timberborn 1.1.2.8, source-inspected 2026-11-02)
+
+[S] = decompiled from the shipped assemblies with `tools/dotnet/ilspycmd.exe`.
+
+- [S] **Presets are blueprints.** `GameModeSpecService.Load` collects `ISpecService.GetSpecs<GameModeSpec>()` ordered by `Order`; the default is the one with `IsDefault` (Timberborn.NewGameConfigurationSystem). The vanilla files are `NewGameModes/GameMode.Easy|Normal|Hard.blueprint.json` (Order 10/20/30, Normal `IsDefault`).
+- [S] **`GameModeSpec` is a fixed record** (`ComponentSpec`): `StartingAdults`, `AdultAgeProgress`, ..., `TemperateWeatherDuration`, `DroughtDuration`, `DroughtDurationHandicapMultiplier/Cycles`, `CyclesBeforeRandomizingBadtide`, `ChanceForBadtide` (0..1), `BadtideDuration`, `BadtideDurationHandicapMultiplier/Cycles`, `InjuryChance`, `DemolishableRecoveryRate`. Nothing can add a field to it.
+- [S] **A blueprint holds several specs.** `ComponentSpec.Blueprint` links a spec to its blueprint and `GetSpec<T>()` finds a sibling spec. `BlueprintFileBundleLoader.GetBundles` groups every blueprint asset with the same path (vanilla and mods), so a mod file at a vanilla path merges into that blueprint.
+- [S] **The screen** (Timberborn.MainMenuPanels): `NewGameModePanel.Load` adds one `MainMenu/NewGameModeButton` per spec into `Modes` and selects the default. "Customize" (`OnCustomizeButtonClicked`) calls `CustomNewGameModeController.Initialize(root, selected preset, UpdateNextButton)`, which fills the fields of `UI/Views/MainMenu/NewGameModePanel.uxml` (`CustomModeSettings`: `BadtideEnabledWrapper`, `BadtideWrapper` with `CyclesBeforeRandomizingBadtideWrapper`, `ChanceForBadtideWrapper`, `BadtideDurationWrapper`, `BadtideDurationHandicapWrapper`) through `TextFields.InitializeIntegerField` (clamps on focus-out). `TryGetValidatedGameMode(out GameModeSpec)` builds `new GameModeSpec {...}` from the fields (`GetGameMode`) and checks min ≤ max (`ValidateGameMode`, class `new-game-mode-panel__setting-input--invalid`); a switched-off drought or badtide is not checked and is stored as zeros. `UpdateNextButton` enables Start from it. `StartNewGame` passes the preset or the custom spec to `GameSceneLoader.StartNewGame(new NewGameConfiguration(faction, map, gameMode, ""))`.
+- [S] **Into the game.** `GameSceneParameters.CreateNewGameParameters` keeps the `NewGameConfiguration` (with the `GameModeSpec` object itself) for the Game scene; `NewGame` is true only for a new game.
+- [S] **Stored per save by each weather.** `BadtideWeather.Load`: saved singleton `BadtideWeather` if present, else for a new game `Initialize(sceneParameters.NewGameConfiguration.GameMode)`, else (older saves) `Initialize(_gameModeSpecService.GetDefaultSpec())`; `Save` writes min/max duration, handicap, cycles before randomizing and chance. `DroughtWeather` does the same with its own singleton. `HazardousWeatherRandomizer` reads `BadtideWeather.ChanceForBadtide` and `CanOccurAtCycle(cycle)` = cycle > cycles before randomizing.
+- [S] **Moddable Timberborn 11.1.3** `PersistentGameModeService`: on a new game `StartedMode = ReconstructedMode = NewGameConfiguration.GameMode`; for a save it rebuilds a plain `GameModeSpec` from the native weather services. `Save` sets the started mode's `Blueprint` to null before JSON-serializing it, so a new game's mode must be read during load, as Deep Frontier does. **Moddable Weathers 11.0.0** `ModdableWeatherSettingsService.Load` seeds a weather's settings once (`FirstLoad`) with the first of ReconstructedMode, BestMatchedMode and Default its `CanSupport` accepts.
+- **Why one Harmony patch.** Presets need none. The custom mode is created inside `CustomNewGameModeController.TryGetValidatedGameMode`, passed straight to `GameSceneLoader.StartNewGame`, and the same method enables Start; no interface, binding or event sits in between. `RadioactiveTideNewGamePatch` is one postfix on it: false while the tide rows are invalid, else a copy of the custom `GameModeSpec` whose blueprint also holds the custom `RadioactiveTideGameModeSpec` (native `Blueprint(name, specs, children)`). It is applied at mod start, with or without Moddable Weathers, after `RadioactiveTideNewGameNative.Verify()` checks the native members by signature and IL calls (the panel's start and Start-button paths reach the patched method, it builds the spec with `GetGameMode`, `OnCustomizeButtonClicked` calls `Initialize`, `Load` loads the panel view, `NewGameModePanel._root`).
+- **The rows are native UI.** `RadioactiveTideNewGameSettings` (main menu) reads the panel root through the verified private `NewGameModePanel._root`, loads a second copy of the native panel view through the public `VisualElementLoader` (localized, text fields and sounds set up natively), moves its badtide toggle and three badtide rows (without the handicap row) after the native badtide rows, renames them and sets their labels. No UXML or stylesheet is added. It tracks the selected preset from the mode buttons (checked at load: one per spec, in order, with the spec's name) and fills the rows when "Customize" is pressed, after the native handler.
 
 ### Native evidence (Timberborn 1.1.2.8, `outputs/weather-api-1.1.2.8`)
 
@@ -357,7 +393,7 @@ The native panels are internal classes. `RadioactiveTideUi` reaches them through
 
 ### Saved state
 
-Singleton `DeepFrontier.RadioactiveTide` stores:
+Singleton `DeepFrontier.RadioactiveTideSettings` holds the game's tide settings (previous section). Singleton `DeepFrontier.RadioactiveTide` stores:
 
 - `CurrentCycleIsTide`;
 - `LastTideCycle` and `LastTideDuration`;
@@ -368,15 +404,18 @@ Remaining days are derived from the native cycle and weather state. `PostLoad` t
 ### Files
 
 - `src/DeepFrontier/Scripts/RadioactiveTide/`:
-  - `RadioactiveTideTuning.cs`: numbers, loc keys and the settings interface
+  - `RadioactiveTideTuning.cs`: numbers, ranges, the former mod-settings keys, loc keys and the settings interface
+  - `RadioactiveTideGameModeSpec.cs`: the game-mode spec and the custom-mode copy
+  - `RadioactiveTideGameSettings.cs`: per-game values, their sources (`RadioactiveTideStartingValues`) and checks
+  - `RadioactiveTideNewGameSettings.cs`: the new-game rows (main menu) and `RadioactiveTideNewGameNative`
+  - `RadioactiveTideNewGamePatch.cs`: the custom-mode postfix, editor-excluded
   - `RadioactiveTideWeather.cs`
   - `RadioactiveTideService.cs`
   - `RadioactiveTideNative.cs`
   - `RadioactiveTideUi.cs`
   - `RadioactiveTidePatches.cs`: Harmony, editor-excluded
-  - `RadioactiveTideSettings.cs`: ModSettings, editor-excluded, `[Context("MainMenu")]` and `[Context("Game")]`
-  - `RadioactiveTideConfigurator.cs`: `[Context("Game")]`, plus the dev module
-- `tools/radioactive_tide_content.mjs`: localization rows, the `Configurations/Sun.blueprint.json` fog overlay and the icon. It is imported at the end of `tools/create_frontier_expansion_content.mjs`.
+  - `RadioactiveTideConfigurator.cs`: `[Context("Game")]`, the dev module, and `RadioactiveTideNewGameConfigurator` `[Context("MainMenu")]`
+- `tools/radioactive_tide_content.mjs`: localization rows, the game-mode presets (`NewGameModes/`), the `Configurations/Sun.blueprint.json` fog overlay and the icon. It is imported at the end of `tools/create_frontier_expansion_content.mjs`.
 - `src/DeepFrontier/Art/Icons/RadioactiveTide.svg` becomes `Sprites/Weather/RadioactiveTideIcon.png` (46×46, radiation ink).
 - `tools/validate_radioactive_tide_content.mjs [dataRoot] [--native outputs/weather-api-1.1.2.8]`.
 
@@ -386,4 +425,4 @@ Remaining days are derived from the native cycle and weather state. `PostLoad` t
 - **Underground water drills.** Native drills block on any hazardous-weather start but, after a reload, only for drought or badtide. A drill reloaded during a tide runs, and its aquifer's water is then partly radioactive.
 - **Weather Station.** Resolved without an enum patch: the Radioactive Tide mode is a decorator with its own save key, a prefix on the native `Sample()` that samples the tide, a prefix on the native `UpdateOutputState()` that sets the tide output only while that mode is on, and a fourth native radio button in the native panel (`Scripts/WeatherStations/WeatherStationPatches.cs`). Not verified in game.
 - **Moddable Weathers and the native Weather Station (source-confirmed, Moddable Weathers 11.0.0).** Moddable Weathers does not patch `WeatherStation`. Its drought and badtide weathers are `GameDroughtWeather`/`GameBadtideWeather`, which are not the native `DroughtWeather`/`BadtideWeather` classes the native station tests with `is`, so with Moddable Weathers the native Drought and Badtide modes never signal. The Radioactive Tide mode compares the weather id and is not affected. Deep Frontier does not change the native modes.
-- **Balance.** The emission rate, the chance and the durations need in-game tuning.
+- **Balance.** The emission rate and the Easy/Normal/Hard values need in-game tuning.

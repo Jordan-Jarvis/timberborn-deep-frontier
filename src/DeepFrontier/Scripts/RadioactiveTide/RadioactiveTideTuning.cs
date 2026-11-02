@@ -29,22 +29,40 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     // many cycles must lie between two tides.
     public const int CooldownCycles = 1;
 
-    // Cycle 1 is chosen by GameCycleService.Load on a new game before the
-    // mod settings load; the minimum-cycle setting cannot go below this.
+    // Cycle 1 is chosen by GameCycleService.Load on a new game, before the
+    // rest of the game has loaded; a tide can come from cycle 2 at the earliest.
     public const int EarliestCycle = 2;
 
-    // Player options (eMka.ModSettings): defaults and slider ranges.
-    public const bool DefaultEnabled = true;
-    public const int DefaultMinCycle = 15;
-    public const int MinCycleLowest = EarliestCycle;
-    public const int MinCycleHighest = 100;
-    public const int DefaultChancePercent = 25;
+    // Per-game settings (RadioactiveTideGameModeSpec on the native game modes,
+    // edited on the native new-game screen; saved per game). Allowed ranges,
+    // as the custom-mode fields clamp them. Tides can happen in cycles after
+    // CyclesWithoutTide, like the native "Cycles without badtide"; the
+    // lowest value is EarliestCycle - 1 (checked by the content validator).
+    public const int CyclesWithoutTideLowest = 1;
+    public const int CyclesWithoutTideHighest = 99;
     public const int ChancePercentLowest = 1;
     public const int ChancePercentHighest = 100;
-    public const int DefaultMinDurationDays = 3;
-    public const int DefaultMaxDurationDays = 6;
     public const int DurationLowest = 1;
     public const int DurationHighest = 30;
+
+    // Saves from before per-game settings (0.8.3 and older) take the values the
+    // player had set in the former Deep Frontier mod settings (eMka.ModSettings
+    // stored them in the native ISettings under these keys); a key the player
+    // never changed reads as the old default below. The Normal game mode has
+    // exactly these defaults (tools/validate_radioactive_tide_content.mjs).
+    // Keys: "ModSetting.<ModId>.<owner type>.<property>" (ModSettings.Core
+    // 1.1.1.0 ModSettingsOwner.InitializePropertyModSetting) of the removed
+    // RadioactiveTideSettings owner.
+    public const string LegacyEnabledKey = "ModSetting.DeepFrontier.RadioactiveTideSettings.TideEnabled";
+    public const string LegacyMinCycleKey = "ModSetting.DeepFrontier.RadioactiveTideSettings.TideMinCycle";
+    public const string LegacyChancePercentKey = "ModSetting.DeepFrontier.RadioactiveTideSettings.TideChancePercent";
+    public const string LegacyMinDurationKey = "ModSetting.DeepFrontier.RadioactiveTideSettings.TideMinDurationDays";
+    public const string LegacyMaxDurationKey = "ModSetting.DeepFrontier.RadioactiveTideSettings.TideMaxDurationDays";
+    public const bool LegacyEnabled = true;
+    public const int LegacyMinCycle = 15;
+    public const int LegacyChancePercent = 25;
+    public const int LegacyMinDurationDays = 3;
+    public const int LegacyMaxDurationDays = 6;
 
     // UI. The CSS class names are deliberately unstyled: native panels add
     // them, and RadioactiveTideUi recognises them and applies inline styles.
@@ -85,17 +103,19 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     public const string Ended = "DeepFrontier.Weather.RadioactiveTideEndedNotification";
     public const string ApproachingDescription = "DeepFrontier.Weather.RadioactiveTideApproachingDescription";
     public const string StartedDescription = "DeepFrontier.Weather.RadioactiveTideStartedDescription";
-    public const string SettingsHeader = "DeepFrontier.RadioactiveTide.Settings.Header";
+    // The native new-game screen's custom mode (RadioactiveTideNewGameSettings):
+    // the toggle reuses SettingEnabled; the rows follow the native badtide rows
+    // ("Cycles without badtide", "Badtide chance", "Badtide duration").
+    public const string NewGameCyclesWithout = "DeepFrontier.NewGame.CyclesWithoutRadioactiveTide";
+    public const string NewGameChance = "DeepFrontier.NewGame.RadioactiveTideChance";
+    public const string NewGameDuration = "DeepFrontier.NewGame.RadioactiveTideDuration";
+    // Moddable Weathers' Weather Settings dialog labels for the per-save
+    // values (RadioactiveTideModdableWeatherSettings).
     public const string SettingEnabled = "DeepFrontier.RadioactiveTide.Settings.Enabled";
-    public const string SettingEnabledTooltip = "DeepFrontier.RadioactiveTide.Settings.Enabled.Tooltip";
     public const string SettingMinCycle = "DeepFrontier.RadioactiveTide.Settings.MinCycle";
-    public const string SettingMinCycleTooltip = "DeepFrontier.RadioactiveTide.Settings.MinCycle.Tooltip";
     public const string SettingChance = "DeepFrontier.RadioactiveTide.Settings.Chance";
-    public const string SettingChanceTooltip = "DeepFrontier.RadioactiveTide.Settings.Chance.Tooltip";
     public const string SettingMinDuration = "DeepFrontier.RadioactiveTide.Settings.MinDuration";
-    public const string SettingMinDurationTooltip = "DeepFrontier.RadioactiveTide.Settings.MinDuration.Tooltip";
     public const string SettingMaxDuration = "DeepFrontier.RadioactiveTide.Settings.MaxDuration";
-    public const string SettingMaxDurationTooltip = "DeepFrontier.RadioactiveTide.Settings.MaxDuration.Tooltip";
     // Moddable Weathers: the weather description in its Weather Settings
     // dialog (ModdableWeatherSpec.DescLoc), and the per-save setting
     // descriptions it looks up as <setting label key> + "Desc"
@@ -108,13 +128,14 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     public const string SettingMaxDurationModdableDesc = "DeepFrontier.RadioactiveTide.Settings.MaxDurationDesc";
   }
 
-  // Player options, read live. Implemented with eMka.ModSettings
-  // (RadioactiveTideSettings); kept as an interface so the core compiles in
-  // the Unity editor, where the ModSettings assemblies are excluded.
+  // A game's radioactive tide settings. Without Moddable Weathers they are
+  // RadioactiveTideGameSettings (saved per game, started from the new game's
+  // RadioactiveTideGameModeSpec); with it, the per-save values of
+  // RadioactiveTideModdableWeatherSettings play this part.
   public interface IRadioactiveTideSettings {
-    bool IsLoaded { get; }
     bool Enabled { get; }
-    int MinCycle { get; }
+    // Tides can happen from cycle CyclesWithoutTide + 1.
+    int CyclesWithoutTide { get; }
     int ChancePercent { get; }
     int MinDurationDays { get; }
     int MaxDurationDays { get; }

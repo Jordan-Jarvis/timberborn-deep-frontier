@@ -18,11 +18,13 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
   // every native water source partly radioactive while one is in progress.
   //
   // Selection (RadioactiveTidePatches postfix on the native
-  // HazardousWeatherRandomizer.GetRandomWeatherForCycle): from the player's
-  // earliest cycle onward, with the player's chance per cycle, the cycle's
-  // hazardous weather becomes a radioactive tide instead of the native
-  // drought/badtide choice, never in two consecutive cycles
-  // (RadioactiveTideTuning.CooldownCycles).
+  // HazardousWeatherRandomizer.GetRandomWeatherForCycle): after the game's
+  // cycles without radioactive tide, with the game's chance per cycle, the
+  // cycle's hazardous weather becomes a radioactive tide instead of the
+  // native drought/badtide choice, never in two consecutive cycles
+  // (RadioactiveTideTuning.CooldownCycles). The settings are the game's own
+  // (IRadioactiveTideSettings = RadioactiveTideGameSettings), chosen on the
+  // native new-game screen.
   //
   // Emission: while WeatherService.IsHazardousWeather and the cycle's weather
   // is the tide, IRadiationService.SetSourceRadioactiveShare makes
@@ -107,7 +109,6 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     }
 
     public void PostLoad() {
-      if (!_settings.IsLoaded) throw new InvalidOperationException("Radioactive tide settings did not load with the Game scene");
       if (_currentCycleIsTide) {
         if (!IsCurrentCycleTide)
           throw new InvalidOperationException("Saved radioactive tide was not restored into HazardousWeatherService");
@@ -115,11 +116,10 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
           throw new InvalidOperationException($"Saved radioactive tide belongs to cycle {LastTideCycle}, but the game is in cycle {_gameCycleService.Cycle}");
         if (LastTideDuration != _hazardousWeatherService.HazardousWeatherDuration)
           throw new InvalidOperationException($"Saved radioactive tide lasts {LastTideDuration} days, but the native hazardous weather lasts {_hazardousWeatherService.HazardousWeatherDuration}");
-        RadioactiveTideSettingsCheck.Validate(_settings);
       } else {
         if (IsCurrentCycleTide) throw new InvalidOperationException("HazardousWeatherService holds a radioactive tide the save does not record");
-        if (_settings.Enabled) RadioactiveTideSettingsCheck.Validate(_settings);
       }
+      RadioactiveTideSettingsCheck.Validate(_settings, "this game");
     }
 
     public void Save(ISingletonSaver singletonSaver) {
@@ -156,14 +156,13 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     }
 
     private IHazardousWeather Choose(int cycle, IHazardousWeather native) {
-      // Cycle 1 is chosen during GameCycleService.Load, possibly before the
-      // settings load; the earliest-cycle setting cannot be below 2.
+      // Cycle 1 is chosen during GameCycleService.Load; the cycles without
+      // radioactive tide are at least 1.
       if (cycle < RadioactiveTideTuning.EarliestCycle) return native;
-      if (!_settings.IsLoaded) throw new InvalidOperationException("Radioactive tide settings are not loaded");
       if (!_settings.Enabled) return native;
-      RadioactiveTideSettingsCheck.Validate(_settings);
+      RadioactiveTideSettingsCheck.Validate(_settings, "this game");
       if (_forceNextCycle) { _forceNextCycle = false; return _weather; }
-      if (cycle < _settings.MinCycle) return native;
+      if (cycle <= _settings.CyclesWithoutTide) return native;
       if (LastTideCycle > 0 && cycle - LastTideCycle <= RadioactiveTideTuning.CooldownCycles) return native;
       return _random.CheckProbability(_settings.ChancePercent / 100f) ? _weather : native;
     }
@@ -186,9 +185,9 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     }
 
     // Dev mode: the next cycle's hazardous weather is a radioactive tide,
-    // ignoring the earliest cycle, the chance and the cooldown. Not saved.
+    // ignoring the cycles without tide, the chance and the cooldown. Not saved.
     public void ForceTideNextCycle() {
-      if (!_settings.Enabled) throw new InvalidOperationException("Radioactive tides are disabled in the Deep Frontier mod settings");
+      if (!_settings.Enabled) throw new InvalidOperationException("Radioactive tides are off in this game's settings (chosen when the game was started)");
       _forceNextCycle = true;
     }
 

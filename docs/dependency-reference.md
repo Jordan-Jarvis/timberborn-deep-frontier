@@ -47,7 +47,7 @@ Deep Frontier does not impose a numeric maximum on building layers. Timberborn b
 |---|---|---|
 | Harmony 2.4.1 | required | Every runtime patch (`HarmonyLib` in about 30 main-assembly files). |
 | TimberUi 11.0.1 | required | All custom panels (`TimberUi.CommonUi`). |
-| Mod Settings 1.1.1.0 | required | Radioactive tide options (`RadioactiveTideSettings`, `ModSettings.Core/Common`). |
+| Mod Settings 1.1.1.0 | required | No Deep Frontier code uses it since the radioactive tide settings moved to the new-game screen (2026-11-02, `docs/radiation.md`). Still listed until dropping it from the manifest and the Workshop required items is decided. Saves from 0.8.3 and earlier read the values it stored (native PlayerPrefs keys) without it. |
 | Moddable Tool Groups 11.0.0 | required | The ten Deep Frontier toolbar sub-groups (`ParentToolGroupSpec` in `Data/BlockObjectToolGroups`); an unknown spec key stops template loading. |
 | Moddable Timberborn 11.1.3 | required | `OptionalModsLoader`, which loads every optional assembly below. Timber Pipes, Conveyor Belts and Map Transformer require it too. No main-assembly code uses it. |
 | Moddable Recipes 11.0.0 | required | The main assembly patches its `ManufactoryPatches.InitInventoryForRecipe` at mod start (restaurant kitchen, bot-maintenance and workplace-upkeep inventories, and the enable-state fix). These are compatibility patches for Moddable Recipes itself, and no Deep Frontier data uses its features, so it could become optional by moving those patches into a `DeepFrontier.ModdableRecipes` assembly. |

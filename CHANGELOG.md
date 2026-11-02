@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Radioactive tide settings on the new-game screen
+- **Radioactive tides are now chosen when you start a game, next to droughts and badtides.** Easy, Normal and Hard each bring their own: Easy from cycle 25, 15% of cycles, 2-4 days; Normal from cycle 15, 25%, 3-6 days (as before); Hard from cycle 10, 35%, 5-10 days.
+- **Customize** shows "Radioactive tides" (on or off), "Cycles without radioactive tide", "Radioactive tide chance" and "Radioactive tide duration" right under the badtide settings, filled in from the mode you picked.
+- **The settings belong to the game** and are saved with it, like the badtide settings. The "Radioactive tide" page in the Mod Settings is gone.
+- **Existing saves keep their tides:** they use what you had set in the Mod Settings, or the old defaults (the same as Normal) if you never changed them.
+- With Moddable Weathers, its Weather Settings start from your new-game choice and can still be changed there during the game.
+
 ### Fixes
 - **Selecting the Bot Assembler no longer freezes the game.** Deep Frontier adds a second recipe (Industrial bot), so the assembler shows a recipe list, and the base game's own bot recipe had no icon for that list (player report: a NullReferenceException and a soft-lock on selecting the Bot Assembler). The base recipe now uses the Bot Assembler's icon.
 - **Industrial bots need steel:** the Bot Assembler's Industrial bot recipe now also takes 2 steel, and the assembler's description says what the recipe is: the same bots, built three times faster from late-game parts, a power module and steel.

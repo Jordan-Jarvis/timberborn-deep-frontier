@@ -10,8 +10,8 @@
 // (dataRoot defaults to src/DeepFrontier/Data; use a scratch copy to test).
 //
 // What it writes:
-// - Localization rows (weather names, notifications, the explanation lines
-//   and the mod-settings labels) appended to the canonical
+// - Localization rows (weather names, notifications, the explanation lines,
+//   the new-game screen rows and the Moddable Weathers setting labels) appended to the canonical
 //   Localizations/enUS.csv. The file must exist and must not already define
 //   any of them (each canonical run rewrites it fresh).
 // - Configurations/Sun.blueprint.json (module-owned, rewritten each run): a
@@ -49,9 +49,19 @@
 //   blueprint another mod defines at the same path, so it cannot carry a new
 //   blueprint.
 //
+// - NewGameModes/GameMode.{Easy,Normal,Hard}.blueprint.json (module-owned,
+//   rewritten each run): a RadioactiveTideGameModeSpec added to each native
+//   game mode (GAME_MODE_PRESETS). The native BlueprintFileBundleLoader groups
+//   every blueprint asset at the same path and the deserializer merges them,
+//   so the vanilla GameModeSpec blueprint gains a second component
+//   (Timberborn 1.1.2.8; vanilla files: vendor ImportedAssets
+//   Resources/NewGameModes). The new-game screen fills its custom radioactive
+//   tide rows from the selected preset; a game started with a preset reads
+//   them from its GameModeSpec (RadioactiveTideStartingValues).
+//
 // The ids it relies on are read from RadioactiveTideTuning.cs; every
 // mismatch, missing target or duplicate throws.
-import {readFile, writeFile, mkdir, access} from 'node:fs/promises';
+import {readFile, writeFile, mkdir, access, readdir} from 'node:fs/promises';
 import {resolve, dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import sharp from 'sharp';
@@ -70,6 +80,20 @@ export const TIDE_FILES = {
   notification: 'Sprites/Weather/RadioactiveTideNotification.png',
   localization: 'Localizations/enUS.csv',
   moddableWeatherSpec: 'ModdableWeatherSpecs/RadioactiveTideWeather.blueprint.json',
+};
+export const VANILLA_GAME_MODES = resolve(vanillaRoot, 'NewGameModes');
+export const gameModeFile = (mode) => `NewGameModes/GameMode.${mode}.blueprint.json`;
+
+// Radioactive tide settings per native game mode (RadioactiveTideGameModeSpec;
+// field names are the record's [Serialize] properties). Normal keeps the
+// defaults of 0.8.3 (RadioactiveTideTuning.Legacy*: from cycle 15, 25% per
+// cycle, 3-6 days); Easy comes later, more rarely and shorter, Hard earlier,
+// more often and longer. CyclesWithoutTide follows the native "Cycles without
+// badtide": tides can come in the cycles after it.
+export const GAME_MODE_PRESETS = {
+  Easy: {Enabled: true, CyclesWithoutTide: 24, ChancePercent: 15, Duration: {Min: 2, Max: 4}},
+  Normal: {Enabled: true, CyclesWithoutTide: 14, ChancePercent: 25, Duration: {Min: 3, Max: 6}},
+  Hard: {Enabled: true, CyclesWithoutTide: 9, ChancePercent: 35, Duration: {Min: 5, Max: 10}},
 };
 // SunSpec day-stage colour blocks -> ModdableWeatherSkySpec day stages.
 export const MODDABLE_SKY_STAGES = {SunriseColors: 'Sunrise', DayColors: 'Day', SunsetColors: 'Sunset', NightColors: 'Night'};
@@ -120,25 +144,25 @@ export const LOCALIZATION = [
     'For {0} days the water of every water source will be partly radioactive. Store clean water: pumps stop wherever radiation reaches them.'],
   ['DeepFrontier.Weather.RadioactiveTideStartedDescription',
     'Water sources are releasing radioactive water. It stays after the tide until it drains off the map, decays, dries into irradiated ground or is pumped out.'],
-  ['DeepFrontier.RadioactiveTide.Settings.Header', 'Radioactive tide'],
+  // The native new-game screen's custom mode: the toggle reuses
+  // Settings.Enabled; the rows follow the native "Cycles without badtide",
+  // "Badtide chance" and "Badtide duration" (whose "%", "to" and "days" stay
+  // the native labels).
+  ['DeepFrontier.NewGame.CyclesWithoutRadioactiveTide', 'Cycles without radioactive tide'],
+  ['DeepFrontier.NewGame.RadioactiveTideChance', 'Radioactive tide chance'],
+  ['DeepFrontier.NewGame.RadioactiveTideDuration', 'Radioactive tide duration'],
+  // Moddable Weathers' Weather Settings dialog labels for the per-save values.
   ['DeepFrontier.RadioactiveTide.Settings.Enabled', 'Radioactive tides'],
-  ['DeepFrontier.RadioactiveTide.Settings.Enabled.Tooltip',
-    'A late-game hazardous season that can replace a drought or badtide: water keeps flowing, but the water of every source is partly radioactive.'],
   ['DeepFrontier.RadioactiveTide.Settings.MinCycle', 'Earliest cycle'],
-  ['DeepFrontier.RadioactiveTide.Settings.MinCycle.Tooltip', 'No radioactive tide happens before this cycle.'],
   ['DeepFrontier.RadioactiveTide.Settings.Chance', 'Chance per cycle (%)'],
-  ['DeepFrontier.RadioactiveTide.Settings.Chance.Tooltip',
-    "Chance that a cycle's hazardous season is a radioactive tide. Never two cycles in a row."],
   ['DeepFrontier.RadioactiveTide.Settings.MinDuration', 'Shortest tide (days)'],
-  ['DeepFrontier.RadioactiveTide.Settings.MinDuration.Tooltip', 'Must not be longer than the longest tide.'],
   ['DeepFrontier.RadioactiveTide.Settings.MaxDuration', 'Longest tide (days)'],
-  ['DeepFrontier.RadioactiveTide.Settings.MaxDuration.Tooltip', 'Must not be shorter than the shortest tide.'],
   // Moddable Weathers: weather description (ModdableWeatherSpec.DescLoc) and
   // the per-save setting descriptions (<label key> + "Desc").
   ['DeepFrontier.Weather.RadioactiveTideDescription',
     'Hazardous weather (Deep Frontier). Water keeps flowing, but part of the water of every water source is radioactive. It stays after the tide until it drains off the map, decays, dries into irradiated ground or is pumped out. Pumps stop wherever radiation reaches them.'],
   ['DeepFrontier.RadioactiveTide.Settings.EnabledDesc',
-    'Whether radioactive tides can happen in this save. New saves start from the Deep Frontier mod settings.'],
+    'Whether radioactive tides can happen in this save. A new game starts with the settings chosen on the new-game screen.'],
   ['DeepFrontier.RadioactiveTide.Settings.MinCycleDesc', 'No radioactive tide happens before this cycle.'],
   ['DeepFrontier.RadioactiveTide.Settings.ChanceDesc',
     'Chance that a hazardous season is a radioactive tide instead of the other hazardous weathers. A percentage, not a weight. Never two cycles in a row.'],
@@ -236,6 +260,26 @@ export async function checkVanillaSun(weatherId) {
   return vanilla;
 }
 
+export function gameModeOverlay(mode) {
+  const preset = GAME_MODE_PRESETS[mode] ?? fail(`no radioactive tide preset for game mode ${mode}`);
+  return {RadioactiveTideGameModeSpec: preset};
+}
+
+// The vanilla game modes this module extends: exactly one blueprint per
+// preset, each a plain GameModeSpec without radioactive tide settings.
+export async function checkVanillaGameModes() {
+  const files = (await readdir(VANILLA_GAME_MODES)).filter(f => f.endsWith('.blueprint.json')).sort();
+  const expected = Object.keys(GAME_MODE_PRESETS).map(mode => gameModeFile(mode).split('/')[1]).sort();
+  if (JSON.stringify(files) !== JSON.stringify(expected)) fail(`vanilla game modes are ${files.join(', ')}, expected ${expected.join(', ')}`);
+  const modes = {};
+  for (const mode of Object.keys(GAME_MODE_PRESETS)) {
+    const blueprint = JSON.parse(await readText(resolve(VANILLA_GAME_MODES, gameModeFile(mode).split('/')[1])));
+    if (Object.keys(blueprint).join() !== 'GameModeSpec') fail(`vanilla ${gameModeFile(mode)} is not a lone GameModeSpec`);
+    modes[mode] = blueprint.GameModeSpec;
+  }
+  return modes;
+}
+
 export function csvCell(value) {
   if (typeof value !== 'string') fail('localization cells must be strings');
   return /[",\n\r]/.test(value) ? `"${value.replaceAll('"', '""')}"` : value;
@@ -329,8 +373,14 @@ export async function applyRadioactiveTide(dataRoot = resolve(root, 'src', 'Deep
   if (`${tuning.iconSpritePath}.png` !== TIDE_FILES.icon) fail(`RadioactiveTideTuning.IconSpritePath ${tuning.iconSpritePath} does not match ${TIDE_FILES.icon}`);
   if (TIDE_FILES.moddableWeatherSpec !== `ModdableWeatherSpecs/${tuning.weatherId}.blueprint.json`) fail(`${TIDE_FILES.moddableWeatherSpec} is not named after ${tuning.weatherId}`);
   await checkVanillaSun(tuning.weatherId);
+  await checkVanillaGameModes();
 
   await appendLocalization(dataRoot);
+  for (const mode of Object.keys(GAME_MODE_PRESETS)) {
+    const path = resolve(dataRoot, gameModeFile(mode));
+    await mkdir(dirname(path), {recursive: true});
+    await writeFile(path, JSON.stringify(gameModeOverlay(mode), null, 2) + '\n', 'utf8');
+  }
   const sunPath = resolve(dataRoot, TIDE_FILES.sun);
   await mkdir(dirname(sunPath), {recursive: true});
   await writeFile(sunPath, JSON.stringify(sunOverlay(tuning.weatherId), null, 2) + '\n', 'utf8');
@@ -339,7 +389,7 @@ export async function applyRadioactiveTide(dataRoot = resolve(root, 'src', 'Deep
   await writeFile(specPath, JSON.stringify(moddableWeatherSpec(tuning), null, 2) + '\n', 'utf8');
   const icon = await writeIcon(dataRoot);
   const banner = await writeBannerArt(dataRoot);
-  console.log(`Radioactive tide content: ${LOCALIZATION.length} localization rows, ${DAY_STAGES.length} sky fogs, Moddable Weathers spec ${TIDE_FILES.moddableWeatherSpec}, icon ${TIDE_FILES.icon} (review ${icon.sheet}), banner art ${TIDE_FILES.progress} + ${TIDE_FILES.notification} (review ${banner.sheet}).`);
+  console.log(`Radioactive tide content: ${LOCALIZATION.length} localization rows, ${DAY_STAGES.length} sky fogs, ${Object.keys(GAME_MODE_PRESETS).length} game-mode presets, Moddable Weathers spec ${TIDE_FILES.moddableWeatherSpec}, icon ${TIDE_FILES.icon} (review ${icon.sheet}), banner art ${TIDE_FILES.progress} + ${TIDE_FILES.notification} (review ${banner.sheet}).`);
   return {rows: LOCALIZATION.length, fogs: DAY_STAGES.length, icon, banner};
 }
 
