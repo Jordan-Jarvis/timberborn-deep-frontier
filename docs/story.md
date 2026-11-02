@@ -33,8 +33,8 @@ The chapters complete strictly in order. Each completion grants its science, pos
 | 4 | `OpenTheRuins` | Open the Ruins | 6 RecoveredArtifact produced (Archive Excavation) | Holding Station 3 artifacts: hard hat, mug, sign; sealed data drives | 2,000 |
 | 5 | `TheArchiveWakes` | The Archive Wakes | 20 RecoveredArtifact produced in total (cache surveys count) | The Deepworks, the Holding, and the postponed maintenance | 3,000 |
 | 6 | `TheLastShift` | The Last Shift | 40 RecoveredArtifact produced in total **and** a finished Mission Control | Why the humans left; the switch set to "until further notice"; an orbital frequency still answers | 5,000 |
-| 7 | `EyesAbove` | Eyes Above | Orbital Observatory mission succeeded | Orbital images plus Authority maps: every spring and every badtide traces back to the Holding | 0 (mission gives 100,000) |
-| 8 | `WhatTheStationKept` | What the Station Kept | Recovery Probe mission succeeded | The station crew's last log; the treatment design matches the colony's plants; the Holding can be kept | 0 (mission gives 250,000) |
+| 7 | `EyesAbove` | Eyes Above | Orbital Observatory mission succeeded | Orbital images plus Authority maps: every spring and every badtide traces back to the Holding | 0 (mission gives 250,000) |
+| 8 | `WhatTheStationKept` | What the Station Kept | Recovery Probe mission succeeded | The station crew's last log; the treatment design matches the colony's plants; the Holding can be kept | 0 (mission gives 500,000) |
 | 9 | `TheMessage` | What the Beacon Says | Ending chosen (journal, or the choice dialog that opens when chapter 8 completes) | The colony's decision | 0 |
 | 10 | `TheBeacon` | The Long-Range Beacon | Long-Range Beacon mission succeeded | The badwater has a source, a reason and a caretaker, followed by the chosen epilogue | 0 |
 

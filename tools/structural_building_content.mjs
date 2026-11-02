@@ -32,12 +32,12 @@ const TOOL_ORDERS=structuralToolOrders();
 
 // Concrete platforms: an n×n deck (n = 3, 4 or 5) on four corner legs
 // H = 1, 2 or 3 layers high, size [n, n, H+1]. The cost and science scale with
-// k = n² + H: k × (3 Concrete, 2 Metal block, 1 Gear) and 1,250 × k science
-// (500 × k until the 2026-11-01 science curve raised the transition and
-// frontier unlocks 2.5x; 1,250 keeps k <= 16 in the transition tier and
-// k >= 17 in the frontier tier, as before). Each deck cell and each leg layer
-// carries the same 3:2:1 bill, which reproduces the original 3×3, 3-high
-// platform exactly (k = 12: 36/24/12).
+// k = n² + H: k × (3 Concrete, 2 Metal block, 1 Gear) and 500 × k science
+// (user 2026-11-01: construction pieces of early goods stay cheap in science;
+// the science curve's 2.5x was reverted, so every size is a transition-tier
+// piece, 4,500-14,000). Each deck cell and each leg layer carries the same
+// 3:2:1 bill, which reproduces the original 3×3, 3-high platform exactly
+// (k = 12: 36/24/12, 6,000).
 const SCAFFOLD_SPANS=[3,4,5],SCAFFOLD_LEGS=[1,2,3];
 export function scaffoldLegs(building) {
   const [w,h,layers]=building.size;
@@ -48,7 +48,7 @@ export function scaffoldLegs(building) {
   if(building.id!==expectedId)throw new Error(`Scaffold ${building.id} must be named ${expectedId}`);
   const k=w*w+legs;
   const cost=[['Concrete',3*k],['MetalBlock',2*k],['Gear',k]];
-  if(JSON.stringify(building.cost)!==JSON.stringify(cost)||building.science!==1250*k)
+  if(JSON.stringify(building.cost)!==JSON.stringify(cost)||building.science!==500*k)
     throw new Error(`Scaffold ${building.id} cost/science differs from k=${k} formula`);
   return legs;
 }
@@ -70,7 +70,7 @@ export function scaffoldLegs(building) {
 // anchor's "object atop" deletion blocker. AnchoredDeckValidator (C#) narrows
 // the stackable anchor to deckAnchor structures. Costs follow the platform
 // formula with no leg layers: k = n², k × (3 Concrete, 2 Metal block, 1 Gear),
-// 1,250 × k science.
+// 500 × k science.
 export function sideDeckSpan(building) {
   const [width,depth,layers]=building.size;
   const n=depth-1;
@@ -85,7 +85,7 @@ export function sideDeckAnchor(building) {
     throw new Error(`Side platform ${building.id} must be named ConcreteSidePlatform${n}x${n}`);
   const k=n*n;
   const cost=[['Concrete',3*k],['MetalBlock',2*k],['Gear',k]];
-  if(JSON.stringify(building.cost)!==JSON.stringify(cost)||building.science!==1250*k)
+  if(JSON.stringify(building.cost)!==JSON.stringify(cost)||building.science!==500*k)
     throw new Error(`Side platform ${building.id} cost/science differs from k=${k} formula`);
   return [Math.floor(n/2),n,0];
 }

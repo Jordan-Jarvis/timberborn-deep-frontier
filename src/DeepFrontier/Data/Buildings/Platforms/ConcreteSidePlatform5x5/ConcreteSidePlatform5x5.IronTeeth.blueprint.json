@@ -5,18 +5,18 @@
     "BuildingCost": [
       {
         "Id": "Concrete",
-        "Amount": 450
-      },
-      {
-        "Id": "MetalBlock",
         "Amount": 300
       },
       {
+        "Id": "MetalBlock",
+        "Amount": 200
+      },
+      {
         "Id": "Gear",
-        "Amount": 150
+        "Amount": 100
       }
     ],
-    "ScienceCost": 31250,
+    "ScienceCost": 12500,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": true,
     "DrawRangeBoundsOnIt": true
@@ -484,7 +484,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierConcretePlatforms",
-    "ToolOrder": 231,
+    "ToolOrder": 216,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

@@ -67,7 +67,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierSteelStructures",
-    "ToolOrder": 205,
+    "ToolOrder": 214,
     "ToolShape": "Square",
     "Layout": "Rectangle",
     "CustomPivot": {

@@ -54,9 +54,9 @@ export const RADIATION_BUILDINGS = [
   {id: 'RadioactiveWasteExport', template: 'Buildings/Water/Discharge/Discharge.IronTeeth.blueprint.json',
    recipes: ['ExportRadioactiveWaste', 'ExportRadioactiveSludge', 'ExportContaminatedWater'], toolOrder: 22, science: 300000, kind: 'export', pipe: 'PIPE_INLET'},
   {id: 'RadioactiveSludgeOutfall', template: 'Buildings/Water/Discharge/Discharge.IronTeeth.blueprint.json',
-   recipes: ['ReleaseRadioactiveSludge'], toolOrder: 21, science: 300000, kind: 'outfall', pipe: 'PIPE_INLET'},
+   recipes: ['ReleaseRadioactiveSludge'], toolOrder: 21, science: 50000, kind: 'outfall', pipe: 'PIPE_INLET'},
   {id: 'RadioactiveSludgeRecoveryPump', template: 'Buildings/Water/DeepBadwaterPump/DeepBadwaterPump.IronTeeth.blueprint.json',
-   recipes: ['RecoverRadioactiveSludge'], toolOrder: 13, science: 300000, kind: 'recovery', pipe: 'PIPE_OUTLET'},
+   recipes: ['RecoverRadioactiveSludge'], toolOrder: 13, science: 50000, kind: 'recovery', pipe: 'PIPE_OUTLET'},
 ];
 // Footprint sides as Timberborn Direction2D (local block coordinates).
 const EDGE_ROWS = {Down: ([w, h]) => [...Array(w).keys()].map((x) => [x, 0]), Up: ([w, h]) => [...Array(w).keys()].map((x) => [x, h - 1]),

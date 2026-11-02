@@ -16,7 +16,7 @@
         "Amount": 44
       }
     ],
-    "ScienceCost": 13750,
+    "ScienceCost": 5500,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": true,
     "DrawRangeBoundsOnIt": true
@@ -253,7 +253,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierConcreteScaffolds",
-    "ToolOrder": 216,
+    "ToolOrder": 208,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

@@ -1,7 +1,7 @@
 {
   "BlockObjectToolGroupSpec": {
     "Id": "DeepFrontierTeleporters",
-    "Order": 72,
+    "Order": 74,
     "NameLocKey": "ToolGroups.DeepFrontierTeleporters",
     "Icon": "Buildings/Paths/Teleporter/TeleporterIcon",
     "FallbackGroup": false

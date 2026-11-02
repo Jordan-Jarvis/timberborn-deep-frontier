@@ -283,67 +283,67 @@
    "devOnly": false
   },
   "ConcreteOverhang8x1.IronTeeth": {
-   "science": 12500,
+   "science": 5000,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold3x3.IronTeeth": {
-   "science": 15000,
+   "science": 6000,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold3x3H1.IronTeeth": {
-   "science": 12500,
+   "science": 5000,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold3x3H2.IronTeeth": {
-   "science": 13750,
+   "science": 5500,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold4x4H1.IronTeeth": {
-   "science": 21250,
+   "science": 8500,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold4x4H2.IronTeeth": {
-   "science": 22500,
+   "science": 9000,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold4x4H3.IronTeeth": {
-   "science": 23750,
+   "science": 9500,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold5x5H1.IronTeeth": {
-   "science": 32500,
+   "science": 13000,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold5x5H2.IronTeeth": {
-   "science": 33750,
+   "science": 13500,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteScaffold5x5H3.IronTeeth": {
-   "science": 35000,
+   "science": 14000,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteSidePlatform3x3.IronTeeth": {
-   "science": 11250,
+   "science": 4500,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteSidePlatform4x4.IronTeeth": {
-   "science": 20000,
+   "science": 8000,
    "recipes": [],
    "devOnly": false
   },
   "ConcreteSidePlatform5x5.IronTeeth": {
-   "science": 31250,
+   "science": 12500,
    "recipes": [],
    "devOnly": false
   },
@@ -672,7 +672,7 @@
    "devOnly": false
   },
   "GroceryStore.IronTeeth": {
-   "science": 15000,
+   "science": 3000,
    "recipes": [],
    "devOnly": false
   },
@@ -1006,14 +1006,14 @@
    "devOnly": false
   },
   "RadioactiveSludgeOutfall.IronTeeth": {
-   "science": 300000,
+   "science": 50000,
    "recipes": [
     "ReleaseRadioactiveSludge"
    ],
    "devOnly": false
   },
   "RadioactiveSludgeRecoveryPump.IronTeeth": {
-   "science": 300000,
+   "science": 50000,
    "recipes": [
     "RecoverRadioactiveSludge"
    ],

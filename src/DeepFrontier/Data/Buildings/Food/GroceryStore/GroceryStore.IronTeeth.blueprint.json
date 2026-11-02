@@ -5,34 +5,26 @@
     "BuildingCost": [
       {
         "Id": "Plank",
-        "Amount": 210
-      },
-      {
-        "Id": "TreatedPlank",
-        "Amount": 105
+        "Amount": 395
       },
       {
         "Id": "MetalBlock",
-        "Amount": 20
+        "Amount": 25
       },
       {
         "Id": "DeepAlloy",
-        "Amount": 10
-      },
-      {
-        "Id": "HighGradeSteel",
-        "Amount": 10
+        "Amount": 15
       },
       {
         "Id": "Concrete",
-        "Amount": 105
+        "Amount": 60
       },
       {
         "Id": "Gear",
-        "Amount": 80
+        "Amount": 60
       }
     ],
-    "ScienceCost": 15000,
+    "ScienceCost": 3000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false
@@ -515,13 +507,13 @@
     "ForceOneFinalAccess": false
   },
   "MechanicalNodeSpec": {
-    "PowerInput": 7700,
+    "PowerInput": 2300,
     "PowerOutput": 0,
     "IsShaft": false
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierCivicServices",
-    "ToolOrder": 39,
+    "ToolOrder": 38,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

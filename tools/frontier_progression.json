@@ -1,7 +1,7 @@
 {
   "revision": "2026-10-25-item-use-completion",
   "implementedBuildingScienceOverrides": {"NuclearReactor": 1000000, "UraniumProcessingPlant": 300000, "RadioactiveWasteVault": 300000, "RadioactiveWasteRefinery": 600000, "SmogScrubber": 2500},
-  "nuclearScienceRule": "Science curve (user decision 2026-11-01, docs/progression.md \"Science curve and menu order (2026-11-01)\", superseding 2026-10-29): early and industrial unlocks (up to 2,500) stay near vanilla; the transition stage (steel, chemistry, machinery, coal power) unlocks at 9,000-20,000, the frontier (hydrogen, cryogenics, archive, oil power, hospital, mission control, deep well) at 25,000-75,000, the launch program at 125,000-200,000 and nuclear at 300,000-600,000, with the 1,000,000 reactor the single last unlock. The 12,000 Materials Laboratory (400 science per working hour) keeps its unlock, so it becomes the transition stage's stepping stone. Order within the stages is unchanged: Uranium Processing Plant, Waste Vault and the radioactive sludge export, outfall and recovery pump 300,000, Reactor Charging Bay 400,000, Waste Refinery 600,000, reactor 1,000,000.",
+  "nuclearScienceRule": "Science curve (user decision 2026-11-01, docs/progression.md \"Science curve and menu order (2026-11-01)\", superseding 2026-10-29): early and industrial unlocks (up to 2,500) stay near vanilla; the transition stage (steel, chemistry, machinery, coal power) unlocks at 9,000-20,000, the frontier (hydrogen, cryogenics, archive, oil power, hospital, mission control, deep well) at 25,000-75,000, the launch program at 125,000-200,000 and nuclear at 300,000-600,000, with the 1,000,000 reactor the single last unlock. The 12,000 Materials Laboratory (400 science per working hour) keeps its unlock, so it becomes the transition stage's stepping stone. Order within the stages is unchanged: Uranium Processing Plant, Waste Vault and the radioactive waste export 300,000, Reactor Charging Bay 400,000, Waste Refinery 600,000, reactor 1,000,000. Approved follow-ups (2026-11-01): the radioactive water recovery pump and outfall unlock at 50,000 (frontier) so radioactive tides can be cleaned up before the nuclear stage, and the Grocery Store at 3,000 (industrial).",
   "restaurant": {
     "requirementStatus": "Build 41 native cooking, cake/coffee meals and conditional water verified; wider acceptance tracked in tools/STATUS.md",
     "powerDemandHp": 400,
@@ -56,7 +56,7 @@
     "requirementStatus": "Native services and access passed builds 68/69; physical belt intake, limits, power and saved-queue continuity passed 73/75; economic balance pending",
     "workers": 2,
     "powerDemandHp": 100,
-    "scienceUnlock": 15000,
+    "scienceUnlock": 3000,
     "buildingCost": [{"Id":"Plank","Amount":80},{"Id":"Concrete","Amount":40},{"Id":"MetalBlock","Amount":35},{"Id":"Gear","Amount":20}],
     "capacityPerFood": 100,
     "areaRadius": 8,
@@ -79,7 +79,7 @@
   "lategameWellbeing": {
     "status": "Integrated for build 122 by create_frontier_expansion_content.mjs from the late-game studies; native Iron Teeth needs only (vanilla NeedSpec wellbeing values); not built or tested in game. Unlocks follow the Steel Mill (4,500).",
     "buildings": [
-      {"id":"Bathhouse","name":"Bathhouse","template":"MudBath","toolOrder":38,"scienceUnlock":15000,"powerDemandHp":300,"capacity":12,"effects":[["MudBath",0.6],["Massager",0.6],["WetFur",1.0]],"consumes":[["Water",1.0]],"fullInventoryWorkHours":20,"visitorSlots":"6 seats in the outdoor plunge pool (filled first), 6 inside the closed hall (export_lategame_models.py bathhouse_slots); native MudBath Sitting","slotAnimation":"Sitting","purpose":"Steam baths: warm soak, massage and a wash in one visit; uses pipe-fed or hauled water and power."},
+      {"id":"Bathhouse","name":"Bathhouse","template":"MudBath","toolOrder":39,"scienceUnlock":15000,"powerDemandHp":300,"capacity":12,"effects":[["MudBath",0.6],["Massager",0.6],["WetFur",1.0]],"consumes":[["Water",1.0]],"fullInventoryWorkHours":20,"visitorSlots":"6 seats in the outdoor plunge pool (filled first), 6 inside the closed hall (export_lategame_models.py bathhouse_slots); native MudBath Sitting","slotAnimation":"Sitting","purpose":"Steam baths: warm soak, massage and a wash in one visit; uses pipe-fed or hauled water and power."},
       {"id":"TownPlaza","name":"Town Plaza","template":"ExercisePlaza","toolOrder":161,"scienceUnlock":12000,"powerDemandHp":0,"capacity":15,"effects":[["DancePit",0.6],["Campfire",0.6]],"consumes":[],"visitorSlots":"15 paving spots round the fountain (export_lategame_models.py)","slotAnimation":"Jumping","purpose":"Civic square: music at the bandstand and company round the fountain."},
       {"id":"ObservationDeck","name":"Observation Deck","template":"ExercisePlaza","toolOrder":162,"scienceUnlock":27500,"powerDemandHp":0,"capacity":20,"effects":[["ExercisePlaza",0.6],["RooftopTerrace",0.6]],"consumes":[],"visitorSlots":"20 spots on the layer-12 deck rim (export_lategame_models.py)","slotAnimation":"Sitting","purpose":"Viewing tower: the 48-step helical climb and the view from the deck."}
     ]

@@ -95,7 +95,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Paths",
-    "ToolOrder": 220,
+    "ToolOrder": 228,
     "ToolShape": "Square",
     "Layout": "Rectangle",
     "CustomPivot": {

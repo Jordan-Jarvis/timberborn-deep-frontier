@@ -5,18 +5,18 @@
     "BuildingCost": [
       {
         "Id": "Concrete",
-        "Amount": 342
-      },
-      {
-        "Id": "MetalBlock",
         "Amount": 228
       },
       {
+        "Id": "MetalBlock",
+        "Amount": 152
+      },
+      {
         "Id": "Gear",
-        "Amount": 114
+        "Amount": 76
       }
     ],
-    "ScienceCost": 23750,
+    "ScienceCost": 9500,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": true,
     "DrawRangeBoundsOnIt": true
@@ -512,7 +512,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierConcreteScaffolds",
-    "ToolOrder": 226,
+    "ToolOrder": 213,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

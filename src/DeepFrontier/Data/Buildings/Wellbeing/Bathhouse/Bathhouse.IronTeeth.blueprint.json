@@ -448,7 +448,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "DeepFrontierCivicServices",
-    "ToolOrder": 38,
+    "ToolOrder": 39,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

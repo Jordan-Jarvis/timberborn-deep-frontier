@@ -4069,7 +4069,7 @@
         "RecipeId": "RocketMission.OrbitalObservatory",
         "PrerequisiteMissionId": "",
         "BaseFailureChance": 0.3,
-        "ScienceReward": 100000,
+        "ScienceReward": 250000,
         "LegacyEffect": {
           "NeedId": "OrbitalObservatoryLegacy",
           "PointsPerHour": 10,
@@ -4087,7 +4087,7 @@
         "RecipeId": "RocketMission.RecoveryProbe",
         "PrerequisiteMissionId": "OrbitalObservatory",
         "BaseFailureChance": 0.35,
-        "ScienceReward": 250000,
+        "ScienceReward": 500000,
         "LegacyEffect": {
           "NeedId": "RecoveryProbeLegacy",
           "PointsPerHour": 10,

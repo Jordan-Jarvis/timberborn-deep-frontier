@@ -5,18 +5,18 @@
     "BuildingCost": [
       {
         "Id": "Concrete",
-        "Amount": 504
-      },
-      {
-        "Id": "MetalBlock",
         "Amount": 336
       },
       {
+        "Id": "MetalBlock",
+        "Amount": 224
+      },
+      {
         "Id": "Gear",
-        "Amount": 168
+        "Amount": 112
       }
     ],
-    "ScienceCost": 35000,
+    "ScienceCost": 14000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": true,
     "DrawRangeBoundsOnIt": true
@@ -764,7 +764,7 @@
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "Paths",
-    "ToolOrder": 234,
+    "ToolOrder": 225,
     "ToolShape": "Square",
     "Layout": "Single",
     "CustomPivot": {

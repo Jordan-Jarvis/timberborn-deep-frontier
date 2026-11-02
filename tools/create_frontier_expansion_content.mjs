@@ -295,7 +295,7 @@ const buildingDefinitions = [
   ['FisheryWorks', 'Buildings/Food/FisheryWorks', 'FoodFactory', 'FreshFish,FishOil', 'Food', 113, 80, 3, 900, 'Fishery Works'],
   ['FoodPackagingWorks', 'Buildings/Food/FoodPackagingWorks', 'FoodFactory', 'CannedFish', 'Food', 114, 140, 3, 1400, 'Food Packaging Works'],
   ['PublicHealthLab', 'Buildings/Wellbeing/PublicHealthLab', 'OilPress', 'Medicine', 'Wellbeing', 36, 100, 3, 1000, 'Public Health Lab'],
-  ['GroceryStore', 'Buildings/Food/GroceryStore', 'FoodFactory', '', 'Wellbeing', 39, progression.groceryStore.powerDemandHp, progression.groceryStore.workers, progression.groceryStore.scienceUnlock, 'Grocery Store'],
+  ['GroceryStore', 'Buildings/Food/GroceryStore', 'FoodFactory', '', 'Wellbeing', 38, progression.groceryStore.powerDemandHp, progression.groceryStore.workers, progression.groceryStore.scienceUnlock, 'Grocery Store'],
   ['Restaurant', 'Buildings/Food/Restaurant', 'FoodFactory', progression.restaurant.kitchenRecipes.join(','), 'Wellbeing', 37, progression.restaurant.powerDemandHp, 4, 1000, 'Restaurant'],
   ['Hospital', 'Buildings/Wellbeing/Hospital', 'FoodFactory', '', 'Wellbeing', 40, progression.hospital.powerDemandHp, progression.hospital.workers, progression.hospital.scienceUnlock, 'Hospital'],
   ['Greenhouse', 'Buildings/Food/Greenhouse', 'HydroponicGarden', 'GreenhouseEggplant,GreenhouseKohlrabi,GreenhouseCoffee,GreenhouseAquaponics', 'Food', 112, 35, 1, 600, 'Greenhouse'],

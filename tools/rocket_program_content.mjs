@@ -37,11 +37,11 @@ export const VISUAL_NODES = {RocketNode: 'LaunchPad.Rocket', ExhaustNode: 'Launc
 // Ingredient amounts are one complete rocket and fuel load. Preparation hours
 // are worker-hours of the native recipe cycle (two pad workers halve them).
 export const MISSIONS = [
-  {Id: 'OrbitalObservatory', prerequisite: '', baseFailure: .30, science: 100000, legacyWellbeing: 2, needOrder: 52,
+  {Id: 'OrbitalObservatory', prerequisite: '', baseFailure: .30, science: 250000, legacyWellbeing: 2, needOrder: 52,
     prepHours: 24, icon: 'RocketAirframe',
     ingredients: [['RocketAirframe', 24], ['PropulsionPackage', 12], ['GuidanceComputer', 4], ['RecoveredTelemetry', 2],
       ['LiquidHydrogen', 200], ['LiquidOxygen', 200]]},
-  {Id: 'RecoveryProbe', prerequisite: 'OrbitalObservatory', baseFailure: .35, science: 250000, legacyWellbeing: 3, needOrder: 53,
+  {Id: 'RecoveryProbe', prerequisite: 'OrbitalObservatory', baseFailure: .35, science: 500000, legacyWellbeing: 3, needOrder: 53,
     prepHours: 32, icon: 'MissionPayload',
     ingredients: [['RocketAirframe', 28], ['PropulsionPackage', 14], ['GuidanceComputer', 6], ['MissionPayload', 2],
       ['RecoveredTelemetry', 4], ['LiquidHydrogen', 280], ['LiquidOxygen', 280]]},

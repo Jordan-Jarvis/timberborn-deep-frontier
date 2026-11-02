@@ -5,7 +5,7 @@
     "BuildingCost": [
       {
         "Id": "TreatedPlank",
-        "Amount": 25
+        "Amount": 10
       },
       {
         "Id": "Alloy",
@@ -13,22 +13,18 @@
       },
       {
         "Id": "MachineCore",
-        "Amount": 10
-      },
-      {
-        "Id": "Electronics",
-        "Amount": 5
-      },
-      {
-        "Id": "PowerModule",
         "Amount": 5
       },
       {
         "Id": "Concrete",
-        "Amount": 570
+        "Amount": 200
+      },
+      {
+        "Id": "Gear",
+        "Amount": 15
       }
     ],
-    "ScienceCost": 300000,
+    "ScienceCost": 50000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": false

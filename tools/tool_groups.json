@@ -72,15 +72,15 @@
       "claims": ["Overhang2x1.IronTeeth", "Overhang3x1.IronTeeth", "Overhang4x1.IronTeeth", "Overhang5x1.IronTeeth", "Overhang6x1.IronTeeth"] },
     "DeepFrontierTubeways": { "parent": "Paths", "order": 71, "name": "Tubeways", "icon": "Tubeway.IronTeeth",
       "claims": ["Tubeway.IronTeeth", "VerticalTubeway.IronTeeth", "ImpermeableTubeway.IronTeeth"] },
-    "DeepFrontierTeleporters": { "parent": "Paths", "order": 72, "name": "Teleporters", "icon": "Teleporter.IronTeeth",
+    "DeepFrontierTeleporters": { "parent": "Paths", "order": 74, "name": "Teleporters", "icon": "Teleporter.IronTeeth",
       "claims": ["Teleporter.IronTeeth", "TeleporterRing.IronTeeth"] },
-    "DeepFrontierConcretePlatforms": { "parent": "Paths", "order": 100, "name": "Concrete side platforms", "icon": "ConcreteSidePlatform4x4",
+    "DeepFrontierConcretePlatforms": { "parent": "Paths", "order": 72, "name": "Concrete side platforms", "icon": "ConcreteSidePlatform4x4",
       "templates": ["ConcreteSidePlatform3x3", "ConcreteSidePlatform4x4", "ConcreteSidePlatform5x5"] },
     "DeepFrontierSteelStructures": { "parent": "Paths", "order": 110, "name": "Steel structures", "icon": "SteelDeck5x5",
       "templates": ["SteelColumnH1", "SteelColumnH2", "SteelDeck3x3", "SteelLegDeck3x3H1", "SteelLegDeck3x3H2", "SteelLegDeck3x3H3", "SteelLegDeck3x3H4",
         "SteelColumnH3", "SteelColumnH4", "SteelBridge8x1", "SteelColumnH5", "SteelColumnH6", "SteelBridge10x1", "SteelBridge12x1", "SteelCantilever10x1",
         "SteelCantilever12x1", "SteelBridge15x1", "SteelCantilever15x1", "SteelDeck5x5", "SteelLegDeck5x5H1", "SteelLegDeck5x5H2", "SteelLegDeck5x5H3", "SteelLegDeck5x5H4"] },
-    "DeepFrontierConcreteScaffolds": { "parent": "Paths", "order": 120, "name": "Concrete platforms", "icon": "ConcreteScaffold4x4H2",
+    "DeepFrontierConcreteScaffolds": { "parent": "Paths", "order": 73, "name": "Concrete platforms", "icon": "ConcreteScaffold4x4H2",
       "templates": ["ConcreteOverhang8x1", "ConcreteScaffold3x3H1", "ConcreteScaffold3x3H2", "ConcreteScaffold3x3", "ConcreteScaffold4x4H1", "ConcreteScaffold4x4H2",
         "ConcreteScaffold4x4H3", "ConcreteScaffold5x5H1", "ConcreteScaffold5x5H2", "ConcreteScaffold5x5H3"] },
     "DeepFrontierWaterPower": { "parent": "Power", "order": 11, "name": "Water power", "icon": "LargeWaterWheel.IronTeeth",
@@ -101,10 +101,10 @@
       "claims": ["Dynamite.IronTeeth", "DoubleDynamite.IronTeeth", "TripleDynamite.IronTeeth"] },
     "DeepFrontierMasonryBlocks": { "parent": "Landscaping", "order": 81, "name": "Masonry and concrete", "icon": "ConcreteBlock",
       "templates": ["BrickMasonryBlock", "SandstoneMasonryBlock", "ConcreteBlock", "ConcreteOverflowDam", "ReinforcedDamBlock"] },
-    "DeepFrontierRadioactiveWaste": { "parent": "Water", "order": 120, "name": "Radioactive waste", "icon": "RadioactiveWasteExport",
+    "DeepFrontierRadioactiveWaste": { "parent": "Water", "order": 105, "name": "Radioactive waste", "icon": "RadioactiveWasteExport",
       "templates": ["RadioactiveSludgeRecoveryPump", "RadioactiveSludgeOutfall", "RadioactiveWasteExport", "RadioactiveWasteVault"] },
     "DeepFrontierCivicServices": { "parent": "Wellbeing", "order": 135, "name": "Civic services", "icon": "Hospital",
-      "templates": ["PublicHealthLab", "Restaurant", "Bathhouse", "GroceryStore", "Hospital"] }
+      "templates": ["PublicHealthLab", "Restaurant", "GroceryStore", "Bathhouse", "Hospital"] }
   },
   "nativeOrders": {
     "Storage": [
