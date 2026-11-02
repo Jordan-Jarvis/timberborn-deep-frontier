@@ -17,6 +17,7 @@
     "NoChargeAnimation": "NoEnergy",
     "CarryingCapacityBonus": 4,
     "SpeedMultiplier": 4,
+    "WorkingSpeedMultiplier": 5,
     "LifespanMultiplier": 10,
     "UnplatedWearMultiplier": 5,
     "IlluminationColorId": "DeepFrontierReactorBot",
@@ -147,5 +148,12 @@
       "b": 1,
       "a": 1
     }
+  },
+  "FrontierReactorBotLeakSpec": {
+    "CoolantNeedId": "ReactorBotCoolant",
+    "OverheatHours": 6,
+    "UnmaintainedHours": 24,
+    "VolumePerHour": 0.02,
+    "PulseHours": 1
   }
 }

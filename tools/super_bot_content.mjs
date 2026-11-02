@@ -11,7 +11,9 @@
 // Writes:
 // - Configurations/DeepFrontierReactorBots.blueprint.json: the singleton
 //   FrontierReactorBotSettingsSpec the runtime reads (buffs, need ids, skin:
-//   glow colour, intensity, joint seams and dark plating curve for ReactorBotSkin).
+//   glow colour, intensity, joint seams and dark plating curve for ReactorBotSkin),
+//   and in the same blueprint FrontierReactorBotLeakSpec (ReactorBotLeak: the
+//   overheating and unplated hours before a bot leaks radioactive water, and the rate).
 // - The Bot needs (retrofit parts, charge, coolant, plating) and their
 //   NeedCollection entries. The runtime switches them per bot with native
 //   NeedManager.EnableNeed/DisableNeed: ordinary bots keep only vanilla Energy.
@@ -45,6 +47,7 @@ const defaultRoot = resolve(fileURLToPath(new URL('../', import.meta.url)));
 export const CONFIG = 'tools/super_bots.json';
 export const SETTINGS_PATH = 'Configurations/DeepFrontierReactorBots.blueprint.json';
 export const SETTINGS_SPEC = 'FrontierReactorBotSettingsSpec';
+export const LEAK_SPEC = 'FrontierReactorBotLeakSpec';
 const VANILLA = ['vendor', 'timberborn-modding', 'Assets', 'Tools', 'ImportedAssets', 'Editor', 'Resources'];
 const GOODS = 'GoodCollections/GoodCollection.IronTeeth.blueprint.json';
 const NEEDS = 'NeedCollections/NeedCollection.IronTeeth.blueprint.json';
@@ -81,6 +84,7 @@ export function checkSuperBotConfig(c) {
   else {
     if (!(u.carryingCapacityBonus > 0)) errors.push('upgrade.carryingCapacityBonus must be positive');
     if (!(u.speedMultiplier > 1)) errors.push('upgrade.speedMultiplier must exceed 1');
+    if (!(u.workingSpeedMultiplier > 1)) errors.push('upgrade.workingSpeedMultiplier must exceed 1');
     if (!(u.lifespanMultiplier > 1)) errors.push('upgrade.lifespanMultiplier must exceed 1');
     if (!(u.unplatedWearMultiplier > 1)) errors.push('upgrade.unplatedWearMultiplier must exceed 1');
     if (!Array.isArray(u.replacedNeeds) || !u.replacedNeeds.length) errors.push('upgrade.replacedNeeds must list the vanilla needs a Reactor Bot loses');
@@ -127,6 +131,10 @@ export function checkSuperBotConfig(c) {
       errors.push(`part ${p.id}: 1..4 [good, positive integer] ingredients`);
     if (!Number.isInteger(p.order) || !Array.isArray(p.color) || p.color.length !== 2) errors.push(`part ${p.id}: order and [r, g] colour are required`);
   }
+  const l = c.leak;
+  if (!l) errors.push('leak is missing');
+  else for (const key of ['overheatHours', 'unmaintainedHours', 'volumePerHour', 'pulseHours'])
+    if (!(typeof l[key] === 'number' && l[key] > 0 && Number.isFinite(l[key]))) errors.push(`leak.${key} must be a positive number`);
   if (!s) errors.push('station is missing');
   else {
     if (!/^[A-Z][A-Za-z]+$/.test(s.id ?? '') || s.folder !== `Buildings/Science/${s.id}` || !s.name || !s.flavor) errors.push('station: id, folder Buildings/Science/<id>, name and flavor are required');
@@ -157,6 +165,7 @@ export function settingsBlueprint(c) {
     NoChargeAnimation: u.noChargeAnimation,
     CarryingCapacityBonus: u.carryingCapacityBonus,
     SpeedMultiplier: u.speedMultiplier,
+    WorkingSpeedMultiplier: u.workingSpeedMultiplier,
     LifespanMultiplier: u.lifespanMultiplier,
     UnplatedWearMultiplier: u.unplatedWearMultiplier,
     IlluminationColorId: u.illumination.id,
@@ -168,6 +177,12 @@ export function settingsBlueprint(c) {
     DarkPlatingGamma: u.darkPlating.gamma,
     DarkPlatingScale: u.darkPlating.scale,
     DarkPlatingColor: {...u.darkPlating.color},
+  }, [LEAK_SPEC]: {
+    CoolantNeedId: n.coolant.id,
+    OverheatHours: c.leak.overheatHours,
+    UnmaintainedHours: c.leak.unmaintainedHours,
+    VolumePerHour: c.leak.volumePerHour,
+    PulseHours: c.leak.pulseHours,
   }};
 }
 
@@ -251,9 +266,9 @@ export function localizationRows(c, energy) {
     [`Building.${s.id}.Description`, 'Charges two Reactor Bots at once, burning enriched fuel while it charges. Ordinary bots use the Charging Station.'],
     [`Building.${s.id}.FlavorDescription`, s.flavor],
     ['DeepFrontier.ReactorBot.Panel.Title', 'Reactor retrofit'],
-    ['DeepFrontier.ReactorBot.Panel.Ordinary', `Retrofit with ${parts} to make this bot a Reactor Bot: ${1 + u.carryingCapacityBonus} times the load, ${u.speedMultiplier} times the speed and ${u.lifespanMultiplier} times the lifespan. It charges at a ${s.name} every ${fmt(chargeDays)} days and takes ${coolant} and ${plating} from storage.`],
+    ['DeepFrontier.ReactorBot.Panel.Ordinary', `Retrofit with ${parts} to make this bot a Reactor Bot: ${1 + u.carryingCapacityBonus} times the load, ${u.speedMultiplier} times the movement speed, ${u.workingSpeedMultiplier} times the working speed and ${u.lifespanMultiplier} times the lifespan. It charges at a ${s.name} every ${fmt(chargeDays)} days and takes ${coolant} and ${plating} from storage.`],
     ['DeepFrontier.ReactorBot.Panel.Queued', `Retrofit queued: the bot fetches ${parts} from storage as soon as its district stocks them.`],
-    ['DeepFrontier.ReactorBot.Panel.Upgraded', `Reactor Bot: ${1 + u.carryingCapacityBonus} times the load and ${u.speedMultiplier} times the speed, and it wears out ${u.lifespanMultiplier} times slower. Charges at a ${s.name}.`],
+    ['DeepFrontier.ReactorBot.Panel.Upgraded', `Reactor Bot: ${1 + u.carryingCapacityBonus} times the load, ${u.speedMultiplier} times the movement speed and ${u.workingSpeedMultiplier} times the working speed, and it wears out ${u.lifespanMultiplier} times slower. Charges at a ${s.name}.`],
     ['DeepFrontier.ReactorBot.Panel.Unplated', `No plating: wearing out ${u.unplatedWearMultiplier} times faster until it takes ${plating} from storage.`],
     ['DeepFrontier.ReactorBot.Panel.Queue', 'Retrofit to Reactor Bot'],
     ['DeepFrontier.ReactorBot.Panel.Cancel', 'Cancel retrofit']);

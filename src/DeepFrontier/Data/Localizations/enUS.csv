@@ -877,9 +877,9 @@ Building.ReactorChargingBay.DisplayName,Reactor Charging Bay,Deep Frontier react
 Building.ReactorChargingBay.Description,"Charges two Reactor Bots at once, burning enriched fuel while it charges. Ordinary bots use the Charging Station.",Deep Frontier reactor bots
 Building.ReactorChargingBay.FlavorDescription,"Two hours on the cradle, a week on the job.",Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Title,Reactor retrofit,Deep Frontier reactor bots
-DeepFrontier.ReactorBot.Panel.Ordinary,"Retrofit with a reinforced bot frame and a reactor power cell to make this bot a Reactor Bot: 5 times the load, 4 times the speed and 10 times the lifespan. It charges at a Reactor Charging Bay every 6.9 days and takes reactor coolant water or cryocoolant and steel or alloy from storage.",Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Ordinary,"Retrofit with a reinforced bot frame and a reactor power cell to make this bot a Reactor Bot: 5 times the load, 4 times the movement speed, 5 times the working speed and 10 times the lifespan. It charges at a Reactor Charging Bay every 6.9 days and takes reactor coolant water or cryocoolant and steel or alloy from storage.",Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Queued,Retrofit queued: the bot fetches a reinforced bot frame and a reactor power cell from storage as soon as its district stocks them.,Deep Frontier reactor bots
-DeepFrontier.ReactorBot.Panel.Upgraded,"Reactor Bot: 5 times the load and 4 times the speed, and it wears out 10 times slower. Charges at a Reactor Charging Bay.",Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Upgraded,"Reactor Bot: 5 times the load, 4 times the movement speed and 5 times the working speed, and it wears out 10 times slower. Charges at a Reactor Charging Bay.",Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Unplated,No plating: wearing out 5 times faster until it takes steel or alloy from storage.,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Queue,Retrofit to Reactor Bot,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Cancel,Cancel retrofit,Deep Frontier reactor bots

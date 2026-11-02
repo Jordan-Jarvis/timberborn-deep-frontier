@@ -164,6 +164,29 @@ User rule 2026-10-22: "Irradiated ground should kill plants immediately."
 - **Saves:** no new data. Plants on irradiated ground in an old save die on the first tick.
 - **Cost:** one block lookup per slot when it turns irradiated, on tracked rows only. No per-plant work.
 
+### Reactor Bot leaks (`Scripts/SuperBots/ReactorBotLeak.cs`)
+
+Status 2026-11-02: compile-checked, generated and validated in mirror `botleak`. Not built or played.
+
+User request 2026-11-02: "If they overheat or go unmaintained for too long then they can leak radioactive water on the ground."
+
+- **Conditions** (native need states, read every tick; numbers in `tools/super_bots.json` `leak`):
+  - *overheated:* the coolant need (`ReactorBotCoolant`) is in its native critical state for more than `overheatHours` 6. That is points at 0: the native "Reactor Bot is overheating" status, and the bot refuses work (`NeedPreventingWorkSpec`).
+  - *unmaintained:* the plating need (`ReactorBotPlating`) is exhausted for more than `unmaintainedHours` 24 (`ReactorBot.IsPlated` false, the panel's "No plating" line).
+  - Lifespan wear does not count: every bot ages however well it is kept, and an unplated Reactor Bot already wears 5 times faster.
+  - A condition's hours restart from 0 once it is fixed.
+- **Rate:** while either condition is past its threshold, `volumePerHour` 0.02 radioactive volume per game hour (a tenth of a RadioactiveSludge good), one pulse at once and then one every `pulseHours` 1. That is 0.48 per day, 40% of what a full Radioactive Waste Vault or a blocked Waste Refinery leaks (1.2 per day); `validate_super_bots` keeps it below both. It stops as soon as both conditions are fixed.
+- **Path:** `IRadiationService.AddRadioactiveWater`, the native add path with r = 1, so the existing rules do the rest:
+  - on dry ground the puddle runs off and evaporates, and evaporated radioactive volume becomes soil radiation (10 per unit of volume): a pulse leaves up to 0.2 of soil, tinted ground where plants die at once;
+  - in water it raises r (0.02 in a column 1 deep reads 2%), so pumps on that water refuse until it dilutes below 0.005 and the cutoff removes it, and stored water in irradiated barrels and tanks turns to ContaminatedWater;
+  - beavers wading in it are dosed at 60·r per hour, on the ground at 0.25·s per hour, and hospitals treat them over 10 days;
+  - the Sludge Recovery Pump recovers it; decay and rinsing work as for any radioactive water and soil.
+- **Where (decision):** the bot's own cell, the cell `RadiationExposure` samples for beavers. While the bot is hidden inside a building (`Enterer.CurrentBuilding`), it is that building's doorstep (`PositionedEntrance.DoorstepCoordinates`): the building's blocks keep water out, so the leak runs out of the door. A building without an entrance uses the bot's cell.
+  - `TryFindOpenCell` then picks the open fluid column at that cell. Its floor takes the water natively: the ground, a platform or flat roof top, or the water surface below the bot. Water on a platform or roof runs off its edge natively, so platforms need nothing special.
+  - If the cell is closed to water (inside a water-blocking block), the water goes to the lowest open cell above it, as for waste leaks and meltdowns. A column closed all the way up takes nothing that pulse.
+- **Visible:** no status or notification of its own (the user wants no hand-holding). The native overheating status and the panel's "No plating" line come first, then the yellow water and ground.
+- **Saved** per bot under `DeepFrontier.ReactorBotLeak`: `OverheatedHours`, `UnplatedHours` and `NextPulseHours`, written only while one is non-zero. Saves without it load with no leak history.
+
 ### Sources and sinks
 
 | Path | Implementation |
@@ -173,6 +196,7 @@ User rule 2026-10-22: "Irradiated ground should kill plants immediately."
 | Radioactive tide | `SetSourceRadioactiveShare`: every native source's added non-bad water carries r = `SourceRadioactiveShare` 1 (19.2 radioactive volume per strength-hour from a clean source) |
 | Sludge Recovery Pump | native `WaterInput.DemandCleanWaterAmount` (the pump path). The replayed removal reports its radioactive volume; the pump buffers it (saved) and makes 1 good per 0.2. Water demand = shortfall / (r / (1 − b)), at most `MaxWaterPerCycle` 4. The fresh water pumped with it is used up. The buffer returns as radioactive water when the pump is deleted |
 | Waste Export, refinery | recipes unchanged |
+| Reactor Bot leaks | `ReactorBotLeak`: `AddRadioactiveWater` at the bot's cell, or its building's doorstep, 0.02 per hour while it has overheated for more than 6 h or gone unplated for more than 24 h (previous section) |
 
 ### Gameplay hooks
 

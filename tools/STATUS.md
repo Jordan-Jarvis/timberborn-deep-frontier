@@ -4,6 +4,46 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Reactor Bots: 500% working speed, and radioactive leaks when overheated or unplated (Claude Code session, 2026-11-02, botleak agent; mirror `botleak` on HEAD e5e0f6e + this change; compile-checked; not built or run in game)
+
+- **User:** "Can we make the nuclear bots work at 500% working speed base? If they overheat or go unmaintained for too long then they can leak radioactive water on the ground."
+- **Working speed, native mechanism (decompiled 1.1.2.8):**
+  - `Worker.Tick` sets `WorkingSpeedMultiplier = BonusManager.Multiplier("WorkingSpeed")` and passes it to the animator's `WorkingSpeed` float, which the bot's Working/Building states use as their `SpeedModifier`.
+  - `ProduceExecutor` (`IncreaseProductionProgress(dt x WorkingSpeedMultiplier)`), `BuildExecutor` (`IncreaseBuildTime`), `PlantExecutor` and `WorkAtReservableExecutor` (cutting, gathering, harvesting, scavenging, demolition: duration / multiplier) apply it; so does Deep Frontier's `FisherCatchExecutor`.
+  - `BonusManager` starts every bonus at 1, adds deltas and clamps to the `BonusTypeSpec`: `BonusType.WorkingSpeed` is 0.05..1000, so x5 needs no patch (unlike movement speed, clamped at 2.0). Wellbeing tiers add their own deltas (bots: +0.65 at wellbeing 0, +1.1 at 1, +1.7 at 2, then +0.2 per point), and the wellbeing panel shows the sum minus 1.
+- **Working speed, change:** `upgrade.workingSpeedMultiplier` 5 in `tools/super_bots.json` becomes `FrontierReactorBotSettingsSpec.WorkingSpeedMultiplier`. `ReactorBot.ApplyUpgrade` adds the native delta `5 - 1` on `WorkingSpeed` beside the carrying bonus, so the base goes from 100% to 500%. `ReactorBotSettings.Load` throws if the bonus type's maximum is below it.
+  - Panel rows: "5 times the load, 4 times the movement speed, 5 times the working speed and 10 times the lifespan" (retrofit), and "5 times the load, 4 times the movement speed and 5 times the working speed" (Reactor Bot).
+- **Leaks (`src/DeepFrontier/Scripts/SuperBots/ReactorBotLeak.cs`, own configurator, decorated on `ReactorBot`, no Harmony):**
+  - *Overheated:* the coolant need in its native critical state (points at 0, the native overheating status) for more than `leak.overheatHours` 6.
+  - *Unmaintained:* the plating need exhausted (`ReactorBot.IsPlated` false) for more than `leak.unmaintainedHours` 24. Lifespan wear is not a condition: every bot ages however well it is kept, and an unplated Reactor Bot already wears 5 times faster.
+  - While either has passed its threshold: `IRadiationService.AddRadioactiveWater` of `leak.volumePerHour` 0.02 x `leak.pulseHours` 1, one pulse at once and then hourly. That is 0.48 per day, 40% of a full waste vault's or blocked refinery's leak. It stops when both are fixed, and each condition's hours restart from 0.
+  - *Where:* the bot's cell, or the doorstep of the building it is hidden in (the building's blocks keep water out). `TryFindOpenCell` then puts the water on the floor of the open column there (ground, platform or roof top, or the water surface), or at the lowest open cell above a closed cell, as waste leaks do.
+  - No status or notification of its own.
+  - Saved per bot (`DeepFrontier.ReactorBotLeak`: `OverheatedHours`, `UnplatedHours`, `NextPulseHours`).
+  - Settings: `FrontierReactorBotLeakSpec` (`CoolantNeedId`, `OverheatHours`, `UnmaintainedHours`, `VolumePerHour`, `PulseHours`) in the same `Configurations/DeepFrontierReactorBots.blueprint.json`. `ReactorBotLeakSettings` requires the coolant need to be a critical reactor need.
+  - docs/radiation.md "Reactor Bot leaks".
+- **Checks:**
+  - Canonical generation in the mirror changes exactly the settings blueprint and the two panel rows.
+  - `validate_super_bots` now covers:
+    - `workingSpeedMultiplier` > 1 and within the vanilla `BonusType.WorkingSpeed` clamp;
+    - the `leak` values, and the leak rate below both waste buildings' leaks;
+    - the leak record matching the generator;
+    - `ReactorBot` adding the delta;
+    - `ReactorBotLeak` using the critical state, `IsPlated`, `TryFindOpenCell`, `AddRadioactiveWater`, the doorstep, saving its hours, adding no status or notification, and not subscribing in `Awake`;
+    - the native contract, decompiled from the plugin assemblies: `Worker`, `ProduceExecutor`, `BuildExecutor`, `BonusManager` and `Need.IsInCriticalState`.
+  - Mutation run: 9 seeded faults (working speed 1, a missing `- 1`, a renamed leak field, soil instead of water, the entrance instead of the doorstep, a `StatusToggle`, an edited settings file, and 0.06 per hour against both waste buildings) all reported.
+  - `tools/compile-check`: 0 errors (3 earlier warnings).
+  - `validate_all -Only` super_bots, component_lifecycle, editor_guards, bot_upkeep, automation_content, reactor_bot_workplaces, radiation_content, meltdown_content, workforce_risks, vertical_slice_content, load_order, deep_frontier_manifest: 12/12.
+  - Full `validate_all -SkipBlender`: 68 of 70 pass (`no-game-assets` needs git and passes on this commit's private index; `audit-item-uses` is report-only, unchanged).
+- **In game, to check (not run; the user was playing):**
+  1. Load a save with a Reactor Bot (or, in dev mode, finish a Reactor bot recipe at the Bot Assembler). Its wellbeing panel shows Working speed 400 points above an ordinary bot's at the same wellbeing (+465% against +65% at wellbeing 0). Progress therefore runs (5 + t) / (1 + t) times an ordinary bot's, where t is the wellbeing delta: about 3.4 times at wellbeing 0, 5 times with no wellbeing bonus. Its work animation is fast.
+  2. Empty the district of reactor coolant water and cryocoolant. In dev mode, open the bot's Wellbeing panel, press Edit, and lower Coolant to 0 with the minus button (0.2 per click). The native "Reactor Bot is overheating" status appears. About 6 game hours later a small yellow puddle appears under the bot, or at the doorstep of the building it is in, then one every hour; the ground there turns yellow-green.
+  3. Restock coolant: once the bot drinks, the leaking stops.
+  4. Lower Steel plating to 0 with no steel or alloy stored: after 24 h it leaks the same way; restocking stops it.
+  5. Let a leaking bot stand in a pump's water: the pump refuses ("radioactive" share at the intake).
+  6. Save while it leaks (and during the grace hours) and reload: the hours carry on (no reset to 0).
+  7. A leaking bot on a platform or roof: the water lands there and runs off the edge.
+
 ## Reactor Bot glow: neon-yellow eyes and joint seams in an HDR emission map (Claude Code session, 2026-11-02, industrial-bot agent; mirror `indbot` on HEAD 05a5b83 + this change; compile-checked; offline renders; not built or run in game)
 
 - **User, on the cb8fb87 renders:** "need neon yellow, bright yellow, and maybe we can do the same in between the joints"; "like a glow"; "we don't need to change the shader though".

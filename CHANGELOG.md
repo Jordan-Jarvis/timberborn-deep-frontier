@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Reactor Bots work five times as fast, and leak when neglected
+- **Reactor Bots now work at a base 500% speed** (player request), up from 100%: production, construction, planting, harvesting, cutting and demolition, and their work animations speed up to match. Wellbeing bonuses still add on top, as for any bot.
+- **A Reactor Bot that overheats for more than 6 hours, or goes without plating for more than a day, leaks radioactive water** where it stands, or out of the door of the building it works in: a tenth of a unit an hour, until it has coolant and plating again.
+- It is ordinary radioactive water: pumps that draw it stop, stored water it reaches is contaminated, the ground turns yellow and plants on it die, and beavers who walk or wade through it are irradiated.
+
 ### Reactor Bot workplaces: a third worker type
 - **Every workplace's worker toggle now has a third button, Reactor Bots, furthest right** (player request), in the building panel and the batch control window. The modes are separate:
   - Beaver workplaces take beavers.

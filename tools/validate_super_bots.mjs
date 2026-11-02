@@ -12,13 +12,22 @@
 //   within 5 degrees, at full saturation and value) written to an HDR emission map, the joint seams
 //   come from the body mesh, the BotURP texture names ReactorBotSkin sets match the official shader
 //   graph, no native texture setter replaces them, and the dark plating follows the plating need;
+// - working speed: ReactorBot adds the native WorkingSpeed bonus (delta workingSpeedMultiplier - 1), whose
+//   clamp allows it, and the native Worker, ProduceExecutor and BuildExecutor still read and apply it
+//   (decompiled from the project's Timberborn plugin assemblies with tools/dotnet/ilspycmd.exe);
+// - leaks: ReactorBotLeak's settings record, its conditions (the coolant need's native critical state,
+//   the plating need), the radiation system's own add path and open-cell rule, the doorstep while inside
+//   a building, saved state, no notices of its own; the coolant need is critical (Need.IsInCriticalState);
+//   the rate stays below a waste building's leak;
 // - when generated: the settings, needs, goods, recipes, manufactories, upkeep effects, light colour, charging bay, collections, icons, localization and its automation declaration.
 // Exits 1 on any error. Runtime behaviour is verified in game, not here.
 import {readFile, access} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {loadSuperBotConfig, checkSuperBotConfig, settingsBlueprint, glowJoints, needBlueprints, partGood, partRecipe, consumptionEffects,
-  illuminationBlueprint, stationComponents, localizationRows, chargeDailyDelta, allNeeds, PANEL_KEYS, SETTINGS_PATH, SETTINGS_SPEC} from './super_bot_content.mjs';
+  illuminationBlueprint, stationComponents, localizationRows, chargeDailyDelta, allNeeds, PANEL_KEYS, SETTINGS_PATH, SETTINGS_SPEC, LEAK_SPEC} from './super_bot_content.mjs';
+import {VAULT, REFINERY} from './meltdown_content.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const dataRoot = resolve(process.argv[2] ?? resolve(root, 'src', 'DeepFrontier', 'Data'));
@@ -40,6 +49,26 @@ const body = settingsSource.match(/record FrontierReactorBotSettingsSpec\b[^{]*\
 const fields = body ? [...body.matchAll(/\[Serialize\] public [\w<>.]+ (\w+) \{/g)].map((m) => m[1]).sort() : [];
 if (!same(fields, Object.keys(settingsBlueprint(config)[SETTINGS_SPEC]).sort()))
   errors.push(`runtime: FrontierReactorBotSettingsSpec serializes [${fields}], generator writes [${Object.keys(settingsBlueprint(config)[SETTINGS_SPEC]).sort()}]`);
+const leakSource = await readFile(resolve(scripts, 'ReactorBotLeak.cs'), 'utf8');
+const leakBody = leakSource.match(/record FrontierReactorBotLeakSpec\b[^{]*\{([\s\S]*?)\n  \}/)?.[1];
+const leakFields = leakBody ? [...leakBody.matchAll(/\[Serialize\] public [\w<>.]+ (\w+) \{/g)].map((m) => m[1]).sort() : [];
+if (!same(leakFields, Object.keys(settingsBlueprint(config)[LEAK_SPEC]).sort()))
+  errors.push(`runtime: FrontierReactorBotLeakSpec serializes [${leakFields}], generator writes [${Object.keys(settingsBlueprint(config)[LEAK_SPEC]).sort()}]`);
+// The leak: native need states, the radiation system's own open-cell rule and add path, the doorstep while
+// hidden in a building, saved hours, decorated on every bot's ReactorBot, and no status or notification.
+for (const [needle, what] of [
+  ['_needs.NeedIsInCriticalState(Spec.CoolantNeedId)', "reads overheating as the coolant need's native critical state"],
+  ['_unplatedHours=_bot.IsPlated?0f:', 'reads unmaintained as the plating need (ReactorBot.IsPlated)'],
+  ['_overheatedHours>Spec.OverheatHours||_unplatedHours>Spec.UnmaintainedHours', 'leaks past either threshold'],
+  ['_radiation.TryFindOpenCell(new Vector2Int(at.x,at.y),at.z,out var cell)', 'finds the cell with IRadiationService.TryFindOpenCell'],
+  ['_radiation.AddRadioactiveWater(cell,Spec.VolumePerHour*Spec.PulseHours)', 'adds VolumePerHour x PulseHours through IRadiationService.AddRadioactiveWater'],
+  ['block.PositionedEntrance.DoorstepCoordinates', 'leaks at the doorstep while inside a building'],
+  ['NavigationCoordinateSystem.WorldToGridInt(Transform.position)', "leaks at the bot's own cell outside"],
+  ['IPersistentEntity', 'saves its hours'],
+  ['AddDecorator<ReactorBot,ReactorBotLeak>()', 'is decorated on ReactorBot'],
+]) if (!leakSource.includes(needle)) errors.push(`runtime: ReactorBotLeak no longer ${what} (${needle})`);
+if (/NotificationBus|StatusToggle|StatusSubject|IAlertFragment/.test(leakSource)) errors.push('runtime: ReactorBotLeak must add no notice or status of its own (the native need statuses and the yellow water show it)');
+if (/\+=/.test(leakSource.match(/public void Awake\(\) \{([\s\S]*?)\n    \}/)?.[1] ?? '')) errors.push('runtime: ReactorBotLeak subscribes to events in Awake (subscribe after loading, as ReactorBot does)');
 const configurator = await readFile(resolve(scripts, 'ReactorBotConfigurator.cs'), 'utf8');
 if (!/AddDecorator<BotSpec,ReactorBot>\(\)/.test(configurator)) errors.push('runtime: ReactorBot is not decorated on the native BotSpec');
 const panel = await readFile(resolve(scripts, 'ReactorBotPanel.cs'), 'utf8');
@@ -51,6 +80,8 @@ const reactorBot = await readFile(resolve(scripts, 'ReactorBot.cs'), 'utf8');
 if (!reactorBot.includes('_material.SetTexture(ReactorBotSkin.BaseMapId,IsPlated?_textures.Plated:_textures.Unplated)') || !reactorBot.includes('e.NeedSpec.Id==Spec.PlatingNeedId) { ApplyPlating();')
     || !reactorBot.includes('_material.SetTexture(ReactorBotSkin.EmissionMapId,_textures.Emission)'))
   errors.push('runtime: ReactorBot no longer sets the yellow eyes and swaps the dark plating with the plating need');
+if (!reactorBot.includes('WorkingSpeedBonusId="WorkingSpeed"') || !reactorBot.includes('_bonuses.AddBonus(WorkingSpeedBonusId,Spec.WorkingSpeedMultiplier-1f)'))
+  errors.push('runtime: ReactorBot no longer adds the native WorkingSpeed bonus (delta WorkingSpeedMultiplier - 1)');
 const radiation = await readFile(resolve(root, 'src', 'DeepFrontier', 'Scripts', 'Radiation', 'RadiationMaterials.cs'), 'utf8');
 const yellow = radiation.match(/\bWaterTintColor = new Color\(([\d.]+)f, ([\d.]+)f, ([\d.]+)f,/)?.slice(1).map(Number);
 if (!yellow) errors.push('runtime: RadiationMaterials.WaterTintColor (the radiation yellow) not found');
@@ -96,6 +127,33 @@ const carry = await readJson(resolve(vanilla, 'BonusTypes', 'BonusType.CarryingC
 if (!speed || speed.BonusTypeSpec.MaximumValue >= config.upgrade.speedMultiplier) errors.push('native: MovementSpeed bonus no longer clamps below the speed multiplier; reconsider the speed patch');
 if (!carry || 1 + config.upgrade.carryingCapacityBonus > carry.BonusTypeSpec.MaximumValue) errors.push('native: CarryingCapacity bonus clamps below the carrying buff');
 if (!(await exists(resolve(root, 'tools', 'asset-pipeline', `lategame_${config.station.id}.py`)))) errors.push(`art: tools/asset-pipeline/lategame_${config.station.id}.py is missing`);
+const working = await readJson(resolve(vanilla, 'BonusTypes', 'BonusType.WorkingSpeed.blueprint.json')).catch(() => null);
+if (!working || working.BonusTypeSpec.Id !== 'WorkingSpeed' || working.BonusTypeSpec.MaximumValue < config.upgrade.workingSpeedMultiplier)
+  errors.push(`native: the WorkingSpeed bonus clamps below x${config.upgrade.workingSpeedMultiplier}; reconsider the working speed`);
+if (!needBlueprints(config, energy, grease)[config.needs.coolant.id].CriticalNeedSpec) errors.push("catalog: the leak's coolant need must be critical (its critical state is overheating)");
+
+// Native contract (Timberborn 1.1.2.8), decompiled from the project's plugin assemblies.
+const plugins = resolve(root, 'vendor', 'timberborn-modding', 'Assets', 'Plugins', 'Timberborn');
+const decompile = (dll, type) => {
+  try {
+    return execFileSync(resolve(root, 'tools', 'dotnet', 'ilspycmd.exe'), [resolve(plugins, dll), '-r', plugins, '-t', type], {encoding: 'utf8', maxBuffer: 64 << 20});
+  } catch (error) {
+    errors.push(`native: ${dll} ${type}: decompilation failed (${error.message.split('\n')[0]})`);
+    return '';
+  }
+};
+for (const [dll, type, patterns, what] of [
+  ['Timberborn.WorkSystem.dll', 'Timberborn.WorkSystem.Worker', [/WorkingSpeedBonusId = "WorkingSpeed"/, /WorkingSpeedMultiplier = _bonusManager\.Multiplier\(WorkingSpeedBonusId\)/],
+    'Worker.Tick reads the WorkingSpeed bonus into WorkingSpeedMultiplier'],
+  ['Timberborn.Workshops.dll', 'Timberborn.Workshops.ProduceExecutor', [/IncreaseProductionProgress\(deltaTimeInHours \* _worker\.WorkingSpeedMultiplier\)/], 'production progress scales with WorkingSpeedMultiplier'],
+  ['Timberborn.ConstructionSites.dll', 'Timberborn.ConstructionSites.BuildExecutor', [/IncreaseBuildTime\(deltaTimeInHours \* _worker\.WorkingSpeedMultiplier\)/], 'construction progress scales with WorkingSpeedMultiplier'],
+  ['Timberborn.BonusSystem.dll', 'Timberborn.BonusSystem.BonusManager', [/new Bonus\(1f, spec\.MinimumValue, spec\.MaximumValue\)/, /_bonuses\[bonusId\]\.ModifyValue\(multiplierDelta\)/, /Mathf\.Clamp\(_value, _min, _max\)/],
+    'bonuses start at 1, add deltas and clamp to the bonus type'],
+  ['Timberborn.NeedSystem.dll', 'Timberborn.NeedSystem.Need', [/if \(IsCritical\)\s*\{\s*return !IsFavorable;/], 'a critical need is in its critical state while not favourable'],
+]) {
+  const source = decompile(dll, type);
+  if (source && !patterns.every((p) => p.test(source))) errors.push(`native: ${type}: no longer true that ${what}`);
+}
 
 // Generated data.
 const settingsPath = resolve(dataRoot, SETTINGS_PATH);
@@ -132,6 +190,12 @@ if (applied) {
   for (const part of config.parts) if (!goods.includes(part.id)) errors.push(`GoodCollection lacks ${part.id}`);
   const needs = (await readJson(resolve(dataRoot, 'NeedCollections', 'NeedCollection.IronTeeth.blueprint.json'))).NeedCollectionSpec['Needs#append'];
   for (const id of needIds) if (!needs.includes(id)) errors.push(`NeedCollection lacks ${id}`);
+  // Modest: a leaking bot releases less than a full waste vault or a blocked refinery.
+  for (const building of [VAULT, REFINERY]) {
+    const spec = (await readJson(resolve(dataRoot, `${building}.json`))).WasteLeakSpec;
+    const rate = spec.GoodsPerLeak * spec.SludgeVolumePerGood / spec.LeakIntervalHours;
+    if (!(config.leak.volumePerHour < rate)) errors.push(`catalog: leak.volumePerHour ${config.leak.volumePerHour} must stay below ${building}'s leak (${rate.toFixed(3)} per hour)`);
+  }
   const light = resolve(dataRoot, 'IlluminationColors', `IlluminationColor.${config.upgrade.illumination.id}.blueprint.json`);
   if (!await exists(light) || !same(await readJson(light), illuminationBlueprint(config))) errors.push('Reactor Bot illumination colour missing or different');
 
@@ -163,4 +227,5 @@ if (errors.length) {
 }
 const days = 1 / -chargeDailyDelta(config, energy);
 console.log(`Reactor bots: OK (${applied ? 'applied data' : 'catalog only'}; x${1 + config.upgrade.carryingCapacityBonus} load, x${config.upgrade.speedMultiplier} speed, ` +
-  `x${config.upgrade.lifespanMultiplier} lifespan, charge every ${days.toFixed(1)} days at ${config.station.id} ${config.station.powerInput} hp).`);
+  `x${config.upgrade.workingSpeedMultiplier} working speed, x${config.upgrade.lifespanMultiplier} lifespan, charge every ${days.toFixed(1)} days at ${config.station.id} ${config.station.powerInput} hp; ` +
+  `leaks ${config.leak.volumePerHour}/h after ${config.leak.overheatHours} h overheated or ${config.leak.unmaintainedHours} h unplated).`);

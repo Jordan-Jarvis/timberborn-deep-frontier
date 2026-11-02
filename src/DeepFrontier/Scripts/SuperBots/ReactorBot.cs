@@ -41,6 +41,10 @@ namespace DeepFrontier.Scripts.SuperBots {
     internal enum State { Ordinary, Queued, Reactor }
 
     private static readonly string CarryingCapacityBonusId="CarryingCapacity"; // native GoodCarrier bonus id
+    // Native Worker bonus id: Worker.Tick sets WorkingSpeedMultiplier from it,
+    // which scales production, construction, planting, yield removal and
+    // demolition progress and the work animations.
+    internal static readonly string WorkingSpeedBonusId="WorkingSpeed";
     private static readonly ComponentKey Key=new("DeepFrontier.ReactorBot");
     private static readonly PropertyKey<string> StateKey=new("State");
 
@@ -159,6 +163,8 @@ namespace DeepFrontier.Scripts.SuperBots {
     private void ApplyUpgrade() {
       if(!_buffed) {
         _bonuses.AddBonus(CarryingCapacityBonusId,Spec.CarryingCapacityBonus);
+        // Native bonuses start at 1 and add deltas (wellbeing tiers add theirs on top).
+        _bonuses.AddBonus(WorkingSpeedBonusId,Spec.WorkingSpeedMultiplier-1f);
         _buffed=true;
       }
       _materialColorer.SetLightingColor(this,_settings.IlluminationColor);

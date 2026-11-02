@@ -2,6 +2,7 @@ using System;
 using System.Collections.Immutable;
 using System.Linq;
 using Timberborn.BlueprintSystem;
+using Timberborn.BonusSystem;
 using Timberborn.GameFactionSystem;
 using Timberborn.Illumination;
 using Timberborn.SingletonSystem;
@@ -30,6 +31,9 @@ namespace DeepFrontier.Scripts.SuperBots {
     [Serialize] public float CarryingCapacityBonus { get; init; }
     // Multiplies WalkerSpeedManager's base speed (the native MovementSpeed bonus clamps at 2.0).
     [Serialize] public float SpeedMultiplier { get; init; }
+    // Base working speed: native BonusManager delta WorkingSpeedMultiplier - 1 on WorkingSpeed
+    // (bonus type clamps 0.05..1000), which Worker.WorkingSpeedMultiplier reads.
+    [Serialize] public float WorkingSpeedMultiplier { get; init; }
     // Divides every deterioration tick (native, workplace and unplated wear).
     [Serialize] public float LifespanMultiplier { get; init; }
     [Serialize] public float UnplatedWearMultiplier { get; init; }
@@ -76,8 +80,12 @@ namespace DeepFrontier.Scripts.SuperBots {
         throw new InvalidOperationException("Reactor bots: settings list no retrofit, reactor or replaced needs; regenerate tools/super_bot_content.mjs");
       if(!Spec.ReactorNeedIds.Contains(Spec.ChargeNeedId)||!Spec.ReactorNeedIds.Contains(Spec.PlatingNeedId))
         throw new InvalidOperationException("Reactor bots: the charge and plating needs must be reactor needs");
-      if(!(Spec.CarryingCapacityBonus>0f&&Spec.SpeedMultiplier>1f&&Spec.LifespanMultiplier>1f&&Spec.UnplatedWearMultiplier>1f))
+      if(!(Spec.CarryingCapacityBonus>0f&&Spec.SpeedMultiplier>1f&&Spec.WorkingSpeedMultiplier>1f&&Spec.LifespanMultiplier>1f&&Spec.UnplatedWearMultiplier>1f))
         throw new InvalidOperationException("Reactor bots: invalid buff values in the settings");
+      // The native clamp must not cut the working speed (BonusManager.Multiplier clamps at the bonus type's maximum).
+      var working=_specs.GetSpecs<BonusTypeSpec>().Single(b=>b.Id==ReactorBot.WorkingSpeedBonusId);
+      if(working.MaximumValue<Spec.WorkingSpeedMultiplier)
+        throw new InvalidOperationException($"Reactor bots: the native {working.Id} bonus clamps at {working.MaximumValue}, below the x{Spec.WorkingSpeedMultiplier} working speed");
       if(!(Spec.DarkPlatingGamma>=1f&&Spec.DarkPlatingScale>0f&&Spec.DarkPlatingScale<1f&&Spec.DarkPlatingColor.maxColorComponent<=1f
            &&Spec.GlowColor.maxColorComponent>0f&&Spec.GlowIntensity>=1f&&Spec.GlowRim>0f&&Spec.GlowJointGain>0f
            &&!Spec.GlowJoints.IsDefaultOrEmpty&&Spec.GlowJoints.All(j=>!string.IsNullOrEmpty(j.Name)&&j.Radius>0f)))
