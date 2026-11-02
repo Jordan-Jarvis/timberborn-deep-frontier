@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.8.4 (2026-11-02)
+
 ### Neon green windows where Reactor Bots work
 - **A workplace's windows now glow neon green while a Reactor Bot works there** (player request), where they used to glow the bot blue. Ordinary bots still light them blue, and beavers the usual warm light.
 - **With a mixed crew** the windows are green while at least one Reactor Bot is working, and blue again once only ordinary bots are.
@@ -25,7 +27,6 @@
 - With Moddable Weathers, its Weather Settings start from your new-game choice and can still be changed there during the game.
 
 ### Fixes
-- **Loading a save with Reactor Bots no longer crashes.** The bot reacted to its needs being restored during loading as if they had changed in play, before its skin existed; it now listens for need changes only once loading is done.
 - **Selecting the Bot Assembler no longer freezes the game.** Deep Frontier adds a second recipe (Reactor bot), so the assembler shows a recipe list, and the base game's own bot recipe had no icon for that list (player report: a NullReferenceException and a soft-lock on selecting the Bot Assembler). The base recipe now uses the Bot Assembler's icon.
 - **The Bot Assembler's second recipe is now called Reactor bot, and it builds Reactor Bots.** It was called Industrial bot, and its bots came out as ordinary bots. Now each one is a Reactor Bot: 5 times the load, 4 times the speed and 10 times the lifespan, charged at a Reactor Charging Bay, with coolant and steel plating from storage. It is made from the Reactor Bot retrofit parts: a reinforced bot frame (in place of the chassis), a reactor power cell, four limbs and a head, in a third of the vanilla time, so it arrives with the reactor power cell, shortly before the Reactor Charging Bay. Ordinary bots can still be retrofitted, bots already in your colony keep what they are, and a Bot Assembler set to the old recipe keeps it.
 - **Reactor Bots stand out:** blackened steel plating, and neon-yellow eyes and joint seams that glow by day and light up at night (neck, shoulders, elbows, hips, knees, ankles and tail). Until now the eyes stayed the base game's cyan and the light grey tint barely showed. A Reactor Bot out of plating shows its bare light body, still glowing, until it takes steel or alloy.
