@@ -4,6 +4,7 @@ import {solidPowerFaces} from './power_faces.mjs';
 import {industrialBlocks,industrialColliders} from './industrial_occupancy.mjs';
 import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {applyVanillaSmoke,sceneSmokeRegistration} from './vanilla_smoke.mjs';
+import {doorstepOverUnderstructure} from './understructure_access.mjs';
 const layouts=JSON.parse(await readFile(new URL('./industrial-layouts.json',import.meta.url),'utf8'));
 const xyz=([X,Y,Z])=>({X,Y,Z});
 // Grid-registered artwork: native grid door contract and wall-measured shaft
@@ -117,6 +118,16 @@ export async function applyIndustrialLayout(value,building){
   // No building-internal walking graph or adaptive rails.
   delete value.BlockObjectNavMeshSettingsSpec;
   delete value.BuildingWalkwaySpec;
+  // The quarry's doorstep stands over its seam, Top only: the entrance reaches
+  // it along an added navmesh edge, as on vanilla EfficientMine
+  // (understructure_access.mjs).
+  if(ident==='MineralQuarry'){
+    const doorstep=[d.entrance[0],d.entrance[1]+1,d.entrance[2]];
+    if(blocks[index(doorstep)].Occupations!=='Top')throw new Error(`${ident}: doorstep ${doorstep} is not a Top-only cell over the seam`);
+    const access=doorstepOverUnderstructure(d.entrance,doorstep,ident);
+    value.BlockObjectNavMeshSettingsSpec={NoAutoWalls:false,GenerateFloorsOnStackable:true,EdgeGroups:[access.edgeGroup],UnblockedCoordinates:[],BlockedEdges:[]};
+    value.BuildingAccessibleSpec.LocalAccess=access.localAccess;
+  }
   value.TransformSlotInitializerSpec={Slots:[{SlotKeyword:'Entrance',Animation:'ForcedIdle',Inanimate:false,RandomizeYRotation:false,WaterSlot:false}]};
   value.WorkplaceSlotManagerSpec={};value.WorkshopWorkerHiderSpec={};
   value.SimpleManufactoryBehaviorsSpec={};

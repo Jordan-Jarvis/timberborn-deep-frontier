@@ -112,13 +112,13 @@ namespace DeepFrontier.Scripts {
         _building.GetComponent<PausableBuilding>().Pause();
         // The fixture follows the installed laboratory blueprint, not a size
         // literal (5x4x3 since the 2026-11-01 shrink). Freed ground: every
-        // open ground cell inside the bounds, plus the rear row the 2026-10-22
-        // footprint pass dropped (the former footprint ended at local y 8).
+        // open ground cell inside the bounds (none since the 5x4 laboratory
+        // covers all of them), plus the rear rows the footprint passes dropped
+        // (the former footprint ended at local y 8).
         var spec=_building.GetComponent<BlockObjectSpec>();
         var size=spec.Size;
         var openGround=spec.GetBlocks(new Placement(Vector3Int.zero,Orientation.Cw0,FlipMode.Unflipped))
           .Where(b=>b.Coordinates.z==0&&!b.IsOccupied).Select(b=>b.Coordinates).ToArray();
-        Require(openGround.Length>0,"Installed MaterialsLaboratory has no open ground cell inside its bounds");
         FreedCellProbe.Require(_templates,_validator,_building,
           openGround.Concat(FreedCellProbe.Outside(0,size.x-1,0,8,size)),"MaterialsLaboratory",Pass);
         // The road runs along the entrance row to the district path at x 173.

@@ -34,7 +34,7 @@ namespace DeepFrontier.Scripts {
     private static readonly string[] Templates = {
       "Restaurant", "GroceryStore", "Hospital", "OilPowerPlant", "CoalPowerPlant", "NuclearReactor", "DeepProcessor", "SteelMill",
       "FisheryWorks", "FishHatchery", "Greenhouse", "Bathhouse", "TownPlaza", "CementKiln", "ConcreteMixer", "ChemicalWorks",
-      "LaunchPad", "MissionControl", "DeepDrill", "DeepMine", "ReinforcedHydroTurbine", "PublicHealthLab" };
+      "LaunchPad", "MissionControl", "DeepDrill", "DeepMine", "ReinforcedHydroTurbine", "PublicHealthLab", "SandstoneQuarry", "LimestoneQuarry" };
     private static readonly float[] Angles = { 35f, 215f };
     private readonly EntityRegistry _entities;
     private readonly CameraService _camera;

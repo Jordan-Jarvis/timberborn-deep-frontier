@@ -31,9 +31,19 @@ for ident,frames in [('StoneCrusher',61),('CementKiln',241),('SandstoneQuarry',4
     # These machines have no walkable decks, balconies or rails (2026-10-21):
     # no walkway spec, building navigation edges or rail nodes may remain. A
     # navmesh spec may only switch on native floors over platformable roofs
-    # (roof_deck_content.mjs: GenerateFloorsOnStackable, no edges).
+    # (roof_deck_content.mjs: GenerateFloorsOnStackable, no edges). A quarry's
+    # doorstep stands over its seam (Top only) and takes exactly vanilla
+    # EfficientMine's entrance edge into it (tools/understructure_access.mjs).
     nav=bp.get('BlockObjectNavMeshSettingsSpec')
-    assert 'BuildingWalkwaySpec' not in bp and (nav is None or not (nav['EdgeGroups'] or nav['UnblockedCoordinates'] or nav['BlockedEdges'])),(ident,'Walkway data remains')
+    edges=nav['EdgeGroups'] if nav else []
+    if 'UnderstructureConstraintSpec' in bp:
+        e=bp['BlockObjectSpec']['Entrance']['Coordinates']
+        door={'Start':{'X':e['X'],'Y':e['Y'],'Z':0},'End':{'X':e['X'],'Y':e['Y']+1,'Z':0},'IsTwoWay':True}
+        assert len(edges)==1 and edges[0]['AddedEdges']==[door] and not edges[0]['IsPath'],(ident,'An understructure doorstep needs exactly the entrance edge into it',edges)
+        access=bp['BuildingAccessibleSpec']['LocalAccess']
+        assert (access['X'],access['Y'],access['Z'])==(e['X']+.5,0,e['Y']+1.5),(ident,'Access must be the doorstep centre',access)
+        edges=[]
+    assert 'BuildingWalkwaySpec' not in bp and (nav is None or not (edges or nav['UnblockedCoordinates'] or nav['BlockedEdges'])),(ident,'Walkway data remains')
     assert not any('Rail' in n and ('.Post' in n or '.Panel' in n or '.CellPart' in n) for n in names),(ident,'Rail nodes remain')
     assert not any(n.startswith('WalkwayJoin.') for n in names),(ident,'Walkway joins remain')
     tracks=[a for n in model.nodes for a in n.nodeAnimations]

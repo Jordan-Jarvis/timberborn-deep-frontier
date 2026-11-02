@@ -26,6 +26,7 @@ import {fileURLToPath, pathToFileURL} from 'node:url';
 import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {solidPowerFaces} from './power_faces.mjs';
 import {applyVanillaSmoke} from './vanilla_smoke.mjs';
+import {doorstepOverUnderstructure} from './understructure_access.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = async (path) => JSON.parse(await readFile(new URL(path, root), 'utf8'));
@@ -209,6 +210,17 @@ export async function lategameBlueprint(value, id, {understructure, terrace, ove
   // Shafts and colliders above follow the solid cells; only the occupation
   // over the marker narrows to Top.
   const understructureCells = understructure ? understructureCore(blocks, size, understructure, door, id) : 0;
+  // A doorstep over the marker is Top only: the entrance reaches it along an
+  // added navmesh edge, as on vanilla EfficientMine (understructure_access.mjs).
+  if (understructure) {
+    const [x0, y0, x1, y1] = understructure.core, [sx, sy] = door.doorstep;
+    if (sx >= x0 && sx <= x1 && sy >= y0 && sy <= y1) {
+      const access = doorstepOverUnderstructure(door.entrance, door.doorstep, id);
+      value.BlockObjectNavMeshSettingsSpec = {NoAutoWalls: false, GenerateFloorsOnStackable: true, EdgeGroups: [access.edgeGroup],
+        UnblockedCoordinates: [], BlockedEdges: []};
+      value.BuildingAccessibleSpec = {...value.BuildingAccessibleSpec, LocalAccess: access.localAccess};
+    }
+  }
   const terraceCells = terrace ? roofTerrace(blocks, size, terrace, id) : 0;
   const overhangCells = overhangs ? groundOverhangs(blocks, size, overhangs, door, id) : 0;
   // Every study animates its machinery. Workshops run it with the native

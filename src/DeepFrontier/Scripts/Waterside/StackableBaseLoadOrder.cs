@@ -70,8 +70,12 @@ namespace DeepFrontier.Scripts {
       _patched=true;
     }
 
+    // One postfix on GetHighestOccupation for both load-order rules: deck
+    // carriers first, then buildings whose footprint changed
+    // (FootprintChangeLoadOrder.cs), then native order.
     private static void Postfix(BlockObject blockObject,ref int __result) {
       if(LoadsFirst(blockObject))__result=SupportFirst;
+      else if(FootprintChangeLoadOrder.LoadsBeforeOccupants(blockObject))__result=FootprintChangeLoadOrder.Rank;
     }
 #endif
   }

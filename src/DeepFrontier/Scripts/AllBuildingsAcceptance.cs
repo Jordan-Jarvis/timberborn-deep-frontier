@@ -126,7 +126,7 @@ namespace DeepFrontier.Scripts {
       public BlockObject Valve,Tank;public int PipeBaseline;public bool PipeChecked;
       public readonly HashSet<Enterer> Visitors=new();public int MaxInside;
       public JObject Icon;
-      public JObject Site;public Orientation Orientation=Orientation.Cw0;public int Produced;
+      public JObject Site;public Orientation Orientation=Orientation.Cw0;public int Produced;public int NeedHolders=-1;
       public int Reemployed;public float LastReemploy;public bool InputRechecked;public bool InputRetry;public bool Entered;public float AccessDistance=float.MaxValue;public readonly List<string> Refusals=new();
       public KitchenRun Kitchen;
       public MechanicalNode Node=>Building?Building.GetComponent<MechanicalNode>():null;
@@ -544,6 +544,10 @@ namespace DeepFrontier.Scripts {
       if(s.Site!=null&&_siteBatch){PlaceOnSite(s,p);return;}
       bool site=s.Blueprint.Specs.Any(c=>SiteSpecs.Contains(c.GetType().Name)||c.GetType().Name.StartsWith("Water",StringComparison.Ordinal))||
         s.Blueprint.HasSpec<PlaceableBlockObjectSpec>()&&s.Blueprint.GetSpec<PlaceableBlockObjectSpec>().CanBeAttachedToTerrainSide;
+      // Steel bridges span open ground: every block past the first needs MatterBelow Air (a gap), which
+      // the levelled pad never has.
+      int spans=s.Spec.GetBlocks(p).Count(k=>k.MatterBelow==MatterBelow.Air);
+      if(spans>0&&!_validator.BlocksValid(s.Spec,p)){Add(s,"placement","SITE","spans open air: "+spans+" blocks need MatterBelow Air (a gap below), which the flat pad does not have");return;}
       if(!_validator.BlocksValid(s.Spec,p)) {
         if(site){Add(s,"placement","SITE","native validator rejects a dry flat pad (site-specific building: "+
           string.Join("/",s.Blueprint.Specs.Select(c=>c.GetType().Name).Where(n=>SiteSpecs.Contains(n)||n.StartsWith("Water",StringComparison.Ordinal)))+")");return;}
@@ -556,6 +560,13 @@ namespace DeepFrontier.Scripts {
         throw;
       }
       s.Placed=true;
+      // A Technical School only opens once the player chooses a profession (Workforce/SpecialistSchool.cs).
+      var school=s.Building.GetComponent<SpecialistSchool>();
+      if(school&&school.Discipline==null) {
+        var discipline=school.Disciplines.OrderBy(d=>d,StringComparer.Ordinal).First();
+        school.Teach(discipline);
+        Add(s,"school program","INFO","teaches "+discipline+" (of "+string.Join(", ",school.Disciplines.OrderBy(d=>d,StringComparer.Ordinal))+")");
+      }
       var expected=s.Spec.GetBlocks(s.Building.Placement).Where(k=>k.IsOccupied).Select(k=>k.Coordinates).ToList();
       Record(s,"placement",Occupied(s.Building).SetEquals(expected)&&expected.All(c=>_blocks.GetObjectsAt(c).Contains(s.Building)),
         "finished at "+s.Building.Coordinates+"; "+expected.Count+" occupied cells registered");
@@ -581,9 +592,16 @@ namespace DeepFrontier.Scripts {
       if(IsRoad(c)){s.EntrancePath=_blocks.GetObjectsAt(c).First(b=>b.GetComponent<TemplateSpec>()?.TemplateName=="Path");return;}
       // A player reaches a building with an ordinary Path on its native Entrance cell, as in vanilla
       // (tools/native_entrance.mjs, validate_building_entrances.mjs). No special access is built: an
-      // Entrance on the building's own block (FisheryWorks and FishHatchery before 2026-10-26) fails.
-      if(_blocks.GetObjectsAt(c).Contains(s.Building)){Record(s,"entrance takes a plain player Path",false,"entrance "+c+" is the building's own block: a player's Path cannot be laid there");return;}
-      if(!Free(_path,c)){Record(s,"entrance takes a plain player Path",false,"native Path rejected at entrance "+c);return;}
+      // Entrance on a cell the building occupies (FisheryWorks and FishHatchery before 2026-10-26) fails.
+      // A block holding only Top and Corners shares its cell with a Path, as under a vanilla Platform
+      // (the Restaurant's dining-balcony slab over its doorstep since 2026-10-30), so the native Path
+      // validation decides, not the presence of the building's block.
+      if(!Free(_path,c)){
+        Record(s,"entrance takes a plain player Path",false,_blocks.GetObjectsAt(c).Contains(s.Building)
+          ?"entrance "+c+" is the building's own block and the native Path is rejected there"
+          :"native Path rejected at entrance "+c);
+        return;
+      }
       s.EntrancePath=Create(_path,At(c));
       Record(s,"entrance takes a plain player Path",true,"native Path on the entrance "+c+" in front of the doorstep "+s.Building.PositionedEntrance.DoorstepCoordinates);
     }
@@ -1217,6 +1235,7 @@ namespace DeepFrontier.Scripts {
       ConnectedVerdict(s);
       if(s.NodeSpec==null)return;
       var g=s.Node.Graph;
+      if(s.IsConsumer&&s.Building.GetComponent<DeepWell.DeepWell>()){Skip(s,"power demand","a Deep Well draws power only over a water source, scaled by its boost (DeepWell/DeepWell.cs); the dry pad has no source");return;}
       if(s.IsConsumer)Record(s,"power demand",s.MaxInput==s.NodeSpec.PowerInput&&s.Node.Powered,"spec input "+s.NodeSpec.PowerInput+" hp; peak actual "+s.MaxInput+
         " hp; graph supply "+g?.PowerSupply+" demand "+g?.PowerDemand+" powered="+s.Node.Powered);
       if(s.IsGenerator&&s.Blueprint.Specs.Any(c=>c.GetType().Name=="HydroTurbineSpec")) {
@@ -1276,6 +1295,7 @@ namespace DeepFrontier.Scripts {
           needs.ApplyEffect(new InstantEffect(id,target-needs.GetNeedPoints(id),1));lowered++;
         }
       }
+      _current.NeedHolders=lowered;
       Phase(5,"attraction "+_current.Id+" ("+lowered+" needs lowered; "+_blocked.Count+" other attractions blocked)");
       return true;
     }
@@ -1291,6 +1311,8 @@ namespace DeepFrontier.Scripts {
       s.MaxInside=Math.Max(s.MaxInside,en.NumberOfEnterersInside);
     }
     private void EvaluateAttraction(Subject s) {
+      if(s.NeedHolders==0){Skip(s,"attraction visited","no colonist in this game holds a need it serves ("+
+        string.Join(",",s.Building.GetComponent<Attraction>().Effects.Select(e=>e.NeedId).Distinct())+"); the beavers here cannot use it");return;}
       Record(s,"attraction visited",s.Visitors.Count>0,s.Visitors.Count+" distinct visitors, at most "+s.MaxInside+" inside within "+
         Hours.ToString("0.0")+" h; statuses ["+string.Join("; ",VisibleStatuses(s.Building))+"]");
     }
@@ -1298,7 +1320,8 @@ namespace DeepFrontier.Scripts {
       foreach(var s in ServiceSubjects()) {
         if(s.Valve&&!s.PipeChecked)Guard(s,"pipe liquid arrives",()=>CheckPipeArrival(s));
         ConnectedVerdict(s);
-        if(s.IsConsumer)Record(s,"power demand",s.Node.Powered&&s.MaxInput==s.NodeSpec.PowerInput,
+        if(s.IsConsumer&&s.Building.GetComponent<DeepWell.DeepWell>())Skip(s,"power demand","a Deep Well draws power only over a water source, scaled by its boost (DeepWell/DeepWell.cs); the dry pad has no source");
+        else if(s.IsConsumer)Record(s,"power demand",s.Node.Powered&&s.MaxInput==s.NodeSpec.PowerInput,
           "spec input "+s.NodeSpec.PowerInput+" hp; peak actual "+s.MaxInput+" hp; graph supply "+s.Node.Graph?.PowerSupply+" powered="+s.Node.Powered);
         if(s.IsGenerator)PowerVerdict(s);
       }

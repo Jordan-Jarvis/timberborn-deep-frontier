@@ -12,7 +12,9 @@ namespace DeepFrontier.Scripts {
       fishing.CreateClassProcessor(typeof(ShoreFishingAllowance)).Patch();
       fishing.CreateClassProcessor(typeof(ShoreFishingJob)).Patch();
       // Hatchery deck paths/shafts/platforms must load after the deck slabs
-      // they stand on (Waterside/StackableBaseLoadOrder.cs).
+      // they stand on (Waterside/StackableBaseLoadOrder.cs); buildings whose
+      // footprint changed load before paths and objects that now overlap them
+      // (FootprintChangeLoadOrder.cs, same patch).
       StackableBaseLoadOrder.Apply();
       // Buildings on a stackable deck or roof don't block the building below
       // (StackableTopBlockExemption.cs).
@@ -25,6 +27,8 @@ namespace DeepFrontier.Scripts {
       PowerPlantSaveMigration.Apply();
       // Saved Deep Mines and quarries move onto their deposit with the 5x5 footprint (MineFootprintSaveMigration.cs).
       MineFootprintSaveMigration.Apply();
+      // Flipped buildings from saves with another width keep their ground (FlippedFootprintSaveMigration.cs).
+      FlippedFootprintSaveMigration.Apply();
       // Touching buildings share their insides (BuildingPassages.cs); the patches are inert until the game binds it.
       BuildingPassagesPatches.Apply();
       // Moddable Recipes 11.0.0 double Enable workaround (InventoryEnableGuard.cs).

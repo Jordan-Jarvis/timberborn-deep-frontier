@@ -42,7 +42,8 @@ namespace DeepFrontier.Scripts {
     }
   }
 
-  // Per FishHatchery, FisheryWorks and Greenhouse in the save (build 176 user reports): placement,
+  // Per FishHatchery, FisheryWorks, Greenhouse (build 176 user reports) and every other building whose footprint
+  // changed (second shrink, 2026-11-01) in the save: placement,
   // visible statuses, district, entrance and doorstep, whether the entrance cell holds a Path, the
   // native path connection toward the door, road connection to each district centre's entrance,
   // single access, entrance blocked/inaccessible, the mechanical graph, and every transput with its
@@ -50,7 +51,10 @@ namespace DeepFrontier.Scripts {
   internal sealed class SaveInspectionProbe : IUpdatableSingleton {
     internal const string Flag="-deepFrontierSaveInspect";
     private const string Tag="[DeepFrontier SaveInspect]";
-    private static readonly string[] Templates={"FishHatchery.IronTeeth","FisheryWorks.IronTeeth","Greenhouse.IronTeeth"};
+    // Every building whose footprint changed (FootprintChangeLoadOrder), the deck-carrier Fish Hatchery and
+    // the buildings on an understructure (second shrink old-save check, 2026-11-01).
+    private static bool Reported(string template)=>template!=null&&(FootprintChangeLoadOrder.Templates.Contains(template)||
+      template is "FishHatchery.IronTeeth" or "DeepMine.IronTeeth" or "SandstoneQuarry.IronTeeth" or "LimestoneQuarry.IronTeeth");
     private readonly EntityRegistry _entities;
     private readonly IBlockService _blocks;
     private readonly IConnectionService _connections;
@@ -164,7 +168,7 @@ namespace DeepFrontier.Scripts {
       var centres=_entities.Entities.Select(e=>e.GetComponent<DistrictCenter>()).Where(d=>d).ToList();
       var report=new JObject{["save"]=save,["districtCentres"]=new JArray(centres.Select(d=>d.Name+" entrance "+Xyz(d.GetComponent<BlockObject>().PositionedEntrance.Coordinates)))};
       var buildings=new JArray();
-      foreach(var e in _entities.Entities.Where(e=>Templates.Contains(e.GetComponent<TemplateSpec>()?.TemplateName)).ToList()) {
+      foreach(var e in _entities.Entities.Where(e=>Reported(e.GetComponent<TemplateSpec>()?.TemplateName)).ToList()) {
         var b=e.GetComponent<BlockObject>();
         var o=new JObject{["template"]=e.GetComponent<TemplateSpec>().TemplateName,["coordinates"]=Xyz(b.Coordinates),["baseZ"]=b.BaseZ,
           ["orientation"]=b.Orientation.ToString(),["flipped"]=b.FlipMode.IsFlipped,["finished"]=b.IsFinished};

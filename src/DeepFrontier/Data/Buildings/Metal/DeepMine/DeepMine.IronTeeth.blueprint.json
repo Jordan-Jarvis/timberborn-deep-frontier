@@ -1154,7 +1154,7 @@
     "LocalAccess": {
       "X": 1.5,
       "Y": 0,
-      "Z": 0
+      "Z": 0.5
     },
     "ForceOneFinalAccess": false
   },
@@ -2028,6 +2028,37 @@
       }
     ]
   },
+  "BlockObjectNavMeshSettingsSpec": {
+    "NoAutoWalls": false,
+    "GenerateFloorsOnStackable": true,
+    "EdgeGroups": [
+      {
+        "Cost": 1,
+        "Group": {
+          "UseGroup": false,
+          "GroupName": ""
+        },
+        "IsPath": false,
+        "AddedEdges": [
+          {
+            "Start": {
+              "X": 1,
+              "Y": -1,
+              "Z": 0
+            },
+            "End": {
+              "X": 1,
+              "Y": 0,
+              "Z": 0
+            },
+            "IsTwoWay": true
+          }
+        ]
+      }
+    ],
+    "UnblockedCoordinates": [],
+    "BlockedEdges": []
+  },
   "TemplateAttachmentsSpec": {
     "Attachments": [
       {
@@ -2099,13 +2130,6 @@
       }
     ],
     "CapacityPerGood": 15
-  },
-  "BlockObjectNavMeshSettingsSpec": {
-    "NoAutoWalls": false,
-    "GenerateFloorsOnStackable": true,
-    "EdgeGroups": [],
-    "UnblockedCoordinates": [],
-    "BlockedEdges": []
   },
   "RoofHardpointsSpec": {
     "Cells": [

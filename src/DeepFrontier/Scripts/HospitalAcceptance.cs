@@ -136,6 +136,9 @@ namespace DeepFrontier.Scripts {
       var face=CivicFixtureGeometry.ShaftFace(spec,_building.GetComponent<TransputProviderSpec>(),
         c=>{var w=_building.TransformCoordinates(c);return used.Contains(new Vector2Int(w.x,w.y));},"Hospital");
       _generators=CivicFixtureGeometry.ShaftLine(place,_building,face,2);
+      // A new native DevPowerGenerator starts at output multiplier 0.5 (AcceptancePower): run both at
+      // their full 10,000 hp, as a loaded generator does.
+      foreach(var generator in _generators)generator.SetOutputMultiplier(1);
       // Walk (local cells; the hospital stands Cw0 unflipped): Entrance, each upper door step, the
       // seam pad, the stair foot, then the road south of the Entrance.
       var entrance=spec.Entrance.Coordinates;
@@ -169,7 +172,10 @@ namespace DeepFrontier.Scripts {
       _speed.ChangeSpeed(1);
     }
     private void StartCare() {
-      Require(_building.GetComponent<MechanicalNode>().PowerEfficiency==1,"Hospital shaft lacks full 11,000 hp");
+      var node=_building.GetComponent<MechanicalNode>();
+      Require(node.PowerEfficiency==1,"Hospital shaft lacks full 11,000 hp: efficiency "+node.PowerEfficiency+", graph "+(node.Graph==null?"none":
+        "generators="+node.Graph.NumberOfGenerators+" supply="+node.Graph.PowerSupply+" demand="+node.Graph.PowerDemand)+
+        ", dev generators "+string.Join(" ",_generators.Select(g=>g.GetComponent<BlockObject>().Coordinates+" output="+g.Actuals.PowerOutput+" same graph="+(g.Graph==node.Graph))));
       CheckSeam(_openSeam,true);CheckSeam(_closedSeam,false);
       foreach(var door in _building.GetComponent<PlatformDeckSpec>().Doors) {
         var a=_building.TransformCoordinates(door.Interior);var b=_building.TransformCoordinates(door.Exterior);

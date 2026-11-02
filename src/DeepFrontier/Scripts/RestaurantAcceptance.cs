@@ -253,7 +253,11 @@ namespace DeepFrontier.Scripts {
         // Since the 2026-11-01 second shrink (6x5x3) the roof decks over the balconies are the
         // upper dining deck and the roof deck in one layer.
         if(levels.Length<2)throw new InvalidOperationException("Restaurant deck has layers ["+string.Join(",",levels)+"]; this fixture needs a lower dining balcony and an upper (roof) dining deck");
-        var top=levels[levels.Length-1];
+        // The roof deck is the highest deck level a door opens onto: since the second shrink the
+        // one-tile stairhead's own flat top is a higher, doorless deck level.
+        var doorLevels=levels.Where(z=>deck.Doors.Any(d=>d.Exterior.z==z)).ToArray();
+        if(doorLevels.Length==0)throw new InvalidOperationException("Restaurant roof deck has no door");
+        var top=doorLevels.Max();
         // Ordinary player Path entities on every exterior deck: every deck stand and every
         // upper door step, and the cells of their layer that take a Path, except one roof cell
         // that carries a stacked platform tower instead.
@@ -272,8 +276,12 @@ namespace DeepFrontier.Scripts {
           return z;
         }
         var ground=faces.Where(f=>f.Cell.z==0&&Enumerable.Range(1,3).All(s=>CivicFixtureGeometry.Free(blocks,f.Cell+f.Out*s))).OrderByDescending(Storeys).ToArray();
-        if(ground.Length==0||Storeys(ground[0])<levels.Length)
-          throw new InvalidOperationException("Restaurant has no ground shaft face repeated with a free outward cell on its "+levels.Length+" storeys");
+        // Walled storeys: since the second shrink (6x5x3) the third is only the one-tile stairhead in the
+        // roof deck, so no wall column runs through every deck level; the line probes the ground and
+        // dining storeys, which every wall column above the ground floor reaches.
+        int walled=Math.Min(levels.Length,2);
+        if(ground.Length==0||Storeys(ground[0])<walled)
+          throw new InvalidOperationException("Restaurant has no ground shaft face repeated with a free outward cell on its "+walled+" walled storeys");
         var power=ground[0];
         _generator=CivicFixtureGeometry.ShaftLine(place,_building,power,1)[0];
         var probe=power.Cell+power.Out;

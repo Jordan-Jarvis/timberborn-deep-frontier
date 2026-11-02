@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Second shrink checked in game: fixes
+- **Deep Mine and the Sandstone and Limestone Quarries work again.** On their new 5x5 footprints the doorstep stands on the vein or seam, and beavers could not walk in: the buildings showed "not connected to any district" and never produced. The entrance now leads in the way it does on the base game's Efficient Mine.
+- **Old saves keep their buildings.** A smaller building could lose its place on load to a path a player had laid on ground the old building left free (the Grocery Store's old doorstep, the Town Plaza's open corner, a free strip of the Fishery Works). The game then deleted the building. Now the building loads first and the overlapping path or object is removed instead, listed in the game's loading notice. A 0.6 save that lost its Grocery Store, Town Plaza and Fishery Works keeps all three.
+- **Mirrored buildings from older saves stay on the same ground.** A flipped building that got narrower now moves by the difference in width, so it covers the ground its old self covered and its door, pipe inlet and (Reinforced Hydro Turbine) water conduit stay where they were. If the new building does not fit there, it keeps its saved position.
+- Still true for old saves: anything standing on a roof deck or platform of the old, bigger building that the new one no longer has is removed on load with the game's loading notice (paths, platforms, steel decks and columns, small buildings). Re-lay paths to moved doors.
+
 ### Diorama, Cliffside and Beaverome can finish the game
 - **Diorama** now gets a Limestone Seam for the Limestone Quarry (east terrace), and has room for the Nuclear Reactor (the forested pocket south of the start; one low cell needs a Concrete Block under it) and the Cryogenic Liquefaction Plant. It no longer shows a "short of" notice.
 - **Cliffside** has flat room for the Nuclear Reactor on the plain west of the start: one Deep Ore Vein moved to the bench east of the river. Only the fishing notice remains (dam the deep bay a little higher).
