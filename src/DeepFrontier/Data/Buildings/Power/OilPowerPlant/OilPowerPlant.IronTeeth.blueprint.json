@@ -1422,9 +1422,6 @@
     "Icon": "Buildings/Power/OilPowerPlant/Icon"
   },
   "GoodPoweredGeneratorAnimatorSpec": {},
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "MechanicalNodeIlluminatorSpec": {},
   "Children": {
     "#Finished": {
@@ -1513,6 +1510,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase5x4WithoutCorners#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase5x4WithoutCorners/ConstructionBase5x4WithoutCorners.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Power/OilPowerPlant/OilPowerPlant.IronTeeth.ConstructionStage0.Model"
@@ -1522,35 +1522,35 @@
               {
                 "Center": {
                   "X": 2.5,
-                  "Y": 1,
-                  "Z": 2
+                  "Y": 1.5,
+                  "Z": 1
                 },
                 "Size": {
                   "X": 5,
-                  "Y": 2,
-                  "Z": 4
+                  "Y": 3,
+                  "Z": 2
                 }
               },
               {
                 "Center": {
                   "X": 1,
-                  "Y": 2.5,
+                  "Y": 1.5,
                   "Z": 3
                 },
                 "Size": {
                   "X": 2,
-                  "Y": 1,
+                  "Y": 3,
                   "Z": 2
                 }
               },
               {
                 "Center": {
                   "X": 2.5,
-                  "Y": 3,
-                  "Z": 1
+                  "Y": 1,
+                  "Z": 3
                 },
                 "Size": {
-                  "X": 5,
+                  "X": 1,
                   "Y": 2,
                   "Z": 2
                 }
@@ -1558,36 +1558,12 @@
               {
                 "Center": {
                   "X": 4,
+                  "Y": 1.5,
+                  "Z": 3
+                },
+                "Size": {
+                  "X": 2,
                   "Y": 3,
-                  "Z": 3
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 2,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 4,
-                  "Y": 4.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4,
-                  "Y": 5.5,
-                  "Z": 3
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
                   "Z": 2
                 }
               }
@@ -2102,5 +2078,10 @@
   },
   "StatusIconAnchorSpec": {
     "Height": 6.7
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
   }
 }

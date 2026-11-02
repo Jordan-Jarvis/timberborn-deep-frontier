@@ -132,8 +132,8 @@ assert(/\[Context\("Game"\)\]\s*public sealed class RocketProgramConfigurator/.t
 const source = async (file) => (await readFile(resolve(scripts, file), 'utf8')).replace(/\/\/.*$/gm, '');
 const visualSource = await source('RocketLaunchVisual.cs');
 const padSource = await source('RocketLaunchPad.cs');
-// #1 The #Unfinished ConstructionStage0 model is an exported copy of the finished
-// mesh, so node lookups must be scoped to the finished model root.
+// #1 The #Unfinished tree (construction base and stage) is a separate model, so node
+// lookups must be scoped to the finished model root.
 assert(/FindChildIfNameNotEmpty\(GetComponent<BuildingModelSpec>\(\)\.FinishedModelName\)/.test(visualSource)
   && /finished\.GetComponentsInChildren<Transform>\(true\)/.test(visualSource)
   && !/(^|[^.\w])GameObject\.GetComponentsInChildren/.test(visualSource), '#1: rocket nodes are searched only under the finished model');

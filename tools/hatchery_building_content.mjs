@@ -3,6 +3,7 @@ import {readFile,copyFile} from 'node:fs/promises';
 import {structureBlocks,authoredColliders,roomPowerFaces} from './grid_structure.mjs';
 import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {nativeEntrance} from './native_entrance.mjs';
+import {unbindConstructionSite} from './construction_stage_content.mjs';
 const root=new URL('../',import.meta.url);
 const read=async p=>JSON.parse(await readFile(new URL(p,root),'utf8'));
 const xyz=([X,Y,Z])=>({X,Y,Z});
@@ -66,10 +67,10 @@ export function applyHatcheryStructure(value,layout,manifest) {
   const [ex,ey]=layout.entrance;
   value.PlaceableBlockObjectSpec={...value.PlaceableBlockObjectSpec,
     CustomPivot:{HasCustomPivot:true,Coordinates:{X:ex+.5,Y:ey+.5,Z:0}}};
-  value.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
+  // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+  unbindConstructionSite(value);
   const colliders=authoredColliders(manifest,layout.structure,1);
   value.Children['#Finished'].CollidersSpec=colliders;
-  value.Children['#Unfinished']={Children:{ConstructionStage0:{TimbermeshSpec:{Model:'Buildings/Food/FishHatchery/FishHatchery.IronTeeth.ConstructionStage0.Model'},CollidersSpec:colliders}}};
   value.BlockObjectNavMeshSettingsSpec={NoAutoWalls:false,GenerateFloorsOnStackable:true,
     EdgeGroups:[{Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,
       // The door links, and the door cell to the player's path on the Entrance cell.
@@ -158,9 +159,7 @@ export async function applyHatchery(value) {
   value.TransformSlotInitializerSpec={Slots:[{SlotKeyword:'Entrance',Animation:'ForcedIdle',Inanimate:false,RandomizeYRotation:false,WaterSlot:false}]};
   value.WorkplaceSlotManagerSpec={};value.WorkshopWorkerHiderSpec={};
   await applyNativeBuildingAssembly(value,'FishHatchery',d.origin,{goodId:'Water',flowNodes:[],wheelNodes:[]});
-  for(const suffix of ['Model','ConstructionStage0.Model']) {
-    const path=`Buildings/Food/FishHatchery/FishHatchery.IronTeeth.${suffix}.timbermesh`;
-    await copyFile(new URL('outputs/civic-integration/Data/'+path,root),new URL('src/DeepFrontier/Data/'+path,root));
-  }
+  const path='Buildings/Food/FishHatchery/FishHatchery.IronTeeth.Model.timbermesh';
+  await copyFile(new URL('outputs/civic-integration/Data/'+path,root),new URL('src/DeepFrontier/Data/'+path,root));
   delete value.ProductionResetterSpec;
 }

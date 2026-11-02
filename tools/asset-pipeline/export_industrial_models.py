@@ -200,8 +200,8 @@ def export_model(ident,bake,data_root):
             empty.location=(-x,-y,z);empty.rotation_euler=(0,0,math.pi)
     # AdaptiveSupports runtime templates: exactly one #SupportSegment and one
     # #SupportFoot node, origin at a cell's bottom centre. They are parked at
-    # an authored anchor buried below a land cell: the finished model hides
-    # them, and the copied construction-stage model keeps them underground.
+    # an authored anchor buried below a land cell, where the finished model
+    # hides them (construction_stage_massing.py leaves them out of the stage).
     import waterside_supports
     if ident in waterside_supports.models():
         for node,g,anchor,bevel in waterside_supports.templates(ident):
@@ -246,12 +246,13 @@ def export_model(ident,bake,data_root):
                 else ROOT/'outputs/research-integration/Data/Buildings/Science'/target if research
                 else data_root/'Buildings/Metal'/target)
         folder.mkdir(parents=True,exist_ok=True)
-        for suffix in ['Model','ConstructionStage0.Model']:
-            destination=folder/(target+'.IronTeeth.'+suffix+'.timbermesh')
-            if exported is None:
-                exporter.Exporter.export_collection(collection,str(destination),settings)
-                exported=destination
-            else:shutil.copyfile(exported,destination)
+        # Only the finished model: the construction stage is generated from the
+        # blueprint and this export (build_construction_stages.py).
+        destination=folder/(target+'.IronTeeth.Model.timbermesh')
+        if exported is None:
+            exporter.Exporter.export_collection(collection,str(destination),settings)
+            exported=destination
+        else:shutil.copyfile(exported,destination)
     if deck_mode=='PlayerPlacedPaths':
         spec=dict(Openings=openings,Doors=[{k:xyz(v) for k,v in d.items()} for d in layout['doorLinks']])
         spec_suffix='platform-deck'

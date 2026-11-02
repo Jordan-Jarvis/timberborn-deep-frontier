@@ -15,8 +15,9 @@
 //   registration's wallFaces), except toward the door. This list only orders
 //   the authored sockets: connection_content.mjs replaces the final face set
 //   with every measured flat exterior face (outputs/connection-faces).
-// - The vanilla template's construction base is replaced by the study's own
-//   construction stage, sized to the new footprint.
+// - The vanilla template's construction site is dropped here; the end of
+//   canonical generation binds a vanilla base and the generated stage
+//   (construction_stage_content.mjs).
 // - Template navmesh edges describe the template's interior and are rejected.
 // - A building with UnderstructureConstraintSpec declares the ground core that
 //   stands over its map marker (see understructureCore below).
@@ -30,6 +31,7 @@ import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {solidPowerFaces} from './power_faces.mjs';
 import {applyVanillaSmoke} from './vanilla_smoke.mjs';
 import {doorstepOverUnderstructure} from './understructure_access.mjs';
+import {unbindConstructionSite} from './construction_stage_content.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = async (path) => JSON.parse(await readFile(new URL(path, root), 'utf8'));
@@ -206,12 +208,10 @@ export async function lategameBlueprint(value, id, {understructure, terrace, ove
   }
   const model = value.Children['#Finished'].TimbermeshSpec.Model;
   if (!model.endsWith(`/${id}.IronTeeth.Model`)) throw new Error(`${id}: unexpected model path ${model}`);
-  const stage = model.replace(/\.Model$/, '.ConstructionStage0.Model');
   const colliders = lategameColliders(blocks, size);
   value.Children['#Finished'].CollidersSpec = colliders;
-  value.Children['#Unfinished'] = {Children: {ConstructionStage0: {TimbermeshSpec: {Model: stage}, CollidersSpec: colliders}}};
-  // One construction stage and no base: no intermediate thresholds.
-  value.ConstructionSiteProgressVisualizerSpec = {ProgressThresholds: []};
+  // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+  unbindConstructionSite(value);
   // Workers idle at the doorway through native slots in the exported model.
   if (value.WorkplaceSpec) {
     value.WorkplaceSlotManagerSpec = {};
@@ -249,7 +249,7 @@ export async function lategameBlueprint(value, id, {understructure, terrace, ove
   // Vanilla smoke/steam at the study's flue mouths (registration smokeEmitters).
   const smoke = applyVanillaSmoke(value, registration, id);
   await applyNativeBuildingAssembly(value, id, [0, 0, 0], {goodId: 'Water', flowNodes: [], wheelNodes: []});
-  return {size, entrance: door?.entrance ?? null, doorstep: door?.doorstep ?? null, model, stage, understructureCells, terraceCells, overhangCells, smoke};
+  return {size, entrance: door?.entrance ?? null, doorstep: door?.doorstep ?? null, model, understructureCells, terraceCells, overhangCells, smoke};
 }
 
 // Values recorded in a late-game study module (tools/asset-pipeline/
@@ -323,7 +323,7 @@ async function writeNativePropMaterials(targetRoot) {
 export async function applyLategame(value, id, {dataRoot, ...options} = {}) {
   const result = await lategameBlueprint(value, id, options);
   const targetRoot = dataRoot ? pathToFileURL(dataRoot.endsWith(sep) ? dataRoot : dataRoot + sep) : new URL('src/DeepFrontier/Data/', root);
-  for (const resource of [result.model, result.stage]) {
+  for (const resource of [result.model]) {
     const source = new URL(`outputs/lategame-integration/Data/${resource}.timbermesh`, root);
     const target = new URL(`${resource}.timbermesh`, targetRoot);
     await mkdir(dirname(fileURLToPath(target)), {recursive: true});

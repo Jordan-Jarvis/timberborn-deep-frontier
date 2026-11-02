@@ -2339,9 +2339,6 @@
       "CarbonFilterMedia"
     ]
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "TransputProviderSpec": {
     "IgnoreRotation": false,
     "Transputs": [
@@ -3083,6 +3080,28 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x4#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x4/ConstructionBase3x4.blueprint",
+          "Modification": {
+            "TransformSpec": {
+              "Position": {
+                "X": 5,
+                "Y": 0,
+                "Z": 0
+              },
+              "Rotation": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "Scale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              }
+            }
+          }
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.ConstructionStage0.Model"
@@ -3091,116 +3110,56 @@
             "BoxColliders": [
               {
                 "Center": {
-                  "X": 4.5,
-                  "Y": 0.5,
-                  "Z": 1
-                },
-                "Size": {
-                  "X": 9,
-                  "Y": 1,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
                   "X": 1.5,
                   "Y": 0.5,
-                  "Z": 3.5
+                  "Z": 0.5
                 },
                 "Size": {
                   "X": 3,
                   "Y": 1,
-                  "Z": 3
+                  "Z": 1
                 }
               },
               {
                 "Center": {
-                  "X": 7,
-                  "Y": 0.5,
-                  "Z": 3.5
+                  "X": 6,
+                  "Y": 1,
+                  "Z": 1
                 },
                 "Size": {
-                  "X": 4,
-                  "Y": 1,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 4,
-                  "Y": 0.5,
-                  "Z": 4
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
+                  "X": 6,
+                  "Y": 2,
                   "Z": 2
                 }
               },
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 1.5,
+                  "Y": 1,
                   "Z": 1.5
                 },
                 "Size": {
                   "X": 3,
-                  "Y": 1,
+                  "Y": 2,
                   "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 7.5,
-                  "Y": 1.5,
-                  "Z": 4
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 2
                 }
               },
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 1.5,
-                  "Z": 4.5
+                  "Y": 0.5,
+                  "Z": 3
                 },
                 "Size": {
                   "X": 3,
                   "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 5,
-                  "Y": 1.5,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 6,
-                  "Y": 2,
-                  "Z": 1
-                },
-                "Size": {
-                  "X": 6,
-                  "Y": 2,
                   "Z": 2
                 }
               },
               {
                 "Center": {
                   "X": 7,
-                  "Y": 2,
+                  "Y": 1,
                   "Z": 2.5
                 },
                 "Size": {
@@ -3212,25 +3171,61 @@
               {
                 "Center": {
                   "X": 4.5,
-                  "Y": 3,
+                  "Y": 0.5,
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 3,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 7.5,
+                  "Y": 1,
+                  "Z": 4
+                },
+                "Size": {
+                  "X": 3,
+                  "Y": 2,
+                  "Z": 2
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 1,
                   "Z": 4.5
                 },
                 "Size": {
-                  "X": 1,
+                  "X": 3,
                   "Y": 2,
                   "Z": 1
                 }
               },
               {
                 "Center": {
-                  "X": 4,
-                  "Y": 5,
+                  "X": 3.5,
+                  "Y": 0.5,
+                  "Z": 4.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 1,
                   "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 5,
+                  "Y": 1,
+                  "Z": 4.5
                 },
                 "Size": {
                   "X": 2,
-                  "Y": 4,
-                  "Z": 2
+                  "Y": 2,
+                  "Z": 1
                 }
               }
             ],
@@ -3685,5 +3680,10 @@
   "StatusIconAnchorSpec": {
     "Height": 7.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

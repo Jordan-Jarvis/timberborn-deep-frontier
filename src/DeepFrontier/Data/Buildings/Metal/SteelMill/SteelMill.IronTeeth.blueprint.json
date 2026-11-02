@@ -959,9 +959,6 @@
   },
   "WorkshopAnimationControllerSpec": {},
   "SimpleManufactoryBehaviorsSpec": {},
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "TransputProviderSpec": {
     "IgnoreRotation": false,
     "Transputs": [
@@ -1595,6 +1592,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase5x4WithoutCorners#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase5x4WithoutCorners/ConstructionBase5x4WithoutCorners.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Metal/SteelMill/SteelMill.IronTeeth.ConstructionStage0.Model"
@@ -1611,30 +1611,6 @@
                   "X": 5,
                   "Y": 2,
                   "Z": 4
-                }
-              },
-              {
-                "Center": {
-                  "X": 2.5,
-                  "Y": 3,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 5,
-                  "Y": 2,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 2,
-                  "Y": 5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 2,
-                  "Z": 1
                 }
               }
             ],
@@ -1728,5 +1704,10 @@
   "StatusIconAnchorSpec": {
     "Height": 2.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

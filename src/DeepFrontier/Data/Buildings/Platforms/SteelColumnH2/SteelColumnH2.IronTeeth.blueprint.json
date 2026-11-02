@@ -94,9 +94,6 @@
     "FlavorDescriptionLocKey": "Building.SteelColumnH2.FlavorDescription",
     "Icon": "Buildings/Platforms/SteelColumnH2/Icon"
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "Children": {
     "#Finished": {
       "TimbermeshSpec": {
@@ -243,6 +240,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase1x1#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase1x1/ConstructionBase1x1.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Platforms/SteelColumnH2/SteelColumnH2.IronTeeth.ConstructionStage0.Model"
@@ -251,110 +251,14 @@
             "BoxColliders": [
               {
                 "Center": {
-                  "X": 0.09,
-                  "Y": 0.5,
-                  "Z": 0.09
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.09,
-                  "Y": 0.5,
-                  "Z": 0.91
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.91,
-                  "Y": 0.5,
-                  "Z": 0.09
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.91,
-                  "Y": 0.5,
-                  "Z": 0.91
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
-                }
-              },
-              {
-                "Center": {
                   "X": 0.5,
-                  "Y": 1.94,
+                  "Y": 1,
                   "Z": 0.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 0.12,
+                  "Y": 2,
                   "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.09,
-                  "Y": 1.5,
-                  "Z": 0.09
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.09,
-                  "Y": 1.5,
-                  "Z": 0.91
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.91,
-                  "Y": 1.5,
-                  "Z": 0.09
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.91,
-                  "Y": 1.5,
-                  "Z": 0.91
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
                 }
               }
             ],
@@ -371,5 +275,10 @@
   },
   "StatusIconAnchorSpec": {
     "Height": 2.7
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
   }
 }

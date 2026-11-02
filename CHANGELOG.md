@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Buildings under construction look unfinished
+- **Every Deep Frontier building now shows a construction site while it is being built** (player report: "some of our buildings look finished even when they are under construction"). Before, a site showed the finished building from the moment it was placed.
+- **As vanilla buildings do:** a new site shows the staked-out ground first. Once the first materials arrive it shows an open frame on a dirt patch, standing to about two thirds of the building's height over its own plan. The finished building appears when construction completes.
+- **Timber or steel:** early buildings get a dark timber frame, buildings that cost metal blocks, alloy or steel a steel frame on timber sills, like the vanilla Centrifuge and Bot Part Factory.
+- **Structural pieces too:** masonry, concrete and dam blocks get timber or steel formwork; scaffolds, decks, columns, bridges, cantilevers and side platforms get a frame where they will stand.
+- In construction mode, unbuilt buildings still show the finished building in grey, as before.
+- Building previews are lighter: every building used to load its full model a second time as its construction site (about 43% fewer triangles across all Deep Frontier blueprints).
+
 ### Modular Warehouse: one door, several goods, stackable modules
 - **New Modular Warehouse and Warehouse Module in the Storage menu** (player request), right after the Large Warehouse, at 400 and 450 science. Both are timber buildings that need no power or workers. The Modular Warehouse costs 100 planks, 60 logs and 15 gears; each module 80 planks, 60 logs and 5 gears.
 - **The Modular Warehouse is the one door haulers use.** Build Warehouse Modules beside it, on top of it, or beside or on top of another attached module, and they join its storage. The district sees one storage point holding several goods.

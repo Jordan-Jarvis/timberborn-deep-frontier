@@ -572,9 +572,6 @@
     "UnblockedCoordinates": [],
     "BlockedEdges": []
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "TransputProviderSpec": {
     "IgnoreRotation": false,
     "Transputs": [
@@ -968,6 +965,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase5x4WithoutCorners#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase5x4WithoutCorners/ConstructionBase5x4WithoutCorners.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.ConstructionStage0.Model"
@@ -984,42 +984,6 @@
                   "X": 5,
                   "Y": 2,
                   "Z": 4
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2.5,
-                  "Z": 2
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 4
-                }
-              },
-              {
-                "Center": {
-                  "X": 4,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 4.5,
-                  "Y": 2.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
                 }
               }
             ],
@@ -1392,5 +1356,10 @@
   "StatusIconAnchorSpec": {
     "Height": 3.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

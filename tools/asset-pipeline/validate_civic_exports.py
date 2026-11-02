@@ -60,7 +60,7 @@ for node in model.nodes:
 tracks = [(n.name, a) for n in model.nodes for a in n.nodeAnimations]
 require(len(tracks) == 1 and tracks[0][0] == '#Restaurant.CarvedSign', 'Unexpected animation bindings')
 require(len(tracks[0][1].frames) == 61, 'Restaurant sign must retain its 61 frame clip')
-require(payload == (folder / 'Restaurant.IronTeeth.ConstructionStage0.Model.timbermesh').read_bytes(), 'Construction-stage binding changed')
+# The construction stage is generated and checked by tools/asset-pipeline/validate_construction_exports.py.
 
 layout = read_json('tools/civic-layouts.json')[ident]
 walkway = read_json('outputs/civic-integration/Restaurant-platform-deck.json')

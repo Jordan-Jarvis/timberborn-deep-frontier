@@ -15,7 +15,7 @@ payload=(folder/'FishHatchery.IronTeeth.Model.timbermesh').read_bytes()
 model=model_pb2.Model();model.ParseFromString(zlib.decompress(payload))
 names=collections.Counter(n.name for n in model.nodes)
 require(all(v==1 for v in names.values()),'Duplicate model nodes')
-require(payload==(folder/'FishHatchery.IronTeeth.ConstructionStage0.Model.timbermesh').read_bytes(),'Construction model mismatch')
+# The construction stage is generated and checked by tools/asset-pipeline/validate_construction_exports.py.
 # Compact early-game footprint since 2026-10-26 (8x8x5 with perimeter docks before).
 # 3 high since the one-layer headhouse and canopy (2026-10-30; was 5); 5x5 since the
 # second shrink pass (2026-11-01; 7x7 before).

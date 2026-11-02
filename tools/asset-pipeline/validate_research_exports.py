@@ -10,7 +10,7 @@ bp=json.loads((folder/'MaterialsLaboratory.IronTeeth.blueprint.json').read_text(
 layout=json.loads((root/'tools/research-layouts.json').read_text())['MaterialsLaboratory']
 recipe=json.loads((root/'outputs/research-integration/Data/Recipes/Recipe.MaterialsResearch.blueprint.json').read_text())['RecipeSpec']
 payload=(folder/'MaterialsLaboratory.IronTeeth.Model.timbermesh').read_bytes()
-assert payload==(folder/'MaterialsLaboratory.IronTeeth.ConstructionStage0.Model.timbermesh').read_bytes()
+# The construction stage is generated and checked by tools/asset-pipeline/validate_construction_exports.py.
 model=model_pb2.Model();model.ParseFromString(zlib.decompress(payload))
 names=[n.name for n in model.nodes];assert len(names)==len(set(names))
 tracks=[(n.name,len(a.frames)) for n in model.nodes for a in n.nodeAnimations]

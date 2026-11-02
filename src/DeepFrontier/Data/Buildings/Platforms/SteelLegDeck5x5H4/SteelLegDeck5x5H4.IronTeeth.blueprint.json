@@ -955,9 +955,6 @@
     "FlavorDescriptionLocKey": "Building.SteelLegDeck5x5H4.FlavorDescription",
     "Icon": "Buildings/Platforms/SteelLegDeck5x5H4/Icon"
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "Children": {
     "#Finished": {
       "Children": {
@@ -2059,6 +2056,9 @@
       "#SteelColumnH6"
     ],
     "MaxDepth": 12
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": []
   },
   "StatusIconAnchorSpec": {
     "Height": 5.7

@@ -15,7 +15,7 @@ folder=root/'outputs/hydro-integration/Data/Buildings/Power/ReinforcedHydroTurbi
 bp=json.loads((folder/'ReinforcedHydroTurbine.IronTeeth.blueprint.json').read_text())
 layout=json.loads((root/'tools/hydro-layouts.json').read_text())['ReinforcedHydroTurbine']
 payload=(folder/'ReinforcedHydroTurbine.IronTeeth.Model.timbermesh').read_bytes()
-assert payload==(folder/'ReinforcedHydroTurbine.IronTeeth.ConstructionStage0.Model.timbermesh').read_bytes()
+# The construction stage is generated and checked by tools/asset-pipeline/validate_construction_exports.py.
 model=model_pb2.Model()
 model.ParseFromString(zlib.decompress(payload))
 names=[n.name for n in model.nodes]

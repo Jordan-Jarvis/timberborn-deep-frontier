@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {dirname,resolve} from 'node:path';
 import {industrialColliders} from './industrial_occupancy.mjs';
 import {buildingCost} from './lategame_costs.mjs';
+import {unbindConstructionSite} from './construction_stage_content.mjs';
 
 const root=new URL('../',import.meta.url);
 const read=async path=>JSON.parse(await readFile(new URL(path,root),'utf8'));
@@ -96,11 +97,10 @@ export async function hydroBlueprint() {
   v.LabeledEntitySpec={DisplayNameLocKey:`Building.${b.id}.DisplayName`,
     DescriptionLocKey:`Building.${b.id}.Description`,FlavorDescriptionLocKey:`Building.${b.id}.FlavorDescription`,
     Icon:`Buildings/Power/${b.id}/Icon`};
-  v.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
   const colliders=industrialColliders(blocks,b.size,0);
-  v.Children={'#Finished':{TimbermeshSpec:{Model:model+'.Model'},CollidersSpec:colliders},
-    '#Unfinished':{Children:{ConstructionStage0:{
-      TimbermeshSpec:{Model:model+'.ConstructionStage0.Model'},CollidersSpec:colliders}}}};
+  v.Children={'#Finished':{TimbermeshSpec:{Model:model+'.Model'},CollidersSpec:colliders}};
+  // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+  unbindConstructionSite(v);
   // Power Lines attachment (optional mod): its integration modifier, not a blueprint spec.
   return {id:b.id,path:model+'.blueprint.json',blueprint:v,
     integrations:{PowerLines:{PowerLineSpec:{ConnectionLocations:[xyz([3.97,5.97,4.90])]}}},rows:[

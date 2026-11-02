@@ -486,9 +486,6 @@
   },
   "PoweredGoodConsumingBuildingSpec": {},
   "GoodConsumingAttractionSpec": {},
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "TransputProviderSpec": {
     "IgnoreRotation": false,
     "Transputs": [
@@ -750,6 +747,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x4#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x4/ConstructionBase3x4.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Wellbeing/Bathhouse/Bathhouse.IronTeeth.ConstructionStage0.Model"
@@ -760,54 +760,54 @@
                 "Center": {
                   "X": 1.5,
                   "Y": 0.5,
-                  "Z": 2
+                  "Z": 1
                 },
                 "Size": {
                   "X": 3,
                   "Y": 1,
-                  "Z": 4
+                  "Z": 2
                 }
               },
               {
                 "Center": {
-                  "X": 3.5,
+                  "X": 1,
                   "Y": 0.5,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 2,
+                  "Y": 1,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 3,
+                  "Y": 1,
                   "Z": 3
                 },
                 "Size": {
-                  "X": 1,
-                  "Y": 1,
+                  "X": 2,
+                  "Y": 2,
                   "Z": 2
                 }
               },
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 1.5,
-                  "Z": 1
+                  "Y": 0.5,
+                  "Z": 3.5
                 },
                 "Size": {
                   "X": 1,
                   "Y": 1,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 3,
-                  "Y": 1.5,
-                  "Z": 3
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 2
+                  "Z": 1
                 }
               },
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 2,
+                  "Y": 1,
                   "Z": 3.5
                 },
                 "Size": {
@@ -1030,5 +1030,10 @@
   "StatusIconAnchorSpec": {
     "Height": 2.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

@@ -37,6 +37,7 @@ obj/
 !/outputs/mapobjects-integration/
 !/outputs/connection-faces/
 !/outputs/roof-hardpoints/
+!/outputs/construction-integration/
 
 # This machine's paths, written by tools/setup_dev.py
 /tools/dev-environment.json

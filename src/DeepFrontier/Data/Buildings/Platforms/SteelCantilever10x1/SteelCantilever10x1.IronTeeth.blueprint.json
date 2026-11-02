@@ -150,9 +150,6 @@
     "FlavorDescriptionLocKey": "Building.SteelCantilever10x1.FlavorDescription",
     "Icon": "Buildings/Platforms/SteelCantilever10x1/Icon"
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "Children": {
     "#Finished": {
       "TimbermeshSpec": {
@@ -335,6 +332,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase1x1#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase1x1/ConstructionBase1x1.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Platforms/SteelCantilever10x1/SteelCantilever10x1.IronTeeth.ConstructionStage0.Model"
@@ -344,168 +344,36 @@
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 0.94,
-                  "Z": 0.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.09,
                   "Y": 0.5,
-                  "Z": 0.09
+                  "Z": 2
                 },
                 "Size": {
-                  "X": 0.18,
+                  "X": 1,
                   "Y": 1,
-                  "Z": 0.18
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.09,
-                  "Y": 0.5,
-                  "Z": 0.91
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.91,
-                  "Y": 0.5,
-                  "Z": 0.09
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.91,
-                  "Y": 0.5,
-                  "Z": 0.91
-                },
-                "Size": {
-                  "X": 0.18,
-                  "Y": 1,
-                  "Z": 0.18
+                  "Z": 4
                 }
               },
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 0.94,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 0.94,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 0.94,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 0.94,
-                  "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 0.94,
-                  "Z": 5.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 0.94,
+                  "Y": 0.625,
                   "Z": 6.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
+                  "Y": 0.75,
+                  "Z": 5
                 }
               },
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 0.94,
-                  "Z": 7.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 0.94,
-                  "Z": 8.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 0.12,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 0.94,
+                  "Y": 0.75,
                   "Z": 9.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 0.12,
+                  "Y": 0.5,
                   "Z": 1
                 }
               }
@@ -519,5 +387,10 @@
   },
   "StatusIconAnchorSpec": {
     "Height": 1.7
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
   }
 }

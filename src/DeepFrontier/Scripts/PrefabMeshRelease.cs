@@ -26,8 +26,9 @@ namespace DeepFrontier.Scripts {
   // of its full vertex data until the next Resources.UnloadUnusedAssets (the next scene
   // change). BottomBarPanel.Load creates a preview of every placeable blueprint during the
   // game-scene load, so all of them are processed in one frame. Vanilla models are small;
-  // Deep Frontier's are 0.1-1.7 M vertices each, with the same model imported twice (finished
-  // and ConstructionStage0), and the orphans alone reached several GB (outputs/memory-load-*).
+  // Deep Frontier's are 0.1-1.7 M vertices each (until 2026-11-02 imported twice: the
+  // ConstructionStage0 model was a copy of the finished one), and the orphans alone reached
+  // several GB (outputs/memory-load-*).
   //
   // A postfix of each optimizer records the meshes it replaced; a postfix of ProcessPrefab
   // destroys those created during this run that the finished prefab no longer references.
@@ -179,9 +180,9 @@ namespace DeepFrontier.Scripts {
           throw new InvalidOperationException($"Prefab mesh release destroyed a mesh that {__result.name}/{filter.name} still uses");
     }
 
-    // Two timbermesh models of one prefab whose files are byte-identical (every Deep Frontier
-    // building's ConstructionStage0 model is a copy of its finished model; vanilla blueprints
-    // repeat models such as barrels and bridge sections) went through the same deterministic
+    // Two timbermesh models of one prefab whose files are byte-identical (vanilla blueprints
+    // repeat models such as barrels and bridge sections; Deep Frontier construction stages
+    // are generated scaffolds since 2026-11-02) went through the same deterministic
     // import and optimization, so the second takes the first's finished meshes and its own
     // copies are released. Objects are matched by model node index (recorded at import); a
     // byte-identical model that came out different is a broken assumption and throws.

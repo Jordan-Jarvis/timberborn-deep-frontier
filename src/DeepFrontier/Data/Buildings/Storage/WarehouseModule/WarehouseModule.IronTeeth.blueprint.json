@@ -147,9 +147,6 @@
     "FlavorDescriptionLocKey": "Building.WarehouseModule.FlavorDescription",
     "Icon": "Buildings/Storage/WarehouseModule/Icon"
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "Children": {
     "#Finished": {
       "TimbermeshSpec": {
@@ -177,6 +174,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x3#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x3/ConstructionBase3x3.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Storage/WarehouseModule/WarehouseModule.IronTeeth.ConstructionStage0.Model"
@@ -209,5 +209,10 @@
   "AmbientAnimationSpec": {},
   "StatusIconAnchorSpec": {
     "Height": 1.7
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
   }
 }

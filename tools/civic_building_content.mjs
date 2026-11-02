@@ -4,6 +4,7 @@ import {structureBlocks,authoredColliders,roomPowerFaces} from './grid_structure
 import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {wallRoomPowerFaces} from './civic_wall_faces.mjs';
 import {applyVanillaSmoke,sceneSmokeRegistration} from './vanilla_smoke.mjs';
+import {unbindConstructionSite} from './construction_stage_content.mjs';
 const root=new URL('../',import.meta.url);
 const data=new URL('src/DeepFrontier/Data/',root);
 const vanilla=new URL('vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources/',root);
@@ -68,10 +69,10 @@ export async function applyRestaurant(value) {
   value.EnterableSpec={OperatingState:'Finished',LimitedCapacityFinished:true,CapacityFinished:menu.seats,LimitedCapacityUnfinished:false,CapacityUnfinished:0};
   value.FixedSlotManagerSpec={};
   value.WorkplaceSpec={MaxWorkers:menu.workers,DefaultWorkers:menu.workers,DefaultWorkerType:'Beaver',DisallowOtherWorkerTypes:true,WorkerTypeUnlockCosts:[]};
-  value.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
+  // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+  unbindConstructionSite(value);
   const colliders=authoredColliders(await read(new URL('outputs/reference-studies/Restaurant-structure.json',root)),layout.structure,layout.baseZ);
   value.Children['#Finished'].CollidersSpec=colliders;
-  value.Children['#Unfinished']={Children:{ConstructionStage0:{TimbermeshSpec:{Model:'Buildings/Food/Restaurant/Restaurant.IronTeeth.ConstructionStage0.Model'},CollidersSpec:colliders}}};
   const edges=layout.edges.filter(([a,b])=>interior.has(a.join(','))&&interior.has(b.join(','))).map(([a,b])=>({Cost:1,Group:{UseGroup:a[2]!==b[2],GroupName:a[2]!==b[2]?'DeepFrontierInterior':''},IsPath:true,AddedEdges:[{Start:xyz(a),End:xyz(b),IsTwoWay:true}]}));
   edges.push({Cost:1,Group:{UseGroup:false,GroupName:''},IsPath:true,AddedEdges:layout.doorLinks.map(d=>({Start:xyz(d.Interior),End:xyz(d.Exterior),IsTwoWay:true}))});
   value.BlockObjectNavMeshSettingsSpec={NoAutoWalls:false,GenerateFloorsOnStackable:true,EdgeGroups:edges,UnblockedCoordinates:[],BlockedEdges:[]};
@@ -124,7 +125,7 @@ export async function applyRestaurant(value) {
   applyVanillaSmoke(value,await sceneSmokeRegistration('civic-integration','Restaurant',layout),'Restaurant');
   await applyNativeBuildingAssembly(value,'Restaurant',layout.origin,{goodId:'Water',flowNodes:[],wheelNodes:[]});
   const folder=new URL('Buildings/Food/Restaurant/',data);
-  for(const file of ['Restaurant.IronTeeth.Model.timbermesh','Restaurant.IronTeeth.ConstructionStage0.Model.timbermesh'])
+  for(const file of ['Restaurant.IronTeeth.Model.timbermesh'])
     await copyFile(new URL(`outputs/civic-integration/Data/Buildings/Food/Restaurant/${file}`,root),new URL(file,folder));
 }
 

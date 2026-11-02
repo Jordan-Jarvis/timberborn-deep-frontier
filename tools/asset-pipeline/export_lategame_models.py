@@ -2,9 +2,10 @@
 
 Reads src/DeepFrontier/Art/Source/<Ident>-ReferenceStudy.blend (written by
 render_lategame_studies.py) and its outputs/lategame-studies/<Ident>-registration.json.
-Writes outputs/lategame-integration/Data/<model path>.timbermesh and its
-ConstructionStage0 copy at the paths the existing blueprint already names.
-lategame_building_content.mjs promotes them together with the new blueprint
+Writes outputs/lategame-integration/Data/<model path>.timbermesh at the path the
+existing blueprint already names (the construction stage is generated from the
+blueprint and this export by build_construction_stages.py).
+lategame_building_content.mjs promotes it together with the new blueprint
 data; the active package is not touched here.
 
 Never moves, scales or repairs artwork. Native/dependency props are removed
@@ -249,8 +250,6 @@ def export_model(ident):
     base = OUT / (model_path(ident) + '.timbermesh')
     base.parent.mkdir(parents=True, exist_ok=True)
     exporter.Exporter.export_collection(collection, str(base), settings)
-    stage = base.with_name(f'{ident}.IronTeeth.ConstructionStage0.Model.timbermesh')
-    shutil.copyfile(base, stage)
     (OUT.parent / f'{ident}-static-merge.json').write_text(
         json.dumps({'ident': ident, 'model': model_path(ident), **merge}, indent=2) + '\n')
     if visitor_slots:

@@ -27,8 +27,8 @@ namespace DeepFrontier.Scripts {
     public void Awake() {
       _spec=GetComponent<RocketLaunchVisualSpec>();_pad=GetComponent<RocketLaunchPad>();
       if(!_pad||!(_spec.AscentHeight>0f))throw new InvalidOperationException("Rocket visual requires the Launch Pad program and a positive ascent height");
-      // Search only the finished model: #Unfinished/ConstructionStage0 is an
-      // exported copy of the same mesh and repeats every node name.
+      // Search only the finished model: #Unfinished holds the construction base
+      // and stage, whose node names must never stand in for the rocket's.
       var finished=GameObject.FindChildIfNameNotEmpty(GetComponent<BuildingModelSpec>().FinishedModelName);
       if(!finished)throw new InvalidOperationException("Launch Pad has no finished model");
       var transforms=finished.GetComponentsInChildren<Transform>(true);

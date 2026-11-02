@@ -4,6 +4,7 @@ import {lategameBlocks,lategameColliders,wallTransputs} from './lategame_buildin
 import {solidPowerFaces} from './power_faces.mjs';
 import {applyVanillaSmoke} from './vanilla_smoke.mjs';
 import {buildingCost,scaledPower} from './lategame_costs.mjs';
+import {unbindConstructionSite} from './construction_stage_content.mjs';
 const root=new URL('../',import.meta.url);
 const data=new URL('src/DeepFrontier/Data/',root);
 const vanilla=new URL('vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources/',root);
@@ -36,13 +37,12 @@ export async function applyGroceryStore(value) {
   Object.assign(value.BuildingSpec,{ScienceCost:shop.scienceUnlock,BuildingCost:buildingCost('GroceryStore',shop.buildingCost,shop.scienceUnlock),SelectionSoundName:'Warehouse',LoopingSoundName:''});
   value.MechanicalNodeSpec={PowerInput:scaledPower('GroceryStore',shop.powerDemandHp,shop.scienceUnlock),PowerOutput:0,IsShaft:false};
   value.TransputProviderSpec={IgnoreRotation:false,Transputs:wallTransputs(solidPowerFaces(blocks,size,{exclude:[door.entrance,door.doorstep]}),reg)};
-  value.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
+  // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+  unbindConstructionSite(value);
   const model='Buildings/Food/GroceryStore/GroceryStore.IronTeeth.Model';
-  const stage='Buildings/Food/GroceryStore/GroceryStore.IronTeeth.ConstructionStage0.Model';
   const colliders=lategameColliders(blocks,size);
   value.Children['#Finished'].TimbermeshSpec={Model:model};
   value.Children['#Finished'].CollidersSpec=colliders;
-  value.Children['#Unfinished']={Children:{ConstructionStage0:{TimbermeshSpec:{Model:stage},CollidersSpec:colliders}}};
   value.EnterableIlluminatorSpec={};
   value.RangedEffectBuildingSpec={EffectRadius:shop.areaRadius};
   // The clerk works at the centre of the native Entrance path cell in front of
@@ -59,7 +59,7 @@ export async function applyGroceryStore(value) {
   // Chimney steam while the shop is staffed (EnterableParticleController).
   applyVanillaSmoke(value,reg,'GroceryStore');
   await applyNativeBuildingAssembly(value,'GroceryMarket',[0,0,0],{goodId:'Water',flowNodes:[],wheelNodes:[]});
-  for(const resource of [model,stage])
+  for(const resource of [model])
     await copyFile(new URL(`outputs/lategame-integration/Data/${resource}.timbermesh`,root),new URL(`${resource}.timbermesh`,data));
 }
 export async function authorGroceryNeed() {

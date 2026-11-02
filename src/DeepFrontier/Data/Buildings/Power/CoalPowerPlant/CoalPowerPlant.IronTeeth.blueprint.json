@@ -1100,9 +1100,6 @@
     "Icon": "Buildings/Power/CoalPowerPlant/Icon"
   },
   "GoodPoweredGeneratorAnimatorSpec": {},
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "MechanicalNodeIlluminatorSpec": {},
   "Children": {
     "#Finished": {
@@ -1155,6 +1152,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase4x4WithoutCorners#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase4x4WithoutCorners/ConstructionBase4x4WithoutCorners.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Power/CoalPowerPlant/CoalPowerPlant.IronTeeth.ConstructionStage0.Model"
@@ -1171,30 +1171,6 @@
                   "X": 4,
                   "Y": 3,
                   "Z": 4
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 3.5,
-                  "Z": 2
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 4
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 4.5,
-                  "Z": 3
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 3,
-                  "Z": 2
                 }
               }
             ],
@@ -1566,5 +1542,10 @@
   },
   "StatusIconAnchorSpec": {
     "Height": 4.7
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
   }
 }

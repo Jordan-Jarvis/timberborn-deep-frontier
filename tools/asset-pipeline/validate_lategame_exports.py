@@ -38,9 +38,9 @@ for ident in json.loads((ROOT / 'tools/lategame_batches.json').read_text(encodin
         continue
     bp = json.loads(blueprints[ident].read_text(encoding='utf-8'))
     model_path = bp['Children']['#Finished']['TimbermeshSpec']['Model']
-    stage_path = bp['Children']['#Unfinished']['Children']['ConstructionStage0']['TimbermeshSpec']['Model']
+    # The construction stage is generated and checked by tools/asset-pipeline/validate_construction_exports.py.
     meshes = {}
-    for resource in (model_path, stage_path):
+    for resource in (model_path,):
         active = DATA / (resource + '.timbermesh')
         export = EXPORTS / 'Data' / (resource + '.timbermesh')
         if not active.is_file() or not export.is_file():

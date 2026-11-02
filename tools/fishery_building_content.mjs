@@ -5,6 +5,7 @@ import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {applyVanillaSmoke,sceneSmokeRegistration} from './vanilla_smoke.mjs';
 import {nativeEntrance} from './native_entrance.mjs';
 import {buildingCost} from './lategame_costs.mjs';
+import {unbindConstructionSite} from './construction_stage_content.mjs';
 const root=new URL('../',import.meta.url);
 const read=async p=>JSON.parse(await readFile(new URL(p,root),'utf8'));
 const xyz=([X,Y,Z])=>({X,Y,Z});
@@ -137,9 +138,9 @@ export async function applyFishery(value) {
   const door=d.entrance,entrance=nativeEntrance('FisheryWorks',door,d.size,blocks);
   value.BlockObjectSpec={Size:xyz(d.size),Blocks:blocks,Entrance:{HasEntrance:true,Coordinates:xyz(entrance)},BaseZ:0,Overridable:false,Flippable:true};
   value.BuildingAccessibleSpec={LocalAccess:xyz([3.5,0,.25]),ForceOneFinalAccess:false};
-  value.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
+  // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+  unbindConstructionSite(value);
   value.Children['#Finished'].CollidersSpec=industrialColliders(blocks,d.size,d.baseZ);
-  value.Children['#Unfinished']={Children:{ConstructionStage0:{TimbermeshSpec:{Model:'Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.ConstructionStage0.Model'},CollidersSpec:industrialColliders(blocks,d.size,d.baseZ)}}};
   // Only the enclosed interior route is building navigation; the galleries and
   // the terrace are native stackable floors reached through the door links.
   const edgeGroups=d.edges.filter(([a,b])=>interior.has(a.join(','))&&interior.has(b.join(',')))
@@ -161,8 +162,6 @@ export async function applyFishery(value) {
   applyVanillaSmoke(value,await sceneSmokeRegistration('civic-integration','FisheryWorks',d),'FisheryWorks');
   await applyNativeBuildingAssembly(value,'FisheryWorks',d.origin,{goodId:'Water',flowNodes:['FisheryCascade'],wheelNodes:['FisheryNativeWheel']});
   const folder='Buildings/Food/FisheryWorks/';
-  for(const suffix of ['Model','ConstructionStage0.Model']) {
-    const path=folder+`FisheryWorks.IronTeeth.${suffix}.timbermesh`;
-    await copyFile(new URL('outputs/civic-integration/Data/'+path,root),new URL('src/DeepFrontier/Data/'+path,root));
-  }
+  const path=folder+'FisheryWorks.IronTeeth.Model.timbermesh';
+  await copyFile(new URL('outputs/civic-integration/Data/'+path,root),new URL('src/DeepFrontier/Data/'+path,root));
 }

@@ -474,9 +474,6 @@
     "UnblockedCoordinates": [],
     "BlockedEdges": []
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "TransputProviderSpec": {
     "IgnoreRotation": false,
     "Transputs": [
@@ -708,6 +705,28 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x3#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x3/ConstructionBase3x3.blueprint",
+          "Modification": {
+            "TransformSpec": {
+              "Position": {
+                "X": 0,
+                "Y": 0,
+                "Z": 1
+              },
+              "Rotation": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "Scale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              }
+            }
+          }
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Science/ArchiveExcavation/ArchiveExcavation.IronTeeth.ConstructionStage0.Model"
@@ -724,42 +743,6 @@
                   "X": 4,
                   "Y": 2,
                   "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 2.5,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 2,
-                  "Y": 2.5,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 1,
-                  "Z": 1
                 }
               }
             ],
@@ -896,5 +879,10 @@
   "StatusIconAnchorSpec": {
     "Height": 3.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

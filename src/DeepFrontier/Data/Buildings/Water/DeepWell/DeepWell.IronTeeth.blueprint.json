@@ -149,9 +149,6 @@
     "FlavorDescriptionLocKey": "Building.DeepWell.FlavorDescription",
     "Icon": "Buildings/Water/DeepWell/DeepWellIcon"
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "TransputProviderSpec": {
     "IgnoreRotation": false,
     "Transputs": [
@@ -239,6 +236,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase1x1#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase1x1/ConstructionBase1x1.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Water/DeepWell/DeepWell.IronTeeth.ConstructionStage0.Model"
@@ -249,23 +249,23 @@
                 "Center": {
                   "X": 0.5,
                   "Y": 1.5,
-                  "Z": 1
+                  "Z": 0.5
                 },
                 "Size": {
                   "X": 1,
                   "Y": 3,
-                  "Z": 2
+                  "Z": 1
                 }
               },
               {
                 "Center": {
                   "X": 0.5,
-                  "Y": 3.5,
+                  "Y": 2,
                   "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 1,
+                  "Y": 2,
                   "Z": 1
                 }
               }
@@ -312,5 +312,10 @@
   "StatusIconAnchorSpec": {
     "Height": 4.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

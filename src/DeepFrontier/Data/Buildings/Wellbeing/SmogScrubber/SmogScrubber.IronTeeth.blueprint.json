@@ -396,9 +396,6 @@
     "FlavorDescriptionLocKey": "Building.SmogScrubber.FlavorDescription",
     "Icon": "Buildings/Wellbeing/SmogScrubber/Icon"
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "TransputProviderSpec": {
     "IgnoreRotation": false,
     "Transputs": [
@@ -591,6 +588,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x3#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x3/ConstructionBase3x3.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Wellbeing/SmogScrubber/SmogScrubber.IronTeeth.ConstructionStage0.Model"
@@ -600,48 +600,12 @@
               {
                 "Center": {
                   "X": 1.5,
-                  "Y": 1,
+                  "Y": 1.5,
                   "Z": 1.5
                 },
                 "Size": {
                   "X": 3,
-                  "Y": 2,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
                   "Y": 3,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 2,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 2,
-                  "Y": 3,
-                  "Z": 2
-                },
-                "Size": {
-                  "X": 2,
-                  "Y": 2,
-                  "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 4.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
                   "Z": 3
                 }
               }
@@ -741,5 +705,10 @@
   "StatusIconAnchorSpec": {
     "Height": 5.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

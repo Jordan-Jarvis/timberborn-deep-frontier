@@ -4,6 +4,7 @@ import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {wallRoomPowerFaces} from './civic_wall_faces.mjs';
 import {applyVanillaSmoke,sceneSmokeRegistration} from './vanilla_smoke.mjs';
 import {buildingCost,scaledPower} from './lategame_costs.mjs';
+import {unbindConstructionSite} from './construction_stage_content.mjs';
 const root=new URL('../',import.meta.url);
 const data=new URL('src/DeepFrontier/Data/',root);
 const vanilla=new URL('vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources/',root);
@@ -60,12 +61,10 @@ export async function applyHospital(value) {
   value.WorkplaceSpec={MaxWorkers:care.workers,DefaultWorkers:care.workers,DefaultWorkerType:'Beaver',DisallowOtherWorkerTypes:true,WorkerTypeUnlockCosts:[]};
   Object.assign(value.BuildingSpec,{ScienceCost:care.scienceUnlock,BuildingCost:buildingCost('Hospital',care.buildingCost,care.scienceUnlock),SelectionSoundName:'MedicalBed',LoopingSoundName:''});
   value.MechanicalNodeSpec={PowerInput:careHp,PowerOutput:0,IsShaft:false};
-  value.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
+  // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+  unbindConstructionSite(value);
   const colliders=authoredColliders(await read(new URL('outputs/reference-studies/Hospital-structure.json',root)),layout.structure,layout.baseZ);
   value.Children['#Finished'].CollidersSpec=colliders;
-  value.Children['#Unfinished']={Children:{ConstructionStage0:{
-    TimbermeshSpec:{Model:'Buildings/Wellbeing/Hospital/Hospital.IronTeeth.ConstructionStage0.Model'},
-    CollidersSpec:colliders}}};
   const edges=layout.edges.filter(([a,b])=>interior.has(a.join(','))&&interior.has(b.join(','))).map(([a,b])=>({
     Cost:1,Group:{UseGroup:a[2]!==b[2],GroupName:a[2]!==b[2]?'DeepFrontierInterior':''},IsPath:true,
     AddedEdges:[{Start:xyz(a),End:xyz(b),IsTwoWay:true}]}));
@@ -129,7 +128,7 @@ export async function applyHospital(value) {
   applyVanillaSmoke(value,await sceneSmokeRegistration('civic-integration','Hospital',layout),'Hospital');
   await applyNativeBuildingAssembly(value,'Hospital',layout.origin,{goodId:'Water',flowNodes:[],wheelNodes:[]});
   const folder=new URL('Buildings/Wellbeing/Hospital/',data);
-  for(const suffix of ['Model','ConstructionStage0.Model'])
+  for(const suffix of ['Model'])
     await copyFile(new URL(`outputs/civic-integration/Data/Buildings/Wellbeing/Hospital/Hospital.IronTeeth.${suffix}.timbermesh`,root),
       new URL(`Hospital.IronTeeth.${suffix}.timbermesh`,folder));
 }

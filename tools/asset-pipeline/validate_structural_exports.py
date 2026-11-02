@@ -26,7 +26,7 @@ for building in catalog['buildings']:
     payload=(folder/(ident+'.IronTeeth.Model.timbermesh')).read_bytes()
     model=model_pb2.Model()
     model.ParseFromString(zlib.decompress(payload))
-    assert payload==(folder/(ident+'.IronTeeth.ConstructionStage0.Model.timbermesh')).read_bytes()
+    # The construction stage is generated and checked by tools/asset-pipeline/validate_construction_exports.py.
     assert len(set(n.name for n in model.nodes))==len(model.nodes), ident
     assert not any(n.nodeAnimations for n in model.nodes), ident
     assert not any(k in bp for k in ('MechanicalNodeSpec','WorkplaceSpec','ManufactorySpec')), ident

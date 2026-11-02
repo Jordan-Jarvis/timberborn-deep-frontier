@@ -4,6 +4,55 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Construction sites: every building shows a vanilla base, then a generated scaffold, instead of its finished model (Claude Code session, 2026-11-02, construction-stage agent; stages built from a HEAD 9705995 view of mirror `constr`, generated and validated there; compile-checked; offline renders; not built or run in game)
+
+- **Report (user):** "Some of our buildings look finished even when they are under construction."
+- **Native mechanism** (decompiled 1.1.2.8 `ConstructionSiteProgressVisualizer`, `BuildingModel`, `ConstructionSite`, `ConstructionModeModel`):
+  - The children of `#Unfinished` are stages, one shown at a time. Child 0, the base, shows until the first material or progress (`WasStarted`); then the last child whose `ProgressThresholds[i-1]` the build progress has reached.
+  - Construction mode shows the finished model in greyscale.
+  - **Vanilla buildings:** all 147 Iron Teeth buildings with a stage nest a vanilla `ConstructionBase<X>x<Y>`, sometimes smaller than the footprint and offset, plus one `ConstructionStage0` with thresholds `[0.0]`. The stage is a dark timber or BaseMetal frame on a Dirt patch, never the finished model.
+  - Monuments use 2-4 progressive stages. Vanilla structural pieces (Platform, Dam, Levee, Stairs, MetalPlatform, Overhang, SuspensionBridge) have frame stages too, so no structural exemption is needed.
+- **Audit (HEAD 9705995):** 92 Deep Frontier templates with a BuildingModelSpec.
+  - **91 showed the finished model while unfinished.** 83 buildings and structures had `ConstructionStage0` as a byte copy of the finished model, with no base and thresholds `[]`. The 8 steel leg deck tools named the SteelDeck's copy.
+  - **Only the Fisher Flag** had a native stage of its own (102 triangles, vanilla ConstructionBase1x1).
+  - DeepOreSource is a map object, placed finished.
+  - Per-template table: `outputs/construction-stages/audit.json`.
+- **Fix:** generated at the pipeline level (docs/asset-pipeline.md "Construction stages"):
+  - **Stage generator.** `tools/construction_stages.json` drives `construction_stage_massing.py`, `construction_stage_geometry.py` and `build_construction_stages.py`. Each building gets an outline frame in the vanilla stage atlas tiles on the native Dirt patch, cut at 60% of its main body over its own plan: timber, or steel on timber sills when it costs metal.
+  - **Exports and binding.** The stages go through the official exporter to the tracked `outputs/construction-integration`. `tools/construction_stage_content.mjs` binds the largest fitting vanilla base plus the stage with `[0.0]` at the end of canonical generation.
+  - **Families and exporters.** Eleven family generators call `unbindConstructionSite`, and the industrial and pit layouts stop writing stage colliders. The industrial and late-game exporters and the prototype exporter no longer copy the finished model to a stage. The 76 old stage copies in the integration folders are removed; `promote_style_exports.ps1` counts one mesh per template.
+  - **Results.** 83 stages of 162-3,078 triangles (most 300-1,000; the old copies were 38-13,241). Total blueprint triangles 717,722 -> 408,359, with the construction ceilings in `triangle-budget.json` recorded at the new counts. The two tiny blocks go up, as vanilla Levee (26 -> 226) and Dam do: BrickMasonryBlock 38 -> 162 and ConcreteOverflowDam 132 -> 162.
+  - **Unchanged.** Data changes only in each building's `#Unfinished` and thresholds and its stage mesh (checked against HEAD). The leg deck tools only reorder one key.
+  - **Comments.** The comments in `PrefabMeshRelease.cs` and `RocketLaunchVisual.cs` no longer describe the stage as a copy.
+- **Exemptions (two, with reasons in the config):**
+  - `authored`: the Fisher Flag, whose native stage and base are already correct.
+  - `previewOnly`: the SteelLegDeck tools, which SteelDeckPlacer never builds. Their unfinished child names the SteelDeck stage, now a scaffold.
+- **Renders** (Cycles OptiX, RTX 2060, `render_map_object_views.py`), in `outputs/construction-stages/`:
+  - `construction-stages-after.png`: all 83 stages;
+  - `construction-stages-before-after.png`: 16 buildings, finished model versus stage;
+  - `close/*-close-after.png`: StoneCrusher, SteelMill, Restaurant, NuclearReactor and SteelDeck3x3;
+  - `vanilla/`: vanilla references (Smelter, LargeWarehouse, BotPartFactory, Centrifuge, MetalPlatform3x3, EfficientMine, Inventor, Dam stages and ConstructionBase3x3).
+- **Checks:**
+  - **Stage builder.** Every stage passes `zfight_audit.audit` with no visible conflict, plus footprint and height bounds, materials, UV tiles and the 4,000-triangle ceiling.
+  - **New validator.** `exports-construction` covers all 92 templates, and its 4 mutations fail as they should.
+  - **Compile.** `tools/compile-check`: 0 errors.
+  - **Full validate_all** in the mirror: 76 of 78 pass. `no-game-assets` needs git; it passes on this commit's private index. `audit-item-uses` is report-only.
+- **Incident:** while making the mirror show HEAD, a cleanup deleted the then-untracked `ModularWarehouse-` and `WarehouseModule-ReferenceStudy.blend` through the mirror's `Art/Source` junction.
+  - They were regenerated at once with `render_lategame_studies.py --save-only` from unchanged sources (`sourceHash` equal). Their study, registration and native-assembly outputs are byte-identical, and they were unpacked (222,396 and 209,956 bytes).
+  - The warehouse commit 9705995 then committed files of exactly those sizes.
+- **In game, to check (not run):**
+  1. Place a Stone Crusher (or any Deep Frontier building) without materials: staked-out ground with planks (the vanilla 3x3 base), not the building.
+  2. Deliver the first materials: an open dark-timber frame on a dirt patch. A Steel Mill or Restaurant shows a steel frame. The finished model appears only when construction completes.
+  3. Construction mode (hammer): unbuilt buildings show the finished model in grey, as vanilla.
+  4. Structures:
+     - **Concrete block and masonry blocks:** a 1x1 formwork cage.
+     - **Concrete scaffold:** corner towers.
+     - **Steel bridge and cantilever:** a frame along the span with the base at the anchor.
+     - **Side platform:** a frame at deck level beside its anchor.
+     - **Steel decks on legs:** each placed column and deck shows its own frame.
+  5. Load a save with sites under construction: they show base or frame by their progress. Flipped and rotated sites keep the base on the building's ground.
+  6. Fisher Flag: unchanged, with its landing and pole.
+
 ## Modular Warehouse: a core haulers use plus stackable Warehouse Modules, five slots with their own warehouse settings (Claude Code session, 2026-11-02, datavault agent; mirror `datavault` on HEAD d1e5095 + this change; compile-checked; offline renders; not built or run in game)
 
 - **User:** "a computerized storage warehouse ... BIG ... store as much as 20 unique items at a time (acts like 20 warehouses with their own settings?) ... maybe we can do 5 items. That way the menu system doesn't get clogged." Then (coordinator, the user's new direction): early game, no power, not computerized; MODULAR (one entrance building plus modules that add capacity and slots; "one entrance can handle multiple items"); STACKABLE (modules on each other and on the core). The first, powered 5x5 single-building version was reworked before anything was committed.

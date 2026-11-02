@@ -459,9 +459,6 @@
   },
   "SimpleManufactoryBehaviorsSpec": {},
   "WorkshopAnimationControllerSpec": {},
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "TransputProviderSpec": {
     "IgnoreRotation": false,
     "Transputs": [
@@ -717,6 +714,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x3#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x3/ConstructionBase3x3.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Wellbeing/PublicHealthLab/PublicHealthLab.IronTeeth.ConstructionStage0.Model"
@@ -726,37 +726,13 @@
               {
                 "Center": {
                   "X": 2,
-                  "Y": 1.5,
+                  "Y": 1,
                   "Z": 1.5
                 },
                 "Size": {
                   "X": 4,
-                  "Y": 3,
+                  "Y": 2,
                   "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 0.5,
-                  "Y": 3.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 3.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 1
                 }
               }
             ],
@@ -1024,5 +1000,10 @@
   "StatusIconAnchorSpec": {
     "Height": 3.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

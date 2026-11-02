@@ -50,6 +50,10 @@ CONSTRUCTION_TARGET_SHARE = .25
 # Model id -> (family, budget class, candidate export root). None = --data.
 CIVIC = OUTPUTS / 'civic-integration/Data'
 LATE = OUTPUTS / 'lategame-integration/Data'
+# Construction stages come from build_construction_stages.py's export, except the
+# authored ones (tools/construction_stages.json), which stay with their family.
+CONSTRUCTION = OUTPUTS / 'construction-integration/Data'
+AUTHORED_STAGES = set(json.loads((ROOT / 'tools/construction_stages.json').read_text(encoding='utf-8'))['authored'])
 OWNERS = {
     'FisheryWorks': ('civic', 'grand', CIVIC),
     'FishHatchery': ('civic', 'grand', CIVIC),
@@ -166,8 +170,8 @@ def measure(data):
         family, klass, root = OWNERS[ident]
         root = root or data
         resolved = []
-        for resource in [finished] + stages:
-            file = root / (resource + '.timbermesh')
+        for i, resource in enumerate([finished] + stages):
+            file = (root if i == 0 or ident in AUTHORED_STAGES else CONSTRUCTION) / (resource + '.timbermesh')
             if not file.is_file():
                 problems.append(f'{ident}: {file.relative_to(ROOT)} is missing')
                 break

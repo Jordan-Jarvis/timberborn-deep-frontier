@@ -342,9 +342,6 @@
     "PipeParentName": "#Finished",
     "MaxDepth": 6
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "Children": {
     "#Finished": {
       "TimbermeshSpec": {
@@ -384,6 +381,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x2#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x2/ConstructionBase3x2.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Water/RadioactiveSludgeRecoveryPump/RadioactiveSludgeRecoveryPump.IronTeeth.ConstructionStage0.Model"
@@ -394,24 +394,24 @@
                 "Center": {
                   "X": 1.5,
                   "Y": 1,
+                  "Z": 1
+                },
+                "Size": {
+                  "X": 3,
+                  "Y": 2,
+                  "Z": 2
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
+                  "Y": 1,
                   "Z": 2.5
                 },
                 "Size": {
                   "X": 1,
                   "Y": 2,
                   "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 1.5,
-                  "Z": 1
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 3,
-                  "Z": 2
                 }
               }
             ],
@@ -547,5 +547,10 @@
   },
   "StatusIconAnchorSpec": {
     "Height": 3.7
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
   }
 }

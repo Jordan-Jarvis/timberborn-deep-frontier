@@ -461,6 +461,10 @@ await (await import('./tool_group_content.mjs')).applyToolGroups();
 // Status icon anchors (tools/status_icon_content.mjs, Scripts/StatusIconAnchor.cs): from each
 // building's final blocks, so after connections (roof decks) and every family generator.
 await (await import('./status_icon_content.mjs')).applyStatusIconAnchors();
+// Construction sites (tools/construction_stage_content.mjs, tools/construction_stages.json): a
+// vanilla ConstructionBase and the generated ConstructionStage0 for every building, from each
+// building's final blocks, so after every family generator and the roof passes.
+await (await import('./construction_stage_content.mjs')).applyConstructionStages();
 // Last: every generated building must keep its declared automation role.
 await import('./automation_building_content.mjs');
 // Built-in new-game setup (tools/map_variants, tools/map_setup.json, docs/maps.md): data only, after

@@ -6,6 +6,7 @@ import {industrialColliders} from './industrial_occupancy.mjs';
 import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {applyVanillaSmoke,sceneSmokeRegistration} from './vanilla_smoke.mjs';
 import {buildingCost,scaledPower} from './lategame_costs.mjs';
+import {unbindConstructionSite} from './construction_stage_content.mjs';
 const root=new URL('../',import.meta.url);
 const read=async path=>JSON.parse(await readFile(new URL(path,root),'utf8'));
 const xyz=([X,Y,Z])=>({X,Y,Z});
@@ -128,10 +129,10 @@ export async function researchContent() {
       CustomPivot:{HasCustomPivot:false,Coordinates:xyz([0,0,0])},CanBeAttachedToTerrainSide:false,DevModeTool:false};
     v.LabeledEntitySpec={DisplayNameLocKey:`Building.${b.id}.DisplayName`,DescriptionLocKey:`Building.${b.id}.Description`,
       FlavorDescriptionLocKey:`Building.${b.id}.FlavorDescription`,Icon:`Buildings/Science/${b.id}/Icon`};
-    v.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
     const colliders=industrialColliders(blocks,d.size,0);
-    v.Children={'#Finished':{TimbermeshSpec:{Model:model+'.Model'},CollidersSpec:colliders},
-      '#Unfinished':{Children:{ConstructionStage0:{TimbermeshSpec:{Model:model+'.ConstructionStage0.Model'},CollidersSpec:colliders}}}};
+    v.Children={'#Finished':{TimbermeshSpec:{Model:model+'.Model'},CollidersSpec:colliders}};
+    // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+    unbindConstructionSite(v);
     // Vanilla smoke from the scene's registered emitters (the donor Smelter's own
     // effects were removed above): none since the roof flues went (no roof vents,
     // user 2026-10-30), so the lab no longer pollutes.

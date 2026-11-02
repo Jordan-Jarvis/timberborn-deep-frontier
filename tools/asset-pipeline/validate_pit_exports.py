@@ -45,7 +45,7 @@ for ident in ('SandstonePit','LimestonePit'):
     tracks=[(n.name,a) for n in model.nodes for a in n.nodeAnimations]
     assert {name for name,_ in tracks}=={'#Pit.Winch','#Pit.HoistedBasket','#Pit.HoistCable'},ident
     assert len(tracks)==3 and all(len(a.frames)==121 for _,a in tracks),ident
-    assert payload==(folder/(ident+'.IronTeeth.ConstructionStage0.Model.timbermesh')).read_bytes()
+    # The construction stage is generated and checked by tools/asset-pipeline/validate_construction_exports.py.
     # 2026-10-22: footprints end at the walls. The sandstone pit keeps its
     # front row (hoist and sorting grate) with the native path cell (1,0,0)
     # in front of its set-back door; the limestone pit's door is on the

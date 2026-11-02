@@ -45,7 +45,6 @@ export async function applyPitLayout(value,building) {
   const [ix,iy,iz]=d.idle[0],[ox,oy,oz]=d.origin;
   value.BuildingAccessibleSpec.LocalAccess=xyz([ix+ox,iz+oz,iy+oy]);
   value.Children['#Finished'].CollidersSpec=industrialColliders(blocks,d.size,0);
-  value.Children['#Unfinished'].Children.ConstructionStage0.CollidersSpec=industrialColliders(blocks,d.size,0);
   value.TransformSlotInitializerSpec={Slots:[{SlotKeyword:'Entrance',Animation:'ForcedIdle',
     Inanimate:false,RandomizeYRotation:false,WaterSlot:false}]};
   value.WorkplaceSlotManagerSpec={};

@@ -37,7 +37,7 @@ for n in model.nodes:
 tracks=[(n.name,a) for n in model.nodes for a in n.nodeAnimations]
 require({name for name,a in tracks}=={'#Hospital.WardBanner5.18','#Hospital.WardBanner8.82'},'Hospital banner tracks missing')
 require(all(len(a.frames)==61 for name,a in tracks),'Banner loop lost frames')
-require(payload==(folder/'Hospital.IronTeeth.ConstructionStage0.Model.timbermesh').read_bytes(),'Construction export differs')
+# The construction stage is generated and checked by tools/asset-pipeline/validate_construction_exports.py.
 assembly=read('outputs/reference-studies/Hospital-native-assembly.json')
 require(all(not any(p['name'] in n for n in names) for p in assembly['props']),'Native preview props shipped in export')
 # No forced ground decoration (2026-10-22): the facade planters and the rear

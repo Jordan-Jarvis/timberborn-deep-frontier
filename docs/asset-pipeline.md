@@ -1,5 +1,64 @@
 # Deep Frontier asset pipeline
 
+## Construction stages (2026-11-02)
+
+Every Deep Frontier building has a native construction site: a vanilla construction base, then a generated scaffold stage. Until 2026-11-02 each exporter copied the finished model to `<Id>.IronTeeth.ConstructionStage0.Model`, so a site looked finished from the moment it was placed.
+
+**Native mechanism** (Timberborn 1.1.2.8, decompiled `ConstructionSiteProgressVisualizer`, `BuildingModel`, `ConstructionSite`, `ConstructionModeModel`):
+
+- The direct children of `BuildingModelSpec.UnfinishedModelName` are the stages, and exactly one is active.
+- Child 0 (the construction base) shows until the site has its first material or build progress (`ConstructionSite.WasStarted`). After that, the last child `i >= 1` whose `ProgressThresholds[i-1]` the build-time progress has reached shows. `ProgressThresholds.Length` must equal the child count minus one.
+- In construction mode an unfinished building shows its finished model in greyscale (`ConstructionModeModel`), unless `ConstructionModeModel` is `Unfinished` (vanilla monuments).
+- All 147 vanilla Iron Teeth buildings with a stage nest a vanilla `ConstructionBases/ConstructionBase<X>x<Y>` blueprint and have one `ConstructionStage0`, with `ProgressThresholds [0.0]`. Some use a smaller base than their footprint, offset with `Modification.TransformSpec` (MetalPlatform3x3, LargeWaterWheel).
+- The vanilla stage is an open frame on a `Dirt` patch, never the finished model:
+  - **Frame:** `BaseWood_DarkBrown.IronTeeth` board strips (atlas u .5–1, v .5–1), or `BaseMetal.IronTeeth` girder strips (u 0–.5, v 0–.5) on buildings that cost MetalBlock. Its height is about two thirds of the building.
+  - **Dirt patch:** a footprint patch whose `DirtURP` fade uses uv0.v: 0 at 0.022 outside the edge, 1 from 0.11 inside.
+- Monuments use two to four progressive stages (thresholds `[0, 0.5]`, EarthRepopulator `[.25, .5, .75]`).
+- Vanilla structural pieces (Platform, Dam, Levee, Stairs, MetalPlatform, Overhang, SuspensionBridge) have their own frame stage as well.
+
+**Pipeline:**
+
+- `tools/construction_stages.json` holds the parameters: stage height fraction 0.6 of the main body, metal-frame cost goods, member sizes, vanilla base list and triangle ceiling 4000. It also lists the two exemptions with reasons:
+  - `authored`: the Fisher Flag's own native stage;
+  - `previewOnly`: the steel leg deck tool templates, which are never built.
+- `construction_stage_massing.py` (no Blender) derives each site from the blueprint and the finished model:
+  - **Plan:** columns with an occupied block. A column is grounded when its lowest block stands on Ground, GroundOrStackable or Stackable.
+  - **Height:** the finished triangles' height over each cell, clamped to the column's occupied layers, so decks, bridge spans and piles keep their real level. The adaptive support templates parked underground are left out.
+  - **Cut:** flat, at `lowest + ceil(0.6 x (main body top - lowest))` layers.
+  - **Frame material:** metal when the BuildingCost holds MetalBlock, Alloy, DeepAlloy or HighGradeSteel, as the vanilla rule.
+  - **Base:** the largest plain or WithoutCorners vanilla base lying on grounded cells of one height, centred.
+  - **Colliders:** one box per bay.
+- `construction_stage_geometry.py` builds the stage in the vanilla look:
+  - At every member level, sills and girts run round the plan's outline, inset half a post so nothing leaves the footprint.
+  - Posts stand at the outline corners and every 2 tiles, each rising to the highest member that meets it.
+  - Roof joists cross each top level, and diagonal braces fill the bottom bays of grounded walls.
+  - The native Dirt patch covers the grounded cells.
+  - Every face has an explicit atlas island. Girts and joists are thinner than the posts and member levels are a quarter layer apart, so no faces are coplanar.
+- `build_construction_stages.py` (Blender, real repository) builds each stage in a fresh scene and checks it:
+  - frame inside the footprint, Dirt at most 0.022 beyond it;
+  - heights inside the block grid;
+  - only the three native materials and UVs inside their tiles;
+  - the triangle ceiling;
+  - `zfight_audit.audit` with no visible conflict.
+
+  It exports each stage merged with the official Timbermesh exporter to `outputs/construction-integration/Data/<stage>.timbermesh`, and records the massing, triangles and export hash in `outputs/construction-integration/construction-stages.json`. The stages are fully generated, so no scene is saved; `--data` reads blueprints and models from another Data tree (a mirror of HEAD).
+- The family generators drop any `#Unfinished` they cloned from a vanilla template (`unbindConstructionSite`), and the exporters write only the finished model.
+- At the end of canonical generation, `tools/construction_stage_content.mjs` binds every generated site:
+  - `#Unfinished = { ConstructionBase<X>x<Y>#nested, ConstructionStage0 }` with `ProgressThresholds [0.0]`;
+  - the stage mesh is copied into Data.
+
+  A building without a manifest entry, or whose blocks changed since its stage was generated, fails generation with the command to rerun. After a footprint change or a new building, run `build_construction_stages.py -- --models <Id>`.
+- `validate_construction_exports.py` (`validate_all` id `exports-construction`) checks every building:
+  - the base and stage children in order and the thresholds;
+  - that the stage is the recorded export and neither is nor equals the finished model;
+  - that the recomputed massing matches the manifest;
+  - one merged node, native materials and the ceiling;
+  - that the authored and preview-only exemptions hold.
+
+  Four mutations (stage = finished, base removed, thresholds emptied, base swapped) must fail.
+- `validate_triangle_budget.py` measures the generated stages from `outputs/construction-integration`. The construction ceilings in `triangle-budget.json` were recorded at the generated counts (total blueprint triangles 717,722 -> 408,359).
+- Review: `render_construction_stages.py specs` writes `render_map_object_views.py` specs (stage, and the finished model as the old look). `render_construction_stages.py sheets` composes `outputs/construction-stages/construction-stages-after.png` and a before/after sheet.
+
 ## GPU work and the CPU budget (2026-10-30)
 
 A sampler of every agent process on this machine (i7-8750H, 6 cores, RTX 2060) found about 88% of all CPU in the Cycles review renders: `render_lategame_studies.py` 51%, `render_budget_views.py` 37%. The visibility audits (`audit_hidden_geometry.py`, `zfight_audit.py`) were 1-3%.

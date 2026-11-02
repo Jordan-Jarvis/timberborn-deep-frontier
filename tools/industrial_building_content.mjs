@@ -110,7 +110,6 @@ export async function applyIndustrialLayout(value,building){
   checkGroundDoor(ident,d,blocks,index,inBounds);
   value.BlockObjectSpec={Size:xyz(d.size),Blocks:blocks,Entrance:{HasEntrance:true,Coordinates:xyz(d.entrance)},BaseZ:0,Overridable:false,Flippable:true};
   value.Children['#Finished'].CollidersSpec=industrialColliders(blocks,d.size,d.baseZ);
-  value.Children['#Unfinished'].Children.ConstructionStage0.CollidersSpec=industrialColliders(blocks,d.size,d.baseZ);
   const exclude=[d.entrance,[d.entrance[0],d.entrance[1]-1,d.entrance[2]]];
   value.TransputProviderSpec.Transputs=await wallTransputs(ident,d,blocks,index,inBounds,exclude);
   const [ix,iy,iz]=d.idle[0], [ox,oy,oz]=d.origin;

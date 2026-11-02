@@ -103,9 +103,6 @@
     "BlockFullMoisture": false,
     "BlockContamination": false
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "Children": {
     "#Finished": {
       "TimbermeshSpec": {
@@ -132,6 +129,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase1x1#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase1x1/ConstructionBase1x1.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Platforms/ConcreteBlock/ConcreteBlock.IronTeeth.ConstructionStage0.Model"
@@ -160,5 +160,10 @@
   },
   "StatusIconAnchorSpec": {
     "Height": 1.7
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
   }
 }

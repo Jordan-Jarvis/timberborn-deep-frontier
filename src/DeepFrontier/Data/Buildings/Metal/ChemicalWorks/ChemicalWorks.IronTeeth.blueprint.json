@@ -546,9 +546,6 @@
   },
   "WorkshopAnimationControllerSpec": {},
   "SimpleManufactoryBehaviorsSpec": {},
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "TransputProviderSpec": {
     "IgnoreRotation": false,
     "Transputs": [
@@ -825,6 +822,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x3#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x3/ConstructionBase3x3.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Metal/ChemicalWorks/ChemicalWorks.IronTeeth.ConstructionStage0.Model"
@@ -841,42 +841,6 @@
                   "X": 4,
                   "Y": 2,
                   "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 2.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 1,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2.5,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 4,
-                  "Z": 2.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 2,
-                  "Z": 1
                 }
               }
             ],
@@ -1075,5 +1039,10 @@
   "StatusIconAnchorSpec": {
     "Height": 5.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

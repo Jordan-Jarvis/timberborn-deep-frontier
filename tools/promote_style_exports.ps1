@@ -42,8 +42,9 @@ foreach ($name in @('research', 'hydro', 'structural')) {
   $source = (Resolve-Path "outputs/$name-integration/Data").Path
   $meshes = @(Get-ChildItem -LiteralPath $source -Filter '*.timbermesh' -File -Recurse)
   # Structural: 33 templates (7 original structures, 8 concrete platform variants, 3 side platforms,
-  # 15 steel structures), two meshes each.
-  $expected = if ($name -eq 'structural') { 66 } else { 2 }
+  # 15 steel structures), one finished mesh each; construction stages come from
+  # build_construction_stages.py and are bound during canonical generation.
+  $expected = if ($name -eq 'structural') { 33 } else { 1 }
   if ($meshes.Count -ne $expected) { throw "Unexpected candidate mesh count in $name" }
   foreach ($mesh in $meshes) {
     $relative = [IO.Path]::GetRelativePath($source, $mesh.FullName)

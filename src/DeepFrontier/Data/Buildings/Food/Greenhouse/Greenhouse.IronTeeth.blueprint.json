@@ -762,9 +762,6 @@
     "AlertLocKey": "Status.HydroponicGarden.CultivationHalted.Short",
     "StatusIcon": "CultivationHalted"
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "Children": {
     "#Finished": {
       "TimbermeshSpec": {
@@ -852,6 +849,28 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x3#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x3/ConstructionBase3x3.blueprint",
+          "Modification": {
+            "TransformSpec": {
+              "Position": {
+                "X": 1,
+                "Y": 0,
+                "Z": 0
+              },
+              "Rotation": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "Scale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              }
+            }
+          }
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Food/Greenhouse/Greenhouse.IronTeeth.ConstructionStage0.Model"
@@ -860,25 +879,13 @@
             "BoxColliders": [
               {
                 "Center": {
-                  "X": 3,
-                  "Y": 0.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 6,
+                  "X": 1.5,
                   "Y": 1,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
-                  "X": 3,
-                  "Y": 1.5,
                   "Z": 1
                 },
                 "Size": {
-                  "X": 6,
-                  "Y": 1,
+                  "X": 3,
+                  "Y": 2,
                   "Z": 2
                 }
               },
@@ -886,43 +893,43 @@
                 "Center": {
                   "X": 4.5,
                   "Y": 1.5,
-                  "Z": 2.5
+                  "Z": 1.5
                 },
                 "Size": {
                   "X": 3,
+                  "Y": 3,
+                  "Z": 3
+                }
+              },
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.5,
+                  "Z": 2.5
+                },
+                "Size": {
+                  "X": 1,
                   "Y": 1,
                   "Z": 1
                 }
               },
               {
                 "Center": {
-                  "X": 4.5,
-                  "Y": 3,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 2,
-                  "Z": 3
-                }
-              },
-              {
-                "Center": {
                   "X": 1.5,
-                  "Y": 3,
+                  "Y": 1.5,
                   "Z": 2.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 4,
+                  "Y": 3,
                   "Z": 1
                 }
               },
               {
                 "Center": {
-                  "X": 4.5,
-                  "Y": 4.5,
-                  "Z": 1.5
+                  "X": 2.5,
+                  "Y": 0.5,
+                  "Z": 2.5
                 },
                 "Size": {
                   "X": 1,
@@ -1473,5 +1480,10 @@
   "StatusIconAnchorSpec": {
     "Height": 4.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

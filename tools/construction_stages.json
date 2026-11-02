@@ -1,0 +1,34 @@
+{
+  "note": "Construction sites of every Deep Frontier building (docs/asset-pipeline.md, 'Construction stages'). Native mechanism (Timberborn 1.1.2.8, decompiled ConstructionSiteProgressVisualizer): the direct children of BuildingModelSpec.UnfinishedModelName are stages, child 0 the ConstructionBase shown until the first material arrives, then the last stage whose ProgressThreshold the build progress has reached. Every vanilla Iron Teeth workshop has a nested vanilla ConstructionBase<X>x<Y> plus one ConstructionStage0 (a dark timber or BaseMetal frame on a Dirt patch) and ProgressThresholds [0.0]. tools/asset-pipeline/build_construction_stages.py generates each stage from the building's blocks and finished model (construction_stage_massing.py, construction_stage_geometry.py) into exportRoot; tools/construction_stage_content.mjs binds the base and the stage at the end of canonical generation; tools/asset-pipeline/validate_construction_exports.py checks them.",
+  "exportRoot": "outputs/construction-integration",
+  "manifest": "outputs/construction-integration/construction-stages.json",
+  "progressThresholds": [0.0],
+  "stageHeightFraction": 0.6,
+  "mainBodyShare": 0.3,
+  "groundedMatter": ["Ground", "GroundOrStackable", "Stackable"],
+  "excludedFinishedNodePrefixes": ["#SupportSegment", "#SupportFoot"],
+  "metalFrameCostGoods": ["MetalBlock", "Alloy", "DeepAlloy", "HighGradeSteel"],
+  "vanillaBases": {
+    "note": "Plain vanilla ConstructionBases (vendor Resources/ConstructionBases), nested like vanilla blueprints; the largest that fits on grounded cells, centred, offset by Modification.TransformSpec as vanilla MetalPlatform3x3 and LargeWaterWheel do. WithoutCorners bases need their non-corner cells grounded.",
+    "plain": ["1x1", "1x2", "2x2", "2x3", "2x4", "3x1", "3x2", "3x3", "3x4", "5x1", "5x5"],
+    "withoutCorners": ["4x4", "5x4", "5x5"]
+  },
+  "frame": {
+    "postSpacing": 2,
+    "slabSnap": 0.25,
+    "minimumSlab": 0.5,
+    "minimumHeight": 0.3,
+    "spacingClearance": 0.5,
+    "wood": {"post": 0.14, "beam": 0.11, "brace": [0.09, 0.045], "inset": 0.015},
+    "metal": {"post": 0.12, "beam": 0.09, "brace": [0.07, 0.04], "inset": 0.015}
+  },
+  "dirt": {"outside": 0.022, "rim": 0.11, "height": 0.001},
+  "triangleCeiling": 4000,
+  "materials": ["BaseWood_DarkBrown.IronTeeth", "BaseMetal.IronTeeth", "Dirt"],
+  "authored": {
+    "FisherFlag": "Authored native stage (fisher_flag_geometry.build_stage: landing, post stumps, the pole lying on the boards) with the vanilla ConstructionBase1x1, as the vanilla Gatherer Flag it is cloned from."
+  },
+  "previewOnly": {
+    "SteelLegDeck": "Tool templates SteelLegDeck<n>x<n>H<k> are only placement previews: SteelDeckPlacer (Scripts/SteelStructures/SteelLegDecks.cs) builds native SteelColumnH* and SteelDeck entities instead, which carry their own construction stages. The template's #Unfinished names the SteelDeck stage and is never shown."
+  }
+}

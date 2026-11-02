@@ -265,9 +265,6 @@
   "EnterableAnimationControllerSpec": {
     "ResetAnimationUponExit": false
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "TransputProviderSpec": {
     "IgnoreRotation": false,
     "Transputs": [
@@ -412,6 +409,9 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x2#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x2/ConstructionBase3x2.blueprint"
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Science/ReactorChargingBay/ReactorChargingBay.IronTeeth.ConstructionStage0.Model"
@@ -428,18 +428,6 @@
                   "X": 3,
                   "Y": 2,
                   "Z": 2
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2.5,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 3,
-                  "Y": 1,
-                  "Z": 1
                 }
               }
             ],
@@ -491,5 +479,10 @@
   "StatusIconAnchorSpec": {
     "Height": 3.7
   },
-  "PowerConnectionStatusSpec": {}
+  "PowerConnectionStatusSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  }
 }

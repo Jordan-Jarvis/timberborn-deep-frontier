@@ -644,9 +644,6 @@
     "FlavorDescriptionLocKey": "Building.TownPlaza.FlavorDescription",
     "Icon": "Buildings/Wellbeing/TownPlaza/Icon"
   },
-  "ConstructionSiteProgressVisualizerSpec": {
-    "ProgressThresholds": []
-  },
   "Children": {
     "#Finished": {
       "TimbermeshSpec": {
@@ -757,6 +754,28 @@
     },
     "#Unfinished": {
       "Children": {
+        "ConstructionBase3x3#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase3x3/ConstructionBase3x3.blueprint",
+          "Modification": {
+            "TransformSpec": {
+              "Position": {
+                "X": 1,
+                "Y": 0,
+                "Z": 1
+              },
+              "Rotation": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "Scale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              }
+            }
+          }
+        },
         "ConstructionStage0": {
           "TimbermeshSpec": {
             "Model": "Buildings/Wellbeing/TownPlaza/TownPlaza.IronTeeth.ConstructionStage0.Model"
@@ -765,81 +784,57 @@
             "BoxColliders": [
               {
                 "Center": {
-                  "X": 0.5,
-                  "Y": 0.5,
-                  "Z": 0.5
+                  "X": 1.5,
+                  "Y": 1,
+                  "Z": 1.5
                 },
                 "Size": {
                   "X": 1,
-                  "Y": 1,
+                  "Y": 2,
                   "Z": 1
                 }
               },
               {
                 "Center": {
-                  "X": 2.5,
-                  "Y": 0.5,
-                  "Z": 2.5
+                  "X": 3.5,
+                  "Y": 1,
+                  "Z": 1.5
                 },
                 "Size": {
-                  "X": 3,
+                  "X": 1,
+                  "Y": 2,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 1.5,
                   "Y": 1,
-                  "Z": 3
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 2,
+                  "Z": 1
+                }
+              },
+              {
+                "Center": {
+                  "X": 3.5,
+                  "Y": 1,
+                  "Z": 3.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 2,
+                  "Z": 1
                 }
               },
               {
                 "Center": {
                   "X": 4.5,
-                  "Y": 1.5,
+                  "Y": 1,
                   "Z": 4.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 3,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 2,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 2,
-                  "Z": 1.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 2,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 1.5,
-                  "Y": 2,
-                  "Z": 3.5
-                },
-                "Size": {
-                  "X": 1,
-                  "Y": 2,
-                  "Z": 1
-                }
-              },
-              {
-                "Center": {
-                  "X": 3.5,
-                  "Y": 2,
-                  "Z": 3.5
                 },
                 "Size": {
                   "X": 1,
@@ -1002,5 +997,10 @@
   },
   "StatusIconAnchorSpec": {
     "Height": 3.7
+  },
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
   }
 }

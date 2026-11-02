@@ -8,6 +8,7 @@ import {applyGroceryStore,authorGroceryNeed} from './grocery_building_content.mj
 import {LATEGAME,applyLategame,studyPipePort} from './lategame_building_content.mjs';
 import {CACHE} from './narrative_content.mjs';
 import {lategameCost, buildingCost, scaledPower} from './lategame_costs.mjs';
+import {unbindConstructionSite} from './construction_stage_content.mjs';
 import {SCHOOL_WORKSHOP_SPECS} from './workforce_risk_content.mjs';
 import {backwardGoodIds, backwardRecipeIds} from './good_migrations.mjs';
 
@@ -405,7 +406,8 @@ function setModels(value, id, outputPath) {
     delete value[key];
   }
   value.Children['#Finished'].TimbermeshSpec.Model = `${outputPath}/${id}.IronTeeth.Model`;
-  value.Children['#Unfinished'].Children.ConstructionStage0.TimbermeshSpec.Model = `${outputPath}/${id}.IronTeeth.ConstructionStage0.Model`;
+  // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+  unbindConstructionSite(value);
 }
 
 const authoredFootprints = new Map([

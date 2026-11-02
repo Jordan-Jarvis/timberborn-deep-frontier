@@ -31,6 +31,8 @@ MATERIALS = {
     # Natural terrain, cliff and source materials (MaterialCollection.Common).
     'Cliff', 'CliffEdge', 'SlopeCliff', 'SlopeCliffEdge', 'SlopeSand', 'Blockage', 'UndergroundRuinsCliff',
     'Ruins', 'WaterSource', 'BadwaterSource', 'UnstableCore', 'DirtCommon', 'DirtUnderground',
+    # Construction sites: the dirt patch under every native ConstructionBase and stage.
+    'Dirt',
     # Relic and goods atlas; stockpile good materials.
     'BeaverCarryingModels', 'Box', 'DirtPile',
     # Liquid goods materials (tank surfaces).

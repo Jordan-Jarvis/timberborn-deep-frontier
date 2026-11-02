@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {dirname,resolve} from 'node:path';
 import {industrialColliders} from './industrial_occupancy.mjs';
 import {scaledCost} from './lategame_costs.mjs';
+import {unbindConstructionSite} from './construction_stage_content.mjs';
 
 const root=new URL('../',import.meta.url);
 const catalog=JSON.parse(await readFile(new URL('tools/structural_content.json',root),'utf8'));
@@ -342,9 +343,14 @@ function legDeckBlueprint(tool,index,built) {
   v.SteelDeckToolSpec={DeckTemplate:deck.id+'.IronTeeth',DeckZ:clearance,
     Columns:columns.map(c=>c.id+'.IronTeeth'),ColumnNodes:columns.map(c=>'#'+c.id),MaxDepth:maxDepth};
   const up={Position:{X:0,Y:clearance,Z:0},Rotation:{X:0,Y:0,Z:0},Scale:{X:1,Y:1,Z:1}};
-  const finished=source.Children['#Finished'],stage=source.Children['#Unfinished'].Children.ConstructionStage0;
-  if(Object.keys(source.Children).join()!=='#Finished,#Unfinished'||Object.keys(source.Children['#Unfinished'].Children).join()!=='ConstructionStage0')
+  const finished=source.Children['#Finished'];
+  if(Object.keys(source.Children).join()!=='#Finished'||!finished.TimbermeshSpec?.Model?.endsWith('.IronTeeth.Model'))
     throw new Error(`${deck.id}: unexpected model children for a leg deck`);
+  // The tool is only a preview (SteelDeckPlacer builds the real SteelDeck and columns,
+  // which construction_stage_content.mjs gives their sites); its one unfinished child
+  // names the deck's generated stage so the native visualizer has a stage to hold.
+  const stage={TimbermeshSpec:{Model:finished.TimbermeshSpec.Model.replace(/\.Model$/,'.ConstructionStage0.Model')},
+    CollidersSpec:finished.CollidersSpec};
   const nodes={'#Deck':{TransformSpec:up,TimbermeshSpec:finished.TimbermeshSpec,CollidersSpec:finished.CollidersSpec}};
   for(const c of columns) {
     const column=built.find(e=>e.id===c.id).blueprint.Children['#Finished'];
@@ -354,6 +360,7 @@ function legDeckBlueprint(tool,index,built) {
     '#Finished':{Children:nodes},
     '#Unfinished':{Children:{ConstructionStage0:{TransformSpec:up,TimbermeshSpec:stage.TimbermeshSpec,CollidersSpec:stage.CollidersSpec}}},
   };
+  v.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
   const rows=[
     [`Building.${tool.id}.DisplayName`,tool.name],
     [`Building.${tool.id}.Description`,tool.description],
@@ -422,13 +429,12 @@ export async function structuralBlueprints() {
       FlavorDescriptionLocKey:`Building.${b.id}.FlavorDescription`,
       Icon:`Buildings/Platforms/${b.id}/Icon`,
     };
-    v.ConstructionSiteProgressVisualizerSpec={ProgressThresholds:[]};
     const colliders=industrialColliders(blocks,b.size,baseZ);
     v.Children={
       '#Finished':{TimbermeshSpec:{Model:model+'.Model'},CollidersSpec:colliders},
-      '#Unfinished':{Children:{ConstructionStage0:{
-        TimbermeshSpec:{Model:model+'.ConstructionStage0.Model'},CollidersSpec:colliders}}},
     };
+    // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+    unbindConstructionSite(v);
     // Steel supports may stand on roof hardpoints (tools/roof_hardpoint_content.mjs,
     // src/DeepFrontier/Scripts/SteelStructures/RoofHardpoints.cs). A column on a hardpoint
     // shows its sleeve: the one-layer column model one layer down, inside the roof.

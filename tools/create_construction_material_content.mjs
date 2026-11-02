@@ -10,6 +10,7 @@ import {researchContent} from './research_building_content.mjs';
 import { buildingCost, scaledPower } from './lategame_costs.mjs';
 import { writeIntegrations } from './optional_mod_content.mjs';
 import { backwardGoodIds, backwardRecipeIds } from './good_migrations.mjs';
+import { unbindConstructionSite } from './construction_stage_content.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dataRoot = resolve(root, 'src/DeepFrontier/Data');
@@ -151,14 +152,11 @@ for (const building of catalog.buildings) {
     'WorkshopParticleControllerSpec', 'WindParticleControllerSpec']) delete value[key];
   value.BuildingModelSpec.UndergroundModelName = '';
   value.BuildingModelSpec.UndergroundModelDepth = 0;
-  // One authored unfinished model is the construction base; there are no later stages.
-  value.ConstructionSiteProgressVisualizerSpec = { ProgressThresholds: [] };
   value.Children = {
     '#Finished': { TimbermeshSpec: { Model: `${modelPath(id)}.Model` }, CollidersSpec: collision(size) },
-    '#Unfinished': { Children: { ConstructionStage0: {
-      TimbermeshSpec: { Model: `${modelPath(id)}.ConstructionStage0.Model` }, CollidersSpec: collision(size),
-    } } },
   };
+  // The construction site (vanilla base + generated stage) is bound by construction_stage_content.mjs.
+  unbindConstructionSite(value);
   const integrations = ['crusher','kiln','quarry','mixer'].includes(kind) ? await applyIndustrialLayout(value,building) : {};
   if (kind==='pit') await applyPitLayout(value,building);
   const path = `Buildings/Metal/${id}/${id}.IronTeeth.blueprint`;

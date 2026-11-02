@@ -26,7 +26,8 @@ for name in PROTOTYPES:
 bpy.ops.wm.open_mainfile(filepath=str(source))
 settings=timbermesh_exporter.ExportSettings(bpy.context,False,True,False)
 for name,group in [(n,g) for n,g in (('NuclearReactor','Power'),('CryogenicLiquefactionPlant','Metal')) if n in PROTOTYPES]:
-    for suffix in ('Model','ConstructionStage0.Model'):
+    # The construction stage is generated (build_construction_stages.py).
+    for suffix in ('Model',):
         collection=bpy.data.collections[f'{name}.IronTeeth.{suffix}']
         output=ROOT/f'src/DeepFrontier/Data/Buildings/{group}/{name}/{collection.name}.timbermesh'
         timbermesh_exporter.Exporter.export_collection(collection,str(output),settings)

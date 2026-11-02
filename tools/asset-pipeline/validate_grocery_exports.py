@@ -47,7 +47,7 @@ tracks = [(n.name, a) for n in model.nodes for a in n.nodeAnimations]
 animated = {'#GroceryMarket.BasketSign', '#GroceryMarket.HoistPulley', '#GroceryMarket.HoistRope', '#GroceryMarket.HoistLoad'}
 require({n for n, a in tracks} == animated, 'Market animations differ: '+str(sorted({n for n, a in tracks})))
 require(all(len(a.frames) == reg['frameEnd'] for n, a in tracks), 'Market animation lost frames')
-require(payload == (folder/'GroceryStore.IronTeeth.ConstructionStage0.Model.timbermesh').read_bytes(), 'Construction export differs')
+# The construction stage is generated and checked by tools/asset-pipeline/validate_construction_exports.py.
 require(sum(n.name.startswith('#Slot#Entrance') for n in model.nodes) == 1, 'Missing the main-door worker slot')
 assembly = read('outputs/reference-studies/GroceryMarket-native-assembly.json')
 require(not assembly['liquids'], 'The water-tower barrel must not pretend to be a water inventory')
