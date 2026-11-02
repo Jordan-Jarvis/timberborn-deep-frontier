@@ -333,6 +333,15 @@
    "construction": 13241,
    "file": "outputs/civic-integration/Data/Buildings/Food/FishHatchery/FishHatchery.IronTeeth.Model.timbermesh"
   },
+  "FisherFlag": {
+   "family": "civic",
+   "class": "small",
+   "target": 8000,
+   "finished": 796,
+   "vertices": 1552,
+   "construction": 102,
+   "file": "outputs/civic-integration/Data/Buildings/Food/FisherFlag/FisherFlag.IronTeeth.Model.timbermesh"
+  },
   "FisheryWorks": {
    "family": "civic",
    "class": "grand",
@@ -838,6 +847,6 @@
    "file": "outputs/lategame-integration/Data/Buildings/Water/WaterTreatmentPlant/WaterTreatmentPlant.IronTeeth.Model.timbermesh"
   }
  },
- "totalBlueprintTriangles": 717754,
+ "totalBlueprintTriangles": 718652,
  "note": "Ceilings are the counts achieved by the triangle-budget pass (outputs/triangle-budget); targets are reported, not enforced. Raise a ceiling only with a reviewed render sheet."
 }

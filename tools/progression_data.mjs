@@ -17,7 +17,7 @@ export const MAP_SOURCES = {
   DeepOre: {via: ['DeepDrill.IronTeeth'], note: 'finite DeepOreSource marker (DeepDrill), then DeepMine over a DeepOreVein'},
   Sandstone: {via: ['SandstonePit.IronTeeth'], note: 'finite SandstoneOutcrop yielders'},
   Limestone: {via: ['LimestonePit.IronTeeth'], note: 'finite LimestoneOutcrop yielders'},
-  FreshFish: {via: ['GathererFlag.IronTeeth'], note: 'Gatherer Flag shore fishing'},
+  FreshFish: {via: ['FisherFlag.IronTeeth'], note: 'Fisher Flag shore fishing'},
   // Not gathered: produced at runtime when stored Water is irradiated
   // (RadiationStorageService). Radiation first exists once the refinery (or
   // reactor) makes RadioactiveSludge, so the refinery is its earliest source.

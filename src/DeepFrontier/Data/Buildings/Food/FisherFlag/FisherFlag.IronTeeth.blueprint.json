@@ -1,0 +1,227 @@
+{
+  "BuildingSpec": {
+    "SelectionSoundName": "GathererFlag",
+    "LoopingSoundName": "",
+    "BuildingCost": [
+      {
+        "Id": "Plank",
+        "Amount": 20
+      },
+      {
+        "Id": "Log",
+        "Amount": 10
+      }
+    ],
+    "ScienceCost": 0,
+    "PlaceFinished": false,
+    "FinishableWithBeaversOnSite": false,
+    "DrawRangeBoundsOnIt": false
+  },
+  "BuildingModelSpec": {
+    "FinishedModelName": "#Finished",
+    "UnfinishedModelName": "#Unfinished",
+    "FinishedUncoveredModelName": "",
+    "UndergroundModelName": "",
+    "ConstructionModeModel": "Finished",
+    "UndergroundModelDepth": 0
+  },
+  "WorkplaceSpec": {
+    "MaxWorkers": 1,
+    "DefaultWorkers": 1,
+    "DefaultWorkerType": "Beaver",
+    "DisallowOtherWorkerTypes": false,
+    "WorkerTypeUnlockCosts": []
+  },
+  "EnterableSpec": {
+    "OperatingState": "Finished",
+    "LimitedCapacityFinished": false,
+    "CapacityFinished": 0,
+    "LimitedCapacityUnfinished": false,
+    "CapacityUnfinished": 0
+  },
+  "TemplateSpec": {
+    "TemplateName": "FisherFlag.IronTeeth",
+    "BackwardCompatibleTemplateNames": [],
+    "RequiredFeatureToggle": "",
+    "DisablingFeatureToggle": ""
+  },
+  "TransformSlotInitializerSpec": {
+    "Slots": [
+      {
+        "SlotKeyword": "Seat",
+        "Animation": "Sitting",
+        "Inanimate": false,
+        "RandomizeYRotation": false,
+        "WaterSlot": false
+      }
+    ]
+  },
+  "WorkplaceSlotManagerSpec": {},
+  "BlockObjectSpec": {
+    "Size": {
+      "X": 1,
+      "Y": 1,
+      "Z": 2
+    },
+    "Blocks": [
+      {
+        "MatterBelow": "GroundOrStackable",
+        "Occupations": "Bottom, Top, Corners, Path, Middle",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      },
+      {
+        "MatterBelow": "Any",
+        "Occupations": "Floor, Bottom, Corners, Path, Middle",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      }
+    ],
+    "Entrance": {
+      "HasEntrance": true,
+      "Coordinates": {
+        "X": 0,
+        "Y": -1,
+        "Z": 0
+      }
+    },
+    "BaseZ": 0,
+    "Overridable": false,
+    "Flippable": true
+  },
+  "BuildingAccessibleSpec": {
+    "LocalAccess": {
+      "X": 0.5,
+      "Y": 0,
+      "Z": 0.2
+    },
+    "ForceOneFinalAccess": false
+  },
+  "PlaceableBlockObjectSpec": {
+    "ToolGroupId": "Food",
+    "ToolOrder": 11,
+    "ToolShape": "Square",
+    "Layout": "SideLine",
+    "CustomPivot": {
+      "HasCustomPivot": false,
+      "Coordinates": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    "CanBeAttachedToTerrainSide": false,
+    "DevModeTool": false
+  },
+  "SimpleOutputInventorySpec": {
+    "Capacity": 20,
+    "IgnorableCapacity": false
+  },
+  "LabeledEntitySpec": {
+    "DisplayNameLocKey": "Building.FisherFlag.DisplayName",
+    "DescriptionLocKey": "Building.FisherFlag.Description",
+    "FlavorDescriptionLocKey": "Building.FisherFlag.FlavorDescription",
+    "Icon": "Buildings/Food/FisherFlag/Icon"
+  },
+  "WorkplaceIlluminatorSpec": {},
+  "ConstructionSiteProgressVisualizerSpec": {
+    "ProgressThresholds": [
+      0
+    ]
+  },
+  "WorkplaceWorkerOutfitSpec": {
+    "WorkerOutfit": "Gatherer"
+  },
+  "Children": {
+    "#Finished": {
+      "TimbermeshSpec": {
+        "Model": "Buildings/Food/FisherFlag/FisherFlag.IronTeeth.Model"
+      },
+      "CollidersSpec": {
+        "BoxColliders": [
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.24,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 0.9,
+              "Y": 0.48,
+              "Z": 0.92
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.89,
+              "Z": 0.58
+            },
+            "Size": {
+              "X": 0.07,
+              "Y": 1.7,
+              "Z": 0.07
+            }
+          },
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 1.36,
+              "Z": 0.547
+            },
+            "Size": {
+              "X": 0.5,
+              "Y": 0.62,
+              "Z": 0.05
+            }
+          }
+        ],
+        "SphereColliders": [],
+        "CapsuleColliders": []
+      }
+    },
+    "#Unfinished": {
+      "Children": {
+        "ConstructionBase1x1#nested": {
+          "BlueprintPath": "ConstructionBases/ConstructionBase1x1/ConstructionBase1x1.blueprint"
+        },
+        "ConstructionStage0": {
+          "TimbermeshSpec": {
+            "Model": "Buildings/Food/FisherFlag/FisherFlag.IronTeeth.ConstructionStage0.Model"
+          },
+          "CollidersSpec": {
+            "BoxColliders": [
+              {
+                "Center": {
+                  "X": 0.5,
+                  "Y": 0.05,
+                  "Z": 0.5
+                },
+                "Size": {
+                  "X": 1,
+                  "Y": 0.1,
+                  "Z": 1
+                }
+              }
+            ],
+            "SphereColliders": [],
+            "CapsuleColliders": []
+          }
+        }
+      }
+    }
+  },
+  "FisherFlagSpec": {
+    "GoodId": "FreshFish",
+    "CatchHours": 4,
+    "MinimumDepth": 0.5,
+    "MaximumContamination": 0.01,
+    "MaximumReachDown": 1.25
+  },
+  "AmbientAnimationSpec": {},
+  "StatusIconAnchorSpec": {
+    "Height": 2.7
+  }
+}

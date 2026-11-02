@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {applyRestaurant,authorRestaurantNeed,RESTAURANT_LOCALIZATION} from './civic_building_content.mjs';
-import {applyFishery,applyHatchery,authorShoreFishing,WATERSIDE_ROWS} from './fishery_building_content.mjs';
+import {applyFishery,applyHatchery,authorFisherFlag,WATERSIDE_ROWS} from './fishery_building_content.mjs';
 import {applyHospital,authorHospitalNeed,HOSPITAL_DESCRIPTION,HOSPITAL_LOCALIZATION} from './hospital_building_content.mjs';
 import {applyGroceryStore,authorGroceryNeed} from './grocery_building_content.mjs';
 import {LATEGAME,applyLategame,studyPipePort} from './lategame_building_content.mjs';
@@ -342,9 +342,9 @@ function plannedRow(id, outputPath, template) {
 const BUILDING_TEXT = {
   FertilizerWorks: ['Makes fertilizer from logs and algae for the Greenhouse.',
     'Logs and algae go in. Nobody asks about the smell.'],
-  FishHatchery: ['Breeds juvenile fish. Build it over a river: its pens need clean water and stop if they dry out or turn to badwater.',
+  FishHatchery: ['Breeds juvenile fish from fresh fish. Build it over a river: its pens need clean water and stop if they dry out or turn to badwater.',
     'Thousands of tiny fish and one very patient beaver.'],
-  FisheryWorks: ['Grows juvenile fish into fresh fish, or presses fresh fish into fish oil.',
+  FisheryWorks: ['Raises juvenile fish into fresh fish, or presses fresh fish into fish oil.',
     'Grow them big, then press the rest for oil.'],
   FoodPackagingWorks: ['Cans fresh fish with fish oil in metal tins. Canned fish feeds beavers and stocks the Grocery Store.',
     'Fish in a tin: the frontier lunch, whether it likes it or not.'],
@@ -722,7 +722,7 @@ for (const definition of buildingDefinitions) buildingBlueprints.push(await make
 await authorRestaurantNeed();
 await authorHospitalNeed();
 await authorGroceryNeed();
-await authorShoreFishing();
+buildingBlueprints.push(await authorFisherFlag());
 buildingBlueprints.push(await makeReactor());
 for (const entry of POWER_PLANTS) buildingBlueprints.push(await makePowerPlant(entry));
 buildingBlueprints.push(await makeVault());
@@ -796,6 +796,13 @@ for (const definition of buildingDefinitions) {
   rows.push(csvRow(`Building.${id}.FlavorDescription`, BUILDING_TEXT[id][1]));
 }
 for (const id of Object.keys(BUILDING_TEXT)) if (!buildingDefinitions.some(([building]) => building === id)) throw new Error(`BUILDING_TEXT names unknown building ${id}`);
+{
+  // Fisher Flag (fishery_building_content.mjs authorFisherFlag): the first step of the fish chain,
+  // named and worded after the vanilla flags ("Employs a lumberjack that cuts trees.").
+  rows.push(csvRow('Building.FisherFlag.DisplayName', 'Fisher Flag'));
+  rows.push(csvRow('Building.FisherFlag.Description', 'Employs a fisher who catches fresh fish from the shore, where the water is clean and deep enough.'));
+  rows.push(csvRow('Building.FisherFlag.FlavorDescription', 'A quiet bank, a long wait and a longer story about the one that got away.'));
+}
 {
   rows.push(csvRow('Building.SmogScrubber.DisplayName', 'Smog Scrubber'));
   // Its share and range are in the tooltip's smog section (DeepFrontier.Smog.Scrubber.Planned).

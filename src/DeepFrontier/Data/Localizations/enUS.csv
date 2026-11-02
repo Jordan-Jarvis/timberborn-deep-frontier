@@ -102,10 +102,10 @@ Building.FertilizerWorks.DisplayName,Fertilizer Works,Deep Frontier
 Building.FertilizerWorks.Description,Makes fertilizer from logs and algae for the Greenhouse. Pipes: valve set to Fill.,Deep Frontier
 Building.FertilizerWorks.FlavorDescription,Logs and algae go in. Nobody asks about the smell.,Deep Frontier
 Building.FishHatchery.DisplayName,Fish Hatchery,Deep Frontier
-Building.FishHatchery.Description,Breeds juvenile fish. Build it over a river: its pens need clean water and stop if they dry out or turn to badwater. Pipes: valve set to Fill.,Deep Frontier
+Building.FishHatchery.Description,Breeds juvenile fish from fresh fish. Build it over a river: its pens need clean water and stop if they dry out or turn to badwater. Pipes: valve set to Fill.,Deep Frontier
 Building.FishHatchery.FlavorDescription,Thousands of tiny fish and one very patient beaver.,Deep Frontier
 Building.FisheryWorks.DisplayName,Fishery Works,Deep Frontier
-Building.FisheryWorks.Description,"Grows juvenile fish into fresh fish, or presses fresh fish into fish oil. Pipes: valves set to Fill and Extract.",Deep Frontier
+Building.FisheryWorks.Description,"Raises juvenile fish into fresh fish, or presses fresh fish into fish oil. Pipes: valves set to Fill and Extract.",Deep Frontier
 Building.FisheryWorks.FlavorDescription,"Grow them big, then press the rest for oil.",Deep Frontier
 Building.FoodPackagingWorks.DisplayName,Food Packaging Works,Deep Frontier
 Building.FoodPackagingWorks.Description,Cans fresh fish with fish oil in metal tins. Canned fish feeds beavers and stocks the Grocery Store. Pipes: valve set to Fill.,Deep Frontier
@@ -167,6 +167,9 @@ Building.ArchiveExcavation.FlavorDescription,The humans buried their warnings in
 Building.CryogenicTankFarm.DisplayName,Cryogenic Tank Farm,Deep Frontier
 Building.CryogenicTankFarm.Description,"Stores one fuel: liquid hydrogen or liquid oxygen. It takes fuel only while powered; without power the fuel starts to vent. Pipes: connect directly, no valve.",Deep Frontier
 Building.CryogenicTankFarm.FlavorDescription,"The coldest place in the colony, kept that way at great expense.",Deep Frontier
+Building.FisherFlag.DisplayName,Fisher Flag,Deep Frontier
+Building.FisherFlag.Description,"Employs a fisher who catches fresh fish from the shore, where the water is clean and deep enough.",Deep Frontier
+Building.FisherFlag.FlavorDescription,"A quiet bank, a long wait and a longer story about the one that got away.",Deep Frontier
 Building.SmogScrubber.DisplayName,Smog Scrubber,Deep Frontier
 Building.SmogScrubber.Description,Cleans smog out of the air around it while powered. No workers.,Deep Frontier
 Building.SmogScrubber.FlavorDescription,What goes up the smokestack comes down in the scrubber.,Deep Frontier

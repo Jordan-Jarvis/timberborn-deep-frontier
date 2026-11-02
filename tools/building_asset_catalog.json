@@ -14,6 +14,18 @@
       "artStage": "detailed"
     },
     {
+      "building": "FisherFlag",
+      "template": "FisherFlag.IronTeeth",
+      "blueprint": "src/DeepFrontier/Data/Buildings/Food/FisherFlag/FisherFlag.IronTeeth.blueprint.json",
+      "model": "FisherFlag",
+      "sourceScene": "src/DeepFrontier/Art/Source/FisherFlag-ReferenceStudy.blend",
+      "collection": "FisherFlag.ReferenceStudy",
+      "geometry": "tools/asset-pipeline/fisher_flag_geometry.py",
+      "generator": "tools/asset-pipeline/build_fisher_flag.py",
+      "exporter": "tools/asset-pipeline/build_fisher_flag.py",
+      "artStage": "detailed"
+    },
+    {
       "building": "FisheryWorks",
       "template": "FisheryWorks.IronTeeth",
       "blueprint": "src/DeepFrontier/Data/Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.blueprint.json",

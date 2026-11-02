@@ -53,6 +53,7 @@ LATE = OUTPUTS / 'lategame-integration/Data'
 OWNERS = {
     'FisheryWorks': ('civic', 'grand', CIVIC),
     'FishHatchery': ('civic', 'grand', CIVIC),
+    'FisherFlag': ('civic', 'small', CIVIC),
     'Restaurant': ('civic', 'grand', CIVIC),
     'Hospital': ('civic', 'grand', CIVIC),
     'GroceryStore': ('grocery', 'grand', LATE),

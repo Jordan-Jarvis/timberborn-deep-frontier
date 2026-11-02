@@ -1,0 +1,45 @@
+{
+ "triangles": 796,
+ "materials": {
+  "Details.IronTeeth": 538,
+  "BaseWood_DarkBrown.IronTeeth": 250,
+  "WindowsAtlas.IronTeeth": 8
+ },
+ "boundsMin": [
+  0.05,
+  0.044,
+  0.0
+ ],
+ "boundsMax": [
+  0.95,
+  0.9662,
+  1.74
+ ],
+ "uvErrors": [],
+ "uvErrorCount": 0,
+ "objects": [
+  "FisherFlag.Structure",
+  "#FisherFlag.Banner",
+  "#Slot#Seat0"
+ ],
+ "sourceScene": "src/DeepFrontier/Art/Source/FisherFlag-ReferenceStudy.blend",
+ "sourceSha256": "3f5266f15255f89f2873adceccea3574eb17af3934d71b92021ef6215da18f77",
+ "export": "Data/Buildings/Food/FisherFlag/FisherFlag.IronTeeth.Model.timbermesh",
+ "exportSha256": "ab4741a12f03aeeb2cd3ec430072db32296eaa2558dd8ad09d80e47e011c1f2d",
+ "frames": 61,
+ "constructionStage": {
+  "triangles": 102,
+  "boundsMin": [
+   0.05,
+   0.044,
+   0.0
+  ],
+  "boundsMax": [
+   0.95,
+   0.956,
+   0.2
+  ],
+  "export": "Data/Buildings/Food/FisherFlag/FisherFlag.IronTeeth.ConstructionStage0.Model.timbermesh",
+  "exportSha256": "43f37d90f7dc9930adf1b28df8ff4afc7a44903b835aacd080e24f8a5a12d69e"
+ }
+}

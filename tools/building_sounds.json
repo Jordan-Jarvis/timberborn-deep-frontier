@@ -188,6 +188,11 @@
       "selection": "Fermenter", "looping": "Gristmill", "loopDriver": "workshop", "family": "food/agri",
       "comment": "Composting and fertilizer mixing are fermentation and grinding, so it takes the native Iron Teeth Fermenter pair (Fermenter selection, Gristmill loop). It replaces the inherited OilPress/Inventor."
     },
+    "FisherFlag": {
+      "template": "Buildings/Food/FisherFlag/FisherFlag.IronTeeth.blueprint",
+      "selection": "GathererFlag", "looping": "", "loopDriver": "none", "family": "food/agri",
+      "comment": "The vanilla Gatherer Flag's template and its native GathererFlag selection, as the sibling flag beside it. No loop: the vanilla flag has none."
+    },
     "FishHatchery": {
       "template": "Buildings/Food/FishHatchery/FishHatchery.IronTeeth.blueprint",
       "selection": "BreedingPod", "looping": "WaterWheel", "loopDriver": "workshop", "family": "food/agri",

@@ -934,7 +934,7 @@ namespace DeepFrontier.Scripts {
       foreach(var s in Placed().Where(s=>s.Building.AllComponents.Any(c=>c.GetType().Name=="GoodPoweredGenerator")))
         Skip(s.Id,"workshop animation","workerless native GoodPoweredGenerator: its animator, smoke and output follow MechanicalNode.OutputMultiplier "+
           "(native GoodPoweredGeneratorAnimator); generation is checked by AllBuildingsAcceptance power supply");
-      Skip("ShoreFishing","automation Off refuses work","needs a waterfront fixture; this dry pad cannot make ShoreFishing.CanWork true while On, "+
+      Skip("FisherFlag","automation Off refuses work","needs a waterfront fixture; this dry pad cannot make FisherFlag.CanWork true while On, "+
         "so an Off refusal would not isolate the automation gate");
       Debug.Log(Tag+" waves for "+_waveQueue.Count+" workplaces with "+_workers.Count+" adult workers");
     }

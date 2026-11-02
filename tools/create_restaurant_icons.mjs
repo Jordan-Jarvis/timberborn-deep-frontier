@@ -7,6 +7,7 @@ const review=[];
 for(const [name,kind,path] of [
   ['SweetBerryCake','good','Sprites/Goods/SweetBerryCakeIcon.png'],['Restaurant','building','Buildings/Food/Restaurant/Icon.png'],
   ['FreshFish','good','Sprites/Goods/FreshFishIcon.png'],['JuvenileFish','good','Sprites/Goods/JuvenileFishIcon.png'],['FishOil','good','Sprites/Goods/FishOilIcon.png'],
+  ['FisherFlag','building','Buildings/Food/FisherFlag/Icon.png'],
   ['FisheryWorks','building','Buildings/Food/FisheryWorks/Icon.png'],['FishHatchery','building','Buildings/Food/FishHatchery/Icon.png'],
   ['GroceryStore','building','Buildings/Food/GroceryStore/Icon.png'],['Hospital','building','Buildings/Wellbeing/Hospital/Icon.png'],
   ['CannedFish','good','Sprites/Goods/CannedFishIcon.png'],['Medicine','good','Sprites/Goods/MedicineIcon.png']

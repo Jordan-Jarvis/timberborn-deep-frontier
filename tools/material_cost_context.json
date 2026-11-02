@@ -576,6 +576,11 @@
    "recipes": [],
    "devOnly": false
   },
+  "FisherFlag.IronTeeth": {
+   "science": 0,
+   "recipes": [],
+   "devOnly": false
+  },
   "FisheryWorks.IronTeeth": {
    "science": 900,
    "recipes": [

@@ -58,5 +58,5 @@
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 121 cells north of the start", "x": 149, "y": 245, "z": 16, "orientation": "Cw0", "margin": 1, "openSides": ["N"]},
     {"template": "ArchiveExcavation.IronTeeth", "label": "Archive Excavation for Ruins 117 cells south-east of the start", "x": 240, "y": 54, "z": 16, "orientation": "Cw90", "margin": 1, "openSides": ["N", "E"]}
   ],
-  "playerWork": [{"item": "shore fishing banks (first FreshFish)", "reason": "Every water cell of the saved map is at most 0.32 deep, and shore fishing needs clean water at least 0.5 deep beside a bank, so no natural bank qualifies. Dam a river deeper before relying on the Gatherer Flag for the first fish."}]
+  "playerWork": [{"item": "Fisher Flag banks (first FreshFish)", "reason": "Every water cell of the saved map is at most 0.32 deep, and the Fisher Flag needs clean water at least 0.5 deep beside a bank, so no natural bank qualifies. Dam a river deeper before relying on the Fisher Flag for the first fish."}]
 }

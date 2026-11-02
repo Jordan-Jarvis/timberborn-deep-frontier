@@ -237,6 +237,7 @@ Reasons for each choice are in the `comment` fields of `tools/building_sounds.js
 | GroceryStore | Agora | none | never (no loop) | civic/service |
 | Restaurant | Grill | Bakery | workshop working | civic/service |
 | FertilizerWorks | Fermenter | Gristmill | workshop working | food/agri |
+| FisherFlag | GathererFlag | none | never (no loop) | food/agri |
 | FishHatchery | BreedingPod | WaterWheel | workshop working | food/agri |
 | FisheryWorks | AquaticFarmhouse | WaterWheel | workshop working | food/agri |
 | FoodPackagingWorks | FoodFactory | Grill | workshop working | food/agri |

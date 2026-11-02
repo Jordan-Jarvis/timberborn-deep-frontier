@@ -101,7 +101,7 @@ BUILDING_COLLECTION = MOD_DATA / 'TemplateCollections/TemplateCollection.Buildin
 NARRATIVE_SETTINGS = MOD_DATA / 'Configurations/DeepFrontierNarrative.blueprint.json'
 LOOP_REQUIREMENTS = ROOT / 'tools/map_loop_requirements.json'
 WORKFORCE_RISKS = ROOT / 'tools/workforce_risks.json'
-GATHERER_FLAG_PATCH = MOD_DATA / 'Buildings/Food/GathererFlag/GathererFlag.IronTeeth.blueprint.json'
+FISHER_FLAG = MOD_DATA / 'Buildings/Food/FisherFlag/FisherFlag.IronTeeth.blueprint.json'
 ORIENTATIONS = ['Cw0', 'Cw90', 'Cw180', 'Cw270']
 # NavigationDistance.ResourceBuildings (Timberborn.Navigation.dll, 1.1.2.8) = 20:
 # BuildingTerrainRange of a yield-removing building (the Sandstone/Limestone
@@ -1726,9 +1726,10 @@ def tree_counts(model, catalog, near):
 
 
 def shore_banks(model, spec):
-    """Bank cells that satisfy ShoreFishing.Suitable on the saved water: the bank is dry and free; the
-    neighbouring cell one layer down holds clean water at least MinimumDepth deep whose surface is
-    within MaximumReachDown below the bank and at most 0.1 above it."""
+    """Bank cells where a Fisher Flag can fish on the saved water (FisherFlag.Suitable, Scripts/FisherFlag.cs):
+    the bank is dry and free; the neighbouring cell one layer down holds clean water at least MinimumDepth
+    deep whose surface is within MaximumReachDown below the bank and at most 0.1 above it. A saved map holds
+    no radioactive water, so the runtime's radiation rule removes no bank here."""
     banks = set()
     depth, contamination, height = model.water_depth, model.water_contamination, model.height
     wet_y, wet_x = np.nonzero((depth >= spec['MinimumDepth']) & (contamination <= spec['MaximumContamination']))
@@ -1755,7 +1756,7 @@ def start_resources(model, catalog, requirements):
     trees, resin = tree_counts(model, catalog, near)
     fields = near & model.dry() & ~model.hard_mask & ~model.natural_mask & model.contiguous \
         & (clean_distance >= 0) & (clean_distance <= requirements['fieldWaterReach'])
-    spec = read_json(GATHERER_FLAG_PATCH)['ShoreFishingSpec']
+    spec = read_json(FISHER_FLAG)['FisherFlagSpec']
     banks = shore_banks(model, spec)
     shore_near = [b for b in banks if 0 <= length[b[1], b[0]] <= requirements['shoreRoute']]
     shore_reachable = sorted((int(bridges[y, x]), int(length[y, x])) for x, y in banks if length[y, x] >= 0)
@@ -1965,7 +1966,7 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
     need('start', 'irrigated farmland near the start', resources['fieldCellsNearStart'] >= requirements['minFieldCellsNearStart'],
          f'{resources["fieldCellsNearStart"]} cells within {requirements["fieldWaterReach"]} of clean water '
          f'(min {requirements["minFieldCellsNearStart"]})')
-    need('start', 'shore fishing banks (first FreshFish)', resources['shoreBanksReachable'] >= requirements['minShoreBanks'],
+    need('start', 'Fisher Flag banks (first FreshFish)', resources['shoreBanksReachable'] >= requirements['minShoreBanks'],
          f'{resources["shoreBanksReachable"]} reachable banks (min {requirements["minShoreBanks"]}), {resources["shoreBanksNearStart"]} '
          f'within route {requirements["shoreRoute"]}; nearest {resources["shoreNearest"]}')
 

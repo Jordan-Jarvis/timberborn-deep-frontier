@@ -323,6 +323,7 @@
   },
   "buildings": {
     "FertilizerWorks": [["Plank",145],["Log",75],["Gear",130]],
+    "FisherFlag": [["Log",10],["Plank",5]],
     "FishHatchery": [["Plank",40],["Gear",20],["MetalBlock",15]],
     "FisheryWorks": [["Plank",40],["Gear",20],["MetalBlock",15]],
     "FoodPackagingWorks": [["Plank",65],["MetalBlock",45],["DeepAlloy",25],["Concrete",190],["Brick",180],["Gear",90]],

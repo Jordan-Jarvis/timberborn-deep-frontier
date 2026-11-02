@@ -85,7 +85,7 @@ namespace DeepFrontier.Scripts {
     private const string Tag="[DeepFrontier AllBuildings]";
     private static readonly string Root=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"TimberbornModding");
     private static readonly string Outputs=Path.Combine(Root,"outputs");
-    private static readonly string[] VanillaPatched={"GathererFlag.IronTeeth","PowerShaft.IronTeeth","VerticalPowerShaft.IronTeeth",
+    private static readonly string[] VanillaPatched={"PowerShaft.IronTeeth","VerticalPowerShaft.IronTeeth",
       "ImpermeablePowerShaft.IronTeeth","BotAssembler.IronTeeth"};
     private static readonly string[] VanillaReference={"Smelter.IronTeeth","MudBath.IronTeeth","DoubleShower.IronTeeth","SwimmingPool.IronTeeth",
       "Campfire.IronTeeth","LargeTank.IronTeeth","DeepWaterPump.IronTeeth"};
@@ -94,7 +94,7 @@ namespace DeepFrontier.Scripts {
     // Specs whose native placement needs a site a dry flat pad cannot offer (water, map edge, seams,
     // understructure, terrain side). A rejected placement of these is SITE, not FAIL.
     private static readonly string[] SiteSpecs={"WaterInputSpec","WaterObstacleSpec","FinishableWaterObstacleSpec","FinishableHorizontalWaterObstacleSpec",
-      "MapEdgeSiteSpec","WaterDepthWorkCellsSpec","UnderstructureConstraintSpec","ShoreFishingSpec","RadioactiveWaterSourceSpec","HydroTurbineSpec",
+      "MapEdgeSiteSpec","WaterDepthWorkCellsSpec","UnderstructureConstraintSpec","FisherFlagSpec","RadioactiveWaterSourceSpec","HydroTurbineSpec",
       "YieldRemovingBuildingSpec","MineralPitSpec","WaterSourceSpec"};
     private static readonly string[] BasicNeeds={"Hunger","Thirst","Sleep"};
     private const int Margin=2,PipeStrip=7,PadW=100,PadH=84,SearchRadius=70;

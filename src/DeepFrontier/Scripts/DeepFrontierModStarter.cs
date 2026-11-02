@@ -7,10 +7,6 @@ namespace DeepFrontier.Scripts {
 #if !UNITY_EDITOR
       new HarmonyLib.Harmony("DeepFrontier.RestaurantKitchen").CreateClassProcessor(typeof(RestaurantKitchenInventory)).Patch();
       new HarmonyLib.Harmony("DeepFrontier.RestaurantKitchen").CreateClassProcessor(typeof(RestaurantKitchenRecipeCompatibility)).Patch();
-      var fishing=new HarmonyLib.Harmony("DeepFrontier.ShoreFishing");
-      fishing.CreateClassProcessor(typeof(ShoreFishingAllowedGoods)).Patch();
-      fishing.CreateClassProcessor(typeof(ShoreFishingAllowance)).Patch();
-      fishing.CreateClassProcessor(typeof(ShoreFishingJob)).Patch();
       // Hatchery deck paths/shafts/platforms must load after the deck slabs
       // they stand on (Waterside/StackableBaseLoadOrder.cs); buildings whose
       // footprint changed load before paths and objects that now overlap them

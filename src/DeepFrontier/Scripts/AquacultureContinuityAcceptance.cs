@@ -90,7 +90,7 @@ namespace DeepFrontier.Scripts {
       if(header.StoredAmount!=30||!header.SurfacesVisible||header.Flowing)throw new InvalidOperationException("Hatchery saved header tank state changed");
       if(_reservoir.StoredAmount!=45||!_reservoir.SurfacesVisible||_reservoir.Flowing||_reservoir.WheelsEnabled)
         throw new InvalidOperationException("Saved paused Fishery water state changed");
-      foreach(var e in _entities.Entities.Where(e=>e.HasComponent<ShoreFishing>()))e.GetComponent<PausableBuilding>().Pause();
+      foreach(var e in _entities.Entities.Where(e=>e.HasComponent<FisherFlag>()))e.GetComponent<PausableBuilding>().Pause();
       _fish.ProductionFinished+=(sender,args)=>{_fishBatches++;Debug.Log("[DeepFrontier Continuity] FISH BATCH "+_fishBatches);};
       _nursery.ProductionFinished+=(sender,args)=>{_juvenileBatches++;Debug.Log("[DeepFrontier Continuity] HATCHERY BATCH "+_juvenileBatches);};
       _camera.MoveTargetTo(new Vector3(166,7,164));_camera.SetZoomLevel(20,0);_camera.HorizontalAngle=25;_camera.VerticalAngle=35;

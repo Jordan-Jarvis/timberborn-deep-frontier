@@ -70,7 +70,7 @@ A Deep Frontier `MapSize.blueprint.json` merge would apply to every world that h
 | `docs/dependency-matrix.md:18`, `docs/dependency-reference.md:20,44`, `docs/implementation-plan.md:17,79`, `docs/feature-feasibility.md`, `docs/roadmap.md:11`, `docs/underground-strategy.md` | Map Transformer moves from authoring-only to required at runtime |
 | `src/DeepFrontier/Scripts/HydroAcceptance.cs:166,168`, `HydroBasinAcceptance.cs:134` | Test scaffolds hard-code `z < 23`. They are harmless on 33-layer test saves; parameterise them only if they are reused on tall saves |
 
-Runtime C# reads `MapSize` and `MapIndexService` dynamically and needs no change: `ShoreFishing`, `MeltdownService`, `WasteLeak`, `RadiationBuildings`, and `RadiationSimulation` (whose arrays are sized by `WaterSimulator.MaxColumnCount`). The late-game generators (`lategame_building_content.mjs`) have no map-height cap.
+Runtime C# reads `MapSize` and `MapIndexService` dynamically and needs no change: `FisherFlag`, `MeltdownService`, `WasteLeak`, `RadiationBuildings`, and `RadiationSimulation` (whose arrays are sized by `WaterSimulator.MaxColumnCount`). The late-game generators (`lategame_building_content.mjs`) have no map-height cap.
 
 ## Compatibility
 

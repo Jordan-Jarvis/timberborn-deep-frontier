@@ -133,8 +133,8 @@ def vanilla_object_placed(v):
 
 
 def player_work_for_met_item(v):
-    # Plains has shore fishing banks: declaring them player work is stale data.
-    v['playerWork'] = [{'item': 'shore fishing banks (first FreshFish)', 'reason': 'dam a river'}]
+    # Plains has Fisher Flag banks: declaring them player work is stale data.
+    v['playerWork'] = [{'item': 'Fisher Flag banks (first FreshFish)', 'reason': 'dam a river'}]
 
 
 def one_vein(v):
@@ -181,7 +181,7 @@ CASES = [
     ('raised site below its terrain', raised_below_terrain, 'is above the raised level'),
     ('platforms under a quarry', platforms_under_quarry, 'MapError'),
     ('vanilla map object placed', vanilla_object_placed, 'MapError'),
-    ('player work declared for a met item', player_work_for_met_item, "player-work item 'shore fishing banks (first FreshFish)' is met"),
+    ('player work declared for a met item', player_work_for_met_item, "player-work item 'Fisher Flag banks (first FreshFish)' is met"),
 ]
 
 failures = 0

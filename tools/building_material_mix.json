@@ -385,6 +385,20 @@
     "wood": 146.7667
    }
   },
+  "FisherFlag": {
+   "model": "Buildings/Food/FisherFlag/FisherFlag.IronTeeth.Model",
+   "sha256": "ab4741a12f03aeeb2cd3ec430072db32296eaa2558dd8ad09d80e47e011c1f2d",
+   "areas": {
+    "BaseWood_DarkBrown.IronTeeth": 1.4264,
+    "Details.IronTeeth#unpriced": 1.1978,
+    "Details.IronTeeth#wood": 1.3481,
+    "WindowsAtlas.IronTeeth": 0.036
+   },
+   "families": {
+    "unpriced": 1.2338,
+    "wood": 2.7746
+   }
+  },
   "FisheryWorks": {
    "model": "Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.Model",
    "sha256": "f7f9427bf6d35a694b35555fd2eadb24007018f6335eb2ec79766e8886067cbb",

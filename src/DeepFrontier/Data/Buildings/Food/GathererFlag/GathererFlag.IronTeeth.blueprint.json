@@ -1,9 +1,0 @@
-{
-  "ShoreFishingSpec": {
-    "GoodId": "FreshFish",
-    "CatchHours": 4,
-    "MinimumDepth": 0.5,
-    "MaximumContamination": 0.01,
-    "MaximumReachDown": 1.25
-  }
-}

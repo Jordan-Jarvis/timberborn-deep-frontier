@@ -45,6 +45,19 @@
     }
    ]
   },
+  "FisherFlag": {
+   "hardpoints": [],
+   "excluded": [
+    {
+     "cell": [
+      0,
+      0,
+      1
+     ],
+     "reason": "a floor the building is walked on (no Top occupation), not a roof"
+    }
+   ]
+  },
   "FisheryWorks": {
    "hardpoints": [
     [

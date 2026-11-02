@@ -6,7 +6,7 @@
   "height": {"totalHeight": 66},
   "mapSize": {"x": 128, "y": 128},
   "hardVariant": false,
-  "description": "Deep Frontier new-game setup of the built-in Waterfalls map: a river falling through terraces past the central start terrace, with a badwater channel to the west and south. Deep Ore Veins with Deep Mine sites lie just south of the start and on the north-east terrace, Deep Ore Sources with Deep Drill sites on the western terrace and on the southern lowlands, sandstone and limestone outcrops beside their pits by the start, five Human Record Caches by the ruins, the reactor on the start terrace and the launch pad north of the start; the saved clean water is too shallow for shore fishing.",
+  "description": "Deep Frontier new-game setup of the built-in Waterfalls map: a river falling through terraces past the central start terrace, with a badwater channel to the west and south. Deep Ore Veins with Deep Mine sites lie just south of the start and on the north-east terrace, Deep Ore Sources with Deep Drill sites on the western terrace and on the southern lowlands, sandstone and limestone outcrops beside their pits by the start, five Human Record Caches by the ruins, the reactor on the start terrace and the launch pad north of the start; the saved clean water is too shallow for the Fisher Flag.",
   "placements": [
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 1 (Limestone Pit, 13 cells north-east of the start)", "x": 72, "y": 83, "z": 5},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 2 (Limestone Pit, 13 cells north-east of the start)", "x": 74, "y": 80, "z": 5},
@@ -53,5 +53,5 @@
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 28 cells south-west of the start", "x": 55, "y": 58, "z": 5, "orientation": "Cw180", "margin": 1, "openSides": []},
     {"template": "WaterTreatmentPlant.IronTeeth", "label": "Water Treatment Plant, 31 cells south of the start", "x": 86, "y": 45, "z": 5, "orientation": "Cw180", "margin": 1, "openSides": ["N"]}
   ],
-  "playerWork": [{"item": "shore fishing banks (first FreshFish)", "reason": "No bank qualifies for Gatherer Flag shore fishing in the saved water: the clean water is at most 0.22 deep (ShoreFishingSpec MinimumDepth 0.5, contamination at most 0.01), and all 35 water cells at least 0.5 deep are badwater (contamination 1.0). The first FreshFish needs a clean reach dammed deeper by the player."}]
+  "playerWork": [{"item": "Fisher Flag banks (first FreshFish)", "reason": "No bank qualifies for the Fisher Flag in the saved water: the clean water is at most 0.22 deep (FisherFlagSpec MinimumDepth 0.5, contamination at most 0.01), and all 35 water cells at least 0.5 deep are badwater (contamination 1.0). The first FreshFish needs a clean reach dammed deeper by the player."}]
 }

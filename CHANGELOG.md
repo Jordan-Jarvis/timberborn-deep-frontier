@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Fisher Flag: fresh fish come from one obvious place
+- **New Fisher Flag in the Food menu, right next to the Gatherer Flag.** A fisher walks to the shore in the flag's range and catches fresh fish where the water is clean and deep enough. Like the Gatherer Flag it needs no science; it costs 20 planks and 10 logs.
+- **When there is nothing to fish in range** (the water is too shallow, has dried up, is badwater or radioactive, or lies too far below the bank), the fisher shows the same "Nothing to do in range" status as the Gatherer Flag.
+- **The Gatherer Flag no longer has a "Catch fish" mode** (player report: the Fish Hatchery needs fresh fish, the Fishery Works needs juvenile fish, and no building seemed to catch either). In saves, Gatherer Flags that were set to fishing go back to gathering, and fish left in their storage are carried to your warehouses.
+- **The fish chain reads from the descriptions:** the Fisher Flag catches fresh fish, the Fish Hatchery breeds juvenile fish from fresh fish, and the Fishery Works raises juvenile fish into fresh fish.
+- Fishing now also stops in water with detectable radiation; the old mode only checked for badwater.
+
 ### Dependencies
 - **Mod Settings (eMka) is no longer required.** Deep Frontier has no settings page any more (the radioactive tide settings moved to the new-game screen). Timber Pipes and Conveyor Belts still require it themselves.
 

@@ -83,9 +83,6 @@ for (const {path:p, json:j} of buildingJsons) {
     special.join('; '), policyRow ? (policyRow.requirementStatus || '') : '',
   ]);
 }
-// Include the active gatherer feature patch, which is not a full building template.
-const gatherer = buildingJsons.find(x => x.path.includes('GathererFlag'));
-if (gatherer) buildingRows.push(['GathererFlag', 'Gatherer flag fishing patch', 'Food', 'Implemented feature patch', rel(gatherer.path), '', '', '', '', '', '', '', '', 'No authored hp connection', '', '', '', '', '', '', '', '', 'ShoreFishingSpec', '']);
 buildingRows.sort((a,b)=>String(a[0]).localeCompare(String(b[0])));
 
 const recipeRows = recipeJsons.map(({path:p,json:j}) => {

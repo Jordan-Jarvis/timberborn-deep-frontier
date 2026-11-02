@@ -4,6 +4,44 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Fisher Flag: fresh fish from their own flag; the Gatherer Flag's fishing mode removed (Claude Code session, 2026-11-02, fisher agent; mirror `fisher` on HEAD + this change; compile-checked and full validate_all in the mirror; not run in game yet)
+
+- **Player:** "One farm says it needs fresh fish to produce juvenile fish. The other says that it needs juvenile fish to produce fresh fish. The mod doesn't explain how to get them anywhere ... None of them catch either type of fish." **User:** "DO NOT just randomly put extra instructions somewhere ... make a fisher flag, that acts like the gatherer flag but is specifically for catching fish. The beaver will get the 'nothing to do in range' notification if the water is contaminated, too low, etc."
+- **Design.** `FisherFlag.IronTeeth` (Food, ToolOrder 11, 0 science, 20 Plank + 10 Log from the material rule on an authored 10 Log + 5 Plank, 1 worker, 1x1x2, F-mirrorable) is the vanilla Iron Teeth Gatherer Flag blueprint (workplace, terrain range, 20-slot output inventory, idle seat, Gatherer outfit, lamp, construction base) with `FisherFlagSpec` in place of `GathererFlagSpec`/`YieldRemovingBuildingSpec`, plus `AmbientAnimationSpec` for the swinging banner (`tools/fishery_building_content.mjs` `authorFisherFlag`; rule data `tools/aquaculture.json` `fisherFlag`). Menu: Gatherer Flag (0), Fisher Flag (0), Farmhouse (0) ... (`validate_tool_order.mjs --print`). The names and descriptions carry the chain: Fisher Flag "Employs a fisher who catches fresh fish from the shore, where the water is clean and deep enough."; Fish Hatchery "Breeds juvenile fish from fresh fish. ..."; Fishery Works "Raises juvenile fish into fresh fish, or presses fresh fish into fish oil." No panel, notice or instruction text.
+- **Runtime (`src/DeepFrontier/Scripts/FisherFlag.cs`, no Harmony).** `FisherFlagConfigurator` gives `FisherFlagSpec` the Gatherer Flag's native decorators (decompiled 1.1.2.8 `GatheringConfigurator` and `GatheringUIConfigurator`: `BuildingWithTerrainRange`, `SimpleOutputInventoryFragmentEnabler`, `AutoEmptiable`, `Emptiable`, `HaulCandidate`, `SimpleOutputInventoryHaulBehaviorProvider`, and the workplace behaviors RemoveUnwantedStock, **FisherWorkplaceBehavior**, EmptyOutput, EmptyInventories, Labor, WaitInsideIdly), and every `Worker` gets `FisherCatchExecutor`. `FisherFlag` is the output inventory's `IAllowedGoodProvider` (FreshFish only). It keeps the old shore rule unchanged: a dry bank in the native `BuildingTerrainRange`, water one layer down at least 0.5 deep, badwater share at most 0.01, and a surface from 1.25 below the bank to 0.1 above it. It adds the pumps' radiation rule (`IRadiationService.IsColumnContaminated`, the detection limit), which the old mode lacked. A catch takes 4 base working hours times the native working-speed multiplier; the fish then goes into the beaver's hands with a capacity reservation, and native carrying delivers it.
+- **"Nothing to do in range" (native).** With no suitable bank, `FisherWorkplaceBehavior.Decide` calls `NothingToDoInRangeStatus.ActivateStatus()` and releases the worker; a found bank calls `DeactivateStatus()`. Evidence (decompiled 1.1.2.8): `WorkSystemConfigurator` decorates every `Workplace` with `NothingToDoInRangeStatus` (loc `Status.Yielding.NothingToDoInRange`, "Nothing to do in range", a normal status with alert and floating icon). The Gatherer Flag reaches the same toggle through `YieldStatus.UpdateStatus` (`NoYielderInRange` -> `ActivateStatus`), and `LumberjackFlagStatusDeactivator` calls `DeactivateStatus`. The status clears itself when the building is blocked or loses its last worker.
+- **Gatherer Flag:** no longer patched. `Data/Buildings/Food/GathererFlag/GathererFlag.IronTeeth.blueprint.json` is deleted; `ShoreFishing.cs`, `ShoreFishingPanel.cs` and the three `GatherWorkplaceBehavior`/allowed-good Harmony patches in `DeepFrontierModStarter` are removed.
+- **Saves:** no migration code.
+  - A Gatherer Flag saved in fishing mode gathers again: the entity loader is pull-based, so its `DeepFrontierShoreFishing` entry is never read.
+  - FreshFish in its stock is native unwanted stock (`Inventory.LimitedAmount` 0), which `RemoveUnwantedStockWorkplaceBehavior` carries off.
+  - A beaver saved in `ShoreCatchExecutor` resumes with no executor: `BehaviorManager.DeserializeExecutor` finds no `IExecutor` of that name and skips `Load`. A fish in its hands loses its reservation in `GoodReserver.ResolveLoadedReservations` (a native warning) and is emptied natively.
+  - Not yet loaded in game.
+- **Model.** `tools/asset-pipeline/fisher_flag_geometry.py` and `build_fisher_flag.py` write `src/DeepFrontier/Art/Source/FisherFlag-ReferenceStudy.blend` (textures external, 0.7 MB) and the official Timbermesh exports in `outputs/civic-integration/Data/Buildings/Food/FisherFlag/` (finished 796 triangles, against the vanilla flag's 466; construction stage 102).
+  - Parts: a roped plank landing, a net with red floats on the back ropes, two rods, a tub of catch, a crate, and a pole with a lantern and a blue swallowtail banner with a fish on both faces. The banner swings in a 60-frame loop (`#FisherFlag.Banner`); the idle seat is `#Slot#Seat0`.
+  - Materials: BaseWood_DarkBrown, Details and WindowsAtlas (Iron Teeth), one atlas island per face.
+  - Icon: `src/DeepFrontier/Art/Icons/FisherFlag.svg`, the vanilla Gatherer Flag pennant with a fish, rendered by `create_restaurant_icons.mjs`.
+  - Reviews: `docs/art/reviews/2026-11-02-fisher-flag/` and `docs/art/reviews/2026-10-21-icons/civic-aquaculture.png`.
+- **Registries:**
+  - building catalog;
+  - triangle budget (`FisherFlag`, civic small, ceiling 796/102);
+  - connection faces (none) and roof hardpoints (excluded: a walked floor);
+  - material mix and cost context;
+  - building sounds (GathererFlag selection, no loop);
+  - automation (pausable; `FisherFlagSpec` operational: `CanWork` needs `BlockableObject.IsUnblocked`);
+  - progression `MAP_SOURCES`: FreshFish via the Fisher Flag.
+- **Map checks:** `prepare_deep_frontier_map.py` reads `FisherFlagSpec` from the Fisher Flag blueprint. The item is now "Fisher Flag banks (first FreshFish)"; 7 built-in maps keep it as `playerWork`, with no notice. `map_loop_requirements.json`, the variant reasons, `test_prepare_deep_frontier_map.py` (22/22) and docs/maps.md follow.
+- **Acceptance fixtures (not run):**
+  - `FisheryAcceptance` places `FisherFlag.IronTeeth`. It now also requires the native Nothing-to-do status on the contaminated and the drained pond, and its clearing on the refilled pond; the switch-to-gathering phase is gone.
+  - `AquacultureContinuityAcceptance`, `AllBuildingsAcceptance` (no longer a vanilla patch; `FisherFlagSpec` is a site spec) and `LategameAcceptance` follow.
+- **Checks:**
+  - both script assemblies compile (mirror);
+  - canonical generation differs from HEAD only by the Fisher Flag, the three descriptions and the template collection;
+  - full `validate_all` in the mirror: 73/75 PASS (audit-item-uses is report-only; no-game-assets runs only in the repository, where it passes on the commit tree).
+- **Not verified:** nothing has run in game. Test plan:
+  - place a Fisher Flag beside clean water at least half a tile deep, with a dry bank one layer above it; check catches and hauling;
+  - place one far from water, or drain or contaminate its pond, and check "Nothing to do in range";
+  - load a save with a fishing Gatherer Flag.
+
 ## Industrial bot recipe from the Reactor Bot retrofit parts (Claude Code session, 2026-11-02, industrial-bot agent; mirror `indbot` on HEAD 22e5c8d + this change; not built or run in game)
 
 - **User decision** on the charging gap left open in the entry below (Industrial bots ran from about 12,000 science, the Reactor Charging Bay unlocks at 400,000): the Industrial bot recipe uses the retrofit parts.

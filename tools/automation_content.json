@@ -158,6 +158,12 @@
         "MechanicalBuildingSpec"
       ]
     },
+    "Buildings/Food/FisherFlag/FisherFlag.IronTeeth.blueprint": {
+      "role": "pausable",
+      "sources": [
+        "WorkplaceSpec"
+      ]
+    },
     "Buildings/Food/FishHatchery/FishHatchery.IronTeeth.blueprint": {
       "role": "pausable",
       "sources": [
@@ -637,13 +643,6 @@
       ],
       "producer": "tools/bot_upkeep_content.mjs"
     },
-    "Buildings/Food/GathererFlag/GathererFlag.IronTeeth.blueprint": {
-      "nativeRole": "pausable",
-      "nativeSources": [
-        "WorkplaceSpec"
-      ],
-      "producer": "tools/fishery_building_content.mjs"
-    },
     "Buildings/Power/PowerShaft/PowerShaft.IronTeeth.blueprint": {
       "nativeRole": "none",
       "nativeSources": [],
@@ -862,12 +861,12 @@
         }
       ]
     },
-    "ShoreFishingSpec": {
+    "FisherFlagSpec": {
       "kind": "operational",
-      "response": "ShoreFishing.CanWork requires BlockableObject.IsUnblocked.",
+      "response": "FisherFlag.CanWork requires BlockableObject.IsUnblocked: an Off signal stops the fishing job and an active catch ends with no fish.",
       "evidence": [
         {
-          "file": "src/DeepFrontier/Scripts/ShoreFishing.cs",
+          "file": "src/DeepFrontier/Scripts/FisherFlag.cs",
           "contains": "GetComponent<BlockableObject>().IsUnblocked"
         }
       ]

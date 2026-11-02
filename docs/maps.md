@@ -110,16 +110,16 @@ Since the 2026-11-01 small-maps pass no built-in map declares an unmet item, so 
 | Map | Size | EXTREMELY difficult | Variant | Placements | Sites | Deep Mine sites | Finite DeepOre | Player work (declared `playerWork`: met, no notice) |
 |---|---|---|---|---:|---:|---:|---:|---|
 | Beaverome | 192×192 |  | `beaverome` | 17 | 22 | 2 | 17,000 | renewable scrap (Underground Ruins for the Efficient Mine): drain a lake |
-| Canyon | 128×128 |  | `canyon` | 17 | 26 | 2 | 17,000 | shore fishing banks (first FreshFish) |
-| Cliffside | 100×50 |  | `cliffside` | 17 | 23 | 2 | 17,000 | shore fishing banks (first FreshFish) |
-| Craters | 192×192 |  | `craters` | 17 | 22 | 2 | 17,000 | shore fishing banks (first FreshFish) |
+| Canyon | 128×128 |  | `canyon` | 17 | 26 | 2 | 17,000 | Fisher Flag banks (first FreshFish) |
+| Cliffside | 100×50 |  | `cliffside` | 17 | 23 | 2 | 17,000 | Fisher Flag banks (first FreshFish) |
+| Craters | 192×192 |  | `craters` | 17 | 22 | 2 | 17,000 | Fisher Flag banks (first FreshFish) |
 | Diorama | 50×50 |  | `diorama` | 17 | 22 | 2 | 17,000 | none |
 | HelixMountain | 256×256 |  | `helix-mountain` | 17 | 26 | 2 | 17,000 | none |
-| Hollows | 192×192 |  | `hollows` | 18 | 27 | 2 | 18,000 | shore fishing banks (first FreshFish) |
+| Hollows | 192×192 |  | `hollows` | 18 | 27 | 2 | 18,000 | Fisher Flag banks (first FreshFish) |
 | Lakes | 256×256 |  | `lakes` | 18 | 27 | 3 | 17,000 | none |
 | Meander | 128×128 |  | `meander` | 17 | 26 | 2 | 17,000 | none |
-| MountainRange | 256×150 |  | `mountain-range` | 17 | 26 | 2 | 17,000 | shore fishing banks (first FreshFish) |
-| Nomads | 256×256 |  | `nomads` | 19 | 28 | 3 | 18,000 | shore fishing banks (first FreshFish) |
+| MountainRange | 256×150 |  | `mountain-range` | 17 | 26 | 2 | 17,000 | Fisher Flag banks (first FreshFish) |
+| Nomads | 256×256 |  | `nomads` | 19 | 28 | 3 | 18,000 | Fisher Flag banks (first FreshFish) |
 | Oasis | 256×256 |  | `oasis` | 19 | 27 | 3 | 18,000 | ReinforcedHydroTurbine site (hydro) |
 | Pillars | 192×192 |  | `pillars` | 17 | 22 | 2 | 17,000 | irrigated farmland near the start; ReinforcedHydroTurbine site (hydro) |
 | Plains | 256×256 |  | `plains` | 19 | 28 | 3 | 18,000 | none |
@@ -127,7 +127,7 @@ Since the 2026-11-01 small-maps pass no built-in map declares an unmet item, so 
 | Spillage | 256×150 |  | `spillage` | 17 | 26 | 2 | 17,000 | none |
 | Terraces | 256×256 |  | `terraces` | 18 | 28 | 3 | 17,000 | none |
 | ThousandIslands | 256×256 |  | `thousand-islands` | 17 | 23 | 2 | 17,000 | trees near the start; irrigated farmland near the start |
-| Waterfalls | 128×128 |  | `waterfalls` | 17 | 25 | 2 | 17,000 | shore fishing banks (first FreshFish) |
+| Waterfalls | 128×128 |  | `waterfalls` | 17 | 25 | 2 | 17,000 | Fisher Flag banks (first FreshFish) |
 
 Every row passes `builtin` (counts after the 2026-11-01 second shrink and, for Beaverome, Cliffside and Diorama, the small-maps pass; no map is small or lacks a Deep Mine site; evidence `outputs/maps/builtin-coverage.json` and the per-map files). No map declares `unmet`. The reasons, with their numbers and the play that provides each item, are in each variant's `playerWork` entries. Notes:
 
@@ -142,7 +142,7 @@ Every row passes `builtin` (counts after the 2026-11-01 second shrink and, for B
   - **Cliffside**: the reactor stands on **flat ground** in the middle of the west level-4 plain, (15, 24, 4) Cw90 (x 15–25, y 11–24), all four sides open, water 1 cell away, no trees. The Deep Ore Vein that lay there, (21, 10, 4), moved with its Deep Mine to the level-8 bench east of the river, (60, 25, 8) (28 cells east of the start; the only nearer spots are right beside the start). Fishing banks are `playerWork`: a dam raising the 0.53-deep bay by about 0.25 creates them (see Shore banks).
   - **Beaverome**: 239 tree-free flat 5×5 seam positions exist now. The Limestone Quarry is 13 cells south of the start (seam (83, 79, 12)), the Sandstone Quarry on the level-13 south shore (seam (95, 45, 13)). The Uranium Processing Plant fits on the level-12 north-west shore (42, 162, 12). The reactor stands on the level-11 south-west shore beside the Cryogenic Liquefaction Plant, (37, 26, 11) Cw180, water 0 cells away, on **39 platform blocks** (28 raised cells, at most 3 layers); the largest dry flat square is 9×9. Its own two Underground Ruins lie on lake beds: (117, 41, 3) under 6.22 of clean water in an 11,197-cell lake (source strength 33.5) whose shore is beside the start, and (149, 137, 0) under 8.58 of badwater (3,682-cell lake). Renewable scrap is `playerWork`: drain the lake over one and build the Efficient Mine there (the scrap item's evidence records depth, contamination, lake size, source strength and shore route for each flooded ruin; vanilla Beaverome's own description says its builders "drained seven mighty craters"). A dry-land vanilla Underground Ruins placed by the setup was tried and removed the same day (user: "Don't modify the base game.").
 - **Raised sites elsewhere**: no other map uses `platformBlocks`; their flat sites are unchanged. The reactor never needs more height: at 66 the highest legal base is 56. Since the second shrink the Launch Pad, Radioactive Waste Refinery, Radioactive Waste Vault and Rocket Assembly Hangar need no reserved site on any map.
-- **Shore banks** (7 maps): the saved water is too shallow (or its banks too high) for `ShoreFishingSpec`; damming a river deeper creates banks in play, so the item is `playerWork` (no notice). Likewise farmland, trees and pines near the start (Pillars, Pressure, Thousand Islands: irrigate, plant, bridge) and the hydro site on Oasis and Pillars (let Aquifer Drill or seep water fall from higher ground: Oasis has aquifers on levels 6-7 with level-2 ground within 12 cells, Pillars seeps on levels 11-13 and an aquifer on level 7 above level-0 ground).
+- **Shore banks** (7 maps): the saved water is too shallow (or its banks too high) for the Fisher Flag (`FisherFlagSpec`); damming a river deeper creates banks in play, so the item is `playerWork` (no notice). Likewise farmland, trees and pines near the start (Pillars, Pressure, Thousand Islands: irrigate, plant, bridge) and the hydro site on Oasis and Pillars (let Aquifer Drill or seep water fall from higher ground: Oasis has aquifers on levels 6-7 with level-2 ground within 12 cells, Pillars seeps on levels 11-13 and an aquifer on level 7 above level-0 ground).
 - **Tool changes made for these maps**: badwater counts the outlet of a badwater source with a positive strength (Nomads and Oasis store theirs dry), and a source feeds the surface water its tunnel water reaches (Hollows: `column_components` follows connected water columns underground).
 - For a declared `unmet` item (none on the built-in maps since 2026-11-01), every missing building site of a map is folded into one "No ready space for: …" line with the enUS building names; the other items use the lines in `tools/map_setup.json` `unmetText`.
 
@@ -198,7 +198,7 @@ A map supports the loop when a player can reach every stage, from the start to t
 | 1 Start | Extract (4 Badwater), Explosives (5 Badwater), Chemical (4 Badwater + Extract) | badwater fed by a badwater source, reachable | vanilla and mod recipes | `badwater` |
 | 1 Start | Log, Plank; TreatedPlank = Plank + PineResin (archive, airframes, payload) | ≥ 200 trees and ≥ 50 resin pines within route 60 | `TreeComponentSpec`, Pine `GatherableSpec` | `trees`, `pines` |
 | 1 Start | crops (Canola → Grease → guidance computers; Corn; Eggplant) | ≥ 150 dry, free, flat cells within 4 of clean water near the start | policy | `irrigated farmland` |
-| 1 Start | Gatherer Flag shore fishing: FreshFish → FishOil (canned fish, bot maintenance); hatchery stock | ≥ 4 reachable banks: dry bank, neighbour one layer down with clean water ≥ 0.5 deep (contamination ≤ 0.01), surface within 1.25 below the bank | `ShoreFishingSpec` (GathererFlag patch), `ShoreFishing.Suitable` | `shore fishing banks` |
+| 1 Start | Fisher Flag: FreshFish → FishOil (canned fish, bot maintenance); hatchery stock | ≥ 4 reachable banks: dry bank, neighbour one layer down with clean water ≥ 0.5 deep (contamination ≤ 0.01), surface within 1.25 below the bank | `FisherFlagSpec`, `FisherFlag.Suitable` (its radiation rule never applies to a saved map) | `Fisher Flag banks` |
 | 2 Construction | Sandstone Pit, Limestone Pit | deposits of the pit's `ResourceGroup` within 20 steps of its door, on its level; yield ≥ the stone that every building up to the permanent quarry (9,000 science since the 2026-11-01 science curve; the same buildings as at 4,000 before) costs: 1,723 sandstone, 1,266 limestone (2026-10-30 after the bricks pass and its brick quarries; 1,275 / 1,393 after the cost re-composition; 842 / 722 on 2026-10-29) | `MineralPitSpec`, `YieldRemovingBuildingSpec`, `MineralDepositSpec`, `NavigationDistance.ResourceBuildings` | pit site + `deposits in range` |
 | 2 Construction | Sandstone / Limestone Quarry (renewable stone for cement, bricks, concrete) | a placed `SandstoneSeam` / `LimestoneSeam` (5×5) under the quarry's 5×5 Top core (the whole 5×5 footprint since 2026-11-01; local x 3–7, y 1–5 of the 8×6 and 11×7 footprints before) | `UnderstructureConstraintSpec` | understructure site |
 | 3 Deep industry | Deep Drill (DeepOre from a finite source) | ≥ 2 flat 4×4 drill sites (the blueprint's footprint; 7×6 before 2026-11-01) within 25 cells of a `DeepOreSource` (Pileable, ≤ `StockpileSpec.MaxCapacity` 10,000, consumed by a DeepDrill recipe); the sources beside a checked drill site hold ≥ the DeepOre of one of each building + `finiteDeepOreMargin` 5% (10,979 → 11,528 after the 2026-10-30 cost re-composition; 15,608 → 16,389 before) | `StockpileSpec`, DeepDrill recipes, `ProgramModel` | `Deep Drill sites`, `finite deep ore` |
@@ -544,7 +544,7 @@ Default variants keep the vanilla water: no source is added, removed or changed.
   - Badwater sources: (185, 62; 0.75) and (38, 226; 1.0).
   - The rivers converge north of the start into the central lake, which drains off the west edge. The south-east badwater river enters the lake from the south. Flow directions are read from the terrain and the saved water, not simulated.
   - The North Bank reactor draws coolant from the north river and lake.
-  - The start river is 0.32 deep in the saved water, below shore fishing's 0.5. Dam it, or fish from the north banks (route 105).
+  - The start river is 0.32 deep in the saved water, below the Fisher Flag's 0.5. Dam it, or fish from the north banks (route 105).
 - **Lakes**
   - Water sources: north-west (10, 239–243; strength 4 in total) and north (106, 239–241; 3), plus a seep at (25, 98).
   - Badwater sources: east plateau (170, 132; 1.0), south-west (59, 65; 1.5) and north (165, 231; 1.0).

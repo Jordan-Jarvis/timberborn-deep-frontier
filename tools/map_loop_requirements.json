@@ -11,7 +11,7 @@
   "minPinesNearStart": {"value": 50, "why": "Pine resin for treated planks (TreatedPlank: Plank + PineResin), which the archive, airframe and payload chains consume."},
   "fieldWaterReach": {"value": 4, "why": "Cells from clean water counted as irrigated farmland."},
   "minFieldCellsNearStart": {"value": 150, "why": "Irrigated, dry, flat, free cells for the first farms."},
-  "minShoreBanks": {"value": 4, "why": "Reachable bank cells where the Gatherer Flag's shore fishing (ShoreFishingSpec) can catch the first FreshFish: FishOil (canned fish, bot maintenance) and the hatchery's breeding stock."},
+  "minShoreBanks": {"value": 4, "why": "Reachable bank cells where a Fisher Flag (FisherFlagSpec) can catch the first FreshFish: FishOil (canned fish, bot maintenance) and the hatchery's breeding stock."},
   "shoreRoute": {"value": 80, "why": "Route length (cells) from the start for the reported near-start bank count. A start river shallower than MinimumDepth can be dammed deeper by normal building."},
   "minHydroHead": {"value": 1, "why": "Natural bed drop (layers) of a source-fed river reach that a dam and Reinforced Hydro Turbine can use; the dam adds the rest of the head."},
   "hydroWindow": {"value": 12, "why": "Wet cells walked along the river from the dam site when measuring the natural drop."},

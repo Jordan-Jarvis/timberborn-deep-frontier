@@ -4,15 +4,59 @@ import {industrialColliders} from './industrial_occupancy.mjs';
 import {applyNativeBuildingAssembly} from './native_building_content.mjs';
 import {applyVanillaSmoke,sceneSmokeRegistration} from './vanilla_smoke.mjs';
 import {nativeEntrance} from './native_entrance.mjs';
+import {buildingCost} from './lategame_costs.mjs';
 const root=new URL('../',import.meta.url);
 const read=async p=>JSON.parse(await readFile(new URL(p,root),'utf8'));
 const xyz=([X,Y,Z])=>({X,Y,Z});
 
-export async function authorShoreFishing() {
-  const plan=await read('tools/aquaculture.json');
-  const folder=new URL('src/DeepFrontier/Data/Buildings/Food/GathererFlag/',root);
-  await mkdir(folder,{recursive:true});
-  await writeFile(new URL('GathererFlag.IronTeeth.blueprint.json',folder),JSON.stringify({ShoreFishingSpec:plan.shoreFishing},null,2)+'\n');
+// Fisher Flag (2026-11-02; tools/aquaculture.json fisherFlag). It replaced the Gatherer
+// Flag's "Catch fish" mode, which players could not find: the vanilla Gatherer Flag is
+// no longer patched, and fresh fish come from this one flag beside it in the Food menu.
+// The blueprint is the vanilla Iron Teeth Gatherer Flag (workplace, terrain range,
+// output inventory, idle seat, outfit, lamp, construction base) with the fishing job
+// (FisherFlagSpec, Scripts/FisherFlag.cs) in place of gathering, its own model
+// and construction stage (tools/asset-pipeline/build_fisher_flag.py, exported to
+// outputs/civic-integration) and
+// an authored cost on the material rule (building_construction_costs.json buildings).
+export async function authorFisherFlag() {
+  const plan=(await read('tools/aquaculture.json')).fisherFlag;
+  const value=await read('vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources/Buildings/Food/GathererFlag/GathererFlag.IronTeeth.blueprint.json');
+  for(const key of ['GathererFlagSpec','YieldRemovingBuildingSpec'])
+    if(!value[key])throw new Error('Fisher Flag: the vanilla Gatherer Flag lost '+key);
+  delete value.GathererFlagSpec;delete value.YieldRemovingBuildingSpec;
+  const rows=(await read('tools/building_construction_costs.json')).buildings.FisherFlag;
+  if(!rows)throw new Error('Fisher Flag: no construction cost in building_construction_costs.json buildings');
+  if(!Number.isInteger(plan.science)||plan.science<0)throw new Error('Fisher Flag: invalid science');
+  value.BuildingSpec={...value.BuildingSpec,BuildingCost:buildingCost('FisherFlag',rows.map(([Id,Amount])=>({Id,Amount})),plan.science),ScienceCost:plan.science};
+  value.TemplateSpec={...value.TemplateSpec,TemplateName:'FisherFlag.IronTeeth',BackwardCompatibleTemplateNames:[]};
+  value.PlaceableBlockObjectSpec={...value.PlaceableBlockObjectSpec,ToolGroupId:'Food',ToolOrder:plan.toolOrder,DevModeTool:false};
+  value.LabeledEntitySpec={...value.LabeledEntitySpec,DisplayNameLocKey:'Building.FisherFlag.DisplayName',
+    DescriptionLocKey:'Building.FisherFlag.Description',FlavorDescriptionLocKey:'Building.FisherFlag.FlavorDescription',
+    Icon:'Buildings/Food/FisherFlag/Icon'};
+  // Native F mirroring like every Deep Frontier building (audit_building_assets --require-mirroring).
+  value.BlockObjectSpec={...value.BlockObjectSpec,Flippable:true};
+  for(const key of ['GoodId','CatchHours','MinimumDepth','MaximumContamination','MaximumReachDown'])
+    if(plan.spec[key]===undefined)throw new Error('Fisher Flag: spec lacks '+key);
+  value.FisherFlagSpec=plan.spec;
+  // The banner swings while the flag stands (Scripts/AmbientAnimation.cs).
+  value.AmbientAnimationSpec={};
+  const finished=value.Children['#Finished'];
+  finished.TimbermeshSpec={Model:plan.model.resource};
+  // Unity axes: X across, Y up, Z back. The landing with its posts, the pole, the banner.
+  finished.CollidersSpec={BoxColliders:[
+    {Center:{X:.5,Y:.24,Z:.5},Size:{X:.9,Y:.48,Z:.92}},
+    {Center:{X:.5,Y:.89,Z:.58},Size:{X:.07,Y:1.7,Z:.07}},
+    {Center:{X:.5,Y:1.36,Z:.547},Size:{X:.5,Y:.62,Z:.05}}],SphereColliders:[],CapsuleColliders:[]};
+  // The vanilla nested construction base stays; the stage model is the flag's own.
+  const stage=value.Children['#Unfinished'].Children.ConstructionStage0;
+  if(!stage?.TimbermeshSpec)throw new Error('Fisher Flag: the vanilla Gatherer Flag lost its ConstructionStage0');
+  stage.TimbermeshSpec={Model:plan.model.stageResource};
+  const folder='Buildings/Food/FisherFlag/';
+  await mkdir(new URL('src/DeepFrontier/Data/'+folder,root),{recursive:true});
+  for(const resource of [plan.model.resource,plan.model.stageResource])
+    await copyFile(new URL('outputs/civic-integration/Data/'+resource+'.timbermesh',root),new URL('src/DeepFrontier/Data/'+resource+'.timbermesh',root));
+  await writeFile(new URL('src/DeepFrontier/Data/'+folder+'FisherFlag.IronTeeth.blueprint.json',root),JSON.stringify(value,null,2)+'\n');
+  return folder+'FisherFlag.IronTeeth.blueprint';
 }
 
 // enUS rows for src/DeepFrontier/Scripts/Waterside (WatersideLoc keys).

@@ -56,5 +56,5 @@
     {"template": "ReinforcedHydroTurbine.IronTeeth", "label": "Dam site with 10 layers of natural drop, 65 cells north of the start", "x": 96, "y": 161, "z": 10},
     {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 67 cells east of the start", "x": 153, "y": 105, "z": 2, "orientation": "Cw0", "margin": 2, "openSides": ["S", "E"], "maxWaterDistance": 15}
   ],
-  "playerWork": [{"item": "shore fishing banks (first FreshFish)", "reason": "On the saved water the hollow rivers are shallow: of 1,288 clean surface water cells only 76 are at least 0.5 deep, and none of them lies one layer below a dry, free bank within the 1.25 reach, so the map has 0 qualifying banks. Damming a clean river deeper creates banks."}]
+  "playerWork": [{"item": "Fisher Flag banks (first FreshFish)", "reason": "On the saved water the hollow rivers are shallow: of 1,288 clean surface water cells only 76 are at least 0.5 deep, and none of them lies one layer below a dry, free bank within the 1.25 reach, so the map has 0 qualifying banks. Damming a clean river deeper creates banks."}]
 }

@@ -6,13 +6,14 @@ const amounts=goods=>goods.map(g=>`${g.Amount} ${name(g.Id)}`).join('; ');
 export const aquaculture=await read('tools/aquaculture.json');
 const fishery=await read('src/DeepFrontier/Data/Buildings/Food/FisheryWorks/FisheryWorks.IronTeeth.blueprint.json');
 const hatchery=await read('src/DeepFrontier/Data/Buildings/Food/FishHatchery/FishHatchery.IronTeeth.blueprint.json');
-const flag=await read('vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources/Buildings/Food/GathererFlag/GathererFlag.IronTeeth.blueprint.json');
+const flag=await read('src/DeepFrontier/Data/Buildings/Food/FisherFlag/FisherFlag.IronTeeth.blueprint.json');
+const catchHours=aquaculture.fisherFlag.spec.CatchHours;
 const source='tools/aquaculture.json; src/DeepFrontier/Data/Buildings/Food; src/DeepFrontier/Data/Recipes; docs/transport-adapters.md';
 const pipePorts=b=>b.BuildingPipeTargetPortsSpec.Ports.map(p=>
   `(${p.Coordinates.X},${p.Coordinates.Y},${p.Coordinates.Z}) ${p.Directions} ${p.State}`).join('; ');
 const hatcheryStatus=aquaculture.hatchery.status;
 const fisheryStatus=aquaculture.fishery.status;
-const flagStatus='Catch/delivery/save/reload and water/job interruptions passed through build 51; build 57 bootstrapped breeding and Fishery production from zero fish stock';
+const flagStatus='Fisher Flag (2026-11-02): generated and statically checked, in-game test pending. Its shore rule and catch are the former Gatherer Flag fishing job, whose catch/delivery/save/reload and water interruptions passed through build 51 (build 57 bootstrapped breeding and Fishery production from zero fish stock)';
 const juvenile=(await read('src/DeepFrontier/Data/Recipes/Recipe.JuvenileFish.blueprint.json')).RecipeSpec;
 const fish=(await read('src/DeepFrontier/Data/Recipes/Recipe.FreshFish.blueprint.json')).RecipeSpec;
 const oil=(await read('src/DeepFrontier/Data/Recipes/Recipe.FishOil.blueprint.json')).RecipeSpec;
@@ -26,11 +27,11 @@ function buildingFields(b,status) {
     'Source':source,'Data status':status,'Status':status};
 }
 export const aquacultureBuildingUpdates=new Map([
-  ['B005',{'Status':'Design only; not authored','Data status':'Proposed fish pond; no active building or recipe','Notes':'Shore fishing provides the implemented starter fish supply.'}],
+  ['B005',{'Status':'Design only; not authored','Data status':'Proposed fish pond; no active building or recipe','Notes':'The Fisher Flag provides the implemented starter fish supply.'}],
   ['B006',{...buildingFields(hatchery,hatcheryStatus),'Infobox':'Manufactory','Power role':'Consumer','Power mode':'Grid',
     'Flags':'Submerged lower layer; bank-level dock; 31 route cells; open decks with no rails; native header tank',
     'Stackable':'Clear side-dock tile','Stacking rule':'Native support and collision on clear dock; no artificial layer cap','Conveyor-only solids':'No','Pipe ports':pipePorts(hatchery),
-    'Unlock prerequisites':'600 science; planks, gears and metal blocks; gatherer fish and native algae',
+    'Unlock prerequisites':'600 science; planks, gears and metal blocks; Fisher Flag fish and native algae',
     'Inputs':amounts(juvenile.Ingredients),'Outputs':amounts(juvenile.Products),'Placement':`Front row on ground/support; real clean water below rear nursery cell (${aquaculture.hatchery.waterCell.join(',')}); BaseZ=1`,
     'Player cue':'A few shore-caught fish seed repeatable breeding','Notes':'Native pool depth rule: stops at <=0.15 tile and restarts above 0.25; badwater blocks above 5.5%, clears at <=4.5%. Header tank shows 0–60 delivered Water independently of world water. The 8x8x5 height includes one submerged layer. Closed workroom, open nursery pens and a clear side-dock construction tile.'}]
 ]);
@@ -42,10 +43,10 @@ export const aquacultureBuildingAdds=[
     'Scale fish production or press fish oil','Clear gallery and terrace cells','Native support and collision; no artificial layer cap','No',pipePorts(fishery),'Grid',
     'Hatchery juvenile fish; native algae; delivered Water; shaft power',`${amounts(fish.Ingredients)} / ${amounts(oil.Ingredients)}`,`${amounts(fish.Products)} / ${amounts(oil.Products)}`,'None',
     'Supported bank or dry land; six basins show actual stored Water','Grow beyond small shore catches',fisheryStatus,'80 hp total, zero output. Original native water wheel is a process animation, not a generator. Water capacity 90. Three doors across levels 0/2.'],
-  ['GathererFlag.ShoreFishing','Gatherer Flag — shore fishing','Workplace','Food; existing vanilla building extension','Iron Teeth','Yes','Existing Gatherer Flag menu',flag.BlockObjectSpec.Size.X,flag.BlockObjectSpec.Size.Y,'1x1',1,flag.BlockObjectSpec.Size.Z,
-    flag.WorkplaceSpec.MaxWorkers,0,0,'Passive / transport',flag.BuildingSpec.ScienceCost,0,'None','Explicit Catch fish job; default remains plant gathering','ShoreCatch (worker activity)',source,flagStatus,'1. Settlement',
-    'Small renewable starter fish supply','Yes','Unchanged native flag support rules','No','No','None','Reachable dry bank beside real clean world water','No inventory ingredient',`1 Fresh Fish per ${aquaculture.shoreFishing.CatchHours} base working hours, plus travel`,'None',
-    'Water depth >=0.5; contamination <=1%; surface no more than 1.25 below bank','Select Catch fish on a flag beside water',flagStatus,'One worker; native work speed, carrying and 20-per-good output capacity. No catch if water dries/pollutes or the job is paused/switched.']
+  ['FisherFlag','Fisher Flag','Workplace','Food; Deep Frontier','Iron Teeth','Yes','Food menu, beside the Gatherer Flag',flag.BlockObjectSpec.Size.X,flag.BlockObjectSpec.Size.Y,'1x1',1,flag.BlockObjectSpec.Size.Z,
+    flag.WorkplaceSpec.MaxWorkers,0,0,'Passive / transport',flag.BuildingSpec.ScienceCost,0,amounts(flag.BuildingSpec.BuildingCost),'Native terrain range; Nothing to do in range without a fishable bank','FisherCatch (worker activity)',source,flagStatus,'1. Settlement',
+    'Small renewable starter fish supply','Yes','Native flag support rules (vanilla Gatherer Flag blocks)','No','No','None','Reachable dry bank beside real clean world water','No inventory ingredient',`1 Fresh Fish per ${catchHours} base working hours, plus travel`,'None',
+    'Water depth >=0.5; contamination <=1%; no radiation; surface no more than 1.25 below bank','Build the flag near clean, deep water',flagStatus,'One worker; native work speed, carrying and 20-per-good output capacity. No catch if the water dries, pollutes or turns radioactive, or the flag is paused.']
 ];
 export function updateAquacultureRows(rows,headers,updates) {
   for(const [id,fields] of updates) {
@@ -57,7 +58,7 @@ export function updateAquacultureRows(rows,headers,updates) {
 }
 export const aquacultureItemUpdates=new Map();
 for(const [rowId,id,producer,consumers] of [
-  ['I004','FreshFish','Gatherer Flag (shore fishing); Fishery Works','Direct eating; restaurant; hatchery; fish oil; food packaging'],
+  ['I004','FreshFish','Fisher Flag; Fishery Works','Direct eating; restaurant; hatchery; fish oil; food packaging'],
   ['I007','FishOil','Fishery Works','Medicine; lubricant; emergency rations (authored recipes; runtime pending)']
 ]) {
   const g=(await read(`src/DeepFrontier/Data/Goods/Good.${id}.blueprint.json`)).GoodSpec;
@@ -78,14 +79,14 @@ function recipeRow(r,b,status,intent) {
 export const juvenileRecipeRow=recipeRow(juvenile,hatchery,hatcheryStatus,'Shore-caught FreshFish provides the starting breeder. Requires actual water under nursery plus delivered recipe Water.');
 juvenileRecipeRow[0]='R004';
 export const aquacultureRecipeAdds=[recipeRow(fish,fishery,fisheryStatus,'Three fish per juvenile; reserve breeder stock for repeatable hatchery supply.'),recipeRow(oil,fishery,'Authored exact recipe; runtime pressing pending','Alternate fishery recipe; same 80 hp building demand.'),
-  ['ShoreCatch','Gatherer Flag — shore fishing','Iron Teeth','Catch Fresh Fish','No inventory goods; real clean world water','1 Fresh Fish',aquaculture.shoreFishing.CatchHours,0,0,'Passive / transport',1,'None','20 fish; native flag output capacity',source,'[]','[{"Id":"FreshFish","Amount":1}]',1,aquaculture.shoreFishing.CatchHours*60,'None',0,'None','1. Settlement','Worker activity, not a Manufactory recipe. Native worker speed applies; travel and delivery add time.',flagStatus]];
+  ['FisherCatch','Fisher Flag','Iron Teeth','Catch Fresh Fish','No inventory goods; real clean world water','1 Fresh Fish',catchHours,0,0,'Passive / transport',1,'None','20 fish; native flag output capacity',source,'[]','[{"Id":"FreshFish","Amount":1}]',1,catchHours*60,'None',0,'None','1. Settlement','Worker activity, not a Manufactory recipe. Native worker speed applies; travel and delivery add time.',flagStatus]];
 export const aquacultureOverview=[
   ['Aquaculture','Starter supply','Hatchery','Fishery Works','Water requirement','Verification'],
-  ['Progression','Existing Gatherer Flag; 1 fish / 4 base work hours plus travel','600 science; 55 hp; breeds juveniles','900 science; 80 hp; raises fish or presses oil','Real water below hatchery nursery; delivered water for recipes',aquaculture.status],
+  ['Progression','Fisher Flag; 1 fish / 4 base work hours plus travel','600 science; 55 hp; breeds juveniles','900 science; 80 hp; raises fish or presses oil','Real water below hatchery nursery; delivered water for recipes',aquaculture.status],
   ['Balance','One worker; renewable; no power','1 fish + 1 algae + 2 water → 2 juveniles / 2 hours','1 juvenile + 1 algae + 3 water → 3 fish / 3 hours','Native pool depth and contamination blocking','Juvenile fish still needs a second useful consumer']
 ];
-export const aquacultureProgression=['G021','Iron Teeth','1–3. Aquaculture','Start fishing, then breed and raise fish',0,'Gatherer Flag → Fish Hatchery → Fishery Works','Hatchery: 40 planks / 20 gears / 15 metal blocks; Fishery: same',
+export const aquacultureProgression=['G021','Iron Teeth','1–3. Aquaculture','Start fishing, then breed and raise fish',0,'Fisher Flag → Fish Hatchery → Fishery Works','Hatchery: 40 planks / 20 gears / 15 metal blocks; Fishery: same',
   'Flag 0 hp; hatchery 55 hp / 600 science; fishery 80 hp / 900 science','Low shore output encourages aquaculture investment','Fresh fish; fish oil; restaurant supply','Starter catch avoids a closed juvenile/adult recipe loop',
-  'Catch fish toggle; native hatchery water warning; factory inventory and recipe selection','Settlement to industrial city','Exact authored blueprints and recipes; native pool behavior',aquaculture.status,source];
+  'Fisher Flag with native Nothing to do in range; native hatchery water warning; factory inventory and recipe selection','Settlement to industrial city','Exact authored blueprints and recipes; native pool behavior',aquaculture.status,source];
 export const aquacultureTransport=['T017','Iron Teeth','Aquaculture supply','Native carrying and Timber Pipes Water intake','FreshFish, JuvenileFish, Algae, Water, FishOil',null,null,'Factories: 55/80 hp; each horizontal pipe pump: 50 hp; paths for workers','Fishery doors 0/2; supported working roof','Native district hauling and attached pipe lines','Carry starter fish into breeding; pipe Water into recipe buffers','Flag output 20; fishery Water 90; hatchery Water 60; network demand varies with pieces','Water pipe delivery passed 76; factory belts and FishOil pipes pending','Build 57 zero-stock catch/breeding/hauling; build 76 conserved tank-to-factory Water and valve stop/resume','Clear fishery terrace supports; ordinary collision rules',source,aquaculture.transportStatus];
 export const aquacultureSource=['Aquaculture and native shore fishing',source,'Buildings, items, recipes, progression, transport and water requirements','2026-10-20','Exact package recipes and dimensions; native SwimmingPool TickableWaterBuildingSpec and contamination decorator. New Fishery: outputs/fishery-run51.log, fishery-reload51.log, fishery-hatchery57.log, fishery-continuity57.log and fishery-bootstrap57.log.','DeepFrontier',aquaculture.status,'4-hour catches; native carrying; fishery 80 hp / 900 science; hatchery 55 hp / 600 science; recipes and water gates'];

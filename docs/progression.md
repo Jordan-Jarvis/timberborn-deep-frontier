@@ -114,7 +114,7 @@ The structure and quarrying generators rank their tools by science (`structural_
 | Heavy industry | Chemical Works 9,000, Steel Mill 10,000, Precision Machine Works 12,000, Electrolysis Plant 30,000, Cryogenic Liquefaction Plant 40,000 |
 | Rocketry | Mission Control 75,000, Rocket Assembly Hangar 125,000, Launch Pad 200,000 |
 | Nuclear fuel | Uranium Processing Plant 300,000, Radioactive Waste Refinery 600,000 |
-| Food | *Gatherer Flag 0, Farmhouse 0, Fermenter 0, Oil Press 120, Hydroponic Garden 200, Food Factory 300*, Fertilizer Works 350, *Coffee Brewery 500*, Fish Hatchery 600, Greenhouse 600, Fishery Works 900, Food Packaging Works 1,400 |
+| Food | *Gatherer Flag 0*, Fisher Flag 0, *Farmhouse 0, Fermenter 0, Oil Press 120, Hydroponic Garden 200, Food Factory 300*, Fertilizer Works 350, *Coffee Brewery 500*, Fish Hatchery 600, Greenhouse 600, Fishery Works 900, Food Packaging Works 1,400 |
 | Science | *Inventor 0, Numbercruncher 1,500, Bot Part Factory 500, Bot Assembler 750, Charging Station 200*, Reactor Charging Bay 400,000 (upgrade of the Charging Station), *Control Tower 1,000, Grease Factory 2,000*, Technical School 2,200, Materials Laboratory 12,000, Archive Excavation 25,000 |
 | Storage | *Small and Large Industrial Pile 0, Pile Module 650, Grand Underground Pile 3,500, Small and Medium Warehouse 0, Large Warehouse 250, Storage Module 750, Grand Warehouse 2,500, Small Tank 0, Medium Tank 120, Large Tank 600, Tank Module 1,050, Grand Tank 3,000*, Cryogenic Tank Farm 40,000 |
 | Water | *Deep Water Pump 0, Deep Badwater Pump 250, Discharge 250*, Water Treatment Plant 1,800, *Deep Mechanical Pump 2,000, Compact Mechanical Pump 4,000, Centrifuge 600, Badwater Pressurizer 4,000, Aquifer Drill 400*, ▸Radioactive waste 50,000, Deep Well 75,000 |
@@ -170,7 +170,7 @@ The structure and quarrying generators rank their tools by science (`structural_
   - ScrapMetal: Scavenger Flag.
   - DeepOre: Deep Drill on the finite DeepOreSource marker.
   - Sandstone and Limestone: the pits.
-  - FreshFish: shore fishing at the Gatherer Flag.
+  - FreshFish: the Fisher Flag (shore fishing; until 2026-11-02 a mode of the Gatherer Flag).
   - ContaminatedWater: not gathered. Stored Water converts at runtime when irradiated (see [radiation.md](radiation.md)). The Radioactive Waste Refinery is the earliest source, because radiation first exists once it makes RadioactiveSludge.
 - **Buildings.** A building can be built at max(its science, the availability of every construction good).
 - **Recipes.** A recipe's products become available at max(its building, its ingredients, its fuel). The cheapest route wins.
@@ -499,7 +499,7 @@ The first audit found the whole late game unreachable: no building ran Flux, Hig
 | FishOil | FishOil @ FisheryWorks | 900 | 1,300 |
 | FlightLicense | FlightLicense @ MissionControl | 14,000 | 46,700 |
 | Flux | Flux @ SteelMill (planned) | 4,500 | 9,600 |
-| FreshFish | gathered @ GathererFlag | 0 | 0 |
+| FreshFish | gathered @ FisherFlag | 0 | 0 |
 | GuidanceComputer | GuidanceComputer @ MissionControl | 14,000 | 46,320 |
 | HighGradeSteel | HighGradeSteel @ SteelMill (planned) | 4,500 | 10,800 |
 | HydrogenGas | Electrolysis @ ElectrolysisPlant | 10,000 | 18,450 |

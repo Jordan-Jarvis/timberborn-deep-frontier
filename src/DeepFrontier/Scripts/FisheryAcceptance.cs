@@ -15,11 +15,13 @@ using Timberborn.EntityNaming;
 using Timberborn.EntitySystem;
 using Timberborn.GameSaveRepositorySystem;
 using Timberborn.GameSaveRuntimeSystem;
+using Timberborn.Localization;
 using Timberborn.Goods;
 using Timberborn.MechanicalSystem;
 using Timberborn.Navigation;
 using Timberborn.PathSystem;
 using Timberborn.SingletonSystem;
+using Timberborn.StatusSystem;
 using Timberborn.TemplateSystem;
 using Timberborn.TerrainSystem;
 using Timberborn.TimeSystem;
@@ -44,7 +46,7 @@ namespace DeepFrontier.Scripts {
     private readonly ITerrainService _terrain;private readonly IWaterService _water;private readonly IThreadSafeWaterMap _waterMap;
     private readonly SpeedManager _speed;private readonly CameraService _camera;private readonly GameSaver _saver;private readonly GameLoader _loader;
     private readonly IDayNightCycle _clock;
-    private readonly INavMeshService _nav;private readonly INavigationService _navigation;
+    private readonly INavMeshService _nav;private readonly INavigationService _navigation;private readonly ILoc _loc;
     // Fixture terrain shared by every run: the level bank at z 3, the road column x 173 and
     // the road row y 159 south of the Fishery. Everything placed against the Fishery follows
     // its installed blueprint (entrance, shaft face, deck openings and doors).
@@ -52,7 +54,7 @@ namespace DeepFrontier.Scripts {
     private static readonly Orientation[] Rotations={Orientation.Cw0,Orientation.Cw90,Orientation.Cw180,Orientation.Cw270};
     // World cells, walked in order.
     private ControllableCharacter _walker;private readonly Queue<Vector3Int> _walkTargets=new();private Vector3Int _walkTarget;private Vector3 _walkWorld;
-    private BlockObject _building;private Manufactory _manufactory;private WorkshopReservoir _reservoir;private ShoreFishing _flag;
+    private BlockObject _building;private Manufactory _manufactory;private WorkshopReservoir _reservoir;private FisherFlag _flag;
     private int _frame,_products,_deposited,_pauseFrame;private bool _failed,_reload,_bootstrap,_sawFlow,_saved,_pausedCheck;
     private float _startTime,_wheelTime;
     private int _shorePhase,_shoreFrame,_catchBefore;
@@ -63,9 +65,9 @@ namespace DeepFrontier.Scripts {
     private int _hatcheryCreatedFrame;
     private bool _hatcheryOnly;
     private float _dryProgress;
-    public FisheryAcceptance(EntityRegistry registry,BlockObjectFactory factory,TemplateService templates,BlockValidator validator,BlockObjectValidationService objects,IBlockService blocks,ITerrainService terrain,IWaterService water,IThreadSafeWaterMap waterMap,SpeedManager speed,CameraService camera,GameSaver saver,GameLoader loader,IDayNightCycle clock,INavMeshService nav,INavigationService navigation) {
+    public FisheryAcceptance(EntityRegistry registry,BlockObjectFactory factory,TemplateService templates,BlockValidator validator,BlockObjectValidationService objects,IBlockService blocks,ITerrainService terrain,IWaterService water,IThreadSafeWaterMap waterMap,SpeedManager speed,CameraService camera,GameSaver saver,GameLoader loader,IDayNightCycle clock,INavMeshService nav,INavigationService navigation,ILoc loc) {
       _registry=registry;_factory=factory;_templates=templates;_validator=validator;_objects=objects;_blocks=blocks;_terrain=terrain;_water=water;
-      _nav=nav;_navigation=navigation;_waterMap=waterMap;_speed=speed;_camera=camera;_saver=saver;_loader=loader;_clock=clock;
+      _nav=nav;_navigation=navigation;_loc=loc;_waterMap=waterMap;_speed=speed;_camera=camera;_saver=saver;_loader=loader;_clock=clock;
     }
     public void PostLoad() {
       if(!_registry.Entities.Any(e=>e.HasComponent<NamedEntity>()&&e.GetComponent<NamedEntity>().EntityName=="Deep Frontier Acceptance Fixture"))
@@ -88,8 +90,8 @@ namespace DeepFrontier.Scripts {
       _speed.ChangeSpeed(0);
       if(_reload) {
         _building=_registry.Entities.Where(e=>e.HasComponent<TemplateSpec>()&&e.GetComponent<TemplateSpec>().TemplateName=="FisheryWorks.IronTeeth").Single().GetComponent<BlockObject>();
-        _flag=_registry.Entities.Where(e=>e.HasComponent<ShoreFishing>()).Single().GetComponent<ShoreFishing>();
-        if(!_flag.FishingSelected||!_building.GetComponent<PausableBuilding>().Paused)throw new InvalidOperationException("Saved fishing selection/factory pause changed");
+        _flag=_registry.Entities.Where(e=>e.HasComponent<FisherFlag>()).Single().GetComponent<FisherFlag>();
+        if(!_building.GetComponent<PausableBuilding>().Paused)throw new InvalidOperationException("Saved factory pause changed");
       } else {
         foreach(var e in _registry.Entities.Where(e=>e.HasComponent<Workplace>()&&e.HasComponent<PausableBuilding>()))e.GetComponent<PausableBuilding>().Pause();
         // Fishery Works at (159,162,3), Cw0 unflipped. The fixture follows the installed
@@ -124,9 +126,8 @@ namespace DeepFrontier.Scripts {
           _terrain.UnsetTerrain(new Vector3Int(x,y,2),1);
           _water.AddCleanWater(new Vector3Int(x,y,2),.8f);
         }
-        _flag=Create("GathererFlag.IronTeeth",188,171,3).GetComponent<ShoreFishing>();
-        if(_flag.FishingSelected)throw new InvalidOperationException("New gatherer must keep native gathering until fishing is selected");
-        _flag.SelectFishing(true);
+        // The Fisher Flag (2026-11-02) replaced the Gatherer Flag's fishing mode.
+        _flag=Create("FisherFlag.IronTeeth",188,171,3).GetComponent<FisherFlag>();
       }
       _manufactory=_building.GetComponent<Manufactory>();_reservoir=_building.GetComponent<WorkshopReservoir>();
       if(!_reload)_manufactory.SetRecipe(_manufactory.ProductionRecipes.Single(r=>r.Id=="FreshFish"));
@@ -148,9 +149,9 @@ namespace DeepFrontier.Scripts {
           Debug.Log("[DeepFrontier Fishery] PASS shaft supply="+power.Graph.PowerSupply+" hp");
           if(_reload) {
             VerifyWater(45);
-            var active=_flag.GetComponent<Workplace>().AssignedWorkers.Any(w=>w.GetComponent<BehaviorManager>().IsRunningExecutor<ShoreCatchExecutor>());
+            var active=_flag.GetComponent<Workplace>().AssignedWorkers.Any(w=>w.GetComponent<BehaviorManager>().IsRunningExecutor<FisherCatchExecutor>());
             if(!active)throw new InvalidOperationException("Reload fixture lacks saved active catch");
-            Debug.Log("[DeepFrontier Fishery] PASS saved reservoir surface heights, fishing selection and active catch");
+            Debug.Log("[DeepFrontier Fishery] PASS saved reservoir surface heights and active catch");
             if(_hatcheryOnly) {SetupHatchery();_shorePhase=11;_shoreFrame=_frame;}
             _speed.ChangeSpeed(3);_startTime=_clock.PartialDayNumber;
           } else SetWater(0);
@@ -176,7 +177,7 @@ namespace DeepFrontier.Scripts {
             _pausedCheck=true;Debug.Log("[DeepFrontier Fishery] PASS pause stops cascade and wheel");_building.GetComponent<PausableBuilding>().Resume();
           }
           if(_frame>420&&!_bootstrap&&_products>0&&_deposited>0&&_sawFlow&&_pausedCheck
-            &&_flag.GetComponent<Workplace>().AssignedWorkers.Any(w=>w.GetComponent<BehaviorManager>().IsRunningExecutor<ShoreCatchExecutor>())) {
+            &&_flag.GetComponent<Workplace>().AssignedWorkers.Any(w=>w.GetComponent<BehaviorManager>().IsRunningExecutor<FisherCatchExecutor>())) {
             _building.GetComponent<PausableBuilding>().Pause();SetWater(45);_speed.ChangeSpeed(0);_saved=true;
             _saver.QueueSave(new SaveReference("Fishery acceptance - verified",_loader.LoadedSave.SettlementReference),()=>Debug.Log("[DeepFrontier Fishery] SAVED VERIFIED FISHERY AND ACTIVE FISHING FIXTURE"));
           }
@@ -188,13 +189,15 @@ namespace DeepFrontier.Scripts {
           _saver.QueueSave(new SaveReference("Aquaculture bootstrap - verified",_loader.LoadedSave.SettlementReference),()=>Debug.Log("[DeepFrontier Fishery] UNSEEDED AQUACULTURE BOOTSTRAP PASSED AND SAVED"));
         }
         if(_frame>420&&_frame%600==0) {
-          Debug.Log($"[DeepFrontier Fishery] STATUS products={_products}, catches={_flag.CaughtThisSession}, delivered={_deposited}, fishing={_flag.State}, workers={_flag.GetComponent<Workplace>().NumberOfAssignedWorkers}, flow={_reservoir.Flowing}, water={_reservoir.StoredAmount}, progress={_manufactory.ProductionProgress}");
+          Debug.Log($"[DeepFrontier Fishery] STATUS products={_products}, catches={_flag.CaughtThisSession}, delivered={_deposited}, nothingToDo={NothingToDo()}, workers={_flag.GetComponent<Workplace>().NumberOfAssignedWorkers}, flow={_reservoir.Flowing}, water={_reservoir.StoredAmount}, progress={_manufactory.ProductionProgress}");
           if(_hatchery)Debug.Log($"[DeepFrontier Fishery] HATCHERY phase={_shorePhase}, workers={_hatchery.GetComponent<Workplace>().NumberOfAssignedWorkers}, working={_hatchery.GetComponent<Workshop>().NumberOfWorkersWorking}, ready={_hatcheryProduction.IsReadyToProduce}, progress={_hatcheryProduction.ProductionProgress}, batches={_hatcheryBatches}");
         }
         if(_frame>420&&_clock.PartialDayNumber-_startTime>(_reload?4:2))throw new InvalidOperationException("Fishery/fishing fixture exceeded its simulated-day allowance without completing");
       } catch(Exception e) {_failed=true;_speed.ChangeSpeed(0);Debug.LogError("[DeepFrontier Fishery] FAILED: "+e);}
     }
-    private bool CatchActive() => _flag.GetComponent<Workplace>().AssignedWorkers.Any(w=>w.GetComponent<BehaviorManager>().IsRunningExecutor<ShoreCatchExecutor>());
+    private bool CatchActive() => _flag.GetComponent<Workplace>().AssignedWorkers.Any(w=>w.GetComponent<BehaviorManager>().IsRunningExecutor<FisherCatchExecutor>());
+    // The native NothingToDoInRangeStatus every Workplace carries, as the Gatherer Flag shows it.
+    private bool NothingToDo() => _flag.GetComponent<StatusSubject>().ActiveStatuses.Any(s=>s.StatusDescription==_loc.T("Status.Yielding.NothingToDoInRange"));
     private void Pond(Action<Vector3Int> action) {
       for(int x=189;x<=192;x++)for(int y=166;y<=169;y++)action(new Vector3Int(x,y,2));
     }
@@ -208,7 +211,8 @@ namespace DeepFrontier.Scripts {
       } else if(_shorePhase==2&&_frame>=_shoreFrame+120) {
         if(_flag.TryFindSpot(_flag.Transform.position,out _,out _)||CatchActive()||_flag.CaughtThisSession!=_catchBefore)
           throw new InvalidOperationException("Contamination failed to interrupt the catch without producing fish");
-        Debug.Log("[DeepFrontier Fishery] PASS contaminated pond interrupts active catch with no fish");
+        if(!NothingToDo())throw new InvalidOperationException("Contaminated pond did not show the native Nothing to do in range status");
+        Debug.Log("[DeepFrontier Fishery] PASS contaminated pond interrupts active catch with no fish and shows Nothing to do in range");
         Capture("fishing-contaminated");
         Pond(c=>{float depth=_waterMap.WaterDepth(c),bad=_waterMap.ColumnContamination(c);_water.RemoveCleanWater(c,depth*(1-bad));_water.RemoveContaminatedWater(c,depth*bad);});
         _shorePhase=3;_shoreFrame=_frame;
@@ -217,15 +221,13 @@ namespace DeepFrontier.Scripts {
           throw new InvalidOperationException("Dry pond accepted by fishing job");
         bool dry=true;Pond(c=>{if(_waterMap.WaterDepth(c)>=.5f)dry=false;});
         if(!dry)throw new InvalidOperationException("Native test pond did not drain");
-        Debug.Log("[DeepFrontier Fishery] PASS drained pond prevents fishing");
+        if(!NothingToDo())throw new InvalidOperationException("Drained pond did not show the native Nothing to do in range status");
+        Debug.Log("[DeepFrontier Fishery] PASS drained pond prevents fishing and shows Nothing to do in range");
         Pond(c=>_water.AddCleanWater(c,.8f));_shorePhase=4;
       } else if(_shorePhase==4&&CatchActive()) {
-        Debug.Log("[DeepFrontier Fishery] PASS clean refilled pond resumes fishing");
-        _flag.SelectFishing(false);_shorePhase=5;_shoreFrame=_frame;
-      } else if(_shorePhase==5&&_frame>=_shoreFrame+120) {
-        if(CatchActive()||_flag.CaughtThisSession!=_catchBefore)throw new InvalidOperationException("Switching back to gathering did not cancel the catch");
-        Debug.Log("[DeepFrontier Fishery] PASS switching job cancels catch without fish");
-        _flag.SelectFishing(true);_shorePhase=6;
+        if(NothingToDo())throw new InvalidOperationException("Refilled pond kept the Nothing to do in range status");
+        Debug.Log("[DeepFrontier Fishery] PASS clean refilled pond resumes fishing and clears Nothing to do in range");
+        _shorePhase=6;
       } else if(_shorePhase==6&&CatchActive()) {
         _flag.GetComponent<PausableBuilding>().Pause();_shorePhase=7;_shoreFrame=_frame;
       } else if(_shorePhase==7&&_frame>=_shoreFrame+120) {
@@ -234,7 +236,7 @@ namespace DeepFrontier.Scripts {
         _flag.GetComponent<PausableBuilding>().Resume();_shorePhase=8;
       } else if(_shorePhase==8&&CatchActive()) {
         var fisher=_flag.GetComponent<Workplace>().AssignedWorkers.Single();
-        var catchFish=fisher.GetComponent<ShoreCatchExecutor>();
+        var catchFish=fisher.GetComponent<FisherCatchExecutor>();
         if(catchFish.RemainingHours>=3)return;
         var model=fisher.GetComponent<Timberborn.CharacterModelSystem.CharacterModel>();
         var target=NavigationCoordinateSystem.GridToWorld(catchFish.WaterCell);

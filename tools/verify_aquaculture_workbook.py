@@ -34,8 +34,8 @@ for recipeId,rowId in [('JuvenileFish','R004'),('FreshFish','FreshFish'),('FishO
     assert json.loads(row['Raw outputs'])==recipe['Products']
     assert row['Power output (hp)']==0
     report[recipeId+'Recipe']='Exact inputs, outputs and native cycle hours'
-catch=one('Recipes','Recipe ID','ShoreCatch')
-assert catch['Cycle hours']==read('tools/aquaculture.json')['shoreFishing']['CatchHours']
+catch=one('Recipes','Recipe ID','FisherCatch')
+assert catch['Cycle hours']==read('tools/aquaculture.json')['fisherFlag']['spec']['CatchHours']
 assert catch['Power demand (hp)']==0
 assert one('Items','Item','Fresh Fish')['Perishable']=='No'
 assert one('Items','Item','Juvenile Fish')['Weight']==8
