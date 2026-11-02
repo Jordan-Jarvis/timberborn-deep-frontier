@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Restaurant kitchen
+- **The Restaurant kitchen takes turns between dishes again.** With two or more cooks, a cook could start the same dish again in the moment after a batch finished, before the kitchen had picked the next one, so it kept cooking one dish (for example Fermented Cassava twice while Sweet Berry Cake was stocked and needed more). Now no batch starts until the kitchen has chosen: the dish with the least in stock, taking turns on a tie.
+- A restaurant with a single worker still serves guests first and cooks only between guests; give it two or more workers if a busy dining room leaves the kitchen idle.
+
 ### Clearer progression: menus left to right in unlock order, steeper late-game science
 - **Every build menu now reads left to right in the order things unlock.** Inside each Deep Frontier group the cheapest unlock is on the left (for example Quarries and cement: the pits, Stone Crusher, Cement Kiln, Concrete Mixer, then the quarries; Masonry and concrete: Brick Block, Sandstone Masonry Block, Concrete Levee Block, Concrete Overflow Dam, Reinforced Dam Block). Deep Frontier buildings and groups sit among the base game's buttons by unlock cost (Metal: Quarries and cement right after the Smelter, Deep mining before the Efficient Mine; Fertilizer Works between the Food Factory and the Coffee Brewery). Flywheels and the engines follow the same rule.
 - **Reactor Charging Bay moved to Metal > Nuclear fuel** and the **Radioactive Waste Vault to Water > Radioactive waste**, next to the buildings they work with.

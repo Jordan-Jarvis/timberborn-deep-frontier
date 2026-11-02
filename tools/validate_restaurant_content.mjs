@@ -92,6 +92,16 @@ check((chooser.match(/_kitchen\.SetRecipe\(/g)??[]).length===1&&/_kitchen\.SetRe
 const tick=chooser.slice(chooser.indexOf('public override void Tick()'),chooser.indexOf('private void Switch('));
 check(/if\(_kitchen\.ProductionProgress>0f\) \{\s*\/\/[^\n]*\n\s*if\(_kitchen\.HasUnreservedCapacityForCurrentProducts\(\)\)return;[\s\S]*?_setAside\.Add\(current,_kitchen\.ProductionProgress\);\s*Switch\(/.test(tick),'Mid-batch the kitchen may switch only after setting the stalled batch aside');
 check((restaurantSource.match(/\.SetRecipe\(/g)??[]).length===(chooser.match(/\.SetRecipe\(/g)??[]).length,'Only the kitchen chooser may set the Restaurant recipe');
+// A finished batch must hold every cook until the chooser has chosen (2026-11-01 Restaurant fixture:
+// with three cooks the finished FermentedCassava restarted in another cook's ProduceExecutor tick
+// before the chooser's own tick, twice, with SweetBerryCake neediest). The chooser is a native
+// IManufactoryLimiter whose efficiency is 0 while a choice is pending: set by ProductionFinished,
+// cleared only where Tick chooses among cookable recipes, and saved.
+check(/class RestaurantKitchenChooser[^{]*IManufactoryLimiter/.test(chooser)
+  &&/public float ProductionEfficiency\(\)=>_choicePending\?0f:1f;/.test(chooser)
+  &&/_kitchen\.ProductionFinished\+=\(_,_\)=>_choicePending=true;/.test(chooser),'A finished kitchen batch must stop production (IManufactoryLimiter) until the chooser picks the next recipe');
+check((chooser.match(/_choicePending=false;/g)??[]).length===1&&/var cookable=[\s\S]*?_choicePending=false;\s*var pick=Choose\(cookable,/.test(tick),'Only a choice among cookable recipes may release a pending kitchen choice');
+check(/if\(_choicePending\)data\.Set\(ChoicePendingKey,true\);/.test(chooser)&&/_choicePending=data\.Has\(ChoicePendingKey\)&&data\.Get\(ChoicePendingKey\);/.test(chooser),'A pending kitchen choice must be saved and loaded');
 const csv=await readFile(new URL('src/DeepFrontier/Data/Localizations/enUS.csv',root),'utf8');
 const dining=await read('src/DeepFrontier/Data/Needs/Need.Beaver.RestaurantDining.blueprint.json');
 check(dining.NeedSpec.DisplayNameLocKey==='DeepFrontier.Need.FineDining'&&csv.includes('\nDeepFrontier.Need.FineDining,Fine dining,'),'The RestaurantDining need must be named Fine dining');

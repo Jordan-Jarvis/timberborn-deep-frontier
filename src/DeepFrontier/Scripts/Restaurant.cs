@@ -396,7 +396,18 @@ namespace DeepFrontier.Scripts {
   // native Manufactory saves the batch cooking now. Nothing is discarded.
   // A choice is made after every finished batch (Manufactory.ProductionFinished),
   // whenever the current recipe is missing or cannot start, and whenever the
-  // current batch's products no longer fit:
+  // current batch's products no longer fit. After a finished batch no batch
+  // may start until the choice is made: native FinishProduction raises
+  // ProductionFinished inside the finishing cook's ProduceExecutor tick, and
+  // entities tick in 128 buckets by entity id (TickableBucketService), so a
+  // second cook ticking before this building started the finished recipe
+  // again (IncreaseProductionProgress consumes its ingredients at once) and the
+  // mid-batch rule then kept it: the 2026-11-01 Restaurant fixture with three
+  // cooks finished FermentedCassava twice with SweetBerryCake stocked and
+  // neediest. As a native IManufactoryLimiter (Manufactory collects them in
+  // Awake) the chooser holds production efficiency at 0 while that choice is
+  // pending, so IsReadyToProduce is false for every cook until Tick chooses;
+  // the pending choice is saved. The choice:
   // - cookable: a set-aside batch whose products fit, or a recipe with every
   //   ingredient (and fuel) in unreserved stock and room for every product,
   //   the native IsReadyToProduce inputs;
@@ -407,8 +418,9 @@ namespace DeepFrontier.Scripts {
   // LackOfResources status appears only then. Moddable Recipes' rebuild never
   // runs for the Restaurant (RestaurantKitchenRecipeCompatibility), so a switch
   // keeps every recipe's ingredients in the one inventory.
-  internal sealed class RestaurantKitchenChooser : TickableComponent, IAwakableComponent, IFinishedStateListener, IPersistentEntity {
+  internal sealed class RestaurantKitchenChooser : TickableComponent, IAwakableComponent, IFinishedStateListener, IPersistentEntity, IManufactoryLimiter {
     private static readonly ComponentKey Key=new("DeepFrontierRestaurantKitchen");
+    private static readonly PropertyKey<bool> ChoicePendingKey=new("ChoicePending");
     private static readonly ListKey<string> SetAsideRecipesKey=new("SetAsideRecipes");
     private static readonly ListKey<float> SetAsideProgressKey=new("SetAsideProgress");
 #if !UNITY_EDITOR
@@ -422,7 +434,7 @@ namespace DeepFrontier.Scripts {
     private readonly Dictionary<RecipeSpec,float> _setAside=new();
     private Manufactory _kitchen;
     private Restaurant _restaurant;
-    private bool _batchFinished;
+    private bool _choicePending;
     public RestaurantKitchenReason Reason { get; private set; }
     public RecipeSpec Cooking => _kitchen.CurrentRecipe;
     public int Switches { get; private set; }
@@ -433,9 +445,12 @@ namespace DeepFrontier.Scripts {
       _kitchen=GetComponent<Manufactory>();_restaurant=GetComponent<Restaurant>();
       if(!_kitchen||!_restaurant||!GetComponent<AutomaticRecipeManufactory>())
         throw new InvalidOperationException("Restaurant kitchen chooser requires the native Manufactory and AutomaticRecipeManufactory");
-      _kitchen.ProductionFinished+=(_,_)=>_batchFinished=true;
+      _kitchen.ProductionFinished+=(_,_)=>_choicePending=true;
       DisableComponent();
     }
+    // IManufactoryLimiter: no batch starts between a finished batch and the next choice.
+    public float ProductionEfficiency()=>_choicePending?0f:1f;
+    public float MaxProductionProgressChange(float expectedProductionProgressChange)=>expectedProductionProgressChange;
     public void OnEnterFinishedState() {EnableComponent();}
     public void OnExitFinishedState() {DisableComponent();}
 
@@ -450,7 +465,7 @@ namespace DeepFrontier.Scripts {
         Switch(Choose(others,current,out var setAsideReason));Reason=setAsideReason;
         return;
       }
-      if(!_batchFinished&&current!=null&&Cookable(current))return;
+      if(!_choicePending&&current!=null&&Cookable(current))return;
       var cookable=_kitchen.ProductionRecipes.Where(Cookable).ToList();
       if(cookable.Count==0) {
         Reason=_kitchen.ProductionRecipes.Any(HasIngredients)?RestaurantKitchenReason.Stocked:RestaurantKitchenReason.Waiting;
@@ -458,7 +473,7 @@ namespace DeepFrontier.Scripts {
         if(current==null&&_kitchen.ProductionRecipes.Length>0)Switch(Choose(_kitchen.ProductionRecipes.ToList(),null,out _));
         return;
       }
-      _batchFinished=false;
+      _choicePending=false;
       var pick=Choose(cookable,current,out var reason);
       Reason=reason;
       if(pick!=current)Switch(pick);
@@ -508,13 +523,17 @@ namespace DeepFrontier.Scripts {
     }
 
     public void Save(IEntitySaver saver) {
-      if(_setAside.Count==0)return;
+      if(_setAside.Count==0&&!_choicePending)return;
       var data=saver.GetComponent(Key);
+      if(_choicePending)data.Set(ChoicePendingKey,true);
+      if(_setAside.Count==0)return;
       data.Set(SetAsideRecipesKey,_setAside.Keys.Select(r=>r.Id).ToList());
       data.Set(SetAsideProgressKey,_setAside.Values.ToList());
     }
     public void Load(IEntityLoader loader) {
       if(!loader.TryGetComponent(Key,out var data))return;
+      _choicePending=data.Has(ChoicePendingKey)&&data.Get(ChoicePendingKey);
+      if(!data.Has(SetAsideRecipesKey)&&!data.Has(SetAsideProgressKey))return;
       var ids=data.Get(SetAsideRecipesKey);var progress=data.Get(SetAsideProgressKey);
       if(ids.Count!=progress.Count)throw new InvalidOperationException("Saved restaurant kitchen batches are malformed");
       for(int i=0;i<ids.Count;i++) {

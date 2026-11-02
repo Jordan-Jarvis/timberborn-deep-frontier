@@ -943,24 +943,36 @@ namespace DeepFrontier.Scripts {
       if(_waveQueue.Count==0){StartServices();return;}
       RefreshBeavers();
       var free=_workers.Where(w=>w).ToList();
-      while(_waveQueue.Count>0&&_wave.Count<free.Count)_wave.Add(_waveQueue.Dequeue());
+      while(_waveQueue.Count>0&&(_wave.Count==0||_wave.Sum(Crew)+Crew(_waveQueue.Peek())<=free.Count))_wave.Add(_waveQueue.Dequeue());
       foreach(var s in _wave) {
         var w=s.Workplace;
         Record(s,"workplace accepts workers",w.MaxWorkers>0,"MaxWorkers="+w.MaxWorkers);
         if(w.MaxWorkers==0)continue;
         var pausable=s.Building.GetComponent<PausableBuilding>();
         if(pausable&&pausable.Paused)pausable.Resume();
-        while(w.DesiredWorkers>1)w.DecreaseDesiredWorkers();
-        while(w.DesiredWorkers<1)w.IncreaseDesiredWorkers();
+        int crew=Crew(s);
+        while(w.DesiredWorkers>crew)w.DecreaseDesiredWorkers();
+        while(w.DesiredWorkers<crew)w.IncreaseDesiredWorkers();
         var worker=CrewMember(s,free);
         if(!worker){Skip(s,"worker assigned","no free adult beaver");continue;}
         free.Remove(worker);
         worker.Unemploy();worker.EmployAt(w);s.Worker=worker;
-        Record(s,"worker assigned",w.NumberOfAssignedWorkers>0&&w.AssignedWorkers.Contains(worker),"assigned "+w.NumberOfAssignedWorkers+" of max "+w.MaxWorkers);
+        for(int i=1;i<crew;i++) {
+          var extra=CrewMember(s,free);
+          if(!extra)break;
+          free.Remove(extra);extra.Unemploy();extra.EmployAt(w);
+        }
+        Record(s,"worker assigned",w.NumberOfAssignedWorkers==crew&&w.AssignedWorkers.Contains(worker),"assigned "+w.NumberOfAssignedWorkers+" of "+crew+" (max "+w.MaxWorkers+")");
       }
       if(_siteBatch)SiteWaveStarted();
       Phase(2,"wave unpowered with workers: "+string.Join(",",_wave.Select(s=>s.Id)));
     }
+    // One worker per workplace, except the Restaurant: Restaurant.IsCook makes half its staff (rounded
+    // down) cooks who keep cooking while guests wait, and a lone worker serves first and cooks only
+    // between guests. On the pad the other crews dine there all day, so a one-worker kitchen starved
+    // (b242/b244: about 8 meals served, FermentedSoybean unfinished after 10 h). Two staff: one cook
+    // and one waiter, who also cooks between guests, so two cooks share the kitchen as in play.
+    private static int Crew(Subject s)=>s.Building.GetComponent<Restaurant>()?2:1;
     private Worker CrewMember(Subject s,List<Worker> free) {
       var discipline=s.Building.GetComponent<FrontierSpecialistWorkplaceSpec>()?.Discipline;
       if(discipline==null)return free.FirstOrDefault(w=>!w.GetComponent<SpecialistTrait>().IsSpecialist)??free.FirstOrDefault();
