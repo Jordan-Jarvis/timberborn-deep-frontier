@@ -71,18 +71,25 @@ namespace DeepFrontier.Scripts.SuperBots {
       _material=GetComponent<CharacterMaterialModifier>();
       _animator=GetComponent<CharacterAnimator>();
       if(!_needs||!_bonuses||!_material||!_animator)throw new InvalidOperationException($"{Name}: a Reactor Bot needs native NeedManager, BonusManager, CharacterMaterialModifier and CharacterAnimator");
-      _needs.NeedChangedIsFavorable+=OnNeedChangedIsFavorable;
-      _needs.NeedChangedCriticalState+=OnNeedChangedCriticalState;
     }
 
     // A newborn bot has no saved state; one born from the Reactor Bot recipe
     // starts as a Reactor Bot with its reactor needs reset to full. On load
     // the saved state and need points stand.
+    // The need handlers are subscribed here, after loading: native
+    // NeedManager.Load replays every saved need through NeedChangedIsFavorable,
+    // and those replays are restored state, not changes in play (the state
+    // they describe is applied above from the loaded values).
     public void InitializeEntity() {
       var assembled=_assembly.TakeBirth(this);
       if(assembled)Current=State.Reactor;
       ApplyNeeds(resetEnabled:assembled);
-      if(IsReactor)ApplyUpgrade();
+      if(IsReactor) {
+        ApplyUpgrade();
+        _animator.SetBool(Spec.NoChargeAnimation,_needs.NeedIsInCriticalState(Spec.ChargeNeedId)); // the loaded charge
+      }
+      _needs.NeedChangedIsFavorable+=OnNeedChangedIsFavorable;
+      _needs.NeedChangedCriticalState+=OnNeedChangedCriticalState;
     }
 
     public void Queue() {
