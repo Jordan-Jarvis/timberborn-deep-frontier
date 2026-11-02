@@ -162,6 +162,12 @@ namespace DeepFrontier.Scripts.Meltdown {
       if (!(s.MeltdownKillRadius >= 0 && s.MeltdownKillRadius < s.MeltdownIrradiationRadius && s.MeltdownRadius >= 1))
         Fail("radii must satisfy 0 <= kill < irradiation and contamination >= 1");
       if (!(s.MeltdownIrradiationDose > 1f) || float.IsInfinity(s.MeltdownIrradiationDose)) Fail("MeltdownIrradiationDose must exceed 1");
+      if (s.MeltdownBlastRadius < 1) Fail("MeltdownBlastRadius must be at least 1");
+      if (!(s.MeltdownCraterRim >= 1 && s.MeltdownCraterRim <= s.MeltdownKillRadius && s.MeltdownCraterRim <= s.MeltdownBlastRadius))
+        Fail("MeltdownCraterRim must satisfy 1 <= rim <= kill radius and <= blast radius (everyone on the crater dies, everything built on it is destroyed)");
+      if (s.MeltdownCraterDepth < 1) Fail("MeltdownCraterDepth must be at least 1");
+      if (!(s.MeltdownCraterFloodFactor > 1f) || float.IsInfinity(s.MeltdownCraterFloodFactor))
+        Fail("MeltdownCraterFloodFactor must exceed 1 (the flood fills the crater and spills over its rim)");
     }
 
     // Every reactor recipe must burn the same coolant amount per cycle and
@@ -253,6 +259,13 @@ namespace DeepFrontier.Scripts.Meltdown {
 
     public override void Tick() {
       if (_meltdownRequested) return;
+      // A core that starts a tick at heat 1 was saved after reaching meltdown
+      // (or forced in dev mode) before MeltdownService ran: it melts down now,
+      // whatever its cooling (the service's pending list is not saved).
+      if (_heat >= 1f) {
+        RequestMeltdown();
+        return;
+      }
       float hours = _cycle.FixedDeltaTimeInHours;
       bool blocked = !_blockable.IsUnblocked;
       bool running = !blocked && _scram == ReactorScram.None && _workshop.CurrentlyWorking && _manufactory.IsReadyToProduce;
@@ -288,13 +301,26 @@ namespace DeepFrontier.Scripts.Meltdown {
       _heat = Mathf.Clamp01(_heat + HeatRatePerHour * hours);
 
       if (_heat >= 1f) {
-        _meltdownRequested = true;
-        Mode = ReactorMode.MeltingDown;
-        _meltdowns.Request(this);
+        RequestMeltdown();
         return;
       }
       PostAlerts();
       UpdateStatuses();
+    }
+
+    // Dev mode only (MeltdownDevModule): the core reaches meltdown heat now and
+    // melts down on the service's next tick, exactly as at heat 1.
+    internal void ForceMeltdown() {
+      if (!Enabled) throw new InvalidOperationException($"{Name}: only a finished reactor can melt down");
+      if (_meltdownRequested) return;
+      _heat = 1f;
+      RequestMeltdown();
+    }
+
+    private void RequestMeltdown() {
+      _meltdownRequested = true;
+      Mode = ReactorMode.MeltingDown;
+      _meltdowns.Request(this);
     }
 
     // No unreserved room for one more cycle of a product of the current recipe

@@ -310,10 +310,10 @@ DeepFrontier.Meltdown.Notification.WasteFull,"Reactor waste storage full: core h
 DeepFrontier.Meltdown.Notification.Imminent,"MELTDOWN IMMINENT: core heat {0}%, meltdown in about {1} hours. Deliver reactor coolant water, haul away its waste or pause the reactor now.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Notification.MaintenanceOverdue,"Reactor maintenance overdue: stop it for {0} hours, or its core heats while it runs.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Notification.MaintenanceDone,Reactor maintenance completed during the stop.,Deep Frontier meltdown
-DeepFrontier.Meltdown.Notification.Meltdown,"REACTOR MELTDOWN: the Nuclear Reactor was destroyed. {0} killed, {1} irradiated.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Notification.Meltdown,"REACTOR MELTDOWN: the Nuclear Reactor exploded, leaving a crater, and destroyed {2} structures around it. {0} killed, {1} irradiated.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Dialog.Title,Reactor meltdown,Deep Frontier meltdown
-DeepFrontier.Meltdown.Dialog.Casualties,"The core melted down and destroyed the Nuclear Reactor. {0} were killed and {1} beavers were irradiated; irradiated beavers need 10 days of hospital care, and untreated radiation sickness is fatal.",Deep Frontier meltdown
-DeepFrontier.Meltdown.Dialog.Contamination,"Radioactive water is pouring from the ruin and will keep flowing for {0} days. Soil and water within {1} tiles turn radioactive: crops there die, pumps there stop and beavers who walk in are irradiated. Clean up with Radioactive Water Recovery Pumps and ship the water off the map at a Radioactive Waste Export.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Dialog.Casualties,"The core melted down and exploded. It blasted a crater where the Nuclear Reactor stood and destroyed everything built within {2} tiles ({3} structures). {0} were killed and {1} beavers were irradiated; irradiated beavers need 10 days of hospital care, and untreated radiation sickness is fatal.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Dialog.Contamination,"Radioactive water floods the crater and spills over its rim, and more will keep pouring out for {0} days. Soil and water within {1} tiles turn radioactive: crops there die, pumps there stop and beavers who walk in are irradiated. Clean up with Radioactive Water Recovery Pumps and ship the water off the map at a Radioactive Waste Export.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Dialog.ShowSite,Show the site,Deep Frontier meltdown
 DeepFrontier.Meltdown.DeathMessage,{0} was killed in the reactor meltdown.,Deep Frontier meltdown
 DeepFrontier.Meltdown.Cause.Coolant,coolant dry,Deep Frontier meltdown
@@ -344,7 +344,7 @@ DeepFrontier.Meltdown.Panel.MaintenanceDue,Maintenance due in {0} running hours;
 DeepFrontier.Meltdown.Panel.MaintenanceGoods,Each maintenance stop uses {0} from the reactor stock.,Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.MaintenanceOverdue,Maintenance overdue: stop the reactor for {0} hours ({1} so far).,Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.Rules,"Without coolant, or with its radioactive waste or radioactive water full, a hot core heats {0}% per hour, running or stopped; otherwise it cools {1}% per hour, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. While running, fewer than {2} operators working or overdue maintenance (a {3}-hour stop every {4} running hours) also heat it, up to {5}%.",Deep Frontier meltdown
-DeepFrontier.Meltdown.Panel.Consequences,"A meltdown destroys the reactor: beavers within {0} tiles die, beavers within {1} tiles are irradiated, radioactive water pours out for {2} days and soil and water within {3} tiles stay radioactive for weeks. Pausing the reactor is a safe cold shutdown.",Deep Frontier meltdown
+DeepFrontier.Meltdown.Panel.Consequences,"A meltdown blows up the reactor: it blasts a crater under it and destroys everything built within {4} tiles, beavers within {0} tiles die, beavers within {1} tiles are irradiated, radioactive water floods the crater, spills over and pours out for {2} days, and soil and water within {3} tiles stay radioactive for weeks. Pausing the reactor is a safe cold shutdown.",Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.ScramButton,Emergency shutdown (SCRAM),Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.RestartButton,Restart reactor,Deep Frontier meltdown
 DeepFrontier.Meltdown.Panel.RestartBlocked,Restart possible once core heat is at or below {0}%.,Deep Frontier meltdown

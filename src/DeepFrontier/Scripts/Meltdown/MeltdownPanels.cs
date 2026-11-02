@@ -70,7 +70,7 @@ namespace DeepFrontier.Scripts.Meltdown {
       _rules.text = F(MeltdownLoc.PanelRules, ReactorCore.Rate(s.HeatPerFaultPerHour), ReactorCore.Rate(s.CoolingPerHour), s.MinOperators,
           Hours(s.MaintenanceOutageHours), Hours(s.MaintenanceIntervalHours), Pct(s.FaultHeatLimit))
         + "\n" + F(MeltdownLoc.PanelConsequences, s.MeltdownKillRadius, s.MeltdownIrradiationRadius,
-          Mathf.CeilToInt(s.MeltdownSourceHours / 24f), s.MeltdownRadius);
+          Mathf.CeilToInt(s.MeltdownSourceHours / 24f), s.MeltdownRadius, s.MeltdownBlastRadius);
     }
 
     private string WasteLines(ReactorCore core) {

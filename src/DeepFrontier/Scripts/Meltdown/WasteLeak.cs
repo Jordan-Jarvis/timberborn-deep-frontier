@@ -35,7 +35,7 @@ namespace DeepFrontier.Scripts.Meltdown {
   // so a stock oscillating at the brim still leaks). Every LeakIntervalHours
   // GoodsPerLeak unreserved goods are destroyed and released at the footprint
   // centre as sludge (SludgeVolumePerGood each); the soil within SoilRadius
-  // tiles of the footprint gains SoilRadiationPerLeak. Warnings, statuses and
+  // tiles of the footprint (a circle, BuildingSite) gains SoilRadiationPerLeak. Warnings, statuses and
   // notifications start at WarningFillFraction, before anything leaks.
   internal sealed class WasteLeak : TickableComponent, IAwakableComponent, IInitializableEntity,
       IFinishedStateListener, IPersistentEntity {
@@ -173,7 +173,7 @@ namespace DeepFrontier.Scripts.Meltdown {
       if (taken == 0) return;   // all reserved by haulers taking it away; wait
       var site = BuildingSite.Of(_block, _mapSize);
       var area = site.OpenCellsWithin(_radiation, Spec.SoilRadius);
-      var footprint = area.FindAll(c => c.Distance == 0).ConvertAll(c => c.Cell);
+      var footprint = area.FindAll(c => c.Distance == 0f).ConvertAll(c => c.Cell);
       if (footprint.Count == 0) throw new InvalidOperationException($"{Name}: no open fluid column in the footprint to leak into");
       inventory.TakeConsumed(new GoodAmount(Spec.GoodId, taken));
       _radiation.AddRadioactiveWater(site.NearestToCenter(footprint), taken * Spec.SludgeVolumePerGood);

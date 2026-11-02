@@ -67,7 +67,44 @@ export const REACTOR_TUNING = {
   MeltdownKillRadius: 2,
   MeltdownIrradiationRadius: 16,
   MeltdownIrradiationDose: 1.5,
+  // User direction 2026-11-02: the meltdown destroys buildings and structures
+  // within 6 tiles, blasts a crater under the reactor and floods it with
+  // radioactive water that spreads past the crater. Radii are circles
+  // (BuildingSite: straight-line tiles from the footprint, rounded). The
+  // crater is an elliptical bowl (craterProfile below): footprint half-extents
+  // + MeltdownCraterRim, MeltdownCraterDepth layers at the centre, 1 at the
+  // rim; within the kill radius, so everyone standing on it dies. Each crater
+  // column gets MeltdownCraterFloodFactor radioactive water per block removed:
+  // the bowl fills and as much again spills over the rim.
+  MeltdownBlastRadius: 6,
+  MeltdownCraterRim: 2,
+  MeltdownCraterDepth: 4,
+  MeltdownCraterFloodFactor: 2,
 };
+
+// The meltdown crater on flat ground for a footprint of sizeX x sizeY tiles,
+// the same math as BuildingSite.CraterColumns (MeltdownService.cs): columns
+// whose centre lies in the ellipse with semi-axes size/2 + rim around the
+// footprint centre and within `rim` tiles of the footprint (dx² + dy² <=
+// rim² + rim), depth max(1, ceil(depth x (1 - u))) with u the squared
+// elliptical radius. Columns are relative to the footprint's first tile (the
+// tile-centre offsets are exact in float either way). `single` evaluates in
+// IEEE single precision, operation by operation, as the C# float code does;
+// the validator requires the same crater in double precision too, so no
+// column sits on a rounding edge where the runtime's float math could differ.
+export function craterProfile(sizeX, sizeY, rim, depth, {single = true} = {}) {
+  const f = single ? Math.fround : (v) => v;
+  const columns = [];
+  const cx = f(sizeX * 0.5), cy = f(sizeY * 0.5), a = f(f(sizeX * 0.5) + rim), b = f(f(sizeY * 0.5) + rim);
+  for (let x = -rim; x < sizeX + rim; x++) for (let y = -rim; y < sizeY + rim; y++) {
+    const dx = x < 0 ? -x : x > sizeX - 1 ? x - (sizeX - 1) : 0, dy = y < 0 ? -y : y > sizeY - 1 ? y - (sizeY - 1) : 0;
+    if (dx * dx + dy * dy > rim * rim + rim) continue;
+    const ex = f(f(f(x + 0.5) - cx) / a), ey = f(f(f(y + 0.5) - cy) / b);
+    const u = f(f(ex * ex) + f(ey * ey));
+    if (u <= 1) columns.push({x, y, depth: Math.max(1, Math.ceil(f(depth * f(1 - u))))});
+  }
+  return {columns, volume: columns.reduce((sum, c) => sum + c.depth, 0)};
+}
 
 // Authored leak tuning. GoodsPerLeak and SludgeVolumePerGood are derived from
 // the WasteRefining recipe and RadiationTuning.VolumePerGood (wasteLeakSpecs):
@@ -153,10 +190,10 @@ export function localizationRows(treatmentDays) {
     ['DeepFrontier.Meltdown.Notification.Imminent', 'MELTDOWN IMMINENT: core heat {0}%, meltdown in about {1} hours. Deliver reactor coolant water, haul away its waste or pause the reactor now.'],
     ['DeepFrontier.Meltdown.Notification.MaintenanceOverdue', 'Reactor maintenance overdue: stop it for {0} hours, or its core heats while it runs.'],
     ['DeepFrontier.Meltdown.Notification.MaintenanceDone', 'Reactor maintenance completed during the stop.'],
-    ['DeepFrontier.Meltdown.Notification.Meltdown', 'REACTOR MELTDOWN: the Nuclear Reactor was destroyed. {0} killed, {1} irradiated.'],
+    ['DeepFrontier.Meltdown.Notification.Meltdown', 'REACTOR MELTDOWN: the Nuclear Reactor exploded, leaving a crater, and destroyed {2} structures around it. {0} killed, {1} irradiated.'],
     ['DeepFrontier.Meltdown.Dialog.Title', 'Reactor meltdown'],
-    ['DeepFrontier.Meltdown.Dialog.Casualties', `The core melted down and destroyed the Nuclear Reactor. {0} were killed and {1} beavers were irradiated; irradiated beavers need ${treatmentDays} days of hospital care, and untreated radiation sickness is fatal.`],
-    ['DeepFrontier.Meltdown.Dialog.Contamination', 'Radioactive water is pouring from the ruin and will keep flowing for {0} days. Soil and water within {1} tiles turn radioactive: crops there die, pumps there stop and beavers who walk in are irradiated. Clean up with Radioactive Water Recovery Pumps and ship the water off the map at a Radioactive Waste Export.'],
+    ['DeepFrontier.Meltdown.Dialog.Casualties', `The core melted down and exploded. It blasted a crater where the Nuclear Reactor stood and destroyed everything built within {2} tiles ({3} structures). {0} were killed and {1} beavers were irradiated; irradiated beavers need ${treatmentDays} days of hospital care, and untreated radiation sickness is fatal.`],
+    ['DeepFrontier.Meltdown.Dialog.Contamination', 'Radioactive water floods the crater and spills over its rim, and more will keep pouring out for {0} days. Soil and water within {1} tiles turn radioactive: crops there die, pumps there stop and beavers who walk in are irradiated. Clean up with Radioactive Water Recovery Pumps and ship the water off the map at a Radioactive Waste Export.'],
     ['DeepFrontier.Meltdown.Dialog.ShowSite', 'Show the site'],
     ['DeepFrontier.Meltdown.DeathMessage', '{0} was killed in the reactor meltdown.'],
     ['DeepFrontier.Meltdown.Cause.Coolant', 'coolant dry'],
@@ -187,7 +224,7 @@ export function localizationRows(treatmentDays) {
     ['DeepFrontier.Meltdown.Panel.MaintenanceGoods', 'Each maintenance stop uses {0} from the reactor stock.'],
     ['DeepFrontier.Meltdown.Panel.MaintenanceOverdue', 'Maintenance overdue: stop the reactor for {0} hours ({1} so far).'],
     ['DeepFrontier.Meltdown.Panel.Rules', 'Without coolant, or with its radioactive waste or radioactive water full, a hot core heats {0}% per hour, running or stopped; otherwise it cools {1}% per hour, so a reactor short of coolant or waste hauling more than half the time ends in a meltdown. While running, fewer than {2} operators working or overdue maintenance (a {3}-hour stop every {4} running hours) also heat it, up to {5}%.'],
-    ['DeepFrontier.Meltdown.Panel.Consequences', 'A meltdown destroys the reactor: beavers within {0} tiles die, beavers within {1} tiles are irradiated, radioactive water pours out for {2} days and soil and water within {3} tiles stay radioactive for weeks. Pausing the reactor is a safe cold shutdown.'],
+    ['DeepFrontier.Meltdown.Panel.Consequences', 'A meltdown blows up the reactor: it blasts a crater under it and destroys everything built within {4} tiles, beavers within {0} tiles die, beavers within {1} tiles are irradiated, radioactive water floods the crater, spills over and pours out for {2} days, and soil and water within {3} tiles stay radioactive for weeks. Pausing the reactor is a safe cold shutdown.'],
     ['DeepFrontier.Meltdown.Panel.ScramButton', 'Emergency shutdown (SCRAM)'],
     ['DeepFrontier.Meltdown.Panel.RestartButton', 'Restart reactor'],
     ['DeepFrontier.Meltdown.Panel.RestartBlocked', 'Restart possible once core heat is at or below {0}%.'],

@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Reactor meltdowns leave a flooded crater and flatten everything nearby
+- **A meltdown now blasts a crater where the reactor stood** (player request): an oval bowl about 18 by 15 tiles, 4 layers deep in the middle and 1 at the rim. It never digs through the bottom layer of the map.
+- **Every building and structure within 6 tiles of the reactor is destroyed** (player request): buildings, paths, platforms, stairs, decks and anything else built, along with whatever stood on them, the way explosions destroy things in the base game. Goods stored in them drop to the ground nearby. Trees and ruins are left standing (the radiation kills the trees).
+- **Radioactive water floods the crater and spills over its rim** (player request): twice the crater's volume, so the bowl fills and as much again spreads into the land around it.
+- **Radiation now spreads in circles, not squares** (player request): the meltdown's contaminated area, its death and irradiation zones, and the irradiated soil around a leaking Radioactive Waste Vault or Refinery have rounded edges, measured from the building's walls.
+- Beavers within 2 tiles still die, and beavers within 16 tiles are still irradiated.
+- The reactor panel and the meltdown dialog describe the crater and the blast.
+- **Fixed:** a reactor saved at the very moment it reached meltdown could cool down after loading instead of melting down.
+- Dev mode: the dev panel has "Deep Frontier: melt down selected reactor".
+
 ### Buildings under construction look unfinished
 - **Every Deep Frontier building now shows a construction site while it is being built** (player report: "some of our buildings look finished even when they are under construction"). Before, a site showed the finished building from the moment it was placed.
 - **As vanilla buildings do:** a new site shows the staked-out ground first. Once the first materials arrive it shows an open frame on a dirt patch, standing to about two thirds of the building's height over its own plan. The finished building appears when construction completes.

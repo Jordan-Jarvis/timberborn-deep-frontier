@@ -42,7 +42,9 @@ namespace DeepFrontier.Scripts.Meltdown {
     [Serialize] public float MeltdownInstantSludge { get; init; }
     [Serialize] public float MeltdownSourceSludgePerHour { get; init; }
     [Serialize] public float MeltdownSourceHours { get; init; }
-    // Radii are in tiles beyond the reactor footprint (Chebyshev distance).
+    // Radii are in tiles beyond the reactor footprint, measured as a circle
+    // (BuildingSite: straight-line distance to the nearest footprint tile,
+    // rounded to whole tiles), never a square.
     [Serialize] public int MeltdownRadius { get; init; }
     [Serialize] public float MeltdownFootprintSoilRadiation { get; init; }
     [Serialize] public float MeltdownEdgeSoilRadiation { get; init; }
@@ -53,6 +55,21 @@ namespace DeepFrontier.Scripts.Meltdown {
     // Added to RadiationExposure dose; above 1 so the beaver is irradiated on
     // its next exposure tick after that tick's small dose decay.
     [Serialize] public float MeltdownIrradiationDose { get; init; }
+    // Every building and structure (BuildingSpec: everything placed with the
+    // construction tools, finished or not) with a block within this radius is
+    // destroyed, with the native terrain-physics cascade for what stood on it.
+    [Serialize] public int MeltdownBlastRadius { get; init; }
+    // Crater: an elliptical bowl centred on the footprint whose semi-axes are
+    // the footprint's half-extents plus MeltdownCraterRim tiles, cut below the
+    // ground the reactor stood on, MeltdownCraterDepth layers deep at the
+    // centre and 1 at the rim; never the map's bottom layer. Removed through
+    // the native explosion outcome (ExplosionOutcomeGatherer + terrain physics).
+    [Serialize] public int MeltdownCraterRim { get; init; }
+    [Serialize] public int MeltdownCraterDepth { get; init; }
+    // Radioactive water released into each crater column per terrain block
+    // removed under it: above 1, so the crater fills and the rest spills over
+    // its rim into the surroundings.
+    [Serialize] public float MeltdownCraterFloodFactor { get; init; }
   }
 
   // RadioactiveWasteVault (Trigger StorageFull: Stockpile) and

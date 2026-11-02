@@ -4,11 +4,12 @@
 // Run after canonical generation (or on a scratch copy's Data). Static
 // evidence only: heat, SCRAM, meltdown, leaks and reload are verified in game.
 import {readFile, readdir, access} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {PIPE_PHRASES, parseCsvRow} from './connection_content.mjs';
 import {REACTOR, VAULT, REFINERY, REACTOR_RECIPE, REFINING_RECIPE, WASTE, SLUDGE, COOLANT, TRIGGERS, REACTOR_TUNING,
-  SPEC_KEYS, PRODUCER_DESCRIPTIONS, radiationTuning, refiningBatch, wasteLeakSpecs, descriptions, localizationRows} from './meltdown_content.mjs';
+  SPEC_KEYS, PRODUCER_DESCRIPTIONS, radiationTuning, refiningBatch, wasteLeakSpecs, descriptions, localizationRows, craterProfile} from './meltdown_content.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const dataRoot = process.argv[2] ? resolve(process.argv[2]) : resolve(root, 'src', 'DeepFrontier', 'Data');
@@ -64,6 +65,25 @@ assert(t.MeltdownKillRadius < t.MeltdownIrradiationRadius && t.MeltdownRadius >=
 assert(t.MeltdownIrradiationDose > 1, 'meltdown dose must irradiate (RadiationExposure irradiates at dose >= 1)');
 assert(t.MeltdownEdgeSoilRadiation > tuning.floraThreshold && t.MeltdownFootprintSoilRadiation <= 1,
   `meltdown soil radiation must kill plants across the radius (edge > IrradiatedGroundThreshold ${tuning.floraThreshold})`);
+// Crater, blast and flood (user 2026-11-02): everything built within the blast
+// radius goes; the crater lies within the kill radius (everyone standing on it
+// dies, as native explosions kill everyone in their tiles) and the blast; the
+// contaminated area covers the blast; the flood overflows the crater.
+assert(Number.isInteger(t.MeltdownBlastRadius) && t.MeltdownKillRadius <= t.MeltdownBlastRadius && t.MeltdownBlastRadius <= t.MeltdownRadius,
+  'radii: kill <= blast <= contamination (whole tiles)');
+assert(Number.isInteger(t.MeltdownCraterRim) && t.MeltdownCraterRim >= 1 && t.MeltdownCraterRim <= t.MeltdownKillRadius && t.MeltdownCraterRim <= t.MeltdownBlastRadius,
+  'crater rim: 1 <= rim <= kill radius and blast radius');
+assert(Number.isInteger(t.MeltdownCraterDepth) && t.MeltdownCraterDepth >= 1, 'crater depth: a whole number of layers, at least 1');
+assert(t.MeltdownCraterFloodFactor > 1 && Number.isFinite(t.MeltdownCraterFloodFactor), 'the crater flood must exceed the crater volume (it spills over the rim)');
+const footprintSize = reactor.BlockObjectSpec?.Size;
+const crater = craterProfile(footprintSize?.X, footprintSize?.Y, t.MeltdownCraterRim, t.MeltdownCraterDepth);
+const craterDouble = craterProfile(footprintSize?.X, footprintSize?.Y, t.MeltdownCraterRim, t.MeltdownCraterDepth, {single: false});
+assert(same(crater, craterDouble), 'crater: single and double precision disagree on a column (a column sits on a rounding edge; change rim or depth)');
+const craterAt = new Map(crater.columns.map((c) => [`${c.x},${c.y}`, c.depth]));
+for (let x = 0; x < (footprintSize?.X ?? 0); x++) for (let y = 0; y < (footprintSize?.Y ?? 0); y++)
+  assert(craterAt.has(`${x},${y}`), `crater: footprint tile ${x},${y} of the ${footprintSize.X}x${footprintSize.Y} reactor is not in the crater`);
+assert(Math.max(...crater.columns.map((c) => c.depth)) === t.MeltdownCraterDepth && Math.min(...crater.columns.map((c) => c.depth)) === 1,
+  'crater: deepest at MeltdownCraterDepth, 1 at the rim');
 for (const [name, spec] of Object.entries(leaks)) {
   assert(TRIGGERS.includes(spec.Trigger), `${name}: unknown trigger ${spec.Trigger}`);
   assert(spec.WarningFillFraction > 0 && spec.WarningFillFraction < 1, `${name}: warning must start before full`);
@@ -74,6 +94,26 @@ assert(leaks.refinery.SludgeVolumePerGood === tuning.volumePerGood, 'refinery sl
 assert(leaks.vault.GoodId === WASTE && leaks.refinery.GoodId === SLUDGE, 'leak goods');
 
 // ---- C# contracts ----
+// Circular distance (BuildingSite) everywhere the meltdown and the leaks reach:
+// no Chebyshev max(dx, dy) left; kill and irradiation use Within.
+const service = await source('MeltdownService.cs');
+const site = service.slice(service.indexOf('internal readonly struct BuildingSite'));
+assert(site.includes('return dx * dx + dy * dy <= radius * radius + radius;') && site.includes('return Mathf.Sqrt(dx * dx + dy * dy);')
+  && !/Math\.Max\(dx, dy\)/.test(site), 'BuildingSite measures circular distance (rounded Euclidean tiles), not Chebyshev');
+assert(/site\.Within\(cell\.x, cell\.y, spec\.MeltdownKillRadius\)/.test(service) && /site\.Within\(cell\.x, cell\.y, spec\.MeltdownIrradiationRadius\)/.test(service),
+  'meltdown casualties use the circular distance');
+assert(/site\.OpenCellsWithin\(_radiation, Spec\.SoilRadius\)/.test(await source('WasteLeak.cs')), 'waste leaks irradiate a circle (BuildingSite.OpenCellsWithin)');
+// Native destruction path (ExplosionService order) and the crater rules.
+for (const [pattern, what] of [
+  [/_explosionOutcome\.GetAffectedTerrainAndObjects\(_craterTiles\.AsReadOnlyHashSet\(\), _terrain, _objects\);/, 'the crater is a native explosion outcome'],
+  [/CollectBlast\(site, spec\.MeltdownBlastRadius, _objects\);/, 'the blast collects buildings within MeltdownBlastRadius'],
+  [/if \(blockObject\.HasComponent<BuildingSpec>\(\)\) objects\.Add\(blockObject\);/, 'the blast takes every BuildingSpec object (what native Deconstructible decorates)'],
+  [/_terrainPhysics\.GetTerrainAndBlockObjectStack\(_terrain, _objects, _extraTerrain, _extraObjects\);/, 'the native terrain-physics cascade covers everything removed'],
+  [/for \(int z = Math\.Max\(1, ground - depth\); z < ground; z\+\+\)/, 'the crater never takes the bottom layer (z 0) and lies below the ground'],
+  [/_terrainService\.UnsetTerrain\(_terrain\);\s*foreach \(var blockObject in _objects\) _entities\.Delete\(blockObject\);\s*_particles\.AddPausableParticles\(_terrain\);/,
+    'destruction follows native ExplosionService.DestroyEverythingAffected (terrain, objects, particles)'],
+  [/flood\.Add\(\(cell, drop \* spec\.MeltdownCraterFloodFactor\)\)/, 'the flood is sized by the crater it fills'],
+]) assert(pattern.test(service), `MeltdownService: ${what}`);
 const specs = await source('MeltdownSpecs.cs');
 const recordKeys = (record) => {
   const body = specs.match(new RegExp(`record ${record} : ComponentSpec \\{([\\s\\S]*?)\\n  \\}`))?.[1] ?? '';
@@ -89,6 +129,8 @@ const configurator = await source('MeltdownConfigurator.cs');
 assert(configurator.includes('[Context("Game")]') && /AddDecorator<ReactorMeltdownSpec,\s*ReactorCore>/.test(configurator)
   && /AddDecorator<WasteLeakSpec,\s*WasteLeak>/.test(configurator) && configurator.includes('Bind<MeltdownService>().AsSingleton()'), 'MeltdownConfigurator binds the service and both decorators');
 assert((await source('MeltdownPanels.cs')).includes('BindFragment<ReactorCorePanel>') && (await source('MeltdownPanels.cs')).includes('BindFragment<WasteLeakPanel>'), 'panels are bound');
+assert(/MultiBind<IDevModule>\(\)\.To<MeltdownDevModule>\(\)\.AsSingleton\(\)/.test(configurator) && configurator.includes('core.ForceMeltdown()'),
+  'the dev-mode meltdown trigger is bound');
 assert((await readFile(resolve(root, 'src', 'DeepFrontier', 'Scripts', 'Radiation', 'RadiationExposure.cs'), 'utf8')).includes('internal void AddDose(float dose)'), 'RadiationExposure.AddDose exists');
 const core = await source('ReactorCore.cs');
 assert(core.includes('IManufactoryLimiter') && !core.includes('_blockable.Block('), 'SCRAM is an IManufactoryLimiter, never BlockableObject.Block (which auto-empties the coolant)');
@@ -136,6 +178,40 @@ for (const spec of Object.keys(SPEC_KEYS)) {
 assert(automation.templates[REACTOR]?.role === 'pausable' && automation.templates[REFINERY]?.role === 'pausable', 'reactor and refinery are automatable (Off = cold shutdown / sealed tanks)');
 assert(automation.templates[VAULT]?.role === 'none', 'vault has no automation role');
 
+// ---- native contract (Timberborn 1.1.2.8, decompiled from the plugin assemblies) ----
+const plugins = resolve(root, 'vendor', 'timberborn-modding', 'Assets', 'Plugins', 'Timberborn');
+const decompile = (dll, type) => {
+  try {
+    return execFileSync(resolve(root, 'tools', 'dotnet', 'ilspycmd.exe'), [resolve(plugins, dll), '-r', plugins, '-t', type], {encoding: 'utf8', maxBuffer: 64 << 20}).replace(/\r\n/g, '\n');
+  } catch (error) {
+    failures.push(`native: ${dll} ${type}: decompilation failed (${error.message.split('\n')[0]})`);
+    return null;
+  }
+};
+for (const [dll, type, patterns, what] of [
+  ['Timberborn.Explosions.dll', 'Timberborn.Explosions.ExplosionService',
+    [/_terrainService\.UnsetTerrain\(_terrainTiles\);\s*foreach \(BlockObject blockObject in _blockObjects\)\s*\{\s*_entityService\.Delete\(blockObject\);\s*\}\s*_deconstructionParticleFactory\.AddPausableParticles\(_terrainTiles\);/],
+    'explosions remove terrain, delete objects, then spawn particles on the removed terrain'],
+  ['Timberborn.Explosions.dll', 'Timberborn.Explosions.ExplosionOutcomeGatherer',
+    [/public void GetAffectedTerrainAndObjects\(ReadOnlyHashSet<Vector3Int> affectedTiles, HashSet<Vector3Int> affectedTerrain, HashSet<BlockObject> affectedObjects\)/,
+      /if \(_terrainService\.Underground\(item\)\)/, /AddObjectsOnTopOfTerrain\(affectedTiles, affectedTerrain, affectedObjects\);/, /ApplyTerrainPhysics\(affectedTerrain, affectedObjects\);/],
+    'the explosion outcome keeps terrain tiles, adds objects in and on them and applies terrain physics'],
+  ['Timberborn.Explosions.dll', 'Timberborn.Explosions.CharacterExploder',
+    [/int terrainHeightBelow = _terrainService\.GetTerrainHeightBelow\(coordinates\);\s*character\.Transform\.position = new Vector3\(position\.x, (\(float\))?terrainHeightBelow, position\.z\);/],
+    'characters killed by an explosion drop to the terrain height below'],
+  ['Timberborn.TerrainPhysics.dll', 'Timberborn.TerrainPhysics.ITerrainPhysicsService',
+    [/void GetTerrainAndBlockObjectStack\(IEnumerable<Vector3Int> inputTerrain, IEnumerable<BlockObject> inputBlockObjects, HashSet<Vector3Int> outputTerrain, HashSet<BlockObject> outputBlockObjects\);/],
+    'terrain physics finds what removed terrain and objects leave unsupported'],
+  ['Timberborn.DeconstructionSystem.dll', 'Timberborn.DeconstructionSystem.DeconstructionSystemConfigurator', [/builder\.AddDecorator<BuildingSpec, Deconstructible>\(\);/],
+    'every BuildingSpec object is Deconstructible (the blast\'s buildings and structures)'],
+  ['Timberborn.DeconstructionSystem.dll', 'Timberborn.DeconstructionSystem.DeconstructionNotifier', [/entityDeletedEvent\.Entity\.GetEnabledComponent<Deconstructible>\(\)/, /new BuildingDeconstructedEvent\(/],
+    'deleting a building posts BuildingDeconstructedEvent (its stored goods are recovered)'],
+  ['Timberborn.TerrainSystem.dll', 'Timberborn.TerrainSystem.TerrainMap', [/return num2 \+ 1;/], 'GetTerrainHeightBelow returns the height of the terrain top (top block + 1)'],
+]) {
+  const text = decompile(dll, type);
+  if (text !== null) assert(patterns.every((p) => p.test(text)), `native: ${type}: no longer true that ${what}`);
+}
+
 if (failures.length) {
   console.error(`Meltdown validation failed:\n  ${failures.join('\n  ')}`);
   process.exit(1);
@@ -143,4 +219,6 @@ if (failures.length) {
 console.log(`Meltdown validation passed: reactor warning ${Math.round(t.WarningHeat * 100)}% / fault limit ${Math.round(t.FaultHeatLimit * 100)}% / meltdown 100%; ` +
   `dry-core meltdown ${Math.round(1 / t.HeatPerFaultPerHour)} h from cold, ${Math.round(0.9 / (t.HeatPerFaultPerHour * 0.55 - t.CoolingPerHour * 0.45))} h from 10% at 45% coolant; ` +
   `vault leak ${leaks.vault.GoodsPerLeak} casks (${leaks.vault.SludgeVolumePerGood} each) / ${leaks.vault.LeakIntervalHours} h; ` +
-  `refinery leak ${leaks.refinery.GoodsPerLeak} sludge / ${leaks.refinery.LeakIntervalHours} h; ${constants.length} localization keys.`);
+  `refinery leak ${leaks.refinery.GoodsPerLeak} sludge / ${leaks.refinery.LeakIntervalHours} h; ` +
+  `blast ${t.MeltdownBlastRadius} tiles; crater ${crater.columns.length} columns, ${crater.volume} blocks on flat ground, flood ${crater.volume * t.MeltdownCraterFloodFactor}; ` +
+  `${constants.length} localization keys.`);

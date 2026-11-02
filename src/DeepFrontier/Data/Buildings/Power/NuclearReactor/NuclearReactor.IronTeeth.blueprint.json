@@ -15662,7 +15662,11 @@
     "MeltdownEdgeWaterRadiation": 0.2,
     "MeltdownKillRadius": 2,
     "MeltdownIrradiationRadius": 16,
-    "MeltdownIrradiationDose": 1.5
+    "MeltdownIrradiationDose": 1.5,
+    "MeltdownBlastRadius": 6,
+    "MeltdownCraterRim": 2,
+    "MeltdownCraterDepth": 4,
+    "MeltdownCraterFloodFactor": 2
   },
   "FrontierSpecialistWorkplaceSpec": {
     "Discipline": "Nuclear"
