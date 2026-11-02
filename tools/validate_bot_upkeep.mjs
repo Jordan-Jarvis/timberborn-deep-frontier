@@ -108,6 +108,11 @@ if (applied) {
   }
   for (const id of upkept) if (!collection.includes(id)) errors.push(`${id}: upkeep template is not collected`);
   if (!same(await readJson(recipePath), assemblyRecipe(template, config))) errors.push(`Recipe.${config.assembly.recipe} differs from the catalog`);
+  // Generation accepts Reactor Bot parts before super_bot_content.mjs writes them; here they must exist.
+  for (const [good] of config.assembly.ingredients)
+    if (!await exists(resolve(vanilla, 'Goods', `Good.${good}.blueprint.json`)) && !await exists(resolve(dataRoot, 'Goods', `Good.${good}.blueprint.json`)))
+      errors.push(`Recipe.${config.assembly.recipe}: ingredient ${good} is not a vanilla or generated good`);
+  if (!await exists(resolve(dataRoot, `${config.assembly.icon}.png`))) errors.push(`Recipe.${config.assembly.recipe}: icon ${config.assembly.icon}.png is not generated`);
   const patchPath = resolve(dataRoot, `${ASSEMBLER}.json`);
   if (!await exists(patchPath) || !same(await readJson(patchPath), assemblerPatch(config))) errors.push(`${ASSEMBLER}: same-path patch missing or different`);
   // The vanilla bot recipe needs an icon once the assembler shows a recipe dropdown (Moddable Recipes reads Icon.Asset).

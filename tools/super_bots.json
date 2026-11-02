@@ -32,7 +32,7 @@
     "HighGradeSteel": [["ReactorBotPlating", 0.5]],
     "Alloy": [["ReactorBotPlating", 1.0]]
   },
-  "$parts": "A queued bot is retrofitted by taking one Reinforced Bot Frame and one Reactor Power Cell from storage (each fills its retrofit need); the upgrade applies when every retrofit need is full. Second use of both parts: the Reactor Charging Bay construction gate (tools/building_construction_costs.json lategameGates).",
+  "$parts": "A queued bot is retrofitted by taking one Reinforced Bot Frame and one Reactor Power Cell from storage (each fills its retrofit need); the upgrade applies when every retrofit need is full. Second use of both parts: the Reactor Charging Bay construction gate (tools/building_construction_costs.json lategameGates). Third: the Bot Assembler's Industrial bot recipe, which builds a Reactor Bot from both parts, four limbs and a head (tools/workforce_risks.json botAssembly).",
   "parts": [
     {"id": "ReinforcedBotFrame", "name": "Reinforced bot frame", "plural": "Reinforced bot frames",
      "building": "Buildings/Metal/PrecisionMachineWorks/PrecisionMachineWorks.IronTeeth.blueprint",

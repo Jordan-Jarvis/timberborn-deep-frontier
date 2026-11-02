@@ -6,7 +6,11 @@
     "CycleDurationInHours": 24,
     "Ingredients": [
       {
-        "Id": "BotChassis",
+        "Id": "ReinforcedBotFrame",
+        "Amount": 1
+      },
+      {
+        "Id": "ReactorPowerCell",
         "Amount": 1
       },
       {
@@ -16,14 +20,6 @@
       {
         "Id": "BotHead",
         "Amount": 1
-      },
-      {
-        "Id": "PowerModule",
-        "Amount": 1
-      },
-      {
-        "Id": "HighGradeSteel",
-        "Amount": 2
       }
     ],
     "Products": [],
@@ -32,6 +28,6 @@
     "CyclesFuelLasts": 0,
     "FuelCapacity": 0,
     "CyclesCapacity": 2,
-    "Icon": "Sprites/Goods/PowerModuleIcon"
+    "Icon": "Sprites/Goods/ReactorPowerCellIcon"
   }
 }

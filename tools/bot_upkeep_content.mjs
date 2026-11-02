@@ -17,7 +17,11 @@
 //   Deep Drill's and Deep Mine's drill bits, worn out by recipe progress and
 //   kept in the same Manufactory inventory; production stops without them.
 // - Recipe.<botAssembly.recipe>: a product-less native bot recipe cloned from
-//   vanilla Recipe.Bot.IronTeeth. The native BotManufactory (1.1.2.8) spawns
+//   vanilla Recipe.Bot.IronTeeth, made from the Reactor Bot retrofit parts
+//   (tools/super_bots.json parts, written by super_bot_content.mjs right after
+//   this step; the ingredient and icon checks accept them by their declared
+//   ids, and validate_bot_upkeep.mjs checks them in the generated data).
+//   The native BotManufactory (1.1.2.8) spawns
 //   the faction's single BotSpec template whenever any assembler recipe
 //   finishes (BotFactory.Load uses TemplateService.GetSingle<BotSpec>); no
 //   second bot template exists. The industrial bot is that bot born as a
@@ -45,6 +49,8 @@
 // The late-game part recipes (bot chassis, limbs and heads from alloy,
 // machine cores and electronics) are ordinary recipes of the Precision
 // Machine Works in tools/create_frontier_expansion_content.mjs.
+// The Reactor Bot parts (reinforced bot frame, reactor power cell) come from
+// tools/super_bot_content.mjs.
 // It fails, without writing anything, on any missing input or duplicate.
 import {readFile, writeFile, access, mkdir} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
@@ -59,6 +65,9 @@ export const ASSEMBLER = 'Buildings/Science/BotAssembler/BotAssembler.IronTeeth.
 export const RECIPE_TEMPLATE = 'Recipes/Recipe.Bot.IronTeeth.blueprint.json';
 const VANILLA = ['vendor', 'timberborn-modding', 'Assets', 'Tools', 'ImportedAssets', 'Editor', 'Resources'];
 const COLLECTION = 'TemplateCollections/TemplateCollection.Buildings.IronTeeth.blueprint.json';
+// The Reactor Bot catalog: its parts may be assembly ingredients (written by super_bot_content.mjs after this step).
+export const SUPER_BOTS = 'tools/super_bots.json';
+export const reactorPartIds = async (root = defaultRoot) => new Set((await readJson(resolve(root, SUPER_BOTS))).parts.map((p) => p.id));
 
 // Fixed texts used by BotUpkeepPanels.cs (ILoc.T takes at most three parameters).
 export const TEXTS = {
@@ -254,8 +263,12 @@ export async function planBotUpkeep({root = defaultRoot, dataRoot = resolve(root
   if (assembler.BuildingSpec && (assembler.LabeledEntitySpec?.Icon ?? '') !== config.assembly.vanillaRecipeIcon)
     errors.push(`botAssembly.vanillaRecipeIcon must be the vanilla assembler's own icon (${assembler.LabeledEntitySpec?.Icon})`);
   if (await exists(resolve(vanilla, 'Recipes', `Recipe.${config.assembly.recipe}.blueprint.json`))) errors.push(`recipe id ${config.assembly.recipe} is a vanilla recipe`);
-  for (const [good] of config.assembly.ingredients) if (!await goodExists(good)) errors.push(`bot assembly ingredient ${good} is not a vanilla or generated good`);
-  if (!await exists(resolve(dataRoot, `${config.assembly.icon}.png`))) errors.push(`bot assembly icon ${config.assembly.icon}.png is not generated`);
+  // Reactor Bot parts and their icons are written by super_bot_content.mjs, which runs next.
+  const parts = await reactorPartIds(root);
+  for (const [good] of config.assembly.ingredients)
+    if (!parts.has(good) && !await goodExists(good)) errors.push(`bot assembly ingredient ${good} is not a vanilla or generated good or a Reactor Bot part (${SUPER_BOTS})`);
+  const partIcon = [...parts].some((id) => config.assembly.icon === `Sprites/Goods/${id}Icon`);
+  if (!partIcon && !await exists(resolve(dataRoot, `${config.assembly.icon}.png`))) errors.push(`bot assembly icon ${config.assembly.icon}.png is not generated`);
 
   const localizationPath = resolve(dataRoot, 'Localizations', 'enUS.csv');
   const lines = (await readFile(localizationPath, 'utf8')).split('\n');

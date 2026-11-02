@@ -2664,7 +2664,11 @@
   "IndustrialBot": {
    "ingredients": [
     [
-     "BotChassis",
+     "ReinforcedBotFrame",
+     1
+    ],
+    [
+     "ReactorPowerCell",
      1
     ],
     [
@@ -2674,14 +2678,6 @@
     [
      "BotHead",
      1
-    ],
-    [
-     "PowerModule",
-     1
-    ],
-    [
-     "HighGradeSteel",
-     2
     ]
    ],
    "hours": 24,

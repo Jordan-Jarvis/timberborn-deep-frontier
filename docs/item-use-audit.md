@@ -42,17 +42,17 @@ Food may have direct eating as its only use. Rocket-specific parts still need on
 | MissionPayload | 1 | 1 | MINIMUM MET | Launch: rocket missions |
 | OxygenGas | 2 | 2 | MINIMUM MET | Products: Yellowcake; Products: LiquidHydrogen + LiquidOxygen |
 | Polymer | 7 | 2 | PREFERRED RANGE MET | Products: Cryocoolant; Products: MachineCore; Products: Electronics; Products: BotChassis; Products: BotHead; Products: RocketAirframe; Products: PropulsionPackage |
-| PowerModule | 12 | 2 | PREFERRED RANGE MET | Construction: UraniumProcessingPlant.IronTeeth; Construction: RadioactiveWasteRefinery.IronTeeth; Construction: RocketAssemblyHangar.IronTeeth; Construction: LaunchPad.IronTeeth; Construction: NuclearReactor.IronTeeth; Construction: RadioactiveWasteVault.IronTeeth; Construction: RadioactiveWasteExport.IronTeeth; Construction: ReactorChargingBay.IronTeeth; Products: EnrichedFuel + RadioactiveWaste; Products: ReactorPowerCell; Disposal: off the map or into the river; Bot assembly: bots |
+| PowerModule | 10 | 2 | PREFERRED RANGE MET | Construction: UraniumProcessingPlant.IronTeeth; Construction: RadioactiveWasteRefinery.IronTeeth; Construction: RocketAssemblyHangar.IronTeeth; Construction: LaunchPad.IronTeeth; Construction: NuclearReactor.IronTeeth; Construction: RadioactiveWasteVault.IronTeeth; Construction: RadioactiveWasteExport.IronTeeth; Construction: ReactorChargingBay.IronTeeth; Products: EnrichedFuel + RadioactiveWaste; Products: ReactorPowerCell |
 | PropulsionPackage | 1 | 1 | MINIMUM MET | Launch: rocket missions |
 | PureWater | 2 | 2 | MINIMUM MET | Products: ReactorCoolantWater; Products: HydrogenGas + OxygenGas |
 | RadioactiveSludge | 1 | 1 | MINIMUM MET | Disposal: off the map or into the river |
 | RadioactiveWaste | 3 | 2 | PREFERRED RANGE MET | Products: EnrichedFuel; Products: RadioactiveSludge; Disposal: off the map or into the river |
 | ReactorCoolantWater | 3 | 2 | PREFERRED RANGE MET | Products: RadioactiveSludge + RadioactiveWaste; Research: Science; Direct consumption |
-| ReactorPowerCell | 2 | 2 | MINIMUM MET | Construction: ReactorChargingBay.IronTeeth; Direct consumption |
+| ReactorPowerCell | 4 | 2 | PREFERRED RANGE MET | Construction: ReactorChargingBay.IronTeeth; Disposal: off the map or into the river; Bot assembly: bots; Direct consumption |
 | RecoveredArtifact | 3 | 2 | PREFERRED RANGE MET | Products: GuidanceComputer; Products: MissionPayload; Products: RecoveredTelemetry |
 | RecoveredMinerals | 0 | 0 | LEGACY SAVE-ONLY (unproduced, unused) |  |
 | RecoveredTelemetry | 2 | 2 | MINIMUM MET | Operation: TechnicalSchool.IronTeeth; Launch: rocket missions |
-| ReinforcedBotFrame | 2 | 2 | MINIMUM MET | Construction: ReactorChargingBay.IronTeeth; Direct consumption |
+| ReinforcedBotFrame | 4 | 2 | PREFERRED RANGE MET | Construction: ReactorChargingBay.IronTeeth; Disposal: off the map or into the river; Bot assembly: bots; Direct consumption |
 | RocketAirframe | 1 | 1 | MINIMUM MET | Launch: rocket missions |
 | Sandstone | 4 | 2 | PREFERRED RANGE MET | Construction: SandstoneMasonryBlock.IronTeeth; Construction: ConcreteBlock.IronTeeth; Products: Dirt; Products: Concrete |
 | SpecialistLicense | 0 | 0 | LEGACY SAVE-ONLY (unproduced, unused) |  |
