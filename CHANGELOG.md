@@ -20,6 +20,7 @@
 - **Neon green windows:** a workplace set to Reactor Bots glows neon green while they work, where bot workplaces glow blue. A light colour you picked yourself still takes priority.
 - **Existing saves:** Reactor Bots working at bot workplaces leave them and wait until a workplace is set to Reactor Bots, as does a bot that finishes its retrofit. Set a few workplaces to Reactor Bots after loading.
 - Without Deep Frontier, a Reactor Bot workplace loads as a bot workplace (as a beaver workplace where bots are not allowed or not unlocked).
+- **Dev mode: spawn Reactor Bots.** A new red button right of the bot generator, with a green bot icon, spawns Reactor Bots where you click (hold the many-characters key for ten), born as Reactor Bots like those from the Bot Assembler's Reactor bot recipe.
 
 ## 0.8.4 (2026-11-02)
 

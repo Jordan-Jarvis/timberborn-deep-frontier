@@ -12,6 +12,11 @@
 // 4. The runtime: decorators, bindings, light priority and rule, staffing,
 //    specialist hand-over, localization keys, no native event subscription in
 //    Awake, and the Harmony file (editor-guarded, five verified targets).
+//    Load order: native EntityPanel.Load builds the patched toggles while
+//    singletons are still loading, so no static singleton access, no Load on
+//    the UI helper or registry, and every use of the UI helper in the toggle
+//    postfixes sits in an item callback. The dev-mode Reactor Bot generator
+//    mirrors the native bot generator and tints its button in PostLoad.
 // 5. The native contract, decompiled from the project's Timberborn plugin
 //    assemblies (project ilspycmd): what the mode, the patches and the save
 //    claims rely on. A game update that changes any of it fails here.
@@ -118,6 +123,8 @@ const sources = {
   unlocks: await read('SuperBots/ReactorBotWorkplaceUnlocks.cs'),
   staffing: await read('SuperBots/ReactorBotStaffing.cs'),
   patches: await read('SuperBots/ReactorBotWorkplacePatches.cs'),
+  generator: await read('SuperBots/ReactorBotGenerator.cs'),
+  assembly: await read('SuperBots/ReactorBotAssembly.cs'),
   specialist: await read('Workforce/SpecialistWorkplace.cs'),
   panels: await read('Workforce/WorkforcePanels.cs'),
 };
@@ -151,6 +158,19 @@ const runtime = [
   ['patches', /^#if !UNITY_EDITOR\n[\s\S]*\n#endif\s*$/, 'the Harmony file guarded by #if !UNITY_EDITOR'],
   ['patches', /class\s+ReactorBotWorkplaceModStarter\s*:\s*IModStarter/, 'an IModStarter that applies the patches'],
   ['patches', /NativeWorkerTypeAccess\.Verify\(\)/, 'the WorkplaceWorkerType members verified at mod start'],
+  ['patches', /private static bool IsReactor\(WorkplacePriority workplace\)=>workplace\.GetComponent<ReactorBotWorkplace>\(\)\.ReactorMode;/, 'the workplace-order postfixes read the mode from the workplace component'],
+  ['workplace', /internal sealed class ReactorBotWorkplaceRegistry \{/, 'the registry has no Load (no lifecycle state)'],
+  ['unlocks', /internal sealed class ReactorBotWorkplaceUi \{/, 'the UI helper has no Load (no lifecycle state)'],
+  ['generator', /class\s+ReactorBotGeneratorTool\s*:\s*IDevModeTool,\s*ITool,\s*IInputProcessor/, 'the generator is a dev-mode tool like native BotGeneratorTool'],
+  ['generator', /public bool IsDevMode=>true;/, 'the generator only exists in dev mode'],
+  ['generator', /_line\.ExpectSpawn\(this,[^;]+\);\s*_botFactory\.Create\(position\);\s*_line\.Settle\(this\);/, 'each spawned bot is born as a Reactor Bot through ReactorBotAssemblyLine'],
+  ['generator', /class\s+ReactorBotGeneratorButton\s*:\s*IBottomBarElementsProvider,\s*IPostLoadableSingleton/, 'the button tints in PostLoad'],
+  ['generator', /if\(_postLoaded\)Tint\(\);/, 'the button tint waits for PostLoad'],
+  ['generator', /CreateGrouplessRed\(_tool,ToolImageKey\)/, 'a red groupless tool button like the native bot generator'],
+  ['generator', /ToolImageKey="BotGeneratorTool"/, 'the native bot generator image'],
+  ['generator', /AddLeftSectionElement\(_button,81\)/, 'the button right after the native bot generator (80)'],
+  ['assembly', /public void ExpectSpawn\(object generator, string name\)=>Begin\(generator,name,manufactured:false\);/, 'a dev spawn birth on the Reactor Bot assembly line'],
+  ['assembly', /if\(_manufactured\) \{\s*if\(!born\|\|birth\.EventToPost is not BotManufacturedEvent\)return false;\s*\} else if\(born\)return false;/, 'assembler births need BotManufacturedEvent, dev spawns no birth init'],
 ];
 for (const [file, pattern, text] of runtime) if (!pattern.test(code[file])) errors.push(`${file}: expected ${text}`);
 const targets = ['"Initialize"', '"InitializeFragment"', '"UpdateUnemployedState"', 'GetHighestPriorityUnderstaffedWorkplace', 'GetLowestPriorityStaffedWorkplace', '"SetWorkerTypeToDistrict"'];
@@ -167,6 +187,18 @@ for (const [file, text] of Object.entries(code)) {
     if (['workplace', 'light', 'staffing', 'unlocks'].includes(file) && /\+=/.test(text.slice(match.index, end)))
       errors.push(`${file}: an event is subscribed in Awake; subscribe in InitializeEntity`);
   }
+}
+// Load order (coordinator 2026-11-02, build 259 crash): no static singleton access in these files, and in the
+// two toggle postfixes every use of the UI helper or the tint sits on a line with an item callback (=>).
+for (const file of ['workplace', 'light', 'unlocks', 'staffing', 'patches', 'generator'])
+  if (/static\s+[\w<>]+\s+Current\b|\.Current\b/.test(code[file])) errors.push(`${file}: static Current access; reach state through the entity's component or PostLoad`);
+for (const name of ['WorkerTypeTogglePostfix', 'DistrictCenterFragmentPostfix']) {
+  const begin = code.patches.indexOf(`private static void ${name}(`);
+  if (begin < 0) { errors.push(`patches: ${name} not found`); continue; }
+  let depth = 0, end = code.patches.indexOf('{', begin);
+  for (let i = end; i < code.patches.length; i++) { if (code.patches[i] === '{') depth++; else if (code.patches[i] === '}' && --depth === 0) { end = i; break; } }
+  for (const line of code.patches.slice(begin, end).split('\n'))
+    if (/\.Ui\.|IconTint|tint\.Apply/.test(line) && !line.includes('=>')) errors.push(`patches: ${name} uses the UI helper outside an item callback: ${line.trim()}`);
 }
 const usedKeys = new Set(Object.values(sources).flatMap((text) => [...text.matchAll(/"(DeepFrontier\.(?:WorkerType\.ReactorBot[\w.]*|ReactorBotWorkplace\.[\w.]+))"/g)].map((m) => m[1])));
 for (const key of usedKeys) if (!LOC_KEYS.includes(key)) errors.push(`C# uses ${key}, which tools/reactor_bot_workplace_content.mjs does not write`);
@@ -196,6 +228,11 @@ const native = {
   unemployed: decompile(work, 'Timberborn.WorkSystem.UnemployedWorkers'),
   assigner: decompile(work, 'Timberborn.WorkSystem.WorkplaceAssigner'),
   unlocking: decompile(work, 'Timberborn.WorkSystem.WorkplaceUnlockingService'),
+  lifecycle: decompile('Timberborn.SingletonSystem.dll', 'Timberborn.SingletonSystem.SingletonLifecycleService'),
+  botsUi: decompile('Timberborn.BotsUI.dll', 'Timberborn.BotsUI.BotGeneratorTool') + decompile('Timberborn.BotsUI.dll', 'Timberborn.BotsUI.BotsUIConfigurator'),
+  botFactory: decompile('Timberborn.Bots.dll', 'Timberborn.Bots.BotFactory'),
+  botManufactory: decompile('Timberborn.BotsUpkeep.dll', 'Timberborn.BotUpkeep.BotManufactory'),
+  toolButtons: decompile('Timberborn.ToolButtonSystem.dll', 'Timberborn.ToolButtonSystem.ToolButtonFactory'),
 };
 const contract = [
   ['bot', '_illuminatorColorizer.SetColor(_botColors.BotIlluminationColor)', 'WorkerTypeIlluminator sets the bot blue'],
@@ -216,6 +253,13 @@ const contract = [
   ['assigner', '_priorityOrderedWorkplaces.GetHighestPriorityUnderstaffedWorkplace()', 'native hiring picks the highest-priority understaffed workplace'],
   ['assigner', '_priorityOrderedWorkplaces.GetLowestPriorityStaffedWorkplace()', 'native reassignment takes from the lowest-priority staffed workplace'],
   ['unlocking', '_workerTypeService.GetWorkerType(item.WorkerType)', 'saved native unlocks resolve their worker type on load (why Reactor Bot unlocks are saved apart)'],
+  ['lifecycle', 'LoadSingletons();\n\t\tLoadNonSingletons();\n\t\tPostLoadSingletons();', 'every singleton Load runs before the entities and every PostLoad'],
+  ['botsUi', '_botFactory.Create(position);', 'the native bot generator spawns with BotFactory.Create(position)'],
+  ['botsUi', 'builder.AddLeftSectionElement(_botGeneratorButton, 80);', 'the native bot generator button sits at 80 in the bottom bar'],
+  ['botFactory', 'Create(position, Quaternion.identity, null);', 'BotFactory.Create(position) adds no birth init'],
+  ['botManufactory', 'new CharacterBirthInit(GetComponent<DistrictBuilding>().District, null, new BotManufacturedEvent())', 'assembled bots carry a BotManufacturedEvent birth init'],
+  ['toolButtons', '"ToolImage"', 'tool buttons have a ToolImage element'],
+  ['toolButtons', '.style.backgroundImage = new StyleBackground(toolImage);', 'tool buttons show their image as its background'],
 ];
 for (const [key, text, what] of contract) if (native[key] && !native[key].replace(/\r\n/g, '\n').includes(text)) errors.push(`native contract changed: ${what}`);
 const colorizer = (text) => Number(/CreateColorizer\((\d+)\)/.exec(text)?.[1]);

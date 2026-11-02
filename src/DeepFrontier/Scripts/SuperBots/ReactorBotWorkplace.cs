@@ -89,18 +89,15 @@ namespace DeepFrontier.Scripts.SuperBots {
     }
   }
 
-  // Workplaces set to Reactor Bots (any state), for the staffing pass and the
-  // native-assigner postfixes (Current: Harmony postfixes are static).
-  internal sealed class ReactorBotWorkplaceRegistry : ILoadableSingleton, IUnloadableSingleton {
-    public static ReactorBotWorkplaceRegistry Current { get; private set; }
+  // Workplaces set to Reactor Bots (any state), for the staffing pass. No
+  // static access and no Load: the Harmony postfixes reach the mode through
+  // the workplace's own ReactorBotWorkplace component.
+  internal sealed class ReactorBotWorkplaceRegistry {
     private readonly HashSet<Workplace> _workplaces=new();
     private readonly List<ReactorBotWorkplace> _all=new();
 
     public IReadOnlyList<ReactorBotWorkplace> All=>_all;
     public bool IsReactor(Workplace workplace)=>_workplaces.Contains(workplace);
-
-    public void Load() {Current=this;}
-    public void Unload() {if(Current==this)Current=null;}
 
     public void Add(ReactorBotWorkplace workplace) {
       if(_workplaces.Add(workplace.Workplace))_all.Add(workplace);
@@ -121,6 +118,10 @@ namespace DeepFrontier.Scripts.SuperBots {
     private readonly ReactorBotWorkplaceUnlocks _unlocks;
     private readonly WorkplaceUnlockingService _nativeUnlocks;
 
+    // What the patched worker-type toggles show and do (used from their item
+    // callbacks, which run only once the game is loaded).
+    public ReactorBotWorkplaceUi Ui { get; }
+
     public WorkplaceWorkerType WorkerType { get; private set; }
     public Workplace Workplace { get; private set; }
     public WorkplacePriority Priority { get; private set; }
@@ -131,8 +132,9 @@ namespace DeepFrontier.Scripts.SuperBots {
     public bool Unlocked=>_unlocks.Unlocked(this);
     public event EventHandler ModeChanged;
 
-    public ReactorBotWorkplace(ReactorBotWorkplaceRegistry registry, ReactorBotWorkplaceUnlocks unlocks, WorkplaceUnlockingService nativeUnlocks) {
-      _registry=registry;_unlocks=unlocks;_nativeUnlocks=nativeUnlocks;
+    public ReactorBotWorkplace(ReactorBotWorkplaceRegistry registry, ReactorBotWorkplaceUnlocks unlocks, WorkplaceUnlockingService nativeUnlocks,
+      ReactorBotWorkplaceUi ui) {
+      _registry=registry;_unlocks=unlocks;_nativeUnlocks=nativeUnlocks;Ui=ui;
     }
 
     public void Awake() {
@@ -222,6 +224,11 @@ namespace DeepFrontier.Scripts.SuperBots {
 
     private DistrictDefaultWorkerType _native;
     private bool _enabled;
+
+    // What the patched District Center toggle shows (used from its item callbacks).
+    public ReactorBotWorkplaceUi Ui { get; }
+
+    public ReactorBotDistrictDefault(ReactorBotWorkplaceUi ui) {Ui=ui;}
 
     // Only together with the native Bot default (another path may change it).
     public bool ReactorMode=>_enabled&&_native.WorkerType==WorkerTypeHelper.BotWorkerType;

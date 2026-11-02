@@ -4,6 +4,36 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Fix: new game crashed in the Reactor Bot worker-type toggle; dev-mode Reactor Bot generator (Claude Code session, 2026-11-02, bot-light agent; mirror `botwork` on HEAD 283306f (rebased on b4340b9, menu order only) + this change; compile-checked; patches and new types run in the game's Mono against the shipped DLLs; not built or run in game)
+
+- **Crash (coordinator, build 259):** starting a new game threw "ReactorBotWorkplaceUi is not loaded" in `DistrictCenterFragmentPostfix` (`EntityPanel.Load` -> `InitializeModules` -> `AddFragments` -> `DistrictCenterFragment.InitializeFragment`).
+  - **Cause (decompiled 1.1.2.8):** `SingletonLifecycleService.LoadAll` calls every singleton's `Load`, then loads the entities, then calls every `PostLoad`, with no order between unrelated singletons. `EntityPanel.Load` builds every entity-panel fragment there. My postfixes read the static `ReactorBotWorkplaceUi.Current` (set in its `Load`) and tinted the icon with `ReactorBotWorkplaceSettings.WorkplaceColor` (resolved in its `Load`) at that moment. Loading a save happened to load them first.
+- **Fix (no null guards):**
+  - **Statics removed.** No static singleton access remains: `ReactorBotWorkplaceUi.Current` and `ReactorBotWorkplaceRegistry.Current` are gone, and neither class has a `Load` any more.
+  - **Toggle callbacks.** The toggle postfixes touch no Deep Frontier singleton. Every item callback reaches the UI helper through the shown entity's own component (`ReactorBotWorkplace.Ui`, `ReactorBotDistrictDefault.Ui`, constructor-injected). Those callbacks run only when a panel is shown, updated or clicked, after loading.
+  - **Icon tint.** The third icon is tinted on the toggle's first update (`LazyTint`).
+  - **Workplace order.** The native-assigner postfixes read the mode from the workplace's `ReactorBotWorkplace` component instead of a static registry.
+  - **Audit.** The other patches run only after loading: the unemployed-pool prefix reads entity state, the workplace-order postfixes run on ticks, and the district-default postfix runs at finished-state entry or district events, when entities have loaded after every singleton `Load`.
+- **Dev-mode Reactor Bot generator** (user). The native pattern (decompiled `Timberborn.BotsUI`): `BotGeneratorTool` is an `IDevModeTool` that calls `BotFactory.Create(position)` on the clicked tile, ten times with SpawnManyCharacters held; `BotGeneratorButton` is a red groupless bottom-bar button at left-section order 80.
+  - **Tool and button.** `ReactorBotGeneratorTool` and `ReactorBotGeneratorButton` (`Scripts/SuperBots/ReactorBotGenerator.cs`) copy them: order 81, the native BotGeneratorTool image tinted with the Reactor Bot colour, applied in `PostLoad`, since the bottom bar collects its elements during singleton loading.
+  - **Birth path.** Each bot is born as a Reactor Bot through the path the Reactor bot recipe uses: `ReactorBotAssemblyLine.ExpectSpawn`, then native `BotFactory.Create`, then `ReactorBot.InitializeEntity` takes the birth (Reactor state, reactor needs full), then `Settle` throws if no bot took it.
+  - **Shared file.** `ReactorBotAssembly.cs` (re-read before editing; unchanged since cb8fb87): the line now accepts an assembler birth (needs the native `BotManufacturedEvent` birth init) or a generator birth (no birth init, as `BotFactory.Create(position)` makes).
+- **Checks:**
+  - **Compile.** `tools/compile-check`: 0 errors.
+  - **Validator.** `validate_reactor_bot_workplaces.mjs` passes. It now also checks the load-order rule: no static `Current` in these files, and in the two toggle postfixes every use of the UI helper or the tint sits in an item callback. It also checks the generator (dev-mode tool, the birth call order, the `PostLoad` tint, button order and image), the assembly line's two birth kinds, and the native contract: the `LoadAll` order, `BotGeneratorTool` and its bottom-bar order 80, `BotFactory.Create(position)` adding no birth init, `BotManufactory`'s `BotManufacturedEvent`, and the tool button image.
+  - **Mutations.** It fails on a tint at initialization, a static `Current`, a button tint before `PostLoad`, a spawn without the Reactor Bot birth, and the birth check removed.
+  - **Mono harness** (game's Mono 6.13, shipped DLLs): the six methods verify and patch; the new types load; `Settle` without a bot throws.
+  - **validate_all.** `-Only` reactor_bot_workplaces, super_bots, component_lifecycle, editor_guards, automation_content, vertical_slice_content, bot_upkeep: 7/7. Full `validate_all -SkipBlender`: 68 of 70 pass (`no-game-assets` needs git and passes on this commit's private index; `audit-item-uses` is report-only).
+- **In game, to check (not run):**
+  1. **New game.** It starts (the build 259 crash).
+  2. **District Center.** Its panel shows Beaver | Bot | Reactor Bot, the third icon tinted green after the panel opens.
+  3. **Workplace panel and batch window.** Both show three buttons that work.
+  4. **Load a save.** Same as above.
+  5. **Dev mode.** A red button with a green bot icon sits right of the bot generator.
+     - A click spawns a Reactor Bot: yellow eyes, dark plating, panel "Reactor Bot", reactor charge, coolant and plating full.
+     - With the many-characters key held, it spawns ten.
+     - The native bot generator still spawns ordinary bots.
+
 ## Menu order: related tools stand together (Claude Code session, 2026-11-02, tool-order agent; generated and validated in mirror `toolorder` on HEAD 283306f; not built or run in game)
 
 - **Player feedback (screenshot):** the Tubeway Station stood apart from the Tubeways group in Paths; Explosives Factory, Dynamite and Tunnel were split by the Masonry and concrete group in Landscaping.

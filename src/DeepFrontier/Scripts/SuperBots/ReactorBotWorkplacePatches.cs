@@ -150,55 +150,74 @@ namespace DeepFrontier.Scripts.SuperBots {
       _patched=true;
     }
 
-    private static ReactorBotWorkplaceUi Ui=>ReactorBotWorkplaceUi.Current??throw new InvalidOperationException(Tag+"ReactorBotWorkplaceUi is not loaded");
-
+    // Initialization. Native EntityPanel.Load builds the entity-panel toggles
+    // while singletons are still loading (SingletonLifecycleService.LoadAll:
+    // every Load, then the entities, then every PostLoad), so these postfixes
+    // touch no Deep Frontier singleton: the items reach ReactorBotWorkplaceUi
+    // through the shown entity's component, in their callbacks, which run only
+    // when the panel is shown, updated or clicked, and the third icon is tinted
+    // on its first update.
     private static void WorkerTypeTogglePostfix(WorkerTypeToggle __instance, VisualElement parent, string toggleBindingKey) {
-      var ui=Ui;
       ((SliderToggle)_toggleSlider.GetValue(__instance)).Root.RemoveFromHierarchy();
       ReactorBotWorkplace Workplace()=>ReactorBotWorkplaceUi.Of((WorkplaceWorkerType)_toggleWorkerType.GetValue(__instance));
       var beaverState=MakeDelegate<Func<SliderToggleState>>(_beaverState,__instance);
       var botState=MakeDelegate<Func<SliderToggleState>>(_botState,__instance);
       var setBeaver=MakeDelegate<Action>(_setBeaver,__instance);
+      var tint=new LazyTint();
       var items=new[] {
         SliderToggleItem.CreateBlockable(MakeDelegate<Func<TooltipContent>>(_beaverTooltip,__instance),_beaverClass,
           ()=>{var workplace=Workplace();if(workplace.NativeBeaverAllowed)workplace.Disable();setBeaver();},beaverState),
         SliderToggleItem.CreateBlockable(MakeDelegate<Func<TooltipContent>>(_botTooltip,__instance),_botClass,
-          ()=>ui.SelectBot(Workplace()),
+          ()=>{var workplace=Workplace();workplace.Ui.SelectBot(workplace);},
           ()=>{var state=botState();return state==SliderToggleState.Active&&Workplace().ReactorMode?SliderToggleState.None:state;}),
-        SliderToggleItem.CreateBlockable(()=>ui.ReactorTooltip(Workplace()),_botClass,
-          ()=>ui.SelectReactor(Workplace()),()=>ui.ReactorState(Workplace())),
+        SliderToggleItem.CreateBlockable(()=>{var workplace=Workplace();return workplace.Ui.ReactorTooltip(workplace);},_botClass,
+          ()=>{var workplace=Workplace();workplace.Ui.SelectReactor(workplace);},
+          ()=>{var workplace=Workplace();tint.Apply(workplace.Ui.IconTint);return workplace.Ui.ReactorState(workplace);}),
       };
       var factory=(SliderToggleFactory)_toggleFactory.GetValue(__instance);
       var slider=string.IsNullOrWhiteSpace(toggleBindingKey)?factory.Create(parent,items):factory.CreateBindable(parent,toggleBindingKey,items);
-      Tint(slider,ui);
+      tint.Icon=ThirdIcon(slider);
       _toggleSlider.SetValue(__instance,slider);
     }
 
     private static void DistrictCenterFragmentPostfix(object __instance) {
-      var ui=Ui;
       ((SliderToggle)_fragmentSlider.GetValue(__instance)).Root.RemoveFromHierarchy();
       DistrictDefaultWorkerType Native()=>(DistrictDefaultWorkerType)_fragmentDefault.GetValue(__instance);
       ReactorBotDistrictDefault Reactor()=>Native().GetComponent<ReactorBotDistrictDefault>()
         ??throw new InvalidOperationException(Tag+"district centre without a Reactor Bot district default");
       var beaver=WorkerTypeHelper.BeaverWorkerType;
       var bot=WorkerTypeHelper.BotWorkerType;
+      var tint=new LazyTint();
       var items=new[] {
         SliderToggleItem.Create(MakeDelegate<Func<string>>(_fragmentBeaverTooltip,__instance),_beaverClass,
           ()=>{Reactor().Set(false);Native().SetWorkerType(beaver);},()=>Native().WorkerType==beaver),
         SliderToggleItem.Create(MakeDelegate<Func<string>>(_fragmentBotTooltip,__instance),_botClass,
           ()=>{Reactor().Set(false);Native().SetWorkerType(bot);},()=>Native().WorkerType==bot&&!Reactor().ReactorMode),
-        SliderToggleItem.Create(()=>ui.DisplayName,_botClass,()=>Reactor().Set(true),()=>Reactor().ReactorMode),
+        SliderToggleItem.Create(()=>Reactor().Ui.DisplayName,_botClass,()=>Reactor().Set(true),
+          ()=>{var reactor=Reactor();tint.Apply(reactor.Ui.IconTint);return reactor.ReactorMode;}),
       };
       var slider=((SliderToggleFactory)_fragmentFactory.GetValue(__instance)).Create((VisualElement)_fragmentRoot.GetValue(__instance),items);
-      Tint(slider,ui);
+      tint.Icon=ThirdIcon(slider);
       _fragmentSlider.SetValue(__instance,slider);
     }
 
-    // The third button's icon is the bot icon tinted with the Reactor Bot window colour.
-    private static void Tint(SliderToggle slider, ReactorBotWorkplaceUi ui) {
+    // The third button's icon (each SliderToggleButton has one Image "Icon").
+    private static VisualElement ThirdIcon(SliderToggle slider) {
       var icons=slider.Root.Query<Image>("Icon").ToList();
       if(icons.Count!=3)throw new InvalidOperationException(Tag+$"expected three worker-type icons, found {icons.Count}");
-      icons[2].style.unityBackgroundImageTintColor=new StyleColor(ui.IconTint);
+      return icons[2];
+    }
+
+    // The bot icon tinted with the Reactor Bot window colour, applied on the
+    // first update of the toggle (after loading).
+    private sealed class LazyTint {
+      public VisualElement Icon;
+      private bool _applied;
+      public void Apply(Color color) {
+        if(_applied)return;
+        Icon.style.unityBackgroundImageTintColor=new StyleColor(color);
+        _applied=true;
+      }
     }
 
     private static bool UpdateUnemployedStatePrefix(Worker worker, HashSet<Worker> ____unemployed) {
@@ -207,22 +226,24 @@ namespace DeepFrontier.Scripts.SuperBots {
       return false;
     }
 
+    // The mode comes from the workplace's own component (every workplace has
+    // one, decorated on WorkplaceWorkerType); no static state.
+    private static bool IsReactor(WorkplacePriority workplace)=>workplace.GetComponent<ReactorBotWorkplace>().ReactorMode;
+
     private static void HighestUnderstaffedPostfix(PriorityOrderedWorkplaces __instance, ref WorkplacePriority __result) {
-      var registry=ReactorBotWorkplaceRegistry.Current;
-      if(!__result||registry==null||!registry.IsReactor(__result.Workplace))return;
+      if(!__result||!IsReactor(__result))return;
       __result=null;
       foreach(var workplace in Ordered(__instance))
-        if(workplace.Workplace.Understaffed&&!registry.IsReactor(workplace.Workplace)) {__result=workplace;return;}
+        if(workplace.Workplace.Understaffed&&!IsReactor(workplace)) {__result=workplace;return;}
     }
 
     private static void LowestStaffedPostfix(PriorityOrderedWorkplaces __instance, ref WorkplacePriority __result) {
-      var registry=ReactorBotWorkplaceRegistry.Current;
-      if(!__result||registry==null||!registry.IsReactor(__result.Workplace))return;
+      if(!__result||!IsReactor(__result))return;
       __result=null;
       var ordered=Ordered(__instance);
       for(var i=ordered.Count-1;i>=0;i--) {
         var workplace=ordered[i];
-        if(workplace.Workplace.NumberOfAssignedWorkers>0&&!registry.IsReactor(workplace.Workplace)) {__result=workplace;return;}
+        if(workplace.Workplace.NumberOfAssignedWorkers>0&&!IsReactor(workplace)) {__result=workplace;return;}
       }
     }
 

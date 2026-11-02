@@ -87,9 +87,13 @@ namespace DeepFrontier.Scripts.SuperBots {
   }
 
   // What the patched worker-type toggles show and do for the Reactor Bot
-  // option (ReactorBotWorkplacePatches; Current: Harmony postfixes are static).
-  internal sealed class ReactorBotWorkplaceUi : ILoadableSingleton, IUnloadableSingleton {
-    public static ReactorBotWorkplaceUi Current { get; private set; }
+  // option (ReactorBotWorkplacePatches). Reached through the shown entity's
+  // ReactorBotWorkplace or ReactorBotDistrictDefault, only from the toggle
+  // items' callbacks: native EntityPanel.Load builds the toggles while
+  // singletons are still loading (SingletonLifecycleService.LoadAll: every
+  // Load, then the entities, then every PostLoad), and the callbacks run when
+  // a panel is shown or updated, after all of it. Nothing here needs a Load.
+  internal sealed class ReactorBotWorkplaceUi {
     private static readonly string TooltipLocKey="DeepFrontier.WorkerType.ReactorBot";
     private static readonly string LockedTooltipLocKey="DeepFrontier.WorkerType.ReactorBot.Unlock.Tooltip";
 
@@ -104,9 +108,6 @@ namespace DeepFrontier.Scripts.SuperBots {
       WorkplaceUnlockingDialogService nativeUnlocks, VisualElementLoader elements, ILoc loc) {
       _unlocks=unlocks;_settings=settings;_nativeUnlocks=nativeUnlocks;_elements=elements;_loc=loc;
     }
-
-    public void Load() {Current=this;}
-    public void Unload() {if(Current==this)Current=null;}
 
     public Color IconTint=>_settings.WorkplaceColor;
     public string DisplayName=>_loc.T(TooltipLocKey);

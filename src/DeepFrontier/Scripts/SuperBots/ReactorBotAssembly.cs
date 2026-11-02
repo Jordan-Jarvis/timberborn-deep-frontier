@@ -56,31 +56,47 @@ namespace DeepFrontier.Scripts.SuperBots {
     private void AfterBotManufactory(object sender, EventArgs e)=>_line.Settle(this);
   }
 
-  // The Reactor Bot birth announced by an assembler, taken by the bot it
-  // creates. Everything happens inside one ProductionFinished call.
+  // The Reactor Bot birth announced by an assembler (or by the dev-mode
+  // Reactor Bot generator, ReactorBotGeneratorTool), taken by the bot it
+  // creates. Everything happens inside one call: ProductionFinished for an
+  // assembler, BotFactory.Create for the generator.
   internal sealed class ReactorBotAssemblyLine {
-    private BaseComponent _assembler;
+    private object _source;
+    private string _sourceName;
+    // An assembler's bot carries the native CharacterBirthInit with a
+    // BotManufacturedEvent (BotManufactory); the generator's has no birth init
+    // (native BotFactory.Create(position), as BotGeneratorTool spawns bots).
+    private bool _manufactured;
     private bool _taken;
 
-    public void Expect(BaseComponent assembler) {
-      if(_assembler)throw new InvalidOperationException($"{assembler.Name}: {_assembler.Name}'s Reactor Bot birth is still pending");
-      _assembler=assembler;_taken=false;
+    public void Expect(BaseComponent assembler)=>Begin(assembler,assembler.Name,manufactured:true);
+
+    public void ExpectSpawn(object generator, string name)=>Begin(generator,name,manufactured:false);
+
+    private void Begin(object source, string name, bool manufactured) {
+      if(_source!=null)throw new InvalidOperationException($"{name}: {_sourceName}'s Reactor Bot birth is still pending");
+      _source=source;_sourceName=name;_manufactured=manufactured;_taken=false;
     }
 
-    // True for the bot the native BotManufactory creates while a Reactor Bot
-    // birth is pending; that bot starts as a Reactor Bot.
+    // True for the bot created while a Reactor Bot birth is pending; that bot
+    // starts as a Reactor Bot.
     public bool TakeBirth(BaseComponent bot) {
-      if(!_assembler||!bot.TryGetComponent<CharacterBirthInit>(out var birth)||birth.EventToPost is not BotManufacturedEvent)return false;
-      if(_taken)throw new InvalidOperationException($"{_assembler.Name} created a second bot from one Reactor Bot recipe");
+      if(_source==null)return false;
+      var born=bot.TryGetComponent<CharacterBirthInit>(out var birth);
+      if(_manufactured) {
+        if(!born||birth.EventToPost is not BotManufacturedEvent)return false;
+      } else if(born)return false;
+      if(_taken)throw new InvalidOperationException($"{_sourceName} created a second bot from one Reactor Bot birth");
       _taken=true;
       return true;
     }
 
-    public void Settle(BaseComponent assembler) {
-      if(_assembler!=assembler)return;
+    public void Settle(object source) {
+      if(_source!=source)return;
       var taken=_taken;
-      _assembler=null;_taken=false;
-      if(!taken)throw new InvalidOperationException($"{assembler.Name}: the native BotManufactory created no bot for the Reactor Bot recipe (Timberborn 1.1.2.8 contract changed)");
+      var name=_sourceName;
+      _source=null;_sourceName=null;_taken=false;
+      if(!taken)throw new InvalidOperationException($"{name}: no bot took the Reactor Bot birth (Timberborn 1.1.2.8 contract changed)");
     }
   }
 }

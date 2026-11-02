@@ -45,6 +45,10 @@ This began as a study. The user chose Option 1 and answered its decision points,
   3. `UnemployedWorkers.UpdateUnemployedState` prefix: keeps Reactor Bots out of the native pool the district assigner hires from, so Bot workplaces get ordinary bots only.
   4. `PriorityOrderedWorkplaces.GetHighestPriorityUnderstaffedWorkplace` and `GetLowestPriorityStaffedWorkplace` postfixes: when native picks a Reactor Bot workplace, they pick the next one that is not, so native neither hires into it nor takes its crew.
   5. `WorkplaceWorkerType.SetWorkerTypeToDistrict` prefix and postfix: applies the district's Reactor Bot default once, when native applies the district default (`_wasSet`).
+- **Load order** (fixed after build 259, which crashed on a new game): native `EntityPanel.Load` builds the toggles while singletons are still loading (`SingletonLifecycleService.LoadAll`: every `Load`, then the entities, then every `PostLoad`) [S].
+  - The postfixes therefore touch no Deep Frontier singleton. The item callbacks reach the UI helper through the shown entity's component, the icon tint is applied on the first update, and no static `Current` remains.
+  - `tools/validate_reactor_bot_workplaces.mjs` checks this.
+- **Dev mode.** A Reactor Bot generator (`ReactorBotGenerator.cs`) sits beside the native bot generator (`BotGeneratorTool`, bottom bar). Its bots are born as Reactor Bots through the Reactor bot recipe's path (`ReactorBotAssemblyLine`).
 - **Startup check.** All of this was run in the game's own Mono 6.13 against the shipped 1.1.2.8 DLLs (a scratch host, as earlier harnesses): verification passes, the six methods patch, and the patched workplace order runs.
 
 **What the player sees in the shared native systems**
