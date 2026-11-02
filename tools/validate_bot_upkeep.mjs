@@ -1,7 +1,8 @@
 // Static checks for bot upkeep (tools/workforce_risks.json botMaintenance,
 // botAssembly and workplaceUpkeep, tools/bot_upkeep_content.mjs,
 // Scripts/Workforce/BotMaintenance.cs, WorkplaceUpkeep.cs, BotWear.cs and
-// BotUpkeepPanels.cs).
+// BotUpkeepPanels.cs; the industrial bot's Reactor Bot birth in
+// Scripts/SuperBots/ReactorBotAssembly.cs).
 //
 //   node tools/validate_bot_upkeep.mjs [dataRoot]
 //
@@ -16,7 +17,7 @@ import {readFile, access} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {loadBotUpkeepConfig, checkBotUpkeepConfig, maintainedTemplates, maintenanceSpec, assemblerPatch, vanillaRecipeWithIcon, assemblyRecipe,
-  localizationRows, TEXTS, MAINTENANCE_SPEC, ASSEMBLER, RECIPE_TEMPLATE, UPKEEP_SPEC, upkeepTemplates, upkeepSpec, upkeepDescription} from './bot_upkeep_content.mjs';
+  localizationRows, TEXTS, MAINTENANCE_SPEC, ASSEMBLER, RECIPE_TEMPLATE, UPKEEP_SPEC, REACTOR_ASSEMBLY_SPEC, upkeepTemplates, upkeepSpec, upkeepDescription} from './bot_upkeep_content.mjs';
 import {parseCsvRow} from './connection_content.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
@@ -42,13 +43,23 @@ const serialized = (text, file, record) => {
 };
 const firstUpkept = upkeepTemplates(config)[0];
 const sampleUpkeep = firstUpkept ? upkeepSpec(config, firstUpkept) : null;
+const superBots = resolve(root, 'src', 'DeepFrontier', 'Scripts', 'SuperBots');
+const assemblySource = await readFile(resolve(superBots, 'ReactorBotAssembly.cs'), 'utf8');
 for (const [text, file, record, value] of [[source, 'BotMaintenance.cs', 'FrontierBotMaintenanceSpec', spec], [source, 'BotMaintenance.cs', 'FrontierBotMaintenanceGoodSpec', spec.Goods[0]],
+    [assemblySource, 'ReactorBotAssembly.cs', REACTOR_ASSEMBLY_SPEC, assemblerPatch(config)[REACTOR_ASSEMBLY_SPEC]],
     ...(sampleUpkeep ? [[upkeepSource, 'WorkplaceUpkeep.cs', UPKEEP_SPEC, sampleUpkeep], [upkeepSource, 'WorkplaceUpkeep.cs', 'FrontierUpkeepGoodSpec', sampleUpkeep.Goods[0]]] : [])]) {
   const keys = serialized(text, file, record);
   if (!same(keys, Object.keys(value).sort())) errors.push(`runtime: ${record} serializes [${keys}], generator writes [${Object.keys(value).sort()}]`);
 }
 if (!/AddDecorator<FrontierBotMaintenanceSpec,BotMaintenance>\(\)/.test(source)) errors.push('runtime: BotMaintenance is not decorated on FrontierBotMaintenanceSpec');
 if (!/AddDecorator<FrontierWorkplaceUpkeepSpec,WorkplaceUpkeep>\(\)/.test(upkeepSource)) errors.push('runtime: WorkplaceUpkeep is not decorated on FrontierWorkplaceUpkeepSpec');
+if (!/AddDecorator<FrontierReactorBotAssemblySpec,ReactorBotAssembler>\(\)/.test(await readFile(resolve(superBots, 'ReactorBotConfigurator.cs'), 'utf8')))
+  errors.push('runtime: ReactorBotAssembler is not decorated on FrontierReactorBotAssemblySpec');
+// The industrial bot's Reactor Bot birth: announced before the native BotManufactory handler
+// (subscribed in Awake; BotManufactory subscribes in InitializeEntity), checked after it.
+for (const needle of ['public void Awake()', '_manufactory.ProductionFinished+=BeforeBotManufactory;', 'public void PostInitializeEntity()', '_manufactory.ProductionFinished+=AfterBotManufactory;', 'birth.EventToPost is not BotManufacturedEvent'])
+  if (!assemblySource.includes(needle)) errors.push(`runtime: ReactorBotAssembly.cs lacks "${needle}"`);
+if (!(await readFile(resolve(superBots, 'ReactorBot.cs'), 'utf8')).includes('_assembly.TakeBirth(this)')) errors.push('runtime: ReactorBot.InitializeEntity no longer takes the assembled Reactor Bot birth');
 // Role texts: WorkplaceUpkeepLoc builds DeepFrontier.WorkplaceUpkeep.<Role>.<suffix>.
 for (const suffix of ['Name', 'Status', 'Status.Short'])
   if (!upkeepSource.includes(`Prefix + role + ".${suffix}"`)) errors.push(`runtime: WorkplaceUpkeepLoc no longer builds <Role>.${suffix}`);

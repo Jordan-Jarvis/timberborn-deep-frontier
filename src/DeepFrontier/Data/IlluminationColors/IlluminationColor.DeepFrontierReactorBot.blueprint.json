@@ -2,9 +2,9 @@
   "IlluminationColorSpec": {
     "Id": "DeepFrontierReactorBot",
     "Color": {
-      "r": 1,
-      "g": 0.52,
-      "b": 0.12,
+      "r": 0.64,
+      "g": 0.69,
+      "b": 0.06,
       "a": 1
     }
   }

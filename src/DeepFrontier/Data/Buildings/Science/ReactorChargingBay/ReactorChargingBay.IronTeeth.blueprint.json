@@ -234,8 +234,8 @@
     "ForceOneFinalAccess": false
   },
   "PlaceableBlockObjectSpec": {
-    "ToolGroupId": "DeepFrontierNuclearFuel",
-    "ToolOrder": 46,
+    "ToolGroupId": "Science",
+    "ToolOrder": 75,
     "ToolShape": "Square",
     "Layout": "SideLine",
     "CustomPivot": {

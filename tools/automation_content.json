@@ -730,6 +730,20 @@
         }
       ]
     },
+    "FrontierReactorBotAssemblySpec": {
+      "kind": "operational",
+      "response": "A Reactor Bot is born only inside the native Manufactory.ProductionFinished of the Bot Assembler's Reactor Bot recipe, and the blocked workplace releases its workers on Off, so the Manufactory makes no progress and no bot of either recipe is assembled.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/SuperBots/ReactorBotAssembly.cs",
+          "contains": "_manufactory.ProductionFinished+=BeforeBotManufactory;"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/SuperBots/ReactorBotAssembly.cs",
+          "contains": "if(_manufactory.CurrentRecipe.Id==_recipeId)_line.Expect(this);"
+        }
+      ]
+    },
     "PowerConnectionStatusSpec": {
       "kind": "cosmetic",
       "response": "Status only: shows 'Not connected to a power source' while the building's mechanical graph has no generator or battery (Scripts/PowerConnectionStatus.cs). It takes no part in operation, so the native Off response of the building is unchanged."

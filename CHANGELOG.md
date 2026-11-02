@@ -14,7 +14,9 @@
 
 ### Fixes
 - **Selecting the Bot Assembler no longer freezes the game.** Deep Frontier adds a second recipe (Industrial bot), so the assembler shows a recipe list, and the base game's own bot recipe had no icon for that list (player report: a NullReferenceException and a soft-lock on selecting the Bot Assembler). The base recipe now uses the Bot Assembler's icon.
-- **Industrial bots need steel:** the Bot Assembler's Industrial bot recipe now also takes 2 steel, and the assembler's description says what the recipe is: the same bots, built three times faster from late-game parts, a power module and steel.
+- **Industrial bots are now Reactor Bots.** A bot the Bot Assembler finishes from the Industrial bot recipe used to come out as an ordinary bot. It now comes out as a Reactor Bot: 5 times the load, 4 times the speed and 10 times the lifespan, charged at a Reactor Charging Bay, with coolant and steel plating from storage. The recipe also takes 2 steel, and the assembler's description says what it builds. Ordinary bots can still be retrofitted, and bots already in your colony keep what they are.
+- **Reactor Bots look different:** their eyes glow radioactive yellow, the mod's radiation colour, instead of the old orange, and their steel plating shows while they are plated.
+- **Reactor Charging Bay is back in the Science menu**, right after the Charging Station it upgrades.
 
 ## 0.8.3 (2026-11-01)
 

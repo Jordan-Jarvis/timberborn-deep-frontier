@@ -24,6 +24,10 @@
 //   to its left with more science, or to its right with less; equal science is neutral).
 // - Two children of a checked group never share an order value (the native sort would
 //   break the tie arbitrarily).
+// - Declared upgrades (tools/tool_groups.json upgrades; user 2026-11-02: the Reactor
+//   Charging Bay right next to the Charging Station) stand immediately to the right of the
+//   building they upgrade, in its group. That is their whole order rule: they are left out
+//   of the science rules above, which every other tool keeps.
 // Unlocking before construction goods or recipe inputs is tools/audit_progression.mjs's
 // unlock-order check, with the reactor and power-plant order checks.
 import {readFile, readdir, access} from 'node:fs/promises';
@@ -44,6 +48,8 @@ const errors = [];
 
 const config = await readJson(resolve(root, CONFIG));
 const {buildings, recipes} = await loadProgressionData(dataRoot);
+// upgrade template name (with the faction suffix) -> the template it upgrades
+const upgrades = new Map(Object.entries(config.upgrades).map(([template, base]) => [`${template}.IronTeeth`, base]));
 
 // ---- Tools: vanilla (Iron Teeth and Common collections), Deep Frontier, catalogued other mods ----
 const tools = new Map();   // template name -> {name, origin, group, order, science, size, products, consumes}
@@ -146,11 +152,22 @@ function checkAscending(groupId, list) {
 
 const report = {};
 const checked = [...groups.values()].filter((g) => g.deepFrontier || childrenOf(g.id).some(deepFrontierChild));
+const placedUpgrades = new Set();
 for (const group of checked) {
-  const list = childrenOf(group.id);
-  report[group.id] = list.map(label);
-  for (let i = 1; i < list.length; i++)
-    if (list[i].key === list[i - 1].key) errors.push(`${group.id}: ${list[i - 1].id} and ${list[i].id} share order ${list[i].key}`);
+  const all = childrenOf(group.id);
+  report[group.id] = all.map(label);
+  for (let i = 1; i < all.length; i++)
+    if (all[i].key === all[i - 1].key) errors.push(`${group.id}: ${all[i - 1].id} and ${all[i].id} share order ${all[i].key}`);
+  const isUpgrade = (child) => child.kind === 'tool' && upgrades.has(child.id);
+  for (const [i, child] of all.entries()) {
+    if (!isUpgrade(child)) continue;
+    placedUpgrades.add(child.id);
+    const base = upgrades.get(child.id);
+    const at = all.findIndex((c) => c.kind === 'tool' && c.id === base);
+    if (at < 0) errors.push(`${group.id}: ${child.id} upgrades ${base}, which is not in this group`);
+    else if (at !== i - 1) errors.push(`${group.id}: ${child.id} must stand immediately right of ${base}, which it upgrades (it stands at ${i + 1}, ${base} at ${at + 1})`);
+  }
+  const list = all.filter((child) => !isUpgrade(child));
   if (group.deepFrontier) { checkAscending(group.id, list); continue; }
   const own = list.filter(deepFrontierChild);
   checkAscending(group.id, own);
@@ -170,9 +187,11 @@ for (const group of checked) {
   }
 }
 
+for (const name of upgrades.keys()) if (!placedUpgrades.has(name)) errors.push(`upgrades: ${name} is in no toolbar group that holds Deep Frontier tools`);
+
 if (print) for (const [id, row] of Object.entries(report)) console.log(`${id}: ${row.join(', ')}`);
 if (errors.length) {
   console.error(`Tool order validation failed (${errors.length}):\n  ${errors.join('\n  ')}`);
   process.exit(1);
 }
-console.log(JSON.stringify({status: 'tool-order-valid', groups: checked.length, data: posix(relative(root, dataRoot))}));
+console.log(JSON.stringify({status: 'tool-order-valid', groups: checked.length, upgrades: Object.fromEntries(upgrades), data: posix(relative(root, dataRoot))}));

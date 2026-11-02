@@ -19,12 +19,17 @@
 // - Recipe.<botAssembly.recipe>: a product-less native bot recipe cloned from
 //   vanilla Recipe.Bot.IronTeeth. The native BotManufactory (1.1.2.8) spawns
 //   the faction's single BotSpec template whenever any assembler recipe
-//   finishes (BotFactory.Load uses TemplateService.GetSingle<BotSpec>), so the
-//   industrial bot is the ordinary Iron Teeth bot made faster from late-game
-//   parts; no second bot template exists.
+//   finishes (BotFactory.Load uses TemplateService.GetSingle<BotSpec>); no
+//   second bot template exists. The industrial bot is that bot born as a
+//   Reactor Bot (tools/super_bots.json upgrade): the patch below declares the
+//   recipe in FrontierReactorBotAssemblySpec, and the runtime
+//   (Scripts/SuperBots/ReactorBotAssembly.cs) sets the new bot's Reactor Bot
+//   state while the native BotManufactory creates it.
 // - The vanilla Bot Assembler same-path patch
-//   {ManufactorySpec: {"ProductionRecipeIds#append": [recipe]}}: native
-//   blueprint array overlay, as the mod's GoodCollection and NeedCollection.
+//   {ManufactorySpec: {"ProductionRecipeIds#append": [recipe]},
+//    FrontierReactorBotAssemblySpec: {RecipeId: recipe}}: native blueprint
+//   array overlay, as the mod's GoodCollection and NeedCollection; the
+//   mod's own component spec is added to the vanilla template the same way.
 // - Recipe.Bot.IronTeeth: the vanilla recipe, unchanged except its Icon. With a
 //   second recipe the assembler shows a recipe dropdown, whose Moddable Recipes
 //   provider reads every recipe's Icon.Asset; the vanilla recipe has none
@@ -162,8 +167,10 @@ export const upkeepDescription = ({upkeep: u}, id) =>
   `Uses up ${listText(u.templates[id].map(([, , role]) => u.roles[role].description))}; stops without them.`;
 
 export const ASSEMBLER_DESCRIPTION_KEY = 'Building.BotAssembler.DeepFrontierDescription';
+// The runtime record (Scripts/SuperBots/ReactorBotAssembly.cs) that makes the recipe's bot a Reactor Bot.
+export const REACTOR_ASSEMBLY_SPEC = 'FrontierReactorBotAssemblySpec';
 export const assemblerPatch = ({assembly: a}) => ({ManufactorySpec: {'ProductionRecipeIds#append': [a.recipe]},
-  LabeledEntitySpec: {DescriptionLocKey: ASSEMBLER_DESCRIPTION_KEY}});
+  LabeledEntitySpec: {DescriptionLocKey: ASSEMBLER_DESCRIPTION_KEY}, [REACTOR_ASSEMBLY_SPEC]: {RecipeId: a.recipe}});
 export const vanillaRecipeWithIcon = (template, {assembly: a}) => ({...template, RecipeSpec: {...template.RecipeSpec, Icon: a.vanillaRecipeIcon}});
 
 export function assemblyRecipe(template, {assembly: a}) {
@@ -239,6 +246,7 @@ export async function planBotUpkeep({root = defaultRoot, dataRoot = resolve(root
   const assembler = await readJson(resolve(vanilla, `${ASSEMBLER}.json`));
   if (!assembler.BotManufactorySpec || !Array.isArray(assembler.ManufactorySpec?.ProductionRecipeIds))
     errors.push(`vanilla ${ASSEMBLER} is no longer a BotManufactory manufactory`);
+  if (assembler[REACTOR_ASSEMBLY_SPEC]) errors.push(`vanilla ${ASSEMBLER} already has ${REACTOR_ASSEMBLY_SPEC}`);
   else if (assembler.ManufactorySpec.ProductionRecipeIds.includes(config.assembly.recipe)) errors.push(`vanilla ${ASSEMBLER} already runs ${config.assembly.recipe}`);
   const template = await readJson(resolve(vanilla, RECIPE_TEMPLATE));
   if (template.RecipeSpec.Products.length) errors.push('vanilla Recipe.Bot.IronTeeth is no longer product-less');

@@ -9,6 +9,9 @@
 // - BlockObjectToolGroups/BlockObjectToolGroup.<Native>.blueprint.json, a same-path partial of a
 //   native group carrying nativeOrders;
 // - the group names in Localizations/enUS.csv.
+// Declared upgrades (upgrades: upgrade -> the building it upgrades) are checked, not
+// written: the upgrade's producer puts it in the base building's group, and
+// tools/validate_tool_order.mjs requires it immediately to the base's right.
 // Runs at the end of canonical generation (create_vertical_slice_content.mjs), after every
 // building exists, or standalone on a generated Data root:
 //   node tools/tool_group_content.mjs [dataRoot]
@@ -154,6 +157,19 @@ export async function planToolGroups({root = repo, dataRoot = resolve(root, 'src
     else if (iconFrom.optionalMod && subtree.some((name) => origin(name)?.optionalMod !== iconFrom.optionalMod))
       errors.push(`group ${id}: icon ${group.icon} comes from the optional ${iconFrom.optionalMod}, but the group also shows without it`);
     groups.push({id, group, blueprint: groupBlueprint(id, group, iconFrom?.icon)});
+  }
+
+  // An upgrade stands in its base building's group (its producer sets group and order).
+  if (!config.upgrades || typeof config.upgrades !== 'object' || Array.isArray(config.upgrades)) errors.push('upgrades must map Deep Frontier templates to the templates they upgrade');
+  for (const [template, base] of Object.entries(config.upgrades ?? {})) {
+    const entry = byTemplate.get(template);
+    if (!entry) { errors.push(`upgrades: ${template} is not a generated Deep Frontier building`); continue; }
+    if (listed.has(template)) errors.push(`upgrades: ${template} is listed in a group; an upgrade stands in the group of the building it upgrades`);
+    if (claimed.has(base)) errors.push(`upgrades: ${base} is claimed by a sub-group`);
+    const from = origin(base);
+    const group = entry.blueprint.PlaceableBlockObjectSpec.ToolGroupId;
+    if (!from) errors.push(`upgrades: ${template} upgrades ${base}, which is not a vanilla, externalMods or Deep Frontier tool`);
+    else if (from.toolGroup !== group) errors.push(`upgrades: ${template} is in ${group} but ${base} is in ${from.toolGroup}; its producer must put it in ${from.toolGroup}`);
   }
 
   const natives = [];

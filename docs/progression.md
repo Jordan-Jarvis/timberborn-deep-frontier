@@ -101,9 +101,10 @@ From the first Numbercruncher stage to the reactor, buying every non-structure b
 Left to right is the unlock order (`tools/validate_tool_order.mjs`, a validate_all check; `tools/tool_groups.json` `$comment`):
 
 - inside a Deep Frontier group every tool, vanilla and other-mod claims included, follows science ascending; on a tie a tool whose products another consumes comes first, then the smaller footprint, then the lower one;
-- a sub-group sits among its parent's buttons by its earliest unlock, at a place with the fewest science inversions against the vanilla and other-mod buttons, which keep their own order; Deep Frontier tools in native groups follow the same rule.
+- a sub-group sits among its parent's buttons by its earliest unlock, at a place with the fewest science inversions against the vanilla and other-mod buttons, which keep their own order; Deep Frontier tools in native groups follow the same rule;
+- a declared upgrade (`tool_groups.json` `upgrades`) stands immediately right of the building it upgrades, in that building's group, and is left out of the two rules above: the Reactor Charging Bay right after the vanilla Charging Station (user, 2026-11-02).
 
-The structure and quarrying generators rank their tools by science (`structural_building_content.mjs`, `create_construction_material_content.mjs`); the other generators author the order. The Reactor Charging Bay moved from Science to **Nuclear fuel** (Uranium Processing Plant, Charging Bay, Waste Refinery) and the Radioactive Waste Vault from Storage to **Radioactive waste** (Recovery Pump, Outfall, Export, Vault). No group was added. The external mods' science is in `tool_groups.json` `externalMods`, checked against the installed loose blueprints by `validate_tool_groups.mjs` (Flywheels read with UnityPy). The power shafts sort at 25, before the Lantern that Power Lines moves into Power at 29.
+The structure and quarrying generators rank their tools by science (`structural_building_content.mjs`, `create_construction_material_content.mjs`); the other generators author the order. The Radioactive Waste Vault moved from Storage to **Radioactive waste** (Recovery Pump, Outfall, Export, Vault); the Reactor Charging Bay, moved to Nuclear fuel on 2026-11-01, is back in Science beside the Charging Station as a declared upgrade. No group was added. The external mods' science is in `tool_groups.json` `externalMods`, checked against the installed loose blueprints by `validate_tool_groups.mjs` (Flywheels read with UnityPy). The power shafts sort at 25, before the Lantern that Power Lines moves into Power at 29.
 
 | Group | Left to right (science; ▸ sub-group, vanilla or other mod in italics) |
 |---|---|
@@ -112,9 +113,9 @@ The structure and quarrying generators rank their tools by science (`structural_
 | Deep mining | Deep Drill 1,000, Deep Ore Processor 1,200, Deep Mine 15,000 |
 | Heavy industry | Chemical Works 9,000, Steel Mill 10,000, Precision Machine Works 12,000, Electrolysis Plant 30,000, Cryogenic Liquefaction Plant 40,000 |
 | Rocketry | Mission Control 75,000, Rocket Assembly Hangar 125,000, Launch Pad 200,000 |
-| Nuclear fuel | Uranium Processing Plant 300,000, Reactor Charging Bay 400,000, Radioactive Waste Refinery 600,000 |
+| Nuclear fuel | Uranium Processing Plant 300,000, Radioactive Waste Refinery 600,000 |
 | Food | *Gatherer Flag 0, Farmhouse 0, Fermenter 0, Oil Press 120, Hydroponic Garden 200, Food Factory 300*, Fertilizer Works 350, *Coffee Brewery 500*, Fish Hatchery 600, Greenhouse 600, Fishery Works 900, Food Packaging Works 1,400 |
-| Science | *Inventor 0, Numbercruncher 1,500, Bot Part Factory 500, Bot Assembler 750, Charging Station 200, Control Tower 1,000, Grease Factory 2,000*, Technical School 2,200, Materials Laboratory 12,000, Archive Excavation 25,000 |
+| Science | *Inventor 0, Numbercruncher 1,500, Bot Part Factory 500, Bot Assembler 750, Charging Station 200*, Reactor Charging Bay 400,000 (upgrade of the Charging Station), *Control Tower 1,000, Grease Factory 2,000*, Technical School 2,200, Materials Laboratory 12,000, Archive Excavation 25,000 |
 | Storage | *Small and Large Industrial Pile 0, Pile Module 650, Grand Underground Pile 3,500, Small and Medium Warehouse 0, Large Warehouse 250, Storage Module 750, Grand Warehouse 2,500, Small Tank 0, Medium Tank 120, Large Tank 600, Tank Module 1,050, Grand Tank 3,000*, Cryogenic Tank Farm 40,000 |
 | Water | *Deep Water Pump 0, Deep Badwater Pump 250, Discharge 250*, Water Treatment Plant 1,800, *Deep Mechanical Pump 2,000, Compact Mechanical Pump 4,000, Centrifuge 600, Badwater Pressurizer 4,000, Aquifer Drill 400*, ▸Radioactive waste 50,000, Deep Well 75,000 |
 | Radioactive waste | Radioactive Water Recovery Pump 50,000, Radioactive Water Outfall 50,000, Radioactive Waste Export 300,000, Radioactive Waste Vault 300,000 |
@@ -648,9 +649,9 @@ Bots already wear out 3–5× faster in heavy industry (`workforce_risks.json`).
   - Bot cortex: 1 Electronics + 1 Polymer → 2 BotHead (4 h).
 
   The Bot Part Factory needs 54 worker-hours for one bot's parts. These recipes need 8.
-- **Industrial bot** at the vanilla Bot Assembler: 1 BotChassis + 4 BotLimb + 1 BotHead + 1 PowerModule → one bot in 24 h. The native recipe takes 72 h.
-  - It is added by a same-path patch, `{"ManufactorySpec": {"ProductionRecipeIds#append": ["IndustrialBot"]}}`.
-  - It builds the same Iron Teeth bot. The native `BotManufactory` spawns a bot when any assembler recipe finishes, and `BotFactory.Load` takes the faction's single template with `TemplateService.GetSingle<BotSpec>()`. A second bot template is therefore impossible without patching the game. A faster recipe for the same bot is the clean route, and vanilla bots stay untouched.
+- **Industrial bot** at the vanilla Bot Assembler: 1 BotChassis + 4 BotLimb + 1 BotHead + 1 PowerModule + 2 Steel → one Reactor Bot in 24 h. The native recipe takes 72 h.
+  - It is added by a same-path patch, `{"ManufactorySpec": {"ProductionRecipeIds#append": ["IndustrialBot"]}, "FrontierReactorBotAssemblySpec": {"RecipeId": "IndustrialBot"}}`.
+  - It builds the Iron Teeth bot born as a Reactor Bot (user, 2026-11-02: industrial bots are the upgraded bots; `tools/super_bots.json` `upgrade`). The native `BotManufactory` spawns a bot when any assembler recipe finishes, and `BotFactory.Load` takes the faction's single template with `TemplateService.GetSingle<BotSpec>()`, so a second bot template is impossible without patching the game. Instead `ReactorBotAssembler` (Scripts/SuperBots/ReactorBotAssembly.cs) announces a Reactor Bot birth from `Manufactory.ProductionFinished` before the native handler (it subscribes in Awake, `BotManufactory` in InitializeEntity) and the new bot's `ReactorBot.InitializeEntity` takes it: the native `BotFactory.Create` instantiates and initializes the bot inside that handler, with a `CharacterBirthInit` carrying a `BotManufacturedEvent`. Ordinary-recipe bots and bots already in a save stay as they are.
   - Known caveat: the recipe is visible from the assembler's 750-science unlock, but the PowerModule only exists from 5,000. `audit_progression.mjs` reads vanilla patches now and reports this as a warning.
 - **Bot maintenance.** `FrontierBotMaintenanceSpec` goes on all 16 open workplaces that have bot wear.
   - The building keeps a second native inventory for maintenance oil: 10 Grease and 10 FishOil. It is stocked only while a bot is assigned, so beaver crews never tie up oil.

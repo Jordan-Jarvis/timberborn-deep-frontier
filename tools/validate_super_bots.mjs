@@ -8,6 +8,8 @@
 // - that the runtime settings record serializes exactly what the generator writes;
 // - that the panel's localization keys are generated;
 // - the native contracts the design relies on;
+// - the skin: the eyes are the mod's softened radiation yellow (RadiationMaterials.WaterBaseColorB)
+//   and the steel plating tint follows the plating need;
 // - when generated: the settings, needs, goods, recipes, manufactories, upkeep effects, light colour, charging bay, collections, icons, localization and its automation declaration.
 // Exits 1 on any error. Runtime behaviour is verified in game, not here.
 import {readFile, access} from 'node:fs/promises';
@@ -43,6 +45,14 @@ const rows = localizationRows(config, energy);
 const rowKeys = new Set(rows.map(([k]) => k));
 for (const [, key] of panel.matchAll(/"(DeepFrontier\.ReactorBot\.[A-Za-z.]+)"/g)) if (!rowKeys.has(key)) errors.push(`runtime: ReactorBotPanel.cs uses ${key}, which the generator does not write`);
 for (const key of PANEL_KEYS) if (!panel.includes(`"${key}"`)) errors.push(`runtime: ${key} is generated but unused by ReactorBotPanel.cs`);
+const reactorBot = await readFile(resolve(scripts, 'ReactorBot.cs'), 'utf8');
+if (!reactorBot.includes('if(IsPlated)_tint.SetTint(Spec.Tint);') || !reactorBot.includes('e.NeedSpec.Id==Spec.PlatingNeedId) { ApplyTint();'))
+  errors.push('runtime: ReactorBot no longer shows the steel plating tint only while plated');
+const radiation = await readFile(resolve(root, 'src', 'DeepFrontier', 'Scripts', 'Radiation', 'RadiationMaterials.cs'), 'utf8');
+const yellow = radiation.match(/\bWaterBaseColorB = new Color\(([\d.]+)f, ([\d.]+)f, ([\d.]+)f,/)?.slice(1).map(Number);
+const eyes = config.upgrade.illumination.color;
+if (!yellow) errors.push('runtime: RadiationMaterials.WaterBaseColorB (the softened radiation yellow) not found');
+else if (!same(yellow, [eyes.r, eyes.g, eyes.b])) errors.push(`catalog: upgrade.illumination ${[eyes.r, eyes.g, eyes.b]} must be the radiation yellow RadiationMaterials.WaterBaseColorB ${yellow}`);
 const patches = await readFile(resolve(scripts, 'ReactorBotPatches.cs'), 'utf8');
 for (const target of ['WalkerSpeedManager),nameof(WalkerSpeedManager.Tick)', 'Deteriorable),nameof(Deteriorable.Tick)', 'CitizenTint),nameof(CitizenTint.UpdateTint)'])
   if (!patches.includes(target)) errors.push(`runtime: ReactorBotPatches.cs no longer patches ${target}`);

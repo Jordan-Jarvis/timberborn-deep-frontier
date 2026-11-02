@@ -6,6 +6,7 @@
     "claims: other templates (vanilla, a required mod, or an optional mod from externalMods), by full template name. They go in the group's ToolGroupChildrenSpec.ChildrenToolsTemplateNames with DoNotIncludePlaceableToolGroup, which takes them out of their own group; their blueprints are not touched. A claimed template that is not loaded is skipped without a warning, and a group with no loaded tool is never created, so a group of an absent optional mod's tools does not appear.",
     "A group with claims lists its tools in ChildrenOrderedIds: claims in the order given, then templates. Otherwise templates keep their ToolOrder. A group holds either tools or sub-groups, not both.",
     "Left to right is the unlock order (user 2026-11-01; tools/validate_tool_order.mjs): inside a Deep Frontier group every tool, claims included, follows science ascending (ties: a tool whose products another tool consumes comes first, then the smaller footprint, then the lower one); a group's order puts it among its parent's buttons by its earliest unlock, at a place with the fewest science inversions against the vanilla and other-mod buttons there, whose own order is kept. Deep Frontier tools placed in a native group follow the same rule.",
+    "upgrades: a Deep Frontier building that upgrades another, by template name without the faction suffix -> the full template name of the building it upgrades (user 2026-11-02: the Reactor Charging Bay right next to the Charging Station). Its producer puts it in the base building's tool group with an order that stands it immediately to the base's right, and it is not listed in any group here. tools/validate_tool_order.mjs requires that adjacency and leaves the upgrade out of the science-order rules (its unlock still comes from its science); every other tool keeps them.",
     "nativeOrders: the complete order of a native group's tools, written as a same-path partial of that group's blueprint, {ToolGroupChildrenSpec: {ChildrenOrderedIds#append: [...]}} (ids get 10, 20, ...; #append keeps other mods' entries).",
     "externalMods: the non-Deep Frontier, non-vanilla templates claimed or ordered here, with the installed package they were read from, and each template's tool group, science (BuildingSpec.ScienceCost, for the menu order) and icon. optional mods are not in the manifest's RequiredMods. Flywheels keeps its blueprints in its asset bundle (read with UnityPy from AssetBundles/flywheels_win at 4.1.1.15): its template names swap Horizontal and Vertical against the display names, so the groups follow the display names."
   ],
@@ -62,7 +63,7 @@
     "DeepFrontierRocketry": { "parent": "Metal", "order": 50, "name": "Rocketry", "icon": "LaunchPad",
       "templates": ["MissionControl", "RocketAssemblyHangar", "LaunchPad"] },
     "DeepFrontierNuclearFuel": { "parent": "Metal", "order": 60, "name": "Nuclear fuel", "icon": "UraniumProcessingPlant",
-      "templates": ["UraniumProcessingPlant", "ReactorChargingBay", "RadioactiveWasteRefinery"] },
+      "templates": ["UraniumProcessingPlant", "RadioactiveWasteRefinery"] },
     "DeepFrontierPathPlatforms": { "parent": "Paths", "order": 25, "name": "Platforms", "icon": "Platform.IronTeeth",
       "claims": ["Platform.IronTeeth", "DoublePlatform.IronTeeth", "TriplePlatform.IronTeeth", "MetalPlatform3x3.IronTeeth", "MetalPlatform5x5.IronTeeth"] },
     "DeepFrontierSuspensionBridges": { "parent": "Paths", "order": 26, "name": "Suspension bridges", "icon": "SuspensionBridge3x1.IronTeeth",
@@ -105,6 +106,9 @@
       "templates": ["RadioactiveSludgeRecoveryPump", "RadioactiveSludgeOutfall", "RadioactiveWasteExport", "RadioactiveWasteVault"] },
     "DeepFrontierCivicServices": { "parent": "Wellbeing", "order": 135, "name": "Civic services", "icon": "Hospital",
       "templates": ["PublicHealthLab", "Restaurant", "GroceryStore", "Bathhouse", "Hospital"] }
+  },
+  "upgrades": {
+    "ReactorChargingBay": "ChargingStation.IronTeeth"
   },
   "nativeOrders": {
     "Storage": [

@@ -6,5 +6,8 @@
   },
   "LabeledEntitySpec": {
     "DescriptionLocKey": "Building.BotAssembler.DeepFrontierDescription"
+  },
+  "FrontierReactorBotAssemblySpec": {
+    "RecipeId": "IndustrialBot"
   }
 }

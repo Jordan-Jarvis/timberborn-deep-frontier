@@ -24,6 +24,12 @@ namespace DeepFrontier.Scripts.SuperBots {
   //             part, whose ConsumptionEffects fill its need; when all are
   //             full the bot becomes a Reactor Bot.
   //   Reactor:  replaced vanilla needs (Energy) disabled, reactor needs on.
+  //             A bot the Bot Assembler finishes from the Reactor Bot recipe
+  //             (ReactorBotAssembler) is born in this state, its reactor
+  //             needs full, as a finished retrofit leaves it.
+  //
+  // Skin: the reactor illumination (eyes and lamps) and, while the plating
+  // need is favourable, the steel plating tint.
   //
   // Need switches follow native ContaminationNeedEnabler (ResetNeed then
   // DisableNeed in InitializeEntity); Need.Enabled is not saved, so they are
@@ -37,6 +43,7 @@ namespace DeepFrontier.Scripts.SuperBots {
 
     private readonly ReactorBotSettings _settings;
     private readonly MaterialColorer _materialColorer;
+    private readonly ReactorBotAssemblyLine _assembly;
     private NeedManager _needs;
     private BonusManager _bonuses;
     private CharacterTint _tint;
@@ -49,8 +56,8 @@ namespace DeepFrontier.Scripts.SuperBots {
     public float SpeedMultiplier=>IsReactor?Spec.SpeedMultiplier:1f;
     private FrontierReactorBotSettingsSpec Spec=>_settings.Spec;
 
-    public ReactorBot(ReactorBotSettings settings, MaterialColorer materialColorer) {
-      _settings=settings;_materialColorer=materialColorer;
+    public ReactorBot(ReactorBotSettings settings, MaterialColorer materialColorer, ReactorBotAssemblyLine assembly) {
+      _settings=settings;_materialColorer=materialColorer;_assembly=assembly;
     }
 
     public void Awake() {
@@ -63,8 +70,13 @@ namespace DeepFrontier.Scripts.SuperBots {
       _needs.NeedChangedCriticalState+=OnNeedChangedCriticalState;
     }
 
+    // A newborn bot has no saved state; one born from the Reactor Bot recipe
+    // starts as a Reactor Bot with its reactor needs reset to full. On load
+    // the saved state and need points stand.
     public void InitializeEntity() {
-      ApplyNeeds(resetEnabled:false);
+      var assembled=_assembly.TakeBirth(this);
+      if(assembled)Current=State.Reactor;
+      ApplyNeeds(resetEnabled:assembled);
       if(IsReactor)ApplyUpgrade();
     }
 
@@ -89,19 +101,22 @@ namespace DeepFrontier.Scripts.SuperBots {
     public float PlatingWearMultiplier=>IsPlated?1f:Spec.UnplatedWearMultiplier;
     public float LifespanMultiplier=>IsReactor?Spec.LifespanMultiplier:1f;
 
-    // Gunmetal tint unless the player named the bot or its district after a
-    // colour (native CitizenTint then owns the tint); called after every
-    // native CitizenTint.UpdateTint (ReactorBotPatches) and on upgrade.
+    // Steel plating tint while plated, none while unplated, unless the player
+    // named the bot or its district after a colour (native CitizenTint then
+    // owns the tint); called after every native CitizenTint.UpdateTint
+    // (ReactorBotPatches), on upgrade and when the plating need changes.
     public void ApplyTint() {
       if(!IsReactor)return;
       var citizen=GetComponent<Citizen>();
       var name=GetComponent<NamedEntity>().EntityName;
       var district=citizen&&citizen.HasAssignedDistrict?citizen.AssignedDistrict.DistrictName:string.Empty;
       if(ColorParser.TryGetColorFromText(name,out _)||ColorParser.TryGetColorFromText(district,out _))return;
-      _tint.SetTint(Spec.Tint);
+      if(IsPlated)_tint.SetTint(Spec.Tint);
+      else _tint.DisableTint();
     }
 
     private void OnNeedChangedIsFavorable(object sender, NeedChangedIsFavorableEventArgs e) {
+      if(IsReactor&&e.NeedSpec.Id==Spec.PlatingNeedId) { ApplyTint(); return; }
       if(Current!=State.Queued||!Spec.RetrofitNeedIds.Contains(e.NeedSpec.Id))return;
       foreach(var id in Spec.RetrofitNeedIds)if(!_needs.NeedIsFavorable(id))return;
       Current=State.Reactor;
