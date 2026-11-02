@@ -88,15 +88,29 @@ namespace DeepFrontier.Scripts.MapSetup {
       return removed;
     }
 
-    private (bool valid, string detail, List<Vector3Int> foundations) Preview(string template, Placement placement) {
+    private (bool valid, string detail, List<Vector3Int> foundations, List<Vector3Int> cells) Preview(string template, Placement placement) {
       var preview = _previews.Create(_templates.GetAll<TemplateSpec>().Single(x => x.TemplateName == template).Blueprint.GetSpec<PlaceableBlockObjectSpec>());
       try {
         var block = preview.BlockObject;
         block.Reposition(placement);
         bool blocks = _validator.BlocksValid(block.PositionedBlocks);
         bool validators = _validation.AreValid(new BaseComponent[] { block }, out var message);
-        return (blocks && validators, "native blocks " + (blocks ? "valid" : "invalid") + ", validators " + (validators ? "valid" : "rejected: " + message),
-          block.PositionedBlocks.GetFoundationCoordinates().ToList());
+        string cells = "";
+        if (!blocks) {
+          // Which cells the native block rules refuse: terrain inside an occupied cell, other objects there,
+          // or a foundation with neither terrain nor a stackable object below.
+          var problems = new List<string>();
+          foreach (var b in block.PositionedBlocks.GetAllBlocks()) {
+            var c = b.Coordinates;
+            if (b.Occupation != BlockOccupations.None && _terrain.Underground(c)) problems.Add(c + " terrain");
+            var others = _blocks.GetObjectsAt(c).Where(o => o != block).Select(o => o.GetComponent<TemplateSpec>()?.TemplateName).ToList();
+            if (b.Occupation != BlockOccupations.None && others.Count > 0) problems.Add(c + " " + string.Join("/", others));
+            if (b.IsFoundationBlock && !_terrain.Underground(c + Vector3Int.back) && !_blocks.GetObjectsAt(c + Vector3Int.back).Any()) problems.Add(c + " nothing below");
+          }
+          cells = "; refused cells: " + string.Join(", ", problems.Take(12)) + (problems.Count > 12 ? " ... (" + problems.Count + ")" : "");
+        }
+        return (blocks && validators, "native blocks " + (blocks ? "valid" : "invalid") + ", validators " + (validators ? "valid" : "rejected: " + message) + cells,
+          block.PositionedBlocks.GetFoundationCoordinates().ToList(), block.PositionedBlocks.GetAllBlocks().Select(k => k.Coordinates).ToList());
       } finally {
         UnityEngine.Object.Destroy(preview.GameObject);
       }
@@ -130,7 +144,7 @@ namespace DeepFrontier.Scripts.MapSetup {
         var placement = new Placement(new Vector3Int(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2])),
           (Orientation)Enum.Parse(typeof(Orientation), parts[3]), new FlipMode(false));
         string mode = parts[4], subject = template + " at " + placement.Coordinates + " " + placement.Orientation;
-        int cleared = ClearNature(Preview(template, placement).foundations);
+        int cleared = ClearNature(Preview(template, placement).cells);
         var before = Preview(template, placement);
         Debug.Log($"{Tag} {subject}: {cleared} trees and bushes removed from the footprint");
         if (mode == "place") {
