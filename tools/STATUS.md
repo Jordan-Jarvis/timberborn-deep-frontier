@@ -15,6 +15,51 @@ Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 - **Offline renders** (game model and textures read at render time, never committed; Blender Cycles on the RTX 2060 with OptiX, BotURP emulated: base x tint, emission x 2 + 0.35 x tint): `outputs/reactor-bot-skin/reactor-bot-skin-sheet.png` (day and night: ordinary bot with cyan eyes; Reactor Bot plated, near-black gunmetal with radioactive-yellow eyes; unplated, the vanilla light body with yellow eyes).
 - **In game, to check:** a Reactor Bot (assembled or retrofitted, and one loaded from a save) has yellow eyes and a dark body by day and night; one out of plating shows the light body with yellow eyes, dark again after it takes steel; ordinary bots unchanged; the Bot Assembler dropdown shows "Reactor bot"; a save made with the assembler on the old recipe loads with "Reactor bot" selected. First Reactor Bot in a session: the textures are built once (expect a short hitch).
 
+## Neon green workplace windows while Reactor Bots work; worker-type study (Claude Code session, 2026-11-02, bot-light agent; mirror `botwork` on HEAD cb8fb87 + this change; compile-checked; not built or run in game)
+
+- **User:** "We have blue windows when the bots are doing stuff, we should make it neon green when nuclear bots do things." Also asked what a third worker-type option (Reactor Bots, furthest right) would take: a study, not an implementation (`docs/worker-types-study.md`).
+- **Native mechanism (decompiled 1.1.2.8, `Timberborn.WorkSystemUI`, `Timberborn.Illumination`):**
+  - A workplace whose blueprint has `WorkplaceIlluminatorSpec` gets `WorkplaceIlluminator`. Its `Illuminator` toggle is on while `Workplace.AnyWorkerHasJobRunning()`, checked every tick.
+  - It also gets `WorkerTypeIlluminator`, a priority-20 `IlluminatorColorizer` that sets `BotColors.BotIlluminationColor` (`Configurations/BotColors` `BotColorId` -> `IlluminationColor.Bot` 0.16/0.59/0.80) while `WorkerTypeHelper.IsBotWorkerType(WorkplaceWorkerType.WorkerType)`.
+  - `Illuminator.UpdateColor` shows the highest-priority colour. The other colorizers: `DefaultIlluminatorColor` 10, `TubeIlluminator` 40, and the player's `CustomizableIlluminator` 100.
+  - Blue therefore comes from the workplace's worker-type setting. Only bots can work at a Bot workplace: `Workplace.AssignWorker` throws on a worker-type mismatch. 34 of the 37 generated Deep Frontier workplaces carry `WorkplaceIlluminatorSpec` (not the Grocery Store, Restaurant or Hospital).
+- **Rule:**
+  - Green while at least one Reactor Bot assigned to the workplace has its job running: the native lights-on test (`Worker.JobRunning`) narrowed to Reactor Bots. Otherwise the native colour, so bot blue while only ordinary bots work.
+  - A mixed crew is green while a Reactor Bot is among those working. Beaver workplaces are never affected.
+  - A player-set light colour (priority 100) still wins.
+- **Runtime (`src/DeepFrontier/Scripts/SuperBots/ReactorBotWorkplaceLight.cs`, no Harmony):**
+  - `ReactorBotWorkplaceLight` is decorated on native `WorkplaceIlluminator`, beside `WorkerTypeIlluminator`, by its own `[Context("Game")]` configurator. `ReactorBotConfigurator.cs` and `ReactorBot.cs` are untouched.
+  - It creates a priority-30 colorizer on the workplace's `Illuminator`.
+  - It follows `Workplace.WorkerAssigned`/`WorkerUnassigned`, keeping each assigned worker's `ReactorBot` (every bot has one, beavers do not).
+  - Each tick it sets or clears the colour on a change of "any assigned `ReactorBot.IsReactor` with `Worker.JobRunning`". It implements `ILateTickable`, so it ticks after the entity's `WorkplaceIlluminator` (`TickableEntityLifecycleManager` orders late tickables last) and the tick that turns the lights on also sets the colour.
+  - Nothing is saved: on load, `Worker.InitializeEntity` re-employs through `AssignWorker` after every entity's `Awake`, so the list rebuilds.
+  - `ReactorBotColors` reads the singleton `FrontierReactorBotColorsSpec {WorkplaceColorId}` the way native `BotColors` reads `BotColorsSpec`, and throws if the colour is not generated (native `FindColorById` only warns).
+- **Data (`tools/reactor_bot_workplace_light.json`, written by `tools/reactor_bot_workplace_light_content.mjs`, run by canonical generation after the Reactor Bots step):**
+  - `Data/IlluminationColors/IlluminationColor.DeepFrontierReactorBotWorkplace` is neon green #39FF14 (0.224/1.0/0.078). It is not a player preset (no `IlluminationPresetSpec`), like the eye colour.
+  - `Data/Configurations/DeepFrontierReactorBotColors` holds the singleton.
+  - Canonical generation in the mirror changes exactly these two files.
+- **Checks (mirror `botwork`, HEAD cb8fb87 + this change):**
+  - `tools/compile-check`: 0 errors (3 earlier warnings).
+  - New `validate_reactor_bot_workplace_light.mjs`, covering:
+    - the catalog: neon green by hue, saturation and value, distinct from every vanilla colour and the Reactor Bot eye colour;
+    - both generated files, a single singleton and a unique colour id;
+    - the generator wiring;
+    - the runtime decorator, late tick, `IsReactor && JobRunning` test, bindings and no Harmony;
+    - the native contract, decompiled from the project's plugin assemblies: the priorities 20 and 100, highest-priority-wins, `AnyWorkerHasJobRunning`, the three `WorkSystemUIConfigurator` decorators, the late-tick order and the `AssignWorker` type check. The priority must lie strictly between the bot blue and the custom colour.
+  - The validator fails on priority 20 and on priority 100, on a missing `ILateTickable`, on an "any assigned" test without `JobRunning`, on the vanilla Green colour, on a blue colour, on an edited data file, and on unwired generation.
+  - `validate_all -Only` reactor_bot_workplace_light, super_bots, component_lifecycle, editor_guards, automation_content, vertical_slice_content, bot_upkeep, workforce_risks: 8/8. Full `validate_all -SkipBlender`: 68 of 70 pass (`no-game-assets` needs git and passes on this commit's private index; `audit-item-uses` is report-only).
+- **In game, to check (not run; the user was playing):**
+  1. Load a save with Reactor Bots, or make one: dev mode, finish a Reactor bot recipe at the Bot Assembler or a retrofit.
+  2. Set a lit workplace (for example a Lumber Mill or Smelter) to bots and let only ordinary bots work it: the windows glow blue.
+  3. Let a Reactor Bot work there: the windows turn neon green within a tick of it starting work. They go back to blue when it leaves and ordinary bots keep working, and off when nobody works.
+  4. Give the building a custom light colour: the custom colour shows whether or not Reactor Bots work there.
+  5. Save and reload while green: still green once work resumes.
+  6. A beaver workplace keeps its warm light.
+- **Worker-type study:** `docs/worker-types-study.md`. The game registers worker types by data (`WorkerTypeSpec`), but the toggle (`WorkerTypeToggle.Initialize`) builds exactly two buttons, and a worker's type comes from its character template, so a Reactor Bot is always "Bot".
+  - **Recommended Option 1:** a saved Deep Frontier "Reactor Bots only" setting on Bot workplaces, staffed like specialist workplaces (`SpecialistStaffing` plus the existing assigner registration prefixes), with a third slider button added by a postfix on `WorkerTypeToggle.Initialize`. About 2-3 days, medium risk, no save change.
+  - Options 2 (a native "ReactorBot" workplace type plus an `AssignWorker` patch) and 3 (Reactor Bots as their own worker type) are documented with what breaks.
+  - Three decisions for the user are listed there.
+
 ## Fisher Flag: fresh fish from their own flag; the Gatherer Flag's fishing mode removed (Claude Code session, 2026-11-02, fisher agent; mirror `fisher` on HEAD + this change; compile-checked and full validate_all in the mirror; not run in game yet)
 
 - **Player:** "One farm says it needs fresh fish to produce juvenile fish. The other says that it needs juvenile fish to produce fresh fish. The mod doesn't explain how to get them anywhere ... None of them catch either type of fish." **User:** "DO NOT just randomly put extra instructions somewhere ... make a fisher flag, that acts like the gatherer flag but is specifically for catching fish. The beaver will get the 'nothing to do in range' notification if the water is contaminated, too low, etc."

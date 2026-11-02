@@ -434,6 +434,9 @@ await (await import('./workforce_risk_content.mjs')).applyWorkforceRisks();
 await (await import('./bot_upkeep_content.mjs')).applyBotUpkeep();
 // Reactor Bots (tools/super_bots.json): parts, needs, upkeep goods and the charging bay.
 await (await import('./super_bot_content.mjs')).applySuperBots();
+// Reactor Bot workplace light (tools/reactor_bot_workplace_light.json): the neon green a workplace's
+// windows take while a Reactor Bot works there; its colour and the BotColors-style singleton.
+await (await import('./reactor_bot_workplace_light_content.mjs')).applyReactorBotWorkplaceLight();
 // Platformable flat roofs (tools/roof_decks.json, tools/roof_deck_content.mjs): a
 // design step after every building's blocks are final and before the connection
 // step, which offers roof faces only on stackable blocks.

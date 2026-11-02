@@ -1,0 +1,11 @@
+{
+  "IlluminationColorSpec": {
+    "Id": "DeepFrontierReactorBotWorkplace",
+    "Color": {
+      "r": 0.224,
+      "g": 1,
+      "b": 0.078,
+      "a": 1
+    }
+  }
+}

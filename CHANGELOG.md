@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Neon green windows where Reactor Bots work
+- **A workplace's windows now glow neon green while a Reactor Bot works there** (player request), where they used to glow the bot blue. Ordinary bots still light them blue, and beavers the usual warm light.
+- **With a mixed crew** the windows are green while at least one Reactor Bot is working, and blue again once only ordinary bots are.
+- A light colour you picked yourself for a building still takes priority.
+
 ### Fisher Flag: fresh fish come from one obvious place
 - **New Fisher Flag in the Food menu, right next to the Gatherer Flag.** A fisher walks to the shore in the flag's range and catches fresh fish where the water is clean and deep enough. Like the Gatherer Flag it needs no science; it costs 20 planks and 10 logs.
 - **When there is nothing to fish in range** (the water is too shallow, has dried up, is badwater or radioactive, or lies too far below the bank), the fisher shows the same "Nothing to do in range" status as the Gatherer Flag.
