@@ -7,10 +7,6 @@
     {"name": "_WaterPerformanceTest", "width": 256, "height": 256}
   ],
   "devMapsWhy": "The game's developer test maps (IsDev, empty loc keys; the new-game list shows them only in dev mode). Deep Frontier gives them no setup: a new game on one gets a notification and a log line saying so, and no objects or height. The names are their asset (GameObject) names in resources.assets; prepare_deep_frontier_map.py checks that the sizes match the game's dev maps.",
-  "vanillaMapObjects": {
-    "templates": ["UndergroundRuins"],
-    "why": "Vanilla map-editor objects (the game's TemplateCollection.MapEditor.Common) a variant may place besides the mod's own MapEditor objects. BuiltinMapSetup places every object through the map editor's native preview and placer, whichever collection it comes from; this list keeps the validated set explicit (prepare_deep_frontier_map.py and map_setup_content.mjs fail on any other vanilla object, and on a name that is not in the game's collection). UndergroundRuins: the vanilla Efficient Mine (5x5, ground core over the 5x5 ruins) is the only renewable scrap metal (ScrapMetal recipes from Treated Planks), and Metal Blocks are made only from scrap; a map whose own Underground Ruins cannot be reached gets one on dry, flat ground (Beaverome: both of its ruins lie on lake beds under 6 to 9 m of water)."
-  },
   "smallMap": {
     "maxArea": 2434,
     "referenceVariants": ["plains", "lakes", "terraces"],
@@ -34,13 +30,9 @@
     "devMap": "{0} is a developer test map: Deep Frontier adds no resources and keeps its height."
   },
   "unmetText": {
-    "why": "Player-facing lines for a variant's declared unmet loop items (the variant's 'reason' stays in the JSON, the validation evidence and docs/maps.md). Every missing building site of a map is folded into one line, sites with the buildings' enUS display names; every other item needs its line here, and map_setup_content.mjs fails on an item without one.",
+    "why": "Player-facing lines for a variant's declared unmet loop items: only items no ordinary play can provide (user 2026-11-01: \"No new game notice. People know how to play.\"). Gaps a player fixes by damming, draining, planting, irrigating, platforms or terraforming are declared \"playerWork\" instead: met, recorded in the validation evidence and docs/maps.md, no notice; their lines (fishing, farmland, trees, pines) were removed. The variant's 'reason' stays in the JSON, the validation evidence and docs/maps.md. Every missing building site of a map is folded into one line, sites with the buildings' enUS display names; every other item needs its line here, and map_setup_content.mjs fails on an item without one. No built-in map declares an unmet item since 2026-11-01.",
     "sites": "No ready space for: {0}. Level ground or build on platforms to make room before you need them.",
     "items": {
-      "shore fishing banks (first FreshFish)": "Fish: no river here is deep enough beside a dry bank for the Gatherer Flag to catch fish, and you need fish to start the Fish Hatchery, canned fish and fish oil. Dam a clean river until it is at least 0.5 m deep next to the bank.",
-      "irrigated farmland near the start": "Farmland: little irrigated land near the start. Irrigate more land with dams or pumps early so food does not run short.",
-      "trees near the start": "Wood: few trees near the start. Plant a forest early for logs and planks.",
-      "pines (resin) near the start": "Resin: few pines near the start. Plant pines early; their resin makes treated planks.",
       "Deep Drill sites beside Deep Ore Sources": "Deep ore: no ready space for a Deep Drill beside a Deep Ore Source. Level ground next to one so a drill can start your deep industry.",
       "finite deep ore covers one of each building": "Deep ore: the Deep Ore Sources run out before you can build one of each deep-ore building. Spend it carefully and get a Deep Mine running early.",
       "Human Record Caches in survey range of an Archive Excavation site": "Story: no Human Record Caches to survey, so their bonus artifacts and journal entries are missing. The Archive Excavation still digs up artifacts.",

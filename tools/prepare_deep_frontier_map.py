@@ -4,12 +4,11 @@ A variant is described by tools/map_variants/<id>.json: the source map, the
 output name/description, the height (Map Transformer MapHeight), explicit
 map-object placements (any template of the mod's MapEditor Common collection:
 veins, ore sources, outcrops, seams, Human Record Caches, the hard variant's
-spring; or a vanilla map-editor object listed in tools/map_setup.json
-vanillaMapObjects: Underground Ruins) and a checked site for every building of
-the Iron Teeth building collection that needs one (site_rule). A flat site may
-stand raised on stackable supports ("platformBlocks", platform_fill). The
-script copies the source map, resizes its height as Map Transformer does, appends the placements, writes the
-.timber and validates the result statically against the source terrain, water
+spring) and a checked site for every building of the Iron Teeth building
+collection that needs one (site_rule). A flat site may stand raised on
+stackable supports ("platformBlocks", platform_fill). The script copies the
+source map, resizes its height as Map Transformer does, appends the placements,
+writes the .timber and validates the result statically against the source terrain, water
 and entities, the mod's collections and the full-loop requirements
 (loop_coverage; docs/maps.md "Full game loop"). Nothing here normalizes or
 repairs inputs: an invalid placement, an unknown template or a changed source
@@ -40,9 +39,12 @@ A variant whose "output" is null is runtime-only: it is never written as a
 .timber; the built-in new-game setup applies it (builtin command). Its
 "height" holds only "totalHeight": the runtime keeps the map's stored terrain
 layers. A variant may declare "unmet": [{"item", "reason"}], loop-coverage
-items the map physically cannot provide; the check fails unless the failing
-items equal the declared ones exactly. Placement and site problems can never
-be declared. tools/map_loop_requirements.json "acceptedGaps" lists the
+items no ordinary play can provide (the new-game setup shows them in a
+notice), and "playerWork": [{"item", "reason"}], items the saved map lacks but
+a player provides with ordinary play (damming, draining, planting, irrigating,
+terraforming; no notice); such an item counts as met, with "ready": false and
+the reason in the evidence. The check fails unless the failing items equal the
+declared ones exactly. Placement and site problems can never be declared. tools/map_loop_requirements.json "acceptedGaps" lists the
 coverage items accepted on every map until a design decision; each is printed
 on every run.
 
@@ -88,9 +90,6 @@ RESOURCES_ASSETS = GAME / 'Timberborn_Data/resources.assets'
 BLUEPRINTS_ZIP = GAME / 'Timberborn_Data/StreamingAssets/Modding/Blueprints.zip'
 MOD_DATA = ROOT / 'src/DeepFrontier/Data'
 MAP_EDITOR_COLLECTION = MOD_DATA / 'TemplateCollections/TemplateCollection.MapEditor.Common.blueprint.json'
-VANILLA_MAP_EDITOR_COLLECTION = 'TemplateCollections/TemplateCollection.MapEditor.Common.blueprint.json'   # in Blueprints.zip
-# Built-in setup settings; also lists the vanilla map-editor objects a variant may place (vanillaMapObjects).
-MAP_SETUP = ROOT / 'tools/map_setup.json'
 MOD_MANIFEST = ROOT / 'src/DeepFrontier/manifest.json'
 DEPENDENCY_MANIFESTS = ROOT / 'tools/installed_dependency_manifests_1_1.json'
 ENTRY_ORDER = ['map_metadata.json', 'map_thumbnail.jpg', 'version.txt', 'world.json']
@@ -310,10 +309,8 @@ class TemplateCatalog:
         self.blueprints[name] = blueprint
         self.origin[name] = origin
 
-    def _map_editor_collection(self):
-        """TemplateName -> collection entry of every object a variant may place: the mod's MapEditor Common
-        objects, plus the vanilla map-editor objects listed in tools/map_setup.json vanillaMapObjects (each
-        must be in the game's own Common collection)."""
+    @staticmethod
+    def _map_editor_collection():
         spec = read_json(MAP_EDITOR_COLLECTION)['TemplateCollectionSpec']
         if spec['CollectionId'] != 'Common':
             fail(f'{MAP_EDITOR_COLLECTION} is not the Common collection')
@@ -323,18 +320,6 @@ class TemplateCatalog:
             if not path.is_file():
                 fail(f'MapEditor collection entry {entry} has no blueprint file {path}')
             result[read_json(path)['TemplateSpec']['TemplateName']] = entry
-        with zipfile.ZipFile(BLUEPRINTS_ZIP) as archive:
-            vanilla = read_json(archive.read(VANILLA_MAP_EDITOR_COLLECTION))['TemplateCollectionSpec']
-        if vanilla['CollectionId'] != 'Common':
-            fail(f'{VANILLA_MAP_EDITOR_COLLECTION} is not the Common collection')
-        entries = {f'vanilla:{entry}.json': entry for entry in vanilla['Blueprints']}
-        for name in read_json(MAP_SETUP)['vanillaMapObjects']['templates']:
-            entry = entries.get(self.origin.get(name))
-            if entry is None:
-                fail(f'{MAP_SETUP} vanillaMapObjects: {name} is not in the game\'s {VANILLA_MAP_EDITOR_COLLECTION}')
-            if name in result:
-                fail(f'{MAP_SETUP} vanillaMapObjects: {name} is already a mod MapEditor object')
-            result[name] = entry
         return result
 
     @staticmethod
@@ -838,8 +823,7 @@ def render_preview(model, path, marks=(), legend=()):
 
 PLACEMENT_COLOURS = {'DeepOreVein': (255, 190, 0), 'DeepOreSource': (255, 255, 0), 'RadioactiveSpringSource': (170, 255, 0),
                      'SandstoneOutcrop': (235, 150, 80), 'LimestoneOutcrop': (235, 235, 205), 'SandstoneSeam': (235, 150, 80),
-                     'LimestoneSeam': (235, 235, 205), 'HumanRecordCache': (255, 255, 255),
-                     'UndergroundRuins': (150, 150, 170)}
+                     'LimestoneSeam': (235, 235, 205), 'HumanRecordCache': (255, 255, 255)}
 STAGE_COLOURS = {'construction': (235, 170, 110), 'deepIndustry': (255, 130, 0), 'power': (255, 70, 255),
                  'narrative': (150, 200, 255), 'nuclear': (170, 255, 0), 'rocket': (0, 255, 255), 'space': (255, 255, 255)}
 
@@ -913,7 +897,7 @@ def load_variant(path):
     missing = [key for key in required if key not in variant]
     if missing:
         fail(f'{path}: missing keys {missing}')
-    unknown = set(variant) - set(required) - {'unmet'}
+    unknown = set(variant) - set(required) - {'unmet', 'playerWork'}
     if unknown:
         fail(f'{path}: unknown keys {sorted(unknown)}')
     expected_height = {'terrainLayers', 'totalHeight'} if variant['output'] is not None else {'totalHeight'}
@@ -922,9 +906,13 @@ def load_variant(path):
              f'({"written" if variant["output"] is not None else "runtime-only"} variant), found {sorted(variant["height"])}')
     if set(variant['mapSize']) != {'x', 'y'}:
         fail(f'{path}: mapSize must be {{"x", "y"}} (the source map size), found {variant["mapSize"]}')
-    for entry in variant.get('unmet', []):
-        if set(entry) != {'item', 'reason'} or not entry['reason'].strip():
-            fail(f'{path}: unmet entry {entry} needs exactly a loop-coverage "item" and a non-empty "reason"')
+    for key in ('unmet', 'playerWork'):
+        for entry in variant.get(key, []):
+            if set(entry) != {'item', 'reason'} or not entry['reason'].strip():
+                fail(f'{path}: {key} entry {entry} needs exactly a loop-coverage "item" and a non-empty "reason"')
+    both = {u['item'] for u in variant.get('unmet', [])} & {u['item'] for u in variant.get('playerWork', [])}
+    if both:
+        fail(f'{path}: {sorted(both)} declared both unmet and playerWork')
     return variant
 
 
@@ -960,7 +948,7 @@ def building_blocks(catalog, template):
 def new_entity(placement, catalog, variant_id, index):
     template = placement['template']
     if template not in catalog.map_editor_common:
-        fail(f'{template} is not a placeable map object (mod MapEditor Common collection or {MAP_SETUP.name} vanillaMapObjects)')
+        fail(f'{template} is not in the mod MapEditor Common collection')
     entity_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f'deep-frontier-map/{variant_id}/{index}/{template}'))
     block_object = {'Coordinates': {'X': placement['x'], 'Y': placement['y'], 'Z': placement['z']}}
     orientation = placement.get('orientation', 'Cw0')
@@ -1800,7 +1788,18 @@ def start_resources(model, catalog, requirements):
         if record['template'] == 'UndergroundRuins':
             cells = footprint(Blocks(blueprint['BlockObjectSpec']), record['coordinates'], record['orientation'])
             route, bridge_cells = route_to(model, cells)
-            underground.append({'at': list(record['coordinates']), 'routeFromStart': route, 'bridgeCells': bridge_cells})
+            entry = {'at': list(record['coordinates']), 'routeFromStart': route, 'bridgeCells': bridge_cells, 'underWater': None}
+            lakes = {int(labels[y, x]) for x, y in cells if labels[y, x] >= 0}
+            if lakes:
+                # Ruins on a lake bed: the player drains the water over them before a mine can stand there.
+                lake = {(int(x), int(y)) for value in lakes for y, x in zip(*np.nonzero(labels == value))}
+                shore, shore_bridges = route_to(model, lake)
+                entry['underWater'] = {
+                    'depth': round(max(float(model.water_depth[y, x]) for x, y in cells), 2),
+                    'contamination': round(max(float(model.water_contamination[y, x]) for x, y in cells), 2),
+                    'lakeCells': len(lake), 'lakeSourceStrength': round(sum(strength.get(v, 0) for v in lakes), 3),
+                    'shoreRouteFromStart': shore, 'shoreBridgeCells': shore_bridges}
+            underground.append(entry)
     return {
         'start': list(model.start),
         'cleanSourceStrength': round(sum(s[2] for s in water_source_cells(model, catalog, badwater=False)), 3),
@@ -2015,12 +2014,15 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
          f'building up to the {mines[0]} ({mine_science} science, ore renewable after it) needs '
          f'{int(round(collection_ore))}, {finite_needed} with the {requirements["finiteDeepOreMargin"]:.0%} margin')
     reachable_ruins = [u for u in resources['undergroundRuins'] if u['routeFromStart'] is not None]
-    placed_ruins = placed_ruin_mines(model, catalog, records, site_reports)
-    workable = [u for u in placed_ruins if u['ok']]
+    flooded = [u for u in resources['undergroundRuins'] if u['routeFromStart'] is None and u['underWater']]
+    drained = '; '.join(f'{tuple(u["at"])} under {u["underWater"]["depth"]} of water (contamination '
+                        f'{u["underWater"]["contamination"]}, lake of {u["underWater"]["lakeCells"]} cells, source strength '
+                        f'{u["underWater"]["lakeSourceStrength"]}, shore at route {u["underWater"]["shoreRouteFromStart"]})'
+                        for u in flooded)
     need('deepIndustry', 'renewable scrap (Underground Ruins for the Efficient Mine)',
-         len(reachable_ruins) + len(workable) >= requirements['minUndergroundRuinsReachable'],
-         f'{len(reachable_ruins)} reachable Underground Ruins of the map, {len(workable)} of {len(placed_ruins)} placed ones '
-         f'with an Efficient Mine site; ruins hold {resources["ruinScrap"]} scrap, one of each building '
+         len(reachable_ruins) >= requirements['minUndergroundRuinsReachable'],
+         f'{len(reachable_ruins)} Underground Ruins reachable on dry land, {len(flooded)} on lake beds'
+         + (f' ({drained})' if flooded else '') + f'; ruins hold {resources["ruinScrap"]} scrap, one of each building '
          f'needs {int(round(construction.get("ScrapMetal", 0)))}')
 
     # Every building that needs a site has a checked one (understructures: the policy minimum).
@@ -2057,46 +2059,10 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
     errors = [f'loop coverage [{i["stage"]}] {i["item"]}: {i["detail"]}' for i in items if not i['ok']]
     stages = [{'id': sid, 'title': title, 'ok': all(i['ok'] for i in items if i['stage'] == sid),
                'items': [i for i in items if i['stage'] == sid]} for sid, title in LOOP_STAGES]
-    report = {'stages': stages, 'startResources': resources, 'caches': caches, 'placedUndergroundRuins': placed_ruins,
+    report = {'stages': stages, 'startResources': resources, 'caches': caches,
               'program': {'missions': missions, 'allMissions': total, 'oneOfEachBuilding': rounded(construction),
                           'finiteDeepOre': finite, 'finiteDeepOreNeeded': finite_needed}}
     return report, errors
-
-
-def placed_ruin_mines(model, catalog, records, site_reports):
-    """Placed Underground Ruins (tools/map_setup.json vanillaMapObjects) and whether the vanilla Iron Teeth
-    mine can work them: the placement itself passed check_object and has a route (ground under every
-    block, ContinuousTerrainConstraint, no tree or other object), and the mine, whose ground core covers
-    the 5x5 ruins exactly, has a door approach on dry, free ground at the ruins' level outside every
-    primary site in at least one orientation."""
-    ruins = [r for r in records if r['template'] == 'UndergroundRuins']
-    if not ruins:
-        return []
-    mines = sorted(t for t, b in catalog.blueprints.items() if t.endswith('.IronTeeth') and 'UndergroundRuins'
-                   in b.get('UnderstructureConstraintSpec', {}).get('UnderstructureTemplateNames', []))
-    if len(mines) != 1:
-        fail(f'Expected one Iron Teeth building over UndergroundRuins, found {mines}')
-    blocks = Blocks(catalog.get(mines[0])['BlockObjectSpec'])
-    claimed = set()
-    for info in site_reports:
-        if not info['alternative'] and info['rule'] != 'hydro':
-            claimed |= set(info['_cells'])
-    placed_columns = {cell for r in records for cell in r['cells']}
-    result = []
-    for record in ruins:
-        x, y, z = record['coordinates']
-        corner = (min(cx for cx, _ in record['cells']), min(cy for _, cy in record['cells']))
-        doors = []
-        for orientation in ORIENTATIONS:
-            coordinates = mine_coordinates(blocks, corner, z, orientation)
-            if blocks.columns(coordinates, orientation) != record['cells']:
-                continue
-            door = approach_cell(blocks, coordinates, orientation)
-            if door and door[:2] not in claimed and not site_problems(model, {door[:2]}, door[2], placed_columns)[0]:
-                doors.append({'orientation': orientation, 'mineAt': list(coordinates), 'door': list(door)})
-        result.append({'label': record['placement']['label'], 'at': [x, y, z], 'mine': mines[0],
-                       'placementOk': record['ok'], 'mineSites': doors, 'ok': record['ok'] and bool(doors)})
-    return result
 
 
 def validate_content(variant, catalog, source, added):
@@ -2115,7 +2081,7 @@ def validate_content(variant, catalog, source, added):
         if template != placement['template']:
             problems.append(f'entity template {template} != placement {placement["template"]}')
         if template not in catalog.map_editor_common:
-            problems.append(f'{template} is not a placeable map object (mod MapEditor Common collection or {MAP_SETUP.name} vanillaMapObjects)')
+            problems.append(f'{template} is not in TemplateCollection.MapEditor.Common')
         blueprint = catalog.get(template)
         blocks = Blocks(blueprint['BlockObjectSpec'])
         c = entity['Components']['BlockObject']['Coordinates']
@@ -2286,29 +2252,37 @@ def map_size_errors(variant, source):
 
 
 def resolve_declared_gaps(variant, report, errors):
-    """Loop-coverage items the variant declares unmet ("unmet") and the gaps accepted on every map
-    (tools/map_loop_requirements.json acceptedGaps) leave the error list and are reported. Every other
-    error stays. A declared item that is met, or that names no coverage item, is itself an error."""
+    """Loop-coverage items the variant declares unmet ("unmet") or solvable by ordinary play ("playerWork"),
+    and the gaps accepted on every map (tools/map_loop_requirements.json acceptedGaps), leave the error
+    list and are reported. A "playerWork" item then counts as met: its coverage entry gets "ready": false
+    and the reason, and its stage is re-evaluated. Every other error stays. A declared item that is met,
+    or that names no coverage item, is itself an error."""
     requirements = load_loop_requirements()
     gaps = {g['item']: g['why'] for g in requirements['acceptedGaps']}
-    declared = {u['item']: u['reason'] for u in variant.get('unmet', [])}
     items = {i['item']: (stage['id'], i) for stage in report['loopCoverage']['stages'] for i in stage['items']}
     remaining = list(errors)
-    report['declaredUnmet'], report['acceptedGaps'] = [], []
-    for item, reason in declared.items():
-        if item in gaps:
-            remaining.append(f'unmet item {item!r} is an accepted gap of every map; do not declare it per map')
-            continue
-        if item not in items:
-            remaining.append(f'unmet item {item!r} is not a loop-coverage item of this map')
-            continue
-        stage, info = items[item]
-        if info['ok']:
-            remaining.append(f'unmet item {item!r} is met ({info["detail"]}); remove the declaration')
-            continue
-        prefix = f'loop coverage [{stage}] {item}: '
-        remaining = [e for e in remaining if not e.startswith(prefix)]
-        report['declaredUnmet'].append({'item': item, 'stage': stage, 'detail': info['detail'], 'reason': reason})
+    report['declaredUnmet'], report['declaredPlayerWork'], report['acceptedGaps'] = [], [], []
+    for key, out, label in (('unmet', 'declaredUnmet', 'unmet'), ('playerWork', 'declaredPlayerWork', 'player-work')):
+        for entry in variant.get(key, []):
+            item, reason = entry['item'], entry['reason']
+            if item in gaps:
+                remaining.append(f'{label} item {item!r} is an accepted gap of every map; do not declare it per map')
+                continue
+            if item not in items:
+                remaining.append(f'{label} item {item!r} is not a loop-coverage item of this map')
+                continue
+            stage, info = items[item]
+            if info['ok']:
+                remaining.append(f'{label} item {item!r} is met ({info["detail"]}); remove the declaration')
+                continue
+            prefix = f'loop coverage [{stage}] {item}: '
+            remaining = [e for e in remaining if not e.startswith(prefix)]
+            report[out].append({'item': item, 'stage': stage, 'detail': info['detail'], 'reason': reason})
+    for entry in report['declaredPlayerWork']:
+        _, info = items[entry['item']]
+        info.update(ok=True, ready=False, playerWork=entry['reason'])
+    for stage in report['loopCoverage']['stages']:
+        stage['ok'] = all(i['ok'] for i in stage['items'])
     for item, why in gaps.items():
         if item in items and not items[item][1]['ok']:
             stage, info = items[item]
@@ -2323,6 +2297,8 @@ def print_gaps(variant, report):
         print(f'   ACCEPTED GAP (every map, pending a design decision): {gap["item"]}: {gap["detail"]}')
     for unmet in report['declaredUnmet']:
         print(f'   DECLARED UNMET: {unmet["item"]}: {unmet["detail"]} -- {unmet["reason"]}')
+    for work in report['declaredPlayerWork']:
+        print(f'   PLAYER WORK (met, no notice): {work["item"]}: {work["detail"]} -- {work["reason"]}')
 
 
 def build(variant_paths, catalog, out_dir=None, write=True):
@@ -2370,6 +2346,7 @@ def build(variant_paths, catalog, out_dir=None, write=True):
 # generated from the same variant JSON by tools/map_setup_content.mjs; this command validates the
 # variant against the state the runtime produces.
 
+MAP_SETUP = ROOT / 'tools/map_setup.json'
 VARIANTS_DIR = ROOT / 'tools/map_variants'
 
 
@@ -2482,6 +2459,7 @@ def builtin_coverage(variants, reports, catalog):
                      'sites': len(variant['sites']) if variant else 0,
                      'siteArea': report['siteArea'] if report else None,
                      'declaredUnmet': [u['item'] for u in report['declaredUnmet']] if report else None,
+                     'declaredPlayerWork': [u['item'] for u in report['declaredPlayerWork']] if report else None,
                      'errors': len(report['errors']) if report else None})
     summary = {'maps': maps, 'devMaps': setup['devMaps'], 'smallMapMaxArea': small['maxArea'],
                'referenceSiteArea': claimed, 'errors': errors}

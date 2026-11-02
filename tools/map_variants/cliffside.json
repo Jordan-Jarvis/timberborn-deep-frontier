@@ -51,5 +51,5 @@
     {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 18 cells south-west of the start", "x": 15, "y": 24, "z": 4, "orientation": "Cw90", "margin": 1, "openSides": ["N", "S", "E", "W"], "maxWaterDistance": 15},
     {"template": "DeepMine.IronTeeth", "label": "Deep Mine, 28 cells east of the start", "x": 60, "y": 25, "z": 8, "orientation": "Cw0", "margin": 1, "openSides": ["S", "E"], "understructure": [60, 25, 8]}
   ],
-  "unmet": [{"item": "shore fishing banks (first FreshFish)", "reason": "No bank satisfies ShoreFishing on the saved water: the only clean water at least 0.5 deep (51 cells, the bay at x46-58 y7-12, bed level 0, surface at most 0.53) is bordered by level-2 banks, 1.48 above the surface, beyond MaximumReachDown 1.25; all other clean water is shallower than 0.5. A player dam that raises the bay by about 0.25 would create banks."}]
+  "playerWork": [{"item": "shore fishing banks (first FreshFish)", "reason": "No bank satisfies ShoreFishing on the saved water: the only clean water at least 0.5 deep (51 cells, the bay at x46-58 y7-12, bed level 0, surface at most 0.53) is bordered by level-2 banks, 1.48 above the surface, beyond MaximumReachDown 1.25; all other clean water is shallower than 0.5. A player dam that raises the bay by about 0.25 would create banks."}]
 }

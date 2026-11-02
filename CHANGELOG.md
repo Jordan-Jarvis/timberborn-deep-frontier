@@ -9,9 +9,10 @@
 - Still true for old saves: anything standing on a roof deck or platform of the old, bigger building that the new one no longer has is removed on load with the game's loading notice (paths, platforms, steel decks and columns, small buildings). Re-lay paths to moved doors.
 
 ### Diorama, Cliffside and Beaverome can finish the game
-- **Diorama** now gets a Limestone Seam for the Limestone Quarry (east terrace), and has room for the Nuclear Reactor (the forested pocket south of the start; one low cell needs a Concrete Block under it) and the Cryogenic Liquefaction Plant. It no longer shows a "short of" notice.
-- **Cliffside** has flat room for the Nuclear Reactor on the plain west of the start: one Deep Ore Vein moved to the bench east of the river. Only the fishing notice remains (dam the deep bay a little higher).
-- **Beaverome** now gets both quarry seams, an **Underground Ruins on dry land** for the Efficient Mine (its own two lie under deep lake water, so scrap no longer runs out), and has room for the Uranium Processing Plant and the Nuclear Reactor (south-west shore, on about 40 Concrete Blocks). It no longer shows a "short of" notice.
+- **Diorama** now gets a Limestone Seam for the Limestone Quarry (east terrace), and has room for the Nuclear Reactor (the forested pocket south of the start; one low cell needs a Concrete Block under it) and the Cryogenic Liquefaction Plant.
+- **Cliffside** has flat room for the Nuclear Reactor on the plain west of the start: one Deep Ore Vein moved to the bench east of the river.
+- **Beaverome** now gets both quarry seams, and has room for the Uranium Processing Plant and the Nuclear Reactor (south-west shore, on about 40 Concrete Blocks). For lasting scrap, drain the lake over one of its own Underground Ruins (the shallower lies about 6 m down) and build an Efficient Mine there.
+- **No "short of" notice at the start of a new game** on any built-in map any more: everything those notices listed (fishing banks, farmland, trees, pines, hydro turbine sites, building space, Beaverome's scrap) can be made with ordinary play, such as dams, irrigation, forests, platforms and draining.
 - These changes apply to new games; existing saves keep their map objects.
 - Map checks: a large building's site may now stand on platforms, counted block by block, because the reactor and plants stand on any stackable block as well as ground. Deep Mine veins and quarry seams stay real ground.
 

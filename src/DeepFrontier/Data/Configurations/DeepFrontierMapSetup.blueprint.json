@@ -187,16 +187,6 @@
             "Orientation": "Cw0",
             "Good": "",
             "Amount": 0
-          },
-          {
-            "Template": "UndergroundRuins",
-            "Label": "Underground Ruins (Efficient Mine, 47 cells north-east of the start)",
-            "X": 116,
-            "Y": 120,
-            "Z": 12,
-            "Orientation": "Cw0",
-            "Good": "",
-            "Amount": 0
           }
         ]
       },
@@ -208,9 +198,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Canyon.1"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "LimestoneOutcrop",
@@ -392,9 +380,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Cliffside.1"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "DeepOreSource",
@@ -576,9 +562,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Craters.1"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "LimestoneOutcrop",
@@ -1124,9 +1108,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Hollows.1"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "LimestoneOutcrop",
@@ -1692,9 +1674,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.MountainRange.1"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "DeepOreVein",
@@ -1876,9 +1856,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Nomads.1"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "DeepOreVein",
@@ -2080,9 +2058,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Oasis.Sites"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "DeepOreVein",
@@ -2284,10 +2260,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Pillars.Sites",
-          "DeepFrontier.MapSetup.Unmet.Pillars.1"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "LimestoneOutcrop",
@@ -2671,11 +2644,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Pressure.1",
-          "DeepFrontier.MapSetup.Unmet.Pressure.2",
-          "DeepFrontier.MapSetup.Unmet.Pressure.3"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "DeepOreVein",
@@ -3251,10 +3220,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.ThousandIslands.1",
-          "DeepFrontier.MapSetup.Unmet.ThousandIslands.2"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "DeepOreVein",
@@ -3436,9 +3402,7 @@
         "TotalHeight": 66,
         "SmallArea": false,
         "NoDeepMineSite": false,
-        "UnmetLocKeys": [
-          "DeepFrontier.MapSetup.Unmet.Waterfalls.1"
-        ],
+        "UnmetLocKeys": [],
         "Placements": [
           {
             "Template": "LimestoneOutcrop",

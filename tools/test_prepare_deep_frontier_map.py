@@ -126,10 +126,15 @@ def platforms_under_quarry(v):
     site(v, 'LimestoneQuarry.IronTeeth')['platformBlocks'] = 3
 
 
-def vanilla_object_not_listed(v):
-    # Only the vanilla map-editor objects of tools/map_setup.json vanillaMapObjects may be placed.
+def vanilla_object_placed(v):
+    # The setup adds Deep Frontier's own map objects only, never base-game content (user 2026-11-01).
     s = site(v, 'SteelMill.IronTeeth')
-    v['placements'].append({'template': 'Blockage', 'label': 'blockage', 'x': s['x'], 'y': s['y'] - 3, 'z': s['z']})
+    v['placements'].append({'template': 'UndergroundRuins', 'label': 'ruins', 'x': s['x'], 'y': s['y'] - 6, 'z': s['z']})
+
+
+def player_work_for_met_item(v):
+    # Plains has shore fishing banks: declaring them player work is stale data.
+    v['playerWork'] = [{'item': 'shore fishing banks (first FreshFish)', 'reason': 'dam a river'}]
 
 
 def one_vein(v):
@@ -175,7 +180,8 @@ CASES = [
     ('platform blocks miscounted', platforms_miscounted, 'platform blocks 0 != declared 5'),
     ('raised site below its terrain', raised_below_terrain, 'is above the raised level'),
     ('platforms under a quarry', platforms_under_quarry, 'MapError'),
-    ('vanilla object not in vanillaMapObjects', vanilla_object_not_listed, 'MapError'),
+    ('vanilla map object placed', vanilla_object_placed, 'MapError'),
+    ('player work declared for a met item', player_work_for_met_item, "player-work item 'shore fishing banks (first FreshFish)' is met"),
 ]
 
 failures = 0

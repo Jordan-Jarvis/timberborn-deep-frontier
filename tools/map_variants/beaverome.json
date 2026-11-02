@@ -6,7 +6,7 @@
   "height": {"totalHeight": 66},
   "mapSize": {"x": 192, "y": 192},
   "hardVariant": false,
-  "description": "Beaverome (192x192), a bowl of shallow lakes and narrow sloping shores with little flat ground: the start shore holds the pits, the limestone quarry and small workshops, the sandstone quarry lies on the level-13 south shore, two Deep Ore Veins with Deep Mine sites on the level-12 north-west shore, two Deep Ore Sources with Deep Drill sites east and north of the start, an Underground Ruins on the level-12 north-east shore for the Efficient Mine (both of the map's own lie under 6 to 9 m of lake water), the Nuclear Reactor on the level-11 south-west shore on 39 platform blocks beside the Cryogenic Liquefaction Plant, and the five Human Record Caches around one Archive Excavation in the south-east.",
+  "description": "Beaverome (192x192), a bowl of shallow lakes and narrow sloping shores with little flat ground: the start shore holds the pits, the limestone quarry and small workshops, the sandstone quarry lies on the level-13 south shore, two Deep Ore Veins with Deep Mine sites on the level-12 north-west shore, two Deep Ore Sources with Deep Drill sites east and north of the start, the map's two Underground Ruins under 6.2 and 8.6 m of lake water (drain one for the Efficient Mine), the Nuclear Reactor on the level-11 south-west shore on 39 platform blocks beside the Cryogenic Liquefaction Plant, and the five Human Record Caches around one Archive Excavation in the south-east.",
   "placements": [
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 1 (Limestone Pit, by the start)", "x": 77, "y": 96, "z": 12},
     {"template": "LimestoneOutcrop", "label": "Limestone Outcrop 2 (Limestone Pit, by the start)", "x": 78, "y": 99, "z": 12},
@@ -24,8 +24,7 @@
     {"template": "HumanRecordCache", "label": "Buried records 101 cells south-east of the start", "x": 172, "y": 50, "z": 10, "orientation": "Cw0"},
     {"template": "HumanRecordCache", "label": "Buried records 98 cells south-east of the start", "x": 169, "y": 53, "z": 13, "orientation": "Cw90"},
     {"template": "LimestoneSeam", "label": "Limestone Seam (Limestone Quarry, 13 cells south of the start)", "x": 83, "y": 79, "z": 12, "orientation": "Cw0"},
-    {"template": "SandstoneSeam", "label": "Sandstone Seam (Sandstone Quarry, 49 cells south of the start)", "x": 95, "y": 45, "z": 13, "orientation": "Cw0"},
-    {"template": "UndergroundRuins", "label": "Underground Ruins (Efficient Mine, 47 cells north-east of the start)", "x": 116, "y": 120, "z": 12, "orientation": "Cw0"}
+    {"template": "SandstoneSeam", "label": "Sandstone Seam (Sandstone Quarry, 49 cells south of the start)", "x": 95, "y": 45, "z": 13, "orientation": "Cw0"}
   ],
   "sites": [
     {"template": "LimestonePit.IronTeeth", "label": "Limestone Pit, by the start", "x": 80, "y": 98, "z": 12, "orientation": "Cw90", "margin": 1, "openSides": ["N", "W"]},
@@ -51,5 +50,5 @@
     {"template": "NuclearReactor.IronTeeth", "label": "Nuclear Reactor, 88 cells south-west of the start (on 39 platform blocks)", "x": 37, "y": 26, "z": 11, "orientation": "Cw180", "margin": 1, "openSides": ["S", "W"], "platformBlocks": 39, "maxWaterDistance": 15},
     {"template": "UraniumProcessingPlant.IronTeeth", "label": "Uranium Processing Plant, 80 cells north-west of the start", "x": 42, "y": 162, "z": 12, "orientation": "Cw0", "margin": 1, "openSides": ["E"]}
   ],
-  "unmet": []
+  "playerWork": [{"item": "renewable scrap (Underground Ruins for the Efficient Mine)", "reason": "Both Underground Ruins lie on lake beds with no dry cell beside them: (117, 41, 3) under 6.2 of clean water in the 11,197-cell lake fed by sources of strength 33.5, whose shore is beside the start (route 0), and (149, 137, 0) under 8.6 of badwater (3,682-cell lake, shore at route 69). A player drains the lake over one, the shallower first, and builds the Efficient Mine on it (vanilla Beaverome: its builders \"drained seven mighty craters\"); until then scrap comes from the surface ruins (5,340)."}]
 }
