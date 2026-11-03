@@ -243,6 +243,14 @@
       }
     },
     "familyGoodsNote": "Progression sets (user 2026-10-31, docs/progression.md \"Progression sets\"): the stage decides which good of each ladder stands in for wood, metal and masonry. Early (T1): Plank and Log, metal as Gear. Industrial (T2): Plank, Metal Block and Deep Iron (DeepAlloy). Transition (T3): Plank and Treated Plank, Metal Block, Deep Iron and Steel (HighGradeSteel). Frontier (T4): Treated Plank, Alloy and Machine Core. Endgame (T5): Treated Plank, Alloy, Machine Core, Electronics and Power Module. Ratios are units. A machinery good named here (Gear, MachineCore) keeps its fixed basis amount and adds the family share on top. T1 is the pre-concrete stage. brick is Brick in every tier (user 2026-10-30, bricks pass): Plaster_Orange.IronTeeth, the one brick-red native surface, and DFIndustrial06, the mod's painted brick tile (2026-10-31: brick walls, plinths and footings), price as Brick; bricks exist from 600 science (Stone Crusher and Cement Kiln), so a building unlocked earlier must show under minFamilyShare of it.",
+    "familyGoodsOverrides": {
+      "Hospital": {
+        "families": {
+          "metal": "T3"
+        },
+        "reason": "User 2026-11-03: \"Can we remove machine cores and alloy from the requirements to build the hospital?\" The Hospital cures irradiated beavers and must stay reachable before radioactive tides (cycle 15 by default), so its metal is priced in the transition goods (Metal Block, Deep Iron, Steel) instead of the frontier Alloy and Machine Core. Its science (50,000, frontier) and its material value are unchanged."
+      }
+    },
     "materials": {
       "BaseMetal.IronTeeth": "metal",
       "BaseWood_Brown.Folktails": "wood",

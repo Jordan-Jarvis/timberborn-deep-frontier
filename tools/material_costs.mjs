@@ -17,6 +17,9 @@
 // A tier's familyGoods follow the progression sets (docs/progression.md
 // "Progression sets"); a machinery good named there (Gear for early metal,
 // Machine Core from the frontier) adds the family's share to its fixed amount.
+// materialRule.familyGoodsOverrides lets one building price a family in an
+// earlier stage's goods, with its reason (the Hospital's metal at T3: it must
+// stay reachable before radioactive tides); its value is unchanged.
 //
 // The value table and the recipe/producer graph come from the generated data
 // and are recorded in tools/material_cost_context.json:
@@ -54,6 +57,37 @@ for (const [tier, families] of Object.entries(rule.familyGoods)) {
     for (const [g, ratio] of Object.entries(goods)) if (!(ratio > 0)) throw new Error(`materialRule.familyGoods.${tier}.${f}.${g}: ratio must be positive`);
   }
 }
+// Per-building family goods (materialRule.familyGoodsOverrides; user
+// 2026-11-03, the Hospital): a building may price a family in an earlier
+// stage's goods, with the reason. The family's value is unchanged; every good
+// the override names must be producible in the building's world.
+const OVERRIDES = rule.familyGoodsOverrides;
+if (!OVERRIDES || typeof OVERRIDES !== 'object' || Array.isArray(OVERRIDES)) throw new Error('materialRule.familyGoodsOverrides must be an object (empty when no building overrides a family)');
+for (const [id, entry] of Object.entries(OVERRIDES)) {
+  const keys = Object.keys(entry ?? {}).sort().join();
+  if (keys !== 'families,reason') throw new Error(`materialRule.familyGoodsOverrides.${id} must have exactly families and reason`);
+  if (typeof entry.reason !== 'string' || !entry.reason.trim()) throw new Error(`materialRule.familyGoodsOverrides.${id}: the reason is required`);
+  if (!Object.keys(entry.families).length) throw new Error(`materialRule.familyGoodsOverrides.${id}: families is empty`);
+  for (const [f, tier] of Object.entries(entry.families)) {
+    if (!FAMILIES.includes(f)) throw new Error(`materialRule.familyGoodsOverrides.${id}: unknown family ${f}`);
+    if (!tierNames.includes(tier)) throw new Error(`materialRule.familyGoodsOverrides.${id}.${f}: unknown tier ${tier}`);
+  }
+}
+export const familyGoodsOverrides = OVERRIDES;
+// The family goods of one building at its tier: the tier's familyGoods, with
+// the building's overridden families taken from the earlier tier it names.
+export function familyGoodsFor(id, tierName) {
+  const templates = rule.familyGoods[tierName];
+  if (!templates) throw new Error(`${id}: unknown tier ${tierName}`);
+  const override = OVERRIDES[id];
+  if (!override) return templates;
+  const out = {...templates};
+  for (const [f, tier] of Object.entries(override.families)) {
+    if (!(tierNames.indexOf(tier) < tierNames.indexOf(tierName))) throw new Error(`materialRule.familyGoodsOverrides.${id}.${f}: ${tier} is not an earlier stage than the building's ${tierName}`);
+    out[f] = rule.familyGoods[tier][f];
+  }
+  return out;
+}
 export const MACHINERY = new Set(rule.machinery);
 // A machinery good may also stand in for a family (progression sets: Gear for
 // early metal, Machine Core from the frontier): its basis amount stays fixed
@@ -62,7 +96,10 @@ export const MACHINERY = new Set(rule.machinery);
 export const MATERIAL_GOODS = new Set(Object.values(rule.familyGoods).flatMap((t) => Object.values(t).flatMap((g) => Object.keys(g))).filter((g) => !MACHINERY.has(g)));
 // The families of a tier whose goods include a machinery good: their value in
 // a finished cost cannot be told apart from the fixed machinery amount.
-export const mergedFamilies = (tierName) => FAMILIES.filter((f) => Object.keys(rule.familyGoods[tierName][f]).some((g) => MACHINERY.has(g)));
+export const mergedFamilies = (id, tierName) => {
+  const templates = familyGoodsFor(id, tierName);
+  return FAMILIES.filter((f) => Object.keys(templates[f]).some((g) => MACHINERY.has(g)));
+};
 if (!(rule.minFamilyShare >= 0 && rule.minFamilyShare < 1)) throw new Error('materialRule.minFamilyShare must lie in [0, 1)');
 for (const [material, family] of Object.entries(rule.materials)) {
   if (![...FAMILIES, 'unpriced', 'stone'].includes(family)) throw new Error(`materialRule.materials.${material}: unknown family ${family}`);
@@ -90,6 +127,7 @@ for (const [id, entry] of Object.entries(MIX_BASIS)) {
   if (!entry.measuredAt || !entry.families) throw new Error(`${MIX_BASIS_PATH} ${id}: needs families and measuredAt`);
   for (const f of Object.keys(entry.families)) if (![...FAMILIES, 'unpriced'].includes(f)) throw new Error(`${MIX_BASIS_PATH} ${id}: unknown family ${f}`);
 }
+for (const id of Object.keys(OVERRIDES)) if (!Object.hasOwn(materialMix, id)) throw new Error(`materialRule.familyGoodsOverrides.${id}: no measured material mix for this building`);
 export const pricedFamilies = (id) => (MIX_BASIS[id] ?? materialMix[id]).families;
 
 // Embodied recipe effort (materialRule.value) over a set of recipes: primary
@@ -174,9 +212,12 @@ const ceil5 = (x) => Math.max(5, Math.ceil(x / 5 - 1e-9) * 5);
 export function materialComposition(id, rows, science, tierName) {
   if (!Object.hasOwn(materialMix, id)) throw new Error(`${id}: no measured material mix in ${MIX_PATH} (run tools/asset-pipeline/measure_building_materials.py)`);
   if (!Number.isInteger(science) || science < 0) throw new Error(`${id}: invalid science ${science}`);
-  const templates = rule.familyGoods[tierName];
-  if (!templates) throw new Error(`${id}: unknown tier ${tierName}`);
+  const templates = familyGoodsFor(id, tierName);
   const {available, producesDeposit} = world(id, science);
+  for (const f of Object.keys(OVERRIDES[id]?.families ?? {})) {
+    const missing = Object.keys(templates[f]).filter((g) => !available.has(g));
+    if (missing.length) throw new Error(`${id}: materialRule.familyGoodsOverrides ${f} names ${missing.join(', ')}, not producible without this building at ${science} science`);
+  }
   const value = (g) => materialValue(id, science, g);
   const area = Object.fromEntries(FAMILIES.map((f) => [f, pricedFamilies(id)[f] ?? 0]));
   const goodsOf = (f) => Object.entries(templates[f]).filter(([g]) => available.has(g));

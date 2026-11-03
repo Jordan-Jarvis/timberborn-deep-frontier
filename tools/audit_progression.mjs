@@ -23,6 +23,8 @@
 //   context must match the generated data; a family the rule could not price
 //   fails with its failure text ("concrete shown before Concrete exists"); a
 //   cost's material goods and family value shares must follow the rule.
+//   A family a building overrides (materialRule.familyGoodsOverrides) is
+//   checked in the earlier stage's goods it names.
 // - A recipe's products are available at max(its building, its ingredients
 //   and fuel). The cheapest such route wins; availability is that route's
 //   largest single unlock ("gate") and the summed science of the distinct
@@ -42,7 +44,7 @@ import {fileURLToPath} from 'node:url';
 import {resolve, relative} from 'node:path';
 import {catalog as costCatalog, rule as costRule, lategameCost, tierForScience, LATEGAME_IDS, PLANNED} from './lategame_costs.mjs';
 import {loadProgressionData, reachableWithout, MAP_SOURCES} from './progression_data.mjs';
-import {materialComposition, materialMix, materialRule, MATERIAL_GOODS, materialValue, mergedFamilies, deriveContext} from './material_costs.mjs';
+import {materialComposition, materialMix, MATERIAL_GOODS, materialValue, mergedFamilies, familyGoodsFor, familyGoodsOverrides, deriveContext} from './material_costs.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const data = resolve(root, process.argv[2] ?? 'src/DeepFrontier/Data');
@@ -228,6 +230,8 @@ const contextNow = JSON.stringify(await deriveContext(data), null, 1) + '\n';
 if (contextNow !== await readFile(resolve(root, 'tools/material_cost_context.json'), 'utf8')) fail('material-context-stale', {file: 'tools/material_cost_context.json', fix: 'node tools/material_costs.mjs --write, then regenerate'});
 const ruleBuildings = modBuildings.filter((b) => b.cost.length && !structures.has(b.id.replace(/\.IronTeeth$/, '')));
 for (const id of Object.keys(materialMix)) if (!ruleBuildings.some((b) => b.id === `${id}.IronTeeth`)) fail('material-mix-unknown', {building: id});
+// Every family-goods override names a building the material rule prices.
+for (const id of Object.keys(familyGoodsOverrides)) if (!ruleBuildings.some((b) => b.id === `${id}.IronTeeth`)) fail('material-override-unknown', {building: id});
 for (const b of ruleBuildings) {
   const id = b.id.replace(/\.IronTeeth$/, '');
   const mix = materialMix[id];
@@ -250,8 +254,11 @@ for (const b of ruleBuildings) {
   // Machine Core from the frontier) adds to the fixed machinery amount, so its
   // value cannot be read back from the cost: the other families are checked
   // against each other.
-  const merged = mergedFamilies(tier).filter((f) => comp.shares[f] > 0);
-  const mergedGoods = new Set(merged.flatMap((f) => Object.keys(materialRule.familyGoods[tier][f])));
+  // A family overridden to an earlier stage (materialRule.familyGoodsOverrides)
+  // is checked in that stage's goods.
+  const templates = familyGoodsFor(id, tier);
+  const merged = mergedFamilies(id, tier).filter((f) => comp.shares[f] > 0);
+  const mergedGoods = new Set(merged.flatMap((f) => Object.keys(templates[f])));
   const material = rows.filter(([g]) => MATERIAL_GOODS.has(g) && !mergedGoods.has(g));
   if (!material.length) continue;
   const total = material.reduce((sum, [g, a]) => sum + a * materialValue(id, b.science, g), 0);
@@ -259,7 +266,7 @@ for (const b of ruleBuildings) {
   const kept = Object.entries(comp.shares).filter(([f]) => !merged.includes(f)).reduce((sum, [, x]) => sum + x, 0);
   for (const [f, share] of Object.entries(comp.shares)) {
     if (merged.includes(f)) continue;
-    const familyGoods = new Set(Object.keys(materialRule.familyGoods[tier][f]));
+    const familyGoods = new Set(Object.keys(templates[f]));
     const actual = material.filter(([g]) => familyGoods.has(g)).reduce((sum, [g, a]) => sum + a * materialValue(id, b.science, g), 0) / total;
     if (Math.abs(actual - share / kept) > tolerance + 1e-9) fail('material-rule-share', {building: id, family: f, actual: +actual.toFixed(3), measured: +(share / kept).toFixed(3), tolerance: +tolerance.toFixed(3)});
   }

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### The Hospital no longer needs Alloy or Machine Cores
+- **The Hospital's metal is now Metal Blocks, Deep Iron and Steel** (player request: "Can we remove machine cores and alloy from the requirements to build the hospital?"): it costs 475 treated planks, 35 metal blocks, 20 deep iron, 20 steel, 440 concrete, 460 bricks and 180 gears, instead of 20 alloy and 5 machine cores for its metal. It cures irradiated beavers, so it should not wait on the frontier metal chain before radioactive tides arrive.
+- Its science (50,000) and the rest of its cost are unchanged, and no other building's cost changes.
+
 ## 0.8.5 (2026-11-02)
 
 ### Reactor meltdowns leave a flooded crater and flatten everything nearby
