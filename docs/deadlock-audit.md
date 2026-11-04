@@ -1,6 +1,6 @@
 # Deadlock audit
 
-Status 2026-11-03. User request: "Let's find anywhere the user can deadlock themselves and change the recipes up a bit. Please look through." Static audit of the generated Iron Teeth economy (vanilla plus Deep Frontier): recipes, construction costs, workplace upkeep, goods-consuming buildings, specialist training, food services, map resources and unlock order. One deadlock is fixed (D1). The rest are verified safe, accepted by design with a check that fails if they change, or proposed for a decision. None of it has been played in game; `tools/STATUS.md` records runtime verification.
+Status 2026-11-03. User request: "Let's find anywhere the user can deadlock themselves and change the recipes up a bit. Please look through." Static audit of the generated Iron Teeth economy (vanilla plus Deep Frontier): recipes, construction costs, workplace upkeep, goods-consuming buildings, specialist training, food services, map resources and unlock order. One deadlock is fixed (D1). The rest are verified safe or proposed for a decision. D3 and D4, first accepted by design, were closed the same day by the recharge of empty Deep Ore Sources (docs/progression.md "Deep Ore Source recharge"). None of it has been played in game; `tools/STATUS.md` records runtime verification.
 
 The check is `tools/validate_deadlocks.mjs` (a validate_all check, `deadlocks`). It covers what `tools/audit_progression.mjs` does not model, so it does not repeat the audit's construction-good, recipe-input and bootstrap checks.
 
@@ -10,11 +10,11 @@ The check is `tools/validate_deadlocks.mjs` (a validate_all check, `deadlocks`).
 |---|---|---|---|
 | D1 | The Deep Mine wore Steel drill bits, and Steel is made from mined deep ore | High: the permanent deep ore source, and all the late game behind it, stops for good | **Fixed**: Metal Block bits |
 | D2 | Technical School programs against the specialist-only buildings | (would be High) | Verified: no training supply needs its own specialists (after D1) |
-| D3 | The Deep Mine is built from finite deep ore (Deep Iron gate, Steel) | Low | Accepted by design; deep-ore item for the coordinator |
-| D4 | The quarries cost Deep Iron; renewable Deep Iron needs the Deep Mine, whose concrete lining needs quarry stone | Very low | Accepted; proposal P3 |
+| D3 | The Deep Mine is built from finite deep ore (Deep Iron gate, Steel) | Low | **Resolved** (2026-11-03): empty Deep Ore Sources recharge, so the mine can be rebuilt from the trickle |
+| D4 | The quarries cost Deep Iron; renewable Deep Iron needs the Deep Mine, whose concrete lining needs quarry stone | Very low | **Resolved** (2026-11-03): Deep Iron is renewable from recharged deep ore |
 | D5 | Contaminated water exists from the first radioactive tide (cycle 15), but nothing takes it before 300,000 science, and its storage cannot be deleted | Medium (stuck storage, no production stop) | Proposal P1 |
 | D6 | Reactor Bots can be made from 300,000 science, but they can only charge at the Reactor Charging Bay (400,000) | Low (recovers at 400,000) | Proposal P2 |
-| D7 | Deep ore: the Deep Drill and its finite sources | — | Items for the coordinator (the Deep Drill agent owns these files) |
+| D7 | Deep ore: the Deep Drill and its finite sources | — | **Done** (2026-11-03): water-only drill recipe, recharge, slow-source check |
 | S1-S13 | Soft risks that ordinary play or vanilla mechanics resolve | Low | No change; listed below |
 
 ### D1. Deep Mine drill bits (fixed)
@@ -38,19 +38,19 @@ The coordinator's rule: no training supply may depend on a building that needs t
 
 Recovered Telemetry before the first launch: Mission Control (75,000, beaver crew) makes Guidance Computers (4 Electronics, 2 Machine Cores, 2 Recovered Artifacts, 1 Grease) and Guidance telemetry (1 Guidance Computer, 2 Recovered Artifacts, 1 Metal Part). Its artifacts come from the Archive Excavation (25,000, open crew) or the Human Record Caches, so neither needs a flight engineer. The validator trains a discipline only from goods available without it, and fails if any program's goods need its own discipline (fault injection: Metallurgy needing Steel, and Mission Control without Guidance telemetry, both fail).
 
-### D3. The Deep Mine is built from finite deep ore (accepted by design)
+### D3. The Deep Mine is built from finite deep ore (resolved 2026-11-03)
 
 - **Chain:** the Deep Mine costs 80 Deep Iron (20 of them the gate that keeps the permanent mine behind the drill phase) and 60 Steel. Both come from deep ore, which is renewable only from a running Deep Mine.
 - **First mine:** built from drilled ore. The map check (`prepare_deep_frontier_map.py` `finiteDeepOreMargin`) holds the Deep Ore Sources at or above the deep ore of every building up to the mine plus 5%: 1,437 (1,509 with the margin) against 17,000-18,000 on every built-in map.
 - **Stuck case:** losing the last Deep Mine (a meltdown blast within 6 tiles, or deconstruction) after the sources are spent, with no Deep Iron and Steel in storage. A second mine is always built from the first (every map has at least two veins with mine sites).
-- **Check:** `rebuild:DeepMine.IronTeeth` and `finite-replacement:DeepOre` are accepted in `validate_deadlocks.mjs`, with this reason; each fails as stale when the design changes. The slow refill of the Deep Ore Sources (in progress, Deep Drill agent) removes the stuck case.
+- **Resolved:** an empty Deep Ore Source recharges 20 deep ore every 5 days (`DeepOreDepositSpec`), so a lost last mine (300 deep ore) can be rebuilt from the trickle: about 38 days on a two-source map, 25 on three. Deep ore is now a slow source in `validate_deadlocks.mjs`: renewable only through the recharge. The check `slow-replacement` requires the Deep Mine to be buildable and runnable at its unlock from the recharge alone. The two accepted entries failed as stale and are gone.
 
-### D4. Quarries and the Deep Mine's concrete lining (accepted)
+### D4. Quarries and the Deep Mine's concrete lining (resolved 2026-11-03)
 
 - **Chain:** each quarry costs 35 Deep Iron. Renewable Deep Iron comes from the Deep Mine, whose shaft lining is Concrete, and Concrete is 3 Sandstone + 2 Cement (3 Limestone + 1 Brick). With the pits spent, that stone is renewable only from the quarries.
 - **Stuck case:** the last Sandstone (or Limestone) Quarry is lost after both the outcrops and the Deep Ore Sources are spent, with no Concrete and no Deep Iron in storage.
 - **First build is fine:** the quarries (9,000) come before the mine (15,000) and take drilled Deep Iron.
-- **Check:** `rebuild:SandstoneQuarry.IronTeeth` and `rebuild:LimestoneQuarry.IronTeeth` are accepted with this reason. Proposal P3 would remove the loop.
+- **Resolved:** Deep Iron is renewable without the mine, from recharged deep ore (35 Deep Iron, 70 deep ore: about 9 days of a two-source map's recharge). The accepted entries failed as stale and are gone. Proposal P3 is no longer needed for D4; it would still let the mine run while the quarries are down.
 
 ### D5. Contaminated water before any consumer (proposal P1)
 
@@ -66,18 +66,18 @@ Recovered Telemetry before the first launch: Mission Control (75,000, beaver cre
 - **Effect:** Reactor Bots made between 300,000 and 400,000 run out of charge (the critical charge state: the native out-of-energy pose and -3 wellbeing) with nowhere to charge until the bay unlocks. This recovers once the bay is unlocked, so it is not a hard deadlock.
 - **P2:** move the Reactor Charging Bay from 400,000 to 300,000 science, with the plant that makes the cells. It is a declared upgrade of the Charging Station, so the menu-order rule keeps it beside the station. Its cost tier (T5) and its power (exempt, 5,000 hp) do not change. Taste: the 2026-11-01 science curve placed it at 400,000 on purpose.
 
-### D7. Deep ore items for the coordinator (Deep Drill agent's files, not edited here)
+### D7. Deep ore items (done 2026-11-03, docs/progression.md "Deep Ore Source recharge")
 
-1. The Deep Drill's recipe "1 Deep Ore + 3 Water → 1 Deep Ore" is a pass-through from the Deep Ore Source stockpile (being redesigned, with a slow refill).
+1. Done: the Deep Drill's recipe is 3 Water → 1 Deep Ore, each cycle's ore bored out of a Deep Ore Source in its district. The source is a deposit, no longer a stockpile haulers empty.
 2. **Deep ore spent outside the path to the Deep Mine** is not in the finite budget, which counts one of each building:
    - steel structures from 11,250 science: columns cost 20-120 Steel, the 3x3 decks 108 (about 250 deep ore each);
    - the Coal Power Plant from 10,000: 1 Coal per hour, a third of a deep ore, about 8 a day at full load;
    - Metallurgy training: 0.75 Deep Iron per hour while anyone studies, 1.5 deep ore.
 
-   The sources hold more than 15,000 beyond the 1,437 the path needs, so only deliberate heavy spending strands a settlement before the mine. Since D1, a running mine no longer needs ore-made goods, so once it runs the remaining stock no longer matters.
-3. D3: rebuilding the last Deep Mine needs deep ore; the refill resolves it.
-4. The quarries' 35 Deep Iron (9,000) come before the mine. A settlement that spends all deep ore before 9,000 and then its pit stone has no quarries, so no concrete, so no Deep Mine (725 Concrete): a double exhaustion, covered by the budget and resolved by the refill.
-5. `validate_deadlocks.mjs` classifies `DeepOre` as finite (`MAP_SOURCE_KIND`: "run out or refill slowly"). Keep it finite after the refill unless the refill alone is meant to sustain the late game. The Deep Drill's own upkeep (0.1 Metal Block) is renewable, and the map tool still fails if its bits ever embody deep ore.
+   The sources hold more than 15,000 beyond the 1,437 the path needs, so only deliberate heavy spending strands a settlement before the mine. Since D1, a running mine no longer needs ore-made goods, so once it runs the remaining stock no longer matters. If the stock is spent anyway, the recharge (8 deep ore a day on two sources, 12 on three) is what is left. It still reaches the mine (300 deep ore, about 38 days on two sources) and the Steel Mill (270). But one coal plant at full load day and night burns about the whole recharge of a two-source map, a 3x3 steel deck takes a month of it, and each metallurgist trained (16 study hours at 0.75 Deep Iron) takes 24 deep ore, three days of it. Spending off the path is the colony's choice; the finite budget stays one of each building up to the mine and ignores the recharge.
+3. D3: resolved by the recharge (above).
+4. The quarries' 35 Deep Iron (9,000) come before the mine. A settlement that spends all deep ore before 9,000 and then its pit stone has no quarries, so no concrete, so no Deep Mine (725 Concrete). This double exhaustion is covered by the budget, and the recharge resolves it: 70 deep ore, about 9 days on two sources.
+5. Decided: `validate_deadlocks.mjs` classifies `DeepOre` as a slow source (`MAP_SOURCE_KIND` `slow`), renewable only through the recharge. It must agree with the data: a good is slow exactly when a map-editor deposit of it recharges. The check `slow-replacement` requires a real supply (the Deep Mine) reachable from the recharge alone. The Deep Drill's recipe counts only as that map source, never as a free recipe. The Deep Drill's own upkeep (0.1 Metal Block) is renewable, and the map tool still fails if its bits ever embody deep ore.
 
 ### Soft risks (no change)
 
@@ -108,13 +108,14 @@ Recovered Telemetry before the first launch: Mission Control (75,000, beaver cre
 ## Model and checks (`tools/validate_deadlocks.mjs`)
 
 - **Operating goods:** a building runs only with its workplace upkeep (`FrontierWorkplaceUpkeepSpec`), the goods its native consumer uses (`GoodConsumingBuildingSpec`: fuel and supplies) and the Deep Well's bits (`DeepWellSpec`). A specialist-only building (`FrontierSpecialistWorkplaceSpec`) also needs its discipline to be teachable, from a school program (`FrontierSpecialistSchoolSpec`) whose supplies are available. These gate all of the building's recipes, so a good never comes first from its own building's output.
-- **Map sources:** each `MAP_SOURCES` good is classified finite (ruin scrap, pit stone, Deep Ore Sources) or renewable (shore fishing, contaminated water as a waste). A new map source fails until it is classified.
+- **Map sources:** each `MAP_SOURCES` good is classified finite (ruin scrap, pit stone), slow (deep ore: renewable only through the Deep Ore Sources' recharge, checked against the deposits that recharge) or renewable (shore fishing, contaminated water as a waste). A new map source fails until it is classified. A map source building's recipe that makes its own map good (the Deep Drill's) counts only as the map source.
 - **renewable-economy:** every building standing and no finite source. Every good the economy uses must still be made: recipe inputs and fuel, operating goods, construction goods, the supplies of every required discipline, and enough foods for the restaurant and grocery. Before D1, 25 goods failed, every one behind "DeepOre.Mine@DeepMine (needs HighGradeSteel to run)".
 - **discipline-trainable:** every required discipline can be taught from renewable goods without itself.
 - **operating-unlock:** at each Deep Frontier building's unlock, its operating goods, discipline and foods are producible (buildings unlocked by then, built from producible goods, finite sources allowed, without the building itself).
 - **rebuild:** with every other building standing and no finite source, each building's construction goods are made without it (goods already failing renewable-economy are not repeated).
-- **finite-replacement:** for each finite map good, a renewable producer of it can be built and run at its own unlock without that finite source (scrap: Efficient Mine 4,000; Sandstone and Limestone: quarries 9,000; deep ore: Deep Mine 15,000, accepted, D3).
-- **Accepted** (`ACCEPTED`, with reasons): `rebuild:DeepMine.IronTeeth`, `finite-replacement:DeepOre` (D3), `rebuild:SandstoneQuarry.IronTeeth`, `rebuild:LimestoneQuarry.IronTeeth` (D4). Each fails as stale when it stops failing.
+- **finite-replacement:** for each finite map good, a renewable producer of it can be built and run at its own unlock without that finite source (scrap: Efficient Mine 4,000; Sandstone and Limestone: quarries 9,000).
+- **slow-replacement:** for each slow map good, a producer other than its map source can be built and run at its own unlock from the recharge alone, with every finite source spent (deep ore: Deep Mine 15,000).
+- **Accepted** (`ACCEPTED`, with reasons): none since 2026-11-03. The D3 and D4 entries failed as stale once the recharge made deep ore renewable. An entry fails as stale when it stops failing.
 - **Fault injection** (mirror only; each fails): Deep Mine on Steel bits; Metallurgy needing Steel; Mission Control without Guidance telemetry; Deep Drill on Steel bits (operating-unlock at 1,000); Coal Power Plant at 1,000 science; Deep Ore Processor costing Deep Iron; a grocery list with only 2 foods available at its unlock. Unchanged data passes.
 - `node tools/validate_deadlocks.mjs [dataRoot] [--print]`; `--print` lists each discipline's training route and each finite good's renewable producers.
 - **Out of scope:** rates, workforce, power supply, water and radiation at runtime, map placement.

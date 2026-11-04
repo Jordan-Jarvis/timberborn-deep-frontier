@@ -4,6 +4,73 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Deep Drill bores Deep Ore Sources; empty sources recharge slowly (Claude Code session, 2026-11-03, orerefill agent; mirror `orerefill` on HEAD 70c37c4 + this change, others' uncommitted work pinned to HEAD; compile-checked; generated and validated; not built or run in game)
+
+- **User:** "make the deep drill something which replenishes every so often, in case the user doesn't make it in time to make the permanent solution. It should be painful though. And show as a cooldown or something." Then: "the recipe says it needs deep ore and water to produce deep ore? That makes no sense." Coordinator (user decision): the drill draws from any Deep Ore Source in its district, not a range.
+- **Design (docs/progression.md "Deep Ore Source recharge", docs/source-authoring.md):**
+  - **Recipe.** `Recipe.DeepOre` is 3 Water -> 1 Deep Ore. Same id, so saved drills keep their recipe and progress.
+  - **`DeepDrill` (new, `Scripts/DeepOre/DeepDrill.cs`, `DeepDrillSpec {GoodId}`).** A native `IManufactoryLimiter`:
+    - it takes the cycle's unit from a deposit in `MaxProductionProgressChange` and keeps it (saved `CycleOreDrawn`) until `ProductionFinished`;
+    - `ProductionEfficiency` is 0 while it holds none and no deposit of its district holds enough;
+    - the deposit is the nearest by `Accessible.FindRoadPath`, as `DistrictInventoryPicker.ClosestInventoryWithStock` picks, then the one holding most.
+  - **`DeepOreDeposit` (new, `DeepOreDepositSpec {GoodId, Capacity 10000, RechargeAmount 20, RechargeTimeInDays 5}`).** It replaces the source's `StockpileSpec`/`FixedStockpileSpec`; entrance and `BuildingAccessibleSpec` kept for the district. The amount is saved. Once empty, a native `ITimeTrigger` recharges 20 after 5 days and stops until the source is drilled empty again (the bush rule). Its progress is saved; the timer never runs in the map editor. New sources hold Capacity, as the native map editor fills a new fixed stockpile.
+  - **Panels (the game's own views).** Source: `RuinFragment` (ore left), `ResourceYieldFragment` (calendar-cycle icon, "5 days", progress, 20 Deep Ore; `resource-yield--inactive` while stocked), "Next 20 deep ore in N days." while recharging. Drill: the district's sources' ore, the soonest recharge once all are empty, or "No Deep Ore Source in the district.". Map editor: the native `FixedStockpileFragment` amount field (good dropdown hidden) with native undo.
+  - **Statuses.** Drill: "Deep Ore Sources recharging" (Empty, floating icon) and "No Deep Ore Source in the district" (NothingToDo, alert). No notices.
+- **Why not native gatherables (decompiled 1.1.2.8):** `GatherableYieldGrower` needs `Growable`/`LivingNaturalResource`/`DyingNaturalResource`; a gather empties the whole yield and regrowth restores the spec yield; `Yielder` amounts come only from the spec and are removed by flag workers, never by a manufactory.
+- **Numbers.**
+  - One Deep Ore Processor eats 42.7 Deep Ore a day on Deep Iron (2 workers, 16 h).
+  - One empty source gives 4 a day (9%); maps give 8 or 12.
+  - Deep Mine 300 Deep Ore, Steel Mill 270 (`ProgramModel`): about 38 days of recharge for the mine on a two-source map (25 on three), 71 (48) with the Steel Mill.
+  - Every building up to the mine, 1,437 Deep Ore: 180 or 120 days, against about 17 days of research from the drill to the mine.
+- **Map checks (`prepare_deep_frontier_map.py`, `map_loop_requirements.json`).**
+  - The finite budget ignores the recharge.
+  - New hard check `deepOreRechargeMinDays` 60: all drillable sources recharging must need at least 60 days for that budget's need. Every built-in map: 120-180 days (`loopCoverage.program.deepOreRecharge`).
+  - Placement checks read `DeepOreDepositSpec` and `DeepDrillSpec` (`deep_drill_bored`), keep the entrance check, and `build` writes `DeepFrontier.DeepOreDeposit {Amount}`.
+  - `map_setup_content.mjs` and `BuiltinMapSetup` set the amount through `DeepOreDeposit.SetAmount`.
+  - `MapLoopAcceptance` reads the deposit.
+- **Saves (statically reasoned, not loaded).**
+  - Native `EntitiesLoader` ignores saved components the template lost (`FixedStockpile`, `SingleGoodAllower`, other mods' stockpile parts).
+  - `DeepOreDeposit.Load` reads an old source's `Inventory:Stockpile` Deep Ore as its amount (native `GoodRegistry` serializer; another good is logged and dropped). This also covers the four map files built before.
+  - An emptied old source (nothing saved) starts recharging; empty sources never disappeared.
+  - A drill saved mid-cycle (progress above 0) keeps that cycle's ore.
+  - Old Deep Ore in a drill's inventory is ordinary output.
+  - The user's current save (read-only copy of `furrealsmira` day 17-16, Waterfalls) has both sources at 8,500, a drill 43 tiles from the nearest, and a built Deep Mine. If the sources share the drill's district it starts drilling, otherwise it shows the no-source status.
+- **Deadlock audit (coordinator, after 70c37c4).** `tools/validate_deadlocks.mjs`:
+  - `DeepOre` is now a slow source (`MAP_SOURCE_KIND` `slow`), renewable only through the recharge. It must match the map-editor deposits that recharge (`DeepOreDepositSpec` with a positive recharge), and it cannot be both finite and slow.
+  - A map source building's recipe that makes its own map good (the Deep Drill's) counts only as the map source, never as a free recipe.
+  - New `slow-replacement`: a producer besides the slow source (the Deep Mine) must be buildable and runnable at its unlock from the recharge alone.
+  - The four accepted entries (D3 `rebuild:DeepMine`, `finite-replacement:DeepOre`; D4 both quarries) failed as stale and are removed.
+  - `docs/deadlock-audit.md`: D3 and D4 resolved, D7 done, model section updated. The off-path deep ore (steel structures, coal plant, metallurgy, the quarries' 35 Deep Iron) and how the recharge covers it are in docs/progression.md.
+- **Costs.** None change. `material_costs --write` changes only the recorded `DeepOre` recipe; the material rule still values Deep Ore at 1 in every world (3 Water at 0.33 plus time is 1.03), and `lategame_costs --check` passes.
+- **Files:**
+  - `Scripts/DeepOre/DeepOreDeposit.cs`, `DeepDrill.cs`, `DeepOrePanels.cs` (new);
+  - `Scripts/MapSetup/BuiltinMapSetup.cs`, `MapSetupSpecs.cs`, `MapLoopAcceptance.cs`, `DeepFrontierRuntime.cs`;
+  - `tools/create_vertical_slice_content.mjs`, `validate_vertical_slice_content.mjs`, `prepare_deep_frontier_map.py`, `test_prepare_deep_frontier_map.py`, `map_loop_requirements.json`, `map_setup_content.mjs`, `automation_content.json` (`DeepDrillSpec` Off response), `progression_data.mjs`, `validate_deadlocks.mjs`, `material_cost_context.json`;
+  - generated `DeepDrill`, `DeepOreSource`, `Recipe.DeepOre`, `enUS.csv`;
+  - docs: progression, maps, source-authoring, implementation-plan, deadlock-audit;
+  - Timberborn skill `verified-findings.md`.
+- **Checks:**
+  - **Compile.** `tools/compile-check` in the mirror: 0 errors.
+  - **Generation.** Canonical generation differs from HEAD only in the 4 generated files above, at a material-cost fixed point (`material_costs --check`).
+  - **Validators.** `validate_vertical_slice_content.mjs` checks: the water-only recipe; the deposit instead of a stockpile, with entrance and district access; recharge at most 1% of capacity; one source's daily recharge at most a tenth of one processor's hungriest daily Deep Ore.
+  - **Maps.** `prepare_deep_frontier_map.py builtin`: all 19 maps OK. `test_prepare_deep_frontier_map.py`: 24/24, with 2 new cases (wrong deposit good; recharge more than a trickle).
+  - **validate_all.** `-Only` automation_content, building_descriptions, component_lifecycle, editor_guards, map_setup, priority_statuses, single_inventory, inventory_enable_guard, load_order, preview_components, vertical_slice_content, workforce_risks, bot_upkeep, audit-progression, good_migrations, deep_frontier_manifest, status_icon_anchors: 17/17. `deadlocks` passes (DeepOre slow, Deep Mine reachable from the recharge, 0 accepted). Full `validate_all -SkipBlender` in the mirror on 70c37c4 + this change: 71 of 73 pass. `audit-item-uses` is report-only (0 of 51 goods need work). `no-game-assets` needs git, so it fails in the mirror; `check_no_game_assets.py` passes on this commit's tree.
+- **In game, to check (not run; the user is playing).** Use a copy of a save in a test settlement, never Memory Test autosaves the user plays in:
+  1. Select a Deep Ore Source:
+     - the panel shows its ore (native ruin row) and a greyed regrow row (calendar-cycle icon, "5 days", 20 deep ore);
+     - there is no stockpile inventory, and haulers never take from it.
+  2. Select (or build) a Deep Drill on the same path network, with water, power and Metal Block bits:
+     - its recipe shows 3 water -> 1 deep ore;
+     - the source's number drops by one per cycle;
+     - its panel shows the district's ore ("Deep ore in district sources (N)").
+  3. In the Map Editor, place a Deep Ore Source next to flat ground and set its amount field to 3 (Ctrl+Z restores the old value). Save, start a game on that map, connect the source and a Deep Drill by path, and let the drill empty it. Expected:
+     - the source shows "Next 20 deep ore in 5.0 days" with the progress rising;
+     - the drill shows the same recharge row and the status "Deep Ore Sources recharging" (Empty icon);
+     - at the fastest speed, after 5 days the source holds 20, the drill bores them out and waits again.
+  4. Save while the source recharges, reload: the progress and countdown continue where they were.
+  5. Delete the path to the source: the drill's status reads "No Deep Ore Source in the district" (alert).
+  6. Load a save from before this change (a copy): sources keep their ore, an emptied source starts its 5-day recharge, and drills work. `Player.log` shows no `[DeepFrontier]` errors.
+
 ## Deadlock audit: Deep Mine drill bits on Metal Block, tools/validate_deadlocks.mjs (Claude Code session, 2026-11-03, deadlock agent; mirror `deadlock` on HEAD 279e9ae + this change; generated and validated; not built or run in game)
 
 - **User:** "Let's find anywhere the user can deadlock themselves and change the recipes up a bit. Please look through." Coordinator: cover the Technical School programs against the specialist-only buildings (the beaver path must work without the Reactor Bot bypass); leave the Deep Drill and Deep Ore Source to the Deep Drill agent.

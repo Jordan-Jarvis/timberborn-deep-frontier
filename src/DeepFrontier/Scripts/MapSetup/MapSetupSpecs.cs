@@ -50,7 +50,7 @@ namespace DeepFrontier.Scripts.MapSetup {
     [Serialize] public int Z { get; init; }
     // Timberborn.Coordinates.Orientation name (Cw0, Cw90, Cw180, Cw270).
     [Serialize] public string Orientation { get; init; }
-    // Stockpile map objects (DeepOreSource) only: the fixed good and its amount; "" and 0 otherwise.
+    // Deep Ore Sources (DeepOreDepositSpec) only: the deposit's good and its amount; "" and 0 otherwise.
     [Serialize] public string Good { get; init; }
     [Serialize] public int Amount { get; init; }
   }

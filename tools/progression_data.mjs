@@ -14,7 +14,7 @@ const read = async (path) => JSON.parse(utf8.decode(await readFile(path)).replac
 // Goods gathered by a workplace rather than produced by a recipe.
 export const MAP_SOURCES = {
   ScrapMetal: {via: ['ScavengerFlag.IronTeeth'], note: 'vanilla Scavenger Flag at ruins (EfficientMine is the recipe route)'},
-  DeepOre: {via: ['DeepDrill.IronTeeth'], note: 'finite DeepOreSource marker (DeepDrill), then DeepMine over a DeepOreVein'},
+  DeepOre: {via: ['DeepDrill.IronTeeth'], note: 'Deep Ore Sources bored by the DeepDrill (finite; a slow recharge once empty), then DeepMine over a DeepOreVein'},
   Sandstone: {via: ['SandstonePit.IronTeeth'], note: 'finite SandstoneOutcrop yielders'},
   Limestone: {via: ['LimestonePit.IronTeeth'], note: 'finite LimestoneOutcrop yielders'},
   FreshFish: {via: ['FisherFlag.IronTeeth'], note: 'Fisher Flag shore fishing'},
@@ -118,8 +118,8 @@ export function reachableWithout({buildings, recipes, primary}, excluded, scienc
       if (!usable.has(b.id)) continue;
       for (const id of b.recipes) {
         const r = recipes.get(id);
-        // A recipe that consumes its own product (DeepOre from DeepOre) needs
-        // that good from another route first.
+        // A recipe that consumes its own product needs that good from another
+        // route first.
         if (!r || !recipeInputs(r).every((i) => have.has(i))) continue;
         for (const p of r.Products) if (!have.has(p.Id)) { have.add(p.Id); changed = true; }
       }

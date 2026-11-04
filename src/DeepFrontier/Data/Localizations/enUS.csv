@@ -1,6 +1,6 @@
 ID,Text,Comment
 Building.DeepDrill.DisplayName,Deep Drill,Deep Frontier
-Building.DeepDrill.Description,Draws deep ore from Deep Ore Sources in its district until they run out. Uses up metal blocks as drill bits; stops without them. Pipes: valve set to Fill.,Deep Frontier
+Building.DeepDrill.Description,"Bores deep ore out of the Deep Ore Sources in its district, the nearest first. Uses up metal blocks as drill bits; stops without them. Pipes: valve set to Fill.",Deep Frontier
 Building.DeepDrill.FlavorDescription,The first machine to bore into the deep sector. It will not be the last.,Deep Frontier
 Building.DeepMine.DisplayName,Deep Mine,Deep Frontier
 Building.DeepMine.Description,Mines deep ore without end. Build it over a Deep Ore Vein. Uses up metal blocks as drill bits and concrete as shaft lining; stops without them. Pipes: valve set to Fill.,Deep Frontier
@@ -9,8 +9,8 @@ Building.DeepProcessor.DisplayName,Deep Ore Processor,Deep Frontier
 Building.DeepProcessor.Description,"Refines deep ore into deep iron, coal, crude oil and uranium ore. Pipes: valves set to Fill and Extract.",Deep Frontier
 Building.DeepProcessor.FlavorDescription,The ore is useless until the surface factory learns how to tame it.,Deep Frontier
 Building.DeepOreSource.DisplayName,Deep Ore Source,Deep Frontier
-Building.DeepOreSource.Description,A finite deposit of deep ore. Deep Drills in the same district draw from it until it is empty.,Deep Frontier
-Building.DeepOreSource.FlavorDescription,"Once it is dug out, it is gone.",Deep Frontier
+Building.DeepOreSource.Description,"A deposit of deep ore for the Deep Drills of its district. Once empty, it recharges 20 deep ore every 5 days.",Deep Frontier
+Building.DeepOreSource.FlavorDescription,"It seeps back, but never fast enough.",Deep Frontier
 Building.DeepOreVein.DisplayName,Deep Ore Vein,Deep Frontier
 Building.DeepOreVein.Description,An endless vein of deep ore. Build a Deep Mine over it.,Deep Frontier
 Building.DeepOreVein.FlavorDescription,It never runs out. Reaching it is the hard part.,Deep Frontier
@@ -18,6 +18,13 @@ Good.DeepOre.DisplayName,Deep ore,Deep Frontier
 Good.DeepOre.PluralDisplayName,Deep ore,Deep Frontier
 Good.DeepAlloy.DisplayName,Deep iron,Deep Frontier
 Good.DeepAlloy.PluralDisplayName,Deep iron,Deep Frontier
+DeepFrontier.DeepDrill.Status.Recharging,Deep Ore Sources recharging,Deep Frontier
+DeepFrontier.DeepDrill.Status.NoSource,No Deep Ore Source in the district,Deep Frontier
+DeepFrontier.DeepDrill.Status.NoSource.Short,No deep ore source,Deep Frontier
+DeepFrontier.DeepDrill.Panel.DistrictOre,Deep ore in district sources ({0}),Deep Frontier
+DeepFrontier.DeepDrill.Panel.NoSource,No Deep Ore Source in the district.,Deep Frontier
+DeepFrontier.DeepOre.Recharge.Next,Next {0} deep ore in {1} days.,Deep Frontier
+DeepFrontier.DeepOre.Recharge.Rule,"Once empty, recharges {0} deep ore every {1} days.",Deep Frontier
 Good.Coal.DisplayName,Coal,Deep Frontier
 Good.Coal.PluralDisplayName,Coal,Deep Frontier
 Good.Chemical.DisplayName,Chemical,Deep Frontier

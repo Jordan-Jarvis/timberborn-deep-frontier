@@ -84,8 +84,10 @@ deepOreRecipe.RecipeSpec = {
   BackwardCompatibleIds: [],
   DisplayLocKey: 'Good.DeepOre.PluralDisplayName',
   CycleDurationInHours: 2 / 60,
+  // Water in, deep ore out: each cycle's ore comes out of a Deep Ore Source of the drill's district
+  // (DeepDrillSpec, Scripts/DeepOre/DeepDrill.cs), not from an inventory. Same id as before, so a
+  // saved drill keeps its recipe and progress.
   Ingredients: [
-    { Id: 'DeepOre', Amount: 1 },
     { Id: 'Water', Amount: 3 },
   ],
   Products: [{ Id: 'DeepOre', Amount: 1 }],
@@ -143,9 +145,8 @@ await writeJson(resolve(sourceRoot, 'Data', 'Recipes', 'Recipe.DeepAlloy.bluepri
 
 const efficientMine = await readJson(resolve(vanillaRoot, 'Buildings', 'Metal', 'EfficientMine', 'EfficientMine.IronTeeth.blueprint.json'));
 const deepDrill = clone(efficientMine);
-// The drill is fed from the authored DeepOreSource stockpile by haulers
-// (docs/source-authoring.md); EfficientMine's UndergroundRuins placement
-// constraint does not apply to it.
+// The drill bores the Deep Ore Sources of its district (DeepDrillSpec; docs/source-authoring.md);
+// EfficientMine's UndergroundRuins placement constraint does not apply to it.
 delete deepDrill.UnderstructureConstraintSpec;
 deepDrill.BuildingSpec = {
   ...deepDrill.BuildingSpec,
@@ -161,6 +162,7 @@ deepDrill.WorkplaceSpec = {
   WorkerTypeUnlockCosts: [{ WorkerType: 'Bot', ScienceCost: 2000 }],
 };
 deepDrill.ManufactorySpec = { ProductionRecipeIds: ['DeepOre'] };
+deepDrill.DeepDrillSpec = { GoodId: 'DeepOre' };
 deepDrill.TemplateSpec = {
   ...deepDrill.TemplateSpec,
   TemplateName: 'DeepDrill.IronTeeth',
@@ -309,6 +311,11 @@ useStudyModel(deepProcessor);
 await applyLategame(deepProcessor, 'DeepProcessor');
 await writeJson(resolve(sourceRoot, 'Data', 'Buildings', 'Metal', 'DeepProcessor', 'DeepProcessor.IronTeeth.blueprint.json'), deepProcessor);
 
+// Deep Ore Source recharge (docs/progression.md "Deep Ore Source recharge"; validated by
+// tools/validate_vertical_slice_content.mjs and tools/prepare_deep_frontier_map.py): 20 ore is about
+// half a day of one Deep Ore Processor making Deep Iron (42.7 ore a day at full crew), so one empty
+// source gives 4 ore a day, about a tenth of one processor; the Deep Mine stays the real supply.
+const DEEP_ORE_RECHARGE = { amount: 20, days: 5 };
 const reservePile = await readJson(resolve(vanillaRoot, 'MapEditor', 'Objects', 'ReservePile', 'ReservePile.blueprint.json'));
 const deepOreSource = clone(reservePile);
 deepOreSource.BuildingSpec = {
@@ -323,9 +330,20 @@ deepOreSource.TemplateSpec = {
   TemplateName: 'DeepOreSource',
   BackwardCompatibleTemplateNames: [],
 };
-// 10,000 per source: two sources hold the DeepOre of one of each building with margin
-// (tools/map_loop_requirements.json finiteDeepOreMargin, checked by prepare_deep_frontier_map.py).
-deepOreSource.StockpileSpec = { MaxCapacity: 10000, WhitelistedGoodType: 'Pileable' };
+// A deposit, not a stockpile (Scripts/DeepOre/DeepOreDeposit.cs): only Deep Drills of its district
+// take from it. 10,000 per source: two sources hold the DeepOre of one of each building up to the
+// Deep Mine with margin (tools/map_loop_requirements.json finiteDeepOreMargin, checked by
+// prepare_deep_frontier_map.py). Once empty it recharges DEEP_ORE_RECHARGE.amount every
+// DEEP_ORE_RECHARGE.days, a trickle the finite budget ignores (docs/progression.md "Deep Ore Source
+// recharge").
+delete deepOreSource.StockpileSpec;
+delete deepOreSource.FixedStockpileSpec;
+deepOreSource.DeepOreDepositSpec = {
+  GoodId: 'DeepOre',
+  Capacity: 10000,
+  RechargeAmount: DEEP_ORE_RECHARGE.amount,
+  RechargeTimeInDays: DEEP_ORE_RECHARGE.days,
+};
 deepOreSource.PlaceableBlockObjectSpec = {
   ...deepOreSource.PlaceableBlockObjectSpec,
   ToolGroupId: 'MapEditorObjects',
@@ -379,7 +397,7 @@ await mkdir(resolve(sourceRoot, 'Data', 'Localizations'), { recursive: true });
 const localizationRows = [
   ['ID', 'Text', 'Comment'],
   ['Building.DeepDrill.DisplayName', 'Deep Drill', 'Deep Frontier'],
-  ['Building.DeepDrill.Description', 'Draws deep ore from Deep Ore Sources in its district until they run out.', 'Deep Frontier'],
+  ['Building.DeepDrill.Description', 'Bores deep ore out of the Deep Ore Sources in its district, the nearest first.', 'Deep Frontier'],
   ['Building.DeepDrill.FlavorDescription', 'The first machine to bore into the deep sector. It will not be the last.', 'Deep Frontier'],
   ['Building.DeepMine.DisplayName', 'Deep Mine', 'Deep Frontier'],
   ['Building.DeepMine.Description', 'Mines deep ore without end. Build it over a Deep Ore Vein.', 'Deep Frontier'],
@@ -388,8 +406,8 @@ const localizationRows = [
   ['Building.DeepProcessor.Description', 'Refines deep ore into deep iron, coal, crude oil and uranium ore.', 'Deep Frontier'],
   ['Building.DeepProcessor.FlavorDescription', 'The ore is useless until the surface factory learns how to tame it.', 'Deep Frontier'],
   ['Building.DeepOreSource.DisplayName', 'Deep Ore Source', 'Deep Frontier'],
-  ['Building.DeepOreSource.Description', 'A finite deposit of deep ore. Deep Drills in the same district draw from it until it is empty.', 'Deep Frontier'],
-  ['Building.DeepOreSource.FlavorDescription', 'Once it is dug out, it is gone.', 'Deep Frontier'],
+  ['Building.DeepOreSource.Description', `A deposit of deep ore for the Deep Drills of its district. Once empty, it recharges ${DEEP_ORE_RECHARGE.amount} deep ore every ${DEEP_ORE_RECHARGE.days} days.`, 'Deep Frontier'],
+  ['Building.DeepOreSource.FlavorDescription', 'It seeps back, but never fast enough.', 'Deep Frontier'],
   ['Building.DeepOreVein.DisplayName', 'Deep Ore Vein', 'Deep Frontier'],
   ['Building.DeepOreVein.Description', 'An endless vein of deep ore. Build a Deep Mine over it.', 'Deep Frontier'],
   ['Building.DeepOreVein.FlavorDescription', 'It never runs out. Reaching it is the hard part.', 'Deep Frontier'],
@@ -397,6 +415,14 @@ const localizationRows = [
   ['Good.DeepOre.PluralDisplayName', 'Deep ore', 'Deep Frontier'],
   ['Good.DeepAlloy.DisplayName', 'Deep iron', 'Deep Frontier'],
   ['Good.DeepAlloy.PluralDisplayName', 'Deep iron', 'Deep Frontier'],
+  // Scripts/DeepOre (DeepOreLoc): the Deep Drill's statuses and panel, the deposit's recharge row.
+  ['DeepFrontier.DeepDrill.Status.Recharging', 'Deep Ore Sources recharging', 'Deep Frontier'],
+  ['DeepFrontier.DeepDrill.Status.NoSource', 'No Deep Ore Source in the district', 'Deep Frontier'],
+  ['DeepFrontier.DeepDrill.Status.NoSource.Short', 'No deep ore source', 'Deep Frontier'],
+  ['DeepFrontier.DeepDrill.Panel.DistrictOre', 'Deep ore in district sources ({0})', 'Deep Frontier'],
+  ['DeepFrontier.DeepDrill.Panel.NoSource', 'No Deep Ore Source in the district.', 'Deep Frontier'],
+  ['DeepFrontier.DeepOre.Recharge.Next', 'Next {0} deep ore in {1} days.', 'Deep Frontier'],
+  ['DeepFrontier.DeepOre.Recharge.Rule', 'Once empty, recharges {0} deep ore every {1} days.', 'Deep Frontier'],
 ];
 const csvCell = (value) => {
   const text = String(value);

@@ -22,10 +22,6 @@
     "ConstructionModeModel": "Finished",
     "UndergroundModelDepth": 0
   },
-  "StockpileSpec": {
-    "MaxCapacity": 10000,
-    "WhitelistedGoodType": "Pileable"
-  },
   "EnterableSpec": {
     "OperatingState": "Finished",
     "LimitedCapacityFinished": false,
@@ -146,7 +142,6 @@
     "FlavorDescriptionLocKey": "Building.DeepOreSource.FlavorDescription",
     "Icon": "MapEditor/Objects/DeepOreSource/DeepOreSourceIcon"
   },
-  "FixedStockpileSpec": {},
   "UnconnectedBuildingBlockerSpec": {},
   "Children": {
     "#Finished": {
@@ -173,5 +168,11 @@
       }
     },
     "#Unfinished": {}
+  },
+  "DeepOreDepositSpec": {
+    "GoodId": "DeepOre",
+    "Capacity": 10000,
+    "RechargeAmount": 20,
+    "RechargeTimeInDays": 5
   }
 }

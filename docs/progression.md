@@ -52,6 +52,54 @@ Totals over every Deep Frontier building (81 blueprints, structures included), b
 
 **Finite deep ore.** Steel, Alloy, Machine Core, Electronics and Power Module now all embody deep ore, so one of each building in the whole collection needs about 24,500 Deep Ore, against the 17,000-18,000 the built-in maps hold. The map check (`finiteDeepOreMargin`) now counts the buildings up to and including the Deep Mine (15,000 since the 2026-11-01 science curve; 6,000 before), because ore is renewable after it. They need 1,450 Deep Ore (1,523 with the 5% margin; 1,363 before the curve, which now puts the 12,000 Materials Laboratory below the mine) against 18,000 in the built-in sources. Drill-bit upkeep until then takes no deep ore: the check fails if the Deep Drill's bits ever embody it.
 
+## Deep Ore Source recharge (2026-11-03)
+
+User requests: "make the deep drill something which replenishes every so often, in case the user doesn't make it in time to make the permanent solution. It should be painful though. And show as a cooldown or something." and "the recipe says it needs deep ore and water to produce deep ore? That makes no sense." The district rule is the user's (coordinator, 2026-11-03). Static authoring and checks only; not played in game.
+
+**Extraction.** The Deep Drill's recipe is now 3 Water -> 1 Deep Ore (same id `DeepOre`, 2-minute cycle, 1,000 hp, 0.1 Metal Block drill bits per full-crew hour). Each cycle's ore comes out of a Deep Ore Source in the drill's district, the nearest by road first, then the one holding most, as the native district picker takes the closest inventory with stock (`Scripts/DeepOre/DeepDrill.cs`, a native `IManufactoryLimiter`). The source is a deposit (`DeepOreDepositSpec`, `Scripts/DeepOre/DeepOreDeposit.cs`), not a stockpile: haulers, district supply and pipe or storage mods can no longer take from it or fill it. Before, haulers carried its ore into the drill, so any building could draw on it directly and the drill's output could be hauled back in. Why not the native gatherable yield (bushes) that was suggested (decompiled 1.1.2.8):
+- `GatherableYieldGrower` needs the natural-resource lifecycle (`Growable`, `LivingNaturalResource`, `DyingNaturalResource`), so a source could die in drought or flood.
+- A gatherer removes the whole yield at once and regrows the full spec yield.
+- `Yielder` takes its amount only from the spec and is emptied by walking flag workers, never by a manufactory.
+
+The drill uses the native hooks that fit: the water pumps' `WaterInputManufactoryLimiter` draws its input from the world per unit of progress, and the Dirt Excavator's `Drill` takes a terrain voxel per finished cycle.
+
+**Numbers.** Once empty, a source regains **20 Deep Ore after 5 days** and holds no more than that until it is drilled empty again (bush rule: no regrowth while it still yields). Reasoning:
+- The deep ore consumer is the Deep Ore Processor. At full crew (2 workers, 16 working hours) it eats 42.7 Deep Ore a day on Deep Iron (2 per 1.5 h per worker), its hungriest recipe; 16 a day on coal or oil and 21 on uranium ore.
+- 20 is about half a processor-day, every 5 days. One source gives 4 a day, 9% of one processor. A two-source map gives 8 a day (19%); Hollows, Nomads, Oasis, Plains and Pressure, with three, give 12.
+- The Deep Mine embodies 300 Deep Ore (80 Deep Iron, 60 Steel; `ProgramModel`), the Steel Mill 270. A colony whose sources run dry before the mine needs about 38 days of recharge on a two-source map (25 on three) for the mine alone, 71 days (48) if the Steel Mill is missing too. That is two to four seasons with Deep Iron, coal and oil at a trickle: painful, but the mine is still reachable.
+- The 1,437 Deep Ore of every building up to the Deep Mine would take the recharge 180 days (two sources) or 120 days (three). Research from the Deep Drill to the Deep Mine takes about 17 days (above: 8.3 days to the first Materials Laboratory, 8.5 for the rest of the transition stage). The recharge can never replace the 17,000-18,000 in the sources or the Deep Mine.
+- **Off the path to the mine** (not in the finite budget, docs/deadlock-audit.md D7): steel structures from 11,250 science (columns 20-120 Steel, a 3x3 deck 108 Steel, about 250 deep ore), the Coal Power Plant (8 deep ore a day at full load day and night), Metallurgy training (24 deep ore per metallurgist), and the quarries' 35 Deep Iron at 9,000 (70 deep ore). They come out of the 15,500 the sources hold beyond the budget. Once that is spent, the recharge is all there is: the quarries take about 9 days of a two-source map's recharge, a steel deck a month, a metallurgist 3 days, and one coal plant burns all of it. Spending off the path is the colony's choice, and the recharge never turns it into a dead end.
+- The cap is 20 of a source's 4,500-10,000 (0.2-0.4%).
+
+**Checks.**
+- `validate_deadlocks.mjs` (deadlock audit D3, D4): deep ore is a slow source, renewable only through the recharge (it must match the deposits that recharge). The Deep Drill's recipe counts only as that map source, and `slow-replacement` needs the Deep Mine buildable and runnable at its unlock from the recharge alone. Drilled ore being renewable closed D3 (rebuilding the last Deep Mine) and D4 (the quarries' Deep Iron), and their four accepted entries are gone.
+- `validate_vertical_slice_content.mjs`:
+  - the drill recipe takes only water and makes Deep Ore;
+  - the source is a deposit, not a stockpile, with an entrance and `BuildingAccessibleSpec` so it joins a district;
+  - the recharge is at most 1% of the capacity;
+  - one source's daily recharge is at most a tenth of one processor's hungriest daily Deep Ore.
+- `prepare_deep_frontier_map.py`: the finite budget (`finiteDeepOreMargin`) ignores the recharge (it is a fallback, not stock). A new hard check needs all drillable sources of a map, recharging, to take at least `deepOreRechargeMinDays` (60, about 3.5 times the drill-to-mine research time) to supply that budget's need. It is a design error, never a map item to declare. Every built-in map passes at 120-180 days.
+
+**Shown as a cooldown** (the game's own views):
+- Source panel:
+  - the ore left in the native ruin row;
+  - the native bush regrow row: calendar-cycle icon, "5 days", the progress, 20 Deep Ore; greyed while it still holds ore;
+  - "Next 20 deep ore in N days." while recharging.
+- Drill panel:
+  - the Deep Ore in its district's sources;
+  - once they are all empty, the soonest recharge in the same regrow row and countdown line;
+  - otherwise "No Deep Ore Source in the district.".
+- Drill statuses: "Deep Ore Sources recharging" (Empty icon) and "No Deep Ore Source in the district" (NothingToDo icon, alert).
+- No notice.
+
+**Saves.**
+- A source saved as a stockpile loads its `Inventory:Stockpile` Deep Ore as the deposit's amount (the native `GoodRegistry` format; any other good is logged and dropped). This also covers the four map files built before this change.
+- An emptied old source (nothing saved) starts recharging on load. Empty sources never disappeared; they stay as recharging sites.
+- A drill saved mid-cycle (progress above 0) counts its cycle's ore as already drawn, as the old recipe took it at the first progress.
+- Deep Ore left in an old drill's inventory is ordinary output.
+- Unknown saved components (`FixedStockpile`, `SingleGoodAllower`, other mods' stockpile parts) are ignored: native `EntitiesLoader` only asks the entity's own `IPersistentEntity` components for their data.
+- No construction cost changes: the material rule still values Deep Ore at 1 in every world (`material_costs --check`; the drill recipe's 3 Water at 0.33 plus time is 1.03).
+
 ## Science curve and menu order (2026-11-01)
 
 User requests: "Did we make sure our tech progression is clear and easy and the menu items are ordered correctly to guide them for buildings from left to right?"; "remember to update the science requirements for the later stage buildings and power plants and everything. The nuclear reactor is the last one."; "Right now it is relatively low, aside from the one plant." This supersedes the [Science curve (2026-10-29)](#science-curve-2026-10-29) where they differ. Static authoring and checks only; not played in game.
@@ -189,7 +237,7 @@ User request: a big storage that holds several goods with their own settings ("m
 - **Primary goods.** A vanilla good that no vanilla recipe produces is primary (gathered, grown, pumped or scavenged). Primary goods are available at science 0.
 - **Map-sourced goods.** `MAP_SOURCES` lists goods that a workplace gathers without a recipe:
   - ScrapMetal: Scavenger Flag.
-  - DeepOre: Deep Drill on the finite DeepOreSource marker.
+  - DeepOre: Deep Drill, boring the Deep Ore Sources of its district (finite, with a slow recharge once empty). Its recipe (3 Water -> 1 Deep Ore) is not a valuation route: Deep Ore stays a gathered good at `primaryGood` until the Deep Mine's route is cheaper.
   - Sandstone and Limestone: the pits.
   - FreshFish: the Fisher Flag (shore fishing; until 2026-11-02 a mode of the Gatherer Flag).
   - ContaminatedWater: not gathered. Stored Water converts at runtime when irradiated (see [radiation.md](radiation.md)). The Radioactive Waste Refinery is the earliest source, because radiation first exists once it makes RadioactiveSludge.

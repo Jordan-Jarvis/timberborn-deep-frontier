@@ -737,6 +737,20 @@
         }
       ]
     },
+    "DeepDrillSpec": {
+      "kind": "operational",
+      "response": "Ore leaves a Deep Ore Source only in the drill's native IManufactoryLimiter.MaxProductionProgressChange, when the Manufactory is about to make recipe progress; the blocked workplace releases its workers on Off, so there is no progress and no deposit is drawn. A unit already drawn for the current cycle stays with the drill. The recharging and no-source statuses show only while the building is unblocked.",
+      "evidence": [
+        {
+          "file": "src/DeepFrontier/Scripts/DeepOre/DeepDrill.cs",
+          "contains": "if (!deposit || !deposit.TryTake(UnitsPerCycle)) return 0f;"
+        },
+        {
+          "file": "src/DeepFrontier/Scripts/DeepOre/DeepDrill.cs",
+          "contains": "bool waiting = _finished && _blockable.IsUnblocked && _manufactory.HasCurrentRecipe"
+        }
+      ]
+    },
     "FrontierReactorBotAssemblySpec": {
       "kind": "operational",
       "response": "A Reactor Bot is born only inside the native Manufactory.ProductionFinished of the Bot Assembler's Reactor Bot recipe, and the blocked workplace releases its workers on Off, so the Manufactory makes no progress and no bot of either recipe is assembled.",

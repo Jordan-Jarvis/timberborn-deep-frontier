@@ -61,9 +61,11 @@ for (const good of goods) {
   await access(resolve(sourceRoot, 'Data', `${good.GoodSpec.Icon}.png`));
 }
 assert(recipes[0].RecipeSpec.Id === 'DeepOre' && recipes[1].RecipeSpec.Id === 'DeepOre.Mine' && recipes[2].RecipeSpec.Id === 'DeepAlloy', 'Recipe IDs do not match the vertical slice.');
-assert(recipes[0].RecipeSpec.Ingredients.some((ingredient) => ingredient.Id === 'DeepOre' && ingredient.Amount === 1), 'DeepOre recipe must consume one unit from the authored source stockpile.');
-assert(recipes[0].RecipeSpec.Ingredients.some((ingredient) => ingredient.Id === 'Water' && ingredient.Amount === 3), 'DeepOre recipe water demand changed unexpectedly.');
-assert(recipes[0].RecipeSpec.Products.some((product) => product.Id === 'DeepOre' && product.Amount === 1), 'DeepOre recipe must output one extracted unit.');
+// The drill's recipe is water in, deep ore out: the ore comes out of a Deep Ore Source of its
+// district (DeepDrillSpec, Scripts/DeepOre/DeepDrill.cs), never from an inventory.
+assert(recipes[0].RecipeSpec.Ingredients.length === 1 && recipes[0].RecipeSpec.Ingredients[0].Id === 'Water' && recipes[0].RecipeSpec.Ingredients[0].Amount === 3,
+  'DeepOre recipe must consume only 3 Water; its ore comes out of a Deep Ore Source, not from an ingredient.');
+assert(recipes[0].RecipeSpec.Products.length === 1 && recipes[0].RecipeSpec.Products[0].Id === 'DeepOre' && recipes[0].RecipeSpec.Products[0].Amount === 1, 'DeepOre recipe must output one bored unit.');
 assert(recipes[1].RecipeSpec.Ingredients.length === 1 && recipes[1].RecipeSpec.Ingredients[0].Id === 'Water' && recipes[1].RecipeSpec.Products.some((product) => product.Id === 'DeepOre' && product.Amount === 4), 'Permanent Deep Mine recipe must consume water and output four Deep Ore.');
 assert(recipes[2].RecipeSpec.Ingredients.some((ingredient) => ingredient.Id === 'DeepOre'), 'DeepAlloy recipe does not consume DeepOre.');
 // The deep buildings carry their late-game study registrations.
@@ -90,7 +92,8 @@ const coreSpan = (axis) => Math.max(...mineCore.map((c) => c[axis])) - Math.min(
 assert(mineCore.length > 0 && mineCore.every((c) => c.z === 0 && c.block.MatterBelow === 'Ground' && c.block.Occupations === 'Top'), 'Deep Mine core must be ground-layer Top blocks on Ground.');
 assert(coreSpan('x') === vein.BlockObjectSpec.Size.X && coreSpan('y') === vein.BlockObjectSpec.Size.Y, 'Deep Mine core does not match the Deep Ore vein footprint.');
 assert(!vein.BlockObjectSpec.Blocks.some((block) => block.Occupations.split(', ').includes('Top')), 'Deep Ore vein must leave Top free for the mine core.');
-assert(!drill.UnderstructureConstraintSpec && foundationCore(drill).length === 0, 'Deep Drill is stockpile-fed and must not require an understructure.');
+assert(!drill.UnderstructureConstraintSpec && foundationCore(drill).length === 0, 'Deep Drill bores the Deep Ore Sources of its district and must not require an understructure.');
+assert(drill.DeepDrillSpec?.GoodId === 'DeepOre' && drill.BuildingAccessibleSpec, 'Deep Drill must bore DeepOre (DeepDrillSpec) and be a district building (BuildingAccessibleSpec).');
 assert(drill.WorkplaceSpec.MaxWorkers === 3, 'Deep Drill worker count changed unexpectedly.');
 assert(drill.MechanicalNodeSpec.PowerInput === 1000 && drill.MechanicalNodeSpec.PowerOutput === 0, 'Deep Drill power contract is invalid.');
 assert(drill.ManufactorySpec.ProductionRecipeIds.includes('DeepOre'), 'Deep Drill is not wired to the DeepOre recipe.');
@@ -101,7 +104,28 @@ assert(mine.ManufactorySpec.ProductionRecipeIds.includes('DeepOre.Mine'), 'Deep 
 assert(mine.UnderstructureConstraintSpec.UnderstructureTemplateNames.includes('DeepOreVein'), 'Deep Mine must require a DeepOreVein understructure.');
 assert(processor.MechanicalNodeSpec.PowerInput === 500 && processor.MechanicalNodeSpec.PowerOutput === 0, 'Deep Processor power contract is invalid.');
 assert(processor.ManufactorySpec.ProductionRecipeIds.includes('DeepAlloy'), 'Deep Processor is not wired to the DeepAlloy recipe.');
-assert(source.StockpileSpec.MaxCapacity === 10000, 'Deep Ore source capacity changed unexpectedly.');
+// Deep Ore Source: a deposit, not a stockpile (Scripts/DeepOre/DeepOreDeposit.cs), reached through
+// its district (BuildingAccessibleSpec and an entrance on a path).
+const deposit = source.DeepOreDepositSpec;
+assert(deposit && !source.StockpileSpec && !source.FixedStockpileSpec, 'Deep Ore source must be a DeepOreDepositSpec deposit, not a stockpile haulers and pipes can use.');
+assert(deposit.GoodId === drill.DeepDrillSpec.GoodId && deposit.Capacity === 10000, 'Deep Ore source must hold up to 10,000 of the good the Deep Drill bores.');
+assert(source.BuildingAccessibleSpec && source.BlockObjectSpec.Entrance.HasEntrance, 'Deep Ore source must join a district (BuildingAccessibleSpec, entrance) so its drills reach it.');
+// Recharge (docs/progression.md "Deep Ore Source recharge"): a trickle once empty, painful by
+// construction. Capped well below a source's stock (at most 1% of its capacity), and one source's
+// daily recharge at most a tenth of what one Deep Ore Processor at full crew consumes a day on its
+// hungriest deep ore recipe (16 working hours, docs/progression.md science economy).
+const WORKING_HOURS = 16;
+assert(Number.isInteger(deposit.RechargeAmount) && deposit.RechargeAmount > 0 && deposit.RechargeAmount <= deposit.Capacity / 100,
+  `Deep Ore source recharge ${deposit.RechargeAmount} must be a positive whole amount of at most 1% of its capacity ${deposit.Capacity}.`);
+assert(deposit.RechargeTimeInDays > 0, 'Deep Ore source recharge time must be positive.');
+const processorOrePerDay = Math.max(...await Promise.all(processor.ManufactorySpec.ProductionRecipeIds.map(async (id) => {
+  const recipe = (await readJson(`Data/Recipes/Recipe.${id}.blueprint.json`)).RecipeSpec;
+  const ore = recipe.Ingredients.find((ingredient) => ingredient.Id === deposit.GoodId)?.Amount ?? 0;
+  return ore * processor.WorkplaceSpec.MaxWorkers * WORKING_HOURS / recipe.CycleDurationInHours;
+})));
+const rechargePerDay = deposit.RechargeAmount / deposit.RechargeTimeInDays;
+assert(processorOrePerDay > 0 && rechargePerDay <= processorOrePerDay / 10,
+  `One Deep Ore Source recharges ${rechargePerDay.toFixed(2)} ore a day, more than a tenth of one Deep Ore Processor's ${processorOrePerDay.toFixed(1)}.`);
 assert(source.Children['#Finished'].TimbermeshSpec.Model === 'MapEditor/Objects/DeepOreSource/DeepOreSource.Model', 'Deep Ore source must use its authored ore model.');
 assert(vein.TemplateSpec.TemplateName === 'DeepOreVein', 'Deep Ore vein marker template is invalid.');
 assert(goodsCollection.GoodCollectionSpec['Goods#append'].includes('DeepOre') && goodsCollection.GoodCollectionSpec['Goods#append'].includes('DeepAlloy'), 'Iron Teeth base good collection overlay is incomplete.');
@@ -183,5 +207,6 @@ console.log(JSON.stringify({
     DeepMine: mine.MechanicalNodeSpec.PowerInput,
     DeepProcessor: processor.MechanicalNodeSpec.PowerInput,
   },
-  sourceCapacity: source.StockpileSpec.MaxCapacity,
+  sourceCapacity: deposit.Capacity,
+  sourceRecharge: { amount: deposit.RechargeAmount, days: deposit.RechargeTimeInDays, perDay: rechargePerDay, processorOrePerDay },
 }, null, 2));

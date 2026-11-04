@@ -95,6 +95,18 @@ def poor_sources(v):
             p['amount'] = 100   # 300 in all; the buildings up to the Deep Mine need about 1,400
 
 
+def wrong_deposit_good(v):
+    for p in v['placements']:
+        if p['template'] == 'DeepOreSource':
+            p['good'] = 'ScrapMetal'
+
+
+def generous_recharge(v):
+    # The deposit spec is shared by every later build, so this case runs last: 100 ore every 5 days
+    # from Plains' three sources is 60 a day, the deep ore up to the Deep Mine in about 24 days.
+    catalog.get('DeepOreSource')['DeepOreDepositSpec']['RechargeAmount'] = 100
+
+
 def dry_dam(v):
     s = site(v, 'ReinforcedHydroTurbine.IronTeeth')
     s['x'] += 8
@@ -172,6 +184,7 @@ CASES = [
     ('footprint in an open margin', open_margin, 'margin is inside'),
     ('dynamite outside the footprint', dynamite_outside, 'is outside the footprint'),
     ('finite deep ore too small', poor_sources, 'finite deep ore covers one of each building'),
+    ('deposit holds the wrong good', wrong_deposit_good, 'is not the deposit good'),
     ('dam site on dry land', dry_dam, 'dam site is not a wet river cell'),
     ('one vein only', one_vein, 'DeepMine.IronTeeth site (understructure): 1 checked sites (min 2)'),
     ('no steel mill site', lambda v: drop_sites(v, 'SteelMill.IronTeeth'), 'SteelMill.IronTeeth site (flat): 0 checked sites'),
@@ -182,6 +195,8 @@ CASES = [
     ('platforms under a quarry', platforms_under_quarry, 'MapError'),
     ('vanilla map object placed', vanilla_object_placed, 'MapError'),
     ('player work declared for a met item', player_work_for_met_item, "player-work item 'Fisher Flag banks (first FreshFish)' is met"),
+    # Last: it changes the shared deposit spec.
+    ('recharge more than a trickle', generous_recharge, 'MapError'),
 ]
 
 failures = 0

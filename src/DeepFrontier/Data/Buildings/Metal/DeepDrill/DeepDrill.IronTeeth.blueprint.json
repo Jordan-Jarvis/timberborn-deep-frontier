@@ -1132,6 +1132,9 @@
       }
     }
   },
+  "DeepDrillSpec": {
+    "GoodId": "DeepOre"
+  },
   "MechanicalBuildingSpec": {},
   "MechanicalNodeSpec": {
     "PowerOutput": 0,

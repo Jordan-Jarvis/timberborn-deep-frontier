@@ -13,13 +13,12 @@ using Timberborn.EntitySystem;
 using Timberborn.ErrorReporting;
 using Timberborn.GameSceneLoading;
 using Timberborn.Goods;
-using Timberborn.InventorySystem;
 using Timberborn.Localization;
 using Timberborn.MapStateSystem;
 using Timberborn.Persistence;
 using Timberborn.SceneLoading;
 using Timberborn.SingletonSystem;
-using Timberborn.Stockpiles;
+using DeepFrontier.Scripts.DeepOre;
 using Timberborn.TemplateSystem;
 using Timberborn.UILayoutSystem;
 using Timberborn.WorldPersistence;
@@ -47,9 +46,8 @@ namespace DeepFrontier.Scripts.MapSetup {
   //     and every IBlockObjectValidator. Then BlockObjectPlacerService.GetMatchingPlacer(...).Place
   //     with a new EntitySetup.Builder, as BlockObjectTool.Place: BuildingPlacer for the Deep Ore
   //     Source (BuildingSpec.PlaceFinished, so finished), DefaultBlockObjectPlacer for the others.
-  //     A stockpile then gets its fixed good and amount as the map editor's
-  //     FixedStockpileInventorySetter does (SingleGoodAllower.Allow, FixedStockpile.SetFixedGood,
-  //     Inventory.GiveExisting).
+  //     A Deep Ore Source then gets its amount (DeepOreDeposit.SetAmount, as the map editor's amount
+  //     field sets it).
   //   - A placement that fails is not moved or skipped silently: it is logged as an error and
   //     reported in a dialog.
   //   - Small maps (BuiltinMapSpec.Small: below the area threshold, or no Deep Mine site) and maps
@@ -220,15 +218,12 @@ namespace DeepFrontier.Scripts.MapSetup {
       var placed = _blocks.GetObjectsAt(coordinates)
         .Where(b => b.Coordinates == coordinates && b.GetComponent<TemplateSpec>()?.TemplateName == p.Template).ToList();
       if (placed.Count != 1) return placed.Count + " " + p.Template + " objects at " + coordinates + " after placing";
-      var stockpile = placed[0].GetComponent<Stockpile>();
-      if (stockpile == null) return p.Good == "" ? null : "placement names good " + p.Good + " but " + p.Template + " has no stockpile";
-      if (p.Good == "" || p.Amount <= 0) return p.Template + " is a stockpile but the placement names no good and amount";
-      // FixedStockpileInventorySetter.ResetInventoryGood + SetAmount (Timberborn.MapEditorStockpilesUI).
-      placed[0].GetComponent<SingleGoodAllower>().Allow(p.Good);
-      placed[0].GetComponent<FixedStockpile>().SetFixedGood(p.Good);
-      stockpile.Inventory.GiveExisting(new GoodAmount(p.Good, p.Amount));
-      int stock = stockpile.Inventory.AmountInStock(p.Good);
-      return stock == p.Amount ? null : "stockpile holds " + stock + " " + p.Good + ", expected " + p.Amount;
+      var deposit = placed[0].GetComponent<DeepOreDeposit>();
+      if (deposit == null) return p.Good == "" ? null : "placement names good " + p.Good + " but " + p.Template + " is not a deep ore deposit";
+      if (p.Good != deposit.Spec.GoodId || p.Amount <= 0) return p.Template + " holds " + deposit.Spec.GoodId + " but the placement names " + p.Amount + " " + p.Good;
+      // The map editor's amount field (DeepOreDepositAmountFragment) sets it the same way.
+      deposit.SetAmount(p.Amount);
+      return deposit.Amount == p.Amount ? null : "deposit holds " + deposit.Amount + " " + p.Good + ", expected " + p.Amount;
     }
 
     private string SmallMapWarning() {

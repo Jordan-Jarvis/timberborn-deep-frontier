@@ -1,32 +1,46 @@
 # Deep Ore source authoring
 
-The current source path uses supported stockpile, manufactory, and understructure contracts. It does not scan terrain or patch the game's private mine-targeting code.
+Deep ore comes from two map objects: finite Deep Ore Sources, which Deep Drills bore, and permanent Deep Ore Veins under Deep Mines. Neither scans terrain or patches the game's mine targeting.
 
-## Author a deposit
+## Deep Ore Source
 
-1. Open the copied Deep Frontier map in the Map Editor with Deep Frontier enabled.
-2. Choose the Deep Ore Source object from the Map Editor objects group.
-3. Place it in the lower sector or basin where the resource should be exposed.
-4. Set its stored good to `DeepOre` and fill it with up to 4,000 units. A 1,000–2,000 unit deposit is a useful first playtest size.
-5. Save the map and start a new colony from that map.
+A Deep Ore Source is a deposit (`DeepOreDepositSpec`, `src/DeepFrontier/Scripts/DeepOre/DeepOreDeposit.cs`), not a stockpile. Only the Deep Drills of its district take from it: no hauler, district supply, pipe or storage mod can.
 
-The source marker is a finite stockpile. A Deep Drill consumes one Deep Ore and three Water per cycle, draws 1,000 hp, and outputs one Deep Ore to its normal output inventory. The input quantity therefore leaves the source stockpile, while the extracted unit can be moved by haulers, Conveyor Belts v2, or Powered Tubeway to storage and the Deep Ore Processor.
+- **Amount.** Up to 10,000 Deep Ore (`Capacity`). A newly placed source holds 10,000, as the map editor fills a new fixed stockpile to its capacity. The map editor panel has an amount field (the native fixed-stockpile layout without its good list), with undo. The new-game setup of the built-in maps sets each source's amount from `tools/map_variants` (8,500 on most maps).
+- **District.** The source has an entrance: connect it to the drill's district with a path.
+- **Recharge.** Once empty, the source regains 20 Deep Ore after 5 days and holds no more than that until drilled empty again, as a bush regrows its yield after it is gathered. The timer is the native time trigger and is saved with the source. It never runs in the map editor. The numbers and their reasons are in `docs/progression.md` ("Deep Ore Source recharge").
 
-The processor consumes two Deep Ore and one Water per cycle, draws 500 hp, and produces one Deep Alloy. Both machines retain ordinary hauler logistics as the fallback path. Timber Pipes, Pump to Tank, Power Lines, and conveyor endpoints are integration work after this authoring loop passes a real save/reload test.
+## Deep Drill
 
-## Permanent source path
+The drill's recipe is 3 Water -> 1 Deep Ore per two-minute cycle (1,000 hp, Metal Block drill bits). The cycle's ore comes out of a Deep Ore Source in the drill's district, the nearest by road first, then the one holding most (`DeepDrillSpec`, `src/DeepFrontier/Scripts/DeepOre/DeepDrill.cs`). The drill stops when no source in its district holds ore. Its panel then shows the soonest recharge, and its status reads "Deep Ore Sources recharging", or "No Deep Ore Source in the district" when there is none. The ore it makes leaves through its output like any product: haulers, belts or tubeways.
 
-The permanent path deliberately follows vanilla's finite scrap versus mine distinction:
+## Author a map
 
-1. Place a `DeepOreVein` map-editor understructure in the lower sector while authoring the map. The vein has no stockpile capacity and never runs out.
-2. Unlock and build `DeepMine.IronTeeth` on that vein. The placement contract requires the `DeepOreVein` understructure, so the permanent recipe is not a free surface resource.
-3. Supply the mine with 12 Water per two-minute cycle and 4,000 hp. Each completed cycle emits 4 Deep Ore indefinitely.
-4. Use belts, tubeways, power lines, or the installed pump/tank chain to move the mine's output and water. The mine does not require finite Deep Ore input.
+1. Open the map in the Map Editor with Deep Frontier enabled.
+2. Place a Deep Ore Source from the map objects group, with its entrance on reachable ground.
+3. Set its amount in its panel. For a built-in map variant, set the placement's `good` (`DeepOre`) and `amount` in `tools/map_variants/<map>.json` instead.
+4. Save the map and start a new colony from it.
 
-The finite drill remains useful because it is cheaper, appears earlier, and can bootstrap the first Deep Alloy chain. The permanent mine is deliberately expensive in footprint, workers, science, construction materials, water, and power so it becomes the sustainable branch rather than an automatic replacement on the first cycle.
+`tools/prepare_deep_frontier_map.py` checks every built-in variant:
+- the drillable sources must hold the deep ore of one of each building up to the Deep Mine, plus 5%, without counting the recharge;
+- the recharge must stay a trickle (`deepOreRechargeMinDays`).
 
-The implementation uses the verified vanilla understructure mechanism. Runtime vein discovery and automatic vein depletion are intentionally out of scope: the map author places the vein, and normal understructure placement rules enforce the mine location.
+See `docs/maps.md`.
 
-## Prototype limitation
+## Permanent source
 
-The source marker currently behaves as an authored stockpile rather than a terrain vein entity. This is intentional: it makes the first resource loop playable with the 1.1 data contracts and keeps saves portable. A later runtime adapter can replace the stockpile input with explicit node selection and depletion without changing the Deep Ore good, processor recipe, or player-facing progression.
+The permanent path follows vanilla's finite scrap versus mine distinction:
+
+1. Place a `DeepOreVein` map-editor understructure. The vein never runs out.
+2. Unlock and build `DeepMine.IronTeeth` on it. The placement contract requires the vein, so the permanent recipe is not a free surface resource.
+3. Supply the mine with 12 Water per two-minute cycle and its power; each cycle makes 4 Deep Ore indefinitely.
+
+The drill phase is cheaper and earlier and bootstraps the first Deep Iron chain. The mine is deliberately expensive (footprint, workers, science, construction materials, water and power) and is the real supply: the recharge of emptied sources keeps a colony that missed it limping along, nothing more.
+
+## Saves from before the deposit (2026-11-03)
+
+Until 2026-11-03 the source was a native fixed stockpile that haulers emptied into the drill.
+
+- A source saved then loads its stockpile's Deep Ore as its amount; this also covers map files built then.
+- An emptied old source starts recharging.
+- A drill saved mid-cycle keeps that cycle's ore.

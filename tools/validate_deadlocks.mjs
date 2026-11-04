@@ -13,9 +13,16 @@
 //   (FrontierSpecialistSchoolSpec) whose supplies are all available. Reactor
 //   Bots can staff any workplace instead (0.8.5), but the beaver path is the one
 //   that must work, so the bot bypass is not counted.
-// - Map sources (progression_data.mjs MAP_SOURCES) are finite (ruins, outcrops,
-//   Deep Ore Sources) or renewable (shore fishing; radiation turning stored water
-//   into contaminated water). Every map source must be classified here.
+// - Map sources (progression_data.mjs MAP_SOURCES) are finite (ruins, outcrops)
+//   or renewable (shore fishing; radiation turning stored water into contaminated
+//   water). A slow source is renewable only through a recharge: the Deep Ore
+//   Sources' stock is finite, but an empty one recharges (DeepOreDepositSpec). A
+//   good is slow exactly when a map-editor deposit of it recharges. Every map
+//   source must be classified here.
+// - A recipe of a map source's own building that makes that map good draws it
+//   from the map (the Deep Drill bores the Deep Ore Sources of its district,
+//   Scripts/DeepOre/DeepDrill.cs): it counts only as the map source, never as a
+//   free recipe.
 // - "Available" is a closure: goods from primary goods, the map sources allowed,
 //   and the recipes of buildings that can run (inputs, fuel, operating goods and
 //   discipline available). A good can never come from its own building's output
@@ -45,9 +52,14 @@
 //   be built and run at its own unlock without that finite source (the other
 //   finite sources and the buildings unlocked by then standing): a player who
 //   spends the finite stock on anything else can still reach the replacement.
+// - slow-replacement: for each slow map good, a producer other than its map source
+//   (the Deep Mine for deep ore) can be built and run at its own unlock from the
+//   recharge alone: a player who spent the deposits' stock reaches the real supply
+//   (slowly) instead of living on the trickle forever.
 // Accepted failures (ACCEPTED) carry a reason and fail when they no longer apply.
 //
 // Usage: node tools/validate_deadlocks.mjs [dataRoot] [--print]   (default src/DeepFrontier/Data)
+import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
 import {loadProgressionData, MAP_SOURCES, recipeInputs} from './progression_data.mjs';
@@ -64,7 +76,7 @@ const fail = (kind, key, message) => errors.push({kind, key, message});
 // Every map source is classified; a new one must be added here explicitly.
 const MAP_SOURCE_KIND = {
   ScrapMetal: {finite: true, why: 'ruins scavenged by the Scavenger Flag run out (the Efficient Mine recipes are the renewable route)'},
-  DeepOre: {finite: true, why: 'Deep Ore Sources drawn by the Deep Drill run out or refill slowly (the Deep Mine is the permanent source)'},
+  DeepOre: {finite: false, slow: true, why: 'Deep Ore Sources bored by the Deep Drill: their stock is finite, but an empty source recharges (DeepOreDepositSpec, 20 every 5 days, about a tenth of one Deep Ore Processor), so deep ore stays renewable, slowly; the Deep Mine is the real supply'},
   Sandstone: {finite: true, why: 'Sandstone Outcrops dug by the pit run out (the Sandstone Quarry is the renewable route)'},
   Limestone: {finite: true, why: 'Limestone Outcrops dug by the pit run out (the Limestone Quarry is the renewable route)'},
   FreshFish: {finite: false, why: 'Fisher Flag shore fishing never runs out'},
@@ -73,16 +85,25 @@ const MAP_SOURCE_KIND = {
 for (const good of Object.keys(MAP_SOURCES)) if (!MAP_SOURCE_KIND[good]) fail('map-source-kind', good, `MAP_SOURCES ${good} is not classified finite or renewable in validate_deadlocks.mjs`);
 for (const good of Object.keys(MAP_SOURCE_KIND)) if (!MAP_SOURCES[good]) fail('map-source-kind', good, `MAP_SOURCE_KIND ${good} is not a MAP_SOURCES good`);
 const FINITE = new Set(Object.keys(MAP_SOURCE_KIND).filter((g) => MAP_SOURCE_KIND[g].finite));
+const SLOW = new Set(Object.keys(MAP_SOURCE_KIND).filter((g) => MAP_SOURCE_KIND[g].slow));
+// Slow sources from the data: the goods of the map-editor deposits that recharge.
+const readBlueprint = (path) => JSON.parse(readFileSync(resolve(data, path + '.json'), 'utf8').replace(/^\uFEFF/, ''));
+const recharging = new Set(readBlueprint('TemplateCollections/TemplateCollection.MapEditor.Common.blueprint')
+  .TemplateCollectionSpec['Blueprints#append'].map(readBlueprint).map((bp) => bp.DeepOreDepositSpec)
+  .filter((d) => d && d.RechargeAmount > 0 && d.RechargeTimeInDays > 0).map((d) => d.GoodId));
+for (const good of Object.keys(MAP_SOURCE_KIND)) {
+  if (MAP_SOURCE_KIND[good].slow && MAP_SOURCE_KIND[good].finite) fail('map-source-kind', good, `${good} is classified both finite and slow`);
+  if (Boolean(MAP_SOURCE_KIND[good].slow) !== recharging.has(good))
+    fail('map-source-kind', good, `${good} is ${MAP_SOURCE_KIND[good].slow ? '' : 'not '}classified slow, but ${recharging.has(good) ? 'a map-editor deposit recharges it' : 'no map-editor deposit recharges it'}`);
+}
+// Recipes that draw a map good from the map: they count only as the map source.
+const gathers = (b, good) => MAP_SOURCES[good]?.via.includes(b.id);
 
 // Known failures kept by design, each with its reason (docs/deadlock-audit.md).
-const ACCEPTED = {
-  'rebuild:DeepMine.IronTeeth': 'By design the permanent mine is built from the finite drill phase (its Deep Iron gate and its Steel, both from deep ore): a second Deep Mine is built from the first, and the map check keeps the finite Deep Ore Sources at the deep ore of every building up to the mine plus 5% (prepare_deep_frontier_map.py finiteDeepOreMargin). Only losing the last mine after the sources are spent strands it (docs/deadlock-audit.md D3).',
-  'finite-replacement:DeepOre': 'The same design: the Deep Mine (the renewable deep ore) costs Deep Iron and Steel, so its first copy needs drilled ore; the finite deep ore check sizes the sources for it (docs/deadlock-audit.md D3).',
-  // A quarry costs Deep Iron; renewable Deep Iron needs the Deep Mine, whose
-  // concrete shaft lining needs quarry stone (Sandstone for concrete, Limestone for its cement).
-  'rebuild:SandstoneQuarry.IronTeeth': 'The quarry costs Deep Iron, renewable only from the Deep Mine, whose Concrete shaft lining needs Sandstone: the loop closes only if the last Sandstone Quarry is lost after the outcrops and the Deep Ore Sources are spent with no Concrete or Deep Iron in stock (docs/deadlock-audit.md D4; proposal P3, brick shaft lining, would open it).',
-  'rebuild:LimestoneQuarry.IronTeeth': 'The same loop through the cement in the Deep Mine\'s Concrete shaft lining (docs/deadlock-audit.md D4; proposal P3).',
-};
+// None since 2026-11-03: the recharge of empty Deep Ore Sources makes drilled ore
+// renewable (slowly), which closed D3 (the Deep Mine built from drilled ore) and D4
+// (the quarries' Deep Iron against the mine's concrete lining); docs/deadlock-audit.md.
+const ACCEPTED = {};
 
 // Player buildings (placeable, not dev tools) and what each needs to run.
 const players = [...buildings.values()].filter((b) => b.bp.PlaceableBlockObjectSpec && !b.bp.PlaceableBlockObjectSpec.DevModeTool);
@@ -147,7 +168,7 @@ function closure({science = Infinity, costGated = false, finite = true, exclude 
       if (!built.has(b.id) || !runs(b)) continue;
       for (const id of b.recipes) {
         const r = recipes.get(id);
-        if (r && recipeInputs(r).every((g) => have.has(g))) for (const p of r.Products) add(p.Id);
+        if (r && recipeInputs(r).every((g) => have.has(g))) for (const p of r.Products) if (!gathers(b, p.Id)) add(p.Id);
       }
     }
   }
@@ -160,12 +181,12 @@ function why(good, c) {
   const reasons = [];
   for (const [g, source] of Object.entries(MAP_SOURCES)) {
     if (g !== good) continue;
-    reasons.push(`map source ${source.via.map(name).join('/')}${FINITE.has(g) ? ' (finite: ' + MAP_SOURCE_KIND[g].why + ')' : ''}`);
+    reasons.push(`map source ${source.via.map(name).join('/')}${FINITE.has(g) ? ' (finite: ' + MAP_SOURCE_KIND[g].why + ')' : SLOW.has(g) ? ' (slow: ' + MAP_SOURCE_KIND[g].why + ')' : ''}`);
   }
   for (const b of players) {
     for (const id of b.recipes) {
       const r = recipes.get(id);
-      if (!r?.Products.some((p) => p.Id === good)) continue;
+      if (!r?.Products.some((p) => p.Id === good) || gathers(b, good)) continue;
       const op = operation.get(b.id);
       const blocks = [];
       if (!c.built.has(b.id)) blocks.push('building not available');
@@ -247,7 +268,7 @@ for (const b of players) {
 //    reachable at its own unlock without that finite source.
 const replacements = [];
 for (const good of FINITE) {
-  const producers = players.filter((b) => b.recipes.some((id) => {
+  const producers = players.filter((b) => !gathers(b, good) && b.recipes.some((id) => {
     const r = recipes.get(id);
     return r?.Products.some((p) => p.Id === good) && !recipeInputs(r).includes(good);
   }));
@@ -263,6 +284,27 @@ for (const good of FINITE) {
   replacements.push({good, producers: results.map((r) => `${name(r.b.id)} (${r.b.science})${r.missing.length ? ' blocked' : ''}`)});
   if (results.every((r) => r.missing.length) && !accepted(`finite-replacement:${good}`))
     fail('finite-replacement', good, `${good}: once its finite source is spent no renewable producer can be reached: ${results.map((r) => `${name(r.b.id)}: ${r.missing.join(' || ')}`).join(' ;; ')}`);
+}
+// 5. slow-replacement: a producer of each slow map good other than its map
+//    source is reachable at its own unlock from the recharge alone (every
+//    finite source spent).
+for (const good of SLOW) {
+  const producers = players.filter((b) => !gathers(b, good) && b.recipes.some((id) => {
+    const r = recipes.get(id);
+    return r?.Products.some((p) => p.Id === good) && !recipeInputs(r).includes(good);
+  }));
+  if (!producers.length) { fail('slow-replacement', good, `${good}: no producer besides its slow map source`); continue; }
+  const results = producers.map((b) => {
+    const c = closure({science: b.science, finite: false, exclude: new Set([b.id])});
+    const op = operation.get(b.id);
+    const recipe = b.recipes.map((id) => recipes.get(id)).find((r) => r?.Products.some((p) => p.Id === good) && !recipeInputs(r).includes(good));
+    const missing = [...new Set([...b.cost.map(([g]) => g), ...op.required, ...recipeInputs(recipe)])].filter((g) => !c.have.has(g));
+    const untrained = op.discipline && !c.trained.has(op.discipline) ? [`${op.discipline} specialists`] : [];
+    return {b, missing: [...missing.map((g) => `${g} <- ${why(g, c)}`), ...untrained]};
+  });
+  replacements.push({good, producers: results.map((r) => `${name(r.b.id)} (${r.b.science}, from the recharge)${r.missing.length ? ' blocked' : ''}`)});
+  if (results.every((r) => r.missing.length))
+    fail('slow-replacement', good, `${good}: from its slow map source alone no other producer can be reached: ${results.map((r) => `${name(r.b.id)}: ${r.missing.join(' || ')}`).join(' ;; ')}`);
 }
 for (const key of Object.keys(ACCEPTED)) if (!outcome.get(key)) fail('accepted-stale', key, `ACCEPTED ${key} no longer fails; remove it from validate_deadlocks.mjs and docs/deadlock-audit.md`);
 
@@ -287,4 +329,4 @@ if (errors.length) {
   for (const e of errors) console.error(`  [${e.kind}] ${e.message}`);
   process.exit(1);
 }
-console.log(`Deadlock validation passed: ${players.length} player buildings, ${used.size} goods used, all renewable; disciplines ${[...requiredDisciplines.keys()].join(', ')} trainable from renewable goods; every building runs at its unlock; ${Object.keys(ACCEPTED).length} accepted by design.`);
+console.log(`Deadlock validation passed: ${players.length} player buildings, ${used.size} goods used, all renewable; disciplines ${[...requiredDisciplines.keys()].join(', ')} trainable from renewable goods; every building runs at its unlock; slow sources (renewable only through a recharge) ${[...SLOW].join(', ') || 'none'}, each with a reachable real supply; ${Object.keys(ACCEPTED).length} accepted by design.`);

@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### The Deep Drill bores its ore, and empty Deep Ore Sources slowly recharge
+- **The drill's recipe makes sense now** (player report: "the recipe says it needs deep ore and water to produce deep ore? That makes no sense."). It takes 3 water and makes 1 deep ore. Each deep ore comes out of a Deep Ore Source in the drill's district, the nearest by road first. Haulers no longer carry ore out of the sources, so other buildings can't take it straight from them, and drilled ore is no longer hauled back in.
+- **Empty Deep Ore Sources recharge** (player request: replenish "in case the user doesn't make it in time to make the permanent solution. It should be painful though."). Once a source is empty, it gets 20 deep ore back every 5 days, never more than 20 at a time. That is about a tenth of what one Deep Ore Processor uses. It is enough to scrape together a Deep Mine (300 deep ore) in about 38 days on a map with two sources, but not to run an industry. The Deep Mine stays the real supply. A colony that loses its last Deep Mine after the sources run out can rebuild it from the recharge.
+- **The recharge shows as a cooldown.**
+  - The source's panel shows the ore left, the regrow row that bushes use (recharge time, progress, amount), and "Next 20 deep ore in N days" while it recharges.
+  - The drill's panel shows the deep ore in its district's sources and, once they are all empty, the soonest recharge.
+  - The drill's status reads "Deep Ore Sources recharging" or "No Deep Ore Source in the district".
+- Saves: sources keep their ore, empty sources start recharging, and a drill mid-cycle finishes that cycle. In the map editor, a source's amount is set in its panel.
+
 ### The Deep Mine can no longer stall for good
 - **The Deep Mine wears metal block drill bits instead of steel** (found in an audit of every production chain for ways to get stuck): steel is made from mined deep ore, so a mine that ran out of steel after the Deep Ore Sources were used up could never start again, and neither could anything made from steel, alloy or machine cores. Metallurgists, who train on deep iron, could not be replaced either. The mine now uses 0.3 metal blocks per hour at full crew instead of 0.1 steel, and still 0.1 concrete as shaft lining. Steel already stocked at a mine is carried away by haulers.
 - Steel keeps its other ongoing uses: the Deep Well's drill bits, the reactor's waste casks, rockets, reinforced bot frames and Reactor Bot plating.

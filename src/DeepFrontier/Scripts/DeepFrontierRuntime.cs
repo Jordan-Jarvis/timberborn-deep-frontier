@@ -6,7 +6,7 @@ namespace DeepFrontier.Scripts {
   // selection logic.
   public sealed class DeepFrontierRuntime {
     public const string VerticalSliceVersion = "0.8.5";
-    public const string SourceMode = "FiniteStockpileAndPermanentVeinWithIndustrialExpansion";
+    public const string SourceMode = "RechargingDepositAndPermanentVeinWithIndustrialExpansion";
     public const string DeepOreGoodId = "DeepOre";
     public const string DeepAlloyGoodId = "DeepAlloy";
     public const string DeepDrillTemplateId = "DeepDrill.IronTeeth";

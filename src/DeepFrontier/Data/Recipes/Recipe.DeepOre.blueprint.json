@@ -6,10 +6,6 @@
     "CycleDurationInHours": 0.03333333333333333,
     "Ingredients": [
       {
-        "Id": "DeepOre",
-        "Amount": 1
-      },
-      {
         "Id": "Water",
         "Amount": 3
       }

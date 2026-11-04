@@ -123,15 +123,17 @@ export async function mapSetupContent({root = defaultRoot, dataRoot = resolve(ro
       if (!ORIENTATIONS.includes(orientation)) fail(`${v.file} placement ${index}: orientation ${orientation}`);
       for (const key of ['x', 'y', 'z']) if (!Number.isInteger(p[key])) fail(`${v.file} placement ${index}: ${key} must be an integer`);
       if (typeof p.label !== 'string' || !p.label) fail(`${v.file} placement ${index}: label is required`);
-      const stockpile = blueprint.StockpileSpec;
-      if (stockpile) {
-        if (typeof p.good !== 'string' || !Number.isInteger(p.amount) || p.amount <= 0 || p.amount > stockpile.MaxCapacity)
-          fail(`${v.file} placement ${index}: ${p.template} needs a good and an amount of 1..${stockpile.MaxCapacity}`);
+      // A Deep Ore Source (DeepOreDepositSpec, Scripts/DeepOre/DeepOreDeposit.cs) gets its amount
+      // at new-game time (BuiltinMapSetup: DeepOreDeposit.SetAmount).
+      const deposit = blueprint.DeepOreDepositSpec;
+      if (deposit) {
+        if (p.good !== deposit.GoodId || !Number.isInteger(p.amount) || p.amount <= 0 || p.amount > deposit.Capacity)
+          fail(`${v.file} placement ${index}: ${p.template} needs good ${deposit.GoodId} and an amount of 1..${deposit.Capacity}`);
       } else if (p.good !== undefined || p.amount !== undefined) {
-        fail(`${v.file} placement ${index}: ${p.template} is not a stockpile; remove good/amount`);
+        fail(`${v.file} placement ${index}: ${p.template} is not a deep ore deposit; remove good/amount`);
       }
       return {Template: p.template, Label: p.label, X: p.x, Y: p.y, Z: p.z, Orientation: orientation,
-        Good: stockpile ? p.good : '', Amount: stockpile ? p.amount : 0};
+        Good: deposit ? p.good : '', Amount: deposit ? p.amount : 0};
     });
     // One line for every missing building site, one per other item (tools/map_setup.json unmetText).
     const unmet = v.unmet ?? [];
