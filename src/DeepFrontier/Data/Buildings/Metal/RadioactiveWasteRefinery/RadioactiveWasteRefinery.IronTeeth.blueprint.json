@@ -1266,11 +1266,29 @@
       },
       {
         "Coordinates": {
+          "X": 4,
+          "Y": 2,
+          "Z": 1
+        },
+        "Directions": "Right",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 3,
           "Y": 3,
           "Z": 1
         },
         "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 3,
+          "Z": 1
+        },
+        "Directions": "Right",
         "ReverseRotation": false
       },
       {
@@ -2012,11 +2030,29 @@
       },
       {
         "Coordinates": {
+          "X": 4,
+          "Y": 2,
+          "Z": 1
+        },
+        "Directions": "Right",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
           "X": 3,
           "Y": 3,
           "Z": 1
         },
         "Directions": "Up",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 3,
+          "Z": 1
+        },
+        "Directions": "Right",
         "State": "Open"
       }
     ]

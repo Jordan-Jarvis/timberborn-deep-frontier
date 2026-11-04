@@ -21,6 +21,24 @@ the face normal, starting FRONT outside the face plane and pointing inward:
               NORMAL_SPREAD of the covering mean. Domes, cylinders, tanks,
               rounded corners, pitched or curved roofs, faceted curves and
               bevels anywhere on the face disqualify it.
+            * Except an eave over a wall: on a side face, a surface sloping
+              up from the wall (its normal turned from the outward axis
+              toward the sky, within AXIS_ANGLE of the vertical plane
+              through that axis) in the top EAVE_BAND of the face is the
+              roof's edge, not the wall. It neither breaks the face nor
+              counts toward its one plane, which must still cover COVER of
+              the face below. A vanilla horizontal shaft's axle meets a wall
+              at 0.376-0.624 of the layer and its end frame reaches 0.68
+              (PowerShaft.IronTeeth AxleHorizontal and ShaftFrame models), so
+              everything a shaft puts against the wall stays on the flat part
+              below 0.75. Vanilla Iron Teeth buildings author side transputs
+              on walls whose only non-flat covering is such an eave: Gear
+              Workshop, Industrial Lumber Mill, Fermenter and Food Factory in
+              the top eighth, Motivatorium in the top quarter (measured from
+              the installed 1.1.2.8 models, 2026-11-03; the Deep Mine's lamp
+              house wall under its eave at 0.84 of the layer failed before).
+              Slopes lower on the face, at the bottom (plinths) or turned
+              sideways (hips, chamfers) still disqualify it.
             * One plane: the samples of a single wall plane (depths within
               PLANE_SPREAD of each other) cover at least COVER of the face;
               parallel relief on the rest (trim, a plinth step) is allowed. The
@@ -84,6 +102,7 @@ FRONT = .02
 AXIS_ANGLE = 5.      # degrees between a covering normal and the face axis
 NORMAL_SPREAD = 1.   # degrees between a covering normal and the covering mean
 PLANE_SPREAD = .05   # depth band of the one plane that must cover COVER of the face (timber frame relief)
+EAVE_BAND = .25      # top share of a side face an eave sloping up from the wall may cover (a shaft's frame reaches 0.68)
 CURVE_NORMALS = 3    # distinct off-axis normal directions that make a face curved (reported)
 OLD_DEPTH, OLD_FACING = .12, .6   # the superseded depth-band rule, reported only
 ANIMATED_REACH = 1.  # the whole outward neighbour cell
@@ -98,7 +117,8 @@ LIQUIDS = frozenset({'Water'})
 DIRECTIONS = (('Left', 0, -1), ('Right', 0, 1), ('Down', 1, -1), ('Up', 1, 1), ('Bottom', 2, -1), ('Top', 2, 1))
 RULE = (f'{SAMPLES}x{SAMPLES} rays per face; covering surface = nearest opaque static surface within {WALL_DEPTH} behind '
         f'(or {FRONT} proud of) the face plane; every covering normal within {AXIS_ANGLE} deg of the outward axis and '
-        f'{NORMAL_SPREAD} deg of the covering mean; one plane (depths within {PLANE_SPREAD}) covers >= {COVER:.0%}; glass counts '
+        f'{NORMAL_SPREAD} deg of the covering mean; one plane (depths within {PLANE_SPREAD}) covers >= {COVER:.0%}; on side faces '
+        f'an eave sloping up from the wall in the top {EAVE_BAND:.0%} is neither wall nor curve; glass counts '
         f'as a surface; no animated geometry within {ANIMATED_REACH} in front')
 OUT = ROOT / 'outputs/connection-faces'
 
@@ -281,11 +301,28 @@ class AxisHits:
         return b > a
 
 
+def eave_samples(normal, off_axis, axis):
+    """The off-axis covering samples of side faces that are an eave over the
+    wall: in the top EAVE_BAND of the face, the normal turned up toward the sky
+    (positive Z) and within AXIS_ANGLE of the vertical plane through the face
+    axis (a slope running along the face's top edge, not a hip or chamfer
+    turned sideways). Top and Bottom faces have none."""
+    if axis == 2:
+        return np.zeros(off_axis.shape, bool)
+    b = 1 - axis                                           # the face's horizontal in-plane axis (Z is the other)
+    height = (np.arange(SAMPLES) + .5) / SAMPLES           # sample heights in the cell, along Z
+    top = np.tile(height >= 1 - EAVE_BAND, SAMPLES)       # sample k = iu * SAMPLES + iv, iv along Z
+    along = np.abs(normal[..., b]) <= np.sin(np.radians(AXIS_ANGLE))
+    return off_axis & top[None, :] & (normal[..., 2] > 0) & along
+
+
 def covering(hits, cells, axis, sign):
     """The covering surface of each cell's face: the share of samples covered,
     the largest angle (deg) between a covering normal and the outward axis,
     the largest angle to the covering mean normal, the covering depth spread,
-    and whether the superseded depth-band rule accepted the face."""
+    and whether the superseded depth-band rule accepted the face. An eave over
+    a side face (eave_samples) is left out of the wall: of the angles, the
+    plane and the curve test; 'eave' marks the faces that have one."""
     plane = cells[:, axis] + (1 if sign > 0 else 0)
     ids = hits.sample_ids(cells)
     found, depth, normal = hits.nearest(ids, plane + sign * FRONT, sign)
@@ -294,30 +331,32 @@ def covering(hits, cells, axis, sign):
     old = (found & (behind <= OLD_DEPTH) & (behind >= -FRONT) & (facing > OLD_FACING)).sum(1) >= COVER * SAMPLES ** 2
     within = found & (behind <= WALL_DEPTH) & (behind >= -FRONT)
     count = within.sum(1)
-    axis_angle = np.degrees(np.arccos(np.clip(np.where(within, facing, 1), -1, 1))).max(1)
-    mean = (normal * within[..., None]).sum(1)
+    eave = eave_samples(normal, within & (np.degrees(np.arccos(np.clip(facing, -1, 1))) > AXIS_ANGLE), axis)
+    wall = within & ~eave
+    axis_angle = np.degrees(np.arccos(np.clip(np.where(wall, facing, 1), -1, 1))).max(1)
+    mean = (normal * wall[..., None]).sum(1)
     mean /= np.maximum(np.linalg.norm(mean, axis=1, keepdims=True), 1e-12)
-    spread_angle = np.degrees(np.arccos(np.clip(np.where(within, (normal * mean[:, None]).sum(2), 1), -1, 1))).max(1)
-    lo = np.where(within, behind, np.inf).min(1)
-    hi = np.where(within, behind, -np.inf).max(1)
-    depth_spread = np.where(count > 0, hi - lo, 0)
+    spread_angle = np.degrees(np.arccos(np.clip(np.where(wall, (normal * mean[:, None]).sum(2), 1), -1, 1))).max(1)
+    lo = np.where(wall, behind, np.inf).min(1)
+    hi = np.where(wall, behind, -np.inf).max(1)
+    depth_spread = np.where(wall.any(1), hi - lo, 0)
     # Curved or faceted: the off-axis covering normals take at least CURVE_NORMALS
     # distinct directions (rounded to whole degrees about the face axis), as a
     # tessellated cylinder, dome or rounded edge does; one off-axis direction is
     # a single slope, bevel or back face.
-    off = within & (np.degrees(np.arccos(np.clip(facing, -1, 1))) > AXIS_ANGLE)
+    off = wall & (np.degrees(np.arccos(np.clip(facing, -1, 1))) > AXIS_ANGLE)
     b, c2 = [a for a in range(3) if a != axis]
     keyed = np.round(np.degrees(np.arctan2(normal[..., b], normal[..., c2]))) * 1000 + np.round(np.degrees(np.arccos(np.clip(facing, -1, 1))))
     keyed = np.where(off, keyed, np.nan)
     srt = np.sort(keyed, axis=1)
     distinct = (np.isfinite(srt) & np.concatenate([np.isfinite(srt[:, :1]), srt[:, 1:] != srt[:, :-1]], axis=1)).sum(1)
-    # Largest single plane: most samples whose depths lie within PLANE_SPREAD.
-    d = np.where(within, behind, np.nan)
+    # Largest single plane: most wall samples whose depths lie within PLANE_SPREAD.
+    d = np.where(wall, behind, np.nan)
     band = (d[:, None, :] >= d[:, :, None] - 1e-9) & (d[:, None, :] <= d[:, :, None] + PLANE_SPREAD + 1e-9)
     plane_share = band.sum(2).max(1) / SAMPLES ** 2
     return {'ids': ids, 'plane': plane, 'share': count / SAMPLES ** 2, 'axisAngle': axis_angle,
             'normalSpread': spread_angle, 'depthSpread': depth_spread, 'planeShare': plane_share, 'old': old,
-            'curve': distinct >= CURVE_NORMALS}
+            'curve': distinct >= CURVE_NORMALS, 'eave': eave.any(1)}
 
 
 def face_test(solid, opaque, cells, axis, sign):
@@ -334,13 +373,14 @@ def planar(c):
 
 
 def measure(path, size, base_z):
-    """Flat faces of a model over a blueprint Size, the counts behind them, and
+    """Flat faces of a model over a blueprint Size, the counts behind them,
     the faces the superseded depth-band rule accepted that sit on a curved or
-    faceted surface (a covering normal off the axis or off the mean)."""
+    faceted surface (a covering normal off the axis or off the mean), the roof
+    findings, and the flat faces with an eave over their top band."""
     kinds = triangles(path, base_z)
     size = tuple(size)
     cells = np.array([(x, y, z) for z in range(size[2]) for y in range(size[1]) for x in range(size[0])], dtype=np.int64)
-    flat, curved, animated_faces, multi, old_count, set_back = [], [], 0, 0, 0, 0
+    flat, curved, eaves, animated_faces, multi, old_count, set_back = [], [], [], 0, 0, 0, 0
     roof = {'blocked': [], 'covered': [], 'animated': []}
     solid_tris = np.concatenate([kinds['opaque'], kinds['glass']])
     solid = [AxisHits(np.concatenate([solid_tris, kinds['lamp']]), a, size, 0) for a in range(3)]   # anything blocks a roof cell
@@ -363,6 +403,8 @@ def measure(path, size, base_z):
             curved.append(face(cell, name) + ['curve' if curve else 'slope'])
         for cell in cells[good & ~moving]:
             flat.append(face(cell, name))
+        for cell in cells[good & ~moving & c['eave']]:
+            eaves.append(face(cell, name))
         if name == 'Top' and (good & ~moving).any():
             kept = cells[good & ~moving]
             over = kept + np.array([0, 0, 1])
@@ -384,11 +426,12 @@ def measure(path, size, base_z):
     key = lambda f: (f[2], f[1], f[0], order[f[3]])
     flat.sort(key=key)
     curved.sort(key=key)
+    eaves.sort(key=key)
     counts = {k: int(len(v)) for k, v in kinds.items()}
     return flat, {'triangles': counts, 'flatButAnimated': animated_faces,
                   'oldRuleFaces': old_count, 'oldRuleCurveExcluded': sum(f[4] == 'curve' for f in curved),
                   'oldRuleSlopeExcluded': sum(f[4] == 'slope' for f in curved), 'oldRuleMultiPlaneExcluded': multi,
-                  'newSetBackFaces': set_back}, curved, roof
+                  'newSetBackFaces': set_back, 'eaveFaces': len(eaves)}, curved, roof, eaves
 
 
 def buildings(data, only):
@@ -433,12 +476,12 @@ def relative(path):
 
 
 def record(ident, finished, export, size, base_z):
-    faces, stats, curved, roof = measure(export, size, base_z)
+    faces, stats, curved, roof, eaves = measure(export, size, base_z)
     return {'template': ident, 'model': finished, 'export': relative(export), 'exportSha256': sha256(export),
             'size': size, 'baseZ': base_z,
             'coordinateSystem': 'Native grid XYZ, Z up, blueprint block indices; cell (x,y,z) covers [x,x+1)x[y,y+1)x[z,z+1)',
             'rule': RULE, 'excluded': 'Water, WalkwayRail nodes, animated nodes; native props are not in the model; glass counts as a surface',
-            'stats': stats, 'curvedFaces': curved, 'roof': roof, 'faces': faces}
+            'stats': stats, 'curvedFaces': curved, 'roof': roof, 'eaveFaces': eaves, 'faces': faces}
 
 
 def main():

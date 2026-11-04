@@ -651,7 +651,16 @@
           "Y": 1,
           "Z": 1
         },
-        "Directions": "Left",
+        "Directions": "Left, Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "Directions": "Up",
         "State": "OpenIn"
       }
     ]

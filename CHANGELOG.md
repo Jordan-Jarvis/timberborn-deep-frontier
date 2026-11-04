@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Power and pipes connect to walls under a roof's eave
+- **Fixed: the Deep Mine's lamp house refused a power shaft on its side wall** (player report: "I tried attaching power to the side of it on the second or third level (over a window) and it didn't take the connection where it obviously should have"). The wall with the two arched windows, one layer up, now takes a power shaft or a pipe valve on both of its tiles. The windows were never the problem: the plank roof's eave reaches a little below the top of that layer, and any slope on a wall used to rule the whole wall out.
+- **The same fix applies to every building**: a flat wall whose top is crossed by its roof's eave now connects, as the walls of the vanilla Gear Workshop and Motivatorium do. New connection spots: Mission Control 4 (upper storey), Precision Machine Works 3 (back of the upper floor), Deep Mine 2, Radioactive Waste Refinery 2, Radioactive Water Outfall 2 (pipes), Archive Excavation 1 (power).
+- Curved and sloped surfaces still don't connect, and neither do walls where the roof comes down further or the slope is at the foot of the wall.
+
 ### The Deep Drill bores its ore, and empty Deep Ore Sources slowly recharge
 - **The drill's recipe makes sense now** (player report: "the recipe says it needs deep ore and water to produce deep ore? That makes no sense."). It takes 3 water and makes 1 deep ore. Each deep ore comes out of a Deep Ore Source in the drill's district, the nearest by road first. Haulers no longer carry ore out of the sources, so other buildings can't take it straight from them, and drilled ore is no longer hauled back in.
 - **Empty Deep Ore Sources recharge** (player request: replenish "in case the user doesn't make it in time to make the permanent solution. It should be painful though."). Once a source is empty, it gets 20 deep ore back every 5 days, never more than 20 at a time. That is about a tenth of what one Deep Ore Processor uses. It is enough to scrape together a Deep Mine (300 deep ore) in about 38 days on a map with two sources, but not to run an industry. The Deep Mine stays the real supply. A colony that loses its last Deep Mine after the sources run out can rebuild it from the recharge.

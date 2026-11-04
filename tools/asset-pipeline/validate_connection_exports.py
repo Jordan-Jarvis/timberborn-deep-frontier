@@ -5,18 +5,27 @@ shaft transputs and pipe ports that tools/connection_content.mjs generates.
 This check:
 - re-measures each owning export over the generated blueprint's Size/BaseZ
   and fails when a record no longer matches (export bytes, model, Size,
-  BaseZ, rule, faces or curved faces);
+  BaseZ, rule, faces, curved faces, roof or eave faces);
 - re-checks every recorded face on its own (glass counts as a surface): one wall plane (depth band 0.05)
   covers >= 60% of it and no covering surface is curved, faceted or sloped
   (every covering normal within 5 degrees of the face axis and 1 degree of the
-  covering mean);
+  covering mean), apart from an eave sloping up from a side wall in the top
+  quarter of the face;
 - holds three curved surfaces as explicit test cases (user: "The reactor has
   curved edges on it; we don't want to be able to connect to the curved
   edges, just the flat ones"): the reactor's curved edge, the round tank of
   the Cryogenic Tank Farm and the barrel-vaulted hall of the Oil Power Plant.
   Each listed face is covered (>= 60% of it within reach) by a curved or
   sloped surface (a covering normal more than 5 degrees off the face axis or
-  1 degree off the covering mean) and must not be a connection face.
+  1 degree off the covering mean) and must not be a connection face;
+- holds the eave rule's test cases (measure_connection_faces EAVE_BAND): the
+  Deep Mine's lamp-house wall under its eave, which the user tried to power
+  on 2026-11-03 ("it didn't take the connection where it obviously should
+  have"), must be a connection face recorded as an eave face; a roof slope
+  reaching below the top quarter (the Oil Power Plant), a downward-facing
+  slope and a sideways-turned surface in the top band (the Deep Mine's ore
+  chute, the Rocket Assembly Hangar) and a slope at the foot of a wall (the
+  Sandstone Pit) must still exclude their faces.
 Static evidence only.
 
   python validate_connection_exports.py [--data <generated Data root>]
@@ -31,7 +40,24 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).parent))
 import measure_connection_faces as M  # noqa: E402
 
-KEYS = ('model', 'export', 'exportSha256', 'size', 'baseZ', 'rule', 'faces', 'curvedFaces', 'roof')
+KEYS = ('model', 'export', 'exportSha256', 'size', 'baseZ', 'rule', 'faces', 'curvedFaces', 'roof', 'eaveFaces')
+# Flat walls whose top band is the roof's edge: connection faces (found 2026-11-03).
+EAVE_CASES = {
+    # The brick lamp house's left wall on layer 2: grand windows under the front-gabled roof's eave at 0.84 of the layer.
+    'DeepMine': [[0, 0, 1, 'Left'], [0, 1, 1, 'Left']],
+}
+# Slopes the eave rule must not excuse: never connection faces (found 2026-11-03).
+# Each one passes under one loosened rule (a wider band, any tilt, any turn, the foot of the wall).
+SLOPE_CASES = {
+    # A roof slope reaching down to 0.63 of the layer, where a shaft's frame stands.
+    'OilPowerPlant': [[2, 1, 2, 'Up']],
+    # The ore chute's underside, facing down, across the headframe plating's top band.
+    'DeepMine': [[2, 1, 1, 'Left']],
+    # A surface in the top band turned 75 degrees sideways, not sloping up from the wall.
+    'RocketAssemblyHangar': [[0, 5, 1, 'Left']],
+    # A 45-degree slope at the foot of its left wall's corner (the bottom quarter).
+    'SandstonePit': [[0, 1, 0, 'Left']],
+}
 # Faces covered by curved surfaces (found 2026-10-23 on the exported models).
 CURVED_CASES = {
     # The arched turbine-hall door portal and the containment drum (2026-10-30 compaction:
@@ -56,6 +82,34 @@ def curved_cases(ident, export, size, base_z, flat):
             failures.append(f'{ident}: test face {f} is no longer covered by a curved or sloped surface; update CURVED_CASES')
         if tuple(f) in flat:
             failures.append(f'{ident}: curved test face {f} is a connection face')
+    return failures
+
+
+def eave_cases(ident, fresh):
+    """Each test wall is a connection face that passes because of its eave."""
+    failures = []
+    flat, eaves = {tuple(f) for f in fresh['faces']}, {tuple(f) for f in fresh['eaveFaces']}
+    for f in EAVE_CASES[ident]:
+        if tuple(f) not in flat:
+            failures.append(f'{ident}: wall {f} under an eave is not a connection face')
+        elif tuple(f) not in eaves:
+            failures.append(f'{ident}: test wall {f} no longer has an eave over its top band; update EAVE_CASES')
+    return failures
+
+
+def slope_cases(ident, export, size, base_z, flat):
+    """Each test face is covered by a slope outside the eave band and is not a connection face."""
+    failures = []
+    kinds = M.triangles(export, base_z)
+    axes = {name: (axis, sign) for name, axis, sign in M.DIRECTIONS}
+    for f in SLOPE_CASES[ident]:
+        axis, sign = axes[f[3]]
+        c = M.face_test(M.AxisHits(np.concatenate([kinds['opaque'], kinds['glass']]), axis, tuple(size), sign),
+                        M.AxisHits(kinds['opaque'], axis, tuple(size), sign), np.array([f[:3]], dtype=np.int64), axis, sign)
+        if c['axisAngle'][0] <= M.AXIS_ANGLE:
+            failures.append(f'{ident}: test face {f} is no longer covered by a slope outside the eave band; update SLOPE_CASES')
+        if tuple(f) in flat:
+            failures.append(f'{ident}: test face {f} under a slope outside the eave band is a connection face')
     return failures
 
 
@@ -88,7 +142,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', type=Path, default=M.ROOT / 'src/DeepFrontier/Data')
     cli = parser.parse_args()
-    failures, checked, total = [], 0, 0
+    failures, checked, total, eaves = [], 0, 0, 0
     seen = set()
     for ident, _, finished, export, size, base_z in M.buildings(cli.data, None):
         target = M.OUT / f'{ident}.json'
@@ -104,15 +158,23 @@ def main():
         if ident in CURVED_CASES:
             seen.add(ident)
             failures += curved_cases(ident, export, size, base_z, {tuple(f) for f in fresh['faces']})
+        if ident in EAVE_CASES:
+            seen.add(ident)
+            failures += eave_cases(ident, fresh)
+        if ident in SLOPE_CASES:
+            seen.add(ident)
+            failures += slope_cases(ident, export, size, base_z, {tuple(f) for f in fresh['faces']})
         checked += 1
         total += len(fresh['faces'])
-    for ident in sorted(set(CURVED_CASES) - seen):
-        failures.append(f'{ident}: curved test case building was not measured')
+        eaves += len(fresh['eaveFaces'])
+    for ident in sorted((set(CURVED_CASES) | set(EAVE_CASES) | set(SLOPE_CASES)) - seen):
+        failures.append(f'{ident}: test case building was not measured')
     if failures:
         print('\n'.join('FAIL ' + f for f in failures))
         raise SystemExit(f'Connection face records are stale or not flat ({len(failures)})')
-    print(f'Connection face records match fresh measurements: {checked} models, {total} flat faces; '
-          f'every face is one uncurved plane; {sum(len(v) for v in CURVED_CASES.values())} curved test faces excluded')
+    print(f'Connection face records match fresh measurements: {checked} models, {total} flat faces ({eaves} under an eave); '
+          f'every face is one uncurved plane; {sum(len(v) for v in CURVED_CASES.values())} curved test faces excluded; '
+          f'{sum(len(v) for v in EAVE_CASES.values())} eave test walls kept, {sum(len(v) for v in SLOPE_CASES.values())} slope test faces excluded')
 
 
 if __name__ == '__main__':

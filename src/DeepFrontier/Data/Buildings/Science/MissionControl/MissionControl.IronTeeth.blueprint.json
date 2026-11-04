@@ -1631,6 +1631,33 @@
       },
       {
         "Coordinates": {
+          "X": 4,
+          "Y": 2,
+          "Z": 2
+        },
+        "Directions": "Right",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 3,
+          "Z": 2
+        },
+        "Directions": "Right",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 3,
           "Y": 4,
           "Z": 2
@@ -1644,7 +1671,7 @@
           "Y": 4,
           "Z": 2
         },
-        "Directions": "Up",
+        "Directions": "Right, Up",
         "ReverseRotation": false
       },
       {
@@ -2259,6 +2286,33 @@
       },
       {
         "Coordinates": {
+          "X": 4,
+          "Y": 2,
+          "Z": 2
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 4,
+          "Y": 3,
+          "Z": 2
+        },
+        "Directions": "Right",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 4,
+          "Z": 2
+        },
+        "Directions": "Up",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
           "X": 3,
           "Y": 4,
           "Z": 2
@@ -2272,7 +2326,7 @@
           "Y": 4,
           "Z": 2
         },
-        "Directions": "Up",
+        "Directions": "Right, Up",
         "State": "OpenIn"
       },
       {

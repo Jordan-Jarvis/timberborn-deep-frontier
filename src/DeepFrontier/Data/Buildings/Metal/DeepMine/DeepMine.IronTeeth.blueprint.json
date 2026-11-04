@@ -1719,7 +1719,16 @@
           "Y": 0,
           "Z": 1
         },
-        "Directions": "Down",
+        "Directions": "Left, Down",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 1,
+          "Z": 1
+        },
+        "Directions": "Left",
         "ReverseRotation": false
       },
       {
@@ -2338,7 +2347,7 @@
           "Y": 0,
           "Z": 1
         },
-        "Directions": "Down",
+        "Directions": "Left, Down",
         "State": "OpenIn"
       },
       {
@@ -2348,6 +2357,15 @@
           "Z": 1
         },
         "Directions": "Down",
+        "State": "OpenIn"
+      },
+      {
+        "Coordinates": {
+          "X": 0,
+          "Y": 1,
+          "Z": 1
+        },
+        "Directions": "Left",
         "State": "OpenIn"
       },
       {

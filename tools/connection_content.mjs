@@ -13,8 +13,11 @@
 //     the face covers >= 60% of it within 0.35 of the cell plane, and no
 //     covering surface is curved, faceted or sloped (user: "we don't want to
 //     be able to connect to the curved edges, just the flat ones"); flat
-//     window glazing counts as wall (2026-10-26, the Greenhouse); no animated
-//     part in front;
+//     window glazing counts as wall (2026-10-26, the Greenhouse); a roof's
+//     eave sloping up from a side wall in the top quarter of the face is
+//     not wall and does not break it (2026-11-03, the Deep Mine's lamp
+//     house; vanilla Gear Workshop and Motivatorium walls carry shafts under
+//     theirs); no animated part in front;
 //  1a. a Top (roof) face only where the roof is already platformable: its
 //     block is Stackable in the blueprint as the families generated it
 //     (roof terraces, decks, the restaurant's and hospital's roof terraces).
