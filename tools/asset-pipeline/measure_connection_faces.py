@@ -48,10 +48,21 @@ the face normal, starting FRONT outside the face plane and pointing inward:
               proud of their infill on the Fishery, Hospital and crusher walls
               that carry the in-game-tested shaft sockets, and requiring the
               whole covering area within 0.02 left the crusher with no face.
+            Depths are compared at the exports' float32 precision (PRECISION):
+            the Deep Mine's back walls set their brick panels 0.05 behind the
+            pilasters, which the export stores as 0.050000191, and a 1e-9
+            margin split each wall into two planes of under 60% (2026-11-03).
             Back faces are invisible from outside and never cover a face.
-- animated: geometry of an animated node (or a descendant of one) stands in
-            front of the face, within the outward neighbour cell, on any sample.
-            A shaft or pipe there would cut through moving parts.
+- animated: geometry of an animated node (or a descendant of one) enters
+            the face's outward neighbour cell (or reaches FRONT behind the
+            face) in any pose: the rest pose and every baked frame of every
+            clip, tested triangle by triangle against that box (ANIMATED_INSET
+            in from its sides, so a part only touching the cell's boundary does
+            not count). A shaft or pipe there would cut through moving parts.
+            Until 2026-11-03 this sampled the rest pose on the 8 x 8 rays and
+            missed thin or swinging parts between them (in front of Fertilizer
+            Works, Fishery Works, Launch Pad and Technical School faces); the
+            user chose to drop those faces.
 
 Window glass covers a face like any other static surface: flat glazing
 qualifies, curved glass (domes) fails the curve test like curved metal. Lamp
@@ -68,7 +79,7 @@ plane to the top of that cell, probed along all three axes so vertical panels
 count too (a stack, mast, tank, vent or frame would cut through anything built
 there). 'roof.covered' lists those whose inner area does not see the sky (an
 overhang or upper storey somewhere above). 'roof.animated' are flat roof faces
-dropped for an animated part above.
+dropped for a moving part in the cell above (the animated test, any pose).
 tools/roof_deck_content.mjs makes the clear ones platformable.
 
 The result is geometric only. tools/connection_content.mjs decides which of
@@ -102,10 +113,12 @@ FRONT = .02
 AXIS_ANGLE = 5.      # degrees between a covering normal and the face axis
 NORMAL_SPREAD = 1.   # degrees between a covering normal and the covering mean
 PLANE_SPREAD = .05   # depth band of the one plane that must cover COVER of the face (timber frame relief)
+PRECISION = 1e-5     # depth comparisons: float32 positions round by up to 3.8e-6 below 64 (the measured range)
 EAVE_BAND = .25      # top share of a side face an eave sloping up from the wall may cover (a shaft's frame reaches 0.68)
 CURVE_NORMALS = 3    # distinct off-axis normal directions that make a face curved (reported)
 OLD_DEPTH, OLD_FACING = .12, .6   # the superseded depth-band rule, reported only
 ANIMATED_REACH = 1.  # the whole outward neighbour cell
+ANIMATED_INSET = 1e-4  # a moving part must enter the cell, not just touch its side boundary
 ROOF_LIP = .1        # roof trim and lips up to 0.1 above a roof plane do not block it
 # static_mesh_merge.LIGHTING_MATERIALS: window glazing (the window atlas, DFIndustrial09
 # ReferenceWindow) covers a wall like any surface; lamp glass (DFIndustrial08
@@ -118,8 +131,9 @@ DIRECTIONS = (('Left', 0, -1), ('Right', 0, 1), ('Down', 1, -1), ('Up', 1, 1), (
 RULE = (f'{SAMPLES}x{SAMPLES} rays per face; covering surface = nearest opaque static surface within {WALL_DEPTH} behind '
         f'(or {FRONT} proud of) the face plane; every covering normal within {AXIS_ANGLE} deg of the outward axis and '
         f'{NORMAL_SPREAD} deg of the covering mean; one plane (depths within {PLANE_SPREAD}) covers >= {COVER:.0%}; on side faces '
-        f'an eave sloping up from the wall in the top {EAVE_BAND:.0%} is neither wall nor curve; glass counts '
-        f'as a surface; no animated geometry within {ANIMATED_REACH} in front')
+        f'an eave sloping up from the wall in the top {EAVE_BAND:.0%} is neither wall nor curve; depths compared to '
+        f'{PRECISION:g} (float32 exports); glass counts '
+        f'as a surface; no animated geometry within {ANIMATED_REACH} in front in any pose (rest and every frame, exact overlap)')
 OUT = ROOT / 'outputs/connection-faces'
 
 
@@ -128,14 +142,19 @@ def sha256(path):
 
 
 def local_matrix(node):
-    x, y, z, w = node.rotation.x, node.rotation.y, node.rotation.z, node.rotation.w
+    return transform_matrix(node.position, node.rotation, node.scale)
+
+
+def transform_matrix(position, rotation_q, scale):
+    """T * R * S of a Timbermesh node or node-animation frame (Unity space)."""
+    x, y, z, w = rotation_q.x, rotation_q.y, rotation_q.z, rotation_q.w
     rotation = np.array([
         [1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
         [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
         [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)]])
     matrix = np.eye(4)
-    matrix[:3, :3] = rotation * np.array([node.scale.x, node.scale.y, node.scale.z])
-    matrix[:3, 3] = (node.position.x, node.position.y, node.position.z)
+    matrix[:3, :3] = rotation * np.array([scale.x, scale.y, scale.z])
+    matrix[:3, 3] = (position.x, position.y, position.z)
     return matrix
 
 
@@ -143,7 +162,10 @@ _TRIANGLES = {}
 
 
 def triangles(path, base_z):
-    """Grid-frame triangles by kind: opaque, glass, animated. Outward normals
+    """Grid-frame triangles by kind: opaque, glass, lamp, animated (rest pose),
+    plus 'swept': per animated node, its vertices in every pose (rest and each
+    baked frame, (poses, vertices, 3)), their per-pose bounds and its
+    triangles' vertex indices. Outward normals
     follow -cross(v1 - v0, v2 - v0) in the grid frame (the Unity winding seen
     through the Y/Z swap); checked on every model's outer left wall.
 
@@ -154,7 +176,7 @@ def triangles(path, base_z):
     key = (str(Path(path).resolve()), base_z, stat.st_size, stat.st_mtime_ns)
     if key not in _TRIANGLES:
         kinds = _decode_triangles(path, base_z)
-        for array in kinds.values():
+        for array in [v for k, v in kinds.items() if k != 'swept'] + [a for part in kinds['swept'] for a in part]:
             array.setflags(write=False)
         _TRIANGLES[key] = kinds
     return _TRIANGLES[key]
@@ -174,6 +196,7 @@ def _decode_triangles(path, base_z):
         if any(c.nodeAnimations or c.vertexAnimations for c in chain):
             animated.add(i)
     kinds = {'opaque': [], 'glass': [], 'lamp': [], 'animated': []}
+    swept = []
     for i, node in enumerate(model.nodes):
         if node.vertexCount <= 0:
             continue
@@ -189,6 +212,7 @@ def _decode_triangles(path, base_z):
         unity = local @ matrix[:3, :3].T + matrix[:3, 3]
         grid = np.column_stack((unity[:, 0], unity[:, 2], unity[:, 1] + base_z))
         rail = node.name.startswith('WalkwayRail.')
+        node_indices = []
         for mesh in node.meshes:
             if len(mesh.indices) % 3:
                 raise ValueError(f'{path.name}: {node.name} is not triangulated')
@@ -198,6 +222,7 @@ def _decode_triangles(path, base_z):
             tris = grid[indices]
             if i in animated:
                 kinds['animated'].append(tris)
+                node_indices.append(indices)
             elif mesh.material in GLASS:
                 kinds['glass'].append(tris)
             elif mesh.material in LAMP_GLASS:
@@ -206,7 +231,97 @@ def _decode_triangles(path, base_z):
                 continue
             else:
                 kinds['opaque'].append(tris)
-    return {k: (np.concatenate(v) if v else np.zeros((0, 3, 3))) for k, v in kinds.items()}
+        if node_indices:
+            swept.append((np.concatenate(node_indices), local, i))
+    out = {k: (np.concatenate(v) if v else np.zeros((0, 3, 3))) for k, v in kinds.items()}
+    out['swept'] = tuple(_poses(model, i, local, indices, base_z, path) for indices, local, i in swept)
+    return out
+
+
+def _poses(model, i, local, indices, base_z, path):
+    """Node i's vertices (node space) in the grid frame in every pose of its
+    chain: each frame of each clip, then the rest pose. Node animations are
+    baked per frame (timbermesh AnimationBuilder); a frame holds the animated
+    node's local position, rotation and scale. Returns (vertices (poses, V, 3),
+    bounds (poses, 2, 3), triangle vertex indices (T, 3))."""
+    chain, k = [], i
+    while True:
+        chain.append(model.nodes[k])
+        if model.nodes[k].parent == -1:
+            break
+        k = model.nodes[k].parent
+    if any(c.vertexAnimations for c in chain):
+        raise ValueError(f'{path.name}: {model.nodes[i].name}: vertex animations are not handled by the moving-part test')
+    clips = {len(c.nodeAnimations) for c in chain if c.nodeAnimations}
+    if len(clips) != 1:
+        raise ValueError(f'{path.name}: {model.nodes[i].name}: animated nodes of one chain must carry the same clips')
+    poses = []
+    for clip in range(clips.pop()):
+        count = max(len(c.nodeAnimations[clip].frames) for c in chain if c.nodeAnimations)
+        for f in range(count):
+            matrix = np.eye(4)
+            for c in chain:
+                if c.nodeAnimations:
+                    frames = c.nodeAnimations[clip].frames
+                    frame = frames[min(f, len(frames) - 1)]
+                    matrix = transform_matrix(frame.position, frame.rotation, frame.scale) @ matrix
+                else:
+                    matrix = local_matrix(c) @ matrix
+            poses.append(matrix)
+    rest = np.eye(4)
+    for c in chain:
+        rest = local_matrix(c) @ rest
+    poses.append(rest)
+    m = np.unique(np.array(poses).reshape(len(poses), 16), axis=0).reshape(-1, 4, 4)   # held frames repeat
+    unity = np.matmul(local[None], m[:, :3, :3].transpose(0, 2, 1)) + m[:, None, :3, 3]
+    grid = np.stack((unity[..., 0], unity[..., 2], unity[..., 1] + base_z), axis=-1)
+    return grid, np.stack((grid.min(1), grid.max(1)), axis=1), np.ascontiguousarray(indices)
+
+
+def triangles_in_box(tris, lo, hi):
+    """Which triangles (N, 3, 3) overlap the open box (lo, hi): the separating
+    axis test of a triangle and an axis-aligned box (box axes, the triangle's
+    normal and the nine edge-axis cross products)."""
+    centre, half = (lo + hi) / 2, (hi - lo) / 2
+    v = tris - centre
+    hit = np.all(v.max(1) > -half, 1) & np.all(v.min(1) < half, 1)
+    edges = (v[:, 1] - v[:, 0], v[:, 2] - v[:, 1], v[:, 0] - v[:, 2])
+    normal = np.cross(edges[0], edges[1])
+    hit &= np.abs((normal * v[:, 0]).sum(1)) <= (np.abs(normal) * half).sum(1)
+    zero = np.zeros(len(v))
+    for e in edges:
+        for a in (np.stack((zero, -e[:, 2], e[:, 1]), 1), np.stack((e[:, 2], zero, -e[:, 0]), 1),
+                  np.stack((-e[:, 1], e[:, 0], zero), 1)):
+            p = np.einsum('nvk,nk->nv', v, a)
+            r = (np.abs(a) * half).sum(1)
+            hit &= (p.min(1) <= r) & (p.max(1) >= -r)
+    return hit
+
+
+def moving_in_front(swept, cells, axis, sign, which):
+    """For the faces of `cells` selected by `which`: whether any pose of an
+    animated part enters the face's outward neighbour cell or reaches FRONT
+    behind the face (ANIMATED_INSET in from the box's sides)."""
+    out = np.zeros(len(cells), bool)
+    reach = [(bounds[:, 0].min(0), bounds[:, 1].max(0)) for _, bounds, _ in swept]   # each part over all poses
+    for n in np.flatnonzero(which):
+        lo, hi = cells[n].astype(np.float64), cells[n] + 1.
+        plane = cells[n, axis] + (1 if sign > 0 else 0)
+        lo[axis], hi[axis] = (plane - FRONT, plane + ANIMATED_REACH) if sign > 0 else (plane - ANIMATED_REACH, plane + FRONT)
+        lo, hi = lo + ANIMATED_INSET, hi - ANIMATED_INSET
+        for (grid, bounds, indices), (low, high) in zip(swept, reach):
+            if not (np.all(high > lo) and np.all(low < hi)):
+                continue
+            near = np.all(bounds[:, 1] > lo, 1) & np.all(bounds[:, 0] < hi, 1)
+            if not near.any():
+                continue
+            tris = grid[near][:, indices].reshape(-1, 3, 3)
+            tris = tris[np.all(tris.max(1) > lo, 1) & np.all(tris.min(1) < hi, 1)]   # triangle bounds first
+            if len(tris) and triangles_in_box(tris, lo, hi).any():
+                out[n] = True
+                break
+    return out
+
 
 
 class AxisHits:
@@ -329,7 +444,7 @@ def covering(hits, cells, axis, sign):
     behind = (plane[:, None] - depth) * sign
     facing = normal[..., axis] * sign
     old = (found & (behind <= OLD_DEPTH) & (behind >= -FRONT) & (facing > OLD_FACING)).sum(1) >= COVER * SAMPLES ** 2
-    within = found & (behind <= WALL_DEPTH) & (behind >= -FRONT)
+    within = found & (behind <= WALL_DEPTH + PRECISION) & (behind >= -FRONT - PRECISION)
     count = within.sum(1)
     eave = eave_samples(normal, within & (np.degrees(np.arccos(np.clip(facing, -1, 1))) > AXIS_ANGLE), axis)
     wall = within & ~eave
@@ -352,7 +467,7 @@ def covering(hits, cells, axis, sign):
     distinct = (np.isfinite(srt) & np.concatenate([np.isfinite(srt[:, :1]), srt[:, 1:] != srt[:, :-1]], axis=1)).sum(1)
     # Largest single plane: most wall samples whose depths lie within PLANE_SPREAD.
     d = np.where(wall, behind, np.nan)
-    band = (d[:, None, :] >= d[:, :, None] - 1e-9) & (d[:, None, :] <= d[:, :, None] + PLANE_SPREAD + 1e-9)
+    band = (d[:, None, :] >= d[:, :, None] - PRECISION) & (d[:, None, :] <= d[:, :, None] + PLANE_SPREAD + PRECISION)
     plane_share = band.sum(2).max(1) / SAMPLES ** 2
     return {'ids': ids, 'plane': plane, 'share': count / SAMPLES ** 2, 'axisAngle': axis_angle,
             'normalSpread': spread_angle, 'depthSpread': depth_spread, 'planeShare': plane_share, 'old': old,
@@ -386,15 +501,12 @@ def measure(path, size, base_z):
     solid = [AxisHits(np.concatenate([solid_tris, kinds['lamp']]), a, size, 0) for a in range(3)]   # anything blocks a roof cell
     inner = slice(SAMPLES // 4, SAMPLES - SAMPLES // 4)   # samples 0.31..0.69: railings and trim within 0.31 of a cell edge do not block
     hits = {'solid': {(a, s): AxisHits(solid_tris, a, size, s) for a in range(3) for s in (-1, 1)},
-            'opaque': {(a, s): AxisHits(kinds['opaque'], a, size, s) for a in range(3) for s in (-1, 1)},
-            'animated': [AxisHits(kinds['animated'], a, size, 0) for a in range(3)]}
+            'opaque': {(a, s): AxisHits(kinds['opaque'], a, size, s) for a in range(3) for s in (-1, 1)}}
     face = lambda cell, name: [int(cell[0]), int(cell[1]), int(cell[2]), name]
     for name, axis, sign in DIRECTIONS:
         c = face_test(hits['solid'][(axis, sign)], hits['opaque'][(axis, sign)], cells, axis, sign)
-        ids, plane = c['ids'], c['plane']
-        lo, hi = (plane - FRONT, plane + ANIMATED_REACH) if sign > 0 else (plane - ANIMATED_REACH, plane + FRONT)
-        moving = hits['animated'][axis].any_between(ids, lo, hi).any(1)
         good = planar(c)
+        moving = moving_in_front(kinds['swept'], cells, axis, sign, good)
         bent = (c['axisAngle'] > AXIS_ANGLE) | (c['normalSpread'] > NORMAL_SPREAD)
         old_count += int(c['old'].sum())
         multi += int((c['old'] & ~bent & ~good).sum())
@@ -427,7 +539,7 @@ def measure(path, size, base_z):
     flat.sort(key=key)
     curved.sort(key=key)
     eaves.sort(key=key)
-    counts = {k: int(len(v)) for k, v in kinds.items()}
+    counts = {k: int(len(v)) for k, v in kinds.items() if k != 'swept'}
     return flat, {'triangles': counts, 'flatButAnimated': animated_faces,
                   'oldRuleFaces': old_count, 'oldRuleCurveExcluded': sum(f[4] == 'curve' for f in curved),
                   'oldRuleSlopeExcluded': sum(f[4] == 'slope' for f in curved), 'oldRuleMultiPlaneExcluded': multi,

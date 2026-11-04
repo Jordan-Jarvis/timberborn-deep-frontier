@@ -1513,11 +1513,29 @@
       },
       {
         "Coordinates": {
+          "X": 1,
+          "Y": 3,
+          "Z": 3
+        },
+        "Directions": "Down",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
+          "X": 2,
+          "Y": 3,
+          "Z": 3
+        },
+        "Directions": "Down",
+        "ReverseRotation": false
+      },
+      {
+        "Coordinates": {
           "X": 3,
           "Y": 3,
           "Z": 3
         },
-        "Directions": "Top",
+        "Directions": "Down, Top",
         "ReverseRotation": false
       },
       {

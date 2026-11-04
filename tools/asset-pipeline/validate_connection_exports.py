@@ -25,7 +25,16 @@ This check:
   reaching below the top quarter (the Oil Power Plant), a downward-facing
   slope and a sideways-turned surface in the top band (the Deep Mine's ore
   chute, the Rocket Assembly Hangar) and a slope at the foot of a wall (the
-  Sandstone Pit) must still exclude their faces.
+  Sandstone Pit) must still exclude their faces;
+- holds walls whose relief is exactly the 0.05 plane band (the Deep Mine's
+  back walls, brick panels 0.05 behind their pilasters, stored as
+  0.050000191): one plane at float32 precision, so connection faces;
+- holds the moving-part rule's test cases (user, 2026-11-03: no connection
+  face in front of a moving part): faces with a moving part in their outward
+  cell in some pose are not flat faces (the Fertilizer Works' drier drum, the
+  Fishery Works' swinging sign, the Greenhouse's gable fan, the Radioactive
+  Waste Refinery's spent-fuel cask, which only passes there while moving,
+  and the Launch Pad's pump flywheel, 0.02 into the cell above a roof).
 Static evidence only.
 
   python validate_connection_exports.py [--data <generated Data root>]
@@ -45,6 +54,19 @@ KEYS = ('model', 'export', 'exportSha256', 'size', 'baseZ', 'rule', 'faces', 'cu
 EAVE_CASES = {
     # The brick lamp house's left wall on layer 2: grand windows under the front-gabled roof's eave at 0.84 of the layer.
     'DeepMine': [[0, 0, 1, 'Left'], [0, 1, 1, 'Left']],
+}
+# Walls whose relief is exactly PLANE_SPREAD deep: one plane at float32 precision (found 2026-11-03).
+RELIEF_CASES = {
+    # The back walls: brick panels set 0.05 behind the concrete pilasters and base course (exported as 0.050000191).
+    'DeepMine': [[1, 4, 0, 'Up'], [2, 4, 0, 'Up']],
+}
+# Flat faces with a moving part in their outward cell in some pose: never flat faces (found 2026-11-03).
+MOVING_CASES = {
+    'FertilizerWorks': [[2, 1, 1, 'Right']],       # the drier drum
+    'FisheryWorks': [[5, 0, 0, 'Down']],           # the swinging carved sign
+    'Greenhouse': [[5, 1, 0, 'Right']],            # the gable fan's blades, across the top of the wall below it
+    'RadioactiveWasteRefinery': [[2, 0, 1, 'Top']],  # the spent-fuel cask, over this roof only while it moves
+    'LaunchPad': [[2, 1, 0, 'Top']],               # the pump flywheel's rim, 0.02 into the cell above
 }
 # Slopes the eave rule must not excuse: never connection faces (found 2026-11-03).
 # Each one passes under one loosened rule (a wider band, any tilt, any turn, the foot of the wall).
@@ -95,6 +117,41 @@ def eave_cases(ident, fresh):
         elif tuple(f) not in eaves:
             failures.append(f'{ident}: test wall {f} no longer has an eave over its top band; update EAVE_CASES')
     return failures
+
+
+def relief_cases(ident, export, size, base_z, flat):
+    """Each test wall's relief is PLANE_SPREAD deep (to float32 precision) and the wall is a flat face."""
+    failures = []
+    kinds = M.triangles(export, base_z)
+    axes = {name: (axis, sign) for name, axis, sign in M.DIRECTIONS}
+    for f in RELIEF_CASES[ident]:
+        axis, sign = axes[f[3]]
+        c = M.face_test(M.AxisHits(np.concatenate([kinds['opaque'], kinds['glass']]), axis, tuple(size), sign),
+                        M.AxisHits(kinds['opaque'], axis, tuple(size), sign), np.array([f[:3]], dtype=np.int64), axis, sign)
+        if not M.PLANE_SPREAD < c['depthSpread'][0] <= M.PLANE_SPREAD + M.PRECISION:
+            failures.append(f'{ident}: test wall {f} relief is {c["depthSpread"][0]:.9f}, not the plane band rounded up; update RELIEF_CASES')
+        if tuple(f) not in flat:
+            failures.append(f'{ident}: wall {f} with relief within the plane band is not a connection face')
+    return failures
+
+
+def moving_cases(ident, export, size, base_z, fresh):
+    """Each test face is one plane, a moving part enters its outward cell in some pose, and it is not a flat face."""
+    failures = []
+    kinds = M.triangles(export, base_z)
+    axes = {name: (axis, sign) for name, axis, sign in M.DIRECTIONS}
+    flat = {tuple(f) for f in fresh['faces']}
+    for f in MOVING_CASES[ident]:
+        axis, sign = axes[f[3]]
+        cell = np.array([f[:3]], dtype=np.int64)
+        c = M.face_test(M.AxisHits(np.concatenate([kinds['opaque'], kinds['glass']]), axis, tuple(size), sign),
+                        M.AxisHits(kinds['opaque'], axis, tuple(size), sign), cell, axis, sign)
+        if not (M.planar(c)[0] and M.moving_in_front(kinds['swept'], cell, axis, sign, np.ones(1, bool))[0]):
+            failures.append(f'{ident}: test face {f} is no longer a flat face with a moving part in front; update MOVING_CASES')
+        if tuple(f) in flat:
+            failures.append(f'{ident}: face {f} with a moving part in front is a flat face')
+    return failures
+
 
 
 def slope_cases(ident, export, size, base_z, flat):
@@ -164,17 +221,24 @@ def main():
         if ident in SLOPE_CASES:
             seen.add(ident)
             failures += slope_cases(ident, export, size, base_z, {tuple(f) for f in fresh['faces']})
+        if ident in RELIEF_CASES:
+            seen.add(ident)
+            failures += relief_cases(ident, export, size, base_z, {tuple(f) for f in fresh['faces']})
+        if ident in MOVING_CASES:
+            seen.add(ident)
+            failures += moving_cases(ident, export, size, base_z, fresh)
         checked += 1
         total += len(fresh['faces'])
         eaves += len(fresh['eaveFaces'])
-    for ident in sorted((set(CURVED_CASES) | set(EAVE_CASES) | set(SLOPE_CASES)) - seen):
+    for ident in sorted((set(CURVED_CASES) | set(EAVE_CASES) | set(SLOPE_CASES) | set(RELIEF_CASES) | set(MOVING_CASES)) - seen):
         failures.append(f'{ident}: test case building was not measured')
     if failures:
         print('\n'.join('FAIL ' + f for f in failures))
         raise SystemExit(f'Connection face records are stale or not flat ({len(failures)})')
     print(f'Connection face records match fresh measurements: {checked} models, {total} flat faces ({eaves} under an eave); '
           f'every face is one uncurved plane; {sum(len(v) for v in CURVED_CASES.values())} curved test faces excluded; '
-          f'{sum(len(v) for v in EAVE_CASES.values())} eave test walls kept, {sum(len(v) for v in SLOPE_CASES.values())} slope test faces excluded')
+          f'{sum(len(v) for v in EAVE_CASES.values())} eave and {sum(len(v) for v in RELIEF_CASES.values())} relief test walls kept, '
+          f'{sum(len(v) for v in SLOPE_CASES.values())} slope and {sum(len(v) for v in MOVING_CASES.values())} moving-part test faces excluded')
 
 
 if __name__ == '__main__':

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### No power or pipe connections in front of moving parts; walls with recessed panels connect
+- **Connection spots in front of a moving part are gone**: a power shaft or pipe valve could attach where a moving part swings or spins through the spot it stands in. Removed: Fertilizer Works 2 (beside the drier drum), Fishery Works 1 (behind the swinging carved sign), Technical School 2 (beside the flywheel and governor), and two roof spots each on the Launch Pad (by the pump flywheel's rim) and the Radioactive Waste Refinery (under the spent-fuel cask's path).
+- **In existing saves, a shaft or valve already attached at one of those spots disconnects.** Reattach it at a neighbouring wall or roof spot.
+- **Four roof tiles can no longer be built on**: two on the Launch Pad (by the pump flywheel) and two on the Radioactive Waste Refinery (under the cask's path). Anything built on them in a save loses its support and may be removed when the save loads.
+- **Walls with brick panels set into a frame now take shafts and pipes**: a rounding error made the panels and the frame count as two separate surfaces, so neither was big enough. New spots: Deep Mine 2 (its back wall at ground level), Steel Mill 3 (the fourth-layer wall over the roof), Deep Well 1, Water Treatment Plant 1.
+- The Greenhouse wall under its gable fan still has no connection: the fan's blades sweep in front of it.
+
 ### Fewer ways to get stuck: contaminated water, Reactor Bot charging, the Deep Mine's lining
 - **The Radioactive Water Outfall also pours out contaminated water**, 30 per hour (follow-up to the deadlock audit). Stored water that a radioactive tide turns into contaminated water had nowhere to go until the Radioactive Waste Export at 300,000 science, and storage holding it can't be deleted; now it can be emptied at the outfall from 50,000 science, the same stage as the Hospital.
 - **The Reactor Charging Bay unlocks at 300,000 science** (was 400,000), together with the Uranium Processing Plant that makes reactor power cells, so a Reactor Bot is never built before it has somewhere to charge.

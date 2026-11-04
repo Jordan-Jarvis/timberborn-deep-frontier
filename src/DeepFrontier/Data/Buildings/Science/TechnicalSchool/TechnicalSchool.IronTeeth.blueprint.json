@@ -641,7 +641,7 @@
           "Y": 0,
           "Z": 1
         },
-        "Directions": "Left, Right, Down",
+        "Directions": "Right, Down",
         "ReverseRotation": false
       },
       {
@@ -651,15 +651,6 @@
           "Z": 1
         },
         "Directions": "Left",
-        "ReverseRotation": false
-      },
-      {
-        "Coordinates": {
-          "X": 2,
-          "Y": 1,
-          "Z": 1
-        },
-        "Directions": "Down",
         "ReverseRotation": false
       },
       {

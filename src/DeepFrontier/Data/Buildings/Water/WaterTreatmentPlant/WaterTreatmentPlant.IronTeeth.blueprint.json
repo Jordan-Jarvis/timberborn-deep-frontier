@@ -2717,7 +2717,7 @@
           "Y": 4,
           "Z": 0
         },
-        "Directions": "Bottom",
+        "Directions": "Up, Bottom",
         "ReverseRotation": false
       },
       {
@@ -3380,6 +3380,15 @@
       {
         "Coordinates": {
           "X": 6,
+          "Y": 4,
+          "Z": 0
+        },
+        "Directions": "Up",
+        "State": "Open"
+      },
+      {
+        "Coordinates": {
+          "X": 7,
           "Y": 4,
           "Z": 0
         },

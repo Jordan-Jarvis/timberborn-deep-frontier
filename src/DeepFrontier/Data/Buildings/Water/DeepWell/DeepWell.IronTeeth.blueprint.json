@@ -167,7 +167,7 @@
           "Y": 0,
           "Z": 1
         },
-        "Directions": "Left",
+        "Directions": "Left, Right",
         "ReverseRotation": false
       },
       {

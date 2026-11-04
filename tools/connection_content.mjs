@@ -17,7 +17,8 @@
 //     eave sloping up from a side wall in the top quarter of the face is
 //     not wall and does not break it (2026-11-03, the Deep Mine's lamp
 //     house; vanilla Gear Workshop and Motivatorium walls carry shafts under
-//     theirs); no animated part in front;
+//     theirs); no moving part in front in any pose (the rest pose and every
+//     frame, exact overlap with the outward cell; 2026-11-03);
 //  1a. a Top (roof) face only where the roof is already platformable: its
 //     block is Stackable in the blueprint as the families generated it
 //     (roof terraces, decks, the restaurant's and hospital's roof terraces).

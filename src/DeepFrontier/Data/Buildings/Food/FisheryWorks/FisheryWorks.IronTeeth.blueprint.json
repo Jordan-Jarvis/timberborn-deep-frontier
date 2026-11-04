@@ -813,7 +813,7 @@
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Right, Down, Bottom",
+        "Directions": "Right, Bottom",
         "ReverseRotation": false
       },
       {
@@ -2263,7 +2263,7 @@
           "Y": 0,
           "Z": 0
         },
-        "Directions": "Right, Down",
+        "Directions": "Right",
         "State": "Open"
       },
       {

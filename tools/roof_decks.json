@@ -603,18 +603,8 @@
   "LaunchPad": {
    "platformable": [
     [
-     2,
-     1,
-     0
-    ],
-    [
      3,
      1,
-     0
-    ],
-    [
-     2,
-     2,
      0
     ],
     [
@@ -714,6 +704,22 @@
     ]
    ],
    "excluded": [
+    {
+     "cell": [
+      2,
+      1,
+      0
+     ],
+     "reason": "animated part above"
+    },
+    {
+     "cell": [
+      2,
+      2,
+      0
+     ],
+     "reason": "animated part above"
+    },
     {
      "cell": [
       4,
@@ -850,16 +856,6 @@
      0
     ],
     [
-     2,
-     0,
-     1
-    ],
-    [
-     2,
-     1,
-     1
-    ],
-    [
      0,
      2,
      1
@@ -875,7 +871,24 @@
      1
     ]
    ],
-   "excluded": []
+   "excluded": [
+    {
+     "cell": [
+      2,
+      0,
+      1
+     ],
+     "reason": "animated part above"
+    },
+    {
+     "cell": [
+      2,
+      1,
+      1
+     ],
+     "reason": "animated part above"
+    }
+   ]
   },
   "RocketAssemblyHangar": {
    "platformable": [
@@ -3618,11 +3631,6 @@
      4
     ],
     [
-     2,
-     0,
-     4
-    ],
-    [
      0,
      1,
      4
@@ -3655,7 +3663,15 @@
       0,
       4
      ],
-     "reason": "enclosed, or a door, entrance or walkway cell above"
+     "reason": "animated part above"
+    },
+    {
+     "cell": [
+      2,
+      0,
+      4
+     ],
+     "reason": "animated part above"
     }
    ]
   },
