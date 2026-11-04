@@ -4,6 +4,39 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Technical School supplies follow the taught profession (Claude Code session, 2026-11-03, school agent; mirror `school` on HEAD 8bea9ab + this change, others' uncommitted work pinned to HEAD; compile-checked; generated and validated; not built or run in game)
+
+- **User:** "The requirements for keeping the building stocked should change depending on what is being taught." The player saw every program's supplies, which read as if metallurgy needed Electronics.
+- **What the player saw (decompiled 1.1.2.8):**
+  - **Supply panel.** Native `GoodConsumingBuildingFragment` builds its `InventoryFragment` with `ShowEmptyRows`, one row per allowed good of the inventory, which allows all 8 goods of the template's `GoodConsumingBuildingSpec`. The 5 refused goods showed as "0 / 0"; the taught goods' limits were the shared highest rate (a reactor school stocked 20 Electronics, not 16). With nothing taught the hours-left label read `float.MaxValue`.
+  - **Tooltip.** Native `GoodConsumingBuildingDescriber` lists the consumer's goods for preview and unfinished objects. `PreviewFactory` never runs `InitializeEntity`, so the tool tooltip listed all 8 goods at their rates. The building description itself names no supplies.
+  - **Hours-left bar.** `MaximumWorkingTime` was computed in native `Awake` from all 8 goods.
+  - **Haulers, status, attraction: already right.** `SpecialistSchool` gives the native consumer a spec copy with the taught goods (`CanUse` → `Attraction.IsUsable`, `HoursUntilNoSupply`, the lack-of-supplies status read it) and, as the inventory's `IGoodDisallower` (`SchoolSupplyInventory`), returned 0 for other goods, so `Inventory.GetCapacity` never requested them. The class comment's "another discipline's stock stays inside" was wrong: leftovers are native unwanted stock that `RemoveUnwantedStockLaborBehavior` carries out.
+- **Change:**
+  - **Native capacity per program.** `SpecialistSchool.AllowedAmount` returns the taught good's native capacity, ceil(goods per hour x `FullInventoryWorkHours` 40), the same formula as `GoodConsumingBuildingInventoryInitializer`: Metallurgy 60 Metal Block, 30 Deep Iron, 30 Corn Ration; Nuclear 16 Electronics, 8 Yellowcake, 16 Medicine; Flight 20 Electronics, 10 Recovered Telemetry, 20 Canned Fish. Other goods 0.
+  - `ApplySupplies` also sets `MaximumWorkingTime` by the native formula over the taught goods (private setter, resolved at load).
+  - **Panel and tooltip (new `SchoolSupplyPanel.cs`, Harmony, schools only, `Verify()` at mod start).** A postfix on `GoodConsumingBuildingFragment.UpdateFragment` hides rows by the native workshop rule (`InventoryRowUpdater.ShouldShow`: allowed amount > 0 or in stock), so the taught goods and leftovers being carried out show, and hides the whole supply fragment while nothing is taught. A postfix on `GoodConsumingBuildingDescriber.DescribeEntity` drops the input section while nothing is taught (the preview always). An unfinished school with a profession chosen shows that profession's supplies natively.
+  - **School panel.** New line "Supplies used per hour while students are inside: …" from `SpecialistSchool.Supplies`; the program line drops its supplies clause.
+  - Switching profession fires `DisallowedGoodsChanged` for every good, so requests, limits and unwanted stock update on the click.
+- **Why Harmony:** both native views read the inventory or spec directly with no per-entity filter. Per-program allowed goods on the one inventory would invalidate in-flight capacity reservations (`UnreserveCapacity` throws for a good no longer allowed). Mutating them would also leave the district registries stale.
+- **Saves:** no new data. Stock and the saved supply list load as before; a saved school's other-program stock becomes unwanted stock on load and is carried out.
+- **Files:** `Scripts/Workforce/SpecialistSchool.cs`, `SchoolSupplyPanel.cs` (new), `WorkforcePanels.cs`; `tools/workforce_risk_content.mjs` (1 new row, 1 shortened); `tools/validate_workforce_risks.mjs`; generated `enUS.csv`; Timberborn skill `dependency-apis.md` ("Goods-consuming buildings whose supplies change at runtime").
+- **Checks:**
+  - **Compile.** `tools/compile-check` in the mirror: 0 errors (3 existing warnings).
+  - **Validator.** `validate_workforce_risks.mjs` now checks the runtime sources (taught-only `Supplies`, native capacity in `AllowedAmount`, `MaximumWorkingTime`, the disallower, both patches applied after `Verify()` and their rules, the panel listing only `Supplies`). It also checks the native contract decompiled from the plugin assemblies, matched without access modifiers since they are publicized. Mutations (`int.MaxValue` capacity, the row rule without stock, the panel listing all disciplines) fail as they should.
+  - **Generation.** Canonical generation in the mirror changes only 2 `enUS.csv` rows against HEAD.
+  - **validate_all.** `-Only` workforce_risks, single_inventory, component_lifecycle, editor_guards, building_descriptions, vertical_slice_content, automation_content, inventory_enable_guard, load_order, mod_dependencies: 10/10. Full `validate_all -SkipBlender`: 70 of 73 pass in the mirror (`deadlocks` is another agent's uncommitted validator, not in HEAD, failing on finite-stock goods unrelated to this change; `no-game-assets` needs git and passes on this commit's private index; `audit-item-uses` is report-only).
+  - **Skill.** `quick_validate.py` not run (no PyYAML on this machine; only a reference file changed).
+- **In game, to check (not run).** Use a test save with a finished, powered Technical School and stock of all eight goods in the district:
+  1. Select a school that teaches nothing. Expected: "Choose the profession…", no supply panel at the bottom, no huge hours-left number.
+  2. Hover the Technical School in the Science toolbar. Expected: the tooltip shows cost, power and description, with no supplies section.
+  3. Click "Teach Metallurgists". Expected: the supply panel shows only the rows Metal block 0 / 60, Deep iron 0 / 30 and Corn ration 0 / 30, and the school panel reads "Supplies used per hour while students are inside: 1.5 Metal blocks, 0.75 Deep iron, 0.75 Corn rations". Haulers bring only those three.
+  4. After some stock arrives, click "Teach Reactor operators". Expected: at once the panel shows Electronics 0 / 16, Yellowcake 0 / 8 and Medicine 0 / 16, plus the metallurgy goods as "N / 0" while haulers carry them out. Those rows disappear when empty, and only the reactor goods are delivered.
+  5. Switch to Flight. Expected: Electronics' limit becomes 20 and it stays; Yellowcake and Medicine are carried out.
+  6. With students inside, let a taught good run out. Expected: students stop coming and the lack-of-supplies status names only the taught goods. The hours-left bar is full at a full stock.
+  7. Save and reload. Expected: the profession, stock, limits and rows are the same.
+  8. Place a new school and pick a profession while it is under construction. Expected: its tooltip lists only that profession's supplies.
+
 ## Hospital without Alloy and Machine Core: per-building family goods (Claude Code session, 2026-11-03, hospcost agent; mirror `hospcost` on HEAD 2c73b75 + this change; generated and validated; not built or run in game)
 
 - **User:** "Can we remove machine cores and alloy from the requirements to build the hospital?"

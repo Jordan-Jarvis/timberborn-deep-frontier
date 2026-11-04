@@ -6,6 +6,7 @@ using Timberborn.BaseComponentSystem;
 using Timberborn.CoreUI;
 using Timberborn.EntityPanelSystem;
 using Timberborn.GameDistricts;
+using Timberborn.Goods;
 using Timberborn.Localization;
 using Timberborn.WorkSystem;
 using DeepFrontier.Scripts.SuperBots;
@@ -75,12 +76,15 @@ namespace DeepFrontier.Scripts {
     private readonly WorkforceSettings _settings;
     private readonly SpecialistRoster _roster;
     private readonly ILoc _loc;
+    private readonly IGoodService _goods;
     private readonly List<(string discipline, Button button)> _teach=new List<(string, Button)>();
-    private Label _program,_students,_remaining,_roster_;
-    public SpecialistSchoolPanel(WorkforceSettings settings, SpecialistRoster roster, ILoc loc) {_settings=settings;_roster=roster;_loc=loc;}
+    private Label _program,_supplies,_students,_remaining,_roster_;
+    public SpecialistSchoolPanel(WorkforceSettings settings, SpecialistRoster roster, ILoc loc, IGoodService goods) {
+      _settings=settings;_roster=roster;_loc=loc;_goods=goods;
+    }
     protected override void InitializePanel() {
       panel.AddGameLabel(_loc.T("DeepFrontier.Workforce.School.Title"),bold:true);
-      _program=Wrapped();_students=Wrapped();_remaining=Wrapped();
+      _program=Wrapped();_supplies=Wrapped();_students=Wrapped();_remaining=Wrapped();
       foreach(var discipline in _settings.Disciplines) {
         var id=discipline.Id;
         var button=panel.AddGameButton(_loc.T("DeepFrontier.Workforce.School.Teach",_loc.T(discipline.PluralDisplayNameLocKey)),
@@ -101,10 +105,13 @@ namespace DeepFrontier.Scripts {
       }
       if(current==null) {
         _program.text=_loc.T("DeepFrontier.Workforce.School.NoProgram");
-        _students.text=_remaining.text="";
+        _supplies.text=_students.text=_remaining.text="";
       } else {
         var spec=_settings.Discipline(current);
         _program.text=_loc.T("DeepFrontier.Workforce.School.Program",_loc.T(spec.PluralDisplayNameLocKey),component.StudyHours.ToString("0.#"));
+        // The taught profession's supplies only; the native supply panel below shows their stock.
+        _supplies.text=_loc.T("DeepFrontier.Workforce.School.Supplies",string.Join(", ",
+          component.Supplies.Select(g=>$"{g.GoodPerHour:0.##} {_goods.GetGood(g.GoodId).PluralDisplayName.Value}")));
         _students.text=_loc.T("DeepFrontier.Workforce.School.Students",component.Students.Count());
         var district=component.GetComponent<DistrictBuilding>().District;
         _remaining.text=district

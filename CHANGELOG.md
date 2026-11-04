@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### The Technical School asks only for the supplies of what it teaches
+- **Its supply panel follows the chosen profession** (player report: "The requirements for keeping the building stocked should change depending on what is being taught."): a school teaching metallurgy lists only Metal Blocks, Deep Iron and Corn Rations, a reactor school only Electronics, Yellowcake and Medicine, a flight school only Electronics, Recovered Telemetry and Canned Fish. Before, the panel showed all eight goods, with the ones it refused as 0 / 0.
+- Each good's limit is the taught profession's own (40 hours of use), and the hours-left bar is measured on its goods. The school panel adds a line with the taught profession's supplies per hour.
+- **Switching profession takes effect at once**: haulers bring only the new profession's goods, and the old profession's leftovers are carried out like a workshop's after a recipe change (they show in the panel until they are gone).
+- A school that teaches nothing shows no supply panel, and the building's tooltip no longer lists every profession's supplies.
+
 ### The Hospital no longer needs Alloy or Machine Cores
 - **The Hospital's metal is now Metal Blocks, Deep Iron and Steel** (player request: "Can we remove machine cores and alloy from the requirements to build the hospital?"): it costs 475 treated planks, 35 metal blocks, 20 deep iron, 20 steel, 440 concrete, 460 bricks and 180 gears, instead of 20 alloy and 5 machine cores for its metal. It cures irradiated beavers, so it should not wait on the frontier metal chain before radioactive tides arrive.
 - Its science (50,000) and the rest of its cost are unchanged, and no other building's cost changes.

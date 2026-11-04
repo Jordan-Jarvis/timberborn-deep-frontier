@@ -20,6 +20,7 @@ using Timberborn.StatusSystem;
 using Timberborn.TickSystem;
 using Timberborn.TimeSystem;
 using Timberborn.WorldPersistence;
+using UnityEngine;
 
 namespace DeepFrontier.Scripts {
   // Technical School: free-time study, no staff (staff would work the shift
@@ -33,12 +34,18 @@ namespace DeepFrontier.Scripts {
   // A beaver holding the discipline keeps that need full (SpecialistTrait), so
   // it never comes. Each hour inside adds one study hour; StudyHours graduates.
   // Each discipline has its own supplies. The template's native
-  // GoodConsumingBuildingSpec lists every discipline's goods; the school gives
-  // its GoodConsumingBuilding a copy listing only the taught discipline's (the
-  // native consumer reads its spec field and supply list, with no setter), and
-  // as the inventory's IGoodDisallower (SchoolSupplyInventory) it accepts only
-  // those goods. Another discipline's stock stays inside for when it is taught
-  // again.
+  // GoodConsumingBuildingSpec lists every discipline's goods (so the one native
+  // inventory can hold them all); the school gives its GoodConsumingBuilding a
+  // copy listing only the taught discipline's (the native consumer reads its
+  // spec field, supply list and MaximumWorkingTime, with no setter), so use,
+  // hours left, the lack-of-supplies status and Attraction.IsUsable follow it.
+  // As the inventory's IGoodDisallower (SchoolSupplyInventory) the school
+  // allows only the taught discipline's goods, each up to its native capacity
+  // (goods per hour x FullInventoryWorkHours), so haulers request only those.
+  // On a switch the old discipline's stock becomes native unwanted stock that
+  // haulers carry out (RemoveUnwantedStockLaborBehavior), as after a vanilla
+  // recipe change. SchoolSupplyPanel shows only those goods in the native
+  // supply panel and keeps supplies out of the tooltip until one is taught.
   internal sealed class SpecialistSchool : TickableComponent, IAwakableComponent, IInitializableEntity,
       IFinishedStateListener, IPersistentEntity, IBuildingEfficiencyProvider, IGoodDisallower {
     private static readonly ComponentKey Key=new("DeepFrontier.SpecialistSchool");
@@ -50,6 +57,8 @@ namespace DeepFrontier.Scripts {
       BindingFlags.Instance|BindingFlags.NonPublic),"AttractionNeedBehavior._districtNeedBehaviorService");
     private static readonly FieldInfo ConsumerSpecField=RequireField(typeof(GoodConsumingBuilding),"_goodConsumingBuildingSpec",typeof(GoodConsumingBuildingSpec));
     private static readonly FieldInfo SuppliesLeftField=RequireField(typeof(GoodConsumingBuilding),"_suppliesLeft",typeof(List<float>));
+    private static readonly MethodInfo MaximumWorkingTimeSetter=Require(typeof(GoodConsumingBuilding)
+      .GetProperty(nameof(GoodConsumingBuilding.MaximumWorkingTime))?.GetSetMethod(true),"GoodConsumingBuilding.MaximumWorkingTime setter");
 
     private readonly WorkforceSettings _settings;
     private readonly IDayNightCycle _cycle;
@@ -68,6 +77,8 @@ namespace DeepFrontier.Scripts {
     public string Discipline { get; private set; }
     public IReadOnlyCollection<string> Disciplines=>_programs.Keys;
     public float StudyHours=>Discipline==null?0f:_programs[Discipline];
+    // The taught discipline's supplies (goods per hour while anyone studies); empty without one.
+    public ImmutableArray<ConsumedGoodSpec> Supplies=>Discipline==null?ImmutableArray<ConsumedGoodSpec>.Empty:_supplies[Discipline];
     public bool CanUse=>Discipline!=null;
     public float Efficiency=>1f;
     public event EventHandler<DisallowedGoodsChangedEventArgs> DisallowedGoodsChanged;
@@ -173,16 +184,24 @@ namespace DeepFrontier.Scripts {
       if(district&&effects.Count>0)district.AddNeedBehavior(_attraction.Effects,_behavior);
     }
 
-    // IGoodDisallower: only the taught discipline's supplies are delivered.
-    public int AllowedAmount(string goodId)=>
-      Discipline!=null&&_supplies[Discipline].Any(g=>g.GoodId==goodId)?int.MaxValue:0;
+    // IGoodDisallower: only the taught discipline's supplies are delivered, each
+    // up to the capacity the native initializer gives a consumed good
+    // (GoodConsumingBuildingInventoryInitializer: ceil(goods per hour x FullInventoryWorkHours)).
+    public int AllowedAmount(string goodId) {
+      foreach(var good in Supplies)
+        if(good.GoodId==goodId)return Mathf.CeilToInt(good.GoodPerHour*_allSupplies.FullInventoryWorkHours);
+      return 0;
+    }
 
     // The native consumer uses up, and requires, only the taught discipline's
-    // goods; its supply list (the part of a unit already taken from stock) is
+    // goods; its supply list (the part of a unit already taken from stock) and
+    // its full-stock hours (native Awake formula, for the hours-left bar) are
     // kept in step. Without a discipline nobody studies and nothing is used.
     private void ApplySupplies(bool keepSuppliesLeft) {
-      var goods=Discipline==null?ImmutableArray<ConsumedGoodSpec>.Empty:_supplies[Discipline];
+      var goods=Supplies;
       ConsumerSpecField.SetValue(_consumer,_allSupplies with {ConsumedGoods=goods});
+      if(goods.Length>0)
+        MaximumWorkingTimeSetter.Invoke(_consumer,new object[]{_allSupplies.FullInventoryWorkHours+1f/goods.Max(g=>g.GoodPerHour)});
       var left=(List<float>)SuppliesLeftField.GetValue(_consumer);
       if(!keepSuppliesLeft)left.Clear();
       if(left.Count>goods.Length)left.RemoveRange(goods.Length,left.Count-goods.Length);

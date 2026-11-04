@@ -9,9 +9,14 @@
 // localization keys match what the generator writes, and the generated data:
 // - not yet applied (no settings blueprint): a dry run must have no errors;
 // - applied: every declared template carries exactly the expected specs.
+// The Technical School's supplies follow the taught profession everywhere the
+// player and haulers see them: runtime sources, and the native contract they
+// rely on, decompiled from the plugin assemblies (publicized: access modifiers
+// are not matched).
 // Automation declarations for the new specs are checked against
 // tools/automation_content.json. Exits 1 on any error.
 import {readFile, readdir, access} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {loadWorkforceConfig, checkWorkforceConfig, planWorkforceRisks, settingsBlueprint, riskSpec, schoolSpec,
@@ -226,6 +231,92 @@ if (design) {
   }
   console.log(`bot wear (native life ${botDays} days):`);
   for (const [id, e] of Object.entries(config.templates)) if (e.botWear) console.log(`  ${id.split('/').at(-1).replace('.IronTeeth.blueprint', '')}: ${e.botWear}x -> ${(botDays / e.botWear).toFixed(1)} days working there`);
+}
+
+// --- Technical School supplies follow the taught profession ---
+// Runtime: the consumer's goods, the inventory's allowed amounts, the native
+// supply panel, the tooltip and the school panel all use only the taught
+// profession's supplies.
+{
+  const school = await readFile(resolve(scripts, 'SpecialistSchool.cs'), 'utf8');
+  const inventory = await readFile(resolve(scripts, 'SchoolSupplyInventory.cs'), 'utf8');
+  const panelPatch = await readFile(resolve(scripts, 'SchoolSupplyPanel.cs'), 'utf8');
+  const panels = await readFile(resolve(scripts, 'WorkforcePanels.cs'), 'utf8');
+  const need = (text, pattern, what) => { if (!pattern.test(text)) errors.push(`school supplies: ${what}`); };
+  need(school, /public ImmutableArray<ConsumedGoodSpec> Supplies=>Discipline==null\?ImmutableArray<ConsumedGoodSpec>\.Empty:_supplies\[Discipline\];/,
+    'SpecialistSchool.Supplies must be the taught profession\'s supplies, empty without one');
+  need(school, /public int AllowedAmount\(string goodId\) \{\s*foreach\(var good in Supplies\)\s*if\(good\.GoodId==goodId\)return Mathf\.CeilToInt\(good\.GoodPerHour\*_allSupplies\.FullInventoryWorkHours\);\s*return 0;\s*\}/,
+    'SpecialistSchool.AllowedAmount must allow only the taught supplies, each at its native capacity ceil(goods per hour x FullInventoryWorkHours)');
+  need(school, /ConsumerSpecField\.SetValue\(_consumer,_allSupplies with \{ConsumedGoods=goods\}\);/, 'ApplySupplies must give the native consumer the taught goods only');
+  need(school, /MaximumWorkingTimeSetter\.Invoke\(_consumer,new object\[\]\{_allSupplies\.FullInventoryWorkHours\+1f\/goods\.Max\(g=>g\.GoodPerHour\)\}\);/,
+    'ApplySupplies must set MaximumWorkingTime by the native formula over the taught goods');
+  need(school, /foreach\(var good in _allSupplies\.ConsumedGoods\)\s*DisallowedGoodsChanged\?\.Invoke/, 'ApplySupplies must notify the inventory for every good');
+  need(inventory, /initializer\.AddGoodDisallower\(school\);/, 'SchoolSupplyInventory must make the school its inventory\'s IGoodDisallower');
+  if (!(panelPatch.trimStart().startsWith('#if !UNITY_EDITOR') && panelPatch.trimEnd().endsWith('#endif')))
+    errors.push('school supplies: SchoolSupplyPanel.cs must be wrapped in #if !UNITY_EDITOR');
+  need(panelPatch, /class SchoolSupplyPanelModStarter : IModStarter \{\s*public void StartMod\(IModEnvironment modEnvironment\) \{\s*SchoolSupplyPanel\.Verify\(\);[\s\S]*?CreateClassProcessor\(typeof\(SchoolSupplyFragmentPatch\)\)\.Patch\(\);\s*harmony\.CreateClassProcessor\(typeof\(SchoolSupplyDescriberPatch\)\)\.Patch\(\);/,
+    'SchoolSupplyPanel must verify the native contract, then apply both patches at mod start');
+  need(panelPatch, /\[HarmonyPatch\(typeof\(GoodConsumingBuildingFragment\), nameof\(GoodConsumingBuildingFragment\.UpdateFragment\)\)\]\s*internal static class SchoolSupplyFragmentPatch \{\s*private static void Postfix\(/,
+    'the supply panel patch is a postfix on GoodConsumingBuildingFragment.UpdateFragment');
+  need(panelPatch, /var school = ____goodConsumingBuilding\.GetComponent<SpecialistSchool>\(\);\s*if \(!school\) return;\s*if \(school\.Discipline == null\) \{\s*____root\.ToggleDisplayStyle\(visible: false\);/,
+    'the supply panel patch leaves other buildings alone and hides the supply panel while nothing is taught');
+  need(panelPatch, /if \(inventory\.LimitedAmount\(row\.GoodId\) <= 0 && inventory\.AmountInStock\(row\.GoodId\) <= 0\) row\.Hide\(\);/,
+    'the supply panel patch hides rows by the native InventoryRowUpdater.ShouldShow rule');
+  need(panelPatch, /if \(school && school\.Discipline == null\) __result = __result\.Where\(description => !description\.Input\)\.ToList\(\);/,
+    'the tooltip patch drops the supply section only while the school teaches nothing');
+  need(panels, /component\.Supplies\.Select\(/, 'the school panel lists the taught profession\'s supplies');
+  if (/_allSupplies|FrontierSpecialistSchoolSpec/.test(panels)) errors.push('school supplies: the school panel must not list every profession\'s supplies');
+}
+// Native contract (Timberborn 1.1.2.8, decompiled from the plugin assemblies).
+{
+  const plugins = resolve(root, 'vendor', 'timberborn-modding', 'Assets', 'Plugins', 'Timberborn');
+  const decompile = (dll, type) => {
+    try {
+      return execFileSync(resolve(root, 'tools', 'dotnet', 'ilspycmd.exe'), [resolve(plugins, dll), '-r', plugins, '-t', type], {encoding: 'utf8', maxBuffer: 64 << 20}).replace(/\r\n/g, '\n');
+    } catch (error) {
+      errors.push(`native: ${dll} ${type}: decompilation failed (${error.message.split('\n')[0]})`);
+      return null;
+    }
+  };
+  for (const [dll, type, patterns, what] of [
+    ['Timberborn.GoodConsumingBuildingSystem.dll', 'Timberborn.GoodConsumingBuildingSystem.GoodConsumingBuilding',
+      [/(?:private|public) GoodConsumingBuildingSpec _goodConsumingBuildingSpec;/, /(?:private|public) readonly List<float> _suppliesLeft = new List<float>\(\);/,
+        /public float MaximumWorkingTime \{ get; (?:private )?set; \}/, /public ImmutableArray<ConsumedGoodSpec> ConsumedGoods => _goodConsumingBuildingSpec\.ConsumedGoods;/,
+        /MaximumWorkingTime = \(float\)_goodConsumingBuildingSpec\.FullInventoryWorkHours \+ 1f \/ ConsumedGoods\.Max\(/],
+      'the consumer reads its goods from its private spec field and computes MaximumWorkingTime from them'],
+    ['Timberborn.GoodConsumingBuildingSystem.dll', 'Timberborn.GoodConsumingBuildingSystem.GoodConsumingBuildingInventoryInitializer',
+      [/int amount = Mathf\.CeilToInt\(current\.GoodPerHour \* \(float\)component\.FullInventoryWorkHours\);/],
+      'a consumed good\'s capacity is ceil(goods per hour x FullInventoryWorkHours)'],
+    ['Timberborn.GoodConsumingBuildingSystem.dll', 'Timberborn.GoodConsumingBuildingSystem.GoodConsumingBuildingStatusInitializer',
+      [/_goodConsumingBuilding\.ConsumedGoods\.GetEnumerator\(\)/], 'the lack-of-supplies status checks the consumer\'s goods'],
+    ['Timberborn.GoodConsumingBuildingSystemUI.dll', 'Timberborn.GoodConsumingBuildingSystemUI.GoodConsumingBuildingFragment',
+      [/\.ShowRowLimit\(\)\.ShowEmptyRows\(\)/, /(?:private|public) GoodConsumingBuilding _goodConsumingBuilding;/, /(?:private|public) VisualElement _root;/, /(?:private|public) InventoryFragment _inventoryFragment;/,
+        /_inventoryFragment\.UpdateFragment\(\);\s*UpdateProgressBar\(\);\s*_root\.ToggleDisplayStyle\(visible: true\);/],
+      'the supply panel shows a row for every allowed good, then its root, in UpdateFragment'],
+    ['Timberborn.GoodConsumingBuildingSystemUI.dll', 'Timberborn.GoodConsumingBuildingSystemUI.GoodConsumingBuildingDescriber',
+      [/if \(_blockObject\.IsPreview \|\| _blockObject\.IsUnfinished\)\s*\{\s*yield return DescribeSupply\(\);/, /EntityDescription\.CreateInputSectionWithTime\(/,
+        /_goodConsumingBuilding\.ConsumedGoods\.GetEnumerator\(\)/],
+      'the tooltip of an unbuilt or unfinished building lists the consumer\'s goods as an input section'],
+    ['Timberborn.BlockObjectTools.dll', 'Timberborn.BlockObjectTools.PreviewFactory',
+      [/componentSlow\.GetComponent<BlockObject>\(\)\.MarkAsPreviewAndInitialize\(\);\s*return componentSlow;/],
+      'tool previews are instantiated without InitializeEntity (so the school has no profession there)'],
+    ['Timberborn.InventorySystemUI.dll', 'Timberborn.InventorySystemUI.InventoryFragment',
+      [/(?:private|public) readonly List<InformationalRow> _rows = new List<InformationalRow>\(\);/, /if \(_showEmptyRows \|\| row\.CurrentAmount > 0\)/],
+      'inventory fragment rows live in _rows and show when empty rows are on'],
+    ['Timberborn.InventorySystemUI.dll', 'Timberborn.InventorySystemUI.InventoryRowUpdater',
+      [/bool num = inventory\.LimitedAmount\(goodId\) > 0;\s*bool flag = inventory\.AmountInStock\(goodId\) > 0;\s*return num \|\| flag;/],
+      'workshop panels show a good while it is allowed or in stock (the rule the school panel uses)'],
+    ['Timberborn.InventorySystem.dll', 'Timberborn.InventorySystem.Inventory',
+      [/return Math\.Min\(_goodDisallower\.AllowedAmount\(goodId\), _allowedGoods\.GetAmount\(goodId\)\);/,
+        /if \(num > 0\)\s*\{\s*capacity\.Add\(new GoodAmount\(goodId, num\)\);/, /(?:private|public) void OnDisallowedGoodsChanged\(object sender, DisallowedGoodsChangedEventArgs e\)\s*\{\s*CheckIfUnwantedStockAppeared\(\);/],
+      'the disallower caps each good, only goods it allows are requested, and a change marks leftovers as unwanted stock'],
+    ['Timberborn.Emptying.dll', 'Timberborn.Emptying.EmptyingStarter',
+      [/IEnumerable<GoodAmount> goods = \(unwantedStock \? inventory\.UnreservedUnwantedStock\(\) : GetUnreservedGoods\(inventory\)\);/],
+      'haulers carry unwanted stock out'],
+  ]) {
+    const text = decompile(dll, type);
+    if (text !== null && !patterns.every((p) => p.test(text))) errors.push(`native: ${type}: no longer true that ${what}`);
+  }
 }
 
 for (const note of notes) console.log(`note: ${note}`);
