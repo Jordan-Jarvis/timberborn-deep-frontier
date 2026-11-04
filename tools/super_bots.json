@@ -60,7 +60,7 @@
      "order": 5195, "color": [0.78, 0.50]}
   ],
   "station": {
-    "$comment": "Native powered goods-consuming attraction (vanilla DecontaminationPod / MudBath contract) on the vanilla ChargingStation.IronTeeth template. It serves only ReactorCharge, so ordinary bots never use it, and Reactor Bots never use the vanilla station (Energy is disabled on them). Geometry, model and slots: tools/asset-pipeline/lategame_ReactorChargingBay.py. Menu (user 2026-11-02): right after the vanilla Charging Station in Science (ChargingStation ToolOrder 70, ControlTower 80), declared as an upgrade in tools/tool_groups.json upgrades.",
+    "$comment": "Native powered goods-consuming attraction (vanilla DecontaminationPod / MudBath contract) on the vanilla ChargingStation.IronTeeth template. It serves only ReactorCharge, so ordinary bots never use it, and Reactor Bots never use the vanilla station (Energy is disabled on them). Geometry, model and slots: tools/asset-pipeline/lategame_ReactorChargingBay.py. Menu (user 2026-11-02): right after the vanilla Charging Station in Science (ChargingStation ToolOrder 70, ControlTower 80), declared as an upgrade in tools/tool_groups.json upgrades. Science 300,000 since 2026-11-03 (was 400,000; docs/deadlock-audit.md D6, user approved P2): with the Uranium Processing Plant, which makes the reactor power cells that Reactor Bots (recipe and retrofit) and the bay itself need, so no Reactor Bot exists before a place to charge it.",
     "id": "ReactorChargingBay",
     "folder": "Buildings/Science/ReactorChargingBay",
     "name": "Reactor Charging Bay",
@@ -68,7 +68,7 @@
     "powerInput": 5000,
     "fuel": ["EnrichedFuel", 0.2],
     "fullInventoryWorkHours": 50,
-    "science": 400000,
+    "science": 300000,
     "toolGroup": "Science",
     "toolOrder": 75,
     "flavor": "Two hours on the cradle, a week on the job."

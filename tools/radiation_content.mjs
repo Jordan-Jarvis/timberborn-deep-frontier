@@ -42,6 +42,14 @@ export const VOLUME_PER_GOOD = 0.2;         // radioactive volume (r * water vol
 // Recovery pump: native water it may pump per recipe cycle (0.5 h) to find the
 // 0.2 radioactive volume of one good; 4 is pure radioactive water down to r = 0.05.
 export const RECOVERY_MAX_WATER_PER_CYCLE = 4;
+// Contaminated water holds a tenth of a radioactive water good's radiation: the
+// refinery's decontamination (create_frontier_expansion_content.mjs
+// DecontaminateWater) turns 10 contaminated water into 8 water and 1 radioactive
+// water. The outfall's contaminated-water recipe pours out the same radioactive
+// volume per cycle as its radioactive-water recipe (validate_radiation_content.mjs
+// checks both against the generated refinery recipe).
+export const CONTAMINATED_WATER_PER_SLUDGE = 10;
+const RELEASED_SLUDGE_PER_CYCLE = 3;
 
 // Radiation buildings. Each clones a vanilla Iron Teeth template for its
 // native behaviour (workplace, manufactory, intake pipe) and swaps in
@@ -54,7 +62,7 @@ export const RADIATION_BUILDINGS = [
   {id: 'RadioactiveWasteExport', template: 'Buildings/Water/Discharge/Discharge.IronTeeth.blueprint.json',
    recipes: ['ExportRadioactiveWaste', 'ExportRadioactiveSludge', 'ExportContaminatedWater'], toolOrder: 22, science: 300000, kind: 'export', pipe: 'PIPE_INLET'},
   {id: 'RadioactiveSludgeOutfall', template: 'Buildings/Water/Discharge/Discharge.IronTeeth.blueprint.json',
-   recipes: ['ReleaseRadioactiveSludge'], toolOrder: 21, science: 50000, kind: 'outfall', pipe: 'PIPE_INLET'},
+   recipes: ['ReleaseRadioactiveSludge', 'ReleaseContaminatedWater'], toolOrder: 21, science: 50000, kind: 'outfall', pipe: 'PIPE_INLET'},
   {id: 'RadioactiveSludgeRecoveryPump', template: 'Buildings/Water/DeepBadwaterPump/DeepBadwaterPump.IronTeeth.blueprint.json',
    recipes: ['RecoverRadioactiveSludge'], toolOrder: 13, science: 50000, kind: 'recovery', pipe: 'PIPE_OUTLET'},
 ];
@@ -86,7 +94,12 @@ export const RADIATION_RECIPES = [
   // Spent-fuel casks dissolved in water and shipped off with it (user direction
   // 2026-10-29: waste disposal must not need the refinery's chemical chain).
   {id: 'ExportRadioactiveWaste', hours: 1, ingredients: [['RadioactiveWaste', 2], ['Water', 8]], products: [], label: 'RadioactiveWaste'},
-  {id: 'ReleaseRadioactiveSludge', hours: 1, ingredients: [[SLUDGE, 3]], products: [], label: SLUDGE},
+  {id: 'ReleaseRadioactiveSludge', hours: 1, ingredients: [[SLUDGE, RELEASED_SLUDGE_PER_CYCLE]], products: [], label: SLUDGE},
+  // Tide-irradiated stored water (docs/deadlock-audit.md D5, user approved P1,
+  // 2026-11-03): storage holding it cannot be deleted, and before this nothing
+  // took it until the Radioactive Waste Export (300,000). The outfall unlocks at
+  // 50,000 with the Hospital, the stage set ahead of radioactive tides.
+  {id: 'ReleaseContaminatedWater', hours: 1, ingredients: [[CONTAMINATED_WATER, RELEASED_SLUDGE_PER_CYCLE * CONTAMINATED_WATER_PER_SLUDGE]], products: [], label: CONTAMINATED_WATER},
   {id: 'RecoverRadioactiveSludge', hours: 0.5, ingredients: [], products: [[SLUDGE, 1]], label: SLUDGE},
 ];
 
@@ -116,7 +129,7 @@ const LOCALIZATION = [
   ['Building.RadioactiveWasteExport.Description', 'Ships radioactive waste, radioactive water and contaminated water off the map for good. Its gate must sit on the map edge.'],
   ['Building.RadioactiveWasteExport.FlavorDescription', 'Somewhere downstream, it is somebody else\'s problem.'],
   ['Building.RadioactiveSludgeOutfall.DisplayName', 'Radioactive Water Outfall'],
-  ['Building.RadioactiveSludgeOutfall.Description', 'Pours radioactive water out onto the map. Until it flows off the map edge, it stops pumps and irradiates beavers and the ground.'],
+  ['Building.RadioactiveSludgeOutfall.Description', 'Pours radioactive water or contaminated water out onto the map. Until it flows off the map edge, it stops pumps and irradiates beavers and the ground.'],
   ['Building.RadioactiveSludgeOutfall.FlavorDescription', 'Out of sight is not out of the river.'],
   ['Building.RadioactiveSludgeRecoveryPump.DisplayName', 'Radioactive Water Recovery Pump'],
   ['Building.RadioactiveSludgeRecoveryPump.Description', 'Draws radioactivity out of rivers and lakes into barrels of radioactive water for export. The middle of its back edge must stand over water.'],
@@ -124,7 +137,7 @@ const LOCALIZATION = [
   ['DeepFrontier.Radiation.Status.PumpBlocked', 'Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.'],
   ['DeepFrontier.Radiation.Status.PumpBlocked.Short', 'Radiation detected'],
   ['DeepFrontier.Radiation.Status.StorageIrradiated', 'Stored water is irradiated and undrinkable.'],
-  ['DeepFrontier.Radiation.DeletionBlocker.HazardousStock', 'Holds radioactive waste, radioactive water or contaminated water. Empty it first: move the contents to other storage, or refine or export them.'],
+  ['DeepFrontier.Radiation.DeletionBlocker.HazardousStock', 'Holds radioactive waste, radioactive water or contaminated water. Empty it first: move the contents to other storage, or pour them out, refine or export them.'],
   ['DeepFrontier.Radiation.Status.NoRadiation', 'No radioactive water at the intake.'],
   ['DeepFrontier.Radiation.WaterShares', 'Water at the intake: {0}% clean, {1}% badwater, {2}% radioactive.'],
   ['DeepFrontier.Radiation.Status.OutletBlocked', 'The outlet is blocked.'],
@@ -244,6 +257,13 @@ async function makeBuilding(building, dataRoot, tuning) {
       value.MapEdgeSiteSpec = {};
     } else {
       const release = RADIATION_RECIPES.find(r => r.id === 'ReleaseRadioactiveSludge');
+      // The outfall pours one radioactive volume per cycle whatever it releases.
+      const perGood = {[SLUDGE]: tuning.volumePerGood, [CONTAMINATED_WATER]: tuning.volumePerGood / CONTAMINATED_WATER_PER_SLUDGE};
+      for (const recipeId of building.recipes) {
+        const [[good, amount], ...rest] = RADIATION_RECIPES.find(r => r.id === recipeId).ingredients;
+        if (rest.length || !perGood[good] || Math.abs(amount * perGood[good] - release.ingredients[0][1] * tuning.volumePerGood) > 1e-9)
+          throw new Error(`${id}: recipe ${recipeId} must release the outfall's radioactive volume per cycle`);
+      }
       const [X, Y, Z] = await studyCell(id, 'SLUDGE_OUTPUT');
       value.RadioactiveSludgeOutfallSpec = {
         OutputCoordinates: {X, Y, Z},

@@ -32,7 +32,7 @@
         "Amount": 2
       }
     ],
-    "ScienceCost": 400000,
+    "ScienceCost": 300000,
     "PlaceFinished": false,
     "FinishableWithBeaversOnSite": false,
     "DrawRangeBoundsOnIt": true

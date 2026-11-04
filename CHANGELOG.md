@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Fewer ways to get stuck: contaminated water, Reactor Bot charging, the Deep Mine's lining
+- **The Radioactive Water Outfall also pours out contaminated water**, 30 per hour (follow-up to the deadlock audit). Stored water that a radioactive tide turns into contaminated water had nowhere to go until the Radioactive Waste Export at 300,000 science, and storage holding it can't be deleted; now it can be emptied at the outfall from 50,000 science, the same stage as the Hospital.
+- **The Reactor Charging Bay unlocks at 300,000 science** (was 400,000), together with the Uranium Processing Plant that makes reactor power cells, so a Reactor Bot is never built before it has somewhere to charge.
+- **The Deep Mine's shaft lining is bricks** (was concrete), still 0.1 per hour at full crew. Bricks need no quarry stone, so the mine keeps running while the quarries are down. Concrete stays in use for Materials Research and the reactor's waste casks. Concrete already stocked at a mine is carried away by haulers.
+
 ### Power and pipes connect to walls under a roof's eave
 - **Fixed: the Deep Mine's lamp house refused a power shaft on its side wall** (player report: "I tried attaching power to the side of it on the second or third level (over a window) and it didn't take the connection where it obviously should have"). The wall with the two arched windows, one layer up, now takes a power shaft or a pipe valve on both of its tiles. The windows were never the problem: the plank roof's eave reaches a little below the top of that layer, and any slope on a wall used to rule the whole wall out.
 - **The same fix applies to every building**: a flat wall whose top is crossed by its roof's eave now connects, as the walls of the vanilla Gear Workshop and Motivatorium do. New connection spots: Mission Control 4 (upper storey), Precision Machine Works 3 (back of the upper floor), Deep Mine 2, Radioactive Waste Refinery 2, Radioactive Water Outfall 2 (pipes), Archive Excavation 1 (power).
@@ -17,7 +22,7 @@
 - Saves: sources keep their ore, empty sources start recharging, and a drill mid-cycle finishes that cycle. In the map editor, a source's amount is set in its panel.
 
 ### The Deep Mine can no longer stall for good
-- **The Deep Mine wears metal block drill bits instead of steel** (found in an audit of every production chain for ways to get stuck): steel is made from mined deep ore, so a mine that ran out of steel after the Deep Ore Sources were used up could never start again, and neither could anything made from steel, alloy or machine cores. Metallurgists, who train on deep iron, could not be replaced either. The mine now uses 0.3 metal blocks per hour at full crew instead of 0.1 steel, and still 0.1 concrete as shaft lining. Steel already stocked at a mine is carried away by haulers.
+- **The Deep Mine wears metal block drill bits instead of steel** (found in an audit of every production chain for ways to get stuck): steel is made from mined deep ore, so a mine that ran out of steel after the Deep Ore Sources were used up could never start again, and neither could anything made from steel, alloy or machine cores. Metallurgists, who train on deep iron, could not be replaced either. The mine now uses 0.3 metal blocks per hour at full crew instead of 0.1 steel, plus its shaft lining. Steel already stocked at a mine is carried away by haulers.
 - Steel keeps its other ongoing uses: the Deep Well's drill bits, the reactor's waste casks, rockets, reinforced bot frames and Reactor Bot plating.
 
 ### The Technical School asks only for the supplies of what it teaches

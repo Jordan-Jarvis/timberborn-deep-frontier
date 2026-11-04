@@ -2049,7 +2049,7 @@
         "Role": "DrillBits"
       },
       {
-        "GoodId": "Concrete",
+        "GoodId": "Brick",
         "GoodPerHour": 0.1,
         "Role": "ShaftLining"
       }

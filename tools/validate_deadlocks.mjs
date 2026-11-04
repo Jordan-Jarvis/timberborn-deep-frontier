@@ -56,6 +56,17 @@
 //   (the Deep Mine for deep ore) can be built and run at its own unlock from the
 //   recharge alone: a player who spent the deposits' stock reaches the real supply
 //   (slowly) instead of living on the trickle forever.
+// - hazard-sink: storage holding a hazardous good cannot be deleted
+//   (RadiationTuning.HazardousStockGoodIds, HazardousStorageDeletionBlocker), so
+//   each one needs a consumer by the time it can first exist: a produced good
+//   from its earliest producer on; contaminated water, which radiation makes out
+//   of stored water, from the Hospital's unlock, the stage the design puts ahead
+//   of radioactive tides (docs/deadlock-audit.md D5).
+// - reactor-bot-charge: Reactor Bots charge only at the building that serves the
+//   charge need (FrontierReactorBotSettingsSpec.ChargeNeedId); it must be usable
+//   no later than the first Reactor Bot (the Bot Assembler's Reactor bot recipe,
+//   FrontierReactorBotAssemblySpec; the retrofit takes the same two parts), so
+//   no Reactor Bot exists with nowhere to charge (docs/deadlock-audit.md D6).
 // Accepted failures (ACCEPTED) carry a reason and fail when they no longer apply.
 //
 // Usage: node tools/validate_deadlocks.mjs [dataRoot] [--print]   (default src/DeepFrontier/Data)
@@ -72,6 +83,13 @@ const {buildings, recipes, primary} = await loadProgressionData(data);
 
 const errors = [];
 const fail = (kind, key, message) => errors.push({kind, key, message});
+// Authored C# constants (RadiationTuning), read as validate_radiation_content.mjs does.
+const radiationSource = readFileSync(resolve(root, 'src/DeepFrontier/Scripts/Radiation/IRadiationService.cs'), 'utf8');
+const csConstant = (id) => {
+  const match = radiationSource.match(new RegExp(`public const string ${id} = "([A-Za-z]+)";`));
+  if (!match) throw new Error(`IRadiationService.cs: RadiationTuning.${id} not found`);
+  return match[1];
+};
 
 // Every map source is classified; a new one must be added here explicitly.
 const MAP_SOURCE_KIND = {
@@ -306,6 +324,55 @@ for (const good of SLOW) {
   if (results.every((r) => r.missing.length))
     fail('slow-replacement', good, `${good}: from its slow map source alone no other producer can be reached: ${results.map((r) => `${name(r.b.id)}: ${r.missing.join(' || ')}`).join(' ;; ')}`);
 }
+// Earliest unlock at which a condition holds: closures over the player
+// buildings unlocked by each science, built from producible goods, finite
+// map sources allowed (first units).
+const sciences = [...new Set(players.map((b) => b.science))].sort((a, b) => a - b);
+const atScience = new Map();
+const unlockClosure = (science) => atScience.get(science) ?? atScience.set(science, closure({science, costGated: true})).get(science);
+const canRun = (b, c) => c.built.has(b.id) && operation.get(b.id).required.every((g) => c.have.has(g))
+  && (!operation.get(b.id).discipline || c.trained.has(operation.get(b.id).discipline));
+const earliest = (test) => sciences.find((science) => test(unlockClosure(science))) ?? Infinity;
+const sinksOf = (good, c) => players.filter((b) => canRun(b, c) && b.recipes.some((id) => {
+  const r = recipes.get(id);
+  return r && r.Ingredients.some((i) => i.Id === good) && recipeInputs(r).every((g) => g === good || c.have.has(g));
+}));
+const show = (science) => Number.isFinite(science) ? science.toLocaleString('en-US') : 'never';
+
+// 6. hazard-sink: undeletable hazardous stock has a consumer from its first unit on.
+const hazardMatch = radiationSource.match(/HazardousStockGoodIds = \{([^}]*)\}/);
+if (!hazardMatch) throw new Error('IRadiationService.cs: RadiationTuning.HazardousStockGoodIds not found');
+const hazardous = hazardMatch[1].split(',').map((n) => csConstant(n.trim()));
+const radiationMade = csConstant('ContaminatedWaterGoodId');
+const hospitals = players.filter((b) => b.bp.HospitalSpec);
+if (hospitals.length !== 1) fail('hazard-sink', 'Hospital', `expected one building with HospitalSpec (the tide-ready stage), found ${hospitals.map((b) => b.id).join(', ') || 'none'}`);
+const tideReady = hospitals[0]?.science ?? 0;
+const hazards = [];
+for (const good of hazardous) {
+  const produced = earliest((c) => c.have.has(good));
+  const appears = good === radiationMade ? Math.min(produced, tideReady) : produced;
+  const sink = earliest((c) => sinksOf(good, c).length > 0);
+  hazards.push(`${good}: appears ${show(appears)}${good === radiationMade ? ` (radiation in stored water; tide-ready stage ${show(tideReady)})` : ''}, first sink ${show(sink)} (${sinksOf(good, unlockClosure(Number.isFinite(sink) ? sink : sciences.at(-1))).map((b) => name(b.id)).join(', ') || 'none'})`);
+  if (sink > appears) fail('hazard-sink', good, `${good} can exist from ${show(appears)} science${good === radiationMade ? ' (stored water irradiated by a radioactive tide; the design puts tides after the Hospital unlock)' : ''}, but nothing consumes it before ${show(sink)}, and storage holding it cannot be deleted`);
+}
+
+// 7. reactor-bot-charge: a place to charge exists no later than the first Reactor Bot.
+const chargeNeed = readBlueprint('Configurations/DeepFrontierReactorBots.blueprint').FrontierReactorBotSettingsSpec.ChargeNeedId;
+const chargers = players.filter((b) => (b.bp.AttractionSpec?.Effects ?? []).some((e) => e.NeedId === chargeNeed));
+const assembler = players.filter((b) => b.origin === 'vanilla' && b.appended?.length)
+  .map((b) => ({b, spec: readBlueprint(b.path).FrontierReactorBotAssemblySpec})).filter((x) => x.spec);
+if (!chargers.length) fail('reactor-bot-charge', chargeNeed, `no building serves ${chargeNeed}`);
+if (assembler.length !== 1) fail('reactor-bot-charge', 'FrontierReactorBotAssemblySpec', `expected one patched assembler with FrontierReactorBotAssemblySpec, found ${assembler.length}`);
+let reactorBots = null;
+if (chargers.length && assembler.length === 1) {
+  const {b, spec} = assembler[0];
+  const recipe = recipes.get(spec.RecipeId);
+  const born = earliest((c) => canRun(b, c) && recipeInputs(recipe).every((g) => c.have.has(g)));
+  const charge = earliest((c) => chargers.some((x) => canRun(x, c)));
+  reactorBots = `Reactor Bots from ${show(born)} (${spec.RecipeId}@${name(b.id)}), charging from ${show(charge)} (${chargers.map((x) => name(x.id)).join(', ')})`;
+  if (charge > born) fail('reactor-bot-charge', chargeNeed, `Reactor Bots can be made from ${show(born)} science (${spec.RecipeId}: ${recipeInputs(recipe).join(', ')}), but nothing serves ${chargeNeed} before ${show(charge)} (${chargers.map((x) => `${name(x.id)} at ${show(x.science)}`).join(', ')})`);
+}
+
 for (const key of Object.keys(ACCEPTED)) if (!outcome.get(key)) fail('accepted-stale', key, `ACCEPTED ${key} no longer fails; remove it from validate_deadlocks.mjs and docs/deadlock-audit.md`);
 
 // Evidence: how each discipline is trained from renewable goods.
@@ -320,6 +387,8 @@ const training = [...requiredDisciplines].map(([discipline, ids]) => {
 });
 
 if (print) {
+  console.log('Hazardous stock:'); for (const h of hazards) console.log('  ' + h);
+  if (reactorBots) console.log('Reactor Bots: ' + reactorBots);
   console.log('Training routes:'); for (const t of training) console.log('  ' + t);
   console.log('Renewable replacements:'); for (const r of replacements) console.log(`  ${r.good}: ${r.producers.join(', ')}`);
 }
@@ -329,4 +398,4 @@ if (errors.length) {
   for (const e of errors) console.error(`  [${e.kind}] ${e.message}`);
   process.exit(1);
 }
-console.log(`Deadlock validation passed: ${players.length} player buildings, ${used.size} goods used, all renewable; disciplines ${[...requiredDisciplines.keys()].join(', ')} trainable from renewable goods; every building runs at its unlock; slow sources (renewable only through a recharge) ${[...SLOW].join(', ') || 'none'}, each with a reachable real supply; ${Object.keys(ACCEPTED).length} accepted by design.`);
+console.log(`Deadlock validation passed: ${players.length} player buildings, ${used.size} goods used, all renewable; disciplines ${[...requiredDisciplines.keys()].join(', ')} trainable from renewable goods; every building runs at its unlock; slow sources (renewable only through a recharge) ${[...SLOW].join(', ') || 'none'}, each with a reachable real supply; hazardous stock (${hazardous.join(', ')}) has a sink from its first unit; Reactor Bots can charge from the first one; ${Object.keys(ACCEPTED).length} accepted by design.`);

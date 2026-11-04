@@ -3,7 +3,7 @@ Building.DeepDrill.DisplayName,Deep Drill,Deep Frontier
 Building.DeepDrill.Description,"Bores deep ore out of the Deep Ore Sources in its district, the nearest first. Uses up metal blocks as drill bits; stops without them. Pipes: valve set to Fill.",Deep Frontier
 Building.DeepDrill.FlavorDescription,The first machine to bore into the deep sector. It will not be the last.,Deep Frontier
 Building.DeepMine.DisplayName,Deep Mine,Deep Frontier
-Building.DeepMine.Description,Mines deep ore without end. Build it over a Deep Ore Vein. Uses up metal blocks as drill bits and concrete as shaft lining; stops without them. Pipes: valve set to Fill.,Deep Frontier
+Building.DeepMine.Description,Mines deep ore without end. Build it over a Deep Ore Vein. Uses up metal blocks as drill bits and bricks as shaft lining; stops without them. Pipes: valve set to Fill.,Deep Frontier
 Building.DeepMine.FlavorDescription,The vein is endless; the power bill is not.,Deep Frontier
 Building.DeepProcessor.DisplayName,Deep Ore Processor,Deep Frontier
 Building.DeepProcessor.Description,"Refines deep ore into deep iron, coal, crude oil and uranium ore. Pipes: valves set to Fill and Extract.",Deep Frontier
@@ -753,7 +753,7 @@ Building.RadioactiveWasteExport.DisplayName,Radioactive Waste Export,Deep Fronti
 Building.RadioactiveWasteExport.Description,"Ships radioactive waste, radioactive water and contaminated water off the map for good. Its gate must sit on the map edge. Pipes: valve set to Fill.",Deep Frontier
 Building.RadioactiveWasteExport.FlavorDescription,"Somewhere downstream, it is somebody else's problem.",Deep Frontier
 Building.RadioactiveSludgeOutfall.DisplayName,Radioactive Water Outfall,Deep Frontier
-Building.RadioactiveSludgeOutfall.Description,"Pours radioactive water out onto the map. Until it flows off the map edge, it stops pumps and irradiates beavers and the ground. Pipes: valve set to Fill.",Deep Frontier
+Building.RadioactiveSludgeOutfall.Description,"Pours radioactive water or contaminated water out onto the map. Until it flows off the map edge, it stops pumps and irradiates beavers and the ground. Pipes: valve set to Fill.",Deep Frontier
 Building.RadioactiveSludgeOutfall.FlavorDescription,Out of sight is not out of the river.,Deep Frontier
 Building.RadioactiveSludgeRecoveryPump.DisplayName,Radioactive Water Recovery Pump,Deep Frontier
 Building.RadioactiveSludgeRecoveryPump.Description,Draws radioactivity out of rivers and lakes into barrels of radioactive water for export. The middle of its back edge must stand over water. Pipes: valve set to Extract.,Deep Frontier
@@ -761,7 +761,7 @@ Building.RadioactiveSludgeRecoveryPump.FlavorDescription,The cleanup always take
 DeepFrontier.Radiation.Status.PumpBlocked,"Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.",Deep Frontier
 DeepFrontier.Radiation.Status.PumpBlocked.Short,Radiation detected,Deep Frontier
 DeepFrontier.Radiation.Status.StorageIrradiated,Stored water is irradiated and undrinkable.,Deep Frontier
-DeepFrontier.Radiation.DeletionBlocker.HazardousStock,"Holds radioactive waste, radioactive water or contaminated water. Empty it first: move the contents to other storage, or refine or export them.",Deep Frontier
+DeepFrontier.Radiation.DeletionBlocker.HazardousStock,"Holds radioactive waste, radioactive water or contaminated water. Empty it first: move the contents to other storage, or pour them out, refine or export them.",Deep Frontier
 DeepFrontier.Radiation.Status.NoRadiation,No radioactive water at the intake.,Deep Frontier
 DeepFrontier.Radiation.WaterShares,"Water at the intake: {0}% clean, {1}% badwater, {2}% radioactive.",Deep Frontier
 DeepFrontier.Radiation.Status.OutletBlocked,The outlet is blocked.,Deep Frontier
@@ -871,7 +871,7 @@ DeepFrontier.WorkplaceUpkeep.DrillBits.Name,Drill bits,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.DrillBits.Status,Waiting for drill bits: production has stopped until haulers bring metal blocks.,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.DrillBits.Status.Short,No drill bits,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Name,Shaft lining,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.ShaftLining.Status,Waiting for shaft lining: production has stopped until haulers bring concrete.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.ShaftLining.Status,Waiting for shaft lining: production has stopped until haulers bring bricks.,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Status.Short,No shaft lining,Deep Frontier bot upkeep
 Good.ReinforcedBotFrame.DisplayName,Reinforced bot frame,Deep Frontier reactor bots
 Good.ReinforcedBotFrame.PluralDisplayName,Reinforced bot frames,Deep Frontier reactor bots

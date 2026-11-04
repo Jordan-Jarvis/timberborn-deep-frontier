@@ -171,6 +171,20 @@ for (const building of RADIATION_BUILDINGS) {
       check(c.X >= 0 && c.Y >= 0 && c.Z >= 0 && c.X < size.X && c.Y < size.Y && c.Z < size.Z, `${building.id}: outlet outside the footprint`);
       const release = RADIATION_RECIPES.find(r => r.id === 'ReleaseRadioactiveSludge');
       check(Math.abs(spec.RadioactiveVolumePerCycle - release.ingredients[0][1] * tuning.volumePerGood) < 1e-9, `${building.id}: released radioactive volume must equal consumed goods * ${tuning.volumePerGood}`);
+      // Every recipe pours that one volume per cycle: contaminated water holds the
+      // radiation the refinery's decontamination takes out of it (contaminated
+      // water in, radioactive water out), read from the generated recipe.
+      const decon = (await readJson(resolve(dataRoot, 'Recipes', 'Recipe.DecontaminateWater.blueprint.json')))?.RecipeSpec;
+      const amountOf = (list, good) => list.find(i => i.Id === good)?.Amount ?? 0;
+      const perGood = {RadioactiveSludge: tuning.volumePerGood};
+      if (check(decon && amountOf(decon.Ingredients, 'ContaminatedWater') > 0 && amountOf(decon.Products, 'RadioactiveSludge') > 0, `${building.id}: Recipe.DecontaminateWater must turn contaminated water into radioactive water`))
+        perGood.ContaminatedWater = tuning.volumePerGood * amountOf(decon.Products, 'RadioactiveSludge') / amountOf(decon.Ingredients, 'ContaminatedWater');
+      check(building.recipes.includes('ReleaseContaminatedWater'), `${building.id}: must release contaminated water (tide-irradiated storage needs a sink before the export, docs/deadlock-audit.md D5)`);
+      for (const id of building.recipes) {
+        const ingredients = (await readJson(resolve(dataRoot, 'Recipes', `Recipe.${id}.blueprint.json`)))?.RecipeSpec?.Ingredients ?? [];
+        const volume = ingredients.length === 1 && perGood[ingredients[0].Id] ? ingredients[0].Amount * perGood[ingredients[0].Id] : NaN;
+        check(Math.abs(volume - spec.RadioactiveVolumePerCycle) < 1e-9, `${building.id}: recipe ${id} releases ${volume} radioactive volume per cycle, not the outfall's ${spec.RadioactiveVolumePerCycle}`);
+      }
     }
   }
   if (building.kind === 'recovery') {

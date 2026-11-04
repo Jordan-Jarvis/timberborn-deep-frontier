@@ -373,7 +373,8 @@
   "WorkshopSpec": {},
   "ManufactorySpec": {
     "ProductionRecipeIds": [
-      "ReleaseRadioactiveSludge"
+      "ReleaseRadioactiveSludge",
+      "ReleaseContaminatedWater"
     ]
   },
   "BlockObjectNavMeshSettingsSpec": {

@@ -1018,7 +1018,8 @@
   "RadioactiveSludgeOutfall.IronTeeth": {
    "science": 50000,
    "recipes": [
-    "ReleaseRadioactiveSludge"
+    "ReleaseRadioactiveSludge",
+    "ReleaseContaminatedWater"
    ],
    "devOnly": false
   },
@@ -1059,7 +1060,7 @@
    "devOnly": false
   },
   "ReactorChargingBay.IronTeeth": {
-   "science": 400000,
+   "science": 300000,
    "recipes": [],
    "devOnly": false
   },
@@ -3171,6 +3172,16 @@
      1
     ]
    ]
+  },
+  "ReleaseContaminatedWater": {
+   "ingredients": [
+    [
+     "ContaminatedWater",
+     30
+    ]
+   ],
+   "hours": 1,
+   "products": []
   },
   "ReleaseRadioactiveSludge": {
    "ingredients": [
