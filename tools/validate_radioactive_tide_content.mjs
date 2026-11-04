@@ -26,13 +26,16 @@
 //   from cycle 15, 25%, 3-6 days) inside those ranges and their former
 //   mod-settings keys, the cooldown, the tide share, distinct unstyled CSS
 //   classes.
-// - Game-mode presets (user request 2026-11-02: radioactive tide settings on
-//   the native Easy/Normal/Hard game modes and the custom mode):
-//   NewGameModes/GameMode.{Easy,Normal,Hard}.blueprint.json equal the
-//   module's RadioactiveTideGameModeSpec overlays, one per vanilla game mode,
-//   with exactly the record's [Serialize] fields, values in range, Normal
-//   (the vanilla default mode) equal to the 0.8.3 defaults, Easy later,
-//   rarer and shorter, Hard earlier, more frequent and longer.
+// - Game modes (user request 2026-11-02: radioactive tide settings on the
+//   native Easy/Normal/Hard game modes and the custom mode; 2026-11-04: a mode
+//   another mod adds, such as Chill, must work): every mode's settings follow
+//   from its weather by RadioactiveTideTuning.GameModeCurve. Each point is
+//   its vanilla mode's weather, the points rise in hazard share, values are
+//   in range and monotonic, no point exceeds its mode's longest hazardous
+//   season, the curve continued to share 0 and 1 stays in range, Normal (the
+//   vanilla default) keeps the 0.8.3 defaults, Easy is later, rarer and
+//   shorter, Hard earlier, more frequent and longer; no NewGameModes overlay
+//   is left in Data; the harness's expected table equals the curve.
 // - Localization: every RadioactiveTideLoc key is a module row and appears
 //   exactly once in Localizations/enUS.csv with the module text.
 // - Configurations/Sun.blueprint.json: exactly one RadioactiveTideWeather fog
@@ -55,8 +58,8 @@ import {resolve, relative} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import sharp from 'sharp';
 import {
-  BANNER_ART, DAY_STAGES, FOGS, FOG_DENSITY, GAME_MODE_PRESETS, ICON_META, LOCALIZATION, MODDABLE_SKY_STAGES, TIDE_FILES, VANILLA_SUN,
-  checkVanillaGameModes, gameModeFile, gameModeOverlay, moddableWeatherSpec, readTideTuning, renderBannerArt, renderTideIcon,
+  BANNER_ART, DAY_STAGES, FOGS, FOG_DENSITY, ICON_META, LOCALIZATION, MODDABLE_SKY_STAGES, TIDE_FILES, VANILLA_SUN,
+  checkGameModeCurve, hazardShare, longestHazardDays, moddableWeatherSpec, readTideTuning, renderBannerArt, renderTideIcon,
 } from './radioactive_tide_content.mjs';
 
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
@@ -139,41 +142,67 @@ check(`${t('NotificationSpritePath')}.png` === TIDE_FILES.notification, `Notific
 check(t('ModdableProgressSpritePath') === t('ProgressSpritePath') && t('ModdableNotificationSpritePath') === t('NotificationSpritePath'),
   'with Moddable Weathers the tide must use its own progress and banner art, not the badtide sprites');
 
-// --- game-mode presets -------------------------------------------------------
+// --- game modes: the curve every mode's settings follow ----------------------
+let curve = [];
 {
-  const vanillaModes = await checkVanillaGameModes().catch(error => { failures.push(error.message); return null; });
+  const checked = await checkGameModeCurve().catch(error => { failures.push(error.message); return null; });
+  curve = checked?.curve ?? [];
+  const vanilla = checked?.vanilla ?? {};
   const specSource = await read(resolve(scripts, 'RadioactiveTideGameModeSpec.cs')) ?? '';
   const recordBody = specSource.match(/public record RadioactiveTideGameModeSpec : ComponentSpec \{([\s\S]*?)\n  \}/)?.[1] ?? '';
   const fields = [...recordBody.matchAll(/\[Serialize\]\s*public (\S+) (\w+) \{ get; init; \}/g)].map(m => [m[2], m[1]]);
   check(JSON.stringify(fields) === JSON.stringify([['Enabled', 'bool'], ['CyclesWithoutTide', 'int'], ['ChancePercent', 'int'], ['Duration', 'MinMaxSpec<int>']]),
     `RadioactiveTideGameModeSpec fields are ${JSON.stringify(fields)}`);
   const inRange = (value, low, high) => Number.isInteger(value) && low <= value && value <= high;
-  for (const [mode, preset] of Object.entries(GAME_MODE_PRESETS)) {
-    check(JSON.stringify(Object.keys(preset)) === JSON.stringify(fields.map(([name]) => name)), `${mode} preset fields ${Object.keys(preset)} differ from the record`);
-    check(typeof preset.Enabled === 'boolean', `${mode} preset Enabled must be a bool`);
-    check(JSON.stringify(Object.keys(preset.Duration ?? {})) === '["Min","Max"]', `${mode} preset Duration must be a MinMaxSpec {Min, Max}`);
-    check(inRange(preset.CyclesWithoutTide, t('CyclesWithoutTideLowest'), t('CyclesWithoutTideHighest')), `${mode} cycles without tide ${preset.CyclesWithoutTide} out of range`);
-    check(inRange(preset.ChancePercent, t('ChancePercentLowest'), t('ChancePercentHighest')), `${mode} chance ${preset.ChancePercent} out of range`);
-    check(inRange(preset.Duration?.Min, t('DurationLowest'), t('DurationHighest')) && inRange(preset.Duration?.Max, t('DurationLowest'), t('DurationHighest'))
-      && preset.Duration.Min <= preset.Duration.Max, `${mode} duration ${JSON.stringify(preset.Duration)} invalid`);
-    const overlay = await read(resolve(dataRoot, gameModeFile(mode)));
-    if (overlay) check(JSON.stringify(JSON.parse(overlay)) === JSON.stringify(gameModeOverlay(mode)), `${gameModeFile(mode)} differs from the module's preset; regenerate it`);
-    if (vanillaModes) check(vanillaModes[mode]?.DisplayNameLocKey === `NewGameConfigurationPanel.${mode}`, `vanilla ${gameModeFile(mode)} is not the ${mode} mode`);
+  const valid = (tide, what) => {
+    check(inRange(tide.CyclesWithoutTide, t('CyclesWithoutTideLowest'), t('CyclesWithoutTideHighest')), `${what}: cycles without tide ${tide.CyclesWithoutTide} out of range`);
+    check(inRange(tide.ChancePercent, t('ChancePercentLowest'), t('ChancePercentHighest')), `${what}: chance ${tide.ChancePercent} out of range`);
+    check(inRange(tide.Duration.Min, t('DurationLowest'), t('DurationHighest')) && inRange(tide.Duration.Max, t('DurationLowest'), t('DurationHighest'))
+      && tide.Duration.Min <= tide.Duration.Max, `${what}: duration ${JSON.stringify(tide.Duration)} invalid`);
+  };
+  for (const [i, point] of curve.entries()) {
+    valid(point.tide, `GameModeCurve point ${point.mode}`);
+    check(point.tide.Duration.Max <= longestHazardDays(point.weather), `GameModeCurve point ${point.mode}: its longest tide exceeds its longest hazardous season, so the rule would cap it`);
+    if (i === 0) continue;
+    const [a, b] = [curve[i - 1], point];
+    check(hazardShare(b.weather) > hazardShare(a.weather), `GameModeCurve: ${b.mode} must be more hazardous than ${a.mode}`);
+    check(b.tide.CyclesWithoutTide <= a.tide.CyclesWithoutTide && b.tide.ChancePercent >= a.tide.ChancePercent
+      && b.tide.Duration.Min >= a.tide.Duration.Min && b.tide.Duration.Max >= a.tide.Duration.Max, `GameModeCurve: ${b.mode} must not be gentler than ${a.mode}`);
   }
-  const extra = (await readdir(resolve(dataRoot, 'NewGameModes')).catch(() => [])).filter(f => !Object.keys(GAME_MODE_PRESETS).some(mode => gameModeFile(mode) === `NewGameModes/${f}`));
-  check(extra.length === 0, `unexpected files in NewGameModes: ${extra.join(', ')}`);
-  const {Easy: easy, Normal: normal, Hard: hard} = GAME_MODE_PRESETS;
-  if (vanillaModes) {
-    check(vanillaModes.Normal?.IsDefault === true && !vanillaModes.Easy?.IsDefault && !vanillaModes.Hard?.IsDefault, 'Normal must be the vanilla default game mode');
-    check(vanillaModes.Easy?.Order < vanillaModes.Normal?.Order && vanillaModes.Normal?.Order < vanillaModes.Hard?.Order, 'vanilla game mode order is no longer Easy, Normal, Hard');
+  // The end segments continued to share 0 and 1 (RadioactiveTideGameModes.Derive):
+  // inside the ranges, so the rule needs no clamping.
+  if (curve.length >= 2) {
+    const along = (a, b, share, pick) => {
+      const t0 = (share - hazardShare(a.weather)) / (hazardShare(b.weather) - hazardShare(a.weather));
+      return Math.round(pick(a.tide) + t0 * (pick(b.tide) - pick(a.tide)));
+    };
+    for (const [share, a, b] of [[0, curve[0], curve[1]], [1, curve.at(-2), curve.at(-1)]]) {
+      const tide = {CyclesWithoutTide: along(a, b, share, x => x.CyclesWithoutTide), ChancePercent: along(a, b, share, x => x.ChancePercent),
+        Duration: {Min: along(a, b, share, x => x.Duration.Min), Max: along(a, b, share, x => x.Duration.Max)}};
+      valid(tide, `the game-mode curve at hazard share ${share}`);
+    }
   }
-  check(normal.Enabled === t('LegacyEnabled') && normal.CyclesWithoutTide + 1 === t('LegacyMinCycle') && normal.ChancePercent === t('LegacyChancePercent')
-    && normal.Duration.Min === t('LegacyMinDurationDays') && normal.Duration.Max === t('LegacyMaxDurationDays'),
-    'the Normal preset must keep the 0.8.3 defaults (RadioactiveTideTuning.Legacy*)');
-  check(easy.Enabled && easy.CyclesWithoutTide > normal.CyclesWithoutTide && easy.ChancePercent < normal.ChancePercent
-    && easy.Duration.Min <= normal.Duration.Min && easy.Duration.Max < normal.Duration.Max, 'Easy must bring tides later, more rarely and shorter than Normal');
-  check(hard.Enabled && hard.CyclesWithoutTide < normal.CyclesWithoutTide && hard.ChancePercent > normal.ChancePercent
-    && hard.Duration.Min >= normal.Duration.Min && hard.Duration.Max > normal.Duration.Max, 'Hard must bring tides earlier, more often and longer than Normal');
+  const byMode = Object.fromEntries(curve.map(p => [p.mode, p.tide]));
+  const {Easy: easy, Normal: normal, Hard: hard} = byMode;
+  check(easy && normal && hard, 'the game-mode curve must run through Easy, Normal and Hard');
+  if (easy && normal && hard) {
+    check(vanilla.Normal?.IsDefault === true && !vanilla.Easy?.IsDefault && !vanilla.Hard?.IsDefault, 'Normal must be the vanilla default game mode');
+    check(normal.CyclesWithoutTide + 1 === t('LegacyMinCycle') && normal.ChancePercent === t('LegacyChancePercent')
+      && normal.Duration.Min === t('LegacyMinDurationDays') && normal.Duration.Max === t('LegacyMaxDurationDays') && t('LegacyEnabled'),
+      'Normal must keep the 0.8.3 defaults (RadioactiveTideTuning.Legacy*)');
+    check(easy.CyclesWithoutTide > normal.CyclesWithoutTide && easy.ChancePercent < normal.ChancePercent
+      && easy.Duration.Min <= normal.Duration.Min && easy.Duration.Max < normal.Duration.Max, 'Easy must bring tides later, more rarely and shorter than Normal');
+    check(hard.CyclesWithoutTide < normal.CyclesWithoutTide && hard.ChancePercent > normal.ChancePercent
+      && hard.Duration.Min >= normal.Duration.Min && hard.Duration.Max > normal.Duration.Max, 'Hard must bring tides earlier, more often and longer than Normal');
+  }
+  const overlays = await readdir(resolve(dataRoot, 'NewGameModes')).catch(() => []);
+  check(overlays.length === 0, `Data/NewGameModes must be gone (every mode derives its tide settings): ${overlays.join(', ')}`);
+  const harness = await read(resolve(root, 'tools', 'compile-check', 'radioactive-tide-modes', 'Program.cs')) ?? '';
+  for (const p of curve) {
+    const row = `["${p.mode}"] = (${p.tide.CyclesWithoutTide}, ${p.tide.ChancePercent}, ${p.tide.Duration.Min}, ${p.tide.Duration.Max})`;
+    check(harness.includes(row), `the radioactive-tide-modes harness must expect ${row}`);
+  }
+  check(/var chill = Preset\("GameMode\.Chill"/.test(harness), 'the radioactive-tide-modes harness must run a mode another mod adds (Chill)');
 }
 
 // --- localization ---------------------------------------------------------
@@ -278,6 +307,8 @@ if (newGamePatch) {
   check(/class RadioactiveTideNewGameModStarter : IModStarter/.test(newGamePatch) && !/ModdableWeathersLoaded/.test(newGamePatch), 'the new-game patch applies at mod start with or without Moddable Weathers');
 }
 if (newGameSettings) {
+  check(/foreach \(var preset in presets\) Resolve\(preset, log: true\);/.test(newGameSettings) && !/RadioactiveTideGameModes\.Require\(/.test(newGameSettings),
+    'the new-game screen must resolve every preset, those from other mods included');
   for (const key of ['SettingEnabled', 'NewGameCyclesWithout', 'NewGameChance', 'NewGameDuration'])
     check(newGameSettings.includes(`RadioactiveTideLoc.${key}`), `the new-game rows do not use RadioactiveTideLoc.${key}`);
   for (const [name, low, high] of [['_cyclesWithout', 'CyclesWithoutTideLowest', 'CyclesWithoutTideHighest'], ['_chance', 'ChancePercentLowest', 'ChancePercentHighest'],
@@ -287,7 +318,8 @@ if (newGameSettings) {
 }
 if (gameSettings) {
   check(gameSettings.includes('new SingletonKey("DeepFrontier.RadioactiveTideSettings")'), 'per-game settings must save under DeepFrontier.RadioactiveTideSettings');
-  check(/RadioactiveTideGameModes\.Require\(parameters\.NewGameConfiguration\.GameMode/.test(gameSettings), 'a new game must read the tide settings of its GameModeSpec');
+  check(/RadioactiveTideGameModes\.For\(gameMode, NewGameSource, out var derivation\)/.test(gameSettings) && /var gameMode = parameters\.NewGameConfiguration\.GameMode;/.test(gameSettings),
+    'a new game must resolve the tide settings of its GameModeSpec (its own, else derived from its weather)');
 }
 if (configurator) {
   check(/\[Context\("Game"\)\]\s*public sealed class RadioactiveTideConfigurator/.test(configurator), 'RadioactiveTideConfigurator must be [Context("Game")]');
@@ -303,7 +335,7 @@ if (docs) {
   const section = docs.slice(docs.indexOf('## Radioactive tide'));
   check(docs.includes('## Radioactive tide'), 'docs/radiation.md lacks the Radioactive tide section');
   check(section.includes(`${Math.round(t('SourceRadioactiveShare') * 100)}%`), 'docs/radiation.md Radioactive tide section does not state the tide share');
-  for (const [mode, p] of Object.entries(GAME_MODE_PRESETS)) {
+  for (const {mode, tide: p} of curve) {
     const row = `| ${mode} | ${p.Enabled ? 'on' : 'off'} | ${p.CyclesWithoutTide} (from cycle ${p.CyclesWithoutTide + 1}) | ${p.ChancePercent}% | ${p.Duration.Min}–${p.Duration.Max} days |`;
     check(section.includes(row), `docs/radiation.md Radioactive tide section lacks the preset row "${row}"`);
   }
@@ -437,4 +469,4 @@ if (failures.length) {
   console.error(`Radioactive tide validation FAILED (${failures.length}):\n - ${failures.join('\n - ')}`);
   process.exit(1);
 }
-console.log(`Radioactive tide content valid: ${LOCALIZATION.length} localization rows, ${DAY_STAGES.length} sky fogs, ${Object.keys(GAME_MODE_PRESETS).length} game-mode presets, 46 px icon, tide banner art, ${helperGetters.length} UI getters, Moddable Weathers spec + ${bridgeFiles.length} optional-assembly files${nativeDir ? ', native evidence re-checked' : ''}${moddableWeathersDir ? ', checked against installed Moddable Weathers' : ''} (${dataRoot}).`);
+console.log(`Radioactive tide content valid: ${LOCALIZATION.length} localization rows, ${DAY_STAGES.length} sky fogs, game-mode curve through ${curve.map(p => p.mode).join('/')}, 46 px icon, tide banner art, ${helperGetters.length} UI getters, Moddable Weathers spec + ${bridgeFiles.length} optional-assembly files${nativeDir ? ', native evidence re-checked' : ''}${moddableWeathersDir ? ', checked against installed Moddable Weathers' : ''} (${dataRoot}).`);

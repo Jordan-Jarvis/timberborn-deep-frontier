@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
@@ -16,13 +17,15 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
   // UI/Views/MainMenu/NewGameModePanel.uxml).
   //
   // Native flow: the panel lists one button per GameModeSpec blueprint
-  // (GameModeSpecService.GetSpecsOrdered: Easy, Normal, Hard) and starts the
-  // game with the selected preset's GameModeSpec. "Customize" fills the
-  // custom fields from the selected preset (CustomNewGameModeController.
-  // Initialize) and the game then starts with the GameModeSpec those fields
-  // build (TryGetValidatedGameMode). Each preset carries a
-  // RadioactiveTideGameModeSpec (Data/NewGameModes), so a preset needs nothing
-  // from this class.
+  // (GameModeSpecService.GetSpecsOrdered: Easy, Normal, Hard and any mode a
+  // mod adds) and starts the game with the selected preset's GameModeSpec.
+  // "Customize" fills the custom fields from the selected preset
+  // (CustomNewGameModeController.Initialize) and the game then starts with
+  // the GameModeSpec those fields build (TryGetValidatedGameMode). A preset's
+  // tide settings follow from its own weather (RadioactiveTideGameModes.For),
+  // which the Game scene resolves the same way, so a preset needs nothing from
+  // this class. At load it resolves every preset once (an invalid one throws
+  // here, naming the mode) and logs each mode's derived values once per run.
   //
   // For the custom mode this class adds a "Radioactive tides" toggle and the
   // rows "Cycles without radioactive tide", "Radioactive tide chance" and
@@ -93,15 +96,32 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
       var root = RadioactiveTideNewGameNative.PanelRoot(_panel)
         ?? throw new InvalidOperationException("Radioactive tide: NewGameModePanel has no root after Load");
       ImmutableArray<GameModeSpec> presets = _gameModeSpecService.GetSpecsOrdered();
-      foreach (var preset in presets) RadioactiveTideGameModes.Require(preset, $"game mode {_loc.T(preset.DisplayNameLocKey)}");
+      foreach (var preset in presets) Resolve(preset, log: true);
       TrackPresetButtons(root, presets);
       _selectedPreset = _gameModeSpecService.GetDefaultSpec();
       AddRows(root);
       Required<Button>(root, CustomizeButtonName).RegisterCallback<ClickEvent>(_ => OnCustomize());
       _nextButton = Required<Button>(root, NextButtonName);
-      Apply(RadioactiveTideGameModes.Require(_selectedPreset, "the default game mode"));
+      Apply(Resolve(_selectedPreset, log: false));
       Current = this;
     }
+
+    // A preset's tide settings (its own spec, else derived from its weather),
+    // checked like a game's settings.
+    private RadioactiveTideGameModeSpec Resolve(GameModeSpec preset, bool log) {
+      string name = _loc.T(preset.DisplayNameLocKey);
+      string what = $"game mode {name}";
+      var tide = RadioactiveTideGameModes.For(preset, what, out var derivation);
+      var values = RadioactiveTideValues.FromSpec(tide, derivation ?? $"its own {nameof(RadioactiveTideGameModeSpec)}");
+      RadioactiveTideSettingsCheck.Validate(values, what);
+      if (log && derivation != null && LoggedDerivations.Add($"{RadioactiveTideGameModes.Name(preset)}: {values}"))
+        UnityEngine.Debug.Log($"[DeepFrontier] Radioactive tide settings for game mode {name} derived from its weather settings: {values}.");
+      return tide;
+    }
+
+    // Each mode's derived settings are logged once per run, not on every
+    // return to the main menu.
+    private static readonly HashSet<string> LoggedDerivations = new HashSet<string>();
 
     public void Unload() {
       if (Current == this) Current = null;
@@ -175,7 +195,7 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     // has filled the native fields from the selected preset.
     private void OnCustomize() {
       _customActive = true;
-      Apply(RadioactiveTideGameModes.Require(_selectedPreset, $"game mode {_loc.T(_selectedPreset.DisplayNameLocKey)}"));
+      Apply(Resolve(_selectedPreset, log: false));
       OnChanged();
     }
 

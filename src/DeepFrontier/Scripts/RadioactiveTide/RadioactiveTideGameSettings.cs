@@ -70,9 +70,12 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
   // 1. the game's own saved copy (singleton DeepFrontier.RadioactiveTideSettings,
   //    written by RadioactiveTideGameSettings when the game runs without
   //    Moddable Weathers);
-  // 2. a new game: the RadioactiveTideGameModeSpec of the new game's mode
+  // 2. a new game: the settings of the new game's mode
   //    (GameSceneParameters.NewGameConfiguration.GameMode), as native
-  //    BadtideWeather.Load reads its values from that GameModeSpec;
+  //    BadtideWeather.Load reads its values from that GameModeSpec: its own
+  //    RadioactiveTideGameModeSpec (the custom mode), else the settings its
+  //    weather gives (RadioactiveTideGameModes.Derive; Easy, Normal, Hard and
+  //    any mode a mod adds), named in the source with how they were derived;
   // 3. a save from before per-game settings: the values the player had in the
   //    former Deep Frontier mod settings, so such a save keeps the tides it had
   //    (keys the player never changed read as the old defaults, the Normal
@@ -109,7 +112,10 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
       if (settings == null) throw new ArgumentNullException(nameof(settings));
       RadioactiveTideValues values;
       if (sceneLoader.TryGetSceneParameters<GameSceneParameters>(out var parameters) && parameters.NewGame) {
-        values = RadioactiveTideValues.FromSpec(RadioactiveTideGameModes.Require(parameters.NewGameConfiguration.GameMode, NewGameSource), NewGameSource);
+        var gameMode = parameters.NewGameConfiguration.GameMode;
+        var spec = RadioactiveTideGameModes.For(gameMode, NewGameSource, out var derivation);
+        values = RadioactiveTideValues.FromSpec(spec, derivation == null ? NewGameSource
+          : $"{NewGameSource} {RadioactiveTideGameModes.Name(gameMode)}, derived from its weather: {derivation}");
       } else {
         values = new RadioactiveTideValues(
           settings.Has(RadioactiveTideTuning.LegacyEnabledKey) ? settings.GetBool(RadioactiveTideTuning.LegacyEnabledKey) : RadioactiveTideTuning.LegacyEnabled,

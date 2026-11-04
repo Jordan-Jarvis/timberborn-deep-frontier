@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Game modes from other mods no longer crash the game
+- **Fixed: "Radioactive tide: game mode Chill has no RadioactiveTideGameModeSpec"**: a game mode added by another mod (for example Chill Mode) stopped the new-game screen. Every game mode now gets radioactive tide settings from its own weather: the share of a cycle its droughts and badtides take places it between Easy (12.9%), Normal (30.6%) and Hard (77.6%), and its tides follow, gentler below Easy and harsher above Hard. A tide never lasts longer than the mode's own droughts or badtides, and a mode without any has no tides.
+- Easy, Normal and Hard keep exactly their settings (from cycle 25, 15%, 2-4 days; from cycle 15, 25%, 3-6 days; from cycle 10, 35%, 5-10 days). Chill (350-day summers, 15-day droughts and badtides) gets tides from cycle 30, 10% per cycle, 1-3 days. Customize shows a mode's values like the presets, and they are saved with the game.
+
 ### No power or pipe connections in front of moving parts; walls with recessed panels connect
 - **Connection spots in front of a moving part are gone**: a power shaft or pipe valve could attach where a moving part swings or spins through the spot it stands in. Removed: Fertilizer Works 2 (beside the drier drum), Fishery Works 1 (behind the swinging carved sign), Technical School 2 (beside the flywheel and governor), and two roof spots each on the Launch Pad (by the pump flywheel's rim) and the Radioactive Waste Refinery (under the spent-fuel cask's path).
 - **In existing saves, a shaft or valve already attached at one of those spots disconnects.** Reattach it at a neighbouring wall or roof spot.

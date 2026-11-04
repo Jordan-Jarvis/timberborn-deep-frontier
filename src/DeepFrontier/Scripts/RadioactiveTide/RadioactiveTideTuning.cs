@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 
 namespace DeepFrontier.Scripts.RadioactiveTide {
   // Radioactive Tide: an optional third hazardous weather (after drought and
@@ -33,8 +34,8 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     // rest of the game has loaded; a tide can come from cycle 2 at the earliest.
     public const int EarliestCycle = 2;
 
-    // Per-game settings (RadioactiveTideGameModeSpec on the native game modes,
-    // edited on the native new-game screen; saved per game). Allowed ranges,
+    // Per-game settings (derived from each game mode's weather, GameModeCurve
+    // below, and edited on the native new-game screen; saved per game). Allowed ranges,
     // as the custom-mode fields clamp them. Tides can happen in cycles after
     // CyclesWithoutTide, like the native "Cycles without badtide"; the
     // lowest value is EarliestCycle - 1 (checked by the content validator).
@@ -44,6 +45,29 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     public const int ChancePercentHighest = 100;
     public const int DurationLowest = 1;
     public const int DurationHighest = 30;
+
+    // Every game mode's radioactive tide settings follow from its own weather
+    // (RadioactiveTideGameModes.Derive; docs/radiation.md "Settings per game"),
+    // unless its blueprint carries a RadioactiveTideGameModeSpec (the custom
+    // mode; a mod may give its own mode one). The rule is this curve, through
+    // the native Easy, Normal and Hard modes: each point is that mode's
+    // Timberborn 1.1.2.8 weather (NewGameModes/GameMode.*.blueprint.json:
+    // TemperateWeatherDuration, DroughtDuration, BadtideDuration in days,
+    // ChanceForBadtide in whole percent) and the radioactive tide it gets.
+    // A mode is placed on the curve by the share of a cycle its hazardous
+    // weather takes (RadioactiveTideModeWeather.HazardShare: Easy 12.9%,
+    // Normal 30.6%, Hard 77.6%); between two points every value is linear in
+    // that share, beyond Easy or Hard the end segment continues, so a gentler
+    // mode than Easy gets later, rarer, shorter tides. Normal keeps the 0.8.3
+    // defaults (Legacy* below). tools/validate_radioactive_tide_content.mjs
+    // checks each point's weather against the vanilla blueprints, the order,
+    // and that the curve stays inside the ranges above for every share in
+    // (0, 1], so the rule needs no clamping.
+    public static readonly ImmutableArray<RadioactiveTideCurvePoint> GameModeCurve = ImmutableArray.Create(
+      //                           mode      temperate  drought  badtide  badtide %   cycles without  chance %  duration
+      new RadioactiveTideCurvePoint("Easy",   16, 19,     2, 4,    1, 3,    40,         24,             15,       2, 4),
+      new RadioactiveTideCurvePoint("Normal", 13, 17,     5, 9,    4, 8,    40,         14,             25,       3, 6),
+      new RadioactiveTideCurvePoint("Hard",    5, 8,     15, 30,  15, 30,   40,          9,             35,       5, 10));
 
     // Saves from before per-game settings (0.8.3 and older) take the values the
     // player had set in the former Deep Frontier mod settings (eMka.ModSettings
@@ -130,7 +154,7 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
 
   // A game's radioactive tide settings. Without Moddable Weathers they are
   // RadioactiveTideGameSettings (saved per game, started from the new game's
-  // RadioactiveTideGameModeSpec); with it, the per-save values of
+  // mode, RadioactiveTideGameModes.For); with it, the per-save values of
   // RadioactiveTideModdableWeatherSettings play this part.
   public interface IRadioactiveTideSettings {
     bool Enabled { get; }

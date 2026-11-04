@@ -32,8 +32,9 @@ namespace DeepFrontier.RadioactiveTideModdableWeathers {
   // BestMatchedMode and Default. The values come from
   // RadioactiveTideStartingValues, the same order the vanilla path uses: the
   // save's vanilla tide settings (a save played without Moddable Weathers),
-  // else the new game's mode (its RadioactiveTideGameModeSpec from the
-  // new-game screen), else the former Deep Frontier mod settings (a save from
+  // else the new game's mode (the custom mode's values from the new-game
+  // screen, or the ones a preset's weather gives, RadioactiveTideGameModes.For,
+  // also for a mode another mod adds), else the former Deep Frontier mod settings (a save from
   // before per-game settings). Moddable Weathers' default-settings file and
   // profile import can overwrite them later, like any of its weather settings.
   public sealed class RadioactiveTideModdableWeatherSettings : IModdableWeatherSettings {

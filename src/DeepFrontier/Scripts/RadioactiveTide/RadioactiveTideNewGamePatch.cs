@@ -7,8 +7,8 @@ using UnityEngine;
 namespace DeepFrontier.Scripts.RadioactiveTide {
   // Why Harmony (Timberborn 1.1.2.8, decompiled Timberborn.MainMenuPanels and
   // Timberborn.NewGameConfigurationSystem): the presets need none, their
-  // radioactive tide settings are data on the native game-mode blueprints
-  // (RadioactiveTideGameModeSpec). The custom mode is built inside the
+  // radioactive tide settings follow from their own weather
+  // (RadioactiveTideGameModes.For). The custom mode is built inside the
   // native CustomNewGameModeController.TryGetValidatedGameMode as a new
   // GameModeSpec whose blueprint holds only itself, and NewGameModePanel
   // passes it straight to GameSceneLoader.StartNewGame; GameModeSpec is a

@@ -49,15 +49,15 @@
 //   blueprint another mod defines at the same path, so it cannot carry a new
 //   blueprint.
 //
-// - NewGameModes/GameMode.{Easy,Normal,Hard}.blueprint.json (module-owned,
-//   rewritten each run): a RadioactiveTideGameModeSpec added to each native
-//   game mode (GAME_MODE_PRESETS). The native BlueprintFileBundleLoader groups
-//   every blueprint asset at the same path and the deserializer merges them,
-//   so the vanilla GameModeSpec blueprint gains a second component
-//   (Timberborn 1.1.2.8; vanilla files: vendor ImportedAssets
-//   Resources/NewGameModes). The new-game screen fills its custom radioactive
-//   tide rows from the selected preset; a game started with a preset reads
-//   them from its GameModeSpec (RadioactiveTideStartingValues).
+// - Game modes: no data. Every game mode's radioactive tide settings follow
+//   from its own weather (RadioactiveTideTuning.GameModeCurve through the
+//   native Easy, Normal and Hard modes; RadioactiveTideGameModes.Derive), so a
+//   mode another mod adds gets them too. Up to 0.8.5 this module wrote
+//   NewGameModes/GameMode.{Easy,Normal,Hard}.blueprint.json overlays with the
+//   same values; a mode only carries a RadioactiveTideGameModeSpec now when a
+//   mod gives it its own. The generator checks each curve point against its
+//   vanilla mode (checkGameModeCurve; vanilla files: vendor ImportedAssets
+//   Resources/NewGameModes).
 //
 // The ids it relies on are read from RadioactiveTideTuning.cs; every
 // mismatch, missing target or duplicate throws.
@@ -83,18 +83,6 @@ export const TIDE_FILES = {
 };
 export const VANILLA_GAME_MODES = resolve(vanillaRoot, 'NewGameModes');
 export const gameModeFile = (mode) => `NewGameModes/GameMode.${mode}.blueprint.json`;
-
-// Radioactive tide settings per native game mode (RadioactiveTideGameModeSpec;
-// field names are the record's [Serialize] properties). Normal keeps the
-// defaults of 0.8.3 (RadioactiveTideTuning.Legacy*: from cycle 15, 25% per
-// cycle, 3-6 days); Easy comes later, more rarely and shorter, Hard earlier,
-// more often and longer. CyclesWithoutTide follows the native "Cycles without
-// badtide": tides can come in the cycles after it.
-export const GAME_MODE_PRESETS = {
-  Easy: {Enabled: true, CyclesWithoutTide: 24, ChancePercent: 15, Duration: {Min: 2, Max: 4}},
-  Normal: {Enabled: true, CyclesWithoutTide: 14, ChancePercent: 25, Duration: {Min: 3, Max: 6}},
-  Hard: {Enabled: true, CyclesWithoutTide: 9, ChancePercent: 35, Duration: {Min: 5, Max: 10}},
-};
 // SunSpec day-stage colour blocks -> ModdableWeatherSkySpec day stages.
 export const MODDABLE_SKY_STAGES = {SunriseColors: 'Sunrise', DayColors: 'Day', SunsetColors: 'Sunset', NightColors: 'Night'};
 export const VANILLA_SUN = resolve(vanillaRoot, 'Configurations', 'Sun.blueprint.json');
@@ -260,24 +248,68 @@ export async function checkVanillaSun(weatherId) {
   return vanilla;
 }
 
-export function gameModeOverlay(mode) {
-  const preset = GAME_MODE_PRESETS[mode] ?? fail(`no radioactive tide preset for game mode ${mode}`);
-  return {RadioactiveTideGameModeSpec: preset};
+// The game-mode curve, RadioactiveTideTuning.GameModeCurve: per point a
+// native game mode's weather (days; badtide chance in whole percent) and the
+// radioactive tide it gets. The C# table is the only copy.
+export async function readGameModeCurve(source = TUNING_SOURCE) {
+  const text = await readText(source);
+  const body = text.match(/GameModeCurve = ImmutableArray\.Create\(([\s\S]*?)\);/)?.[1] ?? fail(`${source} has no GameModeCurve`);
+  const points = [...body.matchAll(/new RadioactiveTideCurvePoint\("(\w+)",([^)]*)\)/g)].map(([, mode, list]) => {
+    const n = list.split(',').map(value => Number(value.trim()));
+    if (n.length !== 11 || !n.every(Number.isInteger)) fail(`GameModeCurve point ${mode} must hold 11 whole numbers`);
+    const [tMin, tMax, dMin, dMax, bMin, bMax, badtidePercent, cyclesWithoutTide, chancePercent, minDays, maxDays] = n;
+    return {
+      mode,
+      weather: {temperate: {Min: tMin, Max: tMax}, drought: {Min: dMin, Max: dMax}, badtide: {Min: bMin, Max: bMax}, badtidePercent},
+      tide: {Enabled: true, CyclesWithoutTide: cyclesWithoutTide, ChancePercent: chancePercent, Duration: {Min: minDays, Max: maxDays}},
+    };
+  });
+  if (points.length < 2) fail('GameModeCurve needs at least two points');
+  return points;
 }
 
-// The vanilla game modes this module extends: exactly one blueprint per
-// preset, each a plain GameModeSpec without radioactive tide settings.
+// RadioactiveTideModeWeather's arithmetic (C# doubles are JS numbers): the
+// hazardous days of an average cycle once badtides are randomized, the
+// share of the cycle they take, the longest hazardous season.
+export const hazardDays = (w) => w.badtidePercent / 100.0 * (w.badtide.Min + w.badtide.Max) / 2.0
+  + (100 - w.badtidePercent) / 100.0 * (w.drought.Min + w.drought.Max) / 2.0;
+export const hazardShare = (w) => hazardDays(w) / ((w.temperate.Min + w.temperate.Max) / 2.0 + hazardDays(w));
+export const longestHazardDays = (w) => Math.max(w.badtidePercent > 0 ? w.badtide.Max : 0, w.badtidePercent < 100 ? w.drought.Max : 0);
+// A GameModeSpec's weather as the rule reads it: the chance in whole percent
+// as the native Customize screen shows it (Mathf.RoundToInt(chance * 100f):
+// a float product, ties to even).
+const roundHalfEven = (x) => { const r = Math.round(x); return Math.abs(x % 1) === 0.5 && r % 2 !== 0 ? r - 1 : r; };
+export const modeWeather = (spec) => ({
+  temperate: {Min: spec.TemperateWeatherDuration.Min, Max: spec.TemperateWeatherDuration.Max},
+  drought: {Min: spec.DroughtDuration.Min, Max: spec.DroughtDuration.Max},
+  badtide: {Min: spec.BadtideDuration.Min, Max: spec.BadtideDuration.Max},
+  badtidePercent: roundHalfEven(Math.fround(Math.fround(spec.ChanceForBadtide) * 100)),
+});
+
+// The vanilla game modes by name (GameMode.<name>.blueprint.json), each a
+// plain GameModeSpec without radioactive tide settings.
 export async function checkVanillaGameModes() {
-  const files = (await readdir(VANILLA_GAME_MODES)).filter(f => f.endsWith('.blueprint.json')).sort();
-  const expected = Object.keys(GAME_MODE_PRESETS).map(mode => gameModeFile(mode).split('/')[1]).sort();
-  if (JSON.stringify(files) !== JSON.stringify(expected)) fail(`vanilla game modes are ${files.join(', ')}, expected ${expected.join(', ')}`);
   const modes = {};
-  for (const mode of Object.keys(GAME_MODE_PRESETS)) {
-    const blueprint = JSON.parse(await readText(resolve(VANILLA_GAME_MODES, gameModeFile(mode).split('/')[1])));
-    if (Object.keys(blueprint).join() !== 'GameModeSpec') fail(`vanilla ${gameModeFile(mode)} is not a lone GameModeSpec`);
-    modes[mode] = blueprint.GameModeSpec;
+  for (const file of (await readdir(VANILLA_GAME_MODES)).filter(f => f.endsWith('.blueprint.json')).sort()) {
+    const name = file.match(/^GameMode\.(\w+)\.blueprint\.json$/)?.[1] ?? fail(`vanilla game mode file ${file} is not GameMode.<name>.blueprint.json`);
+    const blueprint = JSON.parse(await readText(resolve(VANILLA_GAME_MODES, file)));
+    if (Object.keys(blueprint).join() !== 'GameModeSpec') fail(`vanilla ${gameModeFile(name)} is not a lone GameModeSpec`);
+    modes[name] = blueprint.GameModeSpec;
   }
   return modes;
+}
+
+// Each curve point is the weather of the vanilla mode it names, so the rule
+// gives Easy, Normal and Hard exactly their points.
+export async function checkGameModeCurve() {
+  const curve = await readGameModeCurve();
+  const vanilla = await checkVanillaGameModes();
+  for (const {mode, weather} of curve) {
+    const spec = vanilla[mode] ?? fail(`GameModeCurve point ${mode} names no vanilla game mode`);
+    if (JSON.stringify(modeWeather(spec)) !== JSON.stringify(weather))
+      fail(`GameModeCurve point ${mode} weather ${JSON.stringify(weather)} differs from vanilla ${gameModeFile(mode)} ${JSON.stringify(modeWeather(spec))}`);
+  }
+  return {curve, vanilla};
 }
 
 export function csvCell(value) {
@@ -373,14 +405,9 @@ export async function applyRadioactiveTide(dataRoot = resolve(root, 'src', 'Deep
   if (`${tuning.iconSpritePath}.png` !== TIDE_FILES.icon) fail(`RadioactiveTideTuning.IconSpritePath ${tuning.iconSpritePath} does not match ${TIDE_FILES.icon}`);
   if (TIDE_FILES.moddableWeatherSpec !== `ModdableWeatherSpecs/${tuning.weatherId}.blueprint.json`) fail(`${TIDE_FILES.moddableWeatherSpec} is not named after ${tuning.weatherId}`);
   await checkVanillaSun(tuning.weatherId);
-  await checkVanillaGameModes();
+  const {curve} = await checkGameModeCurve();
 
   await appendLocalization(dataRoot);
-  for (const mode of Object.keys(GAME_MODE_PRESETS)) {
-    const path = resolve(dataRoot, gameModeFile(mode));
-    await mkdir(dirname(path), {recursive: true});
-    await writeFile(path, JSON.stringify(gameModeOverlay(mode), null, 2) + '\n', 'utf8');
-  }
   const sunPath = resolve(dataRoot, TIDE_FILES.sun);
   await mkdir(dirname(sunPath), {recursive: true});
   await writeFile(sunPath, JSON.stringify(sunOverlay(tuning.weatherId), null, 2) + '\n', 'utf8');
@@ -389,7 +416,7 @@ export async function applyRadioactiveTide(dataRoot = resolve(root, 'src', 'Deep
   await writeFile(specPath, JSON.stringify(moddableWeatherSpec(tuning), null, 2) + '\n', 'utf8');
   const icon = await writeIcon(dataRoot);
   const banner = await writeBannerArt(dataRoot);
-  console.log(`Radioactive tide content: ${LOCALIZATION.length} localization rows, ${DAY_STAGES.length} sky fogs, ${Object.keys(GAME_MODE_PRESETS).length} game-mode presets, Moddable Weathers spec ${TIDE_FILES.moddableWeatherSpec}, icon ${TIDE_FILES.icon} (review ${icon.sheet}), banner art ${TIDE_FILES.progress} + ${TIDE_FILES.notification} (review ${banner.sheet}).`);
+  console.log(`Radioactive tide content: ${LOCALIZATION.length} localization rows, ${DAY_STAGES.length} sky fogs, game-mode curve ${curve.map(p => p.mode).join('/')}, Moddable Weathers spec ${TIDE_FILES.moddableWeatherSpec}, icon ${TIDE_FILES.icon} (review ${icon.sheet}), banner art ${TIDE_FILES.progress} + ${TIDE_FILES.notification} (review ${banner.sheet}).`);
   return {rows: LOCALIZATION.length, fogs: DAY_STAGES.length, icon, banner};
 }
 
