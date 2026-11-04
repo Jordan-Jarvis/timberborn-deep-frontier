@@ -3,7 +3,7 @@ Building.DeepDrill.DisplayName,Deep Drill,Deep Frontier
 Building.DeepDrill.Description,Draws deep ore from Deep Ore Sources in its district until they run out. Uses up metal blocks as drill bits; stops without them. Pipes: valve set to Fill.,Deep Frontier
 Building.DeepDrill.FlavorDescription,The first machine to bore into the deep sector. It will not be the last.,Deep Frontier
 Building.DeepMine.DisplayName,Deep Mine,Deep Frontier
-Building.DeepMine.Description,Mines deep ore without end. Build it over a Deep Ore Vein. Uses up steel as drill bits and concrete as shaft lining; stops without them. Pipes: valve set to Fill.,Deep Frontier
+Building.DeepMine.Description,Mines deep ore without end. Build it over a Deep Ore Vein. Uses up metal blocks as drill bits and concrete as shaft lining; stops without them. Pipes: valve set to Fill.,Deep Frontier
 Building.DeepMine.FlavorDescription,The vein is endless; the power bill is not.,Deep Frontier
 Building.DeepProcessor.DisplayName,Deep Ore Processor,Deep Frontier
 Building.DeepProcessor.Description,"Refines deep ore into deep iron, coal, crude oil and uranium ore. Pipes: valves set to Fill and Extract.",Deep Frontier
@@ -863,9 +863,6 @@ DeepFrontier.WorkplaceUpkeep.Panel.Note,Production stops while any upkeep is mis
 DeepFrontier.WorkplaceUpkeep.DrillBits.Name,Drill bits,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.DrillBits.Status,Waiting for drill bits: production has stopped until haulers bring metal blocks.,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.DrillBits.Status.Short,No drill bits,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.SteelDrillBits.Name,Drill bits,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.SteelDrillBits.Status,Waiting for drill bits: production has stopped until haulers bring steel.,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.SteelDrillBits.Status.Short,No drill bits,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Name,Shaft lining,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Status,Waiting for shaft lining: production has stopped until haulers bring concrete.,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Status.Short,No shaft lining,Deep Frontier bot upkeep

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### The Deep Mine can no longer stall for good
+- **The Deep Mine wears metal block drill bits instead of steel** (found in an audit of every production chain for ways to get stuck): steel is made from mined deep ore, so a mine that ran out of steel after the Deep Ore Sources were used up could never start again, and neither could anything made from steel, alloy or machine cores. Metallurgists, who train on deep iron, could not be replaced either. The mine now uses 0.3 metal blocks per hour at full crew instead of 0.1 steel, and still 0.1 concrete as shaft lining. Steel already stocked at a mine is carried away by haulers.
+- Steel keeps its other ongoing uses: the Deep Well's drill bits, the reactor's waste casks, rockets, reinforced bot frames and Reactor Bot plating.
+
 ### The Technical School asks only for the supplies of what it teaches
 - **Its supply panel follows the chosen profession** (player report: "The requirements for keeping the building stocked should change depending on what is being taught."): a school teaching metallurgy lists only Metal Blocks, Deep Iron and Corn Rations, a reactor school only Electronics, Yellowcake and Medicine, a flight school only Electronics, Recovered Telemetry and Canned Fish. Before, the panel showed all eight goods, with the ones it refused as 0 / 0.
 - Each good's limit is the taught profession's own (40 hours of use), and the hours-left bar is measured on its goods. The school panel adds a line with the taught profession's supplies per hour.
