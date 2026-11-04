@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.8.6 (2026-11-04)
+
 ### macOS asset loading
 - Fixed missing Deep Frontier materials and other bundled assets on macOS, including the reported `Materials/DeepFrontierArt/DFArtTimber` load error. Packages now include the macOS asset bundle as well as the Windows bundle.
 - The build enables its managed dependency references for both platforms. Package verification checks each bundle's platform, authored materials and stockpile meshes; a missing platform bundle fails the build.
