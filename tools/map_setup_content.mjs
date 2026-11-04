@@ -86,6 +86,13 @@ async function mapEditorTemplates(dataRoot) {
 export async function mapSetupContent({root = defaultRoot, dataRoot = resolve(root, 'src', 'DeepFrontier', 'Data')} = {}) {
   const {setup, variants} = await readSources(root);
   const templates = await mapEditorTemplates(dataRoot);
+  if (!Array.isArray(setup.requiredMineralTemplates) || setup.requiredMineralTemplates.length !== 6)
+    fail('requiredMineralTemplates must define the six mineral source types');
+  const mineralIds = new Set();
+  for (const id of setup.requiredMineralTemplates) {
+    if (!templates.has(id) || mineralIds.has(id)) fail(`invalid required mineral template: ${id}`);
+    mineralIds.add(id);
+  }
   const names = await displayNames(dataRoot);
   const unmetText = setup.unmetText;
   if (typeof unmetText?.sites !== 'string' || !unmetText.sites.includes('{0}') || typeof unmetText.items !== 'object')
@@ -123,17 +130,17 @@ export async function mapSetupContent({root = defaultRoot, dataRoot = resolve(ro
       if (!ORIENTATIONS.includes(orientation)) fail(`${v.file} placement ${index}: orientation ${orientation}`);
       for (const key of ['x', 'y', 'z']) if (!Number.isInteger(p[key])) fail(`${v.file} placement ${index}: ${key} must be an integer`);
       if (typeof p.label !== 'string' || !p.label) fail(`${v.file} placement ${index}: label is required`);
-      // A Deep Ore Source (DeepOreDepositSpec, Scripts/DeepOre/DeepOreDeposit.cs) gets its amount
+      // A Deep Ore Source (MineralDepositSpec, Scripts/MineralDeposit.cs) gets its amount
       // at new-game time (BuiltinMapSetup: DeepOreDeposit.SetAmount).
-      const deposit = blueprint.DeepOreDepositSpec;
-      if (deposit) {
-        if (p.good !== deposit.GoodId || !Number.isInteger(p.amount) || p.amount <= 0 || p.amount > deposit.Capacity)
-          fail(`${v.file} placement ${index}: ${p.template} needs good ${deposit.GoodId} and an amount of 1..${deposit.Capacity}`);
+      const deposit = blueprint.MineralDepositSpec;
+      if (deposit && p.good !== undefined) {
+        if (p.good !== deposit.Yielder.Yield.Id || !Number.isInteger(p.amount) || p.amount <= 0 || p.amount > deposit.Yielder.Yield.Amount)
+          fail(`${v.file} placement ${index}: ${p.template} needs good ${deposit.Yielder.Yield.Id} and an amount of 1..${deposit.Yielder.Yield.Amount}`);
       } else if (p.good !== undefined || p.amount !== undefined) {
         fail(`${v.file} placement ${index}: ${p.template} is not a deep ore deposit; remove good/amount`);
       }
       return {Template: p.template, Label: p.label, X: p.x, Y: p.y, Z: p.z, Orientation: orientation,
-        Good: deposit ? p.good : '', Amount: deposit ? p.amount : 0};
+        Good: deposit && p.good !== undefined ? p.good : '', Amount: deposit && p.good !== undefined ? p.amount : 0};
     });
     // One line for every missing building site, one per other item (tools/map_setup.json unmetText).
     const unmet = v.unmet ?? [];
@@ -168,6 +175,7 @@ export async function mapSetupContent({root = defaultRoot, dataRoot = resolve(ro
     ReferenceSiteArea: Math.floor(small.maxArea * numerator / denominator),
     DevMaps: devMaps,
     Maps: maps,
+    RequiredMineralTemplates: setup.requiredMineralTemplates,
   };
   return {spec, rows};
 }

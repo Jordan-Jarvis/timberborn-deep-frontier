@@ -70,6 +70,7 @@
   "PureWater": 1.421091,
   "RadioactiveSludge": 0.5,
   "RadioactiveWaste": 22.022121,
+  "RawDeepOre": 1,
   "ReactorCoolantWater": 4.064956,
   "ReactorPowerCell": 385.897778,
   "RecoveredArtifact": 23.15,
@@ -1352,7 +1353,8 @@
   "StoneCrusher.IronTeeth": {
    "science": 600,
    "recipes": [
-    "BrickEarth"
+    "BrickEarth",
+    "RawOreEarth"
    ],
    "devOnly": false
   },
@@ -2027,6 +2029,10 @@
   },
   "DeepOre": {
    "ingredients": [
+    [
+     "RawDeepOre",
+     1
+    ],
     [
      "Water",
      3
@@ -3045,6 +3051,21 @@
     [
      "ConcentratedWaste",
      1
+    ]
+   ]
+  },
+  "RawOreEarth": {
+   "ingredients": [
+    [
+     "RawDeepOre",
+     3
+    ]
+   ],
+   "hours": 1,
+   "products": [
+    [
+     "Dirt",
+     8
     ]
    ]
   },

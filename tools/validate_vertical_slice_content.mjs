@@ -11,6 +11,7 @@ async function readJson(relativePath) {
 }
 
 const goods = [
+  await readJson('Data/Goods/Good.RawDeepOre.blueprint.json'),
   await readJson('Data/Goods/Good.DeepOre.blueprint.json'),
   await readJson('Data/Goods/Good.DeepAlloy.blueprint.json'),
 ];
@@ -55,16 +56,14 @@ await access(resolve(sourceRoot, 'Data/Localizations/enUS.csv'));
 assert(!await access(resolve(sourceRoot, 'Localizations/enUS.csv')).then(() => true).catch(() => false), 'Localization must live under Data/Localizations for mod packaging.');
 
 const goodIds = goods.map((good) => good.GoodSpec.Id);
-assert(goodIds.join(',') === 'DeepOre,DeepAlloy', `Unexpected good IDs: ${goodIds.join(',')}`);
+assert(goodIds.join(',') === 'RawDeepOre,DeepOre,DeepAlloy', `Unexpected good IDs: ${goodIds.join(',')}`);
 for (const good of goods) {
   assert(good.GoodSpec.Icon === `Sprites/Goods/${good.GoodSpec.Id}Icon`, `${good.GoodSpec.Id} must show its own icon, not ${good.GoodSpec.Icon}.`);
   await access(resolve(sourceRoot, 'Data', `${good.GoodSpec.Icon}.png`));
 }
 assert(recipes[0].RecipeSpec.Id === 'DeepOre' && recipes[1].RecipeSpec.Id === 'DeepOre.Mine' && recipes[2].RecipeSpec.Id === 'DeepAlloy', 'Recipe IDs do not match the vertical slice.');
-// The drill's recipe is water in, deep ore out: the ore comes out of a Deep Ore Source of its
-// district (DeepDrillSpec, Scripts/DeepOre/DeepDrill.cs), never from an inventory.
-assert(recipes[0].RecipeSpec.Ingredients.length === 1 && recipes[0].RecipeSpec.Ingredients[0].Id === 'Water' && recipes[0].RecipeSpec.Ingredients[0].Amount === 3,
-  'DeepOre recipe must consume only 3 Water; its ore comes out of a Deep Ore Source, not from an ingredient.');
+// Physical raw ore and water are native inventory ingredients; no district-pool draw.
+assert(JSON.stringify(recipes[0].RecipeSpec.Ingredients) === JSON.stringify([{Id:'RawDeepOre',Amount:1},{Id:'Water',Amount:3}]), 'Deep Drill must process one hauled raw ore with three water.');
 assert(recipes[0].RecipeSpec.Products.length === 1 && recipes[0].RecipeSpec.Products[0].Id === 'DeepOre' && recipes[0].RecipeSpec.Products[0].Amount === 1, 'DeepOre recipe must output one bored unit.');
 assert(recipes[1].RecipeSpec.Ingredients.length === 1 && recipes[1].RecipeSpec.Ingredients[0].Id === 'Water' && recipes[1].RecipeSpec.Products.some((product) => product.Id === 'DeepOre' && product.Amount === 4), 'Permanent Deep Mine recipe must consume water and output four Deep Ore.');
 assert(recipes[2].RecipeSpec.Ingredients.some((ingredient) => ingredient.Id === 'DeepOre'), 'DeepAlloy recipe does not consume DeepOre.');
@@ -93,7 +92,9 @@ assert(mineCore.length > 0 && mineCore.every((c) => c.z === 0 && c.block.MatterB
 assert(coreSpan('x') === vein.BlockObjectSpec.Size.X && coreSpan('y') === vein.BlockObjectSpec.Size.Y, 'Deep Mine core does not match the Deep Ore vein footprint.');
 assert(!vein.BlockObjectSpec.Blocks.some((block) => block.Occupations.split(', ').includes('Top')), 'Deep Ore vein must leave Top free for the mine core.');
 assert(!drill.UnderstructureConstraintSpec && foundationCore(drill).length === 0, 'Deep Drill bores the Deep Ore Sources of its district and must not require an understructure.');
-assert(drill.DeepDrillSpec?.GoodId === 'DeepOre' && drill.BuildingAccessibleSpec, 'Deep Drill must bore DeepOre (DeepDrillSpec) and be a district building (BuildingAccessibleSpec).');
+assert(!drill.DeepDrillSpec && drill.BuildingAccessibleSpec, 'Deep Drill must use physical inventory ingredients, not a district-pool limiter.');
+assert(drill.FrontierWorkplaceUpkeepSpec.Goods.map(g => g.GoodId).join() === 'MetalBlock,TreatedPlank', 'Deep Drill must run on metal blocks and treated planks.');
+assert(!mine.BuildingSpec.BuildingCost.some(g => ['DeepAlloy','HighGradeSteel'].includes(g.Id)), 'Deep Mine must not require deep iron, including through steel.');
 assert(drill.WorkplaceSpec.MaxWorkers === 3, 'Deep Drill worker count changed unexpectedly.');
 assert(drill.MechanicalNodeSpec.PowerInput === 1000 && drill.MechanicalNodeSpec.PowerOutput === 0, 'Deep Drill power contract is invalid.');
 assert(drill.ManufactorySpec.ProductionRecipeIds.includes('DeepOre'), 'Deep Drill is not wired to the DeepOre recipe.');
@@ -106,21 +107,20 @@ assert(processor.MechanicalNodeSpec.PowerInput === 500 && processor.MechanicalNo
 assert(processor.ManufactorySpec.ProductionRecipeIds.includes('DeepAlloy'), 'Deep Processor is not wired to the DeepAlloy recipe.');
 // Deep Ore Source: a deposit, not a stockpile (Scripts/DeepOre/DeepOreDeposit.cs), reached through
 // its district (BuildingAccessibleSpec and an entrance on a path).
-const deposit = source.DeepOreDepositSpec;
-assert(deposit && !source.StockpileSpec && !source.FixedStockpileSpec, 'Deep Ore source must be a DeepOreDepositSpec deposit, not a stockpile haulers and pipes can use.');
-assert(deposit.GoodId === drill.DeepDrillSpec.GoodId && deposit.Capacity === 10000, 'Deep Ore source must hold up to 10,000 of the good the Deep Drill bores.');
-assert(source.BuildingAccessibleSpec && source.BlockObjectSpec.Entrance.HasEntrance, 'Deep Ore source must join a district (BuildingAccessibleSpec, entrance) so its drills reach it.');
+const deposit = source.MineralDepositSpec;
+assert(deposit && !source.StockpileSpec && !source.BuildingAccessibleSpec && !source.DeepOreDepositSpec, 'Ore outcrops must be native mineral yielders, not district stockpiles.');
+assert(deposit.Yielder.Yield.Id === 'RawDeepOre' && deposit.Yielder.Yield.Amount === 10000 && deposit.Yielder.ResourceGroup === 'Ruin', 'Scavengers must collect raw ore from the outcrop.');
 // Recharge (docs/progression.md "Deep Ore Source recharge"): a trickle once empty, painful by
 // construction. Capped well below a source's stock (at most 1% of its capacity), and one source's
 // daily recharge at most a tenth of what one Deep Ore Processor at full crew consumes a day on its
 // hungriest deep ore recipe (16 working hours, docs/progression.md science economy).
 const WORKING_HOURS = 16;
-assert(Number.isInteger(deposit.RechargeAmount) && deposit.RechargeAmount > 0 && deposit.RechargeAmount <= deposit.Capacity / 100,
-  `Deep Ore source recharge ${deposit.RechargeAmount} must be a positive whole amount of at most 1% of its capacity ${deposit.Capacity}.`);
+assert(Number.isInteger(deposit.RechargeAmount) && deposit.RechargeAmount > 0 && deposit.RechargeAmount <= deposit.Yielder.Yield.Amount / 100,
+  `Deep Ore source recharge ${deposit.RechargeAmount} must be a positive whole amount of at most 1% of its capacity ${deposit.Yielder.Yield.Amount}.`);
 assert(deposit.RechargeTimeInDays > 0, 'Deep Ore source recharge time must be positive.');
 const processorOrePerDay = Math.max(...await Promise.all(processor.ManufactorySpec.ProductionRecipeIds.map(async (id) => {
   const recipe = (await readJson(`Data/Recipes/Recipe.${id}.blueprint.json`)).RecipeSpec;
-  const ore = recipe.Ingredients.find((ingredient) => ingredient.Id === deposit.GoodId)?.Amount ?? 0;
+  const ore = recipe.Ingredients.find((ingredient) => ingredient.Id === 'DeepOre')?.Amount ?? 0;
   return ore * processor.WorkplaceSpec.MaxWorkers * WORKING_HOURS / recipe.CycleDurationInHours;
 })));
 const rechargePerDay = deposit.RechargeAmount / deposit.RechargeTimeInDays;
@@ -207,6 +207,6 @@ console.log(JSON.stringify({
     DeepMine: mine.MechanicalNodeSpec.PowerInput,
     DeepProcessor: processor.MechanicalNodeSpec.PowerInput,
   },
-  sourceCapacity: deposit.Capacity,
+  sourceCapacity: deposit.Yielder.Yield.Amount,
   sourceRecharge: { amount: deposit.RechargeAmount, days: deposit.RechargeTimeInDays, perDay: rechargePerDay, processorOrePerDay },
 }, null, 2));

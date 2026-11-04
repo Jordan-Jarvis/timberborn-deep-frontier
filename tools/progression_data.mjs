@@ -14,9 +14,9 @@ const read = async (path) => JSON.parse(utf8.decode(await readFile(path)).replac
 // Goods gathered by a workplace rather than produced by a recipe.
 export const MAP_SOURCES = {
   ScrapMetal: {via: ['ScavengerFlag.IronTeeth'], note: 'vanilla Scavenger Flag at ruins (EfficientMine is the recipe route)'},
-  DeepOre: {via: ['DeepDrill.IronTeeth'], note: 'Deep Ore Sources bored by the DeepDrill (finite; a slow recharge once empty), then DeepMine over a DeepOreVein'},
-  Sandstone: {via: ['SandstonePit.IronTeeth'], note: 'finite SandstoneOutcrop yielders'},
-  Limestone: {via: ['LimestonePit.IronTeeth'], note: 'finite LimestoneOutcrop yielders'},
+  RawDeepOre: {via: ['ScavengerFlag.IronTeeth'], note: 'visible ore outcrops gathered and hauled; the drill processes raw ore, and the permanent Deep Mine bypasses this slow source'},
+  Sandstone: {via: ['SandstonePit.IronTeeth'], note: 'SandstoneOutcrop yielders; depleted outcrops slowly recover'},
+  Limestone: {via: ['LimestonePit.IronTeeth'], note: 'LimestoneOutcrop yielders; depleted outcrops slowly recover'},
   FreshFish: {via: ['FisherFlag.IronTeeth'], note: 'Fisher Flag shore fishing'},
   // Not gathered: produced at runtime when stored Water is irradiated
   // (RadiationStorageService). Radiation first exists once the refinery (or

@@ -58,3 +58,5 @@ for (const [path, science] of Object.entries(RAISED_SCIENCE)) {
   await writePatch(path, {BuildingSpec: {ScienceCost: science}});
 }
 console.log(`Vanilla tool overrides: ${SHAFTS.length * FACTIONS.length} shaft tools shown, ${HIDDEN_VANILLA_TOOLS.length} hidden, ${Object.keys(RAISED_SCIENCE).length} science raised.`);
+
+await writePatch('Buildings/Metal/ScavengerFlag/ScavengerFlag.IronTeeth.blueprint.json', {LabeledEntitySpec: {DescriptionLocKey: 'Building.ScavengerFlag.DeepFrontierDescription'}});

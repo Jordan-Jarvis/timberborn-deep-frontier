@@ -16,6 +16,10 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace DeepFrontier.Scripts.DeepOre {
+  internal static class MineralDepositLoc {
+    public const string RechargeNext = "DeepFrontier.MineralDeposit.Recharge.Next";
+    public const string RechargeRule = "DeepFrontier.MineralDeposit.Recharge.Rule";
+  }
   // The deposit's stock and its recharge shown with the game's own entity-panel views (decompiled
   // 1.1.2.8):
   // - the stock: the native RuinFragment layout (good icon, name and amount remaining), as a ruin
@@ -69,23 +73,23 @@ namespace DeepFrontier.Scripts.DeepOre {
       tooltips.Register(Root, () => _rule);
     }
 
-    public void Show(DeepOreDeposit deposit, Sprite icon) {
+    public void Show(MineralDeposit deposit, Sprite icon) {
       var spec = deposit.Spec;
       _time.text = _loc.T(_timePhrase, spec.RechargeTimeInDays);
       _amount.text = spec.RechargeAmount.ToString();
       _icon.sprite = icon;
-      _rule = _loc.T(DeepOreLoc.RechargeRule, spec.RechargeAmount, spec.RechargeTimeInDays.ToString("0.#"));
+      _rule = _loc.T(MineralDepositLoc.RechargeRule, spec.RechargeAmount, spec.RechargeTimeInDays.ToString("0.#"));
       bool recharging = deposit.IsRecharging;
       _progress.text = _loc.T(_progressPhrase, deposit.RechargeProgress);
       _progress.ToggleDisplayStyle(recharging);
       Root.EnableInClassList(InactiveClass, !recharging);
-      _next.text = recharging ? _loc.T(DeepOreLoc.RechargeNext, spec.RechargeAmount, deposit.RechargeDaysLeft.ToString("0.0")) : "";
+      _next.text = recharging ? _loc.T(MineralDepositLoc.RechargeNext, spec.RechargeAmount, deposit.RechargeDaysLeft.ToString("0.0")) : "";
       _next.ToggleDisplayStyle(recharging);
     }
   }
 
   // Deep Ore Source: its stock and recharge.
-  internal sealed class DeepOreDepositFragment : IEntityPanelFragment {
+  internal sealed class MineralDepositFragment : IEntityPanelFragment {
     private readonly VisualElementLoader _loader;
     private readonly ITooltipRegistrar _tooltips;
     private readonly IGoodService _goods;
@@ -93,10 +97,10 @@ namespace DeepFrontier.Scripts.DeepOre {
     private VisualElement _root;
     private DeepOreStockView _stock;
     private DeepOreRechargeView _recharge;
-    private DeepOreDeposit _deposit;
+    private MineralDeposit _deposit;
     private GoodSpec _good;
 
-    public DeepOreDepositFragment(VisualElementLoader loader, ITooltipRegistrar tooltips, IGoodService goods, ILoc loc) {
+    public MineralDepositFragment(VisualElementLoader loader, ITooltipRegistrar tooltips, IGoodService goods, ILoc loc) {
       _loader = loader; _tooltips = tooltips; _goods = goods; _loc = loc;
     }
 
@@ -111,7 +115,7 @@ namespace DeepFrontier.Scripts.DeepOre {
     }
 
     public void ShowFragment(BaseComponent entity) {
-      _deposit = entity.GetComponent<DeepOreDeposit>();
+      _deposit = entity.GetComponent<MineralDeposit>();
       if (!_deposit) return;
       _good = _goods.GetGood(_deposit.Spec.GoodId);
       UpdateFragment();
@@ -131,88 +135,22 @@ namespace DeepFrontier.Scripts.DeepOre {
     }
   }
 
-  // Deep Drill: the deep ore its district's sources hold, the soonest recharge once they are all
-  // empty, or that the district has none.
-  internal sealed class DeepDrillFragment : IEntityPanelFragment {
-    private readonly VisualElementLoader _loader;
-    private readonly ITooltipRegistrar _tooltips;
-    private readonly IGoodService _goods;
-    private readonly ILoc _loc;
-    private VisualElement _root;
-    private DeepOreStockView _stock;
-    private DeepOreRechargeView _recharge;
-    private Label _noSource;
-    private DeepDrill _drill;
-    private GoodSpec _good;
-
-    public DeepDrillFragment(VisualElementLoader loader, ITooltipRegistrar tooltips, IGoodService goods, ILoc loc) {
-      _loader = loader; _tooltips = tooltips; _goods = goods; _loc = loc;
-    }
-
-    public VisualElement InitializeFragment() {
-      _root = new VisualElement();
-      _stock = new DeepOreStockView(_loader);
-      _recharge = new DeepOreRechargeView(_loader, _tooltips, _loc);
-      _noSource = new Label();
-      _noSource.AddToClassList("entity-panel__text");
-      _root.Add(_stock.Root);
-      _root.Add(_recharge.Root);
-      _root.Add(_noSource);
-      _root.ToggleDisplayStyle(visible: false);
-      return _root;
-    }
-
-    public void ShowFragment(BaseComponent entity) {
-      _drill = entity.GetComponent<DeepDrill>();
-      if (!_drill) return;
-      _good = _goods.GetGood(_drill.Spec.GoodId);
-      UpdateFragment();
-    }
-
-    public void ClearFragment() {
-      _drill = null;
-      _good = null;
-      _root.ToggleDisplayStyle(visible: false);
-    }
-
-    public void UpdateFragment() {
-      // The component is enabled while the drill is finished.
-      bool shown = _drill && _drill.Enabled && _drill.HasDistrict;
-      _root.ToggleDisplayStyle(shown);
-      if (!shown) return;
-      var deposits = _drill.Deposits().ToList();
-      _stock.Root.ToggleDisplayStyle(deposits.Count > 0);
-      _noSource.ToggleDisplayStyle(deposits.Count == 0);
-      if (deposits.Count == 0) {
-        _recharge.Root.ToggleDisplayStyle(false);
-        _noSource.text = _loc.T(DeepOreLoc.PanelNoSource);
-        return;
-      }
-      _stock.Show(_loc.T(DeepOreLoc.PanelDistrictOre, deposits.Count), _good.IconSmall.Value, deposits.Sum(d => d.Amount));
-      bool allRecharging = deposits.All(d => d.IsRecharging);
-      _recharge.Root.ToggleDisplayStyle(allRecharging);
-      if (allRecharging) _recharge.Show(deposits.OrderBy(d => d.RechargeDaysLeft).First(), _good.IconSmall.Value);
-    }
-  }
-
+  // Shared stock/recovery panel for the three visible mineral outcrops.
   [Context("Game")]
   public sealed class DeepOrePanelConfigurator : Configurator {
     protected override void Configure() {
-      Bind<DeepOreDepositFragment>().AsSingleton();
-      Bind<DeepDrillFragment>().AsSingleton();
+      Bind<MineralDepositFragment>().AsSingleton();
       MultiBind<EntityPanelModule>().ToProvider<EntityPanelModuleProvider>().AsSingleton();
     }
 
     // Where the native GatherableFragment sits (GatheringUIConfigurator).
     private sealed class EntityPanelModuleProvider : IProvider<EntityPanelModule> {
-      private readonly DeepOreDepositFragment _deposit;
-      private readonly DeepDrillFragment _drill;
-      public EntityPanelModuleProvider(DeepOreDepositFragment deposit, DeepDrillFragment drill) { _deposit = deposit; _drill = drill; }
+      private readonly MineralDepositFragment _deposit;
+      public EntityPanelModuleProvider(MineralDepositFragment deposit) { _deposit = deposit; }
 
       public EntityPanelModule Get() {
         var builder = new EntityPanelModule.Builder();
         builder.AddMiddleFragment(_deposit);
-        builder.AddMiddleFragment(_drill);
         return builder.Build();
       }
     }
@@ -221,15 +159,15 @@ namespace DeepFrontier.Scripts.DeepOre {
   // Map editor: the deposit's amount, in the native fixed stockpile fragment's layout (its amount
   // field; the good is fixed, so the good dropdown is hidden), with native undo as
   // FixedStockpileFragment records it.
-  internal sealed class DeepOreDepositAmountFragment : IEntityPanelFragment, ILoadableSingleton {
+  internal sealed class MineralDepositAmountFragment : IEntityPanelFragment, ILoadableSingleton {
     private readonly EventBus _eventBus;
     private readonly VisualElementLoader _loader;
     private readonly EntityChangeRecorderFactory _changeRecorders;
     private VisualElement _root;
     private IntegerField _amount;
-    private DeepOreDeposit _deposit;
+    private MineralDeposit _deposit;
 
-    public DeepOreDepositAmountFragment(EventBus eventBus, VisualElementLoader loader, EntityChangeRecorderFactory changeRecorders) {
+    public MineralDepositAmountFragment(EventBus eventBus, VisualElementLoader loader, EntityChangeRecorderFactory changeRecorders) {
       _eventBus = eventBus; _loader = loader; _changeRecorders = changeRecorders;
     }
 
@@ -246,7 +184,7 @@ namespace DeepFrontier.Scripts.DeepOre {
     }
 
     public void ShowFragment(BaseComponent entity) {
-      _deposit = entity.GetComponent<DeepOreDeposit>();
+      _deposit = entity.GetComponent<MineralDeposit>();
       if (!_deposit) return;
       _amount.SetValueWithoutNotify(_deposit.Amount);
       _root.ToggleDisplayStyle(visible: true);
@@ -275,14 +213,14 @@ namespace DeepFrontier.Scripts.DeepOre {
   [Context("MapEditor")]
   public sealed class DeepOreMapEditorPanelConfigurator : Configurator {
     protected override void Configure() {
-      Bind<DeepOreDepositAmountFragment>().AsSingleton();
+      Bind<MineralDepositAmountFragment>().AsSingleton();
       MultiBind<EntityPanelModule>().ToProvider<EntityPanelModuleProvider>().AsSingleton();
     }
 
     // Where the native FixedStockpileFragment sits (MapEditorStockpilesUIConfigurator).
     private sealed class EntityPanelModuleProvider : IProvider<EntityPanelModule> {
-      private readonly DeepOreDepositAmountFragment _amount;
-      public EntityPanelModuleProvider(DeepOreDepositAmountFragment amount) { _amount = amount; }
+      private readonly MineralDepositAmountFragment _amount;
+      public EntityPanelModuleProvider(MineralDepositAmountFragment amount) { _amount = amount; }
 
       public EntityPanelModule Get() {
         var builder = new EntityPanelModule.Builder();

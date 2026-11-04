@@ -1132,9 +1132,6 @@
       }
     }
   },
-  "DeepDrillSpec": {
-    "GoodId": "DeepOre"
-  },
   "MechanicalBuildingSpec": {},
   "MechanicalNodeSpec": {
     "PowerOutput": 0,
@@ -1465,6 +1462,11 @@
         "GoodId": "MetalBlock",
         "GoodPerHour": 0.1,
         "Role": "DrillBits"
+      },
+      {
+        "GoodId": "TreatedPlank",
+        "GoodPerHour": 0.1,
+        "Role": "TimberBracing"
       }
     ],
     "CapacityPerGood": 15

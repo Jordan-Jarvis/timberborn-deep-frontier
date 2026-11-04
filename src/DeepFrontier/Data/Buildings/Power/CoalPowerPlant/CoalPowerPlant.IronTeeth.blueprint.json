@@ -5,7 +5,7 @@
     "BuildingCost": [
       {
         "Id": "MetalBlock",
-        "Amount": 40
+        "Amount": 35
       },
       {
         "Id": "DeepAlloy",

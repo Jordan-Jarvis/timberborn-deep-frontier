@@ -38,6 +38,12 @@ for (const entry of catalog.buildings) {
   assert(buildingsCollection.includes(path), `${entry.id}: missing faction registration`);
   const value = await read(data, `${path}.json`);
   buildings.push(value);
+  const costIds = value.BuildingSpec.BuildingCost.map(c => c.Id);
+  assert.equal(new Set(costIds).size, costIds.length, `${entry.id}: duplicate construction good`);
+  if (entry.kind === 'quarry') {
+    assert(costIds.every(id => ['Log', 'Plank', 'TreatedPlank', 'MetalBlock', 'Gear'].includes(id)),
+      `${entry.id}: permanent extraction must be buildable without finite mod resources`);
+  }
   const size = value.BlockObjectSpec.Size;
   assert.deepEqual([size.X, size.Y, size.Z], entry.size, `${entry.id}: grid axes are width, depth, height`);
   assert.equal(value.BlockObjectSpec.Blocks.length, size.X*size.Y*size.Z);
@@ -94,6 +100,8 @@ for (const source of catalog.sources) {
   if(source.kind==='finite') {
     assert.equal(value.MineralDepositSpec.Yielder.Yield.Id, source.good);
     assert.equal(value.MineralDepositSpec.Yielder.Yield.Amount, source.yield);
+    assert.equal(value.MineralDepositSpec.RechargeAmount, 20);
+    assert.equal(value.MineralDepositSpec.RechargeTimeInDays, 5);
     assert.equal(value.MineralDepositSpec.Yielder.ResourceGroup, `DeepFrontier${source.good}`);
     assert(!value.RuinSpec, 'Mineral deposits must not acquire vanilla random ruin models');
   }

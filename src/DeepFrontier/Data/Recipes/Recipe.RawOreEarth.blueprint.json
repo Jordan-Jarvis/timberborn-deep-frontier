@@ -1,0 +1,26 @@
+{
+  "RecipeSpec": {
+    "Id": "RawOreEarth",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Recipe.RawOreEarth.DisplayName",
+    "CycleDurationInHours": 1,
+    "Ingredients": [
+      {
+        "Id": "RawDeepOre",
+        "Amount": 3
+      }
+    ],
+    "Products": [
+      {
+        "Id": "Dirt",
+        "Amount": 8
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 4,
+    "Icon": "Sprites/Goods/DirtIcon"
+  }
+}

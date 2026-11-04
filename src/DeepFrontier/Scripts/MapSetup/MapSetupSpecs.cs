@@ -18,6 +18,7 @@ namespace DeepFrontier.Scripts.MapSetup {
     // The game's developer test maps (IsDev): no setup, reported as such.
     [Serialize] public ImmutableArray<string> DevMaps { get; init; }
     [Serialize] public ImmutableArray<BuiltinMapSpec> Maps { get; init; }
+    [Serialize] public ImmutableArray<string> RequiredMineralTemplates { get; init; }
 
     public BuiltinMapSpec Find(string mapName) => Maps.SingleOrDefault(m => m.MapName == mapName);
   }
@@ -50,7 +51,7 @@ namespace DeepFrontier.Scripts.MapSetup {
     [Serialize] public int Z { get; init; }
     // Timberborn.Coordinates.Orientation name (Cw0, Cw90, Cw180, Cw270).
     [Serialize] public string Orientation { get; init; }
-    // Deep Ore Sources (DeepOreDepositSpec) only: the deposit's good and its amount; "" and 0 otherwise.
+    // Deep Ore Sources (MineralDepositSpec) only: the deposit's good and its amount; "" and 0 otherwise.
     [Serialize] public string Good { get; init; }
     [Serialize] public int Amount { get; init; }
   }

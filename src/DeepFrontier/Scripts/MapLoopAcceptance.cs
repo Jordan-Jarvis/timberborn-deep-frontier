@@ -190,11 +190,8 @@ namespace DeepFrontier.Scripts {
         if(found.Count!=1){Record(subject,"placement loaded",false,found.Count+" "+template+" registered at "+at);continue;}
         var block=found[0];
         Record(subject,"placement loaded",block.Orientation==o,template+" at "+at+" orientation "+block.Orientation+" (expected "+o+")");
-        if(p["good"]!=null&&block.GetComponent<DeepOreDeposit>() is DeepOreDeposit ore) {
+        if(p["good"]!=null&&block.GetComponent<MineralDeposit>() is MineralDeposit ore) {
           Record(subject,"stock",ore.Spec.GoodId==(string)p["good"]&&ore.Amount==(int)p["amount"],ore.Amount+" "+ore.Spec.GoodId+" (map "+p["amount"]+" "+p["good"]+")");
-        } else if(p["good"]!=null&&block.GetComponent<MineralDeposit>() is MineralDeposit deposit) {
-          var y=deposit.Yielder.Yield;
-          Record(subject,"yield",y.GoodId==(string)p["good"]&&y.Amount==(int)p["amount"],y.Amount+" "+y.GoodId+" (blueprint "+p["amount"]+" "+p["good"]+")");
         }
         if(block.GetComponent<HumanRecordCache>() is HumanRecordCache cache)
           Record(subject,"cache unsurveyed",!cache.Surveyed,"state "+cache.State+", surveyed "+cache.Surveyed);

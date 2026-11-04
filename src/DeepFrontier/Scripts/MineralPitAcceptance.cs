@@ -305,9 +305,10 @@ namespace DeepFrontier.Scripts {
         } else if(_reload&&Enumerable.Range(0,2).All(i=>_inventories[i].AmountInStock(Goods[i])==TestYield)) {
           Require(_moved.All(v=>v),"Reloaded hoist did not animate new deliveries");
           foreach(var id in _depositIds)
-            Require(!_entities.Entities.Any(e=>e.GetComponent<EntityComponent>().EntityId.ToString()==id),
-              "Exhausted finite source remains registered");
-          Pass("fresh-process workers exhausted both finite sources; source entities removed; all 24 units each delivered");
+            Require(_entities.Entities.Any(e=>e.GetComponent<EntityComponent>().EntityId.ToString()==id
+              && e.GetComponent<MineralDeposit>().Amount==0 && e.GetComponent<MineralDeposit>().IsRecharging),
+              "Exhausted source must remain registered and recover");
+          Pass("fresh-process workers exhausted both sources; empty sources retained and recovering; all 24 units each delivered");
           Save();
         }
         Require((_clock.PartialDayNumber-_started)*24<18,"Timed out waiting for native pit work");

@@ -1,15 +1,15 @@
 ID,Text,Comment
 Building.DeepDrill.DisplayName,Deep Drill,Deep Frontier
-Building.DeepDrill.Description,"Bores deep ore out of the Deep Ore Sources in its district, the nearest first. Uses up metal blocks as drill bits; stops without them. Pipes: valve set to Fill.",Deep Frontier
+Building.DeepDrill.Description,Processes hauled raw ore using water. Requires metal blocks and treated planks. Pipes: valve set to Fill.,Deep Frontier
 Building.DeepDrill.FlavorDescription,The first machine to bore into the deep sector. It will not be the last.,Deep Frontier
 Building.DeepMine.DisplayName,Deep Mine,Deep Frontier
-Building.DeepMine.Description,Mines deep ore without end. Build it over a Deep Ore Vein. Uses up metal blocks as drill bits and bricks as shaft lining; stops without them. Pipes: valve set to Fill.,Deep Frontier
+Building.DeepMine.Description,Mines deep ore without end. Build it over a Deep Ore Vein. Requires metal blocks and bricks. Pipes: valve set to Fill.,Deep Frontier
 Building.DeepMine.FlavorDescription,The vein is endless; the power bill is not.,Deep Frontier
 Building.DeepProcessor.DisplayName,Deep Ore Processor,Deep Frontier
 Building.DeepProcessor.Description,"Refines deep ore into deep iron, coal, crude oil and uranium ore. Pipes: valves set to Fill and Extract.",Deep Frontier
 Building.DeepProcessor.FlavorDescription,The ore is useless until the surface factory learns how to tame it.,Deep Frontier
-Building.DeepOreSource.DisplayName,Deep Ore Source,Deep Frontier
-Building.DeepOreSource.Description,"A deposit of deep ore for the Deep Drills of its district. Once empty, it recharges 20 deep ore every 5 days.",Deep Frontier
+Building.DeepOreSource.DisplayName,Deep Ore Outcrop,Deep Frontier
+Building.DeepOreSource.Description,Scavengers collect raw ore here. Slowly recovers when empty.,Deep Frontier
 Building.DeepOreSource.FlavorDescription,"It seeps back, but never fast enough.",Deep Frontier
 Building.DeepOreVein.DisplayName,Deep Ore Vein,Deep Frontier
 Building.DeepOreVein.Description,An endless vein of deep ore. Build a Deep Mine over it.,Deep Frontier
@@ -18,13 +18,12 @@ Good.DeepOre.DisplayName,Deep ore,Deep Frontier
 Good.DeepOre.PluralDisplayName,Deep ore,Deep Frontier
 Good.DeepAlloy.DisplayName,Deep iron,Deep Frontier
 Good.DeepAlloy.PluralDisplayName,Deep iron,Deep Frontier
-DeepFrontier.DeepDrill.Status.Recharging,Deep Ore Sources recharging,Deep Frontier
-DeepFrontier.DeepDrill.Status.NoSource,No Deep Ore Source in the district,Deep Frontier
-DeepFrontier.DeepDrill.Status.NoSource.Short,No deep ore source,Deep Frontier
-DeepFrontier.DeepDrill.Panel.DistrictOre,Deep ore in district sources ({0}),Deep Frontier
-DeepFrontier.DeepDrill.Panel.NoSource,No Deep Ore Source in the district.,Deep Frontier
-DeepFrontier.DeepOre.Recharge.Next,Next {0} deep ore in {1} days.,Deep Frontier
-DeepFrontier.DeepOre.Recharge.Rule,"Once empty, recharges {0} deep ore every {1} days.",Deep Frontier
+Good.RawDeepOre.DisplayName,Raw deep ore,Deep Frontier
+Good.RawDeepOre.PluralDisplayName,Raw deep ore,Deep Frontier
+Building.ScavengerFlag.DeepFrontierDescription,Collects scrap metal and raw deep ore.,Deep Frontier
+DeepFrontier.MineralDeposit.Recharge.Next,Next {0} in {1} days.,Deep Frontier
+DeepFrontier.MineralDeposit.Recharge.Rule,When empty: {0} recovered every {1} days.,Deep Frontier
+DeepFrontier.Minerals.MissingSources,This map is missing: {0}. Existing settlements may need a few deposits placed with developer tools; custom maps can be edited before starting. Scavenger Flags collect raw deep ore. Stone pits collect sandstone and limestone. Quarries and Deep Mines need permanent seams or veins.,Deep Frontier
 Good.Coal.DisplayName,Coal,Deep Frontier
 Good.Coal.PluralDisplayName,Coal,Deep Frontier
 Good.Chemical.DisplayName,Chemical,Deep Frontier
@@ -565,11 +564,12 @@ Recipe.BrickEarth.DisplayName,Dirt,Deep Frontier construction materials
 Recipe.FireBricks.DisplayName,Bricks,Deep Frontier construction materials
 Recipe.Cement.DisplayName,Cement,Deep Frontier construction materials
 Recipe.Concrete.DisplayName,Concrete,Deep Frontier construction materials
+Recipe.RawOreEarth.DisplayName,Ore crushing,Deep Frontier construction materials
 Building.SandstonePit.DisplayName,Sandstone Pit,Deep Frontier construction materials
-Building.SandstonePit.Description,Digs sandstone from outcrops within its range until they run out. A Sandstone Quarry later gives an endless supply.,Deep Frontier construction materials
+Building.SandstonePit.Description,Collects sandstone from nearby outcrops.,Deep Frontier construction materials
 Building.SandstonePit.FlavorDescription,"Soft stone, hard work.",Deep Frontier construction materials
 Building.LimestonePit.DisplayName,Limestone Pit,Deep Frontier construction materials
-Building.LimestonePit.Description,Digs limestone from outcrops within its range until they run out. A Limestone Quarry later gives an endless supply.,Deep Frontier construction materials
+Building.LimestonePit.Description,Collects limestone from nearby outcrops.,Deep Frontier construction materials
 Building.LimestonePit.FlavorDescription,Every bucket of limestone is a future bag of cement.,Deep Frontier construction materials
 Building.SandstoneQuarry.DisplayName,Sandstone Quarry,Deep Frontier construction materials
 Building.SandstoneQuarry.Description,Quarries sandstone without end. Build it over a Deep Sandstone Seam. Pipes: valve set to Fill.,Deep Frontier construction materials
@@ -578,7 +578,7 @@ Building.LimestoneQuarry.DisplayName,Limestone Quarry,Deep Frontier construction
 Building.LimestoneQuarry.Description,Quarries limestone without end. Build it over a Deep Limestone Seam. Pipes: valve set to Fill.,Deep Frontier construction materials
 Building.LimestoneQuarry.FlavorDescription,"Old sea floor, new town square.",Deep Frontier construction materials
 Building.StoneCrusher.DisplayName,Stone Crusher,Deep Frontier construction materials
-Building.StoneCrusher.Description,Grinds sandstone into dirt for the Cement Kiln to fire into bricks.,Deep Frontier construction materials
+Building.StoneCrusher.Description,Grinds sandstone or raw deep ore into dirt.,Deep Frontier construction materials
 Building.StoneCrusher.FlavorDescription,Rocks go in loud and come out quiet.,Deep Frontier construction materials
 Building.CementKiln.DisplayName,Cement Kiln,Deep Frontier construction materials
 Building.CementKiln.Description,"Burns logs to fire dirt into bricks, and limestone with bricks into cement. Pipes: valve set to Fill.",Deep Frontier construction materials
@@ -725,10 +725,10 @@ Building.MaterialsLaboratory.FlavorDescription,Break a few samples. Build a bett
 Recipe.MaterialsResearch.DisplayName,Materials research,Deep Frontier construction materials
 Recipe.GeochemicalAssay.DisplayName,Geochemical assays,Deep Frontier construction materials
 Building.SandstoneOutcrop.DisplayName,Sandstone Outcrop,Deep Frontier construction materials
-Building.SandstoneOutcrop.Description,A finite sandstone deposit. A Sandstone Pit in range digs it out.,Deep Frontier construction materials
+Building.SandstoneOutcrop.Description,A sandstone deposit. Slowly recovers when empty.,Deep Frontier construction materials
 Building.SandstoneOutcrop.FlavorDescription,"Easy to dig, and gone before you know it.",Deep Frontier construction materials
 Building.LimestoneOutcrop.DisplayName,Limestone Outcrop,Deep Frontier construction materials
-Building.LimestoneOutcrop.Description,A finite limestone deposit. A Limestone Pit in range digs it out.,Deep Frontier construction materials
+Building.LimestoneOutcrop.Description,A limestone deposit. Slowly recovers when empty.,Deep Frontier construction materials
 Building.LimestoneOutcrop.FlavorDescription,"Shells of creatures long gone, waiting to become cement.",Deep Frontier construction materials
 Building.SandstoneSeam.DisplayName,Deep Sandstone Seam,Deep Frontier construction materials
 Building.SandstoneSeam.Description,An endless sandstone seam. Build a Sandstone Quarry over it.,Deep Frontier construction materials
@@ -863,16 +863,19 @@ DeepFrontier.BotUpkeep.Panel.Good,{0}: {1} in stock. A bot serviced with it wear
 DeepFrontier.BotUpkeep.Panel.Dose,"One dose lasts {0} hours of work here; unserviced bots wear out {1} times as fast. Bots take the first good in stock, in the order listed.",Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Bot.Serviced,Serviced with {0}: wears out {1} times as fast here for {2} more hours.,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Bot.Unserviced,Not serviced: stock maintenance goods at the {0} to slow its wear.,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.Panel.Title,Upkeep,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.Panel.GoodName,{0} ({1}),Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.Panel.Good,"{0}: {1} in stock, {2} used per hour at full crew.",Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.Panel.Note,Production stops while any upkeep is missing. A smaller crew uses less; the stock lasts about {0} hours at full crew.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.Panel.Title,Operating supplies,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.Panel.GoodName,{1},Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.Panel.Good,{0}: {1} stocked; {2}/hour at full crew.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.Panel.Note,Required to run. Stock lasts {0} hours at full crew.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.TimberBracing.Name,Bracing,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.TimberBracing.Status,Needs treated planks.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.TimberBracing.Status.Short,No treated planks,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.DrillBits.Name,Drill bits,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.DrillBits.Status,Waiting for drill bits: production has stopped until haulers bring metal blocks.,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.DrillBits.Status.Short,No drill bits,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.DrillBits.Status,Needs metal blocks.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.DrillBits.Status.Short,No metal blocks,Deep Frontier bot upkeep
 DeepFrontier.WorkplaceUpkeep.ShaftLining.Name,Shaft lining,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.ShaftLining.Status,Waiting for shaft lining: production has stopped until haulers bring bricks.,Deep Frontier bot upkeep
-DeepFrontier.WorkplaceUpkeep.ShaftLining.Status.Short,No shaft lining,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.ShaftLining.Status,Needs bricks.,Deep Frontier bot upkeep
+DeepFrontier.WorkplaceUpkeep.ShaftLining.Status.Short,No bricks,Deep Frontier bot upkeep
 Good.ReinforcedBotFrame.DisplayName,Reinforced bot frame,Deep Frontier reactor bots
 Good.ReinforcedBotFrame.PluralDisplayName,Reinforced bot frames,Deep Frontier reactor bots
 Good.ReactorPowerCell.DisplayName,Reactor power cell,Deep Frontier reactor bots

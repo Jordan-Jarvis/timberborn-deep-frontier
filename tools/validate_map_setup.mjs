@@ -56,6 +56,24 @@ const sameKeys = (record, object) => {
     `${record} [Serialize] properties ${fields.join(', ')} != generated keys ${Object.keys(object).join(', ')}`);
 };
 sameKeys('BuiltinMapSetupSpec', spec);
+assert([...spec.RequiredMineralTemplates].sort().join() ===
+  ['DeepOreSource','SandstoneOutcrop','LimestoneOutcrop','DeepOreVein','SandstoneSeam','LimestoneSeam'].sort().join(),
+  'mineral notice must cover all finite and permanent mineral sources');
+const editorCollection = await readJson(resolve(dataRoot, 'TemplateCollections/TemplateCollection.MapEditor.Common.blueprint.json'));
+for (const id of spec.RequiredMineralTemplates) {
+  const blueprintPath = `MapEditor/Objects/${id}/${id}.blueprint`;
+  const source = await readJson(resolve(dataRoot, blueprintPath + '.json'));
+  assert(source.PlaceableBlockObjectSpec?.DevModeTool === true,
+    `${id}: must be placeable in settlement developer mode`);
+  assert(source.PlaceableBlockObjectSpec?.ToolGroupId === 'MapEditorObjects',
+    `${id}: must appear in the native map-object tool group`);
+  assert(editorCollection.TemplateCollectionSpec['Blueprints#append'].includes(blueprintPath),
+    `${id}: missing from the common map-object template collection`);
+}
+for (const map of spec.Maps) {
+  for (const id of spec.RequiredMineralTemplates)
+    assert(map.Placements.some(p => p.Template === id), `${map.MapName}: new game lacks ${id}`);
+}
 assert(spec.Maps.length > 0, 'no built-in map entries');
 if (spec.Maps.length) {
   sameKeys('BuiltinMapSpec', spec.Maps[0]);

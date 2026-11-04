@@ -1,33 +1,7 @@
 {
-  "BuildingSpec": {
-    "SelectionSoundName": "Pile",
-    "LoopingSoundName": "",
-    "BuildingCost": [],
-    "ScienceCost": 0,
-    "PlaceFinished": true,
-    "FinishableWithBeaversOnSite": true,
-    "DrawRangeBoundsOnIt": false
-  },
   "TemplateSpec": {
     "TemplateName": "DeepOreSource",
-    "BackwardCompatibleTemplateNames": [],
-    "RequiredFeatureToggle": "",
-    "DisablingFeatureToggle": ""
-  },
-  "BuildingModelSpec": {
-    "FinishedModelName": "#Finished",
-    "UnfinishedModelName": "#Unfinished",
-    "FinishedUncoveredModelName": "",
-    "UndergroundModelName": "",
-    "ConstructionModeModel": "Finished",
-    "UndergroundModelDepth": 0
-  },
-  "EnterableSpec": {
-    "OperatingState": "Finished",
-    "LimitedCapacityFinished": false,
-    "CapacityFinished": 0,
-    "LimitedCapacityUnfinished": false,
-    "CapacityUnfinished": 0
+    "BackwardCompatibleTemplateNames": []
   },
   "BlockObjectSpec": {
     "Size": {
@@ -37,28 +11,28 @@
     },
     "Blocks": [
       {
-        "MatterBelow": "GroundOrStackable",
+        "MatterBelow": "Ground",
         "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "GroundOrStackable",
+        "MatterBelow": "Ground",
         "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "GroundOrStackable",
+        "MatterBelow": "Ground",
         "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
         "Underground": false
       },
       {
-        "MatterBelow": "GroundOrStackable",
+        "MatterBelow": "Ground",
         "Occupations": "All",
         "Stackable": "None",
         "OccupyAllBelow": false,
@@ -94,37 +68,22 @@
       }
     ],
     "Entrance": {
-      "HasEntrance": true,
+      "HasEntrance": false,
       "Coordinates": {
-        "X": 1,
-        "Y": -1,
+        "X": 0,
+        "Y": 0,
         "Z": 0
       }
     },
     "BaseZ": 0,
     "Overridable": false,
-    "Flippable": true
-  },
-  "BlockObjectNavMeshSettingsSpec": {
-    "NoAutoWalls": false,
-    "GenerateFloorsOnStackable": true,
-    "EdgeGroups": [],
-    "UnblockedCoordinates": [],
-    "BlockedEdges": []
-  },
-  "BuildingAccessibleSpec": {
-    "LocalAccess": {
-      "X": 1.5,
-      "Y": 0,
-      "Z": 0.2
-    },
-    "ForceOneFinalAccess": false
+    "Flippable": false
   },
   "PlaceableBlockObjectSpec": {
     "ToolGroupId": "MapEditorObjects",
     "ToolOrder": 1010,
     "ToolShape": "Square",
-    "Layout": "Single",
+    "Layout": "Rectangle",
     "CustomPivot": {
       "HasCustomPivot": false,
       "Coordinates": {
@@ -142,7 +101,16 @@
     "FlavorDescriptionLocKey": "Building.DeepOreSource.FlavorDescription",
     "Icon": "MapEditor/Objects/DeepOreSource/DeepOreSourceIcon"
   },
-  "UnconnectedBuildingBlockerSpec": {},
+  "BasicSelectionSoundSpec": {
+    "SoundName": "Ruin",
+    "AlternativeSoundName": ""
+  },
+  "BlockObjectModelSpec": {
+    "FullModelName": "#Finished",
+    "UncoveredModelName": "",
+    "UndergroundModelName": "",
+    "UndergroundModelDepth": 0
+  },
   "Children": {
     "#Finished": {
       "TimbermeshSpec": {
@@ -166,12 +134,18 @@
         "SphereColliders": [],
         "CapsuleColliders": []
       }
-    },
-    "#Unfinished": {}
+    }
   },
-  "DeepOreDepositSpec": {
-    "GoodId": "DeepOre",
-    "Capacity": 10000,
+  "MineralDepositSpec": {
+    "Yielder": {
+      "YielderComponentName": "Mineral",
+      "Yield": {
+        "Id": "RawDeepOre",
+        "Amount": 10000
+      },
+      "RemovalTimeInHours": 0.1,
+      "ResourceGroup": "Ruin"
+    },
     "RechargeAmount": 20,
     "RechargeTimeInDays": 5
   }

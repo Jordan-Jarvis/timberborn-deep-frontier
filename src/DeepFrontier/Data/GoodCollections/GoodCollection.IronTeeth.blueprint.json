@@ -2,6 +2,7 @@
   "GoodCollectionSpec": {
     "CollectionId": "IronTeeth",
     "Goods#append": [
+      "RawDeepOre",
       "DeepOre",
       "DeepAlloy",
       "Coal",

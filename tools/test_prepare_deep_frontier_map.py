@@ -104,7 +104,7 @@ def wrong_deposit_good(v):
 def generous_recharge(v):
     # The deposit spec is shared by every later build, so this case runs last: 100 ore every 5 days
     # from Plains' three sources is 60 a day, the deep ore up to the Deep Mine in about 24 days.
-    catalog.get('DeepOreSource')['DeepOreDepositSpec']['RechargeAmount'] = 100
+    catalog.get('DeepOreSource')['MineralDepositSpec']['RechargeAmount'] = 100
 
 
 def dry_dam(v):
@@ -184,7 +184,7 @@ CASES = [
     ('footprint in an open margin', open_margin, 'margin is inside'),
     ('dynamite outside the footprint', dynamite_outside, 'is outside the footprint'),
     ('finite deep ore too small', poor_sources, 'finite deep ore covers one of each building'),
-    ('deposit holds the wrong good', wrong_deposit_good, 'is not the deposit good'),
+    ('deposit holds the wrong good', wrong_deposit_good, 'wrong ore outcrop good'),
     ('dam site on dry land', dry_dam, 'dam site is not a wet river cell'),
     ('one vein only', one_vein, 'DeepMine.IronTeeth site (understructure): 1 checked sites (min 2)'),
     ('no steel mill site', lambda v: drop_sites(v, 'SteelMill.IronTeeth'), 'SteelMill.IronTeeth site (flat): 0 checked sites'),

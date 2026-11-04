@@ -200,7 +200,7 @@ for (const source of catalog.sources) {
   if (source.kind === 'finite') {
     value = await read(vanillaRoot, 'MapEditor/Ruins/RuinColumnH1/RuinColumnH1.blueprint.json');
     delete value.RuinSpec;
-    value.MineralDepositSpec = { Yielder: { YielderComponentName: 'Mineral',
+    value.MineralDepositSpec = { RechargeAmount: source.rechargeAmount, RechargeTimeInDays: source.rechargeDays, Yielder: { YielderComponentName: 'Mineral',
       Yield: { Id: source.good, Amount: source.yield }, RemovalTimeInHours: source.removalHours, ResourceGroup: `DeepFrontier${source.good}` } };
   } else if (source.kind === 'permanent') {
     value = await read(vanillaRoot, 'MapEditor/Ruins/UndergroundRuins/UndergroundRuins.blueprint.json');

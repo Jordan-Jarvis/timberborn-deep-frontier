@@ -47,7 +47,8 @@
   },
   "ManufactorySpec": {
     "ProductionRecipeIds": [
-      "BrickEarth"
+      "BrickEarth",
+      "RawOreEarth"
     ]
   },
   "WorkshopSpec": {},

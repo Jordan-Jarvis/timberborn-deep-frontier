@@ -90,6 +90,8 @@
     }
   },
   "MineralDepositSpec": {
+    "RechargeAmount": 20,
+    "RechargeTimeInDays": 5,
     "Yielder": {
       "YielderComponentName": "Mineral",
       "Yield": {

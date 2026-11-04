@@ -2,6 +2,26 @@
 
 ## Unreleased
 
+## 0.9.0 (2026-11-04)
+
+### Physical ore mining and clearer drill supplies
+- Scavenger Flags collect **Raw Deep Ore** from visible Deep Ore Outcrops. Workers haul it to the Deep Drill; the invisible district ore pool is gone.
+- Each Deep Drill cycle consumes **1 Raw Deep Ore and 3 Water to produce 1 Deep Ore**, using 1,000 hp. Operating supplies are **Metal Blocks and Treated Planks**, at 0.1 each per full-crew operating hour. No separately crafted drill bits are required.
+- Shorter help and status text names the actual supplies. The Stone Crusher can also turn **3 Raw Deep Ore into 8 Dirt**.
+
+### Recoverable outcrops and reachable permanent mines
+- Empty sandstone, limestone and deep-ore outcrops remain on the map and recover **20 units after five days**. Recovery stops while stock remains, and its progress survives saving and loading. This slow recovery supply supplements permanent mines and quarries.
+- The Deep Mine no longer requires Deep Iron or Steel to build. Its permanent vein, power and operating requirements remain.
+- Sandstone and Limestone Quarries now cost **315 Planks, 195 Treated Planks, 130 Metal Blocks and 320 Gears** each. Neither needs stone-derived construction materials, so exhausting the early outcrops does not prevent building their permanent replacement.
+- Construction costs using frontier metals were recalculated with the added raw-ore processing step.
+
+### Map deposits and existing saves
+- All 19 supported built-in maps receive authored ore/stone outcrops and permanent veins/seams when starting a new settlement.
+- Existing settlements and Workshop/custom maps receive a one-time warning listing missing mineral source types. Deposits are not automatically added to these maps.
+- All six mineral source types are available in the native **developer-mode map-object menu**: Deep Ore Outcrop, Sandstone Outcrop, Limestone Outcrop, Deep Ore Vein, Sandstone Seam and Limestone Seam.
+- Existing ore deposits preserve their remaining quantities as Raw Deep Ore. Processed Deep Ore already in storage stays processed. Outcrops deleted before this update cannot be recovered automatically; use a permanent seam or place a replacement with developer tools.
+- Verified in-game: scavenging, hauling, drill production, depleted-outcrop recovery across save/reload, new-game placement and existing-save ore migration. Windows and macOS bundles are included; native macOS playtesting was not performed.
+
 ## 0.8.6 (2026-11-04)
 
 ### macOS asset loading

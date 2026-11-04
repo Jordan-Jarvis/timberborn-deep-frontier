@@ -589,11 +589,11 @@ Contamination stays a consequence of play. Radioactive water comes from reactor 
     - matter below satisfied;
     - the `ContinuousTerrainConstraint` of veins and seams holds.
   - Every placement except the spring has a route from the start.
-  - Deep Ore Sources (`DeepOreDepositSpec`):
-    - the good is the deposit's good and the one the Deep Drill bores (`DeepDrillSpec.GoodId`, produced and not consumed by every drill recipe);
-    - the amount is at most the deposit's `Capacity` (10,000; the stockpile's `MaxCapacity` until 2026-11-03, 4,000 before 2026-10-30);
-    - the entrance cell is dry, free ground: drills reach the source through its district.
-  - Outcrops save the blueprint yield.
+  - Deep Ore Outcrops (`MineralDepositSpec`):
+    - the good is `RawDeepOre`, consumed by the Deep Drill recipe;
+    - the amount is at most `Yielder.Yield.Amount` (10,000);
+    - the natural object has accessible ground for scavenging, not a district entrance.
+  - Outcrops save native `Yielder:Mineral` stock; ore placements use their authored amount.
   - A spring only in `hardVariant`, which also requires one; it must be next to a river cell at or below its level.
 - **Sites.** Every site's template must be a building that needs one; the keys are checked per rule.
   - Flat-type sites (flat, understructure, pit, map edge):

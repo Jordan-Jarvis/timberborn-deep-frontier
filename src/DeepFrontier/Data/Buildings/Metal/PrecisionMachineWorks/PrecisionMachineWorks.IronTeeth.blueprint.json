@@ -13,15 +13,15 @@
       },
       {
         "Id": "MetalBlock",
-        "Amount": 35
+        "Amount": 30
       },
       {
         "Id": "DeepAlloy",
-        "Amount": 20
+        "Amount": 15
       },
       {
         "Id": "HighGradeSteel",
-        "Amount": 20
+        "Amount": 15
       },
       {
         "Id": "Concrete",

@@ -19,7 +19,7 @@ const goods = [
   'LiquidHydrogen', 'LiquidOxygen', 'Cryocoolant', 'RadioactiveWaste', 'RocketAirframe', 'PropulsionPackage',
   'GuidanceComputer', 'MissionPayload', 'RecoveredTelemetry', 'IndustrialLicense', 'SpecialistLicense', 'FlightLicense',
   'Electronics', 'ReactorCoolantWater', 'RecoveredMinerals', 
-  'DeepOre', 'DeepAlloy',
+  'RawDeepOre', 'DeepOre', 'DeepAlloy',
 ];
 const buildings = {
   FertilizerWorks: 'Buildings/Food/FertilizerWorks/Icon.png',

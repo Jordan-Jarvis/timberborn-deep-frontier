@@ -264,11 +264,26 @@ for (const b of ruleBuildings) {
   const total = material.reduce((sum, [g, a]) => sum + a * materialValue(id, b.science, g), 0);
   const tolerance = material.reduce((sum, [g]) => sum + 5 * materialValue(id, b.science, g), 0) / total;
   const kept = Object.entries(comp.shares).filter(([f]) => !merged.includes(f)).reduce((sum, [, x]) => sum + x, 0);
-  for (const [f, share] of Object.entries(comp.shares)) {
-    if (merged.includes(f)) continue;
-    const familyGoods = new Set(Object.keys(templates[f]));
-    const actual = material.filter(([g]) => familyGoods.has(g)).reduce((sum, [g, a]) => sum + a * materialValue(id, b.science, g), 0) / total;
-    if (Math.abs(actual - share / kept) > tolerance + 1e-9) fail('material-rule-share', {building: id, family: f, actual: +actual.toFixed(3), measured: +(share / kept).toFixed(3), tolerance: +tolerance.toFixed(3)});
+  // Explicit bootstrap substitutions can make two families use the same good.
+  // Their contributions share one cost row, so audit their combined value.
+  const groups = [];
+  for (const [family, share] of Object.entries(comp.shares)) {
+    if (!share || merged.includes(family)) continue;
+    const group = {families: [family], goods: new Set(Object.keys(templates[family])), share};
+    for (let i = groups.length - 1; i >= 0; i--) {
+      if (![...groups[i].goods].some(g => group.goods.has(g))) continue;
+      const [overlap] = groups.splice(i, 1);
+      group.families.push(...overlap.families);
+      for (const good of overlap.goods) group.goods.add(good);
+      group.share += overlap.share;
+      i = groups.length; // Include transitive overlaps introduced by this union.
+    }
+    groups.push(group);
+  }
+  for (const group of groups) {
+    const actual = material.filter(([g]) => group.goods.has(g)).reduce((sum, [g, a]) => sum + a * materialValue(id, b.science, g), 0) / total;
+    const measured = group.share / kept;
+    if (Math.abs(actual - measured) > tolerance + 1e-9) fail('material-rule-share', {building: id, family: group.families.join('+'), actual: +actual.toFixed(3), measured: +measured.toFixed(3), tolerance: +tolerance.toFixed(3)});
   }
 }
 

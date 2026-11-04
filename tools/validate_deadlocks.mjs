@@ -16,7 +16,7 @@
 // - Map sources (progression_data.mjs MAP_SOURCES) are finite (ruins, outcrops)
 //   or renewable (shore fishing; radiation turning stored water into contaminated
 //   water). A slow source is renewable only through a recharge: the Deep Ore
-//   Sources' stock is finite, but an empty one recharges (DeepOreDepositSpec). A
+//   Sources' stock is finite, but an empty one recharges (MineralDepositSpec). A
 //   good is slow exactly when a map-editor deposit of it recharges. Every map
 //   source must be classified here.
 // - A recipe of a map source's own building that makes that map good draws it
@@ -94,9 +94,9 @@ const csConstant = (id) => {
 // Every map source is classified; a new one must be added here explicitly.
 const MAP_SOURCE_KIND = {
   ScrapMetal: {finite: true, why: 'ruins scavenged by the Scavenger Flag run out (the Efficient Mine recipes are the renewable route)'},
-  DeepOre: {finite: false, slow: true, why: 'Deep Ore Sources bored by the Deep Drill: their stock is finite, but an empty source recharges (DeepOreDepositSpec, 20 every 5 days, about a tenth of one Deep Ore Processor), so deep ore stays renewable, slowly; the Deep Mine is the real supply'},
-  Sandstone: {finite: true, why: 'Sandstone Outcrops dug by the pit run out (the Sandstone Quarry is the renewable route)'},
-  Limestone: {finite: true, why: 'Limestone Outcrops dug by the pit run out (the Limestone Quarry is the renewable route)'},
+  RawDeepOre: {finite: false, slow: true, replacementGood: 'DeepOre', why: 'Visible outcrops scavenged and hauled to the drill; empty MineralDeposit sources recover 20 every 5 days; the Deep Mine is the industrial supply'},
+  Sandstone: {finite: false, slow: true, replacementGood: 'Sandstone', why: 'Sandstone Outcrops dug by the pit run out (the Sandstone Quarry is the renewable route)'},
+  Limestone: {finite: false, slow: true, replacementGood: 'Limestone', why: 'Limestone Outcrops dug by the pit run out (the Limestone Quarry is the renewable route)'},
   FreshFish: {finite: false, why: 'Fisher Flag shore fishing never runs out'},
   ContaminatedWater: {finite: false, why: 'radiation turns stored water into contaminated water (a waste, never a supply)'},
 };
@@ -107,8 +107,8 @@ const SLOW = new Set(Object.keys(MAP_SOURCE_KIND).filter((g) => MAP_SOURCE_KIND[
 // Slow sources from the data: the goods of the map-editor deposits that recharge.
 const readBlueprint = (path) => JSON.parse(readFileSync(resolve(data, path + '.json'), 'utf8').replace(/^\uFEFF/, ''));
 const recharging = new Set(readBlueprint('TemplateCollections/TemplateCollection.MapEditor.Common.blueprint')
-  .TemplateCollectionSpec['Blueprints#append'].map(readBlueprint).map((bp) => bp.DeepOreDepositSpec)
-  .filter((d) => d && d.RechargeAmount > 0 && d.RechargeTimeInDays > 0).map((d) => d.GoodId));
+  .TemplateCollectionSpec['Blueprints#append'].map(readBlueprint).map((bp) => bp.MineralDepositSpec)
+  .filter((d) => d && d.RechargeAmount > 0 && d.RechargeTimeInDays > 0).map((d) => d.Yielder.Yield.Id));
 for (const good of Object.keys(MAP_SOURCE_KIND)) {
   if (MAP_SOURCE_KIND[good].slow && MAP_SOURCE_KIND[good].finite) fail('map-source-kind', good, `${good} is classified both finite and slow`);
   if (Boolean(MAP_SOURCE_KIND[good].slow) !== recharging.has(good))
@@ -307,15 +307,17 @@ for (const good of FINITE) {
 //    source is reachable at its own unlock from the recharge alone (every
 //    finite source spent).
 for (const good of SLOW) {
+  const replacementGood = MAP_SOURCE_KIND[good].replacementGood;
+  if (!replacementGood) throw new Error(`No replacement good defined for ${good}`);
   const producers = players.filter((b) => !gathers(b, good) && b.recipes.some((id) => {
     const r = recipes.get(id);
-    return r?.Products.some((p) => p.Id === good) && !recipeInputs(r).includes(good);
+    return r?.Products.some((p) => p.Id === replacementGood) && !recipeInputs(r).includes(good);
   }));
   if (!producers.length) { fail('slow-replacement', good, `${good}: no producer besides its slow map source`); continue; }
   const results = producers.map((b) => {
     const c = closure({science: b.science, finite: false, exclude: new Set([b.id])});
     const op = operation.get(b.id);
-    const recipe = b.recipes.map((id) => recipes.get(id)).find((r) => r?.Products.some((p) => p.Id === good) && !recipeInputs(r).includes(good));
+    const recipe = b.recipes.map((id) => recipes.get(id)).find((r) => r?.Products.some((p) => p.Id === replacementGood) && !recipeInputs(r).includes(good));
     const missing = [...new Set([...b.cost.map(([g]) => g), ...op.required, ...recipeInputs(recipe)])].filter((g) => !c.have.has(g));
     const untrained = op.discipline && !c.trained.has(op.discipline) ? [`${op.discipline} specialists`] : [];
     return {b, missing: [...missing.map((g) => `${g} <- ${why(g, c)}`), ...untrained]};

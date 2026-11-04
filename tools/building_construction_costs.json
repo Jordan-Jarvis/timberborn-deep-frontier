@@ -5,7 +5,7 @@
     "foundation": "Concrete = groundCells (occupied cells on layer 0) x tier.concretePerGroundCell",
     "superstructure": "each good = builtCells (all occupied cells) / 100 x tier.per100BuiltCells[good]",
     "rounding": "nearest multiple of 5, minimum 5",
-    "gate": "lategameGates adds explicit goods that prove the previous stage on top of the rule: DeepMine DeepAlloy (finite drill phase), Greenhouse Fertilizer (fertilizer works; bed soil; Compost until the 2026-10-30 bricks pass), NuclearReactor EnrichedFuel (first core load) and 100 extra HighGradeSteel (containment; replaced RecoveredMinerals on 2026-10-29), OilPowerPlant MachineCore (turbine governors from the precision works, after the oil chain feeds polymer), ModularWarehouse and WarehouseModule Log, Plank and Gear (storage priced like the vanilla warehouses for its capacity, 60 Log + 80 Plank per 1,200 times the T1 cost factor: the size rule prices a 3x3 early building far below them)",
+    "gate": "lategameGates adds explicit goods that prove the previous stage on top of the rule: Greenhouse Fertilizer (fertilizer works; bed soil; Compost until the 2026-10-30 bricks pass), NuclearReactor EnrichedFuel (first core load) and 100 extra HighGradeSteel (containment; replaced RecoveredMinerals on 2026-10-29), OilPowerPlant MachineCore (turbine governors from the precision works, after the oil chain feeds polymer), ModularWarehouse and WarehouseModule Log, Plank and Gear (storage priced like the vanilla warehouses for its capacity, 60 Log + 80 Plank per 1,200 times the T1 cost factor: the size rule prices a 3x3 early building far below them)",
     "tierBand": "tier is fixed by the science unlock: the first tier whose scienceMax is at least the building's science (null = no upper bound)",
     "power": {
       "rule": "every Deep Frontier power consumer (MechanicalNodeSpec.PowerInput > 0) unlocked at scienceMin science or more draws max(authored base, floor); floor = referenceHp x (science / referenceScience) ^ exponent (5.65 x science^0.75), rounded to the nearest rounding.step, or rounding.largeStep from rounding.largeFrom hp; each generator applies it with scaledPower (tools/lategame_costs.mjs) and tools/validate_power_rule.mjs checks the generated blueprints; generators (PowerOutput) are outside the rule",
@@ -70,7 +70,6 @@
     "WarehouseModule": "T1"
   },
   "lategameGates": {
-    "DeepMine": [["DeepAlloy",20]],
     "Greenhouse": [["Fertilizer",30]],
     "NuclearReactor": [["EnrichedFuel",20],["HighGradeSteel",100]],
     "OilPowerPlant": [["MachineCore",4]],
@@ -244,6 +243,42 @@
     },
     "familyGoodsNote": "Progression sets (user 2026-10-31, docs/progression.md \"Progression sets\"): the stage decides which good of each ladder stands in for wood, metal and masonry. Early (T1): Plank and Log, metal as Gear. Industrial (T2): Plank, Metal Block and Deep Iron (DeepAlloy). Transition (T3): Plank and Treated Plank, Metal Block, Deep Iron and Steel (HighGradeSteel). Frontier (T4): Treated Plank, Alloy and Machine Core. Endgame (T5): Treated Plank, Alloy, Machine Core, Electronics and Power Module. Ratios are units. A machinery good named here (Gear, MachineCore) keeps its fixed basis amount and adds the family share on top. T1 is the pre-concrete stage. brick is Brick in every tier (user 2026-10-30, bricks pass): Plaster_Orange.IronTeeth, the one brick-red native surface, and DFIndustrial06, the mod's painted brick tile (2026-10-31: brick walls, plinths and footings), price as Brick; bricks exist from 600 science (Stone Crusher and Cement Kiln), so a building unlocked earlier must show under minFamilyShare of it.",
     "familyGoodsOverrides": {
+      "SandstoneQuarry": {
+        "families": {
+          "metal": {
+            "MetalBlock": 1
+          },
+          "concrete": {
+            "MetalBlock": 1
+          },
+          "brick": {
+            "TreatedPlank": 1
+          }
+        },
+        "reason": "User 2026-11-04: permanent extraction must remain buildable after outcrops are exhausted. Pay for the foundation and structure with renewable metal blocks and treated planks; no stone-derived construction inputs. Preserve material value."
+      },
+      "LimestoneQuarry": {
+        "families": {
+          "metal": {
+            "MetalBlock": 1
+          },
+          "concrete": {
+            "MetalBlock": 1
+          },
+          "brick": {
+            "TreatedPlank": 1
+          }
+        },
+        "reason": "User 2026-11-04: permanent extraction must remain buildable after outcrops are exhausted. Pay for the foundation and structure with renewable metal blocks and treated planks; no stone-derived construction inputs. Preserve material value."
+      },
+      "DeepMine": {
+        "families": {
+          "metal": {
+            "MetalBlock": 1
+          }
+        },
+        "reason": "User 2026-11-04: no deep iron needed to build the permanent mine. Use vanilla metal blocks for all structural metal, including steel, so the mine can be built without processed deep ore. Preserve its material value."
+      },
       "Hospital": {
         "families": {
           "metal": "T3"
@@ -338,13 +373,13 @@
     "FisherFlag": [["Log",10],["Plank",5]],
     "FishHatchery": [["Plank",40],["Gear",20],["MetalBlock",15]],
     "FisheryWorks": [["Plank",40],["Gear",20],["MetalBlock",15]],
-    "FoodPackagingWorks": [["Plank",65],["MetalBlock",45],["DeepAlloy",25],["Concrete",190],["Brick",180],["Gear",90]],
+    "FoodPackagingWorks": [["Plank",65],["MetalBlock",40],["DeepAlloy",20],["Concrete",190],["Brick",180],["Gear",90]],
     "PublicHealthLab": [["Plank",170],["Concrete",240],["Brick",155],["Gear",90]],
     "Restaurant": [["Plank",40],["Gear",20],["MetalBlock",15],["Concrete",60]],
     "Greenhouse": [["Plank",15],["Log",10],["Gear",85],["Fertilizer",30]],
-    "ChemicalWorks": [["MetalBlock",210],["DeepAlloy",105],["Concrete",650],["Gear",200]],
-    "PrecisionMachineWorks": [["Plank",105],["TreatedPlank",55],["MetalBlock",35],["DeepAlloy",20],["HighGradeSteel",20],["Concrete",515],["Brick",210],["Gear",145]],
-    "WaterTreatmentPlant": [["Plank",145],["MetalBlock",55],["DeepAlloy",30],["Concrete",425],["Brick",140],["Gear",135]],
+    "ChemicalWorks": [["MetalBlock",185],["DeepAlloy",95],["Concrete",650],["Gear",200]],
+    "PrecisionMachineWorks": [["Plank",105],["TreatedPlank",55],["MetalBlock",30],["DeepAlloy",15],["HighGradeSteel",15],["Concrete",515],["Brick",210],["Gear",145]],
+    "WaterTreatmentPlant": [["Plank",145],["MetalBlock",50],["DeepAlloy",25],["Concrete",425],["Brick",140],["Gear",135]],
     "TechnicalSchool": [["Plank",115],["MetalBlock",10],["DeepAlloy",5],["Concrete",265],["Brick",140],["Gear",85]],
     "UraniumProcessingPlant": [["Alloy",180],["MachineCore",130],["Electronics",25],["PowerModule",25],["Concrete",7140],["Brick",975]],
     "RadioactiveWasteRefinery": [["Alloy",130],["MachineCore",115],["Electronics",20],["PowerModule",20],["Concrete",7210],["Brick",1600]],
@@ -354,10 +389,10 @@
     "MissionControl": [["TreatedPlank",240],["Alloy",25],["MachineCore",10],["Concrete",3015],["Brick",385],["Gear",295]],
     "LaunchPad": [["TreatedPlank",265],["Alloy",170],["MachineCore",140],["Electronics",25],["PowerModule",25],["Concrete",8705]],
     "NuclearReactor": [["Alloy",595],["MachineCore",480],["Electronics",75],["PowerModule",75],["Concrete",30935],["EnrichedFuel",20],["HighGradeSteel",100]],
-    "SteelMill": [["MetalBlock",265],["DeepAlloy",135],["Concrete",870],["Gear",255]],
+    "SteelMill": [["MetalBlock",235],["DeepAlloy",120],["Concrete",870],["Gear",255]],
     "ArchiveExcavation": [["TreatedPlank",240],["Alloy",20],["MachineCore",5],["Concrete",2040],["Brick",825],["Gear",265]],
     "CryogenicTankFarm": [["TreatedPlank",175],["Alloy",40],["MachineCore",10],["Concrete",2025],["Brick",300],["Gear",225]],
-    "CoalPowerPlant": [["MetalBlock",40],["DeepAlloy",20],["HighGradeSteel",20],["Concrete",65],["Brick",305],["Gear",75]],
+    "CoalPowerPlant": [["MetalBlock",35],["DeepAlloy",20],["HighGradeSteel",20],["Concrete",65],["Brick",305],["Gear",75]],
     "OilPowerPlant": [["Alloy",45],["MachineCore",19],["Concrete",605],["Gear",100]]
   }
 }

@@ -55,6 +55,13 @@ deepOre.GoodSpec = {
 };
 await writeJson(resolve(sourceRoot, 'Data', 'Goods', 'Good.DeepOre.blueprint.json'), deepOre);
 
+// Raw ore is physically mined and hauled; the drill processes it into DeepOre.
+const rawDeepOre = clone(deepOre);
+Object.assign(rawDeepOre.GoodSpec, {Id: 'RawDeepOre', GoodOrder: 5069,
+  DisplayNameLocKey: 'Good.RawDeepOre.DisplayName', PluralDisplayNameLocKey: 'Good.RawDeepOre.PluralDisplayName',
+  StockpileVisualization: 'DeepOre', Icon: 'Sprites/Goods/RawDeepOreIcon'});
+await writeJson(resolve(sourceRoot, 'Data/Goods/Good.RawDeepOre.blueprint.json'), rawDeepOre);
+
 const metalBlock = await readJson(resolve(vanillaRoot, 'Goods', 'Good.MetalBlock.blueprint.json'));
 const deepAlloy = clone(metalBlock);
 deepAlloy.GoodSpec = {
@@ -84,10 +91,10 @@ deepOreRecipe.RecipeSpec = {
   BackwardCompatibleIds: [],
   DisplayLocKey: 'Good.DeepOre.PluralDisplayName',
   CycleDurationInHours: 2 / 60,
-  // Water in, deep ore out: each cycle's ore comes out of a Deep Ore Source of the drill's district
-  // (DeepDrillSpec, Scripts/DeepOre/DeepDrill.cs), not from an inventory. Same id as before, so a
-  // saved drill keeps its recipe and progress.
+  // Scavengers mine visible outcrops and native haulers deliver their raw ore.
+  // Keep the recipe id so an existing drill retains its production progress.
   Ingredients: [
+    { Id: 'RawDeepOre', Amount: 1 },
     { Id: 'Water', Amount: 3 },
   ],
   Products: [{ Id: 'DeepOre', Amount: 1 }],
@@ -145,8 +152,8 @@ await writeJson(resolve(sourceRoot, 'Data', 'Recipes', 'Recipe.DeepAlloy.bluepri
 
 const efficientMine = await readJson(resolve(vanillaRoot, 'Buildings', 'Metal', 'EfficientMine', 'EfficientMine.IronTeeth.blueprint.json'));
 const deepDrill = clone(efficientMine);
-// The drill bores the Deep Ore Sources of its district (DeepDrillSpec; docs/source-authoring.md);
-// EfficientMine's UndergroundRuins placement constraint does not apply to it.
+// The drill processes hauled raw ore. EfficientMine's UndergroundRuins placement
+// constraint does not apply to this workshop.
 delete deepDrill.UnderstructureConstraintSpec;
 deepDrill.BuildingSpec = {
   ...deepDrill.BuildingSpec,
@@ -162,7 +169,7 @@ deepDrill.WorkplaceSpec = {
   WorkerTypeUnlockCosts: [{ WorkerType: 'Bot', ScienceCost: 2000 }],
 };
 deepDrill.ManufactorySpec = { ProductionRecipeIds: ['DeepOre'] };
-deepDrill.DeepDrillSpec = { GoodId: 'DeepOre' };
+// All drill inputs are native inventory goods; no district-pool limiter.
 deepDrill.TemplateSpec = {
   ...deepDrill.TemplateSpec,
   TemplateName: 'DeepDrill.IronTeeth',
@@ -317,60 +324,30 @@ await writeJson(resolve(sourceRoot, 'Data', 'Buildings', 'Metal', 'DeepProcessor
 // source gives 4 ore a day, about a tenth of one processor; the Deep Mine stays the real supply.
 const DEEP_ORE_RECHARGE = { amount: 20, days: 5 };
 const reservePile = await readJson(resolve(vanillaRoot, 'MapEditor', 'Objects', 'ReservePile', 'ReservePile.blueprint.json'));
-const deepOreSource = clone(reservePile);
-deepOreSource.BuildingSpec = {
-  ...deepOreSource.BuildingSpec,
-  BuildingCost: [],
-  ScienceCost: 0,
-  PlaceFinished: true,
-  FinishableWithBeaversOnSite: true,
-};
-deepOreSource.TemplateSpec = {
-  ...deepOreSource.TemplateSpec,
-  TemplateName: 'DeepOreSource',
-  BackwardCompatibleTemplateNames: [],
-};
-// A deposit, not a stockpile (Scripts/DeepOre/DeepOreDeposit.cs): only Deep Drills of its district
-// take from it. 10,000 per source: two sources hold the DeepOre of one of each building up to the
-// Deep Mine with margin (tools/map_loop_requirements.json finiteDeepOreMargin, checked by
-// prepare_deep_frontier_map.py). Once empty it recharges DEEP_ORE_RECHARGE.amount every
-// DEEP_ORE_RECHARGE.days, a trickle the finite budget ignores (docs/progression.md "Deep Ore Source
-// recharge").
-delete deepOreSource.StockpileSpec;
-delete deepOreSource.FixedStockpileSpec;
-deepOreSource.DeepOreDepositSpec = {
-  GoodId: 'DeepOre',
-  Capacity: 10000,
-  RechargeAmount: DEEP_ORE_RECHARGE.amount,
-  RechargeTimeInDays: DEEP_ORE_RECHARGE.days,
-};
-deepOreSource.PlaceableBlockObjectSpec = {
-  ...deepOreSource.PlaceableBlockObjectSpec,
-  ToolGroupId: 'MapEditorObjects',
-  ToolOrder: 1010,
-  DevModeTool: true,
-};
-deepOreSource.LabeledEntitySpec = { ...deepOreSource.LabeledEntitySpec };
+// Keep the existing template and footprint so saved sources become mineable in place.
+const deepOreSource = await readJson(resolve(vanillaRoot, 'MapEditor/Ruins/RuinColumnH1/RuinColumnH1.blueprint.json'));
+delete deepOreSource.RuinSpec;
+deepOreSource.TemplateSpec = {TemplateName: 'DeepOreSource', BackwardCompatibleTemplateNames: []};
+Object.assign(deepOreSource.PlaceableBlockObjectSpec, {ToolGroupId: 'MapEditorObjects', ToolOrder: 1010, DevModeTool: true});
 setLoc(deepOreSource.LabeledEntitySpec, 'DeepOreSource');
 deepOreSource.LabeledEntitySpec.Icon = 'MapEditor/Objects/DeepOreSource/DeepOreSourceIcon';
-deepOreSource.StockpileGoodPileVisualizerSpec = {
-  ...deepOreSource.StockpileGoodPileVisualizerSpec,
-  GoodPileVisualizations: ['DeepOre'],
+deepOreSource.BlockObjectSpec.Size = {X: 2, Y: 2, Z: 2};
+const oreBlock = clone(deepOreSource.BlockObjectSpec.Blocks[0]);
+deepOreSource.BlockObjectSpec.Blocks = Array.from({length: 8}, (_, i) => ({...clone(oreBlock), MatterBelow: i < 4 ? 'Ground' : 'Any', Occupations: 'All', Stackable: 'None'}));
+deepOreSource.MineralDepositSpec = {
+  Yielder: {YielderComponentName: 'Mineral', Yield: {Id: 'RawDeepOre', Amount: 10000},
+    RemovalTimeInHours: 0.1, ResourceGroup: 'Ruin'},
+  RechargeAmount: DEEP_ORE_RECHARGE.amount, RechargeTimeInDays: DEEP_ORE_RECHARGE.days,
 };
-// The authored source marker has its own ore geometry; vanilla dirt/pile
-// visualization IDs do not describe DeepOre.
-delete deepOreSource.StockpileGoodPileVisualizerSpec;
-delete deepOreSource.StockpilePlaneVisualizerSpec;
-deepOreSource.Children['#Finished'].TimbermeshSpec.Model = mapObjectModel('DeepOreSource');
-// The ore mound stands 1.3 high; the ReservePile collider covered 0.49.
-deepOreSource.Children['#Finished'].CollidersSpec = mapObjectCollider('DeepOreSource');
+deepOreSource.BlockObjectModelSpec = {FullModelName: '#Finished', UncoveredModelName: '', UndergroundModelName: '', UndergroundModelDepth: 0};
+deepOreSource.Children = {'#Finished': {TimbermeshSpec: {Model: mapObjectModel('DeepOreSource')}, CollidersSpec: mapObjectCollider('DeepOreSource')}};
 checkMapObjectBlueprint('DeepOreSource', deepOreSource, '#Finished');
-await writeJson(resolve(sourceRoot, 'Data', 'MapEditor', 'Objects', 'DeepOreSource', 'DeepOreSource.blueprint.json'), deepOreSource);
+await writeJson(resolve(sourceRoot, 'Data/MapEditor/Objects/DeepOreSource/DeepOreSource.blueprint.json'), deepOreSource);
 
 await writeJson(resolve(sourceRoot, 'Data', 'GoodCollections', 'GoodCollection.IronTeeth.blueprint.json'), {
   GoodCollectionSpec: {
     CollectionId: 'IronTeeth',
-    'Goods#append': ['DeepOre', 'DeepAlloy'],
+    'Goods#append': ['RawDeepOre', 'DeepOre', 'DeepAlloy'],
   },
 });
 await writeJson(resolve(sourceRoot, 'Data', 'TemplateCollections', 'TemplateCollection.Buildings.IronTeeth.blueprint.json'), {
@@ -397,7 +374,7 @@ await mkdir(resolve(sourceRoot, 'Data', 'Localizations'), { recursive: true });
 const localizationRows = [
   ['ID', 'Text', 'Comment'],
   ['Building.DeepDrill.DisplayName', 'Deep Drill', 'Deep Frontier'],
-  ['Building.DeepDrill.Description', 'Bores deep ore out of the Deep Ore Sources in its district, the nearest first.', 'Deep Frontier'],
+  ['Building.DeepDrill.Description', 'Processes hauled raw ore using water.', 'Deep Frontier'],
   ['Building.DeepDrill.FlavorDescription', 'The first machine to bore into the deep sector. It will not be the last.', 'Deep Frontier'],
   ['Building.DeepMine.DisplayName', 'Deep Mine', 'Deep Frontier'],
   ['Building.DeepMine.Description', 'Mines deep ore without end. Build it over a Deep Ore Vein.', 'Deep Frontier'],
@@ -405,8 +382,8 @@ const localizationRows = [
   ['Building.DeepProcessor.DisplayName', 'Deep Ore Processor', 'Deep Frontier'],
   ['Building.DeepProcessor.Description', 'Refines deep ore into deep iron, coal, crude oil and uranium ore.', 'Deep Frontier'],
   ['Building.DeepProcessor.FlavorDescription', 'The ore is useless until the surface factory learns how to tame it.', 'Deep Frontier'],
-  ['Building.DeepOreSource.DisplayName', 'Deep Ore Source', 'Deep Frontier'],
-  ['Building.DeepOreSource.Description', `A deposit of deep ore for the Deep Drills of its district. Once empty, it recharges ${DEEP_ORE_RECHARGE.amount} deep ore every ${DEEP_ORE_RECHARGE.days} days.`, 'Deep Frontier'],
+  ['Building.DeepOreSource.DisplayName', 'Deep Ore Outcrop', 'Deep Frontier'],
+  ['Building.DeepOreSource.Description', 'Scavengers collect raw ore here. Slowly recovers when empty.', 'Deep Frontier'],
   ['Building.DeepOreSource.FlavorDescription', 'It seeps back, but never fast enough.', 'Deep Frontier'],
   ['Building.DeepOreVein.DisplayName', 'Deep Ore Vein', 'Deep Frontier'],
   ['Building.DeepOreVein.Description', 'An endless vein of deep ore. Build a Deep Mine over it.', 'Deep Frontier'],
@@ -416,13 +393,12 @@ const localizationRows = [
   ['Good.DeepAlloy.DisplayName', 'Deep iron', 'Deep Frontier'],
   ['Good.DeepAlloy.PluralDisplayName', 'Deep iron', 'Deep Frontier'],
   // Scripts/DeepOre (DeepOreLoc): the Deep Drill's statuses and panel, the deposit's recharge row.
-  ['DeepFrontier.DeepDrill.Status.Recharging', 'Deep Ore Sources recharging', 'Deep Frontier'],
-  ['DeepFrontier.DeepDrill.Status.NoSource', 'No Deep Ore Source in the district', 'Deep Frontier'],
-  ['DeepFrontier.DeepDrill.Status.NoSource.Short', 'No deep ore source', 'Deep Frontier'],
-  ['DeepFrontier.DeepDrill.Panel.DistrictOre', 'Deep ore in district sources ({0})', 'Deep Frontier'],
-  ['DeepFrontier.DeepDrill.Panel.NoSource', 'No Deep Ore Source in the district.', 'Deep Frontier'],
-  ['DeepFrontier.DeepOre.Recharge.Next', 'Next {0} deep ore in {1} days.', 'Deep Frontier'],
-  ['DeepFrontier.DeepOre.Recharge.Rule', 'Once empty, recharges {0} deep ore every {1} days.', 'Deep Frontier'],
+  ['Good.RawDeepOre.DisplayName', 'Raw deep ore', 'Deep Frontier'],
+  ['Good.RawDeepOre.PluralDisplayName', 'Raw deep ore', 'Deep Frontier'],
+  ['Building.ScavengerFlag.DeepFrontierDescription', 'Collects scrap metal and raw deep ore.', 'Deep Frontier'],
+  ['DeepFrontier.MineralDeposit.Recharge.Next', 'Next {0} in {1} days.', 'Deep Frontier'],
+  ['DeepFrontier.MineralDeposit.Recharge.Rule', 'When empty: {0} recovered every {1} days.', 'Deep Frontier'],
+  ['DeepFrontier.Minerals.MissingSources', 'This map is missing: {0}. Existing settlements may need a few deposits placed with developer tools; custom maps can be edited before starting. Scavenger Flags collect raw deep ore. Stone pits collect sandstone and limestone. Quarries and Deep Mines need permanent seams or veins.', 'Deep Frontier'],
 ];
 const csvCell = (value) => {
   const text = String(value);

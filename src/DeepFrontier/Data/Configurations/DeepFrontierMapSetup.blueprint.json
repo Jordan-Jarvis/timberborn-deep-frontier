@@ -105,7 +105,7 @@
             "Y": 107,
             "Z": 12,
             "Orientation": "Cw270",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -115,7 +115,7 @@
             "Y": 130,
             "Z": 15,
             "Orientation": "Cw180",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -347,7 +347,7 @@
             "Y": 41,
             "Z": 12,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -357,7 +357,7 @@
             "Y": 55,
             "Z": 11,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -389,7 +389,7 @@
             "Y": 34,
             "Z": 8,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -399,7 +399,7 @@
             "Y": 12,
             "Z": 4,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -651,7 +651,7 @@
             "Y": 66,
             "Z": 3,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -661,7 +661,7 @@
             "Y": 12,
             "Z": 15,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -753,7 +753,7 @@
             "Y": 18,
             "Z": 6,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -763,7 +763,7 @@
             "Y": 16,
             "Z": 4,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -955,7 +955,7 @@
             "Y": 26,
             "Z": 6,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -965,7 +965,7 @@
             "Y": 171,
             "Z": 4,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -1197,7 +1197,7 @@
             "Y": 136,
             "Z": 5,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 6000
           },
           {
@@ -1207,7 +1207,7 @@
             "Y": 98,
             "Z": 5,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 6000
           },
           {
@@ -1217,7 +1217,7 @@
             "Y": 102,
             "Z": 1,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 6000
           },
           {
@@ -1339,7 +1339,7 @@
             "Y": 122,
             "Z": 2,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 7000
           },
           {
@@ -1349,7 +1349,7 @@
             "Y": 25,
             "Z": 2,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 10000
           },
           {
@@ -1651,7 +1651,7 @@
             "Y": 10,
             "Z": 4,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -1661,7 +1661,7 @@
             "Y": 64,
             "Z": 5,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           }
         ]
@@ -1703,7 +1703,7 @@
             "Y": 39,
             "Z": 6,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -1713,7 +1713,7 @@
             "Y": 115,
             "Z": 8,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -1895,7 +1895,7 @@
             "Y": 74,
             "Z": 5,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 4500
           },
           {
@@ -1905,7 +1905,7 @@
             "Y": 141,
             "Z": 8,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 6000
           },
           {
@@ -1915,7 +1915,7 @@
             "Y": 107,
             "Z": 11,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 7500
           },
           {
@@ -2097,7 +2097,7 @@
             "Y": 136,
             "Z": 5,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 4500
           },
           {
@@ -2107,7 +2107,7 @@
             "Y": 93,
             "Z": 7,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 6000
           },
           {
@@ -2117,7 +2117,7 @@
             "Y": 124,
             "Z": 5,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 7500
           },
           {
@@ -2349,7 +2349,7 @@
             "Y": 117,
             "Z": 12,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -2359,7 +2359,7 @@
             "Y": 57,
             "Z": 12,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -2481,7 +2481,7 @@
             "Y": 120,
             "Z": 4,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 4500
           },
           {
@@ -2491,7 +2491,7 @@
             "Y": 167,
             "Z": 4,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 6000
           },
           {
@@ -2501,7 +2501,7 @@
             "Y": 81,
             "Z": 2,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 7500
           },
           {
@@ -2683,7 +2683,7 @@
             "Y": 79,
             "Z": 8,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 4500
           },
           {
@@ -2693,7 +2693,7 @@
             "Y": 134,
             "Z": 7,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 7500
           },
           {
@@ -2703,7 +2703,7 @@
             "Y": 194,
             "Z": 5,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 6000
           },
           {
@@ -2875,7 +2875,7 @@
             "Y": 33,
             "Z": 7,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -2885,7 +2885,7 @@
             "Y": 80,
             "Z": 13,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -3067,7 +3067,7 @@
             "Y": 136,
             "Z": 9,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 7000
           },
           {
@@ -3077,7 +3077,7 @@
             "Y": 106,
             "Z": 11,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 10000
           },
           {
@@ -3249,7 +3249,7 @@
             "Y": 30,
             "Z": 4,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -3259,7 +3259,7 @@
             "Y": 29,
             "Z": 6,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -3551,7 +3551,7 @@
             "Y": 11,
             "Z": 2,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -3561,7 +3561,7 @@
             "Y": 81,
             "Z": 5,
             "Orientation": "Cw0",
-            "Good": "DeepOre",
+            "Good": "RawDeepOre",
             "Amount": 8500
           },
           {
@@ -3576,6 +3576,14 @@
           }
         ]
       }
+    ],
+    "RequiredMineralTemplates": [
+      "DeepOreSource",
+      "SandstoneOutcrop",
+      "LimestoneOutcrop",
+      "DeepOreVein",
+      "SandstoneSeam",
+      "LimestoneSeam"
     ]
   }
 }

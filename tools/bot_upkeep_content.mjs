@@ -78,10 +78,10 @@ export const TEXTS = {
   'DeepFrontier.BotUpkeep.Panel.Dose': 'One dose lasts {0} hours of work here; unserviced bots wear out {1} times as fast. Bots take the first good in stock, in the order listed.',
   'DeepFrontier.BotUpkeep.Bot.Serviced': 'Serviced with {0}: wears out {1} times as fast here for {2} more hours.',
   'DeepFrontier.BotUpkeep.Bot.Unserviced': 'Not serviced: stock maintenance goods at the {0} to slow its wear.',
-  'DeepFrontier.WorkplaceUpkeep.Panel.Title': 'Upkeep',
-  'DeepFrontier.WorkplaceUpkeep.Panel.GoodName': '{0} ({1})',
-  'DeepFrontier.WorkplaceUpkeep.Panel.Good': '{0}: {1} in stock, {2} used per hour at full crew.',
-  'DeepFrontier.WorkplaceUpkeep.Panel.Note': 'Production stops while any upkeep is missing. A smaller crew uses less; the stock lasts about {0} hours at full crew.',
+  'DeepFrontier.WorkplaceUpkeep.Panel.Title': 'Operating supplies',
+  'DeepFrontier.WorkplaceUpkeep.Panel.GoodName': '{1}',
+  'DeepFrontier.WorkplaceUpkeep.Panel.Good': '{0}: {1} stocked; {2}/hour at full crew.',
+  'DeepFrontier.WorkplaceUpkeep.Panel.Note': 'Required to run. Stock lasts {0} hours at full crew.',
 };
 // Per-role texts used by WorkplaceUpkeep.cs (WorkplaceUpkeepLoc): <Role>.Name, .Status, .Status.Short.
 export const roleKey = (role, suffix) => `DeepFrontier.WorkplaceUpkeep.${role}.${suffix}`;
@@ -173,7 +173,7 @@ export const upkeepSpec = ({upkeep}, id) => ({
 // The sentence appended to the building's description, e.g. "Wears out metal block
 // drill bits; stops without them." (the rates are in the building panel).
 export const upkeepDescription = ({upkeep: u}, id) =>
-  `Uses up ${listText(u.templates[id].map(([, , role]) => u.roles[role].description))}; stops without them.`;
+  `Requires ${listText(u.templates[id].map(([, , role]) => u.roles[role].description))}.`;
 
 export const ASSEMBLER_DESCRIPTION_KEY = 'Building.BotAssembler.DeepFrontierDescription';
 // The runtime record (Scripts/SuperBots/ReactorBotAssembly.cs) that makes the recipe's bot a Reactor Bot.

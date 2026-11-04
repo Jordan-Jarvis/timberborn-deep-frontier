@@ -45,7 +45,9 @@ namespace DeepFrontier.Scripts {
         _loader.StartNewGameInstantly("IronTeeth",reference,MemoryLoadProbe.TestSettlement);
         return;
       }
-      var saveName=args.Contains("-deepFrontierLategameRocketPreparing")?"Lategame rocket - preparing":
+      var saveName=args.Contains("-deepFrontierOreReload")?"Ore hauling - verified":
+        args.Contains("-deepFrontierOreHauling")?"Reservoir acceptance - verified":
+        args.Contains("-deepFrontierLategameRocketPreparing")?"Lategame rocket - preparing":
         args.Contains("-deepFrontierLategameRocketFlight")?"Lategame rocket - flight":
         args.Contains("-deepFrontierLategameRocketRefurbishing")?"Lategame rocket - refurbishing":
         args.Contains("-deepFrontierLategameRocket")?"Lategame acceptance - main":

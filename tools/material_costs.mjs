@@ -70,7 +70,11 @@ for (const [id, entry] of Object.entries(OVERRIDES)) {
   if (!Object.keys(entry.families).length) throw new Error(`materialRule.familyGoodsOverrides.${id}: families is empty`);
   for (const [f, tier] of Object.entries(entry.families)) {
     if (!FAMILIES.includes(f)) throw new Error(`materialRule.familyGoodsOverrides.${id}: unknown family ${f}`);
-    if (!tierNames.includes(tier)) throw new Error(`materialRule.familyGoodsOverrides.${id}.${f}: unknown tier ${tier}`);
+    if (typeof tier === 'string') {
+      if (!tierNames.includes(tier)) throw new Error(`materialRule.familyGoodsOverrides.${id}.${f}: unknown tier ${tier}`);
+    } else if (!tier || Array.isArray(tier) || typeof tier !== 'object' || !Object.keys(tier).length || Object.values(tier).some(ratio => typeof ratio !== 'number' || !Number.isFinite(ratio) || ratio <= 0)) {
+      throw new Error(`materialRule.familyGoodsOverrides.${id}.${f}: expected a tier or explicit positive material ratios`);
+    }
   }
 }
 export const familyGoodsOverrides = OVERRIDES;
@@ -83,6 +87,7 @@ export function familyGoodsFor(id, tierName) {
   if (!override) return templates;
   const out = {...templates};
   for (const [f, tier] of Object.entries(override.families)) {
+    if (typeof tier !== 'string') { out[f] = tier; continue; }
     if (!(tierNames.indexOf(tier) < tierNames.indexOf(tierName))) throw new Error(`materialRule.familyGoodsOverrides.${id}.${f}: ${tier} is not an earlier stage than the building's ${tierName}`);
     out[f] = rule.familyGoods[tier][f];
   }
@@ -244,23 +249,24 @@ export function materialComposition(id, rows, science, tierName) {
   if (!(kept > 0)) throw new Error(`${id}: no family of its model can be priced`);
   for (const [g] of rows) if (!MATERIAL_GOODS.has(g) && !MACHINERY.has(g)) throw new Error(`${id}: basis good ${g} is neither a material family good nor machinery`);
   const materialTotal = rows.filter(([g]) => MATERIAL_GOODS.has(g)).reduce((s, [g, a]) => s + a * value(g), 0);
-  const out = [];
+  // Different visible material families can be supplied by the same good.
+  // Compose the cost keyed by good from the outset: one construction row per id.
+  const amounts = new Map();
+  const add = (good, amount) => amounts.set(good, (amounts.get(good) ?? 0) + amount);
   if (materialTotal > 0) {
     for (const f of FAMILIES) {
       if (!share[f]) continue;
       const familyValue = materialTotal * share[f] / kept;
       const goods = goodsOf(f);
       const unitValue = goods.reduce((s, [g, ratio]) => s + ratio * value(g), 0);
-      for (const [g, ratio] of goods) out.push([g, ceil5(familyValue * ratio / unitValue)]);
+      for (const [g, ratio] of goods) add(g, ceil5(familyValue * ratio / unitValue));
     }
   }
   for (const [g, a] of rows) {
     if (!MACHINERY.has(g)) continue;
-    const row = out.find(([x]) => x === g);
-    if (row) row[1] += a;
-    else out.push([g, a]);
+    add(g, a);
   }
-  return {rows: out, failures, unpriced, folded, shares: share};
+  return {rows: [...amounts], failures, unpriced, folded, shares: share};
 }
 
 export const materialCost = (id, rows, science, tierName) => materialComposition(id, rows, science, tierName).rows;

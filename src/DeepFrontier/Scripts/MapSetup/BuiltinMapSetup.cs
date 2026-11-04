@@ -46,7 +46,7 @@ namespace DeepFrontier.Scripts.MapSetup {
   //     and every IBlockObjectValidator. Then BlockObjectPlacerService.GetMatchingPlacer(...).Place
   //     with a new EntitySetup.Builder, as BlockObjectTool.Place: BuildingPlacer for the Deep Ore
   //     Source (BuildingSpec.PlaceFinished, so finished), DefaultBlockObjectPlacer for the others.
-  //     A Deep Ore Source then gets its amount (DeepOreDeposit.SetAmount, as the map editor's amount
+  //     A Deep Ore Source then gets its amount (MineralDeposit.SetAmount, as the map editor's amount
   //     field sets it).
   //   - A placement that fails is not moved or skipped silently: it is logged as an error and
   //     reported in a dialog.
@@ -88,6 +88,7 @@ namespace DeepFrontier.Scripts.MapSetup {
     private readonly DialogBoxShower _dialogs;
     private readonly ILoc _loc;
     private readonly EventBus _eventBus;
+    public bool Ready => !_placePending;
 
     private string _map = "";
     private string _outcome;
@@ -218,10 +219,11 @@ namespace DeepFrontier.Scripts.MapSetup {
       var placed = _blocks.GetObjectsAt(coordinates)
         .Where(b => b.Coordinates == coordinates && b.GetComponent<TemplateSpec>()?.TemplateName == p.Template).ToList();
       if (placed.Count != 1) return placed.Count + " " + p.Template + " objects at " + coordinates + " after placing";
-      var deposit = placed[0].GetComponent<DeepOreDeposit>();
+      if (p.Good == "") return null;
+      var deposit = placed[0].GetComponent<MineralDeposit>();
       if (deposit == null) return p.Good == "" ? null : "placement names good " + p.Good + " but " + p.Template + " is not a deep ore deposit";
       if (p.Good != deposit.Spec.GoodId || p.Amount <= 0) return p.Template + " holds " + deposit.Spec.GoodId + " but the placement names " + p.Amount + " " + p.Good;
-      // The map editor's amount field (DeepOreDepositAmountFragment) sets it the same way.
+      // The map editor's amount field (MineralDepositAmountFragment) sets it the same way.
       deposit.SetAmount(p.Amount);
       return deposit.Amount == p.Amount ? null : "deposit holds " + deposit.Amount + " " + p.Good + ", expected " + p.Amount;
     }

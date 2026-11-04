@@ -5,6 +5,7 @@ namespace DeepFrontier.Scripts {
   internal sealed class DeepFrontierModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
 #if !UNITY_EDITOR
+      RawOreScavenging.Apply();
       new HarmonyLib.Harmony("DeepFrontier.RestaurantKitchen").CreateClassProcessor(typeof(RestaurantKitchenInventory)).Patch();
       new HarmonyLib.Harmony("DeepFrontier.RestaurantKitchen").CreateClassProcessor(typeof(RestaurantKitchenRecipeCompatibility)).Patch();
       // Hatchery deck paths/shafts/platforms must load after the deck slabs

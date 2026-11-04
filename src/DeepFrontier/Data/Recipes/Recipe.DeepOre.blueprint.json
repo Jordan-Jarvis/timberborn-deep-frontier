@@ -6,6 +6,10 @@
     "CycleDurationInHours": 0.03333333333333333,
     "Ingredients": [
       {
+        "Id": "RawDeepOre",
+        "Amount": 1
+      },
+      {
         "Id": "Water",
         "Amount": 3
       }

@@ -1,5 +1,6 @@
 {
   "schema": 1,
+  "requiredMineralTemplates": ["DeepOreSource", "SandstoneOutcrop", "LimestoneOutcrop", "DeepOreVein", "SandstoneSeam", "LimestoneSeam"],
   "scope": "Built-in new-game setup (src/DeepFrontier/Scripts/MapSetup, docs/maps.md 'Built-in maps: new-game setup'). The per-map placements, total height, map size and unmet items come from tools/map_variants/*.json (each default variant whose source is builtin:<Name>). tools/map_setup_content.mjs generates Configurations/DeepFrontierMapSetup.blueprint.json and the enUS rows from this file and the variants; tools/prepare_deep_frontier_map.py builtin checks this file against the game and the reference variants.",
   "devMaps": [
     {"name": "_Mini", "width": 32, "height": 32},

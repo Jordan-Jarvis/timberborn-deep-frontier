@@ -9,19 +9,11 @@
       },
       {
         "Id": "TreatedPlank",
-        "Amount": 160
+        "Amount": 195
       },
       {
         "Id": "MetalBlock",
-        "Amount": 70
-      },
-      {
-        "Id": "DeepAlloy",
-        "Amount": 35
-      },
-      {
-        "Id": "Brick",
-        "Amount": 190
+        "Amount": 130
       },
       {
         "Id": "Gear",

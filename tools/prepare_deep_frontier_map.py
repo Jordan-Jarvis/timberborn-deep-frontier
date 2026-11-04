@@ -961,10 +961,6 @@ def new_entity(placement, catalog, variant_id, index):
         components['FixedStockpile'] = {'FixedGoodId': good}
         components['SingleGoodAllower'] = {'AllowedGood': good}
         components['Inventory:Stockpile'] = {'Storage': {'Goods': [{'Good': good, 'Amount': amount}]}}
-    elif 'DeepOreDepositSpec' in blueprint:
-        # A Deep Ore Source (Scripts/DeepOre/DeepOreDeposit.cs) saves its amount under
-        # "DeepFrontier.DeepOreDeposit"; no recharge progress while it holds ore.
-        components['DeepFrontier.DeepOreDeposit'] = {'Amount': placement['amount']}
     elif 'RadioactiveWaterSourceSpec' in blueprint:
         # A native water source whose water is radioactive. Native
         # WaterSource.Save writes, and WaterSource.Load requires, both
@@ -979,7 +975,7 @@ def new_entity(placement, catalog, variant_id, index):
         # blueprint's full yield.
         yielder = blueprint['MineralDepositSpec']['Yielder']
         components[f'Yielder:{yielder["YielderComponentName"]}'] = {
-            'Yield': {'Good': yielder['Yield']['Id'], 'Amount': yielder['Yield']['Amount']}}
+            'Yield': {'Good': yielder['Yield']['Id'], 'Amount': placement['amount'] if 'amount' in placement else yielder['Yield']['Amount']}}
     extra = set(placement) - {'template', 'x', 'y', 'z', 'orientation', 'label', 'good', 'amount', 'radioactivePerHour'}
     missing = {'template', 'x', 'y', 'z', 'label'} - set(placement)
     if extra or missing:
@@ -996,19 +992,13 @@ def good_spec(good_id):
 
 
 def deep_drill_bored(catalog):
-    """The good the DeepDrill bores out of Deep Ore Sources (DeepDrillSpec.GoodId): every drill recipe
-    produces it and none consumes it (Scripts/DeepOre/DeepDrill.cs takes it from the deposit)."""
+    """Raw ore collected by scavengers and physically hauled into the drill."""
     drill = catalog.get(DEEP_DRILL)
-    good = drill['DeepDrillSpec']['GoodId']
-    recipe_ids = set(drill['ManufactorySpec']['ProductionRecipeIds'])
-    for path in (MOD_DATA / 'Recipes').rglob('*.json'):
-        spec = read_json(path).get('RecipeSpec')
-        if spec and spec['Id'] in recipe_ids:
-            recipe_ids.discard(spec['Id'])
-            if any(i['Id'] == good for i in spec['Ingredients']) or not any(p['Id'] == good for p in spec['Products']):
-                fail(f'DeepDrill recipe {spec["Id"]} must produce {good} and not consume it')
-    if recipe_ids:
-        fail(f'DeepDrill recipes {sorted(recipe_ids)} are not defined in {MOD_DATA / "Recipes"}')
+    good = catalog.get('DeepOreSource')['MineralDepositSpec']['Yielder']['Yield']['Id']
+    for recipe_id in drill['ManufactorySpec']['ProductionRecipeIds']:
+        spec = read_json(MOD_DATA / 'Recipes' / f'Recipe.{recipe_id}.blueprint.json')['RecipeSpec']
+        if not any(i['Id'] == good for i in spec['Ingredients']) or not any(p['Id'] == 'DeepOre' for p in spec['Products']):
+            fail(f'DeepDrill recipe {recipe_id} must process {good} into DeepOre')
     return good
 
 
@@ -2020,12 +2010,12 @@ def loop_coverage(model, catalog, variant, records, site_reports, requirements):
          f'{finite} DeepOre in {len(drillable)} of {len(sources)} sources beside a checked Deep Drill site; one of each '
          f'building up to the {mines[0]} ({mine_science} science, ore renewable after it) needs '
          f'{int(round(collection_ore))}, {finite_needed} with the {requirements["finiteDeepOreMargin"]:.0%} margin')
-    # The budget above ignores the recharge of an emptied source (DeepOreDepositSpec: RechargeAmount
-    # every RechargeTimeInDays once empty): it is a fallback for a colony that missed the Deep Mine,
+    # The budget above ignores the recharge of an emptied source (MineralDepositSpec: RechargeAmount
+    # every RechargeTimeInDays once empty): it is a recovery route for a colony that missed the Deep Mine,
     # not stock. It must stay a trickle: all the drillable sources recharging must need at least
     # deepOreRechargeMinDays to supply the deep ore of the buildings up to the Deep Mine. A map
     # cannot declare this away: it is a design limit, not a map provision.
-    deposit = catalog.get('DeepOreSource')['DeepOreDepositSpec']
+    deposit = catalog.get('DeepOreSource')['MineralDepositSpec']
     recharge_per_day = len(drillable) * deposit['RechargeAmount'] / deposit['RechargeTimeInDays']
     recharge_days = collection_ore / recharge_per_day if recharge_per_day else math.inf
     trickle = {'perDay': round(recharge_per_day, 3), 'daysForNeed': round(recharge_days, 1),
@@ -2133,20 +2123,13 @@ def validate_content(variant, catalog, source, added):
                     or source.water_any[ey, ex] > 0 or source.hard_mask[ey, ex] or (ex, ey) in placed_columns:
                 problems.append(f'stockpile entrance {entrance} is not dry free ground at its level')
             info.update(good=placement['good'], amount=placement['amount'], entrance=list(entrance))
-        if 'DeepOreDepositSpec' in blueprint:
-            # A Deep Ore Source: its Deep Drills reach it through the district, so its entrance needs
-            # a path (Scripts/DeepOre/DeepOreDeposit.cs).
-            spec = blueprint['DeepOreDepositSpec']
-            if placement['good'] != spec['GoodId'] or placement['good'] != deep_drill_bored(catalog):
-                problems.append(f'good {placement["good"]} is not the deposit good {spec["GoodId"]} that the DeepDrill bores')
-            if not 0 < placement['amount'] <= spec['Capacity']:
-                problems.append(f'amount {placement["amount"]} outside 1..{spec["Capacity"]}')
-            entrance = blocks.entrance_cell(coordinates, orientation)
-            ex, ey, ez = entrance
-            if not (0 <= ex < source.sx and 0 <= ey < source.sy) or source.height[ey, ex] != ez \
-                    or source.water_any[ey, ex] > 0 or source.hard_mask[ey, ex] or (ex, ey) in placed_columns:
-                problems.append(f'deposit entrance {entrance} is not dry free ground at its level')
-            info.update(good=placement['good'], amount=placement['amount'], entrance=list(entrance))
+        if 'MineralDepositSpec' in blueprint and 'good' in placement:
+            spec = blueprint['MineralDepositSpec']['Yielder']['Yield']
+            if placement['good'] != spec['Id'] or placement['good'] != deep_drill_bored(catalog):
+                problems.append(f'wrong ore outcrop good {placement["good"]}')
+            if not 0 < placement['amount'] <= spec['Amount']:
+                problems.append(f'amount {placement["amount"]} outside 1..{spec["Amount"]}')
+            info.update(good=placement['good'], amount=placement['amount'])
         if 'RadioactiveWaterSourceSpec' in blueprint:
             if not variant['hardVariant']:
                 problems.append('RadioactiveSpringSource placed in a variant not marked hardVariant')
