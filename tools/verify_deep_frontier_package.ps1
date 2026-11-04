@@ -44,8 +44,16 @@ foreach($dependency in @('TimberUi.dll','0Harmony.dll','ModdableRecipes.dll','Co
 }
 # Every GoodVisualization mesh (AssetRef<Mesh>) must be a Mesh in the built bundle;
 # build 167 shipped the pile meshes as BinaryData GameObjects and every load failed.
-& $dev.python (Join-Path $root 'tools\asset-pipeline\validate_goodmesh_exports.py') --data $data --bundle (Join-Path $installed 'AssetBundles\deepfrontier_win')
-if ($LASTEXITCODE -ne 0) { throw 'A GoodVisualization mesh is not a Mesh in the installed bundle.' }
-$report = [pscustomobject]@{ build=$Build; checkedAt=(Get-Date -Format o); status='all-authored-files-match-installed-package'; count=$checked.Count; files=$checked }
+# Both platform bundles ship: the game loads deepfrontier_win on Windows and deepfrontier_mac
+# on macOS, and a missing one fails every bundled asset there.
+$bundles = [Collections.Generic.List[object]]::new()
+foreach ($platform in 'win', 'mac') {
+  $bundle = Join-Path $installed "AssetBundles\deepfrontier_$platform"
+  if (-not (Test-Path -LiteralPath $bundle -PathType Leaf)) { throw "The installed package has no $platform asset bundle ($bundle)." }
+  & $dev.python (Join-Path $root 'tools\asset-pipeline\validate_goodmesh_exports.py') --data $data --bundle $bundle --platform $platform
+  if ($LASTEXITCODE -ne 0) { throw "The installed $platform bundle failed platform, material or stockpile-mesh validation." }
+  $bundles.Add([pscustomobject]@{ platform=$platform; bytes=(Get-Item -LiteralPath $bundle).Length; sha256=(Get-FileHash -LiteralPath $bundle -Algorithm SHA256).Hash })
+}
+$report = [pscustomobject]@{ bundles=$bundles; build=$Build; checkedAt=(Get-Date -Format o); status='all-authored-files-match-installed-package'; count=$checked.Count; files=$checked }
 $report | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $root "outputs\restaurant-package-verification$Build.json") -Encoding utf8
 Write-Output "Build ${Build}: $($checked.Count) authored data/manifest/DLL hashes match the official installed package."

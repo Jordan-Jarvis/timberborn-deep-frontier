@@ -18,7 +18,7 @@ PluginImporter:
       settings:
         Exclude Editor: 1
         Exclude Linux64: 1
-        Exclude OSXUniversal: 1
+        Exclude OSXUniversal: 0
         Exclude Win: 1
         Exclude Win64: 0
   - first:
@@ -31,6 +31,12 @@ PluginImporter:
         OS: AnyOS
   - first:
       Standalone: Win64
+    second:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+  - first:
+      Standalone: OSXUniversal
     second:
       enabled: 1
       settings:

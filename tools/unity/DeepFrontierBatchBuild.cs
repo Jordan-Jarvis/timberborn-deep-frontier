@@ -10,6 +10,10 @@ namespace Timberborn.ModdingTools.ModBuilding {
   public static class DeepFrontierBatchBuild {
     private const string OptionalPrefix = "DeepFrontier.";
     public static void Build() {
+      foreach (var target in new[] { BuildTarget.StandaloneWindows64, BuildTarget.StandaloneOSX }) {
+        if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.Standalone, target))
+          throw new InvalidOperationException("Install Unity build support for " + target + " before building Deep Frontier.");
+      }
       if (!EditorApplication.ExecuteMenuItem("Deep Frontier/Create Materials")) {
         throw new InvalidOperationException("Deep Frontier material authoring menu is unavailable.");
       }
@@ -31,12 +35,22 @@ namespace Timberborn.ModdingTools.ModBuilding {
       var settings = new ModBuilderSettings(
           buildCode: true,
           buildWindowsAssetBundle: true,
-          buildMacAssetBundle: false,
+          // macOS players load deepfrontier_mac; without it every bundled asset fails
+          // ("Failed to load asset at Materials/DeepFrontierArt/DFArtTimber", player reports 2026-11-04).
+          buildMacAssetBundle: true,
           deleteFiles: false,
           buildZipArchive: false,
           compatibilityVersion: "1.1");
       if (!new ModBuilder(new[] { mod }, settings).Build()) {
         throw new InvalidOperationException("The official Deep Frontier build failed. See the Unity build log.");
+      }
+      // The official bundle builder does not propagate a failed BuildAssetBundles
+      // return value. Reject an incomplete package before reporting success.
+      var bundles = Path.Combine(ModDirectories.ModsDirectory, mod.Name, "version-1.1", "AssetBundles");
+      foreach (var platform in new[] { "win", "mac" }) {
+        var bundle = Path.Combine(bundles, "deepfrontier_" + platform);
+        if (!File.Exists(bundle) || new FileInfo(bundle).Length == 0)
+          throw new InvalidOperationException("The official build produced no asset bundle: " + bundle);
       }
       // Every asmdef other than the main DeepFrontier one is an optional-mod integration named
       // DeepFrontier.<ModId> (tools/validate_mod_dependencies.mjs checks each ModId is in the

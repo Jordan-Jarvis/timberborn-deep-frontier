@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### macOS asset loading
+- Fixed missing Deep Frontier materials and other bundled assets on macOS, including the reported `Materials/DeepFrontierArt/DFArtTimber` load error. Packages now include the macOS asset bundle as well as the Windows bundle.
+- The build enables its managed dependency references for both platforms. Package verification checks each bundle's platform, authored materials and stockpile meshes; a missing platform bundle fails the build.
+
 ### Game modes from other mods no longer crash the game
 - **Fixed: "Radioactive tide: game mode Chill has no RadioactiveTideGameModeSpec"**: a game mode added by another mod (for example Chill Mode) stopped the new-game screen. Every game mode now gets radioactive tide settings from its own weather: the share of a cycle its droughts and badtides take places it between Easy (12.9%), Normal (30.6%) and Hard (77.6%), and its tides follow, gentler below Easy and harsher above Hard. A tide never lasts longer than the mode's own droughts or badtides, and a mode without any has no tides.
 - Easy, Normal and Hard keep exactly their settings (from cycle 25, 15%, 2-4 days; from cycle 15, 25%, 3-6 days; from cycle 10, 35%, 5-10 days). Chill (350-day summers, 15-day droughts and badtides) gets tides from cycle 30, 10% per cycle, 1-3 days. Customize shows a mode's values like the presets, and they are saved with the game.

@@ -41,7 +41,8 @@ def visualization_meshes(data):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', default=str(SOURCE / 'Data'))
-    parser.add_argument('--bundle', help='built deepfrontier_win asset bundle to check instead of the sources')
+    parser.add_argument('--bundle', help='built deepfrontier_win or deepfrontier_mac asset bundle to check instead of the sources')
+    parser.add_argument('--platform', choices=['win', 'mac'], help='required bundle build target')
     cli = parser.parse_args()
     vanilla = set()
     for path in VANILLA.glob('*.blueprint.json'):
@@ -54,6 +55,11 @@ def main():
         sys.path.insert(0, str(ROOT / 'tools/asset-pipeline/unitypy'))
         import UnityPy  # noqa: E402
         env = UnityPy.load(cli.bundle)
+        if cli.platform:
+            expected = {'win': 19, 'mac': 2}[cli.platform]  # Unity BuildTarget values
+            actual = {int(o.assets_file.target_platform) for o in env.objects}
+            if actual != {expected}:
+                failures.append(f'{cli.bundle}: expected {cli.platform} build target {expected}, got {sorted(actual)}')
         objects = {o.path_id: o for o in env.objects}
         container = {}
         for o in env.objects:
@@ -61,6 +67,17 @@ def main():
                 for name, info in o.parse_as_dict()['m_Container']:
                     target = objects.get(info['asset']['m_PathID'])
                     container.setdefault(name.rsplit('.', 1)[0], []).append(target)
+        # The reported macOS crash was a missing DFArtTimber material. Check
+        # every authored BaseColor material as well as the pile Mesh assets.
+        resources = SOURCE / 'AssetBundles/Resources'
+        materials = list(resources.rglob('*.BaseColor.png'))
+        if not materials:
+            failures.append('No authored material textures found')
+        for texture in materials:
+            material = texture.relative_to(resources).as_posix().removesuffix('.BaseColor.png')
+            entries = container.get(BUNDLE_ROOT + material.lower(), [])
+            if len([e for e in entries if e is not None and e.type.name == 'Material']) != 1:
+                failures.append(f'{material}: bundle must contain one Material')
         for mesh, users in ours.items():
             entries = container.get(BUNDLE_ROOT + mesh.lower(), [])
             found = [e for e in entries if e is not None and e.type.name == 'Mesh']

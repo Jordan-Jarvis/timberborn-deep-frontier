@@ -4,6 +4,17 @@
 
 Updated 2026-10-25. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## macOS bundle repair and game-mode release verification (2026-11-04)
+
+- Resumed Claude's interrupted session after commit `7090abb` (game-mode fix already pushed). The two remaining tool-group order changes and their validator edits in the working tree are unrelated and excluded from this release.
+- Mac failure: the official build had enabled `buildMacAssetBundle`, but all 12 managed dependency importers still excluded OSXUniversal. Mac asset-bundle compilation therefore failed to resolve Harmony/TimberUi/etc.; the official AssetBundleBuilder ignored the failed result and reported success without a Mac bundle.
+- Fix: enable OSXUniversal and Win64 for every managed dependency importer, keep Editor excluded, require both platform build-support modules up front, and reject missing/empty bundles after the official builder. Dependencies remain in their own mod packages.
+- Package checks now inspect both serialized platform targets (Windows 19, macOS 2), every authored BaseColor material including DFArtTimber, and the four readable single-submesh pile Mesh assets. Verification records bundle sizes and SHA-256 hashes. A deliberate Windows-bundle-as-Mac check fails as expected.
+- **Build 271:** official Mod Builder succeeded in the isolated `release086` mirror. Windows bundle 2,314,568 bytes; Mac bundle 3,263,660 bytes. All 797 authored files/manifest/DLL hashes match the installed package. Evidence: `outputs/unity-official-build271.log`, `outputs/restaurant-package-verification271.json`.
+- **Validation:** 78 full-suite checks pass; item-use report has zero failures across 51 goods. The one mirror failure is `no-game-assets` because the mirror has no Git metadata; that exact guard passes in the real repository. Logs copied to `outputs/release086-validation`. Incremental main compile: zero errors, three existing warnings. Radioactive-tide mode harness: 35/35 including Chill new-game/save round trip and the 167,832-configuration grid. No production code changed beyond the already committed game-mode fix.
+- **Windows runtime smoke check (build 271):** with Claude's local ChillModeRepro enabled, Iron Teeth -> Lakes -> Game Mode opens without the reported crash. Chill -> Customize shows radioactive tides enabled, 29 cycles without, 10%, 1-3 days. Log confirms the four derived presets and contains no exception or missing-asset error. Evidence: `outputs/release086-chill-smoke.log`, `outputs/release086-chill-settings.png`. No settlement was started; save persistence was checked by the harness above, not by a live save/reload in this session.
+- **Limit:** macOS bundle cross-compilation and serialized asset inspection were performed on Windows, not a native macOS playtest.
+
 ## Game modes from other mods: radioactive tide settings derived from each mode's weather (Claude Code session, 2026-11-04, gamemodes agent; mirror `gamemodes` on HEAD 28c0a2c; compile-checked, harness run against the shipped DLLs; not run in game)
 
 - **Player crash (Workshop 0.8.5):** "Radioactive tide: game mode Chill has no RadioactiveTideGameModeSpec ... Every game mode needs radioactive tide settings". Chill is zxuiji's Chill Mode (Workshop 3642660958: temperate 350, drought and badtide 15 at 50%, from cycle 0). The coordinator reproduced it with `Documents/Timberborn/Mods/ChillModeRepro`.
