@@ -249,7 +249,10 @@ export function schoolEnterableSpec(config, enterable) {
 // The specs that make the school a goods-consuming attraction (vanilla Detailer pattern).
 export function schoolAttractionSpecs(config) {
   return {
-    AttractionSpec: {Effects: config.school.programs.map((p) => ({NeedId: studyNeedId(p), PointsPerHour: config.school.study.pointsPerHour, SatisfyToMaxValue: true}))},
+    // Ordinary attraction visits release the native behavior after each short
+    // session so food, water, sleep and work can take priority. Medical-style
+    // SatisfyToMaxValue returns straight to studying instead of the root needs.
+    AttractionSpec: {Effects: config.school.programs.map((p) => ({NeedId: studyNeedId(p), PointsPerHour: config.school.study.pointsPerHour, SatisfyToMaxValue: false}))},
     GoodConsumingBuildingSpec: {FullInventoryWorkHours: config.school.fullInventoryWorkHours,
       ConsumedGoods: schoolSupplies(config)},
     GoodConsumingAttractionSpec: {},

@@ -19,6 +19,7 @@ using Timberborn.GameDistricts;
 using Timberborn.Navigation;
 using Timberborn.SingletonSystem;
 using Timberborn.Stockpiles;
+using Timberborn.TubeSystem;
 using Timberborn.UILayoutSystem;
 using Timberborn.WorkSystem;
 using UnityEngine;
@@ -30,8 +31,8 @@ namespace DeepFrontier.Scripts {
   // side (this replaces the Hooman Stairs mod, which links stacked buildings
   // only; BuildingPassagesHoomanStairs turns this off while it is enabled).
   //
-  // A passage between two finished buildings (homes, workplaces, storage and
-  // attractions; not district centres or crossings) of one district joins
+  // A passage between two finished buildings with native building access and
+  // a door (not district centres, crossings or tubeway stations) of one district joins
   // their doorsteps by a unit-step path found breadth-first through the cells
   // both occupy, plus each building's own entrance <-> doorstep step. Its
   // steps are native nav-mesh edges in their own group ("DeepFrontierPassages"),
@@ -105,7 +106,10 @@ namespace DeepFrontier.Scripts {
 
     private static bool Linkable(BlockObject b) =>
       b && b.IsFinished && b.PositionedEntrance != null && !b.HasComponent<DistrictCenter>() && !b.HasComponent<DistrictCrossing>()
-      && (b.HasComponent<Dwelling>() || b.HasComponent<Workplace>() || b.HasComponent<Stockpile>() || b.HasComponent<Attraction>());
+      // A tubeway station's occupied cells are transport ports, not walkable
+      // rooms. Its one-way Tubeway edges (cost 0.25) must keep their native group;
+      // a competing indoor edge selects different groups at the two ends.
+      && !b.HasComponent<TubeStationSpec>() && b.HasComponent<Building>() && b.HasComponent<BuildingAccessible>();
 
     private static bool SameDistrict(BlockObject a, BlockObject b) {
       var da = a.GetComponent<DistrictBuilding>()?.District;
@@ -175,18 +179,20 @@ namespace DeepFrontier.Scripts {
             if (--Nodes[id] == 0) Nodes.Remove(id);
           }
         Passages.Remove(passage);
-        Leave(passage.A); Leave(passage.B);
+        Leave(passage.A, building); Leave(passage.B, building);
       }
     }
 
     // With its last passage gone a building gets its native access back.
-    private void Leave(BlockObject building) {
+    private void Leave(BlockObject building, BlockObject exiting) {
       if (--Linked[building] > 0) return;
       Linked.Remove(building);
       var doorstep = building.PositionedEntrance.DoorstepCoordinates;
       _caching.StopCachingRoadFlowField(doorstep);
       if (building.HasComponent<BuildingWithTerrainRange>()) _caching.StopCachingTerrainFlowField(doorstep);
-      if (building.IsFinished) EnableNativeAccesses(building.GetComponent<BuildingAccessible>());
+      // ExitedFinishedStateEvent runs while IsFinished is still true. Its native
+      // listener has already cleared access; do not re-enable the deleted entity.
+      if (building != exiting && building.IsFinished) EnableNativeAccesses(building.GetComponent<BuildingAccessible>());
     }
 
     // Breadth-first, unit steps (6 directions), through the cells of both buildings.

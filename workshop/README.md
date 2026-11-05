@@ -4,6 +4,10 @@
 - `thumbnail.png`: the 640×640 preview (under Steam's 1 MB limit), from an in-game capture.
 - `screenshots/`: gallery images to add on the Workshop page (Edit images & videos).
 
+## Next update draft
+
+`changenotes-0.10.0.bbcode` contains the next minor update's prepared notes. This is not a published release: manifest/runtime versions remain at 0.9.0 for the owner to bump. Rebuild and verify after changing them. Hospital treatment/save-reload acceptance and the Deep Mine-specific inventory review remain pending; see `tools/STATUS.md` and `CHANGELOG.md` for the verification record.
+
 ## Uploading
 
 1. Build and install: `powershell -ExecutionPolicy Bypass -File tools/build_deep_frontier.ps1`, then `pwsh tools/verify_deep_frontier_package.ps1 -Build <n>`.

@@ -122,7 +122,8 @@ namespace DeepFrontier.Scripts {
           Debug.Log(Tag+" passages reach measuring "+(hooman!=null?"Hooman Stairs top buildings":"Deep Frontier linked buildings")+": "+measured.Count);
           int instantDoor=0;
           foreach(var b in measured) {
-            bool entrance=_navigation.FindRoadPath(from,NavigationCoordinateSystem.GridToWorld(b.PositionedEntrance.Coordinates),out _);
+            // Hypothetical entrance nodes need not have a native cached flow field.
+            bool entrance=_navigation.FindInstantRoadPath(from,NavigationCoordinateSystem.GridToWorld(b.PositionedEntrance.Coordinates),out _);
             bool door=_navigation.FindRoadPath(from,NavigationCoordinateSystem.GridToWorld(b.PositionedEntrance.DoorstepCoordinates),out _);
             if(_navigation.FindInstantRoadPath(from,NavigationCoordinateSystem.GridToWorld(b.PositionedEntrance.DoorstepCoordinates),out _))instantDoor++;
             if(entrance&&door)kept++;else if(door)gained++;else if(entrance){lost++;Debug.Log(Tag+" passage LOST "+b.GetComponent<TemplateSpec>()?.TemplateName+" "+Xyz(b.Coordinates));}else neither++;

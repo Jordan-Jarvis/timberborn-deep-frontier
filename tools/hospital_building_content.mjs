@@ -32,6 +32,8 @@ function nativeEntrance(layout,blocks,index){
 }
 
 export async function applyHospital(value) {
+  if (!(care.decontaminationRateMultiplier > 1) || !Number.isFinite(care.decontaminationRateMultiplier))
+    throw new Error('Hospital decontamination must be faster than the native pod');
   // A care attraction has one native supply processor. It is not a factory.
   for(const key of ['ManufactorySpec','WorkshopSpec','SimpleManufactoryBehaviorsSpec',
     'WorkshopAnimationControllerSpec','WorkplaceIlluminatorSpec','WorkplaceSlotManagerSpec',
@@ -100,7 +102,7 @@ export async function applyHospital(value) {
   value.AttractionSpec={Effects:[
     {NeedId:'Injury',PointsPerHour:healing,SatisfyToMaxValue:true},
     {...effect(teeth,'ChippedTeeth'),SatisfyToMaxValue:true},
-    {...effect(pod,'BadwaterContamination'),SatisfyToMaxValue:true}
+    {...effect(pod,'BadwaterContamination'),PointsPerHour:effect(pod,'BadwaterContamination').PointsPerHour*care.decontaminationRateMultiplier,SatisfyToMaxValue:true}
   ]};
   // Patient meals (Scripts/HospitalPantry.cs): admitted patients cannot leave
   // to eat. Foods are chosen at runtime from the faction's goods; water covers
@@ -135,7 +137,7 @@ export async function applyHospital(value) {
 
 // Hospital description and the panel/status rows used by Scripts/Hospital*.cs;
 // create_frontier_expansion_content.mjs writes them with the other rows.
-export const HOSPITAL_DESCRIPTION='Treats injuries, chipped teeth, badwater contamination and radiation sickness day and night. Staffed and supplied, it gives nearby beavers up to +2 wellbeing.';
+export const HOSPITAL_DESCRIPTION='Treats injuries and chipped teeth; medicine treats contamination and radiation. Fully staffed, decontaminates twice as fast as a pod. Nearby beavers gain up to +2 wellbeing.';
 export const HOSPITAL_LOCALIZATION=[
   ['DeepFrontier.Hospital.Panel.Title','Hospital'],
   ['DeepFrontier.Hospital.Panel.Patients','Patients admitted: {0} / {1} beds'],
@@ -147,14 +149,16 @@ export const HOSPITAL_LOCALIZATION=[
   ['DeepFrontier.Hospital.Panel.NoPower','Care stopped: check power and building warnings'],
   ['DeepFrontier.Hospital.Panel.NoCrew','Closed: no ward crew assigned'],
   ['DeepFrontier.Hospital.Panel.NoMeals','Closed: a patient is starving or dehydrated and the food or water stock is empty'],
-  ['DeepFrontier.Hospital.Panel.NoSupplies','Waiting for medicine, water and extract'],
-  ['DeepFrontier.Hospital.Panel.Treating','Patients stay until cured of injury, chipped teeth, badwater contamination and radiation sickness. Treatment speed: {0}% (set by its staffing)'],
+  ['DeepFrontier.Hospital.Panel.NoSupplies','Waiting for water or extract'],
+  ['DeepFrontier.Hospital.Panel.Treating','Treatment speed: {0}% of full staffing. Medicine is used only for contamination and radiation.'],
   ['DeepFrontier.Hospital.Panel.AreaActive','Neighborhood care active (+2 wellbeing)'],
   ['DeepFrontier.Hospital.Panel.AreaInactive','Neighborhood care inactive'],
   ['DeepFrontier.Hospital.Status.MealsLow','Patient food or water is running low.'],
   ['DeepFrontier.Hospital.Status.MealsLow.Short','Low patient meals'],
   ['DeepFrontier.Hospital.Status.MealsOut','No food or water for patients: hungry or thirsty patients will be sent out to eat.'],
   ['DeepFrontier.Hospital.Status.MealsOut.Short','No patient meals'],
+  ['DeepFrontier.Hospital.Status.Medicine','Medicine needed for contamination and radiation treatment. Other care continues.'],
+  ['DeepFrontier.Hospital.Status.Medicine.Short','Needs medicine'],
 ];
 
 export async function authorHospitalNeed() {

@@ -1339,7 +1339,7 @@
       },
       {
         "NeedId": "BadwaterContamination",
-        "PointsPerHour": 0.068,
+        "PointsPerHour": 0.136,
         "SatisfyToMaxValue": true
       },
       {

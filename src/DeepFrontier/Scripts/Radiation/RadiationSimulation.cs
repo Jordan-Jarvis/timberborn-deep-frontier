@@ -502,7 +502,19 @@ namespace DeepFrontier.Scripts.Radiation {
         var state = pair.Value;
         float total = state.Clean + state.Bad;
         float radiation = total > 0f ? state.Radioactive / total : 0f;
-        RadiationMixing.RequireShares(columns[pair.Key].Contamination, radiation, "the native water changes");
+        try { RadiationMixing.RequireShares(columns[pair.Key].Contamination, radiation, "the native water changes"); }
+        catch (InvalidOperationException error) {
+          string steps = "";
+          for (int k = 0; k < changes.Count; k++) {
+            var change = changes[k];
+            int idx = NativeColumnIndex(counts, columns, verticalStride,
+              mapIndex.CellToIndex(new Vector2Int(change.Coordinates.x, change.Coordinates.y)), change.Coordinates.z);
+            if (idx == pair.Key) steps += $" [{change.DepthChange:R}, {change.ContaminationChange:R}]";
+          }
+          throw new InvalidOperationException($"Radiation water-change trace: column {pair.Key}; "
+            + $"initial clean/bad/radioactive {state.InitialClean:R}/{state.InitialBad:R}/{state.InitialRadioactive:R}; "
+            + $"final {state.Clean:R}/{state.Bad:R}/{state.Radioactive:R}; native depth {EffectiveDepth(in columns[pair.Key]):R}; changes{steps}", error);
+        }
         _radiation[pair.Key] = radiation;
       }
     }
@@ -1088,7 +1100,10 @@ namespace DeepFrontier.Scripts.Radiation {
 
     private struct ChangeState {
       public float Clean, Bad, Radioactive;
-      public ChangeState(float clean, float bad, float radioactive) { Clean = clean; Bad = bad; Radioactive = radioactive; }
+      public readonly float InitialClean, InitialBad, InitialRadioactive;
+      public ChangeState(float clean, float bad, float radioactive) {
+        Clean = InitialClean = clean; Bad = InitialBad = bad; Radioactive = InitialRadioactive = radioactive;
+      }
     }
 
     private struct ContinuousSource {

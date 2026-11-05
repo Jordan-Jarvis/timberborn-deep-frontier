@@ -105,7 +105,10 @@ require(meals=={'FoodCapacityPerGood':care['patientMeals']['foodUnitsPerGood'],'
   'WaterCapacity':math.ceil(care['patientCapacity']*care['patientMeals']['zombieNeedMultiplier']*thirst*care['patientMeals']['waterDays']/quench[0]),
   'LowStockUnits':care['patientMeals']['lowStockUnits']},'Admitted patients need the authored meal stock (HospitalPantrySpec)')
 require(abs((effects['Injury']['PointsPerHour']+.1/24)/(.015+.1/24)-1.8)<1e-10,'Steady native recovery is not 80 percent faster under the observed half-treatment cadence')
-require(effects['ChippedTeeth']['PointsPerHour']==.5 and effects['BadwaterContamination']['PointsPerHour']==.068,'Native tooth/contamination rates differ')
+pod=json.loads((vanilla/'Buildings/Wellbeing/DecontaminationPod/DecontaminationPod.IronTeeth.blueprint.json').read_text(encoding='utf-8-sig'))
+pod_rate=next(e['PointsPerHour'] for e in pod['AttractionSpec']['Effects'] if e['NeedId']=='BadwaterContamination')
+require(care['decontaminationRateMultiplier']>1,'Hospital must decontaminate faster than a pod')
+require(effects['ChippedTeeth']['PointsPerHour']==.5 and effects['BadwaterContamination']['PointsPerHour']==pod_rate*care['decontaminationRateMultiplier'],'Hospital tooth/pod-relative contamination rates differ')
 require(blueprint['HospitalSpec']['WardWorkPosition']=={'X':2.5,'Y':0,'Z':3.5},'Staff work point differs from the enclosed central ward')
 report={'status':'Source/export checks passed; native runtime acceptance pending','size':[w,d,h],
         'sourceSha256':hashlib.sha256((ROOT/'src/DeepFrontier/Art/Source/Hospital-ReferenceStudy.blend').read_bytes()).hexdigest(),

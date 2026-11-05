@@ -34,7 +34,7 @@ export const LOCALIZATION_COMMENT = 'Deep Frontier Reactor Bot workplaces';
 // Keys the runtime uses (ReactorBotWorkplaceUi, ReactorBotWorkplaceUnlocks, WorkforcePanels).
 export const LOC_KEYS = ['DeepFrontier.WorkerType.ReactorBot', 'DeepFrontier.WorkerType.ReactorBot.Unlock.Tooltip',
   'DeepFrontier.WorkerType.ReactorBot.Unlock.Prompt', 'DeepFrontier.WorkerType.ReactorBot.Unlock.CantUnlock',
-  'DeepFrontier.ReactorBotWorkplace.NoBotWear', 'DeepFrontier.ReactorBotWorkplace.InsteadOfSpecialists'];
+  'DeepFrontier.ReactorBotWorkplace.InsteadOfSpecialists'];
 export const colorPath = (id) => `IlluminationColors/IlluminationColor.${id}.blueprint.json`;
 
 export const readJson = async (path) => JSON.parse((await readFile(path, 'utf8')).replace(/^﻿/, ''));

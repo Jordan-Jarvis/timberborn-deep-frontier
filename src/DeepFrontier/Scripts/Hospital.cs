@@ -13,6 +13,9 @@ using Timberborn.EntitySystem;
 using Timberborn.GoodConsumingBuildingSystem;
 using Timberborn.MechanicalSystem;
 using Timberborn.NeedSpecs;
+using Timberborn.NeedSystem;
+using Timberborn.Localization;
+using Timberborn.StatusSystem;
 using Timberborn.RangedEffectSystem;
 using Timberborn.TemplateInstantiation;
 using Timberborn.TickSystem;
@@ -44,9 +47,14 @@ namespace DeepFrontier.Scripts {
   // it needs (HospitalPantry.MealsShort); admission never waits for a
   // delivery, although admitted patients cannot leave to eat. Treatment runs at the
   // crew's strength, around the clock. Staff still attend the ward during
-  // working hours; their attendance drives neighborhood care and supply use.
+  // working hours; their attendance drives neighborhood care and water/extract use.
+  // HospitalMedicalSupplies restricts medicine to contamination/radiation cases,
+  // leaving ordinary care usable without it and preserving native fractional doses.
   internal sealed class Hospital : TickableComponent, IAwakableComponent,
-      IFinishedStateListener, IBuildingEfficiencyProvider {
+      IFinishedStateListener, IInitializableEntity, IBuildingEfficiencyProvider {
+    internal const string MedicineGoodId = "Medicine";
+    internal static bool NeedsMedicineFor(string needId) => needId == "BadwaterContamination" || needId == "Irradiation";
+    private readonly ILoc _loc;
     private HospitalSpec _spec;
     private Workplace _workplace;
     private BlockableObject _blockable;
@@ -58,6 +66,8 @@ namespace DeepFrontier.Scripts {
     private Enterable _ward;
     private IAnimator _banners;
     private bool _areaEffectAdded;
+    private StatusToggle _medicineStatus;
+    public Hospital(ILoc loc) { _loc = loc; }
     public Vector3 WardPosition => Transform.TransformPoint(_spec.WardWorkPosition);
     public bool IsOperating => Enabled && _blockable.IsUnblocked && _power.ActiveAndPowered;
     public int AttendingStaff => _workplace.AssignedWorkers.Count(w=>
@@ -70,6 +80,13 @@ namespace DeepFrontier.Scripts {
     public float Efficiency => (float)CrewAssigned/_spec.RequiredStaff;
     public bool ProvidesNeighborhoodCare => _areaEffectAdded;
     public HospitalPantry Pantry => _pantry;
+    public bool HasMedicalPatients => _ward.EnterersInside.Any(p => {
+      var needs = p.GetComponent<NeedManager>();
+      return needs.NeedPointsToMax("BadwaterContamination") > 0 || needs.NeedPointsToMax("Irradiation") > 0;
+    });
+    // Native HoursUntilNoSupply includes fractional doses and every required supply.
+    // Ordinary care checks CanUse (which excludes medicine); medical effects check all supplies.
+    public bool CanProvideMedicalTreatment => CanUse && _supplies.CanUse && _supplies.HoursUntilNoSupply() > 0;
 
     public void Awake() {
       _pantry=GetComponent<HospitalPantry>(); _ward=GetComponent<Enterable>();
@@ -84,11 +101,17 @@ namespace DeepFrontier.Scripts {
       _banners=finished.GetComponentsInChildren<MonoBehaviour>(true).OfType<IAnimator>().Single();
       _staffToggle.PauseConsumption(); DisableComponent();
     }
+    public void InitializeEntity() {
+      _medicineStatus = StatusToggle.CreateNormalStatusWithAlertAndFloatingIcon("LackOfResources",
+        _loc.T("DeepFrontier.Hospital.Status.Medicine"), _loc.T("DeepFrontier.Hospital.Status.Medicine.Short"));
+      GetComponent<StatusSubject>().RegisterStatus(_medicineStatus);
+    }
     public void OnEnterFinishedState() {
       EnableComponent(); _banners.Enabled=true; _banners.Play("Default");
     }
     public void OnExitFinishedState() {
       SetNeighborhoodCare(false); _staffToggle.PauseConsumption();
+      _medicineStatus.Deactivate();
       _banners.Stop(); DisableComponent();
     }
     public override void Tick() {
@@ -96,6 +119,9 @@ namespace DeepFrontier.Scripts {
       // Supplies are used while staff attend or patients are treated.
       if(attended || (CanUse && _ward.NumberOfEnterersInside>0))_staffToggle.ResumeConsumption();else _staffToggle.PauseConsumption();
       SetNeighborhoodCare(attended && _supplies.CanUse);
+      bool medicineAvailable = _supplies.Inventory.UnreservedAmountInStock(MedicineGoodId) > 0
+        || _supplies.ProcessedGoods.Any(g => g.GoodId == MedicineGoodId);
+      if (CanUse && HasMedicalPatients && !medicineAvailable) _medicineStatus.Activate(); else _medicineStatus.Deactivate();
     }
     private void SetNeighborhoodCare(bool active) {
       if(active==_areaEffectAdded)return;

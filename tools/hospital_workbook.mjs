@@ -8,7 +8,7 @@ const p=(await read('tools/frontier_progression.json')).hospital;
 const size=b.BlockObjectSpec.Size;
 const layout=(await read('tools/civic-layouts.json')).Hospital;
 const source='tools/frontier_progression.json; src/DeepFrontier/Data/Buildings/Wellbeing/Hospital; src/DeepFrontier/Scripts/Hospital.cs';
-const inputs=p.suppliesPerHour.map(g=>`${g.GoodPerHour} ${name(g.GoodId)}`).join('; ');
+const inputs=p.suppliesPerHour.map(g=>`${g.GoodPerHour} ${name(g.GoodId)}${g.GoodId==='Medicine'?' (only contamination/radiation treatment)':''}`).join('; ');
 export const hospitalBuildingUpdates=new Map([['B011',{
   'Infobox':'Native treatment attraction and workplace','Width':size.X,'Length':size.Y,'Footprint':`${size.X}x${size.Y}`,
   'Footprint tiles':size.X*size.Y,'Height':size.Z,'Workers':b.WorkplaceSpec.MaxWorkers,
@@ -16,7 +16,7 @@ export const hospitalBuildingUpdates=new Map([['B011',{
   'Science unlock':b.BuildingSpec.ScienceCost,'Bot unlock':'Beaver staff only','Build materials':amounts(b.BuildingSpec.BuildingCost),
   'Flags':`${p.patientCapacity} patients; staff use no patient slots; player-placed paths; ${layout.nodes.length} authored access cells; open decks with no rails; native F mirroring`,
   'Recipe names':'None; native per-hour supply consumption','Source':source,'Data status':p.requirementStatus,
-  'Role':'Treat injuries, chipped teeth and badwater contamination; staffed neighborhood care',
+  'Role':'Treat injuries, chipped teeth, badwater contamination and radiation; staffed neighborhood care',
   'Stackable':'Open 4x2 roof garden (3x2 clear beside the stairhead)','Stacking rule':'Roof garden at layer 2; player-placed paths; native support/collision; no layer cap',
   'Conveyor-only solids':'No','Pipe ports':'Water inventory; pipe transfer unverified','Power mode':'Grid',
   'Unlock prerequisites':`${p.scienceUnlock} science; concrete, treated planks, metal, gears; medicine, water and extract deliveries`,
@@ -24,15 +24,15 @@ export const hospitalBuildingUpdates=new Map([['B011',{
   'Outputs':'Native condition recovery; Public Healthcare neighborhood wellbeing','Waste / side effect':'None',
   'Placement':'Compact 4x4 two-storey pavilion; two one-tile doors (ground and roof garden at layer 2) connect through enclosed interiors to player-built paths',
   'Player cue':'Care panel shows patient occupancy, attending staff and care availability','Status':p.requirementStatus,
-  'Notes':`Full staff and power target 1.8x Medical Bed injury recovery during treatment. Native treatment replaces passive healing on those ticks. ${p.areaRadius}-cell native area radius; +${p.areaWellbeingPoints} wellbeing cap. ${p.supplyPolicy} ${p.balanceStatus}`
+  'Notes':`Full staff and power target 1.8x Medical Bed injury recovery and ${p.decontaminationRateMultiplier}x Decontamination Pod treatment. Native treatment replaces passive healing on those ticks. ${p.areaRadius}-cell native area radius; +${p.areaWellbeingPoints} wellbeing cap. ${p.supplyPolicy} ${p.balanceStatus}`
 }]]);
 // Medical Food was retired on 2026-10-30 (bricks pass, tools/content_policy.json migratedGoods: saves map it to Canned Fish).
 export const hospitalItemUpdates=new Map([['I012',{
   'Source / recipe':'Retired','Consumed by':'None','Source':'tools/content_policy.json migratedGoods',
   'Data status':'Retired 2026-10-30; saved stock loads as Canned Fish','Primary uses':'None',
   'Notes':'Removed: a plain Hunger 0.3 food with no medical effect. The Hospital uses Medicine.'
-}],['I011',{'Primary uses':'Hospital operating supply; Technical School reactor course','Consumed by':'Hospital; Technical School',
-  'Notes':'Hospital consumes 2 per operating hour with water and extract; reactor studies use it as a course supply.'}]]);
+}],['I011',{'Primary uses':'Hospital contamination/radiation treatment; Technical School reactor course','Consumed by':'Hospital; Technical School',
+  'Notes':'Hospital consumes 2 per hour only while treating contamination or radiation. Ordinary care and neighborhood wellbeing require no medicine. Reactor studies use it as a course supply.'}]]);
 export const hospitalProgressionUpdates=new Map([['G005',{
   'Player goal':'Provide large-scale hospital care','Required buildings':'Hospital; medicine production and water supply',
   'Science range':p.scienceUnlock,

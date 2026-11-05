@@ -37,8 +37,13 @@ namespace DeepFrontier.Scripts.Radiation {
     // After the kernels: returns the corrected share and the radioactive share
     // moved to the soil (0 unless one of the two native cases pushed b + r over 1).
     public static float KernelExcess(float bad, float radioactive, out float excess) {
-      excess = bad + radioactive - 1f;
-      if (excess > RadiationTuning.ShareTolerance) return 1f - bad;
+      // Measure against the clean-water capacity directly. The share-check
+      // tolerance is not a volume that the kernels may leave in the water:
+      // selective badwater pumping can magnify that surplus on the next step.
+      // Every positive surplus belongs to the existing soil-transfer rule.
+      float capacity = 1f - bad;
+      excess = radioactive - capacity;
+      if (excess > 0f) return capacity;
       excess = 0f;
       return radioactive;
     }
@@ -72,9 +77,15 @@ namespace DeepFrontier.Scripts.Radiation {
         radioactive += cleanChange * radioactiveShare;
       } else {
         float taken = -cleanChange < clean ? -cleanChange : clean;
-        removed = clean > 0f ? radioactive * (taken / clean) : 0f;   // never more than radioactive
-        radioactive -= removed;
-        clean -= taken;
+        float remaining = clean - taken;
+        // Calculate the retained amount directly. Subtracting a rounded removed
+        // amount from an almost equal radioactive amount loses the small remainder:
+        // near-empty pumping amplified an accepted 1.0000076 share to 1.0114943.
+        // This is the same proportional removal, without catastrophic cancellation.
+        float retained = clean > 0f ? radioactive * (remaining / clean) : 0f;
+        removed = radioactive - retained;
+        radioactive = retained;
+        clean = remaining;
       }
       bad += depthChange * contaminationChange;
       if (bad < 0f) bad = 0f;

@@ -865,17 +865,17 @@
       {
         "NeedId": "StudyMetallurgy",
         "PointsPerHour": 0.5,
-        "SatisfyToMaxValue": true
+        "SatisfyToMaxValue": false
       },
       {
         "NeedId": "StudyNuclear",
         "PointsPerHour": 0.5,
-        "SatisfyToMaxValue": true
+        "SatisfyToMaxValue": false
       },
       {
         "NeedId": "StudyFlight",
         "PointsPerHour": 0.5,
-        "SatisfyToMaxValue": true
+        "SatisfyToMaxValue": false
       }
     ]
   },

@@ -126,7 +126,7 @@ Building.Restaurant.DisplayName,Restaurant,Deep Frontier
 Building.Restaurant.Description,"Serves food at its tables and makes sweet berry cake and fermented food. A meal of fresh fish, berries, fermented mushrooms and an eggplant ration gives Fine dining. Pipes: valve set to Fill.",Deep Frontier
 Building.Restaurant.FlavorDescription,"A good meal deserves a table, a view and good company.",Deep Frontier
 Building.Hospital.DisplayName,Hospital,Deep Frontier
-Building.Hospital.Description,"Treats injuries, chipped teeth, badwater contamination and radiation sickness day and night. Staffed and supplied, it gives nearby beavers up to +2 wellbeing. Pipes: valve set to Fill.",Deep Frontier
+Building.Hospital.Description,"Treats injuries and chipped teeth; medicine treats contamination and radiation. Fully staffed, decontaminates twice as fast as a pod. Nearby beavers gain up to +2 wellbeing. Pipes: valve set to Fill.",Deep Frontier
 Building.Hospital.FlavorDescription,"Rest, clean water and a very strict ward nurse.",Deep Frontier
 Building.Greenhouse.DisplayName,Greenhouse,Deep Frontier
 Building.Greenhouse.Description,"Grows eggplants, kohlrabi and coffee beans indoors with fertilizer. Aquaponics also raises fresh fish from juvenile fish. Pipes: valve set to Fill.",Deep Frontier
@@ -226,14 +226,16 @@ DeepFrontier.Hospital.Panel.Paused,Paused,Deep Frontier
 DeepFrontier.Hospital.Panel.NoPower,Care stopped: check power and building warnings,Deep Frontier
 DeepFrontier.Hospital.Panel.NoCrew,Closed: no ward crew assigned,Deep Frontier
 DeepFrontier.Hospital.Panel.NoMeals,Closed: a patient is starving or dehydrated and the food or water stock is empty,Deep Frontier
-DeepFrontier.Hospital.Panel.NoSupplies,"Waiting for medicine, water and extract",Deep Frontier
-DeepFrontier.Hospital.Panel.Treating,"Patients stay until cured of injury, chipped teeth, badwater contamination and radiation sickness. Treatment speed: {0}% (set by its staffing)",Deep Frontier
+DeepFrontier.Hospital.Panel.NoSupplies,Waiting for water or extract,Deep Frontier
+DeepFrontier.Hospital.Panel.Treating,Treatment speed: {0}% of full staffing. Medicine is used only for contamination and radiation.,Deep Frontier
 DeepFrontier.Hospital.Panel.AreaActive,Neighborhood care active (+2 wellbeing),Deep Frontier
 DeepFrontier.Hospital.Panel.AreaInactive,Neighborhood care inactive,Deep Frontier
 DeepFrontier.Hospital.Status.MealsLow,Patient food or water is running low.,Deep Frontier
 DeepFrontier.Hospital.Status.MealsLow.Short,Low patient meals,Deep Frontier
 DeepFrontier.Hospital.Status.MealsOut,No food or water for patients: hungry or thirsty patients will be sent out to eat.,Deep Frontier
 DeepFrontier.Hospital.Status.MealsOut.Short,No patient meals,Deep Frontier
+DeepFrontier.Hospital.Status.Medicine,Medicine needed for contamination and radiation treatment. Other care continues.,Deep Frontier
+DeepFrontier.Hospital.Status.Medicine.Short,Needs medicine,Deep Frontier
 DeepFrontier.Need.FineDining,Fine dining,Deep Frontier
 Need.NeighborhoodGroceries.DisplayName,Neighborhood groceries,Deep Frontier
 DeepFrontier.Waterside.SupportTooDeep,A support post would need more than {0} m to reach the ground or riverbed.,Deep Frontier waterside placement error; {0} = AdaptiveSupportsSpec.MaxDepth
@@ -903,7 +905,6 @@ DeepFrontier.WorkerType.ReactorBot,Reactor Bots,Deep Frontier Reactor Bot workpl
 DeepFrontier.WorkerType.ReactorBot.Unlock.Tooltip,Unlock this workplace for Reactor Bots.,Deep Frontier Reactor Bot workplaces
 DeepFrontier.WorkerType.ReactorBot.Unlock.Prompt,Are you sure you want to unlock this workplace for Reactor Bots? It costs {0} Science Points.,Deep Frontier Reactor Bot workplaces
 DeepFrontier.WorkerType.ReactorBot.Unlock.CantUnlock,"Can't unlock this workplace for Reactor Bots, not enough Science Points.",Deep Frontier Reactor Bot workplaces
-DeepFrontier.ReactorBotWorkplace.NoBotWear,Bots do not wear out faster here.,Deep Frontier Reactor Bot workplaces
 DeepFrontier.ReactorBotWorkplace.InsteadOfSpecialists,Set to Reactor Bots: they work here instead of trained {0}.,Deep Frontier Reactor Bot workplaces
 ToolGroups.DeepFrontierQuarrying,Quarries and cement,Deep Frontier toolbar group
 ToolGroups.DeepFrontierDeepMining,Deep mining,Deep Frontier toolbar group

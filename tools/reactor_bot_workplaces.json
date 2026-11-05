@@ -15,7 +15,6 @@
     "DeepFrontier.WorkerType.ReactorBot.Unlock.Tooltip": "Unlock this workplace for Reactor Bots.",
     "DeepFrontier.WorkerType.ReactorBot.Unlock.Prompt": "Are you sure you want to unlock this workplace for Reactor Bots? It costs {0} Science Points.",
     "DeepFrontier.WorkerType.ReactorBot.Unlock.CantUnlock": "Can't unlock this workplace for Reactor Bots, not enough Science Points.",
-    "DeepFrontier.ReactorBotWorkplace.NoBotWear": "Bots do not wear out faster here.",
     "DeepFrontier.ReactorBotWorkplace.InsteadOfSpecialists": "Set to Reactor Bots: they work here instead of trained {0}."
   }
 }

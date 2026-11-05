@@ -143,23 +143,29 @@ namespace DeepFrontier.Scripts {
           Require(_needs.GetNeedPoints("PublicHealthcare")<_baseline-.005f,"Outside observer still receives neighborhood benefit");
           Pass("actual neighborhood need decays outside radius");
           MoveObserver(InRange);
+          var medicalPatient=_building.GetComponent<Enterable>().EnterersInside.First();
+          SetNeed(medicalPatient.GetComponent<NeedManager>(),"BadwaterContamination",-.6f);
           int stock=_supplies.Inventory.AmountInStock("Medicine");
           Require(stock==_supplies.Inventory.UnreservedAmountInStock("Medicine"),"Medicine depletion fixture encountered reserved stock");
           _supplies.Inventory.TakeConsumed(new GoodAmount("Medicine",stock));Phase(5);
         } else if(_phase==5&&hours>=1f) {
-          Require(!_supplies.CanUse&&!_supplies.IsConsuming&&!_hospital.ProvidesNeighborhoodCare
-            &&!_building.GetComponent<Attraction>().IsUsable,"Missing medicine did not stop native treatment and area care");
+          Require(_supplies.CanUse&&_supplies.IsConsuming&&_hospital.ProvidesNeighborhoodCare
+            &&_building.GetComponent<Attraction>().IsUsable,"Missing medicine stopped ordinary treatment or neighborhood care");
+          Require(!_hospital.CanProvideMedicalTreatment,"Medicine depletion did not stop medical treatment; ensure an admitted medical patient exhausted the fractional dose");
+          var effects=new List<ContinuousEffect>();_building.GetComponent<Attraction>().GetEfficiencyAdjustedEffects(effects);
+          Require(effects.Count==2&&effects.All(e=>e.NeedId=="Injury"||e.NeedId=="ChippedTeeth"),
+            "Empty medicine must leave only injury and tooth effects available");
           if(Vector3.Distance(_observer.Transform.position,_target)>=.18f)return;
           _baseline=_needs.GetNeedPoints("PublicHealthcare");Phase(6);
         } else if(_phase==6&&hours>=.6f) {
-          Require(_needs.GetNeedPoints("PublicHealthcare")<=_baseline,"Unstocked hospital grants neighborhood points");
-          Pass("exhausted real medicine and its fractional buffer stop treatment, consumption and neighborhood benefit");
+          Require(_needs.GetNeedPoints("PublicHealthcare")>_baseline+.06f,"Empty medicine stopped neighborhood benefit");
+          Pass("exhausted medicine pauses medical effects while ordinary care, water/extract consumption and neighborhood benefit continue");
           _supplies.Inventory.GiveExisting(new GoodAmount("Medicine",8));Phase(7);
-        } else if(_phase==7&&_hospital.ProvidesNeighborhoodCare&&_building.GetComponent<Attraction>().IsUsable) {
+        } else if(_phase==7&&_hospital.CanProvideMedicalTreatment&&_building.GetComponent<Attraction>().IsUsable) {
           _baseline=_needs.GetNeedPoints("PublicHealthcare");Phase(8);
         } else if(_phase==8&&hours>=.6f) {
           Require(_needs.GetNeedPoints("PublicHealthcare")>_baseline+.06f,"Replenished care did not restore neighborhood benefit");
-          Pass("replenished medicine restores actual care and nearby need gain");
+          Pass("replenished medicine restores medical treatment; neighborhood care remains active");
           Require(_workplace.DesiredWorkers==6,"Expected six worker slots before partial-staff check");
           for(int i=0;i<3;i++)_workplace.DecreaseDesiredWorkers();
           Phase(9);

@@ -35,9 +35,11 @@ namespace DeepFrontier.Scripts {
   internal sealed class BotMaintenanceInventoryModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
       BotMaintenanceInventory.Verify();
+      WorkplaceInventoryRows.Verify();
       var harmony=new Harmony(BotMaintenanceInventory.HarmonyId);
       harmony.CreateClassProcessor(typeof(BotMaintenanceInventory)).Patch();
       harmony.CreateClassProcessor(typeof(BotMaintenanceRecipeCompatibility)).Patch();
+      harmony.CreateClassProcessor(typeof(WorkplaceInventoryRows)).Patch();
       Debug.Log("[DeepFrontier] Bot maintenance and workplace upkeep inventory patches applied (ManufactoryInventoryInitializer.Initialize, ModdableRecipes InitInventoryForRecipe).");
     }
   }

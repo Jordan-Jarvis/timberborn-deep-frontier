@@ -40,7 +40,8 @@ namespace DeepFrontier.Scripts.Radiation {
   //
   // Sickness: an irradiated beaver that has not been inside a Hospital for
   // more than CareGraceHours accrues untreated time; LethalUntreatedHours of
-  // untreated time kills it. Hospital stays pause (do not reset) the clock.
+  // untreated time kills it. Powered, staffed and medically supplied Hospital
+  // stays pause (do not reset) the clock; admission alone is not treatment.
   // The clock counts hours only: the zombie's doubled hunger and thirst do not
   // shorten it (they can still starve or dehydrate it natively, twice as fast).
   //
@@ -149,7 +150,8 @@ namespace DeepFrontier.Scripts.Radiation {
     private void UpdateSickness(Enterable building, float hours) {
       if (!IsIrradiated) { _untreatedHours = 0f; return; }
       float now = _dayNightCycle.PartialDayNumber * 24f;
-      if (building != null && building.GetComponent<Hospital>() != null) _lastCareHour = now;
+      var hospital = building != null ? building.GetComponent<Hospital>() : null;
+      if (hospital != null && hospital.CanProvideMedicalTreatment) _lastCareHour = now;
       if (now - _lastCareHour > RadiationTuning.CareGraceHours) _untreatedHours += hours;
       if (_untreatedHours >= RadiationTuning.LethalUntreatedHours) {
         _dying = true;

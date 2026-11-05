@@ -15,37 +15,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace DeepFrontier.Scripts {
-  internal sealed class IndustrialRiskPanel : BaseEntityPanelFragment<IndustrialRisk> {
-    private readonly WorkforceSettings _settings;
-    private readonly ILoc _loc;
-    private Label _risk,_severity,_crew,_record,_bots;
-    public IndustrialRiskPanel(WorkforceSettings settings, ILoc loc) {_settings=settings;_loc=loc;}
-    protected override void InitializePanel() {
-      panel.AddGameLabel(_loc.T("DeepFrontier.Workforce.Panel.Title"),bold:true);
-      _risk=Wrapped();_severity=Wrapped();_crew=Wrapped();_record=Wrapped();_bots=Wrapped();
-    }
-    private Label Wrapped() {var label=panel.AddGameLabel();label.style.whiteSpace=WhiteSpace.Normal;return label;}
-    public override void ShowFragment(BaseComponent entity) {base.ShowFragment(entity);UpdateFragment();}
-    public override void UpdateFragment() {
-      if(!component)return;
-      var spec=component.Spec;
-      var tier=_loc.T($"DeepFrontier.Workforce.Danger.{spec.DangerTier}");
-      _risk.text=component.InjuriesEnabled
-        ?_loc.T("DeepFrontier.Workforce.Panel.InjuryRisk",tier,(component.FitChancePerHour*100f).ToString("0.##"),
-          $"{_settings.Spec.StrainedRolls}/{_settings.Spec.ExhaustedRolls}")
-        :_loc.T("DeepFrontier.Workforce.Panel.InjuriesDisabled",tier);
-      var days=Mathf.RoundToInt(-spec.InjuryPoints/_settings.InjuryNeed.DailyDelta);
-      _severity.text=_loc.T("DeepFrontier.Workforce.Panel.InjurySeverity",days,Mathf.RoundToInt(spec.FatalAccidentChance*100f));
-      _crew.text=_loc.T("DeepFrontier.Workforce.Panel.Crew",component.FitWorkers,component.StrainedWorkers,component.ExhaustedWorkers);
-      _record.text=_loc.T("DeepFrontier.Workforce.Panel.Record",component.Injuries,component.Fatalities);
-      // Set to Reactor Bots, any workplace takes bots (ReactorBotWorkplace); beaver-only ones declare no bot wear.
-      var reactorBots=component.GetComponent<ReactorBotWorkplace>().ReactorMode;
-      _bots.text=reactorBots&&!(spec.BotWearMultiplier>1f)?_loc.T("DeepFrontier.ReactorBotWorkplace.NoBotWear")
-        :!reactorBots&&component.GetComponent<WorkplaceSpec>().DisallowOtherWorkerTypes?_loc.T("DeepFrontier.Workforce.Panel.BotsNotAllowed")
-        :_loc.T("DeepFrontier.Workforce.Panel.BotWear",spec.BotWearMultiplier.ToString("0.#"));
-    }
-  }
-
   internal sealed class SpecialistWorkplacePanel : BaseEntityPanelFragment<SpecialistWorkplace> {
     private readonly WorkforceSettings _settings;
     private readonly ILoc _loc;
@@ -169,7 +138,6 @@ namespace DeepFrontier.Scripts {
   [Context("Game")]
   public sealed class WorkforcePanelConfigurator : Configurator {
     protected override void Configure() {
-      this.BindFragment<IndustrialRiskPanel>();
       this.BindFragment<SpecialistWorkplacePanel>();
       this.BindFragment<SpecialistSchoolPanel>();
       this.BindFragment<SpecialistTraitPanel>();
