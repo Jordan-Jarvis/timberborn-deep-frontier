@@ -1,0 +1,8 @@
+tools/create_vertical_slice_content.mjs: line 1: import: command not found
+tools/create_vertical_slice_content.mjs: line 2: import: command not found
+tools/create_vertical_slice_content.mjs: line 3: import: command not found
+tools/create_vertical_slice_content.mjs: line 4: import: command not found
+tools/create_vertical_slice_content.mjs: line 5: import: command not found
+tools/create_vertical_slice_content.mjs: line 6: import: command not found
+tools/create_vertical_slice_content.mjs: line 7: syntax error near unexpected token `('
+tools/create_vertical_slice_content.mjs: line 7: `// Late-game construction costs follow the size rule (docs/progression.md).'

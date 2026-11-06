@@ -4,9 +4,9 @@
 - `thumbnail.png`: the 640×640 preview (under Steam's 1 MB limit), from an in-game capture.
 - `screenshots/`: gallery images to add on the Workshop page (Edit images & videos).
 
-## Next update draft
+## Current update
 
-`changenotes-0.10.0.bbcode` contains the next minor update's prepared notes. This is not a published release: manifest/runtime versions remain at 0.9.0 for the owner to bump. Rebuild and verify after changing them. Hospital treatment/save-reload acceptance and the Deep Mine-specific inventory review remain pending; see `tools/STATUS.md` and `CHANGELOG.md` for the verification record.
+`changenotes-0.10.0.bbcode` contains the 0.10.0 update notes. Manifest/runtime versions are 0.10.0.0 / 0.10.0; Workshop publication remains a separate owner action. Hospital treatment/save-reload acceptance and the Deep Mine-specific inventory review remain pending; see `tools/STATUS.md` and `CHANGELOG.md` for the verification record.
 
 ## Uploading
 

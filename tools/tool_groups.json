@@ -8,7 +8,7 @@
     "Left to right is the unlock order (user 2026-11-01; tools/validate_tool_order.mjs): inside a Deep Frontier group every tool, claims included, follows science ascending (ties: a tool whose products another tool consumes comes first, then the smaller footprint, then the lower one); a group's order puts it among its parent's buttons by its earliest unlock, at a place with the fewest science inversions against the vanilla and other-mod buttons there, whose own order is kept. Deep Frontier tools placed in a native group follow the same rule.",
     "upgrades: a Deep Frontier building that upgrades another, by template name without the faction suffix -> the full template name of the building it upgrades (user 2026-11-02: the Reactor Charging Bay right next to the Charging Station). Its producer puts it in the base building's tool group with an order that stands it immediately to the base's right, and it is not listed in any group here. tools/validate_tool_order.mjs requires that adjacency and leaves the upgrade out of the science-order rules (its unlock still comes from its science); every other tool keeps them.",
     "nativeOrders: the complete order of a native group's tools, written as a same-path partial of that group's blueprint, {ToolGroupChildrenSpec: {ChildrenOrderedIds#append: [...]}} (ids get 10, 20, ...; #append keeps other mods' entries).",
-    "related: tools and sub-groups that belong together (player feedback 2026-11-02: the tubeway station beside the Tubeways group; Explosives Factory, Dynamite, Tunnel). Each entry names a toolbar group and its children (template names with the faction suffix, or sub-group ids) in the order they must stand: next to each other, left to right as listed. tools/validate_tool_order.mjs requires that and leaves the listed Deep Frontier children out of the science-order rules; every other child keeps them and may not stand between them. An upgrade (below) is the same rule for a pair: the base building, then its upgrade.",
+    "related: retained design context for associated tools and sub-groups. Ordering follows the science-order rules; these associations no longer impose adjacency or exempt children from those rules. Only declared upgrades require immediate adjacency to their base building.",
     "externalMods: the non-Deep Frontier, non-vanilla templates claimed, ordered or kept together here, with the installed package they were read from, and each template's tool group, science (BuildingSpec.ScienceCost), ToolOrder (the menu order of an unclaimed one) and icon. optional mods are not in the manifest's RequiredMods. Flywheels keeps its blueprints in its asset bundle (read with UnityPy from AssetBundles/flywheels_win at 4.1.1.15): its template names swap Horizontal and Vertical against the display names, so the groups follow the display names."
   ],
   "externalMods": {
@@ -73,7 +73,7 @@
         "SuspensionBridge5x1.IronTeeth", "SuspensionBridge6x1.IronTeeth"] },
     "DeepFrontierOverhangs": { "parent": "Paths", "order": 70, "name": "Overhangs", "icon": "Overhang3x1.IronTeeth",
       "claims": ["Overhang2x1.IronTeeth", "Overhang3x1.IronTeeth", "Overhang4x1.IronTeeth", "Overhang5x1.IronTeeth", "Overhang6x1.IronTeeth"] },
-    "DeepFrontierTubeways": { "parent": "Paths", "order": 51, "name": "Tubeways", "icon": "Tubeway.IronTeeth",
+    "DeepFrontierTubeways": { "parent": "Paths", "order": 71, "name": "Tubeways", "icon": "Tubeway.IronTeeth",
       "claims": ["Tubeway.IronTeeth", "VerticalTubeway.IronTeeth", "ImpermeableTubeway.IronTeeth"] },
     "DeepFrontierTeleporters": { "parent": "Paths", "order": 74, "name": "Teleporters", "icon": "Teleporter.IronTeeth",
       "claims": ["Teleporter.IronTeeth", "TeleporterRing.IronTeeth"] },
@@ -102,7 +102,7 @@
       "claims": ["Floodgate.IronTeeth", "DoubleFloodgate.IronTeeth", "TripleFloodgate.IronTeeth"] },
     "DeepFrontierDynamite": { "parent": "Landscaping", "order": 80, "name": "Dynamite", "icon": "Dynamite.IronTeeth",
       "claims": ["Dynamite.IronTeeth", "DoubleDynamite.IronTeeth", "TripleDynamite.IronTeeth"] },
-    "DeepFrontierMasonryBlocks": { "parent": "Landscaping", "order": 65, "name": "Masonry and concrete", "icon": "ConcreteBlock",
+    "DeepFrontierMasonryBlocks": { "parent": "Landscaping", "order": 81, "name": "Masonry and concrete", "icon": "ConcreteBlock",
       "templates": ["BrickMasonryBlock", "SandstoneMasonryBlock", "ConcreteBlock", "ConcreteOverflowDam", "ReinforcedDamBlock"] },
     "DeepFrontierRadioactiveWaste": { "parent": "Water", "order": 105, "name": "Radioactive waste", "icon": "RadioactiveWasteExport",
       "templates": ["RadioactiveSludgeRecoveryPump", "RadioactiveSludgeOutfall", "RadioactiveWasteExport", "RadioactiveWasteVault"] },

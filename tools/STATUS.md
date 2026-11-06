@@ -4,10 +4,13 @@
 
 Updated 2026-11-05. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
-## Next minor release preparation (2026-11-05)
+## Release 0.10.0 (2026-11-05; build 285 installed)
 
-- Prepared `CHANGELOG.md` Unreleased section and `workshop/changenotes-0.10.0.bbcode` for the next minor update. User will bump the version; manifest/runtime remain 0.9.0 and no Workshop upload is performed. Release notes distinguish the tested school/passage/radiation repairs from pending hospital treatment/save-reload acceptance and Deep Mine-specific UI review.
-- Commit scope includes the accumulated hospital, workplace UI, radiation, passage and school fixes and their validation sources. The four separately staged toolbar ordering files and unrelated untracked documents/images are excluded and preserved.
+- At the user's subsequent request, bumped manifest/runtime to 0.10.0.0 / 0.10.0 and dated the changelog. `workshop/changenotes-0.10.0.bbcode` is ready for the owner's Workshop upload. Release notes distinguish the tested school/passage/radiation repairs from pending hospital treatment/save-reload acceptance and Deep Mine-specific UI review.
+- User clarified that all pending changes must be included. Included the staged toolbar ordering/validator changes and corrected the producing catalog: Tubeways order 71, Masonry order 81. Regenerated both blueprints in the scratch mirror; manifest/dependency and toolbar validators all pass. All pending research documents, warehouse review renders and the existing generator log are included in repository scope; they are not runtime assets.
+- Build 284 was intentionally stopped before installation completed after the scope clarification. Build 285 contains the complete runtime working set. Incremental compile succeeds with three existing diagnostic-script warnings and no errors. The full build-283 suite and native acceptance cover the unchanged gameplay fixes; the final broader run covers the toolbar changes.
+- Official build 285 verified: all 802 authored data/manifest/DLL hashes match the installed package; Windows/macOS bundles pass verification. Installed manifest is 0.10.0.0. Evidence: `outputs/unity-official-build285.log`, `outputs/restaurant-package-verification285.json`. Relaunched normally with no acceptance scenario enabled (`outputs/release0100-launch285.log`); Workshop upload remains the user's action.
+- Final full suite: 78 checks pass, one item-use report (52 goods, zero issues); the Git-only asset guard passes separately on the staged real repository (the scratch mirror has no Git metadata). Evidence: `outputs/release0100-285-validation/`. Launch log confirms `Deep Frontier (v0.10.0.0)`. User's physical Escape stopped computer control during window discovery, so no further UI input or upload-menu navigation was performed.
 
 ## School study priority (2026-11-05; build 283 installed; native acceptance passed)
 

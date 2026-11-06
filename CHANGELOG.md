@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-Prepared for **0.10.0**; version numbers and Workshop publication remain pending.
+## 0.10.0 (2026-11-05)
 
 ### School, passages and radiation fixes
 - Technical School students now use short study visits, allowing normal food, water, sleep and work priorities to be reconsidered between sessions. Accumulated training progress is preserved. Native tests cover occupied pause, resume and refusal of new visits while paused; the player-reported mass-death incident has not been independently reproduced.
@@ -10,6 +10,7 @@ Prepared for **0.10.0**; version numbers and Workshop publication remain pending
 - Fixed radioactive-water arithmetic that could crash the simulation when pumping nearly empty water columns or selectively removing badwater. Radioactive surplus follows the existing soil-transfer rule; invalid-share checks remain strict.
 
 ### Hospital treatment and clearer inventories
+- Reordered the Tubeways and Masonry/concrete toolbar groups by unlock progression. Upgraded buildings remain immediately beside their base building.
 - Hospitals use Medicine only while treating badwater contamination or irradiation. Injury and chipped-teeth care, and neighborhood wellbeing, no longer require Medicine. Medical treatment pauses when its supplies are unavailable and displays a medicine-shortage status.
 - Hospital badwater decontamination uses twice the Decontamination Pod's treatment rate at full staffing and power. Radiation sickness counts hospital care only when actual treatment is available.
 - Operating supplies such as Metal Blocks and Treated Planks appear as native input inventory rows with capacities and consumption tooltips. Removed the long operating-supply and workforce-risk panels; injury risk uses a compact native-style description.
@@ -17,7 +18,7 @@ Prepared for **0.10.0**; version numbers and Workshop publication remain pending
 ### Verification and release preparation
 - Build 283: official Windows/macOS package verification; compile/static checks; native school decision/pause tests and repeated passage removal/rebuild tests passed. Radiation checks cover 30,025 arithmetic assertions plus a crash-save replay.
 - Hospital changes compile and pass static validation; dedicated treatment and save/reload acceptance remains pending. Deep Drill inventory rows were reviewed in game; the Deep Mine-specific visual review remains pending. Native macOS playtesting was not performed.
-- Steam-ready draft notes: `workshop/changenotes-0.10.0.bbcode`. Bump the version and rebuild/verify before uploading; the currently installed build still identifies as 0.9.0.
+- Steam-ready notes: `workshop/changenotes-0.10.0.bbcode`. Manifest/runtime versions are 0.10.0.0 / 0.10.0; Workshop publication is performed separately by the owner.
 
 ## 0.9.0 (2026-11-04)
 

@@ -9,7 +9,7 @@
 //   tool of the same tab, and not hidden by a Deep Frontier partial.
 // - externalMods: the package's manifest Id and Version match, a required mod is in the
 //   manifest's RequiredMods and an optional one is not; loose blueprints give each template's
-//   tool group, science (BuildingSpec.ScienceCost) and ToolOrder (both read by tools/validate_tool_order.mjs) and
+//   tool group, science (BuildingSpec.ScienceCost, read by tools/validate_tool_order.mjs) and
 //   icon, an asset-bundle mod's IronTeeth TemplateCollection matches (its science was read
 //   with UnityPy at the catalogued version).
 // - nativeOrders list every vanilla Iron Teeth, Deep Frontier and externalMods tool of that group.
@@ -104,12 +104,12 @@ for (const [modId, mod] of Object.entries(config.externalMods)) {
     for (const path of await looseBlueprints(folder)) {
       const blueprint = await readJson(path);
       const name = blueprint.TemplateSpec?.TemplateName;
-      if (name && blueprint.PlaceableBlockObjectSpec) tools.set(name, {toolGroup: blueprint.PlaceableBlockObjectSpec.ToolGroupId, science: blueprint.BuildingSpec?.ScienceCost ?? 0, toolOrder: blueprint.PlaceableBlockObjectSpec.ToolOrder, icon: blueprint.LabeledEntitySpec?.Icon});
+      if (name && blueprint.PlaceableBlockObjectSpec) tools.set(name, {toolGroup: blueprint.PlaceableBlockObjectSpec.ToolGroupId, science: blueprint.BuildingSpec?.ScienceCost ?? 0, icon: blueprint.LabeledEntitySpec?.Icon});
     }
     for (const [name, tool] of Object.entries(mod.templates)) {
       const found = tools.get(name);
       if (!found) errors.push(`externalMods ${modId}: ${name} is not in the installed package`);
-      else if (!same(found, {toolGroup: tool.toolGroup, science: tool.science, toolOrder: tool.toolOrder, icon: tool.icon})) errors.push(`externalMods ${modId}: ${name} is ${JSON.stringify(found)} installed, ${JSON.stringify(tool)} in the catalog`);
+      else if (!same(found, {toolGroup: tool.toolGroup, science: tool.science, icon: tool.icon})) errors.push(`externalMods ${modId}: ${name} is ${JSON.stringify(found)} installed, ${JSON.stringify(tool)} in the catalog`);
     }
   } else if (mod.blueprints === 'assetBundle') {
     const listed = (await readJson(resolve(folder, 'TemplateCollections', 'TemplateCollection.Buildings.IronTeeth.blueprint.json'))).TemplateCollectionSpec['Blueprints#append'];
