@@ -4,6 +4,13 @@
 
 Updated 2026-11-05. Target: Timberborn 1.1.2.8, Iron Teeth; Unity 6000.5.11f1.
 
+## Hatchery without starter fish (2026-11-05; build 286 installed)
+
+- Removed FreshFish from the canonical JuvenileFish recipe: 1 Algae + 2 Water produces 2 JuvenileFish at the existing 2 worker-hours per cycle. Workers, hp, science, physical water requirements and output quantities are unchanged. The Fisher Flag remains an independent food source.
+- Canonical regeneration changed only the juvenile recipe and hatchery help text. Updated current aquaculture documentation/workbook source text and native test fixtures to stop supplying or expecting starter fish. Historical acceptance evidence remains historical; the changed recipe has not yet had a native production/save-reload run.
+- Targeted recipe/content, progression-deadlock and building-description checks pass. Incremental compile succeeds with three existing diagnostic warnings. Full validation initially caught the stale material-cost context; regenerated it and reran progression, construction, recipe and deadlock checks successfully. Regeneration changed no additional runtime data or building costs. Final result: 78 checks pass, one item-use report (52 goods, zero issues), Git-only asset guard passes separately in the real repository. FreshFish retains four consumers. Evidence: `outputs/hatchery286-validation/`.
+- Official build 286 installed and verified: 802 matching data/manifest/DLL hashes, Windows/macOS bundle checks, and explicit installed recipe inspection (only Algae 1 and Water 2). Evidence: `outputs/unity-official-build286.log`, `outputs/restaurant-package-verification286.json`. Game was already closed and remains closed; changes apply on its next launch. Version remains 0.10.0.0; no Workshop upload or new native production/save-reload run.
+
 ## Release 0.10.0 (2026-11-05; build 285 installed)
 
 - At the user's subsequent request, bumped manifest/runtime to 0.10.0.0 / 0.10.0 and dated the changelog. `workshop/changenotes-0.10.0.bbcode` is ready for the owner's Workshop upload. Release notes distinguish the tested school/passage/radiation repairs from pending hospital treatment/save-reload acceptance and Deep Mine-specific UI review.

@@ -278,7 +278,7 @@ namespace DeepFrontier.Scripts {
         }
       } else if(_shorePhase>=11)CheckHatchery();
     }
-    private void SetupHatchery(bool seedFish=true) {
+    private void SetupHatchery(bool bootstrapSupplies=false) {
       // Exact empty bank surveyed in Reservoir acceptance - verified. The
       // nursery sits beside the quarry, with a separate four-row water bed under
       // its 5x5 deck (2026-11-01 shrink; 7x7 from 2026-10-26, 8x8 before).
@@ -338,7 +338,7 @@ namespace DeepFrontier.Scripts {
       Debug.Log("[DeepFrontier Fishery] PASS hatchery player-path placement, blocked room/pen, shaft underneath and native platform stack above dock");
       RequireHatcheryDeckLoadOrder(HatcheryPathCells().Count(c=>c.y>0)+1);
       _hatcheryProduction=_hatchery.GetComponent<Manufactory>();
-      var supplies=seedFish?new[]{new GoodAmount("FreshFish",2),new GoodAmount("Algae",2),new GoodAmount("Water",4)}:
+      var supplies=!bootstrapSupplies?new[]{new GoodAmount("Algae",2),new GoodAmount("Water",4)}:
         new[]{new GoodAmount("Algae",4),new GoodAmount("Water",8)};
       foreach(var good in supplies)_hatcheryProduction.Inventory.GiveExisting(good);
       _hatcheryProduction.ProductionFinished+=(sender,args)=>{_hatcheryBatches++;Debug.Log("[DeepFrontier Fishery] HATCHERY PRODUCED JuvenileFish");};
@@ -654,7 +654,7 @@ namespace DeepFrontier.Scripts {
       if(workers.Length<6)throw new InvalidOperationException("Bootstrap fixture needs six adult workers");
       foreach(var worker in workers)worker.Unemploy();
       workers[0].EmployAt(_flag.GetComponent<Workplace>());
-      SetupHatchery(seedFish:false);
+      SetupHatchery(bootstrapSupplies:true);
       if(_flag.Inventory.AmountInStock("FreshFish")!=0||_manufactory.Inventory.AmountInStock("FreshFish")!=0||_manufactory.Inventory.AmountInStock("JuvenileFish")!=0||_hatcheryProduction.Inventory.AmountInStock("FreshFish")!=0||_hatcheryProduction.Inventory.AmountInStock("JuvenileFish")!=0)
         throw new InvalidOperationException("Bootstrap must begin without fish or juveniles");
       _manufactory.Inventory.GiveExisting(new GoodAmount("Algae",8));

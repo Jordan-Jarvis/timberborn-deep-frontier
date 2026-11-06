@@ -10,7 +10,7 @@
   "BotHead": 38.069722,
   "BotLimb": 18.217963,
   "Brick": 1.113125,
-  "CannedFish": 2.732909,
+  "CannedFish": 2.731176,
   "CanolaOil": 2.25,
   "CanolaSeeds": 1,
   "Cassava": 1,
@@ -41,14 +41,14 @@
   "Fertilizer": 6.227143,
   "FilterMedia": 1.489815,
   "Fireworks": 0.333,
-  "FishOil": 1.399491,
-  "FreshFish": 0.199746,
+  "FishOil": 1.397411,
+  "FreshFish": 0.198705,
   "Gear": 5.25,
   "Grease": 4.585,
   "GuidanceComputer": 440.511296,
   "HighGradeSteel": 11.453611,
   "HydrogenGas": 1.796091,
-  "JuvenileFish": 3.628444,
+  "JuvenileFish": 3.528571,
   "Kohlrabi": 0.194413,
   "Limestone": 0.415,
   "LiquidHydrogen": 6.635005,
@@ -2703,10 +2703,6 @@
   },
   "JuvenileFish": {
    "ingredients": [
-    [
-     "FreshFish",
-     1
-    ],
     [
      "Algae",
      1

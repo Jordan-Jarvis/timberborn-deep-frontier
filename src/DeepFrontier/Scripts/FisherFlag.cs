@@ -29,7 +29,7 @@ using Timberborn.WorldPersistence;
 using UnityEngine;
 
 namespace DeepFrontier.Scripts {
-  // Fisher Flag (2026-11-02): the one place fresh fish come from. Players
+  // Fisher Flag (2026-11-02): an independent source of fresh fish. Players
   // could not find the old "Catch fish" mode hidden in the Gatherer Flag panel,
   // so fishing is its own small flag beside the Gatherer Flag, built and
   // staffed the same way. The fisher walks to a dry bank in the flag's native

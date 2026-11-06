@@ -147,7 +147,7 @@ const recipeDefinitions = [
   // One step from wood and algae (the retired Compost intermediate folded in,
   // tools/content_policy.json migratedGoods): the two old recipes added together.
   ['Fertilizer', 'Fertilizer', 2.0, [{ Id: 'Log', Amount: 1 }, { Id: 'Algae', Amount: 2 }, { Id: 'Water', Amount: 2 }], [{ Id: 'Fertilizer', Amount: 2 }], 'Fertilizer'],
-  ['JuvenileFish', 'JuvenileFish', 2.0, [{ Id: 'FreshFish', Amount: 1 }, { Id: 'Algae', Amount: 1 }, { Id: 'Water', Amount: 2 }], [{ Id: 'JuvenileFish', Amount: 2 }], 'JuvenileFish'],
+  ['JuvenileFish', 'JuvenileFish', 2.0, [{ Id: 'Algae', Amount: 1 }, { Id: 'Water', Amount: 2 }], [{ Id: 'JuvenileFish', Amount: 2 }], 'JuvenileFish'],
   ['FreshFish', 'FreshFish', 3.0, [{ Id: 'JuvenileFish', Amount: 1 }, { Id: 'Algae', Amount: 1 }, { Id: 'Water', Amount: 3 }], [{ Id: 'FreshFish', Amount: 3 }], 'FreshFish'],
   ['FishOil', 'FishOil', 1.0, [{ Id: 'FreshFish', Amount: 2 }], [{ Id: 'FishOil', Amount: 1 }], 'FishOil'],
   ['CannedFish', 'CannedFish', 2.0, [{ Id: 'FreshFish', Amount: 3 }, { Id: 'MetalBlock', Amount: 1 }, { Id: 'FishOil', Amount: 1 }], [{ Id: 'CannedFish', Amount: 3 }], 'CannedFish'],
@@ -343,7 +343,7 @@ function plannedRow(id, outputPath, template) {
 const BUILDING_TEXT = {
   FertilizerWorks: ['Makes fertilizer from logs and algae for the Greenhouse.',
     'Logs and algae go in. Nobody asks about the smell.'],
-  FishHatchery: ['Breeds juvenile fish from fresh fish. Build it over a river: its pens need clean water and stop if they dry out or turn to badwater.',
+  FishHatchery: ['Raises juvenile fish using algae and water. Its pens need clean river water beneath them.',
     'Thousands of tiny fish and one very patient beaver.'],
   FisheryWorks: ['Raises juvenile fish into fresh fish, or presses fresh fish into fish oil.',
     'Grow them big, then press the rest for oil.'],

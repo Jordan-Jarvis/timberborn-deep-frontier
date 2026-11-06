@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fish Hatchery no longer requires Fresh Fish: 1 Algae + 2 Water produces 2 Juvenile Fish. Clean water beneath the pens, power, workers and production time are unchanged. Updated help text to remove the starter-fish requirement.
+
 ## 0.10.0 (2026-11-05)
 
 ### School, passages and radiation fixes

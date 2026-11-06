@@ -6,10 +6,6 @@
     "CycleDurationInHours": 2,
     "Ingredients": [
       {
-        "Id": "FreshFish",
-        "Amount": 1
-      },
-      {
         "Id": "Algae",
         "Amount": 1
       },

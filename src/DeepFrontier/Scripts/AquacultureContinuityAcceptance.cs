@@ -80,7 +80,7 @@ namespace DeepFrontier.Scripts {
       if(_normalOutput<=0)throw new InvalidOperationException("Saved power fixture has no output");
       if(!_fishery.GetComponent<PausableBuilding>().Paused||!_hatchery.GetComponent<PausableBuilding>().Paused)
         throw new InvalidOperationException("Expected both saved workshops paused");
-      if(_nursery.CurrentRecipe.Id!="JuvenileFish"||_nursery.Inventory.AmountInStock("JuvenileFish")!=2||_nursery.Inventory.AmountInStock("FreshFish")!=1||_nursery.Inventory.AmountInStock("Algae")!=1||_nursery.Inventory.AmountInStock("Water")!=30)
+      if(_nursery.CurrentRecipe.Id!="JuvenileFish"||_nursery.Inventory.AmountInStock("JuvenileFish")!=2||_nursery.Inventory.AmountInStock("FreshFish")!=0||_nursery.Inventory.AmountInStock("Algae")!=1||_nursery.Inventory.AmountInStock("Water")!=30)
         throw new InvalidOperationException("Native hatchery recipe or saved stock changed");
       var waterSite=_hatchery.GetComponent<WaterDepthWorkCells>();
       if(_hatchery.TransformCoordinates(waterSite.Spec.WorkCells[0])!=new Vector3Int(188,161,2)||waterSite.IsBlockedByDepth||_hatchery.GetComponent<ContaminationBlockableBuilding>().IsBlocked)

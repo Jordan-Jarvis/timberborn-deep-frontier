@@ -108,7 +108,7 @@ Building.FertilizerWorks.DisplayName,Fertilizer Works,Deep Frontier
 Building.FertilizerWorks.Description,Makes fertilizer from logs and algae for the Greenhouse. Pipes: valve set to Fill.,Deep Frontier
 Building.FertilizerWorks.FlavorDescription,Logs and algae go in. Nobody asks about the smell.,Deep Frontier
 Building.FishHatchery.DisplayName,Fish Hatchery,Deep Frontier
-Building.FishHatchery.Description,Breeds juvenile fish from fresh fish. Build it over a river: its pens need clean water and stop if they dry out or turn to badwater. Pipes: valve set to Fill.,Deep Frontier
+Building.FishHatchery.Description,Raises juvenile fish using algae and water. Its pens need clean river water beneath them. Pipes: valve set to Fill.,Deep Frontier
 Building.FishHatchery.FlavorDescription,Thousands of tiny fish and one very patient beaver.,Deep Frontier
 Building.FisheryWorks.DisplayName,Fishery Works,Deep Frontier
 Building.FisheryWorks.Description,"Raises juvenile fish into fresh fish, or presses fresh fish into fish oil. Pipes: valves set to Fill and Extract.",Deep Frontier

@@ -39,7 +39,7 @@
     "sourceScene": "src/DeepFrontier/Art/Source/FisheryWorks-ReferenceStudy.blend",
     "registrationSource": "tools/asset-pipeline/fishery_layout.py"
   },
-  "progression": "The Fisher Flag catches small amounts from real water; fresh fish seeds the hatchery; juveniles, algae and delivered water sustain the larger fishery.",
+  "progression": "The hatchery produces juveniles from algae and delivered water, with clean river water beneath its pens. No starter fish are required. Juveniles, algae and delivered water sustain the larger fishery; the Fisher Flag provides an independent small supply of fresh fish.",
   "transportStatus": "Build 76 passed real tank/pipe delivery, intake faces, capacity, valve interruption, reservoir levels, exact fresh-process reload and native pipe-fed production with conserved water",
   "evidence": [
     "outputs/fishery-run44.log",
