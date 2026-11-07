@@ -166,23 +166,23 @@ The structure and quarrying generators rank their tools by science (`structural_
 | Public Health Lab 1,000 / Hospital 50,000 | | keep | | The Hospital is a frontier building; Medicine comes first by design. |
 | Mission Control 75,000 / Rocket Assembly Hangar 125,000 | | keep | | Mission Control comes first in the story (chapter 6 asks for it). |
 
-## Modular Warehouse (2026-11-02)
+## Modular Warehouse (updated 2026-11-07)
 
-User request: a big storage that holds several goods with their own settings ("maybe we can do 5 items. That way the menu system doesn't get clogged"), then, as the design: early game, no power, one entrance with storage modules attached to it and stacked on it. Static authoring and checks only; not played in game.
+User request: early-game storage with five independently selected goods, no power, one entrance, and attachable/stackable capacity modules. All five selections belong to the core. Runtime verification is recorded in `tools/STATUS.md`.
 
 | | Modular Warehouse (core) | Warehouse Module |
 |---|---|---|
 | Menu, science (stage) | Storage, after the Large Warehouse; 400 (early, T1) | right of the core; 450 (T1) |
 | Size | 3x3, 2 high, door in front | 3x3, 1 high, no door |
-| Storage | 600 and 1 slot; at most 5 slots | +600 and +1 slot (up to 5) when attached |
+| Storage | 600 shared across 5 slots | +600 shared across the same 5 slots when attached |
 | Cost | 100 Plank, 60 Log, 15 Gear | 80 Plank, 60 Log, 5 Gear |
 | Power, workers | none | none |
 
 - **Attachment:** a finished module joins a finished core when it touches it, or an attached module, face to face (side by side on one layer, or stacked on its top); diagonal contact does not count. A module touching two networks joins the nearer core. The core holds the network's only inventory, so haulers, laborers, belts and needs use one storage point.
-- **Slots:** open slots = 1 + attached modules, at most 5; the capacity (600 + 600 per module) is shared equally by the open slots. Each slot is a warehouse of its own: one good (not in two slots) and the native Accept / Obtain / Supply / Empty setting.
+- **Slots:** all five are available without modules; capacity (600 + 600 per module) is shared equally, starting at 120 per slot. Each slot selects one distinct good and has the native Accept / Obtain / Supply / Empty controls. The goods button opens the existing native floating stockpile picker through `OverlayGoodSelectionController`, outside the entity panel. The game owns the picker controls, layout, updates, input, positioning and dismissal. A UI-only native Stockpile/SingleGoodAllower data adapter represents the selected slot; it never registers another world inventory or hauling destination.
 - **Capacity basis:** the vanilla Large Warehouse holds 1,200 in 3x3x2 at 250 science (67 per cell, 60 Log + 80 Plank). A module holds 600 in 3x3x1 (67 per cell; `validate_modular_warehouse.mjs` fails a denser module). A core with four modules stores 3,000 (5 x 600); with nine, 5 x 1,200.
 - **Costs:** the late-game size rule (both are integrated studies, tier T1) gives a 3x3 early building only 15-20 Plank, 10 Log and 5 Gear, far below the vanilla warehouses. `lategameGates` adds the rest so each costs about what the vanilla warehouses cost for its capacity, times the T1 cost factor 2 (60 Log + 80 Plank per 1,200 at vanilla rates): core +50 Log, +80 Plank, +10 Gear; module +50 Log, +65 Plank. The material rule still composes the rule part from the models (timber, iron straps priced as Gear; no brick or concrete, which do not exist at 400 science).
-- **Removing a module** lowers the capacity; stock above the new shares, and the good of a slot that closes (its good is cleared), become native unwanted stock and are carried to other storage. Goods never sit in a module. Deleting the core recovers its goods natively.
+- **Removing a module** lowers capacity while preserving all five selections. Stock above the new shares becomes native unwanted stock and is carried to other storage. Goods never sit in a module. Deleting the core recovers its goods natively.
 
 ## Tools
 

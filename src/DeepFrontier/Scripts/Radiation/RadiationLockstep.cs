@@ -72,6 +72,10 @@ namespace DeepFrontier.Scripts.Radiation {
           ("_waterColumnCounts", typeof(ReadOnlyArray<byte>)), ("_verticalStride", typeof(int)));
       }
       RequireFields(typeof(UpdateWaterSourcesTask), ("_waterSources", typeof(ReadOnlyList<ThreadSafeWaterSource>)), ("_deltaTime", typeof(float)));
+      RequireFields(typeof(UpdateWaterSourcesTask), ("_waterDepthSetter", typeof(WaterDepthSetter)));
+      Require(AccessTools.Method(typeof(UpdateWaterSourcesTask), "UpdateContaminationFromWaterChange",
+        new[] { typeof(WaterColumn).MakeByRefType(), typeof(float), typeof(float) })?.ReturnType == typeof(void),
+        "UpdateWaterSourcesTask.UpdateContaminationFromWaterChange(ref WaterColumn, float, float)");
       RequireFields(typeof(UpdateWaterChangesTask), ("_waterChanges", typeof(ReadOnlyList<WaterChange>)));
       RequireFields(typeof(ThreadSafeWaterSource), ("_waterSource", typeof(IWaterSource)));
       Require(AccessTools.Method(typeof(WaterChangeService), nameof(WaterChangeService.Tick), Type.EmptyTypes) != null, "WaterChangeService.Tick()");
@@ -100,7 +104,7 @@ namespace DeepFrontier.Scripts.Radiation {
     private static class SourcesPatch {
       private static void Prefix(ref UpdateWaterSourcesTask __instance) =>
         Simulation?.RecordSourceCells(__instance._mapIndexService, __instance._waterColumns, __instance._waterColumnCounts,
-          __instance._waterSources, __instance._verticalStride, __instance._deltaTime);
+          __instance._waterSources, __instance._verticalStride, __instance._deltaTime, in __instance);
     }
 
     [HarmonyPatch(typeof(UpdateWaterChangesTask), nameof(UpdateWaterChangesTask.Run))]

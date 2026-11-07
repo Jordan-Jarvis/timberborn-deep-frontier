@@ -19,8 +19,9 @@ namespace DeepFrontier.Scripts.Radiation {
   //   evaporated water carries its share away. Evaporated radioactive volume
   //   goes into the soil (EvaporatedVolume), so a pond that dries out leaves
   //   irradiated ground.
-  // - UpdateWaterSourcesTask: (c * I + cSource * (F - I)) / F per source cell;
-  //   MixSource is the same formula for r.
+  // - UpdateWaterSourcesTask: additions mix by retained volume, in source order;
+  //   withdrawals retain the fresh/radioactive ratio in the native clean water.
+  //   A negative source must never be treated as a negative addition of r.
   // - UpdateWaterChangesTask (dumps, pumps, workshops, AddRadioactiveWater):
   //   clean and contaminated volumes, each clamped at 0, then c = bad / total;
   //   ReplayChange applies the same steps to (clean, bad, radioactive) with
@@ -58,11 +59,22 @@ namespace DeepFrontier.Scripts.Radiation {
       return evaporated < available ? evaporated : available;
     }
 
-    // before / after: effective depths (WaterDepth + Overflow * pressure factor)
-    // around the native source step; addedRadioactive: radioactive part of the
-    // water the sources added.
-    public static float MixSource(float radioactive, float before, float after, float addedRadioactive) =>
-      after != 0f ? (radioactive * before + addedRadioactive) / after : 0f;
+    // One source operation, in native order. A negative-strength source is a
+    // withdrawal, not a negative addition of the source's radioactive share.
+    // Native badwater accounting determines the remaining clean-water fraction;
+    // its fresh/radioactive composition is unchanged by a withdrawal.
+    public static float MixSource(float radioactive, float before, float after, float sourceRadioactive,
+        float beforeBad, float afterBad) {
+      RequireShares(beforeBad, radioactive, "before a water source");
+      RequireShares(0f, sourceRadioactive, "the source composition");
+      if (!(before >= 0f) || !(after >= 0f) || float.IsInfinity(before) || float.IsInfinity(after))
+        throw new ArgumentOutOfRangeException(nameof(after), "Source depths must be finite and nonnegative");
+      if (after == 0f) return 0f;
+      if (after < before)
+        return beforeBad < 1f ? (radioactive / (1f - beforeBad)) * (1f - afterBad) : 0f;
+      float addedFraction = (after - before) / after;
+      return radioactive + (sourceRadioactive - radioactive) * addedFraction;
+    }
 
     // One native water change on volumes clean (= fresh + radioactive), bad and
     // radioactive. radioactiveShare: share of added clean water that is

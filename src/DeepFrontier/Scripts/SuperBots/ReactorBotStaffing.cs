@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Timberborn.BaseComponentSystem;
+using Timberborn.Characters;
 using Timberborn.EntitySystem;
 using Timberborn.GameDistricts;
 using Timberborn.TickSystem;
@@ -17,6 +18,7 @@ namespace DeepFrontier.Scripts.SuperBots {
     public Worker Worker { get; private set; }
     public Citizen Citizen { get; private set; }
     public WorkRefuser WorkRefuser { get; private set; }
+    public Character Character { get; private set; }
     public bool IsReactor=>Bot.IsReactor;
 
     public ReactorBotWorker(ReactorBotStaffing staffing) {_staffing=staffing;}
@@ -26,7 +28,8 @@ namespace DeepFrontier.Scripts.SuperBots {
       Worker=GetComponent<Worker>();
       Citizen=GetComponent<Citizen>();
       WorkRefuser=GetComponent<WorkRefuser>();
-      if(!Bot||!Worker||!Citizen||!WorkRefuser)
+      Character=GetComponent<Character>();
+      if(!Bot||!Worker||!Citizen||!WorkRefuser||!Character)
         throw new InvalidOperationException($"{Name}: a Reactor Bot worker needs ReactorBot and the native Worker, Citizen and WorkRefuser");
     }
 
@@ -97,7 +100,7 @@ namespace DeepFrontier.Scripts.SuperBots {
 
     // 0 = unemployed, 1 = at a lower-priority Reactor Bot workplace, -1 = not available.
     private int Rank(ReactorBotWorker bot, ReactorBotWorkplace workplace) {
-      if(!bot.IsReactor||bot.WorkRefuser.RefusesWork)return -1;
+      if(!bot.Character.Alive||!bot.IsReactor||bot.WorkRefuser.RefusesWork)return -1;
       var district=workplace.DistrictBuilding.District;
       if(!district||!bot.Citizen.HasAssignedDistrict||bot.Citizen.AssignedDistrict!=district)return -1;
       var current=bot.Worker.Workplace;

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>FluidsApi.GamePrototype</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../src/FluidsApi/GameBridge/*.cs" />
+    <ProjectReference Include="../fluid-transport/FluidsApi.TransportPrototype.csproj" />
+    <Reference Include="Timberborn.Multithreading" HintPath="$(TimberbornManaged)/Timberborn.Multithreading.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(ModsBuildManaged)/0Harmony.dll" Private="false" />
+  </ItemGroup>
+</Project>

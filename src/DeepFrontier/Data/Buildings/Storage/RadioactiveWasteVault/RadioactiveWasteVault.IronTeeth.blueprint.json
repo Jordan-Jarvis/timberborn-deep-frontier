@@ -1353,6 +1353,7 @@
       }
     }
   },
+  "ShieldedRadioactiveStorageSpec": {},
   "AmbientAnimationSpec": {},
   "WasteLeakSpec": {
     "GoodId": "RadioactiveWaste",

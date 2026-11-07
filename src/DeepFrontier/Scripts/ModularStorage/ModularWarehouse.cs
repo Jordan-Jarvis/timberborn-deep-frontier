@@ -31,7 +31,7 @@ namespace DeepFrontier.Scripts.ModularStorage {
   // StockpileInventoryInitializer does, unlimited like the native
   // SimpleOutputInventory, since the limits come from the slots) and this
   // component is its good disallower, partitioned into slots:
-  //   active slots = 1 + attached modules, at most MaxSlots;
+  //   all MaxSlots selections are available; modules increase capacity only;
   //   network capacity = CoreCapacity + each attached module's Capacity, shared
   //   equally by the active slots;
   //   AllowedAmount(good) = its slot's share less the slot's leftovers, for the
@@ -47,8 +47,7 @@ namespace DeepFrontier.Scripts.ModularStorage {
   //           longer allows.
   // A slot switched to another good keeps the old stock as leftovers until it
   // leaves; the new good fills the rest of the slot. Removing a module lowers the
-  // capacity: stock above the new shares, and the goods of slots that close
-  // (their good is cleared), become native unwanted stock and are carried to
+  // capacity: stock above the new shares becomes native unwanted stock and is carried to
   // other storage. Goods never sit in a module, so removing one loses nothing;
   // deleting the core recovers its goods natively (RecoverableGoodProvider).
   internal record ModularWarehouseSpec : ComponentSpec {
@@ -95,7 +94,7 @@ namespace DeepFrontier.Scripts.ModularStorage {
     // The attached network (ModularWarehouseNetwork.Update), saved so a load starts from it.
     public int Modules { get; private set; }
     public int NetworkCapacity { get; private set; }
-    public int ActiveSlots => Math.Min(_slots.Length, 1 + Modules);
+    public int ActiveSlots => _slots.Length;
     // Finished and unblocked (automation and pause block it), as the native stockpile behaviors require.
     public bool Operating => Enabled && Inventory.Enabled && _blockable.IsUnblocked;
 
@@ -144,12 +143,8 @@ namespace DeepFrontier.Scripts.ModularStorage {
       var changed = new HashSet<string>(_slots.SelectMany(s => s.Leftovers.Append(s.Good)).Where(g => g != null));
       Modules = modules;
       NetworkCapacity = capacity;
-      for (int i = ActiveSlots; i < _slots.Length; i++) {
-        var slot = _slots[i];
-        if (slot.Good != null && Inventory.AmountInStock(slot.Good) > 0) slot.Leftovers.Add(slot.Good);
-        slot.Good = null;
-        slot.Mode = WarehouseSlotMode.Accept;
-      }
+      // Modules change capacity, not the five good selections. Reduced limits
+      // make excess stock unwanted through the native inventory system.
       foreach (var good in changed) InvokeDisallowedGoodsChanged(good);
       UpdateEmptyingStatus();
     }

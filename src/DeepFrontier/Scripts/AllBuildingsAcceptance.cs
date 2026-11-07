@@ -816,7 +816,7 @@ namespace DeepFrontier.Scripts {
     // network of four modules applied for the probe (ModularWarehouse.SetNetwork, as ModularWarehouseNetwork does),
     // each of the five open slots takes its share of the capacity and every other good 0; an Empty slot allows 0
     // (native unwanted stock); a slot switched to another good keeps the old stock as leftovers, which take the new
-    // good's room until they leave; closing slots (fewer modules) clears their goods. The network, slots and stock
+    // good's room until they leave; fewer modules reduce capacity but retain selections. The network, slots and stock
     // are restored afterwards.
     private void WarehouseSlots(Subject s,ModularStorage.ModularWarehouse warehouse,Inventory inventory) {
       var goods=inventory.AllowedGoods.Select(g=>g.StorableGood.GoodId).ToList();
@@ -844,14 +844,14 @@ namespace DeepFrontier.Scripts {
       inventory.TakeExisting(new GoodAmount(goods[0],10));
       Expect("new good "+other+" after the leftovers left, limit",inventory.LimitedAmount(other),warehouse.SlotCapacity(0));
       warehouse.SetNetwork(0,spec.CoreCapacity);
-      Expect("open slots without modules",warehouse.ActiveSlots,1);
-      Expect("closed slot cleared",warehouse.GoodIn(1)==null?0:1,0);
-      Expect("limit of a closed slot's good "+goods[1],inventory.LimitedAmount(goods[1]),0);
-      Expect("core alone, limit "+other,inventory.LimitedAmount(other),spec.CoreCapacity);
-      warehouse.SetGood(0,null);
+      Expect("open slots without modules",warehouse.ActiveSlots,warehouse.MaxSlots);
+      Expect("selection retained without modules",warehouse.GoodIn(1)==goods[1]?1:0,1);
+      Expect("limit after module removal "+goods[1],inventory.LimitedAmount(goods[1]),warehouse.SlotCapacity(1));
+      Expect("core alone, limit "+other,inventory.LimitedAmount(other),warehouse.SlotCapacity(0));
+      for(int i=0;i<warehouse.MaxSlots;i++)warehouse.SetGood(i,null);
       warehouse.SetNetwork(modules,capacity);
       Record(s,"warehouse slots partition the inventory",problems.Count==0,problems.Count==0
-        ?"4 modules: "+warehouse.MaxSlots+" slots of "+share+"; Empty, leftovers, closing slots and the core alone as designed"
+        ?"4 modules: "+warehouse.MaxSlots+" slots of "+share+"; Empty, leftovers, retained selections and five slots on the core alone"
         :string.Join("; ",problems));
     }
 

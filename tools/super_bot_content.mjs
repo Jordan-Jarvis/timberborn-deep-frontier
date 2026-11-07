@@ -258,6 +258,7 @@ export function localizationRows(c, energy) {
     return GOOD_NAMES[g];
   }).join(' or ');
   const coolant = goodsFor(n.coolant.id), plating = goodsFor(n.plating.id);
+  const leakWarning = `Warning: leaks radioactive water into the ground after more than ${fmt(c.leak.overheatHours)} hours without coolant or ${fmt(c.leak.unmaintainedHours)} hours without plating.`;
   const rows = [];
   for (const p of c.parts) rows.push([`Good.${p.id}.DisplayName`, p.name], [`Good.${p.id}.PluralDisplayName`, p.plural]);
   for (const need of allNeeds(c)) rows.push([`Need.${need.id}.DisplayName`, need.name]);
@@ -266,10 +267,10 @@ export function localizationRows(c, energy) {
     [`Building.${s.id}.Description`, 'Charges two Reactor Bots at once, burning enriched fuel while it charges. Ordinary bots use the Charging Station.'],
     [`Building.${s.id}.FlavorDescription`, s.flavor],
     ['DeepFrontier.ReactorBot.Panel.Title', 'Reactor retrofit'],
-    ['DeepFrontier.ReactorBot.Panel.Ordinary', `Retrofit with ${parts} to make this bot a Reactor Bot: ${1 + u.carryingCapacityBonus} times the load, ${u.speedMultiplier} times the movement speed, ${u.workingSpeedMultiplier} times the working speed and ${u.lifespanMultiplier} times the lifespan. It charges at a ${s.name} every ${fmt(chargeDays)} days and takes ${coolant} and ${plating} from storage.`],
+    ['DeepFrontier.ReactorBot.Panel.Ordinary', `Retrofit with ${parts} to make this bot a Reactor Bot: ${1 + u.carryingCapacityBonus} times the load, ${u.speedMultiplier} times the movement speed, ${u.workingSpeedMultiplier} times the working speed and ${u.lifespanMultiplier} times the lifespan. It charges at a ${s.name} every ${fmt(chargeDays)} days and takes ${coolant} and ${plating} from storage. ${leakWarning}`],
     ['DeepFrontier.ReactorBot.Panel.Queued', `Retrofit queued: the bot fetches ${parts} from storage as soon as its district stocks them.`],
-    ['DeepFrontier.ReactorBot.Panel.Upgraded', `Reactor Bot: ${1 + u.carryingCapacityBonus} times the load, ${u.speedMultiplier} times the movement speed and ${u.workingSpeedMultiplier} times the working speed, and it wears out ${u.lifespanMultiplier} times slower. Charges at a ${s.name}.`],
-    ['DeepFrontier.ReactorBot.Panel.Unplated', `No plating: wearing out ${u.unplatedWearMultiplier} times faster until it takes ${plating} from storage.`],
+    ['DeepFrontier.ReactorBot.Panel.Upgraded', `Reactor Bot: ${1 + u.carryingCapacityBonus} times the load, ${u.speedMultiplier} times the movement speed and ${u.workingSpeedMultiplier} times the working speed, and it wears out ${u.lifespanMultiplier} times slower. Charges at a ${s.name}. ${leakWarning}`],
+    ['DeepFrontier.ReactorBot.Panel.Unplated', `No plating: wears out ${u.unplatedWearMultiplier} times faster and leaks radioactive water after ${fmt(c.leak.unmaintainedHours)} hours without plating. Supply ${plating}.`],
     ['DeepFrontier.ReactorBot.Panel.Queue', 'Retrofit to Reactor Bot'],
     ['DeepFrontier.ReactorBot.Panel.Cancel', 'Cancel retrofit']);
   return rows;

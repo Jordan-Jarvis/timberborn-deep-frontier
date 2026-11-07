@@ -14,8 +14,8 @@
 // core as its good disallower and native Emptiable as its inventory validator,
 // the native decorators a stockpile gets, slot modes in the native
 // StockpilePriorityToggle order, the network search over native block occupancy
-// across the six faces after loading and after finished-state changes, closing
-// slots on fewer modules, persistence through the native SerializedGood
+// across the six faces after loading and after finished-state changes, preserving
+// five selections when modules change, persistence through the native SerializedGood
 // serializer, native events subscribed in InitializeEntity, no Harmony and no
 // dependency mod.
 // Native contract (Timberborn 1.1.2.8, decompiled from the plugin assemblies).
@@ -103,7 +103,7 @@ const warehouse = sources['ModularWarehouse.cs'] ?? '';
 const network = sources['WarehouseModule.cs'] ?? '';
 const hauling = sources['ModularWarehouseHauling.cs'] ?? '';
 const configurator = sources['ModularWarehouseConfigurator.cs'] ?? '';
-const panel = (sources['ModularWarehousePanel.cs'] ?? '') + (sources['WarehouseGoodSelectionBox.cs'] ?? '');
+const panel = (sources['ModularWarehousePanel.cs'] ?? '') + (sources['WarehouseSlotSelection.cs'] ?? '');
 if (/HarmonyLib|\[HarmonyPatch|\bHarmony\b/.test(all)) fail('runtime: the warehouse uses no Harmony');
 if (/\b(TimberPipes|ConveyorBelt|PowerLines|TimberUi|ModdableRecipes|ModdableTimberborn|ModSettings)\./.test(all)) fail('runtime: no dependency mod (the editor build compiles it without them)');
 if (/IInventoryValidator|MechanicalBuilding|ActiveAndPowered/.test(warehouse + hauling)) fail('runtime: the core is unpowered; native Emptiable is its inventory validator');
@@ -115,11 +115,11 @@ if (!enumMatch || compact(enumMatch[1]) !== 'Accept,Obtain,Supply,Empty') fail('
 const allowed = warehouse.match(/public int AllowedAmount\(string goodId\)\s*\{([\s\S]*?)\n    \}/);
 if (!allowed || !has(allowed[1], 'if (slot.Mode == WarehouseSlotMode.Empty) return 0;') || !has(allowed[1], 'Math.Max(0, SlotCapacity(i) - slot.Leftovers.Sum(Inventory.AmountInStock))') || !has(allowed[1], 'return 0;'))
   fail('runtime: AllowedAmount gives 0 to Empty slots and unselected goods and the slot share less its leftovers to a selected good');
-if (!has(warehouse, 'public int ActiveSlots => Math.Min(_slots.Length, 1 + Modules);') || !has(warehouse, 'return NetworkCapacity / active + (slot < NetworkCapacity % active ? 1 : 0);'))
-  fail('runtime: open slots = 1 + modules (capped) and the capacity is shared equally');
+if (!has(warehouse, 'public int ActiveSlots => _slots.Length;') || !has(warehouse, 'return NetworkCapacity / active + (slot < NetworkCapacity % active ? 1 : 0);'))
+  fail('runtime: all five slots are available without modules and capacity is shared equally');
 const setNetwork = warehouse.match(/public void SetNetwork\(int modules, int capacity\)\s*\{([\s\S]*?)\n    \}/);
-if (!setNetwork || !has(setNetwork[1], 'for (int i = ActiveSlots; i < _slots.Length; i++)') || !has(setNetwork[1], 'slot.Good = null;') || !has(setNetwork[1], 'InvokeDisallowedGoodsChanged(good)'))
-  fail('runtime: SetNetwork closes the slots past the open count and tells the inventory every affected good');
+if (!setNetwork || has(setNetwork[1], 'slot.Good = null;') || !has(setNetwork[1], 'InvokeDisallowedGoodsChanged(good)'))
+  fail('runtime: SetNetwork preserves selections and notifies the inventory of changed capacities');
 const awake = warehouse.match(/public void Awake\(\)\s*\{([\s\S]*?)\n    \}/);
 if (!awake || /\+=/.test(awake[1])) fail('runtime: ModularWarehouse subscribes to no event in Awake (load replays it)');
 const init = warehouse.match(/public void InitializeEntity\(\)\s*\{([\s\S]*?)\n    \}/);
@@ -148,8 +148,11 @@ for (const needle of ['if (source == own) return false;', 'obtainer.IsObtaining'
 for (const needle of ['if (target == own) return false;', 'supplier.IsSupplying', 'warehouse.HasSlot(good, WarehouseSlotMode.Supply)'])
   if (!has(hauling, needle)) fail(`runtime: Supply must not give to itself, a supplying stockpile or a supplying slot (${needle})`);
 if ((hauling.match(/if \(!_warehouse\.Operating\) return/g) ?? []).length !== 4) fail('runtime: Obtain and Supply behaviors and providers stop while the core is blocked');
-for (const view of ['Game/EntityPanel/StockpileInventoryFragment', 'Game/StockpileGoodSelectionBox', 'Game/EntityPanel/GoodSelectionBoxRow', 'Game/EntityPanel/StockpileInventoryFragmentItem'])
-  if (!panel.includes(`"${view}"`)) fail(`panel: loads the native view ${view}`);
+if (!panel.includes('"Game/EntityPanel/StockpileInventoryFragment"')) fail('panel: use native stockpile row view');
+if (!panel.includes('OverlayGoodSelectionController') || !panel.includes('_picker.ToggleGoodSelection(stockpile,anchor)'))
+  fail('panel: use the native floating picker controller');
+for (const replacement of ['GoodSelectionBoxRowFactory','GoodSelectionBoxItemFactory','DropdownListDrawer','ShowDropdown(', 'Game/StockpileGoodSelectionBox'])
+  if (panel.includes(replacement)) fail(`panel: do not reconstruct the native picker (${replacement})`);
 if (!panel.includes('$"StockpilePriority.{mode}"') || !panel.includes('$"stockpile-priority-toggle__icon--{icon}"')) fail('panel: the toggle uses the native StockpilePriority texts and icons');
 const fragmentInit = panel.match(/public VisualElement InitializeFragment\(\)\s*\{([\s\S]*?)\n    \}/);
 if (!fragmentInit || /_views\.Create|GetComponent|_loc\.T/.test(fragmentInit[1])) fail('panel: InitializeFragment builds nothing that depends on another singleton or an entity');

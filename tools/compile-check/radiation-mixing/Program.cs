@@ -1,9 +1,9 @@
 using System.Reflection;
 
 // Runs the actual compiled mod's pure mixing methods, without Unity or a settlement.
-// Pass one explicit DeepFrontier.dll path (installed DLL for the before check,
-// compile-check DLL for the after check). No copied implementation or test stubs.
-if (args.Length != 1) throw new ArgumentException("Expected the full DeepFrontier.dll path");
+// Pass an explicit DeepFrontier.dll and the official publicized Managed directory.
+// No copied implementation or test stubs.
+if (args.Length != 2) throw new ArgumentException("Expected DeepFrontier.dll and official publicized Managed directory");
 var assembly = Assembly.LoadFrom(Path.GetFullPath(args[0]));
 var mixing = assembly.GetType("DeepFrontier.Scripts.Radiation.RadiationMixing", throwOnError:true)!;
 var replay = mixing.GetMethod("ReplayChange", BindingFlags.Public | BindingFlags.Static)!;
@@ -74,5 +74,6 @@ float traceClean = 3.97814256E-05f, traceBad = .206209153f, traceRadioactive = 4
 float traceDepth = traceClean + traceBad;
 KernelThenBadRemoval(traceBad / traceDepth, traceRadioactive / traceDepth,
   traceDepth, .149856851f, "live crash cell 6412");
+NativeSourceRegression.Run(assembly, Path.GetFullPath(args[1]), Check);
 Console.WriteLine($"{cases - failures}/{cases} checks passed; {failures} failures.");
 return failures == 0 ? 0 : 1;

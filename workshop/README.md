@@ -6,7 +6,7 @@
 
 ## Current update
 
-`changenotes-0.10.0.bbcode` contains the 0.10.0 update notes. Manifest/runtime versions are 0.10.0.0 / 0.10.0; Workshop publication remains a separate owner action. Hospital treatment/save-reload acceptance and the Deep Mine-specific inventory review remain pending; see `tools/STATUS.md` and `CHANGELOG.md` for the verification record.
+`changenotes-0.10.2.bbcode` contains the complete upload notes for this patch: the native five-slot warehouse picker, negative-employment compatibility fix, radioactive-source mixing fix, developer visibility crash fix, radioactive-water recovery and shielded storage, Reactor Bot warnings, and hatchery startup change. Manifest/runtime versions are 0.10.2.0 / 0.10.2. Official build 296 is installed and verified (803 file hashes and both platform bundles), and Timberborn has been relaunched. Evidence is recorded in `tools/STATUS.md`. Workshop publication is performed by the owner. Experimental Fluids API work remains a separate development package.
 
 ## Uploading
 

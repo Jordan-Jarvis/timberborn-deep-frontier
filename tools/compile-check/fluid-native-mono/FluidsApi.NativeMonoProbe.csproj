@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>FluidsApi.NativeMonoProbe</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../fluid-transport/FluidsApi.TransportPrototype.csproj" />
+    <ProjectReference Include="../fluid-game-bridge/FluidsApi.GamePrototype.csproj" />
+    <Reference Include="Timberborn.Multithreading" HintPath="$(TimberbornManaged)/Timberborn.Multithreading.dll" Private="false" />
+    <Reference Include="Timberborn.WaterSystem" HintPath="$(TimberbornManaged)/Timberborn.WaterSystem.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(TimberbornManaged)/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="System.Collections.Immutable" HintPath="$(TimberbornManaged)/System.Collections.Immutable.dll" Private="false" />
+  </ItemGroup>
+</Project>

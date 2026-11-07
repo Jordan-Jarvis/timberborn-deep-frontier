@@ -118,7 +118,7 @@ export const LEAK_TUNING = {
 // descriptions below replace them.
 export const PRODUCER_DESCRIPTIONS = {
   NuclearReactor: 'Huge power from enriched fuel, run by trained reactor operators.',
-  RadioactiveWasteVault: 'Stores radioactive waste.',
+  RadioactiveWasteVault: 'Shielded storage for radioactive waste or radioactive water.',
   RadioactiveWasteRefinery: 'Refines radioactive waste.',
 };
 
@@ -162,7 +162,7 @@ export function wasteLeakSpecs(batch, volumePerGood) {
 export function descriptions() {
   return {
     NuclearReactor: `${PRODUCER_DESCRIPTIONS.NuclearReactor} It melts down if its coolant water runs out or its waste is not hauled away; pausing it is safe.`,
-    RadioactiveWasteVault: `${PRODUCER_DESCRIPTIONS.RadioactiveWasteVault} Keep it below full: a full vault leaks radioactive water and irradiates the ground around it.`,
+    RadioactiveWasteVault: `${PRODUCER_DESCRIPTIONS.RadioactiveWasteVault} Select one good. A vault full of waste casks leaks radioactive water into the ground.`,
     RadioactiveWasteRefinery: 'Turns radioactive waste into radioactive water, cleans contaminated water and filters badwater. Haul its output away: full tanks leak.',
   };
 }

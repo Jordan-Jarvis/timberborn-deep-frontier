@@ -135,6 +135,7 @@ namespace DeepFrontier.Scripts.Radiation {
     private float _tideShare, _publishedTideShare;
     // Worker-side scratch (tasks run one after another).
     private readonly List<SourceCell> _sourceCells = new List<SourceCell>();
+    private readonly List<SourceStep> _sourceSteps = new List<SourceStep>();
     private readonly Dictionary<int, ChangeState> _changeStates = new Dictionary<int, ChangeState>();
 
     public float TotalWaterRadiation { get; private set; }
@@ -377,8 +378,10 @@ namespace DeepFrontier.Scripts.Radiation {
         for (int j = 0; j < _counts[i]; j++) {
           int idx = j * _vs + i;
           float radiation = _water[idx].Contamination;
-          if (!_isSourceCell[idx] && radiation > 0f) {
-            float bad = native[idx].Contamination;
+          if (radiation > 0f) {
+            // Source cells were restored to their pre-source state for these
+            // kernels. Compare both components at that same simulation stage.
+            float bad = _isSourceCell[idx] ? _sourceCells.Find(e => e.Index == idx).Before.Contamination : native[idx].Contamination;
             radiation = RadiationMixing.KernelExcess(bad, radiation, out float excess);
             if (excess > 0f) { Deposit(idx, excess * EffectiveDepth(in native[idx])); System.Threading.Interlocked.Increment(ref _kernelCorrections); }
             RadiationMixing.RequireShares(bad, radiation, "the contamination kernels");
@@ -396,10 +399,12 @@ namespace DeepFrontier.Scripts.Radiation {
     }
 
     // Prefix of UpdateWaterSourcesTask.Run: each source cell before any source
-    // adds water this substep, with the intended water and radioactive water.
+    // runs this substep. Replay native depth/badwater accounting on local value
+    // copies to retain each operation's actual before/after state, in order.
     internal void RecordSourceCells(MapIndexService mapIndex, WaterColumn[] columns, ReadOnlyArray<byte> counts,
-        ReadOnlyList<ThreadSafeWaterSource> sources, int verticalStride, float deltaTime) {
+        ReadOnlyList<ThreadSafeWaterSource> sources, int verticalStride, float deltaTime, in UpdateWaterSourcesTask task) {
       _sourceCells.Clear();
+      _sourceSteps.Clear();
       if (_layers == 0) return;
       for (int s = 0; s < sources.Count; s++) {
         var source = sources[s];
@@ -413,8 +418,12 @@ namespace DeepFrontier.Scripts.Radiation {
           int k = _sourceCells.FindIndex(e => e.Index == idx);
           if (k < 0) { _sourceCells.Add(new SourceCell(idx, columns[idx])); k = _sourceCells.Count - 1; }
           var entry = _sourceCells[k];
-          entry.Water += water;
-          entry.Radioactive += water * share;
+          var before = entry.After;
+          var after = before;
+          task._waterDepthSetter.SetWaterDepth(water, ref after);
+          task.UpdateContaminationFromWaterChange(ref after, EffectiveDepth(in before), source.Contamination);
+          _sourceSteps.Add(new SourceStep(idx, before, after, share));
+          entry.After = after;
           _sourceCells[k] = entry;
         }
       }
@@ -436,11 +445,18 @@ namespace DeepFrontier.Scripts.Radiation {
     }
 
     internal void MixSourceCells(WaterColumn[] native) {
+      foreach (var step in _sourceSteps) {
+        int idx = step.Index;
+        _radiation[idx] = RadiationMixing.MixSource(_radiation[idx], EffectiveDepth(in step.Before),
+          EffectiveDepth(in step.After), step.Radioactive, step.Before.Contamination, step.After.Contamination);
+        RadiationMixing.RequireShares(step.After.Contamination, _radiation[idx], "a water source operation");
+      }
       foreach (var entry in _sourceCells) {
         int idx = entry.Index;
-        float before = EffectiveDepth(in entry.Before), after = EffectiveDepth(in native[idx]);
-        float added = entry.Water > 0f ? entry.Radioactive / entry.Water * (after - before) : 0f;
-        float radiation = RadiationMixing.MixSource(_radiation[idx], before, after, added);
+        if (entry.After.WaterDepth != native[idx].WaterDepth || entry.After.Overflow != native[idx].Overflow ||
+            entry.After.Contamination != native[idx].Contamination)
+          throw new InvalidOperationException($"Radiation source replay differs from native water at column {idx}");
+        float radiation = _radiation[idx];
         RadiationMixing.RequireShares(native[idx].Contamination, radiation, "the water sources");
         _radiation[idx] = radiation;
         var column = native[idx];
@@ -1094,8 +1110,17 @@ namespace DeepFrontier.Scripts.Radiation {
     private struct SourceCell {
       public readonly int Index;
       public readonly WaterColumn Before;
-      public float Water, Radioactive;
-      public SourceCell(int index, in WaterColumn before) { Index = index; Before = before; Water = 0f; Radioactive = 0f; }
+      public WaterColumn After;
+      public SourceCell(int index, in WaterColumn before) { Index = index; Before = After = before; }
+    }
+
+    private readonly struct SourceStep {
+      public readonly int Index;
+      public readonly WaterColumn Before, After;
+      public readonly float Radioactive;
+      public SourceStep(int index, in WaterColumn before, in WaterColumn after, float radioactive) {
+        Index = index; Before = before; After = after; Radioactive = radioactive;
+      }
     }
 
     private struct ChangeState {

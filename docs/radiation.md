@@ -1,6 +1,22 @@
 # Radiation: radioactive water, contaminated stores and irradiation
 
-Status 2026-10-22: **one-fluid model, staged in `outputs/radiation-onefluid/` only.** It replaces the two-layer model (sludge as its own fluid) that build 122 ships. Compile-checked with the whole Scripts tree and run through the shipped native water tasks in a scratch harness. Nothing here has been built, launched or played; `tools/STATUS.md` records runtime verification.
+Current installation and runtime verification are recorded in `tools/STATUS.md`. The recovery/storage extension below is installed in build 287; settlement production, hauling and save/reload testing remain pending.
+
+## Radioactive-water recovery and shielded storage (2026-11-06)
+
+The existing Radioactive Water Recovery Pump is the specialized intake. Ordinary pumps remain blocked by radiation. Its native intake collects actual radioactive volume: dilution does not multiply the goods produced. The recovered good retains its existing `RadioactiveSludge` ID and Liquid type, displayed as **Radioactive water**.
+
+The Uranium Processing Plant gains **Yellowcake from radioactive water**: 6 radioactive water + 2 Chemical -> 1 Yellowcake, 4 worker-hours per cycle. It uses the plant's existing 73,000 hp demand, six-worker capacity, supplies and 300,000 science unlock (final generated blueprint, after the power rule). The uranium-ore recipe remains available. Yellowcake continues into existing fuel, reprocessing and training uses; no new item or separate nuclear progression is introduced.
+
+At the user's request, the initial 60-water/two-yellowcake proposal was reduced and oxygen removed. The batch is now closer to existing recipes (26 authored recipes consume ordinary Water, median 3, typically 1–4 per batch). Radioactive-water goods are concentrated material, not ordinary drinking water. Waste recycling can replenish nuclear feedstock: one newly enriched fuel consumes two yellowcake (12 radioactive water) and can return up to 26.5 radioactive water after ten reactor cycles and waste refining. Fuel reprocessing consumes one yellowcake (6) and four waste, returns two waste plus a fuel, and after burning/refining nets up to 22 radioactive water. This is a gameplay recycling route with chemical, coolant, structural-material and power costs; it is not a resource-free power loop. `tools/validate_radioactive_recovery.mjs` reports these yields without enforcing the earlier lossy-feedstock constraint.
+
+The existing Radioactive Waste Vault gains `ShieldedRadioactiveStorageSpec`: its sealed inventory can select radioactive water as well as its existing warehouse goods, with the same 1,600 total capacity and one selected good. This adds no new building mesh. Use haulers for the vault; this change does not add a pipe socket to it. The pump and processing plant retain their existing Timber Pipes connections.
+
+Ordinary native tanks cannot select or receive radioactive water. Their radioactive-water inventory entry is output-only with zero incoming capacity, so old saved contents remain recognized and withdrawable instead of being deleted. Native unwanted-stock hauling and the hazardous-stock demolition blocker remain in effect. Accidentally contaminated drinking water (`ContaminatedWater`) retains its existing tank/decontamination/disposal rules. Factories' required input/output buffers are not stockpiles and retain their production inventories. The existing vault leak rule still concerns full waste-cask stock; it is not a new full-tank leak rule for stored radioactive water.
+
+Native 1.1.2.8 extension point: `StockpileInventoryInitializer` selects goods only by type. A narrowly scoped `InventoryInitializer.Initialize` prefix authors the radioactive-water entry for the `Stockpile` inventory before native registration. It does not replace `SingleGoodAllower` or the cryogenic intake gate. The native storage picker includes output-only goods, so its initialization removes the unavailable radioactive-water choice. The runtime type/method and private field contracts are explicit and fail if incompatible.
+
+Reactor Bot warnings are now authored in the Bot Assembler's native description and the ordinary/retrofitted bot panel. Existing leak conditions are unchanged: more than 6 hours in the coolant need's critical state or more than 24 hours without favorable plating. The no-plating message names its 24-hour leak deadline. Leaks stop when neither condition is past its deadline.
 
 ## Model: one fluid
 
@@ -196,6 +212,10 @@ User request 2026-11-02: "If they overheat or go unmaintained for too long then 
 - **Saved** per bot under `DeepFrontier.ReactorBotLeak`: `OverheatedHours`, `UnplatedHours` and `NextPulseHours`, written only while one is non-zero. Saves without it load with no leak history.
 
 ### Sources and sinks
+
+Source arithmetic correction (2026-11-07): native `WaterSource.LimitStrength` limits only the maximum, so negative source strengths are supported. The old aggregate calculation kept the old radioactive amount when net source volume was nonpositive, then divided it by the reduced water volume. Fully radioactive depth 1 drained to `1 / 1.068215` consequently produced the reported 106.8215% share from valid inputs. This is a reproduced arithmetic failure, not confirmation of the unavailable reporter save's exact setup.
+
+`RecordSourceCells` now records each operation in order using local `WaterColumn` value copies and the native `WaterDepthSetter` and `UpdateContaminationFromWaterChange`. Positive retained volume mixes source composition; a withdrawal preserves the fresh/radioactive ratio in the remaining native clean-water portion. `MixSourceCells` verifies replayed depth, overflow and badwater against the native task's final state. There is no result clamp or fallback. The existing kernel soil-transfer operation now applies to source cells at their pre-source state, before replay. `tools/test_radiation_mixing.ps1` exercises the compiled production methods and native tasks through official publicized assemblies (required by .NET access checks); it currently passes 30,546 checks. Game-worker replay is recorded separately in `tools/STATUS.md`.
 
 | Path | Implementation |
 |---|---|

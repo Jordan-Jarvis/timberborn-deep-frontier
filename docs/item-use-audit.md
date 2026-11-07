@@ -45,7 +45,7 @@ Food may have direct eating as its only use. Rocket-specific parts still need on
 | PowerModule | 10 | 2 | PREFERRED RANGE MET | Construction: UraniumProcessingPlant.IronTeeth; Construction: RadioactiveWasteRefinery.IronTeeth; Construction: RocketAssemblyHangar.IronTeeth; Construction: LaunchPad.IronTeeth; Construction: NuclearReactor.IronTeeth; Construction: RadioactiveWasteVault.IronTeeth; Construction: RadioactiveWasteExport.IronTeeth; Construction: ReactorChargingBay.IronTeeth; Products: EnrichedFuel + RadioactiveWaste; Products: ReactorPowerCell |
 | PropulsionPackage | 1 | 1 | MINIMUM MET | Launch: rocket missions |
 | PureWater | 2 | 2 | MINIMUM MET | Products: ReactorCoolantWater; Products: HydrogenGas + OxygenGas |
-| RadioactiveSludge | 1 | 1 | MINIMUM MET | Disposal: off the map or into the river |
+| RadioactiveSludge | 2 | 1 | MINIMUM MET | Products: Yellowcake; Disposal: off the map or into the river |
 | RadioactiveWaste | 3 | 2 | PREFERRED RANGE MET | Products: EnrichedFuel; Products: RadioactiveSludge; Disposal: off the map or into the river |
 | RawDeepOre | 2 | 2 | MINIMUM MET | Products: DeepOre; Products: Dirt |
 | ReactorCoolantWater | 3 | 2 | PREFERRED RANGE MET | Products: RadioactiveSludge + RadioactiveWaste; Research: Science; Direct consumption |

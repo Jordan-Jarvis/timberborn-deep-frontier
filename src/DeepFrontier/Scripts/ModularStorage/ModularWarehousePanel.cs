@@ -22,12 +22,13 @@ namespace DeepFrontier.Scripts.ModularStorage {
     public const string NetworkLocKey = "DeepFrontier.ModularWarehouse.Network";
     private readonly WarehouseSlotViewFactory _views;
     private readonly ILoc _loc;
+    private readonly WarehouseSlotSelection _box;
     private readonly List<WarehouseSlotView> _slots = new List<WarehouseSlotView>();
     private VisualElement _root, _rows;
     private Label _network;
     private ModularWarehouse _warehouse;
 
-    public ModularWarehouseFragment(WarehouseSlotViewFactory views, ILoc loc) { _views = views; _loc = loc; }
+    public ModularWarehouseFragment(WarehouseSlotViewFactory views, ILoc loc,WarehouseSlotSelection box) { _views = views; _loc = loc; _box=box; }
 
     public VisualElement InitializeFragment() {
       _root = new VisualElement();
@@ -68,26 +69,24 @@ namespace DeepFrontier.Scripts.ModularStorage {
     private readonly SliderToggleFactory _toggles;
     private readonly StockpileOptionsService _options;
     private readonly IGoodService _goods;
-    private readonly WarehouseGoodSelectionBoxFactory _boxes;
+    private readonly WarehouseSlotSelection _box;
     private readonly ILoc _loc;
 
     public WarehouseSlotViewFactory(VisualElementLoader loader, SliderToggleFactory toggles, StockpileOptionsService options,
-        IGoodService goods, WarehouseGoodSelectionBoxFactory boxes, ILoc loc) {
-      _loader = loader; _toggles = toggles; _options = options; _goods = goods; _boxes = boxes; _loc = loc;
+        IGoodService goods, WarehouseSlotSelection box, ILoc loc) {
+      _loader = loader; _toggles = toggles; _options = options; _goods = goods; _box = box; _loc = loc;
     }
 
     public WarehouseSlotView Create(VisualElement parent, ModularWarehouse warehouse, int slot) {
       var root = _loader.LoadVisualElement("Game/EntityPanel/StockpileInventoryFragment");
       parent.Add(root);
-      var box = _boxes.Create();
-      root.Add(box.Root);
       // StockpilePriorityToggle's items, order and icon classes, below the good row.
       var toggle = _toggles.Create(root.Q<VisualElement>("StockpileInventoryFragment"),
         Item(warehouse, slot, WarehouseSlotMode.Accept, "accept"),
         Item(warehouse, slot, WarehouseSlotMode.Obtain, "obtain"),
         Item(warehouse, slot, WarehouseSlotMode.Supply, "supply"),
         Item(warehouse, slot, WarehouseSlotMode.Empty, "empty"));
-      return new WarehouseSlotView(_options, _goods, root, box, toggle, warehouse, slot);
+      return new WarehouseSlotView(_options, _goods, root, _box, toggle, warehouse, slot);
     }
 
     private SliderToggleItem Item(ModularWarehouse warehouse, int slot, WarehouseSlotMode mode, string icon) =>
@@ -100,7 +99,7 @@ namespace DeepFrontier.Scripts.ModularStorage {
     private readonly StockpileOptionsService _options;
     private readonly IGoodService _goods;
     private readonly VisualElement _root;
-    private readonly WarehouseGoodSelectionBox _box;
+    private readonly WarehouseSlotSelection _box;
     private readonly SliderToggle _toggle;
     private readonly ModularWarehouse _warehouse;
     private readonly int _slot;
@@ -111,7 +110,7 @@ namespace DeepFrontier.Scripts.ModularStorage {
     private readonly VisualElement _leftover;
     private string _shownGood = "";
 
-    public WarehouseSlotView(StockpileOptionsService options, IGoodService goods, VisualElement root, WarehouseGoodSelectionBox box,
+    public WarehouseSlotView(StockpileOptionsService options, IGoodService goods, VisualElement root, WarehouseSlotSelection box,
         SliderToggle toggle, ModularWarehouse warehouse, int slot) {
       _options = options; _goods = goods; _root = root; _box = box; _toggle = toggle; _warehouse = warehouse; _slot = slot;
       _amount = root.Q<Label>("CapacityAmount");
@@ -125,9 +124,7 @@ namespace DeepFrontier.Scripts.ModularStorage {
       _unselect = root.Q<Button>("Unselect");
       _unselect.RegisterCallback<ClickEvent>(_ => _warehouse.SetGood(_slot, null));
       var select = root.Q<Button>("Selection");
-      select.RegisterCallback<ClickEvent>(_ => _box.Toggle(_warehouse, _slot));
-      select.RegisterCallback<MouseEnterEvent>(_ => _box.DisableInput());
-      select.RegisterCallback<MouseLeaveEvent>(_ => _box.EnableInput());
+      select.RegisterCallback<ClickEvent>(_ => _box.Toggle(_warehouse, _slot, root.Q<VisualElement>("StockpileInventoryFragment")));
     }
 
     public void Update() {
@@ -157,7 +154,6 @@ namespace DeepFrontier.Scripts.ModularStorage {
         _leftoverName.text = spec.PluralDisplayName.Value;
       }
       _toggle.Update();
-      _box.Update();
     }
 
     public void Clear() {

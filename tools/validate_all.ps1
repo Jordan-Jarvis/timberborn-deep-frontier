@@ -18,7 +18,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
-$dev = Get-DevEnvironment 'node','python'
+$dev = Get-DevEnvironment 'node','python','pwsh'
 $node = $dev.node
 $python = $dev.python
 $blender = $dev.blender
@@ -82,6 +82,10 @@ Add-Check 'animations' 'python' $python @((Join-Path $root 'tools/asset-pipeline
 foreach ($file in Get-ChildItem -LiteralPath (Join-Path $root 'tools') -Filter 'validate_*.mjs' | Sort-Object Name) {
   Add-Check ($file.BaseName -replace '^validate_', '') 'node' $node @($file.FullName)
 }
+
+# Standalone Fluids API transport prototype plus installed native-task controls.
+Add-Check 'fluid-transport' 'dotnet' $dev.pwsh @('-NoProfile', '-File', (Join-Path $root 'tools/test_fluid_transport.ps1'))
+Add-Check 'radiation-mixing' 'dotnet' $dev.pwsh @('-NoProfile', '-File', (Join-Path $root 'tools/test_radiation_mixing.ps1'))
 
 # Built-in new-game setup: every default map variant against its unmodified built-in map (needs the game files).
 Add-Check 'map-setup-terrain' 'python' $python @((Join-Path $root 'tools/prepare_deep_frontier_map.py'), 'builtin')

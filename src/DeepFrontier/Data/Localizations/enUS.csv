@@ -144,7 +144,7 @@ Building.TechnicalSchool.DisplayName,Technical School,Deep Frontier
 Building.TechnicalSchool.Description,"Beavers study here in their free time to become metallurgists, reactor operators or flight engineers. Each school teaches one, chosen in its panel.",Deep Frontier
 Building.TechnicalSchool.FlavorDescription,Night classes for beavers who want a dangerous job done properly.,Deep Frontier
 Building.UraniumProcessingPlant.DisplayName,Uranium Processing Plant,Deep Frontier
-Building.UraniumProcessingPlant.Description,"Turns uranium ore into enriched fuel and reactor power cells, and reprocesses spent fuel. Its fuel leaves radioactive waste. Pipes: valve set to Fill.",Deep Frontier
+Building.UraniumProcessingPlant.Description,"Makes yellowcake from uranium ore or recovered radioactive water, enriches fuel and makes reactor power cells. Enrichment leaves radioactive waste. Pipes: valve set to Fill.",Deep Frontier
 Building.UraniumProcessingPlant.FlavorDescription,"Yellowcake is not for eating, however much it looks like it.",Deep Frontier
 Building.RadioactiveWasteRefinery.DisplayName,Radioactive Waste Refinery,Deep Frontier
 Building.RadioactiveWasteRefinery.Description,"Turns radioactive waste into radioactive water, cleans contaminated water and filters badwater. Haul its output away: full tanks leak. Pipes: valves set to Fill and Extract.",Deep Frontier
@@ -177,10 +177,10 @@ Building.FisherFlag.DisplayName,Fisher Flag,Deep Frontier
 Building.FisherFlag.Description,"Employs a fisher who catches fresh fish from the shore, where clean water at least 0.5 m deep lies no more than 1.25 m below the bank.",Deep Frontier
 Building.FisherFlag.FlavorDescription,"A quiet bank, a long wait and a longer story about the one that got away.",Deep Frontier
 Building.ModularWarehouse.DisplayName,Modular Warehouse,Deep Frontier
-Building.ModularWarehouse.Description,"Stores up to 5 goods, each in its own slot with its own warehouse settings. Each attached Warehouse Module adds a slot and storage.",Deep Frontier
+Building.ModularWarehouse.Description,Stores 5 different goods with separate warehouse settings. Attached Warehouse Modules increase the shared storage capacity.,Deep Frontier
 Building.ModularWarehouse.FlavorDescription,"One door, one ledger and a beaver who knows where everything is.",Deep Frontier
 Building.WarehouseModule.DisplayName,Warehouse Module,Deep Frontier
-Building.WarehouseModule.Description,"Adds storage and a slot to a Modular Warehouse when built beside it, on top of it, or on another attached module.",Deep Frontier
+Building.WarehouseModule.Description,"Adds storage to a Modular Warehouse when built beside it, on top of it, or on another attached module.",Deep Frontier
 Building.WarehouseModule.FlavorDescription,"Another floor of crates, and the ledger grows a page.",Deep Frontier
 DeepFrontier.ModularWarehouse.Network,Modules: {0}. Capacity: {1},Deep Frontier
 DeepFrontier.ModularWarehouse.ModuleUnattached,Not attached to a Modular Warehouse,Deep Frontier
@@ -200,7 +200,7 @@ Building.NuclearReactor.DisplayName,Nuclear Reactor,Deep Frontier
 Building.NuclearReactor.Description,"Huge power from enriched fuel, run by trained reactor operators. It melts down if its coolant water runs out or its waste is not hauled away; pausing it is safe. Pipes: valves set to Fill and Extract.",Deep Frontier
 Building.NuclearReactor.FlavorDescription,The frontier makes power and consequences at the same scale.,Deep Frontier
 Building.RadioactiveWasteVault.DisplayName,Radioactive Waste Vault,Deep Frontier
-Building.RadioactiveWasteVault.Description,Stores radioactive waste. Keep it below full: a full vault leaks radioactive water and irradiates the ground around it.,Deep Frontier
+Building.RadioactiveWasteVault.Description,Shielded storage for radioactive waste or radioactive water. Select one good. A vault full of waste casks leaks radioactive water into the ground.,Deep Frontier
 Building.RadioactiveWasteVault.FlavorDescription,"Labeled, logged and never, ever full.",Deep Frontier
 Building.CoalPowerPlant.DisplayName,Coal Power Plant,Deep Frontier
 Building.CoalPowerPlant.Description,Burns coal and water for power day and night. No workers. Pipes: valve set to Fill.,Deep Frontier
@@ -212,6 +212,7 @@ Recipe.CarbonFilterMedia.DisplayName,Filter media from coal,Deep Frontier
 Recipe.BrineChemical.DisplayName,Chemicals from concentrated waste,Deep Frontier
 Recipe.GreenhouseAquaponics.DisplayName,Kohlrabi and fresh fish,Deep Frontier
 Recipe.FuelReprocessing.DisplayName,Enriched fuel from radioactive waste,Deep Frontier
+Recipe.RecoveredYellowcake.DisplayName,Yellowcake from radioactive water,Deep Frontier
 Recipe.ContaminatedWaterRefining.DisplayName,Radioactive water from contaminated water,Deep Frontier
 Recipe.DecontaminateWater.DisplayName,Water from contaminated water,Deep Frontier
 Recipe.BadwaterFiltering.DisplayName,Water from badwater,Deep Frontier
@@ -758,7 +759,7 @@ Building.RadioactiveSludgeOutfall.DisplayName,Radioactive Water Outfall,Deep Fro
 Building.RadioactiveSludgeOutfall.Description,"Pours radioactive water or contaminated water out onto the map. Until it flows off the map edge, it stops pumps and irradiates beavers and the ground. Pipes: valve set to Fill.",Deep Frontier
 Building.RadioactiveSludgeOutfall.FlavorDescription,Out of sight is not out of the river.,Deep Frontier
 Building.RadioactiveSludgeRecoveryPump.DisplayName,Radioactive Water Recovery Pump,Deep Frontier
-Building.RadioactiveSludgeRecoveryPump.Description,Draws radioactivity out of rivers and lakes into barrels of radioactive water for export. The middle of its back edge must stand over water. Pipes: valve set to Extract.,Deep Frontier
+Building.RadioactiveSludgeRecoveryPump.Description,Recovers radioactive water for yellowcake production or disposal. Store it in a Radioactive Waste Vault. Its rear intake must stand over water. Pipes: valve set to Extract.,Deep Frontier
 Building.RadioactiveSludgeRecoveryPump.FlavorDescription,The cleanup always takes longer than the spill.,Deep Frontier
 DeepFrontier.Radiation.Status.PumpBlocked,"Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.",Deep Frontier
 DeepFrontier.Radiation.Status.PumpBlocked.Short,Radiation detected,Deep Frontier
@@ -857,7 +858,7 @@ DeepFrontier.Workforce.FatalAccident,{0} was killed in an industrial accident at
 DeepFrontier.Workforce.Bot.Wearing,Wearing out {0} times faster at the {1}.,Deep Frontier workforce risks
 DeepFrontier.Workforce.Bot.Assigned,Assigned to the {1}: wears out {0} times faster inside.,Deep Frontier workforce risks
 Recipe.IndustrialBot.DisplayName,Reactor bot,Deep Frontier bot upkeep
-Building.BotAssembler.DeepFrontierDescription,"Assembles bots from a chassis, four limbs and a head. Reactor bots take a reinforced bot frame and a reactor power cell instead of the chassis.",Deep Frontier bot upkeep
+Building.BotAssembler.DeepFrontierDescription,Assembles ordinary or Reactor Bots. Warning: Reactor Bots leak radioactive water into the ground after prolonged coolant loss or exhausted steel plating.,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Panel.Title,Bot maintenance,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Panel.Bots,Bots assigned: {0}. Serviced: {1}.,Deep Frontier bot upkeep
 DeepFrontier.BotUpkeep.Panel.NoBots,No bots assigned: maintenance goods are stocked only while bots work here.,Deep Frontier bot upkeep
@@ -895,10 +896,10 @@ Building.ReactorChargingBay.DisplayName,Reactor Charging Bay,Deep Frontier react
 Building.ReactorChargingBay.Description,"Charges two Reactor Bots at once, burning enriched fuel while it charges. Ordinary bots use the Charging Station.",Deep Frontier reactor bots
 Building.ReactorChargingBay.FlavorDescription,"Two hours on the cradle, a week on the job.",Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Title,Reactor retrofit,Deep Frontier reactor bots
-DeepFrontier.ReactorBot.Panel.Ordinary,"Retrofit with a reinforced bot frame and a reactor power cell to make this bot a Reactor Bot: 5 times the load, 4 times the movement speed, 5 times the working speed and 10 times the lifespan. It charges at a Reactor Charging Bay every 6.9 days and takes reactor coolant water or cryocoolant and steel or alloy from storage.",Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Ordinary,"Retrofit with a reinforced bot frame and a reactor power cell to make this bot a Reactor Bot: 5 times the load, 4 times the movement speed, 5 times the working speed and 10 times the lifespan. It charges at a Reactor Charging Bay every 6.9 days and takes reactor coolant water or cryocoolant and steel or alloy from storage. Warning: leaks radioactive water into the ground after more than 6 hours without coolant or 24 hours without plating.",Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Queued,Retrofit queued: the bot fetches a reinforced bot frame and a reactor power cell from storage as soon as its district stocks them.,Deep Frontier reactor bots
-DeepFrontier.ReactorBot.Panel.Upgraded,"Reactor Bot: 5 times the load, 4 times the movement speed and 5 times the working speed, and it wears out 10 times slower. Charges at a Reactor Charging Bay.",Deep Frontier reactor bots
-DeepFrontier.ReactorBot.Panel.Unplated,No plating: wearing out 5 times faster until it takes steel or alloy from storage.,Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Upgraded,"Reactor Bot: 5 times the load, 4 times the movement speed and 5 times the working speed, and it wears out 10 times slower. Charges at a Reactor Charging Bay. Warning: leaks radioactive water into the ground after more than 6 hours without coolant or 24 hours without plating.",Deep Frontier reactor bots
+DeepFrontier.ReactorBot.Panel.Unplated,No plating: wears out 5 times faster and leaks radioactive water after 24 hours without plating. Supply steel or alloy.,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Queue,Retrofit to Reactor Bot,Deep Frontier reactor bots
 DeepFrontier.ReactorBot.Panel.Cancel,Cancel retrofit,Deep Frontier reactor bots
 DeepFrontier.WorkerType.ReactorBot,Reactor Bots,Deep Frontier Reactor Bot workplaces

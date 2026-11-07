@@ -132,7 +132,7 @@ const LOCALIZATION = [
   ['Building.RadioactiveSludgeOutfall.Description', 'Pours radioactive water or contaminated water out onto the map. Until it flows off the map edge, it stops pumps and irradiates beavers and the ground.'],
   ['Building.RadioactiveSludgeOutfall.FlavorDescription', 'Out of sight is not out of the river.'],
   ['Building.RadioactiveSludgeRecoveryPump.DisplayName', 'Radioactive Water Recovery Pump'],
-  ['Building.RadioactiveSludgeRecoveryPump.Description', 'Draws radioactivity out of rivers and lakes into barrels of radioactive water for export. The middle of its back edge must stand over water.'],
+  ['Building.RadioactiveSludgeRecoveryPump.Description', 'Recovers radioactive water for yellowcake production or disposal. Store it in a Radioactive Waste Vault. Its rear intake must stand over water.'],
   ['Building.RadioactiveSludgeRecoveryPump.FlavorDescription', 'The cleanup always takes longer than the spill.'],
   ['DeepFrontier.Radiation.Status.PumpBlocked', 'Radiation detected at the intake. Pumps cannot filter radiation, so pumping has stopped until the water is clean.'],
   ['DeepFrontier.Radiation.Status.PumpBlocked.Short', 'Radiation detected'],

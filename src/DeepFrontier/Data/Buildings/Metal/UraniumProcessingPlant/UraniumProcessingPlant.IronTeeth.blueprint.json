@@ -3265,6 +3265,7 @@
   "ManufactorySpec": {
     "ProductionRecipeIds": [
       "Yellowcake",
+      "RecoveredYellowcake",
       "EnrichedFuel",
       "FuelReprocessing",
       "ReactorPowerCell"

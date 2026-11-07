@@ -1,0 +1,14 @@
+[h2]0.10.1 — Radioactive-water recovery, storage and stability fixes[/h2]
+[list]
+[*]Fixed negative unemployment when Teleporter Station restores districts after loading: dead beavers and bots are no longer returned to the hiring pool by its recovery scans. Reactor Bot staffing also explicitly excludes dead bots.
+[*]Modular Warehouse cores now offer all five goods selections. Modules increase shared capacity; removing a module preserves selected goods. Each slot opens the game's native floating stockpile picker.
+[*]Fixed the modular warehouse's apparently blank goods picker with scrolling entity panels. It now uses the existing native floating picker and controller outside the scrolling entity panel.
+[*]Fixed a radioactive-water crash caused by draining water sources retaining too much radiation. Overlapping sources now mix in order and account for water retained at the pressure limit.
+[*]Fixed crashes when hiding buildings in developer mode: restaurant guests and charging bots can still use their slots while building models are hidden.
+[*]Added an alternative Uranium Processing Plant recipe: 6 radioactive water + 2 chemicals produces 1 yellowcake. Takes 4 worker-hours per cycle and requires no oxygen. The uranium-ore recipe remains available.
+[*]The specialized Radioactive Water Recovery Pump can now supply the nuclear production chain. Updated its help text to explain recovery and shielded storage.
+[*]Radioactive Waste Vaults can store radioactive water, with the existing 1,600 capacity and one selected good. Deliveries use haulers.
+[*]Ordinary tanks no longer accept new radioactive-water deliveries. Existing saved contents remain available to haul out, and tanks holding hazardous contents still cannot be demolished. Accidentally contaminated drinking water keeps its existing cleanup options.
+[*]The Bot Assembler now warns that Reactor Bots leak radioactive water into the ground after prolonged coolant loss or exhausted plating. Retrofit and bot panels explain the existing 6-hour coolant and 24-hour plating leak deadlines; leak behavior is unchanged.
+[*]Fish Hatcheries no longer need Fresh Fish to start: 1 algae + 2 water produces 2 juvenile fish. Water beneath the pens, power, workers and production time are unchanged.
+[/list]

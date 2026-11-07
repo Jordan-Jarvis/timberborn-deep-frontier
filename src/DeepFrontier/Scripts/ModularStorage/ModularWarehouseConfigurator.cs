@@ -30,7 +30,7 @@ namespace DeepFrontier.Scripts.ModularStorage {
       Bind<ModularWarehouseNetwork>().AsSingleton();
       Bind<ModularWarehouseFragment>().AsSingleton();
       Bind<WarehouseSlotViewFactory>().AsSingleton();
-      Bind<WarehouseGoodSelectionBoxFactory>().AsSingleton();
+      Bind<WarehouseSlotSelection>().AsSingleton();
       MultiBind<TemplateModule>().ToProvider<TemplateModuleProvider>().AsSingleton();
       MultiBind<EntityPanelModule>().ToProvider<EntityPanelModuleProvider>().AsSingleton();
     }

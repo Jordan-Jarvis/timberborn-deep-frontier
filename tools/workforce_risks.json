@@ -77,7 +77,7 @@
     "cyclesCapacity": 2,
     "icon": "Sprites/Goods/ReactorPowerCellIcon",
     "ingredients": [["ReinforcedBotFrame", 1], ["ReactorPowerCell", 1], ["BotLimb", 4], ["BotHead", 1]],
-    "assemblerDescription": "Assembles bots from a chassis, four limbs and a head. Reactor bots take a reinforced bot frame and a reactor power cell instead of the chassis."
+    "assemblerDescription": "Assembles ordinary or Reactor Bots. Warning: Reactor Bots leak radioactive water into the ground after prolonged coolant loss or exhausted steel plating."
   },
   "templates": {
     "Buildings/Power/NuclearReactor/NuclearReactor.IronTeeth.blueprint": { "danger": "Extreme", "workers": "specialists", "discipline": "Nuclear", "reason": "Reactor control: trained operators only; no bots in the control room." },

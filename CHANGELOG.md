@@ -1,8 +1,51 @@
 # Changelog
 
-## Unreleased
+## 0.10.2 (2026-11-07)
 
-- Fish Hatchery no longer requires Fresh Fish: 1 Algae + 2 Water produces 2 Juvenile Fish. Clean water beneath the pens, power, workers and production time are unchanged. Updated help text to remove the starter-fish requirement.
+- Modular Warehouse cores expose all five goods slots and open the game's existing native floating stockpile picker. Native controls, layout, positioning and dismissal are retained; modules change capacity without clearing selections.
+- Fixed negative unemployment caused by Teleporter Station restoring dead beavers and bots to hiring pools. Recovery now checks living characters before registration; native employment counters remain unchanged. Reactor Bot staffing also excludes dead bots.
+- Fixed radioactive shares above 100% when negative-strength sources withdraw water; overlapping sources replay in native order using actual retained volumes. Invariant checks remain enabled.
+- Includes the developer building-visibility crash fix and the current radioactive-water recovery, shielded storage, Reactor Bot warning and hatchery startup changes detailed below. Full upload notes: `workshop/changenotes-0.10.2.bbcode`.
+- Release-only patch bump from the verified build 295 implementation: manifest/runtime versions **0.10.2.0 / 0.10.2**. Prior verification includes the native picker mouse check and 120-second replay, employment reproduction/fix replay, native source regression and radiation worker replay. No gameplay code changed for this version bump. Official build 296 passed all 803 package hashes and both platform bundles; installed version strings verified and Timberborn relaunched.
+
+## 0.10.1 (2026-11-06)
+
+### Negative unemployment with Teleporter Station
+- Added compatibility with Teleporter Station 0.5.1: its load-time recovery now skips dead characters before restoring district membership or moving stranded characters. It previously returned corpses to native hiring pools, creating occupied jobs for characters already excluded from the population.
+- Reactor Bot staffing also explicitly requires a living character. Native worker assignment events and population counters remain unchanged.
+
+### Modular warehouse selection
+- All five goods selections are available on the core. Attached modules increase shared capacity; removing a module preserves selections and lets native hauling remove excess stock.
+- Goods selection opens the game's existing floating stockpile picker through its native OverlayGoodSelectionController. Its layout, controls, input, positioning and dismissal are native; a small data adapter connects the selected warehouse slot.
+
+### Radioactive water-source mixing
+- Fixed radioactive shares exceeding 100% when a negative-strength water source drains a column. Withdrawals now remove radioactive water with the remaining native clean-water mixture instead of retaining its entire previous radioactive amount.
+- Overlapping sources are processed in native order with their actual retained volumes, including pressure-limited sources. Source cells use their pre-source badwater state for the existing contamination-kernel soil-transfer rule. Share validation remains enabled; no output clamp or exception suppression was added.
+- Added a native-task regression gate covering withdrawal, full drainage, mixed badwater, reversed overlapping sources and pressure saturation alongside existing pump tests. The reporter's exact settlement was unavailable; the valid-input over-100% failure is reproduced by the negative-control calculation.
+
+### Debug building visibility
+- Fixed crashes when hiding buildings in developer mode. The native command disabled gameplay slot markers along with the model, causing restaurant guests and charging bots to fail on entry despite free slots. The command now suppresses rendering while leaving native slots and simulation objects active; showing buildings restores their prior rendering state.
+
+### Radioactive-water recovery and shielded storage
+- Added **Yellowcake from radioactive water** at the Uranium Processing Plant: **6 radioactive water + 2 chemicals -> 1 yellowcake**, taking 4 worker-hours per cycle. No oxygen is required. The original uranium-ore recipe remains available; the plant's existing power, workforce and science requirements remain.
+- The specialized Radioactive Water Recovery Pump now supplies a useful nuclear feedstock as well as disposal. Updated its help text to identify the yellowcake route and shielded storage. Yield still follows collected radioactive material, so dilution does not multiply recovered goods.
+- Radioactive Waste Vaults can select recovered radioactive water, retaining their 1,600 total capacity and one selected good. Vaults use hauling; this update adds no vault pipe connection.
+- Ordinary tanks no longer accept new radioactive-water deliveries or offer it in their good picker. Existing saved contents remain withdrawable and must be removed before demolition. Accidentally contaminated drinking water retains its existing cleanup and storage rules.
+- The smaller recovery recipe allows waste recycling to replenish nuclear feedstock while still consuming chemicals, power and the other processing/reactor supplies. Updated progression context, item-use documentation and recipe validation.
+
+### Reactor Bot warnings
+- The Bot Assembler description now warns that Reactor Bots leak radioactive water into the ground after prolonged coolant loss or exhausted plating.
+- Retrofit and upgraded-bot guidance includes the existing leak deadlines: more than 6 hours critically low on coolant or more than 24 hours without plating. The no-plating message also states its leak deadline. Leak behavior and tuning are unchanged.
+
+### Easier aquaculture startup
+- Fish Hatcheries no longer require Fresh Fish: **1 Algae + 2 Water -> 2 Juvenile Fish**. Clean water beneath the pens, power, workers and production time are unchanged. Updated help text to remove the starter-fish requirement; the Fisher Flag remains an independent food source.
+
+### Development and verification
+- Added experimental Fluids API transport, native-adapter and scheduling-bridge groundwork, with dedicated harnesses and development documentation. This separate prototype is not packaged into Deep Frontier and does not replace the released water simulation.
+- Gameplay changes were packaged and installed in build 287 under version 0.10.0.0: all 803 authored data/manifest/DLL hashes matched, both platform bundles passed verification, and startup loaded Deep Frontier. The installed shielded-storage policy passed 12 compiled-policy/native-registry checks; content checks and the item-use audit passed.
+- Settlement production, hauling, legacy tank withdrawal and save/reload testing of the new recovery/storage chain remain pending. Startup/package checks are not gameplay acceptance; native macOS playtesting was not performed.
+- Official build 288 installs manifest/runtime versions **0.10.1.0 / 0.10.1**. All 803 authored data/manifest/DLL hashes and both platform bundles pass package verification; the installed storage policy again passes all 12 compiled-policy/native-registry checks. Steam-ready notes: `workshop/changenotes-0.10.1.bbcode`.
+- Build 290 adds the developer visibility fix at the same version. All 803 package hashes and both bundles pass. Native crash-save replay passed three hide/show cycles and 60 seconds hidden with 32 restaurant arrivals, 14 charging-station arrivals and 26 meals served; renderer state restored correctly. Original saves were untouched.
 
 ## 0.10.0 (2026-11-05)
 

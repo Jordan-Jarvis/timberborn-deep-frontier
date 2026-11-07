@@ -186,6 +186,9 @@ const recipeDefinitions = [
   ['DeepUranium', 'UraniumOre', 3.0, [{ Id: 'DeepOre', Amount: 2 }, { Id: 'Water', Amount: 4 }], [{ Id: 'UraniumOre', Amount: 1 }], 'UraniumOre'],
   // Oxygen as the leaching oxidant; hydrogen reduces the oxide for fuel pellets.
   ['Yellowcake', 'Yellowcake', 2.0, [{ Id: 'UraniumOre', Amount: 3 }, { Id: 'Chemical', Amount: 1 }, { Id: 'Water', Amount: 2 }, { Id: 'OxygenGas', Amount: 1 }], [{ Id: 'Yellowcake', Amount: 2 }], 'Yellowcake'],
+  // Captured radioactive water and chemicals only. Waste recycling can supply
+  // fuel feedstock; it still consumes chemicals, plant power and reactor supplies.
+  ['RecoveredYellowcake', 'Yellowcake', 4.0, [{ Id: 'RadioactiveSludge', Amount: 6 }, { Id: 'Chemical', Amount: 2 }], [{ Id: 'Yellowcake', Amount: 1 }], 'Yellowcake'],
   ['EnrichedFuel', 'EnrichedFuel', 1.0, [{ Id: 'Yellowcake', Amount: 2 }, { Id: 'MachineCore', Amount: 1 }, { Id: 'PowerModule', Amount: 1 }, { Id: 'HydrogenGas', Amount: 1 }], [{ Id: 'EnrichedFuel', Amount: 1 }, { Id: 'RadioactiveWaste', Amount: 1 }], 'EnrichedFuel'],
   ['Cryocoolant', 'Cryocoolant', 2.0, [{ Id: 'Polymer', Amount: 1 }, { Id: 'Grease', Amount: 1 }, { Id: 'Water', Amount: 2 }], [{ Id: 'Cryocoolant', Amount: 2 }], 'Cryocoolant'],
   ['Electrolysis', 'HydrogenGas/OxygenGas', 3.0, [{ Id: 'PureWater', Amount: 8 }], [{ Id: 'HydrogenGas', Amount: 4 }, { Id: 'OxygenGas', Amount: 4 }], 'HydrogenGas'],
@@ -264,6 +267,7 @@ const RECIPE_NAMES = {
   BrineChemical: 'Chemicals from concentrated waste',
   GreenhouseAquaponics: 'Kohlrabi and fresh fish',
   FuelReprocessing: 'Enriched fuel from radioactive waste',
+  RecoveredYellowcake: 'Yellowcake from radioactive water',
   ContaminatedWaterRefining: 'Radioactive water from contaminated water',
   DecontaminateWater: 'Water from contaminated water',
   BadwaterFiltering: 'Water from badwater',
@@ -304,7 +308,7 @@ const buildingDefinitions = [
   ['PrecisionMachineWorks', 'Buildings/Metal/PrecisionMachineWorks', 'BotPartFactory', 'MachineCore,Electronics,PowerModule,ReinforcedBotChassis,ServoBotLimbs,BotCortex', 'Metal', 42, 2200, 6, 12000, 'Precision Machine Works'],
   ['WaterTreatmentPlant', 'Buildings/Water/WaterTreatmentPlant', 'Centrifuge', 'PureWater,ReactorCoolantWater,FilterMedia,CarbonFilterMedia', 'Water', 43, 500, 4, 1800, 'Water Treatment Plant'],
   ['TechnicalSchool', 'Buildings/Science/TechnicalSchool', 'Inventor', '', 'Science', 92, 300, 4, 2200, 'Technical School'],
-  ['UraniumProcessingPlant', 'Buildings/Metal/UraniumProcessingPlant', 'Centrifuge', 'Yellowcake,EnrichedFuel,FuelReprocessing', 'Metal', 45, 5000, 6, progression.implementedBuildingScienceOverrides.UraniumProcessingPlant, 'Uranium Processing Plant'],
+  ['UraniumProcessingPlant', 'Buildings/Metal/UraniumProcessingPlant', 'Centrifuge', 'Yellowcake,RecoveredYellowcake,EnrichedFuel,FuelReprocessing', 'Metal', 45, 5000, 6, progression.implementedBuildingScienceOverrides.UraniumProcessingPlant, 'Uranium Processing Plant'],
   ['RadioactiveWasteRefinery', 'Buildings/Metal/RadioactiveWasteRefinery', 'Centrifuge', 'WasteRefining,ContaminatedWaterRefining,DecontaminateWater,BadwaterFiltering', 'Metal', 47, 8000, 6, progression.implementedBuildingScienceOverrides.RadioactiveWasteRefinery, 'Radioactive Waste Refinery'],
   ['ElectrolysisPlant', 'Buildings/Metal/ElectrolysisPlant', 'Centrifuge', 'Electrolysis', 'Metal', 47, 6000, 5, 30000, 'Electrolysis Plant'],
   ['CryogenicLiquefactionPlant', 'Buildings/Metal/CryogenicLiquefactionPlant', 'Centrifuge', 'Liquefaction', 'Metal', 48, 10000, 6, 40000, 'Cryogenic Liquefaction Plant'],
@@ -366,7 +370,7 @@ const BUILDING_TEXT = {
     'Every barrel tested, every filter changed on time.'],
   TechnicalSchool: ['Beavers study here in their free time to become metallurgists, reactor operators or flight engineers. Each school teaches one, chosen in its panel.',
     'Night classes for beavers who want a dangerous job done properly.'],
-  UraniumProcessingPlant: ['Turns uranium ore into enriched fuel and reactor power cells, and reprocesses spent fuel. Its fuel leaves radioactive waste.',
+  UraniumProcessingPlant: ['Makes yellowcake from uranium ore or recovered radioactive water, enriches fuel and makes reactor power cells. Enrichment leaves radioactive waste.',
     'Yellowcake is not for eating, however much it looks like it.'],
   // Replaced by meltdown_content.mjs (PRODUCER_DESCRIPTIONS) with its risk text.
   RadioactiveWasteRefinery: ['Refines radioactive waste.', 'It turns a problem you store into a problem you can ship.'],
@@ -702,7 +706,7 @@ async function makePowerPlant(entry) {
 // attaches to it, both from the vanilla Large Warehouse without its native
 // single-good stockpile and its box columns (the studies show their own
 // crates). The core's ModularWarehouseSpec gives the slots and its own
-// capacity; a module (WarehouseModuleSpec) adds capacity and a slot, holds no
+// capacity; a module (WarehouseModuleSpec) adds capacity, holds no
 // goods and has no door, so it loses the warehouse's entrance, access and
 // enterable specs (lategame_building_content.mjs doorless). Unpowered and
 // worker-free, as the vanilla warehouses. Costs come from the late-game rule
@@ -746,6 +750,7 @@ async function makeVault() {
   value.TemplateSpec = { ...value.TemplateSpec, TemplateName: 'RadioactiveWasteVault.IronTeeth', BackwardCompatibleTemplateNames: [] };
   value.PlaceableBlockObjectSpec = { ...value.PlaceableBlockObjectSpec, ToolGroupId: 'Water', ToolOrder: 61 };
   value.StockpileSpec = { ...value.StockpileSpec, MaxCapacity: 1600, WhitelistedGoodType: 'Box' };
+  value.ShieldedRadioactiveStorageSpec = {};
   setLabels(value, 'RadioactiveWasteVault', 'Buildings/Storage/RadioactiveWasteVault');
   setModels(value, 'RadioactiveWasteVault', 'Buildings/Storage/RadioactiveWasteVault');
   if (LATEGAME.has('RadioactiveWasteVault')) {
@@ -857,11 +862,11 @@ for (const id of Object.keys(BUILDING_TEXT)) if (!buildingDefinitions.some(([bui
   const {core, module} = MODULAR;
   rows.push(csvRow(`Building.${core.id}.DisplayName`, core.name));
   rows.push(csvRow(`Building.${core.id}.Description`,
-    `Stores up to ${core.maxSlots} goods, each in its own slot with its own warehouse settings. Each attached ${module.name} adds a slot and storage.`));
+    `Stores ${core.maxSlots} different goods with separate warehouse settings. Attached ${module.name}s increase the shared storage capacity.`));
   rows.push(csvRow(`Building.${core.id}.FlavorDescription`, 'One door, one ledger and a beaver who knows where everything is.'));
   rows.push(csvRow(`Building.${module.id}.DisplayName`, module.name));
   rows.push(csvRow(`Building.${module.id}.Description`,
-    `Adds storage and a slot to a ${core.name} when built beside it, on top of it, or on another attached module.`));
+    `Adds storage to a ${core.name} when built beside it, on top of it, or on another attached module.`));
   rows.push(csvRow(`Building.${module.id}.FlavorDescription`, 'Another floor of crates, and the ledger grows a page.'));
   rows.push(csvRow('DeepFrontier.ModularWarehouse.Network', 'Modules: {0}. Capacity: {1}'));
   rows.push(csvRow('DeepFrontier.ModularWarehouse.ModuleUnattached', `Not attached to a ${core.name}`));
@@ -890,7 +895,7 @@ for (const id of ['NuclearReactor', 'RadioactiveWasteVault']) {
   rows.push(csvRow(`Building.${id}.DisplayName`, display));
   rows.push(csvRow(`Building.${id}.Description`, id === 'NuclearReactor'
     ? 'Huge power from enriched fuel, run by trained reactor operators.'
-    : 'Stores radioactive waste.'));
+    : 'Shielded storage for radioactive waste or radioactive water.'));
   rows.push(csvRow(`Building.${id}.FlavorDescription`, id === 'NuclearReactor'
     ? 'The frontier makes power and consequences at the same scale.'
     : 'Labeled, logged and never, ever full.'));

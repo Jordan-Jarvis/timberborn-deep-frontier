@@ -28,6 +28,10 @@ param(
   [switch]$SaveInspect,
   # Also run Scripts/ShowcaseCapture.cs: UI hidden, Workshop screenshots of Deep Frontier buildings (outputs/showcase).
   [switch]$Showcase,
+  # Replays native building visibility toggles and restaurant entry/service on its named disposable save.
+  [switch]$RestaurantVisibility,
+  [switch]$EmploymentProbe,
+  [switch]$WarehouseUi,
   # Game seconds to run instead of 180 (SaveInspect runs at speed 3, so wall time is a third).
   [double]$RunSeconds = 0
 )
@@ -56,6 +60,19 @@ if ($SaveInspect) {
 if ($Showcase) {
   if ($NewGame -or $SaveAs) { throw '-Showcase is read-only: it loads -Save and never takes -NewGame or -SaveAs' }
   $arguments += '-deepFrontierShowcase'
+}
+if ($RestaurantVisibility) {
+  if ($NewGame -or $SaveAs) { throw '-RestaurantVisibility loads a disposable copy and never saves mutations' }
+  if ((Split-Path -Leaf $Save) -ne 'restaurant-visibility-repro-copy.timber') { throw '-RestaurantVisibility requires restaurant-visibility-repro-copy.timber' }
+  $arguments += '-deepFrontierRestaurantVisibilityAcceptance'
+}
+if ($EmploymentProbe) {
+  if ($NewGame -or $SaveAs -or (Split-Path -Leaf $Save) -ne 'employment-repro-copy.timber') { throw '-EmploymentProbe requires its named disposable copy and must not save' }
+  $arguments += '-deepFrontierEmploymentProbe'
+}
+if ($WarehouseUi) {
+  if ($NewGame -or $SaveAs -or (Split-Path -Leaf $Save) -ne 'modular-warehouse-ui-repro-copy.timber') { throw '-WarehouseUi requires its named disposable copy and must not save' }
+  $arguments += '-deepFrontierWarehouseUiAcceptance'
 }
 if ($RunSeconds -gt 0) { $arguments += @('-deepFrontierRunSeconds',$RunSeconds.ToString([Globalization.CultureInfo]::InvariantCulture)) }
 if ($KeepPrefabMeshes) { $arguments += '-deepFrontierKeepPrefabMeshes' }
