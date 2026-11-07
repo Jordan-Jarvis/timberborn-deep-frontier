@@ -86,6 +86,7 @@ foreach ($file in Get-ChildItem -LiteralPath (Join-Path $root 'tools') -Filter '
 # Standalone Fluids API transport prototype plus installed native-task controls.
 Add-Check 'fluid-transport' 'dotnet' $dev.pwsh @('-NoProfile', '-File', (Join-Path $root 'tools/test_fluid_transport.ps1'))
 Add-Check 'radiation-mixing' 'dotnet' $dev.pwsh @('-NoProfile', '-File', (Join-Path $root 'tools/test_radiation_mixing.ps1'))
+Add-Check 'reactor-faction' 'dotnet' $dev.pwsh @('-NoProfile', '-File', (Join-Path $root 'tools/test_reactor_faction.ps1'))
 
 # Built-in new-game setup: every default map variant against its unmodified built-in map (needs the game files).
 Add-Check 'map-setup-terrain' 'python' $python @((Join-Path $root 'tools/prepare_deep_frontier_map.py'), 'builtin')

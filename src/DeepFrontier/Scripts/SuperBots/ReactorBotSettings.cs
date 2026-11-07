@@ -65,13 +65,15 @@ namespace DeepFrontier.Scripts.SuperBots {
   internal sealed class ReactorBotSettings : ILoadableSingleton, IPostLoadableSingleton {
     private readonly ISpecService _specs;
     private readonly FactionNeedService _needs;
+    private readonly FactionService _factions;
     private readonly IlluminationService _illumination;
 
     public FrontierReactorBotSettingsSpec Spec { get; private set; }
     public Color IlluminationColor { get; private set; }
+    public bool AppliesToFaction => _factions.Current.Id == "IronTeeth";
 
-    public ReactorBotSettings(ISpecService specs, FactionNeedService needs, IlluminationService illumination) {
-      _specs=specs;_needs=needs;_illumination=illumination;
+    public ReactorBotSettings(ISpecService specs, FactionNeedService needs, IlluminationService illumination, FactionService factions) {
+      _specs=specs;_needs=needs;_illumination=illumination;_factions=factions;
     }
 
     public void Load() {
@@ -101,6 +103,7 @@ namespace DeepFrontier.Scripts.SuperBots {
     // (as WorkforceSettings does). Every switched need must be a current-faction
     // Bot need (Iron Teeth NeedCollection).
     public void PostLoad() {
+      if(!AppliesToFaction)return;
       var botNeeds=_needs.GetBotNeeds().Select(n=>n.Id).ToImmutableHashSet();
       foreach(var id in Spec.ReactorNeedIds.Concat(Spec.ReplacedNeedIds).Concat(Spec.RetrofitNeedIds))
         if(!botNeeds.Contains(id))throw new InvalidOperationException($"Reactor bots: {id} is not a Bot need of the current faction");

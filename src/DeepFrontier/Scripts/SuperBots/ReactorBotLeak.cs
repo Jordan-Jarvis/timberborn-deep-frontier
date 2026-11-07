@@ -83,6 +83,7 @@ namespace DeepFrontier.Scripts.SuperBots {
 
     // Faction needs and the Reactor Bot settings are loaded by now.
     public void PostLoad() {
+      if(!_bots.AppliesToFaction)return;
       if(!_bots.Spec.ReactorNeedIds.Contains(Spec.CoolantNeedId))
         throw new InvalidOperationException($"Reactor bots: leak coolant need {Spec.CoolantNeedId} is not a reactor need");
       var coolant=_needs.GetBotNeeds().SingleOrDefault(n=>n.Id==Spec.CoolantNeedId);

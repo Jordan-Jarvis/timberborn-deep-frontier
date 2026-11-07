@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Reactor Bot startup validation now runs only for Iron Teeth, including the coolant-need check. Other factions no longer have to declare Iron Teeth Reactor Bot needs. Missing needs still fail validation for Iron Teeth.
+
 ## 0.10.2 (2026-11-07)
 
 - Modular Warehouse cores expose all five goods slots and open the game's existing native floating stockpile picker. Native controls, layout, positioning and dismissal are retained; modules change capacity without clearing selections.

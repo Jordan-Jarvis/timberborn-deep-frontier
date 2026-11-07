@@ -1,5 +1,12 @@
 # Current development status
 
+## Reactor Bot faction validation (2026-11-07; source prepared, not installed)
+
+- `ReactorBotSettings.PostLoad` unconditionally required Iron Teeth-only reactor/retrofit needs from the current faction. `ReactorBotLeakSettings.PostLoad` likewise required its coolant need. Both now check the native `FactionService.Current.Id == "IronTeeth"` through one shared applicability property before querying faction needs. Iron Teeth validation remains strict; no missing-need fallback, exception suppression or added needs on other factions.
+- Compilation and four focused checks pass. New `reactor-faction` gate executes the compiled production PostLoad methods: Folktails, Whitepaws and Emberpelts with no reactor needs pass both checks; Iron Teeth missing reactor charge/coolant still fails, and its complete bot-need list passes (nine assertions). This is a targeted startup-validation test, not a claim of complete non-Iron-Teeth gameplay compatibility. The original crash's selected faction was not confirmed.
+- The user's active game is left running. No official install/restart, version bump or new-game runtime acceptance performed for this follow-up. Full scratch suite passed 82 checks with zero failures plus one item-use report (zero issues); the Git-only asset guard passed separately in the checkout. Logs: `outputs/reactor-faction-validation/`.
+
+
 ## Patch release 0.10.2 (2026-11-07; build 296 installed and relaunched)
 
 - Bumped manifest/runtime from 0.10.1.0 / 0.10.1 to 0.10.2.0 / 0.10.2. Created `workshop/changenotes-0.10.2.bbcode` with all current upload notes; updated the root changelog and Workshop README. No gameplay code changes after build 295's verified native-picker implementation.
