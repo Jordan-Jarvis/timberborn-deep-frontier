@@ -95,7 +95,10 @@ namespace DeepFrontier.Scripts.Meltdown {
       var batch = _pending.ToArray();
       _pending.Clear();
       foreach (var core in batch)
-        if (core) Execute(core);   // a reactor deleted since its request has nothing left to melt
+        // EntityService.Delete removes blocks immediately but defers Unity's
+        // GameObject destruction. An earlier blast in this batch can therefore
+        // leave a truthy component whose reactor is already gone from the map.
+        if (core && !core.GetComponent<EntityComponent>().Deleted) Execute(core);
     }
 
     private void Execute(ReactorCore core) {

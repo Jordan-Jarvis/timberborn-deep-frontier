@@ -48,6 +48,8 @@ The panel says so explicitly: the dry-coolant and full-waste statuses suggest pa
 
 ### Meltdown (`MeltdownService`)
 
+Queued meltdowns check native `EntityComponent.Deleted` immediately before execution. An earlier blast can destroy another queued reactor in the same tick, while Unity keeps its GameObject alive until the frame ends. That reactor has already been destroyed and does not execute another blast; surviving queued reactors still execute. The live-reactor blast-membership invariant remains strict.
+
 The meltdown runs in the service's singleton tick, the place native `ExplosionService` removes terrain and deletes block objects. Reworked 2026-11-02 (user: "Reactor meltdown should destroy the terrain underneath it as well. The radiation of the blocks also needs to not just be square. It should be circular."; "it should also destroy buildings and structures within 6 tiles of the reactor"; "the radioactive water should be everywhere enough to spread past the crater we make").
 
 **Distance is a circle.** Every meltdown and leak radius is measured by `BuildingSite`: the straight-line distance in tiles from a column to the nearest footprint column (0 inside), and a column is within R tiles when that distance rounds to R or less (dx² + dy² ≤ R² + R). It replaced the Chebyshev (square) distance in the contamination area, the kill and irradiation radii, the new blast radius and the waste-leak soil radius. Around a 1x1 footprint this is an exact tile circle; around the 14x11 reactor it is the footprint swept by a circle, so "within 6 tiles of the reactor" means 6 tiles from its nearest wall, with rounded corners instead of square ones (the 12-tile area is 1,194 columns instead of 1,330).

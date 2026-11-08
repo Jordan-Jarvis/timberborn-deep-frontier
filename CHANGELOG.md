@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Fixed a crash when two nearby reactors were queued to melt down together. A reactor already destroyed by the preceding blast no longer executes a second meltdown while its Unity object awaits destruction. Separate surviving reactors still melt down normally.
+
 ## 0.10.3 (2026-11-07)
 
 - Reactor Bot startup validation now runs only for Iron Teeth, including the coolant-need check. Other factions no longer have to declare Iron Teeth Reactor Bot needs. Missing needs still fail validation for Iron Teeth.

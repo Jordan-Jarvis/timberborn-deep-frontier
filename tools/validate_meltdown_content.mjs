@@ -105,6 +105,7 @@ assert(/site\.Within\(cell\.x, cell\.y, spec\.MeltdownKillRadius\)/.test(service
 assert(/site\.OpenCellsWithin\(_radiation, Spec\.SoilRadius\)/.test(await source('WasteLeak.cs')), 'waste leaks irradiate a circle (BuildingSite.OpenCellsWithin)');
 // Native destruction path (ExplosionService order) and the crater rules.
 for (const [pattern, what] of [
+  [/if \(!_objects\.Contains\(reactor\)\)\s*throw new InvalidOperationException/, 'a live reactor missing from its own blast still fails explicitly'],
   [/_explosionOutcome\.GetAffectedTerrainAndObjects\(_craterTiles\.AsReadOnlyHashSet\(\), _terrain, _objects\);/, 'the crater is a native explosion outcome'],
   [/CollectBlast\(site, spec\.MeltdownBlastRadius, _objects\);/, 'the blast collects buildings within MeltdownBlastRadius'],
   [/if \(blockObject\.HasComponent<BuildingSpec>\(\)\) objects\.Add\(blockObject\);/, 'the blast takes every BuildingSpec object (what native Deconstructible decorates)'],
@@ -189,6 +190,13 @@ const decompile = (dll, type) => {
   }
 };
 for (const [dll, type, patterns, what] of [
+  ['Timberborn.EntitySystem.dll', 'Timberborn.EntitySystem.EntityService',
+    [/component\.Delete\(\);\s*_entityRegistry\.RemoveEntity\(component\);\s*Object\.Destroy\(\(Object\)\(object\)component\.GameObject\);/],
+    'entity deletion precedes deferred Unity object destruction'],
+  ['Timberborn.EntitySystem.dll', 'Timberborn.EntitySystem.EntityComponent',
+    [/public bool Deleted => _entityState == EntityState\.Deleted;/,
+      /_entityState = EntityState\.Deleted;\s*foreach \(IDeletableEntity item in GetComponentsAllocating<IDeletableEntity>\(\)\)/],
+    'the Deleted flag is set before native deletion callbacks'],
   ['Timberborn.Explosions.dll', 'Timberborn.Explosions.ExplosionService',
     [/_terrainService\.UnsetTerrain\(_terrainTiles\);\s*foreach \(BlockObject blockObject in _blockObjects\)\s*\{\s*_entityService\.Delete\(blockObject\);\s*\}\s*_deconstructionParticleFactory\.AddPausableParticles\(_terrainTiles\);/],
     'explosions remove terrain, delete objects, then spawn particles on the removed terrain'],
