@@ -1,5 +1,10 @@
 # Current development status
 
+## Hotfix 0.10.3 (2026-11-07; build 297 installed and relaunched)
+
+- Promoted the verified faction-validation fix to manifest/runtime 0.10.3.0 / 0.10.3; added `workshop/changenotes-0.10.3.bbcode`. The prior full suite passed 82 checks plus a clean item-use report, and the compiled faction regression passed nine checks. Game was already closed before installation. Official build 297 passed all 803 authored data/manifest/DLL hashes and both platform bundles. The installed DLL passed the nine compiled faction-validation checks; installed manifest/runtime versions verified as 0.10.3.0 / 0.10.3. Relaunched ordinary Timberborn without acceptance flags (`outputs/build297-startup.log`). Evidence: `outputs/unity-official-build297.log`, `outputs/restaurant-package-verification297.json`. New-game runtime acceptance has not been repeated; the user will perform the Steam upload.
+
+
 ## Reactor Bot faction validation (2026-11-07; source prepared, not installed)
 
 - `ReactorBotSettings.PostLoad` unconditionally required Iron Teeth-only reactor/retrofit needs from the current faction. `ReactorBotLeakSettings.PostLoad` likewise required its coolant need. Both now check the native `FactionService.Current.Id == "IronTeeth"` through one shared applicability property before querying faction needs. Iron Teeth validation remains strict; no missing-need fallback, exception suppression or added needs on other factions.

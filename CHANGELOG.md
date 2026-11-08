@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.10.3 (2026-11-07)
 
 - Reactor Bot startup validation now runs only for Iron Teeth, including the coolant-need check. Other factions no longer have to declare Iron Teeth Reactor Bot needs. Missing needs still fail validation for Iron Teeth.
 

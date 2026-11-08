@@ -6,7 +6,7 @@
 
 ## Current update
 
-`changenotes-0.10.2.bbcode` contains the complete upload notes for this patch: the native five-slot warehouse picker, negative-employment compatibility fix, radioactive-source mixing fix, developer visibility crash fix, radioactive-water recovery and shielded storage, Reactor Bot warnings, and hatchery startup change. Manifest/runtime versions are 0.10.2.0 / 0.10.2. Official build 296 is installed and verified (803 file hashes and both platform bundles), and Timberborn has been relaunched. Evidence is recorded in `tools/STATUS.md`. Workshop publication is performed by the owner. Experimental Fluids API work remains a separate development package.
+`changenotes-0.10.3.bbcode` contains the faction-validation hotfix notes. Manifest/runtime versions are 0.10.3.0 / 0.10.3. Build 297 is installed and verified (803 file hashes, both platform bundles and nine installed-DLL faction checks); Timberborn has been relaunched. Evidence is recorded in `tools/STATUS.md`. The owner will upload this hotfix to Steam Workshop.
 
 ## Uploading
 
