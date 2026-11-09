@@ -35,7 +35,9 @@ namespace ModdableFluids.Runtime.Prototype {
       if (!registry.TryGetSourceType(NativeFluidSourceTypes.WaterSource, out _nativeSource)) throw new InvalidOperationException("The native water source type is not registered");
     }
 
+    public bool HasState => State.HasSnapshot;
     public bool TrySample(int x, int y, int z, out FluidColumnSample sample) => State.TrySample(x, y, z, out sample);
+    public IReadOnlyList<FluidColumnSample> SampleCell(int x, int y) => State.SampleCell(x, y);
     public double TotalVolume(FluidHandle fluid) => State.TotalVolume(fluid);
     public void SetSourceComposition(string ownerId, IReadOnlyDictionary<string, double> composition) => State.SetSourceComposition(ownerId, composition);
 

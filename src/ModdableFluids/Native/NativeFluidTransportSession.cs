@@ -168,6 +168,21 @@ namespace ModdableFluids.Native.Prototype {
       } catch { _stage = Stage.Faulted; throw; }
     }
     public void EndTick() { Require(Stage.Changes); CompletedTicks++; _stage = Stage.Ready; }
+    /// <summary>
+    /// Converts <paramref name="volume"/> of one non-badwater component into another in layout slot <paramref name="slot"/>,
+    /// at a completed tick. The column's physical volume and badwater are unchanged, so native water is not touched.
+    /// </summary>
+    public void ConvertComponent(int slot, int from, int to, double volume) {
+      Require(Stage.Ready);
+      if (slot < 0 || slot >= _layout.Length) throw new ArgumentOutOfRangeException(nameof(slot), slot, "No such column");
+      if (from < 0 || from >= _components || to < 0 || to >= _components || from == to) throw new ArgumentException("A conversion needs two distinct components");
+      if (from == _badwater || to == _badwater) throw new ArgumentException("Badwater is native contamination and cannot be converted");
+      var values = _mixtures[slot].CopyVolumes();
+      if (double.IsNaN(volume) || double.IsInfinity(volume) || volume <= 0 || volume > values[from])
+        throw new ArgumentOutOfRangeException(nameof(volume), volume, "A conversion moves a positive volume the column holds (" + values[from].ToString("R") + ")");
+      values[from] -= volume; values[to] += volume;
+      _mixtures[slot] = new FluidVolumes(values);
+    }
     public void AbortTick() { _stage = Stage.Faulted; }
     public FluidGeometryResult ReconcileGeometry(NativeWaterArrayAdapter updatedBackend) {
       Require(Stage.Ready);

@@ -63,6 +63,14 @@ namespace ModdableFluids.World.Prototype {
       return false;
     }
 
+    /// <summary>Every open column at (x, y), lowest floor first; empty outside the map or where the cell is solid.</summary>
+    public IReadOnlyList<FluidColumnSample> SampleCell(int x, int y) {
+      var snapshot = _snapshot ?? throw new InvalidOperationException("No completed fluid tick has been published yet");
+      if (x < 0 || x >= Stride - 2 || y < 0 || !snapshot.ByCell.TryGetValue((y + 1) * Stride + x + 1, out var slots)) return Array.Empty<FluidColumnSample>();
+      return slots.OrderBy(slot => snapshot.Layout[slot].Floor)
+        .Select(slot => new FluidColumnSample(snapshot.Layout[slot].Floor, snapshot.Layout[slot].Ceiling, snapshot.Mixtures[slot].CopyVolumes())).ToArray();
+    }
+
     public double TotalVolume(FluidHandle fluid) {
       Registry.Get(fluid);
       var snapshot = _snapshot ?? throw new InvalidOperationException("No completed fluid tick has been published yet");

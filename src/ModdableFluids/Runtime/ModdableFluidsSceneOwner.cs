@@ -13,6 +13,8 @@ using ModdableFluids;
 using ModdableFluids.GameBridge.Prototype;
 using ModdableFluids.Native.Prototype;
 using ModdableFluids.Persistence.Prototype;
+using ModdableFluids.Transport.Prototype;
+using ModdableFluids.World.Prototype;
 using UnityEngine;
 
 namespace ModdableFluids.Runtime.Prototype {
@@ -54,6 +56,8 @@ namespace ModdableFluids.Runtime.Prototype {
     public FluidSaveDocument LoadedDocument => _loaded?.Document;
     public bool LoadedFluidState => _loaded != null;
     public FluidRestoreResult Restored { get; private set; }
+    /// <summary>The fluid state an importer supplied for a save without Moddable Fluids data, if any.</summary>
+    public FluidSaveDocument ImportedDocument { get; private set; }
     public string LastSaveDigest { get; private set; }
     public int Stride => _index.Stride;
     public int Height => _index.TerrainSize.y;
@@ -78,29 +82,46 @@ namespace ModdableFluids.Runtime.Prototype {
       Registry = host.Freeze();
       // Missing or moved fluids stop loading here, on the main thread, naming their mods.
       LoadedDocument?.ResolveFluidSlots(Registry);
-      Scene = host.ActivateScene();
+      World = new ModdableFluidsWorld(Registry, Stride, _water, MainThreadId);
+      Scene = host.ActivateScene(World);
       host.LoadProviderStates(Scene, _loaded?.ProviderStates);
       object simulator = Read(_water, "_waterSimulator");
       object starter = Read(simulator, "_waterSimulationTaskStarter");
       Hooks = new NativeTransportHooks(starter, Registry.Count, FluidRegistry.BadwaterIndex);
-      World = new ModdableFluidsWorld(Registry, Stride, _water, MainThreadId);
       Hooks.SessionCreated = OnSessionCreated;
-      Hooks.TickCompleted = World.State.Publish;
+      Hooks.TickCompleted = OnTickCompleted;
       Hooks.ResolveAddition = World.ResolveAddition;
       Hooks.ResolveSource = World.ResolveSource;
       Hooks.Attach(); WorkerAcceptanceRun.Attached++;
       Debug.Log("[ModdableFluids] ATTACHED scene " + WorkerAcceptanceRun.Attached + "; native workers=" + WorkerCount + "; main thread=" + MainThreadId
-        + "; saved fluid state=" + (LoadedDocument != null ? LoadedDocument.ColumnCount + " columns" : _loaded != null ? "native only" : "none") + "\n" + host.DescribeRuntime());
+        + "; saved fluid state=" + (LoadedDocument != null ? LoadedDocument.ColumnCount + " columns" : _loaded == null ? "none" : _loaded.ImportPending ? "native only, import pending" : "native only") + "\n" + host.DescribeRuntime());
     }
 
     private void OnSessionCreated(NativeFluidTransportSession session) {
-      if (LoadedDocument != null) {
-        var layout = Enumerable.Range(0, session.ColumnCount).Select(session.GetGeometry).ToArray();
-        Restored = FluidWorldPersistence.Restore(LoadedDocument, Registry, layout, Stride, Height);
+      var layout = Enumerable.Range(0, session.ColumnCount).Select(session.GetGeometry).ToArray();
+      // A save without Moddable Fluids data (an older or another mod's format) may be imported, once.
+      if (_loaded == null || _loaded.ImportPending) ImportedDocument = ModdableFluidsEntry.Host.ImportWorld(Scene, layout.Select(g => NativeColumn(session, g)).ToArray());
+      var document = LoadedDocument ?? ImportedDocument;
+      if (document != null) {
+        Restored = FluidWorldPersistence.Restore(document, Registry, layout, Stride, Height);
         FluidWorldPersistence.Apply(session, Registry, Restored, Stride);
       }
       World.State.Publish(session);
       SessionCreated?.Invoke(session);
+    }
+
+    private FluidNativeColumn NativeColumn(NativeFluidTransportSession session, FluidColumnGeometry geometry) {
+      var mixture = session.Sample(geometry.NativeIndex);
+      return new FluidNativeColumn(geometry.CellIndex % Stride - 1, geometry.CellIndex / Stride - 1, geometry.Floor, geometry.Ceiling,
+        geometry.Capacity, mixture.TotalVolume, mixture.GetShare(FluidRegistry.BadwaterIndex));
+    }
+
+    // Worker thread, at the completed-tick barrier: provider rules, then publication to readers.
+    private void OnTickCompleted(NativeFluidTransportSession session) {
+      var editor = new FluidColumnEditor(session, Registry, Stride);
+      try { ModdableFluidsEntry.Host.ApplyColumnRules(Scene, editor); }
+      finally { editor.Close(); }
+      World.State.Publish(session);
     }
 
     public void Save(ISingletonSaver singletonSaver) {
@@ -111,7 +132,11 @@ namespace ModdableFluids.Runtime.Prototype {
       FluidSaveDocument document;
       if (session == null) {
         // No fluid tick has run since load: the saved components are unchanged.
-        if (LoadedDocument == null) { FluidWorldSaveFormat.WriteNativeOnly(saver, states); LastSaveDigest = null; return; }
+        // Before the first substep the importers have not run: mark the save so the next load imports.
+        if (LoadedDocument == null) {
+          FluidWorldSaveFormat.WriteNativeOnly(saver, states, (_loaded == null || _loaded.ImportPending) && host.HasImporters);
+          LastSaveDigest = null; return;
+        }
         document = FluidWorldSaveFormat.WithProviderStates(LoadedDocument, states);
       } else {
         if (session.Phase != "Ready")

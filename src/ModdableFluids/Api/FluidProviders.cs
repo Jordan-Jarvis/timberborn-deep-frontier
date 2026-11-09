@@ -146,7 +146,16 @@ namespace ModdableFluids {
         return _registry;
       }
     }
-    internal FluidScene(FluidRegistry registry, int serial) { _registry = registry; Serial = serial; }
+    /// <summary>The scene's world fluid service; a scene activated without native transport (tests) has none.</summary>
+    public IFluidWorld World {
+      get {
+        if (!IsActive) throw new InvalidOperationException("Fluid scene " + Serial + " is no longer active");
+        return _world ?? throw new InvalidOperationException("Fluid scene " + Serial + " has no world service: it was activated without native water transport");
+      }
+    }
+    public bool HasWorld => _world != null;
+    private readonly IFluidWorld _world;
+    internal FluidScene(FluidRegistry registry, int serial, IFluidWorld world) { _registry = registry; Serial = serial; _world = world; }
   }
 
   /// <summary>

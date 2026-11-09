@@ -28,8 +28,18 @@ namespace ModdableFluids.Native.Acceptance {
       var states = document.GetProviderStates();
       Check(loaded.ProviderStates.Count == states.Count && loaded.ProviderStates.Zip(states, (a, b) => a.ProviderId == b.ProviderId && a.OwnerModId == b.OwnerModId
         && a.SchemaVersion == b.SchemaVersion && a.Data == b.Data).All(same => same), "Provider state changed through the native save envelope");
-      var nativeOnly = RoundTrip(saver => FluidWorldSaveFormat.WriteNativeOnly(saver, states), out _);
-      Check(nativeOnly.NativeOnly && nativeOnly.ProviderStates.Count == states.Count, "Native-only envelope round trip");
+      var nativeOnly = RoundTrip(saver => FluidWorldSaveFormat.WriteNativeOnly(saver, states, false), out _);
+      Check(nativeOnly.NativeOnly && !nativeOnly.ImportPending && nativeOnly.ProviderStates.Count == states.Count, "Native-only envelope round trip");
+      var pending = RoundTrip(saver => FluidWorldSaveFormat.WriteNativeOnly(saver, states, true), out _);
+      Check(pending.NativeOnly && pending.ImportPending, "A pending import did not survive the native save envelope");
+      // Envelope 1 (0.1.2) has no ImportPending key and reads as no pending import.
+      var first = new SerializedObject();
+      var firstSaver = new ObjectSaver(first);
+      firstSaver.Set(new PropertyKey<int>("EnvelopeVersion"), 1); firstSaver.Set(new PropertyKey<bool>("NativeOnly"), true);
+      foreach (var name in new[] { "ProviderIds", "ProviderOwners", "ProviderData" }) firstSaver.Set(new ListKey<string>(name), Array.Empty<string>());
+      firstSaver.Set(new ListKey<int>("ProviderSchemas"), Array.Empty<int>());
+      var firstLoaded = FluidWorldSaveFormat.Read(new ObjectLoader(json.ReadJson(json.WriteJson(first))));
+      Check(firstLoaded.NativeOnly && !firstLoaded.ImportPending, "Envelope 1 did not load as written");
       Check(FluidWorldSaveFormat.ContentDigest(FluidWorldSaveFormat.WithProviderStates(document, Array.Empty<FluidProviderState>())) == digest,
         "Provider state is part of the content digest");
       bool missing = false;
@@ -37,8 +47,8 @@ namespace ModdableFluids.Native.Acceptance {
       Check(missing, "A save entry without an envelope version loaded");
       bool newer = false;
       var future = new SerializedObject();
-      new ObjectSaver(future).Set(new PropertyKey<int>("EnvelopeVersion"), 2);
-      try { FluidWorldSaveFormat.Read(new ObjectLoader(future)); } catch (FluidSaveException e) { newer = e.Message.Contains("envelope 2"); }
+      new ObjectSaver(future).Set(new PropertyKey<int>("EnvelopeVersion"), 3);
+      try { FluidWorldSaveFormat.Read(new ObjectLoader(future)); } catch (FluidSaveException e) { newer = e.Message.Contains("envelope 3"); }
       Check(newer, "An unknown save envelope version loaded");
       return checks;
     }

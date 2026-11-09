@@ -13,7 +13,7 @@ namespace ModdableFluids {
   /// and unload one at a time. A failed freeze leaves the host Faulted with its report.
   /// </summary>
   public sealed class ModdableFluidsHost {
-    public const int ApiMajor = 0, ApiMinor = 1, ApiPatch = 2;
+    public const int ApiMajor = 0, ApiMinor = 1, ApiPatch = 3;
     public static string ApiVersion => ApiMajor + "." + ApiMinor + "." + ApiPatch;
 
     /// <summary>Capabilities implemented by this contract, in ordinal order. Nothing unimplemented is listed.</summary>
@@ -26,6 +26,8 @@ namespace ModdableFluids {
       "ModdableFluids.Scene.Lifecycle",
       "ModdableFluids.Sources.Types",
       "ModdableFluids.World.Additions",
+      "ModdableFluids.World.Import",
+      "ModdableFluids.World.Rules",
       "ModdableFluids.World.Sampling",
       "ModdableFluids.World.SourceComposition"
     }.OrderBy(c => c, StringComparer.Ordinal).ToArray());
@@ -37,12 +39,15 @@ namespace ModdableFluids {
     private FluidRegistry _registry;
     private FluidRegistryException _fault;
     private FluidScene _scene;
+    private ProviderEntry[] _rules;
     private int _sceneSerial;
     private bool _sceneStateLoaded;
 
     public string Phase { get { lock (_gate) return _scene != null ? "SceneActive" : _state.ToString(); } }
     public bool IsFrozen { get { lock (_gate) return _state == State.Frozen; } }
     public FluidScene ActiveScene { get { lock (_gate) return _scene; } }
+    /// <summary>Whether any accepted provider imports other save formats (<see cref="IFluidWorldImporter"/>).</summary>
+    public bool HasImporters { get { lock (_gate) return _state == State.Frozen && _providers.Any(e => e.Importer != null); } }
 
     public FluidRegistry Registry {
       get {
@@ -56,7 +61,8 @@ namespace ModdableFluids {
     public void RegisterProvider(IFluidProvider provider) {
       if (provider == null) throw new ArgumentNullException(nameof(provider));
       if (provider is ReflectedFluidProvider) throw new ArgumentException("Register reflected providers with RegisterReflectedProvider");
-      Add(new ProviderEntry(provider, "Compiled", provider as IFluidSceneProvider, provider as IFluidStateProvider));
+      Add(new ProviderEntry(provider, "Compiled", provider as IFluidSceneProvider, provider as IFluidStateProvider) {
+        Importer = provider as IFluidWorldImporter, Rules = provider as IFluidColumnRules });
     }
 
     /// <summary>Reflection route: binds a plain object by documented member names (see the API documentation).</summary>
@@ -155,6 +161,7 @@ namespace ModdableFluids {
           e.Capabilities, e.Scene != null, e.State != null, e.State?.StateSchemaVersion ?? 0)).ToArray();
         _registry = new FluidRegistry(definitions.ToArray(), infos, sourceTypes.ToArray());
         _providers.Clear(); _providers.AddRange(accepted);
+        _rules = _providers.Where(e => e.Rules != null).ToArray();
         _state = State.Frozen;
         return _registry;
       }
@@ -203,11 +210,15 @@ namespace ModdableFluids {
     }
 
     /// <summary>Activates scene providers in ordinal order. A failure unloads those already activated, in reverse.</summary>
-    public FluidScene ActivateScene() {
+    public FluidScene ActivateScene() => ActivateScene(null);
+
+    /// <summary>Activates a scene whose providers reach <paramref name="world"/> through <see cref="FluidScene.World"/>.</summary>
+    public FluidScene ActivateScene(IFluidWorld world) {
       lock (_gate) {
         var registry = Registry;
         if (_scene != null) throw new InvalidOperationException("Fluid scene " + _scene.Serial + " is still active; unload it before activating another");
-        var scene = new FluidScene(registry, ++_sceneSerial) { IsActive = true };
+        if (world != null && !ReferenceEquals(world.Registry, registry)) throw new ArgumentException("The world service belongs to a different registry");
+        var scene = new FluidScene(registry, ++_sceneSerial, world) { IsActive = true };
         var activated = new List<ProviderEntry>();
         foreach (var entry in _providers.Where(e => e.Scene != null)) {
           try { entry.Scene.Activate(scene); activated.Add(entry); }
@@ -285,6 +296,42 @@ namespace ModdableFluids {
       }
     }
 
+    /// <summary>
+    /// Asks every importer for the world fluid state of a save without Moddable Fluids data (see
+    /// <see cref="IFluidWorldImporter"/>). Returns null when none has any. The document's fluids must be registered.
+    /// </summary>
+    public FluidSaveDocument ImportWorld(FluidScene scene, IReadOnlyList<FluidNativeColumn> columns) {
+      if (columns == null) throw new ArgumentNullException(nameof(columns));
+      lock (_gate) {
+        RequireActive(scene);
+        FluidSaveDocument imported = null; ProviderEntry importer = null;
+        foreach (var entry in _providers.Where(e => e.Importer != null)) {
+          FluidSaveDocument document;
+          try { document = entry.Importer.ImportWorld(scene, columns); }
+          catch (FluidSaveException) { throw; }
+          catch (Exception e) { throw new InvalidOperationException("Provider " + entry.Id + " (mod " + entry.Owner + ") failed to import this save's fluid state", e); }
+          if (document == null) continue;
+          if (importer != null)
+            throw new FluidSaveException(new[] { "Providers " + importer.Id + " (mod " + importer.Owner + ") and " + entry.Id + " (mod " + entry.Owner
+              + ") both import fluid state for this save; only one may" });
+          importer = entry; imported = document;
+        }
+        imported?.ResolveFluidSlots(scene.Registry);
+        return imported;
+      }
+    }
+
+    /// <summary>Runs every provider's column rules on a completed tick, in provider order (see <see cref="IFluidColumnRules"/>).</summary>
+    public void ApplyColumnRules(FluidScene scene, IFluidColumnEditor columns) {
+      if (columns == null) throw new ArgumentNullException(nameof(columns));
+      var rules = _rules ?? throw new InvalidOperationException("The registry is not frozen");
+      if (scene == null || !scene.IsActive || !ReferenceEquals(ActiveScene, scene)) throw new InvalidOperationException("Expected the active fluid scene");
+      foreach (var entry in rules) {
+        try { entry.Rules.ApplyRules(scene, columns); }
+        catch (Exception e) { throw new InvalidOperationException("Provider " + entry.Id + " (mod " + entry.Owner + ") failed its fluid rules on tick " + columns.CompletedTicks, e); }
+      }
+    }
+
     private void RequireActive(FluidScene scene) {
       if (scene == null || !ReferenceEquals(scene, _scene) || !scene.IsActive) throw new InvalidOperationException("Expected the active fluid scene");
     }
@@ -322,6 +369,8 @@ namespace ModdableFluids {
       internal readonly IFluidStateProvider State;
       internal string Id, Owner;
       internal string[] Capabilities;
+      internal IFluidWorldImporter Importer;
+      internal IFluidColumnRules Rules;
       internal ProviderEntry(IFluidProvider provider, string route, IFluidSceneProvider scene, IFluidStateProvider state) {
         Provider = provider; Route = route; Scene = scene; State = state;
       }
