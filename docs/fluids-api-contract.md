@@ -1,6 +1,6 @@
 # Moddable Fluids 0.1 contract
 
-Implemented 2026-11-09 as item 3 of the [Moddable Fluids plan](fluids-api-plan.md), with item 4's persistent identities. The contract is experimental: its major version is 0, so any minor release may change it. It has passed the .NET 8 harness and the installed-Mono probes, including a Mono process without the API. In game, the registry, both consumer routes and the provider scene lifecycle passed the worker fixture on 2026-11-09, under the pre-rename names. Behaviour policies, public sampling, shared rendering and tide registration are not part of 0.1. Where the plan calls a definition field a behaviour or appearance, that is only data until the matching capability exists.
+Implemented 2026-11-09 as item 3 of the [Moddable Fluids plan](fluids-api-plan.md), with item 4's persistent identities. The contract is experimental: its major version is 0, so any minor release may change it. It has passed the .NET 8 harness and the installed-Mono probes, including a Mono process without the API. In game, the registry, both consumer routes and the provider scene lifecycle passed the worker fixture on 2026-11-09, under the pre-rename names. Behaviour policies and tide registration are not part of 0.1. Source types (0.1.1), the world service (0.1.2), and legacy import and column rules (0.1.3) were added in patch releases; shared rendering is a runtime service with no API surface yet. Where the plan calls a definition field a behaviour or appearance, that is only data until the matching capability exists.
 
 ## Rename from FluidsApi
 
@@ -124,6 +124,14 @@ A reflected provider then goes through the same validation and lifecycle as a co
 | `ModdableFluids.Scene.Lifecycle` | Per-scene activation and unload |
 | `ModdableFluids.Persistence.ComponentIdentity` | Saves identify fluids by ID |
 | `ModdableFluids.Persistence.ProviderState` | Versioned provider-owned save data |
+| `ModdableFluids.Sources.Types` | Register source types; the seven native kinds are built in (0.1.1) |
+| `ModdableFluids.World.Sampling` | Read columns of the last completed tick (0.1.2) |
+| `ModdableFluids.World.Additions` | Add a named fluid at a cell (0.1.2) |
+| `ModdableFluids.World.SourceComposition` | One owner at a time overrides what tide-overridable sources emit (0.1.2) |
+| `ModdableFluids.World.Import` | Import another save format once (0.1.3) |
+| `ModdableFluids.World.Rules` | Provider rules after every completed tick (0.1.3) |
+
+The current runtime is 0.1.3. Each patch release only added capabilities; a provider built for 0.1.1 loads on 0.1.3.
 
 `ModdableFluidsEntry.DescribeRuntime()` returns a plain-text report for logs and support requests. It lists the version, capabilities, phase, any fault, the registry fingerprint and fluids, and each provider with its route, minimum version and optional interfaces.
 
@@ -170,7 +178,26 @@ Rules:
 - **Changed geometry.** Other columns are projected with the shared geometry rules, and geometry and pressure losses are reported explicitly.
 - **Native mismatch.** When native water disagrees with the restored state, the session faults and the load stops with the cell named.
 
-The game-side envelope (`ModdableFluids.World`, envelope 1) is built and round-trips through the game's own persistence under Mono; see [World save in game](fluids-native-adapter.md#world-save-in-game). Not yet done: the in-game save/reload run, a last-completed-tick snapshot for exception saves, and the Deep Frontier importer.
+The game-side envelope (`ModdableFluids.World`) is built and round-trips through the game's own persistence under Mono; see [World save in game](fluids-native-adapter.md#world-save-in-game). Envelope 2 adds `ImportPending`: a native-only save written before the first fluid substep of a world whose importers have not run, so the next load imports again. Envelope 1 (0.1.2) is still read, as written. Not yet done: the in-game save/reload run and a last-completed-tick snapshot for exception saves.
+
+## Source types (0.1.1)
+
+A source type describes one kind of water source placed from a blueprint: its template, tile count, default strength, whether it follows drought, whether badtide contaminates it, whether a tide may override what it emits, an optional periodic schedule, and the share of each extra fluid it emits. `FluidRegistration.AddSourceType`, `SetSourceEmission` and `SetSourceSchedule` register one; every behaviour is stated, nothing is inherited from a native kind. The seven native kinds (water and badwater sources, both seeps, the aquifer, the badtide drain and the dev source) are registered by Moddable Fluids with their native behaviour, including the seep depth limit, the aquifer's drill and the drain's badtide-only activity. `FluidRegistry.SourceTypes`, `TryGetSourceType` and `TryGetSourceTypeByTemplate` read them. In game the template must carry a native `WaterSourceSpec` with the same tile count and strength. Emission shares are of the source's non-bad volume and may total at most one; the rest stays fresh water.
+
+## World service (0.1.2)
+
+`IFluidWorld`, reached through `FluidScene.World` from 0.1.3, is the scene's fluid state for other mods:
+
+- `TrySample(x, y, z)` returns the open column containing height z at a cell; `SampleCell(x, y)` returns every open column of the cell, lowest first (0.1.3). Samples come from the state published at the last completed tick, so any game thread may read them and never sees half a tick. `HasState` is false until the scene's first native water substep (0.1.3).
+- `QueueAddition(x, y, z, fluid, volume)` is a main-thread request, like the native water service. It becomes a native clean-water change that the change stage resolves to the named fluid by cell and volume, oldest first. Badwater additions use the native contaminated-water change.
+- `SetSourceComposition(owner, shares)` makes tide-overridable source types emit the given extra fluids; `null` clears it. A second owner fails instead of winning by load order.
+
+## Legacy import and column rules (0.1.3)
+
+Two optional provider interfaces, for compiled providers:
+
+- **`IFluidWorldImporter`.** When a save has no `ModdableFluids.World` entry (or one marked `ImportPending`), Moddable Fluids asks every importer once, in the first native substep on a worker thread, with the native columns (`FluidNativeColumn`: cell, interval, capacity, physical volume, native contamination). An importer returns a `FluidSaveDocument` built from data it read in its own Load, or null. The document is validated and restored like a saved one; two importers returning documents stop loading and name both.
+- **`IFluidColumnRules`.** After every completed native water tick, before the tick is published, each provider's rules run in provider order on the worker thread with an `IFluidColumnEditor`. The editor reads columns and can only convert volume between two non-badwater fluids within one column, so native depth and contamination never change. It is valid only during the call. An exception fails the tick and names the provider.
 
 ## Optional integrations
 

@@ -1,5 +1,16 @@
 # Current development status
 
+## Moddable Fluids 0.1.1 to 0.1.3, GPU rendering, More Fluids skeleton, Deep Frontier groundwork (2026-11-09; harness and Mono passed, not built by Unity, nothing installed)
+
+- **Source types, API 0.1.1 (`385a6eb`).** A registry of water-source kinds: the seven native kinds with their native behaviour, plus provider-registered types with explicit template, tiles, strength, drought, badtide, tide override, schedule and emitted fluids. Native source adapters compose emissions from it.
+- **Shared rendering, GPU half (`9cf0520`, audit proposal C2).** Per-scene copies of the native water materials with generated shader variants and four R8 channel arrays; native materials are never edited. Not yet compiled by Unity or seen in game.
+- **More Fluids skeleton (`d4b029c`).** Package `MoreFluids` registers coffee, saltwater and healing water, a Geyser and a Healing Spring through the public API only, with provisional numbers from the design proposal, which still awaits the user.
+- **World service, API 0.1.2 (`61e6e2b`).** Sampling from the last completed tick, fluid additions resolved at the native change stage, and a single-owner source composition override (tides).
+- **Import and rules, API 0.1.3 (`e003bb8`).** `FluidScene.World`; `SampleCell` and `HasState`; `IFluidWorldImporter` (another save format imported once in the first substep; envelope 2 marks a save made before then `ImportPending`); `IFluidColumnRules` (provider rules after each completed tick that can only convert between non-badwater fluids in a column).
+- **Deep Frontier migration groundwork (`964fd7d`), behind `DEEP_FRONTIER_MODDABLE_FLUIDS`.** In `src/DeepFrontier/ModdableFluids`, never staged into the shipped package: radioactive water and both springs as a provider, the `DeepFrontier.Radiation` v2/v3 importer with `ApplyLoaded`'s rules, decay and cutoff as column rules, the `IRadiationService` facade, a soil ledger and the flagged v4 save. With the flag, Deep Frontier binds the facade and skips the lockstep hooks. The flagged build compiles but is not runnable: the direct `RadiationSimulation` users, soil exchange and deposition must move first ([list](../docs/fluids-native-adapter.md#deep-frontier-migration-groundwork)). The shipped Deep Frontier is unchanged.
+- **Evidence.** .NET harness 405,158 assertions in 57 scenarios; installed Mono 1,168 checks; API-absent probe 5 checks; normal and flagged Deep Frontier compile checks build. Docs: [contract](../docs/fluids-api-contract.md) sections for 0.1.1 to 0.1.3.
+- **Next.** An official Mod Builder build (agreed with the coordinator first), then the in-game runs in the order given in the report.
+
 ## Audit proposals 3 and 4: Reactor Bot skin, Technical School, preview caches (2026-11-09; source validated in mirror `nativeaudit2`, not built or run in game)
 
 - User approved native-safety proposals 2, 3 and 4 (2 goes to the Moddable Fluids agent). No in-game testing until all implementation tasks are done; no Unity build without the coordinator's go-ahead (none run).

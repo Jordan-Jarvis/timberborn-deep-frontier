@@ -305,11 +305,12 @@ Status on 2026-11-09:
    - the game-side world saver/loader (`ModdableFluids.World`) and a native save/reload fixture (`-SaveReload`), which has not run in game yet;
    - the CPU half of shared rendering (resolved appearance in the native texture layout).
 
+   - the GPU half of rendering: per-scene material copies with generated shader variants, so native materials are never edited (built 2026-11-09, not yet built by Unity or seen in game).
+
    Not built:
-   - the GPU half of rendering (shader variants, material ownership, uploads);
    - a last-completed-tick snapshot for exception saves.
 
    [Shared rendering](fluids-native-adapter.md#shared-rendering) has the details.
-5. **Not started: Deep Frontier migration and More Fluids content.** They wait for the in-game save/reload run and the item 4 work above. More Fluids' first release (coffee, saltwater, healing water) has a [design proposal](more-fluids-design.md) awaiting the user's numbers. That design orders the API capabilities still to build: intake conversion and refusal, tide registration, GPU rendering, exposure, then irrigation.
+5. **Groundwork: Deep Frontier migration and More Fluids content.** API patch releases added what both need: source types (0.1.1), the world service (0.1.2), and legacy import and column rules (0.1.3); see the [contract](fluids-api-contract.md). The [Deep Frontier groundwork](fluids-native-adapter.md#deep-frontier-migration-groundwork) (radioactive water and springs as a provider, the version 2/3 importer, decay and cutoff rules, the `IRadiationService` facade) compiles behind `DEEP_FRONTIER_MODDABLE_FLUIDS` and passes the harness; the shipped package is unchanged, and the flagged build is not runnable until the listed consumers and the soil exchange move. The More Fluids package skeleton registers coffee, saltwater and healing water and the geyser and healing-spring source types with provisional numbers from the [design proposal](more-fluids-design.md), which still awaits the user's numbers. Still to build for More Fluids gameplay: intake conversion and refusal, tide registration, exposure, then irrigation.
 
 Decided on 2026-11-09: the foundation name (Moddable Fluids), the first pack contents (coffee, saltwater and healing water), and the tide policy (explicit per-tide chances with independent rolls). Still open: the user's approval of the proposed More Fluids numbers, and later oil/lava gameplay details. Storage layout, transport equations, renderer data format, and terrain solidification remain engineering decisions to resolve with the corresponding prototypes.
