@@ -1,5 +1,19 @@
 # Current development status
 
+## Moddable Fluids: rename, and the in-game worker fixture passed (2026-11-09)
+
+- **In-game worker fixture (plan item 1): passed.** Run by the coordinator on HEAD `e597e4f` (pre-rename names), game closed, dialogs clicked by the user. `outputs/fluids-api-prototype/worker-report.json`:
+  - status passed; two scenes attached and detached; 51 native ticks and 144 checks per world;
+  - callbacks on five real worker threads, never on the main thread;
+  - native columns 1024 to 1026; pressure loss 2.470;
+  - native intakes 3.5600054935 against the component ledger within 1e-9; largest representation difference 4.6e-7;
+  - registry `86256e57…` with water, badwater, the compiled Tracer and the reflected Juice; provider scenes 1 and 2; clean menu teardown.
+- **Launcher fix.** The launcher restored the profile, then threw on an empty exit code: it found the process by name and held no handle, so .NET loses the exit code once the process exits. It now waits on the PID the launch reports, opens its handle at once, and fails whenever the exit code is unavailable. Tested on a stand-in process: without a handle the exit code reads empty, with one it reads 7. No other `tools/start_*.ps1` reads an exit code without a handle.
+- **Rename (user decision).** The foundation is Moddable Fluids (`e9d02a5`): mod ID, assemblies, namespaces, capabilities, flags, fixture IDs, `src/ModdableFluids`, `build_moddable_fluids.ps1` and `verify_moddable_fluids_package.ps1`. There are no aliases; the mapping is in [docs/fluids-api-contract.md](../docs/fluids-api-contract.md#rename-from-fluidsapi).
+  - The renamed fluid gate matches the old one: 402,478 assertions, 1,159 Mono checks, 5 absence checks.
+  - The pre-rename `Mods/FluidsApi` package is still installed until `tools/build_moddable_fluids.ps1 -RemoveLegacyPackage` runs.
+  - The renamed fixture map must be generated (`tools/create_fluid_acceptance_map.py`) before the next worker run.
+
 ## Fluids API 0.1 registry, providers and persistent identities (2026-11-09; harness, Mono and official package passed; in-game fixture pending)
 
 - **Extraction inventory (plan item 2).** [docs/fluids-extraction-inventory.md](../docs/fluids-extraction-inventory.md) covers every Deep Frontier water, weather, rendering, sensor and save hook. For each it gives the patch target, startup check, lifecycle, optional assemblies, direct `RadiationSimulation` consumers and proposed owner. It is taken at `d418394` and amended for the safety audit's later commits (`2dce084`, `432e696`, `ec17e3f`), which moved Deep Frontier patches to verified install-once-at-mod-start.

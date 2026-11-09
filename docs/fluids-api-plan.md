@@ -272,7 +272,14 @@ Record performance with zero extra active fluids and with increasing active coun
 
 Status on 2026-11-09:
 
-1. **Pending: the in-game worker fixture.** It is implemented and has not run, and it needs a closed game. It now covers the registry too: both synthetic consumer routes register, the registry freezes before the first world, and provider scenes enter and leave twice. It also establishes actual worker barriers, resized arrays, native intakes and patch cleanup across scene re-entry. Activation stays limited to disposable worlds until persistence runs in game.
+1. **Done: the in-game worker fixture.** It passed in game on 2026-11-09, on HEAD `e597e4f` with the pre-rename names. It ran two disposable worlds:
+   - five real worker threads;
+   - native column growth and pressure capacity reached;
+   - ten native intakes matching the component ledger;
+   - the registry from both consumer routes, with provider scenes entering and leaving twice;
+   - clean teardown.
+
+   Details are in the [native adapter document](fluids-native-adapter.md). Activation stays limited to disposable worlds until persistence runs in game.
 2. **Done: the extraction inventory.** [fluids-extraction-inventory.md](fluids-extraction-inventory.md) lists every water, weather, rendering, sensor and save hook. For each it gives the startup checks, lifecycle, optional assemblies, direct `RadiationSimulation` consumers and proposed owner. It also records the native-safety audit's later Deep Frontier changes.
 3. **Done as contract 0.1, with the tide policy awaiting the user.** The [0.1 contract](fluids-api-contract.md) covers:
    - stable IDs and deterministic handles;

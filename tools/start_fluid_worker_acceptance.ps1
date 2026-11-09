@@ -54,13 +54,23 @@ try {
     $installedFixtures += $id
   }
   if (Test-Path -LiteralPath $report) { Remove-Item -LiteralPath $report }
-  & (Join-Path $PSScriptRoot 'launch_timberborn.ps1') -Arguments @('-moddableFluidsWorkerAcceptance','-moddableFluidsReport',('"'+$report+'"'),'-logFile',('"'+$log+'"'))
-  $ownedProcess = @(Get-Process Timberborn -ErrorAction Stop)
-  if ($ownedProcess.Count -ne 1) { throw 'Expected exactly one owned acceptance game process.' }
-  $ownedProcess = $ownedProcess[0]
+  $launch = @(& (Join-Path $PSScriptRoot 'launch_timberborn.ps1') -Arguments @('-moddableFluidsWorkerAcceptance','-moddableFluidsReport',('"'+$report+'"'),'-logFile',('"'+$log+'"')))
+  $launch | Write-Output
+  # Wait on the exact process the launch started. A Process object found later by name or id
+  # has no handle, and .NET then cannot report its exit code once it exits (the 2026-11-09 run
+  # passed but read an empty exit code). Opening .Handle while it runs keeps the code readable.
+  $pids = @($launch | ForEach-Object { if ("$_" -match '^Started Timberborn\.exe \(pid (\d+)\)') { [int]$Matches[1] } })
+  if ($pids.Count -ne 1) { throw 'The launch did not report exactly one Timberborn process id.' }
+  $ownedProcess = Get-Process -Id $pids[0] -ErrorAction Stop
+  $null = $ownedProcess.Handle
+  if (@(Get-Process Timberborn -ErrorAction SilentlyContinue).Count -ne 1) { throw 'Expected exactly one Timberborn process: the owned acceptance game.' }
   Write-Output "Disposable worker acceptance PID $($ownedProcess.Id). Profile backup: $backup"
   if (-not $ownedProcess.WaitForExit($TimeoutSeconds * 1000)) { throw "Disposable worker acceptance exceeded $TimeoutSeconds seconds. See $log" }
-  if ($ownedProcess.ExitCode -ne 0) { throw "Acceptance game exited with $($ownedProcess.ExitCode). See $log" }
+  $ownedProcess.WaitForExit()
+  $exitCode = $ownedProcess.ExitCode
+  # No fallback: without an exit code the run cannot distinguish a clean quit from a crash.
+  if ($null -eq $exitCode) { throw "The acceptance game's exit code is unavailable although its handle was held. See $log" }
+  if ($exitCode -ne 0) { throw "Acceptance game exited with $exitCode. See $log" }
   if (-not (Test-Path -LiteralPath $report)) { throw "Acceptance did not produce its report. See $log" }
   $result = Get-Content -LiteralPath $report -Raw | ConvertFrom-Json
   if ($result.status -ne 'passed' -or $result.scenesAttached -ne 2 -or $result.scenesDetached -ne 2) { throw 'Worker acceptance report did not pass two scene lifecycles.' }

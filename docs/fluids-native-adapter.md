@@ -123,7 +123,18 @@ On 2026-11-09 the official Mod Builder rebuilt development version 0.0.1.0 with 
 - `verify_moddable_fluids_package.ps1` passed. The installed assemblies pass all **1,159 installed-Mono checks** (`package-mono-report.json`). The kept fixture DLLs pass the absence probe (`package-absence-report.json`).
 - Both probes use copies in ignored output folders and never change the installed package.
 
-The installed prototype remains experimental. Flag-gated activation keeps ordinary settlements out of a system whose saver is not yet in the game. The package has no enablement key in the user's profile, which means it is enabled. Without the acceptance flag it binds nothing. The worker fixture compiles, but no `worker-report.json` result exists yet.
+The installed prototype remains experimental. Flag-gated activation keeps ordinary settlements out of a system whose saver is not yet in the game. The package has no enablement key in the user's profile, which means it is enabled. Without the acceptance flag it binds nothing.
+
+**In-game result (2026-11-09, HEAD `e597e4f`, pre-rename names).** The coordinator ran the launcher with the game closed, and the user clicked through the startup dialogs. `outputs/fluids-api-prototype/worker-report.json` passed.
+
+- **Scenes.** Two scenes were attached and detached. Each world ran 51 native ticks and passed 144 checks.
+- **Threads.** Callbacks ran on five real native worker threads (9–13, then 22–26), never on the main thread (1).
+- **Buffers and pressure.** Native columns grew from 1024 to 1026 when the obstacle split them. The sealed reservoir reached pressure capacity, losing 2.470 units.
+- **Pumps.** The ten native intakes removed 3.5600054935 units; the component ledger agrees to within 1e-9.
+- **Representation.** The largest native-float representation difference was 4.6e-7.
+- **Registry.** Both scenes ran the same four fluids, from both consumer routes (fingerprint `86256e57…`), with provider scene serials 1 and 2. No transport owner or provider scene survived into the menu, and the prototype disabled itself afterwards.
+
+The launcher restored the profile and verified its hashes. It then failed on an empty exit code: it had found the process by name and never held a handle, and .NET cannot read the exit code of such a process once it exits. It now takes the PID the launch reports, opens the handle at once, and fails if the exit code is ever unavailable.
 
 ## Verification
 
@@ -148,7 +159,7 @@ Run `tools/test_fluid_transport.ps1` in a freshly synchronized scratch mirror, o
 
 ## Remaining work before a playable foundation
 
-1. Run the two-settlement fixture, which now includes the registry and both consumer routes. It verifies real worker barriers, resized arrays, geometry delivery, removal-result consumption and scene teardown.
+1. ~~Run the two-settlement fixture~~ Passed in game on 2026-11-09 (see above). Rerun it after the rename build to establish the renamed identities in game.
 2. Bind the 0.1 registry ([contract](fluids-api-contract.md)) to source composition, intake conversion and native weather. Source composition and intake conversion are still prototype delegates.
 3. Add the game-side saver and loader for `FluidSaveDocument`, with an in-game save/reload fixture, then the Deep Frontier importer and migration. Component identity, the bit-exact round trip and geometry projection are already proven in the harness and in Mono.
 4. Measure active-area work and memory on real maps, then finish shared rendering. The current reflected full-buffer prototype has no production performance acceptance yet.
