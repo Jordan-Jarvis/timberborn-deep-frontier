@@ -22,7 +22,7 @@ The user approved these numbers on 2026-11-09, chose shared-budget tide selectio
 | Water pumps | Coffee counts as potable. Water intakes accept a column while coffee is under 50% of it, and the coffee they draw becomes `Water` goods through the declared transformation `MoreFluids.CoffeeDrunkAsWater`. From 50% coffee, water intakes stop. |
 | Irrigation | Coffee moistens soil like water. |
 | Colour | Vanilla coffee barrel colour (0.161, 0.110, 0.090) at alpha 0.85. |
-| **Coffee tide** | Water sources run at ×0.5 strength and everything they emit (the non-bad part) is coffee. Near the sources the river passes 50% coffee, so water pumps stop there: a drought with a harvestable upside. |
+| **Coffee tide** | Clean water sources (water sources, water seeps, aquifers) run at ×0.5 strength; badwater sources keep their strength (user decision, 2026-11-09). Everything tide-overridable sources emit (the non-bad part) is coffee. Near the sources the river passes 50% coffee, so water pumps stop there: a drought with a harvestable upside. |
 | Tide rows (Easy / Normal / Hard) | Chance 10 / 15 / 20%, the tide's default weight. Cycles without the tide 12 / 8 / 6. Duration 2–4 / 3–5 / 4–7 days. |
 
 ## Saltwater (`MoreFluids.Saltwater`)
