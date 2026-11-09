@@ -19,6 +19,12 @@ namespace Timberborn.ModdingTools.ModBuilding {
     /// </summary>
     public static void BuildWithSyntheticFixtures() => BuildMods(new[] { "ModdableFluids" }.Concat(Fixtures).ToArray());
 
+    /// <summary>The API and the More Fluids package (public API only, provisional data).</summary>
+    public static void BuildWithMoreFluids() => BuildMods(new[] { "ModdableFluids", "MoreFluids" });
+
+    /// <summary>The API, both fixtures and More Fluids.</summary>
+    public static void BuildWithSyntheticFixturesAndMoreFluids() => BuildMods(new[] { "ModdableFluids" }.Concat(Fixtures).Concat(new[] { "MoreFluids" }).ToArray());
+
     private static void BuildMods(string[] names) {
       foreach (var target in new[] { BuildTarget.StandaloneWindows64, BuildTarget.StandaloneOSX })
         if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.Standalone, target))

@@ -2,6 +2,7 @@
 #
 #   build_moddable_fluids.ps1                     # ModdableFluids only (flag-gated: binds nothing without -moddableFluidsWorkerAcceptance)
 #   build_moddable_fluids.ps1 -SyntheticFixtures  # also the two synthetic consumer fixtures
+#   build_moddable_fluids.ps1 -MoreFluids         # also the More Fluids package (public API only, provisional data)
 #
 # Timberborn enables a newly installed mod by default (ModPlayerPrefsHelper.IsModEnabled
 # returns true without a saved key), and the compiled fixture cannot even be enumerated
@@ -15,7 +16,7 @@
 #                                                    # package and its staged authoring copies (2026-11-09 rename)
 # The build refuses to run while that legacy package is installed: it carries the old flag and
 # assembly names, so it would load beside the renamed package without being detected as a copy.
-param([switch]$SyntheticFixtures, [switch]$RemoveLegacyPackage)
+param([switch]$SyntheticFixtures, [switch]$MoreFluids, [switch]$RemoveLegacyPackage)
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
@@ -111,6 +112,11 @@ if ($SyntheticFixtures) {
     Stage $fixture.Id (Join-Path $fixture.Folder 'manifest.json') @(@{Folder='Code';Asmdef=(Join-Path $fixture.Folder ($fixture.Id + '.asmdef'));Sources=@($fixture.Folder)})
   }
 }
+$moreFluidsSource = Join-Path $root 'src/MoreFluids'
+if ($MoreFluids) {
+  if (Test-Path -LiteralPath (Join-Path $mods 'MoreFluids')) { throw 'MoreFluids is installed in the Mods folder; packages must only be present during an acceptance run. Remove it first.' }
+  Stage 'MoreFluids' (Join-Path $moreFluidsSource 'manifest.json') @(@{Folder='Code';Asmdef=(Join-Path $moreFluidsSource 'Scripts/MoreFluids.asmdef');Sources=@((Join-Path $moreFluidsSource 'Scripts'))})
+}
 $dependencies = Join-Path $project 'Assets/Plugins/ModDependencies'
 New-Item -ItemType Directory -Force -Path $dependencies | Out-Null
 Copy-Item -LiteralPath (Join-Path $dev.workshopContent '3284904751/0Harmony.dll') -Destination $dependencies -Force
@@ -118,7 +124,7 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/0Harmony.dll.meta') -Dest
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/ModdableFluidsBatchBuild.cs') -Destination (Join-Path $project 'Assets/Tools/Editor/Scripts/ModBuilding') -Force
 $log = Join-Path $output 'official-build.log'
 New-Item -ItemType Directory -Force -Path $output | Out-Null
-$method = if ($SyntheticFixtures) { 'BuildWithSyntheticFixtures' } else { 'Build' }
+$method = if ($SyntheticFixtures -and $MoreFluids) { 'BuildWithSyntheticFixturesAndMoreFluids' } elseif ($SyntheticFixtures) { 'BuildWithSyntheticFixtures' } elseif ($MoreFluids) { 'BuildWithMoreFluids' } else { 'Build' }
 $process = Start-Process -FilePath $dev.unity -WindowStyle Hidden -PassThru -ArgumentList @(
   '-batchmode','-nographics','-quit','-disable-assembly-updater','-projectPath',('"'+$project+'"'),
   '-executeMethod',"Timberborn.ModdingTools.ModBuilding.ModdableFluidsBatchBuild.$method",'-logFile',('"'+$log+'"'))
@@ -147,6 +153,10 @@ if ($SyntheticFixtures) {
     $hashes = Verify $fixture.Id (Package $fixture.Id) (Join-Path $fixture.Folder 'manifest.json') @($fixture.Id + '.dll')
     $report.fixtures[$fixture.Id] = [ordered]@{ package=(Keep $fixture.Id); assemblies=$hashes }
   }
+}
+if ($MoreFluids) {
+  $hashes = Verify 'MoreFluids' (Package 'MoreFluids') (Join-Path $moreFluidsSource 'manifest.json') @('MoreFluids.dll')
+  $report.moreFluids = [ordered]@{ package=(Keep 'MoreFluids'); assemblies=$hashes }
 }
 $report | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $output 'package-report.json')
 Write-Output "Official Moddable Fluids packages verified and kept out of the Mods folder under $(Join-Path $output 'packages'). Log: $log"
