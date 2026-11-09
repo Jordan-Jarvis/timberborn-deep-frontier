@@ -10,8 +10,8 @@ using UnityEngine;
 
 /// <summary>
 /// Moddable Fluids 0.1.3 (scene world, legacy import, column rules, whole-cell sampling) and the Deep Frontier
-/// migration groundwork on it: radioactive water and springs, the DeepFrontier.Radiation import, decay and cutoff
-/// rules, and the IRadiationService facade. Unity types are used only in methods called after the native fixture
+/// migration on it: radioactive water and springs, the DeepFrontier.Radiation import, the water rules through the
+/// soil field (HarnessExtensions.DeepFrontier.cs covers the field itself), and the IRadiationService facade. Unity types are used only in methods called after the native fixture
 /// installed its game assembly resolver.
 /// </summary>
 internal static class DeepFrontierFluidsScenarios {
@@ -31,6 +31,22 @@ internal static class DeepFrontierFluidsScenarios {
       using var native = new NativeWaterFixture(managed, specification);
       Facade(check, native, observations);
     });
+  }
+
+  /// <summary>The real column editor with no losses (the runtime fills Moddable Fluids' loss reports; DeepFrontierSoil covers them).</summary>
+  private sealed class LossFree : IFluidColumnEditor {
+    private readonly IFluidColumnEditor _inner;
+    public LossFree(IFluidColumnEditor inner) { _inner = inner; }
+    public int ColumnCount => _inner.ColumnCount;
+    public int CompletedTicks => _inner.CompletedTicks;
+    public int X(int column) => _inner.X(column);
+    public int Y(int column) => _inner.Y(column);
+    public int Floor(int column) => _inner.Floor(column);
+    public int Ceiling(int column) => _inner.Ceiling(column);
+    public double GetVolume(int column, FluidHandle fluid) => _inner.GetVolume(column, fluid);
+    public double TotalVolume(int column) => _inner.TotalVolume(column);
+    public void Convert(int column, FluidHandle from, FluidHandle to, double volume) => _inner.Convert(column, from, to, volume);
+    public IReadOnlyList<FluidLoss> Losses => Array.Empty<FluidLoss>();
   }
 
   private static void Rejects<T>(Action<bool, string> check, Action action, string name) where T : Exception {
@@ -101,8 +117,9 @@ internal static class DeepFrontierFluidsScenarios {
     var session = new NativeFluidTransportSession(native.CreateAdapter(), registry.Count, FluidRegistry.BadwaterIndex);
     var scene = host.ActivateScene();
     Rejects<InvalidOperationException>(check, () => _ = scene.World, "A scene without native transport has no world service");
-    Rejects<InvalidOperationException>(check, () => host.ApplyColumnRules(scene, new FluidColumnEditor(session, registry, NativeWaterFixture.Stride)), "Rules before Deep Frontier prepared the scene");
-    provider.PrepareScene(Hours, Record(3, false, new[] { (0, 0, 0, .5f, .2f, 0f), (1, 0, 0, .004f, 0f, 0f), (2, 0, 0, .3f, 0f, 0f), (1, 1, 0, 0f, .3f, 0f), (1, 1, 4, .2f, 0f, 0f) }));
+    Rejects<InvalidOperationException>(check, () => host.ApplyColumnRules(scene, new LossFree(new FluidColumnEditor(session, registry, NativeWaterFixture.Stride))), "Rules before Deep Frontier prepared the scene");
+    var field = DeepFrontierSoil.Field(NativeWaterFixture.Width, NativeWaterFixture.Height, (float)Hours);
+    provider.PrepareScene(field, Record(3, false, new[] { (0, 0, 0, .5f, .2f, 0f), (1, 0, 0, .004f, 0f, 0f), (2, 0, 0, .3f, 0f, 0f), (1, 1, 0, 0f, .3f, 0f), (1, 1, 4, .2f, 0f, 0f) }));
     check(provider.ImportPending && provider.PendingRecord!.Version == 3, "Legacy record waits for the first substep");
     var document = ImportInto(host, scene, session);
     check(document != null && !provider.ImportPending, "Import consumed the record");
@@ -119,21 +136,24 @@ internal static class DeepFrontierFluidsScenarios {
     check(session.Sample(native.Indices[lower]).GetVolume(radioactive.Index) == 0, "Soil-only cell holds no radioactive water");
     check(Math.Abs(session.Sample(native.Indices[upper]).GetVolume(radioactive.Index) - .2f * v4) < 1e-9, "Upper reservoir imported by its floor");
 
-    // Rules: decay converts radioactive water into fresh water in place.
+    // Rules: decay and the soil's uptake convert radioactive water into fresh water in place (the one-fluid sequence).
     double decay = RadiationTuning.DecayPerHour(RadiationTuning.RadiationHalfLifeDays) * Hours;
     double total0 = m0.TotalVolume, badVolume = m0.GetVolume(FluidRegistry.BadwaterIndex);
+    var expect0 = DeepFrontierSoil.Reference(0f, m0.GetVolume(FluidRegistry.WaterIndex), badVolume, m0.GetVolume(radioactive.Index), 0f, (float)Hours);
     var editor = new FluidColumnEditor(session, registry, NativeWaterFixture.Stride);
-    host.ApplyColumnRules(scene, editor);
+    var rules = new LossFree(editor);
+    host.ApplyColumnRules(scene, rules);
     var d0 = session.Sample(native.Indices[bad]);
-    check(Math.Abs(d0.GetShare(radioactive.Index) - (.5 - .5 * decay)) < 1e-12, "Decay over one tick");
-    check(Math.Abs(d0.TotalVolume - total0) < 1e-15 && d0.GetVolume(FluidRegistry.BadwaterIndex) == badVolume, "Decay keeps volume and badwater");
+    check(Math.Abs(d0.GetShare(radioactive.Index) - expect0.Share) < 1e-12 && field.Published.Water[new Vector3Int(0, 0, 0)] == expect0.Share
+      && field.Published.Soil[new Vector3Int(0, 0, 0)] == expect0.Soil && expect0.Soil > 0, "Decay and uptake over one tick");
+    check(Math.Abs(d0.TotalVolume - total0) < 1e-15 && d0.GetVolume(FluidRegistry.BadwaterIndex) == badVolume, "The rules keep volume and badwater");
     // Cutoff: a share below the limit survives while it grows, then is removed.
     var seeded = new double[registry.Count]; seeded[FluidRegistry.WaterIndex] = v1 * .997; seeded[radioactive.Index] = v1 * .003;
     session.SeedComposition(native.Indices[low], new FluidVolumes(seeded));
-    host.ApplyColumnRules(scene, editor);
+    host.ApplyColumnRules(scene, rules);
     double kept = session.Sample(native.Indices[low]).GetVolume(radioactive.Index);
     check(kept > 0 && kept < v1 * .003, "A growing share below the limit is kept (decayed)");
-    host.ApplyColumnRules(scene, editor);
+    host.ApplyColumnRules(scene, rules);
     var cut = session.Sample(native.Indices[low]);
     check(cut.GetVolume(radioactive.Index) == 0 && Math.Abs(cut.GetVolume(FluidRegistry.WaterIndex) - v1) < 1e-12, "A share below the limit that stopped growing becomes fresh water");
     // Editor limits.
@@ -171,7 +191,7 @@ internal static class DeepFrontierFluidsScenarios {
       var (host, provider, registry) = Host();
       var scene = host.ActivateScene();
       var session = new NativeFluidTransportSession(adapter, registry.Count, FluidRegistry.BadwaterIndex);
-      provider.PrepareScene(Hours, Record(2, false, new[] { (0, 0, 0, .6f, 0f, 1.5f), (1, 0, 0, 0f, 0f, .4f) }));
+      provider.PrepareScene(DeepFrontierSoil.Field(NativeWaterFixture.Width, NativeWaterFixture.Height, (float)Hours), Record(2, false, new[] { (0, 0, 0, .6f, 0f, 1.5f), (1, 0, 0, 0f, 0f, .4f) }));
       ImportInto(host, scene, session);
       var result = provider.TakeImportResult()!;
       check(Math.Abs(session.Sample(native.Indices[a]).GetVolume(registry.GetHandle(DeepFrontierRadioactiveWater.FluidId).Index) - .6f * .5 * va) < 1e-9, "Version 2 share of the non-bad water");
@@ -183,7 +203,7 @@ internal static class DeepFrontierFluidsScenarios {
       var (host, provider, registry) = Host();
       var scene = host.ActivateScene();
       var session = new NativeFluidTransportSession(adapter, registry.Count, FluidRegistry.BadwaterIndex);
-      provider.PrepareScene(Hours, Record(3, false, new[] { (0, 0, 0, .7f, 0f, 0f), (2, 2, 0, .3f, 0f, 0f) }));
+      provider.PrepareScene(DeepFrontierSoil.Field(NativeWaterFixture.Width, NativeWaterFixture.Height, (float)Hours), Record(3, false, new[] { (0, 0, 0, .7f, 0f, 0f), (2, 2, 0, .3f, 0f, 0f) }));
       Exception? caught = null;
       try { host.ImportWorld(scene, Columns(session)); } catch (Exception e) { caught = e; }
       var problems = (caught as FluidSaveException)?.Problems ?? Array.Empty<string>();
@@ -195,7 +215,7 @@ internal static class DeepFrontierFluidsScenarios {
       var (host, provider, registry) = Host();
       var scene = host.ActivateScene();
       var session = new NativeFluidTransportSession(adapter, registry.Count, FluidRegistry.BadwaterIndex);
-      provider.PrepareScene(Hours, Record(3, true, new[] { (0, 0, 0, .7f, 0f, 0f), (2, 2, 0, .3f, 0f, 0f) }));
+      provider.PrepareScene(DeepFrontierSoil.Field(NativeWaterFixture.Width, NativeWaterFixture.Height, (float)Hours), Record(3, true, new[] { (0, 0, 0, .7f, 0f, 0f), (2, 2, 0, .3f, 0f, 0f) }));
       ImportInto(host, scene, session);
       var result = provider.TakeImportResult()!;
       check(result.SnapshotCorrections.Count == 2 && Math.Abs(session.Sample(native.Indices[a]).GetVolume(registry.GetHandle(DeepFrontierRadioactiveWater.FluidId).Index) - .5 * va) < 1e-9,
@@ -211,13 +231,13 @@ internal static class DeepFrontierFluidsScenarios {
       var registry = host.Freeze();
       var scene = host.ActivateScene();
       var session = new NativeFluidTransportSession(adapter, registry.Count, FluidRegistry.BadwaterIndex);
-      provider.PrepareScene(Hours, Record(3, false, new[] { (0, 0, 0, .3f, 0f, 0f) }));
+      provider.PrepareScene(DeepFrontierSoil.Field(NativeWaterFixture.Width, NativeWaterFixture.Height, (float)Hours), Record(3, false, new[] { (0, 0, 0, .3f, 0f, 0f) }));
       var columns = Columns(session);
       var foreign = new FluidSaveDocument(1, "0.1.3", registry.Fingerprint, new[] { "OtherMod.Ink" }, new[] { "OtherMod" }, new[] { 0 }, new[] { 0 }, new[] { 0 }, new[] { 4 },
         new[] { FluidSaveDocument.EncodeQuantity(4) }, new[] { 0 }, new[] { 0 }, new[] { FluidSaveDocument.EncodeQuantity(1) }, Array.Empty<string>(), Array.Empty<string>(), Array.Empty<int>(), Array.Empty<string>());
       other.Document = foreign;
       Rejects<FluidSaveException>(check, () => host.ImportWorld(scene, columns), "Two importers for one save");
-      provider.PrepareScene(Hours, null);
+      provider.PrepareScene(DeepFrontierSoil.Field(NativeWaterFixture.Width, NativeWaterFixture.Height, (float)Hours), null);
       Exception? caught = null;
       try { host.ImportWorld(scene, columns); } catch (Exception e) { caught = e; }
       check(caught is FluidSaveException fse && fse.Message.Contains("OtherMod.Ink"), "An imported unknown fluid is named");
@@ -275,10 +295,11 @@ internal static class DeepFrontierFluidsScenarios {
     Rejects<ArgumentException>(check, () => other.ActivateScene(world), "A world from another registry");
     var scene = host.ActivateScene(world);
     check(ReferenceEquals(scene.World, world) && scene.HasWorld, "The scene carries its world service");
-    var soil = new RadiationSoilLedger();
+    var soil = DeepFrontierSoil.Field(NativeWaterFixture.Width, NativeWaterFixture.Height, (float)Hours);
+    soil.Load(new[] { new Vector3Int(0, 0, 0) }, new[] { .2f }, 0f, lenient: false);
     var cells = new TestCells((0, 0, 0, 4, 2f, .25f), (1, 0, 0, 3, 1f, 0f), (1, 1, 0, 2, .5f, 0f), (1, 1, 4, 12, 1f, 0f));
     var facade = new ModdableFluidsRadiationService(provider, soil, cells, () => 3f);
-    provider.PrepareScene(Hours, Record(3, false, new[] { (0, 0, 0, .5f, .2f, 0f) }));
+    provider.PrepareScene(soil, Record(3, false, new[] { (0, 0, 0, .5f, .2f, 0f) }));
     // Before the first fluid tick: pending, nothing to sample, requests wait; native geometry already answers.
     check(facade.SavedStatePending && !facade.Sample(new Vector3Int(0, 0, 1)).HasColumn && facade.ColumnRadiation(new Vector3Int(0, 0, 1)) == 0
       && !facade.IsIrradiatedGround(new Vector3Int(0, 0, 0)), "Before the first tick");
@@ -286,24 +307,32 @@ internal static class DeepFrontierFluidsScenarios {
     Rejects<ArgumentException>(check, () => facade.AddSoilRadiation(new Vector3Int(1, 1, 3), .1f), "Soil under a solid cell is refused at once, as RadiationSimulation refuses it");
     facade.AddRadioactiveWater(new Vector3Int(1, 0, 0), .25f);
     facade.AddSoilRadiation(new Vector3Int(1, 1, 5), .05f);
-    check(facade.EarlyAdditions == 2 && world.Additions.Count == 0, "Requests before the first tick are kept");
+    check(facade.EarlyAdditions.Count == 1 && soil.PendingRequests.Count == 1 && world.Additions.Count == 0, "Requests before the first tick are kept");
     Rejects<ArgumentOutOfRangeException>(check, () => facade.AddRadioactiveWater(new Vector3Int(5, 0, 0), 1f), "Outside the map");
     Rejects<ArgumentOutOfRangeException>(check, () => facade.AddRadioactiveWater(new Vector3Int(0, 0, 0), 0f), "Zero volume");
     // First substep: import, then publish.
     var session = new NativeFluidTransportSession(native.CreateAdapter(), registry.Count, FluidRegistry.BadwaterIndex);
     ImportInto(host, scene, session);
     world.State.Publish(session);
-    soil.Load(new[] { new Vector3Int(0, 0, 0) }, new[] { .2f });
-    check(!facade.SavedStatePending, "State published and imported");
+    check(facade.SavedStatePending, "Still pending until the soil rules ran once");
+    // The first completed tick: the rules apply the soil request, then the one-fluid sequence per column.
+    FluidVolumes At(int x, int y, int floor) => session.Sample(session.GetGeometry(Slot(session, x, y, floor)).NativeIndex);
+    var c0 = At(0, 0, 0); var c4 = At(1, 1, 4);
+    var expect0 = DeepFrontierSoil.Reference(.2f, c0.GetVolume(FluidRegistry.WaterIndex), c0.GetVolume(FluidRegistry.BadwaterIndex), c0.GetVolume(radioactive.Index), 0f, (float)Hours);
+    var expect4 = DeepFrontierSoil.Reference(.05f, c4.GetVolume(FluidRegistry.WaterIndex), c4.GetVolume(FluidRegistry.BadwaterIndex), c4.GetVolume(radioactive.Index), 0f, (float)Hours);
+    host.ApplyColumnRules(scene, new LossFree(new FluidColumnEditor(session, registry, NativeWaterFixture.Stride)));
+    world.State.Publish(session);
+    check(!facade.SavedStatePending && soil.PendingRequests.Count == 0, "State published, imported and the soil rules ran");
     facade.Tick((float)Hours);
-    check(facade.EarlyAdditions == 0 && world.Additions.Count == 1 && world.Additions[0].Equals((1, 0, 0, radioactive, (double).25f)), "Early water added through the world service");
-    check(Math.Abs(soil.SoilAt(new Vector3Int(1, 1, 4)) - .05f) < 1e-7, "Early soil lands under the column containing the cell");
+    check(facade.EarlyAdditions.Count == 0 && world.Additions.Count == 1 && world.Additions[0].Equals((1, 0, 0, radioactive, (double).25f)), "Early water added through the world service");
+    check(soil.SoilAt(new Vector3Int(1, 1, 4)) == expect4.Soil && expect4.Soil < .05f && expect4.Soil > 0f, "Early soil lands under the column containing the cell, then clean water rinses it");
     var sample = facade.Sample(new Vector3Int(0, 0, 1));
-    check(sample.HasColumn && Math.Abs(sample.WaterRadiation - .5f) < 1e-6 && Math.Abs(sample.BadwaterShare - .25f) < 1e-6 && sample.Submerged && Math.Abs(sample.SoilRadiation - .2f) < 1e-7, "Sample");
+    check(sample.HasColumn && Math.Abs(sample.WaterRadiation - expect0.Share) < 1e-6 && Math.Abs(sample.BadwaterShare - .25f) < 1e-6 && sample.Submerged
+      && sample.SoilRadiation == expect0.Soil, "Sample");
     check(!facade.Sample(new Vector3Int(0, 0, 3)).Submerged && facade.Sample(new Vector3Int(0, 0, 3)).HasColumn, "Above the surface in an open column");
-    check(Math.Abs(facade.GetRadiation(new Vector3Int(0, 0, 1)) - .5f) < 1e-6 && Math.Abs(facade.GetRadiation(new Vector3Int(0, 0, 3)) - .2f * RadiationTuning.SoilHazardWeight) < 1e-7, "GetRadiation");
+    check(Math.Abs(facade.GetRadiation(new Vector3Int(0, 0, 1)) - expect0.Share) < 1e-6 && facade.GetRadiation(new Vector3Int(0, 0, 3)) == expect0.Soil * RadiationTuning.SoilHazardWeight, "GetRadiation");
     check(facade.IsColumnContaminated(new Vector3Int(0, 0, 2)) && !facade.IsColumnContaminated(new Vector3Int(1, 0, 0)), "IsColumnContaminated");
-    check(Math.Abs(facade.ColumnRadiation(new Vector3Int(0, 0, 3)) - .5f) < 1e-6 && facade.ColumnRadiation(new Vector3Int(1, 1, 3)) == 0, "ColumnRadiation in the column, 0 in a solid cell");
+    check(Math.Abs(facade.ColumnRadiation(new Vector3Int(0, 0, 3)) - expect0.Share) < 1e-6 && facade.ColumnRadiation(new Vector3Int(1, 1, 3)) == 0, "ColumnRadiation in the column, 0 in a solid cell");
     check(facade.IsIrradiatedGround(new Vector3Int(0, 0, 0)) && facade.IsIrradiatedGround(new Vector3Int(0, 0, 2)) && !facade.IsIrradiatedGround(new Vector3Int(1, 0, 0)),
       "Irradiated ground at or above the threshold, by the column containing the cell");
     check(facade.TryFindOpenCell(new Vector2Int(1, 1), 1, out var inside) && inside == new Vector3Int(1, 1, 1), "Open cell containing the height");
@@ -327,11 +356,6 @@ internal static class DeepFrontierFluidsScenarios {
     facade.SetSourceRadioactiveShare(0f); facade.Tick((float)Hours);
     check(world.State.ActiveSourceComposition == null, "Tide over");
     Rejects<ArgumentOutOfRangeException>(check, () => facade.SetSourceRadioactiveShare(1.5f), "Share above one");
-    // Soil ledger: decay and limits.
-    soil.Decay(24f * RadiationTuning.SoilHalfLifeDays);
-    check(Math.Abs(soil.SoilAt(new Vector3Int(0, 0, 0)) - .2f * (1f - (float)Math.Log(2))) < 1e-4, "Soil decay");
-    soil.Decay(24f * 3000f);
-    check(soil.Count == 0, "Soil below the minimum is gone");
     host.UnloadScene(scene);
     observations["deepFrontierFacadeSampledShare"] = sample.WaterRadiation;
   }

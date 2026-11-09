@@ -48,7 +48,8 @@ namespace DeepFrontier.ModdableFluidsMigration {
 
   /// <summary>
   /// Version 4 of <c>DeepFrontier.Radiation</c>, written by the Moddable Fluids build: the water is saved by
-  /// Moddable Fluids, so Deep Frontier keeps only soil by (x, y, column floor), timed sources and its hour counter.
+  /// Moddable Fluids, so Deep Frontier keeps soil by (x, y, column floor), timed sources, its hour counter, and the
+  /// requests no fluid tick has applied yet (soil additions, and radioactive water added before the first fluid tick).
   /// </summary>
   public sealed class RadiationFacadeRecord {
     public const int Version = 4;
@@ -57,12 +58,18 @@ namespace DeepFrontier.ModdableFluidsMigration {
     public IReadOnlyList<RadiationSourceRecord> Sources { get; }
     public int NextSourceId { get; }
     public float HourAccumulator { get; }
-    public RadiationFacadeRecord(IList<Vector3Int> soilCells, IList<float> soil, IList<RadiationSourceRecord> sources, int nextSourceId, float hourAccumulator) {
+    public IReadOnlyList<(Vector3Int Cell, float Amount)> PendingSoil { get; }
+    public IReadOnlyList<(Vector3Int Cell, float Volume)> EarlyWater { get; }
+    public RadiationFacadeRecord(IList<Vector3Int> soilCells, IList<float> soil, IList<RadiationSourceRecord> sources, int nextSourceId, float hourAccumulator,
+        IList<(Vector3Int, float)> pendingSoil, IList<(Vector3Int, float)> earlyWater) {
       if (soil.Count != soilCells.Count) throw new InvalidOperationException("Radiation soil save lists have different lengths");
-      if (soil.Any(s => !(s > 0) || float.IsInfinity(s))) throw new InvalidOperationException("Saved soil radiation is positive and finite");
+      if (soil.Any(s => !(s > 0) || s > 1)) throw new InvalidOperationException("Saved soil radiation is within (0, 1]");
       if (soilCells.Distinct().Count() != soilCells.Count) throw new InvalidOperationException("Saved soil radiation lists a cell twice");
       if (sources.Any(s => s.Id >= nextSourceId)) throw new InvalidOperationException("Saved radiation source id is not below NextSourceId");
+      if (!(hourAccumulator >= 0) || float.IsInfinity(hourAccumulator)) throw new InvalidOperationException("Saved radiation hour counter " + hourAccumulator + " is invalid");
+      if (pendingSoil.Concat(earlyWater).Any(p => !(p.Item2 > 0) || float.IsInfinity(p.Item2))) throw new InvalidOperationException("Saved pending radiation amounts are positive and finite");
       SoilCells = soilCells.ToArray(); Soil = soil.ToArray(); Sources = sources.ToArray(); NextSourceId = nextSourceId; HourAccumulator = hourAccumulator;
+      PendingSoil = pendingSoil.ToArray(); EarlyWater = earlyWater.ToArray();
     }
   }
 }

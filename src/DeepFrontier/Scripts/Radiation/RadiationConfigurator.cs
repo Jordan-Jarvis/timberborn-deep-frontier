@@ -15,6 +15,7 @@ namespace DeepFrontier.Scripts.Radiation {
 #if DEEP_FRONTIER_MODDABLE_FLUIDS
       // Moddable Fluids carries and renders the water; the facade serves the radiation services
       // (docs/deep-frontier-fluids-migration.md).
+      Bind<DeepFrontier.ModdableFluidsMigration.ModdableFluidsBankLayer>().AsSingleton();
       Bind<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>().AsSingleton();
       Bind<IRadiationService>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();
       Bind<IIrradiatedGround>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();

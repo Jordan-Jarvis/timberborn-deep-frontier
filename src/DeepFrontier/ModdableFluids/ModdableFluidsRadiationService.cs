@@ -25,39 +25,55 @@ namespace DeepFrontier.ModdableFluidsMigration {
   /// <see cref="IRadiationService"/> backed by Moddable Fluids, so the reactor, bots, storage, tide and sensors can
   /// move one at a time (migration groundwork; flagged build and harness only). Water reads come from the world
   /// state published at the last completed fluid tick; radioactive water is added through the world service; the
-  /// tide's radioactive share is the world's source composition override. Soil comes from <see cref="IRadiationSoil"/>.
-  /// Timed sources, the tide share and requests made before the first fluid tick are applied in <see cref="Tick"/>
-  /// (main thread), as RadiationSimulation applies them at the start of its Tick.
+  /// tide's radioactive share is the world's source composition override. Soil comes from <see cref="RadiationSoilField"/>
+  /// (the last completed pass, with the bank layer). Timed sources, the tide share and water added before the first
+  /// fluid tick are applied in <see cref="Tick"/> (main thread), as RadiationSimulation applies them at the start of its Tick.
   /// The semantics are RadiationSimulation's; differences are named where they occur.
   /// </summary>
   public class ModdableFluidsRadiationService : IRadiationService, IIrradiatedGround, IRadiationWaterCells {
     public const string TideOwner = "DeepFrontier.RadioactiveTide";
     private readonly DeepFrontierRadioactiveWater _provider;
-    private readonly IRadiationSoil _soil;
+    private RadiationSoilField _soil;
     private readonly Func<float> _waterPerStrengthHour;
     private readonly IRadiationCellMap _cells;
     private readonly List<RadiationSourceRecord> _sources = new List<RadiationSourceRecord>();
     private readonly List<(Vector3Int Cell, float Volume)> _early = new List<(Vector3Int, float)>();
-    private readonly List<(Vector3Int Cell, float Amount)> _earlySoil = new List<(Vector3Int, float)>();
     private float _tideShare, _publishedTideShare;
     private int _nextSourceId = 1;
 
-    public ModdableFluidsRadiationService(DeepFrontierRadioactiveWater provider, IRadiationSoil soil, IRadiationCellMap cells, Func<float> waterPerStrengthHour) {
+    public ModdableFluidsRadiationService(DeepFrontierRadioactiveWater provider, RadiationSoilField soil, IRadiationCellMap cells, Func<float> waterPerStrengthHour)
+      : this(provider, cells, waterPerStrengthHour) {
+      AttachSoil(soil);
+    }
+
+    /// <summary>For the game, whose soil field needs the loaded map and clock: <see cref="AttachSoil"/> follows in Load.</summary>
+    protected ModdableFluidsRadiationService(DeepFrontierRadioactiveWater provider, IRadiationCellMap cells, Func<float> waterPerStrengthHour) {
       _provider = provider ?? throw new ArgumentNullException(nameof(provider));
-      _soil = soil ?? throw new ArgumentNullException(nameof(soil));
       _cells = cells ?? throw new ArgumentNullException(nameof(cells));
       _waterPerStrengthHour = waterPerStrengthHour ?? throw new ArgumentNullException(nameof(waterPerStrengthHour));
     }
 
+    protected void AttachSoil(RadiationSoilField soil) {
+      if (_soil != null) throw new InvalidOperationException("The radiation facade already has its soil field");
+      _soil = soil ?? throw new ArgumentNullException(nameof(soil));
+    }
+
     public IReadOnlyList<RadiationSourceRecord> Sources => _sources;
     public int NextSourceId => _nextSourceId;
-    /// <summary>Requests waiting for the first fluid tick (water and soil additions before any state is published).</summary>
-    public int EarlyAdditions => _early.Count + _earlySoil.Count;
+    /// <summary>Radioactive water added before the first fluid tick published state (it waits for it, and is saved).</summary>
+    public IReadOnlyList<(Vector3Int Cell, float Volume)> EarlyAdditions => _early;
+    public RadiationSoilField Soil => _soil ?? throw new InvalidOperationException("The radiation facade has no soil field before Load");
 
     private IFluidWorld World => (_provider.Scene ?? throw new InvalidOperationException("Radiation has no active Moddable Fluids scene")).World;
     private bool HasState => _provider.Scene != null && _provider.Scene.HasWorld && World.HasState;
 
     // ------------------------------------------------------------------ state
+
+    /// <summary>Radioactive water a save recorded as added before its first fluid tick (checked when it was added).</summary>
+    public void LoadEarlyAdditions(IReadOnlyList<(Vector3Int Cell, float Volume)> additions) {
+      if (_early.Count > 0) throw new InvalidOperationException("Early radioactive water was loaded twice");
+      foreach (var (cell, volume) in additions) { RequirePositive(volume, nameof(additions)); RequireInMap(new Vector2Int(cell.x, cell.y)); _early.Add((cell, volume)); }
+    }
 
     /// <summary>Sources and the counter from a save (version 4, or 2/3 before their water is imported).</summary>
     public void LoadSources(IReadOnlyList<RadiationSourceRecord> sources, int nextSourceId) {
@@ -68,7 +84,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
     }
 
     /// <summary>
-    /// Main thread, start of Deep Frontier's tick: version 2 sludge from an import, requests from before the first
+    /// Main thread, start of Deep Frontier's tick: version 2 sludge from an import, water added before the first
     /// fluid tick, the tide share, then timed sources over <paramref name="hours"/> (EmitSources).
     /// </summary>
     public void Tick(float hours) {
@@ -76,9 +92,9 @@ namespace DeepFrontier.ModdableFluidsMigration {
       var imported = _provider.TakeImportResult();
       if (imported != null)
         foreach (var (x, y, floor, volume) in imported.SludgeAdditions) World.QueueAddition(x, y, floor, _provider.Radioactive, volume);
-      foreach (var (cell, volume) in _early) AddRadioactiveWater(cell, volume);
-      foreach (var (cell, amount) in _earlySoil) AddSoilRadiation(cell, amount);
-      _early.Clear(); _earlySoil.Clear();
+      var early = _early.ToArray();
+      _early.Clear();
+      foreach (var (cell, volume) in early) AddRadioactiveWater(cell, volume);
       if (_tideShare != _publishedTideShare) {
         World.SetSourceComposition(TideOwner, _tideShare > 0f ? new Dictionary<string, double> { [DeepFrontierRadioactiveWater.FluidId] = _tideShare } : null);
         _publishedTideShare = _tideShare;
@@ -117,11 +133,11 @@ namespace DeepFrontier.ModdableFluidsMigration {
       _sources.RemoveAt(index);
     }
 
+    /// <summary>Applied by the next pass of the soil rules (RadiationSimulation applies it in its next Tick).</summary>
     public void AddSoilRadiation(Vector3Int cell, float amount) {
       RequirePositive(amount, nameof(amount));
       ValidateOpenCell(cell);
-      if (!HasState) { _earlySoil.Add((cell, amount)); return; }
-      _soil.AddSoilRadiation(ColumnCell(cell), amount);
+      Soil.RequestSoil(cell, amount);
     }
 
     public void SetSourceRadioactiveShare(float share) {
@@ -144,7 +160,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
       RequireInMap(new Vector2Int(cell.x, cell.y));
       if (!HasState || !World.TrySample(cell.x, cell.y, cell.z, out var column)) return default;
       float water = RadiationTuning.Detected((float)column.GetShare(_provider.Radioactive));
-      return new RadiationSample(true, water, _cells.BadwaterShare(cell), _cells.IsSubmerged(cell), _soil.SoilAt(new Vector3Int(cell.x, cell.y, column.Floor)));
+      return new RadiationSample(true, water, _cells.BadwaterShare(cell), _cells.IsSubmerged(cell), Soil.SoilAt(new Vector3Int(cell.x, cell.y, column.Floor)));
     }
 
     public float GetRadiation(Vector3Int cell) {
@@ -170,23 +186,16 @@ namespace DeepFrontier.ModdableFluidsMigration {
     public bool IsIrradiatedGround(Vector3Int cell) {
       RequireInMap(new Vector2Int(cell.x, cell.y));
       if (SavedStatePending || !World.TrySample(cell.x, cell.y, cell.z, out var column)) return false;
-      return _soil.SoilAt(new Vector3Int(cell.x, cell.y, column.Floor)) >= RadiationTuning.IrradiatedGroundThreshold;
+      return Soil.SoilAt(new Vector3Int(cell.x, cell.y, column.Floor)) >= RadiationTuning.IrradiatedGroundThreshold;
     }
 
     /// <summary>Radioactive volume in all columns, overflow included (RadiationSimulation sums r x depth).</summary>
     public float TotalWaterRadiation => HasState ? (float)World.TotalVolume(_provider.Radioactive) : 0f;
 
-    /// <summary>True until the first fluid tick has published state (and imported a legacy save).</summary>
-    public bool SavedStatePending => !HasState || _provider.ImportPending;
+    /// <summary>True until the first fluid tick has published state, imported a legacy save and run the soil rules.</summary>
+    public bool SavedStatePending => !HasState || _provider.ImportPending || !Soil.HasPass;
 
     // ------------------------------------------------------------- internals
-
-    private Vector3Int ColumnCell(Vector3Int cell) {
-      RequireInMap(new Vector2Int(cell.x, cell.y));
-      if (!World.TrySample(cell.x, cell.y, cell.z, out var column))
-        throw new ArgumentException("Radiation cell " + cell + " is not inside an open fluid column; use TryFindOpenCell", nameof(cell));
-      return new Vector3Int(cell.x, cell.y, column.Floor);
-    }
 
     private void ValidateOpenCell(Vector3Int cell) {
       if (!IsOpenCell(cell))
