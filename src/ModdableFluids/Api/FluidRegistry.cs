@@ -37,10 +37,14 @@ namespace ModdableFluids {
     public string Fingerprint { get; }
     public IReadOnlyList<FluidDefinition> Definitions { get; }
     public IReadOnlyList<FluidProviderInfo> Providers { get; }
+    /// <summary>The game's native source kinds first, in their fixed order, then custom types in ordinal ID order.</summary>
+    public IReadOnlyList<FluidSourceTypeDefinition> SourceTypes { get; }
+    private readonly Dictionary<string, FluidSourceTypeDefinition> _sourceTypes = new Dictionary<string, FluidSourceTypeDefinition>(StringComparer.Ordinal);
+    private readonly Dictionary<string, FluidSourceTypeDefinition> _sourceTemplates = new Dictionary<string, FluidSourceTypeDefinition>(StringComparer.Ordinal);
     public FluidHandle Water => new FluidHandle(WaterIndex, _stamp);
     public FluidHandle Badwater => new FluidHandle(BadwaterIndex, _stamp);
 
-    internal FluidRegistry(FluidDefinition[] definitions, FluidProviderInfo[] providers) {
+    internal FluidRegistry(FluidDefinition[] definitions, FluidProviderInfo[] providers, FluidSourceTypeDefinition[] sourceTypes) {
       if (definitions.Length < 2 || definitions[WaterIndex].Id != FluidIds.Water || definitions[BadwaterIndex].Id != FluidIds.Badwater)
         throw new InvalidOperationException("Registry layout must begin with the game's water and badwater");
       _definitions = definitions;
@@ -56,6 +60,19 @@ namespace ModdableFluids {
       _stamp = (uint)(hash[0] | hash[1] << 8 | hash[2] << 16 | hash[3] << 24);
       Definitions = new ReadOnlyCollection<FluidDefinition>(definitions);
       Providers = new ReadOnlyCollection<FluidProviderInfo>(providers);
+      SourceTypes = new ReadOnlyCollection<FluidSourceTypeDefinition>(sourceTypes);
+      foreach (var type in sourceTypes) { _sourceTypes.Add(type.Id, type); _sourceTemplates.Add(type.Template, type); }
+    }
+
+    public bool TryGetSourceType(string id, out FluidSourceTypeDefinition type) {
+      type = null;
+      return id != null && _sourceTypes.TryGetValue(id, out type);
+    }
+
+    /// <summary>The source type placed from blueprint template <paramref name="template"/>, if one is registered.</summary>
+    public bool TryGetSourceTypeByTemplate(string template, out FluidSourceTypeDefinition type) {
+      type = null;
+      return template != null && _sourceTemplates.TryGetValue(template, out type);
     }
 
     public bool TryGetHandle(string id, out FluidHandle handle) {

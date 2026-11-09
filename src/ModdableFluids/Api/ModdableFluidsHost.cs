@@ -13,7 +13,7 @@ namespace ModdableFluids {
   /// and unload one at a time. A failed freeze leaves the host Faulted with its report.
   /// </summary>
   public sealed class ModdableFluidsHost {
-    public const int ApiMajor = 0, ApiMinor = 1, ApiPatch = 0;
+    public const int ApiMajor = 0, ApiMinor = 1, ApiPatch = 1;
     public static string ApiVersion => ApiMajor + "." + ApiMinor + "." + ApiPatch;
 
     /// <summary>Capabilities implemented by this contract, in ordinal order. Nothing unimplemented is listed.</summary>
@@ -23,7 +23,8 @@ namespace ModdableFluids {
       "ModdableFluids.Persistence.ProviderState",
       "ModdableFluids.Registry.Definitions",
       "ModdableFluids.Registry.Providers",
-      "ModdableFluids.Scene.Lifecycle"
+      "ModdableFluids.Scene.Lifecycle",
+      "ModdableFluids.Sources.Types"
     }.OrderBy(c => c, StringComparer.Ordinal).ToArray());
 
     private enum State { Open, Frozen, Faulted }
@@ -95,12 +96,14 @@ namespace ModdableFluids {
         }
         accepted.Sort((a, b) => string.CompareOrdinal(a.Id, b.Id));
         var pending = new List<PendingFluid>();
+        var pendingSources = new List<PendingSourceType>();
         foreach (var entry in accepted) {
-          var registration = new FluidRegistration(entry.Id, entry.Owner, pending);
-          int before = pending.Count;
+          var registration = new FluidRegistration(entry.Id, entry.Owner, pending, pendingSources);
+          int before = pending.Count, sourcesBefore = pendingSources.Count;
           try { entry.Provider.Register(registration); }
           catch (Exception e) {
             pending.RemoveRange(before, pending.Count - before);
+            pendingSources.RemoveRange(sourcesBefore, pendingSources.Count - sourcesBefore);
             problems.Add("Provider " + entry.Id + " (mod " + entry.Owner + ") failed during Register: " + e.GetType().Name + ": " + e.Message);
           } finally { registration.Close(); }
         }
@@ -111,6 +114,27 @@ namespace ModdableFluids {
             continue;
           }
           byId.Add(fluid.Id, fluid);
+        }
+        var sourceTypes = new List<FluidSourceTypeDefinition>(NativeFluidSourceTypes.Create());
+        var templates = sourceTypes.ToDictionary(t => t.Template, t => t.Id, StringComparer.Ordinal);
+        var sourceIds = new HashSet<string>(sourceTypes.Select(t => t.Id), StringComparer.Ordinal);
+        foreach (var source in pendingSources.OrderBy(s => s.Id, StringComparer.Ordinal)) {
+          if (!sourceIds.Add(source.Id)) { problems.Add("Source type " + source.Id + " is registered twice"); continue; }
+          if (templates.TryGetValue(source.Template, out string other)) { problems.Add("Source types " + other + " and " + source.Id + " both claim blueprint " + source.Template); continue; }
+          templates.Add(source.Template, source.Id);
+          double total = 0;
+          foreach (var emitted in source.Emitted) {
+            if (!byId.ContainsKey(emitted.Key)) problems.Add("Source type " + source.Id + " emits " + emitted.Key + ", which is not a registered extra fluid");
+            total += emitted.Value;
+          }
+          // Summed in ordinal fluid order, as the emission composer does, so an accepted total never exceeds one.
+          if (total > 1) problems.Add("Source type " + source.Id + " emission shares total " + total.ToString("R", CultureInfo.InvariantCulture) + ", above 1");
+          if (source.Schedule != null && source.DefaultStrength * source.Schedule.ActiveMultiplier > 8.0 * source.TileCount + 1e-9)
+            problems.Add("Source type " + source.Id + " erupts at " + (source.DefaultStrength * source.Schedule.ActiveMultiplier).ToString("R", CultureInfo.InvariantCulture)
+              + ", above the native limit of 8 per tile; the game would cap it silently");
+          sourceTypes.Add(new FluidSourceTypeDefinition(source.Id, source.OwnerModId, source.LocalName, source.ProviderId, source.DisplayNameLocKey, source.Template,
+            false, source.TileCount, source.DefaultStrength, 0f, source.FollowsDrought, source.BadtideContamination, null, false, new string[0], false,
+            source.Emitted, source.Schedule, source.TideOverridable));
         }
         if (problems.Count > 0) {
           _fault = new FluidRegistryException(problems);
@@ -126,7 +150,7 @@ namespace ModdableFluids {
             FluidNativeRole.Extra, true, fluid.Color, fluid.Metadata));
         var infos = accepted.Select(e => new FluidProviderInfo(e.Id, e.Owner, e.Provider.MinimumApiVersion, e.Route,
           e.Capabilities, e.Scene != null, e.State != null, e.State?.StateSchemaVersion ?? 0)).ToArray();
-        _registry = new FluidRegistry(definitions.ToArray(), infos);
+        _registry = new FluidRegistry(definitions.ToArray(), infos, sourceTypes.ToArray());
         _providers.Clear(); _providers.AddRange(accepted);
         _state = State.Frozen;
         return _registry;

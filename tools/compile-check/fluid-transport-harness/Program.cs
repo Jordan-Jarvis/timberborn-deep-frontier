@@ -281,6 +281,7 @@ try {
   SourceRegressionScenarios.Run(Check, Scenario, managed, specification, observations);
   PersistenceScenarios.Run(Check, Scenario, managed, specification, observations);
   RenderingScenarios.Run(Check, Scenario, managed, specification, observations);
+  SourceScenarios.Run(Check, Scenario, managed, observations);
   RegistryScenarios.Run(Check, Scenario, managed, reflectionConsumer, observations);
 
   Directory.CreateDirectory(Path.GetDirectoryName(reportPath)!);

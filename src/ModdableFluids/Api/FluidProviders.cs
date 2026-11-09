@@ -45,12 +45,55 @@ namespace ModdableFluids {
   /// <summary>Registration-stage context; valid only during the provider's Register call.</summary>
   public sealed class FluidRegistration {
     private readonly List<PendingFluid> _fluids;
+    private readonly List<PendingSourceType> _sources;
     private bool _closed;
     public string ProviderId { get; }
     public string OwnerModId { get; }
-    internal FluidRegistration(string providerId, string ownerModId, List<PendingFluid> fluids) {
-      ProviderId = providerId; OwnerModId = ownerModId; _fluids = fluids;
+    internal FluidRegistration(string providerId, string ownerModId, List<PendingFluid> fluids, List<PendingSourceType> sources) {
+      ProviderId = providerId; OwnerModId = ownerModId; _fluids = fluids; _sources = sources;
     }
+
+    /// <summary>
+    /// Registers source type <c>OwnerModId.localName</c>, placed from blueprint <paramref name="template"/>, which must
+    /// carry a native WaterSourceSpec with the same tile count and default strength (checked in game). Capability
+    /// <c>ModdableFluids.Sources.Types</c>. Every behaviour is explicit: nothing is inherited from a native kind.
+    /// </summary>
+    public void AddSourceType(string localName, string displayNameLocKey, string template, int tileCount, float defaultStrength,
+        bool followsDrought, bool badtideContamination, bool tideOverridable) {
+      RequireOpen();
+      FluidIds.RequireLocalName(localName, "source type local name of provider " + ProviderId);
+      string id = OwnerModId + "." + localName;
+      if (string.IsNullOrWhiteSpace(displayNameLocKey)) throw new ArgumentException("Source type " + id + " needs a display name localization key");
+      if (string.IsNullOrWhiteSpace(template)) throw new ArgumentException("Source type " + id + " needs its blueprint template name");
+      if (tileCount < 1 || tileCount > 64) throw new ArgumentOutOfRangeException(nameof(tileCount), tileCount, "Source type " + id + " covers 1 to 64 tiles");
+      if (float.IsNaN(defaultStrength) || float.IsInfinity(defaultStrength) || defaultStrength <= 0 || defaultStrength > 8f * tileCount)
+        throw new ArgumentOutOfRangeException(nameof(defaultStrength), defaultStrength, "Source type " + id + " default strength must be in (0, 8 x tiles], the native limit");
+      if (_sources.Any(s => s.Id == id)) throw new ArgumentException("Provider " + ProviderId + " registered source type " + id + " twice");
+      _sources.Add(new PendingSourceType(id, OwnerModId, localName, ProviderId, displayNameLocKey, template, tileCount, defaultStrength,
+        followsDrought, badtideContamination, tideOverridable));
+    }
+
+    /// <summary>Makes <paramref name="share"/> of the source's non-bad emitted volume the registered extra fluid <paramref name="fluidId"/>.</summary>
+    public void SetSourceEmission(string sourceLocalName, string fluidId, double share) {
+      RequireOpen();
+      var source = OwnSource(sourceLocalName);
+      if (double.IsNaN(share) || share <= 0 || share > 1) throw new ArgumentOutOfRangeException(nameof(share), share, "Source type " + source.Id + " emission shares are in (0, 1]");
+      if (fluidId == null || source.Emitted.ContainsKey(fluidId)) throw new ArgumentException("Source type " + source.Id + " lists fluid " + fluidId + " twice or as null");
+      source.Emitted.Add(fluidId, share);
+    }
+
+    /// <summary>Gives the source a periodic emission profile (see <see cref="FluidSourceSchedule"/>).</summary>
+    public void SetSourceSchedule(string sourceLocalName, double periodHours, double activeHours, double rampHours, double activeMultiplier, double dormantMultiplier) {
+      RequireOpen();
+      var source = OwnSource(sourceLocalName);
+      if (source.Schedule != null) throw new ArgumentException("Source type " + source.Id + " was given two schedules");
+      try { source.Schedule = new FluidSourceSchedule(periodHours, activeHours, rampHours, activeMultiplier, dormantMultiplier); }
+      catch (ArgumentOutOfRangeException e) { throw new ArgumentException("Source type " + source.Id + ": " + e.Message, e); }
+    }
+
+    private PendingSourceType OwnSource(string localName) =>
+      _sources.SingleOrDefault(s => s.ProviderId == ProviderId && s.LocalName == localName)
+        ?? throw new ArgumentException("Provider " + ProviderId + " has not registered source type " + OwnerModId + "." + localName);
 
     /// <summary>Registers <c>OwnerModId.localName</c>. Uses primitives only so reflected providers can call it.</summary>
     public void AddFluid(string localName, string displayNameLocKey, float red, float green, float blue, float alpha) {

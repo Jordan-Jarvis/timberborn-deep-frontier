@@ -30,7 +30,7 @@ namespace ModdableFluids.Native.Acceptance {
       var juice = Activator.CreateInstance(reflection.GetType("ModdableFluidsSyntheticReflection.JuiceProvider", true));
       var register = reflection.GetType("ModdableFluidsSyntheticReflection.SyntheticReflectionDiscovery", true).GetMethod("Register");
       string result = (string)register.Invoke(null, new object[] { AppDomain.CurrentDomain.GetAssemblies(), juice });
-      Check(result == "registered ModdableFluidsSyntheticReflection.Juice with Moddable Fluids 0.1.0", "Mono reflection discovery: " + result);
+      Check(result == "registered ModdableFluidsSyntheticReflection.Juice with Moddable Fluids 0.1.1", "Mono reflection discovery: " + result);
       // The cast succeeds only if the byte-loaded consumer bound to this same API assembly.
       var tracer = (IFluidProvider)Activator.CreateInstance(compiled.GetType("ModdableFluidsSyntheticCompiled.TracerProvider", true));
       ModdableFluidsEntry.RegisterProvider(tracer);

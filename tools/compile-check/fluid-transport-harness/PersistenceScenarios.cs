@@ -98,7 +98,7 @@ internal static class PersistenceScenarios {
       var states = new[] { new FluidProviderState("ExampleCreator.Juices", "ExampleCreator", 3, "orchard") };
       var document = FluidWorldPersistence.Capture(registry, saved, NativeWaterFixture.Stride, states);
       check(document.ColumnCount == 4 && document.FluidIds.Count == components, "Saved only wet columns and used fluids");
-      check(document.RegistryFingerprint == registry.Fingerprint && document.ApiVersion == "0.1.0", "Document header");
+      check(document.RegistryFingerprint == registry.Fingerprint && document.ApiVersion == ModdableFluidsHost.ApiVersion && ModdableFluidsHost.ApiVersion == "0.1.1", "Document header");
       var text = ThroughText(document);
 
       var reversed = Registry(Providers(withTracer: true).Reverse());

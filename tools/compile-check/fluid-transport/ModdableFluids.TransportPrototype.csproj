@@ -12,6 +12,7 @@
     <Compile Include="../../../src/ModdableFluids/Native/*.cs" />
     <Compile Include="../../../src/ModdableFluids/Persistence/*.cs" />
     <Compile Include="../../../src/ModdableFluids/Rendering/*.cs" />
+    <Compile Include="../../../src/ModdableFluids/Sources/*.cs" />
     <ProjectReference Include="../fluid-api/ModdableFluids.csproj" />
   </ItemGroup>
 </Project>
