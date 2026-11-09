@@ -1,6 +1,6 @@
 # Fluids API and More Fluids development plan
 
-Draft started 2026-11-06. Initial target: the installed Timberborn 1.1.2.8 development environment. The [multi-fluid transport prototype](fluids-transport-prototype.md) and [native stage adapter](fluids-native-adapter.md) pass standalone .NET and installed-Mono probes. The official Mod Builder has installed a separate flag-gated development package, and its actual core/bridge DLLs also pass the Mono probe. The scene owner and disposable fixture compile; real-worker settlement acceptance is pending. There is no production registry, persistence or More Fluids package yet.
+Draft started 2026-11-06. Initial target: the installed Timberborn 1.1.2.8 development environment. The [multi-fluid transport prototype](fluids-transport-prototype.md) and [native stage adapter](fluids-native-adapter.md) pass standalone .NET and installed-Mono probes. The official Mod Builder has installed a separate flag-gated development package, and its actual core/bridge DLLs also pass the Mono probe. The scene owner and disposable fixture compile; real-worker settlement acceptance is pending. Since 2026-11-09 the [0.1 contract](fluids-api-contract.md) has a public registry, providers, discovery, persistent component identities and save round trips. These are verified outside the game only. The game-side saver, shared rendering and the More Fluids package do not exist yet.
 
 Build two new mods: **Fluids API**, which provides a shared world-fluid system, and **More Fluids**, which adds liquids using that system. Migrate the existing **Deep Frontier** mod to depend on Fluids API and register its radioactive water through the same public interfaces available to other creators. A third creator should be able to add a juice tide that works alongside both mods without implementing fluid transport, saves, or rendering again.
 
@@ -270,10 +270,24 @@ Record performance with zero extra active fluids and with increasing active coun
 
 ## Immediate next work
 
-1. Run the implemented two-settlement worker fixture with the normal game closed. Establish actual worker barriers, resized arrays, native intakes and patch cleanup across scene re-entry. Keep activation restricted to disposable worlds while persistence is absent.
-2. ~~Complete the extraction inventory~~ Done 2026-11-09: [fluids-extraction-inventory.md](fluids-extraction-inventory.md) lists every water, weather, rendering, sensor and save hook. For each it gives the startup checks, lifecycle, optional assemblies, direct `RadiationSimulation` consumers and proposed owner.
-3. Build the first public registry and provider contract around the proven sampling, emission and intake behavior. Include stable IDs, deterministic handles, reflection discovery, version/capability reporting, provider stages and optional bridge loading. Choose the combined tide-selection policy and capability defaults before weather implementation.
-4. Add the independent synthetic consumer package, shared rendering and persistent component identities. Establish native controls and save/reload fixtures through official packages before enabling ordinary settlements.
-5. Begin Deep Frontier migration after those gates pass; select the first finished More Fluids liquid before starting its gameplay work.
+Status on 2026-11-09:
 
-Open product decisions are the final foundation name, the first pack liquid, combined tide probabilities, and later oil/lava gameplay details. Storage layout, transport equations, renderer data format, and terrain solidification remain engineering decisions to resolve with the corresponding prototypes.
+1. **Pending: the in-game worker fixture.** It is implemented and has not run, and it needs a closed game. It now covers the registry too: both synthetic consumer routes register, the registry freezes before the first world, and provider scenes enter and leave twice. It also establishes actual worker barriers, resized arrays, native intakes and patch cleanup across scene re-entry. Activation stays limited to disposable worlds until persistence runs in game.
+2. **Done: the extraction inventory.** [fluids-extraction-inventory.md](fluids-extraction-inventory.md) lists every water, weather, rendering, sensor and save hook. For each it gives the startup checks, lifecycle, optional assemblies, direct `RadiationSimulation` consumers and proposed owner. It also records the native-safety audit's later Deep Frontier changes.
+3. **Done as contract 0.1, with the tide policy awaiting the user.** The [0.1 contract](fluids-api-contract.md) covers:
+   - stable IDs and deterministic handles;
+   - compiled and reflected providers, and scene and state stages;
+   - discovery with version and capability reporting, and refusal of duplicate copies;
+   - the optional-bridge rules, verified with the API absent.
+
+   The [combined tide-selection proposal](#combined-tide-selection-proposal) recommends policy D and waits for the user's choice. The scheduler hooks now verify the whole native contract at startup and refuse foreign patches on the methods they replace.
+4. **Partly done.** Built:
+   - the synthetic consumer packages (reflection-only and compiled), built officially and kept out of the Mods folder;
+   - persistent component identities;
+   - save round-trip fixtures in the .NET harness and in the installed Mono;
+   - official API packaging with a verify script.
+
+   Not built: shared rendering, the game-side saver/loader, and the in-game save/reload fixture.
+5. **Not started: Deep Frontier migration and More Fluids content.** Items 1 and 4 must pass first. Select the first finished More Fluids liquid before starting its gameplay work.
+
+Open product decisions are the final foundation name (it fixes the assembly, namespace and the `FluidsApi.*` capability names before a 1.0 release), the first pack liquid, the combined tide policy and its probabilities, and later oil/lava gameplay details. Storage layout, transport equations, renderer data format, and terrain solidification remain engineering decisions to resolve with the corresponding prototypes.

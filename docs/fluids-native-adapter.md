@@ -42,7 +42,11 @@ This correctness prototype executes each substep's row work serially inside its 
 
 The installed-Mono fixture calls actual native `Simulate` and exercises both patched scheduling methods through a deterministic immediate executor for the public native parallelizer interface. It verifies two ticks, source composition, queued physical pump results, per-tick result reset, duplicate-owner rejection, nonfinite source rejection, fault handling, and patch cleanup. This proves scheduling interception and operation order; it does not prove the production parallelizer's worker barriers.
 
-Only one shared transport attachment may own the scheduler. A rejected second attachment cannot remove the first owner's patches when disposed. Active legacy Deep Frontier radiation transport is also rejected until migration removes its competing water ownership. Detachment removes only this prototype's Harmony owner from its two target methods.
+Only one shared transport attachment may own the scheduler. A rejected second attachment cannot remove the first owner's patches when it is disposed. Detachment removes only this prototype's Harmony owner from its two target methods.
+
+Since 2026-11-09 the hooks verify the whole native contract before they patch anything. `NativeSchedulerContract` checks every starter field, every `SimulationParameters` property, and each task constructor with the exact argument types the job passes. It also checks the value-type members the jobs read and the adapter's buffer members (`NativeWaterArrayAdapter.CheckContract`). A changed game produces one message listing every difference, before any patch exists; it no longer fails later on a worker thread. The Mono probe confirms that the installed types report nothing.
+
+Attach also refuses any foreign Harmony owner on the two replaced scheduling methods, and on the native tasks the bridge skips instead of running (`UpdateContaminationTask.Run(int)`, `UpdateWaterSourcesTask.Run()`, `UpdateWaterChangesTask.Run()`). Those patches would silently stop running, so the error names every owner and method. This replaces the earlier lookup of Deep Frontier's `RadiationLockstep.Simulation` by name. Deep Frontier patches two of the skipped tasks from mod start, so the shared transport cannot attach while Deep Frontier is enabled, and the worker launcher disables it for the run.
 
 ## Physical volume and native badwater
 
@@ -94,21 +98,47 @@ Geometry reconciliation groups columns by map cell so it does not compare every 
 
 The `Game` configurator binds one owner, which locates the installed `WaterService`'s native starter during `PostLoad`. Its `Unload` calls the public parallelizer barrier before disposing owned Harmony patches. Native singleton unload order follows binding order, so the parallelizer may already have closed its workers; the owner still uses its public `Wait` barrier. Source inspection supports this order; two complete game-scene cycles must establish runtime behavior.
 
-The fixture requires `-fluidsApiWorkerAcceptance -fluidsApiReport <absolute path>`. Its menu loader creates two new Iron Teeth settlements from the explicitly named 32 by 32 dry map. Only worlds started by that loader may activate the owner. Synthetic components exist only inside this development fixture. It queues real obstacles, source emissions, additions and ten native non-bad intakes, checks physical accounting at native tick barriers, and returns to the menu between scenes. It records callback thread IDs and compares them with the scene's main thread. On success it disables its own prototype for the next launch, writes a JSON report and exits. This is not a save/reload test.
+Since 2026-11-09 the owner also runs the public registry, defined in the [0.1 contract](fluids-api-contract.md). In `PostLoad` it freezes the process-wide registry, which happens once before the first world. It then activates a provider scene and loads provider state, which is empty in a fresh disposable world. Finally it attaches the transport sized to the registry. `Unload` waits at the barrier, disposes the hooks and unloads the provider scene. The main menu then checks that neither a transport owner nor a provider scene survived.
+
+The fixture requires `-fluidsApiWorkerAcceptance -fluidsApiReport <absolute path>`. Its menu loader creates two new Iron Teeth settlements from the explicitly named 32 by 32 dry map. Only worlds started by that loader may activate the owner. The registry must hold exactly water, badwater, `FluidsApiSyntheticCompiled.Tracer` and `FluidsApiSyntheticReflection.Juice`, registered by the two fixture packages through the compiled and reflection routes. Test emissions are split evenly across every registered component, and conservation is checked for each one. It queues real obstacles, source emissions, additions and ten native non-bad intakes, checks physical accounting at native tick barriers, and returns to the menu between scenes. It records callback thread IDs and compares them with the scene's main thread. On success it disables its own prototype for the next launch, writes a JSON report and exits. This is not a save/reload test.
 
 Use the configured PowerShell/Python executables and run from the real checkout:
 
 1. Run `tools/create_fluid_acceptance_map.py` to create the dedicated local fixture. The source is the existing `Deep Frontier - All Buildings Test.timber` map; the generated map is ignored game data.
-2. Run `tools/build_fluids_api.ps1`. It stages only `src/FluidsApi` and invokes the official Mod Builder for that mod alone, without bundles. It verifies the installed manifest and all three DLL hashes against official output, and rejects embedded dependencies. It does not rebuild or install Deep Frontier. Close any flagged prototype acceptance process before replacing its package; an ordinary game session has no active prototype singleton.
-3. With Timberborn closed and Steam running, run `tools/start_fluid_worker_acceptance.ps1`. The launcher backs up native PlayerData files and Deep Frontier/API enablement, disables legacy Deep Frontier for this test, and starts only the marked fixture. It restores the original profile and verifies file hashes after the owned process exits, including failure/timeout cleanup. No existing colony is loaded.
+2. Run `tools/build_fluids_api.ps1 -SyntheticFixtures` with Timberborn and the Unity editor closed.
+   - It stages `src/FluidsApi` and both fixtures, and invokes the official Mod Builder for those three mods, without bundles.
+   - It verifies each installed manifest and every DLL hash against the official output, and rejects embedded dependencies.
+   - It then moves the fixtures out of `Mods` into `outputs/fluids-api-prototype/fixture-packages`. Timberborn enables a newly installed mod by default, and the compiled fixture breaks mod start whenever Fluids API is disabled.
+   - It does not rebuild or install Deep Frontier.
+3. Run `tools/verify_fluids_api_package.ps1`. It re-checks the installed package and kept fixtures against `package-report.json`, then runs the installed-Mono probes against copies of the installed DLLs (API present) and of the fixture DLLs alone (API absent).
+4. With Timberborn closed and Steam running, run `tools/start_fluid_worker_acceptance.ps1`.
+   - It backs up the native PlayerData files and the Deep Frontier, API and fixture enablement keys.
+   - It disables Deep Frontier, whose lockstep patches conflict with the shared transport, installs the two fixture packages for this run only, and starts the marked fixture.
+   - After the owned process exits, including on failure or timeout, it removes the fixtures and any keys the game created for them, restores the original profile and verifies the file hashes.
+   - No existing colony is loaded. Startup dialogs may still need clicking.
 
-The official Mod Builder installed development version 0.0.1.0 and rebuilt it with the source corrections on 2026-11-07. `outputs/fluids-api-prototype/package-report.json` records all three DLL hashes, verified against official build output, with the authored manifest matched byte for byte. The actual installed core/bridge assemblies pass the expanded **138 isolated Mono checks**; `package-mono-report.json` records their paths and hashes. That probe uses copied test inputs in an ignored output directory and never changes the installed package.
+On 2026-11-09 the official Mod Builder rebuilt development version 0.0.1.0 with its four assemblies, including the new public `FluidsApi.dll`, and both fixtures.
 
-The installed prototype remains experimental. Flag-gated activation prevents ordinary settlements from entering a system that cannot yet persist extra components. The new worker fixture is implemented and compiles; no `worker-report.json` acceptance result has been established yet. Timberborn was relaunched for separate Deep Frontier work during this implementation, so its normal process is left running and the fixture awaits a closed game.
+- `outputs/fluids-api-prototype/package-report.json` records every DLL hash, each verified against the official build output, and the authored manifests matched byte for byte.
+- `verify_fluids_api_package.ps1` passed. The installed assemblies pass all **1,159 installed-Mono checks** (`package-mono-report.json`). The kept fixture DLLs pass the absence probe (`package-absence-report.json`).
+- Both probes use copies in ignored output folders and never change the installed package.
+
+The installed prototype remains experimental. Flag-gated activation keeps ordinary settlements out of a system whose saver is not yet in the game. The package has no enablement key in the user's profile, which means it is enabled. Without the acceptance flag it binds nothing. The worker fixture compiles, but no `worker-report.json` result exists yet.
 
 ## Verification
 
-The combined .NET 8 harness passes **397,175 assertions across 31 scenarios**. The isolated installed-Mono probe passes **138 additional checks**, including actual native depth and scheduler execution, signed source order, pressure admission, source/change binding, physical pump result delivery, owner cleanup, invalid-source fault handling, producer budgeting, type enumeration, and reflection calls. All five projects, including the scene runtime, build in Release with zero warnings or errors.
+As of 2026-11-09 the combined .NET 8 harness passes **402,478 assertions across 45 scenarios**. The 14 new scenarios cover the registry, providers, reflection binding, scene lifecycle, provider state, discovery, duplicate copies, optional consumers with the API present and absent, and save documents and round trips.
+
+The isolated installed-Mono probe passes **1,159 checks**:
+
+- actual native depth and scheduler execution, signed source order and pressure admission;
+- source and change binding, physical pump-result delivery and owner cleanup;
+- invalid-source fault handling, producer budgeting, type enumeration and reflection calls;
+- the startup contract and foreign-patch refusal;
+- byte-loaded consumers through both routes, the registry, provider state, and a bitwise save round trip;
+- 1,000 exact quantity encodings, and detection of a second byte-loaded API copy.
+
+A separate Mono process with no `FluidsApi.dll` passes the 5-check absence probe. All Release projects build with zero warnings or errors. Earlier counts: 397,175 assertions, 31 scenarios and 138 Mono checks on 2026-11-07.
 
 Repository coverage includes the full suite with 80 passing checks and the item-use report, followed by the final static suite with 74 passing checks and the report. The fluid gate is rerun after the last fault-handling changes. The mirror's Git-only asset guard passes separately in the real checkout. Logs are `native-adapter-full-validation.log`, `native-hooks-final-validation.log`, and `native-adapter-acceptance.log` under `outputs/fluids-api-prototype/`.
 
@@ -118,7 +148,7 @@ Run `tools/test_fluid_transport.ps1` in a freshly synchronized scratch mirror, o
 
 ## Remaining work before a playable foundation
 
-1. Run the implemented scene owner and two-settlement fixture to verify real worker barriers, resized arrays, geometry delivery, removal-result consumption and scene teardown.
-2. Build the registry and provider bindings, including source composition, intake conversion, native weather, and third-party reflected registration. Keep the current prototype names experimental until the public contract is ready.
-3. Add persistence and Deep Frontier migration. Save component identity and full physical state rather than reconstructing extra fluids from native badwater values.
-4. Measure active-area work and memory on real maps, then finish shared rendering and the independent content examples. The current reflected full-buffer prototype has no production performance acceptance yet.
+1. Run the two-settlement fixture, which now includes the registry and both consumer routes. It verifies real worker barriers, resized arrays, geometry delivery, removal-result consumption and scene teardown.
+2. Bind the 0.1 registry ([contract](fluids-api-contract.md)) to source composition, intake conversion and native weather. Source composition and intake conversion are still prototype delegates.
+3. Add the game-side saver and loader for `FluidSaveDocument`, with an in-game save/reload fixture, then the Deep Frontier importer and migration. Component identity, the bit-exact round trip and geometry projection are already proven in the harness and in Mono.
+4. Measure active-area work and memory on real maps, then finish shared rendering. The current reflected full-buffer prototype has no production performance acceptance yet.

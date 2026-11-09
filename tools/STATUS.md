@@ -1,5 +1,43 @@
 # Current development status
 
+## Fluids API 0.1 registry, providers and persistent identities (2026-11-09; harness, Mono and official package passed; in-game fixture pending)
+
+- **Extraction inventory (plan item 2).** [docs/fluids-extraction-inventory.md](../docs/fluids-extraction-inventory.md) covers every Deep Frontier water, weather, rendering, sensor and save hook. For each it gives the patch target, startup check, lifecycle, optional assemblies, direct `RadiationSimulation` consumers and proposed owner. It is taken at `d418394` and amended for the safety audit's later commits (`2dce084`, `432e696`, `ec17e3f`), which moved Deep Frontier patches to verified install-once-at-mod-start.
+- **Public contract 0.1.0 (plan item 3).** New assembly `FluidsApi`, which references netstandard only. Details: [docs/fluids-api-contract.md](../docs/fluids-api-contract.md).
+  - Canonical case-sensitive IDs. `Timberborn.Water` and `Timberborn.Badwater` are built in.
+  - A frozen registry with deterministic handles and a SHA-256 fingerprint. Registration order cannot change results.
+  - Compiled providers, plus a reflection route that binds plain objects by documented member signatures.
+  - Scene activation with rollback and reverse unload, and versioned provider state.
+  - `FluidsApiEntry` discovery with version and capability reporting. It lists only implemented capabilities and refuses a second loaded copy. Every invalid registration is reported in one exception.
+- **Tide selection is a proposal.** The combined policy is not decided. [The plan](../docs/fluids-api-plan.md#combined-tide-selection-proposal) lists five options with exact long-run shares from `tools/model_tide_selection.py`. It recommends D (independent rolls, weighted pick), which gives 18.4% for each tide with Deep Frontier 25% and More Fluids 25% on Normal; Deep Frontier alone stays at 20.0%.
+- **Native safety.** `NativeTransportHooks` now verifies the whole scheduler contract before patching (`NativeSchedulerContract`). That covers every private member, task constructor and buffer shape the jobs touch, reported in one message. It no longer reads Deep Frontier internals. Attach refuses any foreign Harmony owner on the replaced scheduling methods or on the three skipped native tasks. Deep Frontier patches two of those, so the shared transport cannot run beside it.
+- **Persistence and fixtures (plan item 4, partial).**
+  - `FluidSaveDocument` uses ints and strings only, saves only the fluids that hold volume, and stores exact IEEE-754 bits. `FluidWorldPersistence` copies unchanged columns bit for bit and projects changed geometry with explicit losses.
+  - Missing or moved fluids and providers stop loading and name the mod. Unknown fluid is never converted to water.
+  - Two flag-gated synthetic consumer packages exist: reflection-only (optional dependency) and compiled (required dependency).
+  - Not built: shared rendering, the game-side saver/loader, an in-game save/reload fixture.
+- **Runtime.** The flag-gated scene owner freezes the registry and runs a provider scene around the transport. The worker fixture requires both consumer routes and checks conservation per registered component.
+- **Evidence.**
+  - .NET 8 harness: 402,478 assertions in 45 scenarios, 14 of them new.
+  - Installed-Mono probe: 1,159 checks, which include byte-loaded consumers, the startup contract, foreign-patch refusal and a bitwise save round trip.
+  - Separate Mono process without `FluidsApi.dll`: 5 checks. The compiled consumer's `GetTypes()` fails as documented and the reflection consumer reports the API absent.
+  - All Release projects build with zero warnings or errors.
+  - Official Mod Builder build: four API DLLs and both fixtures; hashes in `outputs/fluids-api-prototype/package-report.json`.
+  - `tools/verify_fluids_api_package.ps1` passed: the installed DLLs pass the same 1,159 Mono checks and the kept fixture DLLs pass the absence probe.
+  - Static suite: `validate_all -SkipBlender` in the mirror passes 77 of 79 checks plus the item-use report; the only failure is the Git-only asset guard, which passes in the real checkout.
+- **Source-confirmed loader facts** (recorded in the skill's dependency reference):
+  - `ModCodeStarter` loads every enabled mod's DLLs before any `StartMod`, and calls `GetTypes()` without a guard.
+  - A player's mod priority can override dependency order.
+  - A newly installed mod is enabled by default.
+  - Under Mono, a second byte-load of the same assembly is a separate copy.
+- **Profile state.** The installed `FluidsApi` development package has no enablement key in the user's profile, so it is enabled; without the acceptance flag it binds nothing. The fixtures are kept in `outputs/fluids-api-prototype/fixture-packages` and only the launcher installs them, for a run.
+- **Pending.**
+  - The in-game worker run, with Timberborn closed: `tools/start_fluid_worker_acceptance.ps1`.
+  - The user's tide-policy choice, the foundation name and the first More Fluids liquid.
+  - The game-side saver and in-game save/reload, then shared rendering.
+  - Deep Frontier migration and More Fluids content, which must not start until these gates pass.
+- **Commits:** `a9b1414`, `ced84c7`, `d2e8fff`, `bf5bf99`, plus the documentation commit.
+
 ## Review of recent changes (2026-11-09; source fixes committed, not built or installed)
 
 - Reviewed every change from `7090abb` (0.8.6) through the queued-meltdown fix, plus the features they touch. Findings, evidence and open items: `docs/review-2026-11-09.md`. Evidence is static only, from decompiled 1.1.2.8 code. The game was not launched; no build or install was made, and the version stays 0.10.3.
