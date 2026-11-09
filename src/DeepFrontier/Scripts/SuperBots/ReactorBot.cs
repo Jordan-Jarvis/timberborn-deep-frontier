@@ -56,7 +56,9 @@ namespace DeepFrontier.Scripts.SuperBots {
     private BonusManager _bonuses;
     private CharacterMaterialModifier _material;
     private CharacterAnimator _animator;
-    private ReactorBotSkin.Textures _textures;
+    // The glow emission map (shared) and the body material's own base colour.
+    private Texture2D _glow;
+    private Color _nativeBaseColor;
     private bool _buffed;
 
     public State Current { get; private set; }
@@ -129,8 +131,9 @@ namespace DeepFrontier.Scripts.SuperBots {
     public float LifespanMultiplier=>IsReactor?Spec.LifespanMultiplier:1f;
 
     // Dark plating while plated, the vanilla body while unplated (on upgrade
-    // and when the plating need changes); the glow stays either way.
-    private void ApplyPlating()=>_material.SetTexture(ReactorBotSkin.BaseMapId,IsPlated?_textures.Plated:_textures.Unplated);
+    // and when the plating need changes): the native _BaseColor multiplier of
+    // the body material; the glow stays either way.
+    private void ApplyPlating()=>_material.SetColor(ReactorBotSkin.BaseColorId,IsPlated?Spec.PlatingColor:_nativeBaseColor);
 
     private void OnNeedChangedIsFavorable(object sender, NeedChangedIsFavorableEventArgs e) {
       if(IsReactor&&e.NeedSpec.Id==Spec.PlatingNeedId) { ApplyPlating(); return; }
@@ -180,13 +183,14 @@ namespace DeepFrontier.Scripts.SuperBots {
       }
       _materialColorer.SetLightingColor(this,_settings.IlluminationColor);
       _materialColorer.EnableLighting(this);
-      if(_textures==null) {
+      if(_glow==null) {
         // The body renderer native CharacterMaterialModifier edits (its Awake takes the same one) and its mesh.
         var body=GetComponentInChildren<Renderer>(includeInactive:true);
         var filter=body.GetComponent<MeshFilter>();
         if(!filter)throw new InvalidOperationException($"{Name}: the bot body renderer {body.name} has no MeshFilter");
-        _textures=_skin.For(body.sharedMaterial,filter.sharedMesh);
-        _material.SetTexture(ReactorBotSkin.EmissionMapId,_textures.Emission);
+        _nativeBaseColor=ReactorBotSkin.NativeBaseColor(body.sharedMaterial);
+        _glow=_skin.For(body.sharedMaterial,filter.sharedMesh);
+        _material.SetTexture(ReactorBotSkin.EmissionMapId,_glow);
       }
       ApplyPlating();
     }

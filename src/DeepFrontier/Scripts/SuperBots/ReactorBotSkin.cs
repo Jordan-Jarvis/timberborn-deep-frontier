@@ -5,128 +5,104 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace DeepFrontier.Scripts.SuperBots {
-  // The Reactor Bot skin: neon-yellow glowing eyes and joint seams, and dark plating.
+  // The Reactor Bot skin: near-black plating, and neon-yellow glowing eyes and
+  // joint seams; the vanilla light body (still glowing) while unplated.
   //
   // Native contract (Timberborn 1.1.2.8; the official BotURP.shadergraph in the
   // modding tools, Resources/Shaders): the bot body has one BotURP material
   // (Bot.IronTeeth: _BaseMap BotIronTeeth_2K_D, _BaseMap_1 BotIronTeeth_2K_E).
   //   BaseColor = lerp(1, _TintColor, _TintEnabled) * _BaseMap * _BaseColor
   //   Emission  = _BaseMap_1 * (BLOOM_ENABLED ? 2 : 1) + _EmissionColor + 0.35 * _TintColor * _TintEnabled
-  // The graph has no _LightingColor, so the native bot illumination colour
-  // (MaterialColorer) never reaches the eyes: their cyan is painted in
-  // _BaseMap and baked into the _BaseMap_1 emission map, which is black
-  // everywhere else. A tint multiplies the whole body and adds 0.35 x the tint
-  // as glow, which washes a light tint out (build 252's steel tint).
-  //
-  // So the skin is a texture set, applied per bot through the native
-  // CharacterMaterialModifier.SetTexture, the mechanism native
-  // CharacterTextureSetter uses for character variants; the shader and the
-  // material are the game's own. The textures are made at runtime from the
-  // bot material's own maps and body mesh, so the mod ships no copy of a game
-  // texture or mesh:
-  //   eye mask   = emission brightness over its peak (0 at or below EyeFloor);
+  // Everything goes through the native per-character material instance
+  // (CharacterMaterialModifier, as native CharacterTextureSetter does):
+  // - Plating is the material's own _BaseColor: while the plating need is
+  //   favourable ReactorBot sets it to the settings' PlatingColor (a dark
+  //   multiplier of the game's base map), otherwise back to the material's own
+  //   value. No base texture is generated or replaced.
+  // - The glow is the one texture made at run time, because the BotURP graph
+  //   has no colour for its emission map and no mask for joint seams, and the
+  //   mod may not ship a copy or a derivative of a game texture or mesh:
+  //   eye mask   = the game emission map's brightness over its peak (0 at or below EyeFloor);
   //   joint mask = near each GlowJoint pivot, the surface within GlowRim of
   //                another part of the mesh (the seams between the bot's
   //                pieces): (1 - d / rim)^2 x clamp01(2 (1 - |p - pivot| / radius)),
-  //                x GlowJointGain, at half resolution;
-  //   glow       = max(eye, joint);
-  //   Emission   = linear GlowColor x GlowIntensity x glow, an HDR (half float,
-  //                linear) map at half resolution, so the glow can exceed what
-  //                an 8-bit map holds and blooms;
-  //   Unplated   = _BaseMap blended to GlowColor by the glow;
-  //   Plated     = the same over dark plating: (c/255)^Gamma x Scale x Color per channel.
+  //                x GlowJointGain;
+  //   Emission   = linear GlowColor x GlowIntensity x max(eye, joint), an HDR
+  //                (half float, linear) map at half resolution, so the glow can
+  //                exceed what an 8-bit map holds and blooms.
   // The body mesh is Timbermesh's StaticMeshBuilder mesh: built with new Mesh(),
   // never made non-readable, and not Optimize()d when vertex-animated (the bot),
   // so its vertices are the bind pose in model space with uv0 intact. Parts are
-  // the mesh's welded connected pieces. One set per source maps and mesh,
-  // shared by every Reactor Bot.
+  // the mesh's welded connected pieces. One glow map per source emission map
+  // and mesh, shared by every Reactor Bot, destroyed on unload.
   internal sealed class ReactorBotSkin : IUnloadableSingleton {
-    // BotURP reference names (BotURP.shadergraph m_OverrideReferenceName of Base Map and Emission Map).
-    internal const string BaseMapProperty="_BaseMap";
+    // BotURP reference names (BotURP.shadergraph m_OverrideReferenceName of Base Color and Emission Map).
+    internal const string BaseColorProperty="_BaseColor";
     internal const string EmissionMapProperty="_BaseMap_1";
-    internal static readonly int BaseMapId=Shader.PropertyToID(BaseMapProperty);
+    internal static readonly int BaseColorId=Shader.PropertyToID(BaseColorProperty);
     internal static readonly int EmissionMapId=Shader.PropertyToID(EmissionMapProperty);
     // Emission values at or below this (of 255) are not eye (the black map's noise).
     private const int EyeFloor=4;
     // Positions closer than this are one vertex when splitting the mesh into parts.
     private const float WeldStep=1e-4f;
 
-    internal sealed record Textures(Texture2D Plated, Texture2D Unplated, Texture2D Emission);
-
     private readonly ReactorBotSettings _settings;
-    private readonly Dictionary<(Texture, Texture, Mesh), Textures> _made=new();
+    private readonly Dictionary<(Texture, Mesh), Texture2D> _made=new();
 
     public ReactorBotSkin(ReactorBotSettings settings) {_settings=settings;}
 
-    // The skin for a bot whose body is mesh drawn with source (its vanilla BotURP maps).
-    public Textures For(Material source, Mesh mesh) {
-      if(!source.HasProperty(BaseMapId)||!source.HasProperty(EmissionMapId))
-        throw new InvalidOperationException($"Reactor bots: bot material {source.name} ({source.shader.name}) has no {BaseMapProperty}/{EmissionMapProperty}; the BotURP contract changed");
-      var baseMap=source.GetTexture(BaseMapId);
+    // The material's own base colour, which the unplated body keeps.
+    public static Color NativeBaseColor(Material source) {
+      if(!source.HasProperty(BaseColorId))
+        throw new InvalidOperationException($"Reactor bots: bot material {source.name} ({source.shader.name}) has no {BaseColorProperty}; the BotURP contract changed");
+      return source.GetColor(BaseColorId);
+    }
+
+    // The glow emission map for a bot whose body is mesh drawn with source (its vanilla BotURP maps).
+    public Texture2D For(Material source, Mesh mesh) {
+      if(!source.HasProperty(EmissionMapId))
+        throw new InvalidOperationException($"Reactor bots: bot material {source.name} ({source.shader.name}) has no {EmissionMapProperty}; the BotURP contract changed");
       var emissionMap=source.GetTexture(EmissionMapId);
-      if(!baseMap||!emissionMap)throw new InvalidOperationException($"Reactor bots: bot material {source.name} has no base or emission map");
+      if(!emissionMap)throw new InvalidOperationException($"Reactor bots: bot material {source.name} has no emission map");
       if(!mesh||!mesh.isReadable)throw new InvalidOperationException($"Reactor bots: the bot body mesh {(mesh?mesh.name:"(none)")} is not readable; the Timbermesh contract changed");
-      if(_made.TryGetValue((baseMap,emissionMap,mesh),out var made))return made;
-      foreach(var set in _made.Values)
-        if(baseMap==set.Plated||baseMap==set.Unplated||emissionMap==set.Emission)
-          throw new InvalidOperationException($"Reactor bots: {source.name} already carries the Reactor Bot skin; read the vanilla maps before applying it");
-      made=Make(baseMap,emissionMap,mesh);
-      _made.Add((baseMap,emissionMap,mesh),made);
+      if(_made.TryGetValue((emissionMap,mesh),out var made))return made;
+      foreach(var glow in _made.Values)
+        if(emissionMap==glow)throw new InvalidOperationException($"Reactor bots: {source.name} already carries the Reactor Bot glow; read the vanilla map before applying it");
+      made=Make(emissionMap,mesh);
+      _made.Add((emissionMap,mesh),made);
       return made;
     }
 
     public void Unload() {
-      foreach(var set in _made.Values) {
-        Object.Destroy(set.Plated);
-        Object.Destroy(set.Unplated);
-        Object.Destroy(set.Emission);
-      }
+      foreach(var glow in _made.Values)Object.Destroy(glow);
       _made.Clear();
     }
 
-    private Textures Make(Texture baseMap, Texture emissionMap, Mesh mesh) {
+    private Texture2D Make(Texture emissionMap, Mesh mesh) {
       var spec=_settings.Spec;
-      int w=baseMap.width,h=baseMap.height;
-      if(emissionMap.width!=w||emissionMap.height!=h||w%2!=0||h%2!=0)
-        throw new InvalidOperationException($"Reactor bots: base map {w}x{h} and emission map {emissionMap.width}x{emissionMap.height} must match and be even");
-      var source=Pixels(baseMap);
+      int w=emissionMap.width,h=emissionMap.height;
+      if(w%2!=0||h%2!=0)throw new InvalidOperationException($"Reactor bots: emission map {w}x{h} must be even");
       var emission=Pixels(emissionMap);
       int peak=0;
       foreach(var p in emission)peak=Math.Max(peak,Math.Max(p.r,Math.Max(p.g,p.b)));
       if(peak<=EyeFloor)throw new InvalidOperationException($"Reactor bots: the bot emission map {emissionMap.name} has no eye (peak {peak})");
       int hw=w/2,hh=h/2;
       var joints=JointMask(mesh,hw,hh,spec);
-      var glow=new float[w*h];
-      for(int y=0;y<h;y++)for(int x=0;x<w;x++) {
-        int i=y*w+x;
-        var e=emission[i];
-        int v=Math.Max(e.r,Math.Max(e.g,e.b));
-        float eye=v<=EyeFloor?0f:Mathf.Min(1f,(v-EyeFloor)/(float)(peak-EyeFloor));
-        glow[i]=Mathf.Max(eye,Mathf.Min(1f,joints[(y/2)*hw+x/2]*spec.GlowJointGain));
-      }
-      Color32 paint=spec.GlowColor;
-      var dark=new byte[3][];
-      for(int c=0;c<3;c++) {
-        dark[c]=new byte[256];
-        for(int v=0;v<256;v++)dark[c][v]=(byte)Mathf.Clamp(Mathf.RoundToInt(Mathf.Pow(v/255f,spec.DarkPlatingGamma)*spec.DarkPlatingScale*spec.DarkPlatingColor[c]*255f),0,255);
-      }
-      var plated=new Color32[source.Length];
-      var unplated=new Color32[source.Length];
-      for(int i=0;i<source.Length;i++) {
-        var s=source[i];
-        var target=new Color32(paint.r,paint.g,paint.b,s.a);
-        unplated[i]=Color32.Lerp(s,target,glow[i]);
-        plated[i]=Color32.Lerp(new Color32(dark[0][s.r],dark[1][s.g],dark[2][s.b],s.a),target,glow[i]);
-      }
       var hot=spec.GlowColor.linear*spec.GlowIntensity;
       var light=new Color[hw*hh];
       for(int y=0;y<hh;y++)for(int x=0;x<hw;x++) {
-        int i=2*y*w+2*x;
-        float g=(glow[i]+glow[i+1]+glow[i+w]+glow[i+w+1])/4f;
+        float joint=Mathf.Min(1f,joints[y*hw+x]*spec.GlowJointGain);
+        float g=0f;
+        for(int dy=0;dy<2;dy++)for(int dx=0;dx<2;dx++) {
+          var e=emission[(2*y+dy)*w+2*x+dx];
+          int v=Math.Max(e.r,Math.Max(e.g,e.b));
+          float eye=v<=EyeFloor?0f:Mathf.Min(1f,(v-EyeFloor)/(float)(peak-EyeFloor));
+          g+=Mathf.Max(eye,joint);
+        }
+        g/=4f;
         light[y*hw+x]=new Color(hot.r*g,hot.g*g,hot.b*g,1f);
       }
-      return new Textures(Compressed("DeepFrontier.ReactorBot.Plated",baseMap,plated),Compressed("DeepFrontier.ReactorBot.Unplated",baseMap,unplated),
-        Hdr("DeepFrontier.ReactorBot.Emission",emissionMap,hw,hh,light));
+      return Hdr("DeepFrontier.ReactorBot.Glow",emissionMap,hw,hh,light);
     }
 
     // Joint seams at half resolution (rows bottom-up, as texture pixels): near each
@@ -246,17 +222,6 @@ namespace DeepFrontier.Scripts.SuperBots {
         RenderTexture.active=active;
         RenderTexture.ReleaseTemporary(target);
       }
-    }
-
-    private static Texture2D Compressed(string name, Texture like, Color32[] pixels) {
-      var texture=new Texture2D(like.width,like.height,TextureFormat.RGBA32,true,false) {
-        name=name, filterMode=like.filterMode, anisoLevel=like.anisoLevel, wrapMode=like.wrapMode,
-      };
-      texture.SetPixels32(pixels);
-      texture.Apply(true,false);
-      texture.Compress(false);
-      texture.Apply(false,true);
-      return texture;
     }
 
     // Linear half-float texture: sampled values are the stored ones, above 1 where the glow is hot.

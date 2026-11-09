@@ -11,7 +11,8 @@
 // - the skin: the glow is a neon yellow of the radiation hue (RadiationMaterials.WaterTintColor,
 //   within 5 degrees, at full saturation and value) written to an HDR emission map, the joint seams
 //   come from the body mesh, the BotURP texture names ReactorBotSkin sets match the official shader
-//   graph, no native texture setter replaces them, and the dark plating follows the plating need;
+//   graph, no native texture setter replaces them, the plating is the native _BaseColor (no base texture is
+//   generated) and follows the plating need;
 // - working speed: ReactorBot adds the native WorkingSpeed bonus (delta workingSpeedMultiplier - 1), whose
 //   clamp allows it, and the native Worker, ProduceExecutor and BuildExecutor still read and apply it
 //   (decompiled from the project's Timberborn plugin assemblies with tools/dotnet/ilspycmd.exe);
@@ -77,9 +78,10 @@ const rowKeys = new Set(rows.map(([k]) => k));
 for (const [, key] of panel.matchAll(/"(DeepFrontier\.ReactorBot\.[A-Za-z.]+)"/g)) if (!rowKeys.has(key)) errors.push(`runtime: ReactorBotPanel.cs uses ${key}, which the generator does not write`);
 for (const key of PANEL_KEYS) if (!panel.includes(`"${key}"`)) errors.push(`runtime: ${key} is generated but unused by ReactorBotPanel.cs`);
 const reactorBot = await readFile(resolve(scripts, 'ReactorBot.cs'), 'utf8');
-if (!reactorBot.includes('_material.SetTexture(ReactorBotSkin.BaseMapId,IsPlated?_textures.Plated:_textures.Unplated)') || !reactorBot.includes('e.NeedSpec.Id==Spec.PlatingNeedId) { ApplyPlating();')
-    || !reactorBot.includes('_material.SetTexture(ReactorBotSkin.EmissionMapId,_textures.Emission)'))
-  errors.push('runtime: ReactorBot no longer sets the yellow eyes and swaps the dark plating with the plating need');
+if (!reactorBot.includes('_material.SetColor(ReactorBotSkin.BaseColorId,IsPlated?Spec.PlatingColor:_nativeBaseColor)') || !reactorBot.includes('e.NeedSpec.Id==Spec.PlatingNeedId) { ApplyPlating();')
+    || !reactorBot.includes('_nativeBaseColor=ReactorBotSkin.NativeBaseColor(body.sharedMaterial)')
+    || !reactorBot.includes('_material.SetTexture(ReactorBotSkin.EmissionMapId,_glow)'))
+  errors.push('runtime: ReactorBot no longer sets the glow and switches the native plating colour with the plating need');
 if (!reactorBot.includes('WorkingSpeedBonusId="WorkingSpeed"') || !reactorBot.includes('_bonuses.AddBonus(WorkingSpeedBonusId,Spec.WorkingSpeedMultiplier-1f)'))
   errors.push('runtime: ReactorBot no longer adds the native WorkingSpeed bonus (delta WorkingSpeedMultiplier - 1)');
 const radiation = await readFile(resolve(root, 'src', 'DeepFrontier', 'Scripts', 'Radiation', 'RadiationMaterials.cs'), 'utf8');
@@ -108,7 +110,9 @@ const skin = await readFile(resolve(scripts, 'ReactorBotSkin.cs'), 'utf8');
 // HDR glow (a half-float linear emission map can exceed 1) and the joint seams from the body mesh.
 if (!skin.includes('new Texture2D(width,height,TextureFormat.RGBAHalf,true,true)')) errors.push('runtime: ReactorBotSkin no longer writes the glow to a linear half-float emission map');
 if (!reactorBot.includes('_skin.For(body.sharedMaterial,filter.sharedMesh)')) errors.push('runtime: ReactorBot no longer gives the skin the bot body mesh for the joint seams');
-for (const [display, reference, constant] of [['Base Map', '_BaseMap', 'BaseMapProperty'], ['Emission Map', '_BaseMap_1', 'EmissionMapProperty']]) {
+// Audit proposal C3: the plating is a native colour; no base texture is generated or set.
+if (/BaseMapId|BaseMapProperty|Compressed\(|SetPixels32/.test(skin)) errors.push('runtime: ReactorBotSkin generates or sets a base texture again; plating is the native _BaseColor');
+for (const [display, reference, constant] of [['Base Color', '_BaseColor', 'BaseColorProperty'], ['Emission Map', '_BaseMap_1', 'EmissionMapProperty']]) {
   if (!new RegExp(`"m_Name": "${display}"[\\s\\S]{0,600}?"m_OverrideReferenceName": "${reference}"`).test(graph)) errors.push(`native: BotURP.shadergraph ${display} is no longer ${reference}`);
   if (!skin.includes(`${constant}="${reference}"`)) errors.push(`runtime: ReactorBotSkin.${constant} must be "${reference}"`);
 }

@@ -40,18 +40,17 @@ namespace DeepFrontier.Scripts.SuperBots {
     // Native bot illumination colour (MaterialColorer), as vanilla BotIlluminationController sets it.
     [Serialize] public string IlluminationColorId { get; init; }
     // Skin (ReactorBotSkin). Glow: the neon colour (gamma space) of the eyes and the
-    // joint seams, painted on the base map and, times GlowIntensity (linear, above
-    // 1 so it glows), in the HDR emission map. Joint seams: within GlowRim of
-    // another mesh part, near a joint pivot, scaled by GlowJointGain.
+    // joint seams, times GlowIntensity (linear, above 1 so it glows), in the HDR
+    // emission map. Joint seams: within GlowRim of another mesh part, near a joint
+    // pivot, scaled by GlowJointGain.
     [Serialize] public Color GlowColor { get; init; }
     [Serialize] public float GlowIntensity { get; init; }
     [Serialize] public float GlowRim { get; init; }
     [Serialize] public float GlowJointGain { get; init; }
     [Serialize] public ImmutableArray<FrontierReactorBotGlowJointSpec> GlowJoints { get; init; }
-    // Dark plating: (c/255)^DarkPlatingGamma x DarkPlatingScale x DarkPlatingColor per channel.
-    [Serialize] public float DarkPlatingGamma { get; init; }
-    [Serialize] public float DarkPlatingScale { get; init; }
-    [Serialize] public Color DarkPlatingColor { get; init; }
+    // Dark plating: the body material's native _BaseColor while plated (it
+    // multiplies the game's base map); the material's own value otherwise.
+    [Serialize] public Color PlatingColor { get; init; }
   }
 
   // A joint whose seams glow: its pivot in the bot body mesh's bind pose (model
@@ -88,7 +87,7 @@ namespace DeepFrontier.Scripts.SuperBots {
       var working=_specs.GetSpecs<BonusTypeSpec>().Single(b=>b.Id==ReactorBot.WorkingSpeedBonusId);
       if(working.MaximumValue<Spec.WorkingSpeedMultiplier)
         throw new InvalidOperationException($"Reactor bots: the native {working.Id} bonus clamps at {working.MaximumValue}, below the x{Spec.WorkingSpeedMultiplier} working speed");
-      if(!(Spec.DarkPlatingGamma>=1f&&Spec.DarkPlatingScale>0f&&Spec.DarkPlatingScale<1f&&Spec.DarkPlatingColor.maxColorComponent<=1f
+      if(!(Spec.PlatingColor.maxColorComponent>0f&&Spec.PlatingColor.maxColorComponent<=0.5f&&Spec.PlatingColor.a==1f
            &&Spec.GlowColor.maxColorComponent>0f&&Spec.GlowIntensity>=1f&&Spec.GlowRim>0f&&Spec.GlowJointGain>0f
            &&!Spec.GlowJoints.IsDefaultOrEmpty&&Spec.GlowJoints.All(j=>!string.IsNullOrEmpty(j.Name)&&j.Radius>0f)))
         throw new InvalidOperationException("Reactor bots: invalid skin values in the settings");

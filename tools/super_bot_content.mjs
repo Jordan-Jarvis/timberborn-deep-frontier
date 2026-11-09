@@ -11,7 +11,7 @@
 // Writes:
 // - Configurations/DeepFrontierReactorBots.blueprint.json: the singleton
 //   FrontierReactorBotSettingsSpec the runtime reads (buffs, need ids, skin:
-//   glow colour, intensity, joint seams and dark plating curve for ReactorBotSkin),
+//   glow colour, intensity and joint seams for ReactorBotSkin, and the plating colour),
 //   and in the same blueprint FrontierReactorBotLeakSpec (ReactorBotLeak: the
 //   overheating and unplated hours before a bot leaks radioactive water, and the rate).
 // - The Bot needs (retrofit parts, charge, coolant, plating) and their
@@ -98,9 +98,10 @@ export function checkSuperBotConfig(c) {
         errors.push(`upgrade.glow.joints ${j.name}: a PascalCase name, a [x, y, z] pivot and a positive radius are required`);
       if (j.mirrorX && !(j.pivot[0] > 0)) errors.push(`upgrade.glow.joints ${j.name}: a mirrored joint is declared on the +x side`);
     }
-    const p = u.darkPlating;
-    if (!(p?.gamma >= 1 && p.scale > 0 && p.scale < 1 && isColor(p.color))) errors.push('upgrade.darkPlating needs gamma >= 1, scale in (0, 1) and an rgba colour');
-    for (const retired of ['tint', 'eyeColor']) if (u[retired] !== undefined) errors.push(`upgrade.${retired} is retired: the skin is ReactorBotSkin (glow, darkPlating)`);
+    const p = u.platingColor;
+    if (!isColor(p) || [p.r, p.g, p.b].some((v) => !(v > 0 && v <= 0.5)) || p.a !== 1)
+      errors.push('upgrade.platingColor must be a dark opaque rgba colour (each of r, g, b in (0, 0.5], a = 1): the native _BaseColor multiplier while plated');
+    for (const retired of ['tint', 'eyeColor', 'darkPlating']) if (u[retired] !== undefined) errors.push(`upgrade.${retired} is retired: the skin is ReactorBotSkin (glow) and platingColor`);
   }
   for (const key of ['charge', 'coolant', 'plating']) {
     if (!/^[A-Z][A-Za-z]+$/.test(n?.[key]?.id ?? '') || !n[key].name) errors.push(`needs.${key} needs a PascalCase id and a name`);
@@ -174,9 +175,7 @@ export function settingsBlueprint(c) {
     GlowRim: u.glow.rim,
     GlowJointGain: u.glow.jointGain,
     GlowJoints: glowJoints(c),
-    DarkPlatingGamma: u.darkPlating.gamma,
-    DarkPlatingScale: u.darkPlating.scale,
-    DarkPlatingColor: {...u.darkPlating.color},
+    PlatingColor: {...u.platingColor},
   }, [LEAK_SPEC]: {
     CoolantNeedId: n.coolant.id,
     OverheatHours: c.leak.overheatHours,
