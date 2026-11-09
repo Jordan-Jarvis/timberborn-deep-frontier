@@ -1,0 +1,8 @@
+{
+  "Name": "More Fluids (development)",
+  "Version": "0.0.1.0",
+  "Id": "MoreFluids",
+  "MinimumGameVersion": "1.1.2.8",
+  "Description": "Development skeleton. Registers coffee, saltwater and healing water and their source types with Moddable Fluids. All gameplay numbers are provisional proposals awaiting approval; no buildings, tides or effects yet.",
+  "RequiredMods": [{ "Id": "ModdableFluids", "MinimumVersion": "0.0.1" }]
+}
