@@ -117,8 +117,14 @@ namespace DeepFrontier.Scripts {
       internal static List<MaterialRecord> ReadAll(ISpecService specs, bool game) {
         var water = specs.GetSingleSpec<WaterMeshSpec>();
         var list = new List<MaterialRecord> {
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+          // Moddable Fluids draws the water with per-scene copies of these materials: the native ones keep their shaders.
+          Read(water.OpaqueMaterial.Asset, RadiationShading.WaterOpaqueNative, RadiationShading.WaterOpaqueNative, game),
+          Read(water.TransparentMaterial.Asset, RadiationShading.WaterTransparentNative, RadiationShading.WaterTransparentNative, game),
+#else
           Read(water.OpaqueMaterial.Asset, RadiationShading.WaterOpaqueNative, RadiationShading.WaterOpaqueVariantName, game),
           Read(water.TransparentMaterial.Asset, RadiationShading.WaterTransparentNative, RadiationShading.WaterTransparentVariantName, game),
+#endif
         };
         var common = specs.GetSpecs<MaterialCollectionSpec>().Where(s => s.CollectionId == "Common")
           .SelectMany(s => s.Materials).Select(m => m.Asset).ToList();

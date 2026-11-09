@@ -38,6 +38,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
     private readonly List<RadiationSourceRecord> _sources = new List<RadiationSourceRecord>();
     private readonly List<(Vector3Int Cell, float Volume)> _early = new List<(Vector3Int, float)>();
     private int _nextSourceId = 1;
+    private bool _savedState;
 
     public ModdableFluidsRadiationService(DeepFrontierRadioactiveWater provider, RadiationSoilField soil, IRadiationCellMap cells, Func<float> waterPerStrengthHour)
       : this(provider, cells, waterPerStrengthHour) {
@@ -66,6 +67,9 @@ namespace DeepFrontier.ModdableFluidsMigration {
     private bool HasState => _provider.Scene != null && _provider.Scene.HasWorld && World.HasState;
 
     // ------------------------------------------------------------------ state
+
+    /// <summary>The game loaded a <c>DeepFrontier.Radiation</c> record: until the first soil pass its radiation is pending.</summary>
+    public void MarkSavedState() => _savedState = true;
 
     /// <summary>Radioactive water a save recorded as added before its first fluid tick (checked when it was added).</summary>
     public void LoadEarlyAdditions(IReadOnlyList<(Vector3Int Cell, float Volume)> additions) {
@@ -184,15 +188,19 @@ namespace DeepFrontier.ModdableFluidsMigration {
     /// <summary>Soil (or the bank layer) at or above IrradiatedGroundThreshold; nothing before the first fluid tick applied the save.</summary>
     public bool IsIrradiatedGround(Vector3Int cell) {
       RequireInMap(new Vector2Int(cell.x, cell.y));
-      if (SavedStatePending || !World.TrySample(cell.x, cell.y, cell.z, out var column)) return false;
+      if (SavedStatePending || !HasState || !World.TrySample(cell.x, cell.y, cell.z, out var column)) return false;
       return Soil.SoilAt(new Vector3Int(cell.x, cell.y, column.Floor)) >= RadiationTuning.IrradiatedGroundThreshold;
     }
 
     /// <summary>Radioactive volume in all columns, overflow included (RadiationSimulation sums r x depth).</summary>
     public float TotalWaterRadiation => HasState ? (float)World.TotalVolume(_provider.Radioactive) : 0f;
 
-    /// <summary>True until the first fluid tick has published state, imported a legacy save and run the soil rules.</summary>
-    public bool SavedStatePending => !HasState || _provider.ImportPending || !Soil.HasPass;
+    /// <summary>
+    /// RadiationSimulation's rule: true from loading a save's radiation until it is applied, here by the first completed
+    /// fluid tick (Moddable Fluids restores or imports the water in its first substep; the soil rules then run once). A
+    /// new game has nothing pending; before its first tick Sample reads no column, as RadiationSimulation's did.
+    /// </summary>
+    public bool SavedStatePending => _savedState && (!HasState || _provider.ImportPending || !Soil.HasPass);
 
     // ------------------------------------------------------------- internals
 

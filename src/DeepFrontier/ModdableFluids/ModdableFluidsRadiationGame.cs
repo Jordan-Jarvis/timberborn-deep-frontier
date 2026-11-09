@@ -97,6 +97,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
       AttachSoil(field);
       RadiationLegacyRecord legacy = null;
       if (_singletonLoader.TryGetSingleton(RadiationKey, out var loader)) {
+        MarkSavedState();
         int version = loader.Get(VersionKey);
         var ids = loader.Get(SourceIdsKey); var cells = loader.Get(SourceCellsKey); var rates = loader.Get(SourceRatesKey); var hours = loader.Get(SourceHoursKey);
         if (cells.Count != ids.Count || rates.Count != ids.Count || hours.Count != ids.Count) throw new InvalidOperationException("Radiation source save lists have different lengths");
@@ -104,19 +105,17 @@ namespace DeepFrontier.ModdableFluidsMigration {
         var pendingSoil = Pairs(loader, PendingSoilCellsKey, PendingSoilAmountsKey, version == RadiationFacadeRecord.Version);
         var earlyWater = Pairs(loader, EarlyWaterCellsKey, EarlyWaterVolumesKey, version == RadiationFacadeRecord.Version);
         if (version == RadiationFacadeRecord.Version) {
-          var record = new RadiationFacadeRecord(loader.Get(CellsKey), loader.Get(SoilKey), sources, loader.Get(NextSourceIdKey), loader.Get(HourAccumulatorKey),
-            pendingSoil, earlyWater);
-          field.Load(record.SoilCells, record.Soil, record.HourAccumulator, lenient: false);
-          LoadSources(record.Sources, record.NextSourceId);
+          new RadiationFacadeRecord(loader.Get(CellsKey), loader.Get(SoilKey), sources, loader.Get(NextSourceIdKey), loader.Get(HourAccumulatorKey),
+            pendingSoil, earlyWater).Restore(this);
         } else {
           legacy = new RadiationLegacyRecord(version, loader.Has(SnapshotKey) && loader.Get(SnapshotKey), loader.Get(CellsKey), loader.Get(WaterRadiationKey),
             loader.Get(SoilKey), version == RadiationLegacyRecord.SludgeVersion ? loader.Get(SludgeKey) : null, sources, loader.Get(NextSourceIdKey), loader.Get(HourAccumulatorKey));
-          // Soil lies under the same column cells; it stays Deep Frontier's.
+          // Soil lies under the same column cells; it stays Deep Frontier's. Requests a write-back kept come with it.
           field.Load(legacy.Cells, legacy.Soil, legacy.HourAccumulator, legacy.Snapshot);
           LoadSources(legacy.Sources, legacy.NextSourceId);
+          foreach (var (cell, amount) in pendingSoil) field.RequestSoil(cell, amount);
+          LoadEarlyAdditions(earlyWater);
         }
-        foreach (var (cell, amount) in pendingSoil) field.RequestSoil(cell, amount);
-        LoadEarlyAdditions(earlyWater);
       }
       _provider.PrepareScene(field, legacy);
     }
@@ -166,24 +165,23 @@ namespace DeepFrontier.ModdableFluidsMigration {
       (_irradiated, _irradiatedNext) = (_irradiatedNext, _irradiated);
     }
 
+    // A normal save arrives at a completed tick (GameSaver finishes it); the native exception saver may arrive mid-tick,
+    // and then writes the last published pass, which is what Capture reads in either case.
     public void Save(ISingletonSaver singletonSaver) {
       var saver = singletonSaver.GetSingleton(RadiationKey);
+      var record = RadiationFacadeRecord.Capture(this);
       var pending = _provider.PendingRecord;
       if (pending != null) WriteLegacy(saver, pending);
       else {
-        var soil = Soil.Published;
-        var cells = soil.Soil.Keys.OrderBy(c => c.y).ThenBy(c => c.x).ThenBy(c => c.z).ToArray();
         saver.Set(VersionKey, RadiationFacadeRecord.Version);
-        saver.Set(CellsKey, cells); saver.Set(SoilKey, cells.Select(c => soil.Soil[c]).ToArray());
-        saver.Set(HourAccumulatorKey, soil.HourAccumulator);
+        saver.Set(CellsKey, record.SoilCells.ToArray()); saver.Set(SoilKey, record.Soil.ToArray());
+        saver.Set(HourAccumulatorKey, record.HourAccumulator);
       }
-      var sources = Sources.ToArray();
-      saver.Set(SourceIdsKey, sources.Select(s => s.Id).ToArray()); saver.Set(SourceCellsKey, sources.Select(s => s.Cell).ToArray());
-      saver.Set(SourceRatesKey, sources.Select(s => s.VolumePerHour).ToArray()); saver.Set(SourceHoursKey, sources.Select(s => s.RemainingHours).ToArray());
-      saver.Set(NextSourceIdKey, NextSourceId);
-      var requests = Soil.PendingRequests;
-      saver.Set(PendingSoilCellsKey, requests.Select(r => r.Cell).ToArray()); saver.Set(PendingSoilAmountsKey, requests.Select(r => r.Amount).ToArray());
-      saver.Set(EarlyWaterCellsKey, EarlyAdditions.Select(r => r.Cell).ToArray()); saver.Set(EarlyWaterVolumesKey, EarlyAdditions.Select(r => r.Volume).ToArray());
+      saver.Set(SourceIdsKey, record.Sources.Select(s => s.Id).ToArray()); saver.Set(SourceCellsKey, record.Sources.Select(s => s.Cell).ToArray());
+      saver.Set(SourceRatesKey, record.Sources.Select(s => s.VolumePerHour).ToArray()); saver.Set(SourceHoursKey, record.Sources.Select(s => s.RemainingHours).ToArray());
+      saver.Set(NextSourceIdKey, record.NextSourceId);
+      saver.Set(PendingSoilCellsKey, record.PendingSoil.Select(r => r.Cell).ToArray()); saver.Set(PendingSoilAmountsKey, record.PendingSoil.Select(r => r.Amount).ToArray());
+      saver.Set(EarlyWaterCellsKey, record.EarlyWater.Select(r => r.Cell).ToArray()); saver.Set(EarlyWaterVolumesKey, record.EarlyWater.Select(r => r.Volume).ToArray());
     }
 
     // The record as loaded: its water waits for the first fluid substep, so it is written back unchanged.

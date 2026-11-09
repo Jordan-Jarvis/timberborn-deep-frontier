@@ -71,5 +71,22 @@ namespace DeepFrontier.ModdableFluidsMigration {
       SoilCells = soilCells.ToArray(); Soil = soil.ToArray(); Sources = sources.ToArray(); NextSourceId = nextSourceId; HourAccumulator = hourAccumulator;
       PendingSoil = pendingSoil.ToArray(); EarlyWater = earlyWater.ToArray();
     }
+
+    /// <summary>The facade's state at a completed tick: the last published soil pass, sources and unapplied requests.</summary>
+    public static RadiationFacadeRecord Capture(ModdableFluidsRadiationService facade) {
+      var pass = facade.Soil.Published;
+      var cells = pass.Soil.Keys.OrderBy(c => c.y).ThenBy(c => c.x).ThenBy(c => c.z).ToArray();
+      return new RadiationFacadeRecord(cells, cells.Select(c => pass.Soil[c]).ToArray(),
+        facade.Sources.Select(s => new RadiationSourceRecord(s.Id, s.Cell, s.VolumePerHour, s.RemainingHours)).ToArray(), facade.NextSourceId, pass.HourAccumulator,
+        facade.Soil.PendingRequests.Select(r => (r.Cell, r.Amount)).ToArray(), facade.EarlyAdditions.Select(r => (r.Cell, r.Volume)).ToArray());
+    }
+
+    /// <summary>Loads this record into a facade whose soil field has not run a pass (singleton Load).</summary>
+    public void Restore(ModdableFluidsRadiationService facade) {
+      facade.Soil.Load(SoilCells, Soil, HourAccumulator, lenient: false);
+      facade.LoadSources(Sources, NextSourceId);
+      foreach (var (cell, amount) in PendingSoil) facade.Soil.RequestSoil(cell, amount);
+      facade.LoadEarlyAdditions(EarlyWater);
+    }
   }
 }

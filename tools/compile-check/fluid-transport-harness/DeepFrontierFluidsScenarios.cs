@@ -308,6 +308,9 @@ internal static class DeepFrontierFluidsScenarios {
     soil.Load(new[] { new Vector3Int(0, 0, 0) }, new[] { .2f }, 0f, lenient: false);
     var cells = new TestCells((0, 0, 0, 4, 2f, .25f), (1, 0, 0, 3, 1f, 0f), (1, 1, 0, 2, .5f, 0f), (1, 1, 4, 12, 1f, 0f));
     var facade = new ModdableFluidsRadiationService(provider, soil, cells, () => 3f);
+    check(!facade.SavedStatePending && !facade.IsIrradiatedGround(new Vector3Int(0, 0, 0)) && !facade.Sample(new Vector3Int(0, 0, 1)).HasColumn,
+      "A new game has nothing pending and reads no column before its first tick (sensors sample it)");
+    facade.MarkSavedState();
     provider.PrepareScene(soil, Record(3, false, new[] { (0, 0, 0, .5f, .2f, 0f) }));
     // Before the first fluid tick: pending, nothing to sample, requests wait; native geometry already answers.
     check(facade.SavedStatePending && !facade.Sample(new Vector3Int(0, 0, 1)).HasColumn && facade.ColumnRadiation(new Vector3Int(0, 0, 1)) == 0

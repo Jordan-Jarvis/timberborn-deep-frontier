@@ -21,6 +21,7 @@ internal static partial class HarnessExtensions {
     scenario("Deep Frontier deposits lost radioactive water from Moddable Fluids losses and credits intakes", () => DeepFrontierSoil.Losses(check, observations));
     scenario("Deep Frontier soil requests, load validation, publication and the bank layer", () => DeepFrontierSoil.RequestsAndLoad(check));
     scenario("Deep Frontier radioactive tide registers on Moddable Fluids with RadioactiveTideTuning's values and keeps its draws alone", () => DeepFrontierSoil.Tide(check, observations));
+    scenario("Deep Frontier radiation record version 4 round trip: soil, hour counter, sources and unapplied requests", () => DeepFrontierSoil.RoundTrip(check));
   }
 }
 
@@ -460,6 +461,62 @@ internal static class DeepFrontierSoil {
     check(differences == 0 && tides > 0, $"{cycles} cycles: the same tides and the same random draws as RadioactiveTideService.Choose ({differences} differences)");
     observations["deepFrontierTideCyclesCompared"] = cycles;
     _ = registry;
+  }
+
+  // ----------------------------------------------------------- round trip
+
+  private sealed class OpenCells : IRadiationCellMap {
+    private readonly int _width, _height;
+    public OpenCells(int width, int height) { _width = width; _height = height; }
+    public Vector2Int Size => new Vector2Int(_width, _height);
+    public bool IsOpenCell(Vector3Int cell) => cell.z >= 0 && cell.z < 8;
+    public bool TryFindOpenCell(Vector2Int xy, int z, out Vector3Int cell) { cell = new Vector3Int(xy.x, xy.y, Math.Max(0, z)); return z < 8; }
+    public bool IsSubmerged(Vector3Int cell) => false;
+    public float BadwaterShare(Vector3Int cell) => 0f;
+  }
+
+  [MethodImpl(MethodImplOptions.NoInlining)]
+  internal static void RoundTrip(Action<bool, string> check) {
+    var (registry, radioactive) = Registry();
+    var columns = new MemoryColumns(registry);
+    columns.Add(0, 0, 0, 8, 1, 0, .2); columns.Add(1, 0, 0, 8); columns.Add(2, 1, 0, 8, .5);
+    var provider = new DeepFrontierRadioactiveWater();
+    var field = Field(3, 2);
+    field.Load(new[] { new Vector3Int(1, 0, 0), new Vector3Int(2, 1, 0) }, new[] { .4f, .05f }, .25f, false);
+    var facade = new ModdableFluidsRadiationService(provider, field, new OpenCells(3, 2), () => 19.2f);
+    facade.MarkSavedState();
+    facade.LoadSources(new[] { new RadiationSourceRecord(3, new Vector3Int(0, 0, 1), 2f, 5f) }, 4);
+    field.ApplyRules(columns, radioactive, registry.Water);
+    facade.AddSoilRadiation(new Vector3Int(2, 1, 3), .125f);
+    facade.AddRadioactiveWater(new Vector3Int(0, 0, 2), .75f);    // no fluid state yet: kept for the first fluid tick
+    int id = facade.AddContinuousSource(new Vector3Int(1, 0, 0), 1.5f, 2f);
+    var saved = RadiationFacadeRecord.Capture(facade);
+    check(saved.SoilCells.Count == 3 && saved.Sources.Count == 2 && saved.NextSourceId == 5 && id == 4 && saved.PendingSoil.Count == 1 && saved.EarlyWater.Count == 1
+      && saved.HourAccumulator == field.Published.HourAccumulator, "Capture: the published pass, both sources, the unapplied soil request and the early water");
+    // Write the record's lists and read them back, as Save and Load do.
+    var reread = new RadiationFacadeRecord(saved.SoilCells.ToList(), saved.Soil.ToList(), saved.Sources.ToList(), saved.NextSourceId, saved.HourAccumulator,
+      saved.PendingSoil.ToList(), saved.EarlyWater.ToList());
+    var loadedField = Field(3, 2);
+    var loaded = new ModdableFluidsRadiationService(provider, loadedField, new OpenCells(3, 2), () => 19.2f);
+    loaded.MarkSavedState();
+    reread.Restore(loaded);
+    var again = RadiationFacadeRecord.Capture(loaded);
+    check(again.SoilCells.SequenceEqual(saved.SoilCells) && again.Soil.SequenceEqual(saved.Soil) && again.HourAccumulator == saved.HourAccumulator
+      && again.NextSourceId == saved.NextSourceId && again.Sources.Select(s => (s.Id, s.Cell, s.VolumePerHour, s.RemainingHours)).SequenceEqual(saved.Sources.Select(s => (s.Id, s.Cell, s.VolumePerHour, s.RemainingHours)))
+      && again.PendingSoil.SequenceEqual(saved.PendingSoil) && again.EarlyWater.SequenceEqual(saved.EarlyWater), "Restore then Capture gives the same record");
+    check(loaded.SavedStatePending && !loadedField.HasPass, "A loaded record is pending until the first pass");
+    // Both continue identically: the next pass applies the request on the same soil.
+    var columnsAgain = new MemoryColumns(registry);
+    columnsAgain.Add(0, 0, 0, 8, 1, 0, .2); columnsAgain.Add(1, 0, 0, 8); columnsAgain.Add(2, 1, 0, 8, .5);
+    field.ApplyRules(columns, radioactive, registry.Water);
+    // The loaded field's first pass checks the saved cells against the columns, then applies the same request.
+    loadedField.ApplyRules(columnsAgain, radioactive, registry.Water);
+    check(loadedField.Published.Soil.OrderBy(p => p.Key.x).ThenBy(p => p.Key.y).SequenceEqual(field.Published.Soil.OrderBy(p => p.Key.x).ThenBy(p => p.Key.y))
+      && loadedField.Published.HourAccumulator == field.Published.HourAccumulator, "The reloaded soil continues exactly as the saved one");
+    Rejects<InvalidOperationException>(check, () => new RadiationFacadeRecord(new[] { new Vector3Int(0, 0, 0) }, new[] { 0f }, new RadiationSourceRecord[0], 1, 0f,
+      new (Vector3Int, float)[0], new (Vector3Int, float)[0]), "A record with zero soil");
+    Rejects<InvalidOperationException>(check, () => new RadiationFacadeRecord(new Vector3Int[0], new float[0], new RadiationSourceRecord[0], 1, 0f,
+      new[] { (new Vector3Int(0, 0, 0), -1f) }, new (Vector3Int, float)[0]), "A negative pending request");
   }
 
   // -------------------------------------------------------- requests and load
