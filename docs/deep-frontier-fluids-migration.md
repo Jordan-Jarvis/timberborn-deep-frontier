@@ -12,11 +12,13 @@ Status on 2026-11-09:
 
 | Path | Contents |
 | --- | --- |
-| `src/DeepFrontier/ModdableFluids` | The migration code. It sits outside `Scripts`, so `tools/stage_deep_frontier.ps1` never stages it. Files that need game types are wrapped in `#if DEEP_FRONTIER_MODDABLE_FLUIDS`. |
+| `src/DeepFrontier/ModdableFluids` | The migration code. It sits outside `Scripts`, so `tools/stage_deep_frontier.ps1` never stages it; only the [test build](#test-packages-and-the-launcher) does. Files that need game types are wrapped in `#if DEEP_FRONTIER_MODDABLE_FLUIDS`. |
 | `src/DeepFrontier/Scripts` | Flag-guarded switches where the two builds differ: bindings, patches not installed, the inert intake guard, the custom-intake marker and the scene-cycle probe. Also the service interfaces both builds use. |
 | `tools/compile-check/deep-frontier-fluids` | The pure part, without game references. The fluid harness uses it. |
 | `tools/compile-check/deep-frontier-moddable-fluids` | All Deep Frontier scripts with the flag. `tools/test_fluid_transport.ps1` builds it. |
 | `tools/compile-check/fluid-transport-harness` | `DeepFrontierFluidsScenarios.cs` and `HarnessExtensions.DeepFrontier.cs` |
+| `tools/build_deep_frontier_moddable_fluids.ps1` (run by `tools/build_deep_frontier.ps1 -ModdableFluids`) | The disposable flagged test package, kept out of Mods |
+| `tools/start_deep_frontier_moddable_fluids.ps1` | One interactive run with the test packages, restoring everything afterwards |
 
 ## The pieces
 
@@ -171,12 +173,63 @@ Open:
 
 The shipped package switches only after every gate below has passed in game. Until then, keep shipping the unflagged build.
 
+### Test packages and the launcher
+
+Build the packages from one commit, with Unity closed, Timberborn closed, and no other official build running (the builds share one Unity project):
+
+```powershell
+pwsh tools/build_moddable_fluids.ps1 -MoreFluids    # Moddable Fluids (and More Fluids), kept in outputs/fluids-api-prototype/packages
+pwsh tools/build_deep_frontier.ps1 -ModdableFluids  # the flagged Deep Frontier test package, kept in outputs/deep-frontier-moddable-fluids/package
+```
+
+`build_deep_frontier.ps1` without the switch is the default shipped build, unchanged. With it, `tools/build_deep_frontier_moddable_fluids.ps1` runs the same official build with a flagged staging:
+
+- `src/DeepFrontier/ModdableFluids` is staged into `Scripts/ModdableFluids`.
+- The staged `DeepFrontier.asmdef` defines `DEEP_FRONTIER_MODDABLE_FLUIDS` for that assembly only (`versionDefines` on the editor version).
+- That asmdef references the `ModdableFluids` assembly definition, which `build_moddable_fluids.ps1` stages from `src/ModdableFluids/Api`. More Fluids compiles against it the same way. A precompiled `ModdableFluids.dll` would collide with that assembly definition.
+- The manifest requires `ModdableFluids` at the kept package's version, leaves out `ModdableWeathers`, and has " (Moddable Fluids test build)" added to its name.
+
+The official builder only writes into `Mods/DeepFrontier`. The script therefore:
+
+1. **Backs up.** It copies the installed package and the builder's `DeepFrontier*.dll` aside, with hashes.
+2. **Verifies the output.**
+   - The manifest is the variant.
+   - No `ModdableFluids*.dll` or Moddable Weathers bridge is packaged.
+   - `DeepFrontier.dll` is the official output, defines the flagged types, and references `ModdableFluids` at the package's assembly version.
+   - The builder's `ModdableFluids.dll` is byte-identical to the kept package's.
+   - The data and both bundles are in place.
+3. **Moves the package out** to `outputs/deep-frontier-moddable-fluids/package/DeepFrontier`.
+4. **Restores everything byte for byte**, then puts the default staging back. A restore that does not match stops with its backup named.
+
+One interactive run with the test packages:
+
+```powershell
+pwsh tools/start_deep_frontier_moddable_fluids.ps1 [-MoreFluids] [-SaveCopies <path.timber>,...]
+```
+
+Before the game starts, the launcher copies aside, with hashes:
+
+- the installed `Mods/DeepFrontier`;
+- `Saves` and `ExperimentalSaves`;
+- the PlayerData files;
+- every `ModEnabled` and `ModPriority` preference value, with its registry type.
+
+It then installs the packages and enables them. It switches Moddable Weathers off for the run, and refuses to start while Moddable Weathers is enabled only by default. `-SaveCopies` puts copies of the given saves into a settlement named "Deep Frontier Moddable Fluids Test". Click through the startup dialogs, and quit the game to end the run.
+
+Afterwards, also after a crash:
+
+- The test packages leave, and `Mods/DeepFrontier` comes back.
+- Preference values come back with their types, and new ones are deleted.
+- PlayerData is restored.
+- Saves the run made or changed move to `outputs/deep-frontier-moddable-fluids/runs/<time>/evidence`. The save folders then return to their state before the run; the shipped build cannot read a flagged save.
+- Every restore is hash-checked, and the game log is in the run folder.
+
 ### Gates
 
-Run each with the packages built from one commit. Use copies of saves in Memory Test, and restore the user's autosaves afterwards.
+Run each with the packages built from one commit, through the launcher above. Load copies of saves only, through `-SaveCopies`.
 
-1. **Moddable Fluids worker fixture.** mf-core's run: `tools/start_fluid_worker_acceptance.ps1`. It proves the transport, losses and policies in game.
-2. **New game, flagged Deep Frontier with Moddable Fluids.**
+1. **Moddable Fluids worker fixture.** mf-core's run: `pwsh tools/start_fluid_worker_acceptance.ps1`. It proves the transport, losses and policies in game.
+2. **New game, flagged Deep Frontier with Moddable Fluids.** Launch with `pwsh tools/start_deep_frontier_moddable_fluids.ps1`, then check:
    - The log shows the providers registered and Moddable Fluids attached, with no foreign-owner refusal.
    - A Radioactive Spring emits radioactive water, tinted by Moddable Fluids.
    - Pumps in it block at 0.5% with Deep Frontier's status.
@@ -184,8 +237,8 @@ Run each with the packages built from one commit. Use copies of saves in Memory 
    - The outfall adds water.
    - Soil around the water turns yellow-green; plants there die and planters skip it.
    - Beavers wading in it gain dose; sensors read the share.
-3. **Version 4 save and reload in game.** Save mid-play and reload. Soil cells, water shares, the intake buffer and sources continue. The scene-cycle probe passes: the native water materials stay untouched and the terrain variant is restored on unload.
-4. **Shipped saves.** Load copies of v3 and v2 saves, one of them an exception save. Compare total radioactive volume and soil cells before and after the import, accounting for the reported cutoff volume. Then save and reload as v4. One of the saves is in a radioactive tide. Check the import log line and that the tide continues with its cycle and duration. Also load one save from 0.8.3 or older.
+3. **Version 4 save and reload in game.** In the same run, save mid-play and reload. Soil cells, water shares, the intake buffer and sources continue. The scene-cycle probe (its launcher with the test packages installed) passes: the native water materials stay untouched and the terrain variant is restored on unload.
+4. **Shipped saves.** Run `pwsh tools/start_deep_frontier_moddable_fluids.ps1 -SaveCopies <v3.timber>,<v2.timber>,<exception.timber>,<in-tide.timber>,<0.8.3.timber>` and load each copy. One of them is an exception save. Compare total radioactive volume and soil cells before and after the import, accounting for the reported cutoff volume. Then save and reload as v4. One of the saves is in a radioactive tide. Check the import log line and that the tide continues with its cycle and duration. Also load one save from 0.8.3 or older.
 5. **Tide.**
    - Use Moddable Fluids' "next cycle" development method for the radioactive tide.
    - Check the banner, icons and badtide sound.
@@ -193,15 +246,13 @@ Run each with the packages built from one commit. Use copies of saves in Memory 
    - Check the Weather Station's tide mode.
    - Save and reload during the tide.
    - Check that a new custom game's rows show Deep Frontier's values.
-6. **Performance.** Tick time and memory on the largest Deep Frontier map with a large irradiated area, against the shipped build.
+6. **Performance.** Tick time and memory on the largest Deep Frontier map with a large irradiated area, against the shipped build. Run once with `-MoreFluids`, so that the shared tide budget and the More Fluids content run alongside.
 
 ### Steps
 
 1. **Package.**
-   - Stage `src/DeepFrontier/ModdableFluids` into the package's `Scripts`.
-   - Define `DEEP_FRONTIER_MODDABLE_FLUIDS` for the `DeepFrontier` assembly, for example with a `csc.rsp` next to `DeepFrontier.asmdef` or in `tools/unity/DeepFrontierBatchBuild.cs`.
-   - Stage `ModdableFluids.dll` (the API assembly only) as a build dependency with its `.meta`, like `ModdableWeathers.dll`, and never inside Deep Frontier's package.
-   - `tools/verify_deep_frontier_package.ps1` must then check three things: the main DLL references `ModdableFluids`, no `ModdableFluids*.dll` is packaged, and the manifest requires it.
+   - Make the test build's flagged staging the default. That is the staged `Scripts/ModdableFluids`, the asmdef with its define and reference, and the manifest.
+   - Fold its package checks into `tools/verify_deep_frontier_package.ps1`. That script then compares the installed package with the builder output, as it does now.
 2. **Manifest.**
    - Add `{ "Id": "ModdableFluids", "MinimumVersion": "<first release>" }` to `RequiredMods` and bump the version.
    - Moddable Fluids refuses Moddable Weathers together with tides. Remove `ModdableWeathers` from `OptionalMods`, or wait for Moddable Fluids' Moddable Weathers adapter. The `DeepFrontier.ModdableWeathers` bridge leaves the package with it.

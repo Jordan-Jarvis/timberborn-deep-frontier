@@ -1,4 +1,13 @@
+# -ModdableFluids: a disposable test package with DEEP_FRONTIER_MODDABLE_FLUIDS, kept out of Mods
+# (tools/build_deep_frontier_moddable_fluids.ps1). Without it this script is the default build, unchanged.
+param([switch]$ModdableFluids)
 $ErrorActionPreference = 'Stop'
+if ($ModdableFluids) {
+  . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+  & (Get-DevEnvironment 'pwsh').pwsh -NoProfile -File (Join-Path $PSScriptRoot 'build_deep_frontier_moddable_fluids.ps1')
+  if ($LASTEXITCODE -ne 0) { throw "The flagged Deep Frontier test build failed ($LASTEXITCODE)." }
+  return
+}
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $project = Join-Path $root 'vendor\timberborn-modding'
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
