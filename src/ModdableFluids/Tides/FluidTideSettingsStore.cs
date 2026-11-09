@@ -57,6 +57,7 @@ namespace ModdableFluids.Tides.Prototype {
   /// <item>a save made before this save had tide settings: every tide off, with the default budget of the vanilla Normal mode.
   /// The game mode such a save started from is not stored, so nothing better can be derived without guessing.</item>
   /// </list>
+  /// Before the last two, FluidTideService asks every IFluidTideImporter for a loaded save without Moddable Fluids tide state.
   /// The settings never change during a game, as the native weather settings do not.
   /// </summary>
   public static class FluidTideSettingsStore {

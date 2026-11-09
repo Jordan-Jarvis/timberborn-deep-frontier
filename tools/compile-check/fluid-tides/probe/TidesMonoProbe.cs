@@ -15,7 +15,9 @@ using Timberborn.HazardousWeatherSystemUI;
 using Timberborn.MainMenuPanels;
 using Timberborn.MapStateSystem;
 using Timberborn.NewGameConfigurationSystem;
+using Timberborn.Persistence;
 using Timberborn.SceneLoading;
+using Timberborn.SerializationSystem;
 using Timberborn.WorldPersistence;
 using UnityEngine;
 
@@ -58,6 +60,7 @@ namespace ModdableFluids.Tides.Acceptance {
         new[] { (15, 24, 2, 4), (25, 14, 3, 6), (35, 9, 5, 10) }));
       host.RegisterProvider(new Provider("MoreFluids.Liquids", "MoreFluids", "Coffee", "CoffeeTide", "MoreFluids.CoffeeTide", .5,
         new[] { (10, 12, 2, 4), (15, 8, 3, 5), (20, 6, 4, 7) }));
+      host.RegisterProvider(new Importer());
       host.Freeze();
       var tides = host.Tides;
       Check(tides.Count == 2, "two tides registered");
@@ -156,6 +159,41 @@ namespace ModdableFluids.Tides.Acceptance {
       second.Unload();
       Check(targets.All(t => Owners(t).Length == 0), "and removes again");
 
+      // A loaded save without Moddable Fluids tide state: the importer is asked once, its state is restored by the native
+      // Load postfix, and the next save writes Moddable Fluids' own singletons, so the import never repeats.
+      var loaded = new SceneLoader(null);
+      var legacy = new MemorySave();
+      new ObjectSaver(legacy.Objects["Probe.LegacyTide"] = new SerializedObject()).Set(Importer.CycleKey, 21);
+      Importer.Calls = 0;
+      var importing = NewService(weatherService, history, random, loaded, settings, legacy);
+      Internal(Native(), "SetCurrentWeather", null, weatherService, badtide);   // native Load maps IsDrought=false to badtide
+      weatherService.Load();
+      Check(Importer.Calls == 1 && importing.ImportedBy == "Probe.Importer" && weatherService.CurrentCycleHazardousWeather is FluidTideWeather imported
+        && imported.Definition.Id == "DeepFrontier.RadioactiveTide" && importing.LastTideCycle == 21 && importing.LastTideDuration == 4, "the importer's tide is restored on load");
+      Check(importing.Settings.BudgetPercent == 30 && importing.Settings.Get("DeepFrontier.RadioactiveTide").Weight == 30 && !importing.Settings.Get("MoreFluids.CoffeeTide").Enabled
+        && Importer.Calls == 1, "imported settings, the unlisted tide off, asked once: " + importing.Settings);
+      var written = new MemorySave();
+      importing.Save(written);
+      Check(written.Objects.ContainsKey("ModdableFluids.Tides") && written.Objects.ContainsKey("ModdableFluids.TideSettings"), "the next save writes both own singletons");
+      importing.Unload();
+      var reloaded = written.RoundTrip();
+      reloaded.Objects.Add("Probe.LegacyTide", legacy.Objects["Probe.LegacyTide"]);   // even with the legacy key still present
+      Internal(Native(), "SetCurrentWeather", null, weatherService, badtide);
+      var again = NewService(weatherService, history, random, loaded, settings, reloaded);
+      weatherService.Load();
+      Check(Importer.Calls == 1 && again.ImportedBy == null && weatherService.CurrentCycleHazardousWeather is FluidTideWeather restored && restored.Definition.Id == "DeepFrontier.RadioactiveTide"
+        && again.LastTideCycle == 21 && again.Settings.BudgetPercent == 30 && again.SettingsSource == FluidTideSettingsStore.SavedSource, "after a save the import is not repeated");
+      again.Unload();
+      var nothing = NewService(weatherService, history, random, loaded, settings, new MemorySave());
+      Check(nothing.Settings.Tides.All(t => !t.Enabled) && Importer.Calls == 2 && nothing.ImportedBy == null, "a loaded save the importer has nothing for: every tide off");
+      nothing.Unload();
+      var half = new MemorySave();
+      half.Objects.Add("ModdableFluids.Tides", written.Objects["ModdableFluids.Tides"]);
+      var broken = NewService(weatherService, history, random, loaded, settings, half);
+      Throws(() => _ = broken.Settings, "every save writes both", "a save with only one of the two tide singletons is refused");
+      broken.Unload();
+      Check(targets.All(t => Owners(t).Length == 0), "the import scenes leave no patch behind");
+
       // Main menu: the new-game patch installs with its contract check and uninstalls on unload.
       var newGame = new FluidTideNewGameSettings(null, null, null, null, null);
       var customTarget = (MethodInfo)Internal(Native(), "CustomTryGetValidatedGameMode", null);
@@ -167,11 +205,52 @@ namespace ModdableFluids.Tides.Acceptance {
       return "PASS " + checks + " tide checks in Mono " + Environment.Version + " against " + managed;
     }
 
-    private static FluidTideService NewService(HazardousWeatherService weatherService, HazardousWeatherHistory history, IRandomNumberGenerator random, ISceneLoader scene, FluidTideSaveSettings settings) {
-      var service = new FluidTideService(new EmptyLoader(), scene, null, weatherService, history, null, null, random, null, null, null);
-      // Set before first use, so the settings getter does not log through UnityEngine (no engine in this process).
-      typeof(FluidTideService).GetField("_settings", Any).SetValue(service, settings);
+    // The service logs its settings only in Load, which the probe never calls: no engine call in this process.
+    private static FluidTideService NewService(HazardousWeatherService weatherService, HazardousWeatherHistory history, IRandomNumberGenerator random, ISceneLoader scene,
+        FluidTideSaveSettings settings, ISingletonLoader singletons = null) {
+      var service = new FluidTideService(singletons ?? new EmptyLoader(), scene, null, weatherService, history, null, null, random, null, null, null, null);
+      if (singletons == null && service.Settings.ToString() != settings.ToString()) throw new InvalidOperationException("Tide probe: the new game's settings changed: " + service.Settings);
       return service;
+    }
+
+    /// <summary>A compiled importer reading its own legacy singleton from the save's native singleton loader.</summary>
+    private sealed class Importer : IFluidProvider, IFluidTideImporter {
+      internal static int Calls;
+      internal static readonly SingletonKey LegacyKey = new SingletonKey("Probe.LegacyTide");
+      internal static readonly PropertyKey<int> CycleKey = new PropertyKey<int>("Cycle");
+      public string ProviderId => "Probe.Importer";
+      public string OwnerModId => "Probe";
+      public string MinimumApiVersion => "0.1.3";
+      public IReadOnlyCollection<string> RequiredCapabilities => new[] { FluidTideRules.ImportCapability };
+      public void Register(FluidRegistration registration) { }
+      public FluidTideImport ImportTides(FluidTideImportContext context) {
+        Calls++;
+        if (!((ISingletonLoader)context.NativeSingletonLoader).TryGetSingleton(LegacyKey, out var legacy)) return null;
+        int cycle = legacy.Get(CycleKey);
+        return new FluidTideImport("DeepFrontier.RadioactiveTide", cycle, "DeepFrontier.RadioactiveTide", 4, 30,
+          new[] { new FluidTideSettings("DeepFrontier.RadioactiveTide", true, 30, 5, 3, 6) });
+      }
+    }
+
+    /// <summary>Singletons kept as the game keeps them: SerializedObjects behind the native ObjectSaver and ObjectLoader.</summary>
+    private sealed class MemorySave : ISingletonLoader, ISingletonSaver {
+      internal readonly Dictionary<string, SerializedObject> Objects = new Dictionary<string, SerializedObject>(StringComparer.Ordinal);
+      public IObjectLoader GetSingleton(SingletonKey key) => throw new NotSupportedException();
+      public bool TryGetSingleton(SingletonKey key, out IObjectLoader objectLoader) {
+        objectLoader = Objects.TryGetValue(key.Name, out var data) ? new ObjectLoader(data) : null;
+        return objectLoader != null;
+      }
+      IObjectSaver ISingletonSaver.GetSingleton(SingletonKey key) {
+        if (!Objects.TryGetValue(key.Name, out var data)) Objects.Add(key.Name, data = new SerializedObject());
+        return new ObjectSaver(data);
+      }
+      // Through the game's JSON writer and reader, as a save file is.
+      internal MemorySave RoundTrip() {
+        var json = new SerializedObjectReaderWriter(new JsonMerger());
+        var copy = new MemorySave();
+        foreach (var pair in Objects) copy.Objects.Add(pair.Key, json.ReadJson(json.WriteJson(pair.Value)));
+        return copy;
+      }
     }
 
     private static void ForeignPostfix() { }

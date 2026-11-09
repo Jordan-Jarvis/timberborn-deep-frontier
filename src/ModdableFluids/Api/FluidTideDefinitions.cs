@@ -11,6 +11,8 @@ namespace ModdableFluids {
   /// </summary>
   public static class FluidTideRules {
     public const string RegistrationCapability = "ModdableFluids.Tides.Registration";
+    /// <summary>Optional <see cref="IFluidTideImporter"/> providers read another tide system's save state once.</summary>
+    public const string ImportCapability = "ModdableFluids.Tides.Import";
     /// <summary>Cycle 1's weather is chosen while the game loads; a tide can come from cycle 2.</summary>
     public const int EarliestCycle = 2;
     /// <summary>Global cooldown: no tide in the cycle right after any tide.</summary>

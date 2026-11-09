@@ -10,7 +10,9 @@ using Timberborn.GameCycleSystem;
 using Timberborn.GameSound;
 using Timberborn.HazardousWeatherSystem;
 using Timberborn.Persistence;
+using Timberborn.GameSceneLoading;
 using Timberborn.SceneLoading;
+using Timberborn.SettingsSystem;
 using Timberborn.SingletonSystem;
 using Timberborn.TickSystem;
 using Timberborn.WeatherSystem;
@@ -78,8 +80,10 @@ namespace ModdableFluids.Tides.Prototype {
     private readonly ModdableFluidsSceneOwner _sceneOwner;
     private readonly FluidTidePatchSet _patches = new FluidTidePatchSet(OwnerId);
     private readonly Dictionary<string, FluidTideWeather> _weathers = new Dictionary<string, FluidTideWeather>(StringComparer.Ordinal);
+    private readonly ISettings _nativeSettings;
     private FluidTideSaveSettings _settings;
-    private bool _stateLoaded, _hadState;
+    private bool _loaded, _hadState;
+    private string _loadMessage;
     private string _currentCycleTide, _forcedTide;
     private FluidTideDefinition _composing;
 
@@ -88,10 +92,13 @@ namespace ModdableFluids.Tides.Prototype {
     public string LastTideId { get; private set; }
     public int LastTideDuration { get; private set; }
     public string SettingsSource { get; private set; }
+    /// <summary>The provider whose <see cref="IFluidTideImporter"/> supplied this save's tide state, or null.</summary>
+    public string ImportedBy { get; private set; }
 
     public FluidTideService(ISingletonLoader singletons, ISceneLoader sceneLoader, EventBus eventBus, HazardousWeatherService hazardousWeatherService,
         HazardousWeatherHistory history, WeatherService weatherService, GameCycleService gameCycleService, IRandomNumberGenerator random,
-        GameUISoundController sound, ISpecService specs, ModdableFluidsSceneOwner sceneOwner) {
+        GameUISoundController sound, ISpecService specs, ISettings nativeSettings, ModdableFluidsSceneOwner sceneOwner) {
+      _nativeSettings = nativeSettings;
       _singletons = singletons; _sceneLoader = sceneLoader; _eventBus = eventBus; _hazardousWeatherService = hazardousWeatherService; _history = history;
       _weatherService = weatherService; _gameCycleService = gameCycleService; _random = random; _sound = sound; _specs = specs; _sceneOwner = sceneOwner;
       if (Current != null) throw new InvalidOperationException("Moddable Fluids tides: a tide service is already active; the previous Game scene was not unloaded");
@@ -114,15 +121,7 @@ namespace ModdableFluids.Tides.Prototype {
       Current ?? throw new InvalidOperationException("Moddable Fluids tides: the native weather was used outside a Game scene with a tide service");
 
     /// <summary>The game's tide settings, read on first use: the native weather may ask during the Game scene's Load.</summary>
-    public FluidTideSaveSettings Settings {
-      get {
-        if (_settings != null) return _settings;
-        _settings = FluidTideSettingsStore.Resolve(Tides, _singletons, _sceneLoader, out string source, out var notes);
-        SettingsSource = source;
-        Debug.Log("[ModdableFluids] Tide settings from " + source + ": " + _settings + (notes.Count > 0 ? "\n  " + string.Join("\n  ", notes) : ""));
-        return _settings;
-      }
-    }
+    public FluidTideSaveSettings Settings { get { EnsureLoaded(); return _settings; } }
     public bool PatchesInstalled => _patches.Installed;
     /// <summary>The cycle's tide (forecast or in progress), from the native service's current weather.</summary>
     public FluidTideDefinition CurrentCycleTide => (_hazardousWeatherService.CurrentCycleHazardousWeather as FluidTideWeather)?.Definition;
@@ -138,8 +137,8 @@ namespace ModdableFluids.Tides.Prototype {
     }
 
     public void Load() {
-      EnsureStateLoaded();
-      _ = Settings;
+      EnsureLoaded();
+      Debug.Log(_loadMessage);
       _eventBus.Register(this);
     }
 
@@ -163,7 +162,7 @@ namespace ModdableFluids.Tides.Prototype {
         var seen = Tides.Tides.Where(t => _history.GetCyclesCount(t.NativeWeatherId) > 0).Select(t => t.Id + " (" + t.NativeWeatherId + ")").ToArray();
         if (seen.Length > 0)
           throw new InvalidOperationException("Moddable Fluids tides: this save's weather history holds " + string.Join(", ", seen)
-            + ", but the save has no Moddable Fluids tide state: it was played with another tide system. Importing that state is not implemented yet.");
+            + ", but the save has no Moddable Fluids tide state and no installed tide importer (IFluidTideImporter) read it: it was played with another tide system.");
       }
     }
 
@@ -193,14 +192,14 @@ namespace ModdableFluids.Tides.Prototype {
     // Postfix of HazardousWeatherService.Load (Game scene).
     internal void RestoreAfterNativeLoad(HazardousWeatherService native) {
       if (native != _hazardousWeatherService) throw new InvalidOperationException("Moddable Fluids tides: a foreign HazardousWeatherService was loaded");
-      EnsureStateLoaded();
+      EnsureLoaded();
       if (_currentCycleTide != null) FluidTideNative.SetCurrentWeather(native, WeatherOf(_currentCycleTide));
     }
 
     // Postfix of HazardousWeatherRandomizer.GetRandomWeatherForCycle, after the native drought/badtide draw.
     internal IHazardousWeather SelectForCycle(int cycle, IHazardousWeather native) {
       if (native == null) throw new InvalidOperationException("Moddable Fluids tides: the native weather randomizer chose no weather for cycle " + cycle);
-      EnsureStateLoaded();
+      EnsureLoaded();
       string forced = cycle >= FluidTideRules.EarliestCycle ? _forcedTide : null;
       string selected = FluidTideSelection.Select(cycle, LastTideCycle, Settings, forced, new NativeRandom(_random));
       if (forced != null) _forcedTide = null;
@@ -255,18 +254,50 @@ namespace ModdableFluids.Tides.Prototype {
       }
     }
 
-    private void EnsureStateLoaded() {
-      if (_stateLoaded) return;
-      _stateLoaded = true;
-      if (!_singletons.TryGetSingleton(StateKey, out var data)) return;
-      _hadState = true;
-      string current = data.Get(CurrentKey), lastId = data.Get(LastIdKey);
-      LastTideCycle = data.Get(LastCycleKey); LastTideDuration = data.Get(LastDurationKey);
-      _currentCycleTide = current.Length == 0 ? null : current;
-      LastTideId = lastId.Length == 0 ? null : lastId;
+    /// <summary>
+    /// Reads the save's tide state and settings once, at first use (the native weather may ask during the scene's Load):
+    /// <list type="number">
+    /// <item>both of Moddable Fluids' own singletons, written together by every save;</item>
+    /// <item>a loaded save with neither: every IFluidTideImporter is asked once (ModdableFluidsHost.ImportTides); the next
+    /// save writes the own singletons, so the import never repeats;</item>
+    /// <item>otherwise no tide state, and the settings of a new game's mode, or every tide off (FluidTideSettingsStore).</item>
+    /// </list>
+    /// </summary>
+    private void EnsureLoaded() {
+      if (_loaded) return;
+      _loaded = true;
+      bool hasState = _singletons.TryGetSingleton(StateKey, out var data);
+      bool hasSettings = _singletons.TryGetSingleton(FluidTideSettingsStore.Key, out _);
+      if (hasState != hasSettings)
+        throw new InvalidOperationException("Moddable Fluids tides: this save has " + (hasState ? StateKey.Name + " but not " + FluidTideSettingsStore.Key.Name : FluidTideSettingsStore.Key.Name + " but not " + StateKey.Name)
+          + "; every save writes both");
+      bool newGame = _sceneLoader.TryGetSceneParameters<GameSceneParameters>(out var parameters) && parameters.NewGame;
+      if (hasState) {
+        _hadState = true;
+        string current = data.Get(CurrentKey), lastId = data.Get(LastIdKey);
+        SetState(current.Length == 0 ? null : current, data.Get(LastCycleKey), lastId.Length == 0 ? null : lastId, data.Get(LastDurationKey), "saved");
+      } else if (!newGame) {
+        var import = ModdableFluidsEntry.Host.ImportTides(new FluidTideImportContext(Tides, _singletons, _nativeSettings), out string importer);
+        if (import != null) {
+          _hadState = true;
+          ImportedBy = importer;
+          SetState(import.CurrentCycleTideId, import.LastTideCycle, import.LastTideId, import.LastTideDuration, "imported");
+          _settings = import.Settings;
+          SettingsSource = "this save's earlier tide state, imported by " + importer;
+          _loadMessage = "[ModdableFluids] Tide state and settings imported by " + importer + ": " + import;
+          return;
+        }
+      }
+      _settings = FluidTideSettingsStore.Resolve(Tides, _singletons, _sceneLoader, out string source, out var notes);
+      SettingsSource = source;
+      _loadMessage = "[ModdableFluids] Tide settings from " + source + ": " + _settings + (notes.Count > 0 ? "\n  " + string.Join("\n  ", notes) : "");
+    }
+
+    private void SetState(string current, int lastCycle, string lastId, int lastDuration, string what) {
+      _currentCycleTide = current; LastTideCycle = lastCycle; LastTideId = lastId; LastTideDuration = lastDuration;
       if (LastTideCycle < 0 || LastTideDuration < 0 || (LastTideCycle == 0) != (LastTideId == null) || (LastTideCycle == 0 && (LastTideDuration != 0 || _currentCycleTide != null))
           || (LastTideCycle > 0 && LastTideCycle < FluidTideRules.EarliestCycle) || (_currentCycleTide != null && _currentCycleTide != LastTideId))
-        throw new InvalidOperationException("Moddable Fluids tides: the saved tide state is invalid (current " + current + ", last " + lastId + " in cycle " + LastTideCycle + " for " + LastTideDuration + " days)");
+        throw new InvalidOperationException("Moddable Fluids tides: the " + what + " tide state is invalid (current " + current + ", last " + lastId + " in cycle " + LastTideCycle + " for " + LastTideDuration + " days)");
       if (_currentCycleTide != null && !Tides.TryGet(_currentCycleTide, out _))
         throw new InvalidOperationException("Moddable Fluids tides: this save is in a " + _currentCycleTide + ", which no installed mod registers. Enable the mod that adds it.");
     }

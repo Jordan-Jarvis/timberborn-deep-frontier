@@ -349,6 +349,60 @@ internal static class TideScenarios {
       check(new FluidTideSettings(Coffee, false, 0, 0, 0, 0).ToString().EndsWith("off"), "A switched-off tide needs no values");
     });
 
+    scenario("tides: legacy tide-state import (IFluidTideImporter)", () => {
+      check(ModdableFluidsHost.Capabilities.Contains(FluidTideRules.ImportCapability), "Tide import capability listed");
+      FluidTideSettings Radio(int weight = 25) => new(Radioactive, true, weight, 14, 3, 6);
+      FluidTideImport InTide() => new(Radioactive, 20, Radioactive, 4, 25, new[] { Radio() });
+      (ModdableFluidsHost Host, FluidTideImportContext Context) Setup(params Func<FluidTideImportContext, FluidTideImport?>[] importers) {
+        var host = new ModdableFluidsHost();
+        host.RegisterProvider(DeepFrontier()); host.RegisterProvider(MoreFluids());
+        for (int i = 0; i < importers.Length; i++) host.RegisterProvider(new TideImporter("Importer" + i + ".Tides", "Importer" + i, importers[i]));
+        host.Freeze();
+        return (host, new FluidTideImportContext(host.Tides, new object(), new object()));
+      }
+      // Accepted: unlisted tides are off; the context reaches the importer unchanged.
+      FluidTideImportContext? seen = null;
+      var (accepting, context) = Setup(c => { seen = c; return InTide(); });
+      var import = accepting.ImportTides(context, out string? importer);
+      check(importer == "Importer0.Tides" && ReferenceEquals(seen, context) && import.CurrentCycleTideId == Radioactive && import.LastTideCycle == 20 && import.LastTideDuration == 4,
+        "Import accepted from its provider: " + import);
+      check(import.Settings.BudgetPercent == 25 && import.Settings.Tides.Select(t => t.TideId).SequenceEqual(new[] { Radioactive, Coffee, Salt })
+        && import.Settings.Get(Radioactive).Weight == 25 && !import.Settings.Get(Coffee).Enabled && !import.Settings.Get(Salt).Enabled, "Unlisted tides are off in an imported save");
+      var none = Setup(_ => null);
+      check(none.Host.ImportTides(none.Context, out importer) == null && importer == null, "An importer with nothing for the save returns null");
+      var without = Setup();
+      check(without.Host.ImportTides(without.Context, out _) == null, "No importer: nothing imported");
+      var nullThenState = Setup(_ => null, _ => new FluidTideImport(null, 0, null, 0, 30, new[] { Radio(30) }));
+      check(nullThenState.Host.ImportTides(nullThenState.Context, out importer)?.Settings.BudgetPercent == 30 && importer == "Importer1.Tides", "One importer of two returns state");
+      // Validation, every failure naming the importer.
+      void Refused(Func<FluidTideImportContext, FluidTideImport?> importer, string expected, string name) {
+        var (host, ctx) = Setup(importer);
+        try { host.ImportTides(ctx, out _); }
+        catch (InvalidOperationException e) { check(e.Message.Contains(expected) && e.Message.Contains("Importer0"), name + ": " + e.Message); return; }
+        check(false, "Invalid import accepted: " + name);
+      }
+      Refused(_ => new FluidTideImport(null, 0, null, 0, 25, new[] { new FluidTideSettings("Other.Tide", true, 5, 3, 1, 2) }), "Other.Tide", "settings for an unregistered tide");
+      Refused(_ => new FluidTideImport("Other.Tide", 9, "Other.Tide", 3, 25, new[] { Radio() }), "Other.Tide", "an unregistered current tide");
+      Refused(_ => new FluidTideImport(Radioactive, 20, Coffee, 4, 25, new[] { Radio() }), "is not the last tide", "current tide differs from the last tide");
+      Refused(_ => new FluidTideImport(null, 1, Radioactive, 4, 25, new[] { Radio() }), "impossible", "a last tide in cycle 1");
+      Refused(_ => new FluidTideImport(null, 20, Radioactive, 0, 25, new[] { Radio() }), "impossible", "a last tide without a duration");
+      Refused(_ => new FluidTideImport(null, 0, Radioactive, 0, 25, new[] { Radio() }), "cycle 0", "a tide ID without a cycle");
+      Refused(_ => new FluidTideImport(null, 0, null, 0, 0, new[] { Radio() }), "budget", "a zero budget");
+      Refused(_ => new FluidTideImport(null, 0, null, 0, 25, new[] { Radio(0) }), "weight", "a zero weight");
+      Refused(_ => new FluidTideImport(null, 0, null, 0, 25, new[] { new FluidTideSettings(Radioactive, true, 25, 14, 6, 3) }), "longer", "an inverted duration");
+      Refused(_ => new FluidTideImport(null, 0, null, 0, 25, new[] { Radio(), Radio() }), "two settings", "a tide listed twice");
+      Refused(_ => throw new InvalidOperationException("legacy key unreadable"), "legacy key unreadable", "an importer that throws");
+      // Two importers returning state stop loading, naming both.
+      var (both, bothContext) = Setup(_ => InTide(), _ => InTide());
+      bool named = false;
+      try { both.ImportTides(bothContext, out _); } catch (FluidSaveException e) { named = e.Message.Contains("Importer0.Tides") && e.Message.Contains("Importer1.Tides"); }
+      check(named, "Two importers returning state are refused, naming both");
+      Rejects(() => new ModdableFluidsHost().ImportTides(bothContext, out _), "import before the registry froze");
+      Rejects(() => accepting.ImportTides(bothContext, out _), "a context of another registry");
+      // Not repeated after a save: the tide service asks only when the save has neither of its own singletons, and every
+      // save writes both. The Mono probe (tools/compile-check/fluid-tides) runs that round trip through the game's persistence.
+    });
+
     scenario("tides: C′ long-run shares match tools/model_tide_selection.py", () => {
       // Exact values printed by tools/model_tide_selection.py (implemented C′ rows).
       var expected = new Dictionary<(string, string), Dictionary<string, double>> {
@@ -381,6 +435,18 @@ internal static class TideScenarios {
       }
       observations["tideLongRunShares"] = table;
     });
+  }
+
+  /// <summary>A compiled provider that only imports tide state.</summary>
+  internal sealed class TideImporter : IFluidProvider, IFluidTideImporter {
+    private readonly Func<FluidTideImportContext, FluidTideImport?> _import;
+    public string ProviderId { get; }
+    public string OwnerModId { get; }
+    public string MinimumApiVersion => "0.1.3";
+    public IReadOnlyCollection<string> RequiredCapabilities => new[] { FluidTideRules.ImportCapability };
+    public TideImporter(string id, string owner, Func<FluidTideImportContext, FluidTideImport?> import) { ProviderId = id; OwnerModId = owner; _import = import; }
+    public void Register(FluidRegistration registration) { }
+    public FluidTideImport ImportTides(FluidTideImportContext context) => _import(context)!;
   }
 
   /// <summary>A reflected provider: the registration context is reached by method name, with primitives only.</summary>

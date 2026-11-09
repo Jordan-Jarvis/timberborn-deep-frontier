@@ -169,17 +169,63 @@ The eight getters are small enough to inline. They rely on Harmony disabling inl
 
 `PostLoad` checks the restored tide against the native service: the same tide, cycle and duration.
 
-A game's settings come from, in order:
+Every save writes both singletons; a save with only one of them is refused. The state and settings are read once, at first use, because the native weather may ask during the scene's Load. They come from, in order:
 
 1. **The save's own copy.**
    - A tide registered after the save was made is off in that save.
    - A saved tide that no installed mod registers stops loading, naming it.
-2. **A new game's mode.**
+2. **An importer.** A loaded save (not a new game) with neither singleton asks every `IFluidTideImporter` once (see [Importing another tide system's state](#importing-another-tide-systems-state)).
+3. **A new game's mode.**
    - The custom mode's tide rows, as a `FluidTideGameModeSpec` on its blueprint.
    - Any other mode derives its values from its own weather. A mode's own spec that leaves out a tide also derives that tide.
-3. **A save made without tide settings.** Every tide is off. The mode such a save started from is not stored.
+4. **A loaded save without tide settings that no importer reads.** Every tide is off. The mode such a save started from is not stored.
 
-A save without Moddable Fluids tide state whose native history already contains a registered tide's weather ID was played under another tide system, such as Deep Frontier's own. Its loading is refused: importing that state is not implemented.
+A save without tide state whose native history already contains a registered tide's weather ID, and that no importer read, was played under another tide system. Its loading is refused.
+
+### Importing another tide system's state
+
+Capability `ModdableFluids.Tides.Import`. A compiled provider can also implement `IFluidTideImporter`:
+
+```csharp
+public interface IFluidTideImporter {
+  FluidTideImport ImportTides(FluidTideImportContext context);
+}
+```
+
+**When it is asked.** The tide service calls `ModdableFluidsHost.ImportTides` once per scene, before it resolves settings or restores the cycle's weather. That happens only for a loaded save (not a new game) that has neither `ModdableFluids.Tides` nor `ModdableFluids.TideSettings`. The host asks every importer in provider order.
+
+**What it is given.** `FluidTideImportContext` holds:
+
+- `Tides`, the frozen tide registry;
+- `NativeSingletonLoader`, the save's `Timberborn.WorldPersistence.ISingletonLoader`, from which the importer reads its own singletons;
+- `NativeSettings`, the game's `Timberborn.SettingsSystem.ISettings`, where older mod settings were stored.
+
+Both native services are passed as `object`, so the API assembly stays free of game types.
+
+**What it returns.** Null when the save holds nothing for this importer. Otherwise a `FluidTideImport(currentCycleTideId, lastTideCycle, lastTideId, lastTideDuration, budgetPercent, tides)`, where `tides` is a list of `FluidTideSettings`.
+
+**Validation.** The constructor validates the state as a saved state is validated:
+
+- no last tide means cycle 0, no ID and no duration;
+- a last tide is in cycle 2 or later and lasted at least a day;
+- the current cycle's tide, if any, is the last tide.
+
+`FluidTideSaveSettings` and `FluidTideSettings` check the budget, weights, cycles without, durations and duplicates. Then:
+
+- **Importer failures.** An importer that throws, including on these checks, stops loading with its provider named.
+- **Unknown tides.** A current, last or listed tide that no installed mod registers stops loading with a `FluidSaveException` naming the importer.
+- **Two importers.** If two importers return state, loading stops naming both.
+- **Unlisted tides.** Registered tides the import does not list are off in the save.
+
+**Afterwards.** The import replaces steps 3 and 4 above. The native Load postfix restores the imported current tide, and `PostLoad` checks it against the native cycle and duration. `FluidTideService.ImportedBy` names the importer. The next save writes Moddable Fluids' own singletons, so a save is imported at most once.
+
+**Deep Frontier's mapping** is implemented by Deep Frontier, not here:
+
+| Deep Frontier key | Import field |
+| --- | --- |
+| `DeepFrontier.RadioactiveTide`: `CurrentCycleIsTide`, `LastTideCycle`, `LastTideDuration` | current and last tide `DeepFrontier.RadioactiveTide` |
+| `DeepFrontier.RadioactiveTideSettings`: `Enabled`, `CyclesWithoutTide`, `ChancePercent`, `MinDurationDays`, `MaxDurationDays` | settings, with budget = weight = `ChancePercent` |
+| Saves from 0.8.3 and older | the former mod-setting keys, through `NativeSettings` |
 
 ### New-game screen
 
@@ -215,7 +261,8 @@ The intended adapter is a Moddable Timberborn `.optional` assembly, like Deep Fr
   - registration, freeze validation and the reflection route;
   - per-mode values, including Deep Frontier's Chill-mode parity and the vanilla anchors against the blueprints;
   - the selection draws;
-  - the exact long-run shares above.
+  - the exact long-run shares above;
+  - imports: an accepted import with unlisted tides off, null imports, every validation failure with the importer named, and two importers refused by name.
 - **Compile check** (`tools/compile-check/fluid-tides`). Runtime and Tides compiled together as `ModdableFluids.RuntimePrototype`, against the shipped (not publicized) game assemblies.
 - **Mono probe** (`tools/compile-check/fluid-tides/probe`, run by `run_tides_mono.py`). It runs in the installed game's Mono, in a separate process, with the shipped Harmony, and covers:
   - the startup contract and install/uninstall per scene;
@@ -225,12 +272,13 @@ The intended adapter is a Moddable Timberborn `.optional` assembly, like Deep Fr
   - the UI helper prefixes, including a caller compiled after patching;
   - the new-game patch;
   - new-game, custom-mode, partial-spec and no-settings resolution;
-  - the fog check.
+  - the fog check;
+  - a legacy import read from the save's own singleton loader and restored by the native Load, then saved through the game's `ObjectSaver` and JSON writer and reloaded without asking the importer again;
+  - refusal of a save with only one of the two tide singletons.
 
 ## Not done yet
 
 - **In-game runs.** Nothing here has run in the game.
 - **Weather Station.** There is no mode per registered tide; the native station signals only drought and badtide.
 - **Moddable Weathers adapter.** Refused visibly; see above.
-- **Importing another tide system's state.** Deep Frontier's `DeepFrontier.RadioactiveTide` and `DeepFrontier.RadioactiveTideSettings` cannot be imported yet, so such a save is refused.
 - **Source composition by type.** The world service's source resolver composes every source as the native water source type. A tide's composition therefore also reaches source types that are not tide-overridable, while the strength modifier already classifies each source by its template.

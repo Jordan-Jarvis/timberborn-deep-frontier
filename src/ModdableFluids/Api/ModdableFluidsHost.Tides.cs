@@ -13,6 +13,7 @@ namespace ModdableFluids {
 
     static partial void AddExtensionCapabilities(List<string> capabilities) {
       capabilities.Add(FluidTideRules.RegistrationCapability);
+      capabilities.Add(FluidTideRules.ImportCapability);
     }
 
     /// <summary>The frozen tides, in ordinal ID order; empty when no provider registered one.</summary>
@@ -23,6 +24,41 @@ namespace ModdableFluids {
           return _tides ?? throw new InvalidOperationException("The Moddable Fluids registry is not frozen yet; tides are known once it freezes");
         }
       }
+    }
+
+    /// <summary>
+    /// Asks every <see cref="IFluidTideImporter"/>, in provider order, for a save's tide state (see that interface). Returns
+    /// null when none has any, else the one import with every registered tide listed and <paramref name="importerId"/> set to
+    /// its provider. An importer that throws stops loading naming it; unknown tide IDs and two importers returning state stop
+    /// loading with a <see cref="FluidSaveException"/>.
+    /// </summary>
+    public FluidTideImport ImportTides(FluidTideImportContext context, out string importerId) {
+      if (context == null) throw new ArgumentNullException(nameof(context));
+      importerId = null;
+      List<ProviderEntry> importers;
+      lock (_gate) {
+        if (_state != State.Frozen) throw new InvalidOperationException("Tide state is imported after the registry froze");
+        if (!ReferenceEquals(context.Tides, _tides)) throw new ArgumentException("The import context belongs to a different tide registry");
+        importers = _providers.Where(e => e.Provider is IFluidTideImporter).ToList();
+      }
+      FluidTideImport found = null;
+      ProviderEntry owner = null;
+      foreach (var entry in importers) {
+        string label = "Provider " + entry.Id + " (mod " + entry.Owner + ")";
+        FluidTideImport import;
+        try { import = ((IFluidTideImporter)entry.Provider).ImportTides(context); }
+        catch (FluidSaveException) { throw; }
+        catch (Exception e) { throw new InvalidOperationException(label + " failed to import this save's tide state: " + e.Message, e); }
+        if (import == null) continue;
+        if (owner != null)
+          throw new FluidSaveException(new[] { "Providers " + owner.Id + " (mod " + owner.Owner + ") and " + entry.Id + " (mod " + entry.Owner + ") both import tide state for this save; only one may" });
+        var problems = new List<string>();
+        found = import.Complete(context.Tides, label, problems);
+        if (found == null) throw new FluidSaveException(problems);
+        owner = entry;
+      }
+      importerId = owner?.Id;
+      return found;
     }
 
     partial void BeginFreezeExtensions() {
