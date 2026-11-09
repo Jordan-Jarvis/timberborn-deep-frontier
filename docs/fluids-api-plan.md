@@ -187,7 +187,7 @@ To implement D:
 3. Among the tides whose roll succeeded, choose one with a single weighted draw over their chances, in ordinal tide-ID order.
 4. Record the chosen tide's ID in the native history.
 
-If the user prefers constant difficulty, choose C′.
+The user chose constant difficulty: C′ (below).
 
 **Decision (user, 2026-11-09, revised): policy C′, a shared hazard budget.** The first reading of "define hazard chances" as policy D was corrected: tides split one shared hazard budget, so installing more tide mods does not make games harder, and vanilla-only and Deep-Frontier-only games stay exactly as today. The budget defaults to the largest installed tide chance for the mode; each tide's weight defaults to its own chance; no tide runs in the cycle after any tide. The budget and each tide's weight are rows on the new-game screen. Implemented in Moddable Fluids 0.1.4 ([fluids-tides.md](fluids-tides.md)); the harness reproduces the Markov model in [model_tide_selection.py](../tools/model_tide_selection.py) to 1e-9, and a single installed tide makes exactly Deep Frontier's random draws.
 
@@ -283,13 +283,13 @@ Status on 2026-11-09:
 
    Details are in the [native adapter document](fluids-native-adapter.md). Activation stays limited to disposable worlds until persistence runs in game.
 2. **Done: the extraction inventory.** [fluids-extraction-inventory.md](fluids-extraction-inventory.md) lists every water, weather, rendering, sensor and save hook. For each it gives the startup checks, lifecycle, optional assemblies, direct `RadiationSimulation` consumers and proposed owner. It also records the native-safety audit's later Deep Frontier changes.
-3. **Done as contract 0.1, with the tide policy awaiting the user.** The [0.1 contract](fluids-api-contract.md) covers:
+3. **Done as contract 0.1; the tide policy is decided (C′).** The [0.1 contract](fluids-api-contract.md) covers:
    - stable IDs and deterministic handles;
    - compiled and reflected providers, and scene and state stages;
    - discovery with version and capability reporting, and refusal of duplicate copies;
    - the optional-bridge rules, verified with the API absent.
 
-   The [combined tide-selection proposal](#combined-tide-selection-proposal) recommends policy D and waits for the user's choice. The scheduler hooks now verify the whole native contract at startup and refuse foreign patches on the methods they replace.
+   The user chose policy C′, a shared hazard budget ([decision](#combined-tide-selection-proposal)); it is implemented in 0.1.4. The scheduler hooks now verify the whole native contract at startup and refuse foreign patches on the methods they replace.
 4. **Partly done.** Built:
    - the synthetic consumer packages (reflection-only and compiled), built officially and kept out of the Mods folder;
    - persistent component identities;
