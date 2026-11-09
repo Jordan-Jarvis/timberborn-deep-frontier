@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
+using Timberborn.AutomationBuildings;
 using Timberborn.BlueprintSystem;
 using Timberborn.Common;
 using Timberborn.GameCycleSystem;
@@ -318,7 +319,24 @@ namespace ModdableFluids.Tides.Prototype {
       harmony.Patch(FluidTideNative.UiSpecification(), prefix: new HarmonyMethod(typeof(FluidTidePatches), nameof(UiSpecificationPrefix)));
       foreach (var getter in FluidTideNative.UiGetters()) harmony.Patch(getter, prefix: new HarmonyMethod(typeof(FluidTidePatches), nameof(UiTextPrefix)));
       harmony.Patch(FluidTideNative.StartSound(), prefix: new HarmonyMethod(typeof(FluidTidePatches), nameof(StartSoundPrefix)));
+      harmony.Patch(FluidTideNative.StationSample(), prefix: new HarmonyMethod(typeof(FluidTidePatches), nameof(StationSamplePrefix)));
+      harmony.Patch(FluidTideNative.StationUpdateOutput(), prefix: new HarmonyMethod(typeof(FluidTidePatches), nameof(StationOutputPrefix)));
+      harmony.Patch(FluidTideNative.FragmentInitialize(), postfix: new HarmonyMethod(typeof(FluidTidePatches), nameof(FragmentInitializePostfix)));
+      harmony.Patch(FluidTideNative.FragmentUpdate(), postfix: new HarmonyMethod(typeof(FluidTidePatches), nameof(FragmentUpdatePostfix)));
     }
+
+    // Weather Station: sample the cycle's tide just before the native sample; while a tide mode is on, set the output
+    // instead of the native mode switch (one SetState per update, as native). The panel gets one radio button per tide.
+    private static void StationSamplePrefix(WeatherStation __instance) =>
+      FluidTideWeatherStation.Of(__instance).Sample(FluidTideService.RequireCurrent().CurrentCycleTide?.Id);
+    private static bool StationOutputPrefix(WeatherStation __instance) {
+      var station = FluidTideWeatherStation.Of(__instance);
+      if (station.SignalledTide == null) return true;
+      station.SetOutput(FluidTideNative.WithinActivationTimeHazardous(__instance));
+      return false;
+    }
+    private static void FragmentInitializePostfix(object __instance) => FluidTideStationPanel.Initialize(__instance, FluidTideService.RequireCurrent().Tides);
+    private static void FragmentUpdatePostfix(object __instance) => FluidTideStationPanel.Update(__instance);
 
     private static void SelectionPostfix(int cycle, ref IHazardousWeather __result) => __result = FluidTideService.RequireCurrent().SelectForCycle(cycle, __result);
     private static void RestorePostfix(HazardousWeatherService __instance) => FluidTideService.RequireCurrent().RestoreAfterNativeLoad(__instance);

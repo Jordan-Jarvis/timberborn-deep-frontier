@@ -132,6 +132,9 @@ One adapter covers every tide, generalizing Deep Frontier's radioactive tide pat
 | `HazardousWeatherUIHelper.UpdateCurrentUISpecification()` | skipping prefix while a tide is current | avoids the native throw |
 | eight `HazardousWeatherUIHelper` string getters | prefixes while a tide is current | the tide's loc keys and three marker classes |
 | `HazardousWeatherSoundPlayer.OnHazardousWeatherStarted` | prefix for a tide | the tide's native alarm (badtide or drought) |
+| `WeatherStation.Sample()` | prefix | samples the cycle's tide just before the native sample |
+| `WeatherStation.UpdateOutputState()` (private) | skipping prefix while a tide mode is on | the tide mode's output |
+| `WeatherStationFragment.InitializeFragment()` and `UpdateFragment()` (internal type) | postfixes | one radio button per tide, exactly one button selected |
 
 `FluidTideUi` turns the marker classes into inline styles with the current tide's sprites, and adds the tide's description line to the banner. This is Deep Frontier's `RadioactiveTideUi`, made generic.
 
@@ -245,11 +248,66 @@ A postfix on `CustomNewGameModeController.TryGetValidatedGameMode` attaches the 
 
 The row labels are Moddable Fluids keys in `src/ModdableFluids/Tides/Localizations/enUS.csv`.
 
+### Weather Station
+
+Capability `ModdableFluids.Tides.WeatherStations`. This is Deep Frontier's radioactive-tide mode, made generic for every registered tide.
+
+**Why it needs patches.** The native `WeatherStationMode` is a closed enum `{Temperate, Drought, Badtide}`. The station saves it, and `UpdateOutputState` throws for any other value. `Sample` tests the cycle's weather only with `is DroughtWeather` and `is BadtideWeather`. So a tide cannot be an enum value.
+
+**The decorator.** `FluidTideWeatherStation` is added to every `WeatherStation` by a `TemplateModule` decorator. It holds the chosen tide and saves it by tide ID: component `ModdableFluids.WeatherStationTide`, property `Tide`, empty for the native mode.
+
+**While a tide mode is on:**
+
+- the native `Mode` keeps the player's previous native choice, so removing the tide system leaves a working station;
+- the output is (the cycle's weather is that tide) and the native private `WithinActivationTimeHazardous`, as for the native Drought and Badtide modes, early activation included;
+- there is one `Automator.SetState` per update, as native.
+
+**The panel.** The internal `WeatherStationFragment` gets one native radio toggle, with a button per registered tide in ordinal order, made with the public `RadioToggleFactory.CreateLocalizable` in the native `ModeRadioToggleContainer`. Exactly one button is selected. Clicking a native mode button returns the station to its native mode.
+
+**Startup contract.** `FluidTideNative.VerifyGame` checks:
+
+- the enum's exact values, and that `UpdateOutputState` is private;
+- that `Sample` reads `CurrentCycleHazardousWeather` and calls `UpdateOutputState`;
+- that `UpdateOutputState` calls `Automator.SetState(bool)` and `WithinActivationTimeHazardous`;
+- the fragment's container name, its `CreateLocalizable<WeatherStationMode>` call, `RadioToggle.Update(int)` and the four private fields;
+- the inline limits.
+
+The patches install and uninstall with the other tide patches, and foreign owners are refused the same way. Deep Frontier's shipped `DeepFrontier.WeatherStation` patches are therefore refused, so its flagged build must drop them.
+
+**Loading.**
+
+- A station saved with an unregistered tide stops loading, naming it.
+- A station saved without the component asks every `IFluidTideStationImporter` once: `string ImportStationTide(FluidTideRegistry tides, object nativeEntityLoader)`, given the station's `IEntityLoader`, through `ModdableFluidsHost.ImportStationTide`.
+- An unregistered answer, a throwing importer or two answering importers stop loading.
+- The next save writes the station's own component.
+- Deep Frontier's mapping: component `DeepFrontier.WeatherStationRadioactiveTide`, property `SignalsRadioactiveTide` true, becomes `DeepFrontier.RadioactiveTide`.
+
 ### Moddable Weathers
 
-Not implemented. Moddable Weathers replaces the native hazardous weather system and transpiles the targets above into throws. With its assembly loaded and any tide registered, the configurator stops the scene with a message naming the tides. The check compares assembly names only and references no Moddable Weathers type.
+Not implemented. With Moddable Weathers loaded and any tide registered, the configurator stops the scene with a message naming the tides. The check compares assembly names only and references no Moddable Weathers type. Moddable Weathers replaces the native hazardous weather system and transpiles the native targets above into throws.
 
-The intended adapter is a Moddable Timberborn `.optional` assembly, like Deep Frontier's. It would convert all registered tides to Moddable Weathers weights once, so that each stage's tide total is the budget, split by weight, with the global cooldown. That gives the same C′ shares.
+**Design of an adapter** (Moddable Weathers 11.0.0, from Deep Frontier's `DeepFrontier.ModdableWeathers` bridge):
+
+- **Packaging.** An assembly `ModdableFluids.ModdableWeathers`, compiled against Moddable Weathers, shipped as `Scripts/ModdableFluids.ModdableWeathers.dll.ModdableWeathers.optional`. Moddable Timberborn's `OptionalModsLoader`, which Moddable Weathers requires, loads it only when Moddable Weathers is enabled. `ModCodeStarter` never enumerates it. The Moddable Fluids build stages it like Deep Frontier's build stages its bridges (a build-script change for the lead).
+- **One weather object per tide.** It would be an `IModdableHazardousWeather` (via `ModdableWeatherBase`) whose `Id` is the tide's native weather ID, multi-bound once per registered tide. `BindWeather<T, TSettings>` binds by type, and tides are only known at run time, so the adapter needs a binding by instance, or one generated type per tide. That has to be confirmed against Moddable Weathers' registry first.
+- **Settings.** The save's settings stay in `ModdableFluids.TideSettings`, not in Moddable Weathers' per-type settings. Its Weather Settings dialog lists a type's attributed properties, and cannot show one row per registered tide.
+- **Selection, C′.** Moddable Weathers draws each hazardous stage by integer weights.
+  - Once per stage, the adapter sums the other enabled hazardous weathers' weights `O`, asking only non-tide weathers. It caches `O` for the stage, so the tides never call each other.
+  - Each eligible tide then gets `O × B / (1 − B) × wᵢ / W`, rounded to an integer of at least 1, where `B` is the budget, `wᵢ` the tide's weight and `W` the eligible tides' total weight.
+  - A tide gets weight 0 in the cycle after any tide (read from Moddable Weathers' `WeatherHistoryService`), before its cycles without, and after a tide earlier in the same cycle.
+  - With `O = 0`, only tides can occur and the tide total is the whole stage.
+- **Duration.** `GetDuration` draws uniformly from the save's settings, as the native adapter does.
+- **Source effect.** While a tide's stage is active (its `Start` and `End`), the service owns the source composition, and the strength modifier uses that stage instead of the native weather.
+- **Presentation.** Moddable Weathers draws its panels and sound from a `ModdableWeatherSpecs/<weather ID>.blueprint.json` per tide, which each content mod would ship. The native UI, sound, selection and restore patches are not installed under Moddable Weathers.
+- **Weather Station.** Moddable Weathers does not patch the station. Its `HazardousWeatherService` returns the current or next hazardous stage's weather, so the station decorator works unchanged.
+
+**Risks.** Each of these is why the refusal stays for now:
+
+- **Weights.** Integer weights make the shares approximate. Deep Frontier measured under half a percentage point with the default weights.
+- **Interference.** Another mod's weather that computes its weight from others' can still recurse into ours.
+- **Bindings.** Per-tide binding may need generated types.
+- **Coupling.** The adapter couples to Moddable Weathers' unversioned public API (`ModdableWeatherBase`, `WeatherCycleStageDecision`, `WeatherHistoryService`). It needs its own startup contract checks.
+- **No probe yet.** None of this can be checked without a Mono probe against the installed Moddable Weathers 11.0.0.
 
 ### Development
 
@@ -262,7 +320,8 @@ The intended adapter is a Moddable Timberborn `.optional` assembly, like Deep Fr
   - per-mode values, including Deep Frontier's Chill-mode parity and the vanilla anchors against the blueprints;
   - the selection draws;
   - the exact long-run shares above;
-  - imports: an accepted import with unlisted tides off, null imports, every validation failure with the importer named, and two importers refused by name.
+  - imports: an accepted import with unlisted tides off, null imports, every validation failure with the importer named, and two importers refused by name;
+  - Weather Station imports: an accepted answer, no answer, an unregistered tide, two answers and a throwing importer.
 - **Compile check** (`tools/compile-check/fluid-tides`). Runtime and Tides compiled together as `ModdableFluids.RuntimePrototype`, against the shipped (not publicized) game assemblies.
 - **Mono probe** (`tools/compile-check/fluid-tides/probe`, run by `run_tides_mono.py`). It runs in the installed game's Mono, in a separate process, with the shipped Harmony, and covers:
   - the startup contract and install/uninstall per scene;
@@ -273,12 +332,13 @@ The intended adapter is a Moddable Timberborn `.optional` assembly, like Deep Fr
   - the new-game patch;
   - new-game, custom-mode, partial-spec and no-settings resolution;
   - the fog check;
+  - the Weather Station contract (16 patched targets in all), the private activation time read on a real `WeatherStation`, the panel's private fields, and the station decorator's output rule;
+  - the station's tide saved by ID through the game's persistence, an unregistered saved tide refused, and another tide system's station mode imported once;
   - a legacy import read from the save's own singleton loader and restored by the native Load, then saved through the game's `ObjectSaver` and JSON writer and reloaded without asking the importer again;
   - refusal of a save with only one of the two tide singletons.
 
 ## Not done yet
 
 - **In-game runs.** Nothing here has run in the game.
-- **Weather Station.** There is no mode per registered tide; the native station signals only drought and badtide.
-- **Moddable Weathers adapter.** Refused visibly; see above.
+- **Moddable Weathers adapter.** Refused visibly; a design is above.
 - **Source composition by type.** The world service's source resolver composes every source as the native water source type. A tide's composition therefore also reaches source types that are not tide-overridable, while the strength modifier already classifies each source by its template.

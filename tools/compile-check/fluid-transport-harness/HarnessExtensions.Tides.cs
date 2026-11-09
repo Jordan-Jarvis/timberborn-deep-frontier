@@ -399,6 +399,30 @@ internal static class TideScenarios {
       check(named, "Two importers returning state are refused, naming both");
       Rejects(() => new ModdableFluidsHost().ImportTides(bothContext, out _), "import before the registry froze");
       Rejects(() => accepting.ImportTides(bothContext, out _), "a context of another registry");
+      // Weather Station modes of another tide system (IFluidTideStationImporter).
+      check(ModdableFluidsHost.Capabilities.Contains(FluidTideRules.WeatherStationCapability), "Weather Station capability listed");
+      (ModdableFluidsHost Host, object Entity) Stations(params Func<object, string?>[] importers) {
+        var host = new ModdableFluidsHost();
+        host.RegisterProvider(DeepFrontier()); host.RegisterProvider(MoreFluids());
+        for (int i = 0; i < importers.Length; i++) host.RegisterProvider(new StationImporter("Station" + i + ".Tides", "Station" + i, importers[i]));
+        host.Freeze();
+        return (host, new object());
+      }
+      object? entitySeen = null;
+      var (stationHost, entity) = Stations(e => { entitySeen = e; return Radioactive; });
+      check(stationHost.ImportStationTide(entity, out string? stationImporter) == Radioactive && stationImporter == "Station0.Tides" && ReferenceEquals(entitySeen, entity), "A station's tide imported");
+      var quiet = Stations(_ => null, _ => null);
+      check(quiet.Host.ImportStationTide(quiet.Entity, out stationImporter) == null && stationImporter == null, "No station importer answers: the native mode");
+      void StationRefused(string expected, string name, params Func<object, string?>[] importers) {
+        var (host, e) = Stations(importers);
+        try { host.ImportStationTide(e, out _); }
+        catch (InvalidOperationException ex) { check(ex.Message.Contains(expected), name + ": " + ex.Message); return; }
+        check(false, "Invalid station import accepted: " + name);
+      }
+      StationRefused("Other.Tide", "a station signalling an unregistered tide", _ => "Other.Tide");
+      StationRefused("Station1.Tides", "two station importers answering", _ => Coffee, _ => Salt);
+      StationRefused("Station0.Tides", "a throwing station importer", _ => throw new InvalidOperationException("unreadable"));
+      Rejects(() => new ModdableFluidsHost().ImportStationTide(new object(), out _), "station import before the registry froze");
       // Not repeated after a save: the tide service asks only when the save has neither of its own singletons, and every
       // save writes both. The Mono probe (tools/compile-check/fluid-tides) runs that round trip through the game's persistence.
     });
@@ -435,6 +459,18 @@ internal static class TideScenarios {
       }
       observations["tideLongRunShares"] = table;
     });
+  }
+
+  /// <summary>A compiled provider that only imports Weather Station tide modes.</summary>
+  internal sealed class StationImporter : IFluidProvider, IFluidTideStationImporter {
+    private readonly Func<object, string?> _import;
+    public string ProviderId { get; }
+    public string OwnerModId { get; }
+    public string MinimumApiVersion => "0.1.3";
+    public IReadOnlyCollection<string> RequiredCapabilities => new[] { FluidTideRules.WeatherStationCapability };
+    public StationImporter(string id, string owner, Func<object, string?> import) { ProviderId = id; OwnerModId = owner; _import = import; }
+    public void Register(FluidRegistration registration) { }
+    public string ImportStationTide(FluidTideRegistry tides, object nativeEntityLoader) => _import(nativeEntityLoader)!;
   }
 
   /// <summary>A compiled provider that only imports tide state.</summary>

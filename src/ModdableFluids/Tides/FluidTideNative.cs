@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
+using Timberborn.Automation;
+using Timberborn.AutomationBuildings;
 using Timberborn.GameSound;
 using Timberborn.HazardousWeatherSystem;
 using Timberborn.HazardousWeatherSystemUI;
@@ -45,6 +47,55 @@ namespace ModdableFluids.Tides.Prototype {
       var type = AccessTools.TypeByName(SoundPlayerType) ?? throw Changed(SoundPlayerType);
       return Method(type, "OnHazardousWeatherStarted", typeof(void), typeof(HazardousWeatherStartedEvent));
     }
+    // Weather Station (Timberborn.AutomationBuildings): the mode is a closed enum, sampled with `is DroughtWeather / BadtideWeather`.
+    internal const string StationModeContainer = "ModeRadioToggleContainer";
+    private const string FragmentType = "Timberborn.AutomationBuildingsUI.WeatherStationFragment, Timberborn.AutomationBuildingsUI";
+    internal static MethodInfo StationSample() => Method(typeof(WeatherStation), nameof(WeatherStation.Sample), typeof(void));
+    internal static MethodInfo StationUpdateOutput() => Method(typeof(WeatherStation), "UpdateOutputState", typeof(void));
+    internal static Type StationFragment() => Type.GetType(FragmentType) ?? throw Changed(FragmentType);
+    internal static MethodInfo FragmentInitialize() => Method(StationFragment(), "InitializeFragment", typeof(VisualElement));
+    internal static MethodInfo FragmentUpdate() => Method(StationFragment(), "UpdateFragment", typeof(void));
+
+    // The station's private WithinActivationTimeHazardous (native early activation included) and the fragment's fields.
+    private static Func<WeatherStation, bool> _withinHazardous;
+    private static FieldInfo _fragmentRoot, _fragmentFactory, _fragmentModes, _fragmentStation;
+    internal static bool WithinActivationTimeHazardous(WeatherStation station) => (_withinHazardous ?? throw Changed("a verified WeatherStation contract"))(station);
+    internal static VisualElement FragmentRoot(object fragment) => (VisualElement)_fragmentRoot.GetValue(fragment);
+    internal static RadioToggleFactory FragmentFactory(object fragment) => (RadioToggleFactory)_fragmentFactory.GetValue(fragment);
+    internal static RadioToggle FragmentModes(object fragment) => (RadioToggle)_fragmentModes.GetValue(fragment);
+    internal static WeatherStation FragmentStation(object fragment) => (WeatherStation)_fragmentStation.GetValue(fragment);
+
+    private static MethodInfo[] VerifyStation() {
+      var names = Enum.GetNames(typeof(WeatherStationMode));
+      if (!names.SequenceEqual(new[] { "Temperate", "Drought", "Badtide" })) throw Changed("WeatherStationMode { Temperate, Drought, Badtide }, found { " + string.Join(", ", names) + " }");
+      var sample = StationSample();
+      var update = StationUpdateOutput();
+      if (update.IsPublic) throw Changed("WeatherStation.UpdateOutputState() private");
+      var currentWeather = typeof(HazardousWeatherService).GetProperty(nameof(HazardousWeatherService.CurrentCycleHazardousWeather))?.GetGetMethod();
+      if (currentWeather == null || !Calls(sample, currentWeather) || !Calls(sample, update)) throw Changed("WeatherStation.Sample reading the cycle's hazardous weather, then calling UpdateOutputState");
+      var setState = typeof(Automator).GetMethod(nameof(Automator.SetState), new[] { typeof(bool) });
+      var within = typeof(WeatherStation).GetProperty("WithinActivationTimeHazardous", Instance)?.GetGetMethod(true);
+      if (setState == null || within == null || within.ReturnType != typeof(bool) || !Calls(update, setState) || !Calls(update, within))
+        throw Changed("WeatherStation.UpdateOutputState setting Automator.SetState(bool) from WithinActivationTimeHazardous : bool");
+      _withinHazardous = (Func<WeatherStation, bool>)Delegate.CreateDelegate(typeof(Func<WeatherStation, bool>), within);
+      var fragment = StationFragment();
+      var initialize = FragmentInitialize();
+      var refresh = FragmentUpdate();
+      if (!LoadsString(initialize, StationModeContainer)) throw Changed("WeatherStationFragment.InitializeFragment building its mode buttons in " + StationModeContainer);
+      var generic = typeof(RadioToggleFactory).GetMethods(BindingFlags.Instance | BindingFlags.Public)
+        .SingleOrDefault(m => m.Name == nameof(RadioToggleFactory.CreateLocalizable) && m.IsGenericMethodDefinition);
+      if (generic == null || !Calls(initialize, generic.MakeGenericMethod(typeof(WeatherStationMode)))) throw Changed("WeatherStationFragment.InitializeFragment calling RadioToggleFactory.CreateLocalizable<WeatherStationMode>");
+      var plain = typeof(RadioToggleFactory).GetMethod(nameof(RadioToggleFactory.CreateLocalizable), new[] { typeof(IEnumerable<string>), typeof(VisualElement) });
+      if (plain?.ReturnType != typeof(RadioToggle)) throw Changed("RadioToggleFactory.CreateLocalizable(IEnumerable<string>, VisualElement) : RadioToggle");
+      if (!Calls(refresh, typeof(RadioToggle).GetMethod(nameof(RadioToggle.Update), new[] { typeof(int) }))) throw Changed("WeatherStationFragment.UpdateFragment selecting with RadioToggle.Update(int)");
+      if (typeof(RadioToggle).GetEvent(nameof(RadioToggle.RadioButtonSelected))?.EventHandlerType != typeof(EventHandler<int>)) throw Changed("RadioToggle.RadioButtonSelected : EventHandler<int>");
+      _fragmentRoot = Field(fragment, "_root", typeof(VisualElement));
+      _fragmentFactory = Field(fragment, "_radioToggleFactory", typeof(RadioToggleFactory));
+      _fragmentModes = Field(fragment, "_modeRadioToggle", typeof(RadioToggle));
+      _fragmentStation = Field(fragment, "_weatherStation", typeof(WeatherStation));
+      return new[] { sample, update, initialize, refresh };
+    }
+
     internal static MethodInfo CustomTryGetValidatedGameMode() {
       var method = Method(typeof(CustomNewGameModeController), nameof(CustomNewGameModeController.TryGetValidatedGameMode), typeof(bool), typeof(GameModeSpec).MakeByRefType());
       var parameter = method.GetParameters()[0];
@@ -68,7 +119,7 @@ namespace ModdableFluids.Tides.Prototype {
       foreach (var name in new[] { nameof(GameUISoundController.PlayBadtideStartedSound), nameof(GameUISoundController.PlayDroughtStartedSound) })
         if (typeof(GameUISoundController).GetMethod(name, Type.EmptyTypes)?.ReturnType != typeof(void)) throw Changed("GameUISoundController." + name + "()");
       PanelRootField();
-      var targets = new[] { randomizer, load, specification, sound };
+      var targets = new[] { randomizer, load, specification, sound }.Concat(VerifyStation()).ToArray();
       foreach (var target in targets) RequireNotInlinable(target);
       return targets.Concat(getters).ToArray();
     }

@@ -15,6 +15,17 @@ namespace ModdableFluids {
     FluidTideImport ImportTides(FluidTideImportContext context);
   }
 
+  /// <summary>
+  /// Optional provider interface (capability <c>ModdableFluids.Tides.WeatherStations</c>, compiled providers only): the tide a
+  /// Weather Station saved by another tide system signals. Moddable Fluids asks every station importer, in provider order,
+  /// when a loaded Weather Station has no <c>ModdableFluids.WeatherStationTide</c> component. Return the tide ID, or null when
+  /// the station holds nothing for this importer. The next save writes the station's own component.
+  /// </summary>
+  public interface IFluidTideStationImporter {
+    /// <param name="nativeEntityLoader">The station's <c>Timberborn.WorldPersistence.IEntityLoader</c>.</param>
+    string ImportStationTide(FluidTideRegistry tides, object nativeEntityLoader);
+  }
+
   /// <summary>What an importer is given. The native services are passed as objects so this assembly stays free of game types.</summary>
   public sealed class FluidTideImportContext {
     public FluidTideRegistry Tides { get; }

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Bindito.Core;
+using Timberborn.AutomationBuildings;
 using Timberborn.BaseComponentSystem;
 using Timberborn.Debugging;
 using Timberborn.EntitySystem;
@@ -30,6 +31,7 @@ namespace ModdableFluids.Tides.Prototype {
       Bind<FluidTideService>().AsSingleton();
       Bind<FluidTideUi>().AsSingleton();
       Bind<FluidTideStrengthModifier>().AsTransient();
+      Bind<FluidTideWeatherStation>().AsTransient();
       MultiBind<IDevModule>().To<FluidTideDevModule>().AsSingleton();
       MultiBind<TemplateModule>().ToProvider(ProvideTemplateModule).AsSingleton();
     }
@@ -38,6 +40,7 @@ namespace ModdableFluids.Tides.Prototype {
     private static TemplateModule ProvideTemplateModule() {
       var builder = new TemplateModule.Builder();
       builder.AddDecorator<WaterSource, FluidTideStrengthModifier>();
+      builder.AddDecorator<WeatherStation, FluidTideWeatherStation>();
       return builder.Build();
     }
   }

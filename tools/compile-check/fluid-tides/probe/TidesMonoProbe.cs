@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using HarmonyLib;
+using Timberborn.AutomationBuildings;
 using ModdableFluids.Tides.Prototype;
 using Timberborn.BlueprintSystem;
 using Timberborn.Common;
@@ -100,7 +101,7 @@ namespace ModdableFluids.Tides.Acceptance {
       // Scene 1: the service verifies the contract and installs its patches on construction.
       var service = NewService(weatherService, history, random, scene, settings);
       var targets = (MethodInfo[])Internal(Native(), "VerifyGame", null);
-      Check(targets.Length == 12 && targets.All(t => Owners(t).SequenceEqual(new[] { FluidTideService.OwnerId })), "every native target patched by ModdableFluids.Tides only");
+      Check(targets.Length == 16 && targets.All(t => Owners(t).SequenceEqual(new[] { FluidTideService.OwnerId })), "every native target patched by ModdableFluids.Tides only");
       Throws(() => NewService(weatherService, history, random, scene, settings), "already active", "a second service refuses while the first is active");
 
       // The real randomizer: native draw first (badtide chance 0 here), then one budget draw, then one weighted draw.
@@ -134,6 +135,48 @@ namespace ModdableFluids.Tides.Acceptance {
         && Get("IconClass") == "moddable-fluids-tide-date" && Get("NotificationBackgroundClass") == "moddable-fluids-tide-notification", "UI helper answers with the tide's texts and markers");
       // A caller compiled after the patch (as the game's panels are, in the Game scene) sees the patched getter.
       Check(DirectName(helper) == "DeepFrontier.Weather.RadioactiveTide", "a caller JIT-compiled after patching reads the patched getter");
+
+      // Weather Station: the private activation time read through the verified delegate, on a real station.
+      var nativeStation = new WeatherStation(null, null, null);
+      void SetField(object target, string name, object value) => target.GetType().GetField(name, Any).SetValue(target, value);
+      bool Within() => (bool)Internal(Native(), "WithinActivationTimeHazardous", null, nativeStation);
+      SetField(nativeStation, "_sampledHazardousWeatherStartCycleDay", 5);
+      SetField(nativeStation, "_sampledPartialCycleDay", 5.5f);
+      Check(Within(), "a station sampled inside the hazardous season is within its activation time");
+      SetField(nativeStation, "_sampledPartialCycleDay", 4.5f);
+      Check(!Within(), "a station sampled before the hazardous season is not");
+      var fragment = System.Runtime.Serialization.FormatterServices.GetUninitializedObject((Type)Internal(Native(), "StationFragment", null));
+      Check(Internal(Native(), "FragmentStation", null, fragment) == null && Internal(Native(), "FragmentModes", null, fragment) == null, "the panel's private fields resolve");
+
+      // Weather Station tide choice: saved by tide ID, refused when unknown, imported once from another tide system's key.
+      FluidTideWeatherStation Station(MemoryEntity entity) { var s = new FluidTideWeatherStation(service); s.Load(entity); return s; }
+      var ownStation = new MemoryEntity();
+      new ObjectSaver(ownStation.Objects["ModdableFluids.WeatherStationTide"] = new SerializedObject()).Set(new PropertyKey<string>("Tide"), "DeepFrontier.RadioactiveTide");
+      Importer.StationCalls = 0;
+      var station = Station(ownStation);
+      Check(station.SignalledTide == "DeepFrontier.RadioactiveTide" && station.ImportedBy == null && Importer.StationCalls == 0, "a saved tide mode loads without asking the importers");
+      Internal(typeof(FluidTideWeatherStation), "Sample", station, "DeepFrontier.RadioactiveTide");
+      Check((bool)Internal(typeof(FluidTideWeatherStation), "Output", station, true) && !(bool)Internal(typeof(FluidTideWeatherStation), "Output", station, false), "output follows the native activation time during its tide");
+      Internal(typeof(FluidTideWeatherStation), "Sample", station, "MoreFluids.CoffeeTide");
+      Check(!(bool)Internal(typeof(FluidTideWeatherStation), "Output", station, true), "no output during another tide");
+      Internal(typeof(FluidTideWeatherStation), "Sample", station, (object)null);
+      Check(!(bool)Internal(typeof(FluidTideWeatherStation), "Output", station, true), "no output without a tide");
+      var unknown = new MemoryEntity();
+      new ObjectSaver(unknown.Objects["ModdableFluids.WeatherStationTide"] = new SerializedObject()).Set(new PropertyKey<string>("Tide"), "Other.Tide");
+      Throws(() => Station(unknown), "Other.Tide", "a station saved with an unregistered tide is refused");
+      var legacyStation = new MemoryEntity();
+      new ObjectSaver(legacyStation.Objects["Probe.LegacyStation"] = new SerializedObject()).Set(Importer.SignalsKey, true);
+      var migrated = Station(legacyStation);
+      Check(migrated.SignalledTide == "DeepFrontier.RadioactiveTide" && migrated.ImportedBy == "Probe.Importer" && Importer.StationCalls == 1, "another tide system's station mode is imported");
+      var savedStation = new MemoryEntity();
+      migrated.Save(savedStation);
+      var reloadedStation = Station(savedStation.RoundTrip());
+      Check(reloadedStation.SignalledTide == "DeepFrontier.RadioactiveTide" && reloadedStation.ImportedBy == null && Importer.StationCalls == 1, "after a save the station's own key is read, not imported again");
+      var plainStation = Station(new MemoryEntity());
+      Check(plainStation.SignalledTide == null && Importer.StationCalls == 2, "a station without any tide key keeps its native mode");
+      var nativeMode = new MemoryEntity();
+      plainStation.Save(nativeMode);
+      Check(Station(nativeMode.RoundTrip()).SignalledTide == null, "a native-mode station saves an empty tide");
 
       // Fog content check through the internal SunSpec.
       Internal(Content(), "RequireFog", null, new Specs(Sun(new[] { "DroughtWeather", "BadtideWeather", "RadioactiveTideWeather", "MoreFluids.CoffeeTide" }, night: null)), tides);
@@ -213,9 +256,15 @@ namespace ModdableFluids.Tides.Acceptance {
       return service;
     }
 
-    /// <summary>A compiled importer reading its own legacy singleton from the save's native singleton loader.</summary>
-    private sealed class Importer : IFluidProvider, IFluidTideImporter {
-      internal static int Calls;
+    /// <summary>A compiled importer reading its own legacy singleton and station component from the save's native loaders.</summary>
+    private sealed class Importer : IFluidProvider, IFluidTideImporter, IFluidTideStationImporter {
+      internal static int Calls, StationCalls;
+      internal static readonly ComponentKey LegacyStationKey = new ComponentKey("Probe.LegacyStation");
+      internal static readonly PropertyKey<bool> SignalsKey = new PropertyKey<bool>("Signals");
+      public string ImportStationTide(FluidTideRegistry tides, object nativeEntityLoader) {
+        StationCalls++;
+        return ((IEntityLoader)nativeEntityLoader).TryGetComponent(LegacyStationKey, out var legacy) && legacy.Get(SignalsKey) ? "DeepFrontier.RadioactiveTide" : null;
+      }
       internal static readonly SingletonKey LegacyKey = new SingletonKey("Probe.LegacyTide");
       internal static readonly PropertyKey<int> CycleKey = new PropertyKey<int>("Cycle");
       public string ProviderId => "Probe.Importer";
@@ -229,6 +278,31 @@ namespace ModdableFluids.Tides.Acceptance {
         int cycle = legacy.Get(CycleKey);
         return new FluidTideImport("DeepFrontier.RadioactiveTide", cycle, "DeepFrontier.RadioactiveTide", 4, 30,
           new[] { new FluidTideSettings("DeepFrontier.RadioactiveTide", true, 30, 5, 3, 6) });
+      }
+    }
+
+    /// <summary>One entity's components kept as the game keeps them.</summary>
+    private sealed class MemoryEntity : IEntityLoader, IEntitySaver {
+      internal readonly Dictionary<string, SerializedObject> Objects = new Dictionary<string, SerializedObject>(StringComparer.Ordinal);
+      public IObjectLoader GetComponent(ComponentKey key) => throw new NotSupportedException();
+      public IObjectLoader GetComponent(ComponentKey key, string suffix) => throw new NotSupportedException();
+      public bool HasComponent(ComponentKey key) => Objects.ContainsKey(key.Name);
+      public bool HasComponent(ComponentKey key, string suffix) => throw new NotSupportedException();
+      public bool TryGetComponent(ComponentKey key, out IObjectLoader objectLoader) {
+        objectLoader = Objects.TryGetValue(key.Name, out var data) ? new ObjectLoader(data) : null;
+        return objectLoader != null;
+      }
+      public bool TryGetComponent(ComponentKey key, string suffix, out IObjectLoader objectLoader) => throw new NotSupportedException();
+      IObjectSaver IEntitySaver.GetComponent(ComponentKey key) {
+        if (!Objects.TryGetValue(key.Name, out var data)) Objects.Add(key.Name, data = new SerializedObject());
+        return new ObjectSaver(data);
+      }
+      IObjectSaver IEntitySaver.GetComponent(ComponentKey key, string suffix) => throw new NotSupportedException();
+      internal MemoryEntity RoundTrip() {
+        var json = new SerializedObjectReaderWriter(new JsonMerger());
+        var copy = new MemoryEntity();
+        foreach (var pair in Objects) copy.Objects.Add(pair.Key, json.ReadJson(json.WriteJson(pair.Value)));
+        return copy;
       }
     }
 

@@ -14,6 +14,7 @@ namespace ModdableFluids {
     static partial void AddExtensionCapabilities(List<string> capabilities) {
       capabilities.Add(FluidTideRules.RegistrationCapability);
       capabilities.Add(FluidTideRules.ImportCapability);
+      capabilities.Add(FluidTideRules.WeatherStationCapability);
     }
 
     /// <summary>The frozen tides, in ordinal ID order; empty when no provider registered one.</summary>
@@ -56,6 +57,38 @@ namespace ModdableFluids {
         found = import.Complete(context.Tides, label, problems);
         if (found == null) throw new FluidSaveException(problems);
         owner = entry;
+      }
+      importerId = owner?.Id;
+      return found;
+    }
+
+    /// <summary>
+    /// Asks every <see cref="IFluidTideStationImporter"/>, in provider order, which tide a Weather Station saved by another
+    /// tide system signals. Null when none answers. A throwing importer stops loading naming it; an unregistered tide or two
+    /// importers answering stop loading with a <see cref="FluidSaveException"/>.
+    /// </summary>
+    public string ImportStationTide(object nativeEntityLoader, out string importerId) {
+      if (nativeEntityLoader == null) throw new ArgumentNullException(nameof(nativeEntityLoader));
+      importerId = null;
+      List<ProviderEntry> importers;
+      FluidTideRegistry tides;
+      lock (_gate) {
+        if (_state != State.Frozen) throw new InvalidOperationException("Weather Station tides are imported after the registry froze");
+        importers = _providers.Where(e => e.Provider is IFluidTideStationImporter).ToList();
+        tides = _tides;
+      }
+      string found = null;
+      ProviderEntry owner = null;
+      foreach (var entry in importers) {
+        string tide;
+        try { tide = ((IFluidTideStationImporter)entry.Provider).ImportStationTide(tides, nativeEntityLoader); }
+        catch (Exception e) { throw new InvalidOperationException("Provider " + entry.Id + " (mod " + entry.Owner + ") failed to import a Weather Station's tide: " + e.Message, e); }
+        if (tide == null) continue;
+        if (owner != null)
+          throw new FluidSaveException(new[] { "Providers " + owner.Id + " (mod " + owner.Owner + ") and " + entry.Id + " (mod " + entry.Owner + ") both import a Weather Station's tide; only one may" });
+        if (!tides.TryGet(tide, out _))
+          throw new FluidSaveException(new[] { "Provider " + entry.Id + " (mod " + entry.Owner + ") imported a Weather Station signalling " + tide + ", which no installed mod registers" });
+        found = tide; owner = entry;
       }
       importerId = owner?.Id;
       return found;
