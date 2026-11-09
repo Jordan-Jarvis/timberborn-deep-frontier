@@ -93,7 +93,7 @@ $api = @(
   @{Folder='Api';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.asmdef');Sources=@((Join-Path $source 'Api'))},
   @{Folder='Core';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.TransportPrototype.asmdef');Sources=@((Join-Path $source 'Transport'),(Join-Path $source 'Native'),(Join-Path $source 'Persistence'),(Join-Path $source 'Rendering'),(Join-Path $source 'Sources'),(Join-Path $source 'World'))},
   @{Folder='GameBridge';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.GamePrototype.asmdef');Sources=@((Join-Path $source 'GameBridge'))},
-  @{Folder='Runtime';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.RuntimePrototype.asmdef');Sources=@((Join-Path $source 'Runtime'))}
+  @{Folder='Runtime';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.RuntimePrototype.asmdef');Sources=@((Join-Path $source 'Runtime'),(Join-Path $source 'Tides'))}
 )
 if (Test-Path -LiteralPath (Join-Path $mods 'ModdableFluids')) { throw 'ModdableFluids is installed in the Mods folder; packages must only be present during an acceptance run. Remove it first.' }
 Stage 'ModdableFluids' (Join-Path $source 'manifest.json') $api
@@ -103,6 +103,11 @@ if ($LASTEXITCODE -ne 0) { throw 'Moddable Fluids shader variants are stale; run
 $stagedBundles = Join-Path $project 'Assets/Mods/ModdableFluids/AssetBundles'
 if (Test-Path -LiteralPath $stagedBundles) { Remove-Item -LiteralPath $stagedBundles -Recurse -Force }
 Copy-Item -LiteralPath (Join-Path $source 'AssetBundles') -Destination $stagedBundles -Recurse
+# The tide system's texts (new-game rows, refusals) ship as the package's localization.
+$tideLocalization = Join-Path $source 'Tides/Localizations/enUS.csv'
+$stagedLocalizations = Join-Path $project 'Assets/Mods/ModdableFluids/Data/Localizations'
+New-Item -ItemType Directory -Force -Path $stagedLocalizations | Out-Null
+Copy-Item -LiteralPath $tideLocalization -Destination $stagedLocalizations -Force
 $fixtures = @(
   @{Id='ModdableFluidsSyntheticReflection';Folder=(Join-Path $source 'Examples/SyntheticReflection')},
   @{Id='ModdableFluidsSyntheticCompiled';Folder=(Join-Path $source 'Examples/SyntheticCompiled')}
@@ -191,6 +196,10 @@ foreach ($platform in 'win','mac') {
   if (-not (Test-Path -LiteralPath $bundle) -or (Get-Item -LiteralPath $bundle).Length -eq 0) { throw "The official build produced no $platform shader bundle." }
   $apiHashes["moddablefluids_$platform"] = (Get-FileHash -LiteralPath $bundle).Hash
 }
+$packagedLocalization = @(Get-ChildItem -LiteralPath $installed -Recurse -File -Filter 'enUS.csv' | Where-Object { $_.Directory.Name -eq 'Localizations' })
+if ($packagedLocalization.Count -ne 1 -or (Get-FileHash -LiteralPath $packagedLocalization[0].FullName).Hash -ne (Get-FileHash -LiteralPath $tideLocalization).Hash) {
+  throw 'The official Moddable Fluids package must hold exactly the tide localization src/ModdableFluids/Tides/Localizations/enUS.csv.' }
+$apiHashes['Localizations/enUS.csv'] = (Get-FileHash -LiteralPath $tideLocalization).Hash
 $report = [ordered]@{ status='passed'; package=(Keep 'ModdableFluids'); version=$version; assemblies=$apiHashes }
 if ($SyntheticFixtures) {
   $report.fixtures = [ordered]@{}
