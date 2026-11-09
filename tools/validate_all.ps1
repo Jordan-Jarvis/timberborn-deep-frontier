@@ -90,6 +90,9 @@ Add-Check 'reactor-faction' 'dotnet' $dev.pwsh @('-NoProfile', '-File', (Join-Pa
 Add-Check 'meltdown-queue' 'dotnet' $dev.pwsh @('-NoProfile', '-File', (Join-Path $root 'tools/test_meltdown_queue.ps1'))
 # Compiled access to non-public game members against the shipped assemblies and the audited baseline.
 Add-Check 'native-access' 'dotnet' $dev.pwsh @('-NoProfile', '-File', (Join-Path $root 'tools/test_native_access.ps1'))
+# Unity build tooling (docs/unity-build-performance.md): staged editor scripts compile against the Unity editor,
+# Unity launches at below-normal priority on a reduced affinity mask, the asset bundle cache.
+Add-Check 'unity-build-tools' 'dotnet' $dev.pwsh @('-NoProfile', '-File', (Join-Path $root 'tools/test_unity_build_tools.ps1'))
 
 # Built-in new-game setup: every default map variant against its unmodified built-in map (needs the game files).
 Add-Check 'map-setup-terrain' 'python' $python @((Join-Path $root 'tools/prepare_deep_frontier_map.py'), 'builtin')
