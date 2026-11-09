@@ -109,13 +109,15 @@ namespace DeepFrontier.Scripts.Radiation {
       _isChild = GetComponent<Child>() != null;
       _dyingStatus = StatusToggle.CreateNormalStatusWithAlertAndFloatingIcon(RadiationSprites.ZombieDying,
         _loc.T(RadiationLoc.ZombieDying), _loc.T(RadiationLoc.ZombieDyingShort));
-      // NeedManager.Load and InfluenceByChildhood report the loaded or
-      // inherited need state through this event.
-      _needs.NeedChangedActiveState += (_, e) => { if (e.NeedSpec.Id == RadiationTuning.NeedId) Sync(); };
       DisableComponent();
     }
 
+    // NeedManager.Load and InfluenceByChildhood (PreInitializeEntity) report
+    // the loaded or inherited need state through this event before the
+    // beaver is initialized; PostInitializeEntity syncs that state once, and
+    // changes in play arrive through the event subscribed here.
     public void InitializeEntity() {
+      _needs.NeedChangedActiveState += (_, e) => { if (e.NeedSpec.Id == RadiationTuning.NeedId) Sync(); };
       if (!_animator.HasParameter(ContaminatedAnimatorParameter))
         throw new System.InvalidOperationException($"Beaver animator has no native '{ContaminatedAnimatorParameter}' parameter");
       _hungerDecay = ZombieDecay(RadiationTuning.HungerNeedId);

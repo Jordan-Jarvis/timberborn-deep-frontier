@@ -1,5 +1,6 @@
 #if !UNITY_EDITOR
 using System;
+using Bindito.Core;
 using HarmonyLib;
 using Timberborn.BlueprintSystem;
 using Timberborn.GameScene;
@@ -7,6 +8,7 @@ using Timberborn.GameSceneLoading;
 using Timberborn.MapStateSystem;
 using Timberborn.Persistence;
 using Timberborn.SceneLoading;
+using Timberborn.SingletonSystem;
 using Timberborn.WorldPersistence;
 using Timberborn.WorldSerialization;
 using UnityEngine;
@@ -34,12 +36,10 @@ namespace DeepFrontier.Scripts.MapSetup {
     internal const string MapSizeSingleton = "MapSize";
     internal static readonly PropertyKey<Vector2Int> MapHeightKey = new("MapHeight");
 
-    private sealed class PendingNewGame {
+    internal sealed class PendingNewGame {
       public string MapName;
       public SerializedWorld World;
     }
-
-    private static PendingNewGame _pending;
 
     // Called once per process from DeepFrontierModStarter.
     internal static void Apply() =>
@@ -70,8 +70,10 @@ namespace DeepFrontier.Scripts.MapSetup {
     [HarmonyPatch(typeof(GameSceneSerializedWorldSupplier), nameof(GameSceneSerializedWorldSupplier.Load))]
     private static class CaptureNewGameWorld {
       private static void Postfix(ISceneLoader ____sceneLoader, SerializedWorld ____serializedWorld) {
+        var capture = BuiltinMapHeightCapture.Current
+          ?? throw new InvalidOperationException("[DeepFrontier MapSetup] the Game scene has no BuiltinMapHeightCapture");
         var parameters = ____sceneLoader.GetSceneParameters<GameSceneParameters>();
-        _pending = parameters.NewGame && parameters.NewGameConfiguration.MapFileReference.Resource
+        capture.Pending = parameters.NewGame && parameters.NewGameConfiguration.MapFileReference.Resource
           ? new PendingNewGame { MapName = parameters.NewGameConfiguration.MapFileReference.Name, World = ____serializedWorld }
           : null;
       }
@@ -80,8 +82,11 @@ namespace DeepFrontier.Scripts.MapSetup {
     [HarmonyPatch(typeof(MapSize), nameof(MapSize.Load))]
     private static class WriteMapHeight {
       private static void Prefix(ISpecService ____specService) {
-        var pending = _pending;
-        _pending = null;
+        // MapSize also loads in the main menu and the map editor, which have no capture.
+        var capture = BuiltinMapHeightCapture.Current;
+        if (capture == null) return;
+        var pending = capture.Pending;
+        capture.Pending = null;
         if (pending == null) return;
         // A built-in map without an entry gets no height; BuiltinMapSetup reports it.
         var map = ____specService.GetSingleSpec<BuiltinMapSetupSpec>().Find(pending.MapName);
@@ -97,6 +102,29 @@ namespace DeepFrontier.Scripts.MapSetup {
         Debug.Log("[DeepFrontier MapSetup] new game on built-in " + pending.MapName + ": MapHeight {" + terrainLayers + ", " + map.TotalHeight + "} written for Map Transformer");
       }
     }
+  }
+
+  // The new game's world, handed from the supplier's Load to MapSize.Load
+  // within one Game scene. Owned by that scene: constructed with its
+  // container (before any Load) and cleared on unload, so a capture from a
+  // game whose load failed can never reach another scene's MapSize.Load.
+  internal sealed class BuiltinMapHeightCapture : IUnloadableSingleton {
+    internal static BuiltinMapHeightCapture Current { get; private set; }
+    internal BuiltinMapHeight.PendingNewGame Pending;
+
+    public BuiltinMapHeightCapture() {
+      if (Current != null) throw new InvalidOperationException("[DeepFrontier MapSetup] a map height capture is already active; the previous Game scene was not unloaded");
+      Current = this;
+    }
+
+    public void Unload() {
+      if (Current == this) Current = null;
+    }
+  }
+
+  [Context("Game")]
+  public sealed class BuiltinMapHeightConfigurator : Configurator {
+    protected override void Configure() => Bind<BuiltinMapHeightCapture>().AsSingleton();
   }
 }
 #endif

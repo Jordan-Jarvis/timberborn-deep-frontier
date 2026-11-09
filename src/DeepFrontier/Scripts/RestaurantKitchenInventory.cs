@@ -80,15 +80,17 @@ namespace DeepFrontier.Scripts {
       // recovered goods stack query every inventory); unstocked goods are disallowed.
       if(id==null||!_stock.TryGetValue(id,out var stock))return 0;
       if(stock.AlwaysStocked)return stock.Capacity;
-      if(_ingredients==null) {
-        // Queried only once the Manufactory has woken (inventory use starts at the finished state).
-        if(_kitchen.ProductionRecipes.IsDefault)throw new InvalidOperationException("Restaurant kitchen stock queried before its recipes were initialized");
-        _ingredients=_kitchen.ProductionRecipes.SelectMany(r=>r.Ingredients.Select(i=>i.Id).Concat(r.ConsumesFuel?new[]{r.Fuel}:Array.Empty<string>())).ToHashSet();
-        foreach(var entry in _spec.Stock)
-          if(!entry.AlwaysStocked&&!_ingredients.Contains(entry.GoodId))
-            throw new InvalidOperationException("Restaurant stock good "+entry.GoodId+" is neither always stocked nor a kitchen ingredient");
-      }
-      return _ingredients.Contains(id)?stock.Capacity:0;
+      return (_ingredients??=Ingredients()).Contains(id)?stock.Capacity:0;
+    }
+    // Built once, on the first query. Queried only once the Manufactory has
+    // woken (inventory use starts at the finished state).
+    private HashSet<string> Ingredients() {
+      if(_kitchen.ProductionRecipes.IsDefault)throw new InvalidOperationException("Restaurant kitchen stock queried before its recipes were initialized");
+      var ingredients=_kitchen.ProductionRecipes.SelectMany(r=>r.Ingredients.Select(i=>i.Id).Concat(r.ConsumesFuel?new[]{r.Fuel}:Array.Empty<string>())).ToHashSet();
+      foreach(var entry in _spec.Stock)
+        if(!entry.AlwaysStocked&&!ingredients.Contains(entry.GoodId))
+          throw new InvalidOperationException("Restaurant stock good "+entry.GoodId+" is neither always stocked nor a kitchen ingredient");
+      return ingredients;
     }
   }
 }

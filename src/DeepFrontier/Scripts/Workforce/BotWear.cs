@@ -1,6 +1,7 @@
 using System;
 using Timberborn.BaseComponentSystem;
 using Timberborn.EnterableSystem;
+using Timberborn.EntitySystem;
 using Timberborn.Persistence;
 using Timberborn.WorkSystem;
 using Timberborn.WorldPersistence;
@@ -21,7 +22,7 @@ namespace DeepFrontier.Scripts {
   // multiplies that workplace's rate by the good's WearFactor (never below
   // 1x) for ServiceHours of wearing time. The dose stays with the bot and is
   // saved with it.
-  internal sealed class BotWear : BaseComponent, IAwakableComponent, IPersistentEntity {
+  internal sealed class BotWear : BaseComponent, IAwakableComponent, IInitializableEntity, IPostInitializableEntity, IPersistentEntity {
     private static readonly ComponentKey Key=new("DeepFrontier.BotWear");
     private static readonly PropertyKey<string> ServiceGoodKey=new("ServiceGood");
     private static readonly PropertyKey<float> ServiceWearFactorKey=new("ServiceWearFactor");
@@ -45,9 +46,20 @@ namespace DeepFrontier.Scripts {
       _worker=GetComponent<Worker>();
       _enterer=GetComponent<Enterer>();
       if(!_worker||!_enterer)throw new InvalidOperationException($"{Name}: bot wear needs a native Worker and Enterer");
-      // Load re-employs through Workplace.AssignWorker, which raises GotEmployed.
+    }
+
+    // Subscribed after loading. Native Worker.InitializeEntity re-employs a
+    // loaded bot (AssignToWorkplaceAfterLoad raises GotEmployed), in component
+    // order relative to this one, so PostInitializeEntity also takes the risk
+    // from the workplace the bot ended up with.
+    public void InitializeEntity() {
       _worker.GotEmployed+=(_,_)=>Risk=_worker.Workplace.GetComponent<IndustrialRisk>();
       _worker.GotUnemployed+=(_,_)=>Risk=null;
+    }
+
+    public void PostInitializeEntity() {
+      var workplace=_worker.Workplace;
+      Risk=workplace?workplace.GetComponent<IndustrialRisk>():null;
     }
 
     public void Service(string goodId, float wearFactor, float hours) {

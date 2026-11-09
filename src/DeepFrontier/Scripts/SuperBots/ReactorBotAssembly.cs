@@ -41,7 +41,7 @@ namespace DeepFrontier.Scripts.SuperBots {
       _recipeId=GetComponent<FrontierReactorBotAssemblySpec>().RecipeId;
       _manufactory=GetComponent<Manufactory>();
       if(string.IsNullOrEmpty(_recipeId)||!_manufactory)throw new InvalidOperationException($"{Name}: a Reactor Bot assembly recipe needs a recipe id and a native Manufactory");
-      _manufactory.ProductionFinished+=BeforeBotManufactory;
+      _manufactory.ProductionFinished+=BeforeBotManufactory; // native-safety: awake-subscription (handler order before BotManufactory's InitializeEntity subscription; ProductionFinished is never raised while loading)
     }
 
     public void PostInitializeEntity() {

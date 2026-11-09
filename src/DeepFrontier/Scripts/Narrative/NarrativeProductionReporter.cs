@@ -1,5 +1,6 @@
 using System;
 using Timberborn.BaseComponentSystem;
+using Timberborn.EntitySystem;
 using Timberborn.Workshops;
 
 namespace DeepFrontier.Scripts.Narrative {
@@ -7,7 +8,8 @@ namespace DeepFrontier.Scripts.Narrative {
   // cycle (native ProductionFinished, raised after the products are given and
   // while CurrentRecipe is still the finished recipe) to the narrative, which
   // counts only the goods and recipes its chapters reference.
-  internal sealed class NarrativeProductionReporter : BaseComponent, IAwakableComponent {
+  // Subscribed after loading (InitializeEntity), as every native event.
+  internal sealed class NarrativeProductionReporter : BaseComponent, IAwakableComponent, IInitializableEntity {
     private readonly NarrativeObjectiveService _narrative;
     private Manufactory _manufactory;
 
@@ -15,6 +17,9 @@ namespace DeepFrontier.Scripts.Narrative {
 
     public void Awake() {
       _manufactory=GetComponent<Manufactory>();
+    }
+
+    public void InitializeEntity() {
       _manufactory.ProductionFinished+=OnProductionFinished;
     }
 

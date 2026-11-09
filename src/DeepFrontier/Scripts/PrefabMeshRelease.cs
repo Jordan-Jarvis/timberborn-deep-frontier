@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using HarmonyLib;
 using Timberborn.AssetSystem;
 using Timberborn.ModManagerScene;
@@ -53,8 +54,10 @@ namespace DeepFrontier.Scripts {
     internal const string HarmonyId = "DeepFrontier.PrefabMeshRelease";
     internal const string KeepFlag = "-deepFrontierKeepPrefabMeshes";
     private static readonly Stack<Run> Runs = new Stack<Run>();
-    // Meshes the finished prefabs of earlier runs use (the chain caches them for the scene).
-    private static readonly HashSet<Mesh> KeptByPrefabs = new HashSet<Mesh>();
+    // Meshes the finished prefabs of earlier runs use, per chain: the chain
+    // caches its prefabs for one scene, and the next scene builds a new chain,
+    // so this set dies with the scene that owned those meshes.
+    private static readonly ConditionalWeakTable<PrefabOptimizationChain, HashSet<Mesh>> KeptByPrefabs = new();
     private static Mesh[] _before;
     internal static long ReleasedMeshes { get; private set; }
     internal static long ReleasedVertices { get; private set; }
@@ -162,6 +165,7 @@ namespace DeepFrontier.Scripts {
     private static void ProcessFinalizer(PrefabOptimizationChain __instance, Exception __exception, GameObject __result) {
       var run = Runs.Pop();
       if (__exception != null || !__result) return;
+      var keptByPrefabs = KeptByPrefabs.GetOrCreateValue(__instance);
       ShareIdenticalModels(__instance, __result, run);
       var kept = new HashSet<Mesh>();
       Collect(__result, kept);
@@ -170,14 +174,14 @@ namespace DeepFrontier.Scripts {
         if (!mesh || kept.Contains(mesh)) continue;
         // A mesh created in this run cannot belong to an earlier finished prefab; if it does,
         // the native chain shares meshes in a way this release does not know.
-        if (KeptByPrefabs.Contains(mesh))
+        if (keptByPrefabs.Contains(mesh))
           throw new InvalidOperationException($"Prefab mesh release: {mesh.name} replaced while processing {__result.name} is used by an earlier optimized prefab");
         released += mesh.vertexCount;
         ReleasedVertices += mesh.vertexCount;
         ReleasedMeshes++;
         UnityEngine.Object.DestroyImmediate(mesh);
       }
-      KeptByPrefabs.UnionWith(kept);
+      keptByPrefabs.UnionWith(kept);
       // The import and optimization of a large model leave hundreds of MB of managed garbage
       // (protobuf vertex data, uv/colour/index copies, MeshBuilder lists). Boehm grows the
       // Mono heap rather than collect while recent allocation is below a share of the heap,

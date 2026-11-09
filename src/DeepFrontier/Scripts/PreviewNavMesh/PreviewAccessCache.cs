@@ -49,6 +49,7 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
     }
 
     private static readonly ConditionalWeakTable<ConstructionSiteAccessible,State> States=new();
+    private static readonly ConditionalWeakTable<ConstructionSiteAccessible,State>.CreateValueCallback NewState=_=>new State();
     private static AccessTools.FieldRef<ConstructionSiteAccessible,Preview> _preview;
     private static AccessTools.FieldRef<ConstructionSiteAccessible,BlockObject> _block;
     private static AccessTools.FieldRef<ConstructionSiteAccessible,BlockObjectAccessGenerator> _generator;
@@ -107,7 +108,7 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
       if(_provider.GetValue(__instance)!=null)return true;        // custom provider: native
       Require(_loaded,"World change listener not loaded in this scene");
       var block=_block(__instance);
-      var state=States.GetValue(__instance,_=>new State());
+      var state=States.GetValue(__instance,NewState);
       if(state.Epoch!=_epoch) {state.Epoch=_epoch;state.Valid=false;}
       if(!(state.Valid&&state.Version==_version&&state.Placement.Equals(block.Placement))) {
         int version=_version;

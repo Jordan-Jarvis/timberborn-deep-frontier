@@ -62,8 +62,11 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     // CustomNewGameModeController.InvalidInputClass.
     private const string InvalidInputClass = "new-game-mode-panel__setting-input--invalid";
 
-    // The main menu's instance, for RadioactiveTideNewGamePatch.
+    // The main menu's instance, for RadioactiveTideNewGamePatch: set when the
+    // main menu's container constructs it (before any Load), cleared on
+    // unload. It answers only once its PostLoad has added the rows (_ready).
     internal static RadioactiveTideNewGameSettings Current { get; private set; }
+    private bool _ready;
 
     private readonly NewGameModePanel _panel;
     private readonly CustomNewGameModeController _customController;
@@ -85,14 +88,18 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
         GameModeSpecService gameModeSpecService, VisualElementLoader visualElementLoader, ILoc loc) {
       _panel = panel; _customController = customController; _gameModeSpecService = gameModeSpecService;
       _visualElementLoader = visualElementLoader; _loc = loc;
+      if (Current != null) throw new InvalidOperationException("Radioactive tide: a new-game screen is already active; the previous main menu was not unloaded");
+      Current = this;
     }
 
-    internal static RadioactiveTideNewGameSettings RequireCurrent() =>
-      Current ?? throw new InvalidOperationException("Radioactive tide: the native custom game mode was built outside the main menu's new-game screen");
+    internal static RadioactiveTideNewGameSettings RequireCurrent() {
+      var current = Current ?? throw new InvalidOperationException("Radioactive tide: the native custom game mode was built outside the main menu's new-game screen");
+      if (!current._ready) throw new InvalidOperationException("Radioactive tide: the native custom game mode was built before the new-game screen finished loading");
+      return current;
+    }
 
     // After NewGameModePanel.Load has built the panel and its mode buttons.
     public void PostLoad() {
-      if (Current != null) throw new InvalidOperationException("Radioactive tide: a new-game screen is already active; the previous main menu was not unloaded");
       var root = RadioactiveTideNewGameNative.PanelRoot(_panel)
         ?? throw new InvalidOperationException("Radioactive tide: NewGameModePanel has no root after Load");
       ImmutableArray<GameModeSpec> presets = _gameModeSpecService.GetSpecsOrdered();
@@ -103,7 +110,7 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
       Required<Button>(root, CustomizeButtonName).RegisterCallback<ClickEvent>(_ => OnCustomize());
       _nextButton = Required<Button>(root, NextButtonName);
       Apply(Resolve(_selectedPreset, log: false));
-      Current = this;
+      _ready = true;
     }
 
     // A preset's tide settings (its own spec, else derived from its weather),

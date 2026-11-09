@@ -191,7 +191,7 @@ namespace DeepFrontier.Scripts {
 
   // Absence of this saved component means no dining visit has begun. A saved
   // visit requires every field; malformed state is never silently repaired.
-  internal sealed class RestaurantDiner : BaseComponent, IAwakableComponent, IPersistentEntity {
+  internal sealed class RestaurantDiner : BaseComponent, IInitializableEntity, IPersistentEntity {
     private static readonly ComponentKey Key=new("DeepFrontierRestaurantDiner");
     private static readonly PropertyKey<Restaurant> RestaurantKey=new("Restaurant");
     private static readonly PropertyKey<bool> ServedKey=new("Served");
@@ -201,7 +201,8 @@ namespace DeepFrontier.Scripts {
     public bool Served { get; private set; }
     public float ServedAt { get; private set; }
     public RestaurantDiner(ReferenceSerializer references) { _references=references; }
-    public void Awake() { GetComponent<Enterer>().ExitedEnterable+=OnExit; }
+    // After loading: native Enterer exits a building it cannot resolve in its PostLoadEntity.
+    public void InitializeEntity() { GetComponent<Enterer>().ExitedEnterable+=OnExit; }
     public void BeginVisit(Restaurant restaurant) {
       if(Restaurant==restaurant)return;
       if(Restaurant!=null)throw new InvalidOperationException("Restaurant visit changed without exiting");
@@ -418,7 +419,7 @@ namespace DeepFrontier.Scripts {
   // LackOfResources status appears only then. Moddable Recipes' rebuild never
   // runs for the Restaurant (RestaurantKitchenRecipeCompatibility), so a switch
   // keeps every recipe's ingredients in the one inventory.
-  internal sealed class RestaurantKitchenChooser : TickableComponent, IAwakableComponent, IFinishedStateListener, IPersistentEntity, IManufactoryLimiter {
+  internal sealed class RestaurantKitchenChooser : TickableComponent, IAwakableComponent, IInitializableEntity, IFinishedStateListener, IPersistentEntity, IManufactoryLimiter {
     private static readonly ComponentKey Key=new("DeepFrontierRestaurantKitchen");
     private static readonly PropertyKey<bool> ChoicePendingKey=new("ChoicePending");
     private static readonly ListKey<string> SetAsideRecipesKey=new("SetAsideRecipes");
@@ -445,9 +446,10 @@ namespace DeepFrontier.Scripts {
       _kitchen=GetComponent<Manufactory>();_restaurant=GetComponent<Restaurant>();
       if(!_kitchen||!_restaurant||!GetComponent<AutomaticRecipeManufactory>())
         throw new InvalidOperationException("Restaurant kitchen chooser requires the native Manufactory and AutomaticRecipeManufactory");
-      _kitchen.ProductionFinished+=(_,_)=>_choicePending=true;
       DisableComponent();
     }
+    // After loading (a pending choice is saved; production does not finish during load).
+    public void InitializeEntity() { _kitchen.ProductionFinished+=(_,_)=>_choicePending=true; }
     // IManufactoryLimiter: no batch starts between a finished batch and the next choice.
     public float ProductionEfficiency()=>_choicePending?0f:1f;
     public float MaxProductionProgressChange(float expectedProductionProgressChange)=>expectedProductionProgressChange;

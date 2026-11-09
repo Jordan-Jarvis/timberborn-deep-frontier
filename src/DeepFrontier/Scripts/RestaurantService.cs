@@ -47,7 +47,7 @@ namespace DeepFrontier.Scripts {
     }
   }
 
-  internal sealed class RestaurantWaiter : BaseComponent, IAwakableComponent, IPersistentEntity, IPostLoadableEntity, IDeletableEntity {
+  internal sealed class RestaurantWaiter : BaseComponent, IAwakableComponent, IInitializableEntity, IPersistentEntity, IPostLoadableEntity, IDeletableEntity {
     private static readonly ComponentKey Key=new("DeepFrontierRestaurantWaiter");
     private static readonly PropertyKey<Restaurant> RestaurantKey=new("Restaurant");
     private static readonly PropertyKey<RestaurantDiner> DinerKey=new("Diner");
@@ -77,6 +77,11 @@ namespace DeepFrontier.Scripts {
     public void Awake() {
       _carrier=GetComponent<GoodCarrier>();_reserver=GetComponent<GoodReserver>();
       _worker=GetComponent<Worker>();_hours=GetComponent<WorkerWorkingHours>();
+    }
+
+    // After loading: native GoodCarrier.Load raises CarriedGoodsChanged while
+    // it restores the hands, which is restored state, not a change in play.
+    public void InitializeEntity() {
       _carrier.CarriedGoodsChanged+=OnHandsChanged;
       _worker.GotUnemployed+=OnUnemployed;
       GetComponent<Character>().Died+=OnDied;

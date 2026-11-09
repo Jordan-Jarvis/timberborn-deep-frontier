@@ -60,7 +60,6 @@ namespace DeepFrontier.Scripts {
       Citizen=GetComponent<Citizen>();
       NeedManager=GetComponent<NeedManager>();
       if(!Worker||!Citizen||!NeedManager)throw new InvalidOperationException($"{Name}: a specialist must be a working citizen with needs");
-      _character.Died+=OnDied;
     }
 
     public bool Has(string discipline)=>_disciplines.Contains(discipline);
@@ -92,6 +91,7 @@ namespace DeepFrontier.Scripts {
         _settings.Discipline(discipline); // unknown saved discipline fails explicitly
       if(_disciplines.Count!=_disciplines.Distinct().Count())throw new InvalidOperationException($"{Name}: a saved discipline is listed twice");
       if(IsSpecialist&&_character.Alive)_roster.Add(this);
+      _character.Died+=OnDied;
     }
 
     public void DeleteEntity() {_roster.Remove(this);}

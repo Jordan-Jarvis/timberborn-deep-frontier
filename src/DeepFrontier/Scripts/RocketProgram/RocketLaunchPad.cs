@@ -129,9 +129,6 @@ namespace DeepFrontier.Scripts {
           _loc.T("RocketProgram.Status.Completed",_loc.T(mission.DisplayNameLocKey)));
       }
       _refurbishStatus=StatusToggle.CreateNormalStatusWithFloatingIcon("NothingToDo",_loc.T("RocketProgram.Status.Refurbishing"));
-      _manufactory.ProductionProgressed+=OnProductionProgressed;
-      _manufactory.ProductionFinished+=OnProductionFinished;
-      _manufactory.RecipeChanged+=OnRecipeChanged;
       DisableComponent();
     }
 
@@ -167,7 +164,13 @@ namespace DeepFrontier.Scripts {
       }
     }
 
+    // Native events are subscribed after loading: native Manufactory sets its
+    // only recipe in Awake and ManufactoryTogglableRecipes in InitializeEntity
+    // (RecipeChanged); a stacked rocket is restored in PostLoadEntity.
     public void InitializeEntity() {
+      _manufactory.ProductionProgressed+=OnProductionProgressed;
+      _manufactory.ProductionFinished+=OnProductionFinished;
+      _manufactory.RecipeChanged+=OnRecipeChanged;
       var subject=GetComponent<StatusSubject>();
       foreach(var status in _lockedStatus.Values.Concat(_completedStatus.Values))subject.RegisterStatus(status);
       subject.RegisterStatus(_refurbishStatus);
