@@ -35,3 +35,10 @@ if ($LASTEXITCODE -ne 0) { throw 'Fluid scene lifecycle prototype build failed' 
 $flaggedProject = Join-Path $PSScriptRoot 'compile-check/deep-frontier-moddable-fluids/DeepFrontierModdableFluidsCompileCheck.csproj'
 & dotnet build $flaggedProject --configuration Release --nologo
 if ($LASTEXITCODE -ne 0) { throw 'Deep Frontier Moddable Fluids build (flagged) failed' }
+# Moddable Fluids tides (tides area): its own installed-Mono probe in a separate process.
+$tidesProject = Join-Path $PSScriptRoot 'compile-check/fluid-tides/probe/ModdableFluids.TidesMonoProbe.csproj'
+& dotnet build $tidesProject --configuration Release --nologo
+if ($LASTEXITCODE -ne 0) { throw 'Moddable Fluids tides Mono probe build failed' }
+$tidesProbe = Join-Path $PSScriptRoot 'compile-check/fluid-tides/probe/bin/Release/netstandard2.1/ModdableFluids.TidesMonoProbe.dll'
+& $dev.python (Join-Path $PSScriptRoot 'compile-check/fluid-tides/run_tides_mono.py') $tidesProbe (Join-Path $root 'outputs/fluids-api-prototype/tides-mono-report.json')
+if ($LASTEXITCODE -ne 0) { throw 'Moddable Fluids tides Mono probe failed' }

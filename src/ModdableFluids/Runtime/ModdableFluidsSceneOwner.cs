@@ -31,10 +31,14 @@ namespace ModdableFluids.Runtime.Prototype {
       // The worker-acceptance fixture stays behind its flag (its synthetic fluids register only with it).
       if (!WorkerAcceptanceRun.Enabled && !registry.HasExtraFluids) return;
       // The native members the intake guard and the moisture input compile against, before either is bound.
-      var changed = FluidWaterIntakeGuard.CheckContract().Concat(FluidMoistureInput.CheckContract()).ToArray();
+      var changed = FluidWaterIntakeGuard.CheckContract().Concat(FluidMoistureInput.CheckContract()).Concat(FluidPlacedSource.CheckContract()).ToArray();
       if (changed.Length > 0)
         throw new InvalidOperationException("Moddable Fluids cannot attach to this game (expected Timberborn 1.1.2.8). Changed native contract:\n- " + string.Join("\n- ", changed));
       Bind<FluidMoistureInput>().AsSingleton();
+      // Before any entity wakes: every placed water source is classified by its blueprint into this table.
+      Bind<FluidPlacedSources>().AsSingleton();
+      Bind<FluidPlacedSource>().AsTransient();
+      MultiBind<TemplateModule>().ToProvider(FluidPlacedSource.Module).AsSingleton();
       Bind<ModdableFluidsSceneOwner>().AsSingleton();
       // After the owner: it needs the frozen registry and the session the owner attaches.
       Bind<FluidWaterRendering>().AsSingleton();
@@ -64,6 +68,7 @@ namespace ModdableFluids.Runtime.Prototype {
     private readonly TickOnlyArrayService _tickOnlyArrays;
     private readonly FieldInfo _forceAllowAccess;
     private readonly FluidMoistureInput _moisture;
+    private readonly FluidPlacedSources _sources;
     private FluidWorldSaveFormat.Loaded _loaded;
     private bool _subscribed;
     public NativeTransportHooks Hooks { get; private set; }
@@ -91,7 +96,8 @@ namespace ModdableFluids.Runtime.Prototype {
     public FluidMoistureInput Moisture => _moisture;
 
     public ModdableFluidsSceneOwner(IWaterService water, IParallelizer parallelizer, ISingletonLoader singletons, MapIndexService index,
-        ITickableSingletonService ticks, TickOnlyArrayService tickOnlyArrays, FluidMoistureInput moisture) {
+        ITickableSingletonService ticks, TickOnlyArrayService tickOnlyArrays, FluidMoistureInput moisture, FluidPlacedSources sources) {
+      _sources = sources;
       _water = water; _parallelizer = parallelizer; _singletons = singletons; _index = index; _ticks = ticks; _tickOnlyArrays = tickOnlyArrays; _moisture = moisture;
       // The native exception saver (GameSceneExceptionStateSaver.CreateExceptionSave) marks itself only through this
       // private field (TickOnlyArrayService.ForceAllowAccess, then GameSaver.SaveWithoutFinishingTick).
@@ -131,7 +137,7 @@ namespace ModdableFluids.Runtime.Prototype {
           + "), and another mod patches them; both cannot run, so the game stops before the simulation starts:\n- " + string.Join("\n- ", conflicts));
       }
       Hooks = hooks;
-      World = new ModdableFluidsWorld(Registry, Stride, Height, _water, MainThreadId);
+      World = new ModdableFluidsWorld(Registry, Stride, Height, _water, MainThreadId, _sources);
       Scene = host.ActivateScene(World);
       host.LoadProviderStates(Scene, _loaded?.ProviderStates);
       Hooks.SessionCreated = OnSessionCreated;

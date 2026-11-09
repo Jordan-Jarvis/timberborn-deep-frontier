@@ -9,13 +9,9 @@
     <ProjectReference Include="../fluid-transport/ModdableFluids.TransportPrototype.csproj" />
     <ProjectReference Include="../fluid-game-bridge/ModdableFluids.GamePrototype.csproj" />
     <ProjectReference Include="../fluid-runtime/ModdableFluids.RuntimePrototype.csproj" />
-    <Reference Include="Timberborn.Persistence" HintPath="$(TimberbornManaged)/Timberborn.Persistence.dll" Private="false" />
-    <Reference Include="Timberborn.SerializationSystem" HintPath="$(TimberbornManaged)/Timberborn.SerializationSystem.dll" Private="false" />
-    <Reference Include="Timberborn.WorldPersistence" HintPath="$(TimberbornManaged)/Timberborn.WorldPersistence.dll" Private="false" />
-    <Reference Include="Timberborn.Multithreading" HintPath="$(TimberbornManaged)/Timberborn.Multithreading.dll" Private="false" />
-    <Reference Include="Timberborn.WaterSystem" HintPath="$(TimberbornManaged)/Timberborn.WaterSystem.dll" Private="false" />
-    <Reference Include="UnityEngine.CoreModule" HintPath="$(TimberbornManaged)/UnityEngine.CoreModule.dll" Private="false" />
+    <!-- The runtime's hooks reach into many game assemblies; reference them as the runtime project does. -->
+    <GameReference Include="$(TimberbornManaged)/Timberborn.*.dll;$(TimberbornManaged)/Bindito*.dll;$(TimberbornManaged)/UnityEngine.CoreModule.dll;$(TimberbornManaged)/UnityEngine.UIElementsModule.dll;$(TimberbornManaged)/System.Collections.Immutable.dll;$(TimberbornManaged)/Newtonsoft.Json.dll" />
+    <Reference Include="@(GameReference)" Private="false" />
     <Reference Include="0Harmony" HintPath="$(ModsBuildManaged)/0Harmony.dll" Private="false" />
-    <Reference Include="System.Collections.Immutable" HintPath="$(TimberbornManaged)/System.Collections.Immutable.dll" Private="false" />
   </ItemGroup>
 </Project>

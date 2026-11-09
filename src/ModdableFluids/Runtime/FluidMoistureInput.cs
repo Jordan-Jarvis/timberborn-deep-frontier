@@ -90,7 +90,15 @@ namespace ModdableFluids.Runtime.Prototype {
         throw new InvalidOperationException("Moddable Fluids cannot own this game's soil-moisture input (expected Timberborn 1.1.2.8). Changed native contract:\n- " + string.Join("\n- ", problems));
       var getSpec = typeof(ISpecService).GetMethods().Single(m => m.Name == "GetSingleSpec" && m.IsGenericMethodDefinition && m.GetParameters().Length == 0);
       object values = getSpec.MakeGenericMethod(spec).Invoke(_specs, null);
-      MaximumWaterContamination = (float)spec.GetProperty("MaximumWaterContamination", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(values);
+      return Prepare(registry, (float)spec.GetProperty("MaximumWaterContamination", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).GetValue(values));
+    }
+
+    /// <summary>As <see cref="Prepare(FluidRegistry)"/>, with the native maximum water contamination already read (used by the Mono probe).</summary>
+    public IReadOnlyList<string> Prepare(FluidRegistry registry, float maximumWaterContamination) {
+      var problems = Inspect(out _target, out _contamination, out _);
+      if (problems.Count > 0)
+        throw new InvalidOperationException("Moddable Fluids cannot own this game's soil-moisture input (expected Timberborn 1.1.2.8). Changed native contract:\n- " + string.Join("\n- ", problems));
+      MaximumWaterContamination = maximumWaterContamination;
       _shadow = new FluidMoistureShadow(registry, MaximumWaterContamination, _index.Stride, _index.VerticalStride);
       if (!_shadow.HasBlockingFluids) return Array.Empty<string>();
       var owners = Harmony.GetPatchInfo(_target)?.Owners.Where(owner => owner != OwnerId).Distinct().ToArray() ?? new string[0];

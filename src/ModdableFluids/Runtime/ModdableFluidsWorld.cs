@@ -21,13 +21,13 @@ namespace ModdableFluids.Runtime.Prototype {
     private readonly IWaterService _water;
     private readonly int _mainThread;
     private readonly PropertyInfo _changeCoordinates;
-    private readonly FluidSourceTypeDefinition _nativeSource;
+    private readonly FluidPlacedSources _sources;
     public FluidWorldState State { get; }
     public FluidExtractionQueue Extractions { get; }
     public FluidRegistry Registry => State.Registry;
     public int CompletedTicks => State.CompletedTicks;
 
-    internal ModdableFluidsWorld(FluidRegistry registry, int stride, int height, IWaterService water, int mainThread) {
+    internal ModdableFluidsWorld(FluidRegistry registry, int stride, int height, IWaterService water, int mainThread, FluidPlacedSources sources) {
       State = new FluidWorldState(registry, stride);
       Extractions = new FluidExtractionQueue(registry, stride - 2, height);
       _water = water; _mainThread = mainThread;
@@ -35,7 +35,7 @@ namespace ModdableFluids.Runtime.Prototype {
         ?? throw new InvalidOperationException("Native Timberborn.WaterSystem.WaterChange is missing (expected Timberborn 1.1.2.8)");
       _changeCoordinates = change.GetProperty("Coordinates", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
       if (_changeCoordinates == null || _changeCoordinates.PropertyType != typeof(Vector3Int)) throw new MissingMemberException(change.FullName, "Coordinates : Vector3Int");
-      if (!registry.TryGetSourceType(NativeFluidSourceTypes.WaterSource, out _nativeSource)) throw new InvalidOperationException("The native water source type is not registered");
+      _sources = sources ?? throw new ArgumentNullException(nameof(sources));
     }
 
     public bool HasState => State.HasSnapshot;
@@ -65,8 +65,9 @@ namespace ModdableFluids.Runtime.Prototype {
     }
 
     /// <summary>The source stage's resolver: native contamination plus the active composition override.</summary>
+    /// <remarks>Each source emits its own type's fluids; an active tide composition replaces them only for tide-overridable types.</remarks>
     internal FluidVolumes ResolveSource(object source, int nativeIndex, double volume) =>
-      FluidSourceEmission.Compose(Registry, _nativeSource, volume, ((IWaterSource)source).Contamination, State.ActiveSourceComposition);
+      FluidSourceEmission.Compose(Registry, _sources.TypeOf(source), volume, ((IWaterSource)source).Contamination, State.ActiveSourceComposition);
 
     private FluidVolumes Native(double volume, double badShare) {
       var values = new double[Registry.Count];
