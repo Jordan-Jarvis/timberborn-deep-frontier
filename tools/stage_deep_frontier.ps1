@@ -73,4 +73,6 @@ foreach ($entry in @('Data', 'Scripts', 'Editor', 'AssetBundles')) {
     ForEach-Object { Remove-Item -LiteralPath $_.FullName -Recurse -Force; Write-Output "Removed stale staged folder: $entry\$($_.FullName.Substring($stagedFull.Length + 1))" }
 }
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\DeepFrontierBatchBuild.cs') -Destination (Join-Path $projectRoot 'Assets\Tools\Editor\Scripts\ModBuilding\DeepFrontierBatchBuild.cs') -Force
+# Strips variants of our own shaders that the game never draws (docs/unity-build-performance.md).
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\ModShaderVariantStripping.cs') -Destination (Join-Path $projectRoot 'Assets\Tools\Editor\Scripts\ModBuilding\ModShaderVariantStripping.cs') -Force
 Write-Output "Staged Deep Frontier authoring files at $destinationRoot"

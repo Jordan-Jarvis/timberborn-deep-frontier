@@ -32,25 +32,32 @@ namespace Timberborn.ModdingTools.ModBuilding {
           .FirstOrDefault(group => group.Count() > 1);
       if (duplicate != null) throw new InvalidOperationException("Bundled resource name collision: " + string.Join(", ", duplicate));
       var mod = new ModFinder().GetAllMods().Single(mod => mod.Name == "DeepFrontier");
+      // -modBundles reuse: the bundle inputs match those of the last verified build (tools/UnityBundleCache.ps1), whose
+      // bundles the build script installs after this one; only the code is built.
+      bool buildBundles = BundlesRequested();
       var settings = new ModBuilderSettings(
           buildCode: true,
-          buildWindowsAssetBundle: true,
+          buildWindowsAssetBundle: buildBundles,
           // macOS players load deepfrontier_mac; without it every bundled asset fails
           // ("Failed to load asset at Materials/DeepFrontierArt/DFArtTimber", player reports 2026-11-04).
-          buildMacAssetBundle: true,
+          buildMacAssetBundle: buildBundles,
           deleteFiles: false,
           buildZipArchive: false,
           compatibilityVersion: "1.1");
       if (!new ModBuilder(new[] { mod }, settings).Build()) {
         throw new InvalidOperationException("The official Deep Frontier build failed. See the Unity build log.");
       }
-      // The official bundle builder does not propagate a failed BuildAssetBundles
-      // return value. Reject an incomplete package before reporting success.
       var bundles = Path.Combine(ModDirectories.ModsDirectory, mod.Name, "version-1.1", "AssetBundles");
-      foreach (var platform in new[] { "win", "mac" }) {
-        var bundle = Path.Combine(bundles, "deepfrontier_" + platform);
-        if (!File.Exists(bundle) || new FileInfo(bundle).Length == 0)
-          throw new InvalidOperationException("The official build produced no asset bundle: " + bundle);
+      if (buildBundles) {
+        // The official bundle builder does not propagate a failed BuildAssetBundles
+        // return value. Reject an incomplete package before reporting success.
+        foreach (var platform in new[] { "win", "mac" }) {
+          var bundle = Path.Combine(bundles, "deepfrontier_" + platform);
+          if (!File.Exists(bundle) || new FileInfo(bundle).Length == 0)
+            throw new InvalidOperationException("The official build produced no asset bundle: " + bundle);
+        }
+      } else if (Directory.Exists(bundles)) {
+        throw new InvalidOperationException("Asset bundles were not built (-modBundles reuse), yet the package has " + bundles);
       }
       // Every asmdef other than the main DeepFrontier one is an optional-mod integration named
       // DeepFrontier.<ModId> (tools/validate_mod_dependencies.mjs checks each ModId is in the
@@ -62,7 +69,17 @@ namespace Timberborn.ModdingTools.ModBuilding {
           throw new InvalidOperationException("Optional assembly " + asmdef + " must be named " + OptionalPrefix + "<ModId>");
         PackageOptionalAssembly(mod.Name, name + ".dll", name + ".dll." + name.Substring(OptionalPrefix.Length) + ".optional");
       }
-      Debug.Log("[DeepFrontier] Official Mod Builder completed successfully.");
+      Debug.Log("[DeepFrontier] Official Mod Builder completed successfully" + (buildBundles ? "." : " (code only; -modBundles reuse)."));
+    }
+
+    // -modBundles build|reuse, required: the build scripts decide from the bundle inputs' fingerprint.
+    private static bool BundlesRequested() {
+      var args = Environment.GetCommandLineArgs();
+      int index = Array.IndexOf(args, "-modBundles");
+      string mode = index >= 0 && index + 1 < args.Length ? args[index + 1] : null;
+      if (mode == "build") return true;
+      if (mode == "reuse") return false;
+      throw new InvalidOperationException("Pass -modBundles build or -modBundles reuse (tools/UnityBundleCache.ps1).");
     }
 
     // Moddable Timberborn's OptionalModsLoader loads Scripts/<name>.dll.<ModId>.optional

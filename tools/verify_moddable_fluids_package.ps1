@@ -8,6 +8,7 @@ param()
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+. (Join-Path $PSScriptRoot 'UnityBundleCache.ps1')
 $dev = Get-DevEnvironment 'timberbornDocuments','python'
 $output = Join-Path $root 'outputs/fluids-api-prototype'
 $installed = Join-Path $output 'packages/ModdableFluids/version-1.1'
@@ -25,6 +26,13 @@ foreach ($name in $apiNames) {
 foreach ($platform in 'win','mac') {
   if ((Get-FileHash -LiteralPath (Join-Path $installed "AssetBundles/moddablefluids_$platform")).Hash -ne $package.assemblies."moddablefluids_$platform") { throw "Kept $platform shader bundle differs from the recorded official build." }
 }
+# Exactly the shader variants the game draws (tools/unity/ModShaderVariantStripping.cs, docs/unity-build-performance.md).
+& $dev.python (Join-Path $root 'tools/asset-pipeline/check_bundle_shaders.py') --win (Join-Path $installed 'AssetBundles/moddablefluids_win') `
+  --mac (Join-Path $installed 'AssetBundles/moddablefluids_mac') --expect 'ModdableFluids/FluidWaterURP_Opaque' 'ModdableFluids/FluidWaterURP_Transparent'
+if ($LASTEXITCODE -ne 0) { throw 'The kept shader bundles do not hold exactly the variants the game can draw.' }
+# The kept AssetBundles folder is byte for byte the cached one of the fingerprint the build recorded (tools/UnityBundleCache.ps1).
+$bundleRecord = Assert-BundlesMatchCache -Entry (Get-BundleCacheEntry -Root $root -Mod 'ModdableFluids' -Variant 'default') -Directory (Join-Path $installed 'AssetBundles')
+if ($package.bundles.fingerprint -ne $bundleRecord.fingerprint) { throw "package-report.json records bundle fingerprint $($package.bundles.fingerprint); the cache holds $($bundleRecord.fingerprint)." }
 $fixtures = @('ModdableFluidsSyntheticReflection','ModdableFluidsSyntheticCompiled')
 $fixtureDlls = @()
 foreach ($id in $fixtures) {

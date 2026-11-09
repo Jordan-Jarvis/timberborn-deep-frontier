@@ -29,12 +29,15 @@ namespace Timberborn.ModdingTools.ModBuilding {
       foreach (var target in new[] { BuildTarget.StandaloneWindows64, BuildTarget.StandaloneOSX })
         if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.Standalone, target))
           throw new InvalidOperationException("Install Unity build support for " + target + " before building Moddable Fluids bundles.");
+      // -modBundles reuse: the API's bundle inputs match those of the last verified build (tools/UnityBundleCache.ps1),
+      // whose bundles tools/build_moddable_fluids.ps1 installs after this one; only the code is built.
+      bool buildBundles = BundlesRequested();
       var all = new ModFinder().GetAllMods().ToArray();
       foreach (string name in names) {
         var mod = all.Single(value => value.Name == name);
         // Only the API has Unity assets: the shared-rendering shader variants. More Fluids ships its Data, which the
         // official AssetsCopier copies as authored into the package root (tools/build_moddable_fluids.ps1 compares it file by file).
-        bool bundles = name == "ModdableFluids";
+        bool bundles = buildBundles && name == "ModdableFluids";
         var settings = new ModBuilderSettings(buildCode: true, buildWindowsAssetBundle: bundles,
           buildMacAssetBundle: bundles, deleteFiles: true, buildZipArchive: false, compatibilityVersion: "1.1");
         if (!new ModBuilder(new[] { mod }, settings).Build()) throw new InvalidOperationException("Official Moddable Fluids build failed for " + name);
@@ -51,8 +54,20 @@ namespace Timberborn.ModdingTools.ModBuilding {
             var bundle = Path.Combine(directory, "AssetBundles", "moddablefluids_" + platform);
             if (!File.Exists(bundle) || new FileInfo(bundle).Length == 0) throw new InvalidOperationException("The official build produced no asset bundle: " + bundle);
           }
+        else if (Directory.Exists(Path.Combine(directory, "AssetBundles")))
+          throw new InvalidOperationException("Asset bundles were not built for " + name + ", yet its package has an AssetBundles folder");
       }
-      Debug.Log("[ModdableFluids] Official Mod Builder completed: " + string.Join(", ", names));
+      Debug.Log("[ModdableFluids] Official Mod Builder completed: " + string.Join(", ", names) + (buildBundles ? "" : " (code only; -modBundles reuse)"));
+    }
+
+    // -modBundles build|reuse, required: tools/build_moddable_fluids.ps1 decides from the bundle inputs' fingerprint.
+    private static bool BundlesRequested() {
+      var args = Environment.GetCommandLineArgs();
+      int index = Array.IndexOf(args, "-modBundles");
+      string mode = index >= 0 && index + 1 < args.Length ? args[index + 1] : null;
+      if (mode == "build") return true;
+      if (mode == "reuse") return false;
+      throw new InvalidOperationException("Pass -modBundles build or -modBundles reuse (tools/UnityBundleCache.ps1).");
     }
   }
 }

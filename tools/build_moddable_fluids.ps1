@@ -17,11 +17,17 @@
 #                                                    # package and its staged authoring copies (2026-11-09 rename)
 # The build refuses to run while that legacy package is installed: it carries the old flag and
 # assembly names, so it would load beside the renamed package without being detected as a copy.
+#
+# Unity runs through tools/UnityProcess.ps1 (below-normal priority, two logical processors left free). The API's
+# shader bundles are built only when their inputs changed since the last verified build; otherwise that build's
+# bundles are installed and Unity builds the code alone (tools/UnityBundleCache.ps1, docs/unity-build-performance.md).
 param([switch]$SyntheticFixtures, [switch]$MoreFluids, [switch]$RemoveLegacyPackage)
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
-$dev = Get-DevEnvironment 'unity','workshopContent','timberbornDocuments'
+. (Join-Path $PSScriptRoot 'UnityProcess.ps1')
+. (Join-Path $PSScriptRoot 'UnityBundleCache.ps1')
+$dev = Get-DevEnvironment 'unity','workshopContent','timberbornDocuments','python'
 if (Get-Process Timberborn -ErrorAction SilentlyContinue) { throw 'Close Timberborn before replacing the Moddable Fluids package; the game loads every enabled mod DLL at startup.' }
 if (Get-CimInstance Win32_Process -Filter "Name='Unity.exe'" | Where-Object ExecutablePath -eq $dev.unity) { throw 'Close the Unity authoring editor (or wait for another official build) before the Moddable Fluids build.' }
 $project = Join-Path $root 'vendor/timberborn-modding'
@@ -100,9 +106,21 @@ Stage 'ModdableFluids' (Join-Path $source 'manifest.json') $api
 # Shared-rendering shader variants (tools/moddable_fluids_shader_variants.mjs) go into the API's bundles.
 & (Get-DevEnvironment 'node').node (Join-Path $PSScriptRoot 'moddable_fluids_shader_variants.mjs') --check
 if ($LASTEXITCODE -ne 0) { throw 'Moddable Fluids shader variants are stale; run node tools/moddable_fluids_shader_variants.mjs' }
+# Synchronised file by file, keeping Unity's .meta files (the GUIDs the bundles' object ids derive from), so unchanged
+# bundle inputs keep their fingerprint (tools/UnityBundleCache.ps1); staged files without a source go with their .meta.
 $stagedBundles = Join-Path $project 'Assets/Mods/ModdableFluids/AssetBundles'
-if (Test-Path -LiteralPath $stagedBundles) { Remove-Item -LiteralPath $stagedBundles -Recurse -Force }
-Copy-Item -LiteralPath (Join-Path $source 'AssetBundles') -Destination $stagedBundles -Recurse
+$sourceBundles = Join-Path $source 'AssetBundles'
+New-Item -ItemType Directory -Force -Path $stagedBundles | Out-Null
+Copy-Item -Path (Join-Path $sourceBundles '*') -Destination $stagedBundles -Recurse -Force
+$stagedBundlesFull = (Resolve-Path -LiteralPath $stagedBundles).Path.TrimEnd([IO.Path]::DirectorySeparatorChar)
+foreach ($file in Get-ChildItem -LiteralPath $stagedBundles -File -Recurse) {
+  $relative = $file.FullName.Substring($stagedBundlesFull.Length + 1)
+  $origin = if ($file.Extension -eq '.meta') { $relative.Substring(0, $relative.Length - 5) } else { $relative }
+  if (-not (Test-Path -LiteralPath (Join-Path $sourceBundles $origin))) { Remove-Item -LiteralPath $file.FullName -Force; Write-Output "Removed stale staged Moddable Fluids bundle file: $relative" }
+}
+Get-ChildItem -LiteralPath $stagedBundles -Directory -Recurse | Sort-Object { $_.FullName.Length } -Descending |
+  Where-Object { -not (Test-Path -LiteralPath (Join-Path $sourceBundles $_.FullName.Substring($stagedBundlesFull.Length + 1))) } |
+  ForEach-Object { Remove-Item -LiteralPath $_.FullName -Recurse -Force }
 # The tide system's texts (new-game rows, refusals) ship as the package's localization.
 $tideLocalization = Join-Path $source 'Tides/Localizations/enUS.csv'
 $stagedLocalizations = Join-Path $project 'Assets/Mods/ModdableFluids/Data/Localizations'
@@ -176,12 +194,18 @@ New-Item -ItemType Directory -Force -Path $dependencies | Out-Null
 Copy-Item -LiteralPath (Join-Path $dev.workshopContent '3284904751/0Harmony.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/0Harmony.dll.meta') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/ModdableFluidsBatchBuild.cs') -Destination (Join-Path $project 'Assets/Tools/Editor/Scripts/ModBuilding') -Force
+# Strips variants of our own shaders that the game never draws (docs/unity-build-performance.md).
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/ModShaderVariantStripping.cs') -Destination (Join-Path $project 'Assets/Tools/Editor/Scripts/ModBuilding') -Force
 $log = Join-Path $output 'official-build.log'
 New-Item -ItemType Directory -Force -Path $output | Out-Null
 $method = if ($SyntheticFixtures -and $MoreFluids) { 'BuildWithSyntheticFixturesAndMoreFluids' } elseif ($SyntheticFixtures) { 'BuildWithSyntheticFixtures' } elseif ($MoreFluids) { 'BuildWithMoreFluids' } else { 'Build' }
-$process = Start-Process -FilePath $dev.unity -WindowStyle Hidden -PassThru -ArgumentList @(
+$cache = Get-BundleCacheEntry -Root $root -Mod 'ModdableFluids' -Variant 'default'
+$inputs = Get-BundleInputs -Project $project -Mod 'ModdableFluids' -Variant 'default' -Unity $dev.unity
+$reuse = Test-BundleCacheHit -Entry $cache -Inputs $inputs
+$process = Start-UnityProcess -FilePath $dev.unity -Hidden -ArgumentList @(
   '-batchmode','-nographics','-quit','-disable-assembly-updater','-projectPath',('"'+$project+'"'),
-  '-executeMethod',"Timberborn.ModdingTools.ModBuilding.ModdableFluidsBatchBuild.$method",'-logFile',('"'+$log+'"'))
+  '-executeMethod',"Timberborn.ModdingTools.ModBuilding.ModdableFluidsBatchBuild.$method",
+  '-modBundles',$(if ($reuse) { 'reuse' } else { 'build' }),'-logFile',('"'+$log+'"'))
 # From here on the builder may have installed packages into Mods. Any failure moves every package this build
 # produces out of Mods (into outputs/fluids-api-prototype/failed-build/<time>) before rethrowing, so nothing stays installed.
 $builtIds = @('ModdableFluids') + $(if ($SyntheticFixtures) { $fixtures | ForEach-Object { $_.Id } } else { @() }) + $(if ($MoreFluids) { @('MoreFluids') } else { @() })
@@ -200,7 +224,14 @@ function Evacuate {
 try {
 $process.WaitForExit()
 if ($process.ExitCode -ne 0) { throw "Official Moddable Fluids build failed. See $log" }
+Write-Output 'Shader variant stripping (tools/unity/ModShaderVariantStripping.cs):'
+Get-ShaderStrippingSummary $log
 $installed = Package 'ModdableFluids'
+$builtInputs = Get-BundleInputs -Project $project -Mod 'ModdableFluids' -Variant 'default' -Unity $dev.unity
+if ($reuse) {
+  Assert-BundleInputsUnchanged -Entry $cache -Before $inputs -After $builtInputs
+  Install-CachedBundles -Entry $cache -Destination (Join-Path $installed 'AssetBundles')
+}
 function Keep([string]$id) {
   $kept = Join-Path $output ('packages/' + $id)
   if (Test-Path -LiteralPath $kept) { Remove-Item -LiteralPath $kept -Recurse -Force }
@@ -216,11 +247,15 @@ foreach ($platform in 'win','mac') {
   if (-not (Test-Path -LiteralPath $bundle) -or (Get-Item -LiteralPath $bundle).Length -eq 0) { throw "The official build produced no $platform shader bundle." }
   $apiHashes["moddablefluids_$platform"] = (Get-FileHash -LiteralPath $bundle).Hash
 }
+& $dev.python (Join-Path $root 'tools/asset-pipeline/check_bundle_shaders.py') --win (Join-Path $installed 'AssetBundles/moddablefluids_win') `
+  --mac (Join-Path $installed 'AssetBundles/moddablefluids_mac') --expect 'ModdableFluids/FluidWaterURP_Opaque' 'ModdableFluids/FluidWaterURP_Transparent'
+if ($LASTEXITCODE -ne 0) { throw 'The shader bundles do not hold exactly the variants the game can draw (tools/asset-pipeline/check_bundle_shaders.py).' }
 $packagedLocalization = @(Get-ChildItem -LiteralPath $installed -Recurse -File -Filter 'enUS.csv' | Where-Object { $_.Directory.Name -eq 'Localizations' })
 if ($packagedLocalization.Count -ne 1 -or (Get-FileHash -LiteralPath $packagedLocalization[0].FullName).Hash -ne (Get-FileHash -LiteralPath $tideLocalization).Hash) {
   throw 'The official Moddable Fluids package must hold exactly the tide localization src/ModdableFluids/Tides/Localizations/enUS.csv.' }
 $apiHashes['Localizations/enUS.csv'] = (Get-FileHash -LiteralPath $tideLocalization).Hash
 $report = [ordered]@{ status='passed'; package=(Keep 'ModdableFluids'); version=$version; assemblies=$apiHashes }
+$keptBundles = Join-Path $report.package 'version-1.1/AssetBundles'
 if ($SyntheticFixtures) {
   $report.fixtures = [ordered]@{}
   foreach ($fixture in $fixtures) {
@@ -241,6 +276,10 @@ if ($MoreFluids) {
   if ($extra.Count -ne 0) { throw "Official More Fluids package holds more than its manifest, Scripts and Data: $($extra.Name -join ', ')" }
   $report.moreFluids = [ordered]@{ package=(Keep 'MoreFluids'); assemblies=$hashes; dataFiles=$expectedData.Count; art=@(MoreFluidsArt).Count }
 }
+# Verified: a fresh build's bundles are cached; the kept package's bundles are the cached ones either way.
+if (-not $reuse) { Save-BundleCache -Entry $cache -Inputs $builtInputs -Source $keptBundles }
+$bundleRecord = Assert-BundlesMatchCache -Entry $cache -Directory $keptBundles -Inputs $builtInputs
+$report.bundles = [ordered]@{ reused=[bool]$reuse; fingerprint=$bundleRecord.fingerprint; cache=$cache }
 $report | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $output 'package-report.json')
 } catch { Evacuate; throw }
 Write-Output "Official Moddable Fluids packages verified and kept out of the Mods folder under $(Join-Path $output 'packages'). Log: $log"

@@ -2,6 +2,7 @@ param([Parameter(Mandatory=$true)][int]$Build)
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
+. (Join-Path $PSScriptRoot 'UnityBundleCache.ps1')
 $dev = Get-DevEnvironment 'python'
 $data = Join-Path $root 'src\DeepFrontier\Data'
 $installed = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Timberborn\Mods\DeepFrontier\version-1.1'
@@ -54,6 +55,13 @@ foreach ($platform in 'win', 'mac') {
   if ($LASTEXITCODE -ne 0) { throw "The installed $platform bundle failed platform, material or stockpile-mesh validation." }
   $bundles.Add([pscustomobject]@{ platform=$platform; bytes=(Get-Item -LiteralPath $bundle).Length; sha256=(Get-FileHash -LiteralPath $bundle -Algorithm SHA256).Hash })
 }
-$report = [pscustomobject]@{ bundles=$bundles; build=$Build; checkedAt=(Get-Date -Format o); status='all-authored-files-match-installed-package'; count=$checked.Count; files=$checked }
+# Exactly the shader variants the game draws (tools/unity/ModShaderVariantStripping.cs, docs/unity-build-performance.md).
+& $dev.python (Join-Path $root 'tools\asset-pipeline\check_bundle_shaders.py') --win (Join-Path $installed 'AssetBundles\deepfrontier_win') --mac (Join-Path $installed 'AssetBundles\deepfrontier_mac') `
+  --expect 'DeepFrontier/IrradiatedTerrainURP' 'DeepFrontier/RadioactiveWaterURP_Opaque' 'DeepFrontier/RadioactiveWaterURP_Transparent'
+if ($LASTEXITCODE -ne 0) { throw 'The installed bundles do not hold exactly the shader variants the game can draw.' }
+# The installed AssetBundles folder is byte for byte the one the last verified build cached with its inputs'
+# fingerprint (tools/UnityBundleCache.ps1): built then, or reused by a code-only build since.
+$bundleRecord = Assert-BundlesMatchCache -Entry (Get-BundleCacheEntry -Root $root -Mod 'DeepFrontier' -Variant 'default') -Directory (Join-Path $installed 'AssetBundles')
+$report = [pscustomobject]@{ bundles=$bundles; bundleFingerprint=$bundleRecord.fingerprint; bundlesBuiltAt=$bundleRecord.storedAt; build=$Build; checkedAt=(Get-Date -Format o); status='all-authored-files-match-installed-package'; count=$checked.Count; files=$checked }
 $report | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $root "outputs\restaurant-package-verification$Build.json") -Encoding utf8
 Write-Output "Build ${Build}: $($checked.Count) authored data/manifest/DLL hashes match the official installed package."
