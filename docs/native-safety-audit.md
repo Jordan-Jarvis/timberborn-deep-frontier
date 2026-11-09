@@ -1,0 +1,224 @@
+# Native safety audit (2026-11-09)
+
+Target: Timberborn **1.1.2.8**, Iron Teeth. Scope: `src/DeepFrontier` (main assembly and the optional `DeepFrontier.PowerLines`, `DeepFrontier.ModdableWeathers`, `DeepFrontier.SluiceIsBack` assemblies); `src/FluidsApi` is out of scope. Evidence is the shipped 1.1.2.8 assemblies, decompiled with `tools/dotnet/ilspycmd.exe` into a session scratch folder (never committed), and the shipped IL hashed with `System.Reflection.Metadata` (`NativeIl.Sha256` computes the same digest at run time).
+
+The user's request: many crashes this month came from Deep Frontier bending native systems (Harmony patches, reflection on private members, statics read during another singleton's Load, handlers subscribed before load replay, runtime shader/material swaps, runtime bot-skin textures, water/terrain array work, native job scheduling, extra worker-type toggles). This document lists every such place, decides for each whether a native extension point replaces it (a), whether it stays and is made robust (b), or whether it should be removed or simplified (c, proposals only; no gameplay feature was removed).
+
+## Summary
+
+| Category | Count | Decision |
+| --- | --- | --- |
+| Harmony patch ids (shipping) | 42 ids, 94 patched native methods (8 of them radioactive tide UI getters); 5 hooks patch other mods (Moddable Recipes `InitInventoryForRecipe` ×3, Sluice is Back! ×2, Teleporter Station ×2) | (b) all: installed once at mod start through `NativePatches.Install` after a startup check; 11 replace a native body and pin its 1.1.2.8 IL hash. No native extension point preserves behavior for any of them (evidence per row). 6 proposals in (c). |
+| Harmony, diagnostic only | 1 id (`DeepFrontier.MemoryTrace`, `-deepFrontierMemoryTrace`) | (b) flag-gated, patches nothing in normal play; proposal C9 |
+| Reflection by name on non-public members outside patches | 12 features (table R) | (b) all checked at mod start: `NativeContracts` (6 new), their own `IModStarter` or a patch's verify |
+| Compiled access to non-public members (publicized reference assemblies) | 198 references: 55 fields, 75 methods, 68 types in 35 game assemblies, from 93 Deep Frontier types (30 of them acceptance/diagnostic code) | (b) `tools/native_access_baseline.json` + `native-access` check: none missing in the installed game, no unaudited addition; runtime check proposed (C8) |
+| Runtime mutation of native assets | 9 places (table M) | (b) 7 kept as they are robust or own their copies; 2 small leaks noted; proposals C2, C3 |
+| Writes into native simulation state or scheduling | 9 places (table S) | (b) public services or verified, read-only lockstep; proposal none beyond C2 |
+| Static mutable state | 16 owners/caches (table T) | (b) 6 fixed (scene owners at construction, cleared in Unload; per-scene caches) |
+| Lifecycle-order dependencies | 15 places (table L) | (b) 12 fixed (Awake subscriptions, Load-time patching, Load-time statics); 3 documented as native-guaranteed and checked |
+
+## Rules now enforced
+
+`tools/validate_native_safety.mjs` (in `validate_all` as `native_safety`) fails when:
+
+1. A file other than `Scripts/NativePatches.cs` creates a Harmony instance, or a `CreateClassProcessor`/`harmony.Patch` call sits outside a `NativePatches.Install(...)` call (exception: the flag-gated `MemoryTrace.cs` diagnostic).
+2. An `Install` has no real startup check (null, an empty lambda, or a method that resolves nothing that can fail).
+3. A Harmony id or patch class is missing from this document, or a `[HarmonyPatch]` class is not installed by any `Install`.
+4. A static `Current`/`Instance` owner is assigned anywhere but its constructor (set) or `Unload` (cleared); a singleton `Load`/`PostLoad` assigns a static member of its class; a `Load` that calls `X.Attach`/`X.Load` lacks the matching `X.Detach`/`X.Unload` in `Unload`.
+5. An `Awake` subscribes to an event (`+=`, `Register(...)`), unless the line carries `// native-safety: awake-subscription <reason>` and the class is listed here (one exception: `ReactorBotAssembler`, table L).
+6. A file reflects on native members by name (`AccessTools.Field/Method/...`, `GetField("...")`, `BindingFlags.NonPublic`, ...) and nothing checks those members at mod start (an `Install`, its own `IModStarter`, or `NativeContracts.cs`). Acceptance, probe and diagnostic code is exempt (command-line flags only).
+7. A patch method on a hot path (per tick, per frame, per hauler query; the `HOT` list) allocates: `new` of a reference type outside a `throw`, a lambda, string formatting or LINQ.
+
+`tools/test_native_access.ps1` (in `validate_all` as `native-access`) builds the four assemblies, runs `tools/compile-check/native-access` against the **shipped** (non-publicized) game assemblies and the pinned dependency DLLs, and fails on any reference missing from the installed game, any non-public reference not in `tools/native_access_baseline.json`, or any stale baseline entry. `-WriteBaseline` rewrites it after an audited change.
+
+Run time: `NativePatches.Install(id, verify, ...)` runs `verify` first, patches nothing if it throws, installs an id once per process, and rethrows any failure as `Deep Frontier <version> cannot start: its patch <id> does not fit this game (...). This Deep Frontier build supports Timberborn 1.1.2.8; the game reports <version>.` `NativeContracts` does the same for reflection outside patches. `ModCodeStarter` does not catch (decompiled `Timberborn.ModManagerScene.ModCodeStarter.StartMods`, called from `ModManagerScenePanel` without a handler), so a changed game stops at the mod screen with that message instead of failing mid-game.
+
+## Native lifecycle facts this relies on (decompiled 1.1.2.8)
+
+- `ModCodeStarter.Start` loads every enabled mod's assemblies, then calls every `IModStarter.StartMod` once per process; exceptions propagate.
+- Bindito `Scoper.WrapInInstanceCacher` instantiates every `AsSingleton` binding while the container is created; `SingletonListener.ThrowIfCollected` forbids singletons created after collection. So every scene singleton is constructed before `SingletonLifecycleService.LoadAll` runs any `Load`, and Loads run in construction (dependency) order.
+- `LoadAll` captures the `IUnloadableSingleton` list before the first `Load`; `SingletonLifecycleUnityAdapter.OnDestroy` calls `UnloadAll`, so `Unload` runs on scene teardown even when a `Load` threw (and then also for singletons whose `Load` never ran).
+- Entities: `Awake` → (loaded entities) `Load` → `PreInitializeEntity` → `InitializeEntity` → `PostInitializeEntity` → `PostLoadEntity` (`EntityComponent.InitializeIfUninitialized`). Native Loads replay state through events: `NeedManager.LoadNeed` raises `NeedChangedIsFavorable`/`NeedChangedActiveState`; `GoodCarrier.Load` raises `CarriedGoodsChanged`; `Manufactory.Awake` (`InitializeRecipes`) and `ManufactoryTogglableRecipes.InitializeEntity` call `SetRecipe` (`RecipeChanged`); `Worker.InitializeEntity` (`AssignToWorkplaceAfterLoad`) raises `GotEmployed`; `Character.PreInitializeEntity` runs `IChildhoodInfluenced.InfluenceByChildhood`.
+
+## Table H: Harmony patches
+
+Hook kinds: pre = prefix, post = postfix, **replace** = prefix that returns false and re-implements the native body for Deep Frontier entities only (its 1.1.2.8 IL hash is pinned), skip = prefix that returns false without re-implementing, tr = transpiler, fin = finalizer. Every row is installed at mod start through `NativePatches.Install`; "Check" lists what the startup verify adds beyond member existence (all check member names, signatures and the private fields bound by name).
+
+| Id (file:line of Install) | Native target(s), hook | Why (extension gap) | Native alternative checked (evidence) | Risk | Decision / check |
+| --- | --- | --- | --- | --- | --- |
+| `DeepFrontier.RawOreScavenging` (RawOreScavenging.cs:23) `RawOreScavenging` | internal `ScavengerYielderRetriever.TryGetYielder`, post | Scavenger Flag harvests the raw ore outcrop | `RuinsConfigurator` decorates the retriever on `ScavengerSpec`; `InRangeYielders` reads the single `IYielderRetriever` with `GetComponent`, so a second retriever cannot be added without a new flag building (no new buildings) | Low | (b) parameter names; interface call never inlined |
+| `DeepFrontier.RestaurantKitchen` (RestaurantKitchenInventory.cs:22) `RestaurantKitchenInventory`, `RestaurantKitchenRecipeCompatibility` | `ManufactoryInventoryInitializer.Initialize` **replace** (Restaurant); Moddable Recipes `ManufactoryPatches.InitInventoryForRecipe` skip (Restaurant) | table-service stock, one persistent menu | `WorkshopsTemplateModuleProvider.AddDedicatedDecorator(_manufactoryInventoryInitializer)`: the Manufactory's Inventory is built by one fixed initializer; a second dedicated decorator adds a second Inventory (single-inventory rule) | Medium (load path) | (b) IL `f5e23601…` pinned; MR static method shape |
+| `DeepFrontier.StackableBaseLoadOrder` (Waterside/StackableBaseLoadOrder.cs:62) `StackableBaseLoadOrder` | private static `BlockObjectBatchLoader.GetHighestOccupation`, post | deck slabs below BaseZ load before what stands on them | load order comes from occupation classes in `AddToServices`; blueprint data cannot express it (comment in file) | Medium (save load) | (b) static, parameter name, size |
+| `DeepFrontier.StackableTopBlockExemption` (StackableTopBlockExemption.cs:32) `StackableTopBlockExemption` | private `BlockObjectBelowBlocker.FillBlockableObjectsBelow` **replace** | buildings on stackable decks don't block the building below | native blocker blocks every blockable below; no per-cell exemption | Medium | (b) IL `8ada1640…` pinned; three fields |
+| `DeepFrontier.RestaurantPanel` (RestaurantPanel.cs:131) `InventoryList`, `Progress` | `ManufactoryInventoryFragment.UpdateFragment`, `ProductionProgressFragment.UpdateFragment`, post | hide the native panels the restaurant panel replaces | `WorkshopsUIConfigurator` adds both fragments for every Manufactory; no per-template filter | Low (UI) | (b) private `_manufactory`/`_root` (read directly) checked |
+| `DeepFrontier.RestaurantLateShift` (RestaurantLateShift.cs:26) `RestaurantLateShift` | `WorkerWorkingHours.AreWorkingHours` getter, post | restaurant staff work into free time | one global `WorkingHoursManager`; no per-workplace hours | Medium (hot: every worker check) | (b) field refs now resolved at start (were lazy static initializers in the hot getter); `WorkingHoursManager.AreWorkingHours` IL pinned; getter kept above the inline limit (22 > 20 bytes) |
+| `DeepFrontier.PowerPlantSaveMigration` (PowerPlantSaveMigration.cs:25) `PowerPlantSaveMigration` | `GoodConsumingBuilding.Load` skip (3 templates, component absent) | pre-193 saves of plants/school as workshops | `Load` reads its key unconditionally; no save-migration hook | Low | (b) native component key; proposal C7 |
+| `DeepFrontier.MineFootprintSaveMigration` (MineFootprintSaveMigration.cs:50) `MineFootprintSaveMigration` | `BlockObject.AddToServiceAfterLoad`, pre | old mine/quarry footprints onto their deposit | no native placement migration API | Medium (save load) | (b) `AddToServiceAfterLoad` validates with `IsValid`; private `UpdateValues(Placement)`; proposal C7 |
+| `DeepFrontier.FlippedFootprintSaveMigration` (FlippedFootprintSaveMigration.cs:98) `FlippedFootprintSaveMigration` | same, pre | flipped buildings from saves with another width | same | Medium | (b) same; `SavedFootprintVersion` now cleared on unload; proposal C7 |
+| `DeepFrontier.BuildingPassages` (BuildingPassages.cs:279) `PassageEdgeBlocking`, `PassageObstacles`, `PassageAccess` | internal `NavMeshSource.BlockEdge`/`UnblockEdge` skip (own group), internal `DistrictObstacleService.IsSetObstacle` post, `Accessible.SetAccesses` pre | touching buildings share insides | building nav blocking closes every inner edge; no per-group exemption, obstacle override or doorstep access provider | High (navigation everywhere) | (b) parameter names; internal `NodeIdService` handles now resolved at start; scene state moved from statics to a scene owner (was read stale by the next scene's load) |
+| `DeepFrontier.InventoryEnableGuard` (InventoryEnableGuard.cs:38) `InventoryEnableGuard` | `Inventory.Enable` skip when enabled | Moddable Recipes 11.0.0 double-Enable bug | bug is in MR | Medium (global, every inventory) | (b); proposal C6 |
+| `DeepFrontier.ModdableRecipesEnabledState` (InventoryEnableGuard.cs:82) `ModdableRecipesEnabledState` | MR `InitInventoryForRecipe` pre (first) + post (last) | restores the enabled state MR changed | bug is in MR | Medium | (b) shapes of the two other DF hooks on that method; proposal C6 |
+| `DeepFrontier.BuiltinMapHeight` (MapSetup/BuiltinMapHeight.cs:46) `CaptureNewGameWorld`, `WriteMapHeight` | `GameSceneSerializedWorldSupplier.Load` post, `MapSize.Load` pre | build height of new games on built-in maps (Map Transformer key) | `MapSizeSpec` is global; no per-map hook | Medium (new game) | (b) fields and the constructor chain that orders the two Loads; handoff now on a Game-scene owner |
+| `DeepFrontier.Cryogenics` (Cryogenics/CryogenicsPatches.cs:12) `CryogenicIntakeGatePatch` | `InventoryInitializer.Initialize`, pre | cryogenic stockpile intake gate | `AddGoodDisallower` keeps one disallower; no composition | Medium | (b) `_goodDisallower`; target not inlinable |
+| `DeepFrontier.ShieldedRadioactiveStorage` (Radiation/ShieldedRadioactiveStoragePatches.cs:14) `ShieldedStorageInventoryPatch`, `ShieldedStorageSelectionPatch` | `InventoryInitializer.Initialize` pre; internal `StockpileDropdownProvider.InitializeEntity` post | shielded storage goods; hide radioactive water in the picker | `StockpileInventoryInitializer` selects by GoodType only | Medium | (b) every private field bound by name |
+| `DeepFrontier.RadioactiveZombieTint` (Radiation/RadioactiveZombieTint.cs:30) `CitizenTintUpdatePatch` | internal `CitizenTint.UpdateTint`, post | zombie tint survives district/name tint updates | `CitizenTint` is the only writer of `CharacterTint`, no layering | Low | (b) target not inlinable |
+| `DeepFrontier.HospitalPantryInventory` (HospitalPantryInventory.cs:25) `HospitalPantryInventory` | internal `GoodConsumingBuildingInventoryInitializer.Initialize` **replace** (Hospital) | patient meals join the native inventory | `GoodConsumingBuildingSystemConfigurator` adds the inventory with one dedicated decorator initializer | Medium (load path) | (b) IL `c6235334…` pinned |
+| `DeepFrontier.SchoolSupplyInventory` (Workforce/SchoolSupplyInventory.cs:25) `SchoolSupplyInventory` | same, **replace** (Technical School) | school as its inventory's disallower | same | Medium | (b) same IL pinned |
+| `DeepFrontier.HospitalMedicalSupplies` (HospitalMedicalSupplies.cs:22) `HospitalSupplyAvailability`, `HospitalSupplyAcquisition`, `HospitalSupplyConsumption`, `HospitalMedicalEffects`, `HospitalSupplyHours` | `GoodConsumingBuilding.CanUseInternal`/`HasSupplies`/`ConsumeSupplies` **replace**, `Attraction.GetEfficiencyAdjustedEffects` **replace** (Hospital); `GoodConsumingBuilding.HoursUntilNoSupply` post (per-treatment supplies, in progress 2026-11-09) | condition-specific supplies | GoodConsumingBuilding toggles are whole-building | High (hot: every consumer and attraction per tick) | (b) four IL hashes pinned; hot-path rule |
+| `DeepFrontier.HospitalMedicalVisits` (HospitalMedicalVisits.cs:24) `HospitalMedicalOffer`, `HospitalMedicalStay` | `AttractionNeedBehavior.ActionPosition` post, private `MaxValueNeedsAreActive` post | no offer/stay for untreatable needs | attraction offers every effect need while usable | Medium (hot) | (b) private target not inlinable; hot-path rule |
+| `DeepFrontier.BotMaintenanceInventory` (Workforce/BotMaintenanceInventory.cs:37) `BotMaintenanceInventory`, `BotMaintenanceRecipeCompatibility`, `WorkplaceInventoryRows` | `ManufactoryInventoryInitializer.Initialize` **replace**; MR `InitInventoryForRecipe` post; `InventoryRowUpdater.AddRecipeRows` **replace** | oils and upkeep goods in the manufactory inventory | dedicated decorator (as above); row classification hard-coded | Medium | (b) two IL hashes pinned; registry fields |
+| `DeepFrontier.SchoolSupplyPanel` (Workforce/SchoolSupplyPanel.cs:38) `SchoolSupplyFragmentPatch`, `SchoolSupplyDescriberPatch` | `GoodConsumingBuildingFragment.UpdateFragment` post, internal `GoodConsumingBuildingDescriber.DescribeEntity` post | school panel shows the taught profession only | no per-entity filter | Low (UI) | (b) |
+| `DeepFrontier.Workforce` (Workforce/WorkforcePatches.cs:16) `BotWearDeteriorationPatch`, `SpecialistWorkplaceRegistrationPatch`, `SpecialistWorkplaceUnregistrationPatch` | `Deteriorable.Tick` pre; internal `DistrictWorkplaceAssigner.OnFinishedBuildingRegistered`/`Unregistered` skip | heavy-industry bot wear; specialist-only staffing | `Deteriorable` has no rate API; the assigner knows worker types only | Medium (hot tick; staffing) | (b) fields and handler parameter names now checked |
+| `DeepFrontier.ReactorBots` (SuperBots/ReactorBotPatches.cs:27) `ReactorBotSpeedPatch`, `ReactorBotLifespanPatch` | `WalkerSpeedManager.Tick` post, `Deteriorable.Tick` pre | Reactor Bot ×4 speed and lifespan | speed: `BonusTypeSpec.MaximumValue` (data) caps `MovementSpeed` at 2, see A1; lifespan: no rate API | Medium (hot) | (b); A1 candidate |
+| `DeepFrontier.ReactorBotWorkplaces` (SuperBots/ReactorBotWorkplacePatches.cs:72) `ReactorBotWorkplacePatches` | `WorkerTypeToggle.Initialize` post (rebuilds the native toggle), internal `DistrictCenterFragment.InitializeFragment` post, internal `UnemployedWorkers.UpdateUnemployedState` pre, `PriorityOrderedWorkplaces.GetHighestPriorityUnderstaffedWorkplace`/`GetLowestPriorityStaffedWorkplace` post, `WorkplaceWorkerType.SetWorkerTypeToDistrict` pre+post | the third "Reactor Bots" worker type | worker types are the fixed strings Beaver/Bot (`WorkerTypeHelper`) across UI and assigners; no third type | High (UI rebuild via reflection, hiring) | (b) IL call-shape checks (two items, factory, callers); targets resolved before any patch; proposal C1 |
+| `DeepFrontier.ContaminationSensor` (Sensors/ContaminationSensorPatches.cs:32) `ContaminationSensorMeasurementPatch` | private `ContaminationSensor.GetContamination`, post | radiation/any-contamination sensing | measured value has no extension point | Low | (b) IL call checks, size |
+| `DeepFrontier.WeatherStation` (WeatherStations/WeatherStationPatches.cs:50) `WeatherStationSamplePatch`, `WeatherStationOutputPatch`, `WeatherStationFragmentInitializePatch`, `WeatherStationFragmentUpdatePatch` | `WeatherStation.Sample` pre, private `UpdateOutputState` skip in tide mode, internal `WeatherStationFragment.InitializeFragment`/`UpdateFragment` post | Radioactive tide mode | closed `WeatherStationMode` enum | Low | (b) enum values, IL calls, container name |
+| `DeepFrontier.SluiceIsBack` (SluiceIsBack/SluiceContaminationPatches.cs:34) `SluiceMeasurementPatch`, `SluiceStateSynchronizationPatch` | Sluice is Back! 11.0.0 `Sluice.GetContamination` post, `SluiceState.SetState` post | optional-mod contamination choice | the mod has no extension point | Low (optional assembly) | (b) IL call checks |
+| `DeepFrontier.RadioactiveTide` (RadioactiveTide/RadioactiveTidePatches.cs:50) `RadioactiveTideSelectionPatch`, `RadioactiveTideRestorePatch`, `RadioactiveTideUiSpecificationPatch`, `RadioactiveTideUiTextPatch`, `RadioactiveTideStartSoundPatch` | `HazardousWeatherRandomizer.GetRandomWeatherForCycle` post, `HazardousWeatherService.Load` post, `HazardousWeatherUIHelper.UpdateCurrentUISpecification` skip, 8 helper getters skip, internal `HazardousWeatherSoundPlayer.OnHazardousWeatherStarted` skip (tide only) | a third hazardous weather (vanilla path; not applied with Moddable Weathers) | weather is not a registry: drought/badtide are constructor arguments; the service saves `IsDrought` only | High (save load, every cycle) | (b); proposal C5 |
+| `DeepFrontier.RadioactiveTideNewGame` (RadioactiveTide/RadioactiveTideNewGamePatch.cs:32) `RadioactiveTideNewGamePatch` | `CustomNewGameModeController.TryGetValidatedGameMode`, post | custom-mode tide settings | custom `GameModeSpec` built inside that method only | Low | (b) |
+| `DeepFrontier.IrradiatedPlantingSpots` (Radiation/IrradiatedPlantingSpots.cs:69) `IrradiatedPlantingSpotsPatch` | internal `PlantingSpotFinder.CanPlantAt`, post | planters skip irradiated ground | `PlantingSoilValidator` internal, `IPlantingSpotValidator` single component, `ISpawnValidator` only for spreading | Medium (hot) | (b) IL call graph, size, decorator wiring |
+| `DeepFrontier.StatusIconAnchor` (StatusIconAnchor.cs:34) `StatusIconAnchor` | private `BuildingStatusIconOffsetter.GetFinishedTopBound`/`GetUnfinishedTopBound`, post | icon over the body, not the chimney | offset from renderer bounds, no spec | Low | (b) IL calls, size, `FinishedOffset` |
+| `DeepFrontier.SteelDeckPlacerClaim` (SteelStructures/SteelDeckPlacerClaim.cs:42) `SteelDeckPlacerClaim` | `BuildingPlacer.CanHandle`, post | steel deck tool's own placer | `GetMatchingPlacer` uses `SingleOrDefault`; `BuildingPlacer` claims every `BuildingSpec` | Low | (b) callee and `SingleOrDefault` checks |
+| `DeepFrontier.PowerGraphReorganizer` (Performance/PowerGraphReorganizer.cs:39) `PowerGraphReorganizer` | internal `MechanicalGraphReorganizer.VisitConnectedNodes` **replace** | quadratic network split froze large networks | native performance bug | Medium | (b) whole-type IL digest |
+| `DeepFrontier.PreviewNavMesh` (PreviewNavMesh/PreviewNavMeshCache.cs:145) `PreviewNavMeshCache` | internal `BlockObjectPreviewNavMesh.AddToPreviewService`/`RemoveFromPreviewService` pre, `PreviewPlacer.PopulateBuildablePreviewsAndAddToBlockServices` pre+fin | huge-preview frame cost | native rebuilds per frame | High (complex state) | (b) IL hashes of 9 methods + 2 types; proposal C4 |
+| `DeepFrontier.PreviewAccess` (PreviewNavMesh/PreviewAccessCache.cs:79) `PreviewAccessCache` | `ConstructionSiteAccessible.OnPreviewSelect`, pre | same | same | Medium | (b) IL hashes; MinZ/MaxZ via typed delegates (was per-frame boxing); proposal C4 |
+| `DeepFrontier.PositionedBlocksIndex` (PreviewNavMesh/PositionedBlocksIndex.cs:41) `PositionedBlocksIndex` | `PositionedBlocks.TryGetBlock`/`HasBlockAt`/`HasStackableBlockAt`, pre | linear scans on 6,600-block buildings | native performance | Medium (global, hot) | (b) type IL digest; proposal C4 |
+| `DeepFrontier.PrefabMeshRelease` (PrefabMeshRelease.cs:78) `PrefabMeshRelease` | internal `PrefabOptimizationChain.ProcessPrefab` pre+fin, five internal optimizers `Optimize` pre+post, `TimbermeshImporter.ProcessModel` post | GBs of orphaned meshes during load | native chain never destroys replaced meshes | Medium (destroys native-created meshes; table M) | (b) all targets verified before the first patch (was: first target patched before the rest were checked); private fields read directly checked |
+| `DeepFrontier.RadiationLockstep` (Radiation/RadiationLockstep.cs:50) `SubstepPatch`, `SourcesPatch`, `ChangesPatch`, `ChangeQueuePatch` | internal `WaterSimulationTaskStarter.ScheduleSimulationSteps` post, internal `UpdateWaterSourcesTask.Run` pre, `UpdateWaterChangesTask.Run` pre+post, internal `WaterChangeService.Tick` post | radioactive share in lockstep with native water | contamination has one channel (badwater) | High (native job scheduling, worker threads) | (b) now installed at mod start (was lazily by the first scene Load); signatures, fields, `SubstepCount == 2` |
+| `DeepFrontier.RadiationSoil` (Radiation/RadiationSoil.cs:569) `MoisturePatch` | internal `SoilMoistureSimulationTaskStarter.StartTask`, pre | moisture tasks see b + r | same | High (worker threads) | (b) installed at mod start; parameter shape |
+| `DeepFrontier.TeleporterCitizenRecovery` (TeleporterCitizenRecovery.cs:38) `TeleporterCitizenRecovery` | Teleporter Station 0.5.1 `TeleporterNetwork.SafeRestoreStrandedDistricts`/`LandOffMeshCharacters`, tr | dead characters hired (negative unemployment) | bug in Teleporter Station | Low (optional) | (b) now installed at mod start (was in a singleton Load, unpatched in Unload); one Character lookup per scan checked; proposal C6 |
+| `DeepFrontier.DebugBuildingVisibility` (DebugBuildingVisibility.cs:37) `DebugBuildingVisibility` | `BuildingsModelToggler.ToggleBuildingModel`, tr (two `SetActive` calls) | dev command disabled slots (crash) | no hook between model choice and activation | Low (dev command) | (b) now installed at mod start with a weak per-model table (was a scene owner that threw if a previous scene had not unloaded) |
+| `DeepFrontier.MemoryTrace` (MemoryTrace.cs:64), diagnostic | every Deep Frontier lifecycle method, `SingletonLifecycleService` loads, `PreviewFactory.Create` | memory investigation | none needed in play | None unless `-deepFrontierMemoryTrace` | (b) flag-gated; proposal C9 |
+
+## Table R: reflection by name outside patches
+
+| File | Native members | Use | Decision / startup check |
+| --- | --- | --- | --- |
+| Workforce/SpecialistSchool.cs | `Attraction.Effects`, `SatisfiesAnyNeedToMaxValue` (private setters), `AttractionNeedBehavior._districtNeedBehaviorService`, `GoodConsumingBuilding._goodConsumingBuildingSpec`, `_suppliesLeft`, `MaximumWorkingTime` setter | **writes** native component state when the taught profession changes | (b) `NativeContracts` (was a lazy type initializer at the first school load); proposal C3 |
+| DeepWell/DeepWell.cs | `GoodConsumingBuilding._goodConsumingBuildingSpec` | **writes** the consumer spec (drill-bit rate) | (b) `NativeContracts` |
+| Restaurant.cs (`RestaurantKitchenChooser`) | `Manufactory.ProductionProgress` setter, `_ingredientsConsumed`, `UpdateGoodRegistry` | **writes** batch progress when recipes are set aside | (b) `NativeContracts` |
+| SuperBots/ReactorBotWorkplace.cs (`NativeWorkerTypeAccess`) | `WorkplaceWorkerType.WorkerType` private setter, `_wasSet`, `WorkerTypeChanged` backing field | **writes** the worker type, raises the native event | (b) verified by `DeepFrontier.ReactorBotWorkplaces`; proposal C1 |
+| BuildingPassages.cs | `NavMeshService._nodeIdService`, `NodeIdService.GridToId`/`Contains`, `BuildingAccessible.EnableAccesses` | node ids, native access restore | (b) moved from a static initializer and `PostLoad` to the patch verify |
+| Radiation/RadiationShading.cs | water/terrain renderer fields mirrored by the shader variants | shading | (b) `NativeContracts` (was checked in a scene Load) |
+| Radiation/RadiationSoil.cs (`RadiationSoilNative`) | 16 private fields of `SoilContaminationSimulationTaskStarter`, internal task constructors | soil simulation on own arrays | (b) `NativeContracts` |
+| Radiation/RadiationSimulation.cs | `TickOnlyArrayService._forceAllowAccess` | exception-save marker | (b) `NativeContracts` (was in `Load`) |
+| RadioactiveTide/RadioactiveTideNative.cs | `HazardousWeatherService.CurrentCycleHazardousWeather` private setter, `PanelStack._root` | **writes** the restored weather | (b) `DeepFrontier.RadioactiveTide` verify (vanilla path) |
+| RadioactiveTide/RadioactiveTideNewGameSettings.cs | `NewGameModePanel._root`, `CustomNewGameModeController` methods | new-game rows | (b) `DeepFrontier.RadioactiveTideNewGame` verify |
+| PowerConnectionStatus.cs | `NoPowerStatus.NoPowerSpriteName` | status sprite | (b) own `IModStarter` |
+| OptionalIntegrations.cs, Sensors/SluiceIsBackBridge.cs, `BuildingPassagesHoomanStairs` | assembly presence by name | optional-mod switches | public API; no member access |
+
+## Compiled access to non-public members
+
+`tools/native_access_baseline.json` lists all 198 references (key: assembly|type|member|kind); the `native-access` check keeps it exact (the last two, internal `AttractionSpec` and its `Effects`, came with the per-treatment hospital supplies, `Hospital.ReadTreatmentSupplies`, and were caught by the check). By assembly: WaterSystem 73, SoilContaminationSystem 23, StockpilesUI 12, BlockSystemNavigation 10, RangedEffectSystem 8, GoodConsumingBuildingSystem 6, WaterSystemRendering 6, PrefabOptimization 5, Workshops 5, WorkshopsUI 5, BaseComponentSystem 4, WaterSourceSystem 4, Planting 3, and 21 assemblies with 1–2 each. Notable shipping uses (acceptance code is the rest):
+
+- Radiation (`RadiationLockstep`, `RadiationSimulation`, `RadiationSoil`, `RadiationRenderer`, `RadioactiveWaterSurface`): internal water types (`WaterColumn`, tasks, `WaterSimulator`, `WaterSimulationTaskStarter` and its private `SimulationParameters`), private task fields; constructs native internal tasks (`SimulateContaminationTask`, `UpdateContaminationTask`, `ClearBuffersTask`, soil `ContaminationCandidatesCountingTask`/`ContaminationsUpdateTask`).
+- `ModularStorage.WarehouseSlotSelection`: builds a UI-only native entity by hand: internal `ComponentCache.Initialize`, `TypeIndexMap()`, `StockpileDropdownProvider` constructor/`Awake`/`InitializeEntity`/`_items`, `OverlayGoodSelectionController.ToggleGoodSelection`/`HideBox`/`SelectedItem` (the user required the native floating picker).
+- `MineralGameConfigurator`: decorates internal `RuinsRemoveYieldStrategy` and `ScavengerWorkplaceBehavior` onto Deep Frontier specs.
+- `RocketLaunchPad`: internal `RangedEffectApplier.Enable/Disable/UpdateActiveState/UpdateEfficiency`, `RecipeGoodDisallower.UpdateAllowedAmounts`.
+- `DeepWell`: internal `DroughtWaterStrengthModifier.Enable/Disable`, `WaterDepthStrengthModifier`, `GoodConsumingBuildingSpec.ConsumedGoods` setter.
+- `Hospital` reads internal `AttractionSpec.Effects` (its treatment list); 14 component types read internal `BuildingModelSpec.FinishedModelName`; `BuildingWalkway`/`PlatformDeck` read internal nav-mesh edge specs; `RestaurantNativeFragmentHider` reads fragment `_manufactory`/`_root`; `PrefabMeshRelease` reads `_prefabProcessors`/`_assetLoader`.
+
+Decision (b): compiled access is now audited and checked against the installed game at validation time; the patch verifies and `NativeContracts` cover the members those features also reach by name. A game update that renames one of these members is not yet caught at mod start (proposal C8).
+
+## Table M: runtime mutation of native assets
+
+| File | What | Decision |
+| --- | --- | --- |
+| Radiation/RadiationShading.cs (`ShaderSwap`), `RadiationRenderer` | swaps the shader of the persistent native materials `PhysicalWater_Opaque/_Transparent` and five `TerrainURP` materials to bundled variants while a game is loaded; global textures and keywords | (b) kept: every native property and enabled keyword checked against the variant, native render queue restored after every assignment (the build-232 dark-water bug), restored in `Unload` even after the bundle reset destroyed the variant (Unity error shader accepted only then); scene-cycle acceptance. Proposal C2. |
+| Radiation/RadiationShading.cs (`RadioactiveWaterSurface`, `IrradiatedSoilSurface`) | sets Deep Frontier properties on the swapped materials; uploads own texture arrays | (b) Deep Frontier properties only |
+| PrefabMeshRelease.cs | `DestroyImmediate` on intermediate meshes the native optimization chain created and abandoned; swaps byte-identical models' meshes; `GC.Collect` after large models | (b) input-prefab meshes never touched, finished prefab checked to reference no destroyed mesh; per-chain kept-mesh set (was session-wide) |
+| SuperBots/ReactorBotSkin.cs, ReactorBot.cs | generates plated/unplated/emission textures at run time from the bot material's maps and a readback of the bot mesh; applies them per bot with native `CharacterMaterialModifier.SetTexture` | (b) contract checks (BotURP properties, readable mesh, matching sizes), shared per source maps, destroyed in `Unload`. Proposal C3. |
+| WorkshopReservoir.cs | `new Material(spec.Material)` per reservoir surface, registered with `EntityMaterials` | (b) Deep Frontier material; leaks until scene end (not destroyed on delete): low |
+| WorkshopReservoir.cs (`NativeBuildingProps`) | `_EnableDetail` on per-entity material instances `EntityMaterials` made | (b) per-entity copies |
+| RestaurantService.cs (table dishes) | `renderer.material` instance per dish | (b) per-dish copy; leaks until scene end: low |
+| Radiation/RadiationMaterials.cs, RadioactiveSpring.cs | Deep Frontier spring material created from a bundled base, destroyed on unload | (b) owned asset |
+| ModularStorage/WarehouseSlotSelection.cs | a UI-only GameObject carrying native components (see compiled access) | (b) destroyed on hide/unload |
+
+No runtime blueprint mutation was found: the radioactive tide composes a copy of the custom `GameModeSpec` (table H, `RadioactiveTideNewGame`).
+
+## Table S: writes into native simulation state and scheduling
+
+| File | What | Decision |
+| --- | --- | --- |
+| Radiation/RadiationLockstep.cs, RadiationSimulation.cs | appends shadow-copy, native contamination and harvest tasks to the native water parallelizer chain each substep and returns the tail handle (native job scheduling); records/mixes source and change cells | (b) native water data is never written (shadow arrays); source replay must equal the native task's result or it throws; hooks verified at mod start |
+| RadiationSimulation.cs:~560 | `IWaterService.AddCleanWater` (radioactive water addition) | public service |
+| Radiation/RadiationSoil.cs | runs native soil-contamination tasks on own arrays; substitutes the moisture tasks' `in` water-column argument with its own b + r array | (b) never writes native arrays |
+| Radiation/RadiationBuildings.cs | `RemoveCleanWater` at pump intakes | public service |
+| HydroTurbine.cs | `AddFullObstacle`/`RemoveFullObstacle`/`AddDirectionLimiter` | public water service |
+| Meltdown/MeltdownService.cs | `ITerrainService.UnsetTerrain` (blast crater) | public service |
+| DeepWell/DeepWell.cs | water-source strength modifiers (public), internal drought modifier enable/disable, consumer spec write | (b) compiled internal access audited; reflection in `NativeContracts` |
+| SuperBots/ReactorBotWorkplace.cs, ReactorBotWorkplacePatches.cs | worker type, unemployed pool, priority order | (b); C1 |
+| Workforce/SpecialistSchool.cs | attraction effects and consumer spec | (b); C3 |
+
+## Table T: static mutable state
+
+| Owner | Kind | Decision |
+| --- | --- | --- |
+| `BuildingPassages` group id, nodes, links | scene state in statics, reset only by the next game's PostLoad | **fixed**: instance state on a scene owner `Current` (set at construction, cleared in `Unload`) |
+| `SavedFootprintVersion.Current` | scene owner never cleared | **fixed**: cleared in `Unload`, throws if a previous scene was not unloaded |
+| `RadioactiveTideNewGameSettings.Current` | owner assigned at the end of `PostLoad` | **fixed**: set at construction, answers only after `PostLoad` |
+| `BuiltinMapHeight._pending` | handoff between two native Loads, could outlive a failed load | **fixed**: on a Game-scene owner `BuiltinMapHeightCapture` |
+| `PrefabMeshRelease.KeptByPrefabs` | grew for the session | **fixed**: per optimization chain (weak table) |
+| `DebugBuildingVisibility._current` | scene owner set in `Load` | **fixed**: removed (weak per-model table) |
+| `RadioactiveTideService.Current` | scene owner set at construction, cleared in `Unload` | (b) already correct |
+| `RadiationLockstep.Simulation`, `RadiationSoilPatches._soil` | patch owners attached in `Load` (arrays exist only then), detached in `Unload`; read only by the hooks | (b) rule 4 requires the detach |
+| `PreviewNavMeshCache` (`_groups`, flags, counters), `PreviewAccessCache` (version, flags) | per-scene cache state, set in `Load`, reset in `Unload` | (b) |
+| `PositionedBlocksIndex`, `PreviewNavMeshCache`, `PreviewAccessCache`, `CryogenicIntakeGate` weak tables | per-object caches | (b) die with their keys |
+| resolved handles (`FieldRef`s, `MethodInfo`s, delegates) in patch classes | set once by a startup verify | (b) process constants |
+| `InventoryEnableGuard.Skipped`, `ModdableRecipesEnabledState.Restored`, preview and mesh counters | diagnostics read by acceptance | (b) |
+| `RadioactiveTideModStarter.ModdableWeathersLoaded` | process fact | (b) |
+| acceptance/diagnostic statics (`AcceptanceLoadingIssues`, `SceneCycleAcceptance`, `MemoryTrace`) | flag-gated | exempt |
+
+## Table L: lifecycle-order dependencies
+
+| Place | Dependency | Decision |
+| --- | --- | --- |
+| `ReactorBot` need handlers | subscribed in Awake, reached by `NeedManager.Load` replay (build-255 crash) | fixed earlier (e06b3f4); now enforced by rule 5 |
+| `RadioactiveZombie` | `NeedChangedActiveState` in Awake (load and childhood replay) | **fixed**: subscribe in `InitializeEntity`; `PostInitializeEntity` syncs the loaded/inherited state |
+| `RestaurantWaiter` | `CarriedGoodsChanged` (raised by `GoodCarrier.Load`), `GotUnemployed`, `Died` in Awake | **fixed**: `InitializeEntity` |
+| `BotWear` | `GotEmployed` in Awake; `Worker.InitializeEntity` re-employs in component order | **fixed**: `InitializeEntity` + risk from the final workplace in `PostInitializeEntity` |
+| `RocketLaunchPad` | `RecipeChanged` (raised in `Manufactory.Awake`/`ManufactoryTogglableRecipes.InitializeEntity`), production events in Awake | **fixed**: `InitializeEntity` (stacked rocket restored in `PostLoadEntity`) |
+| `RestaurantDiner`, `RestaurantKitchenChooser`, `NarrativeProductionReporter`, `SpecialistTrait` | events in Awake | **fixed**: `InitializeEntity` |
+| `ReactorBotAssembler` | `ProductionFinished` in Awake so its handler runs before native `BotManufactory`'s (subscribed in its `InitializeEntity`) | (b) audited exception, marked `native-safety: awake-subscription`; `ProductionFinished` is never raised while loading |
+| `TeleporterCitizenRecovery`, `DebugBuildingVisibility` | Harmony patched in a singleton `Load` | **fixed**: mod start |
+| `RadiationLockstep`, `RadiationSoilPatches` | Harmony installed by the first scene `Load` | **fixed**: mod start |
+| Reactor Bot toggle postfixes | native `EntityPanel.Load` builds fragments during singleton loading | fixed earlier (ecaca57): no singleton read in the postfixes |
+| `RadioactiveTideRestorePatch` | postfix on native `HazardousWeatherService.Load` reads `RadioactiveTideService.Current` | (b) owner set at construction, before every Load |
+| `BuiltinMapHeight` | supplier `Load` before `MapSize.Load` | (b) native construction chain checked at mod start |
+| `BuildingPassages` patches during the next scene's load | stale statics | **fixed** (table T) |
+
+## Replacements (a)
+
+No Harmony patch had a native or official extension point that preserves its behavior; the evidence is the "Native alternative checked" column of table H. What did change to official mechanisms:
+
+- Every Harmony install now uses the official mod-start entry point (`IModStarter`) instead of scene Loads (four ids moved: Teleporter recovery, debug visibility, radiation lockstep, radiation soil).
+- Scene owners use the container's construction order and `IUnloadableSingleton` instead of `Load`-time statics (five owners), and native events are subscribed through the entity lifecycle (`InitializeEntity`/`PostInitializeEntity`) instead of `Awake` (nine components).
+- **A1 (candidate, needs a decision):** Reactor Bot speed. `MovementSpeed` is clamped by `BonusTypeSpec.MaximumValue` (blueprint data, `BonusManager.ClampedValue`), not by code. Raising that maximum through a partial blueprint and adding the Reactor Bot speed as a native `MovementSpeed` bonus (as `ReactorBot.ApplyUpgrade` already does for carrying and working speed) would remove `ReactorBotSpeedPatch`. It is not equivalent: native speed is `base × bonus` and swimming uses `bonus − SwimmingPenalty`, so an additive +3 changes swimming and stacking, and the cap is global (all characters and other mods). Not implemented.
+
+## Robustness fixes (b) made
+
+Commits on `main` (2026-11-09): `2dce084` NativePatches and startup checks for every patch, replaced-body IL hashes, hot-path fixes; `432e696` scene lifecycle (passages owner, mod-start installs for teleporter/debug/radiation hooks); `ec17e3f` NativeContracts; `e597e4f` Awake subscriptions, scene owners at construction, map-height capture, per-chain mesh set, allocation-free hot paths; followed by the validators and this document. Details are in the tables above and in `CHANGELOG.md`.
+
+## Proposals (c), for the user
+
+- **C1 Reactor Bot worker-type toggle.** The extra toggle rebuilds two native UI controls by reflection, writes `WorkplaceWorkerType` privately, and changes the native hiring pool and priority order (6 hooks). Simpler: leave the native Beaver/Bot toggles untouched and add a Deep Frontier entity-panel fragment (official `EntityPanelModule`) with a "Reactor Bots only" switch on bot workplaces and district centres; staffing stays as is. Removes the two UI postfixes and most of the reflection.
+- **C2 Radiation shading.** Swapping shaders on persistent native materials is the riskiest asset change (render queue, bundle reset). Alternatives to evaluate: per-scene material copies assigned only to the scene's water/terrain renderers (native assets untouched), or rendering radioactivity as a separate overlay. Needs in-game work; current code is guarded.
+- **C3 Reactor Bot skin and runtime writes into native components.** The skin synthesizes textures from the bot's maps and mesh on the first Reactor Bot (CPU and GPU readback). A tint through native `MaterialColorer` (already used for its lighting) or pre-authored masks would remove it. Likewise the Technical School rewrites native attraction effects and consumer specs when the profession changes; one school template per profession would use native data only.
+- **C4 Preview performance patches** (3 ids, 7 methods with IL-hash-guarded caches). They exist because of very large footprints (Nuclear Reactor 2,543 occupied blocks). After the compaction passes, measure the largest previews without them (`PreviewCostAcceptance`); remove any no longer needed.
+- **C5 Vanilla radioactive tide path.** Five patches turn the closed drought/badtide pair into three weathers and restore it from saves. With Moddable Weathers the tide is a registered weather and these patches are not applied. Requiring Moddable Weathers would remove them (a dependency decision).
+- **C6 Other mods' bugs.** Report the Moddable Recipes double `Inventory.Enable` and Teleporter Station dead-character recovery upstream; drop `InventoryEnableGuard` (a global hook on every inventory), `ModdableRecipesEnabledState` and `TeleporterCitizenRecovery` once fixed versions ship.
+- **C7 Save migrations.** Power plant (pre-193), mine and flipped footprint (≤ 0.8.1) migrations patch native load paths for old saves. Set a cutoff version after which they are removed.
+- **C8 Run-time compiled-reference check.** A mod-start check that every compiled reference into game assemblies still resolves (reading the mod DLL's metadata with the game's own `System.Reflection.Metadata` and matching by name) would turn a renamed internal member into a clear start-up message instead of a mid-game exception. Needs the official Mod Builder to accept the reference and an in-game run.
+- **C9 Ship acceptance and diagnostics separately.** About 30 acceptance/probe types and `MemoryTrace` (which can patch every lifecycle method) ship in the release DLL behind command-line flags; a separate dev-only assembly would remove them from players' installs.
+
+## In-game checks needed
+
+Nothing here was run in game. Check, in one session:
+
+1. Mod start: the log shows every `[DeepFrontier] ... patch applied` line, `Native contracts checked at mod start (6 reflected features ...)`, and no `cannot start` exception.
+2. Load a save with Reactor Bots (charged, uncharged, plated), radioactive zombies (adult and kit), a restaurant mid-service (waiter carrying a dish), bots at heavy-industry workplaces (wear rate in the panel), a launch pad with a stacked rocket, specialists; play a day. These exercise the moved event subscriptions.
+3. Building passages: load save A, return to the menu, load save B; walk beavers through linked buildings in B (stale-state fix). Then open the map editor.
+4. New game on a built-in map (map height), then load a save, then a new custom game with tide settings (new-game owner).
+5. Teleporter Station enabled: load the employment fixture; developer "toggle building models" on a restaurant and charging bay, then back.
+6. Restaurant: haulers stock the kitchen; staff work the late shift.
+7. Large preview (Nuclear Reactor) frame time unchanged; prefab memory after load unchanged (`start_memory_load.ps1`).

@@ -8,6 +8,11 @@
 - A hospital missing one supply keeps giving its other treatments. It no longer admits or keeps beavers that only need the missing treatment, so contaminated beavers use Decontamination Pods instead of waiting untreated. Each missing supply has its own status, the supply bar shows only the supplies of treatments in progress (no more 0.0 h because medicine ran out), and the hospital panel lists each treatment's supply. Neighborhood wellbeing needs only attending staff.
 - Fixed a rare second recovery timer on empty Deep Ore Sources migrated from 0.8.x saves.
 - Review of all changes since 0.8.6, with remaining open items and needed in-game checks: `docs/review-2026-11-09.md`.
+- Deep Frontier now checks, when the game starts, every place where it patches or reads the game's internal code. If a Timberborn update changed one of them, the game stops at the mod screen with a message naming Deep Frontier and the supported game version (1.1.2.8), instead of failing later inside a save.
+- Loading saves no longer depends on the order in which a beaver's, bot's or building's parts load: radioactive zombies, restaurant waiters and diners, bot wear, rocket launch pads, specialists and production reports now react to game events only after the save has loaded (the same cause as the earlier Reactor Bot load crash).
+- Loading another save, starting a new game or opening the map editor after playing no longer reuses data left behind by the previous game (building links, the built-in map height and saved-version information), and the developer building-visibility and Teleporter Station fixes no longer depend on game load order.
+- Small performance fixes: the restaurant kitchen's stock check and the construction preview of very large buildings no longer allocate memory on every call.
+- Developer: `docs/native-safety-audit.md` inventories every Harmony patch, reflection, native asset change and simulation hook with its decision; `validate_native_safety.mjs` and `test_native_access.ps1` enforce the rules.
 
 ## 0.10.3 (2026-11-07)
 

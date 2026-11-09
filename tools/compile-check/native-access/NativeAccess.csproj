@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Lists every reference a compiled mod assembly makes to a type or member that is not public in the shipped
+       (non-publicized) assemblies it runs against. Deep Frontier compiles against publicized references
+       (ModsBuildManaged), so such references bind only when the code first runs, and a game update that renames one
+       fails mid-game. Reads metadata only (System.Reflection.Metadata ships in the .NET 8 shared framework).
+       Usage and report format: Program.cs. Not part of the official Mod Builder pipeline. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>NativeAccess</AssemblyName>
+    <RootNamespace>NativeAccess</RootNamespace>
+  </PropertyGroup>
+</Project>
