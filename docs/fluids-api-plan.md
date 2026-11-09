@@ -139,6 +139,56 @@ All tide emissions use source-specific owned requests. Define conflict handling 
 
 Save selected weather identity, duration, cooldown history, and the settings used by that game. Restore the active tide before weather readers run after load. Weather Station choices and warning UI use registered tide IDs. Fluid content mods should not each patch the native randomizer, weather UI, sound switch, and source loop.
 
+#### Combined tide-selection proposal
+
+This is a proposal; the user has not chosen a policy. The [extraction inventory](fluids-extraction-inventory.md#8-tide-selection-as-implemented) records the current behaviour, and [model_tide_selection.py](../tools/model_tide_selection.py) computes the figures below. That script is an exact Markov model of two installed rules: the native `HazardousWeatherRandomizer`, whose badtide chance changes with the current streak (and a tide in the history counts as a non-badtide streak), and Deep Frontier's one-cycle tide cooldown. Its output is `outputs/fluids-api-prototype/tide-policy-model.json`.
+
+Inputs:
+
+- Every vanilla mode has `ChanceForBadtide` 0.4. Randomizing starts after cycle 5 on Easy, 4 on Normal and 3 on Hard; drought is guaranteed until then.
+- Deep Frontier's tide chances are 15, 25 and 35 percent on Easy, Normal and Hard.
+- More Fluids has no tide yet. The table assumes a coffee tide with Deep Frontier's rules at 25 and at 15 percent.
+
+All shares are long-run, once every weather is eligible.
+
+Requirements for any policy:
+
+- Vanilla-only and Deep-Frontier-only games keep exactly their current probabilities.
+- No combination exceeds 100 percent.
+- Mod load order never matters.
+- Each tide keeps its own per-save settings, cooldown and eligibility.
+- The Moddable Weathers path produces the same shares through one adapter that converts all registered tides to weights once. This avoids the mutual `GetChance` calls in the current Moddable Weathers integration.
+
+| Case (Normal unless stated) | Policy | Drought | Badtide | DF tide | MF tide |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Vanilla only (any mode) | native | 59.7% | 40.3% | – | – |
+| DF only, Easy / Normal / Hard | current | 52.2 / 48.1 / 44.5% | 34.8 / 31.9 / 29.5% | 13.0 / 20.0 / 25.9% | – |
+| DF 25% + MF 25% | A. Load order: each later patch overrides the earlier one (status-quo hazard) | 38.0% | 25.2% | 16.8% | 20.0% |
+| DF 25% + MF 25% | B. Additive: each tide takes its own chance of the cycle; the native draw gets the rest | 36.1% | 23.9% | 20.0% | 20.0% |
+| DF 25% + MF 25% | C. Shared budget (the largest chance), split by chance, cooldown per tide | 45.1% | 29.9% | 12.5% | 12.5% |
+| DF 25% + MF 25% | C′. Shared budget with a global cooldown: no tide in the cycle after any tide | 48.1% | 31.9% | 10.0% | 10.0% |
+| DF 25% + MF 25% | D. Independent rolls; if several succeed, pick one in proportion to their chances | 38.0% | 25.2% | 18.4% | 18.4% |
+| DF 25% + MF 15% | B. Additive | 40.3% | 26.7% | 20.0% | 13.0% |
+| DF 25% + MF 15% | C′. Shared budget, global cooldown | 48.1% | 31.9% | 12.5% | 7.5% |
+| DF 25% + MF 15% | D. Independent rolls | 41.6% | 27.6% | 19.2% | 11.6% |
+
+Policy A is rejected because it lets load order decide.
+
+Policy B is the simplest, but its shares can exceed one when several tide mods are installed. It would then need a rule to reject or cap them, and capping is the scaling this plan forbids.
+
+Policies C and C′ keep the game's total hazard close to the single-content difficulty. C′ matches it exactly, at 20 percent. The cost is that installing More Fluids halves how often the Deep Frontier tide appears.
+
+Policy D is the recommendation. It reproduces vanilla and Deep Frontier exactly when they are alone, never exceeds 100 percent, does not depend on order, and composes for any number of tides. Combined, each tide appears close to its advertised rate (18.4 percent against 20). The total tide rate grows as 1 − Π(1 − cᵢ), and each tide's per-save chance setting stays the player's control over difficulty.
+
+To implement D:
+
+1. Run the native drought/badtide draw first, as now.
+2. Roll every eligible tide once.
+3. Among the tides whose roll succeeded, choose one with a single weighted draw over their chances, in ordinal tide-ID order.
+4. Record the chosen tide's ID in the native history.
+
+If the user prefers constant difficulty, choose C′.
+
 ## Saves and version compatibility
 
 The foundation owns the world-fluid save schema. Save stable fluid IDs and owning mod/schema versions with component state. Runtime numeric handles can speed up lookup but are rebuilt from the registry and never serve as persistent identity. Persist cells and column geometry sufficiently to restore reservoirs at different heights, following the existing reconciliation requirements.
@@ -221,7 +271,7 @@ Record performance with zero extra active fluids and with increasing active coun
 ## Immediate next work
 
 1. Run the implemented two-settlement worker fixture with the normal game closed. Establish actual worker barriers, resized arrays, native intakes and patch cleanup across scene re-entry. Keep activation restricted to disposable worlds while persistence is absent.
-2. Complete the extraction inventory of Deep Frontier's water, weather, rendering and save hooks, including optional assemblies and direct simulation consumers.
+2. ~~Complete the extraction inventory~~ Done 2026-11-09: [fluids-extraction-inventory.md](fluids-extraction-inventory.md) lists every water, weather, rendering, sensor and save hook. For each it gives the startup checks, lifecycle, optional assemblies, direct `RadiationSimulation` consumers and proposed owner.
 3. Build the first public registry and provider contract around the proven sampling, emission and intake behavior. Include stable IDs, deterministic handles, reflection discovery, version/capability reporting, provider stages and optional bridge loading. Choose the combined tide-selection policy and capability defaults before weather implementation.
 4. Add the independent synthetic consumer package, shared rendering and persistent component identities. Establish native controls and save/reload fixtures through official packages before enabling ordinary settlements.
 5. Begin Deep Frontier migration after those gates pass; select the first finished More Fluids liquid before starting its gameplay work.
