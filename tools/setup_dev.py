@@ -248,7 +248,10 @@ def main():
                 # assemblies, so the exit code is not the result; the package is.
                 log = ROOT / 'outputs' / 'unity_first_import.log'
                 print(f'  $ {config["unity"]} -batchmode -quit -projectPath {vendor}  (log: {log})', flush=True)
-                subprocess.run([config['unity'], '-batchmode', '-nographics', '-quit', '-projectPath', str(vendor),
+                # Through tools/UnityProcess.ps1, like every Unity launch here (below-normal priority, two logical
+                # processors left free).
+                subprocess.run(['powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', str(ROOT / 'tools' / 'run_unity.ps1'),
+                                config['unity'], '-batchmode', '-nographics', '-quit', '-projectPath', str(vendor),
                                 '-logFile', str(log)])
                 if not any(cache.glob('com.unity.nuget.mono-cecil@*')):
                     raise SystemExit(f'Unity did not resolve the project packages; see {log}')
