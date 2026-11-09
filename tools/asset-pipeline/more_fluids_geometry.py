@@ -91,6 +91,7 @@ def faction_palette(faction):
 # into CollectionId Common (as Deep Frontier's MaterialCollection.DeepFrontierMapResources does).
 REGISTERED_COMMON = {
     'Plaster_White.IronTeeth': 'Materials/UberAtlas/Materials/IronTeeth/Plaster_White.IronTeeth',
+    'Plaster_Orange.IronTeeth': 'Materials/UberAtlas/Materials/IronTeeth/Plaster_Orange.IronTeeth',
     'Details.Folktails': 'Materials/UberAtlas/Materials/Folktails/Details.Folktails',
     'Moss.Folktails': 'Materials/UberAtlas/Materials/Folktails/Moss.Folktails',
 }
@@ -100,6 +101,7 @@ COMMON_PALETTE = {
     'crack': ('Blockage', 'sheet', CRACKED, .55),
     'grey': ('Blockage', 'sheet', BLOCK_GREY, .55),
     'sinter': ('Plaster_White.IronTeeth', 'sheet', PLASTER, .7),
+    'ochre': ('Plaster_Orange.IronTeeth', 'sheet', PLASTER, .7),
     'teal': ('Details.Folktails', 'whole', TEAL_FOLK, None),
     'moss': ('Moss.Folktails', 'sheet', PLASTER, .6),
     'dirt': ('Dirt', 'explicit', DIRT, None),
@@ -294,14 +296,16 @@ class Kit:
         if caps[1] and r1 > 0:
             self.poly(high, top_key, ax)
 
-    def revolve(self, center, profile, key, sides=12, cap_top=None, smooth=True, keys=None):
+    def revolve(self, center, profile, key, sides=12, cap_top=None, smooth=True, keys=None, wobble=None):
         """Surface of revolution about a vertical axis through center (x, y):
-        profile [(r, z), ...] from bottom to top. Optional per-band keys."""
+        profile [(r, z), ...] from bottom to top. Optional per-band keys and
+        wobble(ring, i) -> radius factor for natural, irregular forms."""
         cx, cy = center
         rings = []
-        for r, z in profile:
-            rings.append([Vector((cx + math.cos(2 * math.pi * (i + .5) / sides) * r,
-                                  cy + math.sin(2 * math.pi * (i + .5) / sides) * r, z)) for i in range(sides)])
+        for ring, (r, z) in enumerate(profile):
+            rings.append([Vector((cx + math.cos(2 * math.pi * (i + .5) / sides) * r * (wobble(ring, i) if wobble else 1),
+                                  cy + math.sin(2 * math.pi * (i + .5) / sides) * r * (wobble(ring, i) if wobble else 1), z))
+                          for i in range(sides)])
         for band in range(len(profile) - 1):
             k = keys[band] if keys else key
             (r0, z0), (r1, z1) = profile[band], profile[band + 1]
@@ -437,14 +441,14 @@ class Kit:
 
 
 def rock_points(rng, center, size, count=10, flat_bottom=0.0):
-    """Points of a rough boulder: jittered ellipsoid samples."""
+    """Points of a rough rounded boulder: jittered ellipsoid samples."""
     cx, cy, cz = center
     sx, sy, sz = size
     pts = []
     for i in range(count):
-        th = rng.uniform(0, 2 * math.pi)
-        ph = rng.uniform(-.2, 1.0) * math.pi / 2
-        r = rng.uniform(.75, 1.0)
+        th = 2 * math.pi * (i + rng.uniform(-.3, .3)) / count
+        ph = rng.uniform(.1, .75) * math.pi / 2
+        r = rng.uniform(.85, 1.0)
         pts.append((cx + math.cos(th) * math.cos(ph) * sx * r, cy + math.sin(th) * math.cos(ph) * sy * r,
                     max(cz + math.sin(ph) * sz * r, flat_bottom)))
     for i in range(5):

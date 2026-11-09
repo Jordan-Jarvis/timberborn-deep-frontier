@@ -287,3 +287,231 @@ for _f in (FOLK, IRON):
               f'Buildings/Water/MoreFluidsFluidExtractor/MoreFluidsFluidExtractor.{_f}.ConstructionStage0.Model',
               [(-.03, -.03, -.3, 2.03, 2.03, 1.2), (0, 2, -.3, 1, 3, 1.0)], 1.2, 700, _f,
               stage_of=f'MoreFluidsFluidExtractor.{_f}')
+
+
+# ---------------------------------------------------------------- Desalinator
+
+def salt_tray(k, x0, x1, y0, y1, z, faction):
+    """Shallow evaporation pan on short legs: timber rim, white salt crust."""
+    rim = 'trim' if faction == FOLK else 'planks2'
+    k.face([(x0 + .04, y0 + .04, z + .04), (x1 - .04, y0 + .04, z + .04), (x1 - .04, y1 - .04, z + .04),
+            (x0 + .04, y1 - .04, z + .04)], 'salt')
+    k.box((x0, y0, z - .04), (x1, y0 + .05, z + .09), rim)
+    k.box((x0, y1 - .05, z - .04), (x1, y1, z + .09), rim)
+    k.box((x0, y0 + .05, z - .04), (x0 + .05, y1 - .05, z + .09), rim, skip=('-y', '+y'))
+    k.box((x1 - .05, y0 + .05, z - .04), (x1, y1 - .05, z + .09), rim, skip=('-y', '+y'))
+    for x in (x0 + .03, x1 - .09):
+        for y in (y0 + .03, y1 - .09):
+            k.box((x, y, 0), (x + .06, y + .06, z - .04), 'frame', skip=('-z', '+z'))
+
+
+def lean_to(k, x_wall, x_edge, y0, y1, z_wall, z_edge, faction):
+    """Condenser hood: a lean-to roof from the house wall out over the pans,
+    on two posts, with a gutter along its low edge."""
+    s = 1 if x_edge > x_wall else -1
+    for c in range(2):
+        t0, t1 = c / 2, (c + 1) / 2
+        xa, xb = x_edge + (x_wall - x_edge) * t0, x_edge + (x_wall - x_edge) * t1
+        za, zb = z_edge + (z_wall - z_edge) * t0, z_edge + (z_wall - z_edge) * t1
+        if s < 0:
+            quad = [(xa, y1, za), (xa, y0, za), (xb, y0, zb), (xb, y1, zb)]
+        else:
+            quad = [(xa, y0, za), (xa, y1, za), (xb, y1, zb), (xb, y0, zb)]
+        k.roof_course(quad, 'roof', c)
+    t = .05
+    k.poly([(x_edge, y0, z_edge - t), (x_wall, y0, z_wall - t), (x_wall, y1, z_wall - t), (x_edge, y1, z_edge - t)],
+           'board', (-s * (z_wall - z_edge), 0, -abs(x_wall - x_edge)))
+    k.poly([(x_edge, y1, z_edge - t), (x_edge, y0, z_edge - t), (x_edge, y0, z_edge), (x_edge, y1, z_edge)], 'trim', (s, 0, 0))
+    for y, ny in ((y0, -1), (y1, 1)):
+        k.poly([(x_edge, y, z_edge - t), (x_edge, y, z_edge), (x_wall, y, z_wall), (x_wall, y, z_wall - t)], 'trim', (0, ny, 0))
+    px = x_edge - s * .07
+    for y in (y0 + .07, y1 - .07):
+        k.box((px - .05, y - .05, 0), (px + .05, y + .05, z_edge - .05), 'frame', skip=('-z', '+z'))
+    gutter = 'trim' if faction == FOLK else 'paint'
+    gx0, gx1 = sorted((x_edge - s * .015, x_edge - s * .11))
+    k.box((gx0, y0 - .02, z_edge - .13), (gx1, y1 + .02, z_edge - .06), gutter)
+
+
+def power_hub(k, x_face, y, z, s, faction):
+    """Mechanical connection on a transput face: a bearing post, a short
+    shaft and a gear disc at the building edge (s = -1 left, +1 right)."""
+    bx0, bx1 = sorted((x_face - s * .16, x_face - s * .06))
+    k.box((bx0, y - .06, 0), (bx1, y + .06, z - .06), 'frame', skip=('-z',))
+    lo, hi = sorted((x_face - s * .16, x_face - s * .005))
+    k.cylinder((0, y, z), .04, lo, hi, 'metal', sides=8, axis='x')
+    lo, hi = sorted((x_face - s * .06, x_face - s * .015))
+    k.cylinder((0, y, z), .15, lo, hi, 'metal' if faction == FOLK else 'paint', sides=12, axis='x',
+               cap_keys=('hatch', 'hatch'))
+
+
+def desalinator(faction):
+    """3 x 4 x 4, BaseZ 1 (vanilla Large Water Pump layout): a narrow
+    timber house down the middle (door on the entrance tile), stepped
+    evaporation pans with white salt crust on both wings under lean-to
+    condenser hoods, and the intake pump house over the water tile (1, 3)
+    with a brine spout. Power connects on the left and right faces of the
+    middle row (blueprint transputs (0, 1, 1) and (2, 1, 1))."""
+    k = Kit(f'MoreFluidsDesalinator.{faction}', faction_palette(faction), seed=21)
+    x0, x1, y0, y1, h = .98, 2.02, .14, 2.3, 1.22
+    plank_house(k, x0, x1, y0, y1, h, faction)
+    door(k, 1.5, y0, .4, .7)
+    gable_ends_y(k, x0, x1, y0, y1, h, 1.78, 'board')
+    roof_y(k, .9, 2.1, .04, 2.4, h - .02, 1.86, faction)
+    k.cylinder((1.5, y0, 1.4), .11, y0 + .01, y0 - .03, 'metal', sides=8, axis='y', caps=(False, True), cap_keys=('port', 'port'))
+    # Pans: front tray in the open, two under each hood, stepping up to the back.
+    for wx0, wx1 in ((.18, .9), (2.1, 2.82)):
+        salt_tray(k, wx0, wx1, .16, .88, .2, faction)
+        salt_tray(k, wx0, wx1, .96, 1.86, .34, faction)
+        salt_tray(k, wx0, wx1, 1.94, 2.84, .48, faction)
+    lean_to(k, x0 - .06, .04, 1.9, 2.92, 1.14, .98, faction)
+    lean_to(k, x1 + .06, 2.96, 1.9, 2.92, 1.14, .98, faction)
+    # Feed pipes from the house into the back pans.
+    key = 'metal' if faction == FOLK else 'paint'
+    pipe_run(k, [(1.14, 2.62, .76), (.54, 2.62, .76), (.54, 2.62, .64)], .045, key)
+    pipe_run(k, [(1.86, 2.62, .76), (2.46, 2.62, .76), (2.46, 2.62, .64)], .045, key)
+    power_hub(k, 0, 1.4, .62, -1, faction)
+    power_hub(k, 3, 1.4, .62, 1, faction)
+
+    # Intake pump house over the water at (1, 3).
+    px0, px1, py0, py1, ph = 1.16, 1.84, 2.36, 3.84, .9
+    plank_house(k, px0, px1, py0, py1, ph, faction)
+    gable_ends_y(k, px0, px1, py0, py1, ph, 1.36, 'board')
+    roof_y(k, 1.08, 1.92, 2.3, 3.92, ph - .02, 1.44, faction, courses=1)
+    intake_pipe(k, 1.5, 3.5, faction, top=.1)
+    flywheel(k, '#FlywheelAnimated', (1.92, 3.1, .5), .24, faction, axis='x', thickness=.05)
+    k.cylinder((0, 3.1, .5), .03, px1 - .02, 1.95, 'metal', sides=6, axis='x')
+    # Pump rod through the ridge.
+    k.box((1.42, 3.3, 1.38), (1.58, 3.5, 1.52), 'metal')
+    k.begin('#PumpRodAnimated', (1.5, 3.4, 1.6), ('bob', 'z', .07))
+    k.cylinder((1.5, 3.4, 0), .035, 1.4, 1.74, 'metal', sides=6, caps=(False, True))
+    k.box((1.38, 3.36, 1.66), (1.62, 3.44, 1.72), 'frame')
+    k.end()
+    # Brine spout out of the back of the pump house, crusted with salt.
+    k.beam((1.5, py1 - .05, .5), (1.5, 3.97, .38), .14, .06, 'board')
+    k.beam((1.5, py1 - .02, .545), (1.5, 3.95, .43), .08, .02, 'salt', caps=False)
+    k.empty('#Slot#Entrance', (1.5, .4, .04), 180)
+    return k
+
+
+def desalinator_stage(faction):
+    k = Kit(f'MoreFluidsDesalinator.{faction}.ConstructionStage0', faction_palette(faction), seed=22)
+    dirt_patch(k, [(0, 0, 3, 3)])
+    stage_frame(k, 0, 3, 0, 3, 1.1, metal=True)
+    for x in (1.3, 1.7):
+        k.box((x - .05, 2.7, 0), (x + .05, 3.94, .085), 'frame', skip=('-z',))
+    intake_pipe(k, 1.5, 3.5, faction, top=0)
+    return k
+
+
+# ---------------------------------------------------------------- Healing Spring (buildable well)
+
+def healing_well(faction):
+    """1 x 1 x 2, BaseZ 0, no entrance: a carved-stone well basin with mint
+    mineral stains, a timber frame carrying the faction's pump head, a
+    power-driven wheel (animated) and a small roof."""
+    k = Kit(f'MoreFluidsHealingWell.{faction}', faction_palette(faction), seed=31)
+    c = (.5, .5)
+    k.revolve(c, [(.44, 0), (.44, .26), (.47, .28), (.47, .36), (.36, .36), (.36, .2), (0, .2)], 'stone', sides=8)
+    # Mint mineral staining down three faces of the basin.
+    apothem = .44 * math.cos(math.pi / 8) + .004
+    for i in (1, 3, 6):
+        a = 2 * math.pi * (i + 1) / 8
+        nx, ny = math.cos(a), math.sin(a)
+        tx, ty = -ny, nx
+        px, py = .5 + nx * apothem, .5 + ny * apothem
+        k.poly([(px - tx * .05, py - ty * .05, .03), (px + tx * .05, py + ty * .05, .03),
+                (px + tx * .07, py + ty * .07, .25), (px - tx * .07, py - ty * .07, .25)], 'teal', (nx, ny, 0))
+    for x in (.1, .9):
+        k.box((x - .05, .45, .0), (x + .05, .55, 1.52), 'frame', skip=('-z',), top='end')
+    k.box((.02, .44, 1.32), (.98, .56, 1.42), 'trim')
+    for x in (.1, .9):
+        k.beam((x + (.05 if x < .5 else -.05), .5, .98), ((x + .5) / 2, .5, 1.32), .05, .05, 'frame')
+    # Pump head: barrel pump (Folktails) or riveted cylinder (Iron Teeth), standpipe and spout.
+    body = 'planks' if faction == FOLK else 'rib'
+    band = 'metal' if faction == FOLK else 'paint'
+    k.cylinder((.5, .5, 0), .13, .82, 1.2, body, sides=10, cap_keys=('end', 'metal'))
+    hoop(k, (.5, .5), .14, .88, band, .04, sides=10)
+    hoop(k, (.5, .5), .14, 1.1, band, .04, sides=10)
+    k.cylinder((.5, .5, 0), .04, 1.2, 1.32, 'metal', sides=6, caps=(False, False))
+    k.cylinder((.5, .5, 0), .05, .2, .82, 'metal', sides=8, caps=(False, False))
+    pipe_run(k, [(.62, .5, 1.0), (.72, .5, 1.0), (.72, .5, .56)], .035, band)
+    # Power-driven wheel in front of the pump head, on the drive shaft.
+    flywheel(k, '#WheelAnimated', (.5, .29, 1.1), .17, faction, axis='y', thickness=.05)
+    k.cylinder((.5, 0, 1.1), .03, .26, .38, 'metal', sides=6, axis='y')
+    if faction == FOLK:
+        k.cone_roof(c, .52, 1.5, 1.96, 'roof', sides=8, courses=2, rim='board')
+    else:
+        k.cone_roof(c, .6, 1.5, 1.88, 'roof', sides=4, courses=2, rim='board')
+        k.cylinder((.5, .5, 0), .04, 1.84, 1.96, 'metal', sides=6, caps=(False, True))
+    return k
+
+
+def healing_well_stage(faction):
+    k = Kit(f'MoreFluidsHealingWell.{faction}.ConstructionStage0', faction_palette(faction), seed=32)
+    dirt_patch(k, [(0, 0, 1, 1)])
+    k.revolve((.5, .5), [(.44, 0), (.44, .14), (.36, .14), (.36, .04), (0, .04)], 'stone', sides=8)
+    for x in (.1, .9):
+        k.box((x - .05, .45, .0), (x + .05, .55, .86), 'metal', skip=('-z',))
+    k.box((.02, .44, .82), (.98, .56, .9), 'metal')
+    return k
+
+
+# ---------------------------------------------------------------- map objects
+
+def healing_spring():
+    """Map Healing Spring, 1 x 1 x 1: a low ring of mossy boulders round a
+    dark vent, with mint mineral crusts terracing down to the water."""
+    k = Kit('MoreFluidsHealingSpring', COMMON_PALETTE, seed=41)
+    rng = random.Random(41)
+
+    def mossy(normal, points):
+        return 'moss' if normal.z > .62 else 'rock'
+    rocks = [((.22, .27, 0), (.17, .15, .26)), ((.77, .3, 0), (.16, .18, .32)), ((.79, .75, 0), (.17, .15, .22)),
+             ((.25, .78, 0), (.18, .16, .36)), ((.52, .86, 0), (.11, .09, .17))]
+    for center, size in rocks:
+        k.hull(rock_points(rng, center, size, 14), mossy, cut=0)
+    # Mint crust terraces round the vent, moss at their outer edge.
+    jitter = [rng.uniform(.82, 1.12) for _ in range(10)]
+    k.revolve((.5, .52), [(.38, .0), (.34, .04), (.29, .05), (.25, .09), (.17, .1), (.12, .07)], None, sides=10,
+              keys=['moss', 'moss', 'teal', 'teal', 'teal'], wobble=lambda ring, i: jitter[i] if ring < 4 else 1)
+    k.cylinder((.5, .52, 0), .11, -.05, .07, 'rockDark', sides=10, caps=(False, False))
+    k.disc((.5, .52), .11, -.05, 'rockDark', sides=10)
+    return k
+
+
+def geyser():
+    """Map Geyser, 1 x 1 x 1: a grey-white sinter cone of stepped terraces
+    with ochre mineral bands round a dark vent."""
+    k = Kit('MoreFluidsGeyser', COMMON_PALETTE, seed=51)
+    rng = random.Random(52)
+    noise = [rng.uniform(.86, 1.08) for _ in range(12)]
+    profile = [(.44, 0), (.4, .06), (.35, .08), (.33, .12), (.27, .14), (.25, .21), (.2, .23), (.18, .32),
+               (.14, .35), (.11, .32), (.1, .2)]
+    keys = ['crack', 'sinter', 'ochre', 'sinter', 'crack', 'sinter', 'sinter', 'sinter', 'rockDark', 'rockDark']
+    k.revolve((.5, .5), profile, None, sides=12, keys=keys,
+              wobble=lambda ring, i: (noise[i] * (1 + .06 * math.sin(ring * 1.7 + i))) if ring < 9 else 1)
+    k.disc((.5, .5), .1, .2, 'rockDark', sides=12)
+    rng = random.Random(51)
+    for center, size in (((.17, .2, 0), (.12, .1, .14)), ((.84, .74, 0), (.11, .12, .12))):
+        k.hull(rock_points(rng, center, size, 9), 'grey', cut=0)
+    return k
+
+
+MAP_CELL = [(0, 0, -.06, 1, 1, .95)]
+DESAL_CELLS = [(0, 0, 0, 3, 3, 2.9), (1, 3, -.3, 2, 4, 2.0)]
+WELL_CELL = [(0, 0, 0, 1, 1, 1.98)]
+for _f in (FOLK, IRON):
+    _register(f'MoreFluidsDesalinator.{_f}', lambda f=_f: desalinator(f),
+              f'Buildings/Water/MoreFluidsDesalinator/MoreFluidsDesalinator.{_f}.Model', DESAL_CELLS, 2.9, 4000, _f)
+    _register(f'MoreFluidsDesalinator.{_f}.Stage0', lambda f=_f: desalinator_stage(f),
+              f'Buildings/Water/MoreFluidsDesalinator/MoreFluidsDesalinator.{_f}.ConstructionStage0.Model',
+              [(-.03, -.03, -.3, 3.03, 3.03, 1.3), (1, 3, -.3, 2, 4, 1.0)], 1.3, 800, _f,
+              stage_of=f'MoreFluidsDesalinator.{_f}')
+    _register(f'MoreFluidsHealingWell.{_f}', lambda f=_f: healing_well(f),
+              f'Buildings/Water/MoreFluidsHealingWell/MoreFluidsHealingWell.{_f}.Model', WELL_CELL, 1.98, 2000, _f)
+    _register(f'MoreFluidsHealingWell.{_f}.Stage0', lambda f=_f: healing_well_stage(f),
+              f'Buildings/Water/MoreFluidsHealingWell/MoreFluidsHealingWell.{_f}.ConstructionStage0.Model',
+              [(-.03, -.03, 0, 1.03, 1.03, 1.0)], 1.0, 500, _f, stage_of=f'MoreFluidsHealingWell.{_f}')
+_register('MoreFluidsHealingSpring', healing_spring,
+          'MapEditor/Objects/MoreFluidsHealingSpring/MoreFluidsHealingSpring.Model', MAP_CELL, .5, 1000)
+_register('MoreFluidsGeyser', geyser, 'MapEditor/Objects/MoreFluidsGeyser/MoreFluidsGeyser.Model', MAP_CELL, .6, 1000)
