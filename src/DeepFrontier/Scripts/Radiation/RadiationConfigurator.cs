@@ -22,6 +22,7 @@ namespace DeepFrontier.Scripts.Radiation {
       Bind<IRadiationWaterCells>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();
       Bind<IRadioactiveIntakes>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();
       Bind<IRadioactiveSprings>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();
+      Bind<DeepFrontier.ModdableFluidsMigration.ModdableFluidsSoilRenderer>().AsSingleton();
 #else
       Bind<RadiationSoil>().AsSingleton();
       Bind<RadiationSimulation>().AsSingleton();

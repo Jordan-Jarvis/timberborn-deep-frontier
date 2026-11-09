@@ -134,6 +134,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
     public void PostLoad() {
       Soil.SetWashoutPerHour(_bank.WashoutPerHour);
       Soil.Bank = _bank;
+      _bank.Field = Soil;
     }
 
     // Late tick: after every non-late singleton (the tide sets its share, the bank layer takes its rows).
@@ -217,6 +218,58 @@ namespace DeepFrontier.ModdableFluidsMigration {
 
     void IRadioactiveSprings.UnregisterSpring(IWaterSource source) {
       if (source == null) throw new ArgumentNullException(nameof(source));
+    }
+  }
+
+  /// <summary>
+  /// Irradiated ground in the Moddable Fluids build: RadiationRenderer without the water surface (Moddable Fluids' shared
+  /// renderer draws radioactive water from the fluid's colour). Deep Frontier's terrain variant draws the soil map from
+  /// the bank layer's view (soil field and bank layer), in the late tick after ModdableFluidsRadiation (bound and created
+  /// after it). Like RadiationRenderer it puts the variant on the native terrain materials while a game is loaded.
+  /// </summary>
+  public sealed class ModdableFluidsSoilRenderer : ILoadableSingleton, IPostLoadableSingleton, ITickableSingleton, ILateTickable,
+      IUnloadableSingleton, IUpdatableSingleton {
+    private readonly ModdableFluidsRadiation _radiation;
+    private readonly ModdableFluidsBankLayer _bank;
+    private readonly Timberborn.AssetSystem.IAssetLoader _assetLoader;
+    private readonly Timberborn.Timbermesh.IMaterialRepository _materialRepository;
+    private readonly Timberborn.TerrainSystem.ITerrainService _terrainService;
+    private readonly List<RadiationShading.ShaderSwap> _swaps = new List<RadiationShading.ShaderSwap>();
+    private IrradiatedSoilSurface _soil;
+    private int _lastPass = -1;
+
+    public ModdableFluidsSoilRenderer(ModdableFluidsRadiation radiation, ModdableFluidsBankLayer bank, Timberborn.AssetSystem.IAssetLoader assetLoader,
+        Timberborn.Timbermesh.IMaterialRepository materialRepository, Timberborn.TerrainSystem.ITerrainService terrainService) {
+      _radiation = radiation; _bank = bank; _assetLoader = assetLoader; _materialRepository = materialRepository; _terrainService = terrainService;
+    }
+
+    public void Load() => RadiationShading.Verify();
+
+    public void PostLoad() {
+      var terrainVariant = _assetLoader.Load<Shader>(RadiationShading.TerrainVariant);
+      var terrain = Array.ConvertAll(RadiationShading.TerrainMaterials, _materialRepository.GetMaterial);
+      _soil = new IrradiatedSoilSurface(terrain, terrainVariant, _terrainService.Size, _swaps);
+    }
+
+    public void Unload() {
+      _soil?.Unload();
+      _soil = null;
+      RadiationShading.ShaderSwap.RestoreAll(_swaps);
+    }
+
+    public void Tick() => Refresh(settle: true);
+
+    // A loaded game starts paused: until the first soil pass the loaded soil is drawn from here.
+    public void UpdateSingleton() {
+      if (!_radiation.Soil.HasPass) Refresh(settle: false);
+    }
+
+    private void Refresh(bool settle) {
+      if (_soil == null) throw new InvalidOperationException("Irradiated soil renderer refreshed before PostLoad");
+      int pass = _radiation.Soil.Published.Pass;
+      if (pass == _lastPass && !(settle && _soil.Pending)) return;
+      _lastPass = pass;
+      _soil.Update(_bank);
     }
   }
 

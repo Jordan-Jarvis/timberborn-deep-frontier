@@ -38,7 +38,7 @@ namespace DeepFrontier.Scripts.Radiation {
   // because DeepFrontier.asmdef has "allowUnsafeCode": true (SkipVerification;
   // outputs/radiation-mono-access-probe).
   public sealed class RadiationSimulation : IRadiationService, IIrradiatedGround, IRadiationWaterCells, IRadioactiveIntakes, IRadioactiveSprings,
-      ILoadableSingleton, ITickableSingleton, ILateTickable, ISaveableSingleton, IUnloadableSingleton, IUpdatableSingleton {
+      IIrradiatedSoilView, ILoadableSingleton, ITickableSingleton, ILateTickable, ISaveableSingleton, IUnloadableSingleton, IUpdatableSingleton {
     private static readonly SingletonKey RadiationKey = new SingletonKey("DeepFrontier.Radiation");
     private static readonly PropertyKey<int> VersionKey = new PropertyKey<int>("Version");
     private static readonly ListKey<Vector3Int> CellsKey = new ListKey<Vector3Int>("Cells");
@@ -676,6 +676,14 @@ namespace DeepFrontier.Scripts.Radiation {
     void IRadioactiveIntakes.UnregisterIntake(Vector3Int cell, RadioactiveSludgeIntake intake) => UnregisterIntake(cell, intake);
     void IRadioactiveSprings.RegisterSpring(IWaterSource source, float share) => RegisterSpring(source, share);
     void IRadioactiveSprings.UnregisterSpring(IWaterSource source) => UnregisterSpring(source);
+    int IIrradiatedSoilView.XSize => XSize;
+    int IIrradiatedSoilView.YSize => YSize;
+    int IIrradiatedSoilView.Stride => Stride;
+    int IIrradiatedSoilView.VerticalStride => VerticalStride;
+    RowRange IIrradiatedSoilView.VisibleRows => VisibleRows;
+    int IIrradiatedSoilView.ColumnCount(int i) => _counts[i];
+    int IIrradiatedSoilView.ColumnFloor(int idx) => _water[idx].Floor;
+    float IIrradiatedSoilView.SoilAt(int idx) => SoilAt(idx);
 
     // ------------------------------------------------------------ persistence
 

@@ -364,6 +364,21 @@ namespace DeepFrontier.Scripts.Radiation {
     }
   }
 
+  // What the irradiated-ground surface reads: the native column layout (padded
+  // index i = (y + 1) * Stride + x + 1, slot idx = j * VerticalStride + i) and
+  // the soil as every reader sees it. RadiationSimulation, or in the Moddable
+  // Fluids build the soil field with its bank layer (ModdableFluidsBankLayer).
+  internal interface IIrradiatedSoilView {
+    int XSize { get; }
+    int YSize { get; }
+    int Stride { get; }
+    int VerticalStride { get; }
+    RadiationSimulation.RowRange VisibleRows { get; }
+    int ColumnCount(int i);
+    int ColumnFloor(int idx);
+    float SoilAt(int idx);
+  }
+
   // Irradiated ground: the second native SoilContaminationVisualization pass,
   // with Deep Frontier's soil map in the native TerrainMaterialMap layout and
   // update rule (a changed value moves G to R and writes the new G; the next
@@ -432,18 +447,19 @@ namespace DeepFrontier.Scripts.Radiation {
       return (byte)(255f * value);
     }
 
-    internal void Update(RadiationSimulation simulation) {
+    internal void Update(RadiationSimulation simulation) => Update((IIrradiatedSoilView)simulation);
+
+    internal void Update(IIrradiatedSoilView simulation) {
       if (simulation.XSize != _width || simulation.YSize != _height)
         throw new InvalidOperationException("Irradiated soil map and the radiation simulation disagree on the map size");
       var rows = RadiationSimulation.RowRange.Union(simulation.VisibleRows, _rowsWithData).Clamp(0, _height - 1);
       var withData = RadiationSimulation.RowRange.None;
-      var counts = simulation.Counts; var columns = simulation.WaterSnapshot;
       int stride = simulation.Stride, vs = simulation.VerticalStride;
       for (int y = rows.Lo; y <= rows.Hi; y++) {
         bool rowData = false;
         int rowStart = (y + 1) * stride + 1;
         for (int x = 0; x < _width; x++) {
-          int i = rowStart + x, p = x + y * _width, count = counts[i];
+          int i = rowStart + x, p = x + y * _width, count = simulation.ColumnCount(i);
           bool any = false;
           for (int j = 0; j < count; j++) {
             int idx = j * vs + i;
@@ -453,7 +469,7 @@ namespace DeepFrontier.Scripts.Radiation {
             // Floors at or above the terrain height (MapSize.TerrainSize.z) are
             // building tops: no terrain surface draws them, and the native map
             // has no layer for them.
-            int z = columns[idx].Floor;
+            int z = simulation.ColumnFloor(idx);
             if (z >= _depth) continue;
             if (value > _target[z]) _target[z] = value;
             any = true;

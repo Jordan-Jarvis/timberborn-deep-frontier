@@ -34,7 +34,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
   /// <see cref="Prepare"/> (same late tick, after the kill check) builds the shadow; <see cref="StartParallelTick"/>
   /// runs the kernels.
   /// </summary>
-  public sealed class ModdableFluidsBankLayer : IRadiationBankLayer, IPostLoadableSingleton, ITickableSingleton, IParallelTickableSingleton {
+  public sealed class ModdableFluidsBankLayer : IRadiationBankLayer, IIrradiatedSoilView, IPostLoadableSingleton, ITickableSingleton, IParallelTickableSingleton {
     private readonly MapIndexService _mapIndex;
     private readonly IThreadSafeWaterMap _waterMap;
     private readonly IThreadSafeColumnTerrainMap _terrainMap;
@@ -62,6 +62,9 @@ namespace DeepFrontier.ModdableFluidsMigration {
     private RadiationSimulation.RowRange _scheduledRows = RadiationSimulation.RowRange.None;
     private RadiationSimulation.RowRange _ranRows = RadiationSimulation.RowRange.None;
     private RadiationSimulation.RowRange _computedRows = RadiationSimulation.RowRange.None;
+    private RadiationSoilField _field;
+    private RadiationFieldSnapshot _viewPass;
+    private RadiationSimulation.RowRange _visibleRows = RadiationSimulation.RowRange.None;
 
     public ModdableFluidsBankLayer(MapIndexService mapIndex, IThreadSafeWaterMap waterMap, IThreadSafeColumnTerrainMap terrainMap,
         ITerrainService terrainService, SoilBarrierMap barriers, SoilContaminationSimulationTaskStarter nativeStarter,
@@ -170,6 +173,42 @@ namespace DeepFrontier.ModdableFluidsMigration {
         }
       }
       _bankRows = bankRows;
+    }
+
+    /// <summary>The soil field whose published passes the view and the bank layer read (ModdableFluidsRadiation.PostLoad).</summary>
+    internal RadiationSoilField Field {
+      set { if (_field != null) throw new InvalidOperationException("The bank layer already reads a soil field"); _field = value ?? throw new ArgumentNullException(nameof(value)); }
+    }
+
+    // ------------------------------------------------- IIrradiatedSoilView (main thread)
+
+    public int XSize => _xSize;
+    public int YSize => _ySize;
+    public int Stride => _stride;
+    public int VerticalStride => _vs;
+    public int ColumnCount(int i) => _waterMap.ColumnCount(i);
+    public int ColumnFloor(int idx) => _waterMap.ColumnFloor(idx);
+
+    /// <summary>RadiationSimulation.VisibleRows: rows with soil, bank or radioactive water, plus RangeMargin.</summary>
+    RadiationSimulation.RowRange IIrradiatedSoilView.VisibleRows {
+      get {
+        var pass = _field.Published;
+        if (!ReferenceEquals(pass, _viewPass)) {
+          var rows = _bankRows;
+          foreach (var key in pass.Soil.Keys) rows.Include(key.y);
+          foreach (var key in pass.Water.Keys) rows.Include(key.y);
+          _visibleRows = rows.Expand(RadiationTuning.RangeMargin, 0, _ySize - 1);
+          _viewPass = pass;
+        }
+        return _visibleRows;
+      }
+    }
+
+    /// <summary>RadiationSimulation.SoilAt for a native column slot: stored soil or the bank layer, whichever is higher.</summary>
+    public float SoilAt(int idx) {
+      int i = idx % _vs, x = i % _stride - 1, y = i / _stride - 1;
+      float soil = _field.Published.Soil.TryGetValue(new Vector3Int(x, y, _waterMap.ColumnFloor(idx)), out float value) ? value : 0f;
+      return Mathf.Max(soil, idx < _bank.Length ? _bank[idx] : 0f);
     }
 
     private void ClearBankRow(int y) {
