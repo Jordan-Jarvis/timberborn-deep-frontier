@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- The tide game code (src/ModdableFluids/Tides) as the Unity package builds it: inside the Runtime assembly, so the
+       Runtime sources are compiled here too (same assembly name). References the shipped game assemblies, not the
+       publicized ModsBuild copies, so any use of a non-public native member fails to compile (the Runtime asmdef has
+       no allowUnsafeCode, and Mono enforces member access at JIT time). -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>ModdableFluids.RuntimePrototype</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../src/ModdableFluids/Runtime/*.cs" />
+    <Compile Include="../../../src/ModdableFluids/Tides/*.cs" />
+    <ProjectReference Include="../fluid-game-bridge/ModdableFluids.GamePrototype.csproj" />
+    <ProjectReference Include="../fluid-transport/ModdableFluids.TransportPrototype.csproj" />
+    <GameReference Include="$(TimberbornManaged)/Timberborn.*.dll;$(TimberbornManaged)/Bindito*.dll;$(TimberbornManaged)/UnityEngine.CoreModule.dll;$(TimberbornManaged)/UnityEngine.UIElementsModule.dll;$(TimberbornManaged)/System.Collections.Immutable.dll;$(TimberbornManaged)/Newtonsoft.Json.dll" />
+    <Reference Include="@(GameReference)" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(ModsBuildManaged)/0Harmony.dll" Private="false" />
+  </ItemGroup>
+</Project>

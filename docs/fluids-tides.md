@@ -2,7 +2,10 @@
 
 Tide registration for Moddable Fluids, started 2026-11-09. A tide is a hazardous weather registered by a content mod. While it is the cycle's weather and in progress, every tide-overridable water source emits the tide's fluids, and may run at reduced strength. Moddable Fluids owns the one native weather adapter for all registered tides. Content mods register tides; they do not patch the native weather.
 
-Status: the registration API, the validation at registry freeze and the selection rule are implemented and covered by the .NET harness. The game-side adapter is described below with its own status. Nothing here has been run in game.
+Status:
+
+- **Implemented and tested outside the game.** The registration API, the validation at registry freeze and the selection rule are covered by the .NET harness. The game-side adapter (`src/ModdableFluids/Tides`) compiles against the shipped game assemblies, and its native parts pass a probe in the game's own Mono (see [Evidence](#evidence)).
+- **Not yet run in game.** Like the rest of Moddable Fluids, it binds only where the scene owner does: in worker acceptance worlds (`-moddableFluidsWorkerAcceptance`).
 
 ## Selection policy C′
 
@@ -106,3 +109,120 @@ A tide defines values for the vanilla Easy, Normal and Hard presets only. Every 
 The anchors are the vanilla 1.1.2.8 presets (`FluidTideModeWeather.VanillaEasy`/`Normal`/`Hard`); the harness checks them against the blueprints. Registration requires each tide's curve to stay in range for every hazard share in [0, 1], so the rule never clamps.
 
 A save's defaults: each tide's weight is its derived chance, and the budget is the largest derived chance among the installed tides.
+
+## Game adapter
+
+`src/ModdableFluids/Tides`, compiled into the Runtime assembly. `FluidTidesConfigurator` binds it with the scene owner, and only when at least one tide is registered. With none, nothing is bound and no native method is patched.
+
+### Native hooks
+
+Hazardous weather is closed in Timberborn 1.1.2.8:
+
+- `HazardousWeatherRandomizer` and `HazardousWeatherService` know only drought and badtide.
+- The service saves only `IsDrought`.
+- `HazardousWeatherUIHelper` throws "No UI for weather" for any other weather.
+- The internal `HazardousWeatherSoundPlayer` throws for any other weather.
+
+One adapter covers every tide, generalizing Deep Frontier's radioactive tide patches. Each registered tide is a `FluidTideWeather` (`IHazardousWeather`, `Id` = its native weather ID). Harmony owner `ModdableFluids.Tides`:
+
+| Target | Kind | Purpose |
+| --- | --- | --- |
+| `HazardousWeatherRandomizer.GetRandomWeatherForCycle(int)` | postfix | `FluidTideSelection.Select` after the native draw |
+| `HazardousWeatherService.Load()` | postfix | puts a saved tide back through the private `CurrentCycleHazardousWeather` setter |
+| `HazardousWeatherUIHelper.UpdateCurrentUISpecification()` | skipping prefix while a tide is current | avoids the native throw |
+| eight `HazardousWeatherUIHelper` string getters | prefixes while a tide is current | the tide's loc keys and three marker classes |
+| `HazardousWeatherSoundPlayer.OnHazardousWeatherStarted` | prefix for a tide | the tide's native alarm (badtide or drought) |
+
+`FluidTideUi` turns the marker classes into inline styles with the current tide's sprites, and adds the tide's description line to the banner. This is Deep Frontier's `RadioactiveTideUi`, made generic.
+
+**Lifetime.** The patches are installed when `FluidTideService` is constructed and removed when it unloads. Every Game-scene singleton is constructed before the first `Load`, so the patches are in place before native `HazardousWeatherService.Load` and the first `SetForCycle`. A second install while patches from an earlier scene remain is refused.
+
+**Startup contract.** `FluidTideNative.VerifyGame` runs before installing and stops the scene, naming any member that changed. It checks:
+
+- every target's signature;
+- the private setter and `PanelStack._root`;
+- that `SetForCycle` calls the randomizer and `GetDurationAtCycle`;
+- the sound controller's two start sounds;
+- that each prefixed or postfixed method is longer than Mono's inline limit.
+
+The eight getters are small enough to inline. They rely on Harmony disabling inlining when it patches, and the game's panels are compiled after the patch. The Mono probe reads a getter from a caller compiled after patching.
+
+**Foreign patches.** Any other Harmony owner on a target is refused before anything is installed, naming each owner. Two examples are Deep Frontier's shipped radioactive tide (`DeepFrontier.RadioactiveTide`) and Moddable Weathers' transpilers. A tide of Deep Frontier's must then come from its Moddable Fluids build (`DEEP_FRONTIER_MODDABLE_FLUIDS`), which registers through this API.
+
+**Content check.** At `PostLoad`, every tide's native weather ID must have fog in all four day stages of `SunSpec`. Otherwise the native `Sun.GetFogSettings` would throw when the tide starts.
+
+### Source effect
+
+- **Composition.** While a tide is in progress (`WeatherService.IsHazardousWeather` and the cycle's weather is the tide), `FluidTideService` owns the world's source composition: it calls `IFluidWorld.SetSourceComposition("ModdableFluids.Tides", tide.SourceEmission)`, and clears it when the tide ends. Content mods must not set a composition themselves; the single-owner rule would refuse them.
+- **Strength.** `FluidTideStrengthModifier` uses the native mechanism: an `IWaterStrengthModifier` on every `WaterSource`, attached by a `TemplateModule` decorator the same way the game attaches `DroughtWaterStrengthModifier`. `WaterSource` multiplies it into `CurrentStrength` every tick. While a tide is in progress, a tide-overridable source returns the tide's multiplier, for example 0.5 for coffee; otherwise it returns 1.
+- **Source types.** A source's type is found by its template name (`TemplateSpec`). A placed source whose template has no registered source type stops loading, naming the template.
+- **Badwater sources.** Every native source type is tide-overridable, including badwater sources, so the coffee tide also halves them. Their badwater stays badwater.
+- **Timing.** The composition and strength change in the tick the tide starts and ends. There is no ramp.
+
+### Saving
+
+| Key | Contents |
+| --- | --- |
+| Singleton `ModdableFluids.Tides` | `CurrentCycleTide` (tide ID or empty), `LastTideCycle`, `LastTideId`, `LastTideDuration` |
+| Singleton `ModdableFluids.TideSettings` | `BudgetPercent`, and parallel lists `TideIds`, `Enabled`, `Weights`, `CyclesWithoutTide`, `MinDurationDays`, `MaxDurationDays` |
+| Native `HazardousWeatherHistory` | each tide under its native weather ID, which gives it its own occurrence count |
+
+`PostLoad` checks the restored tide against the native service: the same tide, cycle and duration.
+
+A game's settings come from, in order:
+
+1. **The save's own copy.**
+   - A tide registered after the save was made is off in that save.
+   - A saved tide that no installed mod registers stops loading, naming it.
+2. **A new game's mode.**
+   - The custom mode's tide rows, as a `FluidTideGameModeSpec` on its blueprint.
+   - Any other mode derives its values from its own weather. A mode's own spec that leaves out a tide also derives that tide.
+3. **A save made without tide settings.** Every tide is off. The mode such a save started from is not stored.
+
+A save without Moddable Fluids tide state whose native history already contains a registered tide's weather ID was played under another tide system, such as Deep Frontier's own. Its loading is refused: importing that state is not implemented.
+
+### New-game screen
+
+`FluidTideNewGameSettings` generalizes Deep Frontier's radioactive tide rows. After the native badtide rows it adds:
+
+- **Tide chance (shared by all tides)**: the budget;
+- for each tide in ordinal order: its toggle, then *Cycles without …*, *… share of the tide chance* (its weight) and *… duration*.
+
+How the rows work:
+
+- They are native rows moved from fresh copies of the native panel view, renamed and relabelled.
+- They clamp on focus-out with the native `TextFields.InitializeIntegerField`.
+- Invalid values get the native invalid class and keep Start disabled.
+- Customize fills the rows from the selected preset.
+
+A postfix on `CustomNewGameModeController.TryGetValidatedGameMode` attaches the values as a `FluidTideGameModeSpec`. Its Harmony owner is `ModdableFluids.TidesNewGame`. It is installed when the main menu builds the screen and removed when the main menu unloads. `VerifyNewGame` first checks the native call path from the panel to `GameSceneLoader.StartNewGame`.
+
+The row labels are Moddable Fluids keys in `src/ModdableFluids/Tides/Localizations/enUS.csv`.
+
+### Moddable Weathers
+
+Not implemented. Moddable Weathers replaces the native hazardous weather system and transpiles the targets above into throws. With its assembly loaded and any tide registered, the configurator stops the scene with a message naming the tides. The check compares assembly names only and references no Moddable Weathers type.
+
+The intended adapter is a Moddable Timberborn `.optional` assembly, like Deep Frontier's. It would convert all registered tides to Moddable Weathers weights once, so that each stage's tide total is the budget, split by weight, with the global cooldown. That gives the same C′ shares.
+
+### Development
+
+`FluidTideDevModule` adds one development method per tide: "Moddable Fluids: <tide> next cycle". It forces the next cycle's hazardous weather to that tide, ignoring cycles without, the budget and the cooldown. The force is not saved.
+
+## Evidence
+
+- **.NET harness** (`HarnessExtensions.Tides.cs`, in `tools/test_fluid_transport.ps1`). It covers:
+  - registration, freeze validation and the reflection route;
+  - per-mode values, including Deep Frontier's Chill-mode parity and the vanilla anchors against the blueprints;
+  - the selection draws;
+  - the exact long-run shares above.
+- **Compile check** (`tools/compile-check/fluid-tides`). Runtime and Tides compiled together as `ModdableFluids.RuntimePrototype`, against the shipped (not publicized) game assemblies.
+- **Mono probe** (`tools/compile-check/fluid-tides/probe`, run by `run_tides_mono.py`). It runs in the installed game's Mono, in a separate process, with the shipped Harmony, and covers:
+  - the startup contract and install/uninstall per scene;
+  - refusal of a second service and of a foreign patch;
+  - the real `HazardousWeatherRandomizer` through the selection postfix: draws, cooldown, weighted pick and budget miss;
+  - the real `HazardousWeatherService.Load` restoring a tide;
+  - the UI helper prefixes, including a caller compiled after patching;
+  - the new-game patch;
+  - new-game, custom-mode, partial-spec and no-settings resolution;
+  - the fog check.

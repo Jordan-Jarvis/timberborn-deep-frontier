@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Runs the tide adapter against the installed native weather types inside the game's own Mono, in a separate
+       process (run_tides_mono.py). No game process, scene or Unity engine call is involved. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>ModdableFluids.TidesMonoProbe</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../ModdableFluids.Tides.csproj" />
+    <GameReference Include="$(TimberbornManaged)/Timberborn.*.dll;$(TimberbornManaged)/Bindito*.dll;$(TimberbornManaged)/UnityEngine.CoreModule.dll;$(TimberbornManaged)/UnityEngine.UIElementsModule.dll;$(TimberbornManaged)/System.Collections.Immutable.dll" />
+    <Reference Include="@(GameReference)" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(ModsBuildManaged)/0Harmony.dll" Private="false" />
+  </ItemGroup>
+</Project>

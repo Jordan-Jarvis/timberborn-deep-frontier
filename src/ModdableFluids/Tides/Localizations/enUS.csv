@@ -1,0 +1,5 @@
+ID,Text,Comment
+ModdableFluids.NewGame.TideBudget,Tide chance (shared by all tides),Moddable Fluids: chance per eligible cycle that the hazardous season is a tide
+ModdableFluids.NewGame.TideCyclesWithout,Cycles without {0},Moddable Fluids: {0} is the tide name
+ModdableFluids.NewGame.TideWeight,{0} share of the tide chance,Moddable Fluids: the tide's weight within the shared chance; {0} is the tide name
+ModdableFluids.NewGame.TideDuration,{0} duration,Moddable Fluids: {0} is the tide name
