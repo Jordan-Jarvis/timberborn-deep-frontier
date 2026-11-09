@@ -46,12 +46,12 @@ namespace DeepFrontier.Scripts {
       try {
         verify();
       } catch (Exception exception) {
-        throw Failure(id, "its check of the game failed", exception);
+        throw Failure($"its patch {id}", "its check of the game failed", exception);
       }
       try {
         apply(new Harmony(id));
       } catch (Exception exception) {
-        throw Failure(id, "Harmony could not apply it", exception);
+        throw Failure($"its patch {id}", "Harmony could not apply it", exception);
       }
       Installed.Add(id);
     }
@@ -62,10 +62,10 @@ namespace DeepFrontier.Scripts {
     public static InvalidOperationException Changed(string feature, string member) =>
       new InvalidOperationException($"{feature}: native API changed; expected {member} (Timberborn {GameVersion})");
 
-    internal static InvalidOperationException Failure(string id, string what, Exception inner) {
+    internal static InvalidOperationException Failure(string subject, string what, Exception inner) {
       var cause = inner is TypeInitializationException { InnerException: { } typeInit } ? typeInit : inner;
       return new InvalidOperationException(
-        $"Deep Frontier {DeepFrontierRuntime.VerticalSliceVersion} cannot start: its patch {id} does not fit this game ({what}: {cause.Message}). " +
+        $"Deep Frontier {DeepFrontierRuntime.VerticalSliceVersion} cannot start: {subject} does not fit this game ({what}: {cause.Message}). " +
         $"This Deep Frontier build supports Timberborn {GameVersion}; the game reports {Application.version}. Disable Deep Frontier or install a version made for this game.",
         cause);
     }

@@ -174,11 +174,15 @@ namespace DeepFrontier.Scripts.Radiation {
       _blockService = blockService; _soilExchange = soilExchange;
     }
 
-    public void Load() {
-      // The native exception saver marks itself here (see Save); verify the member now, not mid-crash.
+    // The native exception saver marks itself through this field (see Save);
+    // checked at mod start (NativeContracts), not mid-crash.
+    internal static void VerifyNative() {
       if (typeof(TickOnlyArrayService).GetField("_forceAllowAccess", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public
           | System.Reflection.BindingFlags.NonPublic)?.FieldType != typeof(bool))
         throw new InvalidOperationException("Radiation: native TickOnlyArrayService._forceAllowAccess (bool) changed (Timberborn 1.1.2.8)");
+    }
+
+    public void Load() {
       _spec = _specService.GetSingleSpec<WaterSimulatorSpec>();
       _stride = _mapIndex.Stride;
       _vs = _mapIndex.VerticalStride;

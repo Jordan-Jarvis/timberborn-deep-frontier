@@ -301,7 +301,9 @@ check(writeCurrent.indexOf('SyncGeometry(') >= 0 && writeCurrent.indexOf('SyncGe
     && /if \(state\.Snapshot\) \{ droppedCells\+\+; continue; \}/.test(methodBody('RadiationSimulation.cs', 'private void ApplyLoaded(') ?? '')
     && /if \(state\.Snapshot && bad \+ _radiation\[idx\] > 1f\)/.test(methodBody('RadiationSimulation.cs', 'private void ApplyLoaded(') ?? ''),
     'loading a snapshot exception save drops cells whose geometry changed and caps r at 1 - b; other saves stay strict');
-  check(/GetField\("_forceAllowAccess"/.test(methodBody('RadiationSimulation.cs', 'public void Load()') ?? ''), 'the native exception-save marker must be verified at load, not mid-crash');
+  check(/GetField\("_forceAllowAccess"/.test(methodBody('RadiationSimulation.cs', 'internal static void VerifyNative()') ?? '')
+    && /\("Radiation simulation", RadiationSimulation\.VerifyNative\)/.test(await readFile(resolve(scripts, '..', 'NativeContracts.cs'), 'utf8').catch(() => '')),
+    'the native exception-save marker must be verified at mod start (NativeContracts), not mid-crash');
 }
 const loadBody = methodBody('RadiationSimulation.cs', 'public void Load()') ?? '';
 check(/_nextSourceId = _loaded\.NextSourceId/.test(loadBody) && /_sources\.AddRange\(_loaded\.Sources\)/.test(loadBody), 'Load must restore sources and NextSourceId immediately');
