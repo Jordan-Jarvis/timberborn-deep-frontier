@@ -231,24 +231,7 @@ Run `tools/test_fluid_transport.ps1` in a freshly synchronized scratch mirror, o
 
 ## Deep Frontier migration groundwork
 
-Built 2026-11-09 on API 0.1.3, behind `DEEP_FRONTIER_MODDABLE_FLUIDS`. The code lives in `src/DeepFrontier/ModdableFluids`, outside `Scripts`, so `tools/stage_deep_frontier.ps1` never stages it and the shipped package is unchanged. Two compile checks cover it: `tools/compile-check/deep-frontier-fluids` (the pure part, referenced by the fluid harness) and `tools/compile-check/deep-frontier-moddable-fluids` (all Deep Frontier scripts with the flag, built by `tools/test_fluid_transport.ps1`).
-
-| Piece | What it does |
-| --- | --- |
-| `DeepFrontierRadioactiveWater` | Provider `DeepFrontier.Radiation`: fluid `DeepFrontier.RadioactiveWater` with Deep Frontier metadata; source types `DeepFrontier.RadioactiveSpring` and `DeepFrontier.RadioactiveSpringSource` (1 tile, native strength 0.026041666666666668, follow drought, no badtide, not tide-overridable, emit radioactive water only); importer; column rules for decay (365-day half-life, 1e-6 floor) and the 0.5% cutoff for a share that stopped growing, both converting radioactive water to fresh water in place as `RunInteraction` and `Rescan` set r lower |
-| `RadiationSaveMigration` | `DeepFrontier.Radiation` versions 2 and 3 to a `FluidSaveDocument`, with `ApplyLoaded`'s rules: shares under the detection limit read as zero (volume reported), version 2 shares are of the non-bad water and its sludge becomes radioactive additions, an exception snapshot drops moved cells and caps r at 1 - b (each reported), and a normal save with either problem stops loading with every cell named |
-| `ModdableFluidsRadiationService` | `IRadiationService` over the scene world: `Sample`, `GetRadiation`, `IsColumnContaminated`, `TryFindOpenCell` (`SampleCell`), additions, timed sources, and the tide share as the source composition override. Requests made before the first fluid tick wait for it. `TotalWaterRadiation` includes overflow, where Deep Frontier sums r x depth |
-| `RadiationSoilLedger` | Persistent soil by (x, y, column floor) with the soil half-life and the clamp at 1 |
-| `ModdableFluidsRadiation` (flagged) | Singleton lifecycle and `DeepFrontier.Radiation` version 4 (soil, sources, counter). It reads versions 2 to 4; a save before the first fluid substep writes the old record back, and Moddable Fluids marks its own entry `ImportPending`, so nothing is half-migrated |
-
-With the flag, `RadiationConfigurator` binds the facade instead of `RadiationSimulation`, `RadiationSoil` and `RadiationRenderer`, and `RadiationPatchesModStarter` no longer installs the lockstep hooks. The soil moisture hook and the radioactive tide's weather patches stay: Moddable Fluids has no replacement for them yet.
-
-The flagged build compiles but is not runnable, and is not on the in-game run list. Before it can run:
-
-1. Move the code that uses `RadiationSimulation` directly instead of `IRadiationService`: `IrradiatedPlantingSpots`, `IrradiatedPlantWarning`, `RadiationBuildings`, `RadiationExposure`, `RadiationIntakeGuard`, `RadiationStorage`, `RadioactiveSpring` (spring registration, now a source type), `WaterShadingProbe` and `NativeContracts`. `RadiationSoil`, `RadiationShading`, `RadiationRenderer` and `RadiationLockstep` read its internals and are replaced by the soil port, Moddable Fluids rendering and Moddable Fluids transport.
-2. Port the soil-water exchange, the native-pattern bank layer, soil spread, and deposition of evaporated, geometry-lost and intake-lost radioactive water. Deposition needs per-column loss reports from Moddable Fluids, which do not exist yet.
-3. Give Moddable Fluids a moisture adapter so the soil moisture hook can go, and move the irradiated-soil overlay onto the shared renderer.
-4. Moddable Fluids itself activates only in acceptance worlds; ordinary play needs that gate lifted first.
+Moved to [Deep Frontier on Moddable Fluids](deep-frontier-fluids-migration.md).
 
 ## Remaining work before a playable foundation
 
