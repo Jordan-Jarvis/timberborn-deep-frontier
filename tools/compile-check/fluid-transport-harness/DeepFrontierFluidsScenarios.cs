@@ -68,6 +68,15 @@ internal static class DeepFrontierFluidsScenarios {
       check(spring.EmittedFluids.Count == 1 && spring.EmittedFluids[DeepFrontierRadioactiveWater.FluidId] == 1, template + " emits radioactive water only");
     }
     check(host.HasImporters, "The provider is an importer");
+    // Native policies (0.1.4): pumps refuse at the detection limit (RadiationIntakeGuard), moisture is blocked like badwater.
+    check(fluid.WaterIntake != null && fluid.WaterIntake.RefuseAtShare == RadiationTuning.DetectionLimit && fluid.WaterIntake.DrawnAsWater == DeepFrontierRadioactiveWater.DrawnAsWater
+      && fluid.WaterIntake.RefusedStatusLocKey == "DeepFrontier.Radiation.Status.PumpBlocked" && fluid.WaterIntake.RefusedAlertLocKey == "DeepFrontier.Radiation.Status.PumpBlocked.Short",
+      "Water-intake policy: refused at 0.5%, Deep Frontier's pump status");
+    check(fluid.Irrigation != null && fluid.Irrigation.Effect == FluidMoistureEffect.BlocksLikeBadwater && fluid.Irrigation.BlocksAtShare == .53f
+      && .53f / fluid.Irrigation.BlocksAtShare == 1, "Irrigation policy: blocks at the native badwater limit, so the moisture tasks see b + r");
+    check(registry.UndeclaredPolicies().Count == 0, "Every policy declared");
+    check(fluid.DisplayNameLocKey == "Good.RadioactiveSludge.DisplayName" && registry.SourceTypes.Where(t => !t.IsNative).All(t => t.DisplayNameLocKey == "Building." + t.Template + ".DisplayName"),
+      "Display names use Deep Frontier's existing localization keys");
   }
 
   private static (ModdableFluidsHost Host, DeepFrontierRadioactiveWater Provider, FluidRegistry Registry) Host() {
@@ -348,13 +357,10 @@ internal static class DeepFrontierFluidsScenarios {
     var emitted = world.Additions.Skip(1).Select(s => s.Volume).ToArray();
     check(emitted.Length == 2 && Math.Abs(emitted[0] - 4) < 1e-6 && Math.Abs(emitted[1] - 2) < 1e-6 && facade.Sources.Count == 0, "Source emits for its duration only");
     Rejects<ArgumentException>(check, () => facade.RemoveContinuousSource(id), "Removing a finished source");
-    // The tide share is the world's source composition, published on the next tick.
-    facade.SetSourceRadioactiveShare(.4f);
-    check(world.State.ActiveSourceComposition == null, "Tide share waits for the tick");
-    facade.Tick((float)Hours);
-    check(Math.Abs(world.State.ActiveSourceComposition![DeepFrontierRadioactiveWater.FluidId] - .4f) < 1e-7, "Tide share overrides sources");
+    // The radioactive tide is a Moddable Fluids tide: its service owns the source composition, never the facade.
     facade.SetSourceRadioactiveShare(0f); facade.Tick((float)Hours);
-    check(world.State.ActiveSourceComposition == null, "Tide over");
+    Rejects<InvalidOperationException>(check, () => facade.SetSourceRadioactiveShare(.4f), "A radioactive source share belongs to the tide service");
+    check(world.State.ActiveSourceComposition == null, "The facade never sets a source composition");
     Rejects<ArgumentOutOfRangeException>(check, () => facade.SetSourceRadioactiveShare(1.5f), "Share above one");
     host.UnloadScene(scene);
     observations["deepFrontierFacadeSampledShare"] = sample.WaterRadiation;

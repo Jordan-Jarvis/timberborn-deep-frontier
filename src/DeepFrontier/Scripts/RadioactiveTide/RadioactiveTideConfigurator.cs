@@ -27,6 +27,9 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
   [Context("Game")]
   public sealed class RadioactiveTideConfigurator : Configurator {
     protected override void Configure() {
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+      // Moddable Fluids' tide service selects, saves, shows and emits the radioactive tide, with its own dev method.
+#else
 #if !UNITY_EDITOR
       if (RadioactiveTideModStarter.ModdableWeathersLoaded) {
         // The build packages the bridge as *.dll.ModdableWeathers.optional
@@ -43,6 +46,7 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
       Bind<RadioactiveTideService>().AsSingleton();
       Bind<RadioactiveTideUi>().AsSingleton();
       MultiBind<IDevModule>().To<RadioactiveTideDevModule>().AsSingleton();
+#endif
     }
 
     internal static bool AssemblyLoaded(string name) =>
@@ -67,7 +71,11 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
   [Context("MainMenu")]
   public sealed class RadioactiveTideNewGameConfigurator : Configurator {
     protected override void Configure() {
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+      // Moddable Fluids' new-game rows cover every registered tide (budget, weight, cycles without, duration).
+#else
       Bind<RadioactiveTideNewGameSettings>().AsSingleton();
+#endif
     }
   }
 }

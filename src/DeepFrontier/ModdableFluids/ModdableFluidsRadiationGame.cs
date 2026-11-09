@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DeepFrontier.Scripts.Radiation;
+using DeepFrontier.Scripts.RadioactiveTide;
 using ModdableFluids;
 using Timberborn.BlockSystem;
 using Timberborn.MapIndexSystem;
@@ -22,10 +23,21 @@ namespace DeepFrontier.ModdableFluidsMigration {
     internal static DeepFrontierRadioactiveWater Provider { get; private set; }
     public void StartMod(IModEnvironment modEnvironment) {
       if (Provider != null) throw new InvalidOperationException("Deep Frontier registered its radioactive water twice");
-      Provider = new DeepFrontierRadioactiveWater();
+      Provider = new DeepFrontierRadioactiveWater(Tide());
       ModdableFluidsEntry.RegisterProvider(Provider);
-      Debug.Log("[DeepFrontier] Radioactive water registered with Moddable Fluids " + ModdableFluidsEntry.ApiVersion + ".");
+      Debug.Log("[DeepFrontier] Radioactive water and the radioactive tide registered with Moddable Fluids " + ModdableFluidsEntry.ApiVersion + ".");
     }
+
+    // RadioactiveTideTuning's Easy, Normal and Hard points; Moddable Fluids derives every other mode with Deep Frontier's
+    // rule (FluidTideModes.Derive), and a tide alone keeps RadioactiveTideService's draws.
+    private static RadioactiveTideRegistration Tide() => new RadioactiveTideRegistration(RadioactiveTideTuning.WeatherId, RadioactiveTideLoc.Name,
+      RadioactiveTideLoc.ModdableDescription,
+      RadioactiveTideTuning.GameModeCurve.Select(p => (p.Mode, p.ChancePercent, p.CyclesWithoutTide, p.MinDurationDays, p.MaxDurationDays)),
+      RadioactiveTideTuning.SourceRadioactiveShare,
+      new[] { RadioactiveTideLoc.Approaching, RadioactiveTideLoc.InProgress, RadioactiveTideLoc.Started, RadioactiveTideLoc.Ended,
+        RadioactiveTideLoc.ApproachingDescription, RadioactiveTideLoc.StartedDescription },
+      new[] { RadioactiveTideTuning.IconSpritePath, RadioactiveTideTuning.ProgressSpritePath, RadioactiveTideTuning.NotificationSpritePath },
+      FluidTideRules.BadtideSound);
   }
 
   /// <summary>

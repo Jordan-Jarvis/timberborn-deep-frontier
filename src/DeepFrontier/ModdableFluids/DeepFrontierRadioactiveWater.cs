@@ -21,18 +21,37 @@ namespace DeepFrontier.ModdableFluidsMigration {
     public static readonly string[] SpringTemplates = { "RadioactiveSpring", "RadioactiveSpringSource" };
     /// <summary>The springs' radioactive share of their non-bad water (RadioactiveWaterSourceSpec.RadioactiveShare in both blueprints).</summary>
     public const float SpringShare = 1f;
+    /// <summary>
+    /// Radioactive water blocks soil moisture exactly like badwater: RadiationSoil's moisture shadow showed the native
+    /// moisture tasks b + r. Moddable Fluids shows them b + share x M / this, so this is M, the native
+    /// SoilMoistureSimulatorSpec.MaximumWaterContamination of 1.1.2.8 (checked against the game in ModdableFluidsBankLayer).
+    /// </summary>
+    public const float MoistureBlockShare = 0.53f;
+    /// <summary>What a native pump draws of radioactive water below the refusal share becomes clean water (as in the one-fluid build).</summary>
+    public const string DrawnAsWater = Owner + ".RadioactiveWaterDrawnAsWater";
 
     private readonly object _gate = new object();
     private RadiationLegacyRecord _pendingImport;
     private RadiationMigrationResult _imported;
     private RadiationSoilField _field;
+    private readonly RadioactiveTideRegistration _tide;
+
+    /// <param name="tide">The radioactive tide to register (the game passes it; harness scenarios may leave it out).</param>
+    public DeepFrontierRadioactiveWater(RadioactiveTideRegistration tide = null) {
+      _tide = tide;
+      var capabilities = new List<string> {
+        "ModdableFluids.Policies.Irrigation", "ModdableFluids.Policies.WaterIntakes", "ModdableFluids.Registry.Definitions", "ModdableFluids.Scene.Lifecycle",
+        "ModdableFluids.Sources.Types", "ModdableFluids.World.Additions", "ModdableFluids.World.Import", "ModdableFluids.World.Losses", "ModdableFluids.World.Rules",
+        "ModdableFluids.World.Sampling" };
+      if (tide != null) capabilities.Add(FluidTideRules.RegistrationCapability);
+      RequiredCapabilities = capabilities;
+    }
 
     public string ProviderId => Id;
     public string OwnerModId => Owner;
     public string MinimumApiVersion => "0.1.3";
-    public IReadOnlyCollection<string> RequiredCapabilities { get; } = new[] {
-      "ModdableFluids.Registry.Definitions", "ModdableFluids.Scene.Lifecycle", "ModdableFluids.Sources.Types", "ModdableFluids.World.Additions",
-      "ModdableFluids.World.Import", "ModdableFluids.World.Rules", "ModdableFluids.World.Sampling", "ModdableFluids.World.SourceComposition" };
+    public IReadOnlyCollection<string> RequiredCapabilities { get; }
+    public bool RegistersTide => _tide != null;
 
     /// <summary>The active scene, between Activate and Unload.</summary>
     public FluidScene Scene { get; private set; }
@@ -40,15 +59,20 @@ namespace DeepFrontier.ModdableFluidsMigration {
 
     public void Register(FluidRegistration registration) {
       // Between the radioactive shader's base colours A (0.50, 0.56, 0.04) and B (0.86, 0.92, 0.08).
-      registration.AddFluid("RadioactiveWater", "DeepFrontier.RadioactiveWater.DisplayName", .68f, .74f, .06f, .85f);
+      // The good of the same name is this water in a barrel ("Radioactive water").
+      registration.AddFluid("RadioactiveWater", "Good." + RadiationTuning.SludgeGoodId + ".DisplayName", .68f, .74f, .06f, .85f);
       registration.AddMetadata("RadioactiveWater", "DeepFrontier.DetectionLimit", "0.005");
       registration.AddMetadata("RadioactiveWater", "DeepFrontier.Good", RadiationTuning.SludgeGoodId);
       registration.AddMetadata("RadioactiveWater", "DeepFrontier.VolumePerGood", "0.2");
       registration.AddMetadata("RadioactiveWater", "DeepFrontier.WaterHalfLifeDays", "365");
+      // RadiationIntakeGuard: native pumps stop at the detection limit and draw less as clean water.
+      registration.SetWaterIntakePolicy("RadioactiveWater", RadiationTuning.DetectionLimit, DrawnAsWater, RadiationLoc.PumpBlocked, RadiationLoc.PumpBlockedShort);
+      registration.SetBlocksMoisture("RadioactiveWater", MoistureBlockShare);
       foreach (string template in SpringTemplates) {
-        registration.AddSourceType(template, "DeepFrontier." + template + ".DisplayName", template, 1, SpringStrength, true, false, false);
+        registration.AddSourceType(template, "Building." + template + ".DisplayName", template, 1, SpringStrength, true, false, false);
         registration.SetSourceEmission(template, FluidId, SpringShare);
       }
+      _tide?.Register(registration);
     }
 
     public void Activate(FluidScene scene) {

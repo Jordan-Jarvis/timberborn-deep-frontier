@@ -10,6 +10,7 @@ using Timberborn.Multithreading;
 using Timberborn.SingletonSystem;
 using Timberborn.SoilBarrierSystem;
 using Timberborn.SoilContaminationSystem;
+using Timberborn.SoilMoistureSystem;
 using Timberborn.TerrainSystem;
 using Timberborn.TickSystem;
 using Timberborn.TimeSystem;
@@ -93,6 +94,11 @@ namespace DeepFrontier.ModdableFluidsMigration {
       if (!(_minimumWaterContamination >= 0f && _minimumWaterContamination < 1f) || !(_contaminationScaler > 0f))
         throw new InvalidOperationException("Radiation soil: native MinimumWaterContamination " + _minimumWaterContamination + " leaves no contamination range");
       int maxRange = _specService.GetSingleSpec<SoilContaminationSimulatorSpec>().MaxRangeFromSource;
+      // Radioactive water's irrigation policy blocks moisture at the native badwater limit, so it acts as b + r did.
+      float moistureLimit = _specService.GetSingleSpec<SoilMoistureSimulatorSpec>().MaximumWaterContamination;
+      if (moistureLimit != DeepFrontierRadioactiveWater.MoistureBlockShare)
+        throw new InvalidOperationException("Radiation soil: native MaximumWaterContamination is " + moistureLimit + ", but radioactive water was registered to block moisture at "
+          + DeepFrontierRadioactiveWater.MoistureBlockShare + " (Timberborn 1.1.2.8)");
       if (RadiationTuning.RangeMargin + RadiationSoil.FieldRowMargin < maxRange + 1)
         throw new InvalidOperationException("Radiation soil: rows RangeMargin + FieldRowMargin must cover the native reach " + maxRange + " + 1");
       _terrainLayers = _terrainMap.MaxColumnCount;

@@ -35,9 +35,9 @@ namespace DeepFrontier.Scripts.Radiation {
   internal sealed class RadiationPatchesModStarter : Timberborn.ModManagerScene.IModStarter {
     public void StartMod(Timberborn.ModManagerScene.IModEnvironment modEnvironment) {
 #if DEEP_FRONTIER_MODDABLE_FLUIDS
-      // Moddable Fluids owns the native water hooks; Deep Frontier's lockstep would be a second owner.
-      RadiationSoilPatches.Install();
-      UnityEngine.Debug.Log("[DeepFrontier] Radiation soil moisture hook applied; Moddable Fluids carries the water.");
+      // Moddable Fluids owns the native water hooks and the soil moisture input (radioactive water's irrigation
+      // policy); Deep Frontier's lockstep and moisture hook would be second owners.
+      UnityEngine.Debug.Log("[DeepFrontier] Radiation hooks not applied: Moddable Fluids carries the water and owns soil moisture.");
 #else
       RadiationLockstep.Install();
       RadiationSoilPatches.Install();

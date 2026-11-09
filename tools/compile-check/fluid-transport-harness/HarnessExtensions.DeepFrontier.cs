@@ -20,6 +20,7 @@ internal static partial class HarnessExtensions {
     scenario("Deep Frontier soil follows geometry changes as Reconcile moves it", () => DeepFrontierSoil.Geometry(check));
     scenario("Deep Frontier deposits lost radioactive water from Moddable Fluids losses and credits intakes", () => DeepFrontierSoil.Losses(check, observations));
     scenario("Deep Frontier soil requests, load validation, publication and the bank layer", () => DeepFrontierSoil.RequestsAndLoad(check));
+    scenario("Deep Frontier radioactive tide registers on Moddable Fluids with RadioactiveTideTuning's values and keeps its draws alone", () => DeepFrontierSoil.Tide(check, observations));
   }
 }
 
@@ -384,6 +385,81 @@ internal static class DeepFrontierSoil {
     Rejects<InvalidOperationException>(check, () => strict.ApplyRules(closed, radioactive, registry.Water), "Radioactive water dropped with no column above it", "no fluid column above");
     observations["deepFrontierDepositedEvaporation"] = soil[new Vector3Int(0, 0, 0)];
     _ = c;
+  }
+
+  // -------------------------------------------------------------------- tide
+
+  /// <summary>The registration the flagged game builds, from RadioactiveTideTuning.cs and RadioactiveTideLoc as written.</summary>
+  internal static RadioactiveTideRegistration TideFromSource() {
+    string root = RepositoryRoot();
+    string tuning = File.ReadAllText(Path.Combine(root, "src", "DeepFrontier", "Scripts", "RadioactiveTide", "RadioactiveTideTuning.cs"));
+    string Constant(string name) => Regex.Match(tuning, "const (?:string|float) " + name + @" = ""?([^"";]+)""?;").Groups[1].Value;
+    var modes = Regex.Matches(tuning, @"new RadioactiveTideCurvePoint\(""(\w+)"",((?:\s*\d+,){9})\s*(\d+), (\d+)\)").Select(m => {
+      var numbers = m.Groups[2].Value.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(t => int.Parse(t.Trim())).ToArray();
+      // temperate min/max, drought min/max, badtide min/max, badtide %, cycles without, chance %; then the durations.
+      return (m.Groups[1].Value, numbers[8], numbers[7], int.Parse(m.Groups[3].Value), int.Parse(m.Groups[4].Value));
+    }).ToArray();
+    if (modes.Length != 3) throw new InvalidOperationException("RadioactiveTideTuning.GameModeCurve: expected Easy, Normal and Hard, found " + modes.Length);
+    return new RadioactiveTideRegistration(Constant("WeatherId"), Constant("Name"), Constant("ModdableDescription"), modes,
+      float.Parse(Constant("SourceRadioactiveShare").TrimEnd('f'), System.Globalization.CultureInfo.InvariantCulture),
+      new[] { Constant("Approaching"), Constant("InProgress"), Constant("Started"), Constant("Ended"), Constant("ApproachingDescription"), Constant("StartedDescription") },
+      new[] { Constant("IconSpritePath"), Constant("ProgressSpritePath"), Constant("NotificationSpritePath") }, FluidTideRules.BadtideSound);
+  }
+
+  private sealed class TideRandom : IFluidTideRandom {
+    private readonly System.Random _random;
+    public int Calls;
+    public TideRandom(int seed) { _random = new System.Random(seed); }
+    public bool CheckProbability(float normalizedProbability) { Calls++; return _random.NextDouble() < normalizedProbability; }
+    public int Range(int inclusiveMin, int exclusiveMax) { Calls++; return _random.Next(inclusiveMin, exclusiveMax); }
+  }
+
+  [MethodImpl(MethodImplOptions.NoInlining)]
+  internal static void Tide(Action<bool, string> check, Dictionary<string, object> observations) {
+    var registration = TideFromSource();
+    check(registration.WeatherId == "RadioactiveTideWeather" && registration.SourceShare == 1 && registration.Texts.All(t => t.StartsWith("DeepFrontier.Weather."))
+      && registration.Art.All(a => a.StartsWith("Sprites/Weather/RadioactiveTide")), "Weather ID, emission, texts and art from RadioactiveTideTuning");
+    check(registration.Modes.Select(m => m.Mode + ":" + m.ChancePercent + "/" + m.CyclesWithoutTide + "/" + m.MinDays + "-" + m.MaxDays).SequenceEqual(
+      new[] { "Easy:15/24/2-4", "Normal:25/14/3-6", "Hard:35/9/5-10" }), "Per-mode values as GameModeCurve states them (docs/radiation.md)");
+    var host = new ModdableFluidsHost();
+    var provider = new DeepFrontierRadioactiveWater(registration);
+    host.RegisterProvider(provider);
+    var registry = host.Freeze();
+    check(provider.RegistersTide && provider.RequiredCapabilities.Contains(FluidTideRules.RegistrationCapability), "The provider requires tide registration");
+    bool listed = host.Tides.TryGetByWeather("RadioactiveTideWeather", out var tide);
+    check(host.Tides.Count == 1 && listed && tide.Id == RadioactiveTideRegistration.TideId
+      && tide.SourceEmission.Count == 1 && tide.SourceEmission[DeepFrontierRadioactiveWater.FluidId] == 1 && tide.SourceStrengthMultiplier == 1
+      && tide.Presentation.StartSound == FluidTideRules.BadtideSound, "Moddable Fluids lists the tide by its native weather ID with its emission");
+    foreach (var (mode, chance, without, min, max) in registration.Modes) {
+      var values = tide.GetMode(mode);
+      check(values.ChancePercent == chance && values.CyclesWithoutTide == without && values.MinDurationDays == min && values.MaxDurationDays == max, mode + " values registered");
+    }
+    // The vanilla presets get the registered values back as their save defaults: budget = weight = the chance.
+    foreach (var (weather, index) in new[] { (FluidTideModeWeather.VanillaEasy, 0), (FluidTideModeWeather.VanillaNormal, 1), (FluidTideModeWeather.VanillaHard, 2) }) {
+      var defaults = FluidTideModes.Defaults(host.Tides, weather, out _);
+      var settings = defaults.Get(RadioactiveTideRegistration.TideId);
+      var m = registration.Modes[index];
+      check(defaults.BudgetPercent == m.ChancePercent && settings.Enabled && settings.Weight == m.ChancePercent && settings.CyclesWithoutTide == m.CyclesWithoutTide
+        && settings.MinDurationDays == m.MinDays && settings.MaxDurationDays == m.MaxDays, m.Mode + ": a new game's defaults are Deep Frontier's");
+    }
+    // With Deep Frontier's tide alone, the C′ rule draws exactly as RadioactiveTideService.Choose (transcribed below).
+    int differences = 0, tides = 0, cycles = 0;
+    foreach (var (_, chance, without, _, _) in registration.Modes) {
+      var settings = new FluidTideSaveSettings(chance, new[] { new FluidTideSettings(RadioactiveTideRegistration.TideId, true, chance, without, 1, 1) });
+      var a = new TideRandom(chance); var b = new TideRandom(chance);
+      int lastA = 0, lastB = 0;
+      for (int cycle = 1; cycle <= 4000; cycle++) {
+        cycles++;
+        bool selected = FluidTideSelection.Select(cycle, lastA, settings, null, a) == RadioactiveTideRegistration.TideId;
+        bool choose = !(cycle < 2) && !(cycle <= without) && !(lastB > 0 && cycle - lastB <= 1) && b.CheckProbability(chance / 100f);
+        if (selected != choose || a.Calls != b.Calls) differences++;
+        if (selected) { lastA = cycle; tides++; }
+        if (choose) lastB = cycle;
+      }
+    }
+    check(differences == 0 && tides > 0, $"{cycles} cycles: the same tides and the same random draws as RadioactiveTideService.Choose ({differences} differences)");
+    observations["deepFrontierTideCyclesCompared"] = cycles;
+    _ = registry;
   }
 
   // -------------------------------------------------------- requests and load

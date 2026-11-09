@@ -34,7 +34,13 @@ namespace DeepFrontier.Scripts.Radiation {
     public RadiationIntakeGuard(IRadiationService radiation, IRadiationWaterCells cells, ILoc loc) { _radiation = radiation; _cells = cells; _loc = loc; }
 
     public void Awake() {
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+      // Moddable Fluids' water-intake guard blocks native intakes by radioactive water's registered policy
+      // (refused at DetectionLimit); here the component only describes the intake's water.
+      _inert = true;
+#else
       _inert = GetComponent<RadioactiveSludgeIntake>() != null;
+#endif
       _waterInput = GetComponent<WaterInput>();
       _blockable = GetComponent<BlockableObject>();
       if (!_inert && _blockable == null)

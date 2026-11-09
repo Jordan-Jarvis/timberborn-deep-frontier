@@ -25,20 +25,18 @@ namespace DeepFrontier.ModdableFluidsMigration {
   /// <see cref="IRadiationService"/> backed by Moddable Fluids, so the reactor, bots, storage, tide and sensors can
   /// move one at a time (migration groundwork; flagged build and harness only). Water reads come from the world
   /// state published at the last completed fluid tick; radioactive water is added through the world service; the
-  /// tide's radioactive share is the world's source composition override. Soil comes from <see cref="RadiationSoilField"/>
-  /// (the last completed pass, with the bank layer). Timed sources, the tide share and water added before the first
-  /// fluid tick are applied in <see cref="Tick"/> (main thread), as RadiationSimulation applies them at the start of its Tick.
+  /// radioactive tide is a Moddable Fluids tide, whose service owns the source emission. Soil comes from <see cref="RadiationSoilField"/>
+  /// (the last completed pass, with the bank layer). Timed sources and water added before the first fluid tick are
+  /// applied in <see cref="Tick"/> (main thread), as RadiationSimulation applies them at the start of its Tick.
   /// The semantics are RadiationSimulation's; differences are named where they occur.
   /// </summary>
   public class ModdableFluidsRadiationService : IRadiationService, IIrradiatedGround, IRadiationWaterCells {
-    public const string TideOwner = "DeepFrontier.RadioactiveTide";
     private readonly DeepFrontierRadioactiveWater _provider;
     private RadiationSoilField _soil;
     private readonly Func<float> _waterPerStrengthHour;
     private readonly IRadiationCellMap _cells;
     private readonly List<RadiationSourceRecord> _sources = new List<RadiationSourceRecord>();
     private readonly List<(Vector3Int Cell, float Volume)> _early = new List<(Vector3Int, float)>();
-    private float _tideShare, _publishedTideShare;
     private int _nextSourceId = 1;
 
     public ModdableFluidsRadiationService(DeepFrontierRadioactiveWater provider, RadiationSoilField soil, IRadiationCellMap cells, Func<float> waterPerStrengthHour)
@@ -85,7 +83,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
 
     /// <summary>
     /// Main thread, start of Deep Frontier's tick: version 2 sludge from an import, water added before the first
-    /// fluid tick, the tide share, then timed sources over <paramref name="hours"/> (EmitSources).
+    /// fluid tick, then timed sources over <paramref name="hours"/> (EmitSources).
     /// </summary>
     public void Tick(float hours) {
       if (!HasState) return;
@@ -95,10 +93,6 @@ namespace DeepFrontier.ModdableFluidsMigration {
       var early = _early.ToArray();
       _early.Clear();
       foreach (var (cell, volume) in early) AddRadioactiveWater(cell, volume);
-      if (_tideShare != _publishedTideShare) {
-        World.SetSourceComposition(TideOwner, _tideShare > 0f ? new Dictionary<string, double> { [DeepFrontierRadioactiveWater.FluidId] = _tideShare } : null);
-        _publishedTideShare = _tideShare;
-      }
       for (int k = _sources.Count - 1; k >= 0; k--) {
         var source = _sources[k];
         float active = source.RemainingHours < hours ? source.RemainingHours : hours;
@@ -140,9 +134,14 @@ namespace DeepFrontier.ModdableFluidsMigration {
       Soil.RequestSoil(cell, amount);
     }
 
+    /// <summary>
+    /// The radioactive tide is a Moddable Fluids tide here: its service owns the source composition while the tide is in
+    /// progress (one owner, ModdableFluids.Tides), so nothing in Deep Frontier sets one. RadioactiveTideService, the only
+    /// caller in the one-fluid build, is not bound in this build; any other caller fails here rather than competing.
+    /// </summary>
     public void SetSourceRadioactiveShare(float share) {
       if (!(share >= 0f && share <= 1f)) throw new ArgumentOutOfRangeException(nameof(share), share, "Must be within 0..1");
-      _tideShare = share;
+      if (share > 0f) throw new InvalidOperationException("The radioactive tide's emission belongs to Moddable Fluids' tide service in this build; a radioactive share of " + share + " cannot be set");
     }
 
     public float WaterPerStrengthHour => _waterPerStrengthHour();

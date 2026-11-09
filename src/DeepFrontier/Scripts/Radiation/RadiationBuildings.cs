@@ -129,8 +129,14 @@ namespace DeepFrontier.Scripts.Radiation {
     [Serialize] public float MaxWaterPerCycle { get; init; }
   }
 
+  // In the Moddable Fluids build it is a custom fluid intake: Moddable Fluids' water-intake guard leaves it alone
+  // (RadiationIntakeGuard stayed inert on it), and it is credited from the tick's native-removal losses at its cell.
   internal sealed class RadioactiveSludgeIntake : BaseComponent, IAwakableComponent, IInitializableEntity, IManufactoryLimiter,
-      IFinishedStateListener, IPersistentEntity, IDeletableEntity {
+      IFinishedStateListener, IPersistentEntity, IDeletableEntity
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+      , ModdableFluids.IFluidCustomIntake
+#endif
+  {
     private static readonly ComponentKey IntakeKey = new ComponentKey("DeepFrontier.RadioactiveSludgeIntake");
     private static readonly PropertyKey<float> BufferKey = new PropertyKey<float>("Buffer");
 

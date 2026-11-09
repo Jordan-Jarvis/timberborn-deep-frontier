@@ -43,6 +43,11 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
 
     public void StartMod(IModEnvironment modEnvironment) {
       ModdableWeathersLoaded = RadioactiveTideConfigurator.AssemblyLoaded(RadioactiveTideTuning.ModdableWeathersAssembly);
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+      // The tide is a Moddable Fluids tide (DeepFrontier.ModdableFluidsMigration.RadioactiveTideRegistration): Moddable
+      // Fluids' one weather adapter selects, restores and shows it, and refuses these patches as a foreign owner.
+      Debug.Log("[DeepFrontier] Radioactive tide registered with Moddable Fluids; its own weather patches are not applied.");
+#else
       if (ModdableWeathersLoaded) {
         Debug.Log("[DeepFrontier] Moddable Weathers owns hazardous weather; the vanilla radioactive tide patches are not applied.");
         return;
@@ -55,6 +60,7 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
         harmony.CreateClassProcessor(typeof(RadioactiveTideStartSoundPatch)).Patch();
       });
       Debug.Log("[DeepFrontier] Radioactive tide weather patches applied (selection, restore, UI helper, start sound).");
+#endif
     }
   }
 

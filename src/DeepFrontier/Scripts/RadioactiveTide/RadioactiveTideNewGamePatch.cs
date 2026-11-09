@@ -29,9 +29,14 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     private const string HarmonyId = "DeepFrontier.RadioactiveTideNewGame";
 
     public void StartMod(IModEnvironment modEnvironment) {
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+      // Moddable Fluids' new-game rows (owner ModdableFluids.TidesNewGame) carry every registered tide's settings.
+      Debug.Log("[DeepFrontier] Radioactive tide new-game rows come from Moddable Fluids; Deep Frontier's postfix is not applied.");
+#else
       NativePatches.Install(HarmonyId, RadioactiveTideNewGameNative.Verify, harmony => harmony.Patch(RadioactiveTideNewGameNative.CustomTryGetValidatedGameMode(),
         postfix: new HarmonyMethod(typeof(RadioactiveTideNewGamePatch), nameof(RadioactiveTideNewGamePatch.Postfix))));
       Debug.Log("[DeepFrontier] Radioactive tide new-game settings applied (CustomNewGameModeController.TryGetValidatedGameMode postfix).");
+#endif
     }
   }
 
