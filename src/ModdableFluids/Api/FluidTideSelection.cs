@@ -23,9 +23,14 @@ namespace ModdableFluids {
   /// <item>Global cooldown: after a tide in cycle c, cycle c + 1 keeps the native weather, whichever tide it was.</item>
   /// <item>The eligible tides are the save's enabled tides whose cycles without tide have passed. None: native weather.</item>
   /// <item>One draw with the save's budget (CheckProbability(budget / 100)). A miss keeps the native weather.</item>
-  /// <item>A hit selects one eligible tide by weight: with one eligible tide no further draw; otherwise one
-  /// Range(0, total weight) draw walked over the eligible tides in ordinal ID order.</item>
+  /// <item>A hit picks one of the save's enabled tides by weight: with one enabled tide no further draw; otherwise one
+  /// Range(0, total enabled weight) draw walked over the enabled tides in ordinal ID order. A pick that is not eligible yet
+  /// keeps the native weather.</item>
   /// </list>
+  /// So each eligible tide's chance in a cycle is its own slice of the budget, budget × weight / (total weight of the
+  /// enabled tides), whether or not the other tides can occur yet (user decision 1b, 2026-11-09): a tide that is not
+  /// eligible leaves its slice to the native weather, and the cycle's tide chance never exceeds the budget. Once every
+  /// tide is eligible the shares are those of the whole budget split by weight.
   /// Registration and load order never matter: the tides are taken in ordinal ID order whatever order they are given in.
   /// With one tide the draws are exactly Deep Frontier's (RadioactiveTideService.Choose), including the random calls.
   /// </summary>
@@ -51,20 +56,22 @@ namespace ModdableFluids {
       }
       if (lastTideCycle > 0 && cycle - lastTideCycle <= FluidTideRules.CooldownCycles) return null;
       // settings.Tides is in ordinal ID order (FluidTideSaveSettings sorts it).
-      var eligible = new List<FluidTideSettings>();
+      var enabled = new List<FluidTideSettings>();
       int total = 0;
+      bool anyEligible = false;
       foreach (var tide in settings.Tides) {
-        if (!tide.Enabled || cycle <= tide.CyclesWithoutTide) continue;
-        eligible.Add(tide);
+        if (!tide.Enabled) continue;
+        enabled.Add(tide);
         total += tide.Weight;
+        anyEligible |= cycle > tide.CyclesWithoutTide;
       }
-      if (eligible.Count == 0) return null;
+      if (!anyEligible) return null;
       if (!random.CheckProbability(settings.BudgetPercent / 100f)) return null;
-      if (eligible.Count == 1) return eligible[0].TideId;
+      if (enabled.Count == 1) return enabled[0].TideId;
       int roll = random.Range(0, total);
       if (roll < 0 || roll >= total) throw new InvalidOperationException("The random generator returned " + roll + " outside [0, " + total + ")");
-      foreach (var tide in eligible) {
-        if (roll < tide.Weight) return tide.TideId;
+      foreach (var tide in enabled) {
+        if (roll < tide.Weight) return cycle > tide.CyclesWithoutTide ? tide.TideId : null;
         roll -= tide.Weight;
       }
       throw new InvalidOperationException("Unreachable: the weighted roll passed every eligible tide");

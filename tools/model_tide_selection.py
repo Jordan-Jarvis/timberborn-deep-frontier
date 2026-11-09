@@ -6,9 +6,10 @@ Exact Markov model of the installed Timberborn 1.1.2.8 selection, not a simulati
   a tide in the history is a non-badtide streak, exactly as the native history records its ID;
 - Deep Frontier RadioactiveTideService.Choose: one tide chance per eligible cycle and
   CooldownCycles = 1 (a tide never follows the same tide);
-- the implemented policy C' (ModdableFluids FluidTideSelection.Select, policy 'budget-global'):
-  the budget is the largest installed chance, split by weight (default: each tide's chance)
-  over the eligible tides, and no tide in the cycle after any tide.
+- the implemented policy C' (ModdableFluids FluidTideSelection.Select, policy 'shared'): the
+  budget is the largest installed chance; each eligible tide gets its own slice of it,
+  budget x weight / total weight of every installed tide (weights default to the chances,
+  decision 1b), and no tide in the cycle after any tide.
 Long-run shares assume every weather is past its first eligible cycle. Probabilities are the
 exact decimals (0.4, 15%), not the game's float values. Writes
 outputs/fluids-api-prototype/tide-policy-model.json and prints the Markdown tables.
@@ -64,6 +65,11 @@ def tide_shares(policy, tides, eligible):
         budget = max(tides.values())  # the largest registered chance, whether or not eligible
         total = sum(chances.values())
         return {t: budget * c / total for t, c in chances.items()}
+    if policy == 'shared':
+        # Implemented C' (decision 1b): each eligible tide's slice of the budget over every installed tide's weight,
+        # so a tide that cannot occur yet leaves its slice to the native weather.
+        budget, total = max(tides.values()), sum(tides.values())
+        return {t: budget * tides[t] / total for t in chances}
     if policy == 'independent':
         result = {t: 0.0 for t in chances}
         names = sorted(chances)
@@ -98,8 +104,9 @@ def stationary(base, tides, policy, cap=12):
         for (last, streak), p in zip(states, distribution):
             if p == 0:
                 continue
-            # CooldownCycles = 1 per tide; a '-global' policy also blocks every tide after any tide.
-            eligible = [] if policy.endswith('-global') and last in tides else [t for t in tides if t != last]
+            # CooldownCycles = 1 per tide; a '-global' policy (and 'shared') also blocks every tide after any tide.
+            blocked = (policy.endswith('-global') or policy == 'shared') and last in tides
+            eligible = [] if blocked else [t for t in tides if t != last]
             shares = tide_shares(policy, tides, eligible)
             native = 1 - sum(shares.values())
             beta = native_badtide_chance(base, last, streak)
@@ -141,7 +148,10 @@ def main():
     for mode, values in MODES.items():
         for install, tides in INSTALLS.items():
             chances = {tide: values[key] for tide, key in tides.items()}
-            shares = stationary(values['badtide'], chances, 'budget-global' if chances else 'single')
+            shares = stationary(values['badtide'], chances, 'shared' if chances else 'single')
+            if len(chances) > 1:  # every tide eligible in the long run: the slices are the whole budget split by weight
+                renormalized = stationary(values['badtide'], chances, 'budget-global')
+                assert all(abs(shares[k] - renormalized[k]) < 1e-12 for k in shares), (mode, install)
             if len(chances) == 1:  # C' with one tide is today's Deep Frontier rule
                 single = stationary(values['badtide'], chances, 'single')
                 assert all(abs(shares[k] - single[k]) < 1e-12 for k in shares), (mode, install)
@@ -167,6 +177,21 @@ def main():
         cells = [f"{100 * s[k]:.1f}%" if k in s else '-' for k in (DROUGHT, BADTIDE, RADIOACTIVE, COFFEE, SALT)]
         budget = f"{100 * row['budget']:.0f}%" if row['budget'] else '-'
         print(f"| {row['mode']} | {row['installed']} | {budget} | " + ' | '.join(cells) + ' |')
+    print()
+    print("Implemented C' per cycle, Normal, before the long run: the chance that an eligible cycle (no tide just before) is a tide.")
+    print()
+    normal = MODES['Normal']
+    cycles_without = {RADIOACTIVE: 14, COFFEE: 8, SALT: 7}
+    print('| Cycle | ' + ' | '.join(INSTALLS) + ' |')
+    print('| ---: |' + ' ---: |' * len(INSTALLS))
+    for cycle in (8, 9, 15):
+        cells = []
+        for install, tides in INSTALLS.items():
+            chances = {tide: normal[key] for tide, key in tides.items()}
+            eligible = [t for t in chances if cycle > cycles_without[t]]
+            shares = tide_shares('shared', chances, eligible) if chances else {}
+            cells.append(f"{100 * sum(shares.values()):.1f}%")
+        print(f'| {cycle} | ' + ' | '.join(cells) + ' |')
     print()
     print('Exact values for the C# harness (HarnessExtensions.Tides.cs):')
     for row in implemented:

@@ -18,7 +18,7 @@ The native drought or badtide draw runs first, unchanged. The rule then decides 
 3. **Global cooldown.** The cycle right after any tide keeps the native weather (`CooldownCycles` = 1).
 4. The eligible tides are the save's enabled tides whose cycles without tide have passed. If there are none, the native weather stays.
 5. One draw against the save's budget: `CheckProbability(budget / 100)`. A miss keeps the native weather.
-6. On a hit, one eligible tide is chosen by weight. With a single eligible tide there is no further draw. Otherwise one `Range(0, total weight)` draw is walked over the eligible tides in ordinal ID order.
+6. On a hit, one of the save's **enabled** tides is picked by weight. With a single enabled tide there is no further draw. Otherwise one `Range(0, total enabled weight)` draw is walked over the enabled tides in ordinal ID order. A pick that is not eligible yet keeps the native weather.
 
 Load order never matters: tides are always taken in ordinal ID order. With one installed tide the draws, including the random calls, are exactly those of Deep Frontier's `RadioactiveTideService.Choose`.
 
@@ -28,7 +28,17 @@ Per save:
 - **Weight.** Each tide's share of the budget. The default is the tide's own chance.
 - **Per tide:** on or off, cycles without the tide, and duration.
 
-When only some tides are eligible (one tide's cycles without have passed and another's have not), the eligible tides share the whole budget. Long-run shares do not depend on this, because every tide is eligible by then.
+**Early cycles** (user decision 1b, 2026-11-09). Each eligible tide gets only its own slice of the budget: budget × its weight ÷ the total weight of every enabled tide. A tide whose cycles without have not passed leaves its slice to the native weather, so the eligible tides do not share the whole budget. The cycle's tide chance never exceeds the budget. Long-run shares are unchanged, because every tide is eligible by then. The model asserts that both forms agree in the long run.
+
+On Normal, a cycle right after a non-tide cycle becomes a tide with this chance (cycles without: radioactive 14, coffee 8, salt 7):
+
+| Cycle | Deep Frontier | More Fluids | Deep Frontier + More Fluids |
+| ---: | ---: | ---: | ---: |
+| 8 (salt only) | 0% | 7.5% | 6.8% |
+| 9–14 (coffee and salt) | 0% | 15.0% | 13.6% |
+| 15 on (all) | 25.0% | 15.0% | 25.0% |
+
+For these installs no cycle is harder than with the harder mod alone. In general the bound is the budget, and each tide's chance per eligible cycle is its fixed slice. An install where a high-chance tide is not yet eligible can still give the eligible low-chance tides more than they would get alone. For example, chances 50, 10 and 10 with only the two 10% tides eligible give 50 × 20 ÷ 70 = 14.3%.
 
 ### Long-run shares
 
