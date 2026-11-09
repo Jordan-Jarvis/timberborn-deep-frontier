@@ -22,15 +22,20 @@ namespace ModdableFluids {
   /// <item>A forced tide (development only) is chosen; it must be one of the save's enabled tides.</item>
   /// <item>Global cooldown: after a tide in cycle c, cycle c + 1 keeps the native weather, whichever tide it was.</item>
   /// <item>The eligible tides are the save's enabled tides whose cycles without tide have passed. None: native weather.</item>
-  /// <item>One draw with the save's budget (CheckProbability(budget / 100)). A miss keeps the native weather.</item>
-  /// <item>A hit picks one of the save's enabled tides by weight: with one enabled tide no further draw; otherwise one
-  /// Range(0, total enabled weight) draw walked over the enabled tides in ordinal ID order. A pick that is not eligible yet
-  /// keeps the native weather.</item>
+  /// <item>One draw with the cycle's tide chance p (below). A miss keeps the native weather.</item>
+  /// <item>A hit picks one eligible tide by weight: with one eligible tide no further draw; otherwise one
+  /// Range(0, total eligible weight) draw walked over the eligible tides in ordinal ID order.</item>
   /// </list>
-  /// So each eligible tide's chance in a cycle is its own slice of the budget, budget × weight / (total weight of the
-  /// enabled tides), whether or not the other tides can occur yet (user decision 1b, 2026-11-09): a tide that is not
-  /// eligible leaves its slice to the native weather, and the cycle's tide chance never exceeds the budget. Once every
-  /// tide is eligible the shares are those of the whole budget split by weight.
+  /// The cycle's tide chance (user decisions 1b and 1c, 2026-11-09), with B the budget, W and m the total and the largest
+  /// weight of the save's enabled tides, and We and me those of the eligible ones:
+  /// p = B × min(We / W, me / m).
+  /// <list type="bullet">
+  /// <item>Every enabled tide eligible: p = B exactly (CheckProbability(budget / 100f)), the budget split by weight.</item>
+  /// <item>Otherwise each eligible tide gets at most its own slice B × w / W (1b), and the cycle at most B × me / m (1c): with
+  /// the default weights (each tide's chance) and budget (the largest chance) that is the largest chance among the eligible
+  /// tides, so no cycle is harder than the hardest eligible tide would be alone. A budget the player raised scales the cap
+  /// with it.</item>
+  /// </list>
   /// Registration and load order never matter: the tides are taken in ordinal ID order whatever order they are given in.
   /// With one tide the draws are exactly Deep Frontier's (RadioactiveTideService.Choose), including the random calls.
   /// </summary>
@@ -56,22 +61,24 @@ namespace ModdableFluids {
       }
       if (lastTideCycle > 0 && cycle - lastTideCycle <= FluidTideRules.CooldownCycles) return null;
       // settings.Tides is in ordinal ID order (FluidTideSaveSettings sorts it).
-      var enabled = new List<FluidTideSettings>();
-      int total = 0;
-      bool anyEligible = false;
+      var eligible = new List<FluidTideSettings>();
+      int enabled = 0, total = 0, largest = 0, eligibleTotal = 0, eligibleLargest = 0;
       foreach (var tide in settings.Tides) {
         if (!tide.Enabled) continue;
-        enabled.Add(tide);
-        total += tide.Weight;
-        anyEligible |= cycle > tide.CyclesWithoutTide;
+        enabled++; total += tide.Weight; largest = Math.Max(largest, tide.Weight);
+        if (cycle <= tide.CyclesWithoutTide) continue;
+        eligible.Add(tide); eligibleTotal += tide.Weight; eligibleLargest = Math.Max(eligibleLargest, tide.Weight);
       }
-      if (!anyEligible) return null;
-      if (!random.CheckProbability(settings.BudgetPercent / 100f)) return null;
-      if (enabled.Count == 1) return enabled[0].TideId;
-      int roll = random.Range(0, total);
-      if (roll < 0 || roll >= total) throw new InvalidOperationException("The random generator returned " + roll + " outside [0, " + total + ")");
-      foreach (var tide in enabled) {
-        if (roll < tide.Weight) return cycle > tide.CyclesWithoutTide ? tide.TideId : null;
+      if (eligible.Count == 0) return null;
+      // Every enabled tide eligible: exactly the budget, as Deep Frontier's single tide drew it.
+      float chance = eligible.Count == enabled ? settings.BudgetPercent / 100f
+        : (float)(settings.BudgetPercent * (double)Math.Min((long)eligibleTotal * largest, (long)eligibleLargest * total) / (100.0 * total * largest));
+      if (!random.CheckProbability(chance)) return null;
+      if (eligible.Count == 1) return eligible[0].TideId;
+      int roll = random.Range(0, eligibleTotal);
+      if (roll < 0 || roll >= eligibleTotal) throw new InvalidOperationException("The random generator returned " + roll + " outside [0, " + eligibleTotal + ")");
+      foreach (var tide in eligible) {
+        if (roll < tide.Weight) return tide.TideId;
         roll -= tide.Weight;
       }
       throw new InvalidOperationException("Unreachable: the weighted roll passed every eligible tide");

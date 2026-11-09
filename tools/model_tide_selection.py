@@ -9,7 +9,8 @@ Exact Markov model of the installed Timberborn 1.1.2.8 selection, not a simulati
 - the implemented policy C' (ModdableFluids FluidTideSelection.Select, policy 'shared'): the
   budget is the largest installed chance; each eligible tide gets its own slice of it,
   budget x weight / total weight of every installed tide (weights default to the chances,
-  decision 1b), and no tide in the cycle after any tide.
+  decision 1b), the cycle capped at budget x largest eligible weight / largest weight (1c),
+  and no tide in the cycle after any tide.
 Long-run shares assume every weather is past its first eligible cycle. Probabilities are the
 exact decimals (0.4, 15%), not the game's float values. Writes
 outputs/fluids-api-prototype/tide-policy-model.json and prints the Markdown tables.
@@ -66,10 +67,11 @@ def tide_shares(policy, tides, eligible):
         total = sum(chances.values())
         return {t: budget * c / total for t, c in chances.items()}
     if policy == 'shared':
-        # Implemented C' (decision 1b): each eligible tide's slice of the budget over every installed tide's weight,
-        # so a tide that cannot occur yet leaves its slice to the native weather.
-        budget, total = max(tides.values()), sum(tides.values())
-        return {t: budget * tides[t] / total for t in chances}
+        # Implemented C' (decisions 1b, 1c): p = B x min(We / W, me / m), split by weight over the eligible tides.
+        budget, total, largest = max(tides.values()), sum(tides.values()), max(tides.values())
+        eligible_total, eligible_largest = sum(chances.values()), max(chances.values())
+        p = budget * min(eligible_total / total, eligible_largest / largest)
+        return {t: p * c / eligible_total for t, c in chances.items()}
     if policy == 'independent':
         result = {t: 0.0 for t in chances}
         names = sorted(chances)
@@ -192,6 +194,8 @@ def main():
             shares = tide_shares('shared', chances, eligible) if chances else {}
             cells.append(f"{100 * sum(shares.values()):.1f}%")
         print(f'| {cycle} | ' + ' | '.join(cells) + ' |')
+    capped = tide_shares('shared', {'A': 0.5, 'B': 0.1, 'C': 0.1}, ['B', 'C'])
+    assert abs(sum(capped.values()) - 0.1) < 1e-12, capped  # 1c: the largest eligible chance, not 50 x 20 / 70
     print()
     print('Exact values for the C# harness (HarnessExtensions.Tides.cs):')
     for row in implemented:

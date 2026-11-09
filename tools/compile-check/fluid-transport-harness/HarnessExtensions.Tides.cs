@@ -114,7 +114,8 @@ internal static class TideScenarios {
       return choice;
     }
     public bool CheckProbability(float p) {
-      double exact = Math.Round(p, 6);
+      // A whole percent as its exact decimal (as the model reads it); any other chance as the float itself.
+      double exact = Math.Abs(p - Math.Round(p, 2)) < 1e-7 ? Math.Round(p, 2) : p;
       if (Math.Abs(p - 1f) < 1e-6f) { Next(1); return true; }
       bool hit = Next(2) == 0;
       Probability *= hit ? exact : 1 - exact;
@@ -355,19 +356,25 @@ internal static class TideScenarios {
         check(FluidTideSelection.Select(20, 0, all, null, random) == expected && random.Calls.SequenceEqual(new[] { "P(" + (25 / 100f).ToString("R") + ")", "R(0,55)" }), "Weighted roll " + roll);
         check(FluidTideSelection.Select(20, 0, shuffled, null, new ScriptedRandom(true, roll)) == expected, "Order of the settings does not matter, roll " + roll);
       }
-      // Early cycles (decision 1b): the weighted draw is over every enabled tide; a pick not eligible yet keeps the native weather.
-      foreach (var (roll, expected) in new[] { (0, (string?)null), (24, null), (25, Coffee), (39, Coffee), (40, Salt), (54, Salt) }) {
+      // Early cycles (decisions 1b, 1c): p = B x min(We / W, me / m), then a weighted draw over the eligible tides only.
+      string P(double p) => "P(" + ((float)p).ToString("R") + ")";
+      foreach (var (roll, expected) in new[] { (0, Coffee), (14, Coffee), (15, Salt), (29, Salt) }) {
         random = new ScriptedRandom(true, roll);
-        check(FluidTideSelection.Select(9, 0, all, null, random) == expected && random.Calls.Last() == "R(0,55)", "Cycle 9 (coffee and salt eligible), roll " + roll);
+        check(FluidTideSelection.Select(9, 0, all, null, random) == expected && random.Calls.SequenceEqual(new[] { P(25 * 30.0 / (100.0 * 55)), "R(0,30)" }),
+          "Cycle 9 (coffee and salt eligible), roll " + roll + ": " + string.Join(" ", random.Calls));
       }
-      foreach (var (roll, expected) in new[] { (24, (string?)null), (25, null), (39, null), (40, Salt) }) {
-        random = new ScriptedRandom(true, roll);
-        check(FluidTideSelection.Select(8, 0, all, null, random) == expected && random.Calls.Count == 2, "Cycle 8 (only salt eligible), roll " + roll);
-      }
+      random = new ScriptedRandom(true);
+      check(FluidTideSelection.Select(8, 0, all, null, random) == Salt && random.Calls.SequenceEqual(new[] { P(25 * 15.0 / (100.0 * 55)) }), "Cycle 8 (only salt eligible): one draw");
+      // 1c: chances 50, 10, 10 with only the two 10% tides eligible: 10%, not 50 x 20 / 70 = 14.3%.
+      var steep = new FluidTideSaveSettings(50, new[] { T("Big.Tide", 50, 20), T(Coffee, 10, 1), T(Salt, 10, 1) });
+      var capped = Distribution(r => FluidTideSelection.Select(5, 0, steep, null, r));
+      Close(capped[Coffee] + capped[Salt], .10, "Cycle capped at the largest eligible chance", 1e-7); Close(capped[Coffee], .05, "Split by weight below the cap", 1e-7);
+      var raised = new FluidTideSaveSettings(60, new[] { T("Big.Tide", 50, 20), T(Coffee, 10, 1), T(Salt, 10, 1) });
+      Close(Distribution(r => FluidTideSelection.Select(5, 0, raised, null, r))["native"], 1 - .60 * 10 / 50, "A raised budget scales the cap", 1e-7);
       var early = Distribution(r => FluidTideSelection.Select(8, 0, all, null, r));
-      Close(early[Salt], .25 * 15 / 55, "Cycle 8: salt keeps only its own slice"); Close(early["native"], 1 - .25 * 15 / 55, "Cycle 8: the rest stays native");
+      Close(early[Salt], .25 * 15 / 55, "Cycle 8: salt keeps only its own slice", 1e-7); Close(early["native"], 1 - .25 * 15 / 55, "Cycle 8: the rest stays native", 1e-7);
       var nine = Distribution(r => FluidTideSelection.Select(9, 0, all, null, r));
-      Close(nine[Coffee] + nine[Salt], .25 * 30 / 55, "Cycle 9: coffee and salt keep their slices");
+      Close(nine[Coffee] + nine[Salt], .25 * 30 / 55, "Cycle 9: coffee and salt keep their slices", 1e-7);
       random = new ScriptedRandom();
       check(FluidTideSelection.Select(7, 0, all, null, random) == null && random.Calls.Count == 0, "No tide eligible: no draw");
       var dfAndOff = new FluidTideSaveSettings(25, new[] { T(Radioactive, 25, 14), T(Coffee, 15, 8, enabled: false) });

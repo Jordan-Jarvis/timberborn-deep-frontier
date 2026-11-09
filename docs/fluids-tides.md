@@ -17,8 +17,8 @@ The native drought or badtide draw runs first, unchanged. The rule then decides 
 2. A tide forced from the development menu is chosen. It must be enabled in the save.
 3. **Global cooldown.** The cycle right after any tide keeps the native weather (`CooldownCycles` = 1).
 4. The eligible tides are the save's enabled tides whose cycles without tide have passed. If there are none, the native weather stays.
-5. One draw against the save's budget: `CheckProbability(budget / 100)`. A miss keeps the native weather.
-6. On a hit, one of the save's **enabled** tides is picked by weight. With a single enabled tide there is no further draw. Otherwise one `Range(0, total enabled weight)` draw is walked over the enabled tides in ordinal ID order. A pick that is not eligible yet keeps the native weather.
+5. One draw with the cycle's tide chance p (below). When every enabled tide is eligible, p is the budget and the draw is `CheckProbability(budget / 100)`. A miss keeps the native weather.
+6. On a hit, one eligible tide is picked by weight. With a single eligible tide there is no further draw. Otherwise one `Range(0, total eligible weight)` draw is walked over the eligible tides in ordinal ID order.
 
 Load order never matters: tides are always taken in ordinal ID order. With one installed tide the draws, including the random calls, are exactly those of Deep Frontier's `RadioactiveTideService.Choose`.
 
@@ -28,7 +28,14 @@ Per save:
 - **Weight.** Each tide's share of the budget. The default is the tide's own chance.
 - **Per tide:** on or off, cycles without the tide, and duration.
 
-**Early cycles** (user decision 1b, 2026-11-09). Each eligible tide gets only its own slice of the budget: budget × its weight ÷ the total weight of every enabled tide. A tide whose cycles without have not passed leaves its slice to the native weather, so the eligible tides do not share the whole budget. The cycle's tide chance never exceeds the budget. Long-run shares are unchanged, because every tide is eligible by then. The model asserts that both forms agree in the long run.
+**Early cycles** (user decisions 1b and 1c, 2026-11-09). With B the budget, W and m the total and largest weight of the enabled tides, and We and me those of the eligible tides, the cycle's tide chance is
+
+p = B × min(We ÷ W, me ÷ m), split by weight over the eligible tides.
+
+- **1b.** Each eligible tide gets at most its own slice of the budget, B × w ÷ W. A tide that cannot occur yet leaves its slice to the native weather.
+- **1c.** The cycle gets at most B × me ÷ m. With the default weights (the chances) and budget (the largest chance), that is the largest chance among the eligible tides. So no cycle is harder than the hardest eligible tide alone, for any set of chances.
+- **Raised budget.** A budget the player raised above the largest chance scales the cap with it.
+- **Long run.** Every tide is eligible, p is the budget exactly, and the shares are unchanged. The model asserts the long-run shares, and that chances 50, 10 and 10 with only the two 10% tides eligible give 10%.
 
 On Normal, a cycle right after a non-tide cycle becomes a tide with this chance (cycles without: radioactive 14, coffee 8, salt 7):
 
@@ -38,7 +45,7 @@ On Normal, a cycle right after a non-tide cycle becomes a tide with this chance 
 | 9–14 (coffee and salt) | 0% | 15.0% | 13.6% |
 | 15 on (all) | 25.0% | 15.0% | 25.0% |
 
-For these installs no cycle is harder than with the harder mod alone. In general the bound is the budget, and each tide's chance per eligible cycle is its fixed slice. An install where a high-chance tide is not yet eligible can still give the eligible low-chance tides more than they would get alone. For example, chances 50, 10 and 10 with only the two 10% tides eligible give 50 × 20 ÷ 70 = 14.3%.
+For these installs the 1c cap (15%) does not bind. It does bind for chances 50, 10 and 10 with only the two 10% tides eligible: the cycle gets 10%, not 50 × 20 ÷ 70 = 14.3%.
 
 ### Long-run shares
 
