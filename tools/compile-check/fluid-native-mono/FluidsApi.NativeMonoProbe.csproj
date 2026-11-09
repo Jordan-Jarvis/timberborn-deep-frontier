@@ -11,6 +11,7 @@
     <Reference Include="Timberborn.Multithreading" HintPath="$(TimberbornManaged)/Timberborn.Multithreading.dll" Private="false" />
     <Reference Include="Timberborn.WaterSystem" HintPath="$(TimberbornManaged)/Timberborn.WaterSystem.dll" Private="false" />
     <Reference Include="UnityEngine.CoreModule" HintPath="$(TimberbornManaged)/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(ModsBuildManaged)/0Harmony.dll" Private="false" />
     <Reference Include="System.Collections.Immutable" HintPath="$(TimberbornManaged)/System.Collections.Immutable.dll" Private="false" />
   </ItemGroup>
 </Project>

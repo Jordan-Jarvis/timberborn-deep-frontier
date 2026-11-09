@@ -13,6 +13,10 @@ namespace FluidsApi.GameBridge.Prototype {
   /// Explicit development attachment for one native water starter. Does not auto-start,
   /// install content, or attach to another scene. Dispose only after its native jobs finish.
   /// This correctness prototype serializes each substep inside one dependent native job.
+  /// The constructor verifies every private native member the jobs use
+  /// (<see cref="NativeSchedulerContract"/>). Attach refuses to run when another Harmony owner
+  /// patches a method this bridge replaces or whose native task it skips, because that patch
+  /// would silently stop running.
   /// </summary>
   public sealed class NativeTransportHooks : IDisposable {
     private const BindingFlags Members = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
@@ -24,6 +28,7 @@ namespace FluidsApi.GameBridge.Prototype {
     private readonly int _components, _badwater;
     private readonly Harmony _harmony;
     private readonly MethodInfo _stepMethod, _changesMethod;
+    private readonly MethodInfo[] _replaced;
     private bool _disposed;
     private bool _ownsPatches;
     public NativeFluidTransportSession Session { get; private set; }
@@ -32,7 +37,7 @@ namespace FluidsApi.GameBridge.Prototype {
     public Action<NativeFluidTransportSession> SessionCreated { get; set; }
     public Func<object, int, double, FluidVolumes> ResolveSource { get; set; }
     public Func<object, int, double, double, FluidVolumes> ResolveAddition { get; set; }
-    private bool AnyOwnedPatches() => new[] { _stepMethod, _changesMethod }.Any(method => Harmony.GetPatchInfo(method)?.Owners.Contains(OwnerId) == true);
+    private bool AnyOwnedPatches() => _replaced.Any(method => Harmony.GetPatchInfo(method)?.Owners.Contains(OwnerId) == true);
     public bool HasInstalledPatches => _ownsPatches && AnyOwnedPatches();
 
     public NativeTransportHooks(object nativeStarter, int componentCount, int badwaterComponent) {
@@ -40,22 +45,14 @@ namespace FluidsApi.GameBridge.Prototype {
         throw new ArgumentException("Expected installed native WaterSimulationTaskStarter");
       if (componentCount < 2 || badwaterComponent <= 0 || badwaterComponent >= componentCount) throw new ArgumentException("Invalid component layout");
       _starter = nativeStarter; _components = componentCount; _badwater = badwaterComponent;
-      var type = nativeStarter.GetType();
-      var parameters = type.GetNestedType("SimulationParameters", BindingFlags.NonPublic | BindingFlags.Public)
-        ?? throw new MissingMemberException("WaterSimulationTaskStarter.SimulationParameters");
-      _stepMethod = type.GetMethod("ScheduleSimulationSteps", Members, null, new[] { typeof(ParallelizerHandle), parameters.MakeByRefType() }, null)
-        ?? throw new MissingMethodException("ScheduleSimulationSteps(ParallelizerHandle, in SimulationParameters)");
-      _changesMethod = type.GetMethod("ScheduleUpdateWaterChanges", Members, null, new[] { typeof(ParallelizerHandle), parameters.MakeByRefType() }, null)
-        ?? throw new MissingMethodException("ScheduleUpdateWaterChanges(ParallelizerHandle, in SimulationParameters)");
-      if (_stepMethod.ReturnType != typeof(ParallelizerHandle) || _changesMethod.ReturnType != typeof(void) ||
-          (int)type.GetField("SubstepCount", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null) != 2)
-        throw new InvalidOperationException("Unsupported native scheduling contract; expected Timberborn 1.1.2.8");
+      _replaced = NativeSchedulerContract.Require(nativeStarter.GetType());
+      _stepMethod = _replaced[0]; _changesMethod = _replaced[1];
       _harmony = new Harmony(OwnerId);
     }
     public void Attach() {
       lock (LifecycleGate) {
         if (_disposed || _active != null || AnyOwnedPatches()) throw new InvalidOperationException("A native fluid transport attachment already exists or was disposed");
-        RequireNoLegacyRadiationOwner(); _active = this; _ownsPatches = true;
+        RequireNoForeignPatches(); _active = this; _ownsPatches = true;
         try {
           _harmony.Patch(_stepMethod, prefix: new HarmonyMethod(typeof(NativeTransportHooks), nameof(StepPrefix)));
           _harmony.Patch(_changesMethod, prefix: new HarmonyMethod(typeof(NativeTransportHooks), nameof(ChangesPrefix)));
@@ -80,7 +77,6 @@ namespace FluidsApi.GameBridge.Prototype {
     }
     private void RunSubstep(object parameters) {
       if (_disposed) throw new InvalidOperationException("Native jobs must finish before disposing fluid transport");
-      RequireNoLegacyRadiationOwner();
       var water = (Array)Property(parameters, "WaterColumns");
       var counts = (byte[])Unwrap(Property(parameters, "WaterColumnCounts"));
       var flows = (Array)Property(parameters, "BaseLevelFlows");
@@ -224,11 +220,19 @@ namespace FluidsApi.GameBridge.Prototype {
     private static object Property(object value, string name) => (value.GetType().GetProperty(name, Members) ?? throw new MissingMemberException(value.GetType().FullName, name)).GetValue(value);
     private static object Unwrap(object readOnly) => Field(readOnly, "_array");
     private static int Coordinate(object value, string name) => (int)Property(value, name);
-    private static void RequireNoLegacyRadiationOwner() {
-      var assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(value => value.GetName().Name == "DeepFrontier");
-      var type = assembly?.GetType("DeepFrontier.Scripts.Radiation.RadiationLockstep", false);
-      if (type?.GetProperty("Simulation", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)?.GetValue(null) != null)
-        throw new InvalidOperationException("Deep Frontier's legacy radiation transport is active. Migrate it before attaching the shared transport owner.");
+    /// <summary>
+    /// Another mod's patch on a replaced scheduling method, or on a native task this bridge skips,
+    /// would stop running without any error. Refuse to attach and name each conflicting owner.
+    /// </summary>
+    private void RequireNoForeignPatches() {
+      var conflicts = new List<string>();
+      foreach (var method in _replaced) {
+        var owners = Harmony.GetPatchInfo(method)?.Owners.Where(owner => owner != OwnerId).Distinct().ToArray();
+        if (owners != null && owners.Length > 0) conflicts.Add(method.DeclaringType.Name + "." + method.Name + " is patched by " + string.Join(", ", owners));
+      }
+      if (conflicts.Count > 0)
+        throw new InvalidOperationException("Fluids API replaces native water scheduling and cannot run with these patches, which would silently stop running:\n- "
+          + string.Join("\n- ", conflicts));
     }
     private void RemoveOwnPatches() {
       _harmony.Unpatch(_stepMethod, HarmonyPatchType.All, OwnerId);

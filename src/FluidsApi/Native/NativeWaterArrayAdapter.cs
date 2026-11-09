@@ -46,6 +46,35 @@ namespace FluidsApi.Native.Prototype {
         ?? throw new MissingMethodException("Expected native WaterOverflowCalculator.GetOverflowSpace(float, byte)");
     }
 
+    /// <summary>
+    /// The member shapes this adapter reads and writes, checked without buffers so a host can verify
+    /// them before installing any patch. Returns every problem; empty when the contract matches.
+    /// </summary>
+    public static IReadOnlyList<string> CheckContract(Type column, Type flow, Type directed, Type depthSetter, Type overflowCalculator) {
+      var problems = new List<string>();
+      void Require(Type owner, string name, Type expected) {
+        if (owner == null) return;
+        var field = owner.GetField(name, Members);
+        if (field == null || field.FieldType != expected) problems.Add(owner.Name + "." + name + " is not a " + expected.Name + " field");
+      }
+      if (column?.FullName != "Timberborn.WaterSystem.WaterColumn") problems.Add("Expected Timberborn.WaterSystem.WaterColumn, got " + column?.FullName);
+      if (flow?.FullName != "Timberborn.WaterSystem.WaterFlow") problems.Add("Expected Timberborn.WaterSystem.WaterFlow, got " + flow?.FullName);
+      if (directed?.FullName != "Timberborn.WaterSystem.DirectedFlow") problems.Add("Expected Timberborn.WaterSystem.DirectedFlow, got " + directed?.FullName);
+      if (depthSetter?.FullName != "Timberborn.WaterSystem.WaterDepthSetter") problems.Add("Expected Timberborn.WaterSystem.WaterDepthSetter, got " + depthSetter?.FullName);
+      if (overflowCalculator?.FullName != "Timberborn.WaterSystem.WaterOverflowCalculator") problems.Add("Expected Timberborn.WaterSystem.WaterOverflowCalculator, got " + overflowCalculator?.FullName);
+      if (problems.Count > 0) return problems;
+      Require(column, "Floor", typeof(byte)); Require(column, "Ceiling", typeof(byte));
+      Require(column, "WaterDepth", typeof(float)); Require(column, "Overflow", typeof(float)); Require(column, "Contamination", typeof(float));
+      foreach (string side in new[] { "Bottom", "Left", "Top", "Right" }) Require(flow, side, typeof(float));
+      Require(directed, "OriginIndex3D", typeof(int)); Require(directed, "TargetIndex3D", typeof(int)); Require(directed, "Flow", typeof(float));
+      if (directed.GetConstructor(new[] { typeof(float), typeof(int), typeof(int) }) == null) problems.Add("DirectedFlow(float, int, int) constructor is missing");
+      if (depthSetter.GetMethod("SetWaterDepth", Members, null, new[] { typeof(float), column.MakeByRefType() }, null) == null)
+        problems.Add("WaterDepthSetter.SetWaterDepth(float, ref WaterColumn) is missing");
+      if (overflowCalculator.GetMethod("GetOverflowSpace", Members, null, new[] { typeof(float), typeof(byte) }, null)?.ReturnType != typeof(float))
+        problems.Add("WaterOverflowCalculator.GetOverflowSpace(float, byte) : float is missing");
+      return problems;
+    }
+
     private static FieldInfo Field(Type type, string name, Type expected) {
       var field = type.GetField(name, Members);
       if (field == null || field.FieldType != expected) throw new MissingFieldException(type.FullName, name + " : " + expected.Name);

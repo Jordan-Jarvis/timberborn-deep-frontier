@@ -8,6 +8,7 @@ using Timberborn.Multithreading;
 using Timberborn.WaterSystem;
 using UnityEngine;
 using FluidsApi.GameBridge.Prototype;
+using HarmonyLib;
 using FluidsApi.Transport.Prototype;
 
 namespace FluidsApi.Native.Acceptance {
@@ -161,8 +162,32 @@ namespace FluidsApi.Native.Acceptance {
       SourceCase("zero source", Mix(.5, .5, .5, .5), Mix(.5, .5, .5, .5), 12, new[] { (0f, 1f) });
       SourceCase("negative infinite source", Mix(0, 0, 1, 0), Mix(0, 0, 0, 0), 12, new[] { (float.NegativeInfinity, 0f) }, "source strength");
       SourceCase("invalid withdrawal composition", Mix(0, 0, 1, 0), Mix(0, 0, 0, 0), 12, new[] { (-.5f, float.NaN) }, "source composition");
+
+      // Startup contract: the installed types pass, anything else is reported, never attached.
+      var contract = NativeSchedulerContract.Check(starter.GetType());
+      Check(contract.Count == 0, "Installed scheduler contract reported: " + string.Join("; ", contract));
+      Check(NativeSchedulerContract.Check(typeof(ImmediateParallelizer)).Count == 1, "A wrong starter type was not reported");
+      bool wrongType = false;
+      try { new NativeTransportHooks(new ImmediateParallelizer(), 4, 1); } catch (ArgumentException e) { wrongType = e.Message.Contains("Expected installed native WaterSimulationTaskStarter"); }
+      Check(wrongType, "Hooks accepted a non-native starter");
+
+      // Another owner's patch on a task the bridge skips would silently stop running: refuse to attach.
+      var foreign = new Harmony("Foreign.FluidTest");
+      var skipped = Type("UpdateWaterSourcesTask").GetMethod("Run", Members, null, System.Type.EmptyTypes, null);
+      foreign.Patch(skipped, postfix: new HarmonyMethod(typeof(SchedulerProbe), nameof(ForeignPostfix)));
+      var blocked = new NativeTransportHooks(starter, 4, 1);
+      bool conflict = false;
+      try { blocked.Attach(); }
+      catch (InvalidOperationException e) { conflict = e.Message.Contains("UpdateWaterSourcesTask.Run is patched by Foreign.FluidTest"); }
+      finally { blocked.Dispose(); foreign.UnpatchAll("Foreign.FluidTest"); }
+      Check(conflict, "A foreign patch on a skipped native task did not block attachment");
+      Check(!blocked.HasInstalledPatches && !NativeTransportHooks.HasActiveOwner, "A refused attachment left patches or an owner");
+      var clean = new NativeTransportHooks(starter, 4, 1);
+      try { clean.Attach(); Check(clean.HasInstalledPatches, "Attachment failed after the foreign patch was removed"); } finally { clean.Dispose(); }
+      Check(!clean.HasInstalledPatches, "Cleanup after the conflict test left patches");
       return checks;
     }
+    private static void ForeignPostfix() { }
     private sealed class Source : IWaterSource {
       internal float Strength = 2;
       internal float BadShare;
