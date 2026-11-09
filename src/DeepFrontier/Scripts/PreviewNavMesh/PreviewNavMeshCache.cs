@@ -184,10 +184,14 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
 
     // Measurement only (PreviewCostAcceptance): run the native path instead.
     // Allowed only while nothing is pending; cached lists are forgotten.
-    internal static void SetEnabledForMeasurement(bool enabled) {
+    internal static void SetEnabledForMeasurement(bool enabled)=>SetEnabledForMeasurement(enabled,enabled,enabled);
+
+    // Each of the three preview caches on or off on its own (the probe's
+    // leave-one-out phases measure what each one still saves).
+    internal static void SetEnabledForMeasurement(bool navMesh,bool access,bool index) {
       Require(PendingStates.Count==0&&!_deferring,"Cannot switch the preview navmesh cache while removals are pending");
-      _enabled=enabled;_epoch++;
-      PreviewAccessCache.SetEnabledForMeasurement(enabled);
+      _enabled=navMesh;_epoch++;
+      PreviewAccessCache.SetEnabledForMeasurement(access,index);
     }
 
     private static bool AddPrefix(BaseComponent __instance) {

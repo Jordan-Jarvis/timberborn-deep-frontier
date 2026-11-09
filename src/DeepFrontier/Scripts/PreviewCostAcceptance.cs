@@ -49,8 +49,11 @@ namespace DeepFrontier.Scripts {
       "SteelColumnH6","SteelDeck5x5","SteelMill","StoneCrusher",
       "TechnicalSchool","TownPlaza","UraniumProcessingPlant","WaterTreatmentPlant"
     };
+    // The heaviest previews after the compaction passes (tools/asset-pipeline/
+    // validate_preview_budget_exports.py, 2026-11-09: occupied blocks and
+    // preview-navmesh wall edges per group).
     private static readonly string[] First={
-      "NuclearReactor","LaunchPad","RocketAssemblyHangar","SteelMill","CoalPowerPlant","OilPowerPlant"
+      "NuclearReactor","ReinforcedHydroTurbine","UraniumProcessingPlant","CryogenicLiquefactionPlant","RocketAssemblyHangar","LaunchPad"
     };
     private static readonly string[] Vanilla={
       "Smelter","LargeTank","MudBath","DistrictCenter","HydroponicGarden","Motivatorium","EarthRepopulator"
@@ -59,10 +62,14 @@ namespace DeepFrontier.Scripts {
     private const float RestWindowSeconds=0.6f;
     // Per building: native (all caches off) still and moving, then shipped
     // still, moving, and holding still after moving (the deferred navmesh
-    // swap lands in that window). Moving = a different buildable placement
-    // every frame, as a dragged mouse gives.
-    private enum Phase { NativeStill, NativeMoving, ShippedStill, ShippedMoving, ShippedRest, Done }
-    private static readonly string[] PhaseNames={"nativeStill","nativeMoving","shippedStill","shippedMoving","shippedRest"};
+    // swap lands in that window), then leave-one-out: shipped with one cache
+    // off (preview navmesh, construction access, PositionedBlocks index),
+    // still and moving, so each cache's own saving is measured. Moving = a
+    // different buildable placement every frame, as a dragged mouse gives.
+    private enum Phase { NativeStill, NativeMoving, ShippedStill, ShippedMoving, ShippedRest,
+      NoNavMeshStill, NoNavMeshMoving, NoAccessStill, NoAccessMoving, NoIndexStill, NoIndexMoving, Done }
+    private static readonly string[] PhaseNames={"nativeStill","nativeMoving","shippedStill","shippedMoving","shippedRest",
+      "noNavMeshStill","noNavMeshMoving","noAccessStill","noAccessMoving","noIndexStill","noIndexMoving"};
     private readonly TemplateService _templates;
     private readonly PreviewFactory _previewFactory;
     private readonly PreviewShower _previewShower;
@@ -73,12 +80,15 @@ namespace DeepFrontier.Scripts {
     private readonly EventBus _events;
     private readonly SpeedManager _speed;
     private readonly List<string> _queue=new();
-    private readonly List<double>[] _samples={new(),new(),new(),new(),new()};
+    private readonly List<double>[] _samples=Enumerable.Range(0,PhaseNames.Length).Select(_=>new List<double>()).ToArray();
     private readonly List<Placement> _sweep=new();
     private Phase _phase;
     private int _frame;
     private float _restStart,_shippedStart;
     private long _rebuilds,_kept,_deferred,_generated,_reused,_worldChanges;
+    // Cache counters over the shipped phases (taken when they end).
+    private long[] _shippedCounts=new long[6];
+    private float _shippedSeconds;
     private readonly List<IPreviewServiceMember> _members=new();
     private readonly List<string> _summary=new();
     private Color _buildable;
@@ -141,17 +151,18 @@ namespace DeepFrontier.Scripts {
         return;
       }
       FindSweep(_preview.BlockObject);
-      SwitchCache(false,_placement);
+      SwitchCache(false,false,false,_placement);
       if(!_preview.GameObject.activeSelf||!_preview.PreviewState.IsBuildable)
         throw new InvalidOperationException("The found placement did not show a buildable preview");
     }
 
     // One native ShowPreviews per frame, as the build tool does.
     private void Step() {
-      bool moving=_phase==Phase.NativeMoving||_phase==Phase.ShippedMoving;
+      bool moving=PhaseNames[(int)_phase].EndsWith("Moving");
+      bool still=PhaseNames[(int)_phase].EndsWith("Still");
       if(moving&&_sweep.Count<2) {Advance();return;}
       Placement placement;
-      if(_phase==Phase.NativeStill||_phase==Phase.ShippedStill)placement=_placement;
+      if(still)placement=_placement;
       else if(_phase==Phase.ShippedRest)placement=_sweep.Count>=2?_sweep[(MoveSamples-1)%_sweep.Count]:_placement;
       else placement=_sweep[_frame%_sweep.Count];
       var watch=Stopwatch.StartNew();
@@ -159,7 +170,7 @@ namespace DeepFrontier.Scripts {
       _samples[(int)_phase].Add(watch.Elapsed.TotalMilliseconds);
       _frame++;
       bool done;
-      if(_phase==Phase.NativeStill||_phase==Phase.ShippedStill)done=_frame>=ShowSamples;
+      if(still)done=_frame>=ShowSamples;
       else if(_phase==Phase.ShippedRest)done=Time.unscaledTime-_restStart>=RestWindowSeconds&&_frame>=5;
       else done=_frame>=MoveSamples;
       if(done)Advance();
@@ -168,10 +179,17 @@ namespace DeepFrontier.Scripts {
     private void Advance() {
       _phase++;_frame=0;
       if(_phase==Phase.ShippedStill) {
-        SwitchCache(true,_placement);
+        SwitchCache(true,true,true,_placement);
         _shippedStart=Time.unscaledTime;
       } else if(_phase==Phase.ShippedRest) {
         _restStart=Time.unscaledTime;
+      } else if(_phase==Phase.NoNavMeshStill) {
+        TakeShippedCounts();
+        SwitchCache(false,true,true,_placement);
+      } else if(_phase==Phase.NoAccessStill) {
+        SwitchCache(true,false,true,_placement);
+      } else if(_phase==Phase.NoIndexStill) {
+        SwitchCache(true,true,false,_placement);
       }
     }
 
@@ -200,10 +218,10 @@ namespace DeepFrontier.Scripts {
     }
 
     // The cache may only switch while no preview is in the preview services.
-    private void SwitchCache(bool enabled,Placement placement) {
+    private void SwitchCache(bool navMesh,bool access,bool index,Placement placement) {
       _placer.HideAllPreviews();
 #if !UNITY_EDITOR
-      PreviewNavMesh.PreviewNavMeshCache.SetEnabledForMeasurement(enabled);
+      PreviewNavMesh.PreviewNavMeshCache.SetEnabledForMeasurement(navMesh,access,index);
       _rebuilds=PreviewNavMesh.PreviewNavMeshCache.Rebuilds;_kept=PreviewNavMesh.PreviewNavMeshCache.KeptApplied;
       _deferred=PreviewNavMesh.PreviewNavMeshCache.DeferredMoves;
       _generated=PreviewNavMesh.PreviewAccessCache.Generated;_reused=PreviewNavMesh.PreviewAccessCache.Reused;
@@ -257,14 +275,9 @@ namespace DeepFrontier.Scripts {
         if(listener.GetType().Name=="PreviewDistrictAdder")continue;
         selects.Add($"{listener.GetType().Name}={Median(PartRepeats,listener.OnPreviewSelect):0.000}");
       }
-      long rebuilds=0,kept=0,deferred=0,generated=0,reused=0,worldChanges=0;
-#if !UNITY_EDITOR
-      rebuilds=PreviewNavMesh.PreviewNavMeshCache.Rebuilds-_rebuilds;kept=PreviewNavMesh.PreviewNavMeshCache.KeptApplied-_kept;
-      deferred=PreviewNavMesh.PreviewNavMeshCache.DeferredMoves-_deferred;
-      generated=PreviewNavMesh.PreviewAccessCache.Generated-_generated;reused=PreviewNavMesh.PreviewAccessCache.Reused-_reused;
-      worldChanges=PreviewNavMesh.PreviewAccessCache.WorldChanges-_worldChanges;
-#endif
-      float seconds=Mathf.Max(Time.unscaledTime-_shippedStart,0.001f);
+      long rebuilds=_shippedCounts[0],kept=_shippedCounts[1],deferred=_shippedCounts[2],generated=_shippedCounts[3],
+        reused=_shippedCounts[4],worldChanges=_shippedCounts[5];
+      float seconds=_shippedSeconds;
       var phases=new List<string>();
       for(int i=0;i<_samples.Length;i++) {
         var list=_samples[i];
@@ -281,6 +294,17 @@ namespace DeepFrontier.Scripts {
       Debug.Log("[DeepFrontier PreviewCost] "+line);
     }
 
+    // The caches' counters over the shipped phases, before the leave-one-out phases.
+    private void TakeShippedCounts() {
+#if !UNITY_EDITOR
+      _shippedCounts=new[] {
+        PreviewNavMesh.PreviewNavMeshCache.Rebuilds-_rebuilds,PreviewNavMesh.PreviewNavMeshCache.KeptApplied-_kept,
+        PreviewNavMesh.PreviewNavMeshCache.DeferredMoves-_deferred,PreviewNavMesh.PreviewAccessCache.Generated-_generated,
+        PreviewNavMesh.PreviewAccessCache.Reused-_reused,PreviewNavMesh.PreviewAccessCache.WorldChanges-_worldChanges };
+#endif
+      _shippedSeconds=Mathf.Max(Time.unscaledTime-_shippedStart,0.001f);
+    }
+
     private void End() {
       if(_placer!=null)_placer.HideAllPreviews();
       // BuildingWithRangePreviewUpdater keeps its preview registered until a tool exits.
@@ -291,6 +315,9 @@ namespace DeepFrontier.Scripts {
 
     private void Finish() {
       _finished=true;
+#if !UNITY_EDITOR
+      PreviewNavMesh.PreviewNavMeshCache.SetEnabledForMeasurement(true);
+#endif
       Debug.Log("[DeepFrontier PreviewCost] ALL MEASURED buildings="+_summary.Count+"\n"+string.Join("\n",_summary));
     }
 

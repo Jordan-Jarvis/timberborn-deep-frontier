@@ -100,7 +100,7 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
     internal static void Load() {_loaded=true;_version++;}
     internal static void Unload() {_loaded=false;_version++;}
     internal static void WorldChanged() {_version++;WorldChanges++;}
-    internal static void SetEnabledForMeasurement(bool enabled) {_enabled=enabled;_epoch++;PositionedBlocksIndex.SetEnabledForMeasurement(enabled);}
+    internal static void SetEnabledForMeasurement(bool access,bool index) {_enabled=access;_epoch++;PositionedBlocksIndex.SetEnabledForMeasurement(index);}
 
     private static bool OnPreviewSelectPrefix(ConstructionSiteAccessible __instance) {
       if(!_enabled)return true;
