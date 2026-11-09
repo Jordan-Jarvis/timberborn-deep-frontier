@@ -2,14 +2,14 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using FluidsApi.Native.Prototype;
-using FluidsApi.Persistence.Prototype;
-using FluidsApi.Transport.Prototype;
+using ModdableFluids.Native.Prototype;
+using ModdableFluids.Persistence.Prototype;
+using ModdableFluids.Transport.Prototype;
 
-namespace FluidsApi.Native.Acceptance {
+namespace ModdableFluids.Native.Acceptance {
   /// <summary>
   /// Public registry, consumer routes and save round trip under the installed Mono. Consumers are
-  /// loaded from bytes like Timberborn's ModCodeStarter, so their Fluids API reference binds the
+  /// loaded from bytes like Timberborn's ModCodeStarter, so their Moddable Fluids reference binds the
   /// same way it does in game.
   /// </summary>
   internal static class RegistryProbe {
@@ -22,22 +22,22 @@ namespace FluidsApi.Native.Acceptance {
       if (paths.Length != 2) throw new ArgumentException("Expected reflection;compiled consumer paths");
       var reflection = Assembly.Load(File.ReadAllBytes(paths[0]));
       var compiled = Assembly.Load(File.ReadAllBytes(paths[1]));
-      Check(!reflection.GetReferencedAssemblies().Any(a => a.Name == "FluidsApi"), "Mono reflection consumer has no compiled API reference");
+      Check(!reflection.GetReferencedAssemblies().Any(a => a.Name == "ModdableFluids"), "Mono reflection consumer has no compiled API reference");
       Check(reflection.GetTypes().Length >= 3 && compiled.GetTypes().Length >= 2, "Mono type enumeration of both consumers with the API present");
-      Check(AppDomain.CurrentDomain.GetAssemblies().Count(a => a.GetName().Name == "FluidsApi") == 1, "Mono has one FluidsApi assembly");
+      Check(AppDomain.CurrentDomain.GetAssemblies().Count(a => a.GetName().Name == "ModdableFluids") == 1, "Mono has one ModdableFluids assembly");
 
-      var juice = Activator.CreateInstance(reflection.GetType("FluidsApiSyntheticReflection.JuiceProvider", true));
-      var register = reflection.GetType("FluidsApiSyntheticReflection.SyntheticReflectionDiscovery", true).GetMethod("Register");
+      var juice = Activator.CreateInstance(reflection.GetType("ModdableFluidsSyntheticReflection.JuiceProvider", true));
+      var register = reflection.GetType("ModdableFluidsSyntheticReflection.SyntheticReflectionDiscovery", true).GetMethod("Register");
       string result = (string)register.Invoke(null, new object[] { AppDomain.CurrentDomain.GetAssemblies(), juice });
-      Check(result == "registered FluidsApiSyntheticReflection.Juice with Fluids API 0.1.0", "Mono reflection discovery: " + result);
+      Check(result == "registered ModdableFluidsSyntheticReflection.Juice with Moddable Fluids 0.1.0", "Mono reflection discovery: " + result);
       // The cast succeeds only if the byte-loaded consumer bound to this same API assembly.
-      var tracer = (IFluidProvider)Activator.CreateInstance(compiled.GetType("FluidsApiSyntheticCompiled.TracerProvider", true));
-      FluidsApiEntry.RegisterProvider(tracer);
-      var host = FluidsApiEntry.Host;
+      var tracer = (IFluidProvider)Activator.CreateInstance(compiled.GetType("ModdableFluidsSyntheticCompiled.TracerProvider", true));
+      ModdableFluidsEntry.RegisterProvider(tracer);
+      var host = ModdableFluidsEntry.Host;
       var registry = host.Freeze();
-      Check(registry.Definitions.Select(d => d.Id).SequenceEqual(new[] { FluidIds.Water, FluidIds.Badwater, "FluidsApiSyntheticCompiled.Tracer", "FluidsApiSyntheticReflection.Juice" }),
+      Check(registry.Definitions.Select(d => d.Id).SequenceEqual(new[] { FluidIds.Water, FluidIds.Badwater, "ModdableFluidsSyntheticCompiled.Tracer", "ModdableFluidsSyntheticReflection.Juice" }),
         "Mono registry order");
-      Check(registry.Get(registry.GetHandle("FluidsApiSyntheticReflection.Juice")).Metadata["FluidsApiSyntheticReflection.Sweetness"] == "7", "Mono reflected metadata");
+      Check(registry.Get(registry.GetHandle("ModdableFluidsSyntheticReflection.Juice")).Metadata["ModdableFluidsSyntheticReflection.Sweetness"] == "7", "Mono reflected metadata");
 
       var scene = host.ActivateScene();
       host.LoadProviderStates(scene, null);
@@ -74,12 +74,12 @@ namespace FluidsApi.Native.Acceptance {
       }
 
       // Last: a second byte load of the API, as an enabled local and Workshop copy would produce.
-      var copy = Assembly.Load(File.ReadAllBytes(typeof(FluidsApiEntry).Assembly.Location));
-      int copies = AppDomain.CurrentDomain.GetAssemblies().Count(a => a.GetName().Name == "FluidsApi");
+      var copy = Assembly.Load(File.ReadAllBytes(typeof(ModdableFluidsEntry).Assembly.Location));
+      int copies = AppDomain.CurrentDomain.GetAssemblies().Count(a => a.GetName().Name == "ModdableFluids");
       bool rejected = false;
-      try { FluidsApiEntry.RequireSingleLoadedCopy(AppDomain.CurrentDomain.GetAssemblies()); } catch (InvalidOperationException) { rejected = true; }
-      Check(copies == 1 ? !rejected && ReferenceEquals(copy, typeof(FluidsApiEntry).Assembly) : rejected, "Mono duplicate-copy detection agrees with the loaded copies");
-      Note = copies == 1 ? "Mono returned the loaded FluidsApi for a second byte load" : "Mono loaded a second FluidsApi copy from bytes and the API refused it";
+      try { ModdableFluidsEntry.RequireSingleLoadedCopy(AppDomain.CurrentDomain.GetAssemblies()); } catch (InvalidOperationException) { rejected = true; }
+      Check(copies == 1 ? !rejected && ReferenceEquals(copy, typeof(ModdableFluidsEntry).Assembly) : rejected, "Mono duplicate-copy detection agrees with the loaded copies");
+      Note = copies == 1 ? "Mono returned the loaded ModdableFluids for a second byte load" : "Mono loaded a second ModdableFluids copy from bytes and the API refused it";
       return checks;
     }
   }

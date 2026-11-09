@@ -7,10 +7,10 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../fluid-transport/FluidsApi.TransportPrototype.csproj" />
-    <ProjectReference Include="../fluid-api/FluidsApi.csproj" />
-    <ProjectReference Include="../fluid-synthetic-compiled/FluidsApiSyntheticCompiled.csproj" />
+    <ProjectReference Include="../fluid-transport/ModdableFluids.TransportPrototype.csproj" />
+    <ProjectReference Include="../fluid-api/ModdableFluids.csproj" />
+    <ProjectReference Include="../fluid-synthetic-compiled/ModdableFluidsSyntheticCompiled.csproj" />
     <!-- Built, then loaded by path only: the reflection consumer must stay without a compiled API reference. -->
-    <ProjectReference Include="../fluid-synthetic-reflection/FluidsApiSyntheticReflection.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="../fluid-synthetic-reflection/ModdableFluidsSyntheticReflection.csproj" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>

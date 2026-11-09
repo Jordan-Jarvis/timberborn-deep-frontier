@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Compiled consumer: its provider type implements Moddable Fluids interfaces. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>ModdableFluidsSyntheticCompiled</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../src/ModdableFluids/Examples/SyntheticCompiled/*.cs" />
+    <ProjectReference Include="../fluid-api/ModdableFluids.csproj" Private="false" />
+    <Reference Include="Timberborn.ModManagerScene" HintPath="$(TimberbornManaged)/Timberborn.ModManagerScene.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(TimberbornManaged)/UnityEngine.CoreModule.dll" Private="false" />
+  </ItemGroup>
+</Project>

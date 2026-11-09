@@ -8,7 +8,7 @@ import dev_environment as dev
 def main():
     maps = Path(dev.get('timberbornDocuments')) / 'Maps'
     source = maps / 'Deep Frontier - All Buildings Test.timber'
-    target = maps / 'Fluids API Worker Fixture.timber'
+    target = maps / 'Moddable Fluids Worker Fixture.timber'
     with zipfile.ZipFile(source) as archive:
         entries = {name: archive.read(name) for name in archive.namelist()}
     world = json.loads(entries['world.json'])
@@ -35,7 +35,7 @@ def main():
     world['Entities'] = starts
     metadata = json.loads(entries['map_metadata.json'])
     metadata.update(Width=32, Height=32, MapNameLocKey='', MapDescriptionLocKey='',
-                    MapDescription='Disposable Fluids API real-worker fixture, flat and dry at height 3.', IsRecommended=False, IsDev=False)
+                    MapDescription='Disposable Moddable Fluids real-worker fixture, flat and dry at height 3.', IsRecommended=False, IsDev=False)
     entries['world.json'] = json.dumps(world, separators=(',', ':')).encode()
     entries['map_metadata.json'] = json.dumps(metadata, separators=(',', ':')).encode()
     with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as archive:

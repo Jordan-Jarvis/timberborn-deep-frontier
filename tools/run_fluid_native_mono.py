@@ -1,10 +1,10 @@
-"""Run an isolated Fluids API probe inside the installed game's Mono, outside its process.
+"""Run an isolated Moddable Fluids probe inside the installed game's Mono, outside its process.
 
-    run_fluid_native_mono.py <FluidsApi.NativeMonoProbe.dll> <reflection consumer.dll> <compiled consumer.dll>
-    run_fluid_native_mono.py --absent <FluidsApi.AbsenceProbe.dll> <reflection consumer.dll> <compiled consumer.dll>
+    run_fluid_native_mono.py <ModdableFluids.NativeMonoProbe.dll> <reflection consumer.dll> <compiled consumer.dll>
+    run_fluid_native_mono.py --absent <ModdableFluids.AbsenceProbe.dll> <reflection consumer.dll> <compiled consumer.dll>
 
 The absent mode searches only the game's Managed folder and the absence probe's own folder,
-which holds no FluidsApi.dll, so the API is genuinely missing as in an install without it.
+which holds no ModdableFluids.dll, so the API is genuinely missing as in an install without it.
 """
 import ctypes
 import hashlib
@@ -23,8 +23,8 @@ def main():
     if len(arguments) != 3:
         raise SystemExit(__doc__)
     probe, reflection, compiled = (Path(a).resolve(strict=True) for a in arguments)
-    if absent and (probe.parent / 'FluidsApi.dll').exists():
-        raise SystemExit('The absence probe folder must not contain FluidsApi.dll')
+    if absent and (probe.parent / 'ModdableFluids.dll').exists():
+        raise SystemExit('The absence probe folder must not contain ModdableFluids.dll')
     consumers = str(reflection) + ';' + str(compiled)
     managed = dev.managed()
     runtime = dev.game_root() / 'MonoBleedingEdge' / 'EmbedRuntime' / 'mono-2.0-bdwgc.dll'
@@ -61,7 +61,7 @@ def main():
 
     # This is a separate worker process. The game process and its loaded mods are untouched.
     set_path((str(managed) + ';' + str(probe.parent)).encode('utf-8'))
-    domain = initialize(b'FluidsApiNativeProbe', b'v4.0.30319')
+    domain = initialize(b'ModdableFluidsNativeProbe', b'v4.0.30319')
     if not domain:
         raise RuntimeError('Installed Mono did not initialize')
     harmony = Path(dev.get('timberbornDocuments')) / 'ModsBuild' / 'TimberbornModExamples_Data' / 'Managed' / '0Harmony.dll'
@@ -70,7 +70,7 @@ def main():
     assembly = open_assembly(domain, str(probe).encode('utf-8'))
     if not assembly:
         raise RuntimeError('Installed Mono did not load the probe assembly')
-    namespace, name, count = (b'FluidsApi.Absence', b'AbsenceProbe', 1) if absent else (b'FluidsApi.Native.Acceptance', b'MonoProbe', 2)
+    namespace, name, count = (b'ModdableFluids.Absence', b'AbsenceProbe', 1) if absent else (b'ModdableFluids.Native.Acceptance', b'MonoProbe', 2)
     klass = get_class(get_image(assembly), namespace, name)
     method = get_method(klass, b'Run', count) if klass else None
     if not method:
@@ -96,7 +96,7 @@ def main():
     if absent:
         report.write_text(json.dumps({
             'status': 'passed', 'runtime': str(runtime), 'probe': str(probe), 'message': message, 'consumers': consumer_hashes,
-            'scope': 'Embedded installed Mono in a separate process whose search path has no FluidsApi.dll; consumers byte-loaded like ModCodeStarter'
+            'scope': 'Embedded installed Mono in a separate process whose search path has no ModdableFluids.dll; consumers byte-loaded like ModCodeStarter'
         }, indent=2) + '\n', encoding='utf-8')
         print(message)
         return
@@ -106,7 +106,7 @@ def main():
         'harmonyAssembly': str(harmony), 'harmonySha256': hashlib.sha256(harmony.read_bytes()).hexdigest(),
         'apiAssemblies': [{ 'path': str(probe.parent / name),
                             'sha256': hashlib.sha256((probe.parent / name).read_bytes()).hexdigest() }
-                          for name in ['FluidsApi.dll', 'FluidsApi.TransportPrototype.dll', 'FluidsApi.GamePrototype.dll']],
+                          for name in ['ModdableFluids.dll', 'ModdableFluids.TransportPrototype.dll', 'ModdableFluids.GamePrototype.dll']],
         'consumers': consumer_hashes,
         'scope': 'Embedded installed Mono in a separate process; actual native scheduler patched with immediate fixture execution; live worker barriers and settlement acceptance remain pending'
     }, indent=2) + '\n', encoding='utf-8')

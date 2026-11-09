@@ -1,0 +1,8 @@
+{
+  "Name": "Moddable Fluids Synthetic Compiled Fixture",
+  "Version": "0.0.1.0",
+  "Id": "ModdableFluidsSyntheticCompiled",
+  "MinimumGameVersion": "1.1.2.8",
+  "Description": "Development fixture. Registers one synthetic fluid through a compiled Moddable Fluids reference, and only in a flagged disposable acceptance run.",
+  "RequiredMods": [{ "Id": "ModdableFluids", "MinimumVersion": "0.0.1" }]
+}

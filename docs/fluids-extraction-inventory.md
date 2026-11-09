@@ -1,6 +1,6 @@
-# Fluids API extraction inventory
+# Moddable Fluids extraction inventory
 
-Completed 2026-11-09 against Timberborn 1.1.2.8 and the Deep Frontier source at `d418394`. This is item 2 of the [Fluids API plan](fluids-api-plan.md): every Deep Frontier water, weather, rendering and save hook, the optional assemblies, and every direct consumer of the radiation simulation. Each entry gives its proposed owner after the split. The source files were read in full. Line numbers are those at `d418394`.
+Completed 2026-11-09 against Timberborn 1.1.2.8 and the Deep Frontier source at `d418394`. This is item 2 of the [Moddable Fluids plan](fluids-api-plan.md): every Deep Frontier water, weather, rendering and save hook, the optional assemblies, and every direct consumer of the radiation simulation. Each entry gives its proposed owner after the split. The source files were read in full. Line numbers are those at `d418394`.
 
 **Changes since `d418394`.** The native-safety audit committed three changes after this inventory was taken:
 
@@ -8,15 +8,15 @@ Completed 2026-11-09 against Timberborn 1.1.2.8 and the Deep Frontier source at 
 - `432e696`: the lockstep and soil-moisture hooks moved from the first scene `Load` to mod start. A scene still attaches its simulation in `Load` and detaches it in `Unload`.
 - `ec17e3f`: reflection outside patches is checked at mod start (`NativeContracts`).
 
-These changes resolve the late-failure and lazy-install findings for Deep Frontier in sections 1 and 2. They do not change ownership: Deep Frontier patches are still never removed, and they sit on the same scheduling and task methods that the Fluids API replaces. `src/DeepFrontier/Scripts/NativePatches.cs` documents the installer rules. The tables below describe `d418394`, and the owners proposed for each hook are unchanged.
+These changes resolve the late-failure and lazy-install findings for Deep Frontier in sections 1 and 2. They do not change ownership: Deep Frontier patches are still never removed, and they sit on the same scheduling and task methods that the Moddable Fluids replaces. `src/DeepFrontier/Scripts/NativePatches.cs` documents the installer rules. The tables below describe `d418394`, and the owners proposed for each hook are unchanged.
 
-Owners: **API** means the Fluids API foundation. **DF** means Deep Frontier content. **Adapter** means a public API hook through which Deep Frontier supplies values or callbacks.
+Owners: **API** means the Moddable Fluids foundation. **DF** means Deep Frontier content. **Adapter** means a public API hook through which Deep Frontier supplies values or callbacks.
 
 ## Rules for the foundation
 
 The inventory shows the same failure modes repeatedly. The foundation should adopt these rules before it takes over any hook:
 
-1. **Give every patch a defined lifetime.** At `d418394`, none of Deep Frontier's water, weather, sensor, storage or planting patches was ever removed; the patches below were installed once per process, at mod start or lazily by a static `_patched` flag. Since `432e696` they all install at mod start and stay inert while no scene is attached. They reach scene objects through static fields (`RadiationLockstep.Simulation`, `RadiationSoilPatches._soil`, `RadioactiveTideService.Current`, `RadioactiveTideNewGameSettings.Current`). The Fluids API patches per scene with its own Harmony owner, unpatches on scene unload, and refuses a second owner of the same target. `NativeTransportHooks` does this for its two targets.
+1. **Give every patch a defined lifetime.** At `d418394`, none of Deep Frontier's water, weather, sensor, storage or planting patches was ever removed; the patches below were installed once per process, at mod start or lazily by a static `_patched` flag. Since `432e696` they all install at mod start and stay inert while no scene is attached. They reach scene objects through static fields (`RadiationLockstep.Simulation`, `RadiationSoilPatches._soil`, `RadioactiveTideService.Current`, `RadioactiveTideNewGameSettings.Current`). The Moddable Fluids patches per scene with its own Harmony owner, unpatches on scene unload, and refuses a second owner of the same target. `NativeTransportHooks` does this for its two targets.
 2. **Verify every native member at startup.** Several members the radiation code uses are never checked, so a game update would first fail on a worker thread during the first tick (section 2). The foundation should check every member a job will touch before it installs a patch, and report all failures in one message.
 3. **Have one owner per native target, and no load-order winners.** Several Deep Frontier patches assume they are the only one on their target: the hazardous-weather selection postfix, the custom game-mode postfix, the Weather Station skip prefix, the sensor and sluice `__result` overwrites, and the global `SetSourceRadioactiveShare` scalar. When another mod patches the same target, the patch applied last silently wins. The foundation dispatches each target to registered providers and treats a foreign patch on a target it replaces as an explicit conflict.
 4. **Do not read Deep Frontier internals.** The prototype's `NativeTransportHooks.RequireNoLegacyRadiationOwner` reflected `DeepFrontier.Scripts.Radiation.RadiationLockstep.Simulation` by name. Commit `d2e8fff` replaced it with foreign-owner detection. Attach now refuses any other Harmony owner on the two replaced scheduling methods, and on the three native tasks the bridge skips (`UpdateContaminationTask`, `UpdateWaterSourcesTask`, `UpdateWaterChangesTask`), and names each owner. Deep Frontier's lockstep patches two of those skipped tasks, so while it is enabled the shared transport cannot attach.
@@ -65,7 +65,7 @@ These are installed at mod start by `RadioactiveTideModStarter`, owner `DeepFron
 | Target | Kind | Source | Installed | Startup check | Owner |
 | --- | --- | --- | --- | --- | --- |
 | `ContaminationSensor.GetContamination(int)` | Postfix that overwrites `__result` | `Sensors/ContaminationSensorPatches.cs:111-120` | Mod start | Parameter, IL length, call chain, fields, `Precision == 0.01` | API: a substance chosen by registry ID, plus a migration adapter for the `SensedSubstance` enum |
-| `SluiceIsBack.Components.Sluice.GetContamination()` | Postfix that overwrites `__result` | `SluiceIsBack/SluiceContaminationPatches.cs:109-118` | Optional bridge start | Private, not inlinable, call chain, fields | API optional bridge (for example `FluidsApi.SluiceIsBack`) |
+| `SluiceIsBack.Components.Sluice.GetContamination()` | Postfix that overwrites `__result` | `SluiceIsBack/SluiceContaminationPatches.cs:109-118` | Optional bridge start | Private, not inlinable, call chain, fields | API optional bridge (for example `ModdableFluids.SluiceIsBack`) |
 | `SluiceState.SetState(SluiceState, int)` | Postfix that copies the substance to the neighbour | :121-132 | same | Parameters, callers | same |
 
 ## 2. Native members without a startup check
@@ -80,7 +80,7 @@ These are read directly through the publicized ModsBuild assemblies (`DeepFronti
 - `IThreadSafeColumnTerrainMap` index methods and events; `SoilBarrierMap.ContaminationBarriers` and `AboveMoistureBarriers`
 - The Moddable Weathers public API (`ModdableWeatherBase`, `IModdableHazardousWeather`, `WeatherHistoryService`, `WeatherGenerator` …). It is compiled against directly, but only the spec `RadioactiveTideWeather` is checked.
 
-The Fluids API prototype had the same gap. Its jobs looked up about 40 private members on worker threads: starter fields, `SimulationParameters` properties, native task constructors, `WaterChange` and `WaterAmountChange` members, diffusion structs, and `ReadOnlyArray._array`. Commit `d2e8fff` added `NativeSchedulerContract`, which checks all of these in the hooks' constructor and reports every difference in one message. The checks cover each task constructor with the exact argument types the job passes, and the adapter's buffer member shapes. See [the native adapter document](fluids-native-adapter.md).
+The Moddable Fluids prototype had the same gap. Its jobs looked up about 40 private members on worker threads: starter fields, `SimulationParameters` properties, native task constructors, `WaterChange` and `WaterAmountChange` members, diffusion structs, and `ReadOnlyArray._array`. Commit `d2e8fff` added `NativeSchedulerContract`, which checks all of these in the hooks' constructor and reports every difference in one message. The checks cover each task constructor with the exact argument types the job passes, and the adapter's buffer member shapes. See [the native adapter document](fluids-native-adapter.md).
 
 Members that are checked with a clear error include `TickOnlyArrayService._forceAllowAccess`, the rendering mirror contract in `RadiationShading.Verify` (`WaterRenderer._contaminations`, `UpdateWaterTexturesTask._contaminations/_waterColumns`, `TerrainMaterialMap` fields, `sizeof(PixelData) == 2`), the eleven soil starter floats and two soil task constructors (`RadiationSoil.cs:528-550`), the planting members, and `GoodConsumingBuilding._goodConsumingBuildingSpec`. The last one is checked in a static initializer, so its failure arrives wrapped in a `TypeInitializationException`.
 
@@ -126,7 +126,7 @@ These consumers inject the concrete `RadiationSimulation`. Changing only `IRadia
 | `RadioactiveSpring` | `RegisterSpring`/`UnregisterSpring` | DF on API owned emitters |
 | `IrradiatedPlantWarning`, `IrradiatedPlantingSpots` | `IsIrradiatedGround` | DF |
 | `WaterShadingProbe` (test) | `TotalWaterRadiation`, `RadiationRenderer.Swaps` | DF test |
-| **Fluids API `NativeTransportHooks`** | Reads `RadiationLockstep.Simulation` by name | To be replaced by Harmony-owner conflict detection (rule 4) |
+| **Moddable Fluids `NativeTransportHooks`** | Reads `RadiationLockstep.Simulation` by name | To be replaced by Harmony-owner conflict detection (rule 4) |
 
 `IRadiationService` consumers: `MeltdownService` (`TryFindOpenCell`, `AddRadioactiveWater`, `AddContinuousSource`, `AddSoilRadiation`, `Sample().Submerged`), `WasteLeak`, `ReactorBotLeak`, `FisherFlag` (`IsColumnContaminated`), `RadioactiveTideService` and `RadioactiveTideModdableEmitter` (`WaterPerStrengthHour`, `SetSourceRadioactiveShare`), `StreamGaugeRadiationPanel`, `ContaminationSensorSubstance` (`SavedStatePending`, `Sample`), `SluiceContaminationSubstance`, and the acceptance probes. The interface remains as a DF facade backed by the API, so these files can migrate one at a time. `KernelCorrections` has no reader, and `RemoveContinuousSource` has no caller.
 
@@ -149,17 +149,17 @@ These rules stay in Deep Frontier. The API must report the volumes they act on, 
 
 Source-confirmed in the 1.1.2.8 assemblies:
 
-- **All code loads before any mod starts.** `Timberborn.ModManagerScene.ModCodeStarter.Start` loads every `*.dll` of every enabled mod with `Assembly.Load(File.ReadAllBytes(...))` before any `IModStarter.StartMod` runs. A consumer's `StartMod` can therefore always find a loaded Fluids API assembly, whatever the load order. The API's own `StartMod` may not have run yet, so the registry is created lazily on first access and does not depend on API start order.
+- **All code loads before any mod starts.** `Timberborn.ModManagerScene.ModCodeStarter.Start` loads every `*.dll` of every enabled mod with `Assembly.Load(File.ReadAllBytes(...))` before any `IModStarter.StartMod` runs. A consumer's `StartMod` can therefore always find a loaded Moddable Fluids assembly, whatever the load order. The API's own `StartMod` may not have run yet, so the registry is created lazily on first access and does not depend on API start order.
 - **Each DLL is enumerated without a guard.** `ModCodeStarter.GetModStarters` calls `assembly.GetTypes()` on every DLL without handling exceptions. A plain-DLL bridge whose types implement an absent mod's interfaces breaks mod start for its package.
 - **Dependencies do not guarantee load order.** `Timberborn.Modding.ModSorter` sorts by `RequiredMods` and `OptionalMods`, then reorders by each mod's player-set priority (`ModPlayerPrefsHelper.GetModPriority`). A player can move a consumer ahead of its dependency. Registration therefore must not depend on load order.
-- **Duplicate copies load twice.** Two enabled copies with the same ID (a local and a Workshop copy) are both kept by the sorter. Two `FluidsApi` assemblies would then load into the AppDomain. The API detects this and refuses to start a second registry.
+- **Duplicate copies load twice.** Two enabled copies with the same ID (a local and a Workshop copy) are both kept by the sorter. Two `ModdableFluids` assemblies would then load into the AppDomain. The API detects this and refuses to start a second registry.
 
 Deep Frontier's mechanism: every non-main asmdef must be named `DeepFrontier.<ModId>` (`DeepFrontierBatchBuild.cs:55-64`). After the official build, each is renamed to `Scripts/DeepFrontier.<ModId>.dll.<ModId>.optional`. Moddable Timberborn's `OptionalModsLoader` loads those files only when the named mod is enabled. The main assembly checks for optional mods only by assembly name, and keeps shared contracts (`IContaminationSubstanceChoice`, `SensedSubstance`, `RadioactiveTideTuning`, `IRadiationService`) in its own assembly. `verify_deep_frontier_package.ps1` rejects plain-DLL bridges, and each bridge's configurator throws when the bridge is missing. The bridges are `DeepFrontier.ModdableWeathers`, `DeepFrontier.SluiceIsBack` and `DeepFrontier.PowerLines`.
 
-The Fluids API depends only on Harmony, so it cannot use Moddable Timberborn's loader for itself. Its core assembly references nothing but the base library, so it is safe to enumerate in any installation. Consumers have three routes:
+The Moddable Fluids depends only on Harmony, so it cannot use Moddable Timberborn's loader for itself. Its core assembly references nothing but the base library, so it is safe to enumerate in any installation. Consumers have three routes:
 
 1. Reflection only: no compile reference and no load-order assumption.
-2. A compiled reference in a package that lists `FluidsApi` in `RequiredMods`.
+2. A compiled reference in a package that lists `ModdableFluids` in `RequiredMods`.
 3. A Moddable Timberborn `.optional` bridge when the consumer already depends on Moddable Timberborn.
 
 The synthetic consumer packages exercise the first two routes. The harness verifies under both .NET 8 and the installed Mono that a compiled bridge fails `GetTypes()` when the API is absent.

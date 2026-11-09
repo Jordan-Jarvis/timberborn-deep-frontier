@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.Json;
-using FluidsApi.Transport.Prototype;
+using ModdableFluids.Transport.Prototype;
 
 if (args.Length != 4) throw new ArgumentException("Expected: installed Managed directory, imported WaterSimulator blueprint, report path, reflection-only consumer DLL");
 string managed = Path.GetFullPath(args[0]), specification = Path.GetFullPath(args[1]), reportPath = Path.GetFullPath(args[2]), reflectionConsumer = Path.GetFullPath(args[3]);
@@ -148,12 +148,12 @@ try {
   });
   Scenario("reflection can enumerate and invoke the standalone prototype", () => {
     var assembly = Assembly.LoadFrom(typeof(FluidVolumes).Assembly.Location);
-    Check(assembly.GetTypes().Any(t => t.FullName == "FluidsApi.Transport.Prototype.FluidVolumes"), "Type enumeration did not expose the mixture contract");
-    var type = assembly.GetType("FluidsApi.Transport.Prototype.FluidVolumes", true)!;
+    Check(assembly.GetTypes().Any(t => t.FullName == "ModdableFluids.Transport.Prototype.FluidVolumes"), "Type enumeration did not expose the mixture contract");
+    var type = assembly.GetType("ModdableFluids.Transport.Prototype.FluidVolumes", true)!;
     object column = Activator.CreateInstance(type, new object[] { new[] { 1d, 2, 3 } })!;
     double total = (double)type.GetProperty("TotalVolume")!.GetValue(column)!;
     Close(total, 6, "Reflected construction and query");
-    var removal = assembly.GetType("FluidsApi.Transport.Prototype.FluidTransportPrototype", true)!.GetMethod("RemoveMixed", BindingFlags.Public | BindingFlags.Static)!;
+    var removal = assembly.GetType("ModdableFluids.Transport.Prototype.FluidTransportPrototype", true)!.GetMethod("RemoveMixed", BindingFlags.Public | BindingFlags.Static)!;
     object result = removal.Invoke(null, new[] { column, (object)3d })!;
     object remaining = result.GetType().GetProperty("Remaining")!.GetValue(result)!;
     Close((double)type.GetProperty("TotalVolume")!.GetValue(remaining)!, 3, "Reflected operation");
@@ -288,7 +288,7 @@ try {
     runtime = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription,
     nativeAssembly = new { path = Path.Combine(managed, "Timberborn.WaterSystem.dll"), sha256 = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(Path.Combine(managed, "Timberborn.WaterSystem.dll")))) },
     fixtureSpecification = new { path = specification, sha256 = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(specification))) },
-    publicApi = new { assembly = typeof(FluidsApi.FluidsApiEntry).Assembly.GetName().Name, version = FluidsApi.FluidsApiEntry.ApiVersion, capabilities = FluidsApi.FluidsApiEntry.Capabilities },
+    publicApi = new { assembly = typeof(ModdableFluids.ModdableFluidsEntry).Assembly.GetName().Name, version = ModdableFluids.ModdableFluidsEntry.ApiVersion, capabilities = ModdableFluids.ModdableFluidsEntry.Capabilities },
     limits = new[] { "Standalone .NET 8 harness; installed Mono and opt-in scheduler hooks are exercised by a separate probe report", "Registry, provider lifecycle and save round trips run outside the game; in-game save/reload remains pending", "No installed mod or save changed", "Native queued obstacle mutations are exercised in the native load phase; automatic scene-bound delivery is not installed", "Joint badwater transport intentionally differs from independent native contamination kernels, pressure-weighted mixing and upper-overflow merge loss", "The Mono scheduler fixture executes dependency jobs immediately; real worker barriers, registry, persistence and settlement acceptance remain pending" }
   }, new JsonSerializerOptions { WriteIndented = true }));
   Console.WriteLine($"{assertions} assertions passed across {scenarios.Count} scenarios. Report: {reportPath}");

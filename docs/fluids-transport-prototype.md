@@ -1,10 +1,10 @@
 # Multi fluid transport prototype
 
-Implemented 2026-11-06 as the first stage of the [Fluids API plan](fluids-api-plan.md). The prototype now includes a [native buffer and stage adapter](fluids-native-adapter.md), tested against installed game tasks and in an isolated host using the game's Mono runtime. It is not yet a packaged mod or an in-game replacement for Deep Frontier's water simulation.
+Implemented 2026-11-06 as the first stage of the [Moddable Fluids plan](fluids-api-plan.md). The prototype now includes a [native buffer and stage adapter](fluids-native-adapter.md), tested against installed game tasks and in an isolated host using the game's Mono runtime. It is not yet a packaged mod or an in-game replacement for Deep Frontier's water simulation.
 
 ## Implementation
 
-The source is in [FluidTransportPrototype.cs](../src/FluidsApi/Transport/FluidTransportPrototype.cs) and [FluidVolumes.cs](../src/FluidsApi/Transport/FluidVolumes.cs). The calculation targets netstandard2.1 without game, Unity, or third-party assembly dependencies. Its namespace is explicitly experimental: `FluidsApi.Transport.Prototype`. A complete registry and published API stability contract follow the transport prototype.
+The source is in [FluidTransportPrototype.cs](../src/ModdableFluids/Transport/FluidTransportPrototype.cs) and [FluidVolumes.cs](../src/ModdableFluids/Transport/FluidVolumes.cs). The calculation targets netstandard2.1 without game, Unity, or third-party assembly dependencies. Its namespace is explicitly experimental: `ModdableFluids.Transport.Prototype`. A complete registry and published API stability contract follow the transport prototype.
 
 Each column contains an immutable vector of nonnegative component volumes, including fresh water and badwater. The vector's sum defines its physical volume. All transfers use the same starting snapshot. Off-map discharge and evaporation return component quantities alongside the resulting columns. Additions and native clean/non-bad versus badwater removals are separate measured operations.
 

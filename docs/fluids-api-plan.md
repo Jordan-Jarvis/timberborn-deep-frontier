@@ -1,8 +1,8 @@
-# Fluids API and More Fluids development plan
+# Moddable Fluids and More Fluids development plan
 
 Draft started 2026-11-06. Initial target: the installed Timberborn 1.1.2.8 development environment. The [multi-fluid transport prototype](fluids-transport-prototype.md) and [native stage adapter](fluids-native-adapter.md) pass standalone .NET and installed-Mono probes. The official Mod Builder has installed a separate flag-gated development package, and its actual core/bridge DLLs also pass the Mono probe. The scene owner and disposable fixture compile; real-worker settlement acceptance is pending. Since 2026-11-09 the [0.1 contract](fluids-api-contract.md) has a public registry, providers, discovery, persistent component identities and save round trips. These are verified outside the game only. The game-side saver, shared rendering and the More Fluids package do not exist yet.
 
-Build two new mods: **Fluids API**, which provides a shared world-fluid system, and **More Fluids**, which adds liquids using that system. Migrate the existing **Deep Frontier** mod to depend on Fluids API and register its radioactive water through the same public interfaces available to other creators. A third creator should be able to add a juice tide that works alongside both mods without implementing fluid transport, saves, or rendering again.
+Build two new mods: **Moddable Fluids**, which provides a shared world-fluid system, and **More Fluids**, which adds liquids using that system. Migrate the existing **Deep Frontier** mod to depend on Moddable Fluids and register its radioactive water through the same public interfaces available to other creators. A third creator should be able to add a juice tide that works alongside both mods without implementing fluid transport, saves, or rendering again.
 
 The agreed direction is the dependency split, shared registration model, and an open API that supports reflection and advanced integrations. Creators can use definitions, compiled C# references, reflection, and runtime patches as their integration requires. The contracts, defaults, and milestones below are proposed starting decisions. Oil that floats and lava that makes obsidian remain intended extensions, with separate feasibility work before they become supported API features.
 
@@ -10,23 +10,23 @@ The agreed direction is the dependency split, shared registration model, and an 
 
 ```mermaid
 flowchart TD
-    API[Fluids API] --> DF[Deep Frontier]
+    API[Moddable Fluids] --> DF[Deep Frontier]
     API --> MF[More Fluids]
     API --> THIRD[Other fluid mods]
 ```
 
-Arrows point from the foundation to its consumers. Deep Frontier and More Fluids each require Fluids API. More Fluids should also work without Deep Frontier; interactions that need Deep Frontier belong in an optional integration.
+Arrows point from the foundation to its consumers. Deep Frontier and More Fluids each require Moddable Fluids. More Fluids should also work without Deep Frontier; interactions that need Deep Frontier belong in an optional integration.
 
 | Package | Owns | Examples |
 | --- | --- | --- |
-| Fluids API | Registry, shared composition and transport, source and intake commands, sampling, world-water rendering, persistence, generic integration hooks, coordinated tide support | Register a fluid; emit a mixture; inspect a reservoir; read a named fluid with a sensor |
+| Moddable Fluids | Registry, shared composition and transport, source and intake commands, sampling, world-water rendering, persistence, generic integration hooks, coordinated tide support | Register a fluid; emit a mixture; inspect a reservoir; read a named fluid with a sensor |
 | Deep Frontier | Radioactive water definition and nuclear gameplay | Radioactive tide, irradiation, soil radiation, reactor spills, recovery and shielded storage |
 | More Fluids | Additional fluid definitions, effects, art, settings, and content | Coffee, saltwater, healing water; later oil and lava if their simulation is supported |
 | Other creators | Their own definitions and content through the public API | Juice tide, new sources, fluid-aware buildings, custom treatment systems |
 
-Fluids API ships no extra playable liquid. It exposes the game's existing fresh water and badwater through built-in definitions. Development fixtures can register synthetic fluids in a separate test mod.
+Moddable Fluids ships no extra playable liquid. It exposes the game's existing fresh water and badwater through built-in definitions. Development fixtures can register synthetic fluids in a separate test mod.
 
-Use working mod IDs `FluidsApi` and `MoreFluids` until names and publication IDs are finalized. Give each package its own manifest, assembly, version, and official Mod Builder output. Consumer packages reference the installed API assembly; they must not embed another runtime copy. Detect conflicting loaded API versions and duplicate registration visibly instead of starting a second simulation. Verify the game loader's handling of duplicate local and Workshop installations during packaging work.
+Use working mod IDs `ModdableFluids` and `MoreFluids` until names and publication IDs are finalized. Give each package its own manifest, assembly, version, and official Mod Builder output. Consumer packages reference the installed API assembly; they must not embed another runtime copy. Detect conflicting loaded API versions and duplicate registration visibly instead of starting a second simulation. Verify the game loader's handling of duplicate local and Workshop installations during packaging work.
 
 ## Existing implementation and constraints
 
@@ -77,7 +77,7 @@ Publish the queue timing clearly: additions and removals are requests, not immed
 
 ### Reflection and advanced extensions
 
-Reflection is a supported way to discover the foundation, inspect definitions, register providers, query fluid state, and invoke public services. A creator should be able to build an optional integration without a hard assembly reference to Fluids API. Give that route a documented entry point, version and capability discovery, and the same registry and runtime behavior as compiled consumers. Do not require reflection callers to impersonate an internal implementation class.
+Reflection is a supported way to discover the foundation, inspect definitions, register providers, query fluid state, and invoke public services. A creator should be able to build an optional integration without a hard assembly reference to Moddable Fluids. Give that route a documented entry point, version and capability discovery, and the same registry and runtime behavior as compiled consumers. Do not require reflection callers to impersonate an internal implementation class.
 
 Provide public registration adapters and callback binding for the reflection route so a consumer can supply documented values and delegates without implementing an API interface at compile time. Validate those adapters against the same typed contracts used by compiled providers. The external example must prove this works in the game's runtime.
 
@@ -215,7 +215,7 @@ Version the public API and schema separately from content balance. Test older co
 
 Audit consumers that directly inject `RadiationSimulation`, including soil, storage, spring, and renderer code. Changing only `IRadiationService` would leave those systems coupled to the old implementation. Remove duplicate water and weather patches as the corresponding shared adapter takes ownership.
 
-Use separate `src/FluidsApi/` and `src/MoreFluids/` roots alongside `src/DeepFrontier/` initially. Keep the public contract independent of the Deep Frontier namespace and avoid dependencies on its content generators or assets. Extend the official build workflow to build and verify each package independently, including optional assemblies and supported platform bundles.
+Use separate `src/ModdableFluids/` and `src/MoreFluids/` roots alongside `src/DeepFrontier/` initially. Keep the public contract independent of the Deep Frontier namespace and avoid dependencies on its content generators or assets. Extend the official build workflow to build and verify each package independently, including optional assemblies and supported platform bundles.
 
 ## More Fluids content direction
 
@@ -290,4 +290,4 @@ Status on 2026-11-09:
    Not built: shared rendering, the game-side saver/loader, and the in-game save/reload fixture.
 5. **Not started: Deep Frontier migration and More Fluids content.** Items 1 and 4 must pass first. Select the first finished More Fluids liquid before starting its gameplay work.
 
-Open product decisions are the final foundation name (it fixes the assembly, namespace and the `FluidsApi.*` capability names before a 1.0 release), the first pack liquid, the combined tide policy and its probabilities, and later oil/lava gameplay details. Storage layout, transport equations, renderer data format, and terrain solidification remain engineering decisions to resolve with the corresponding prototypes.
+Open product decisions are the final foundation name (it fixes the assembly, namespace and the `ModdableFluids.*` capability names before a 1.0 release), the first pack liquid, the combined tide policy and its probabilities, and later oil/lava gameplay details. Storage layout, transport equations, renderer data format, and terrain solidification remain engineering decisions to resolve with the corresponding prototypes.

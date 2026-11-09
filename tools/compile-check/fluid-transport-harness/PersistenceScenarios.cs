@@ -1,8 +1,8 @@
 using System.Text.Json;
-using FluidsApi;
-using FluidsApi.Native.Prototype;
-using FluidsApi.Persistence.Prototype;
-using FluidsApi.Transport.Prototype;
+using ModdableFluids;
+using ModdableFluids.Native.Prototype;
+using ModdableFluids.Persistence.Prototype;
+using ModdableFluids.Transport.Prototype;
 using static RegistryScenarios;
 
 /// <summary>Persistent component identity: save schema, exact round trips and load failures.</summary>
@@ -38,15 +38,15 @@ internal static class PersistenceScenarios {
     var log = new List<string>();
     object[] Providers(bool withTracer, bool withEarly = false) {
       var providers = new List<object> {
-        new PlainProvider("FluidsApiTest.Sea", "FluidsApiTest", log, new Fluid("Brine", "FluidsApiTest.Brine")),
+        new PlainProvider("ModdableFluidsTest.Sea", "ModdableFluidsTest", log, new Fluid("Brine", "ModdableFluidsTest.Brine")),
         new PlainReflected()
       };
-      if (withTracer) providers.Add(new PlainProvider("FluidsApiTest.Tracers", "FluidsApiTest", log, new Fluid("Tracer", "FluidsApiTest.Tracer")));
+      if (withTracer) providers.Add(new PlainProvider("ModdableFluidsTest.Tracers", "ModdableFluidsTest", log, new Fluid("Tracer", "ModdableFluidsTest.Tracer")));
       if (withEarly) providers.Add(new PlainProvider("Aaa.Early", "Aaa", log, new Fluid("Early", "Aaa.Early")));
       return providers.ToArray();
     }
     FluidRegistry Registry(IEnumerable<object> providers) {
-      var host = new FluidsApiHost();
+      var host = new ModdableFluidsHost();
       foreach (var p in providers) { if (p is IFluidProvider c) host.RegisterProvider(c); else host.RegisterReflectedProvider(p); }
       return host.Freeze();
     }
@@ -132,7 +132,7 @@ internal static class PersistenceScenarios {
 
       // A provider whose fluid is in the save is missing: loading stops and names the mod.
       var missing = Registry(Providers(withTracer: false));
-      Rejects<FluidSaveException>(() => document.ResolveFluidSlots(missing), "Missing provider", "FluidsApiTest.Tracer (mod FluidsApiTest)");
+      Rejects<FluidSaveException>(() => document.ResolveFluidSlots(missing), "Missing provider", "ModdableFluidsTest.Tracer (mod ModdableFluidsTest)");
       Rejects<FluidSaveException>(() => FluidWorldPersistence.Restore(text, missing, Layout(restoredSession), NativeWaterFixture.Stride, NativeWaterFixture.Height), "Missing provider restore", "never replaces unknown fluid with water");
 
       // Native water that disagrees with the saved state faults the restored session.
@@ -150,7 +150,7 @@ internal static class PersistenceScenarios {
       var session = new NativeFluidTransportSession(native.CreateAdapter(), full.Count, FluidRegistry.BadwaterIndex);
       var document = FluidWorldPersistence.Capture(full, session, NativeWaterFixture.Stride, Array.Empty<FluidProviderState>());
       check(document.FluidIds.SequenceEqual(new[] { FluidIds.Water, FluidIds.Badwater }), "Unused fluids were saved as requirements");
-      var vanilla = new FluidsApiHost().Freeze();
+      var vanilla = new ModdableFluidsHost().Freeze();
       var reloaded = new NativeFluidTransportSession(native.CreateAdapter(), vanilla.Count, FluidRegistry.BadwaterIndex);
       FluidWorldPersistence.Apply(reloaded, vanilla, FluidWorldPersistence.Restore(document, vanilla, Layout(reloaded), NativeWaterFixture.Stride, NativeWaterFixture.Height), NativeWaterFixture.Stride);
       check(SameBits(reloaded.Sample(native.Indices[0]).GetVolume(1), session.Sample(native.Indices[0]).GetVolume(1)), "Vanilla-only reload");
@@ -191,21 +191,21 @@ internal static class PersistenceScenarios {
     scenario("malformed or newer save documents are rejected with every problem", () => {
       var registry = Registry(Providers(withTracer: true));
       Lists Valid() => new() {
-        Schema = 1, Api = "0.1.0", Fingerprint = registry.Fingerprint, Ids = new() { FluidIds.Water, "FluidsApiTest.Tracer" }, Owners = new() { "Timberborn", "FluidsApiTest" },
+        Schema = 1, Api = "0.1.0", Fingerprint = registry.Fingerprint, Ids = new() { FluidIds.Water, "ModdableFluidsTest.Tracer" }, Owners = new() { "Timberborn", "ModdableFluidsTest" },
         X = new() { 0, 1 }, Y = new() { 0, 0 }, Floor = new() { 0, 0 }, Ceiling = new() { 4, 4 }, Capacity = new() { FluidSaveDocument.EncodeQuantity(4.5), FluidSaveDocument.EncodeQuantity(4.5) },
         EntryColumn = new() { 0, 0, 1 }, EntryFluid = new() { 0, 1, 1 }, Volume = new() { FluidSaveDocument.EncodeQuantity(1), FluidSaveDocument.EncodeQuantity(.5), FluidSaveDocument.EncodeQuantity(2) },
-        ProviderIds = new() { "FluidsApiTest.Tracers" }, ProviderOwners = new() { "FluidsApiTest" }, ProviderSchemas = new() { 1 }, ProviderData = new() { "" }
+        ProviderIds = new() { "ModdableFluidsTest.Tracers" }, ProviderOwners = new() { "ModdableFluidsTest" }, ProviderSchemas = new() { 1 }, ProviderData = new() { "" }
       };
       check(Valid().Build().ColumnCount == 2, "Valid fixture document");
       var cases = new (Action<Lists> Mutate, string Mention)[] {
-        (l => l.Schema = 2, "newer Fluids API"), (l => l.Schema = 0, "schema 0 is invalid"), (l => l.Owners.RemoveAt(1), "Fluid table lengths differ"),
+        (l => l.Schema = 2, "newer Moddable Fluids"), (l => l.Schema = 0, "schema 0 is invalid"), (l => l.Owners.RemoveAt(1), "Fluid table lengths differ"),
         (l => l.Y.RemoveAt(1), "Column list lengths differ"), (l => l.Volume.RemoveAt(2), "Component entry list lengths differ"), (l => l.ProviderData.Clear(), "Provider state list lengths differ"),
         (l => l.Ids[1] = FluidIds.Water, "appears twice"), (l => l.Owners[1] = "Other", "lists owner Other"), (l => l.Ids[1] = "Tracer", "'Tracer' is invalid"),
         (l => l.X[1] = 0, "overlap"), (l => l.Ceiling[0] = 300, "invalid geometry"), (l => l.Capacity[0] = "40120000000000ab", "16 uppercase hexadecimal"),
         (l => l.Capacity[1] = "7FF8000000000000", "not a finite nonnegative"), (l => l.Volume[0] = "0000000000000000", "zero volume"),
         (l => l.EntryColumn[2] = 5, "missing column or fluid"), (l => { l.EntryColumn[2] = 0; l.EntryFluid[2] = 1; }, "repeats"),
         (l => l.Volume[2] = FluidSaveDocument.EncodeQuantity(5), "above its capacity"), (l => l.Capacity[0] = FluidSaveDocument.EncodeQuantity(3), "smaller than its open interval"),
-        (l => l.ProviderSchemas[0] = 0, "Saved provider state 0"), (l => { l.ProviderIds.Add("FluidsApiTest.Tracers"); l.ProviderOwners.Add("FluidsApiTest"); l.ProviderSchemas.Add(1); l.ProviderData.Add(""); }, "appears twice"),
+        (l => l.ProviderSchemas[0] = 0, "Saved provider state 0"), (l => { l.ProviderIds.Add("ModdableFluidsTest.Tracers"); l.ProviderOwners.Add("ModdableFluidsTest"); l.ProviderSchemas.Add(1); l.ProviderData.Add(""); }, "appears twice"),
         (l => l.Fingerprint = "abc", "fingerprint"), (l => l.Api = "0.1", "major.minor.patch")
       };
       foreach (var (mutate, mention) in cases) {
@@ -216,9 +216,9 @@ internal static class PersistenceScenarios {
       FluidSaveException? both = null;
       try { two.Build(); } catch (FluidSaveException e) { both = e; }
       check(both?.Problems.Count == 2, "Problems were not all reported together");
-      var moved = Valid(); moved.Ids[1] = "FluidsApiTest.Tracer";
-      var otherOwner = Registry(new object[] { new PlainProvider("FluidsApiTest.Sea", "FluidsApiTest", log, new Fluid("Brine", "x")) });
-      Rejects<FluidSaveException>(() => moved.Build().ResolveFluidSlots(otherOwner), "Missing saved fluid", "FluidsApiTest.Tracer (mod FluidsApiTest)");
+      var moved = Valid(); moved.Ids[1] = "ModdableFluidsTest.Tracer";
+      var otherOwner = Registry(new object[] { new PlainProvider("ModdableFluidsTest.Sea", "ModdableFluidsTest", log, new Fluid("Brine", "x")) });
+      Rejects<FluidSaveException>(() => moved.Build().ResolveFluidSlots(otherOwner), "Missing saved fluid", "ModdableFluidsTest.Tracer (mod ModdableFluidsTest)");
       observations["malformedDocumentCases"] = cases.Length;
     });
   }

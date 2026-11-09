@@ -7,11 +7,11 @@ using System.IO;
 using Timberborn.Multithreading;
 using Timberborn.WaterSystem;
 using UnityEngine;
-using FluidsApi.GameBridge.Prototype;
+using ModdableFluids.GameBridge.Prototype;
 using HarmonyLib;
-using FluidsApi.Transport.Prototype;
+using ModdableFluids.Transport.Prototype;
 
-namespace FluidsApi.Native.Acceptance {
+namespace ModdableFluids.Native.Acceptance {
   internal static class SchedulerProbe {
     private const BindingFlags Members = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
     internal static int Run(string managed) {

@@ -1,6 +1,6 @@
 # Deep Frontier implementation plan
 
-The [Fluids API and More Fluids development plan](fluids-api-plan.md) proposes extracting the shared fluid foundation into a separate dependency used by Deep Frontier and a new More Fluids content mod. It covers public registration, coexistence, save migration, and later layered fluids and reactions; the extraction is not implemented yet.
+The [Moddable Fluids and More Fluids development plan](fluids-api-plan.md) proposes extracting the shared fluid foundation into a separate dependency, Moddable Fluids (named 2026-11-09), used by Deep Frontier and a new More Fluids content mod. It covers public registration, coexistence, save migration, and later layered fluids and reactions; the extraction is not implemented yet.
 
 The [2026-10-19 civic/progression revision](civic-progression-revision.md) supersedes earlier service-token and low late-game science proposals below: worker-served multi-food dining, 30-patient hospital care, a stocked neighborhood grocery, wellbeing/education readiness, aluminum, advanced research and new structural blocks/overhangs/bridges/scaffolds. Nuclear research is **1,000,000 science**. New ordinary industrial goods require at least two useful destinations (target three to five); edible foods and rocket-specific final-goal parts may have one. The [item audit](item-use-audit.md) reports the current implementation gaps separately from plans.
 

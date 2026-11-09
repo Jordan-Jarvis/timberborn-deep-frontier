@@ -1,17 +1,45 @@
-# Fluids API 0.1 contract
+# Moddable Fluids 0.1 contract
 
-Implemented 2026-11-09 as item 3 of the [Fluids API plan](fluids-api-plan.md), with item 4's persistent identities. The contract is experimental: its major version is 0, so any minor release may change it. It has passed the .NET 8 harness and the installed-Mono probes, including a Mono process without the API. It has not run in a game yet. Behaviour policies, public sampling, shared rendering and tide registration are not part of 0.1. Where the plan calls a definition field a behaviour or appearance, that is only data until the matching capability exists.
+Implemented 2026-11-09 as item 3 of the [Moddable Fluids plan](fluids-api-plan.md), with item 4's persistent identities. The contract is experimental: its major version is 0, so any minor release may change it. It has passed the .NET 8 harness and the installed-Mono probes, including a Mono process without the API. It has not run in a game yet. Behaviour policies, public sampling, shared rendering and tide registration are not part of 0.1. Where the plan calls a definition field a behaviour or appearance, that is only data until the matching capability exists.
+
+## Rename from FluidsApi
+
+On 2026-11-09 the user named the foundation **Moddable Fluids**. Nothing was released under the working name. The rename has no aliases and no compatibility shims: old names are simply not recognised.
+
+| Working name (before 2026-11-09) | Moddable Fluids |
+| --- | --- |
+| Mod ID and manifest `FluidsApi` | `ModdableFluids` |
+| Assemblies `FluidsApi`, `FluidsApi.TransportPrototype`, `.GamePrototype`, `.RuntimePrototype` | `ModdableFluids`, `ModdableFluids.TransportPrototype`, `.GamePrototype`, `.RuntimePrototype` |
+| Namespaces `FluidsApi`, `FluidsApi.*.Prototype` | `ModdableFluids`, `ModdableFluids.*.Prototype` |
+| Entry and host types `FluidsApiEntry`, `FluidsApiHost` | `ModdableFluidsEntry`, `ModdableFluidsHost` |
+| Capabilities `FluidsApi.<Name>` | `ModdableFluids.<Name>` |
+| Harmony owner `FluidsApi.Prototype.NativeTransport` | `ModdableFluids.Prototype.NativeTransport` |
+| Flags `-fluidsApiWorkerAcceptance`, `-fluidsApiReport` | `-moddableFluidsWorkerAcceptance`, `-moddableFluidsReport` |
+| Fixture mods `FluidsApiSyntheticReflection`, `FluidsApiSyntheticCompiled` (and their fluid IDs) | `ModdableFluidsSyntheticReflection`, `ModdableFluidsSyntheticCompiled` |
+| Source `src/FluidsApi`; `tools/build_fluids_api.ps1`, `verify_fluids_api_package.ps1`, `unity/FluidsApiBatchBuild.cs` | `src/ModdableFluids`; `tools/build_moddable_fluids.ps1`, `verify_moddable_fluids_package.ps1`, `unity/ModdableFluidsBatchBuild.cs` |
+| Worker fixture map and settlement `Fluids API Worker Fixture/Acceptance` | `Moddable Fluids Worker Fixture/Acceptance`; regenerate it with `tools/create_fluid_acceptance_map.py` |
+
+Unchanged:
+
+- the documentation file names `docs/fluids-api-*.md`, so existing links keep working;
+- the evidence folder `outputs/fluids-api-prototype`;
+- the generic tool names (`test_fluid_transport.ps1`, `run_fluid_native_mono.py`, `start_fluid_worker_acceptance.ps1`);
+- the API version 0.1.0 and the save schema 1.
+
+No save holds fluid state yet, so there is nothing to migrate.
+
+The pre-rename development package must be removed from an installation. Its old assembly name means the duplicate-copy check would not catch it, and its old flag means it would never activate. `tools/build_moddable_fluids.ps1 -RemoveLegacyPackage` checks the manifest of each pre-rename package, then deletes `Mods/FluidsApi`, the two old fixture folders, their staged copies in the authoring project and their enablement keys. The build refuses to run while any of them remains. The launcher refuses to start while `Mods/FluidsApi` exists.
 
 ## Assemblies
 
 | Assembly | Contents | References |
 | --- | --- | --- |
-| `FluidsApi` | IDs, definitions, registry and handles, providers, scene lifecycle, discovery entry, save schema | `netstandard` only, so its types enumerate safely in any installation |
-| `FluidsApi.TransportPrototype` | Transport, native adapter, world persistence (`FluidWorldPersistence`) | `FluidsApi` |
-| `FluidsApi.GamePrototype` | Native scheduler hooks and their startup contract | Harmony, `Timberborn.Multithreading` |
-| `FluidsApi.RuntimePrototype` | Flag-gated scene owner and worker fixture | Game assemblies |
+| `ModdableFluids` | IDs, definitions, registry and handles, providers, scene lifecycle, discovery entry, save schema | `netstandard` only, so its types enumerate safely in any installation |
+| `ModdableFluids.TransportPrototype` | Transport, native adapter, world persistence (`FluidWorldPersistence`) | `ModdableFluids` |
+| `ModdableFluids.GamePrototype` | Native scheduler hooks and their startup contract | Harmony, `Timberborn.Multithreading` |
+| `ModdableFluids.RuntimePrototype` | Flag-gated scene owner and worker fixture | Game assemblies |
 
-The three prototype assemblies keep their experimental `*.Prototype` namespaces. The package activates nothing unless the game is started with `-fluidsApiWorkerAcceptance`.
+The three prototype assemblies keep their experimental `*.Prototype` namespaces. The package activates nothing unless the game is started with `-moddableFluidsWorkerAcceptance`.
 
 ## Identity
 
@@ -31,7 +59,7 @@ Register providers from an `IModStarter.StartMod`. The flag-gated runtime freeze
 
 The freeze runs each provider's `Register` in ordinal `ProviderId` order, then validates everything together. Every problem is reported in one `FluidRegistryException` that names the provider, the mod and the fluid. A failed freeze leaves the host faulted with that report.
 
-Load order cannot break registration. Timberborn loads every enabled mod's assemblies before any `StartMod` runs (`ModCodeStarter`), and the process-wide host is created on first use. Consumers should still list `FluidsApi` in `RequiredMods` (compiled route) or `OptionalMods` (reflection route), so the native sorter places the API first by default. A player can move mods by hand-set priority; registration does not depend on the API loading first.
+Load order cannot break registration. Timberborn loads every enabled mod's assemblies before any `StartMod` runs (`ModCodeStarter`), and the process-wide host is created on first use. Consumers should still list `ModdableFluids` in `RequiredMods` (compiled route) or `OptionalMods` (reflection route), so the native sorter places the API first by default. A player can move mods by hand-set priority; registration does not depend on the API loading first.
 
 ## Compiled providers
 
@@ -40,7 +68,7 @@ public sealed class CoffeeProvider : IFluidProvider, IFluidSceneProvider, IFluid
   public string ProviderId => "MoreFluids.Drinks";
   public string OwnerModId => "MoreFluids";
   public string MinimumApiVersion => "0.1.0";
-  public IReadOnlyCollection<string> RequiredCapabilities { get; } = new[] { "FluidsApi.Registry.Definitions" };
+  public IReadOnlyCollection<string> RequiredCapabilities { get; } = new[] { "ModdableFluids.Registry.Definitions" };
   public void Register(FluidRegistration r) {
     r.AddFluid("Coffee", "MoreFluids.Coffee.DisplayName", .3f, .2f, .1f, .9f);
     r.AddMetadata("Coffee", "MoreFluids.Caffeine", "2");
@@ -51,7 +79,7 @@ public sealed class CoffeeProvider : IFluidProvider, IFluidSceneProvider, IFluid
   public string SaveState(FluidScene scene) => "";
   public void LoadState(FluidScene scene, bool hasState, int schemaVersion, string state) { }
 }
-// IModStarter.StartMod: FluidsApiEntry.RegisterProvider(new CoffeeProvider());
+// IModStarter.StartMod: ModdableFluidsEntry.RegisterProvider(new CoffeeProvider());
 ```
 
 Optional behaviour uses separate interfaces (`IFluidSceneProvider`, `IFluidStateProvider`). Later stages will add new optional interfaces rather than change `IFluidProvider`.
@@ -60,8 +88,8 @@ Optional behaviour uses separate interfaces (`IFluidSceneProvider`, `IFluidState
 
 A consumer with no compiled reference:
 
-1. Finds exactly one loaded assembly named `FluidsApi` in `AppDomain.CurrentDomain.GetAssemblies()`. If there is none, the API is absent. If there are several, it stops with an error.
-2. Gets the type `FluidsApi.FluidsApiEntry`.
+1. Finds exactly one loaded assembly named `ModdableFluids` in `AppDomain.CurrentDomain.GetAssemblies()`. If there is none, the API is absent. If there are several, it stops with an error.
+2. Gets the type `ModdableFluids.ModdableFluidsEntry`.
 3. Reads the static `ApiVersion` (string) and `Capabilities` (`IReadOnlyList<string>`).
 4. Calls `RegisterReflectedProvider(object)` with a plain object.
 
@@ -82,7 +110,7 @@ The context objects use primitive methods only: `AddFluid(string localName, stri
 - a wrong return or parameter type;
 - an object that already implements `IFluidProvider`.
 
-A reflected provider then goes through the same validation and lifecycle as a compiled one. [SyntheticReflectionFluids.cs](../src/FluidsApi/Examples/SyntheticReflection/SyntheticReflectionFluids.cs) is the working example.
+A reflected provider then goes through the same validation and lifecycle as a compiled one. [SyntheticReflectionFluids.cs](../src/ModdableFluids/Examples/SyntheticReflection/SyntheticReflectionFluids.cs) is the working example.
 
 ## Versions and capabilities
 
@@ -90,16 +118,16 @@ A reflected provider then goes through the same validation and lifecycle as a co
 
 | Capability | Meaning |
 | --- | --- |
-| `FluidsApi.Registry.Definitions` | Register fluids with colour and namespaced metadata |
-| `FluidsApi.Registry.Providers` | Compiled provider registration and validation |
-| `FluidsApi.Discovery.Reflection` | The reflection route above |
-| `FluidsApi.Scene.Lifecycle` | Per-scene activation and unload |
-| `FluidsApi.Persistence.ComponentIdentity` | Saves identify fluids by ID |
-| `FluidsApi.Persistence.ProviderState` | Versioned provider-owned save data |
+| `ModdableFluids.Registry.Definitions` | Register fluids with colour and namespaced metadata |
+| `ModdableFluids.Registry.Providers` | Compiled provider registration and validation |
+| `ModdableFluids.Discovery.Reflection` | The reflection route above |
+| `ModdableFluids.Scene.Lifecycle` | Per-scene activation and unload |
+| `ModdableFluids.Persistence.ComponentIdentity` | Saves identify fluids by ID |
+| `ModdableFluids.Persistence.ProviderState` | Versioned provider-owned save data |
 
-`FluidsApiEntry.DescribeRuntime()` returns a plain-text report for logs and support requests. It lists the version, capabilities, phase, any fault, the registry fingerprint and fluids, and each provider with its route, minimum version and optional interfaces.
+`ModdableFluidsEntry.DescribeRuntime()` returns a plain-text report for logs and support requests. It lists the version, capabilities, phase, any fault, the registry fingerprint and fluids, and each provider with its route, minimum version and optional interfaces.
 
-`FluidsApiEntry.Host` refuses to start when more than one `FluidsApi` assembly is loaded. This was verified under the game's Mono: a second byte-load of the same DLL produces a second assembly, which is what a local copy plus a Workshop copy would do.
+`ModdableFluidsEntry.Host` refuses to start when more than one `ModdableFluids` assembly is loaded. This was verified under the game's Mono: a second byte-load of the same DLL produces a second assembly, which is what a local copy plus a Workshop copy would do.
 
 ## Scene lifecycle and provider state
 
@@ -148,15 +176,15 @@ Not built yet: the game-side saver/loader singleton, the Deep Frontier importer,
 
 | Route | When the API is absent |
 | --- | --- |
-| Reflection only, `OptionalMods: FluidsApi` | Works and reports absence; verified under .NET 8 and the installed Mono |
-| Compiled reference, `RequiredMods: FluidsApi` | The package's provider types cannot load. `GetTypes()` fails, and the game's `ModCodeStarter` does not catch that (verified under both runtimes). Ship such a package only as a hard dependent. |
+| Reflection only, `OptionalMods: ModdableFluids` | Works and reports absence; verified under .NET 8 and the installed Mono |
+| Compiled reference, `RequiredMods: ModdableFluids` | The package's provider types cannot load. `GetTypes()` fails, and the game's `ModCodeStarter` does not catch that (verified under both runtimes). Ship such a package only as a hard dependent. |
 | Moddable Timberborn `.optional` bridge | Loaded only when the named mod is enabled (Deep Frontier's existing mechanism); for consumers that already depend on Moddable Timberborn |
 
 ## Development fixtures
 
-The two fixture packages under `src/FluidsApi/Examples` register only with `-fluidsApiWorkerAcceptance`:
+The two fixture packages under `src/ModdableFluids/Examples` register only with `-moddableFluidsWorkerAcceptance`:
 
-- `FluidsApiSyntheticReflection` registers `Juice` by reflection, with state and scenes.
-- `FluidsApiSyntheticCompiled` registers `Tracer` through the compiled interfaces, with a state migration.
+- `ModdableFluidsSyntheticReflection` registers `Juice` by reflection, with state and scenes.
+- `ModdableFluidsSyntheticCompiled` registers `Tracer` through the compiled interfaces, with a state migration.
 
 Timberborn enables a newly installed mod by default. The official build therefore moves both packages out of `Mods` into `outputs/fluids-api-prototype/fixture-packages`. `tools/start_fluid_worker_acceptance.ps1` installs them only for a run, then removes them and any preference keys created for them.

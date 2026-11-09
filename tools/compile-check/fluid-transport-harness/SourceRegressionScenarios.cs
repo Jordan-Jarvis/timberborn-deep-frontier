@@ -1,5 +1,5 @@
-using FluidsApi.Native.Prototype;
-using FluidsApi.Transport.Prototype;
+using ModdableFluids.Native.Prototype;
+using ModdableFluids.Transport.Prototype;
 
 internal static class SourceRegressionScenarios {
   internal static void Run(Action<bool, string> check, Action<string, Action> scenario,

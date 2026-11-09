@@ -1,8 +1,8 @@
 using System.Reflection;
 using System.Runtime.Loader;
-using FluidsApi;
+using ModdableFluids;
 
-/// <summary>Public registry, provider, lifecycle and discovery contract (FluidsApi 0.1).</summary>
+/// <summary>Public registry, provider, lifecycle and discovery contract (ModdableFluids 0.1).</summary>
 internal static class RegistryScenarios {
   internal sealed record Fluid(string Local, string Loc, float R = .5f, float G = .5f, float B = .5f, float A = 1f, (string Key, string Value)[]? Metadata = null);
 
@@ -12,7 +12,7 @@ internal static class RegistryScenarios {
     public string ProviderId { get; }
     public string OwnerModId { get; }
     public string MinimumApiVersion { get; init; } = "0.1.0";
-    public IReadOnlyCollection<string> RequiredCapabilities { get; init; } = new[] { "FluidsApi.Registry.Definitions" };
+    public IReadOnlyCollection<string> RequiredCapabilities { get; init; } = new[] { "ModdableFluids.Registry.Definitions" };
     public Action<FluidRegistration>? Extra { get; init; }
     public FluidRegistration? Kept { get; private set; }
     public PlainProvider(string id, string owner, List<string> log, params Fluid[] fluids) { ProviderId = id; OwnerModId = owner; _log = log; _fluids = fluids; }
@@ -49,7 +49,7 @@ internal static class RegistryScenarios {
     public string ProviderId => "ExampleCreator.Juices";
     public string OwnerModId => "ExampleCreator";
     public string MinimumApiVersion => "0.1.0";
-    public string[] RequiredCapabilities => new[] { "FluidsApi.Discovery.Reflection" };
+    public string[] RequiredCapabilities => new[] { "ModdableFluids.Discovery.Reflection" };
     public int StateSchemaVersion => 3;
     public List<string> Log { get; } = new();
     public string Saved { get; set; } = "orchard";
@@ -124,8 +124,8 @@ internal static class RegistryScenarios {
       Rejects<ArgumentException>(() => FluidIds.RequireOwned("morefluids.Coffee", "MoreFluids", "fluid"), "Case-folded owner accepted");
     });
 
-    FluidsApiHost Host(List<string> log, IEnumerable<object> providers) {
-      var host = new FluidsApiHost();
+    ModdableFluidsHost Host(List<string> log, IEnumerable<object> providers) {
+      var host = new ModdableFluidsHost();
       foreach (var provider in providers) {
         if (provider is IFluidProvider compiled) host.RegisterProvider(compiled); else host.RegisterReflectedProvider(provider);
       }
@@ -157,7 +157,7 @@ internal static class RegistryScenarios {
       check(a.Get(a.GetHandle("ExampleCreator.Juice")).ProviderId == "ExampleCreator.Juices", "Reflected registration");
       check(a.Providers.Select(p => p.ProviderId).SequenceEqual(new[] { "DeepFrontier.Radiation", "ExampleCreator.Juices", "MoreFluids.Drinks", "MoreFluids.Sea" }), "Provider info order");
       check(a.Providers.Single(p => p.ProviderId == "ExampleCreator.Juices") is { Route: "Reflected", HasSceneLifecycle: true, HasState: true, StateSchemaVersion: 3 }, "Reflected provider info");
-      Rejects<ArgumentException>(() => new FluidsApiHost().Freeze().Get(a.Water), "Handle from a registry with different content");
+      Rejects<ArgumentException>(() => new ModdableFluidsHost().Freeze().Get(a.Water), "Handle from a registry with different content");
       Rejects<ArgumentException>(() => a.GetHandle("MoreFluids.Tea"), "Unknown fluid handle");
       observations["registryFingerprint"] = a.Fingerprint;
       observations["registryFluids"] = a.Count;
@@ -175,7 +175,7 @@ internal static class RegistryScenarios {
         new PlainProvider("Future.Major", "Future", log) { MinimumApiVersion = "1.0.0" },
         new PlainProvider("Future.Minor", "Future", log) { MinimumApiVersion = "0.2.0" },
         new PlainProvider("Future.Patch", "Future", log) { MinimumApiVersion = "0.1.5" },
-        new PlainProvider("Needs.Rendering", "Needs", log) { RequiredCapabilities = new[] { "FluidsApi.Rendering" } },
+        new PlainProvider("Needs.Rendering", "Needs", log) { RequiredCapabilities = new[] { "ModdableFluids.Rendering" } },
         new PlainProvider("Twice.Provider", "Twice", log), new PlainProvider("Twice.Provider", "Twice", log),
         new PlainProvider("Bad.Colour", "Bad", log, new Fluid("Glow", "Bad.Glow", 1.5f)),
         new PlainProvider("Bad.Loc", "Bad", log, new Fluid("Blank", " ")),
@@ -186,8 +186,8 @@ internal static class RegistryScenarios {
       try { host.Freeze(); } catch (FluidRegistryException e) { report = e; }
       check(report != null, "Invalid registrations froze");
       var problems = report!.Problems;
-      string[] mentions = { "Fluid MoreFluids.Coffee is registered by both", "reserved owner 'Timberborn'", "Thief.Drinks", "'0.1'", "requires Fluids API 1.0.0", "requires Fluids API 0.2.0",
-        "requires Fluids API 0.1.5", "FluidsApi.Rendering", "Twice.Provider is registered twice", "Bad.Colour", "Bad.Loc", "Bad.Metadata", "ExampleCreator.Throws (mod ExampleCreator) failed during Register: FormatException: orchard data unreadable" };
+      string[] mentions = { "Fluid MoreFluids.Coffee is registered by both", "reserved owner 'Timberborn'", "Thief.Drinks", "'0.1'", "requires Moddable Fluids 1.0.0", "requires Moddable Fluids 0.2.0",
+        "requires Moddable Fluids 0.1.5", "ModdableFluids.Rendering", "Twice.Provider is registered twice", "Bad.Colour", "Bad.Loc", "Bad.Metadata", "ExampleCreator.Throws (mod ExampleCreator) failed during Register: FormatException: orchard data unreadable" };
       foreach (string mention in mentions) check(problems.Any(p => p.Contains(mention, StringComparison.Ordinal)), "Problem report lacks " + mention + ":\n" + report.Message);
       check(problems.Count == 13, "Expected 13 problems, got " + problems.Count + ":\n" + report.Message);
       check(problems.Count(p => p.Contains("registered by both")) == 1, "The duplicate fluid was reported more than once");
@@ -201,7 +201,7 @@ internal static class RegistryScenarios {
     scenario("registration closes at freeze and contexts expire after their stage", () => {
       var log = new List<string>();
       var keeper = new PlainProvider("Keep.Provider", "Keep", log, new Fluid("Kept", "Keep.Kept"));
-      var host = new FluidsApiHost();
+      var host = new ModdableFluidsHost();
       host.RegisterProvider(keeper);
       Rejects<InvalidOperationException>(() => _ = host.Registry, "Registry readable before freeze");
       var registry = host.Freeze();
@@ -213,7 +213,7 @@ internal static class RegistryScenarios {
     });
 
     scenario("reflected providers bind documented members with exact signatures", () => {
-      var host = new FluidsApiHost();
+      var host = new ModdableFluidsHost();
       var plain = new PlainReflected();
       host.RegisterReflectedProvider(plain);
       foreach (var (bad, name) in new (object, string)[] { (new ReflectedActivateOnly(), "Activate without Unload"), (new ReflectedPartialState(), "partial state group"),
@@ -256,7 +256,7 @@ internal static class RegistryScenarios {
     scenario("provider state round trips and missing or newer providers stop loading", () => {
       var log = new List<string>();
       StateProvider Stateful(string state) => new("State.Keeper", "State", log, new Fluid("Kept", "State.Kept")) { StateSchemaVersion = 2, State = state };
-      var saving = new FluidsApiHost(); var keeper = Stateful("alpha|7"); saving.RegisterProvider(keeper); saving.RegisterProvider(new StateProvider("State.Empty", "State", log));
+      var saving = new ModdableFluidsHost(); var keeper = Stateful("alpha|7"); saving.RegisterProvider(keeper); saving.RegisterProvider(new StateProvider("State.Empty", "State", log));
       saving.Freeze();
       var scene = saving.ActivateScene(); saving.LoadProviderStates(scene, null);
       check(keeper.Loaded is { HasState: false, Schema: 0, State: null }, "New game state delivery");
@@ -265,27 +265,27 @@ internal static class RegistryScenarios {
       saving.UnloadScene(scene);
       check(saved.Select(s => s.ProviderId).SequenceEqual(new[] { "State.Empty", "State.Keeper" }) && saved[1].Data == "alpha|7" && saved[0].Data == "", "Saved provider states");
 
-      var loading = new FluidsApiHost(); var reloaded = Stateful(""); loading.RegisterProvider(new StateProvider("State.Empty", "State", log)); loading.RegisterProvider(reloaded);
+      var loading = new ModdableFluidsHost(); var reloaded = Stateful(""); loading.RegisterProvider(new StateProvider("State.Empty", "State", log)); loading.RegisterProvider(reloaded);
       loading.Freeze(); var next = loading.ActivateScene(); loading.LoadProviderStates(next, saved);
       check(reloaded.Loaded is { HasState: true, Schema: 2, State: "alpha|7" }, "Provider state round trip");
       loading.UnloadScene(next);
 
-      void Fails(FluidsApiHost host, IReadOnlyList<FluidProviderState> states, string mention) {
+      void Fails(ModdableFluidsHost host, IReadOnlyList<FluidProviderState> states, string mention) {
         host.Freeze(); var s = host.ActivateScene();
         Rejects<FluidSaveException>(() => host.LoadProviderStates(s, states), "State load " + mention, mention);
         host.UnloadScene(s);
       }
-      Fails(new FluidsApiHost(), saved, "needs provider State.Empty from mod State");
-      var newer = new FluidsApiHost(); newer.RegisterProvider(new StateProvider("State.Keeper", "State", log) { StateSchemaVersion = 1 }); newer.RegisterProvider(new StateProvider("State.Empty", "State", log));
+      Fails(new ModdableFluidsHost(), saved, "needs provider State.Empty from mod State");
+      var newer = new ModdableFluidsHost(); newer.RegisterProvider(new StateProvider("State.Keeper", "State", log) { StateSchemaVersion = 1 }); newer.RegisterProvider(new StateProvider("State.Empty", "State", log));
       Fails(newer, saved, "schema 2 is newer than the installed 1");
-      var stateless = new FluidsApiHost(); stateless.RegisterProvider(new SceneProvider("State.Keeper", "State", log)); stateless.RegisterProvider(new StateProvider("State.Empty", "State", log));
+      var stateless = new ModdableFluidsHost(); stateless.RegisterProvider(new SceneProvider("State.Keeper", "State", log)); stateless.RegisterProvider(new StateProvider("State.Empty", "State", log));
       Fails(stateless, saved, "no longer stores state");
       Rejects<ArgumentOutOfRangeException>(() => new FluidProviderState("State.Keeper", "State", 0, ""), "Schema zero");
       Rejects<ArgumentException>(() => new FluidProviderState("Other.Keeper", "State", 1, ""), "State outside the owner namespace");
     });
 
     scenario("optional consumers load with the API present and fail only where documented when it is absent", () => {
-      string compiledPath = Path.Combine(AppContext.BaseDirectory, "FluidsApiSyntheticCompiled.dll");
+      string compiledPath = Path.Combine(AppContext.BaseDirectory, "ModdableFluidsSyntheticCompiled.dll");
       Assembly? Game(AssemblyLoadContext context, AssemblyName name) {
         string path = Path.Combine(managed, name.Name + ".dll");
         return File.Exists(path) ? context.LoadFromAssemblyPath(path) : null;
@@ -294,69 +294,69 @@ internal static class RegistryScenarios {
       try {
       // Present: the reflection consumer finds the API, checks capabilities and registers through the entry point.
       var reflection = Assembly.LoadFrom(reflectionConsumerPath);
-      check(!reflection.GetReferencedAssemblies().Any(a => a.Name == "FluidsApi"), "Reflection consumer has a compiled API reference");
+      check(!reflection.GetReferencedAssemblies().Any(a => a.Name == "ModdableFluids"), "Reflection consumer has a compiled API reference");
       check(reflection.GetTypes().Length >= 3, "Reflection consumer type enumeration");
       var compiled = Assembly.LoadFrom(compiledPath);
       check(compiled.GetTypes().Any(t => typeof(IFluidProvider).IsAssignableFrom(t)), "Compiled consumer type enumeration with the API present");
-      var discovery = reflection.GetType("FluidsApiSyntheticReflection.SyntheticReflectionDiscovery", true)!;
-      var provider = Activator.CreateInstance(reflection.GetType("FluidsApiSyntheticReflection.JuiceProvider", true)!)!;
+      var discovery = reflection.GetType("ModdableFluidsSyntheticReflection.SyntheticReflectionDiscovery", true)!;
+      var provider = Activator.CreateInstance(reflection.GetType("ModdableFluidsSyntheticReflection.JuiceProvider", true)!)!;
       var register = discovery.GetMethod("Register")!;
       string result = (string)register.Invoke(null, new[] { AppDomain.CurrentDomain.GetAssemblies(), provider })!;
-      check(result.StartsWith("registered FluidsApiSyntheticReflection.Juice with Fluids API 0.1.0", StringComparison.Ordinal), "Reflection discovery: " + result);
-      FluidsApiEntry.RegisterProvider((IFluidProvider)Activator.CreateInstance(compiled.GetType("FluidsApiSyntheticCompiled.TracerProvider", true)!)!);
-      var registry = FluidsApiEntry.Host.Freeze();
-      check(registry.Definitions.Select(d => d.Id).SequenceEqual(new[] { FluidIds.Water, FluidIds.Badwater, "FluidsApiSyntheticCompiled.Tracer", "FluidsApiSyntheticReflection.Juice" }),
+      check(result.StartsWith("registered ModdableFluidsSyntheticReflection.Juice with Moddable Fluids 0.1.0", StringComparison.Ordinal), "Reflection discovery: " + result);
+      ModdableFluidsEntry.RegisterProvider((IFluidProvider)Activator.CreateInstance(compiled.GetType("ModdableFluidsSyntheticCompiled.TracerProvider", true)!)!);
+      var registry = ModdableFluidsEntry.Host.Freeze();
+      check(registry.Definitions.Select(d => d.Id).SequenceEqual(new[] { FluidIds.Water, FluidIds.Badwater, "ModdableFluidsSyntheticCompiled.Tracer", "ModdableFluidsSyntheticReflection.Juice" }),
         "Process-wide registry through both consumer routes");
-      check(registry.Get(registry.GetHandle("FluidsApiSyntheticReflection.Juice")).Metadata["FluidsApiSyntheticReflection.Sweetness"] == "7", "Reflected metadata");
-      var scene = FluidsApiEntry.Host.ActivateScene();
-      FluidsApiEntry.Host.LoadProviderStates(scene, null);
-      FluidsApiEntry.Host.UnloadScene(scene);
+      check(registry.Get(registry.GetHandle("ModdableFluidsSyntheticReflection.Juice")).Metadata["ModdableFluidsSyntheticReflection.Sweetness"] == "7", "Reflected metadata");
+      var scene = ModdableFluidsEntry.Host.ActivateScene();
+      ModdableFluidsEntry.Host.LoadProviderStates(scene, null);
+      ModdableFluidsEntry.Host.UnloadScene(scene);
       check((int)provider.GetType().GetProperty("Activations")!.GetValue(provider)! == 1 && (int)provider.GetType().GetProperty("Unloads")!.GetValue(provider)! == 1, "Reflection consumer lifecycle");
-      observations["processRegistry"] = FluidsApiEntry.DescribeRuntime();
+      observations["processRegistry"] = ModdableFluidsEntry.DescribeRuntime();
 
-      // Absent: a context where FluidsApi cannot load, like a game install without the API.
+      // Absent: a context where ModdableFluids cannot load, like a game install without the API.
       var absent = new AbsentApiContext();
       try {
         var lonelyReflection = absent.LoadFromStream(new MemoryStream(File.ReadAllBytes(reflectionConsumerPath)));
         check(lonelyReflection.GetTypes().Length >= 3, "Reflection consumer enumeration without the API");
-        var lonelyDiscovery = lonelyReflection.GetType("FluidsApiSyntheticReflection.SyntheticReflectionDiscovery", true)!;
-        var lonelyProvider = Activator.CreateInstance(lonelyReflection.GetType("FluidsApiSyntheticReflection.JuiceProvider", true)!)!;
+        var lonelyDiscovery = lonelyReflection.GetType("ModdableFluidsSyntheticReflection.SyntheticReflectionDiscovery", true)!;
+        var lonelyProvider = Activator.CreateInstance(lonelyReflection.GetType("ModdableFluidsSyntheticReflection.JuiceProvider", true)!)!;
         string absentResult = (string)lonelyDiscovery.GetMethod("Register")!.Invoke(null, new[] { new[] { lonelyReflection }, lonelyProvider })!;
         check(absentResult == (string)lonelyDiscovery.GetField("Absent")!.GetValue(null)!, "Absent API outcome: " + absentResult);
         var lonelyCompiled = absent.LoadFromStream(new MemoryStream(File.ReadAllBytes(compiledPath)));
         ReflectionTypeLoadException? failure = null;
         try { lonelyCompiled.GetTypes(); } catch (ReflectionTypeLoadException e) { failure = e; }
-        check(failure != null && failure.LoaderExceptions.Any(e => e?.Message.Contains("FluidsApi", StringComparison.Ordinal) == true),
-          "Compiled consumer enumerated without the API; its package must require Fluids API");
+        check(failure != null && failure.LoaderExceptions.Any(e => e?.Message.Contains("ModdableFluids", StringComparison.Ordinal) == true),
+          "Compiled consumer enumerated without the API; its package must require Moddable Fluids");
         observations["absentApiCompiledConsumer"] = failure?.LoaderExceptions.FirstOrDefault()?.Message ?? "";
       } finally { absent.Unload(); }
       } finally { AssemblyLoadContext.Default.Resolving -= Game; }
     });
 
     scenario("discovery entry reports version and capabilities and refuses duplicate copies", () => {
-      check(FluidsApiEntry.ApiVersion == "0.1.0" && FluidsApiEntry.ContractMajor == 0, "API version");
-      check(typeof(FluidsApiEntry).Assembly.GetName().Version == new Version(0, 1, 0, 0), "Assembly version matches the contract version");
-      check(FluidsApiEntry.Capabilities.SequenceEqual(FluidsApiEntry.Capabilities.OrderBy(c => c, StringComparer.Ordinal)) && FluidsApiEntry.Capabilities.Count == 6, "Capability list");
-      check(!FluidsApiEntry.Capabilities.Any(c => c.Contains("Rendering") || c.Contains("Transport") || c.Contains("Tide")), "Unimplemented capability advertised");
-      FluidsApiEntry.RequireSingleLoadedCopy(AppDomain.CurrentDomain.GetAssemblies());
-      check(typeof(FluidsApiEntry).FullName == FluidsApiEntry.EntryTypeName && typeof(FluidsApiEntry).Assembly.GetName().Name == FluidsApiEntry.AssemblyName, "Documented entry names");
-      var second = new AssemblyLoadContext("second Fluids API copy", isCollectible: true);
+      check(ModdableFluidsEntry.ApiVersion == "0.1.0" && ModdableFluidsEntry.ContractMajor == 0, "API version");
+      check(typeof(ModdableFluidsEntry).Assembly.GetName().Version == new Version(0, 1, 0, 0), "Assembly version matches the contract version");
+      check(ModdableFluidsEntry.Capabilities.SequenceEqual(ModdableFluidsEntry.Capabilities.OrderBy(c => c, StringComparer.Ordinal)) && ModdableFluidsEntry.Capabilities.Count == 6, "Capability list");
+      check(!ModdableFluidsEntry.Capabilities.Any(c => c.Contains("Rendering") || c.Contains("Transport") || c.Contains("Tide")), "Unimplemented capability advertised");
+      ModdableFluidsEntry.RequireSingleLoadedCopy(AppDomain.CurrentDomain.GetAssemblies());
+      check(typeof(ModdableFluidsEntry).FullName == ModdableFluidsEntry.EntryTypeName && typeof(ModdableFluidsEntry).Assembly.GetName().Name == ModdableFluidsEntry.AssemblyName, "Documented entry names");
+      var second = new AssemblyLoadContext("second Moddable Fluids copy", isCollectible: true);
       try {
-        var copy = second.LoadFromStream(new MemoryStream(File.ReadAllBytes(typeof(FluidsApiEntry).Assembly.Location)));
-        check(copy != typeof(FluidsApiEntry).Assembly, "Second copy was not separate");
-        Rejects<InvalidOperationException>(() => FluidsApiEntry.RequireSingleLoadedCopy(AppDomain.CurrentDomain.GetAssemblies()), "Duplicate API copies", "loaded 2 times");
-        observations["duplicateCopiesReport"] = string.Join(", ", FluidsApiEntry.DescribeLoadedCopies(AppDomain.CurrentDomain.GetAssemblies()));
+        var copy = second.LoadFromStream(new MemoryStream(File.ReadAllBytes(typeof(ModdableFluidsEntry).Assembly.Location)));
+        check(copy != typeof(ModdableFluidsEntry).Assembly, "Second copy was not separate");
+        Rejects<InvalidOperationException>(() => ModdableFluidsEntry.RequireSingleLoadedCopy(AppDomain.CurrentDomain.GetAssemblies()), "Duplicate API copies", "loaded 2 times");
+        observations["duplicateCopiesReport"] = string.Join(", ", ModdableFluidsEntry.DescribeLoadedCopies(AppDomain.CurrentDomain.GetAssemblies()));
       } finally { second.Unload(); }
-      foreach (var type in typeof(FluidsApiEntry).Assembly.GetTypes().Where(t => !t.Name.StartsWith("<", StringComparison.Ordinal))) check(type.Namespace == "FluidsApi", "Unexpected namespace in the public assembly: " + type.FullName);
-      check(typeof(FluidsApiEntry).Assembly.GetReferencedAssemblies().All(a => a.Name == "netstandard"), "The public assembly references more than netstandard");
+      foreach (var type in typeof(ModdableFluidsEntry).Assembly.GetTypes().Where(t => !t.Name.StartsWith("<", StringComparison.Ordinal))) check(type.Namespace == "ModdableFluids", "Unexpected namespace in the public assembly: " + type.FullName);
+      check(typeof(ModdableFluidsEntry).Assembly.GetReferencedAssemblies().All(a => a.Name == "netstandard"), "The public assembly references more than netstandard");
     });
   }
 
-  /// <summary>Resolves game assemblies but never Fluids API, so the API is genuinely missing.</summary>
+  /// <summary>Resolves game assemblies but never Moddable Fluids, so the API is genuinely missing.</summary>
   private sealed class AbsentApiContext : AssemblyLoadContext {
     internal AbsentApiContext() : base("API absent", isCollectible: true) { }
     protected override Assembly? Load(AssemblyName name) {
-      if (name.Name == "FluidsApi") throw new FileNotFoundException("FluidsApi is not installed", "FluidsApi.dll");
+      if (name.Name == "ModdableFluids") throw new FileNotFoundException("ModdableFluids is not installed", "ModdableFluids.dll");
       return null;
     }
   }

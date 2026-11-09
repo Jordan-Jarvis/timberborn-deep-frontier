@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Pure prototype, not an official packaged mod or published API contract. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>ModdableFluids.TransportPrototype</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../src/ModdableFluids/Transport/*.cs" />
+    <Compile Include="../../../src/ModdableFluids/Native/*.cs" />
+    <Compile Include="../../../src/ModdableFluids/Persistence/*.cs" />
+    <ProjectReference Include="../fluid-api/ModdableFluids.csproj" />
+  </ItemGroup>
+</Project>

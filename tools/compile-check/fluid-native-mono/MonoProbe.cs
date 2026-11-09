@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Reflection;
 using System.IO;
-using FluidsApi.Native.Prototype;
-using FluidsApi.Transport.Prototype;
+using ModdableFluids.Native.Prototype;
+using ModdableFluids.Transport.Prototype;
 
-namespace FluidsApi.Native.Acceptance {
+namespace ModdableFluids.Native.Acceptance {
   public static class MonoProbe {
     private const BindingFlags Members = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
     public static string Run(string managed, string consumers) {

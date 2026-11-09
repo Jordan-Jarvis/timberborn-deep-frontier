@@ -3,8 +3,8 @@ using System.Collections.Immutable;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text.Json;
-using FluidsApi.Transport.Prototype;
-using FluidsApi.Native.Prototype;
+using ModdableFluids.Transport.Prototype;
+using ModdableFluids.Native.Prototype;
 
 // Invokes the installed, unmodified game tasks by reflection. The fixture supplies
 // arrays and explicit parameters; it contains no copied implementation of native tasks.

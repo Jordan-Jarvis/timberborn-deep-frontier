@@ -1,0 +1,8 @@
+{
+  "Name": "Moddable Fluids Prototype",
+  "Version": "0.0.1.0",
+  "Id": "ModdableFluids",
+  "MinimumGameVersion": "1.1.2.8",
+  "Description": "Development prototype for shared multi-fluid transport. Activates only in explicitly flagged disposable acceptance worlds. No production fluid persistence or content yet.",
+  "RequiredMods": [{ "Id": "Harmony", "MinimumVersion": "2.4.1" }]
+}
