@@ -412,15 +412,17 @@ def healing_well(faction):
     k = Kit(f'MoreFluidsHealingWell.{faction}', faction_palette(faction), seed=31)
     c = (.5, .5)
     k.revolve(c, [(.44, 0), (.44, .26), (.47, .28), (.47, .36), (.36, .36), (.36, .2), (0, .2)], 'stone', sides=8)
-    # Mint mineral staining down three faces of the basin.
+    # Mint-green mineral staining down three faces of the basin (Details banner green).
     apothem = .44 * math.cos(math.pi / 8) + .004
-    for i in (1, 3, 6):
+    for i in (1, 4, 6):
         a = 2 * math.pi * (i + 1) / 8
         nx, ny = math.cos(a), math.sin(a)
         tx, ty = -ny, nx
         px, py = .5 + nx * apothem, .5 + ny * apothem
-        k.poly([(px - tx * .05, py - ty * .05, .03), (px + tx * .05, py + ty * .05, .03),
-                (px + tx * .07, py + ty * .07, .25), (px - tx * .07, py - ty * .07, .25)], 'teal', (nx, ny, 0))
+        k.poly([(px - tx * .06, py - ty * .06, .02), (px + tx * .06, py + ty * .06, .02),
+                (px + tx * .1, py + ty * .1, .255), (px - tx * .1, py - ty * .1, .255)], 'mint', (nx, ny, 0))
+    # Mineral line at the water's edge round the inner rim.
+    k.revolve(c, [(.41, .366), (.362, .366)], 'mint', sides=8)
     for x in (.1, .9):
         k.box((x - .05, .45, .0), (x + .05, .55, 1.52), 'frame', skip=('-z',), top='end')
     k.box((.02, .44, 1.32), (.98, .56, 1.42), 'trim')
@@ -473,7 +475,8 @@ def healing_spring():
     # Mint crust terraces round the vent, moss at their outer edge.
     jitter = [rng.uniform(.82, 1.12) for _ in range(10)]
     k.revolve((.5, .52), [(.38, .0), (.34, .04), (.29, .05), (.25, .09), (.17, .1), (.12, .07)], None, sides=10,
-              keys=['moss', 'moss', 'teal', 'teal', 'teal'], wobble=lambda ring, i: jitter[i] if ring < 4 else 1)
+              keys=['moss', 'moss', 'mint', 'sinter', 'mint'],
+              wobble=lambda ring, i: (jitter[i] * (1 + .07 * math.sin(ring * 2.3 + i * 1.3))) if ring < 5 else 1)
     k.cylinder((.5, .52, 0), .11, -.05, .07, 'rockDark', sides=10, caps=(False, False))
     k.disc((.5, .52), .11, -.05, 'rockDark', sides=10)
     return k

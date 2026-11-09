@@ -36,7 +36,7 @@ GLASS = (.77, .02, .98, .23)               # WindowsAtlas plain glass (glows at 
 PORTHOLE = (.755, .255, .995, .495)        # WindowsAtlas round glass in a metal rim
 DARK = (.03, .03, .47, .47)                # WindowsAtlas dark interior (doorways)
 PLASTER = (.02, .02, .98, .98)
-TEAL_FOLK = (.012, .905, .088, .985)       # Details.Folktails plain teal corner
+BANNER_GREEN = (.872, .678, .953, .716)    # Details banner: plain green band (both factions' sheets)
 FORGED = (.01, .01, .99, .99)              # PlanksWithMetal: planks with metal straps
 CORE_PANEL = (.02, .52, .48, .98)          # UnstableCore plain bronze panel
 CRACKED = (.51, .51, .99, .99)             # Blockage cracked dry crust
@@ -53,12 +53,12 @@ def faction_palette(faction):
         f = '.Folktails'
         frame, trim, accent = 'BaseWood_Brown' + f, 'BaseWood_LightBrown' + f, 'BaseWood_Yellow' + f
         planks, planks2 = 'IrregularPlanks_Brown' + f, 'IrregularPlanks_LightBrown' + f
-        roof, teal = 'ThatchedRoof' + f, ('Details' + f, 'whole', TEAL_FOLK, None)
+        roof = 'ThatchedRoof' + f
     elif faction == 'IronTeeth':
         f = '.IronTeeth'
         frame, trim, accent = 'BaseWood_DarkBrown' + f, 'BaseWood_Grey' + f, 'BaseWood_Indigo' + f
         planks, planks2 = 'IrregularPlanks_Grey' + f, 'IrregularPlanks_MetalForged' + f
-        roof, teal = 'RoofPlanks' + f, ('PaintedMetal' + f, 'strip', PAINT_STRIPS, .45)
+        roof = 'RoofPlanks' + f
     else:
         raise ValueError(f'Unknown faction {faction}')
     return {
@@ -81,7 +81,7 @@ def faction_palette(faction):
         'dark': ('WindowsAtlas' + f, 'whole', DARK, None),
         'salt': ('Plaster_White' + f, 'sheet', PLASTER, .6),
         'stone': ('Plaster_White' + f, 'sheet', PLASTER, .9),
-        'teal': teal,
+        'mint': ('Details' + f, 'whole', BANNER_GREEN, None),
         'dirt': ('Dirt', 'explicit', DIRT, None),
     }
 
@@ -102,7 +102,7 @@ COMMON_PALETTE = {
     'grey': ('Blockage', 'sheet', BLOCK_GREY, .55),
     'sinter': ('Plaster_White.IronTeeth', 'sheet', PLASTER, .7),
     'ochre': ('Plaster_Orange.IronTeeth', 'sheet', PLASTER, .7),
-    'teal': ('Details.Folktails', 'whole', TEAL_FOLK, None),
+    'mint': ('Details.Folktails', 'whole', BANNER_GREEN, None),
     'moss': ('Moss.Folktails', 'sheet', PLASTER, .6),
     'dirt': ('Dirt', 'explicit', DIRT, None),
 }
