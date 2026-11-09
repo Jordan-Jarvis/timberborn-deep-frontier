@@ -11,6 +11,9 @@
     <ProjectReference Include="../fluid-api/ModdableFluids.csproj" />
     <ProjectReference Include="../fluid-synthetic-compiled/ModdableFluidsSyntheticCompiled.csproj" />
     <ProjectReference Include="../more-fluids/MoreFluids.csproj" />
+    <ProjectReference Include="../deep-frontier-fluids/DeepFrontier.FluidsGroundwork.csproj" />
+    <!-- Resolved at run time from the game's Managed folder by the native fixture's resolver. -->
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(TimberbornManaged)/UnityEngine.CoreModule.dll" Private="false" />
     <!-- Built, then loaded by path only: the reflection consumer must stay without a compiled API reference. -->
     <ProjectReference Include="../fluid-synthetic-reflection/ModdableFluidsSyntheticReflection.csproj" ReferenceOutputAssembly="false" />
   </ItemGroup>

@@ -31,3 +31,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Fluid API absence Mono probe failed' }
 $runtimeProject = Join-Path $PSScriptRoot 'compile-check/fluid-runtime/ModdableFluids.RuntimePrototype.csproj'
 & dotnet build $runtimeProject --configuration Release --nologo
 if ($LASTEXITCODE -ne 0) { throw 'Fluid scene lifecycle prototype build failed' }
+# Deep Frontier with DEEP_FRONTIER_MODDABLE_FLUIDS (migration groundwork; never shipped) must keep compiling.
+$flaggedProject = Join-Path $PSScriptRoot 'compile-check/deep-frontier-moddable-fluids/DeepFrontierModdableFluidsCompileCheck.csproj'
+& dotnet build $flaggedProject --configuration Release --nologo
+if ($LASTEXITCODE -ne 0) { throw 'Deep Frontier Moddable Fluids build (flagged) failed' }

@@ -12,10 +12,17 @@ namespace DeepFrontier.Scripts.Radiation {
   [Context("Game")]
   public sealed class RadiationConfigurator : Configurator {
     protected override void Configure() {
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+      // Migration groundwork: Moddable Fluids carries and renders the water; the facade serves IRadiationService.
+      // Not runnable yet: the consumers that still inject RadiationSimulation are listed in docs/fluids-native-adapter.md.
+      Bind<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>().AsSingleton();
+      Bind<IRadiationService>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();
+#else
       Bind<RadiationSoil>().AsSingleton();
       Bind<RadiationSimulation>().AsSingleton();
       Bind<IRadiationService>().ToExisting<RadiationSimulation>();
       Bind<RadiationRenderer>().AsSingleton();
+#endif
       Bind<RadiationStorageService>().AsSingleton();
       Bind<MapEdgeSiteValidator>().AsSingleton();
       MultiBind<IBlockObjectValidator>().ToExisting<MapEdgeSiteValidator>();

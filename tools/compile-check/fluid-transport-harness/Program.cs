@@ -284,6 +284,7 @@ try {
   SourceScenarios.Run(Check, Scenario, managed, observations);
   MoreFluidsScenarios.Run(Check, Scenario, observations);
   WorldScenarios.Run(Check, Scenario, managed, specification, observations);
+  DeepFrontierFluidsScenarios.Run(Check, Scenario, managed, specification, observations);
   RegistryScenarios.Run(Check, Scenario, managed, reflectionConsumer, observations);
 
   Directory.CreateDirectory(Path.GetDirectoryName(reportPath)!);

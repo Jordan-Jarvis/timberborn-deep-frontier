@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Deep Frontier's Moddable Fluids migration groundwork without game references, for the fluid harness:
+       radioactive water provider, DeepFrontier.Radiation import, the IRadiationService facade and the soil ledger.
+       The game glue (ModdableFluidsRadiationGame.cs) is compiled only by deep-frontier-moddable-fluids/. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>DeepFrontier.FluidsGroundwork</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../src/DeepFrontier/ModdableFluids/*.cs" />
+    <Compile Include="../../../src/DeepFrontier/Scripts/Radiation/IRadiationService.cs" />
+    <ProjectReference Include="../fluid-api/ModdableFluids.csproj" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(TimberbornManaged)/UnityEngine.CoreModule.dll" Private="false" />
+  </ItemGroup>
+</Project>
