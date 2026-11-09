@@ -12,12 +12,12 @@ namespace ModdableFluids {
   /// Lifecycle: Open (providers register) → Frozen (registry built once) → scenes activate
   /// and unload one at a time. A failed freeze leaves the host Faulted with its report.
   /// </summary>
-  public sealed class ModdableFluidsHost {
+  public sealed partial class ModdableFluidsHost {
     public const int ApiMajor = 0, ApiMinor = 1, ApiPatch = 3;
     public static string ApiVersion => ApiMajor + "." + ApiMinor + "." + ApiPatch;
 
     /// <summary>Capabilities implemented by this contract, in ordinal order. Nothing unimplemented is listed.</summary>
-    public static IReadOnlyList<string> Capabilities { get; } = new ReadOnlyCollection<string>(new[] {
+    public static IReadOnlyList<string> Capabilities { get; } = BuildCapabilities(new[] {
       "ModdableFluids.Discovery.Reflection",
       "ModdableFluids.Persistence.ComponentIdentity",
       "ModdableFluids.Persistence.ProviderState",
@@ -30,7 +30,23 @@ namespace ModdableFluids {
       "ModdableFluids.World.Rules",
       "ModdableFluids.World.Sampling",
       "ModdableFluids.World.SourceComposition"
-    }.OrderBy(c => c, StringComparer.Ordinal).ToArray());
+    });
+
+    // Feature areas in their own files (partial classes) add their capabilities and freeze stages
+    // through these hooks, so each area owns its files: AddExtensionCapabilities lists what an area
+    // implements; the freeze hooks run inside Freeze under the host lock.
+    static partial void AddExtensionCapabilities(List<string> capabilities);
+    partial void BeginFreezeExtensions();
+    partial void CollectExtensions(ProviderEntry entry, FluidRegistration registration, bool failed);
+    partial void ValidateExtensions(IReadOnlyDictionary<string, PendingFluid> fluids, List<string> problems);
+    partial void CommitExtensions(FluidRegistry registry);
+
+    private static IReadOnlyList<string> BuildCapabilities(string[] core) {
+      var list = new List<string>(core);
+      AddExtensionCapabilities(list);
+      if (list.Distinct(StringComparer.Ordinal).Count() != list.Count) throw new InvalidOperationException("A Moddable Fluids capability is listed twice");
+      return new ReadOnlyCollection<string>(list.OrderBy(c => c, StringComparer.Ordinal).ToArray());
+    }
 
     private enum State { Open, Frozen, Faulted }
     private readonly object _gate = new object();
@@ -104,17 +120,21 @@ namespace ModdableFluids {
           accepted.Add(entry);
         }
         accepted.Sort((a, b) => string.CompareOrdinal(a.Id, b.Id));
+        BeginFreezeExtensions();
         var pending = new List<PendingFluid>();
         var pendingSources = new List<PendingSourceType>();
         foreach (var entry in accepted) {
           var registration = new FluidRegistration(entry.Id, entry.Owner, pending, pendingSources);
           int before = pending.Count, sourcesBefore = pendingSources.Count;
+          bool failed = false;
           try { entry.Provider.Register(registration); }
           catch (Exception e) {
+            failed = true;
             pending.RemoveRange(before, pending.Count - before);
             pendingSources.RemoveRange(sourcesBefore, pendingSources.Count - sourcesBefore);
             problems.Add("Provider " + entry.Id + " (mod " + entry.Owner + ") failed during Register: " + e.GetType().Name + ": " + e.Message);
           } finally { registration.Close(); }
+          CollectExtensions(entry, registration, failed);
         }
         var byId = new Dictionary<string, PendingFluid>(StringComparer.Ordinal);
         foreach (var fluid in pending) {
@@ -145,6 +165,7 @@ namespace ModdableFluids {
             false, source.TileCount, source.DefaultStrength, 0f, source.FollowsDrought, source.BadtideContamination, null, false, new string[0], false,
             source.Emitted, source.Schedule, source.TideOverridable));
         }
+        ValidateExtensions(byId, problems);
         if (problems.Count > 0) {
           _fault = new FluidRegistryException(problems);
           _state = State.Faulted;
@@ -162,6 +183,7 @@ namespace ModdableFluids {
         _registry = new FluidRegistry(definitions.ToArray(), infos, sourceTypes.ToArray());
         _providers.Clear(); _providers.AddRange(accepted);
         _rules = _providers.Where(e => e.Rules != null).ToArray();
+        CommitExtensions(_registry);
         _state = State.Frozen;
         return _registry;
       }

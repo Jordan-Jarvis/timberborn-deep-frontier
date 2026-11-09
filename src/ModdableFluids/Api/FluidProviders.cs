@@ -43,7 +43,7 @@ namespace ModdableFluids {
   }
 
   /// <summary>Registration-stage context; valid only during the provider's Register call.</summary>
-  public sealed class FluidRegistration {
+  public sealed partial class FluidRegistration {
     private readonly List<PendingFluid> _fluids;
     private readonly List<PendingSourceType> _sources;
     private bool _closed;
