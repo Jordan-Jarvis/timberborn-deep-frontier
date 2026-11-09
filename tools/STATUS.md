@@ -1,5 +1,13 @@
 # Current development status
 
+## Audit proposals 3 and 4: Reactor Bot skin, Technical School, preview caches (2026-11-09; source validated in mirror `nativeaudit2`, not built or run in game)
+
+- User approved native-safety proposals 2, 3 and 4 (2 goes to the Moddable Fluids agent). No in-game testing until all implementation tasks are done; no Unity build without the coordinator's go-ahead (none run).
+- **C3 skin (`9a53352`):** plating is the body material's native BotURP `_BaseColor` through `CharacterMaterialModifier.SetColor` (`PlatingColor` 0.31/0.32/0.35 while plated, the material's own colour otherwise). Only the HDR glow map is still generated at run time (eyes from the game's emission map, joint seams from the body mesh; unchanged rules and colour): the official graph has no emission colour or seam mask, and an authored mask would be traced from game assets. Removed: two 2K base-map syntheses, their GPU readback and run-time DXT compression, the plating texture swap. Settings `DarkPlating*` -> `PlatingColor` (`tools/super_bots.json` `platingColor`); the generated settings blueprint differs only in that field (written in the mirror by the generator's own `settingsBlueprint`). Checks: compile 0 errors; super_bots, bot_upkeep, workforce_risks, component_lifecycle, editor_guards, native_safety, reactor_bot_workplaces, automation_content, reactor-faction, native-access pass.
+- **C3 Technical School:** evaluated, not changed: every native write it makes is needed for one school teaching one discipline at a time with per-discipline supplies, and the public district route would double-register its need behaviour before the finished state. Options for the user in `docs/native-safety-audit.md` C3 (shared supplies; reuse the Hospital's per-supply patches; keep).
+- **C4 preview caches:** static re-measure on current buildings (Nuclear Reactor 1,694 blocks / 709 occupied / 2,203 wall edges per group, was 6,600 / 2,537 / 8,111) and the last in-game data (build 211: reactor 1,303 → 13.7 ms still with all caches; vanilla Earth Repopulator 44 → 3.5) say all three still pay; kept. The probe now measures each cache alone (`181fa75`, leave-one-out phases, heaviest-first list updated). Queued: `pwsh tools/start_preview_cost.ps1 -Label caches-<build> -All`, then remove any cache whose absence raises no building's median by more than 1 ms.
+- In-game checks: audit "In-game checks needed" (skin look against `outputs/reactor-bot-skin/reactor-bot-glow-sheet.png`; the queued preview probe).
+
 ## Moddable Fluids: world save, save/reload fixture, rendering CPU side, More Fluids design (2026-11-09)
 
 - **User decisions recorded** in [docs/fluids-api-plan.md](../docs/fluids-api-plan.md):

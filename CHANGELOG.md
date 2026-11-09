@@ -13,6 +13,7 @@
 - Loading another save, starting a new game or opening the map editor after playing no longer reuses data left behind by the previous game (building links, the built-in map height and saved-version information), and the developer building-visibility and Teleporter Station fixes no longer depend on game load order.
 - Small performance fixes: the restaurant kitchen's stock check and the construction preview of very large buildings no longer allocate memory on every call.
 - Developer: `docs/native-safety-audit.md` inventories every Harmony patch, reflection, native asset change and simulation hook with its decision; `validate_native_safety.mjs` and `test_native_access.ps1` enforce the rules.
+- Reactor Bots: the dark plating is now the game's own material colour instead of textures rebuilt when the first Reactor Bot appears; only the yellow glow of the eyes and joint seams is still built then, so the one-time hitch is shorter. The plating tones differ slightly from before.
 
 ## 0.10.3 (2026-11-07)
 
