@@ -8,21 +8,31 @@
 #   start_fluid_worker_acceptance.ps1             # two fresh disposable worlds (worker barriers, geometry, intakes)
 #   start_fluid_worker_acceptance.ps1 -SaveReload # one world saved natively, reloaded and compared bit for bit;
 #                                                 # the fixture deletes its settlement through the native repository
-param([int]$TimeoutSeconds = 360, [switch]$SaveReload)
+#   start_fluid_worker_acceptance.ps1 -MoreFluids # an interactive session with Moddable Fluids and More Fluids only
+#                                                 # (build_moddable_fluids.ps1 -MoreFluids keeps both packages); no fixture,
+#                                                 # no acceptance flag. Quit the game to end it; both packages, their
+#                                                 # enablement keys and the PlayerData files are then restored as below.
+param([int]$TimeoutSeconds = 360, [switch]$SaveReload, [switch]$MoreFluids)
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
 $dev = Get-DevEnvironment 'timberbornDocuments'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 if (Get-Process Timberborn -ErrorAction SilentlyContinue) { throw 'Close Timberborn before the disposable worker acceptance run.' }
-if (-not (Test-Path (Join-Path $dev.timberbornDocuments 'Maps/Moddable Fluids Worker Fixture.timber'))) { throw 'Generate the explicit worker fixture first.' }
+if ($MoreFluids -and $SaveReload) { throw '-MoreFluids is an interactive session; it does not combine with the -SaveReload fixture.' }
+# An interactive session lasts as long as the player plays: six hours unless a timeout is given.
+if ($MoreFluids -and -not $PSBoundParameters.ContainsKey('TimeoutSeconds')) { $TimeoutSeconds = 6 * 3600 }
+if (-not $MoreFluids -and -not (Test-Path (Join-Path $dev.timberbornDocuments 'Maps/Moddable Fluids Worker Fixture.timber'))) { throw 'Generate the explicit worker fixture first.' }
 $output = Join-Path $root 'outputs/fluids-api-prototype'
 $mods = Join-Path $dev.timberbornDocuments 'Mods'
 if (Test-Path -LiteralPath (Join-Path $mods 'FluidsApi')) { throw 'The pre-rename FluidsApi development package is still installed; remove it with tools/build_moddable_fluids.ps1 -RemoveLegacyPackage.' }
-$fixtureIds = @('ModdableFluids','ModdableFluidsSyntheticReflection','ModdableFluidsSyntheticCompiled')
+$allPackageIds = @('ModdableFluids','ModdableFluidsSyntheticReflection','ModdableFluidsSyntheticCompiled','MoreFluids')
+$fixtureIds = if ($MoreFluids) { @('ModdableFluids','MoreFluids') } else { @('ModdableFluids','ModdableFluidsSyntheticReflection','ModdableFluidsSyntheticCompiled') }
 $saveSettlements = @('Saves','ExperimentalSaves') | ForEach-Object { Join-Path $dev.timberbornDocuments "$_/Moddable Fluids Save Acceptance" }
 foreach ($settlement in $saveSettlements) { if (Test-Path -LiteralPath $settlement) { throw "$settlement already exists; the save fixture owns that settlement and must start without it." } }
 foreach ($id in $fixtureIds) {
-  if (-not (Test-Path -LiteralPath (Join-Path $output "packages/$id/version-1.1/Scripts/$id.dll"))) { throw "Missing kept package $id; run tools/build_moddable_fluids.ps1 -SyntheticFixtures" }
+  if (-not (Test-Path -LiteralPath (Join-Path $output "packages/$id/version-1.1/Scripts/$id.dll"))) { throw "Missing kept package $id; run tools/build_moddable_fluids.ps1 $(if ($MoreFluids) { '-MoreFluids' } else { '-SyntheticFixtures' })" }
+}
+foreach ($id in $allPackageIds) {
   if (Test-Path -LiteralPath (Join-Path $mods $id)) { throw "$id is already in the Mods folder; it must be installed only by this launcher." }
 }
 $backup = Join-Path $output ('profile-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
@@ -38,21 +48,22 @@ foreach ($name in $profileFiles) {
   }
 }
 $prefsPath = 'HKCU:\Software\Mechanistry\Timberborn'
-$ownedKeys = '^Mod(Enabled|Priority)\..*\.(ModdableFluids|ModdableFluidsSyntheticReflection|ModdableFluidsSyntheticCompiled)_h\d+$'
+$ownedKeys = '^Mod(Enabled|Priority)\..*\.(ModdableFluids|ModdableFluidsSyntheticReflection|ModdableFluidsSyntheticCompiled|MoreFluids)_h\d+$'
 $prefs = Get-Item -LiteralPath $prefsPath
 $flags = @{}
-foreach ($name in $prefs.GetValueNames() | Where-Object { $_ -match '^ModEnabled\..*\.(DeepFrontier|ModdableFluids|ModdableFluidsSyntheticReflection|ModdableFluidsSyntheticCompiled)_h\d+$' }) {
+foreach ($name in $prefs.GetValueNames() | Where-Object { $_ -match '^ModEnabled\..*\.(DeepFrontier|ModdableFluids|ModdableFluidsSyntheticReflection|ModdableFluidsSyntheticCompiled|MoreFluids)_h\d+$' }) {
   $flags[$name] = [int]$prefs.GetValue($name)
 }
 @{ playerDataHashes=$hashes; modFlags=$flags } | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $backup 'original.json')
-$log = Join-Path $output 'worker-game.log'
+$log = Join-Path $output $(if ($MoreFluids) { 'more-fluids-game.log' } else { 'worker-game.log' })
 $report = Join-Path $output 'worker-report.json'
 $ownedProcess = $null
 $installedFixtures = @()
 try {
   # Existing keys only: a mod without a key is enabled by default (ModPlayerPrefsHelper.IsModEnabled).
   foreach ($name in $flags.Keys) {
-    $enabled = if ($name -match '\.(ModdableFluids|ModdableFluidsSyntheticReflection|ModdableFluidsSyntheticCompiled)_h\d+$') { 1 } else { 0 }
+    # The installed packages on; Deep Frontier (whose lockstep patches conflict with the shared transport) and any package not in this run off.
+    $enabled = if ($fixtureIds | Where-Object { $name -match ('\.' + $_ + '_h\d+$') }) { 1 } else { 0 }
     Set-ItemProperty -LiteralPath $prefsPath -Name $name -Value $enabled
   }
   foreach ($id in $fixtureIds) {
@@ -60,9 +71,9 @@ try {
     $installedFixtures += $id
   }
   if (Test-Path -LiteralPath $report) { Remove-Item -LiteralPath $report }
-  $gameArguments = @('-moddableFluidsWorkerAcceptance')
+  $gameArguments = if ($MoreFluids) { @() } else { @('-moddableFluidsWorkerAcceptance', '-moddableFluidsReport', ('"'+$report+'"')) }
   if ($SaveReload) { $gameArguments += '-moddableFluidsSaveAcceptance' }
-  $launch = @(& (Join-Path $PSScriptRoot 'launch_timberborn.ps1') -Arguments ($gameArguments + @('-moddableFluidsReport',('"'+$report+'"'),'-logFile',('"'+$log+'"'))))
+  $launch = @(& (Join-Path $PSScriptRoot 'launch_timberborn.ps1') -Arguments ($gameArguments + @('-logFile',('"'+$log+'"'))))
   $launch | Write-Output
   # Wait on the exact process the launch started. A Process object found later by name or id
   # has no handle, and .NET then cannot report its exit code once it exits (the 2026-11-09 run
@@ -79,6 +90,10 @@ try {
   # No fallback: without an exit code the run cannot distinguish a clean quit from a crash.
   if ($null -eq $exitCode) { throw "The acceptance game's exit code is unavailable although its handle was held. See $log" }
   if ($exitCode -ne 0) { throw "Acceptance game exited with $exitCode. See $log" }
+  if ($MoreFluids) {
+    Write-Output "More Fluids session ended normally. The game log ($log) holds the Moddable Fluids attach report; nothing here verifies gameplay."
+    return
+  }
   if (-not (Test-Path -LiteralPath $report)) { throw "Acceptance did not produce its report. See $log" }
   $result = Get-Content -LiteralPath $report -Raw | ConvertFrom-Json
   if ($result.status -ne 'passed' -or $result.scenesAttached -ne 2 -or $result.scenesDetached -ne 2) { throw 'Worker acceptance report did not pass two scene lifecycles.' }
@@ -100,7 +115,7 @@ try {
   foreach ($id in $installedFixtures) { Remove-Item -LiteralPath (Join-Path $mods $id) -Recurse -Force }
   # A failed save run may leave the disposable settlement; it did not exist before this run.
   foreach ($settlement in $saveSettlements) { if (Test-Path -LiteralPath $settlement) { Remove-Item -LiteralPath $settlement -Recurse -Force; Write-Output "Removed the disposable settlement $settlement" } }
-  foreach ($id in $fixtureIds) { if (Test-Path -LiteralPath (Join-Path $mods $id)) { throw "Fixture $id is still installed." } }
+  foreach ($id in $allPackageIds) { if (Test-Path -LiteralPath (Join-Path $mods $id)) { throw "Package $id is still installed." } }
   foreach ($name in $flags.Keys) { Set-ItemProperty -LiteralPath $prefsPath -Name $name -Value $flags[$name] }
   foreach ($name in (Get-Item -LiteralPath $prefsPath).GetValueNames()) {
     if ($flags.ContainsKey($name)) { continue }
@@ -113,5 +128,5 @@ try {
       if ((Get-FileHash -LiteralPath $path).Hash -ne $hashes[$name]) { throw "Profile restoration hash mismatch: $name" }
     } elseif (Test-Path -LiteralPath $path) { Remove-Item -LiteralPath $path }
   }
-  Write-Output 'Moddable Fluids and fixture packages removed; original Deep Frontier/API enablement and PlayerData files restored; hashes verified.'
+  Write-Output "Packages removed ($($fixtureIds -join ', ')); original Deep Frontier/API enablement and PlayerData files restored; hashes verified."
 }
