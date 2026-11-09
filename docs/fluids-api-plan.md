@@ -141,7 +141,7 @@ Save selected weather identity, duration, cooldown history, and the settings use
 
 #### Combined tide-selection proposal
 
-This is a proposal; the user has not chosen a policy. The [extraction inventory](fluids-extraction-inventory.md#8-tide-selection-as-implemented) records the current behaviour, and [model_tide_selection.py](../tools/model_tide_selection.py) computes the figures below. That script is an exact Markov model of two installed rules: the native `HazardousWeatherRandomizer`, whose badtide chance changes with the current streak (and a tide in the history counts as a non-badtide streak), and Deep Frontier's one-cycle tide cooldown. Its output is `outputs/fluids-api-prototype/tide-policy-model.json`.
+The comparison below led to the user's decision, recorded after it: policy C′. The [extraction inventory](fluids-extraction-inventory.md#8-tide-selection-as-implemented) records the current behaviour, and [model_tide_selection.py](../tools/model_tide_selection.py) computes the figures below. That script is an exact Markov model of two installed rules: the native `HazardousWeatherRandomizer`, whose badtide chance changes with the current streak (and a tide in the history counts as a non-badtide streak), and Deep Frontier's one-cycle tide cooldown. Its output is `outputs/fluids-api-prototype/tide-policy-model.json`.
 
 Inputs:
 
@@ -178,7 +178,7 @@ Policy B is the simplest, but its shares can exceed one when several tide mods a
 
 Policies C and C′ keep the game's total hazard close to the single-content difficulty. C′ matches it exactly, at 20 percent. The cost is that installing More Fluids halves how often the Deep Frontier tide appears.
 
-Policy D is the recommendation. It reproduces vanilla and Deep Frontier exactly when they are alone, never exceeds 100 percent, does not depend on order, and composes for any number of tides. Combined, each tide appears close to its advertised rate (18.4 percent against 20). The total tide rate grows as 1 − Π(1 − cᵢ), and each tide's per-save chance setting stays the player's control over difficulty.
+Policy D was the original recommendation (superseded by the user's choice of C′ below). It reproduces vanilla and Deep Frontier exactly when they are alone, never exceeds 100 percent, does not depend on order, and composes for any number of tides. Combined, each tide appears close to its advertised rate (18.4 percent against 20). The total tide rate grows as 1 − Π(1 − cᵢ), and each tide's per-save chance setting stays the player's control over difficulty.
 
 To implement D:
 
@@ -189,14 +189,7 @@ To implement D:
 
 If the user prefers constant difficulty, choose C′.
 
-**Decision (user, 2026-11-09: "define hazard chances").** Each tide's chance is defined explicitly, both in its data and as a per-save row on the new-game screen, like Deep Frontier's radioactive tide rows. The combined selection honours every defined chance with independent rolls and a weighted pick when several succeed. That is policy D, with the per-tide chances visible to the player.
-
-- Vanilla-only and single-tide games keep their current probabilities.
-- The total tide rate is the visible consequence of the chances the player sets.
-- Each tide's own cooldown, earliest cycle and duration remain per-tide settings.
-- The Moddable Weathers adapter converts the same per-tide chances to weights once, for all registered tides.
-
-If "define hazard chances" was meant as one shared hazard budget that the defined chances divide, the policy would be C′ instead. The implementation keeps the selection rule in one function, so switching it does not change tide registration.
+**Decision (user, 2026-11-09, revised): policy C′, a shared hazard budget.** The first reading of "define hazard chances" as policy D was corrected: tides split one shared hazard budget, so installing more tide mods does not make games harder, and vanilla-only and Deep-Frontier-only games stay exactly as today. The budget defaults to the largest installed tide chance for the mode; each tide's weight defaults to its own chance; no tide runs in the cycle after any tide. The budget and each tide's weight are rows on the new-game screen. Implemented in Moddable Fluids 0.1.4 ([fluids-tides.md](fluids-tides.md)); the harness reproduces the Markov model in [model_tide_selection.py](../tools/model_tide_selection.py) to 1e-9, and a single installed tide makes exactly Deep Frontier's random draws.
 
 ## Saves and version compatibility
 
@@ -311,6 +304,6 @@ Status on 2026-11-09:
    - a last-completed-tick snapshot for exception saves.
 
    [Shared rendering](fluids-native-adapter.md#shared-rendering) has the details.
-5. **Groundwork: Deep Frontier migration and More Fluids content.** API patch releases added what both need: source types (0.1.1), the world service (0.1.2), and legacy import and column rules (0.1.3); see the [contract](fluids-api-contract.md). The [Deep Frontier groundwork](fluids-native-adapter.md#deep-frontier-migration-groundwork) (radioactive water and springs as a provider, the version 2/3 importer, decay and cutoff rules, the `IRadiationService` facade) compiles behind `DEEP_FRONTIER_MODDABLE_FLUIDS` and passes the harness; the shipped package is unchanged, and the flagged build is not runnable until the listed consumers and the soil exchange move. The More Fluids package skeleton registers coffee, saltwater and healing water and the geyser and healing-spring source types with provisional numbers from the [design proposal](more-fluids-design.md), which still awaits the user's numbers. Still to build for More Fluids gameplay: intake conversion and refusal, tide registration, exposure, then irrigation.
+5. **Built, not yet run in game: Moddable Fluids 0.1.4, More Fluids, and the Deep Frontier migration.** 0.1.4 adds per-tick loss reports, single-fluid extraction, water-intake and irrigation policies, placed sources applied by blueprint, ordinary-play activation (only when an extra fluid is registered; foreign patches refused), exception-save snapshots, visibility curves, and tides with the shared budget and legacy tide-state import ([contract](fluids-api-contract.md), [tides](fluids-tides.md)). More Fluids has its approved content: the Fluid Extractor, Desalinator and buildable Healing Spring for both factions, the Healing Spring and Geyser map objects, the Coffee and Salt tides, healing exposure, pump and irrigation rules, art in each faction's vanilla style, and official packaging ([design](more-fluids-design.md)). Deep Frontier's migration is complete behind `DEEP_FRONTIER_MODDABLE_FLUIDS` ([migration](deep-frontier-fluids-migration.md)); the shipped package is unchanged and switches only after the in-game gates pass.
 
-Decided on 2026-11-09: the foundation name (Moddable Fluids), the first pack contents (coffee, saltwater and healing water), and the tide policy (explicit per-tide chances with independent rolls). Still open: the user's approval of the proposed More Fluids numbers, and later oil/lava gameplay details. Storage layout, transport equations, renderer data format, and terrain solidification remain engineering decisions to resolve with the corresponding prototypes.
+Decided on 2026-11-09: the foundation name (Moddable Fluids), the first pack contents (coffee, saltwater and healing water) and their numbers, the tide policy (C′, a shared hazard budget), the geyser, a player-buildable Healing Spring, and vanilla faction style for More Fluids art. Still open: the questions listed in tools/STATUS.md for this release, and later oil/lava gameplay details. Storage layout, transport equations, renderer data format, and terrain solidification remain engineering decisions to resolve with the corresponding prototypes.
