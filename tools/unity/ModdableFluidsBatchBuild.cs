@@ -32,8 +32,8 @@ namespace Timberborn.ModdingTools.ModBuilding {
       var all = new ModFinder().GetAllMods().ToArray();
       foreach (string name in names) {
         var mod = all.Single(value => value.Name == name);
-        // Only the API has Unity assets: the shared-rendering shader variants. More Fluids ships its Data folder, which the
-        // official AssetsCopier copies as authored (tools/build_moddable_fluids.ps1 compares it file by file).
+        // Only the API has Unity assets: the shared-rendering shader variants. More Fluids ships its Data, which the
+        // official AssetsCopier copies as authored into the package root (tools/build_moddable_fluids.ps1 compares it file by file).
         bool bundles = name == "ModdableFluids";
         var settings = new ModBuilderSettings(buildCode: true, buildWindowsAssetBundle: bundles,
           buildMacAssetBundle: bundles, deleteFiles: true, buildZipArchive: false, compatibilityVersion: "1.1");
@@ -42,8 +42,9 @@ namespace Timberborn.ModdingTools.ModBuilding {
         var expected = name == "ModdableFluids" ? ApiAssemblies : new[] { name };
         foreach (string assembly in expected)
           if (!File.Exists(Path.Combine(directory, "Scripts", assembly + ".dll"))) throw new InvalidOperationException("Official package " + name + " lacks " + assembly);
-        if (name == "MoreFluids" && !File.Exists(Path.Combine(directory, "Data", "Localizations", "enUS.csv")))
-          throw new InvalidOperationException("Official package MoreFluids lacks its Data folder");
+        // The official AssetsCopier copies Data's contents into the package root (as in Deep Frontier's package).
+        if (name == "MoreFluids" && !File.Exists(Path.Combine(directory, "Localizations", "enUS.csv")))
+          throw new InvalidOperationException("Official package MoreFluids lacks its Data (Localizations/enUS.csv at the package root)");
         // The official bundle builder does not propagate a failed BuildAssetBundles result.
         if (bundles)
           foreach (var platform in new[] { "win", "mac" }) {

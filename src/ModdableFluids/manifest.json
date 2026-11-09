@@ -1,6 +1,6 @@
 {
   "Name": "Moddable Fluids Prototype",
-  "Version": "0.0.1.0",
+  "Version": "0.1.4.0",
   "Id": "ModdableFluids",
   "MinimumGameVersion": "1.1.2.8",
   "Description": "Shared multi-fluid transport for other mods. Attaches to a game only when another mod registers a fluid; otherwise native water is untouched. Development prototype.",

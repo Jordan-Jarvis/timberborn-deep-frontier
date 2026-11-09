@@ -134,12 +134,16 @@ function MoreFluidsArt {
   foreach ($path in @($paths)) { if ($path.EndsWith('.png')) { [void]$paths.Add($path + '.meta.json') } }
   @($paths)
 }
-# The authored Data, file by file (Data-relative path to SHA-256); Unity's .meta files are not part of it.
-function DataHashes([string]$folder) {
+# The authored Data, file by file (Data-relative path to SHA-256); Unity's .meta files are not part of it. The official
+# AssetsCopier copies Data's contents into the package root, so a package is read from its root without the top-level
+# names in $exclude (its manifest and Scripts).
+function DataHashes([string]$folder, [string[]]$exclude = @()) {
   $hashes = [ordered]@{}
   $full = (Resolve-Path -LiteralPath $folder).Path.TrimEnd([IO.Path]::DirectorySeparatorChar)
   foreach ($file in Get-ChildItem -LiteralPath $folder -File -Recurse | Where-Object Extension -ne '.meta' | Sort-Object FullName) {
-    $hashes[$file.FullName.Substring($full.Length + 1).Replace([IO.Path]::DirectorySeparatorChar, '/')] = (Get-FileHash -LiteralPath $file.FullName).Hash
+    $relative = $file.FullName.Substring($full.Length + 1).Replace([IO.Path]::DirectorySeparatorChar, '/')
+    if ($relative.Split('/')[0] -in $exclude) { continue }
+    $hashes[$relative] = (Get-FileHash -LiteralPath $file.FullName).Hash
   }
   $hashes
 }
@@ -178,6 +182,22 @@ $method = if ($SyntheticFixtures -and $MoreFluids) { 'BuildWithSyntheticFixtures
 $process = Start-Process -FilePath $dev.unity -WindowStyle Hidden -PassThru -ArgumentList @(
   '-batchmode','-nographics','-quit','-disable-assembly-updater','-projectPath',('"'+$project+'"'),
   '-executeMethod',"Timberborn.ModdingTools.ModBuilding.ModdableFluidsBatchBuild.$method",'-logFile',('"'+$log+'"'))
+# From here on the builder may have installed packages into Mods. Any failure moves every package this build
+# produces out of Mods (into outputs/fluids-api-prototype/failed-build/<time>) before rethrowing, so nothing stays installed.
+$builtIds = @('ModdableFluids') + $(if ($SyntheticFixtures) { $fixtures | ForEach-Object { $_.Id } } else { @() }) + $(if ($MoreFluids) { @('MoreFluids') } else { @() })
+function Evacuate {
+  $failed = Join-Path $output ('failed-build/' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+  foreach ($id in $builtIds) {
+    $left = Join-Path $mods $id
+    if (-not (Test-Path -LiteralPath $left)) { continue }
+    $manifestPath = @(Get-ChildItem -LiteralPath $left -Filter 'manifest.json' -Recurse -File | Select-Object -First 1)
+    if ($manifestPath.Count -ne 1 -or (Get-Content -LiteralPath $manifestPath[0].FullName -Raw | ConvertFrom-Json).Id -ne $id) { Write-Warning "$left is not this build's $id package; left in place."; continue }
+    New-Item -ItemType Directory -Force -Path $failed | Out-Null
+    Move-Item -LiteralPath $left -Destination (Join-Path $failed $id)
+    if (Test-Path -LiteralPath $left) { Write-Warning "$id is STILL installed at $left; remove it by hand." } else { Write-Warning "Moved the failed build's $id out of Mods to $failed" }
+  }
+}
+try {
 $process.WaitForExit()
 if ($process.ExitCode -ne 0) { throw "Official Moddable Fluids build failed. See $log" }
 $installed = Package 'ModdableFluids'
@@ -211,14 +231,16 @@ if ($SyntheticFixtures) {
 if ($MoreFluids) {
   $moreFluidsPackage = Package 'MoreFluids'
   $hashes = Verify 'MoreFluids' $moreFluidsPackage (Join-Path $moreFluidsSource 'manifest.json') @('MoreFluids.dll')
-  # The package's Data is exactly the authored Data, art included; nothing else ships beside it.
+  # The package root holds exactly the authored Data (art included) beside its manifest and Scripts.
   $expectedData = DataHashes $moreFluidsData
-  $packagedData = DataHashes (Join-Path $moreFluidsPackage 'Data')
+  $packagedData = DataHashes $moreFluidsPackage @('manifest.json','Scripts')
   $differences = @(@($expectedData.Keys) + @($packagedData.Keys) | Sort-Object -Unique | Where-Object { $expectedData[$_] -ne $packagedData[$_] })
   if ($differences.Count -ne 0) { throw "Official More Fluids package Data differs from src/MoreFluids/Data:`n  " + ($differences -join "`n  ") }
-  $extra = @(Get-ChildItem -LiteralPath $moreFluidsPackage | Where-Object Name -notin @('manifest.json','Scripts','Data'))
-  if ($extra.Count -ne 0) { throw "Official More Fluids package holds more than manifest, Scripts and Data: $($extra.Name -join ', ')" }
+  $allowed = @('manifest.json','Scripts') + @(Get-ChildItem -LiteralPath $moreFluidsData | Select-Object -ExpandProperty Name)
+  $extra = @(Get-ChildItem -LiteralPath $moreFluidsPackage | Where-Object Name -notin $allowed)
+  if ($extra.Count -ne 0) { throw "Official More Fluids package holds more than its manifest, Scripts and Data: $($extra.Name -join ', ')" }
   $report.moreFluids = [ordered]@{ package=(Keep 'MoreFluids'); assemblies=$hashes; dataFiles=$expectedData.Count; art=@(MoreFluidsArt).Count }
 }
 $report | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $output 'package-report.json')
+} catch { Evacuate; throw }
 Write-Output "Official Moddable Fluids packages verified and kept out of the Mods folder under $(Join-Path $output 'packages'). Log: $log"

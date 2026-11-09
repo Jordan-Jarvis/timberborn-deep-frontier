@@ -1,8 +1,8 @@
 {
   "Name": "More Fluids (development)",
-  "Version": "0.0.1.0",
+  "Version": "0.1.0.0",
   "Id": "MoreFluids",
   "MinimumGameVersion": "1.1.2.8",
   "Description": "Coffee, saltwater and healing water for Moddable Fluids: a Fluid Extractor, a Desalinator, a buildable Healing Spring, Healing Spring and Geyser map objects, and the Coffee and Salt tides. For Folktails and Iron Teeth.",
-  "RequiredMods": [{ "Id": "ModdableFluids", "MinimumVersion": "0.0.1" }]
+  "RequiredMods": [{ "Id": "ModdableFluids", "MinimumVersion": "0.1.4" }]
 }
