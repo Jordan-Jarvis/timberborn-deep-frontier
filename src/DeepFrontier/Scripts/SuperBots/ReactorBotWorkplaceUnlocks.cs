@@ -93,22 +93,26 @@ namespace DeepFrontier.Scripts.SuperBots {
   // singletons are still loading (SingletonLifecycleService.LoadAll: every
   // Load, then the entities, then every PostLoad), and the callbacks run when
   // a panel is shown or updated, after all of it. Nothing here needs a Load.
+  // Reactor Bots are Iron Teeth only (ReactorBotSettings.AppliesToFaction):
+  // for another faction the option cannot be unlocked or chosen.
   internal sealed class ReactorBotWorkplaceUi {
     private static readonly string TooltipLocKey="DeepFrontier.WorkerType.ReactorBot";
     private static readonly string LockedTooltipLocKey="DeepFrontier.WorkerType.ReactorBot.Unlock.Tooltip";
 
     private readonly ReactorBotWorkplaceUnlocks _unlocks;
     private readonly ReactorBotWorkplaceSettings _settings;
+    private readonly ReactorBotSettings _bots;
     private readonly WorkplaceUnlockingDialogService _nativeUnlocks;
     private readonly VisualElementLoader _elements;
     private readonly ILoc _loc;
     private readonly Phrase _scienceCostPhrase=Phrase.New().FormatCompact(); // as native WorkerTypeToggle
 
-    public ReactorBotWorkplaceUi(ReactorBotWorkplaceUnlocks unlocks, ReactorBotWorkplaceSettings settings,
+    public ReactorBotWorkplaceUi(ReactorBotWorkplaceUnlocks unlocks, ReactorBotWorkplaceSettings settings, ReactorBotSettings bots,
       WorkplaceUnlockingDialogService nativeUnlocks, VisualElementLoader elements, ILoc loc) {
-      _unlocks=unlocks;_settings=settings;_nativeUnlocks=nativeUnlocks;_elements=elements;_loc=loc;
+      _unlocks=unlocks;_settings=settings;_bots=bots;_nativeUnlocks=nativeUnlocks;_elements=elements;_loc=loc;
     }
 
+    public bool Applies=>_bots.AppliesToFaction;
     public Color IconTint=>_settings.WorkplaceColor;
     public string DisplayName=>_loc.T(TooltipLocKey);
 
@@ -118,9 +122,11 @@ namespace DeepFrontier.Scripts.SuperBots {
       return workplace;
     }
 
-    // Reactor Bot button: never unclickable (every workplace may take Reactor Bots).
+    // Reactor Bot button: unclickable only outside Iron Teeth (every Iron Teeth
+    // workplace may take Reactor Bots).
     public SliderToggleState ReactorState(ReactorBotWorkplace workplace)=>
-      !workplace.Unlocked?SliderToggleState.Locked:workplace.ReactorMode?SliderToggleState.Active:SliderToggleState.None;
+      !Applies?SliderToggleState.Unclickable
+      :!workplace.Unlocked?SliderToggleState.Locked:workplace.ReactorMode?SliderToggleState.Active:SliderToggleState.None;
 
     public TooltipContent ReactorTooltip(ReactorBotWorkplace workplace)=>workplace.Unlocked
       ?TooltipContent.Create(()=>DisplayName)
@@ -135,6 +141,7 @@ namespace DeepFrontier.Scripts.SuperBots {
     }
 
     public void SelectReactor(ReactorBotWorkplace workplace) {
+      if(!Applies)return; // as SelectBot: the hotkey selects disabled buttons too
       if(workplace.Unlocked)workplace.Enable();
       else _unlocks.TryUnlock(workplace,workplace.Enable);
     }

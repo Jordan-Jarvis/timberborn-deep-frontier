@@ -70,7 +70,7 @@ namespace DeepFrontier.Scripts.SuperBots {
 
     public FrontierReactorBotSettingsSpec Spec { get; private set; }
     public Color IlluminationColor { get; private set; }
-    public bool AppliesToFaction => _factions.Current.Id == "IronTeeth";
+    public bool AppliesToFaction => DeepFrontierFaction.Applies(_factions);
 
     public ReactorBotSettings(ISpecService specs, FactionNeedService needs, IlluminationService illumination, FactionService factions) {
       _specs=specs;_needs=needs;_illumination=illumination;_factions=factions;

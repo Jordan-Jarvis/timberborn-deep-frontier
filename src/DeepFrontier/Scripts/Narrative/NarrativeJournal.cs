@@ -6,6 +6,7 @@ using Bindito.Core;
 using Timberborn.BaseComponentSystem;
 using Timberborn.CoreUI;
 using Timberborn.EntityPanelSystem;
+using Timberborn.GameFactionSystem;
 using Timberborn.Goods;
 using Timberborn.Localization;
 using Timberborn.SingletonSystem;
@@ -203,15 +204,22 @@ namespace DeepFrontier.Scripts.Narrative {
   internal sealed class HumanRecordCachePanel : BaseEntityPanelFragment<HumanRecordCache> {
     private readonly ILoc _loc;
     private readonly IGoodService _goods;
+    private readonly FactionService _factions;
     private Label _state,_reward;
-    public HumanRecordCachePanel(ILoc loc,IGoodService goods) {_loc=loc;_goods=goods;}
+    public HumanRecordCachePanel(ILoc loc,IGoodService goods,FactionService factions) {_loc=loc;_goods=goods;_factions=factions;}
 
     protected override void InitializePanel() {
       panel.AddGameLabel(_loc.T("Narrative.Cache.Title"),bold:true);
       _state=Wrapped();_reward=Wrapped();
     }
     private Label Wrapped() {var label=panel.AddGameLabel();label.style.whiteSpace=WhiteSpace.Normal;return label;}
-    public override void ShowFragment(BaseComponent entity) {base.ShowFragment(entity);UpdateFragment();}
+    public override void ShowFragment(BaseComponent entity) {
+      base.ShowFragment(entity);
+      // The cache's reward is an Iron Teeth good (DeepFrontierFaction); another
+      // faction playing a map with caches has no such good and no narrative.
+      if(component&&!DeepFrontierFaction.Applies(_factions)) {ClearFragment();return;}
+      UpdateFragment();
+    }
 
     public override void UpdateFragment() {
       if(!component)return;

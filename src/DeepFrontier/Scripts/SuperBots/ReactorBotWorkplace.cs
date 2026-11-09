@@ -239,6 +239,7 @@ namespace DeepFrontier.Scripts.SuperBots {
     }
 
     public void Set(bool enabled) {
+      if(enabled&&!Ui.Applies)return; // Reactor Bots are Iron Teeth only (ReactorBotWorkplaceUi.Applies)
       _enabled=enabled;
       if(enabled)_native.SetWorkerType(WorkerTypeHelper.BotWorkerType);
     }

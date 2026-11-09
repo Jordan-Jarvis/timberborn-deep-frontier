@@ -5,6 +5,7 @@ using Bindito.Core;
 using Timberborn.CoreUI;
 using Timberborn.BlueprintSystem;
 using Timberborn.EntitySystem;
+using Timberborn.GameFactionSystem;
 using Timberborn.Localization;
 using Timberborn.Persistence;
 using Timberborn.SingletonSystem;
@@ -21,6 +22,7 @@ namespace DeepFrontier.Scripts.MapSetup {
 
   // Inspect the world after new-game placement, never modify an established save.
   // Empty sources still count: their native recovery timer makes them usable again.
+  // Iron Teeth only (DeepFrontierFaction): the sources serve Iron Teeth buildings.
   internal sealed class MineralMapNotice : ILoadableSingleton, ISaveableSingleton, IUpdatableSingleton {
     private static readonly SingletonKey Key = new("DeepFrontier.MineralMapNotice");
     private static readonly PropertyKey<bool> ShownKey = new("Shown");
@@ -32,17 +34,18 @@ namespace DeepFrontier.Scripts.MapSetup {
     private readonly EventBus _events;
     private readonly DialogBoxShower _dialogs;
     private readonly ILoc _loc;
+    private readonly FactionService _factions;
     private bool _shown, _ready, _checked;
     private int _frames;
 
     public MineralMapNotice(ISingletonLoader loader, EntityRegistry entities, TemplateNameMapper templates,
-        EventBus events, DialogBoxShower dialogs, ILoc loc, ISpecService specs, BuiltinMapSetup setup) {
+        EventBus events, DialogBoxShower dialogs, ILoc loc, ISpecService specs, BuiltinMapSetup setup, FactionService factions) {
       _loader=loader; _entities=entities; _templates=templates; _events=events; _dialogs=dialogs; _loc=loc;
-      _specs=specs; _setup=setup;
+      _specs=specs; _setup=setup; _factions=factions;
     }
     public void Load() {
       if(_loader.TryGetSingleton(Key,out var saved)) _shown=saved.Get(ShownKey);
-      if(!_shown) _events.Register(this);
+      if(!_shown && DeepFrontierFaction.Applies(_factions)) _events.Register(this);
     }
     public void Save(ISingletonSaver saver) => saver.GetSingleton(Key).Set(ShownKey,_shown);
     [OnEvent]

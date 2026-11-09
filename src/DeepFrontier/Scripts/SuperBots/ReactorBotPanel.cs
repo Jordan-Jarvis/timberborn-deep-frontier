@@ -23,7 +23,12 @@ namespace DeepFrontier.Scripts.SuperBots {
       _cancel=panel.AddGameButton(_loc.T("DeepFrontier.ReactorBot.Panel.Cancel"),()=>{if(component)component.Cancel();UpdateFragment();});
     }
     private Label Wrapped() {var label=panel.AddGameLabel();label.style.whiteSpace=WhiteSpace.Normal;return label;}
-    public override void ShowFragment(BaseComponent entity) {base.ShowFragment(entity);UpdateFragment();}
+    public override void ShowFragment(BaseComponent entity) {
+      base.ShowFragment(entity);
+      // Other factions' bots have no Reactor Bot needs and no retrofit to offer.
+      if(component&&!component.Applies) {ClearFragment();return;}
+      UpdateFragment();
+    }
 
     public override void UpdateFragment() {
       if(!component)return;

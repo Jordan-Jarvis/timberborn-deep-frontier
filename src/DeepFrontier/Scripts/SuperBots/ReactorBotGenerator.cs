@@ -25,7 +25,8 @@ namespace DeepFrontier.Scripts.SuperBots {
   // path the Bot Assembler's Reactor bot recipe uses: the birth is announced
   // on ReactorBotAssemblyLine, the native factory creates and initializes the
   // ordinary bot, ReactorBot.InitializeEntity takes the birth (Reactor state,
-  // reactor needs full), and Settle requires that it did.
+  // reactor needs full), and Settle requires that it did. Reactor Bots are
+  // Iron Teeth only (ReactorBot.Applies): another faction's click spawns nothing.
   internal sealed class ReactorBotGeneratorTool : IDevModeTool, ITool, IInputProcessor {
     private static readonly string CursorKey="BeaverAvatarCursor"; // native BotGeneratorTool
     private static readonly string SpawnManyCharactersKey="SpawnManyCharacters"; // native BotGeneratorTool
@@ -33,15 +34,16 @@ namespace DeepFrontier.Scripts.SuperBots {
 
     private readonly BotFactory _botFactory;
     private readonly ReactorBotAssemblyLine _line;
+    private readonly ReactorBotSettings _settings;
     private readonly InputService _inputService;
     private readonly CursorService _cursorService;
     private readonly CursorCoordinatesPicker _cursorCoordinatesPicker;
 
     public bool IsDevMode=>true;
 
-    public ReactorBotGeneratorTool(BotFactory botFactory, ReactorBotAssemblyLine line, InputService inputService,
+    public ReactorBotGeneratorTool(BotFactory botFactory, ReactorBotAssemblyLine line, ReactorBotSettings settings, InputService inputService,
       CursorService cursorService, CursorCoordinatesPicker cursorCoordinatesPicker) {
-      _botFactory=botFactory;_line=line;_inputService=inputService;_cursorService=cursorService;_cursorCoordinatesPicker=cursorCoordinatesPicker;
+      _botFactory=botFactory;_line=line;_settings=settings;_inputService=inputService;_cursorService=cursorService;_cursorCoordinatesPicker=cursorCoordinatesPicker;
     }
 
     public bool ProcessInput() {
@@ -63,6 +65,10 @@ namespace DeepFrontier.Scripts.SuperBots {
     }
 
     private void PlaceBots(int count) {
+      if(!_settings.AppliesToFaction) {
+        Debug.LogWarning("[DeepFrontier] Reactor Bot generator: Reactor Bots are Iron Teeth only; no bot spawned");
+        return;
+      }
       var picked=_cursorCoordinatesPicker.Pick();
       if(!picked.HasValue)return;
       var position=CoordinateSystem.GridToWorldCentered(picked.Value.TileCoordinates);

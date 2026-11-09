@@ -11,6 +11,7 @@ using Timberborn.Coordinates;
 using Timberborn.CoreUI;
 using Timberborn.EntitySystem;
 using Timberborn.ErrorReporting;
+using Timberborn.GameFactionSystem;
 using Timberborn.GameSceneLoading;
 using Timberborn.Goods;
 using Timberborn.Localization;
@@ -52,6 +53,9 @@ namespace DeepFrontier.Scripts.MapSetup {
   //     reported in a dialog.
   //   - Small maps (BuiltinMapSpec.Small: below the area threshold, or no Deep Mine site) and maps
   //     with unmet loop items get a one-time dialog.
+  //   - Other factions: the objects are Iron Teeth content (their goods are Iron Teeth goods, which
+  //     native GoodService does not hold for another faction), so a new game of another faction
+  //     places nothing (DeepFrontierFaction), saved as OtherFaction.
   //   - Saved before the first frame: only the native exception save can do that (autosaves wait
   //     for ShowPrimaryUIEvent, GameStartupAutosaveBlocker). It runs from ExceptionListener's
   //     FirstUncaughtException after ErrorReporter.LogString is set, and saves the world as it is:
@@ -74,6 +78,7 @@ namespace DeepFrontier.Scripts.MapSetup {
     private const string NoSetup = "NoSetup";               // built-in map without an entry (an error)
     private const string SavedBeforeSetup = "SavedBeforeSetup"; // a save from before this system: never touched
     private const string ExceptionSaveBeforeSetup = "ExceptionSaveBeforeSetup"; // exception save before the first frame: never set up
+    private const string OtherFaction = "OtherFaction";     // new game of a faction other than Iron Teeth: nothing to do
 
     private readonly ISingletonLoader _singletonLoader;
     private readonly ISceneLoader _sceneLoader;
@@ -88,6 +93,7 @@ namespace DeepFrontier.Scripts.MapSetup {
     private readonly DialogBoxShower _dialogs;
     private readonly ILoc _loc;
     private readonly EventBus _eventBus;
+    private readonly FactionService _factions;
     public bool Ready => !_placePending;
 
     private string _map = "";
@@ -99,10 +105,12 @@ namespace DeepFrontier.Scripts.MapSetup {
 
     public BuiltinMapSetup(ISingletonLoader singletonLoader, ISceneLoader sceneLoader, ISpecService specs, MapSize mapSize,
         TemplateNameMapper templates, PreviewFactory previews, BlockObjectPlacerService placers, BlockValidator blockValidator,
-        BlockObjectValidationService validation, IBlockService blocks, DialogBoxShower dialogs, ILoc loc, EventBus eventBus) {
+        BlockObjectValidationService validation, IBlockService blocks, DialogBoxShower dialogs, ILoc loc, EventBus eventBus,
+        FactionService factions) {
       _singletonLoader = singletonLoader; _sceneLoader = sceneLoader; _specs = specs; _mapSize = mapSize;
       _templates = templates; _previews = previews; _placers = placers; _blockValidator = blockValidator;
       _validation = validation; _blocks = blocks; _dialogs = dialogs; _loc = loc; _eventBus = eventBus;
+      _factions = factions;
     }
 
     public void Load() {
@@ -117,6 +125,12 @@ namespace DeepFrontier.Scripts.MapSetup {
       if (!parameters.NewGame) { _outcome = SavedBeforeSetup; return; }
       var map = parameters.NewGameConfiguration.MapFileReference;
       _map = map.Name;
+      // FactionService.Load (native, injected first) has set the new game's faction.
+      if (!DeepFrontierFaction.Applies(_factions)) {
+        _outcome = OtherFaction;
+        Debug.Log(Tag + " new " + _factions.Current.Id + " game on " + map.Name + ": Deep Frontier map objects are Iron Teeth content; nothing placed");
+        return;
+      }
       if (!map.Resource) { _outcome = UserMap; return; }
       _eventBus.Register(this);
       var setup = _specs.GetSingleSpec<BuiltinMapSetupSpec>();

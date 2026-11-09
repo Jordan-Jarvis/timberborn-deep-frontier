@@ -60,6 +60,10 @@ namespace DeepFrontier.Scripts.SuperBots {
     private bool _buffed;
 
     public State Current { get; private set; }
+    // Reactor Bots are Iron Teeth content: their needs exist only in the Iron
+    // Teeth NeedCollection. Other factions' bots carry this component (it is
+    // decorated on BotSpec) but stay native and ordinary.
+    public bool Applies=>_settings.AppliesToFaction;
     public bool IsReactor=>Current==State.Reactor;
     public bool IsPlated=>!IsReactor||_needs.NeedIsFavorable(Spec.PlatingNeedId);
     public float SpeedMultiplier=>IsReactor?Spec.SpeedMultiplier:1f;
@@ -85,6 +89,12 @@ namespace DeepFrontier.Scripts.SuperBots {
     // and those replays are restored state, not changes in play (the state
     // they describe is applied above from the loaded values).
     public void InitializeEntity() {
+      if(!Applies) {
+        // Only an Iron Teeth save can hold a retrofit state; FactionService
+        // loads the saved faction, so a state here is a corrupt save.
+        if(Current!=State.Ordinary)throw new InvalidOperationException($"{Name}: saved Reactor Bot state {Current} in a non-Iron Teeth settlement");
+        return;
+      }
       var assembled=_assembly.TakeBirth(this);
       if(assembled)Current=State.Reactor;
       ApplyNeeds(resetEnabled:assembled);
@@ -97,6 +107,7 @@ namespace DeepFrontier.Scripts.SuperBots {
     }
 
     public void Queue() {
+      if(!Applies)throw new InvalidOperationException($"{Name}: Reactor Bot retrofits are Iron Teeth only");
       if(Current!=State.Ordinary)throw new InvalidOperationException($"{Name}: only an ordinary bot can be queued for a retrofit ({Current})");
       Current=State.Queued;
       foreach(var id in Spec.RetrofitNeedIds) {

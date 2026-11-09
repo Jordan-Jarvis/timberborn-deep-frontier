@@ -6,6 +6,7 @@ using Timberborn.CoreUI;
 using Timberborn.DropdownSystem;
 using Timberborn.EntityPanelSystem;
 using Timberborn.EntityUndoSystem;
+using Timberborn.GameFactionSystem;
 using Timberborn.Goods;
 using Timberborn.Localization;
 using Timberborn.SingletonSystem;
@@ -94,14 +95,16 @@ namespace DeepFrontier.Scripts.DeepOre {
     private readonly ITooltipRegistrar _tooltips;
     private readonly IGoodService _goods;
     private readonly ILoc _loc;
+    private readonly FactionService _factions;
     private VisualElement _root;
     private DeepOreStockView _stock;
     private DeepOreRechargeView _recharge;
     private MineralDeposit _deposit;
     private GoodSpec _good;
 
-    public MineralDepositFragment(VisualElementLoader loader, ITooltipRegistrar tooltips, IGoodService goods, ILoc loc) {
-      _loader = loader; _tooltips = tooltips; _goods = goods; _loc = loc;
+    public MineralDepositFragment(VisualElementLoader loader, ITooltipRegistrar tooltips, IGoodService goods, ILoc loc,
+        FactionService factions) {
+      _loader = loader; _tooltips = tooltips; _goods = goods; _loc = loc; _factions = factions;
     }
 
     public VisualElement InitializeFragment() {
@@ -117,6 +120,9 @@ namespace DeepFrontier.Scripts.DeepOre {
     public void ShowFragment(BaseComponent entity) {
       _deposit = entity.GetComponent<MineralDeposit>();
       if (!_deposit) return;
+      // Iron Teeth goods (DeepFrontierFaction); a map placed with these
+      // objects and played by another faction has no such goods to show.
+      if (!DeepFrontierFaction.Applies(_factions)) { _deposit = null; return; }
       _good = _goods.GetGood(_deposit.Spec.GoodId);
       UpdateFragment();
       _root.ToggleDisplayStyle(visible: true);

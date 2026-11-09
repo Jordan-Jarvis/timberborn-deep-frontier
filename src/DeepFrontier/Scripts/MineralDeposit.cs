@@ -29,19 +29,25 @@ namespace DeepFrontier.Scripts {
     private readonly ITimeTriggerFactory _triggers;
     private readonly MapEditorMode _editor;
     private readonly GoodRegistryValueSerializer _registrySerializer;
+    private readonly IGoodService _goods;
     private ITimeTrigger _recharge;
     private int? _migratedAmount;
     private float? _savedProgress;
     private bool _settingYield;
     public Yielder Yielder { get; private set; }
     public MineralDepositSpec Spec { get; private set; }
+    // Native YielderInitializer starts a yielder whose good is not loaded at 0
+    // (these minerals are Iron Teeth goods, DeepFrontierFaction: another
+    // faction's GoodService lacks them). Such a deposit has no stock to set,
+    // take or recover.
+    public bool GoodLoaded { get; private set; }
     public int Amount => Yielder.Yield.Amount;
     public bool IsRecharging => Amount == 0;
     public float RechargeProgress => _recharge.Progress;
     public float RechargeDaysLeft => _recharge.DaysLeft;
 
-    public MineralDeposit(ITimeTriggerFactory triggers, MapEditorMode editor, GoodRegistryValueSerializer registrySerializer) {
-      _triggers = triggers; _editor = editor; _registrySerializer = registrySerializer;
+    public MineralDeposit(ITimeTriggerFactory triggers, MapEditorMode editor, GoodRegistryValueSerializer registrySerializer, IGoodService goods) {
+      _triggers = triggers; _editor = editor; _registrySerializer = registrySerializer; _goods = goods;
     }
 
     public void Awake() {
@@ -50,10 +56,12 @@ namespace DeepFrontier.Scripts {
       if (Spec.Capacity <= 0 || Spec.RechargeAmount <= 0 || Spec.RechargeAmount > Spec.Capacity || !(Spec.RechargeTimeInDays > 0))
         throw new InvalidOperationException($"{Name}: invalid mineral capacity or recovery rule");
       _recharge = _triggers.Create(Recharge, Spec.RechargeTimeInDays);
+      GoodLoaded = _goods.HasGood(Spec.GoodId);
     }
 
     public void InitializeEntity() {
       Yielder.Enable();
+      if (!GoodLoaded) return;
       // All native components have loaded before InitializeEntity: migrate only
       // the old district-pool/stockpile save formats, never overwrite native yield.
       if (_migratedAmount.HasValue) SetAmount(_migratedAmount.Value);
@@ -70,6 +78,7 @@ namespace DeepFrontier.Scripts {
     }
 
     public void SetAmount(int amount) {
+      if (!GoodLoaded) throw new InvalidOperationException($"{Name}: {Spec.GoodId} is not a good of this settlement (Iron Teeth content)");
       if (amount < 0 || amount > Spec.Capacity) throw new ArgumentOutOfRangeException(nameof(amount));
       _recharge.Reset();
       _settingYield = true;

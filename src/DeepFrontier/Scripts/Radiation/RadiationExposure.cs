@@ -4,6 +4,7 @@ using Timberborn.Characters;
 using Timberborn.Common;
 using Timberborn.Effects;
 using Timberborn.EnterableSystem;
+using Timberborn.GameFactionSystem;
 using Timberborn.Goods;
 using Timberborn.Localization;
 using Timberborn.MortalSystem;
@@ -50,6 +51,10 @@ namespace DeepFrontier.Scripts.Radiation {
   // the dose and the sickness clock the same way (cf. native
   // ContaminationIncubator.InfluenceByChildhood), so an irradiated kit keeps
   // its untreated time instead of starting a fresh 8 days.
+  //
+  // Iron Teeth only (DeepFrontierFaction): the Irradiation need is in the
+  // Iron Teeth NeedCollection. Other factions' beavers carry this component
+  // (decorated on BeaverSpec) but it stays disabled and never ticks.
   internal sealed class RadiationExposure : TickableComponent, IAwakableComponent, IPersistentEntity, IChildhoodInfluenced {
     private static readonly ComponentKey ExposureKey = new ComponentKey("DeepFrontier.RadiationExposure");
     private static readonly PropertyKey<float> DoseKey = new PropertyKey<float>("Dose");
@@ -62,6 +67,7 @@ namespace DeepFrontier.Scripts.Radiation {
     private readonly IRandomNumberGenerator _random;
     private readonly NotificationBus _notifications;
     private readonly IGoodService _goods;
+    private readonly FactionService _factions;
     private NeedManager _needs;
     private GoodCarrier _carrier;
     private Enterer _enterer;
@@ -81,9 +87,9 @@ namespace DeepFrontier.Scripts.Radiation {
     public bool SicknessClockPaused => IsIrradiated && _dayNightCycle.PartialDayNumber * 24f - _lastCareHour <= RadiationTuning.CareGraceHours;
 
     public RadiationExposure(RadiationSimulation radiation, IDayNightCycle dayNightCycle, ILoc loc,
-        IRandomNumberGenerator random, NotificationBus notifications, IGoodService goods) {
+        IRandomNumberGenerator random, NotificationBus notifications, IGoodService goods, FactionService factions) {
       _radiation = radiation; _dayNightCycle = dayNightCycle; _loc = loc;
-      _random = random; _notifications = notifications; _goods = goods;
+      _random = random; _notifications = notifications; _goods = goods; _factions = factions;
     }
 
     public void Awake() {
@@ -94,6 +100,7 @@ namespace DeepFrontier.Scripts.Radiation {
       _carrier = GetComponent<GoodCarrier>();   // null on kits: BeaverChild has no GoodCarrier
       if (_needs == null || _enterer == null || _mortal == null)
         throw new System.InvalidOperationException("RadiationExposure requires NeedManager, Enterer and Mortal on beavers");
+      if (!DeepFrontierFaction.Applies(_factions)) DisableComponent();
     }
 
     // Prompt dose from a reactor meltdown (Meltdown/MeltdownService.cs). It

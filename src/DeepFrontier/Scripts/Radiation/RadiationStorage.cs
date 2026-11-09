@@ -2,6 +2,7 @@ using System.Linq;
 using Timberborn.BaseComponentSystem;
 using Timberborn.BlockSystem;
 using Timberborn.EntitySystem;
+using Timberborn.GameFactionSystem;
 using Timberborn.Goods;
 using Timberborn.InventorySystem;
 using Timberborn.Localization;
@@ -22,17 +23,23 @@ namespace DeepFrontier.Scripts.Radiation {
   // to drink or haul are converted on a later pass once released. A tank whose
   // single allowed good was Water switches to ContaminatedWater once it holds
   // no Water, so haulers stop treating its contents as unwanted stock.
+  //
+  // Iron Teeth only (DeepFrontierFaction): ContaminatedWater is an Iron Teeth
+  // good, and native stockpile visuals look up every stored good.
   public sealed class RadiationStorageService : ITickableSingleton, ILateTickable {
     private readonly EntityComponentRegistry _registry;
     private readonly RadiationSimulation _radiation;
     private readonly IDayNightCycle _dayNightCycle;
+    private readonly FactionService _factions;
     private float _hours;
 
-    public RadiationStorageService(EntityComponentRegistry registry, RadiationSimulation radiation, IDayNightCycle dayNightCycle) {
-      _registry = registry; _radiation = radiation; _dayNightCycle = dayNightCycle;
+    public RadiationStorageService(EntityComponentRegistry registry, RadiationSimulation radiation, IDayNightCycle dayNightCycle,
+        FactionService factions) {
+      _registry = registry; _radiation = radiation; _dayNightCycle = dayNightCycle; _factions = factions;
     }
 
     public void Tick() {
+      if (!DeepFrontierFaction.Applies(_factions)) return;
       _hours += _dayNightCycle.FixedDeltaTimeInHours;
       if (_hours < RadiationTuning.StorageCheckIntervalHours) return;
       _hours = 0f;
