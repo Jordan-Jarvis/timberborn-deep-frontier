@@ -1,5 +1,40 @@
 # Current development status
 
+## Hospital supplies per treatment (2026-11-09; source and data committed, not built or installed)
+
+- **User decision:** medicine only for radioactive beavers; other care uses normal supplies; contaminated beavers need extract. Vanilla 1.1.2.8 equivalents, checked in their blueprints:
+  - Medical Bed (injury) and Teeth Grindstone consume no goods;
+  - Decontamination Pod consumes Extract at 0.1/h for one bed (0.068 points/h).
+
+  The Hospital now consumes:
+
+  | Treatment | Supply |
+  |---|---|
+  | Injury | none |
+  | Chipped teeth | none |
+  | Badwater contamination | Extract 0.2/h (the pod's rate at the Hospital's doubled 0.136 points/h) |
+  | Irradiation | Medicine 2/h (unchanged) |
+
+  Each rate is per building, and only while an admitted patient needs that treatment (native GoodConsumingBuilding semantics, as vanilla multi-place attractions). Water (12/h) is no longer a ward supply; the pantry still stocks patient water. Neighborhood care needs attending staff only.
+- **Generation.** `hospital_building_content.mjs` derives the Extract row from the vanilla pod and fails if the Medical Bed or Teeth Grindstone start consuming goods. Config: `frontier_progression.json` `hospital.treatmentSupplies` / `freeTreatments`. `HospitalSpec.TreatmentSupplies` maps each consumed good to its treatment. Generated in the scratch mirror; only the Hospital blueprint and `enUS.csv` changed. Description and panel/status texts are updated.
+- **Runtime.**
+  - The ward needs no supply to be usable.
+  - Doses are taken and used per treatment in use.
+  - Effects, admission and stay follow each treatment's own supply (`HasTreatableNeed`).
+  - Radiation sickness counts care only while radiation care is supplied.
+  - A hospital-only `HoursUntilNoSupply` postfix makes the native bar report the supplies of treatments in progress (full when none), so it no longer reads 0.0 h because medicine is out.
+  - Per-supply statuses ("No extract/medicine in the district") follow the native LackOfResources rule; the panel lists each treatment's supply.
+
+  Patches install through `NativePatches`. The new `HospitalSupplyHours` postfix must be listed in the native-safety audit when that validator lands.
+- **Saves.** The native dose list is saved by index; Medicine stays at index 0, so an old Water dose (index 1) loads as at most one Extract dose. Extract above the new capacity of 5 and Water above the pantry's 128 are hauled out natively.
+- **Checks:**
+  - compile: 0 errors, the three existing warnings;
+  - `validate_radiation_content` now checks the rows against the vanilla blueprints and config, the localization keys and supplied radiation care. A negative control with Extract at 1/h fails it.
+  - affected gates pass;
+  - full scratch `validate_all -SkipBlender`: 77 passes, the item-use report (0 issues among 52 goods) and the expected mirror-only failure of the Git-only asset guard (it passes in the checkout).
+
+  The hospital acceptance fixtures were updated to the new rules but not rerun; the reload fixture predates the supply layout and must be recaptured. In-game check list: `docs/review-2026-11-09.md`.
+
 ## Moddable Fluids: rename, and the in-game worker fixture passed (2026-11-09)
 
 - **In-game worker fixture (plan item 1): passed.** Run by the coordinator on HEAD `e597e4f` (pre-rename names), game closed, dialogs clicked by the user. `outputs/fluids-api-prototype/worker-report.json`:
