@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Bindito.Core;
+using Timberborn.Attractions;
 using Timberborn.BaseComponentSystem;
 using Timberborn.BehaviorSystem;
 using Timberborn.BlockingSystem;
@@ -50,6 +51,8 @@ namespace DeepFrontier.Scripts {
   // working hours; their attendance drives neighborhood care and water/extract use.
   // HospitalMedicalSupplies restricts medicine to contamination/radiation cases,
   // leaving ordinary care usable without it and preserving native fractional doses.
+  // Without medical treatment, HospitalMedicalVisits neither admits nor keeps a
+  // patient for those needs alone.
   internal sealed class Hospital : TickableComponent, IAwakableComponent,
       IFinishedStateListener, IInitializableEntity, IBuildingEfficiencyProvider {
     internal const string MedicineGoodId = "Medicine";
@@ -62,6 +65,7 @@ namespace DeepFrontier.Scripts {
     private GoodConsumingBuilding _supplies;
     private GoodConsumingToggle _staffToggle;
     private RangedEffectBuilding _range;
+    private Attraction _attraction;
     private HospitalPantry _pantry;
     private Enterable _ward;
     private IAnimator _banners;
@@ -87,6 +91,13 @@ namespace DeepFrontier.Scripts {
     // Native HoursUntilNoSupply includes fractional doses and every required supply.
     // Ordinary care checks CanUse (which excludes medicine); medical effects check all supplies.
     public bool CanProvideMedicalTreatment => CanUse && _supplies.CanUse && _supplies.HoursUntilNoSupply() > 0;
+    // A need this ward treats without medicine (every effect but the medical
+    // ones), with native AttractionNeedBehavior's MaxValueTolerance (1.1.2.8).
+    internal bool HasOrdinaryCareNeed(NeedManager needs) {
+      foreach (var effect in _attraction.Effects)
+        if (!NeedsMedicineFor(effect.NeedId) && needs.NeedPointsToMax(effect.NeedId) > 0.001f) return true;
+      return false;
+    }
 
     public void Awake() {
       _pantry=GetComponent<HospitalPantry>(); _ward=GetComponent<Enterable>();
@@ -94,6 +105,8 @@ namespace DeepFrontier.Scripts {
       _spec=GetComponent<HospitalSpec>(); _workplace=GetComponent<Workplace>();
       _blockable=GetComponent<BlockableObject>(); _power=GetComponent<MechanicalBuilding>();
       _supplies=GetComponent<GoodConsumingBuilding>(); _staffToggle=_supplies.GetGoodConsumingToggle();
+      _attraction=GetComponent<Attraction>();
+      if(_attraction==null)throw new InvalidOperationException("Hospital requires its native Attraction");
       _range=GetComponent<RangedEffectBuilding>();
       if(_spec.RequiredStaff<=0 || GetComponent<WorkplaceSpec>().MaxWorkers!=_spec.RequiredStaff)
         throw new InvalidOperationException("Hospital staffing must match the authored workplace capacity");
