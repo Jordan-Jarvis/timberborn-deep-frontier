@@ -13,7 +13,7 @@ namespace ModdableFluids {
   /// and unload one at a time. A failed freeze leaves the host Faulted with its report.
   /// </summary>
   public sealed class ModdableFluidsHost {
-    public const int ApiMajor = 0, ApiMinor = 1, ApiPatch = 1;
+    public const int ApiMajor = 0, ApiMinor = 1, ApiPatch = 2;
     public static string ApiVersion => ApiMajor + "." + ApiMinor + "." + ApiPatch;
 
     /// <summary>Capabilities implemented by this contract, in ordinal order. Nothing unimplemented is listed.</summary>
@@ -24,7 +24,10 @@ namespace ModdableFluids {
       "ModdableFluids.Registry.Definitions",
       "ModdableFluids.Registry.Providers",
       "ModdableFluids.Scene.Lifecycle",
-      "ModdableFluids.Sources.Types"
+      "ModdableFluids.Sources.Types",
+      "ModdableFluids.World.Additions",
+      "ModdableFluids.World.Sampling",
+      "ModdableFluids.World.SourceComposition"
     }.OrderBy(c => c, StringComparer.Ordinal).ToArray());
 
     private enum State { Open, Frozen, Faulted }

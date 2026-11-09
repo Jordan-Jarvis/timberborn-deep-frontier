@@ -57,6 +57,8 @@ namespace ModdableFluids.Runtime.Prototype {
     public string LastSaveDigest { get; private set; }
     public int Stride => _index.Stride;
     public int Height => _index.TerrainSize.y;
+    /// <summary>The scene's world fluid service (sampling, additions, source composition).</summary>
+    public ModdableFluidsWorld World { get; private set; }
 
     public ModdableFluidsSceneOwner(IWaterService water, IParallelizer parallelizer, ISingletonLoader singletons, MapIndexService index) {
       _water = water; _parallelizer = parallelizer; _singletons = singletons; _index = index;
@@ -81,7 +83,11 @@ namespace ModdableFluids.Runtime.Prototype {
       object simulator = Read(_water, "_waterSimulator");
       object starter = Read(simulator, "_waterSimulationTaskStarter");
       Hooks = new NativeTransportHooks(starter, Registry.Count, FluidRegistry.BadwaterIndex);
+      World = new ModdableFluidsWorld(Registry, Stride, _water, MainThreadId);
       Hooks.SessionCreated = OnSessionCreated;
+      Hooks.TickCompleted = World.State.Publish;
+      Hooks.ResolveAddition = World.ResolveAddition;
+      Hooks.ResolveSource = World.ResolveSource;
       Hooks.Attach(); WorkerAcceptanceRun.Attached++;
       Debug.Log("[ModdableFluids] ATTACHED scene " + WorkerAcceptanceRun.Attached + "; native workers=" + WorkerCount + "; main thread=" + MainThreadId
         + "; saved fluid state=" + (LoadedDocument != null ? LoadedDocument.ColumnCount + " columns" : _loaded != null ? "native only" : "none") + "\n" + host.DescribeRuntime());
@@ -93,6 +99,7 @@ namespace ModdableFluids.Runtime.Prototype {
         Restored = FluidWorldPersistence.Restore(LoadedDocument, Registry, layout, Stride, Height);
         FluidWorldPersistence.Apply(session, Registry, Restored, Stride);
       }
+      World.State.Publish(session);
       SessionCreated?.Invoke(session);
     }
 

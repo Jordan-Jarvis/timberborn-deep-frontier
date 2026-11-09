@@ -35,6 +35,8 @@ namespace ModdableFluids.GameBridge.Prototype {
     public int ScheduledSubsteps { get; private set; }
     public int ScheduledChangeBatches { get; private set; }
     public Action<NativeFluidTransportSession> SessionCreated { get; set; }
+    /// <summary>Runs on the native worker right after each tick completes (the session is Ready).</summary>
+    public Action<NativeFluidTransportSession> TickCompleted { get; set; }
     public Func<object, int, double, FluidVolumes> ResolveSource { get; set; }
     public Func<object, int, double, double, FluidVolumes> ResolveAddition { get; set; }
     private bool AnyOwnedPatches() => _replaced.Any(method => Harmony.GetPatchInfo(method)?.Owners.Contains(OwnerId) == true);
@@ -166,6 +168,7 @@ namespace ModdableFluids.GameBridge.Prototype {
         }
       }
       Session.EndTick();
+      TickCompleted?.Invoke(Session);
     }
     private FluidVolumes Vanilla(double volume, double badShare) {
       var values = new double[_components]; values[_badwater] = volume * badShare; values[0] = volume - values[_badwater];
@@ -246,7 +249,7 @@ namespace ModdableFluids.GameBridge.Prototype {
           RemoveOwnPatches(); _ownsPatches = false;
         }
         if (ReferenceEquals(_active, this)) _active = null;
-        _disposed = true; SessionCreated = null; ResolveSource = null; ResolveAddition = null;
+        _disposed = true; SessionCreated = null; TickCompleted = null; ResolveSource = null; ResolveAddition = null;
       }
     }
     private readonly struct SubstepJob : IParallelizerSingleTask {

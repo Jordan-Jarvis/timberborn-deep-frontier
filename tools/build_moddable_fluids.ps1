@@ -89,7 +89,7 @@ function Verify([string]$id, [string]$installed, [string]$manifest, [string[]]$e
 
 $api = @(
   @{Folder='Api';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.asmdef');Sources=@((Join-Path $source 'Api'))},
-  @{Folder='Core';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.TransportPrototype.asmdef');Sources=@((Join-Path $source 'Transport'),(Join-Path $source 'Native'),(Join-Path $source 'Persistence'),(Join-Path $source 'Rendering'),(Join-Path $source 'Sources'))},
+  @{Folder='Core';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.TransportPrototype.asmdef');Sources=@((Join-Path $source 'Transport'),(Join-Path $source 'Native'),(Join-Path $source 'Persistence'),(Join-Path $source 'Rendering'),(Join-Path $source 'Sources'),(Join-Path $source 'World'))},
   @{Folder='GameBridge';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.GamePrototype.asmdef');Sources=@((Join-Path $source 'GameBridge'))},
   @{Folder='Runtime';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.RuntimePrototype.asmdef');Sources=@((Join-Path $source 'Runtime'))}
 )
