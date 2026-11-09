@@ -12,14 +12,22 @@ $report = Join-Path $root 'outputs/fluids-api-prototype/transport-report.json'
 & dotnet build $project --configuration Release --nologo
 if ($LASTEXITCODE -ne 0) { throw 'Fluid transport prototype build failed' }
 $harness = Join-Path $PSScriptRoot 'compile-check/fluid-transport-harness/bin/Release/net8.0/FluidTransportHarness.dll'
-& dotnet $harness $dev.gameManaged $specification $report
+$reflectionConsumer = Join-Path $PSScriptRoot 'compile-check/fluid-synthetic-reflection/bin/Release/netstandard2.1/FluidsApiSyntheticReflection.dll'
+& dotnet $harness $dev.gameManaged $specification $report $reflectionConsumer
 if ($LASTEXITCODE -ne 0) { throw 'Fluid transport prototype assertions failed' }
 $monoProject = Join-Path $PSScriptRoot 'compile-check/fluid-native-mono/FluidsApi.NativeMonoProbe.csproj'
 & dotnet build $monoProject --configuration Release --nologo
 if ($LASTEXITCODE -ne 0) { throw 'Fluid native Mono probe build failed' }
 $monoProbe = Join-Path $PSScriptRoot 'compile-check/fluid-native-mono/bin/Release/netstandard2.1/FluidsApi.NativeMonoProbe.dll'
-& $dev.python (Join-Path $PSScriptRoot 'run_fluid_native_mono.py') $monoProbe
+$compiledConsumer = Join-Path $PSScriptRoot 'compile-check/fluid-synthetic-compiled/bin/Release/netstandard2.1/FluidsApiSyntheticCompiled.dll'
+& $dev.python (Join-Path $PSScriptRoot 'run_fluid_native_mono.py') $monoProbe $reflectionConsumer $compiledConsumer
 if ($LASTEXITCODE -ne 0) { throw 'Fluid native Mono probe failed' }
+$absenceProject = Join-Path $PSScriptRoot 'compile-check/fluid-absence-probe/FluidsApi.AbsenceProbe.csproj'
+& dotnet build $absenceProject --configuration Release --nologo
+if ($LASTEXITCODE -ne 0) { throw 'Fluid API absence probe build failed' }
+$absenceProbe = Join-Path $PSScriptRoot 'compile-check/fluid-absence-probe/bin/Release/netstandard2.1/FluidsApi.AbsenceProbe.dll'
+& $dev.python (Join-Path $PSScriptRoot 'run_fluid_native_mono.py') --absent $absenceProbe $reflectionConsumer $compiledConsumer
+if ($LASTEXITCODE -ne 0) { throw 'Fluid API absence Mono probe failed' }
 $runtimeProject = Join-Path $PSScriptRoot 'compile-check/fluid-runtime/FluidsApi.RuntimePrototype.csproj'
 & dotnet build $runtimeProject --configuration Release --nologo
 if ($LASTEXITCODE -ne 0) { throw 'Fluid scene lifecycle prototype build failed' }

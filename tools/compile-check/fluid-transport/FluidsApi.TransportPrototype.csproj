@@ -10,5 +10,7 @@
   <ItemGroup>
     <Compile Include="../../../src/FluidsApi/Transport/*.cs" />
     <Compile Include="../../../src/FluidsApi/Native/*.cs" />
+    <Compile Include="../../../src/FluidsApi/Persistence/*.cs" />
+    <ProjectReference Include="../fluid-api/FluidsApi.csproj" />
   </ItemGroup>
 </Project>

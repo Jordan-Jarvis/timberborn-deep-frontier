@@ -8,5 +8,9 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../fluid-transport/FluidsApi.TransportPrototype.csproj" />
+    <ProjectReference Include="../fluid-api/FluidsApi.csproj" />
+    <ProjectReference Include="../fluid-synthetic-compiled/FluidsApiSyntheticCompiled.csproj" />
+    <!-- Built, then loaded by path only: the reflection consumer must stay without a compiled API reference. -->
+    <ProjectReference Include="../fluid-synthetic-reflection/FluidsApiSyntheticReflection.csproj" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>

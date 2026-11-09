@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Compiled consumer: its provider type implements Fluids API interfaces. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>FluidsApiSyntheticCompiled</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../src/FluidsApi/Examples/SyntheticCompiled/*.cs" />
+    <ProjectReference Include="../fluid-api/FluidsApi.csproj" Private="false" />
+    <Reference Include="Timberborn.ModManagerScene" HintPath="$(TimberbornManaged)/Timberborn.ModManagerScene.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(TimberbornManaged)/UnityEngine.CoreModule.dll" Private="false" />
+  </ItemGroup>
+</Project>

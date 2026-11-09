@@ -1,0 +1,8 @@
+{
+  "Name": "Fluids API Synthetic Reflection Fixture",
+  "Version": "0.0.1.0",
+  "Id": "FluidsApiSyntheticReflection",
+  "MinimumGameVersion": "1.1.2.8",
+  "Description": "Development fixture. Registers one synthetic fluid through reflection only, with no compiled reference to Fluids API, and only in a flagged disposable acceptance run.",
+  "OptionalMods": [{ "Id": "FluidsApi", "MinimumVersion": "0.0.1" }]
+}

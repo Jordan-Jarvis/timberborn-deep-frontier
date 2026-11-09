@@ -1,1 +1,1 @@
-{"name":"FluidsApi.GamePrototype","references":["FluidsApi.TransportPrototype"],"autoReferenced":false,"excludePlatforms":["Editor"]}
+{"name":"FluidsApi.GamePrototype","references":["FluidsApi","FluidsApi.TransportPrototype"],"autoReferenced":false,"excludePlatforms":["Editor"]}

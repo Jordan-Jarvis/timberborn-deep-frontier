@@ -3,8 +3,8 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using FluidsApi.Transport.Prototype;
 
-if (args.Length != 3) throw new ArgumentException("Expected: installed Managed directory, imported WaterSimulator blueprint, report path");
-string managed = Path.GetFullPath(args[0]), specification = Path.GetFullPath(args[1]), reportPath = Path.GetFullPath(args[2]);
+if (args.Length != 4) throw new ArgumentException("Expected: installed Managed directory, imported WaterSimulator blueprint, report path, reflection-only consumer DLL");
+string managed = Path.GetFullPath(args[0]), specification = Path.GetFullPath(args[1]), reportPath = Path.GetFullPath(args[2]), reflectionConsumer = Path.GetFullPath(args[3]);
 int assertions = 0;
 var scenarios = new List<string>();
 var observations = new Dictionary<string, object>();
@@ -279,6 +279,8 @@ try {
 
   NativeAdapterScenarios.Run(Check, Scenario, managed, specification, observations);
   SourceRegressionScenarios.Run(Check, Scenario, managed, specification, observations);
+  PersistenceScenarios.Run(Check, Scenario, managed, specification, observations);
+  RegistryScenarios.Run(Check, Scenario, managed, reflectionConsumer, observations);
 
   Directory.CreateDirectory(Path.GetDirectoryName(reportPath)!);
   File.WriteAllText(reportPath, JsonSerializer.Serialize(new {
@@ -286,7 +288,8 @@ try {
     runtime = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription,
     nativeAssembly = new { path = Path.Combine(managed, "Timberborn.WaterSystem.dll"), sha256 = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(Path.Combine(managed, "Timberborn.WaterSystem.dll")))) },
     fixtureSpecification = new { path = specification, sha256 = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(specification))) },
-    limits = new[] { "Standalone .NET 8 harness; installed Mono and opt-in scheduler hooks are exercised by a separate probe report", "No installed mod or save changed", "Native queued obstacle mutations are exercised in the native load phase; automatic scene-bound delivery is not installed", "Joint badwater transport intentionally differs from independent native contamination kernels, pressure-weighted mixing and upper-overflow merge loss", "The Mono scheduler fixture executes dependency jobs immediately; real worker barriers, registry, persistence and settlement acceptance remain pending" }
+    publicApi = new { assembly = typeof(FluidsApi.FluidsApiEntry).Assembly.GetName().Name, version = FluidsApi.FluidsApiEntry.ApiVersion, capabilities = FluidsApi.FluidsApiEntry.Capabilities },
+    limits = new[] { "Standalone .NET 8 harness; installed Mono and opt-in scheduler hooks are exercised by a separate probe report", "Registry, provider lifecycle and save round trips run outside the game; in-game save/reload remains pending", "No installed mod or save changed", "Native queued obstacle mutations are exercised in the native load phase; automatic scene-bound delivery is not installed", "Joint badwater transport intentionally differs from independent native contamination kernels, pressure-weighted mixing and upper-overflow merge loss", "The Mono scheduler fixture executes dependency jobs immediately; real worker barriers, registry, persistence and settlement acceptance remain pending" }
   }, new JsonSerializerOptions { WriteIndented = true }));
   Console.WriteLine($"{assertions} assertions passed across {scenarios.Count} scenarios. Report: {reportPath}");
   return 0;

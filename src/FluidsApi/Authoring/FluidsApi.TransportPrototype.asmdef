@@ -1,1 +1,1 @@
-{"name":"FluidsApi.TransportPrototype","autoReferenced":false}
+{"name":"FluidsApi.TransportPrototype","references":["FluidsApi"],"autoReferenced":false}

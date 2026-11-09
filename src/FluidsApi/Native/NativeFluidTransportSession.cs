@@ -19,6 +19,8 @@ namespace FluidsApi.Native.Prototype {
     private int _substeps, _completed;
     public string Phase => _stage.ToString();
     public int ColumnCount => _layout.Length;
+    public int ComponentCount => _components;
+    public int BadwaterComponent => _badwater;
     public int CompletedTicks { get; private set; }
     public FluidVolumes Added { get; private set; }
     public FluidVolumes Removed { get; private set; }

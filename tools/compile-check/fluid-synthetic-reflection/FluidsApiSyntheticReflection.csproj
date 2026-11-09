@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Reflection-only consumer: deliberately no reference to the FluidsApi assembly. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>FluidsApiSyntheticReflection</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../src/FluidsApi/Examples/SyntheticReflection/*.cs" />
+    <Reference Include="Timberborn.ModManagerScene" HintPath="$(TimberbornManaged)/Timberborn.ModManagerScene.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(TimberbornManaged)/UnityEngine.CoreModule.dll" Private="false" />
+  </ItemGroup>
+</Project>
