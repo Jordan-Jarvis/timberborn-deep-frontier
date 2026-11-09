@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Compile check for the editor scripts the build scripts stage into the shared Unity project (tools/unity/*.cs),
+       together with the official Mod Builder sources they extend, against this machine's Unity editor assemblies.
+       Run through tools/test_unity_build_tools.ps1, which passes UnityEditorData (<Unity>/Editor/Data) from
+       tools/dev-environment.json. Not part of the official Mod Builder pipeline. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Timberborn.ModdingTools.ModBuilding</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <MSBuildWarningsAsMessages>MSB3277;MSB3243</MSBuildWarningsAsMessages>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Vendor>$(MSBuildThisFileDirectory)../../../vendor/timberborn-modding/Assets/Tools/Editor/Scripts</Vendor>
+    <Staged>$(MSBuildThisFileDirectory)../../unity</Staged>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(Staged)/*.cs" />
+    <!-- The official sources the batch builds call (one assembly here; ModBuilder is internal to ModBuilding). Staged
+         copies of our scripts in the project are compiled from tools/unity instead. -->
+    <Compile Include="$(Vendor)/Common/*.cs" />
+    <Compile Include="$(Vendor)/ModBuilding/*.cs" Exclude="$(Vendor)/ModBuilding/DeepFrontierBatchBuild.cs;$(Vendor)/ModBuilding/ModdableFluidsBatchBuild.cs;$(Vendor)/ModBuilding/FluidsApiBatchBuild.cs;$(Vendor)/ModBuilding/ModShaderVariantStripping.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="$(UnityEditorData)/NetStandard/ref/2.1.0/netstandard.dll" Private="false" />
+    <Reference Include="$(UnityEditorData)/Managed/UnityEngine/*.dll" Private="false" />
+  </ItemGroup>
+  <Target Name="RequireUnityEditorData" BeforeTargets="ResolveAssemblyReferences" Condition="'$(UnityEditorData)' == '' Or !Exists('$(UnityEditorData)/Managed/UnityEngine/UnityEditor.CoreModule.dll')">
+    <Error Text="Pass -p:UnityEditorData=&lt;Unity&gt;/Editor/Data (tools/test_unity_build_tools.ps1 reads it from tools/dev-environment.json)." />
+  </Target>
+</Project>
