@@ -131,7 +131,7 @@ export async function mapSetupContent({root = defaultRoot, dataRoot = resolve(ro
       for (const key of ['x', 'y', 'z']) if (!Number.isInteger(p[key])) fail(`${v.file} placement ${index}: ${key} must be an integer`);
       if (typeof p.label !== 'string' || !p.label) fail(`${v.file} placement ${index}: label is required`);
       // A Deep Ore Source (MineralDepositSpec, Scripts/MineralDeposit.cs) gets its amount
-      // at new-game time (BuiltinMapSetup: DeepOreDeposit.SetAmount).
+      // at new-game time (BuiltinMapSetup: MineralDeposit.SetAmount).
       const deposit = blueprint.MineralDepositSpec;
       if (deposit && p.good !== undefined) {
         if (p.good !== deposit.Yielder.Yield.Id || !Number.isInteger(p.amount) || p.amount <= 0 || p.amount > deposit.Yielder.Yield.Amount)

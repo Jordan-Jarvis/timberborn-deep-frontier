@@ -45,10 +45,9 @@ namespace DeepFrontier.Scripts.MapSetup {
   //     map editor's own path. A native preview (PreviewFactory, as the BlockObjectTool's
   //     PreviewPlacer) must be valid at the placement: BlockObject.IsValid = BlockValidator.BlocksValid
   //     and every IBlockObjectValidator. Then BlockObjectPlacerService.GetMatchingPlacer(...).Place
-  //     with a new EntitySetup.Builder, as BlockObjectTool.Place: BuildingPlacer for the Deep Ore
-  //     Source (BuildingSpec.PlaceFinished, so finished), DefaultBlockObjectPlacer for the others.
-  //     A Deep Ore Source then gets its amount (MineralDeposit.SetAmount, as the map editor's amount
-  //     field sets it).
+  //     with a new EntitySetup.Builder, as BlockObjectTool.Place (DefaultBlockObjectPlacer for these
+  //     map objects). A mineral source then gets its amount (MineralDeposit.SetAmount, as the map
+  //     editor's amount field sets it).
   //   - A placement that fails is not moved or skipped silently: it is logged as an error and
   //     reported in a dialog.
   //   - Small maps (BuiltinMapSpec.Small: below the area threshold, or no Deep Mine site) and maps

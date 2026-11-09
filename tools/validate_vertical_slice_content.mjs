@@ -91,7 +91,7 @@ const coreSpan = (axis) => Math.max(...mineCore.map((c) => c[axis])) - Math.min(
 assert(mineCore.length > 0 && mineCore.every((c) => c.z === 0 && c.block.MatterBelow === 'Ground' && c.block.Occupations === 'Top'), 'Deep Mine core must be ground-layer Top blocks on Ground.');
 assert(coreSpan('x') === vein.BlockObjectSpec.Size.X && coreSpan('y') === vein.BlockObjectSpec.Size.Y, 'Deep Mine core does not match the Deep Ore vein footprint.');
 assert(!vein.BlockObjectSpec.Blocks.some((block) => block.Occupations.split(', ').includes('Top')), 'Deep Ore vein must leave Top free for the mine core.');
-assert(!drill.UnderstructureConstraintSpec && foundationCore(drill).length === 0, 'Deep Drill bores the Deep Ore Sources of its district and must not require an understructure.');
+assert(!drill.UnderstructureConstraintSpec && foundationCore(drill).length === 0, 'Deep Drill takes hauled raw deep ore and must not require an understructure.');
 assert(!drill.DeepDrillSpec && drill.BuildingAccessibleSpec, 'Deep Drill must use physical inventory ingredients, not a district-pool limiter.');
 assert(drill.FrontierWorkplaceUpkeepSpec.Goods.map(g => g.GoodId).join() === 'MetalBlock,TreatedPlank', 'Deep Drill must run on metal blocks and treated planks.');
 assert(!mine.BuildingSpec.BuildingCost.some(g => ['DeepAlloy','HighGradeSteel'].includes(g.Id)), 'Deep Mine must not require deep iron, including through steel.');
@@ -105,8 +105,8 @@ assert(mine.ManufactorySpec.ProductionRecipeIds.includes('DeepOre.Mine'), 'Deep 
 assert(mine.UnderstructureConstraintSpec.UnderstructureTemplateNames.includes('DeepOreVein'), 'Deep Mine must require a DeepOreVein understructure.');
 assert(processor.MechanicalNodeSpec.PowerInput === 500 && processor.MechanicalNodeSpec.PowerOutput === 0, 'Deep Processor power contract is invalid.');
 assert(processor.ManufactorySpec.ProductionRecipeIds.includes('DeepAlloy'), 'Deep Processor is not wired to the DeepAlloy recipe.');
-// Deep Ore Source: a deposit, not a stockpile (Scripts/DeepOre/DeepOreDeposit.cs), reached through
-// its district (BuildingAccessibleSpec and an entrance on a path).
+// Deep Ore Source: a native mineral yielder (Scripts/MineralDeposit.cs) that Scavenger Flags
+// extract, not a stockpile or a district building.
 const deposit = source.MineralDepositSpec;
 assert(deposit && !source.StockpileSpec && !source.BuildingAccessibleSpec && !source.DeepOreDepositSpec, 'Ore outcrops must be native mineral yielders, not district stockpiles.');
 assert(deposit.Yielder.Yield.Id === 'RawDeepOre' && deposit.Yielder.Yield.Amount === 10000 && deposit.Yielder.ResourceGroup === 'Ruin', 'Scavengers must collect raw ore from the outcrop.');

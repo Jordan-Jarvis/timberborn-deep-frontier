@@ -20,9 +20,9 @@
 //   good is slow exactly when a map-editor deposit of it recharges. Every map
 //   source must be classified here.
 // - A recipe of a map source's own building that makes that map good draws it
-//   from the map (the Deep Drill bores the Deep Ore Sources of its district,
-//   Scripts/DeepOre/DeepDrill.cs): it counts only as the map source, never as a
-//   free recipe.
+//   from the map: it counts only as the map source, never as a free recipe.
+//   (Since 0.9.0 the Deep Drill takes hauled RawDeepOre from visible outcrops,
+//   Scripts/MineralDeposit.cs, as an ordinary ingredient.)
 // - "Available" is a closure: goods from primary goods, the map sources allowed,
 //   and the recipes of buildings that can run (inputs, fuel, operating goods and
 //   discipline available). A good can never come from its own building's output
@@ -95,8 +95,8 @@ const csConstant = (id) => {
 const MAP_SOURCE_KIND = {
   ScrapMetal: {finite: true, why: 'ruins scavenged by the Scavenger Flag run out (the Efficient Mine recipes are the renewable route)'},
   RawDeepOre: {finite: false, slow: true, replacementGood: 'DeepOre', why: 'Visible outcrops scavenged and hauled to the drill; empty MineralDeposit sources recover 20 every 5 days; the Deep Mine is the industrial supply'},
-  Sandstone: {finite: false, slow: true, replacementGood: 'Sandstone', why: 'Sandstone Outcrops dug by the pit run out (the Sandstone Quarry is the renewable route)'},
-  Limestone: {finite: false, slow: true, replacementGood: 'Limestone', why: 'Limestone Outcrops dug by the pit run out (the Limestone Quarry is the renewable route)'},
+  Sandstone: {finite: false, slow: true, replacementGood: 'Sandstone', why: 'Sandstone Outcrops dug by the pit recover 20 every 5 days once empty (the Sandstone Quarry is the renewable route)'},
+  Limestone: {finite: false, slow: true, replacementGood: 'Limestone', why: 'Limestone Outcrops dug by the pit recover 20 every 5 days once empty (the Limestone Quarry is the renewable route)'},
   FreshFish: {finite: false, why: 'Fisher Flag shore fishing never runs out'},
   ContaminatedWater: {finite: false, why: 'radiation turns stored water into contaminated water (a waste, never a supply)'},
 };
