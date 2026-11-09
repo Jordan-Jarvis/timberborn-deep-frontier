@@ -19,6 +19,7 @@ using Timberborn.SingletonSystem;
 using Timberborn.TickSystem;
 using Timberborn.TimeSystem;
 using Timberborn.WaterSystem;
+using FluidsApi;
 using FluidsApi.GameBridge.Prototype;
 using FluidsApi.Transport.Prototype;
 using UnityEngine;
@@ -55,6 +56,7 @@ namespace FluidsApi.Runtime.Prototype {
     public void UpdateSingleton() {
       if (++_frame != 30) return;
       WorkerAcceptanceRun.Require(!NativeTransportHooks.HasActiveOwner && WorkerAcceptanceRun.Attached == WorkerAcceptanceRun.Detached, "Main menu retained a game-scene transport owner");
+      WorkerAcceptanceRun.Require(WorkerAcceptanceRun.Attached == 0 || FluidsApiEntry.Host.ActiveScene == null, "Main menu retained an active provider scene");
       if (WorkerAcceptanceRun.Worlds.Count < 2) {
         WorkerAcceptanceRun.Require(_maps.GetUserMapNames().Contains(WorkerAcceptanceRun.Map), "Missing the explicitly named disposable worker fixture map");
         Debug.Log("[FluidsApi Acceptance] Starting disposable world " + (WorkerAcceptanceRun.Worlds.Count + 1));
@@ -68,7 +70,8 @@ namespace FluidsApi.Runtime.Prototype {
       string report = WorkerAcceptanceRun.ReportPath;
       Directory.CreateDirectory(Path.GetDirectoryName(report));
       File.WriteAllText(report, JsonConvert.SerializeObject(new { status = "passed", scenesAttached = WorkerAcceptanceRun.Attached,
-        scenesDetached = WorkerAcceptanceRun.Detached, worlds = WorkerAcceptanceRun.Worlds, prototypeDisabled = true }, Formatting.Indented));
+        scenesDetached = WorkerAcceptanceRun.Detached, worlds = WorkerAcceptanceRun.Worlds, prototypeDisabled = true,
+        apiRuntime = FluidsApiEntry.DescribeRuntime() }, Formatting.Indented));
       Debug.Log("[FluidsApi Acceptance] COMPLETE two disposable worlds; actual worker barriers, native geometry, intakes and scene teardown passed. Report: " + report);
       Application.Quit();
     }
@@ -99,6 +102,13 @@ namespace FluidsApi.Runtime.Prototype {
     private void Check(bool condition, string name) { _checks++; WorkerAcceptanceRun.Require(condition, name); }
     public void PostLoad() {
       Check(_index.TerrainSize.x == 32 && _index.TerrainSize.y == 32, "Worker acceptance requires the generated 32 by 32 fixture");
+      // Both synthetic consumer packages must have registered: one by reflection, one compiled.
+      var registry = _owner.Registry;
+      Check(registry.Definitions.Select(d => d.Id).SequenceEqual(new[] { FluidIds.Water, FluidIds.Badwater, "FluidsApiSyntheticCompiled.Tracer", "FluidsApiSyntheticReflection.Juice" }),
+        "Worker acceptance requires the two synthetic fixture packages; registry: " + string.Join(", ", registry.Definitions.Select(d => d.Id)));
+      Check(_owner.Scene.Serial == WorkerAcceptanceRun.Attached, "Provider scene serial differs from the attached scene count");
+      int components = registry.Count;
+      FluidVolumes Even(double volume) => new FluidVolumes(Enumerable.Repeat(volume / components, components).ToArray());
       _owner.Hooks.SessionCreated = session => {
         _workerIds.TryAdd(Thread.CurrentThread.ManagedThreadId, 0);
         WorkerAcceptanceRun.Require(session.CompletedTicks == 0, "A new scene inherited previous fluid ticks");
@@ -106,12 +116,13 @@ namespace FluidsApi.Runtime.Prototype {
       _owner.Hooks.ResolveSource = (source, native, volume) => {
         _workerIds.TryAdd(Thread.CurrentThread.ManagedThreadId, 0);
         WorkerAcceptanceRun.Require(ReferenceEquals(source, _source), "Unexpected emitter in the disposable dry map");
-        return new FluidVolumes(new[] { volume / 4, volume / 4, volume / 4, volume / 4 });
+        return Even(volume);
       };
       _owner.Hooks.ResolveAddition = (change, native, volume, bad) => {
         _workerIds.TryAdd(Thread.CurrentThread.ManagedThreadId, 0);
-        return native == PoolIndex ? new FluidVolumes(new[] { volume / 4, volume / 4, volume / 4, volume / 4 })
-          : new FluidVolumes(new[] { volume * (1 - bad), volume * bad, 0, 0 });
+        if (native == PoolIndex) return Even(volume);
+        var vanilla = new double[components]; vanilla[FluidRegistry.WaterIndex] = volume * (1 - bad); vanilla[FluidRegistry.BadwaterIndex] = volume * bad;
+        return new FluidVolumes(vanilla);
       };
     }
     public void UpdateSingleton() {
@@ -177,7 +188,7 @@ namespace FluidsApi.Runtime.Prototype {
       Check(_owner.WorkerCount > 0 && _workerIds.Count > 0 && !_workerIds.ContainsKey(_owner.MainThreadId), "Fluid callbacks did not run on actual native worker threads");
       Check(_maxColumns > _initialColumns, "Native column growth/resizing was not exercised");
       Check(_nativeRemoved > 0 && _pumpRequests == 10, "Native pump acceptance did not execute its ten requests");
-      for (int component = 0; component < 4; component++) {
+      for (int component = 0; component < _owner.Registry.Count; component++) {
         double remaining = 0;
         for (int slot = 0; slot < session.ColumnCount; slot++) remaining += session.Sample(session.GetGeometry(slot).NativeIndex).GetVolume(component);
         double accounted = remaining + session.Removed.GetVolume(component) + session.Evaporated.GetVolume(component) + session.Discharged.GetVolume(component)
@@ -188,7 +199,8 @@ namespace FluidsApi.Runtime.Prototype {
       WorkerAcceptanceRun.Worlds.Add(new { scene = WorkerAcceptanceRun.Attached, nativeTicks = session.CompletedTicks, checks = _checks,
         workers = _owner.WorkerCount, mainThread = _owner.MainThreadId, callbackThreads = _workerIds.Keys.OrderBy(v=>v).ToArray(),
         initialColumns = _initialColumns, maximumColumns = _maxColumns, pressureLoss = session.PressureLoss.TotalVolume,
-        nativePumpRemoved = _nativeRemoved, componentPumpRemoved = _lastRemoved, maxRepresentationDifference = session.MaxRepresentationDifference });
+        nativePumpRemoved = _nativeRemoved, componentPumpRemoved = _lastRemoved, maxRepresentationDifference = session.MaxRepresentationDifference,
+        registryFingerprint = _owner.Registry.Fingerprint, fluids = _owner.Registry.Definitions.Select(d => d.Id).ToArray(), providerScene = _owner.Scene.Serial });
       Debug.Log("[FluidsApi Acceptance] WORLD PASS " + WorkerAcceptanceRun.Worlds.Count + "; ticks=" + session.CompletedTicks + "; callbacks=" + string.Join(",", _workerIds.Keys));
       _finished = true; _speed.ChangeSpeed(0); _returnToMenu = true;
     }
