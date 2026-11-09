@@ -12,16 +12,28 @@ using Timberborn.TimeSystem;
 using UnityEngine;
 
 namespace DeepFrontier.Scripts {
-  // Native 1.1.2.8 GoodConsumingBuilding has only whole-building consumption toggles.
-  // Its CanUse gates every attraction effect, even while consumption is paused.
-  // Hospital-only extension: medicine is optional for ordinary care, and is consumed
-  // only for admitted contamination/radiation cases. Keep the native inventory,
-  // supply order, fractional-dose list, save format, hauling and stock UI unchanged.
+  // Native 1.1.2.8 GoodConsumingBuilding consumes every good of the building
+  // together and its CanUse gates every attraction effect. A Hospital's
+  // supplies are per treatment instead (Hospital.cs, HospitalSpec.
+  // TreatmentSupplies; user 2026-11-09): injuries and chipped teeth need none,
+  // decontamination consumes Extract and radiation care consumes Medicine.
+  // Hospital-only replacements:
+  //   CanUseInternal       the ward needs no supply to be usable;
+  //   HasSupplies          a dose of a good is taken only while an admitted
+  //                        patient needs its treatment;
+  //   ConsumeSupplies      each loaded dose is used only while one does;
+  //   effects              a treatment applies only while supplied;
+  //   HoursUntilNoSupply   (postfix) hours of the supplies treatments in progress
+  //                        use, so the native supply bar does not read 0 h
+  //                        because a good no admitted patient needs is out.
+  // The native inventory, consumed-goods order, fractional-dose list, save
+  // format, hauling and stock UI stay native.
   internal sealed class HospitalMedicalSuppliesModStarter : IModStarter {
     public void StartMod(IModEnvironment environment) {
       NativePatches.Install("DeepFrontier.HospitalMedicalSupplies", HospitalMedicalSupplies.Verify,
-        typeof(HospitalSupplyAvailability), typeof(HospitalSupplyAcquisition), typeof(HospitalSupplyConsumption), typeof(HospitalMedicalEffects));
-      Debug.Log("[DeepFrontier] Hospital condition-specific medicine patches applied.");
+        typeof(HospitalSupplyAvailability), typeof(HospitalSupplyAcquisition), typeof(HospitalSupplyConsumption),
+        typeof(HospitalMedicalEffects), typeof(HospitalSupplyHours));
+      Debug.Log("[DeepFrontier] Hospital per-treatment supply patches applied.");
     }
   }
 
@@ -39,8 +51,10 @@ namespace DeepFrontier.Scripts {
       foreach (var name in new[] { "CanUseInternal", "HasSupplies" })
         Require(AccessTools.Method(type, name, Type.EmptyTypes)?.ReturnType == typeof(bool), name);
       Require(AccessTools.Method(type, "ConsumeSupplies", Type.EmptyTypes)?.ReturnType == typeof(void), "ConsumeSupplies");
-      foreach (var (name, sha) in ReplacedIl) NativeIl.RequireBody("Hospital medical supplies", AccessTools.Method(type, name, Type.EmptyTypes), sha);
-      NativeIl.RequireBody("Hospital medical supplies", AccessTools.Method(typeof(Attraction), nameof(Attraction.GetEfficiencyAdjustedEffects),
+      Require(AccessTools.Method(type, nameof(GoodConsumingBuilding.HoursUntilNoSupply), Type.EmptyTypes)?.ReturnType == typeof(float),
+        "HoursUntilNoSupply");
+      foreach (var (name, sha) in ReplacedIl) NativeIl.RequireBody("Hospital supplies", AccessTools.Method(type, name, Type.EmptyTypes), sha);
+      NativeIl.RequireBody("Hospital supplies", AccessTools.Method(typeof(Attraction), nameof(Attraction.GetEfficiencyAdjustedEffects),
         new[] { typeof(List<ContinuousEffect>) }), EffectsIl);
       Require(AccessTools.Field(type, "_suppliesLeft")?.FieldType == typeof(List<float>), "_suppliesLeft");
       Require(AccessTools.Field(type, "_dayNightCycle")?.FieldType == typeof(IDayNightCycle), "_dayNightCycle");
@@ -54,56 +68,53 @@ namespace DeepFrontier.Scripts {
     }
   }
 
+  // No supply is required for the ward to be usable; each treatment checks its own.
   [HarmonyPatch(typeof(GoodConsumingBuilding), "CanUseInternal")]
   internal static class HospitalSupplyAvailability {
-    private static bool Prefix(GoodConsumingBuilding __instance, List<float> ____suppliesLeft, ref bool __result) {
+    private static bool Prefix(GoodConsumingBuilding __instance, ref bool __result) {
       if (!__instance.GetComponent<Hospital>()) return true;
       __result = true;
-      for (int i = 0; i < __instance.ConsumedGoods.Length; i++) {
-        var good = __instance.ConsumedGoods[i];
-        if (good.GoodId != Hospital.MedicineGoodId && ____suppliesLeft[i] <= 0
-            && __instance.Inventory.UnreservedAmountInStock(good.GoodId) == 0) __result = false;
-      }
       return false;
     }
   }
 
+  // Native: an empty dose takes one unit of its good from stock. Here only for a
+  // treatment an admitted patient needs, while the ward is open.
   [HarmonyPatch(typeof(GoodConsumingBuilding), "HasSupplies")]
   internal static class HospitalSupplyAcquisition {
     private static bool Prefix(GoodConsumingBuilding __instance, List<float> ____suppliesLeft, ref bool __result) {
       var hospital = __instance.GetComponent<Hospital>();
       if (!hospital) return true;
-      __result = __instance.CanUse;
-      if (!__result) return false;
-      var medicalPatients = hospital.CanUse && hospital.HasMedicalPatients;
+      __result = true;
+      if (!hospital.CanUse) return false;
       for (int i = 0; i < __instance.ConsumedGoods.Length; i++) {
-        var good = __instance.ConsumedGoods[i];
         if (____suppliesLeft[i] > 0) continue;
-        if (good.GoodId == Hospital.MedicineGoodId && (!medicalPatients
-            || __instance.Inventory.UnreservedAmountInStock(good.GoodId) == 0)) continue;
-        __instance.Inventory.TakeConsumed(new GoodAmount(good.GoodId, 1));
+        var good = __instance.ConsumedGoods[i].GoodId;
+        if (!hospital.SupplyInUse(i) || __instance.Inventory.UnreservedAmountInStock(good) == 0) continue;
+        __instance.Inventory.TakeConsumed(new GoodAmount(good, 1));
         ____suppliesLeft[i] = 1;
       }
       return false;
     }
   }
 
+  // Native: every dose is used at its hourly rate while consuming. Here a dose is
+  // used only while an admitted patient needs its treatment.
   [HarmonyPatch(typeof(GoodConsumingBuilding), "ConsumeSupplies")]
   internal static class HospitalSupplyConsumption {
     private static bool Prefix(GoodConsumingBuilding __instance, List<float> ____suppliesLeft, IDayNightCycle ____dayNightCycle) {
       var hospital = __instance.GetComponent<Hospital>();
       if (!hospital) return true;
-      if (!__instance.IsConsuming) return false;
-      var medicalPatients = hospital.CanProvideMedicalTreatment && hospital.HasMedicalPatients;
+      if (!__instance.IsConsuming || !hospital.CanUse) return false;
       for (int i = 0; i < __instance.ConsumedGoods.Length; i++) {
-        var good = __instance.ConsumedGoods[i];
-        if (good.GoodId == Hospital.MedicineGoodId && !medicalPatients) continue;
-        ____suppliesLeft[i] -= ____dayNightCycle.FixedDeltaTimeInHours * good.GoodPerHour;
+        if (____suppliesLeft[i] <= 0 || !hospital.SupplyInUse(i)) continue;
+        ____suppliesLeft[i] -= ____dayNightCycle.FixedDeltaTimeInHours * __instance.ConsumedGoods[i].GoodPerHour;
       }
       return false;
     }
   }
 
+  // Native body with one change: an effect whose treatment is unsupplied is left out.
   [HarmonyPatch(typeof(Attraction), nameof(Attraction.GetEfficiencyAdjustedEffects))]
   internal static class HospitalMedicalEffects {
     private static bool Prefix(Attraction __instance, List<ContinuousEffect> continuousEffects,
@@ -112,12 +123,34 @@ namespace DeepFrontier.Scripts {
       if (!hospital) return true;
       float efficiency = 1;
       foreach (var provider in ____efficiencyProviders) efficiency *= provider.Efficiency;
-      var medicalCare = hospital.CanProvideMedicalTreatment;
-      foreach (var effect in __instance.Effects) {
-        if (Hospital.NeedsMedicineFor(effect.NeedId) && !medicalCare) continue;
+      var effects = __instance.Effects;
+      for (int i = 0; i < effects.Count; i++) {
+        var effect = effects[i];
+        if (!hospital.TreatmentSupplied(effect.NeedId)) continue;
         continuousEffects.Add(new ContinuousEffect(effect.NeedId, effect.PointsPerHour * efficiency));
       }
       return false;
+    }
+  }
+
+  // The native supply bar (GoodConsumingBuildingFragment) shows the hours until
+  // the first good runs out. For a Hospital: the hours of the supplies that
+  // treatments in progress use (a dose plus unreserved stock, at its rate); the
+  // full working time while none is in use, since the ward then needs none.
+  // A missing supply has its own status (Hospital).
+  [HarmonyPatch(typeof(GoodConsumingBuilding), nameof(GoodConsumingBuilding.HoursUntilNoSupply))]
+  internal static class HospitalSupplyHours {
+    private static void Postfix(GoodConsumingBuilding __instance, List<float> ____suppliesLeft, ref float __result) {
+      var hospital = __instance.GetComponent<Hospital>();
+      if (!hospital) return;
+      float hours = __instance.MaximumWorkingTime;
+      for (int i = 0; i < __instance.ConsumedGoods.Length; i++) {
+        if (!hospital.SupplyInUse(i) || !hospital.SupplyAvailable(i)) continue;
+        var good = __instance.ConsumedGoods[i];
+        float left = (__instance.Inventory.UnreservedAmountInStock(good.GoodId) + Mathf.Max(0f, ____suppliesLeft[i])) / good.GoodPerHour;
+        if (left < hours) hours = left;
+      }
+      __result = hours;
     }
   }
 }

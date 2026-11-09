@@ -24,8 +24,11 @@ namespace DeepFrontier.Scripts {
     public const string NoPower = "DeepFrontier.Hospital.Panel.NoPower";
     public const string NoCrew = "DeepFrontier.Hospital.Panel.NoCrew";
     public const string NoMeals = "DeepFrontier.Hospital.Panel.NoMeals";
-    public const string NoSupplies = "DeepFrontier.Hospital.Panel.NoSupplies";
     public const string Treating = "DeepFrontier.Hospital.Panel.Treating";
+    public const string Supply = "DeepFrontier.Hospital.Panel.Supply";
+    public const string SupplyOut = "DeepFrontier.Hospital.Panel.SupplyOut";
+    // + need id: the supplied treatment's name.
+    public const string Treatment = "DeepFrontier.Hospital.Treatment.";
     public const string AreaActive = "DeepFrontier.Hospital.Panel.AreaActive";
     public const string AreaInactive = "DeepFrontier.Hospital.Panel.AreaInactive";
   }
@@ -33,7 +36,7 @@ namespace DeepFrontier.Scripts {
   internal sealed class HospitalPanel : BaseEntityPanelFragment<Hospital> {
     private readonly ILoc _loc;
     private readonly IGoodService _goods;
-    private Label _patients,_staff,_meals,_fed,_care,_area;
+    private Label _patients,_staff,_meals,_fed,_care,_supplies,_area;
     public HospitalPanel(ILoc loc,IGoodService goods) {_loc=loc;_goods=goods;}
     protected override void InitializePanel() {
       panel.AddGameLabel(_loc.T(HospitalPanelLoc.Title),bold:true);
@@ -41,6 +44,7 @@ namespace DeepFrontier.Scripts {
       _meals=panel.AddGameLabel();_meals.style.whiteSpace=WhiteSpace.Normal;
       _fed=panel.AddGameLabel();
       _care=panel.AddGameLabel();_care.style.whiteSpace=WhiteSpace.Normal;
+      _supplies=panel.AddGameLabel();_supplies.style.whiteSpace=WhiteSpace.Normal;
       _area=panel.AddGameLabel();
     }
     public override void ShowFragment(BaseComponent entity) {base.ShowFragment(entity);UpdateFragment();}
@@ -58,8 +62,16 @@ namespace DeepFrontier.Scripts {
       else if(!component.IsOperating)_care.text=_loc.T(HospitalPanelLoc.NoPower);
       else if(component.CrewAssigned==0)_care.text=_loc.T(HospitalPanelLoc.NoCrew);
       else if(pantry.MealsShort)_care.text=_loc.T(HospitalPanelLoc.NoMeals);
-      else if(!component.GetComponent<GoodConsumingBuilding>().CanUse)_care.text=_loc.T(HospitalPanelLoc.NoSupplies);
       else _care.text=_loc.T(HospitalPanelLoc.Treating,(component.Efficiency*100).ToString("0"));
+      // One line per supplied treatment (HospitalSpec.TreatmentSupplies).
+      var inventory=component.GetComponent<GoodConsumingBuilding>().Inventory;
+      _supplies.text=string.Join("\n",Enumerable.Range(0,component.SupplyCount).Select(i=>{
+        var treatment=_loc.T(HospitalPanelLoc.Treatment+component.SupplyNeed(i));
+        var good=_goods.GetGood(component.SupplyGood(i)).PluralDisplayName.Value;
+        return component.SupplyAvailable(i)
+          ?_loc.T(HospitalPanelLoc.Supply,treatment,inventory.AmountInStock(component.SupplyGood(i)),good)
+          :_loc.T(HospitalPanelLoc.SupplyOut,treatment,good);
+      }));
       _area.text=_loc.T(component.ProvidesNeighborhoodCare?HospitalPanelLoc.AreaActive:HospitalPanelLoc.AreaInactive);
     }
   }

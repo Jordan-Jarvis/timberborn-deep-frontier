@@ -8,7 +8,10 @@ const p=(await read('tools/frontier_progression.json')).hospital;
 const size=b.BlockObjectSpec.Size;
 const layout=(await read('tools/civic-layouts.json')).Hospital;
 const source='tools/frontier_progression.json; src/DeepFrontier/Data/Buildings/Wellbeing/Hospital; src/DeepFrontier/Scripts/Hospital.cs';
-const inputs=p.suppliesPerHour.map(g=>`${g.GoodPerHour} ${name(g.GoodId)}${g.GoodId==='Medicine'?' (only contamination/radiation treatment)':''}`).join('; ');
+// Per-treatment supplies from the generated blueprint (consumed only while a patient needs that treatment).
+const treatment=good=>b.HospitalSpec.TreatmentSupplies.find(t=>t.GoodId===good).NeedId;
+const inputs=b.GoodConsumingBuildingSpec.ConsumedGoods.map(g=>`${g.GoodPerHour} ${name(g.GoodId)} (${name(treatment(g.GoodId))})`).join('; ')
+  +'; injuries and chipped teeth need none';
 export const hospitalBuildingUpdates=new Map([['B011',{
   'Infobox':'Native treatment attraction and workplace','Width':size.X,'Length':size.Y,'Footprint':`${size.X}x${size.Y}`,
   'Footprint tiles':size.X*size.Y,'Height':size.Z,'Workers':b.WorkplaceSpec.MaxWorkers,
@@ -19,8 +22,8 @@ export const hospitalBuildingUpdates=new Map([['B011',{
   'Role':'Treat injuries, chipped teeth, badwater contamination and radiation; staffed neighborhood care',
   'Stackable':'Open 4x2 roof garden (3x2 clear beside the stairhead)','Stacking rule':'Roof garden at layer 2; player-placed paths; native support/collision; no layer cap',
   'Conveyor-only solids':'No','Pipe ports':'Water inventory; pipe transfer unverified','Power mode':'Grid',
-  'Unlock prerequisites':`${p.scienceUnlock} science; concrete, treated planks, metal, gears; medicine, water and extract deliveries`,
-  'Inputs':`${inputs} per operating hour; ${p.supplyBufferHours}-hour buffer`,
+  'Unlock prerequisites':`${p.scienceUnlock} science; concrete, treated planks, metal, gears; extract and medicine deliveries for decontamination and radiation care`,
+  'Inputs':`${inputs}; per hour while in use; ${p.supplyBufferHours}-hour buffer`,
   'Outputs':'Native condition recovery; Public Healthcare neighborhood wellbeing','Waste / side effect':'None',
   'Placement':'Compact 4x4 two-storey pavilion; two one-tile doors (ground and roof garden at layer 2) connect through enclosed interiors to player-built paths',
   'Player cue':'Care panel shows patient occupancy, attending staff and care availability','Status':p.requirementStatus,
@@ -31,20 +34,20 @@ export const hospitalItemUpdates=new Map([['I012',{
   'Source / recipe':'Retired','Consumed by':'None','Source':'tools/content_policy.json migratedGoods',
   'Data status':'Retired 2026-10-30; saved stock loads as Canned Fish','Primary uses':'None',
   'Notes':'Removed: a plain Hunger 0.3 food with no medical effect. The Hospital uses Medicine.'
-}],['I011',{'Primary uses':'Hospital contamination/radiation treatment; Technical School reactor course','Consumed by':'Hospital; Technical School',
-  'Notes':'Hospital consumes 2 per hour only while treating contamination or radiation. Ordinary care and neighborhood wellbeing require no medicine. Reactor studies use it as a course supply.'}]]);
+}],['I011',{'Primary uses':'Hospital radiation care; Technical School reactor course','Consumed by':'Hospital; Technical School',
+  'Notes':'Hospital consumes it only while treating radiation; other treatments and neighborhood wellbeing need none. Reactor studies use it as a course supply.'}]]);
 export const hospitalProgressionUpdates=new Map([['G005',{
   'Player goal':'Provide large-scale hospital care','Required buildings':'Hospital; medicine production and water supply',
   'Science range':p.scienceUnlock,
   'Required items':amounts(b.BuildingSpec.BuildingCost),
-  'Infrastructure gate':`${b.MechanicalNodeSpec.PowerInput} hp; ${p.workers} staff; ${inputs} per operating hour`,
+  'Infrastructure gate':`${b.MechanicalNodeSpec.PowerInput} hp; ${p.workers} staff; ${inputs}`,
   'Suggested trigger':'Injured, chipped-tooth or contaminated workers need more care capacity',
   'Why now':'Thirty patient places and faster full-staff injury recovery support a larger industrial colony',
-  'Player-facing cue':'Hospital care panel and native health needs; neighborhood benefit requires operating supplies',
+  'Player-facing cue':'Hospital care panel and native health needs; neighborhood benefit requires attending staff',
   'Status':p.requirementStatus,'Data status':p.balanceStatus
 }]]);
 export const hospitalTransport=['T018','Iron Teeth','Hospital supplies and access','Native hauling; player-placed deck paths',
-  'Medicine; Water; Extract',null,b.MechanicalNodeSpec.PowerInput,'Ground entrance; native power shaft; six attending staff',
+  'Extract; Medicine; patient food and water',null,b.MechanicalNodeSpec.PowerInput,'Ground entrance; native power shaft; six attending staff',
   'Two doors at 0/2; roof garden at layer 2',`${p.areaRadius}-cell native area effect`,
   'Sustain ward care and nearby wellbeing',`${p.supplyBufferHours}-hour input buffer; actual attending staff`,
   'Pipes and belts require runtime checks','Native Enterable, Attraction, GoodConsumingBuilding and RangedEffectBuilding',

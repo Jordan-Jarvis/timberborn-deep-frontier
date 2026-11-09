@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Immutable;
 using System.Linq;
 using Bindito.Core;
 using Timberborn.Attractions;
@@ -11,7 +12,9 @@ using Timberborn.Buildings;
 using Timberborn.Common;
 using Timberborn.EnterableSystem;
 using Timberborn.EntitySystem;
+using Timberborn.GameDistricts;
 using Timberborn.GoodConsumingBuildingSystem;
+using Timberborn.InventorySystem;
 using Timberborn.MechanicalSystem;
 using Timberborn.NeedSpecs;
 using Timberborn.NeedSystem;
@@ -30,6 +33,14 @@ namespace DeepFrontier.Scripts {
     [Serialize] public Vector3 WardWorkPosition { get; init; }
     [Serialize] public int RequiredStaff { get; init; }
     [Serialize] public ContinuousEffectSpec NeighborhoodEffect { get; init; }
+    // The good each supplied treatment consumes (GoodConsumingBuildingSpec
+    // ConsumedGoods, one each); every other attraction effect needs none.
+    [Serialize] public ImmutableArray<HospitalTreatmentSupplySpec> TreatmentSupplies { get; init; }
+  }
+
+  internal record HospitalTreatmentSupplySpec {
+    [Serialize] public string NeedId { get; init; }
+    [Serialize] public string GoodId { get; init; }
   }
 
   // Native Attraction owns condition recovery, Enterable owns the thirty
@@ -48,15 +59,23 @@ namespace DeepFrontier.Scripts {
   // it needs (HospitalPantry.MealsShort); admission never waits for a
   // delivery, although admitted patients cannot leave to eat. Treatment runs at the
   // crew's strength, around the clock. Staff still attend the ward during
-  // working hours; their attendance drives neighborhood care and water/extract use.
-  // HospitalMedicalSupplies restricts medicine to contamination/radiation cases,
-  // leaving ordinary care usable without it and preserving native fractional doses.
-  // Without medical treatment, HospitalMedicalVisits neither admits nor keeps a
-  // patient for those needs alone.
+  // working hours; their attendance drives neighborhood care.
+  //
+  // Supplies are per treatment (user 2026-11-09; HospitalSpec.TreatmentSupplies):
+  // injuries and chipped teeth need none (as the vanilla Medical Bed and Teeth
+  // Grindstone), decontamination consumes Extract (as the Decontamination Pod)
+  // and radiation care consumes Medicine. A treatment is supplied while its good
+  // is in the ward (a native fractional dose or unreserved stock).
+  // HospitalMedicalSupplies consumes each good only while an admitted patient
+  // needs its treatment, applies only supplied effects and reports per-treatment
+  // hours; HospitalMedicalVisits neither admits nor keeps a patient for
+  // unsupplied treatments alone. Each missing supply has its own status, shown
+  // as native LackOfResourcesStatus would be (open, none in the district).
   internal sealed class Hospital : TickableComponent, IAwakableComponent,
       IFinishedStateListener, IInitializableEntity, IBuildingEfficiencyProvider {
-    internal const string MedicineGoodId = "Medicine";
-    internal static bool NeedsMedicineFor(string needId) => needId == "BadwaterContamination" || needId == "Irradiation";
+    // Native AttractionNeedBehavior.MaxValueTolerance (1.1.2.8): a need closer to
+    // its maximum is satisfied.
+    internal const float NeedTolerance = 0.001f;
     private readonly ILoc _loc;
     private HospitalSpec _spec;
     private Workplace _workplace;
@@ -68,9 +87,13 @@ namespace DeepFrontier.Scripts {
     private Attraction _attraction;
     private HospitalPantry _pantry;
     private Enterable _ward;
+    private DistrictBuilding _district;
     private IAnimator _banners;
     private bool _areaEffectAdded;
-    private StatusToggle _medicineStatus;
+    // Per native consumed good, in ConsumedGoods order: its treatment, good and status.
+    private string[] _supplyNeeds;
+    private string[] _supplyGoods;
+    private StatusToggle[] _supplyStatuses;
     public Hospital(ILoc loc) { _loc = loc; }
     public Vector3 WardPosition => Transform.TransformPoint(_spec.WardWorkPosition);
     public bool IsOperating => Enabled && _blockable.IsUnblocked && _power.ActiveAndPowered;
@@ -84,18 +107,48 @@ namespace DeepFrontier.Scripts {
     public float Efficiency => (float)CrewAssigned/_spec.RequiredStaff;
     public bool ProvidesNeighborhoodCare => _areaEffectAdded;
     public HospitalPantry Pantry => _pantry;
-    public bool HasMedicalPatients => _ward.EnterersInside.Any(p => {
-      var needs = p.GetComponent<NeedManager>();
-      return needs.NeedPointsToMax("BadwaterContamination") > 0 || needs.NeedPointsToMax("Irradiation") > 0;
-    });
-    // Native HoursUntilNoSupply includes fractional doses and every required supply.
-    // Ordinary care checks CanUse (which excludes medicine); medical effects check all supplies.
-    public bool CanProvideMedicalTreatment => CanUse && _supplies.CanUse && _supplies.HoursUntilNoSupply() > 0;
-    // A need this ward treats without medicine (every effect but the medical
-    // ones), with native AttractionNeedBehavior's MaxValueTolerance (1.1.2.8).
-    internal bool HasOrdinaryCareNeed(NeedManager needs) {
-      foreach (var effect in _attraction.Effects)
-        if (!NeedsMedicineFor(effect.NeedId) && needs.NeedPointsToMax(effect.NeedId) > 0.001f) return true;
+    public int SupplyCount => _supplyNeeds.Length;
+    public string SupplyNeed(int index) => _supplyNeeds[index];
+    public string SupplyGood(int index) => _supplyGoods[index];
+
+    // Index of the native consumed good a treatment uses; -1 when it needs none.
+    public int SupplyIndex(string needId) {
+      for (int i = 0; i < _supplyNeeds.Length; i++) if (_supplyNeeds[i] == needId) return i;
+      return -1;
+    }
+
+    // Its good is in the ward: a native fractional dose (ProcessedGoods) or unreserved stock.
+    public bool SupplyAvailable(int index) {
+      var good = _supplyGoods[index];
+      if (_supplies.Inventory.UnreservedAmountInStock(good) > 0) return true;
+      var dosed = _supplies.ProcessedGoods;
+      for (int i = 0; i < dosed.Count; i++) if (dosed[i].GoodId == good) return true;
+      return false;
+    }
+
+    public bool TreatmentSupplied(string needId) {
+      int index = SupplyIndex(needId);
+      return index < 0 || SupplyAvailable(index);
+    }
+
+    // The ward treats this condition now: open (CanUse) and its supply, if any, available.
+    public bool CanTreat(string needId) => CanUse && TreatmentSupplied(needId);
+
+    // The beaver has a condition the ward can treat with its current supplies.
+    internal bool HasTreatableNeed(NeedManager needs) {
+      var effects = _attraction.Effects;
+      for (int i = 0; i < effects.Count; i++) {
+        var id = effects[i].NeedId;
+        if (needs.NeedPointsToMax(id) > NeedTolerance && TreatmentSupplied(id)) return true;
+      }
+      return false;
+    }
+
+    // An admitted patient needs the treatment of consumed good `index`.
+    internal bool SupplyInUse(int index) {
+      var need = _supplyNeeds[index];
+      foreach (var patient in _ward.EnterersInside)
+        if (patient.GetComponent<NeedManager>().NeedPointsToMax(need) > NeedTolerance) return true;
       return false;
     }
 
@@ -108,33 +161,66 @@ namespace DeepFrontier.Scripts {
       _attraction=GetComponent<Attraction>();
       if(_attraction==null)throw new InvalidOperationException("Hospital requires its native Attraction");
       _range=GetComponent<RangedEffectBuilding>();
+      _district=GetComponent<DistrictBuilding>();
+      if(_district==null)throw new InvalidOperationException("Hospital requires the native DistrictBuilding");
       if(_spec.RequiredStaff<=0 || GetComponent<WorkplaceSpec>().MaxWorkers!=_spec.RequiredStaff)
         throw new InvalidOperationException("Hospital staffing must match the authored workplace capacity");
+      ReadTreatmentSupplies();
       var finished=GameObject.FindChildIfNameNotEmpty(GetComponent<BuildingModelSpec>().FinishedModelName);
       _banners=finished.GetComponentsInChildren<MonoBehaviour>(true).OfType<IAnimator>().Single();
       _staffToggle.PauseConsumption(); DisableComponent();
     }
+    // Every consumed good serves exactly one treatment of the attraction, and
+    // every supplied treatment names a consumed good (generated by
+    // tools/hospital_building_content.mjs; checked by validate_radiation_content).
+    private void ReadTreatmentSupplies() {
+      var consumed = GetComponent<GoodConsumingBuildingSpec>().ConsumedGoods;
+      var effects = GetComponent<AttractionSpec>().Effects;
+      var supplies = _spec.TreatmentSupplies;
+      if (supplies.IsDefault || supplies.Length != consumed.Length)
+        throw new InvalidOperationException("Hospital: every consumed good must be the supply of one treatment (HospitalSpec.TreatmentSupplies)");
+      _supplyNeeds = new string[consumed.Length];
+      _supplyGoods = new string[consumed.Length];
+      for (int i = 0; i < consumed.Length; i++) {
+        var good = consumed[i].GoodId;
+        var matches = supplies.Where(s => s.GoodId == good).ToList();
+        if (matches.Count != 1) throw new InvalidOperationException($"Hospital: consumed good {good} must supply exactly one treatment");
+        var need = matches[0].NeedId;
+        if (!effects.Any(e => e.NeedId == need)) throw new InvalidOperationException($"Hospital: supplied treatment {need} is not an attraction effect");
+        if (_supplyNeeds.Contains(need)) throw new InvalidOperationException($"Hospital: treatment {need} has two supplies");
+        _supplyNeeds[i] = need;
+        _supplyGoods[i] = good;
+      }
+    }
+
     public void InitializeEntity() {
-      _medicineStatus = StatusToggle.CreateNormalStatusWithAlertAndFloatingIcon("LackOfResources",
-        _loc.T("DeepFrontier.Hospital.Status.Medicine"), _loc.T("DeepFrontier.Hospital.Status.Medicine.Short"));
-      GetComponent<StatusSubject>().RegisterStatus(_medicineStatus);
+      _supplyStatuses = new StatusToggle[_supplyGoods.Length];
+      var subject = GetComponent<StatusSubject>();
+      for (int i = 0; i < _supplyGoods.Length; i++) {
+        var key = "DeepFrontier.Hospital.Status." + _supplyGoods[i];
+        _supplyStatuses[i] = StatusToggle.CreateNormalStatusWithAlertAndFloatingIcon("LackOfResources", _loc.T(key), _loc.T(key + ".Short"));
+        subject.RegisterStatus(_supplyStatuses[i]);
+      }
     }
     public void OnEnterFinishedState() {
       EnableComponent(); _banners.Enabled=true; _banners.Play("Default");
     }
     public void OnExitFinishedState() {
       SetNeighborhoodCare(false); _staffToggle.PauseConsumption();
-      _medicineStatus.Deactivate();
+      foreach (var status in _supplyStatuses) status.Deactivate();
       _banners.Stop(); DisableComponent();
     }
     public override void Tick() {
       var attended=Attended;
       // Supplies are used while staff attend or patients are treated.
       if(attended || (CanUse && _ward.NumberOfEnterersInside>0))_staffToggle.ResumeConsumption();else _staffToggle.PauseConsumption();
-      SetNeighborhoodCare(attended && _supplies.CanUse);
-      bool medicineAvailable = _supplies.Inventory.UnreservedAmountInStock(MedicineGoodId) > 0
-        || _supplies.ProcessedGoods.Any(g => g.GoodId == MedicineGoodId);
-      if (CanUse && HasMedicalPatients && !medicineAvailable) _medicineStatus.Activate(); else _medicineStatus.Deactivate();
+      // Neighborhood care uses no supplies, as no ward treatment requires one by itself.
+      SetNeighborhoodCare(attended);
+      // As native LackOfResourcesStatus: the ward open, its good missing here and in the district.
+      var district = _district.District;
+      var stock = district ? district.GetComponent<DistrictInventoryRegistry>() : null;
+      for (int i = 0; i < _supplyGoods.Length; i++)
+        _supplyStatuses[i].Toggle(CanUse && stock != null && !SupplyAvailable(i) && stock.ActiveInventoriesWithStock(_supplyGoods[i]).Count == 0);
     }
     private void SetNeighborhoodCare(bool active) {
       if(active==_areaEffectAdded)return;

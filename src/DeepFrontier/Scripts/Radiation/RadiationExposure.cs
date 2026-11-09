@@ -158,7 +158,7 @@ namespace DeepFrontier.Scripts.Radiation {
       if (!IsIrradiated) { _untreatedHours = 0f; return; }
       float now = _dayNightCycle.PartialDayNumber * 24f;
       var hospital = building != null ? building.GetComponent<Hospital>() : null;
-      if (hospital != null && hospital.CanProvideMedicalTreatment) _lastCareHour = now;
+      if (hospital != null && hospital.CanTreat(RadiationTuning.NeedId)) _lastCareHour = now;
       if (now - _lastCareHour > RadiationTuning.CareGraceHours) _untreatedHours += hours;
       if (_untreatedHours >= RadiationTuning.LethalUntreatedHours) {
         _dying = true;

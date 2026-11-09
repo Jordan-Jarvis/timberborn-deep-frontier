@@ -29,12 +29,14 @@ assert len(hospitals)==1
 hospital=hospitals[0];components=hospital['Components']
 assert components['PausableBuilding']['Paused']
 stocks={g['Good']:g['Amount'] for g in components['Inventory:GoodConsumingBuilding']['Storage']['Goods']}
-assert set(stocks)=={'Medicine','Water','Extract'}
 blueprint=json.loads((root/'src/DeepFrontier/Data/Buildings/Wellbeing/Hospital/Hospital.IronTeeth.blueprint.json').read_text(encoding='utf-8'))
+# Per-treatment supplies (HospitalSpec.TreatmentSupplies) plus the pantry water.
 rates=blueprint['GoodConsumingBuildingSpec']['ConsumedGoods']
+supplied={s['GoodId'] for s in blueprint['HospitalSpec']['TreatmentSupplies']}
+assert supplied=={g['GoodId'] for g in rates}
+assert supplied|{'Water'}<=set(stocks),(supplied,stocks)
 fractions=components['GoodConsumingBuilding']['SuppliesLeft']
-assert len(rates)==len(fractions)==3
-hours=min((stocks[g['GoodId']]+fraction)/g['GoodPerHour'] for g,fraction in zip(rates,fractions))
+assert len(rates)==len(fractions)
 patients=[]
 for entity in world['Entities']:
     if entity['Template']!='BeaverAdult':continue
@@ -42,12 +44,12 @@ for entity in world['Entities']:
            if n['Name'] in {'Injury','ChippedTeeth','BadwaterContamination','PublicHealthcare'}]
     if needs:patients.append({'EntityId':entity['Id'],'Needs':needs})
 assert len(patients)>=3
-record={'EntityId':hospital['Id'],**stocks,'SupplyHours':hours,'Patients':patients}
+record={'EntityId':hospital['Id'],**{g:stocks[g] for g in ('Medicine','Water','Extract')},'SuppliesLeft':fractions,'Patients':patients}
 (root/'outputs/hospital-reload-expectations.json').write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8')
 preserved=root/f'outputs/hospital-verified-build{args.build}.timber'
 shutil.copyfile(source,preserved)
 evidence={'build':args.build,'nativeSave':str(source),'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
-          'preserved':str(preserved),'stocks':stocks,'fractionalSupplies':fractions,'hours':hours,
+          'preserved':str(preserved),'stocks':stocks,'fractionalSupplies':fractions,
           'savedAdultsWithHealthOrNeighborhoodPoints':len(patients),
           'verifiedPlacements':len(placed_entities),'entities':placed_entities}
 (root/'outputs/hospital-reload-source.json').write_text(json.dumps(evidence,indent=2)+'\n',encoding='utf-8')

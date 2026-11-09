@@ -1362,12 +1362,8 @@
         "GoodPerHour": 2
       },
       {
-        "GoodId": "Water",
-        "GoodPerHour": 12
-      },
-      {
         "GoodId": "Extract",
-        "GoodPerHour": 1
+        "GoodPerHour": 0.2
       }
     ],
     "FullInventoryWorkHours": 24
@@ -1392,6 +1388,16 @@
       "Z": 3.5
     },
     "RequiredStaff": 6,
+    "TreatmentSupplies": [
+      {
+        "NeedId": "Irradiation",
+        "GoodId": "Medicine"
+      },
+      {
+        "NeedId": "BadwaterContamination",
+        "GoodId": "Extract"
+      }
+    ],
     "NeighborhoodEffect": {
       "NeedId": "PublicHealthcare",
       "PointsPerHour": 0.15,

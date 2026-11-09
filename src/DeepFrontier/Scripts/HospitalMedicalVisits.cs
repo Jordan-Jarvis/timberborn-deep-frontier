@@ -12,13 +12,13 @@ namespace DeepFrontier.Scripts {
   // in the static AttractionSpec effect list (DistrictNeedBehaviorService
   // groups behaviors by those effects) whenever Attraction.IsUsable, and
   // MaxValueNeedsAreActive keeps a visitor until every SatisfyToMaxValue need
-  // is full. Ordinary hospital care no longer requires medicine
-  // (HospitalMedicalSupplies), so without medical treatment the ward stayed
-  // usable for beavers needing only decontamination or radiation care: they
-  // were drawn away from Decontamination Pods and held, untreated, in its
-  // thirty beds. While the hospital cannot treat those needs it neither offers
-  // itself to a beaver that has no ordinary-care need nor keeps a patient for
-  // them; injury and tooth care, and every native rule, are unchanged.
+  // is full. Hospital supplies are per treatment (HospitalMedicalSupplies), so
+  // the ward stays usable while one treatment's supply is out: without these
+  // postfixes, beavers needing only that treatment (decontamination without
+  // Extract, radiation care without Medicine) were drawn away from other care
+  // and held, untreated, in its thirty beds. The hospital neither offers
+  // itself to a beaver with no condition it can treat now nor keeps a patient
+  // for unsupplied treatments alone; every native rule is otherwise unchanged.
   internal sealed class HospitalMedicalVisitsModStarter : IModStarter {
     public void StartMod(IModEnvironment environment) {
       NativePatches.Install("DeepFrontier.HospitalMedicalVisits", Verify, typeof(HospitalMedicalOffer), typeof(HospitalMedicalStay));
@@ -45,7 +45,7 @@ namespace DeepFrontier.Scripts {
     private static void Postfix(AttractionNeedBehavior __instance, NeedManager needManager, ref Vector3? __result) {
       if (!__result.HasValue) return;
       var hospital = __instance.GetComponent<Hospital>();
-      if (hospital && !hospital.CanProvideMedicalTreatment && !hospital.HasOrdinaryCareNeed(needManager)) __result = null;
+      if (hospital && !hospital.HasTreatableNeed(needManager)) __result = null;
     }
   }
 
@@ -55,7 +55,7 @@ namespace DeepFrontier.Scripts {
     private static void Postfix(AttractionNeedBehavior __instance, BehaviorAgent agent, ref bool __result) {
       if (__result) return;
       var hospital = __instance.GetComponent<Hospital>();
-      if (hospital && !hospital.CanProvideMedicalTreatment && !hospital.HasOrdinaryCareNeed(agent.GetComponent<NeedManager>())) __result = true;
+      if (hospital && !hospital.HasTreatableNeed(agent.GetComponent<NeedManager>())) __result = true;
     }
   }
 }

@@ -91,6 +91,7 @@ const needCollection = await readJson(resolve(dataRoot, 'NeedCollections', 'Need
 check((needCollection?.NeedCollectionSpec?.['Needs#append'] ?? []).filter(n => n === NEED).length === 1, 'Irradiation must appear once in the Iron Teeth need collection');
 
 // --- hospital
+const hospitalSupplyKeys = [];
 const hospital = await readJson(resolve(dataRoot, 'Buildings', 'Wellbeing', 'Hospital', 'Hospital.IronTeeth.blueprint.json'));
 if (hospital) {
   const effects = hospital.AttractionSpec?.Effects ?? [];
@@ -108,6 +109,35 @@ if (hospital) {
   check(meals?.WaterGoodId === 'Water' && meals.FoodCapacityPerGood > 0 && meals.WaterCapacity > 0 && meals.LowStockUnits > 0, 'Hospital must stock patient meals (HospitalPantrySpec): admitted patients cannot leave to eat');
   const progressionMeals = (await readJson(resolve(root, 'tools', 'frontier_progression.json')))?.hospital?.patientMeals;
   check(progressionMeals?.zombieNeedMultiplier === Number((csharp['IRadiationService.cs'] ?? '').match(/ZombieNeedDecayMultiplier = ([0-9.]+)f/)?.[1]), 'hospital.patientMeals.zombieNeedMultiplier must equal RadiationTuning.ZombieNeedDecayMultiplier (pantry water sized for zombies)');
+  // Supplies per treatment (user 2026-11-09): injuries and chipped teeth need
+  // none (vanilla Medical Bed and Teeth Grindstone consume nothing),
+  // decontamination uses the vanilla Decontamination Pod's good at its rate times
+  // the hospital's decontamination multiplier, radiation care uses Medicine.
+  const care = (await readJson(resolve(root, 'tools', 'frontier_progression.json')))?.hospital;
+  const vanilla = async path => readJson(resolve(vanillaRoot, 'Buildings', 'Wellbeing', path));
+  const bed = await vanilla('MedicalBed/MedicalBed.IronTeeth.blueprint.json');
+  const teeth = await vanilla('TeethGrindstone/TeethGrindstone.IronTeeth.blueprint.json');
+  const pod = await vanilla('DecontaminationPod/DecontaminationPod.IronTeeth.blueprint.json');
+  check(bed && teeth && !bed.GoodConsumingBuildingSpec && !teeth.GoodConsumingBuildingSpec,
+    'vanilla Medical Bed and Teeth Grindstone must consume nothing (the Hospital treats injuries and teeth without supplies)');
+  const podGoods = pod?.GoodConsumingBuildingSpec?.ConsumedGoods ?? [];
+  check(podGoods.length === 1 && podGoods[0].GoodId === 'Extract', 'vanilla Decontamination Pod must consume Extract alone');
+  const expected = [
+    {NeedId: NEED, GoodId: 'Medicine', GoodPerHour: care?.treatmentSupplies?.find(t => t.NeedId === NEED)?.GoodPerHour},
+    {NeedId: 'BadwaterContamination', GoodId: podGoods[0]?.GoodId, GoodPerHour: podGoods[0]?.GoodPerHour * care?.decontaminationRateMultiplier},
+  ];
+  const supplies = hospital.HospitalSpec?.TreatmentSupplies ?? [];
+  const consumed = hospital.GoodConsumingBuildingSpec?.ConsumedGoods ?? [];
+  check(JSON.stringify(supplies) === JSON.stringify(expected.map(({NeedId, GoodId}) => ({NeedId, GoodId}))),
+    `Hospital TreatmentSupplies must be radiation care: Medicine, decontamination: Extract (found ${JSON.stringify(supplies)})`);
+  check(consumed.length === expected.length && consumed.every((g, i) => g.GoodId === expected[i].GoodId && expected[i].GoodPerHour > 0
+      && Math.abs(g.GoodPerHour - expected[i].GoodPerHour) < 1e-9),
+    `Hospital consumed goods must be exactly its treatment supplies at their rates (found ${JSON.stringify(consumed)}, expected ${JSON.stringify(expected)})`);
+  check(supplies.every(s => effects.some(e => e.NeedId === s.NeedId)), 'every Hospital supplied treatment must be one of its attraction effects');
+  check(!supplies.some(s => s.NeedId === 'Injury' || s.NeedId === 'ChippedTeeth'), 'Hospital injury and teeth care must need no supplies');
+  hospitalSupplyKeys.push(...supplies.flatMap(s => [`DeepFrontier.Hospital.Status.${s.GoodId}`, `DeepFrontier.Hospital.Status.${s.GoodId}.Short`,
+    `DeepFrontier.Hospital.Treatment.${s.NeedId}`]));
+  notes.push(`hospital supplies: ${consumed.map((g, i) => `${supplies[i]?.NeedId} ${g.GoodPerHour} ${g.GoodId}/h`).join(', ')}; injuries and teeth none`);
 }
 
 // --- recipes
@@ -597,6 +627,8 @@ const conversionEnd = conversionBlock < 0 ? -1 : (() => {
 })();
 check(conversionEnd > 0 && processBody.indexOf('allower.Allow(') > conversionEnd, 'tank allower switch must run on every pass, outside the conversion branch');
 const exposure = csharp['RadiationExposure.cs'] ?? '';
+check(/hospital != null && hospital\.CanTreat\(RadiationTuning\.NeedId\)\) _lastCareHour = now;/.test(exposure),
+  'radiation sickness counts hospital care only while the ward can treat Irradiation (its medicine supplied)');
 check(/class RadiationExposure\b[^{]*IChildhoodInfluenced/.test(exposure) && /_untreatedHours = childExposure\._untreatedHours/.test(exposure) && /_dose = childExposure\._dose/.test(exposure), 'RadiationExposure must carry dose and untreated time from kit to adult');
 
 // --- C# decorators and localization
@@ -614,7 +646,7 @@ check(locKeys.length >= 7, 'RadiationLoc keys not found');
 blueprintKeys.push(`Need.${NEED}.DisplayName`, `Status.Need.${NEED}`, `Status.Need.${NEED}.Short`,
   ...[SLUDGE, CONTAMINATED_WATER].flatMap(id => [`Good.${id}.DisplayName`, `Good.${id}.PluralDisplayName`]),
   ...RADIATION_BUILDINGS.flatMap(b => ['DisplayName', 'Description', 'FlavorDescription'].map(k => `Building.${b.id}.${k}`)));
-for (const key of [...locKeys, ...blueprintKeys]) check(locIds.has(key), `enUS.csv is missing ${key}`);
+for (const key of [...locKeys, ...blueprintKeys, ...hospitalSupplyKeys]) check(locIds.has(key), `enUS.csv is missing ${key}`);
 const sprites = allCs.match(/class RadiationSprites \{([\s\S]*?)\n  \}/)?.[1] ?? '';
 notes.push(`placeholder building status sprites: ${[...new Set([...sprites.matchAll(/= "([^"]+)"/g)].map(m => m[1]))].join(', ')}`);
 

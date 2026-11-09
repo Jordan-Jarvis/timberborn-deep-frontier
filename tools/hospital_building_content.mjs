@@ -31,6 +31,26 @@ function nativeEntrance(layout,blocks,index){
   return b;
 }
 
+// The good and hourly rate of each supplied treatment, in authored order.
+function treatmentSupplies(care,vanilla) {
+  const supplies=vanilla=>vanilla.GoodConsumingBuildingSpec?.ConsumedGoods??[];
+  const free=care.freeTreatments.vanillaBuildings;
+  for(const [need,id] of [['Injury','bed'],['ChippedTeeth','teeth']]) {
+    if(free[need]===undefined)throw new Error('Hospital freeTreatments must name the vanilla building for '+need);
+    if(supplies(vanilla[id]).length)throw new Error(`Vanilla ${free[need]} now consumes goods; revisit the free ${need} treatment`);
+  }
+  return care.treatmentSupplies.map(t=>{
+    if(t.vanillaSupplyFrom===undefined) {
+      if(!t.GoodId||!(t.GoodPerHour>0))throw new Error('Hospital supply for '+t.NeedId+' needs a good and a positive rate');
+      return {NeedId:t.NeedId,GoodId:t.GoodId,GoodPerHour:t.GoodPerHour};
+    }
+    if(t.vanillaSupplyFrom!=='DecontaminationPod'||t.NeedId!=='BadwaterContamination')throw new Error('Unknown vanilla supply basis '+t.vanillaSupplyFrom);
+    const goods=supplies(vanilla.pod);
+    if(goods.length!==1)throw new Error('Vanilla Decontamination Pod no longer consumes exactly one good');
+    return {NeedId:t.NeedId,GoodId:goods[0].GoodId,GoodPerHour:goods[0].GoodPerHour*care.decontaminationRateMultiplier};
+  });
+}
+
 export async function applyHospital(value) {
   if (!(care.decontaminationRateMultiplier > 1) || !Number.isFinite(care.decontaminationRateMultiplier))
     throw new Error('Hospital decontamination must be faster than the native pod');
@@ -115,7 +135,14 @@ export async function applyHospital(value) {
   value.HospitalPantrySpec={FoodCapacityPerGood:meals.foodUnitsPerGood,WaterGoodId:meals.waterGood,
     WaterCapacity:Math.ceil(care.patientCapacity*meals.zombieNeedMultiplier*-thirst.DailyDelta*meals.waterDays/quench[0].Points),
     LowStockUnits:meals.lowStockUnits};
-  value.GoodConsumingBuildingSpec={ConsumedGoods:care.suppliesPerHour,FullInventoryWorkHours:care.supplyBufferHours};
+  // Supplies per treatment (user 2026-11-09), from the vanilla equivalents:
+  // the Medical Bed and Teeth Grindstone consume nothing; the Decontamination
+  // Pod's good and rate, scaled to the doubled treatment rate; radiation care
+  // has no vanilla equivalent and uses Medicine. Each good is consumed per
+  // building, only while an admitted patient needs its treatment
+  // (HospitalTreatmentSupplies.cs); medicine keeps index 0 for saved doses.
+  value.GoodConsumingBuildingSpec={ConsumedGoods:treatmentSupplies(care,{bed,teeth,pod}).map(({GoodId,GoodPerHour})=>({GoodId,GoodPerHour})),
+    FullInventoryWorkHours:care.supplyBufferHours};
   value.PoweredGoodConsumingBuildingSpec={};
   value.EntererNeedSuspendingBuildingSpec=bed.EntererNeedSuspendingBuildingSpec;
   // Workplace already implements native IStatusHider. Enterer requests one
@@ -124,6 +151,7 @@ export async function applyHospital(value) {
   value.EnterableIlluminatorSpec={};
   value.RangedEffectBuildingSpec={EffectRadius:care.areaRadius};
   value.HospitalSpec={WardWorkPosition:xyz(layout.wardWorkPosition),RequiredStaff:care.workers,
+    TreatmentSupplies:treatmentSupplies(care,{bed,teeth,pod}).map(({NeedId,GoodId})=>({NeedId,GoodId})),
     NeighborhoodEffect:{NeedId:'PublicHealthcare',PointsPerHour:care.areaPointsPerHour,SatisfyToMaxValue:false}};
   // Ward flue steam while patients are inside (EnterableParticleController:
   // the hospital is not a workshop). Steam does not pollute.
@@ -137,7 +165,7 @@ export async function applyHospital(value) {
 
 // Hospital description and the panel/status rows used by Scripts/Hospital*.cs;
 // create_frontier_expansion_content.mjs writes them with the other rows.
-export const HOSPITAL_DESCRIPTION='Treats injuries and chipped teeth; medicine treats contamination and radiation. Fully staffed, decontaminates twice as fast as a pod. Nearby beavers gain up to +2 wellbeing.';
+export const HOSPITAL_DESCRIPTION='Treats injuries and teeth without supplies. Fully staffed, extract decontaminates twice as fast as a pod; medicine treats radiation. Nearby beavers gain up to +2 wellbeing.';
 export const HOSPITAL_LOCALIZATION=[
   ['DeepFrontier.Hospital.Panel.Title','Hospital'],
   ['DeepFrontier.Hospital.Panel.Patients','Patients admitted: {0} / {1} beds'],
@@ -149,16 +177,21 @@ export const HOSPITAL_LOCALIZATION=[
   ['DeepFrontier.Hospital.Panel.NoPower','Care stopped: check power and building warnings'],
   ['DeepFrontier.Hospital.Panel.NoCrew','Closed: no ward crew assigned'],
   ['DeepFrontier.Hospital.Panel.NoMeals','Closed: a patient is starving or dehydrated and the food or water stock is empty'],
-  ['DeepFrontier.Hospital.Panel.NoSupplies','Waiting for water or extract'],
-  ['DeepFrontier.Hospital.Panel.Treating','Treatment speed: {0}% of full staffing. Medicine is used only for contamination and radiation.'],
+  ['DeepFrontier.Hospital.Panel.Treating','Treatment speed: {0}% of full staffing. Injuries and chipped teeth need no supplies.'],
+  ['DeepFrontier.Hospital.Panel.Supply','{0}: {1} {2} in stock'],
+  ['DeepFrontier.Hospital.Panel.SupplyOut','{0} paused: no {1}'],
+  ['DeepFrontier.Hospital.Treatment.BadwaterContamination','Decontamination'],
+  ['DeepFrontier.Hospital.Treatment.Irradiation','Radiation care'],
   ['DeepFrontier.Hospital.Panel.AreaActive','Neighborhood care active (+2 wellbeing)'],
   ['DeepFrontier.Hospital.Panel.AreaInactive','Neighborhood care inactive'],
   ['DeepFrontier.Hospital.Status.MealsLow','Patient food or water is running low.'],
   ['DeepFrontier.Hospital.Status.MealsLow.Short','Low patient meals'],
   ['DeepFrontier.Hospital.Status.MealsOut','No food or water for patients: hungry or thirsty patients will be sent out to eat.'],
   ['DeepFrontier.Hospital.Status.MealsOut.Short','No patient meals'],
-  ['DeepFrontier.Hospital.Status.Medicine','Medicine needed for contamination and radiation treatment. Other care continues.'],
-  ['DeepFrontier.Hospital.Status.Medicine.Short','Needs medicine'],
+  ['DeepFrontier.Hospital.Status.Medicine','No medicine in the district: radiation care is paused. Other care continues.'],
+  ['DeepFrontier.Hospital.Status.Medicine.Short','No medicine'],
+  ['DeepFrontier.Hospital.Status.Extract','No extract in the district: decontamination is paused. Other care continues.'],
+  ['DeepFrontier.Hospital.Status.Extract.Short','No extract'],
 ];
 
 export async function authorHospitalNeed() {

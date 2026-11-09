@@ -245,16 +245,21 @@ namespace DeepFrontier.Scripts {
               "Staffed, powered, supplied Hospital must admit before its first meal delivery");
             foreach(var g in held)pantry.Inventory.GiveExisting(g);
             Pass("staffed, powered, supplied ward is open with an empty food stock");
-            Require(!_hospital.HasMedicalPatients,"Ordinary-care check requires no contamination or radiation patients");
-            int medicine=_supplies.Inventory.UnreservedAmountInStock("Medicine");
-            Require(medicine==_supplies.Inventory.AmountInStock("Medicine"),"Medicine is reserved during ordinary-care check");
-            _supplies.Inventory.TakeExisting(new GoodAmount("Medicine",medicine));
-            Require(_supplies.CanUse&&_building.GetComponent<Attraction>().IsUsable,"Empty medicine blocks ordinary hospital care");
-            Require(!_hospital.CanProvideMedicalTreatment,"Empty ward consumed medicine into a fractional dose before any medical patient arrived");
+            // Per-treatment supplies: extract (decontamination) and medicine (radiation care) only.
+            var supplyStock=new List<GoodAmount>();
+            for(int s=0;s<_hospital.SupplyCount;s++) {
+              var good=_hospital.SupplyGood(s);int amount=_supplies.Inventory.UnreservedAmountInStock(good);
+              Require(!_hospital.SupplyInUse(s),"Ordinary-care check requires no patient needing "+_hospital.SupplyNeed(s));
+              Require(amount==_supplies.Inventory.AmountInStock(good),good+" is reserved during ordinary-care check");
+              _supplies.Inventory.TakeExisting(new GoodAmount(good,amount));supplyStock.Add(new GoodAmount(good,amount));
+            }
+            Require(_supplies.CanUse&&_building.GetComponent<Attraction>().IsUsable,"Without extract and medicine the hospital must still give ordinary care");
+            for(int s=0;s<_hospital.SupplyCount;s++)
+              Require(!_hospital.SupplyAvailable(s),"Empty ward dosed "+_hospital.SupplyGood(s)+" before any patient needed it");
             var ordinaryEffects=new List<ContinuousEffect>();_building.GetComponent<Attraction>().GetEfficiencyAdjustedEffects(ordinaryEffects);
-            Require(ordinaryEffects.Count==2&&ordinaryEffects.All(e=>e.NeedId=="Injury"||e.NeedId=="ChippedTeeth"),"Without medicine, hospital must offer only injury and tooth treatment");
-            _supplies.Inventory.GiveExisting(new GoodAmount("Medicine",medicine));
-            Pass("ordinary care remains usable without medicine; no medicine used by the empty staffed ward");
+            Require(ordinaryEffects.Count==2&&ordinaryEffects.All(e=>e.NeedId=="Injury"||e.NeedId=="ChippedTeeth"),"Without supplies, hospital must offer only injury and tooth treatment");
+            foreach(var g in supplyStock)_supplies.Inventory.GiveExisting(g);
+            Pass("injury and tooth care need no supplies; the empty staffed ward doses no extract or medicine");
             for(int i=0;i<_patients.Length;i++)SetNeed(_patients[i],_conditions[i],-.6f);
             _phase=1;
             Pass("six staff stably attending before separate injury, teeth and contamination cases begin");

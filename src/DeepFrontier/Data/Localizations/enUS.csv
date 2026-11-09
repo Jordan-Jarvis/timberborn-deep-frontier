@@ -126,7 +126,7 @@ Building.Restaurant.DisplayName,Restaurant,Deep Frontier
 Building.Restaurant.Description,"Serves food at its tables and makes sweet berry cake and fermented food. A meal of fresh fish, berries, fermented mushrooms and an eggplant ration gives Fine dining. Pipes: valve set to Fill.",Deep Frontier
 Building.Restaurant.FlavorDescription,"A good meal deserves a table, a view and good company.",Deep Frontier
 Building.Hospital.DisplayName,Hospital,Deep Frontier
-Building.Hospital.Description,"Treats injuries and chipped teeth; medicine treats contamination and radiation. Fully staffed, decontaminates twice as fast as a pod. Nearby beavers gain up to +2 wellbeing. Pipes: valve set to Fill.",Deep Frontier
+Building.Hospital.Description,"Treats injuries and teeth without supplies. Fully staffed, extract decontaminates twice as fast as a pod; medicine treats radiation. Nearby beavers gain up to +2 wellbeing. Pipes: valve set to Fill.",Deep Frontier
 Building.Hospital.FlavorDescription,"Rest, clean water and a very strict ward nurse.",Deep Frontier
 Building.Greenhouse.DisplayName,Greenhouse,Deep Frontier
 Building.Greenhouse.Description,"Grows eggplants, kohlrabi and coffee beans indoors with fertilizer. Aquaponics also raises fresh fish from juvenile fish. Pipes: valve set to Fill.",Deep Frontier
@@ -227,16 +227,21 @@ DeepFrontier.Hospital.Panel.Paused,Paused,Deep Frontier
 DeepFrontier.Hospital.Panel.NoPower,Care stopped: check power and building warnings,Deep Frontier
 DeepFrontier.Hospital.Panel.NoCrew,Closed: no ward crew assigned,Deep Frontier
 DeepFrontier.Hospital.Panel.NoMeals,Closed: a patient is starving or dehydrated and the food or water stock is empty,Deep Frontier
-DeepFrontier.Hospital.Panel.NoSupplies,Waiting for water or extract,Deep Frontier
-DeepFrontier.Hospital.Panel.Treating,Treatment speed: {0}% of full staffing. Medicine is used only for contamination and radiation.,Deep Frontier
+DeepFrontier.Hospital.Panel.Treating,Treatment speed: {0}% of full staffing. Injuries and chipped teeth need no supplies.,Deep Frontier
+DeepFrontier.Hospital.Panel.Supply,{0}: {1} {2} in stock,Deep Frontier
+DeepFrontier.Hospital.Panel.SupplyOut,{0} paused: no {1},Deep Frontier
+DeepFrontier.Hospital.Treatment.BadwaterContamination,Decontamination,Deep Frontier
+DeepFrontier.Hospital.Treatment.Irradiation,Radiation care,Deep Frontier
 DeepFrontier.Hospital.Panel.AreaActive,Neighborhood care active (+2 wellbeing),Deep Frontier
 DeepFrontier.Hospital.Panel.AreaInactive,Neighborhood care inactive,Deep Frontier
 DeepFrontier.Hospital.Status.MealsLow,Patient food or water is running low.,Deep Frontier
 DeepFrontier.Hospital.Status.MealsLow.Short,Low patient meals,Deep Frontier
 DeepFrontier.Hospital.Status.MealsOut,No food or water for patients: hungry or thirsty patients will be sent out to eat.,Deep Frontier
 DeepFrontier.Hospital.Status.MealsOut.Short,No patient meals,Deep Frontier
-DeepFrontier.Hospital.Status.Medicine,Medicine needed for contamination and radiation treatment. Other care continues.,Deep Frontier
-DeepFrontier.Hospital.Status.Medicine.Short,Needs medicine,Deep Frontier
+DeepFrontier.Hospital.Status.Medicine,No medicine in the district: radiation care is paused. Other care continues.,Deep Frontier
+DeepFrontier.Hospital.Status.Medicine.Short,No medicine,Deep Frontier
+DeepFrontier.Hospital.Status.Extract,No extract in the district: decontamination is paused. Other care continues.,Deep Frontier
+DeepFrontier.Hospital.Status.Extract.Short,No extract,Deep Frontier
 DeepFrontier.Need.FineDining,Fine dining,Deep Frontier
 Need.NeighborhoodGroceries.DisplayName,Neighborhood groceries,Deep Frontier
 DeepFrontier.Waterside.SupportTooDeep,A support post would need more than {0} m to reach the ground or riverbed.,Deep Frontier waterside placement error; {0} = AdaptiveSupportsSpec.MaxDepth
