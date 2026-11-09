@@ -3,7 +3,11 @@
 # The two synthetic consumer fixtures (built by build_moddable_fluids.ps1 -SyntheticFixtures and kept
 # outside the Mods folder) are installed only for this run and removed afterwards, together with
 # any enablement keys the game created for them: Timberborn enables a new mod by default.
-param([int]$TimeoutSeconds = 360)
+#
+#   start_fluid_worker_acceptance.ps1             # two fresh disposable worlds (worker barriers, geometry, intakes)
+#   start_fluid_worker_acceptance.ps1 -SaveReload # one world saved natively, reloaded and compared bit for bit;
+#                                                 # the fixture deletes its settlement through the native repository
+param([int]$TimeoutSeconds = 360, [switch]$SaveReload)
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
 $dev = Get-DevEnvironment 'timberbornDocuments'
@@ -15,6 +19,8 @@ $mods = Join-Path $dev.timberbornDocuments 'Mods'
 if (-not (Test-Path -LiteralPath (Join-Path $mods 'ModdableFluids/version-1.1/Scripts/ModdableFluids.dll'))) { throw 'Build Moddable Fluids first: tools/build_moddable_fluids.ps1 -SyntheticFixtures' }
 if (Test-Path -LiteralPath (Join-Path $mods 'FluidsApi')) { throw 'The pre-rename FluidsApi development package is still installed; remove it with tools/build_moddable_fluids.ps1 -RemoveLegacyPackage.' }
 $fixtureIds = @('ModdableFluidsSyntheticReflection','ModdableFluidsSyntheticCompiled')
+$saveSettlements = @('Saves','ExperimentalSaves') | ForEach-Object { Join-Path $dev.timberbornDocuments "$_/Moddable Fluids Save Acceptance" }
+foreach ($settlement in $saveSettlements) { if (Test-Path -LiteralPath $settlement) { throw "$settlement already exists; the save fixture owns that settlement and must start without it." } }
 foreach ($id in $fixtureIds) {
   if (-not (Test-Path -LiteralPath (Join-Path $output "fixture-packages/$id/version-1.1/Scripts/$id.dll"))) { throw "Missing fixture package $id; run tools/build_moddable_fluids.ps1 -SyntheticFixtures" }
   if (Test-Path -LiteralPath (Join-Path $mods $id)) { throw "$id is already in the Mods folder; it must be installed only by this launcher." }
@@ -54,7 +60,9 @@ try {
     $installedFixtures += $id
   }
   if (Test-Path -LiteralPath $report) { Remove-Item -LiteralPath $report }
-  $launch = @(& (Join-Path $PSScriptRoot 'launch_timberborn.ps1') -Arguments @('-moddableFluidsWorkerAcceptance','-moddableFluidsReport',('"'+$report+'"'),'-logFile',('"'+$log+'"')))
+  $gameArguments = @('-moddableFluidsWorkerAcceptance')
+  if ($SaveReload) { $gameArguments += '-moddableFluidsSaveAcceptance' }
+  $launch = @(& (Join-Path $PSScriptRoot 'launch_timberborn.ps1') -Arguments ($gameArguments + @('-moddableFluidsReport',('"'+$report+'"'),'-logFile',('"'+$log+'"'))))
   $launch | Write-Output
   # Wait on the exact process the launch started. A Process object found later by name or id
   # has no handle, and .NET then cannot report its exit code once it exits (the 2026-11-09 run
@@ -74,9 +82,15 @@ try {
   if (-not (Test-Path -LiteralPath $report)) { throw "Acceptance did not produce its report. See $log" }
   $result = Get-Content -LiteralPath $report -Raw | ConvertFrom-Json
   if ($result.status -ne 'passed' -or $result.scenesAttached -ne 2 -or $result.scenesDetached -ne 2) { throw 'Worker acceptance report did not pass two scene lifecycles.' }
+  if ($result.mode -ne $(if ($SaveReload) { 'save-reload' } else { 'worker' })) { throw "The report is for mode $($result.mode)." }
+  if ($SaveReload) {
+    $reloaded = $result.worlds[1]
+    if (-not $reloaded.reloaded -or $reloaded.restoredDigest -ne $result.savedDigest -or -not $result.settlementDeleted) { throw 'The save/reload report does not show a bit-identical restore and a deleted settlement.' }
+    foreach ($settlement in $saveSettlements) { if (Test-Path -LiteralPath $settlement) { throw "The fixture left its settlement at $settlement." } }
+  }
   $expectedFluids = 'Timberborn.Water,Timberborn.Badwater,ModdableFluidsSyntheticCompiled.Tracer,ModdableFluidsSyntheticReflection.Juice'
   foreach ($world in $result.worlds) { if (($world.fluids -join ',') -ne $expectedFluids) { throw "World $($world.scene) ran with registry $($world.fluids -join ',')" } }
-  Write-Output "PASS: two real-worker scenes with the registry from both consumer routes. Report: $report"
+  Write-Output $(if ($SaveReload) { "PASS: native save and reload restored the fluid state bit for bit. Report: $report" } else { "PASS: two real-worker scenes with the registry from both consumer routes. Report: $report" })
 } finally {
   # Never restore files while Unity could still write them. Stop only this test's process.
   if ($ownedProcess -and -not $ownedProcess.HasExited) {
@@ -84,6 +98,8 @@ try {
     $ownedProcess.WaitForExit()
   }
   foreach ($id in $installedFixtures) { Remove-Item -LiteralPath (Join-Path $mods $id) -Recurse -Force }
+  # A failed save run may leave the disposable settlement; it did not exist before this run.
+  foreach ($settlement in $saveSettlements) { if (Test-Path -LiteralPath $settlement) { Remove-Item -LiteralPath $settlement -Recurse -Force; Write-Output "Removed the disposable settlement $settlement" } }
   foreach ($id in $fixtureIds) { if (Test-Path -LiteralPath (Join-Path $mods $id)) { throw "Fixture $id is still installed." } }
   foreach ($name in $flags.Keys) { Set-ItemProperty -LiteralPath $prefsPath -Name $name -Value $flags[$name] }
   foreach ($name in (Get-Item -LiteralPath $prefsPath).GetValueNames()) {

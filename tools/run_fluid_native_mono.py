@@ -106,7 +106,7 @@ def main():
         'harmonyAssembly': str(harmony), 'harmonySha256': hashlib.sha256(harmony.read_bytes()).hexdigest(),
         'apiAssemblies': [{ 'path': str(probe.parent / name),
                             'sha256': hashlib.sha256((probe.parent / name).read_bytes()).hexdigest() }
-                          for name in ['ModdableFluids.dll', 'ModdableFluids.TransportPrototype.dll', 'ModdableFluids.GamePrototype.dll']],
+                          for name in ['ModdableFluids.dll', 'ModdableFluids.TransportPrototype.dll', 'ModdableFluids.GamePrototype.dll', 'ModdableFluids.RuntimePrototype.dll']],
         'consumers': consumer_hashes,
         'scope': 'Embedded installed Mono in a separate process; actual native scheduler patched with immediate fixture execution; live worker barriers and settlement acceptance remain pending'
     }, indent=2) + '\n', encoding='utf-8')

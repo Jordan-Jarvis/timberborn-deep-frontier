@@ -65,6 +65,7 @@ namespace ModdableFluids.Native.Acceptance {
       var sample = typeof(NativeFluidTransportSession).GetMethod("Sample");
       Check(((FluidVolumes)sample.Invoke(session, new object[] { 12 })).TotalVolume > 0, "Mono reflected invocation");
       checks += RegistryProbe.Run(consumers, backend, session);
+      checks += WorldSaveProbe.Run(RegistryProbe.Document);
       counts[13] = 1; columns.SetValue(New("WaterColumn", 0, 1), 13);
       object demands = baseFlows.GetValue(12); Set(demands, "Right", 100f); baseFlows.SetValue(demands, 12);
       var transfers = backend.BudgetFlowRequests(backend.CaptureGeometry(), new[] { session.Sample(12), new FluidVolumes(new double[4]) }, .31);
@@ -72,7 +73,7 @@ namespace ModdableFluids.Native.Acceptance {
       Check(transfers[0].Volume > 0 && transfers[0].Volume <= session.Sample(12).TotalVolume, "Mono float producer budget");
       Check(backend.LastUnfulfilledFlowDemand > 0, "Mono demand accounting");
       checks += SchedulerProbe.Run(managed);
-      return "PASS " + checks + " Mono checks: native scheduler hooks, ordered signed sources, pressure admission, physical pump results, owner cleanup, producer budget, reflection, registry consumers and exact save round trip. " + RegistryProbe.Note;
+      return "PASS " + checks + " Mono checks: native scheduler hooks, ordered signed sources, pressure admission, physical pump results, owner cleanup, producer budget, reflection, registry consumers, exact save round trip and the native save envelope. " + RegistryProbe.Note;
     }
   }
 }

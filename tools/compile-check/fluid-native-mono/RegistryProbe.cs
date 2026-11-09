@@ -14,6 +14,7 @@ namespace ModdableFluids.Native.Acceptance {
   /// </summary>
   internal static class RegistryProbe {
     internal static string Note = "";
+    internal static FluidSaveDocument Document;
 
     internal static int Run(string consumers, NativeWaterArrayAdapter backend, NativeFluidTransportSession session) {
       int checks = 0;
@@ -48,6 +49,7 @@ namespace ModdableFluids.Native.Acceptance {
       host.UnloadScene(scene);
       Check(session.Phase == "Ready" && session.ComponentCount == registry.Count, "Mono session matches the registry layout");
       var document = FluidWorldPersistence.Capture(registry, session, 5, states);
+      Document = document;
       var restoredSession = new NativeFluidTransportSession(backend, registry.Count, FluidRegistry.BadwaterIndex);
       var layout = Enumerable.Range(0, restoredSession.ColumnCount).Select(restoredSession.GetGeometry).ToArray();
       var restored = FluidWorldPersistence.Restore(document, registry, layout, 5, 3);

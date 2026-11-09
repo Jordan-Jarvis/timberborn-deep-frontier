@@ -10,28 +10,40 @@ using System.Threading;
 using Bindito.Core;
 using Newtonsoft.Json;
 using Timberborn.CoreUI;
+using Timberborn.GameSaveRepositorySystem;
+using Timberborn.GameSaveRuntimeSystem;
 using Timberborn.GameSceneLoading;
 using Timberborn.MainMenuSceneLoading;
 using Timberborn.MapIndexSystem;
 using Timberborn.MapRepositorySystem;
 using Timberborn.Modding;
+using Timberborn.SettlementNameSystem;
 using Timberborn.SingletonSystem;
 using Timberborn.TickSystem;
 using Timberborn.TimeSystem;
 using Timberborn.WaterSystem;
 using ModdableFluids;
 using ModdableFluids.GameBridge.Prototype;
+using ModdableFluids.Native.Prototype;
+using ModdableFluids.Persistence.Prototype;
 using ModdableFluids.Transport.Prototype;
 using UnityEngine;
 
 namespace ModdableFluids.Runtime.Prototype {
   internal static class WorkerAcceptanceRun {
     internal const string Flag = "-moddableFluidsWorkerAcceptance";
+    /// <summary>With the worker flag: one world saved natively, then reloaded and compared bit for bit.</summary>
+    internal const string SaveFlag = "-moddableFluidsSaveAcceptance";
     internal const string Map = "Moddable Fluids Worker Fixture";
-    internal const string Settlement = "Moddable Fluids Worker Acceptance";
+    internal const string SaveName = "Moddable Fluids save acceptance";
     internal static bool Enabled => Environment.GetCommandLineArgs().Contains(Flag);
+    internal static bool SaveMode => Environment.GetCommandLineArgs().Contains(SaveFlag);
+    internal static string Settlement => SaveMode ? "Moddable Fluids Save Acceptance" : "Moddable Fluids Worker Acceptance";
     internal static int Attached, Detached;
-    internal static bool StartingWorld;
+    internal static bool StartingWorld, Reloading;
+    internal static SaveReference SavedReference;
+    internal static string SavedDigest;
+    internal static string[] SavedProviderStates;
     internal static readonly List<object> Worlds = new List<object>();
     internal static string ReportPath {
       get {
@@ -51,13 +63,31 @@ namespace ModdableFluids.Runtime.Prototype {
     private readonly GameSceneLoader _loader;
     private readonly MapRepository _maps;
     private readonly ModRepository _mods;
+    private readonly GameSaveRepository _saves;
     private int _frame;
-    public FluidAcceptanceMenu(GameSceneLoader loader, MapRepository maps, ModRepository mods) { _loader = loader; _maps = maps; _mods = mods; }
+    public FluidAcceptanceMenu(GameSceneLoader loader, MapRepository maps, ModRepository mods, GameSaveRepository saves) {
+      _loader = loader; _maps = maps; _mods = mods; _saves = saves;
+    }
     public void UpdateSingleton() {
       if (++_frame != 30) return;
       WorkerAcceptanceRun.Require(!NativeTransportHooks.HasActiveOwner && WorkerAcceptanceRun.Attached == WorkerAcceptanceRun.Detached, "Main menu retained a game-scene transport owner");
       WorkerAcceptanceRun.Require(WorkerAcceptanceRun.Attached == 0 || ModdableFluidsEntry.Host.ActiveScene == null, "Main menu retained an active provider scene");
-      if (WorkerAcceptanceRun.Worlds.Count < 2) {
+      if (WorkerAcceptanceRun.SaveMode && WorkerAcceptanceRun.Worlds.Count == 1) {
+        WorkerAcceptanceRun.Require(WorkerAcceptanceRun.SavedReference != null && WorkerAcceptanceRun.SavedDigest != null, "The first world finished without its native save");
+        Debug.Log("[ModdableFluids Acceptance] Reloading " + WorkerAcceptanceRun.SavedReference);
+        WorkerAcceptanceRun.StartingWorld = true; WorkerAcceptanceRun.Reloading = true;
+        _loader.StartSaveGameInstantly(WorkerAcceptanceRun.SavedReference);
+        return;
+      }
+      bool settlementDeleted = false;
+      if (WorkerAcceptanceRun.SaveMode && WorkerAcceptanceRun.Worlds.Count == 2) {
+        // The disposable settlement's saves are removed through the native repository.
+        var settlement = WorkerAcceptanceRun.SavedReference.SettlementReference;
+        _saves.DeleteSettlement(settlement);
+        WorkerAcceptanceRun.Require(!Directory.Exists(_saves.SettlementReferenceIntoDirectoryName(settlement)), "The disposable settlement's saves were not deleted");
+        settlementDeleted = true;
+      }
+      if (WorkerAcceptanceRun.Worlds.Count < (WorkerAcceptanceRun.SaveMode ? 1 : 2)) {
         WorkerAcceptanceRun.Require(_maps.GetUserMapNames().Contains(WorkerAcceptanceRun.Map), "Missing the explicitly named disposable worker fixture map");
         Debug.Log("[ModdableFluids Acceptance] Starting disposable world " + (WorkerAcceptanceRun.Worlds.Count + 1));
         WorkerAcceptanceRun.StartingWorld = true;
@@ -69,10 +99,11 @@ namespace ModdableFluids.Runtime.Prototype {
       ModPlayerPrefsHelper.ToggleMod(false, ownMod); PlayerPrefs.Save();
       string report = WorkerAcceptanceRun.ReportPath;
       Directory.CreateDirectory(Path.GetDirectoryName(report));
-      File.WriteAllText(report, JsonConvert.SerializeObject(new { status = "passed", scenesAttached = WorkerAcceptanceRun.Attached,
-        scenesDetached = WorkerAcceptanceRun.Detached, worlds = WorkerAcceptanceRun.Worlds, prototypeDisabled = true,
+      File.WriteAllText(report, JsonConvert.SerializeObject(new { status = "passed", mode = WorkerAcceptanceRun.SaveMode ? "save-reload" : "worker",
+        scenesAttached = WorkerAcceptanceRun.Attached, scenesDetached = WorkerAcceptanceRun.Detached, worlds = WorkerAcceptanceRun.Worlds,
+        savedDigest = WorkerAcceptanceRun.SavedDigest, settlementDeleted, prototypeDisabled = true,
         apiRuntime = ModdableFluidsEntry.DescribeRuntime() }, Formatting.Indented));
-      Debug.Log("[ModdableFluids Acceptance] COMPLETE two disposable worlds; actual worker barriers, native geometry, intakes and scene teardown passed. Report: " + report);
+      Debug.Log("[ModdableFluids Acceptance] COMPLETE " + (WorkerAcceptanceRun.SaveMode ? "native save and reload" : "two disposable worlds") + ". Report: " + report);
       Application.Quit();
     }
   }
@@ -86,6 +117,10 @@ namespace ModdableFluids.Runtime.Prototype {
     private readonly SpeedManager _speed;
     private readonly MainMenuSceneLoader _menu;
     private readonly PanelStack _panels;
+    private readonly GameSaver _saver;
+    private readonly SettlementReferenceService _settlements;
+    private string _restoredDigest;
+    private bool _sourceRegistered, _saveQueued;
     private readonly ConcurrentDictionary<int, byte> _workerIds = new ConcurrentDictionary<int, byte>();
     private readonly TestSource _source = new TestSource();
     private readonly Vector3Int _pool = new Vector3Int(8, 8, 3);
@@ -96,8 +131,10 @@ namespace ModdableFluids.Runtime.Prototype {
     // This fixture always samples the lower reservoir (vertical ordinal zero).
     private int PoolIndex => (_pool.y + 1) * (_index.TerrainSize.x + 2) + _pool.x + 1;
     public FluidWorkerAcceptance(ModdableFluidsSceneOwner owner, IWaterService water, IWaterRemovalService removals,
-        ITickableSingletonService ticks, MapIndexService index, SpeedManager speed, MainMenuSceneLoader menu, PanelStack panels) {
+        ITickableSingletonService ticks, MapIndexService index, SpeedManager speed, MainMenuSceneLoader menu, PanelStack panels,
+        GameSaver saver, SettlementReferenceService settlements) {
       _owner = owner; _water = water; _removals = removals; _ticks = ticks; _index = index; _speed = speed; _menu = menu; _panels = panels;
+      _saver = saver; _settlements = settlements;
     }
     private void Check(bool condition, string name) { _checks++; WorkerAcceptanceRun.Require(condition, name); }
     public void PostLoad() {
@@ -109,9 +146,14 @@ namespace ModdableFluids.Runtime.Prototype {
       Check(_owner.Scene.Serial == WorkerAcceptanceRun.Attached, "Provider scene serial differs from the attached scene count");
       int components = registry.Count;
       FluidVolumes Even(double volume) => new FluidVolumes(Enumerable.Repeat(volume / components, components).ToArray());
-      _owner.Hooks.SessionCreated = session => {
+      Check(WorkerAcceptanceRun.Reloading == (_owner.LoadedDocument != null), WorkerAcceptanceRun.Reloading
+        ? "The reloaded world has no saved fluid state" : "A fresh disposable world loaded saved fluid state");
+      _owner.SessionCreated = session => {
         _workerIds.TryAdd(Thread.CurrentThread.ManagedThreadId, 0);
         WorkerAcceptanceRun.Require(session.CompletedTicks == 0, "A new scene inherited previous fluid ticks");
+        // Runs after the owner restored the saved state: recapture it before the first tick advances.
+        if (WorkerAcceptanceRun.Reloading)
+          _restoredDigest = FluidWorldSaveFormat.ContentDigest(FluidWorldPersistence.Capture(_owner.Registry, session, _owner.Stride, Array.Empty<FluidProviderState>()));
       };
       _owner.Hooks.ResolveSource = (source, native, volume) => {
         _workerIds.TryAdd(Thread.CurrentThread.ManagedThreadId, 0);
@@ -144,6 +186,7 @@ namespace ModdableFluids.Runtime.Prototype {
       Check(_ticks.ParalleTicklIsFinished, "Acceptance sampling occurred before the native parallel barrier");
       _tick++;
       var session = _owner.Hooks.Session;
+      if (WorkerAcceptanceRun.Reloading) { TickReloaded(session); return; }
       if (_tick == 1) {
         // Queue a sealed lower reservoir. The next native Tick applies the real
         // obstacles and grows its buffers when the horizontal ceiling splits it.
@@ -157,7 +200,7 @@ namespace ModdableFluids.Runtime.Prototype {
       if (_initialColumns == 0) _initialColumns = session.ColumnCount;
       _maxColumns = Math.Max(_maxColumns, session.ColumnCount);
       if (_tick == 3) {
-        _water.RegisterWaterSource(_source);
+        _water.RegisterWaterSource(_source); _sourceRegistered = true;
         _water.AddCleanWater(_pool, .75f);
       }
       if (_tick == 12) _water.AddHorizontalObstacle(new Vector3Int(8,8,5));
@@ -202,9 +245,52 @@ namespace ModdableFluids.Runtime.Prototype {
         nativePumpRemoved = _nativeRemoved, componentPumpRemoved = _lastRemoved, maxRepresentationDifference = session.MaxRepresentationDifference,
         registryFingerprint = _owner.Registry.Fingerprint, fluids = _owner.Registry.Definitions.Select(d => d.Id).ToArray(), providerScene = _owner.Scene.Serial });
       Debug.Log("[ModdableFluids Acceptance] WORLD PASS " + WorkerAcceptanceRun.Worlds.Count + "; ticks=" + session.CompletedTicks + "; callbacks=" + string.Join(",", _workerIds.Keys));
+      _finished = true; _speed.ChangeSpeed(0);
+      if (!WorkerAcceptanceRun.SaveMode) { _returnToMenu = true; return; }
+      // Native save of this disposable world. GameSaver finishes the tick first; the owner then
+      // captures the fluid document and records its digest, which the reloaded world must match.
+      var states = ProviderStates();
+      var reference = new SaveReference(WorkerAcceptanceRun.SaveName, _settlements.SettlementReference);
+      _saveQueued = true;
+      _saver.QueueSave(reference, () => {
+        Check(_owner.LastSaveDigest != null, "The native save did not capture fluid state");
+        WorkerAcceptanceRun.SavedReference = reference; WorkerAcceptanceRun.SavedDigest = _owner.LastSaveDigest; WorkerAcceptanceRun.SavedProviderStates = states;
+        Debug.Log("[ModdableFluids Acceptance] SAVED " + reference + "; fluid digest " + _owner.LastSaveDigest);
+        _returnToMenu = true;
+      });
+    }
+    private string[] ProviderStates() =>
+      ModdableFluidsEntry.Host.SaveProviderStates(_owner.Scene).Select(s => s.ProviderId + "|" + s.SchemaVersion + "|" + s.Data).ToArray();
+    private void TickReloaded(NativeFluidTransportSession session) {
+      if (session == null) return;
+      Check(session.Phase == "Ready", "Real worker jobs left an incomplete fluid tick after reload");
+      if (_tick < 6) return;
+      var restored = _owner.Restored;
+      Check(restored != null && _restoredDigest != null, "The reloaded world never restored its fluid state");
+      Check(_restoredDigest == WorkerAcceptanceRun.SavedDigest, "Reloaded fluid state differs from the saved state: " + _restoredDigest + " versus " + WorkerAcceptanceRun.SavedDigest);
+      Check(restored.ExactColumns == _owner.LoadedDocument.ColumnCount && restored.ProjectedColumns == 0, "Unchanged geometry was not restored exactly");
+      Check(ProviderStates().SequenceEqual(WorkerAcceptanceRun.SavedProviderStates), "Provider state changed across the native save and reload");
+      for (int component = 0; component < _owner.Registry.Count; component++) {
+        double baseline = 0, remaining = 0;
+        for (int slot = 0; slot < restored.ColumnCount; slot++) baseline += restored.GetColumn(slot).GetVolume(component);
+        for (int slot = 0; slot < session.ColumnCount; slot++) remaining += session.Sample(session.GetGeometry(slot).NativeIndex).GetVolume(component);
+        double accounted = remaining + session.Removed.GetVolume(component) + session.Evaporated.GetVolume(component) + session.Discharged.GetVolume(component)
+          + session.PressureLoss.GetVolume(component) + session.GeometryLoss.GetVolume(component);
+        Check(Math.Abs(accounted - baseline - session.Added.GetVolume(component)) < 1e-7, "Reloaded component conservation failed for " + component);
+      }
+      Check(_workerIds.Count > 0 && !_workerIds.ContainsKey(_owner.MainThreadId), "Reloaded fluid callbacks did not run on native worker threads");
+      WorkerAcceptanceRun.Worlds.Add(new { scene = WorkerAcceptanceRun.Attached, reloaded = true, nativeTicks = session.CompletedTicks, checks = _checks,
+        restoredColumns = restored.ExactColumns, restoredDigest = _restoredDigest, providerStates = WorkerAcceptanceRun.SavedProviderStates,
+        maxRepresentationDifference = session.MaxRepresentationDifference, registryFingerprint = _owner.Registry.Fingerprint,
+        fluids = _owner.Registry.Definitions.Select(d => d.Id).ToArray(), providerScene = _owner.Scene.Serial });
+      Debug.Log("[ModdableFluids Acceptance] RELOAD PASS; " + restored.ExactColumns + " columns restored bit for bit; digest " + _restoredDigest);
+      WorkerAcceptanceRun.Reloading = false;
       _finished = true; _speed.ChangeSpeed(0); _returnToMenu = true;
     }
-    public void Unload() { _water.UnregisterWaterSource(_source); }
+    public void Unload() {
+      if (_sourceRegistered) _water.UnregisterWaterSource(_source);
+      WorkerAcceptanceRun.Require(!_saveQueued || WorkerAcceptanceRun.SavedReference != null, "The scene unloaded before its queued native save completed");
+    }
     private sealed class TestSource : IWaterSource {
       internal float Strength = .4f;
       public ImmutableArray<Vector3Int> Coordinates => ImmutableArray.Create(new Vector3Int(8,8,3));
