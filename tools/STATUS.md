@@ -1,5 +1,12 @@
 # Current development status
 
+## Fluids: user decisions on the open questions (2026-11-09; implementation in progress, no in-game runs until all of it is done)
+
+- **Implement:** early-cycle tides take only their own slice of the shared budget (no cycle ever gets harder); the coffee tide halves clean water sources only; tides start on at the mode's defaults when More Fluids joins an existing save; Moddable Fluids per-game terrain material copies so Deep Frontier stops editing the native terrain materials (before the switch-over); the Moddable Weathers adapter (before the switch-over).
+- **Kept as built (approved):** undeclared fluid policies refuse loading; crash saves rescale the stored mix to native volume with a log line per column; the Healing Well as built (tune after its in-game run); Antidote 2 per 2 hours, healing "Too dilute" below 10%, weak saltwater drawn as Water; recoloured badtide sprites for the coffee and salt tides.
+- **Deferred:** a second tint colour for radioactive water waits for the in-game visual check.
+- **Builds so far:** official Moddable Fluids build (fingerprint 45E4B7FA4B5C) and the flagged Deep Frontier test build (2964A1F1F498) passed with stripping, bundle caches and the low-priority launcher; the throwaway player build compiles no mod shader. Further builds are asked for first.
+
 ## Unity build performance: bundle reuse, shader stripping, process limits, flagged build without water variants (2026-11-09; static checks only, not run in Unity)
 
 - **Why:** the flagged Deep Frontier build missed the shader cache, compiled the water and terrain variants cold on every core and froze the machine. The user approved four fixes; [docs/unity-build-performance.md](../docs/unity-build-performance.md) has the evidence, the fingerprint inputs and the cost estimates.
