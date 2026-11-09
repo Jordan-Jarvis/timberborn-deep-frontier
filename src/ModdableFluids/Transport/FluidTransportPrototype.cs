@@ -39,11 +39,18 @@ namespace ModdableFluids.Transport.Prototype {
         for (int c = 0; c < components; c++) next[i][c] = columns[i].GetVolume(c) * retainedFraction;
       }
       var discharged = new double[components];
+      // Off-map discharge is also kept per donor column, for per-column loss reports.
+      var dischargedBy = new double[columns.Length][];
       foreach (var transfer in transfers) {
         var source = columns[transfer.Source];
         double fraction = source.TotalVolume > 0 ? transfer.Volume / source.TotalVolume : 0;
         double[] destination = transfer.Destination == -1 ? discharged : next[transfer.Destination];
-        for (int c = 0; c < components; c++) destination[c] += source.GetVolume(c) * fraction;
+        double[] donor = transfer.Destination == -1 ? dischargedBy[transfer.Source] ?? (dischargedBy[transfer.Source] = new double[components]) : null;
+        for (int c = 0; c < components; c++) {
+          double moved = source.GetVolume(c) * fraction;
+          destination[c] += moved;
+          if (donor != null) donor[c] += moved;
+        }
       }
       var result = new FluidVolumes[columns.Length];
       var evaporated = new FluidVolumes[columns.Length];
@@ -52,7 +59,9 @@ namespace ModdableFluids.Transport.Prototype {
         result[i] = removal.Remaining;
         evaporated[i] = removal.Removed;
       }
-      return new FluidStepResult(result, evaporated, new FluidVolumes(discharged));
+      var dischargedColumns = new FluidVolumes[columns.Length];
+      for (int i = 0; i < columns.Length; i++) if (dischargedBy[i] != null) dischargedColumns[i] = new FluidVolumes(dischargedBy[i]);
+      return new FluidStepResult(result, evaporated, new FluidVolumes(discharged), dischargedColumns);
     }
 
     /// <summary>
@@ -124,6 +133,23 @@ namespace ModdableFluids.Transport.Prototype {
         remaining[c] = column.GetVolume(c) * fraction;
         removed[c] = column.GetVolume(c) - remaining[c];
       }
+      return new FluidRemovalResult(new FluidVolumes(remaining), new FluidVolumes(removed));
+    }
+
+    /// <summary>
+    /// Removes up to <paramref name="requested"/> of one component and nothing else (an extraction request). The
+    /// component keeps the exact remainder; taking all of it leaves exactly zero.
+    /// </summary>
+    public static FluidRemovalResult RemoveComponent(FluidVolumes column, int component, double requested) {
+      if (column == null) throw new ArgumentNullException(nameof(column));
+      RequireIndex(component, column.ComponentCount);
+      FluidVolumes.RequireQuantity(requested, nameof(requested));
+      if (requested == 0) throw new ArgumentOutOfRangeException(nameof(requested), requested, "An extraction requests a positive volume");
+      var remaining = column.CopyVolumes();
+      var removed = new double[remaining.Length];
+      double taken = Math.Min(requested, remaining[component]);
+      removed[component] = taken;
+      remaining[component] = taken == remaining[component] ? 0 : remaining[component] - taken;
       return new FluidRemovalResult(new FluidVolumes(remaining), new FluidVolumes(removed));
     }
 

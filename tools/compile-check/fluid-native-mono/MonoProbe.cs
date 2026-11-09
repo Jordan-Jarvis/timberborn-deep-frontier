@@ -55,7 +55,7 @@ namespace ModdableFluids.Native.Acceptance {
       }
       Check(Math.Abs(session.Sample(12).TotalVolume - 2.875) < 1e-12, "Mono pressure source capacity");
       Check(Math.Abs(session.PressureLoss.TotalVolume - .625) < 1e-12, "Mono pressure loss accounting");
-      var removed = session.RemoveQueued(12, .75, .25);
+      var removed = session.RemoveQueued(12, 0, .75, .25);
       Check(Math.Abs(removed.Removed.TotalVolume - 1) < 1e-12, "Mono physical pump result");
       session.EndTick();
       Check(session.CompletedTicks == 1 && session.Phase == "Ready", "Mono native stage order");

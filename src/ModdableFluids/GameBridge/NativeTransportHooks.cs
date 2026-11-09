@@ -7,6 +7,7 @@ using HarmonyLib;
 using Timberborn.Multithreading;
 using ModdableFluids.Native.Prototype;
 using ModdableFluids.Transport.Prototype;
+using ModdableFluids.World.Prototype;
 
 namespace ModdableFluids.GameBridge.Prototype {
   /// <summary>
@@ -39,6 +40,8 @@ namespace ModdableFluids.GameBridge.Prototype {
     public Action<NativeFluidTransportSession> TickCompleted { get; set; }
     public Func<object, int, double, FluidVolumes> ResolveSource { get; set; }
     public Func<object, int, double, double, FluidVolumes> ResolveAddition { get; set; }
+    /// <summary>Extraction requests: the batch is taken when the change job is scheduled and resolved after the native changes.</summary>
+    public FluidExtractionQueue Extractions { get; set; }
     private bool AnyOwnedPatches() => _replaced.Any(method => Harmony.GetPatchInfo(method)?.Owners.Contains(OwnerId) == true);
     public bool HasInstalledPatches => _ownsPatches && AnyOwnedPatches();
 
@@ -72,7 +75,7 @@ namespace ModdableFluids.GameBridge.Prototype {
     private static bool ChangesPrefix(object __instance, object[] __args) {
       var owner = _active;
       if (owner == null || !ReferenceEquals(owner._starter, __instance)) return true;
-      var job = new ChangesJob(owner, __args[1]);
+      var job = new ChangesJob(owner, __args[1], owner.Extractions?.TakeBatch() ?? Array.Empty<FluidExtractionTicket>());
       ((IParallelizer)Field(__instance, "_parallelizer")).Schedule(in job, (ParallelizerHandle)__args[0]);
       owner.ScheduledChangeBatches++;
       return false;
@@ -132,7 +135,7 @@ namespace ModdableFluids.GameBridge.Prototype {
           if (volume < 0) {
             // No fluid is emitted. Preserve the remaining non-bad mixture rather
             // than calling an emission provider with a negative addition.
-            Session.RemoveSource(index, -volume, bad);
+            Session.RemoveSource(index, Coordinate(coordinate, "z"), -volume, bad);
             continue;
           }
           var mixture = ResolveSource != null ? ResolveSource(Field(source, "_waterSource"), index, volume) : Vanilla(volume, bad);
@@ -142,22 +145,30 @@ namespace ModdableFluids.GameBridge.Prototype {
       }
       Session.FinishSubstep();
     }
-    private void RunChanges(object parameters) {
+    private void RunChanges(object parameters, FluidExtractionTicket[] extractions) {
       if (_disposed || Session == null) throw new InvalidOperationException("No completed fluid substeps for native water changes");
       int stride = (int)Field(_starter, "_stride");
       var removed = (IDictionary)Property(parameters, "RemovedWater"); removed.Clear();
       foreach (object change in (IEnumerable)Property(parameters, "WaterChanges")) {
         object coordinate = Property(change, "Coordinates");
-        // Native UpdateWaterChangesTask.TryGetColumnIndex also applies zero when
-        // a queued intake/dump loses its column before the changes are processed.
-        if (!TryFindColumn(coordinate, stride, out int index)) continue;
         double volume = (float)Property(change, "DepthChange"), bad = (float)Property(change, "ContaminationChange");
         if (bad < 0 || bad > 1 || double.IsNaN(bad)) throw new InvalidOperationException("Invalid native water-change composition");
+        // Native UpdateWaterChangesTask.TryGetColumnIndex also applies zero when
+        // a queued intake/dump loses its column before the changes are processed.
+        if (!TryFindColumn(coordinate, stride, out int index)) {
+          if (volume > 0) {
+            // The dropped addition still consumes its fluid record, and is reported as never having entered.
+            var dropped = ResolveAddition != null ? ResolveAddition(change, -1, volume, bad) : Vanilla(volume, bad);
+            RequireVolume(dropped, volume);
+            Session.RecordDroppedAddition((Coordinate(coordinate, "y") + 1) * stride + Coordinate(coordinate, "x") + 1, Coordinate(coordinate, "z"), dropped);
+          }
+          continue;
+        }
         if (volume >= 0) {
           var mixture = ResolveAddition != null ? ResolveAddition(change, index, volume, bad) : Vanilla(volume, bad);
           RequireVolume(mixture, volume); Session.AddQueued(index, mixture);
         } else {
-          var result = Session.RemoveQueued(index, -volume * (1 - bad), -volume * bad);
+          var result = Session.RemoveQueued(index, Coordinate(coordinate, "z"), -volume * (1 - bad), -volume * bad);
           double contaminated = result.Removed.GetVolume(_badwater), clean = result.Removed.TotalVolume - contaminated;
           if (removed.Contains(coordinate)) {
             clean += (float)Property(removed[coordinate], "CleanWaterChange");
@@ -166,6 +177,10 @@ namespace ModdableFluids.GameBridge.Prototype {
           var amountType = change.GetType().Assembly.GetType("Timberborn.WaterSystem.WaterAmountChange", true);
           removed[coordinate] = Activator.CreateInstance(amountType, (float)clean, (float)contaminated);
         }
+      }
+      if (extractions.Length > 0) {
+        if (Extractions == null) throw new InvalidOperationException("Extraction requests reached a change stage without an extraction queue");
+        Extractions.Resolve(extractions, Session, (int x, int y, int z, out int nativeIndex) => TryFindColumn(x, y, z, stride, out nativeIndex));
       }
       Session.EndTick();
       TickCompleted?.Invoke(Session);
@@ -183,12 +198,13 @@ namespace ModdableFluids.GameBridge.Prototype {
       if (TryFindColumn(coordinate, stride, out int index)) return index;
       throw new InvalidOperationException("Native source has no open column at " + coordinate);
     }
-    private bool TryFindColumn(object coordinate, int stride, out int index) {
-      int cell = (Coordinate(coordinate, "y") + 1) * stride + Coordinate(coordinate, "x") + 1, z = Coordinate(coordinate, "z");
+    private bool TryFindColumn(object coordinate, int stride, out int index) =>
+      TryFindColumn(Coordinate(coordinate, "x"), Coordinate(coordinate, "y"), Coordinate(coordinate, "z"), stride, out index);
+    private bool TryFindColumn(int x, int y, int z, int stride, out int index) {
+      int cell = (y + 1) * stride + x + 1;
       object size = Field(_starter, "_mapSize");
-      if (Coordinate(coordinate, "x") < -1 || Coordinate(coordinate, "x") > Coordinate(size, "x") ||
-          Coordinate(coordinate, "y") < -1 || Coordinate(coordinate, "y") > Coordinate(size, "y"))
-        throw new ArgumentOutOfRangeException(nameof(coordinate), "Native change lies outside the padded map");
+      if (x < -1 || x > Coordinate(size, "x") || y < -1 || y > Coordinate(size, "y"))
+        throw new ArgumentOutOfRangeException(nameof(x), "Native change (" + x + ", " + y + ", " + z + ") lies outside the padded map");
       for (int i = 0; i < Session.ColumnCount; i++) {
         var geometry = Session.GetGeometry(i);
         if (geometry.CellIndex == cell && z >= geometry.Floor && z < geometry.Ceiling) { index = geometry.NativeIndex; return true; }
@@ -249,7 +265,7 @@ namespace ModdableFluids.GameBridge.Prototype {
           RemoveOwnPatches(); _ownsPatches = false;
         }
         if (ReferenceEquals(_active, this)) _active = null;
-        _disposed = true; SessionCreated = null; TickCompleted = null; ResolveSource = null; ResolveAddition = null;
+        _disposed = true; SessionCreated = null; TickCompleted = null; ResolveSource = null; ResolveAddition = null; Extractions = null;
       }
     }
     private readonly struct SubstepJob : IParallelizerSingleTask {
@@ -258,9 +274,9 @@ namespace ModdableFluids.GameBridge.Prototype {
       public void Run() { try { _owner.RunSubstep(_parameters); } catch { _owner.Session?.AbortTick(); throw; } }
     }
     private readonly struct ChangesJob : IParallelizerSingleTask {
-      private readonly NativeTransportHooks _owner; private readonly object _parameters;
-      internal ChangesJob(NativeTransportHooks owner, object parameters) { _owner = owner; _parameters = parameters; }
-      public void Run() { try { _owner.RunChanges(_parameters); } catch { _owner.Session?.AbortTick(); throw; } }
+      private readonly NativeTransportHooks _owner; private readonly object _parameters; private readonly FluidExtractionTicket[] _extractions;
+      internal ChangesJob(NativeTransportHooks owner, object parameters, FluidExtractionTicket[] extractions) { _owner = owner; _parameters = parameters; _extractions = extractions; }
+      public void Run() { try { _owner.RunChanges(_parameters, _extractions); } catch { _owner.Session?.AbortTick(); throw; } }
     }
   }
 }

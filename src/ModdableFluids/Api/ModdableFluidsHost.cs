@@ -27,6 +27,7 @@ namespace ModdableFluids {
       "ModdableFluids.Sources.Types",
       "ModdableFluids.World.Additions",
       "ModdableFluids.World.Import",
+      "ModdableFluids.World.Losses",
       "ModdableFluids.World.Rules",
       "ModdableFluids.World.Sampling",
       "ModdableFluids.World.SourceComposition"

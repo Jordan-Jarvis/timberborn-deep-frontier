@@ -336,7 +336,14 @@ internal static class RegistryScenarios {
     scenario("discovery entry reports version and capabilities and refuses duplicate copies", () => {
       check(ModdableFluidsEntry.ApiVersion == "0.1.3" && ModdableFluidsEntry.ContractMajor == 0, "API version");
       check(typeof(ModdableFluidsEntry).Assembly.GetName().Version == new Version(0, 1, 3, 0), "Assembly version matches the contract version");
-      check(ModdableFluidsEntry.Capabilities.SequenceEqual(ModdableFluidsEntry.Capabilities.OrderBy(c => c, StringComparer.Ordinal)) && ModdableFluidsEntry.Capabilities.Count == 13, "Capability list");
+      // Core capabilities here; each feature area (tides) checks its own in its scenario file.
+      var core = new[] { "ModdableFluids.Discovery.Reflection", "ModdableFluids.Persistence.ComponentIdentity", "ModdableFluids.Persistence.ProviderState",
+        "ModdableFluids.Registry.Definitions", "ModdableFluids.Registry.Providers", "ModdableFluids.Scene.Lifecycle", "ModdableFluids.Sources.Types",
+        "ModdableFluids.World.Additions", "ModdableFluids.World.Import", "ModdableFluids.World.Losses", "ModdableFluids.World.Rules",
+        "ModdableFluids.World.Sampling", "ModdableFluids.World.SourceComposition" };
+      check(ModdableFluidsEntry.Capabilities.SequenceEqual(ModdableFluidsEntry.Capabilities.OrderBy(c => c, StringComparer.Ordinal))
+        && ModdableFluidsEntry.Capabilities.Distinct().Count() == ModdableFluidsEntry.Capabilities.Count
+        && core.All(ModdableFluidsEntry.Capabilities.Contains) && ModdableFluidsEntry.Capabilities.All(c => c.StartsWith("ModdableFluids.", StringComparison.Ordinal)), "Capability list");
       check(!ModdableFluidsEntry.Capabilities.Any(c => c.Contains("Rendering") || c.Contains("Transport")), "Unimplemented capability advertised");
       ModdableFluidsEntry.RequireSingleLoadedCopy(AppDomain.CurrentDomain.GetAssemblies());
       check(typeof(ModdableFluidsEntry).FullName == ModdableFluidsEntry.EntryTypeName && typeof(ModdableFluidsEntry).Assembly.GetName().Name == ModdableFluidsEntry.AssemblyName, "Documented entry names");

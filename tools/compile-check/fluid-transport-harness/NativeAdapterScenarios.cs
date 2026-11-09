@@ -33,7 +33,7 @@ internal static class NativeAdapterScenarios {
       for (int i = 0; i < initial.Length; i++) session.SeedComposition(fixture.Indices[i], initial[i]);
       Reject(() => session.AddSource(fixture.Indices[0], Mix(1, 0, 0, 0)), "Source outside native source stage");
       session.BeginTick(2);
-      Reject(() => session.RemoveQueued(fixture.Indices[0], 1, 0), "Early queued pump");
+      Reject(() => session.RemoveQueued(fixture.Indices[0], 0, 1, 0), "Early queued pump");
       for (int substep = 0; substep < 2; substep++) {
         fixture.RunAdapterSubstep(session, () => { fixture.ClearRawFlows(); fixture.SetRawFlow(0, 1, .25f); }, new double[2], false);
         session.AddSource(fixture.Indices[0], Mix(0, 0, 0, .125));
@@ -41,7 +41,7 @@ internal static class NativeAdapterScenarios {
         session.FinishSubstep();
       }
       session.AddQueued(fixture.Indices[1], Mix(.25, 0, 0, 0));
-      var removed = session.RemoveQueued(fixture.Indices[1], .5, .125);
+      var removed = session.RemoveQueued(fixture.Indices[1], 0, .5, .125);
       check(removed.Removed.TotalVolume > .5, "Selective pump did not report its actual removal");
       session.EndTick();
       check(session.CompletedTicks == 1 && session.Phase == "Ready", "Native adapter did not finish exactly one tick");
@@ -61,7 +61,7 @@ internal static class NativeAdapterScenarios {
       Close(session.PressureLoss.TotalVolume, .625, "Measured pressure loss");
       Close(session.Sample(native).GetShare(1), .5 / 2.875, "Only admitted source volume mixes");
       session.FinishSubstep();
-      var pump = session.RemoveQueued(native, .75, .25);
+      var pump = session.RemoveQueued(native, 0, .75, .25);
       Close(pump.Removed.TotalVolume, 1, "Pressure pump uses physical units");
       session.EndTick(); Balance(session, initial, "pressure source and pump");
       Close(fixture.PhysicalVolume(0), session.Sample(native).TotalVolume, "Physical pressure writeback", 2e-6);

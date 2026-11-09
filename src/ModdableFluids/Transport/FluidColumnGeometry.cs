@@ -17,13 +17,17 @@ namespace ModdableFluids.Transport.Prototype {
   }
 
   public sealed class FluidGeometryResult {
-    private readonly FluidVolumes[] _columns;
+    private readonly FluidVolumes[] _columns, _lostByOld, _pressureByNew;
     public FluidVolumes GeometryLoss { get; }
     public FluidVolumes PressureLoss { get; }
-    internal FluidGeometryResult(FluidVolumes[] columns, FluidVolumes geometryLoss, FluidVolumes pressureLoss) {
-      _columns = columns; GeometryLoss = geometryLoss; PressureLoss = pressureLoss;
+    internal FluidGeometryResult(FluidVolumes[] columns, FluidVolumes geometryLoss, FluidVolumes pressureLoss, FluidVolumes[] lostByOld, FluidVolumes[] pressureByNew) {
+      _columns = columns; GeometryLoss = geometryLoss; PressureLoss = pressureLoss; _lostByOld = lostByOld; _pressureByNew = pressureByNew;
     }
     public FluidVolumes GetColumn(int slot) => _columns[slot];
+    /// <summary>What old column <paramref name="old"/> lost to the geometry change (all of it if it vanished).</summary>
+    public FluidVolumes GetGeometryLoss(int old) => _lostByOld[old];
+    /// <summary>What new column <paramref name="slot"/> lost above its pressure capacity after merging.</summary>
+    public FluidVolumes GetPressureLoss(int slot) => _pressureByNew[slot];
   }
 
   public static class FluidGeometryTransport {
@@ -40,6 +44,8 @@ namespace ModdableFluids.Transport.Prototype {
       for (int n = 0; n < next.Length; n++) next[n] = new double[componentCount];
       var lost = new double[componentCount];
       var pressureLost = new FluidVolumes(new double[componentCount]);
+      var lostByOld = new FluidVolumes[before.Length];
+      var pressureByNew = new FluidVolumes[after.Length];
       var byCell = new Dictionary<int, List<int>>();
       for (int n = 0; n < after.Length; n++) {
         if (!byCell.TryGetValue(after[n].CellIndex, out var indices)) { indices = new List<int>(); byCell.Add(after[n].CellIndex, indices); }
@@ -66,19 +72,23 @@ namespace ModdableFluids.Transport.Prototype {
         if (pressureDestination >= 0 && overflow > 0) { assigned.Add(new KeyValuePair<int, double>(pressureDestination, overflow)); retained += overflow; }
         if (retained > mixture.TotalVolume) throw new InvalidOperationException("Geometry remap allocated more than the donor volume");
         double lostFraction = mixture.TotalVolume > 0 ? (mixture.TotalVolume - retained) / mixture.TotalVolume : 0;
+        var oldLost = new double[componentCount];
         for (int c = 0; c < componentCount; c++) {
-          lost[c] += mixture.GetVolume(c) * lostFraction;
+          oldLost[c] = mixture.GetVolume(c) * lostFraction;
+          lost[c] += oldLost[c];
           foreach (var allocation in assigned) next[allocation.Key][c] += mixture.GetVolume(c) * (allocation.Value / mixture.TotalVolume);
         }
+        lostByOld[o] = new FluidVolumes(oldLost);
       }
       var result = new FluidVolumes[after.Length];
       for (int n = 0; n < after.Length; n++) {
         var mixture = new FluidVolumes(next[n]);
         var capped = FluidTransportPrototype.LimitCapacity(mixture, after[n].Capacity);
         result[n] = capped.Remaining;
+        pressureByNew[n] = capped.Removed;
         pressureLost = FluidTransportPrototype.Add(pressureLost, capped.Removed);
       }
-      return new FluidGeometryResult(result, new FluidVolumes(lost), pressureLost);
+      return new FluidGeometryResult(result, new FluidVolumes(lost), pressureLost, lostByOld, pressureByNew);
     }
 
     private static void Validate(FluidColumnGeometry[] columns) {

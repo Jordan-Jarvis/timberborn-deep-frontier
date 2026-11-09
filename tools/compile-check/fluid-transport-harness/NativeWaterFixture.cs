@@ -224,6 +224,13 @@ internal sealed class NativeWaterFixture : IDisposable {
 
   // Prescribed, representative raw flow rates; generated cases below use native OutflowsUpdateTask.
   public void SetRawFlow(int source, int destination, float volume) => SetRawRate(source, destination, volume / DeltaTime);
+  /// <summary>A base-level flow from a lowest column into the padded map edge ("Bottom", "Left", "Top" or "Right"): off-map discharge.</summary>
+  public void SetRawEdgeFlow(int source, string direction, float volume) {
+    int from = Indices[source];
+    if (from >= VerticalStride) throw new ArgumentException("Edge flows leave a lowest column");
+    object flows = _baseFlows.GetValue(from)!;
+    Set(flows, direction, Get<float>(flows, direction) + volume / DeltaTime); _baseFlows.SetValue(flows, from);
+  }
   private void SetRawRate(int source, int destination, float rate) {
     int from = Indices[source], to = Indices[destination], offset = to % VerticalStride - from % VerticalStride;
     if (from < VerticalStride && to < VerticalStride) {

@@ -70,9 +70,9 @@ internal static class SourceRegressionScenarios {
         var session = new NativeFluidTransportSession(fixture.CreateAdapter(), 4, 1);
         int index = fixture.Indices[0];
         session.BeginTick(1); fixture.RunAdapterSubstep(session, fixture.ClearRawFlows, new double[1], false);
-        if (withdrawFirst) session.RemoveSource(index, 1, 1);
+        if (withdrawFirst) session.RemoveSource(index, 0, 1, 1);
         session.AddSource(index, Mix(0, 0, 1, 0));
-        if (!withdrawFirst) session.RemoveSource(index, 1, 1);
+        if (!withdrawFirst) session.RemoveSource(index, 0, 1, 1);
         session.FinishSubstep(); session.EndTick();
         Close(session.Removed.TotalVolume, 1, "Source withdrawal ledger");
         Close(session.Sample(index).TotalVolume, 1, "Ordered source final physical volume");
@@ -106,7 +106,7 @@ internal static class SourceRegressionScenarios {
       Close(session.PressureLoss.GetVolume(1), 20, "Rejected badwater remains rejected emission");
       session.FinishSubstep(); session.EndTick();
       bool rejected = false;
-      try { session.RemoveSource(index, 1, 0); } catch (InvalidOperationException) { rejected = true; }
+      try { session.RemoveSource(index, 0, 1, 0); } catch (InvalidOperationException) { rejected = true; }
       check(rejected, "Source withdrawal outside source stage must fail");
     });
   }

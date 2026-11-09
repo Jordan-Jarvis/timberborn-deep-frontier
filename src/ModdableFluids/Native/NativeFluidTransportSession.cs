@@ -28,7 +28,17 @@ namespace ModdableFluids.Native.Prototype {
     public FluidVolumes Discharged { get; private set; }
     public FluidVolumes PressureLoss { get; private set; }
     public FluidVolumes GeometryLoss { get; private set; }
+    /// <summary>Volume removed by extraction requests (not part of <see cref="Removed"/>).</summary>
+    public FluidVolumes Extracted { get; private set; }
+    /// <summary>Additions queued to a cell without an open column: they never entered (not part of <see cref="Added"/>).</summary>
+    public FluidVolumes Dropped { get; private set; }
     public double MaxRepresentationDifference { get; private set; }
+    /// <summary>
+    /// The losses of the last completed tick, from the geometry reconciliation at its start to its change stage
+    /// (empty before the first). Replaced at every <see cref="EndTick"/>.
+    /// </summary>
+    public IReadOnlyList<FluidLossRecord> CompletedLosses { get; private set; } = Array.Empty<FluidLossRecord>();
+    private FluidLossLedger _ledger;
 
     /// <summary>Explicit initialization from native fresh/bad water; no saved custom state is inferred.</summary>
     public NativeFluidTransportSession(NativeWaterArrayAdapter backend, int componentCount, int badwaterComponent) {
@@ -44,6 +54,8 @@ namespace ModdableFluids.Native.Prototype {
         _mixtures[i] = new FluidVolumes(values);
       }
       Added = Empty(); Removed = Empty(); Evaporated = Empty(); Discharged = Empty(); PressureLoss = Empty(); GeometryLoss = Empty();
+      Extracted = Empty(); Dropped = Empty();
+      _ledger = new FluidLossLedger(_components);
     }
     private FluidVolumes Empty() => new FluidVolumes(new double[_components]);
     public FluidColumnGeometry GetGeometry(int slot) => _layout[slot];
@@ -80,7 +92,7 @@ namespace ModdableFluids.Native.Prototype {
         if (evaporation == null || evaporation.Length != _layout.Length) throw new ArgumentException("Depth callback must report one evaporation request per open column");
         RequireUnchangedGeometry();
         var step = _layout.Length > 0 ? FluidTransportPrototype.Advect(_mixtures, transfers, evaporation)
-          : new FluidStepResult(new FluidVolumes[0], new FluidVolumes[0], Empty());
+          : new FluidStepResult(new FluidVolumes[0], new FluidVolumes[0], Empty(), new FluidVolumes[0]);
         var next = new FluidVolumes[_layout.Length];
         var scales = new double[_layout.Length];
         for (int i = 0; i < next.Length; i++) scales[i] = _mixtures[i].TotalVolume + evaporation[i];
@@ -89,8 +101,9 @@ namespace ModdableFluids.Native.Prototype {
           if (transfer.Destination >= 0) scales[transfer.Destination] += transfer.Volume;
         }
         var evaporated = Empty(); var pressure = Empty();
+        var capped = new FluidVolumes[next.Length];
         for (int i = 0; i < next.Length; i++) {
-          var cap = Cap(i, step.GetColumn(i)); next[i] = cap.Remaining;
+          var cap = Cap(i, step.GetColumn(i)); next[i] = cap.Remaining; capped[i] = cap.Removed;
           evaporated = FluidTransportPrototype.Add(evaporated, step.GetEvaporated(i));
           pressure = FluidTransportPrototype.Add(pressure, cap.Removed);
           CheckRepresentation(_backend.PhysicalVolume(_layout[i].NativeIndex), next[i].TotalVolume, scales[i]);
@@ -110,15 +123,24 @@ namespace ModdableFluids.Native.Prototype {
         Evaporated = FluidTransportPrototype.Add(Evaporated, evaporated);
         PressureLoss = FluidTransportPrototype.Add(PressureLoss, pressure);
         Discharged = FluidTransportPrototype.Add(Discharged, step.Discharged);
+        for (int i = 0; i < next.Length; i++) {
+          ColumnLoss(FluidLossKind.Evaporation, i, step.GetEvaporated(i));
+          ColumnLoss(FluidLossKind.Pressure, i, capped[i]);
+          if (step.GetDischarged(i) != null) ColumnLoss(FluidLossKind.Discharge, i, step.GetDischarged(i));
+        }
         _stage = Stage.Sources;
       } catch { _stage = Stage.Faulted; throw; }
     }
     public FluidVolumes AddSource(int nativeIndex, FluidVolumes addition) {
       Require(Stage.Sources); return AddPhysical(nativeIndex, addition, true);
     }
-    public FluidRemovalResult RemoveSource(int nativeIndex, double requested, double badShare) {
-      Require(Stage.Sources); int slot = Slot(nativeIndex);
-      return RemovePhysical(nativeIndex, slot, FluidTransportPrototype.RemoveSource(_mixtures[slot], _badwater, requested, badShare));
+    /// <summary>A native source with negative strength at cell height <paramref name="z"/>: withdraws total volume.</summary>
+    public FluidRemovalResult RemoveSource(int nativeIndex, int z, double requested, double badShare) {
+      Require(Stage.Sources); int slot = Slot(nativeIndex); RequireHeight(slot, z);
+      var result = RemovePhysical(nativeIndex, slot, FluidTransportPrototype.RemoveSource(_mixtures[slot], _badwater, requested, badShare));
+      Removed = FluidTransportPrototype.Add(Removed, result.Removed);
+      _ledger.Add(FluidLossKind.SourceWithdrawal, _layout[slot].CellIndex, z, slot, null, result.Removed);
+      return result;
     }
     public void FinishSubstep() {
       Require(Stage.Sources);
@@ -150,24 +172,65 @@ namespace ModdableFluids.Native.Prototype {
         _mixtures[slot] = next;
         Added = FluidTransportPrototype.Add(Added, addition);
         PressureLoss = FluidTransportPrototype.Add(PressureLoss, cap.Removed);
+        ColumnLoss(FluidLossKind.Pressure, slot, cap.Removed);
         return cap.Removed;
       } catch { _stage = Stage.Faulted; throw; }
     }
-    public FluidRemovalResult RemoveQueued(int nativeIndex, double nonBadRequest, double badRequest) {
-      Require(Stage.Changes); int slot = Slot(nativeIndex);
-      var result = FluidTransportPrototype.RemoveNative(_mixtures[slot], _badwater, nonBadRequest, badRequest);
-      return RemovePhysical(nativeIndex, slot, result);
+    /// <summary>A native queued removal at cell height <paramref name="z"/> of the column.</summary>
+    public FluidRemovalResult RemoveQueued(int nativeIndex, int z, double nonBadRequest, double badRequest) {
+      Require(Stage.Changes); int slot = Slot(nativeIndex); RequireHeight(slot, z);
+      var result = RemovePhysical(nativeIndex, slot, FluidTransportPrototype.RemoveNative(_mixtures[slot], _badwater, nonBadRequest, badRequest));
+      Removed = FluidTransportPrototype.Add(Removed, result.Removed);
+      _ledger.Add(FluidLossKind.NativeRemoval, _layout[slot].CellIndex, z, slot, null, result.Removed);
+      return result;
+    }
+    /// <summary>
+    /// An extraction request at the change stage: removes up to <paramref name="requested"/> of one component, and nothing
+    /// else, when that component's share is at least <paramref name="minimumShare"/>. Returns the removed volume (zero when
+    /// the share is too low); <paramref name="share"/> is the share before the extraction.
+    /// </summary>
+    public double Extract(int nativeIndex, int z, int component, double requested, double minimumShare, string requesterId, out double share) {
+      Require(Stage.Changes); int slot = Slot(nativeIndex); RequireHeight(slot, z);
+      if (component < 0 || component >= _components) throw new ArgumentOutOfRangeException(nameof(component), component, "No such fluid component");
+      if (double.IsNaN(minimumShare) || minimumShare < 0 || minimumShare > 1) throw new ArgumentOutOfRangeException(nameof(minimumShare), minimumShare, "Minimum shares are in [0, 1]");
+      if (string.IsNullOrEmpty(requesterId)) throw new ArgumentException("An extraction names its requester");
+      share = _mixtures[slot].GetShare(component);
+      if (share < minimumShare) return 0;
+      var result = RemovePhysical(nativeIndex, slot, FluidTransportPrototype.RemoveComponent(_mixtures[slot], component, requested));
+      Extracted = FluidTransportPrototype.Add(Extracted, result.Removed);
+      _ledger.Add(FluidLossKind.Extraction, _layout[slot].CellIndex, z, slot, requesterId, result.Removed);
+      return result.Removed.GetVolume(component);
+    }
+    /// <summary>
+    /// An addition queued to padded cell <paramref name="cellIndex"/> at height <paramref name="z"/>, which has no open
+    /// column: the native game drops it. Reported as a dropped addition; nothing else changes.
+    /// </summary>
+    public void RecordDroppedAddition(int cellIndex, int z, FluidVolumes addition) {
+      Require(Stage.Changes); ValidateLayout(addition);
+      for (int i = 0; i < _layout.Length; i++)
+        if (_layout[i].CellIndex == cellIndex && z >= _layout[i].Floor && z < _layout[i].Ceiling)
+          throw new InvalidOperationException("Height " + z + " of padded cell " + cellIndex + " has an open column; the addition was not dropped");
+      Dropped = FluidTransportPrototype.Add(Dropped, addition);
+      _ledger.Add(FluidLossKind.DroppedAddition, cellIndex, z, -1, null, addition);
     }
     private FluidRemovalResult RemovePhysical(int nativeIndex, int slot, FluidRemovalResult result) {
       try {
         _backend.Publish(nativeIndex, result.Remaining, _badwater, true);
         CheckRepresentation(_backend.PhysicalVolume(nativeIndex), result.Remaining.TotalVolume, _mixtures[slot].TotalVolume);
         _mixtures[slot] = result.Remaining;
-        Removed = FluidTransportPrototype.Add(Removed, result.Removed);
         return result;
       } catch { _stage = Stage.Faulted; throw; }
     }
-    public void EndTick() { Require(Stage.Changes); CompletedTicks++; _stage = Stage.Ready; }
+    private void ColumnLoss(FluidLossKind kind, int slot, FluidVolumes volumes) => _ledger.Add(kind, _layout[slot].CellIndex, _layout[slot].Floor, slot, null, volumes);
+    private void RequireHeight(int slot, int z) {
+      if (z < _layout[slot].Floor || z >= _layout[slot].Ceiling)
+        throw new ArgumentOutOfRangeException(nameof(z), z, "Height " + z + " lies outside column " + _layout[slot].Floor + "-" + _layout[slot].Ceiling);
+    }
+    public void EndTick() {
+      Require(Stage.Changes); CompletedTicks++;
+      CompletedLosses = _ledger.Complete(); _ledger = new FluidLossLedger(_components);
+      _stage = Stage.Ready;
+    }
     /// <summary>
     /// Converts <paramref name="volume"/> of one non-badwater component into another in layout slot <paramref name="slot"/>,
     /// at a completed tick. The column's physical volume and badwater are unchanged, so native water is not touched.
@@ -196,8 +259,11 @@ namespace ModdableFluids.Native.Prototype {
           updatedBackend.Publish(next[i].NativeIndex, mixtures[i], _badwater, true);
           CheckRepresentation(updatedBackend.PhysicalVolume(next[i].NativeIndex), mixtures[i].TotalVolume, mixtures[i].TotalVolume);
         }
+        // Geometry losses belong to the tick this reconciliation starts, by the old column's cell and floor.
+        for (int o = 0; o < _layout.Length; o++) _ledger.Add(FluidLossKind.Geometry, _layout[o].CellIndex, _layout[o].Floor, -1, null, remapped.GetGeometryLoss(o));
         _backend = updatedBackend; _layout = next; _mixtures = mixtures;
         _slots.Clear(); for (int i = 0; i < next.Length; i++) _slots.Add(next[i].NativeIndex, i);
+        for (int i = 0; i < next.Length; i++) ColumnLoss(FluidLossKind.Pressure, i, remapped.GetPressureLoss(i));
         GeometryLoss = FluidTransportPrototype.Add(GeometryLoss, remapped.GeometryLoss);
         PressureLoss = FluidTransportPrototype.Add(PressureLoss, remapped.PressureLoss);
         return remapped;

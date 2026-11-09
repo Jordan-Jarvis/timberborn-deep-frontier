@@ -51,13 +51,16 @@ namespace ModdableFluids.Transport.Prototype {
   public sealed class FluidStepResult {
     private readonly FluidVolumes[] _columns;
     private readonly FluidVolumes[] _evaporated;
+    private readonly FluidVolumes[] _discharged;
     public int ColumnCount => _columns.Length;
     public FluidVolumes Discharged { get; }
-    internal FluidStepResult(FluidVolumes[] columns, FluidVolumes[] evaporated, FluidVolumes discharged) {
-      _columns = columns; _evaporated = evaporated; Discharged = discharged;
+    internal FluidStepResult(FluidVolumes[] columns, FluidVolumes[] evaporated, FluidVolumes discharged, FluidVolumes[] dischargedByColumn) {
+      _columns = columns; _evaporated = evaporated; Discharged = discharged; _discharged = dischargedByColumn;
     }
     public FluidVolumes GetColumn(int column) => _columns[column];
     public FluidVolumes GetEvaporated(int column) => _evaporated[column];
+    /// <summary>What column <paramref name="column"/> discharged off the map, or null when it discharged nothing.</summary>
+    public FluidVolumes GetDischarged(int column) => _discharged[column];
   }
 
   public sealed class FluidRemovalResult {
