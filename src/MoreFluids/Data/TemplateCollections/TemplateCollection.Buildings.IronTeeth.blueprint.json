@@ -1,0 +1,10 @@
+{
+  "TemplateCollectionSpec": {
+    "CollectionId": "Buildings.IronTeeth",
+    "Blueprints#append": [
+      "Buildings/Water/MoreFluidsFluidExtractor/MoreFluidsFluidExtractor.IronTeeth.blueprint",
+      "Buildings/Water/MoreFluidsDesalinator/MoreFluidsDesalinator.IronTeeth.blueprint",
+      "Buildings/Water/MoreFluidsHealingWell/MoreFluidsHealingWell.IronTeeth.blueprint"
+    ]
+  }
+}

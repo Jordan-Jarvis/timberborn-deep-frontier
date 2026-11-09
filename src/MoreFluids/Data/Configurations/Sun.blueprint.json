@@ -1,0 +1,116 @@
+{
+  "SunSpec": {
+    "SunriseColors": {
+      "HazardousWeatherFogs#append": [
+        {
+          "HazardousWeatherId": "MoreFluidsCoffeeTideWeather",
+          "FogSettings": {
+            "FogColor": {
+              "r": 0.78,
+              "g": 0.62,
+              "b": 0.48,
+              "a": 1
+            },
+            "FogDensity": 0.003
+          }
+        },
+        {
+          "HazardousWeatherId": "MoreFluidsSaltTideWeather",
+          "FogSettings": {
+            "FogColor": {
+              "r": 0.74,
+              "g": 0.8,
+              "b": 0.8,
+              "a": 1
+            },
+            "FogDensity": 0.003
+          }
+        }
+      ]
+    },
+    "DayColors": {
+      "HazardousWeatherFogs#append": [
+        {
+          "HazardousWeatherId": "MoreFluidsCoffeeTideWeather",
+          "FogSettings": {
+            "FogColor": {
+              "r": 0.62,
+              "g": 0.48,
+              "b": 0.36,
+              "a": 1
+            },
+            "FogDensity": 0.003
+          }
+        },
+        {
+          "HazardousWeatherId": "MoreFluidsSaltTideWeather",
+          "FogSettings": {
+            "FogColor": {
+              "r": 0.6,
+              "g": 0.7,
+              "b": 0.72,
+              "a": 1
+            },
+            "FogDensity": 0.003
+          }
+        }
+      ]
+    },
+    "SunsetColors": {
+      "HazardousWeatherFogs#append": [
+        {
+          "HazardousWeatherId": "MoreFluidsCoffeeTideWeather",
+          "FogSettings": {
+            "FogColor": {
+              "r": 0.8,
+              "g": 0.62,
+              "b": 0.52,
+              "a": 1
+            },
+            "FogDensity": 0.003
+          }
+        },
+        {
+          "HazardousWeatherId": "MoreFluidsSaltTideWeather",
+          "FogSettings": {
+            "FogColor": {
+              "r": 0.78,
+              "g": 0.76,
+              "b": 0.74,
+              "a": 1
+            },
+            "FogDensity": 0.003
+          }
+        }
+      ]
+    },
+    "NightColors": {
+      "HazardousWeatherFogs#append": [
+        {
+          "HazardousWeatherId": "MoreFluidsCoffeeTideWeather",
+          "FogSettings": {
+            "FogColor": {
+              "r": 0.4,
+              "g": 0.35,
+              "b": 0.32,
+              "a": 1
+            },
+            "FogDensity": 0.003
+          }
+        },
+        {
+          "HazardousWeatherId": "MoreFluidsSaltTideWeather",
+          "FogSettings": {
+            "FogColor": {
+              "r": 0.36,
+              "g": 0.42,
+              "b": 0.44,
+              "a": 1
+            },
+            "FogDensity": 0.003
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "TemplateCollectionSpec": {
+    "CollectionId": "Common",
+    "Blueprints#append": [
+      "MapEditor/Objects/MoreFluidsHealingSpring/MoreFluidsHealingSpring.blueprint",
+      "MapEditor/Objects/MoreFluidsGeyser/MoreFluidsGeyser.blueprint"
+    ]
+  }
+}

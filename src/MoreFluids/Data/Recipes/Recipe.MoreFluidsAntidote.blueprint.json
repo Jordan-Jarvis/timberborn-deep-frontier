@@ -1,0 +1,21 @@
+{
+  "RecipeSpec": {
+    "Id": "MoreFluidsAntidote",
+    "BackwardCompatibleIds": [],
+    "DisplayLocKey": "Good.Antidote.PluralDisplayName",
+    "CycleDurationInHours": 2.0,
+    "Ingredients": [],
+    "Products": [
+      {
+        "Id": "Antidote",
+        "Amount": 2
+      }
+    ],
+    "ProducedSciencePoints": 0,
+    "Fuel": "",
+    "CyclesFuelLasts": 0,
+    "FuelCapacity": 0,
+    "CyclesCapacity": 20,
+    "Icon": "Sprites/Goods/AntidoteIcon"
+  }
+}

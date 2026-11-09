@@ -1,0 +1,10 @@
+{
+  "TemplateCollectionSpec": {
+    "CollectionId": "Buildings.Folktails",
+    "Blueprints#append": [
+      "Buildings/Water/MoreFluidsFluidExtractor/MoreFluidsFluidExtractor.Folktails.blueprint",
+      "Buildings/Water/MoreFluidsDesalinator/MoreFluidsDesalinator.Folktails.blueprint",
+      "Buildings/Water/MoreFluidsHealingWell/MoreFluidsHealingWell.Folktails.blueprint"
+    ]
+  }
+}

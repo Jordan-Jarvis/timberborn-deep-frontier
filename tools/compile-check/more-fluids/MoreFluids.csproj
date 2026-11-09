@@ -1,16 +1,45 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <!-- More Fluids consumes only the public ModdableFluids assembly. -->
+  <!-- More Fluids consumes the public ModdableFluids assembly and the installed game's public API (no Harmony, no
+       Deep Frontier). Game references are the real game DLLs, not the publicized ModsBuild copies, so only public
+       members compile. -->
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>MoreFluids</AssemblyName>
     <LangVersion>9.0</LangVersion>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <MSBuildWarningsAsMessages>MSB3277;MSB3243</MSBuildWarningsAsMessages>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../../src/MoreFluids/Scripts/*.cs" />
     <ProjectReference Include="../fluid-api/ModdableFluids.csproj" Private="false" />
-    <Reference Include="Timberborn.ModManagerScene" HintPath="$(TimberbornManaged)/Timberborn.ModManagerScene.dll" Private="false" />
+    <Reference Include="Bindito.Core" HintPath="$(TimberbornManaged)/Bindito.Core.dll" Private="false" />
     <Reference Include="UnityEngine.CoreModule" HintPath="$(TimberbornManaged)/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="System.Collections.Immutable" HintPath="$(TimberbornManaged)/System.Collections.Immutable.dll" Private="false" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.BaseComponentSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.Beavers.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.BlockSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.BlueprintSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.Effects.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.EnterableSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.EntitySystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.Goods.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.Localization.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.MechanicalSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.ModManagerScene.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.Navigation.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.NeedSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.Persistence.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.StatusSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.TemplateInstantiation.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.TickSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.TimeSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.WaterBuildings.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.WaterSourceSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.WaterSystem.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.Workshops.dll" />
+    <GameDll Include="$(TimberbornManaged)/Timberborn.WorldPersistence.dll" />
+    <Reference Include="@(GameDll)" Private="false" />
   </ItemGroup>
 </Project>

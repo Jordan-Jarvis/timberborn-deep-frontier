@@ -1,0 +1,42 @@
+ID,Text,Comment
+Building.MoreFluidsFluidExtractor.DisplayName,Fluid Extractor,More Fluids
+Building.MoreFluidsFluidExtractor.IronTeeth.Description,Pumps only the coffee out of the water below and bottles it as coffee. Needs water that is at least 10% coffee.,More Fluids
+Building.MoreFluidsFluidExtractor.Folktails.Description,Pumps only the healing water out of the water below and makes antidote from it. Needs water that is at least 10% healing water.,More Fluids
+Building.MoreFluidsFluidExtractor.FlavorDescription,"Leave the water, keep the good part.",More Fluids
+Building.MoreFluidsDesalinator.DisplayName,Desalinator,More Fluids
+Building.MoreFluidsDesalinator.Description,"Boils saltwater from below into clean water. Each water takes 0.3 saltwater, and the rest leaves as brine.",More Fluids
+Building.MoreFluidsDesalinator.FlavorDescription,"The salt crust is a nuisance. The water is not.",More Fluids
+Building.MoreFluidsHealingWell.DisplayName,Healing Spring,More Fluids: the player-built spring
+Building.MoreFluidsHealingWell.Description,Draws healing water from deep below. Beavers wading in water that is at least 20% healing recover from injuries and contamination. Stops in droughts.,More Fluids
+Building.MoreFluidsHealingWell.FlavorDescription,Some beavers swear by a daily soak.,More Fluids
+Building.MoreFluidsHealingSpring.DisplayName,Healing Spring,More Fluids: the map object
+Building.MoreFluidsHealingSpring.Description,A natural spring of healing water. Beavers wading in water that is at least 20% healing recover from injuries and contamination.,More Fluids
+Building.MoreFluidsGeyser.DisplayName,Geyser,More Fluids
+Building.MoreFluidsGeyser.Description,"Erupts with fresh water for 3 hours of every 18, even during droughts and badtides.",More Fluids
+MoreFluids.Coffee.DisplayName,Coffee,More Fluids: the fluid
+MoreFluids.Saltwater.DisplayName,Saltwater,More Fluids: the fluid
+MoreFluids.HealingWater.DisplayName,Healing water,More Fluids: the fluid
+MoreFluids.Status.TooDilute,Too dilute,More Fluids: Fluid Extractor status
+MoreFluids.Status.NoSaltwater,No saltwater,More Fluids: Desalinator status
+MoreFluids.Status.TooMuchCoffee,Too much coffee: water pumps stop at 50% coffee.,More Fluids: water-intake policy
+MoreFluids.Alert.TooMuchCoffee,Too much coffee,More Fluids: water-intake policy
+MoreFluids.Status.TooMuchHealingWater,Too much healing water: water pumps stop at 50% healing water.,More Fluids: water-intake policy
+MoreFluids.Alert.TooMuchHealingWater,Too much healing water,More Fluids: water-intake policy
+MoreFluids.Status.TooSalty,Too salty: water pumps stop at 10% saltwater.,More Fluids: water-intake policy
+MoreFluids.Alert.TooSalty,Water too salty,More Fluids: water-intake policy
+MoreFluids.Weather.CoffeeTide,Coffee tide,More Fluids
+MoreFluids.Weather.CoffeeTideDescription,"Hazardous weather (More Fluids). Water sources run at half strength and release coffee instead of water. Pumps stop where the water is half coffee or more.",More Fluids
+MoreFluids.Weather.Notification.CoffeeTideApproaching,Coffee tide approaching,More Fluids
+MoreFluids.Weather.Notification.CoffeeTideInProgress,Coffee tide in progress,More Fluids
+MoreFluids.Weather.CoffeeTideStartedNotification,Coffee tide started,More Fluids
+MoreFluids.Weather.CoffeeTideEndedNotification,Coffee tide ended,More Fluids
+MoreFluids.Weather.CoffeeTideApproachingDescription,For {0} days water sources will run at half strength and release coffee. Store water: pumps stop where the water is half coffee or more.,More Fluids
+MoreFluids.Weather.CoffeeTideStartedDescription,Water sources are releasing coffee. It stays until it drains off the map or is pumped out.,More Fluids
+MoreFluids.Weather.SaltTide,Salt tide,More Fluids
+MoreFluids.Weather.SaltTideDescription,"Hazardous weather (More Fluids). Water sources release saltwater instead of water. Pumps refuse water that is 10% or more saltwater, and it stops crops growing.",More Fluids
+MoreFluids.Weather.Notification.SaltTideApproaching,Salt tide approaching,More Fluids
+MoreFluids.Weather.Notification.SaltTideInProgress,Salt tide in progress,More Fluids
+MoreFluids.Weather.SaltTideStartedNotification,Salt tide started,More Fluids
+MoreFluids.Weather.SaltTideEndedNotification,Salt tide ended,More Fluids
+MoreFluids.Weather.SaltTideApproachingDescription,For {0} days water sources will release saltwater. Store water: pumps refuse water that is 10% or more saltwater.,More Fluids
+MoreFluids.Weather.SaltTideStartedDescription,Water sources are releasing saltwater. It stays until it drains off the map or is desalinated.,More Fluids

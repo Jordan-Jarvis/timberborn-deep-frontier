@@ -61,7 +61,7 @@ All five templates are prefixed `MoreFluids` so they cannot collide with vanilla
 | Field | Value |
 | --- | --- |
 | Templates | `MoreFluidsFluidExtractor.Folktails`, `MoreFluidsFluidExtractor.IronTeeth` |
-| Footprint | The vanilla Deep Water Pump layout exactly: size 2 × 3 × 3, `BaseZ` 1, entrance (1, −1, 1). Ground blocks at z = 1 for y = 0–1; the intake overhang (0, 2, 1) sits over water (`MatterBelow` Air). |
+| Footprint | The vanilla Deep Badwater Pump (Iron Teeth) and Badwater Pump (Folktails) blocks exactly: size 2 × 3 × 3, `BaseZ` 1, entrance (1, −1, 1), the Deep Water Pump's footprint and intake with a fully occupied top layer. Ground blocks at z = 1 for y = 0–1; the intake overhang (0, 2, 1) sits over water (`MatterBelow` Air). |
 | Water input | (0, 2, −1); pipe `MaxDepth` 6, like the Deep Water Pump. Pipe segments reuse vanilla prefabs: `Buildings/Water/BadwaterPump/BadwaterPumpPipeSegment.Folktails` and `Buildings/Water/DeepBadwaterPump/DeepBadwaterPumpPipeSegment.IronTeeth`. |
 | Factions and recipe | Iron Teeth: `MoreFluidsCoffee`, 1 `Coffee` per 0.33 h from 0.2 coffee volume. Folktails: `MoreFluidsAntidote`, 2 `Antidote` per 2 h from 0.8 healing volume. |
 | Status | "Too dilute" while the recipe's fluid is under 10% of the intake column; production stops. |

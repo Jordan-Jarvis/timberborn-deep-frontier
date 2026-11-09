@@ -1,0 +1,106 @@
+{
+  "TemplateSpec": {
+    "TemplateName": "MoreFluidsGeyser",
+    "BackwardCompatibleTemplateNames": [],
+    "RequiredFeatureToggle": "",
+    "DisablingFeatureToggle": ""
+  },
+  "WaterSourceSpec": {
+    "Coordinates": [
+      {
+        "X": 0,
+        "Y": 0
+      }
+    ],
+    "DefaultStrength": 2.0
+  },
+  "BlockObjectSpec": {
+    "Size": {
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+    },
+    "Blocks": [
+      {
+        "MatterBelow": "Ground",
+        "Occupations": "All",
+        "Stackable": "None",
+        "OccupyAllBelow": false,
+        "Underground": false
+      }
+    ],
+    "Entrance": {
+      "HasEntrance": false,
+      "Coordinates": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    "BaseZ": 0,
+    "Overridable": false,
+    "Flippable": true
+  },
+  "PlaceableBlockObjectSpec": {
+    "ToolGroupId": "MapEditorWater",
+    "ToolOrder": 530,
+    "ToolShape": "Square",
+    "Layout": "Line",
+    "CustomPivot": {
+      "HasCustomPivot": false,
+      "Coordinates": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    "CanBeAttachedToTerrainSide": false,
+    "DevModeTool": true
+  },
+  "LabeledEntitySpec": {
+    "DisplayNameLocKey": "Building.MoreFluidsGeyser.DisplayName",
+    "DescriptionLocKey": "Building.MoreFluidsGeyser.Description",
+    "FlavorDescriptionLocKey": "",
+    "Icon": "MapEditor/Objects/MoreFluidsGeyser/MoreFluidsGeyserIcon"
+  },
+  "BasicSelectionSoundSpec": {
+    "SoundName": "WaterSource",
+    "AlternativeSoundName": ""
+  },
+  "WaterSourceContaminationSpec": {
+    "DefaultContamination": 0
+  },
+  "BlockObjectNavMeshAdderSpec": {},
+  "BlockObjectRandomizablePlacementSpec": {},
+  "BlockObjectModelSpec": {
+    "FullModelName": "#Model",
+    "UncoveredModelName": "",
+    "UndergroundModelName": "",
+    "UndergroundModelDepth": 0
+  },
+  "Children": {
+    "#Model": {
+      "TimbermeshSpec": {
+        "Model": "MapEditor/Objects/MoreFluidsGeyser/MoreFluidsGeyser.Model"
+      },
+      "CollidersSpec": {
+        "BoxColliders": [
+          {
+            "Center": {
+              "X": 0.5,
+              "Y": 0.45,
+              "Z": 0.5
+            },
+            "Size": {
+              "X": 1,
+              "Y": 0.9,
+              "Z": 1
+            }
+          }
+        ],
+        "SphereColliders": [],
+        "CapsuleColliders": []
+      }
+    }
+  }
+}
