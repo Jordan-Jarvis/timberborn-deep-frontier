@@ -52,7 +52,8 @@ if (-not (Test-Path -LiteralPath $mfDll -PathType Leaf) -or (Get-Content -Litera
   throw "The official Moddable Fluids package is missing ($mfPackage); run tools/build_moddable_fluids.ps1 first."
 }
 $mfVersion = (Get-Content -LiteralPath (Join-Path $mfPackage 'manifest.json') -Raw | ConvertFrom-Json).Version
-$stagedApi = Join-Path $project 'Assets/Mods/ModdableFluids/Scripts/Api'
+# build_moddable_fluids.ps1 stages each source folder inside its assembly folder: Scripts/Api/ModdableFluids.asmdef, Scripts/Api/Api/*.cs.
+$stagedApi = Join-Path $project 'Assets/Mods/ModdableFluids/Scripts/Api/Api'
 $sourceApi = Join-Path $root 'src/ModdableFluids/Api'
 function SourceHashes([string]$folder) {
   $hashes = [ordered]@{}
