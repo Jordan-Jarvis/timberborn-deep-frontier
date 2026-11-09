@@ -23,7 +23,7 @@ The user approved these numbers on 2026-11-09, chose shared-budget tide selectio
 | Irrigation | Coffee moistens soil like water. |
 | Colour | Vanilla coffee barrel colour (0.161, 0.110, 0.090) at alpha 0.85. |
 | **Coffee tide** | Water sources run at ×0.5 strength and everything they emit (the non-bad part) is coffee. Near the sources the river passes 50% coffee, so water pumps stop there: a drought with a harvestable upside. |
-| Tide rows (Easy / Normal / Hard) | Weight 10 / 15 / 20. Cycles without the tide 12 / 8 / 6. Duration 2–4 / 3–5 / 4–7 days. |
+| Tide rows (Easy / Normal / Hard) | Chance 10 / 15 / 20%, the tide's default weight. Cycles without the tide 12 / 8 / 6. Duration 2–4 / 3–5 / 4–7 days. |
 
 ## Saltwater (`MoreFluids.Saltwater`)
 
@@ -35,7 +35,7 @@ The user approved these numbers on 2026-11-09, chose shared-budget tide selectio
 | Desalination | The **Desalinator**: each `Water` good costs 0.3 saltwater volume (about 67% recovery). The remaining 0.1 leaves the world through the declared transformation `MoreFluids.DesalinationBrine`. |
 | Colour | (0.15, 0.45, 0.55) at alpha 0.35: a subtle teal over the native water. |
 | **Salt tide** | Sources keep their strength, and everything they emit (the non-bad part) is saltwater. The river turns salty: water pumps and irrigation fail until the salt flushes downstream or is desalinated. |
-| Tide rows (Easy / Normal / Hard) | Weight 10 / 15 / 20. Cycles without the tide 10 / 7 / 5. Duration 2–4 / 4–8 / 10–20 days (vanilla badtide is 1–3 / 4–8 / 15–30). |
+| Tide rows (Easy / Normal / Hard) | Chance 10 / 15 / 20%, the tide's default weight. Cycles without the tide 10 / 7 / 5. Duration 2–4 / 4–8 / 10–20 days (vanilla badtide is 1–3 / 4–8 / 15–30). |
 
 ## Healing water (`MoreFluids.HealingWater`)
 
@@ -90,16 +90,16 @@ All five templates are prefixed `MoreFluids` so they cannot collide with vanilla
 
 | Field | Value |
 | --- | --- |
-| Template | `MoreFluidsHealingWell`, one faction-neutral blueprint listed in both factions' building collections |
+| Templates | `MoreFluidsHealingWell.Folktails`, `MoreFluidsHealingWell.IronTeeth` (one blueprint per faction, each with its faction's model) |
 | Footprint | 1 × 1 × 2, `BaseZ` 0, no entrance. Both blocks fully occupied; the bottom one needs terrain (`MatterBelow` Ground), like vanilla water sources. |
-| Water source | 1 tile at (0, 0), `DefaultStrength` 0.2, emits only healing water. Strength × the building's power efficiency; 0 while under construction or paused. Follows droughts (the native drought modifier) and keeps flowing, clean, through badtides. Source type `MoreFluids.HealingWell`. |
+| Water source | 1 tile at (0, 0), `DefaultStrength` 0.2, emits only healing water. Strength × the building's power efficiency; 0 while under construction or paused. Follows droughts (the native drought modifier) and keeps flowing, clean, through badtides. Source types `MoreFluids.HealingWellFolktails` and `MoreFluids.HealingWellIronTeeth`, one per template (a source type names one template). |
 | Placement | Anywhere on terrain, not on platforms. It cannot go on an existing water source tile, because the native source already occupies it. |
 | Cost | Plank 40, Gear 30, Metal Block 20 (a little above the Aquifer Drill's 40 / 25 / 15) |
 | Science | 1,000 |
 | Workers | None |
 | Power | 100 hp input; power connects on all four sides of either block |
 | Toolbar | `Water`, order 101 (after the Aquifer Drill) |
-| Description | "Draws healing water from deep underground. Beavers wading in water that is at least 20% healing recover from injuries and badwater contamination. Needs power. Stops during droughts." |
+| Description | "Draws healing water from deep below. Beavers wading in water that is at least 20% healing recover from injuries and contamination. Stops in droughts." (The native tooltip lists cost, science and power.) |
 
 Placement reasons: a healing pool belongs beside the colony's paths, and map sources are often far away. The native water source inside a building is exactly how Deep Frontier's Radioactive Spring and vanilla `DevWaterSource` work, and Moddable Fluids gives it its own source type with no new API. Converting an existing map source would destroy that source's drinking water and need a per-source composition override that the API does not have. The power gate follows the vanilla Aquifer Drill (`UndergroundWaterSourceDrill`: strength × `MechanicalNode.PowerEfficiency`). Its output does not replace drinking water: pure healing water is above the 50% pump limit.
 
@@ -131,20 +131,21 @@ The art agent owns every model, icon and art source at these paths and nothing e
 | --- | --- |
 | Fluid Extractor | `Buildings/Water/MoreFluidsFluidExtractor/MoreFluidsFluidExtractor.<Faction>.Model`, `…<Faction>.ConstructionStage0.Model` for Folktails and IronTeeth; icon `…/MoreFluidsFluidExtractorIcon` |
 | Desalinator | `Buildings/Water/MoreFluidsDesalinator/MoreFluidsDesalinator.<Faction>.Model`, `…<Faction>.ConstructionStage0.Model` for both; icon `…/MoreFluidsDesalinatorIcon` |
-| Healing Spring (building) | `Buildings/Water/MoreFluidsHealingWell/MoreFluidsHealingWell.Model`, `…ConstructionStage0.Model`; icon `…/MoreFluidsHealingWellIcon` |
+| Healing Spring (building) | `Buildings/Water/MoreFluidsHealingWell/MoreFluidsHealingWell.<Faction>.Model`, `…<Faction>.ConstructionStage0.Model` for both; icon `…/MoreFluidsHealingWellIcon` |
 | Healing Spring (map object) | `MapEditor/Objects/MoreFluidsHealingSpring/MoreFluidsHealingSpring.Model`; icon `…/MoreFluidsHealingSpringIcon` |
 | Geyser | `MapEditor/Objects/MoreFluidsGeyser/MoreFluidsGeyser.Model`; icon `…/MoreFluidsGeyserIcon` |
+| Coffee tide, Salt tide | `Sprites/Weather/MoreFluidsCoffeeTideIcon` (46 × 46), `…Progress` (316 × 52) and `…Notification` (1514 × 348), and the same three for `MoreFluidsSaltTide`, at the sizes of Deep Frontier's radioactive tide sprites |
 
-Art sources (Blender scenes, references, renders) go under `src/MoreFluids/Art/`. Direction: vanilla faction style, not Deep Frontier's metal and concrete. Folktails buildings are planks, rope and brass; Iron Teeth buildings are dark riveted metal. The Fluid Extractor is a pump with a small separator vessel and a glass sight gauge. The Desalinator is a pump feeding shallow evaporation pans under a condenser hood, with white salt crust and a brine spout. The buildable Healing Spring is a pale carved-stone wellhead with a small bronze pump head and mint-green mineral staining (the fluid colour). The map Healing Spring is a natural mossy rock vent with mint crusts, at the scale of Deep Frontier's Radioactive Spring. The Geyser is a grey-white sinter cone with ochre bands around a vent.
+Art sources (Blender scenes, references, renders) go under `src/MoreFluids/Art/`. One icon per building serves both factions, as vanilla does (`CentrifugeIcon`). Direction (user, 2026-11-09): vanilla style, wood and stone like the base game, matching each faction's own look, so the pack works without Deep Frontier; not Deep Frontier's metal and concrete. The Fluid Extractor is a pump with a small separator vessel and a glass sight gauge. The Desalinator is a pump feeding shallow evaporation pans under a condenser hood, with white salt crust and a brine spout. The buildable Healing Spring is a carved-stone wellhead with a small pump head in the faction's style and mint-green mineral staining (the fluid colour). The map Healing Spring is a natural mossy rock vent with mint crusts, at the scale of Deep Frontier's Radioactive Spring. The Geyser is a grey-white sinter cone with ochre bands around a vent.
 
 ## Tides
 
-Both tides use Moddable Fluids' tide registration: weight, cycles without the tide and duration rows per difficulty, presentation (name, notifications, weather-panel text) and the source composition while active. The long-run shares with the other installed tides are in `docs/fluids-tides.md`, computed by `tools/model_tide_selection.py`.
+Both tides use Moddable Fluids' tide registration: per difficulty a chance (the tide's default weight, and the save's default budget when it is the largest installed chance), cycles without the tide and duration; presentation (name, notifications, weather-panel text, sprites, the native drought alarm) and the source composition and strength while active. The long-run shares with the other installed tides are in `docs/fluids-tides.md`, computed by `tools/model_tide_selection.py`.
 
 ## API capabilities this needs
 
 1. **Intake policies and selective removal.** Water-pump thresholds; the Fluid Extractor and Desalinator remove only their fluid. Each conversion is a declared transformation in the ledgers.
 2. **Tide registration.** Shared-budget selection, per-tide new-game rows, presentation and source composition, plus the Moddable Weathers adapter.
-3. **Custom source types in play.** Emission, schedule and drought-following for the Healing Spring, Healing Well and Geyser templates.
+3. **Custom source types in play.** Emission, schedule and drought-following for the Healing Spring, Healing Well and Geyser templates. The Geyser ignores droughts, so the native `DroughtWaterStrengthModifier` that the game adds to every `WaterSource` must be turned off for it, as the native `WaterSourceDischarger` does under a Badwater Pressurizer.
 4. **Exposure context.** Healing water reads each beaver's column, much as `RadiationExposure` does in Deep Frontier.
 5. **Irrigation policy.** Saltwater blocks growth through the native moisture input.
