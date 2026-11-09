@@ -355,6 +355,31 @@ internal static class MoreFluidsContent {
           type.Id + " contamination matches " + path);
       }
       check(templates.Values.Count(p => corpus.Ours[p].TryGetProperty("WaterSourceSpec", out _)) == registry.SourceTypes.Count(t => !t.IsNative), "Every More Fluids water source blueprint is a registered source type");
+      // Colliders (fitted to the delivered models) stay inside the block footprint: X across, Z along the block Y axis,
+      // Y up from the model origin at BaseZ.
+      foreach (var path in templates.Values) {
+        var bp = corpus.Ours[path];
+        var block = P(bp, "BlockObjectSpec");
+        double sx = P(block, "Size", "X").GetInt32(), sy = P(block, "Size", "Y").GetInt32(), sz = P(block, "Size", "Z").GetInt32(), baseZ = P(block, "BaseZ").GetInt32();
+        int boxes = 0;
+        void Boxes(JsonElement e) {
+          if (e.ValueKind == JsonValueKind.Object) {
+            foreach (var p in e.EnumerateObject()) {
+              if (p.Name != "BoxColliders") { Boxes(p.Value); continue; }
+              foreach (var b in p.Value.EnumerateArray()) {
+                boxes++;
+                double cx = P(b, "Center", "X").GetDouble(), cy = P(b, "Center", "Y").GetDouble(), cz = P(b, "Center", "Z").GetDouble();
+                double wx = P(b, "Size", "X").GetDouble(), wy = P(b, "Size", "Y").GetDouble(), wz = P(b, "Size", "Z").GetDouble();
+                const double slack = .05;
+                check(wx > 0 && wy > 0 && wz > 0 && cx - wx / 2 >= -slack && cx + wx / 2 <= sx + slack && cz - wz / 2 >= -slack && cz + wz / 2 <= sy + slack
+                  && cy - wy / 2 >= -baseZ - slack && cy + wy / 2 <= sz - baseZ + slack, path + " collider " + JsonSerializer.Serialize(b) + " leaves its footprint");
+              }
+            }
+          } else if (e.ValueKind == JsonValueKind.Array) foreach (var x in e.EnumerateArray()) Boxes(x);
+        }
+        Boxes(P(bp, "Children"));
+        check(boxes > 0, path + " has colliders");
+      }
       // Every tide weather has a fog colour in each day stage (the game looks it up when the weather starts).
       var sun = P(corpus.Ours["Configurations/Sun.blueprint"], "SunSpec");
       foreach (var tide in tides.Tides)

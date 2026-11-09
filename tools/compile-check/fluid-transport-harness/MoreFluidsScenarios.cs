@@ -3,42 +3,26 @@ using MoreFluids;
 
 /// <summary>More Fluids on the public API: registration, approved numbers, policies, source types, tides and intake math.</summary>
 internal static class MoreFluidsScenarios {
-  /// <summary>The real provider's Register stage with only the capabilities this API lists, so its content is checked before every capability ships.</summary>
-  private sealed class ListedCapabilitiesProvider : IFluidProvider {
-    private readonly MoreFluidsLiquids _inner = new();
-    public string ProviderId => _inner.ProviderId;
-    public string OwnerModId => _inner.OwnerModId;
-    public string MinimumApiVersion => _inner.MinimumApiVersion;
-    public IReadOnlyCollection<string> RequiredCapabilities => _inner.RequiredCapabilities.Where(c => ModdableFluidsEntry.Capabilities.Contains(c)).ToArray();
-    public void Register(FluidRegistration registration) => _inner.Register(registration);
-  }
-
   internal static (FluidRegistry Registry, FluidTideRegistry Tides) Freeze() {
     var host = new ModdableFluidsHost();
-    host.RegisterProvider(new ListedCapabilitiesProvider());
+    host.RegisterProvider(new MoreFluidsLiquids());
     return (host.Freeze(), host.Tides);
   }
 
   internal static void Run(Action<bool, string> check, Action<string, Action> scenario, Dictionary<string, object> observations) {
-    scenario("More Fluids requires exactly the capabilities it uses, and Moddable Fluids rejects it until each one is listed", () => {
+    scenario("More Fluids requires exactly the capabilities it uses, and this Moddable Fluids lists them all and accepts it", () => {
       string[] expected = { "ModdableFluids.Policies.Irrigation", "ModdableFluids.Policies.WaterIntakes", "ModdableFluids.Registry.Definitions", "ModdableFluids.Scene.Lifecycle",
         "ModdableFluids.Sources.Types", "ModdableFluids.Tides.Registration", "ModdableFluids.World.Extraction", "ModdableFluids.World.Sampling" };
       var provider = new MoreFluidsLiquids();
       check(provider.RequiredCapabilities.OrderBy(c => c, StringComparer.Ordinal).SequenceEqual(expected), "More Fluids capabilities: " + string.Join(", ", provider.RequiredCapabilities));
       check(provider.MinimumApiVersion == "0.1.3", "More Fluids keeps MinimumApiVersion 0.1.3 until the release is set");
-      var missing = expected.Where(c => !ModdableFluidsEntry.Capabilities.Contains(c)).ToArray();
+      var unlisted = expected.Where(c => !ModdableFluidsEntry.Capabilities.Contains(c)).ToArray();
+      check(unlisted.Length == 0, "Moddable Fluids does not list " + string.Join(", ", unlisted) + ", so it would reject More Fluids");
       var host = new ModdableFluidsHost();
       host.RegisterProvider(provider);
-      if (missing.Length == 0) {
-        var registry = host.Freeze();
-        check(registry.UndeclaredPolicies().Count == 0, "More Fluids declares every policy: " + string.Join("; ", registry.UndeclaredPolicies()));
-      } else {
-        try { host.Freeze(); check(false, "Moddable Fluids accepted More Fluids without " + string.Join(", ", missing)); }
-        catch (FluidRegistryException e) {
-          check(missing.All(c => e.Message.Contains(c, StringComparison.Ordinal)), "The rejection names every missing capability: " + e.Message);
-        }
-      }
-      observations["moreFluidsAwaitedCapabilities"] = missing;
+      var registry = host.Freeze();
+      check(registry.Providers.Single().ProviderId == MoreFluidsLiquids.Id && registry.UndeclaredPolicies().Count == 0,
+        "More Fluids is accepted with every policy declared: " + string.Join("; ", registry.UndeclaredPolicies()));
     });
 
     scenario("More Fluids registers its approved fluids, numbers and policies", () => {
