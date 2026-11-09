@@ -12,17 +12,18 @@ using ModdableFluids.Runtime.Prototype;
 
 namespace ModdableFluids.Tides.Prototype {
   /// <summary>
-  /// Binds the tide system with the scene owner (<see cref="ModdableFluidsSceneConfigurator"/>): only where Moddable Fluids
-  /// attaches to the game scene, and only when at least one tide is registered. With none, nothing is bound and no native
-  /// method is patched. With Moddable Weathers loaded, registered tides refuse to run (FluidTideModdableWeathers).
+  /// Binds the tide system with the scene owner, under the same condition as <see cref="ModdableFluidsSceneConfigurator"/>
+  /// (a mod registered a fluid, or the worker fixture), and only when at least one tide is registered. A tide always emits a
+  /// registered extra fluid, so wherever a tide is registered the scene owner is bound. With no tide nothing is bound and
+  /// no native method is patched. With Moddable Weathers loaded, registered tides refuse to run (FluidTideModdableWeathers).
   /// </summary>
   [Context("Game")]
   public sealed class FluidTidesConfigurator : Configurator {
     protected override void Configure() {
-      if (!WorkerAcceptanceRun.Enabled) return;
       // Every provider registered from IModStarter.StartMod before the first scene; freezing here gives the same registry the scene owner gets.
       var host = ModdableFluidsEntry.Host;
-      host.Freeze();
+      var registry = host.Freeze();
+      if (!WorkerAcceptanceRun.Enabled && !registry.HasExtraFluids) return;
       var tides = host.Tides;
       if (tides.Count == 0) return;
       FluidTideModdableWeathers.RequireAbsent(tides);

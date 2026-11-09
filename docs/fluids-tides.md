@@ -5,7 +5,7 @@ Tide registration for Moddable Fluids, started 2026-11-09. A tide is a hazardous
 Status:
 
 - **Implemented and tested outside the game.** The registration API, the validation at registry freeze and the selection rule are covered by the .NET harness. The game-side adapter (`src/ModdableFluids/Tides`) compiles against the shipped game assemblies, and its native parts pass a probe in the game's own Mono (see [Evidence](#evidence)).
-- **Not yet run in game.** Like the rest of Moddable Fluids, it binds only where the scene owner does: in worker acceptance worlds (`-moddableFluidsWorkerAcceptance`).
+- **Not yet run in game.** It binds where the scene owner does (every game in which a mod registers a fluid, and the worker fixture), and only when a tide is registered. The new-game rows follow the same rule in the main menu.
 
 ## Selection policy C′
 
@@ -112,7 +112,7 @@ A save's defaults: each tide's weight is its derived chance, and the budget is t
 
 ## Game adapter
 
-`src/ModdableFluids/Tides`, compiled into the Runtime assembly. `FluidTidesConfigurator` binds it with the scene owner, and only when at least one tide is registered. With none, nothing is bound and no native method is patched.
+`src/ModdableFluids/Tides`, compiled into the Runtime assembly. `FluidTidesConfigurator` binds it under the scene owner's condition, and only when at least one tide is registered. A tide always emits a registered extra fluid, so the scene owner is then bound too. With no tide, nothing is bound and no native method is patched.
 
 ### Native hooks
 

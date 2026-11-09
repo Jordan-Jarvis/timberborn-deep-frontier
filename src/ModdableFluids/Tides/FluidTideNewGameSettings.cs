@@ -15,12 +15,13 @@ using ModdableFluids.Runtime.Prototype;
 using UnityEngine.UIElements;
 
 namespace ModdableFluids.Tides.Prototype {
+  /// <summary>The new-game rows wherever a game scene would bind the tide system: a tide is registered (FluidTidesConfigurator).</summary>
   [Context("MainMenu")]
   public sealed class FluidTideNewGameConfigurator : Configurator {
     protected override void Configure() {
-      if (!WorkerAcceptanceRun.Enabled) return;
       var host = ModdableFluidsEntry.Host;
-      host.Freeze();
+      var registry = host.Freeze();
+      if (!WorkerAcceptanceRun.Enabled && !registry.HasExtraFluids) return;
       if (host.Tides.Count == 0) return;
       Bind<FluidTideNewGameSettings>().AsSingleton();
     }
