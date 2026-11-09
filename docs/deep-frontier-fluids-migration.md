@@ -186,12 +186,13 @@ pwsh tools/build_moddable_fluids.ps1 -MoreFluids    # Moddable Fluids (and More 
 pwsh tools/build_deep_frontier.ps1 -ModdableFluids  # the flagged Deep Frontier test package, kept in outputs/deep-frontier-moddable-fluids/package
 ```
 
-`build_deep_frontier.ps1` without the switch is the default shipped build, unchanged. With it, `tools/build_deep_frontier_moddable_fluids.ps1` runs the same official build with a flagged staging:
+`build_deep_frontier.ps1` without the switch is the default shipped build. With it, `tools/build_deep_frontier_moddable_fluids.ps1` runs the same official build with a flagged staging (both builds reuse their last verified asset bundles while the bundle inputs are unchanged: [unity-build-performance.md](unity-build-performance.md)):
 
 - `src/DeepFrontier/ModdableFluids` is staged into `Scripts/ModdableFluids`.
 - The staged `DeepFrontier.asmdef` defines `DEEP_FRONTIER_MODDABLE_FLUIDS` for that assembly only (`versionDefines` on the editor version).
 - That asmdef references the `ModdableFluids` assembly definition, which `build_moddable_fluids.ps1` stages from `src/ModdableFluids/Api`. More Fluids compiles against it the same way. A precompiled `ModdableFluids.dll` would collide with that assembly definition.
 - The manifest requires `ModdableFluids` at the kept package's version, leaves out `ModdableWeathers`, and has " (Moddable Fluids test build)" added to its name.
+- Deep Frontier's radioactive-water shader variants (`RadioactiveWaterURP_Opaque`/`_Transparent`, with their `.meta` files) are set aside for the build, because Moddable Fluids draws the water. Only `RadiationRenderer` loads them, and it is bound only without the flag. The irradiated-soil variant stays.
 
 The official builder only writes into `Mods/DeepFrontier`. The script therefore:
 
@@ -202,6 +203,7 @@ The official builder only writes into `Mods/DeepFrontier`. The script therefore:
    - `DeepFrontier.dll` is the official output, defines the flagged types, and references `ModdableFluids` at the package's assembly version.
    - The builder's `ModdableFluids.dll` is byte-identical to the kept package's.
    - The data and both bundles are in place.
+   - The bundles hold `DeepFrontier/IrradiatedTerrainURP` with exactly the variants the game draws, and no radioactive-water variant (`tools/asset-pipeline/check_bundle_shaders.py`).
 3. **Moves the package out** to `outputs/deep-frontier-moddable-fluids/package/DeepFrontier`.
 4. **Restores everything byte for byte**, then puts the default staging back. A restore that does not match stops with its backup named.
 
@@ -257,6 +259,7 @@ Run each with the packages built from one commit, through the launcher above. Lo
 
 1. **Package.**
    - Make the test build's flagged staging the default. That is the staged `Scripts/ModdableFluids`, the asmdef with its define and reference, and the manifest.
+   - Delete the radioactive-water shader variants from `src/DeepFrontier/AssetBundles/Resources/Shaders/DeepFrontier`, which the test build already leaves out, with `RadiationRenderer` and its water surface.
    - Fold its package checks into `tools/verify_deep_frontier_package.ps1`. That script then compares the installed package with the builder output, as it does now.
 2. **Manifest.**
    - Add `{ "Id": "ModdableFluids", "MinimumVersion": "<first release>" }` to `RequiredMods` and bump the version.
