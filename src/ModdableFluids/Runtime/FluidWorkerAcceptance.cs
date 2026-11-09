@@ -119,6 +119,7 @@ namespace ModdableFluids.Runtime.Prototype {
     private readonly PanelStack _panels;
     private readonly GameSaver _saver;
     private readonly SettlementReferenceService _settlements;
+    private readonly FluidWaterRendering _rendering;
     private string _restoredDigest;
     private bool _sourceRegistered, _saveQueued;
     private readonly ConcurrentDictionary<int, byte> _workerIds = new ConcurrentDictionary<int, byte>();
@@ -132,9 +133,9 @@ namespace ModdableFluids.Runtime.Prototype {
     private int PoolIndex => (_pool.y + 1) * (_index.TerrainSize.x + 2) + _pool.x + 1;
     public FluidWorkerAcceptance(ModdableFluidsSceneOwner owner, IWaterService water, IWaterRemovalService removals,
         ITickableSingletonService ticks, MapIndexService index, SpeedManager speed, MainMenuSceneLoader menu, PanelStack panels,
-        GameSaver saver, SettlementReferenceService settlements) {
+        GameSaver saver, SettlementReferenceService settlements, FluidWaterRendering rendering) {
       _owner = owner; _water = water; _removals = removals; _ticks = ticks; _index = index; _speed = speed; _menu = menu; _panels = panels;
-      _saver = saver; _settlements = settlements;
+      _saver = saver; _settlements = settlements; _rendering = rendering;
     }
     private void Check(bool condition, string name) { _checks++; WorkerAcceptanceRun.Require(condition, name); }
     public void PostLoad() {
@@ -231,6 +232,8 @@ namespace ModdableFluids.Runtime.Prototype {
       Check(_owner.WorkerCount > 0 && _workerIds.Count > 0 && !_workerIds.ContainsKey(_owner.MainThreadId), "Fluid callbacks did not run on actual native worker threads");
       Check(_maxColumns > _initialColumns, "Native column growth/resizing was not exercised");
       Check(_nativeRemoved > 0 && _pumpRequests == 10, "Native pump acceptance did not execute its ten requests");
+      // Shared rendering: scene copies on the tiles (native materials untouched) and tinted texels for the synthetic fluids.
+      Check(_rendering.TilesWithFluidMaterial > 0 && _rendering.TintedTexels > 0, "Shared rendering did not assign its scene materials or tint the synthetic fluids");
       for (int component = 0; component < _owner.Registry.Count; component++) {
         double remaining = 0;
         for (int slot = 0; slot < session.ColumnCount; slot++) remaining += session.Sample(session.GetGeometry(slot).NativeIndex).GetVolume(component);
@@ -243,7 +246,8 @@ namespace ModdableFluids.Runtime.Prototype {
         workers = _owner.WorkerCount, mainThread = _owner.MainThreadId, callbackThreads = _workerIds.Keys.OrderBy(v=>v).ToArray(),
         initialColumns = _initialColumns, maximumColumns = _maxColumns, pressureLoss = session.PressureLoss.TotalVolume,
         nativePumpRemoved = _nativeRemoved, componentPumpRemoved = _lastRemoved, maxRepresentationDifference = session.MaxRepresentationDifference,
-        registryFingerprint = _owner.Registry.Fingerprint, fluids = _owner.Registry.Definitions.Select(d => d.Id).ToArray(), providerScene = _owner.Scene.Serial });
+        registryFingerprint = _owner.Registry.Fingerprint, fluids = _owner.Registry.Definitions.Select(d => d.Id).ToArray(), providerScene = _owner.Scene.Serial,
+        renderedTiles = _rendering.TilesWithFluidMaterial, tintedTexels = _rendering.TintedTexels });
       Debug.Log("[ModdableFluids Acceptance] WORLD PASS " + WorkerAcceptanceRun.Worlds.Count + "; ticks=" + session.CompletedTicks + "; callbacks=" + string.Join(",", _workerIds.Keys));
       _finished = true; _speed.ChangeSpeed(0);
       if (!WorkerAcceptanceRun.SaveMode) { _returnToMenu = true; return; }

@@ -22,6 +22,9 @@ if ($files.Count -ne $apiNames.Count -or @($files | Where-Object Name -notin $ap
 foreach ($name in $apiNames) {
   if ((Get-FileHash -LiteralPath (Join-Path $installed "Scripts/$name")).Hash -ne $package.assemblies.$name) { throw "Kept $name differs from the recorded official build." }
 }
+foreach ($platform in 'win','mac') {
+  if ((Get-FileHash -LiteralPath (Join-Path $installed "AssetBundles/moddablefluids_$platform")).Hash -ne $package.assemblies."moddablefluids_$platform") { throw "Kept $platform shader bundle differs from the recorded official build." }
+}
 $fixtures = @('ModdableFluidsSyntheticReflection','ModdableFluidsSyntheticCompiled')
 $fixtureDlls = @()
 foreach ($id in $fixtures) {

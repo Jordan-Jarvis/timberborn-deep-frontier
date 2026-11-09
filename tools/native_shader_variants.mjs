@@ -126,7 +126,7 @@ function requireSafeNumbers(text, what) {
   }
 }
 
-class Graph {
+export class Graph {
   // library: a native graph that lends utility-node templates (Add, Maximum,
   // Keyword) this graph does not contain.
   constructor(text, seed, library = null) {
@@ -328,7 +328,7 @@ class Graph {
   }
 }
 
-async function subgraphGuid(name) {
+export async function subgraphGuid(name) {
   const meta = await readFile(resolve(NATIVE_SHADER_DIR, `${name}.shadersubgraph.meta`), 'utf8');
   const guid = /^guid: ([0-9a-f]{32})$/m.exec(meta)?.[1];
   if (!guid) throw new Error(`${name}.shadersubgraph.meta has no guid`);
@@ -336,7 +336,7 @@ async function subgraphGuid(name) {
 }
 
 // The native contamination subgraph node and the Lerp that applies its colour.
-function nativeContamination(graph, guid, what) {
+export function nativeContamination(graph, guid, what) {
   const matches = graph.subGraphNodes(guid);
   if (matches.length !== 1) throw new Error(`${what}: expected one native contamination subgraph, found ${matches.length}`);
   const [native] = matches;
@@ -350,7 +350,7 @@ function nativeContamination(graph, guid, what) {
 
 // Copies `native` with every native input edge, except `replace`: input name
 // -> [node, output slot].
-function duplicateContamination(graph, native, key, replace) {
+export function duplicateContamination(graph, native, key, replace) {
   const copy = graph.cloneNode(native, key, 0, 1300, `${native.m_Name} (Deep Frontier)`);
   const used = new Set();
   for (const edge of graph.edgesInto(native)) {

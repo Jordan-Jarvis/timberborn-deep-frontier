@@ -95,6 +95,12 @@ $api = @(
 )
 if (Test-Path -LiteralPath (Join-Path $mods 'ModdableFluids')) { throw 'ModdableFluids is installed in the Mods folder; packages must only be present during an acceptance run. Remove it first.' }
 Stage 'ModdableFluids' (Join-Path $source 'manifest.json') $api
+# Shared-rendering shader variants (tools/moddable_fluids_shader_variants.mjs) go into the API's bundles.
+& (Get-DevEnvironment 'node').node (Join-Path $PSScriptRoot 'moddable_fluids_shader_variants.mjs') --check
+if ($LASTEXITCODE -ne 0) { throw 'Moddable Fluids shader variants are stale; run node tools/moddable_fluids_shader_variants.mjs' }
+$stagedBundles = Join-Path $project 'Assets/Mods/ModdableFluids/AssetBundles'
+if (Test-Path -LiteralPath $stagedBundles) { Remove-Item -LiteralPath $stagedBundles -Recurse -Force }
+Copy-Item -LiteralPath (Join-Path $source 'AssetBundles') -Destination $stagedBundles -Recurse
 $fixtures = @(
   @{Id='ModdableFluidsSyntheticReflection';Folder=(Join-Path $source 'Examples/SyntheticReflection')},
   @{Id='ModdableFluidsSyntheticCompiled';Folder=(Join-Path $source 'Examples/SyntheticCompiled')}
@@ -129,6 +135,11 @@ function Keep([string]$id) {
 }
 $version = (Get-Content (Join-Path $installed 'manifest.json') -Raw | ConvertFrom-Json).Version
 $apiHashes = Verify 'ModdableFluids' $installed (Join-Path $source 'manifest.json') @('ModdableFluids.dll','ModdableFluids.TransportPrototype.dll','ModdableFluids.GamePrototype.dll','ModdableFluids.RuntimePrototype.dll')
+foreach ($platform in 'win','mac') {
+  $bundle = Join-Path $installed "AssetBundles/moddablefluids_$platform"
+  if (-not (Test-Path -LiteralPath $bundle) -or (Get-Item -LiteralPath $bundle).Length -eq 0) { throw "The official build produced no $platform shader bundle." }
+  $apiHashes["moddablefluids_$platform"] = (Get-FileHash -LiteralPath $bundle).Hash
+}
 $report = [ordered]@{ status='passed'; package=(Keep 'ModdableFluids'); version=$version; assemblies=$apiHashes }
 if ($SyntheticFixtures) {
   $report.fixtures = [ordered]@{}

@@ -23,6 +23,8 @@ namespace ModdableFluids.Runtime.Prototype {
       // ordinary play leaves native water untouched.
       if (!WorkerAcceptanceRun.Enabled) return;
       Bind<ModdableFluidsSceneOwner>().AsSingleton();
+      // After the owner: it needs the frozen registry and the session the owner attaches.
+      Bind<FluidWaterRendering>().AsSingleton();
       Bind<FluidWorkerAcceptance>().AsSingleton();
     }
   }
