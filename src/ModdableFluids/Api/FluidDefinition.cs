@@ -53,12 +53,14 @@ namespace ModdableFluids {
     public FluidWaterIntakePolicy WaterIntake { get; }
     /// <summary>What this extra fluid does to soil moisture (0.1.4); null for the game's fluids and while undeclared.</summary>
     public FluidIrrigationPolicy Irrigation { get; }
+    /// <summary>The shared renderer's visibility curve (0.1.4); null means the visibility is the share.</summary>
+    public FluidVisibility Visibility { get; }
 
     internal FluidDefinition(string id, string ownerModId, string localName, string providerId, string displayNameLocKey,
         FluidNativeRole role, bool hasColor, FluidColor color, SortedDictionary<string, string> metadata,
-        FluidWaterIntakePolicy waterIntake = null, FluidIrrigationPolicy irrigation = null) {
+        FluidWaterIntakePolicy waterIntake = null, FluidIrrigationPolicy irrigation = null, FluidVisibility visibility = null) {
       Id = id; OwnerModId = ownerModId; LocalName = localName; ProviderId = providerId; DisplayNameLocKey = displayNameLocKey;
-      NativeRole = role; HasColor = hasColor; Color = color; WaterIntake = waterIntake; Irrigation = irrigation;
+      NativeRole = role; HasColor = hasColor; Color = color; WaterIntake = waterIntake; Irrigation = irrigation; Visibility = visibility;
       Metadata = new ReadOnlyDictionary<string, string>(new SortedDictionary<string, string>(metadata, StringComparer.Ordinal));
     }
 

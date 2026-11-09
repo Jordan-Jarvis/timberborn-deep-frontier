@@ -161,6 +161,22 @@ namespace ModdableFluids {
       fluid.Irrigation = new FluidIrrigationPolicy(FluidMoistureEffect.BlocksLikeBadwater, blocksAtShare);
     }
 
+    /// <summary>
+    /// Gives a fluid this provider registered a logarithmic visibility curve for the shared water renderer (see
+    /// <see cref="FluidVisibility"/>): hidden below <paramref name="fromShare"/> (in (0, 1)), <paramref name="visibilityAtFromShare"/>
+    /// (in (0, 1]) there, 1 when pure. Without one a fluid's visibility is its share.
+    /// </summary>
+    public void SetVisibilityCurve(string localName, double fromShare, double visibilityAtFromShare) {
+      RequireOpen();
+      var fluid = OwnFluid(localName, "visibility curve");
+      if (fluid.Visibility != null) throw new ArgumentException("Fluid " + fluid.Id + " was given two visibility curves");
+      if (double.IsNaN(fromShare) || fromShare <= 0 || fromShare >= 1)
+        throw new ArgumentOutOfRangeException(nameof(fromShare), fromShare, "Fluid " + fluid.Id + ": a visibility curve starts at a share in (0, 1)");
+      if (double.IsNaN(visibilityAtFromShare) || visibilityAtFromShare <= 0 || visibilityAtFromShare > 1)
+        throw new ArgumentOutOfRangeException(nameof(visibilityAtFromShare), visibilityAtFromShare, "Fluid " + fluid.Id + ": the visibility where the curve starts is in (0, 1]");
+      fluid.Visibility = new FluidVisibility(fromShare, visibilityAtFromShare);
+    }
+
     private PendingFluid OwnFluid(string localName, string what) {
       string id = OwnerModId + "." + localName;
       return _fluids.SingleOrDefault(f => f.ProviderId == ProviderId && f.Id == id)
@@ -179,6 +195,7 @@ namespace ModdableFluids {
     internal readonly SortedDictionary<string, string> Metadata = new SortedDictionary<string, string>(StringComparer.Ordinal);
     internal FluidWaterIntakePolicy WaterIntake;
     internal FluidIrrigationPolicy Irrigation;
+    internal FluidVisibility Visibility;
     internal PendingFluid(string id, string owner, string local, string provider, string loc, FluidColor color) {
       Id = id; OwnerModId = owner; LocalName = local; ProviderId = provider; DisplayNameLocKey = loc; Color = color;
     }

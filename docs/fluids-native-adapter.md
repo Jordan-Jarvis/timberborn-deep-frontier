@@ -169,7 +169,7 @@ The CPU half is built (`src/ModdableFluids/Rendering`, 2026-11-09).
 
 **`FluidAppearanceResolver`** turns a mixture into one RGBA8 tint, whatever the number of registered fluids.
 - Water and badwater keep the native shader's look: strength 0, with badwater staying on the native contamination channel.
-- Each extra fluid adds its share times its colour alpha to the strength. The colour is the same weighted mean, so the strength cannot exceed one and nothing is clamped.
+- Each extra fluid has a weight: its colour alpha times its visibility. The visibility is its share, or its declared curve (0.1.4, [contract](fluids-api-contract.md#visibility-curve-shared-rendering)). The strength is 1 - product(1 - weight), so each tint covers what the others leave. It equals the weight for a single fluid and stays in [0, 1] for any curves, with nothing clamped. The colour is the weight-weighted mean. Until 0.1.4 the strength was the plain sum of share times alpha.
 
 **`FluidAppearanceField`** lays the texels out like the native water texture arrays.
 - There is one layer per vertical column ordinal, with texels at unpadded `y * width + x`.

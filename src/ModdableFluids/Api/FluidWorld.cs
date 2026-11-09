@@ -42,7 +42,11 @@ namespace ModdableFluids {
     IReadOnlyList<FluidColumnSample> SampleCell(int x, int y);
     /// <summary>Total volume of one fluid over every column, at the last completed tick.</summary>
     double TotalVolume(FluidHandle fluid);
-    /// <summary>Requests <paramref name="volume"/> of <paramref name="fluid"/> in the open column containing (x, y, z).</summary>
+    /// <summary>
+    /// Requests <paramref name="volume"/> of <paramref name="fluid"/> in the open column containing (x, y, z) at the next
+    /// native change stage. The column is found then, so it need not exist in the last published tick (0.1.4); a cell
+    /// with no open column at that stage drops the addition, reported as <see cref="FluidLossKind.DroppedAddition"/>.
+    /// </summary>
     void QueueAddition(int x, int y, int z, FluidHandle fluid, double volume);
     /// <summary>Sets (or with null clears) <paramref name="ownerId"/>'s override of tide-overridable source emissions.</summary>
     void SetSourceComposition(string ownerId, IReadOnlyDictionary<string, double> composition);

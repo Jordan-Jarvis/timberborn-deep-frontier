@@ -188,7 +188,7 @@ namespace ModdableFluids {
         };
         foreach (var fluid in byId.Values.OrderBy(f => f.Id, StringComparer.Ordinal))
           definitions.Add(new FluidDefinition(fluid.Id, fluid.OwnerModId, fluid.LocalName, fluid.ProviderId, fluid.DisplayNameLocKey,
-            FluidNativeRole.Extra, true, fluid.Color, fluid.Metadata, fluid.WaterIntake, fluid.Irrigation));
+            FluidNativeRole.Extra, true, fluid.Color, fluid.Metadata, fluid.WaterIntake, fluid.Irrigation, fluid.Visibility));
         var infos = accepted.Select(e => new FluidProviderInfo(e.Id, e.Owner, e.Provider.MinimumApiVersion, e.Route,
           e.Capabilities, e.Scene != null, e.State != null, e.State?.StateSchemaVersion ?? 0)).ToArray();
         _registry = new FluidRegistry(definitions.ToArray(), infos, sourceTypes.ToArray());
@@ -383,7 +383,8 @@ namespace ModdableFluids {
             text.Append("  [").Append(i).Append("] ").Append(d.Id).Append(" role=").Append(d.NativeRole).Append(" owner=").Append(d.OwnerModId)
               .Append(" provider=").Append(d.ProviderId);
             if (d.NativeRole == FluidNativeRole.Extra)
-              text.Append(" water intakes: ").Append(d.WaterIntake?.ToString() ?? "undeclared").Append("; moisture: ").Append(d.Irrigation?.ToString() ?? "undeclared");
+              text.Append(" water intakes: ").Append(d.WaterIntake?.ToString() ?? "undeclared").Append("; moisture: ").Append(d.Irrigation?.ToString() ?? "undeclared")
+                .Append("; ").Append(d.Visibility?.ToString() ?? "visible by share");
             text.Append('\n');
           }
           foreach (var p in _registry.Providers)

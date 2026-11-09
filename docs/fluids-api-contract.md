@@ -194,6 +194,9 @@ A source type describes one kind of water source placed from a blueprint: its te
 
 - `TrySample(x, y, z)` returns the open column containing height z at a cell; `SampleCell(x, y)` returns every open column of the cell, lowest first (0.1.3). Samples come from the state published at the last completed tick, so any game thread may read them and never sees half a tick. `HasState` is false until the scene's first native water substep (0.1.3).
 - `QueueAddition(x, y, z, fluid, volume)` is a main-thread request, like the native water service. It becomes a native clean-water change that the change stage resolves to the named fluid by cell and volume, oldest first. Badwater additions use the native contaminated-water change.
+  - **Column lookup (from 0.1.4).** The column is found at the change stage, against that tick's native layout, so the last published tick need not have it: geometry may have changed this tick, or no fluid tick may have run yet. Until 0.1.3 such a request threw.
+  - **Closed cell.** A cell with no open column at that stage drops the addition, as the native game drops the change. The drop is reported as `DroppedAddition`.
+  - **Outside the map.** A cell outside the map throws at once.
 - `SetSourceComposition(owner, shares)` makes tide-overridable source types emit the given extra fluids; `null` clears it. A second owner fails instead of winning by load order.
 
 ## Legacy import and column rules (0.1.3)
@@ -238,6 +241,8 @@ A tick's losses run from the geometry reconciliation at its start to its change 
 
 `requesterId` is an ID in the requester's namespace (`MoreFluids.FluidExtractor`) and appears on the tick's `Extraction` losses. A building that draws through extraction while it has a native `WaterInput` for its pipe marks itself with a component implementing `IFluidCustomIntake`, so the water-intake guard leaves it alone.
 
+`IFluidCustomIntake` also covers an intake that keeps the native pump path on purpose. Deep Frontier's sludge intake pumps through its native `WaterInput`, so the fresh water it draws is used up as natively. Its column rules credit the radioactive volume from the tick's `NativeRemoval` losses at its cell. This is supported. Losses are summed per cell, so two intakes that share one cell share one entry, as natively they share one `RemovedWater` result.
+
 ### Water-intake policy (`ModdableFluids.Policies.WaterIntakes`)
 
 `FluidRegistration.SetWaterIntakePolicy(localName, refuseAtShare, drawnAsWater, refusedStatusLocKey, refusedAlertLocKey)`:
@@ -264,6 +269,18 @@ Every placed native water source is classified once, when its entity wakes, by i
 - **Schedule.** A type's schedule (a geyser) is applied as a native `IWaterStrengthModifier` on the source.
 - **Drought.** A type that does not follow droughts removes the source's native drought modifier, as the Badwater Pressurizer's `UnderlyingWaterSource.DisableDroughtInfluence` does.
 - **Badtide.** Badtide behaviour stays the blueprint's own native controller; the classification checks that it agrees with the type.
+
+### Visibility curve (shared rendering)
+
+`SetVisibilityCurve(localName, fromShare, visibilityAtFromShare)` declares how visible a fluid is in the shared water renderer (`FluidVisibility`):
+
+- **The curve.** The fluid is hidden below `fromShare` (in (0, 1)) and shows at `visibilityAtFromShare` (in (0, 1]) there. Visibility then rises with the logarithm of the share, reaching 1 in a pure column.
+- **Without a curve,** the visibility is the share.
+- **Deep Frontier.** Its radioactive water is `(0.005, 0.12)`. This reproduces `RadioactiveWaterSurface.Encode`, `0.12 + 0.88 * log10(r / 0.005) / -log10(0.005)`, to 1e-12 in the harness.
+- **Blending.** Each fluid's weight is its colour alpha times its visibility. Each fluid's tint covers what the others leave: strength = 1 - product(1 - weight). The colour is the weight-weighted mean.
+- **Native curve.** The GPU half encodes the strength through the inverse of the native contamination curve, as before.
+
+Not covered: Deep Frontier's two base and two detail colours. A fluid has one colour.
 
 ### Both policies are required in game
 

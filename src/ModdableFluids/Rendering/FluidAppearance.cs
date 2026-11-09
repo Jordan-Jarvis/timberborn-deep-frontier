@@ -21,13 +21,15 @@ namespace ModdableFluids.Rendering.Prototype {
   /// <summary>
   /// Resolves a mixture to one tint, independent of how many fluids are registered. Water and badwater
   /// keep the native shader's look (badwater stays on the native contamination channel), so a mixture
-  /// of only those resolves to strength 0. Each extra fluid contributes its volume share times its
-  /// colour alpha: strength = sum(share * alpha), which cannot exceed 1 because shares total at most 1;
-  /// the colour is the same weighted mean of the extra fluids' colours. Nothing is clamped or rescaled.
+  /// of only those resolves to strength 0. Each extra fluid has a weight w = alpha * visibility(share),
+  /// where visibility is the fluid's declared curve (<see cref="FluidVisibility"/>) or its share. Each
+  /// fluid's tint covers what the others leave: strength = 1 - product(1 - w), which is in [0, 1] for any
+  /// curves and equals w for a single fluid; the colour is the w-weighted mean. Nothing is clamped.
   /// </summary>
   public sealed class FluidAppearanceResolver {
     private readonly int[] _extras;
     private readonly double[] _red, _green, _blue, _alpha;
+    private readonly FluidVisibility[] _visibility;
     public int ComponentCount { get; }
 
     public FluidAppearanceResolver(FluidRegistry registry) {
@@ -35,12 +37,14 @@ namespace ModdableFluids.Rendering.Prototype {
       ComponentCount = registry.Count;
       var extras = new List<int>();
       _red = new double[registry.Count]; _green = new double[registry.Count]; _blue = new double[registry.Count]; _alpha = new double[registry.Count];
+      _visibility = new FluidVisibility[registry.Count];
       for (int c = 0; c < registry.Count; c++) {
         var definition = registry.Definitions[c];
         if (definition.NativeRole != FluidNativeRole.Extra) continue;
         if (!definition.HasColor) throw new InvalidOperationException("Extra fluid " + definition.Id + " has no colour");
         extras.Add(c);
         _red[c] = definition.Color.Red; _green[c] = definition.Color.Green; _blue[c] = definition.Color.Blue; _alpha[c] = definition.Color.Alpha;
+        _visibility[c] = definition.Visibility;
       }
       _extras = extras.ToArray();
     }
@@ -49,13 +53,14 @@ namespace ModdableFluids.Rendering.Prototype {
       if (mixture == null || mixture.ComponentCount != ComponentCount) throw new ArgumentException("Mixture layout differs from the registry");
       double total = mixture.TotalVolume;
       if (total == 0) return default;
-      double red = 0, green = 0, blue = 0, weight = 0;
+      double red = 0, green = 0, blue = 0, weight = 0, uncovered = 1;
       foreach (int c in _extras) {
-        double w = mixture.GetVolume(c) / total * _alpha[c];
-        red += w * _red[c]; green += w * _green[c]; blue += w * _blue[c]; weight += w;
+        double share = mixture.GetVolume(c) / total;
+        double w = _alpha[c] * (_visibility[c] != null ? _visibility[c].At(share) : FluidVisibility.Linear(share));
+        red += w * _red[c]; green += w * _green[c]; blue += w * _blue[c]; weight += w; uncovered *= 1 - w;
       }
       if (weight == 0) return default;
-      return new FluidAppearance(Quantize(red / weight), Quantize(green / weight), Quantize(blue / weight), Quantize(weight));
+      return new FluidAppearance(Quantize(red / weight), Quantize(green / weight), Quantize(blue / weight), Quantize(1 - uncovered));
     }
 
     private static byte Quantize(double value) {

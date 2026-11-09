@@ -344,6 +344,63 @@ internal static partial class HarnessExtensions {
       Rejects<InvalidOperationException>(() => new FluidMoistureShadow(CoffeeRegistry(), M, NativeWaterFixture.Stride, NativeWaterFixture.VerticalStride), "A fluid without an irrigation policy");
       observations["moistureMergedContribution"] = added[Cell(0, 1)];
     });
+
+    scenario("a declared visibility curve hides a fluid below its share and blends with the others", () => {
+      var registry = CoffeeRegistry(r => {
+        r.AddFluid("Glow", "MoreFluids.Glow", .68f, .74f, .06f, .85f);
+        r.SetVisibilityCurve("Glow", .005, .12);
+      });
+      var glow = registry.Get(registry.GetHandle("MoreFluids.Glow")).Visibility!;
+      check(registry.Get(registry.GetHandle("MoreFluids.Coffee")).Visibility == null, "No curve: visibility is the share");
+      Close(glow.At(.0049), 0, "Hidden below the curve's share"); Close(glow.At(.005), .12, "Visibility where the curve starts");
+      Close(glow.At(1), 1, "Pure column fully visible");
+      // Deep Frontier's RadioactiveWaterSurface.Encode: 0.12 + 0.88 * log10(r / 0.005) / -log10(0.005).
+      foreach (double r in new[] { .005, .01, .05, .2, .73 })
+        Close(glow.At(r), .12 + .88 * Math.Log10(r / .005) / -Math.Log10(.005), "Deep Frontier's visibility at " + r, 1e-12);
+      var resolver = new ModdableFluids.Rendering.Prototype.FluidAppearanceResolver(registry);
+      int c = registry.GetHandle("MoreFluids.Coffee").Index, g = registry.GetHandle("MoreFluids.Glow").Index;
+      FluidVolumes M(double water, double coffee, double glowVolume) { var v = new double[registry.Count]; v[0] = water; v[c] = coffee; v[g] = glowVolume; return new FluidVolumes(v); }
+      byte Q(double value) => (byte)Math.Round(value * 255, MidpointRounding.AwayFromZero);
+      check(resolver.Resolve(M(.996, 0, .004)).Strength == 0, "A trace below the curve stays invisible");
+      check(resolver.Resolve(M(.995, 0, .005)).Strength == Q(.85f * .12), "At the detection share the tint is alpha times 0.12");
+      double wg = .85f * glow.At(.5), wc = .5 * 1f; // coffee: grey at alpha 1, visible by share
+      var blended = resolver.Resolve(M(0, .5, .5));
+      check(blended.Strength == Q(1 - (1 - wg) * (1 - wc)) && blended.Red == Q((wg * .68f + wc * .5f) / (wg + wc)), "A curved and a linear fluid blend: " + blended);
+      Rejects<FluidRegistryException>(() => CoffeeRegistry(r => r.SetVisibilityCurve("Coffee", 0, .1)), "Curve from share zero", "starts at a share in (0, 1)");
+      Rejects<FluidRegistryException>(() => CoffeeRegistry(r => r.SetVisibilityCurve("Coffee", 1, .1)), "Curve from share one", "starts at a share in (0, 1)");
+      Rejects<FluidRegistryException>(() => CoffeeRegistry(r => r.SetVisibilityCurve("Coffee", .1, 0)), "No visibility at the start", "is in (0, 1]");
+      Rejects<FluidRegistryException>(() => CoffeeRegistry(r => { r.SetVisibilityCurve("Coffee", .1, .2); r.SetVisibilityCurve("Coffee", .2, .2); }), "Two curves", "two visibility curves");
+      var host = new ModdableFluidsHost();
+      host.RegisterProvider(new PlainProvider("MoreFluids.Liquids", "MoreFluids", new List<string>(), new Fluid("Coffee", "MoreFluids.Coffee")) { Extra = r => r.SetVisibilityCurve("Coffee", .01, .2) });
+      host.Freeze();
+      check(host.DescribeRuntime().Contains("visible from 0.01 at 0.2, log-scaled to 1"), "Runtime description lists the curve");
+      observations["visibilityOneDecadeAboveDetection"] = glow.At(.05);
+    });
+
+    scenario("an addition is resolved against the native layout of its change stage, not the published tick", () => {
+      var registry = CoffeeRegistry();
+      var coffee = registry.GetHandle("MoreFluids.Coffee");
+      using var fixture = new NativeWaterFixture(managed, specification);
+      fixture.AddColumn(0, 1, 1);
+      var session = new NativeFluidTransportSession(fixture.CreateAdapter(), registry.Count, FluidRegistry.BadwaterIndex);
+      var world = new FluidWorldState(registry, NativeWaterFixture.Stride);
+      world.Publish(session);
+      check(!world.TrySample(1, 1, 0, out _), "The published tick has no column at (1, 1)");
+      // Requested on the main thread while the published tick has no column there; the native map opens one this tick.
+      world.RecordAddition(1, 1, 0, coffee, .25); world.RecordAddition(2, 2, 0, coffee, .5);
+      fixture.AddColumn(1, 1, .25f);
+      session.ReconcileGeometry(fixture.CreateAdapter());
+      session.BeginTick(1); fixture.RunAdapterSubstep(session, fixture.ClearRawFlows, new double[2], false); session.FinishSubstep();
+      check(world.TryResolveAddition(1, 1, 0, .25, out var opened), "The new column's addition resolved");
+      session.AddQueued(fixture.Indices[1], opened);
+      // (2, 2) is still closed: the record is consumed and the addition reported as dropped.
+      check(world.TryResolveAddition(2, 2, 0, .5, out var dropped) && world.PendingAdditions == 0, "The closed cell's record consumed");
+      session.RecordDroppedAddition((2 + 1) * NativeWaterFixture.Stride + 2 + 1, 0, dropped);
+      session.EndTick();
+      Close(session.Sample(fixture.Indices[1]).GetVolume(coffee.Index), .25, "Coffee reached the column that appeared this tick");
+      var report = new FluidColumnEditor(session, registry, NativeWaterFixture.Stride).Losses.Single(l => l.Kind == FluidLossKind.DroppedAddition);
+      check(report.X == 2 && report.Y == 2 && Math.Abs(report.GetVolume(coffee) - .5) < 1e-15, "Dropped coffee reported at its cell");
+    });
   }
 
   /// <summary>A reflected provider declaring both 0.1.4 policies with primitive calls only.</summary>

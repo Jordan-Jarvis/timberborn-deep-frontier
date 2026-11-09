@@ -40,7 +40,7 @@ internal static class RenderingScenarios {
       check(resolver.Resolve(Mix(1, 0, 1, 0)).Equals(new FluidAppearance(Q(.3f), Q(.2f), Q(.1f), Q(.5 * .9f))), "Diluted coffee strength");
       double wc = .25 * .9f, wj = .25 * .8f;
       check(resolver.Resolve(Mix(1.5, .5, 1, 1)).Equals(new FluidAppearance(Q((wc * .3f + wj * .9f) / (wc + wj)), Q((wc * .2f + wj * .5f) / (wc + wj)),
-        Q((wc * .1f + wj * .1f) / (wc + wj)), Q(wc + wj))), "Two extra fluids blend by weighted colour");
+        Q((wc * .1f + wj * .1f) / (wc + wj)), Q(1 - (1 - wc) * (1 - wj)))), "Two extra fluids blend by weighted colour; each covers what the other leaves");
       var reversed = Registry(true);
       check(reversed.Fingerprint == registry.Fingerprint, "Registration order changed the registry");
       var reverseResolver = new FluidAppearanceResolver(reversed);
@@ -57,9 +57,9 @@ internal static class RenderingScenarios {
         var volumes = Enumerable.Range(0, large.Count).Select(_ => random.NextDouble() * random.NextDouble()).ToArray();
         var mixture = new FluidVolumes(volumes);
         var appearance = largeResolver.Resolve(mixture);
-        double weight = 0;
-        for (int c = 2; c < large.Count; c++) weight += volumes[c] / mixture.TotalVolume * large.Definitions[c].Color.Alpha;
-        check(appearance.Strength == Q(weight), "64-component strength");
+        double uncovered = 1;
+        for (int c = 2; c < large.Count; c++) uncovered *= 1 - volumes[c] / mixture.TotalVolume * large.Definitions[c].Color.Alpha;
+        check(appearance.Strength == Q(1 - uncovered), "64-component strength");
       }
       observations["appearancePureCoffee"] = resolver.Resolve(Mix(0, 0, 2, 0)).ToString();
     });

@@ -19,7 +19,7 @@ namespace ModdableFluids.Runtime.Prototype {
   /// </summary>
   public sealed class ModdableFluidsWorld : IFluidWorld, IFluidExtraction {
     private readonly IWaterService _water;
-    private readonly int _mainThread;
+    private readonly int _mainThread, _height;
     private readonly PropertyInfo _changeCoordinates;
     private readonly FluidPlacedSources _sources;
     public FluidWorldState State { get; }
@@ -30,7 +30,7 @@ namespace ModdableFluids.Runtime.Prototype {
     internal ModdableFluidsWorld(FluidRegistry registry, int stride, int height, IWaterService water, int mainThread, FluidPlacedSources sources) {
       State = new FluidWorldState(registry, stride);
       Extractions = new FluidExtractionQueue(registry, stride - 2, height);
-      _water = water; _mainThread = mainThread;
+      _water = water; _mainThread = mainThread; _height = height;
       var change = typeof(IWaterService).Assembly.GetType("Timberborn.WaterSystem.WaterChange")
         ?? throw new InvalidOperationException("Native Timberborn.WaterSystem.WaterChange is missing (expected Timberborn 1.1.2.8)");
       _changeCoordinates = change.GetProperty("Coordinates", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -46,7 +46,10 @@ namespace ModdableFluids.Runtime.Prototype {
 
     public void QueueAddition(int x, int y, int z, FluidHandle fluid, double volume) {
       if (Thread.CurrentThread.ManagedThreadId != _mainThread) throw new InvalidOperationException("Fluid additions are requested on the main thread, like native water changes");
-      if (!State.TrySample(x, y, z, out _)) throw new ArgumentException("No open column at (" + x + ", " + y + ", " + z + ") for a fluid addition");
+      // The column is resolved at the change stage, against the native layout of that tick: the published tick may not
+      // have it yet (geometry changed this tick, or no fluid tick ran yet). A cell closed by then is reported as a
+      // dropped addition, as the native game drops the change.
+      if (x < 0 || x >= State.Stride - 2 || y < 0 || y >= _height || z < 0) throw new ArgumentOutOfRangeException(nameof(x), "Fluid addition cell (" + x + ", " + y + ", " + z + ") lies outside the map");
       State.RecordAddition(x, y, z, fluid, volume);
       _water.AddCleanWater(new Vector3Int(x, y, z), (float)volume);
     }
