@@ -14,19 +14,22 @@ namespace ModdableFluids.Runtime.Prototype {
   /// <summary>
   /// The scene's <see cref="IFluidWorld"/>: sampling from the last published completed tick, additions as native
   /// clean-water changes that the change stage resolves to the requested fluid, and the source composition
-  /// override applied to native sources. Additions are main-thread requests, like the native water service.
+  /// override applied to native sources. Additions and extractions are main-thread requests, like the native water
+  /// service; extraction results are delivered by the scene owner on the main thread.
   /// </summary>
-  public sealed class ModdableFluidsWorld : IFluidWorld {
+  public sealed class ModdableFluidsWorld : IFluidWorld, IFluidExtraction {
     private readonly IWaterService _water;
     private readonly int _mainThread;
     private readonly PropertyInfo _changeCoordinates;
     private readonly FluidSourceTypeDefinition _nativeSource;
     public FluidWorldState State { get; }
+    public FluidExtractionQueue Extractions { get; }
     public FluidRegistry Registry => State.Registry;
     public int CompletedTicks => State.CompletedTicks;
 
-    internal ModdableFluidsWorld(FluidRegistry registry, int stride, IWaterService water, int mainThread) {
+    internal ModdableFluidsWorld(FluidRegistry registry, int stride, int height, IWaterService water, int mainThread) {
       State = new FluidWorldState(registry, stride);
+      Extractions = new FluidExtractionQueue(registry, stride - 2, height);
       _water = water; _mainThread = mainThread;
       var change = typeof(IWaterService).Assembly.GetType("Timberborn.WaterSystem.WaterChange")
         ?? throw new InvalidOperationException("Native Timberborn.WaterSystem.WaterChange is missing (expected Timberborn 1.1.2.8)");
@@ -46,6 +49,12 @@ namespace ModdableFluids.Runtime.Prototype {
       if (!State.TrySample(x, y, z, out _)) throw new ArgumentException("No open column at (" + x + ", " + y + ", " + z + ") for a fluid addition");
       State.RecordAddition(x, y, z, fluid, volume);
       _water.AddCleanWater(new Vector3Int(x, y, z), (float)volume);
+    }
+
+    public IFluidExtractionRequest RequestExtraction(string requesterId, int x, int y, int z, FluidHandle fluid, double volume, double minimumShare,
+        Action<IFluidExtractionRequest> resolved) {
+      if (Thread.CurrentThread.ManagedThreadId != _mainThread) throw new InvalidOperationException("Fluid extractions are requested on the main thread, like native water changes");
+      return Extractions.Request(requesterId, x, y, z, fluid, volume, minimumShare, resolved);
     }
 
     /// <summary>The change stage's addition resolver: a recorded fluid, or the native water/badwater split.</summary>

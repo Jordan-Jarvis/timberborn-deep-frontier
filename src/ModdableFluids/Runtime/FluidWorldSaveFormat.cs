@@ -14,15 +14,18 @@ namespace ModdableFluids.Runtime.Prototype {
   /// save written before the first fluid tick of a world that had no fluid state: its components equal
   /// the native water and badwater, and only provider state is stored. Envelope 2 adds <c>ImportPending</c>:
   /// a native-only save of a world whose importers have not run yet (saved before its first fluid tick),
-  /// so the next load imports again. Envelope 1 is read as written, without that key. A missing or
+  /// so the next load imports again. Envelope 3 adds <c>LastCompletedTickSnapshot</c>: the native exception saver
+  /// arrived while a fluid tick was running, so the document is the last completed tick and native water (saved
+  /// mid-tick) is authoritative on load. Envelopes 1 and 2 are read as written, without the newer keys. A missing or
   /// unknown envelope version fails loading; nothing is defaulted.
   /// </summary>
   public static class FluidWorldSaveFormat {
     public static readonly SingletonKey Key = new SingletonKey("ModdableFluids.World");
-    private const int CurrentEnvelope = 2, FirstEnvelope = 1;
+    private const int CurrentEnvelope = 3, FirstEnvelope = 1;
     private static readonly PropertyKey<int> EnvelopeKey = new PropertyKey<int>("EnvelopeVersion");
     private static readonly PropertyKey<bool> NativeOnlyKey = new PropertyKey<bool>("NativeOnly");
     private static readonly PropertyKey<bool> ImportPendingKey = new PropertyKey<bool>("ImportPending");
+    private static readonly PropertyKey<bool> SnapshotKey = new PropertyKey<bool>("LastCompletedTickSnapshot");
     private static readonly PropertyKey<int> SchemaKey = new PropertyKey<int>("SchemaVersion");
     private static readonly PropertyKey<string> ApiKey = new PropertyKey<string>("ApiVersion");
     private static readonly PropertyKey<string> FingerprintKey = new PropertyKey<string>("RegistryFingerprint");
@@ -39,12 +42,15 @@ namespace ModdableFluids.Runtime.Prototype {
       public bool NativeOnly => Document == null;
       /// <summary>Saved before the world's importers ran: the next load imports again.</summary>
       public bool ImportPending { get; internal set; }
+      /// <summary>A native exception save: the document is the last completed tick; native water wins on load.</summary>
+      public bool Snapshot { get; internal set; }
     }
 
-    public static void Write(IObjectSaver saver, FluidSaveDocument document) {
+    public static void Write(IObjectSaver saver, FluidSaveDocument document, bool snapshot = false) {
       saver.Set(EnvelopeKey, CurrentEnvelope);
       saver.Set(NativeOnlyKey, false);
       saver.Set(ImportPendingKey, false);
+      saver.Set(SnapshotKey, snapshot);
       saver.Set(SchemaKey, document.SchemaVersion);
       saver.Set(ApiKey, document.ApiVersion);
       saver.Set(FingerprintKey, document.RegistryFingerprint);
@@ -61,6 +67,7 @@ namespace ModdableFluids.Runtime.Prototype {
       saver.Set(EnvelopeKey, CurrentEnvelope);
       saver.Set(NativeOnlyKey, true);
       saver.Set(ImportPendingKey, importPending);
+      saver.Set(SnapshotKey, false);
       WriteProviders(saver, states);
     }
 
@@ -74,18 +81,22 @@ namespace ModdableFluids.Runtime.Prototype {
     public static Loaded Read(IObjectLoader loader) {
       if (!loader.Has(EnvelopeKey)) throw new FluidSaveException(new[] { "The ModdableFluids.World save entry has no EnvelopeVersion" });
       int envelope = loader.Get(EnvelopeKey);
-      if (envelope != CurrentEnvelope && envelope != FirstEnvelope)
-        throw new FluidSaveException(new[] { "The ModdableFluids.World save envelope " + envelope + " is not supported; this runtime reads " + FirstEnvelope + " and " + CurrentEnvelope });
+      if (envelope < FirstEnvelope || envelope > CurrentEnvelope)
+        throw new FluidSaveException(new[] { "The ModdableFluids.World save envelope " + envelope + " is not supported; this runtime reads " + FirstEnvelope + " to " + CurrentEnvelope });
       bool importPending = envelope == FirstEnvelope ? false : loader.Get(ImportPendingKey);
+      bool snapshot = envelope < 3 ? false : loader.Get(SnapshotKey);
       var ids = loader.Get(ProviderIdsKey); var owners = loader.Get(ProviderOwnersKey); var schemas = loader.Get(ProviderSchemasKey); var data = loader.Get(ProviderDataKey);
       if (owners.Count != ids.Count || schemas.Count != ids.Count || data.Count != ids.Count) throw new FluidSaveException(new[] { "Saved provider state list lengths differ" });
       var states = Enumerable.Range(0, ids.Count).Select(i => new FluidProviderState(ids[i], owners[i], schemas[i], data[i])).ToArray();
-      if (loader.Get(NativeOnlyKey)) return new Loaded { ProviderStates = states, ImportPending = importPending };
+      if (loader.Get(NativeOnlyKey)) {
+        if (snapshot) throw new FluidSaveException(new[] { "The ModdableFluids.World save is native-only and a last-completed-tick snapshot at once" });
+        return new Loaded { ProviderStates = states, ImportPending = importPending };
+      }
       if (importPending) throw new FluidSaveException(new[] { "The ModdableFluids.World save holds fluid state and a pending import at once" });
       var document = new FluidSaveDocument(loader.Get(SchemaKey), loader.Get(ApiKey), loader.Get(FingerprintKey),
         loader.Get(FluidIdsKey), loader.Get(FluidOwnersKey), loader.Get(XKey), loader.Get(YKey), loader.Get(FloorKey), loader.Get(CeilingKey),
         loader.Get(CapacityKey), loader.Get(EntryColumnKey), loader.Get(EntryFluidKey), loader.Get(VolumeKey), ids, owners, schemas, data);
-      return new Loaded { Document = document, ProviderStates = states };
+      return new Loaded { Document = document, ProviderStates = states, Snapshot = snapshot };
     }
 
     /// <summary>The loaded component state with new provider state (a save before the first tick).</summary>

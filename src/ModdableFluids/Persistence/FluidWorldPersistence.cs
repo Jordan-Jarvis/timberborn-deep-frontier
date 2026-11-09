@@ -22,6 +22,13 @@ namespace ModdableFluids.Persistence.Prototype {
     public FluidVolumes GetColumn(int slot) => _columns[slot];
   }
 
+  /// <summary>What applying an exception-save snapshot changed: the adjusted columns and the absolute change per fluid.</summary>
+  public sealed class FluidSnapshotAdjustment {
+    public IReadOnlyList<string> AdjustedColumns { get; }
+    public FluidVolumes AbsoluteDifference { get; }
+    internal FluidSnapshotAdjustment(IReadOnlyList<string> columns, FluidVolumes difference) { AdjustedColumns = columns; AbsoluteDifference = difference; }
+  }
+
   /// <summary>
   /// Experimental bridge between the transport session and the public save schema. Capture only at a
   /// completed-tick barrier. Restore maps saved fluids by canonical ID, copies columns whose cell,
@@ -35,12 +42,25 @@ namespace ModdableFluids.Persistence.Prototype {
       if (registry == null || session == null || providerStates == null) throw new ArgumentNullException("capture input");
       if (session.Phase != "Ready") throw new InvalidOperationException("Fluid state can only be saved at a completed-tick barrier; the session is in " + session.Phase);
       RequireLayout(registry, session.ComponentCount, session.BadwaterComponent);
+      var layout = Enumerable.Range(0, session.ColumnCount).Select(session.GetGeometry).ToArray();
+      return Capture(registry, layout, layout.Select(g => session.Sample(g.NativeIndex)).ToArray(), stride, providerStates);
+    }
+
+    /// <summary>
+    /// Captures a published completed tick (<see cref="World.Prototype.FluidWorldState.TryGetPublished"/>), for the native
+    /// exception save, which can arrive while the next tick is still running on the workers.
+    /// </summary>
+    public static FluidSaveDocument Capture(FluidRegistry registry, FluidColumnGeometry[] layout, FluidVolumes[] mixtures, int stride,
+        IReadOnlyList<FluidProviderState> providerStates) {
+      if (registry == null || layout == null || mixtures == null || providerStates == null) throw new ArgumentNullException("capture input");
+      if (layout.Length != mixtures.Length) throw new ArgumentException("Layout and mixtures differ in length");
       if (stride < 3) throw new ArgumentOutOfRangeException(nameof(stride));
       var used = new bool[registry.Count];
       var wet = new List<(FluidColumnGeometry Geometry, FluidVolumes Mixture)>();
-      for (int slot = 0; slot < session.ColumnCount; slot++) {
-        var geometry = session.GetGeometry(slot);
-        var mixture = session.Sample(geometry.NativeIndex);
+      for (int slot = 0; slot < layout.Length; slot++) {
+        var geometry = layout[slot];
+        var mixture = mixtures[slot];
+        if (mixture == null || mixture.ComponentCount != registry.Count) throw new ArgumentException("A captured mixture does not match the registry layout");
         if (mixture.TotalVolume == 0) continue;
         wet.Add((geometry, mixture));
         for (int c = 0; c < mixture.ComponentCount; c++) if (mixture.GetVolume(c) > 0) used[c] = true;
@@ -134,6 +154,40 @@ namespace ModdableFluids.Persistence.Prototype {
             + (geometry.CellIndex / stride - 1) + ", floor " + geometry.Floor + "): " + e.Message + ". The fluid session was discarded." });
         }
       }
+    }
+
+    /// <summary>
+    /// Seeds every current column from a last-completed-tick snapshot (a native exception save). Native water is
+    /// authoritative there, because the native arrays were saved mid-tick: each column keeps the native physical volume
+    /// and badwater share, and its non-bad volume takes the snapshot's non-bad composition (all fresh water when the
+    /// snapshot held none there). Every column whose components changed is reported; nothing is changed silently.
+    /// </summary>
+    public static FluidSnapshotAdjustment ApplySnapshot(NativeFluidTransportSession session, FluidRegistry registry, FluidRestoreResult restored, int stride) {
+      if (session == null || registry == null || restored == null) throw new ArgumentNullException("apply input");
+      RequireLayout(registry, session.ComponentCount, session.BadwaterComponent);
+      if (restored.ColumnCount != session.ColumnCount) throw new ArgumentException("Restored layout differs from the session's native layout");
+      var columns = new List<string>();
+      var difference = new double[registry.Count];
+      for (int slot = 0; slot < session.ColumnCount; slot++) {
+        var geometry = session.GetGeometry(slot);
+        var native = session.Sample(geometry.NativeIndex);
+        var saved = restored.GetColumn(slot);
+        double bad = native.GetVolume(FluidRegistry.BadwaterIndex), nonBad = native.TotalVolume - bad, savedNonBad = saved.TotalVolume - saved.GetVolume(FluidRegistry.BadwaterIndex);
+        var values = new double[registry.Count];
+        values[FluidRegistry.BadwaterIndex] = bad;
+        if (savedNonBad > 0) for (int c = 0; c < values.Length; c++) { if (c != FluidRegistry.BadwaterIndex) values[c] = saved.GetVolume(c) * (nonBad / savedNonBad); }
+        else values[FluidRegistry.WaterIndex] = nonBad;
+        var mixture = new FluidVolumes(values);
+        bool changed = false;
+        for (int c = 0; c < values.Length; c++) {
+          double delta = Math.Abs(values[c] - saved.GetVolume(c));
+          difference[c] += delta;
+          if (delta > 1e-9 * Math.Max(1, saved.TotalVolume)) changed = true;
+        }
+        if (changed) columns.Add("(" + (geometry.CellIndex % stride - 1) + ", " + (geometry.CellIndex / stride - 1) + ", floor " + geometry.Floor + ")");
+        session.SeedComposition(geometry.NativeIndex, mixture);
+      }
+      return new FluidSnapshotAdjustment(columns, new FluidVolumes(difference));
     }
 
     private static void RequireLayout(FluidRegistry registry, int components, int badwater) {

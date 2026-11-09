@@ -243,12 +243,17 @@ namespace ModdableFluids.GameBridge.Prototype {
     /// Another mod's patch on a replaced scheduling method, or on a native task this bridge skips,
     /// would stop running without any error. Refuse to attach and name each conflicting owner.
     /// </summary>
-    private void RequireNoForeignPatches() {
+    /// <summary>Every other Harmony owner on a method this bridge replaces or skips, one line per method; empty when attachable.</summary>
+    public IReadOnlyList<string> ForeignPatches() {
       var conflicts = new List<string>();
       foreach (var method in _replaced) {
         var owners = Harmony.GetPatchInfo(method)?.Owners.Where(owner => owner != OwnerId).Distinct().ToArray();
         if (owners != null && owners.Length > 0) conflicts.Add(method.DeclaringType.Name + "." + method.Name + " is patched by " + string.Join(", ", owners));
       }
+      return conflicts;
+    }
+    private void RequireNoForeignPatches() {
+      var conflicts = ForeignPatches();
       if (conflicts.Count > 0)
         throw new InvalidOperationException("Moddable Fluids replaces native water scheduling and cannot run with these patches, which would silently stop running:\n- "
           + string.Join("\n- ", conflicts));

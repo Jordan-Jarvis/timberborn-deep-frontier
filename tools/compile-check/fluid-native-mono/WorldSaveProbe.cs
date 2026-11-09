@@ -47,9 +47,21 @@ namespace ModdableFluids.Native.Acceptance {
       Check(missing, "A save entry without an envelope version loaded");
       bool newer = false;
       var future = new SerializedObject();
-      new ObjectSaver(future).Set(new PropertyKey<int>("EnvelopeVersion"), 3);
-      try { FluidWorldSaveFormat.Read(new ObjectLoader(future)); } catch (FluidSaveException e) { newer = e.Message.Contains("envelope 3"); }
+      new ObjectSaver(future).Set(new PropertyKey<int>("EnvelopeVersion"), 4);
+      try { FluidWorldSaveFormat.Read(new ObjectLoader(future)); } catch (FluidSaveException e) { newer = e.Message.Contains("envelope 4"); }
       Check(newer, "An unknown save envelope version loaded");
+      // Envelope 3: a native exception save marks the document as the last completed tick.
+      var snapshot = RoundTrip(saver => FluidWorldSaveFormat.Write(saver, document, snapshot: true), out _);
+      Check(snapshot.Snapshot && !loaded.Snapshot && FluidWorldSaveFormat.ContentDigest(snapshot.Document) == digest, "The exception-save snapshot flag did not survive the native envelope");
+      Check(!nativeOnly.Snapshot && !firstLoaded.Snapshot, "A native-only or envelope 1 save read as a snapshot");
+      // Envelope 2 (0.1.3) has no snapshot key and reads as a normal save.
+      var second = new SerializedObject();
+      var secondSaver = new ObjectSaver(second);
+      secondSaver.Set(new PropertyKey<int>("EnvelopeVersion"), 2); secondSaver.Set(new PropertyKey<bool>("NativeOnly"), true); secondSaver.Set(new PropertyKey<bool>("ImportPending"), true);
+      foreach (var name in new[] { "ProviderIds", "ProviderOwners", "ProviderData" }) secondSaver.Set(new ListKey<string>(name), Array.Empty<string>());
+      secondSaver.Set(new ListKey<int>("ProviderSchemas"), Array.Empty<int>());
+      var secondLoaded = FluidWorldSaveFormat.Read(new ObjectLoader(json.ReadJson(json.WriteJson(second))));
+      Check(secondLoaded.NativeOnly && secondLoaded.ImportPending && !secondLoaded.Snapshot, "Envelope 2 did not load as written");
       return checks;
     }
   }

@@ -50,6 +50,16 @@ namespace ModdableFluids.World.Prototype {
       _snapshot = new Snapshot(layout, mixtures, session.CompletedTicks);
     }
 
+    /// <summary>
+    /// The last published completed tick: its layout and (immutable) mixtures, safe to read on any thread while the
+    /// next tick runs. False before the first publication. Used by the exception save and the moisture input.
+    /// </summary>
+    public bool TryGetPublished(out FluidColumnGeometry[] layout, out FluidVolumes[] mixtures, out int ticks) {
+      var snapshot = _snapshot;
+      layout = snapshot?.Layout; mixtures = snapshot?.Mixtures; ticks = snapshot?.Ticks ?? 0;
+      return snapshot != null;
+    }
+
     public bool TrySample(int x, int y, int z, out FluidColumnSample sample) {
       sample = null;
       var snapshot = _snapshot ?? throw new InvalidOperationException("No completed fluid tick has been published yet");

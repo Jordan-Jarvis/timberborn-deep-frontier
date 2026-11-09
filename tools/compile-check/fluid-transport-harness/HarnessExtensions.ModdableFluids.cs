@@ -199,6 +199,46 @@ internal static partial class HarnessExtensions {
       Rejects<InvalidOperationException>(() => queue.Request("MoreFluids.X", 0, 1, 0, coffee, .1, 0, Take), "A request after unload");
       observations["extractionCoffeeShareBefore"] = first.ShareAtResolution;
     });
+
+    scenario("an exception save writes the last published tick and its load takes native water as authoritative", () => {
+      var registry = CoffeeRegistry();
+      var coffee = registry.GetHandle("MoreFluids.Coffee");
+      using var saved = new NativeWaterFixture(managed, specification);
+      saved.AddColumn(0, 1, 2); saved.AddColumn(1, 1, 1);
+      var session = new NativeFluidTransportSession(saved.CreateAdapter(), registry.Count, FluidRegistry.BadwaterIndex);
+      session.SeedComposition(saved.Indices[0], Mix(1, .5, .5)); session.SeedComposition(saved.Indices[1], Mix(.5, 0, .5));
+      var world = new FluidWorldState(registry, NativeWaterFixture.Stride);
+      check(!world.TryGetPublished(out _, out _, out _), "Nothing published before the first substep");
+      world.Publish(session);
+      session.BeginTick(1);
+      saved.RunAdapterSubstep(session, () => { saved.ClearRawFlows(); saved.SetRawFlow(0, 1, .5f); }, new double[2], false);
+      // Mid-tick: the session moved on, the published tick did not.
+      check(world.TryGetPublished(out var layout, out var mixtures, out int ticks) && ticks == 0, "The published tick during a running tick");
+      Close(mixtures[0].GetVolume(coffee.Index), .5, "Published mixture unchanged mid-tick");
+      var document = ModdableFluids.Persistence.Prototype.FluidWorldPersistence.Capture(registry, layout, mixtures, NativeWaterFixture.Stride, Array.Empty<FluidProviderState>());
+      check(document.ColumnCount == 2, "Snapshot document columns");
+      Rejects<ArgumentException>(() => ModdableFluids.Persistence.Prototype.FluidWorldPersistence.Capture(registry, layout, mixtures.Take(1).ToArray(), NativeWaterFixture.Stride, Array.Empty<FluidProviderState>()), "Mismatched snapshot arrays");
+      // The native arrays were saved mid-tick: A grew and holds badwater, B is unchanged, C is new.
+      using var native = new NativeWaterFixture(managed, specification);
+      native.AddColumn(0, 1, 2.5f); native.AddColumn(1, 1, 1); native.AddColumn(2, 1, .5f);
+      native.SetContamination(0, .3); native.SetContamination(2, .5);
+      var strict = new NativeFluidTransportSession(native.CreateAdapter(), registry.Count, FluidRegistry.BadwaterIndex);
+      var nativeLayout = Enumerable.Range(0, strict.ColumnCount).Select(strict.GetGeometry).ToArray();
+      var restored = ModdableFluids.Persistence.Prototype.FluidWorldPersistence.Restore(document, registry, nativeLayout, NativeWaterFixture.Stride, NativeWaterFixture.Height);
+      Rejects<FluidSaveException>(() => ModdableFluids.Persistence.Prototype.FluidWorldPersistence.Apply(strict, registry, restored, NativeWaterFixture.Stride), "A normal load of a mid-tick native save");
+      var lenient = new NativeFluidTransportSession(native.CreateAdapter(), registry.Count, FluidRegistry.BadwaterIndex);
+      var adjustment = ModdableFluids.Persistence.Prototype.FluidWorldPersistence.ApplySnapshot(lenient, registry, restored, NativeWaterFixture.Stride);
+      check(adjustment.AdjustedColumns.SequenceEqual(new[] { "(0, 1, floor 0)", "(2, 1, floor 0)" }), "Adjusted columns reported: " + string.Join("; ", adjustment.AdjustedColumns));
+      var a = lenient.Sample(native.Indices[0]);
+      Close(a.TotalVolume, 2.5, "Native volume wins", 1e-6); Close(a.GetVolume(1), .75, "Native badwater share wins", 1e-6);
+      Close(a.GetVolume(coffee.Index) / a.GetVolume(0), .5, "The snapshot's non-bad composition is kept");
+      var b = lenient.Sample(native.Indices[1]);
+      Close(b.GetVolume(coffee.Index), .5, "An unchanged column is the snapshot's"); Close(b.GetVolume(0), .5, "Unchanged column water");
+      var c = lenient.Sample(native.Indices[2]);
+      Close(c.GetVolume(0), .25, "A column the snapshot lacks is native fresh water", 1e-6); Close(c.GetVolume(coffee.Index), 0, "No coffee invented");
+      Close(adjustment.AbsoluteDifference.GetVolume(1), (.75 - .5) + .25, "Reported badwater change", 1e-6);
+      observations["snapshotAdjustedColumns"] = adjustment.AdjustedColumns.Count;
+    });
   }
 
   private sealed class LossReader : IFluidProvider, IFluidColumnRules {
