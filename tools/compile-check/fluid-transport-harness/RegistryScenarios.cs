@@ -338,8 +338,9 @@ internal static class RegistryScenarios {
       check(typeof(ModdableFluidsEntry).Assembly.GetName().Version == new Version(0, 1, 3, 0), "Assembly version matches the contract version");
       // Core capabilities here; each feature area (tides) checks its own in its scenario file.
       var core = new[] { "ModdableFluids.Discovery.Reflection", "ModdableFluids.Persistence.ComponentIdentity", "ModdableFluids.Persistence.ProviderState",
+        "ModdableFluids.Policies.Irrigation", "ModdableFluids.Policies.WaterIntakes",
         "ModdableFluids.Registry.Definitions", "ModdableFluids.Registry.Providers", "ModdableFluids.Scene.Lifecycle", "ModdableFluids.Sources.Types",
-        "ModdableFluids.World.Additions", "ModdableFluids.World.Import", "ModdableFluids.World.Losses", "ModdableFluids.World.Rules",
+        "ModdableFluids.World.Additions", "ModdableFluids.World.Extraction", "ModdableFluids.World.Import", "ModdableFluids.World.Losses", "ModdableFluids.World.Rules",
         "ModdableFluids.World.Sampling", "ModdableFluids.World.SourceComposition" };
       check(ModdableFluidsEntry.Capabilities.SequenceEqual(ModdableFluidsEntry.Capabilities.OrderBy(c => c, StringComparer.Ordinal))
         && ModdableFluidsEntry.Capabilities.Distinct().Count() == ModdableFluidsEntry.Capabilities.Count

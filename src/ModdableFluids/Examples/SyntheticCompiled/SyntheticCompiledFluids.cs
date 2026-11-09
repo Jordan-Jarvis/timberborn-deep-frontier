@@ -38,6 +38,15 @@ namespace ModdableFluidsSyntheticCompiled {
     public void Register(FluidRegistration registration) {
       registration.AddFluid("Tracer", Owner + ".Tracer.DisplayName", .2f, .9f, .35f, .7f);
       registration.AddMetadata("Tracer", Owner + ".DetectionLimit", "0.001");
+      // 0.1.4 policies only where the runtime lists them; the calls sit in their own method so an older API never JITs them.
+      if (ModdableFluidsEntry.Capabilities.Contains("ModdableFluids.Policies.WaterIntakes") && ModdableFluidsEntry.Capabilities.Contains("ModdableFluids.Policies.Irrigation"))
+        DeclarePolicies(registration);
+    }
+
+    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+    private static void DeclarePolicies(FluidRegistration registration) {
+      registration.SetWaterIntakePolicy("Tracer", .5, Owner + ".TracerDrawnAsWater", Owner + ".Tracer.IntakeRefused", Owner + ".Tracer.IntakeRefusedAlert");
+      registration.SetIrrigatesLikeWater("Tracer");
     }
 
     public void Activate(FluidScene scene) {

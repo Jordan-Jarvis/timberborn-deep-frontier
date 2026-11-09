@@ -8,6 +8,7 @@ using Timberborn.MapIndexSystem;
 using Timberborn.Multithreading;
 using Timberborn.Persistence;
 using Timberborn.SingletonSystem;
+using Timberborn.TemplateInstantiation;
 using Timberborn.TickSystem;
 using Timberborn.WaterSystem;
 using Timberborn.WorldPersistence;
@@ -29,9 +30,16 @@ namespace ModdableFluids.Runtime.Prototype {
       // With no fluid besides water and badwater nothing is bound: native water stays completely untouched.
       // The worker-acceptance fixture stays behind its flag (its synthetic fluids register only with it).
       if (!WorkerAcceptanceRun.Enabled && !registry.HasExtraFluids) return;
+      // The native members the intake guard and the moisture input compile against, before either is bound.
+      var changed = FluidWaterIntakeGuard.CheckContract().Concat(FluidMoistureInput.CheckContract()).ToArray();
+      if (changed.Length > 0)
+        throw new InvalidOperationException("Moddable Fluids cannot attach to this game (expected Timberborn 1.1.2.8). Changed native contract:\n- " + string.Join("\n- ", changed));
+      Bind<FluidMoistureInput>().AsSingleton();
       Bind<ModdableFluidsSceneOwner>().AsSingleton();
       // After the owner: it needs the frozen registry and the session the owner attaches.
       Bind<FluidWaterRendering>().AsSingleton();
+      Bind<FluidWaterIntakeGuard>().AsTransient();
+      MultiBind<TemplateModule>().ToProvider(FluidWaterIntakeGuard.Module).AsSingleton();
       if (WorkerAcceptanceRun.Enabled) Bind<FluidWorkerAcceptance>().AsSingleton();
     }
   }
@@ -55,6 +63,7 @@ namespace ModdableFluids.Runtime.Prototype {
     private readonly ITickableSingletonService _ticks;
     private readonly TickOnlyArrayService _tickOnlyArrays;
     private readonly FieldInfo _forceAllowAccess;
+    private readonly FluidMoistureInput _moisture;
     private FluidWorldSaveFormat.Loaded _loaded;
     private bool _subscribed;
     public NativeTransportHooks Hooks { get; private set; }
@@ -78,10 +87,12 @@ namespace ModdableFluids.Runtime.Prototype {
     public int Height => _index.TerrainSize.y;
     /// <summary>The scene's world fluid service (sampling, additions, source composition, extraction).</summary>
     public ModdableFluidsWorld World { get; private set; }
+    /// <summary>The native soil-moisture input owner (installed only when a fluid blocks moisture).</summary>
+    public FluidMoistureInput Moisture => _moisture;
 
     public ModdableFluidsSceneOwner(IWaterService water, IParallelizer parallelizer, ISingletonLoader singletons, MapIndexService index,
-        ITickableSingletonService ticks, TickOnlyArrayService tickOnlyArrays) {
-      _water = water; _parallelizer = parallelizer; _singletons = singletons; _index = index; _ticks = ticks; _tickOnlyArrays = tickOnlyArrays;
+        ITickableSingletonService ticks, TickOnlyArrayService tickOnlyArrays, FluidMoistureInput moisture) {
+      _water = water; _parallelizer = parallelizer; _singletons = singletons; _index = index; _ticks = ticks; _tickOnlyArrays = tickOnlyArrays; _moisture = moisture;
       // The native exception saver (GameSceneExceptionStateSaver.CreateExceptionSave) marks itself only through this
       // private field (TickOnlyArrayService.ForceAllowAccess, then GameSaver.SaveWithoutFinishingTick).
       _forceAllowAccess = typeof(TickOnlyArrayService).GetField("_forceAllowAccess", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -112,8 +123,8 @@ namespace ModdableFluids.Runtime.Prototype {
       object simulator = Read(_water, "_waterSimulator");
       object starter = Read(simulator, "_waterSimulationTaskStarter");
       var hooks = new NativeTransportHooks(starter, Registry.Count, FluidRegistry.BadwaterIndex);
-      var conflicts = hooks.ForeignPatches();
-      if (conflicts.Count > 0) {
+      var conflicts = hooks.ForeignPatches().Concat(_moisture.Prepare(Registry)).ToArray();
+      if (conflicts.Length > 0) {
         hooks.Dispose();
         throw new InvalidOperationException("Moddable Fluids replaces these native methods for the registered fluids ("
           + string.Join(", ", Registry.Definitions.Where(d => d.NativeRole == FluidNativeRole.Extra).Select(d => d.Id))
@@ -129,10 +140,12 @@ namespace ModdableFluids.Runtime.Prototype {
       Hooks.ResolveSource = World.ResolveSource;
       Hooks.Extractions = World.Extractions;
       Hooks.Attach();
+      _moisture.Install(World.State);
       // A save forces the parallel tick to finish (Ticker.FinishFullTick): deliver extraction results before it writes.
       _ticks.ForcedParallelTickFinished += OnForcedParallelTickFinished; _subscribed = true;
       if (WorkerAcceptanceRun.Enabled) WorkerAcceptanceRun.Attached++;
       Debug.Log("[ModdableFluids] ATTACHED" + (WorkerAcceptanceRun.Enabled ? " acceptance scene " + WorkerAcceptanceRun.Attached : "") + "; native workers=" + WorkerCount + "; main thread=" + MainThreadId
+        + "; moisture input " + (_moisture.Installed ? "owned" : "untouched (no fluid blocks moisture)")
         + "; saved fluid state=" + (LoadedDocument != null ? LoadedDocument.ColumnCount + " columns" + (_loaded.Snapshot ? " (exception-save snapshot)" : "")
           : _loaded == null ? "none" : _loaded.ImportPending ? "native only, import pending" : "native only") + "\n" + host.DescribeRuntime());
     }
@@ -216,17 +229,18 @@ namespace ModdableFluids.Runtime.Prototype {
 
     public void Unload() {
       if (_subscribed) { _ticks.ForcedParallelTickFinished -= OnForcedParallelTickFinished; _subscribed = false; }
-      if (Scene == null) { Hooks?.Dispose(); return; }
+      if (Scene == null) { Hooks?.Dispose(); _moisture.Uninstall(); return; }
       World?.Extractions.Close();
-      if (Hooks == null) { ModdableFluidsEntry.Host.UnloadScene(Scene); return; }
+      if (Hooks == null) { _moisture.Uninstall(); ModdableFluidsEntry.Host.UnloadScene(Scene); return; }
       // Native singleton unload order may already have closed the parallelizer.
       // Wait is still its public main-thread barrier and checks pending work.
       _parallelizer.Wait();
       int ticks = Hooks.Session?.CompletedTicks ?? 0;
       Hooks.Dispose();
+      _moisture.Uninstall();
       ModdableFluidsEntry.Host.UnloadScene(Scene);
-      if (Hooks.HasInstalledPatches || NativeTransportHooks.HasActiveOwner || ModdableFluidsEntry.Host.ActiveScene != null)
-        throw new InvalidOperationException("Moddable Fluids scene teardown left an active transport owner or provider scene");
+      if (Hooks.HasInstalledPatches || NativeTransportHooks.HasActiveOwner || _moisture.HasOwnedPatch || FluidMoistureInput.HasActiveOwner || ModdableFluidsEntry.Host.ActiveScene != null)
+        throw new InvalidOperationException("Moddable Fluids scene teardown left an active transport owner, moisture patch or provider scene");
       if (WorkerAcceptanceRun.Enabled) WorkerAcceptanceRun.Detached++;
       Debug.Log("[ModdableFluids] DETACHED" + (WorkerAcceptanceRun.Enabled ? " acceptance scene " + WorkerAcceptanceRun.Detached : "") + "; completed ticks=" + ticks);
     }

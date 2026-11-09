@@ -239,6 +239,125 @@ internal static partial class HarnessExtensions {
       Close(adjustment.AbsoluteDifference.GetVolume(1), (.75 - .5) + .25, "Reported badwater change", 1e-6);
       observations["snapshotAdjustedColumns"] = adjustment.AdjustedColumns.Count;
     });
+
+    scenario("water-intake and irrigation policies are registered, validated and required before a game attaches", () => {
+      void Policies(FluidRegistration r) {
+        r.AddFluid("Saltwater", "MoreFluids.Saltwater", .15f, .45f, .55f, .35f);
+        r.SetWaterIntakePolicy("Coffee", .5, "MoreFluids.CoffeeDrunkAsWater", "MoreFluids.Coffee.IntakeRefused", "MoreFluids.Coffee.IntakeRefusedAlert");
+        r.SetIrrigatesLikeWater("Coffee");
+        r.SetWaterIntakePolicy("Saltwater", .1, "MoreFluids.BrackishDrawnAsWater", "MoreFluids.Saltwater.IntakeRefused", "MoreFluids.Saltwater.IntakeRefusedAlert");
+        r.SetBlocksMoisture("Saltwater", .1);
+      }
+      var registry = CoffeeRegistry(Policies);
+      var coffee = registry.Get(registry.GetHandle("MoreFluids.Coffee")); var salt = registry.Get(registry.GetHandle("MoreFluids.Saltwater"));
+      check(coffee.WaterIntake!.RefuseAtShare == .5 && coffee.WaterIntake.DrawnAsWater == "MoreFluids.CoffeeDrunkAsWater" && coffee.WaterIntake.RefusedAlertLocKey == "MoreFluids.Coffee.IntakeRefusedAlert",
+        "Coffee water-intake policy");
+      check(coffee.Irrigation!.Effect == FluidMoistureEffect.IrrigatesLikeWater && coffee.Irrigation.BlocksAtShare == 0, "Coffee irrigates");
+      check(salt.Irrigation!.Effect == FluidMoistureEffect.BlocksLikeBadwater && salt.Irrigation.BlocksAtShare == .1 && salt.WaterIntake!.RefuseAtShare == .1, "Saltwater policies");
+      check(registry.Get(registry.Water).WaterIntake == null && registry.Get(registry.Badwater).Irrigation == null, "The game's fluids keep native behaviour");
+      check(registry.UndeclaredPolicies().Count == 0 && registry.HasExtraFluids, "Every fluid declared");
+      var bare = CoffeeRegistry();
+      var missing = bare.UndeclaredPolicies();
+      check(missing.Count == 1 && missing[0].Contains("MoreFluids.Coffee") && missing[0].Contains("provider MoreFluids.Liquids") && missing[0].Contains("mod MoreFluids")
+        && missing[0].Contains("water-intake policy") && missing[0].Contains("irrigation policy"), "Undeclared policies named: " + string.Join("; ", missing));
+      check(!new ModdableFluidsHost().Freeze().HasExtraFluids, "Water and badwater alone");
+      void Refused(Action<FluidRegistration> extra, string expected, string name) =>
+        Rejects<FluidRegistryException>(() => CoffeeRegistry(extra), name, expected);
+      Refused(r => r.SetWaterIntakePolicy("Coffee", 0, "MoreFluids.A", "a", "b"), "refuse at a share in (0, 1]", "Refusal share zero");
+      Refused(r => r.SetWaterIntakePolicy("Coffee", 1.5, "MoreFluids.A", "a", "b"), "refuse at a share in (0, 1]", "Refusal share above one");
+      Refused(r => r.SetWaterIntakePolicy("Coffee", double.NaN, "MoreFluids.A", "a", "b"), "refuse at a share in (0, 1]", "NaN refusal share");
+      Refused(r => r.SetWaterIntakePolicy("Coffee", .5, "DeepFrontier.CoffeeDrunk", "a", "b"), "outside its owner's namespace", "Transformation outside the namespace");
+      Refused(r => r.SetWaterIntakePolicy("Coffee", .5, "MoreFluids.A", "", "b"), "localization keys", "Missing status key");
+      Refused(r => { r.SetWaterIntakePolicy("Coffee", .5, "MoreFluids.A", "a", "b"); r.SetWaterIntakePolicy("Coffee", .4, "MoreFluids.B", "a", "b"); }, "two water-intake policies", "Two intake policies");
+      Refused(r => r.SetWaterIntakePolicy("Tea", .5, "MoreFluids.A", "a", "b"), "which it has not registered", "Policy on an unregistered fluid");
+      Refused(r => r.SetBlocksMoisture("Coffee", 0), "moisture is blocked at a share in (0, 1]", "Blocking share zero");
+      Refused(r => { r.SetIrrigatesLikeWater("Coffee"); r.SetBlocksMoisture("Coffee", .5); }, "two irrigation policies", "Two irrigation policies");
+      Refused(r => { r.AddFluid("Tea", "MoreFluids.Tea", 1, 1, 1, 1); r.SetWaterIntakePolicy("Coffee", .5, "MoreFluids.Drunk", "a", "b"); r.SetWaterIntakePolicy("Tea", .5, "MoreFluids.Drunk", "a", "b"); },
+        "both name the water-intake transformation MoreFluids.Drunk", "One transformation for two fluids");
+      var host = new ModdableFluidsHost();
+      host.RegisterProvider(new PlainProvider("MoreFluids.Liquids", "MoreFluids", new List<string>(), new Fluid("Coffee", "MoreFluids.Coffee")) { Extra = Policies });
+      host.RegisterReflectedProvider(new ReflectedPolicies());
+      var both = host.Freeze();
+      string described = host.DescribeRuntime();
+      check(described.Contains("water intakes: refused at 0.5, drawn as water by MoreFluids.CoffeeDrunkAsWater; moisture: irrigates like water")
+        && described.Contains("moisture: blocks moisture at 0.1"), "Runtime description lists the policies");
+      var syrup = both.Get(both.GetHandle("Reflected.Syrup"));
+      check(syrup.WaterIntake!.DrawnAsWater == "Reflected.SyrupDrawnAsWater" && syrup.Irrigation!.BlocksAtShare == .25 && both.UndeclaredPolicies().Count == 0,
+        "The reflection route declares both policies with primitives");
+    });
+
+    scenario("the intake guard refuses from the share and the moisture input raises contamination like badwater", () => {
+      var registry = CoffeeRegistry(r => {
+        r.AddFluid("Saltwater", "MoreFluids.Saltwater", .15f, .45f, .55f, .35f); r.AddFluid("Glow", "MoreFluids.Glow", 1, 1, 0, 1);
+        r.SetWaterIntakePolicy("Coffee", .5, "MoreFluids.CoffeeDrunkAsWater", "a", "b"); r.SetIrrigatesLikeWater("Coffee");
+        r.SetWaterIntakePolicy("Saltwater", .1, "MoreFluids.BrackishDrawnAsWater", "a", "b"); r.SetBlocksMoisture("Saltwater", .1);
+        r.SetWaterIntakePolicy("Glow", .005, "MoreFluids.GlowDrawnAsWater", "a", "b"); r.SetBlocksMoisture("Glow", .53);
+      });
+      int c = registry.GetHandle("MoreFluids.Coffee").Index, s = registry.GetHandle("MoreFluids.Saltwater").Index, g = registry.GetHandle("MoreFluids.Glow").Index;
+      FluidColumnSample Sample(double water, double coffee = 0, double salt = 0, double glow = 0, double bad = 0) {
+        var v = new double[registry.Count]; v[0] = water; v[1] = bad; v[c] = coffee; v[s] = salt; v[g] = glow;
+        return new FluidColumnSample(0, 4, v);
+      }
+      check(FluidIntakeRefusal.Refusing(registry, Sample(.51, coffee: .49)).Count == 0, "Coffee under half is drawn");
+      check(FluidIntakeRefusal.Refusing(registry, Sample(.5, coffee: .5)).SequenceEqual(new[] { c }), "Coffee at half refuses");
+      check(FluidIntakeRefusal.Refusing(registry, Sample(.9, salt: .1)).SequenceEqual(new[] { s }), "Saltwater at 10% refuses");
+      check(FluidIntakeRefusal.Refusing(registry, Sample(.991, salt: .004, glow: .005)).SequenceEqual(new[] { g }), "Glow at its detection limit refuses alone");
+      check(FluidIntakeRefusal.Refusing(registry, Sample(.3, coffee: .5, salt: .2)).SequenceEqual(new[] { c, s }), "Two refusing fluids, in registry order");
+      check(FluidIntakeRefusal.Refusing(registry, Sample(0)).Count == 0 && FluidIntakeRefusal.Refusing(registry, Sample(.2, bad: .8)).Count == 0, "Dry or badwater-only columns");
+      Rejects<InvalidOperationException>(() => FluidIntakeRefusal.Refusing(CoffeeRegistry(), new FluidColumnSample(0, 4, new double[] { 1, 0, .1 })), "A fluid without a policy");
+      const double M = .53;
+      var shadow = new FluidMoistureShadow(registry, M, NativeWaterFixture.Stride, NativeWaterFixture.VerticalStride);
+      FluidVolumes V(double water, double salt = 0, double glow = 0, double coffee = 0, double bad = 0) {
+        var v = new double[registry.Count]; v[0] = water; v[1] = bad; v[c] = coffee; v[s] = salt; v[g] = glow; return new FluidVolumes(v);
+      }
+      check(shadow.HasBlockingFluids, "Saltwater and glow block moisture");
+      Close(shadow.Contribution(V(.9, salt: .1)), M, "Saltwater at 10% gives no moisture");
+      Close(shadow.Contribution(V(.8, glow: .2)), .2, "Glow blocking at M is exactly badwater-like");
+      Close(shadow.Contribution(V(.5, coffee: .5)), 0, "Coffee irrigates like water");
+      Close(shadow.Contribution(V(.75, salt: .05, glow: .1, bad: .1)), .05 * M / .1 + .1, "Blocking fluids add up; badwater is native");
+      int Cell(int x, int y) => (y + 1) * NativeWaterFixture.Stride + x + 1;
+      const int VS = NativeWaterFixture.VerticalStride;
+      var layout = new[] {
+        new FluidColumnGeometry(Cell(0, 0), Cell(0, 0), 0, 4, 5),
+        new FluidColumnGeometry(Cell(1, 0), Cell(1, 0), 0, 4, 5),
+        new FluidColumnGeometry(Cell(2, 0), Cell(2, 0), 0, 6, 7),
+        new FluidColumnGeometry(Cell(0, 1), Cell(0, 1), 0, 2, 3),
+        new FluidColumnGeometry(Cell(0, 1) + VS, Cell(0, 1), 3, 6, 4) };
+      // An unchanged column with 5% saltwater, a column without blocking fluid, a column an obstacle split after the
+      // published tick, and two columns merged into one.
+      var mixtures = new[] { V(1.9, salt: .1), V(2), V(3.6, salt: .4), V(1.8, salt: .2), V(1) };
+      var threadSafe = new Dictionary<int, (int Floor, int Ceiling)> {
+        [Cell(0, 0)] = (0, 4), [Cell(1, 0)] = (0, 4), [Cell(2, 0)] = (0, 2), [Cell(2, 0) + VS] = (3, 6), [Cell(0, 1)] = (0, 6) };
+      int Count(int cell) => threadSafe.Keys.Count(k => k % VS == cell);
+      void Read(int index, out int floor, out int ceiling) { (floor, ceiling) = threadSafe[index]; }
+      var additions = new List<KeyValuePair<int, double>>();
+      check(shadow.Compute(layout, mixtures, Count, Read, additions) == 4, "Four thread-safe columns raised: " + string.Join(", ", additions.Select(a => a.Key + "=" + a.Value)));
+      var added = additions.ToDictionary(a => a.Key, a => a.Value);
+      Close(added[Cell(0, 0)], .05 * M / .1, "Unchanged column takes its own shares");
+      check(!added.ContainsKey(Cell(1, 0)), "A column without a blocking fluid stays native");
+      Close(added[Cell(2, 0)], .1 * M / .1, "Lower part of a split column"); Close(added[Cell(2, 0) + VS], .1 * M / .1, "Upper part of a split column");
+      Close(added[Cell(0, 1)], (2 * (.1 * M / .1) + 1 * 0) / 3, "A merged column weights its parents' wet intervals");
+      var none = new FluidMoistureShadow(CoffeeRegistry(r => { r.SetWaterIntakePolicy("Coffee", .5, "MoreFluids.A", "a", "b"); r.SetIrrigatesLikeWater("Coffee"); }), M,
+        NativeWaterFixture.Stride, NativeWaterFixture.VerticalStride);
+      check(!none.HasBlockingFluids && none.Compute(Array.Empty<FluidColumnGeometry>(), Array.Empty<FluidVolumes>(), Count, Read, additions) == 0, "Nothing blocks: the native input stays untouched");
+      Rejects<ArgumentOutOfRangeException>(() => new FluidMoistureShadow(registry, 0, NativeWaterFixture.Stride, NativeWaterFixture.VerticalStride), "No native maximum contamination");
+      Rejects<InvalidOperationException>(() => new FluidMoistureShadow(CoffeeRegistry(), M, NativeWaterFixture.Stride, NativeWaterFixture.VerticalStride), "A fluid without an irrigation policy");
+      observations["moistureMergedContribution"] = added[Cell(0, 1)];
+    });
+  }
+
+  /// <summary>A reflected provider declaring both 0.1.4 policies with primitive calls only.</summary>
+  public sealed class ReflectedPolicies {
+    public string ProviderId => "Reflected.Syrups";
+    public string OwnerModId => "Reflected";
+    public string MinimumApiVersion => "0.1.3";
+    public string[] RequiredCapabilities => new[] { "ModdableFluids.Discovery.Reflection" };
+    public void Register(object registration) {
+      var type = registration.GetType();
+      type.GetMethod("AddFluid")!.Invoke(registration, new object[] { "Syrup", "Reflected.Syrup", .5f, .3f, .1f, 1f });
+      type.GetMethod("SetWaterIntakePolicy")!.Invoke(registration, new object[] { "Syrup", .3, "Reflected.SyrupDrawnAsWater", "Reflected.Refused", "Reflected.RefusedAlert" });
+      type.GetMethod("SetBlocksMoisture")!.Invoke(registration, new object[] { "Syrup", .25 });
+    }
   }
 
   private sealed class LossReader : IFluidProvider, IFluidColumnRules {

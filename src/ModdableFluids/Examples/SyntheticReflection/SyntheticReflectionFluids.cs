@@ -35,6 +35,8 @@ namespace ModdableFluidsSyntheticReflection {
       var capabilities = new HashSet<string>((IEnumerable<string>)Get(entry, "Capabilities"), StringComparer.Ordinal);
       foreach (string required in JuiceProvider.Required)
         if (!capabilities.Contains(required)) throw new InvalidOperationException("Moddable Fluids " + version + " lacks " + required);
+      // Optional features are used only when the runtime lists them (0.1.4 policies).
+      ((JuiceProvider)provider).DeclarePolicies = capabilities.Contains("ModdableFluids.Policies.WaterIntakes") && capabilities.Contains("ModdableFluids.Policies.Irrigation");
       var register = entry.GetMethod("RegisterReflectedProvider", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(object) }, null)
         ?? throw new MissingMethodException("ModdableFluids.ModdableFluidsEntry.RegisterReflectedProvider(object)");
       Invoke(register, null, provider);
@@ -67,11 +69,18 @@ namespace ModdableFluidsSyntheticReflection {
     public int LastSceneSerial { get; private set; }
     /// <summary>Provider-owned persistent counter, saved with the world fluid state.</summary>
     public int Pressings { get; set; }
+    /// <summary>Set by discovery when the runtime lists the water-intake and irrigation policy capabilities.</summary>
+    public bool DeclarePolicies { get; set; }
 
     public void Register(object registration) {
       var type = registration.GetType();
       SyntheticReflectionDiscovery.Invoke(type.GetMethod("AddFluid"), registration, "Juice", Owner + ".Juice.DisplayName", .95f, .55f, .1f, .85f);
       SyntheticReflectionDiscovery.Invoke(type.GetMethod("AddMetadata"), registration, "Juice", Owner + ".Sweetness", "7");
+      if (!DeclarePolicies) return;
+      // Juice stops water intakes from half the column and blocks moisture at the same share (exercises the moisture input).
+      SyntheticReflectionDiscovery.Invoke(type.GetMethod("SetWaterIntakePolicy"), registration, "Juice", .5, Owner + ".JuiceDrawnAsWater",
+        Owner + ".Juice.IntakeRefused", Owner + ".Juice.IntakeRefusedAlert");
+      SyntheticReflectionDiscovery.Invoke(type.GetMethod("SetBlocksMoisture"), registration, "Juice", .5);
     }
 
     public void Activate(object scene) {

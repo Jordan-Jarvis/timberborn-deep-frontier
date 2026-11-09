@@ -12,5 +12,6 @@
     <ProjectReference Include="../fluid-transport/ModdableFluids.TransportPrototype.csproj" />
     <GameReference Include="$(TimberbornManaged)/Timberborn.*.dll;$(TimberbornManaged)/Bindito*.dll;$(TimberbornManaged)/UnityEngine.CoreModule.dll;$(TimberbornManaged)/UnityEngine.UIElementsModule.dll;$(TimberbornManaged)/System.Collections.Immutable.dll;$(TimberbornManaged)/Newtonsoft.Json.dll" />
     <Reference Include="@(GameReference)" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(ModsBuildManaged)/0Harmony.dll" Private="false" />
   </ItemGroup>
 </Project>
