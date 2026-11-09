@@ -12,7 +12,8 @@ namespace DeepFrontier.ModdableFluidsMigration {
   /// decay, the soil-water exchange, the 0.5% cutoff, deposition of lost radioactive water, soil spread). The rules
   /// are Deep Frontier's: nothing here is a Moddable Fluids default.
   /// </summary>
-  public sealed class DeepFrontierRadioactiveWater : IFluidProvider, IFluidSceneProvider, IFluidWorldImporter, IFluidColumnRules, IFluidTideImporter {
+  public sealed class DeepFrontierRadioactiveWater : IFluidProvider, IFluidSceneProvider, IFluidWorldImporter, IFluidColumnRules, IFluidTideImporter,
+      IFluidTideStationImporter {
     public const string Owner = "DeepFrontier";
     public const string Id = Owner + ".Radiation";
     public const string FluidId = Owner + ".RadioactiveWater";
@@ -38,18 +39,25 @@ namespace DeepFrontier.ModdableFluidsMigration {
     private RadiationSoilField _field;
     private readonly RadioactiveTideRegistration _tide;
     private readonly Func<FluidTideImportContext, FluidTideImport> _tideImport;
+    private readonly Func<object, bool?> _stationImport;
 
     /// <param name="tide">The radioactive tide to register (the game passes it; harness scenarios may leave it out).</param>
     /// <param name="tideImport">Reads a Deep Frontier save's tide state and settings (RadioactiveTideImport); only with a tide.</param>
-    public DeepFrontierRadioactiveWater(RadioactiveTideRegistration tide = null, Func<FluidTideImportContext, FluidTideImport> tideImport = null) {
-      if (tideImport != null && tide == null) throw new ArgumentException("Deep Frontier imports tide state only for the tide it registers", nameof(tideImport));
-      _tide = tide; _tideImport = tideImport;
+    /// <param name="stationImport">
+    /// Reads a Weather Station's <c>DeepFrontier.WeatherStationRadioactiveTide</c> component from the native entity loader:
+    /// its <c>SignalsRadioactiveTide</c>, or null when the station was saved without it. Only with a tide.
+    /// </param>
+    public DeepFrontierRadioactiveWater(RadioactiveTideRegistration tide = null, Func<FluidTideImportContext, FluidTideImport> tideImport = null,
+        Func<object, bool?> stationImport = null) {
+      if ((tideImport != null || stationImport != null) && tide == null) throw new ArgumentException("Deep Frontier imports tide state only for the tide it registers");
+      _tide = tide; _tideImport = tideImport; _stationImport = stationImport;
       var capabilities = new List<string> {
         "ModdableFluids.Policies.Irrigation", "ModdableFluids.Policies.WaterIntakes", "ModdableFluids.Registry.Definitions", "ModdableFluids.Scene.Lifecycle",
         "ModdableFluids.Sources.Types", "ModdableFluids.World.Additions", "ModdableFluids.World.Import", "ModdableFluids.World.Losses", "ModdableFluids.World.Rules",
         "ModdableFluids.World.Sampling" };
       if (tide != null) capabilities.Add(FluidTideRules.RegistrationCapability);
       if (tideImport != null) capabilities.Add(FluidTideRules.ImportCapability);
+      if (stationImport != null) capabilities.Add(FluidTideRules.WeatherStationCapability);
       RequiredCapabilities = capabilities;
     }
 
@@ -128,6 +136,14 @@ namespace DeepFrontier.ModdableFluidsMigration {
 
     // Main thread, once for a loaded save without Moddable Fluids tide state: Deep Frontier's own tide state and settings.
     public FluidTideImport ImportTides(FluidTideImportContext context) => _tideImport?.Invoke(context ?? throw new ArgumentNullException(nameof(context)));
+
+    // Main thread, once for each loaded Weather Station without Moddable Fluids' tide component: a station that signalled
+    // Deep Frontier's radioactive tide (WeatherStationRadioactiveTide) signals the registered tide; any other, nothing.
+    public string ImportStationTide(FluidTideRegistry tides, object nativeEntityLoader) {
+      if (tides == null) throw new ArgumentNullException(nameof(tides));
+      if (_stationImport == null) return null;
+      return _stationImport(nativeEntityLoader ?? throw new ArgumentNullException(nameof(nativeEntityLoader))) == true ? RadioactiveTideRegistration.TideId : null;
+    }
 
     // Native worker thread, after every completed fluid tick.
     public void ApplyRules(FluidScene scene, IFluidColumnEditor columns) {

@@ -23,6 +23,7 @@ internal static partial class HarnessExtensions {
     scenario("Deep Frontier radioactive tide registers on Moddable Fluids with RadioactiveTideTuning's values and keeps its draws alone", () => DeepFrontierSoil.Tide(check, observations));
     scenario("Deep Frontier radiation record version 4 round trip: soil, hour counter, sources and unapplied requests", () => DeepFrontierSoil.RoundTrip(check));
     scenario("Deep Frontier's tide state and settings import into Moddable Fluids, saves from 0.8.3 and older included", () => DeepFrontierSoil.TideImport(check, observations));
+    scenario("A Weather Station saved with Deep Frontier's tide mode imports as Moddable Fluids' station mode", () => DeepFrontierSoil.StationImport(check));
   }
 }
 
@@ -560,6 +561,35 @@ internal static class DeepFrontierSoil {
     save = (null, (true, 0, 25, 3, 6));
     Rejects<InvalidOperationException>(check, () => Run(out _), "Enabled settings out of range stop loading naming Deep Frontier", DeepFrontierRadioactiveWater.Id);
     observations["deepFrontierTideImportCases"] = 9;
+  }
+
+  // ------------------------------------------------------- station import
+
+  /// <summary>Stands in for the native entity loader: what the station's DeepFrontier.WeatherStationRadioactiveTide component held, if any.</summary>
+  private sealed class SavedStation { public bool? SignalsRadioactiveTide; }
+
+  [MethodImpl(MethodImplOptions.NoInlining)]
+  internal static void StationImport(Action<bool, string> check) {
+    var registration = TideFromSource();
+    bool? Read(object loader) => ((SavedStation)loader).SignalsRadioactiveTide;
+    var host = new ModdableFluidsHost();
+    var provider = new DeepFrontierRadioactiveWater(registration, null, Read);
+    host.RegisterProvider(provider);
+    host.Freeze();
+    check(provider.RequiredCapabilities.Contains(FluidTideRules.WeatherStationCapability), "The provider requires the Weather Station capability");
+    check(host.ImportStationTide(new SavedStation { SignalsRadioactiveTide = true }, out var importer) == RadioactiveTideRegistration.TideId && importer == DeepFrontierRadioactiveWater.Id,
+      "A station that signalled the radioactive tide signals Deep Frontier's registered tide");
+    check(host.ImportStationTide(new SavedStation { SignalsRadioactiveTide = false }, out importer) == null && importer == null, "A station in a native mode imports nothing (it keeps its native mode)");
+    check(host.ImportStationTide(new SavedStation(), out _) == null, "A station saved before the tide mode existed imports nothing");
+    Rejects<ArgumentException>(check, () => new DeepFrontierRadioactiveWater(null, null, Read), "A station import without the tide it signals");
+    var failing = new ModdableFluidsHost();
+    failing.RegisterProvider(new DeepFrontierRadioactiveWater(registration, null, _ => throw new InvalidOperationException("unreadable station")));
+    failing.Freeze();
+    Rejects<InvalidOperationException>(check, () => failing.ImportStationTide(new SavedStation(), out _), "A station that cannot be read stops loading naming Deep Frontier", DeepFrontierRadioactiveWater.Id);
+    var plain = new ModdableFluidsHost();
+    plain.RegisterProvider(new DeepFrontierRadioactiveWater(registration));
+    plain.Freeze();
+    check(plain.ImportStationTide(new SavedStation { SignalsRadioactiveTide = true }, out _) == null, "Without the station reader the provider answers nothing");
   }
 
   // ----------------------------------------------------------- round trip

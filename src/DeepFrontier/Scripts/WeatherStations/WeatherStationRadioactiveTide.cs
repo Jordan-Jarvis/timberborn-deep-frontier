@@ -83,8 +83,12 @@ namespace DeepFrontier.Scripts.WeatherStations {
   [Context("Game")]
   public sealed class WeatherStationRadioactiveTideConfigurator : Configurator {
     protected override void Configure() {
+#if !DEEP_FRONTIER_MODDABLE_FLUIDS
+      // The Moddable Fluids build: Moddable Fluids' FluidTideWeatherStation is the tide mode; Deep Frontier's
+      // DeepFrontierRadioactiveWater imports a station saved with this component (ImportStationTide).
       Bind<WeatherStationRadioactiveTide>().AsTransient();
       MultiBind<TemplateModule>().ToProvider(Provide).AsSingleton();
+#endif
     }
 
     private static TemplateModule Provide() {

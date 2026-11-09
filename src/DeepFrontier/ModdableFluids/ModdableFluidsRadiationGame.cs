@@ -24,7 +24,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
     internal static DeepFrontierRadioactiveWater Provider { get; private set; }
     public void StartMod(IModEnvironment modEnvironment) {
       if (Provider != null) throw new InvalidOperationException("Deep Frontier registered its radioactive water twice");
-      Provider = new DeepFrontierRadioactiveWater(Tide(), ImportTide);
+      Provider = new DeepFrontierRadioactiveWater(Tide(), ImportTide, ImportStation);
       ModdableFluidsEntry.RegisterProvider(Provider);
       Debug.Log("[DeepFrontier] Radioactive water and the radioactive tide registered with Moddable Fluids " + ModdableFluidsEntry.ApiVersion + ".");
     }
@@ -49,6 +49,16 @@ namespace DeepFrontier.ModdableFluidsMigration {
       var import = RadioactiveTideImport.Map(state, values.Enabled, values.CyclesWithoutTide, values.ChancePercent, values.MinDurationDays, values.MaxDurationDays);
       Debug.Log("[DeepFrontier] Radioactive tide imported into Moddable Fluids: settings " + values + "; " + import + ".");
       return import;
+    }
+
+    // WeatherStationRadioactiveTide's component (same keys): whether the station signalled the radioactive tide.
+    private static readonly ComponentKey StationKey = new ComponentKey("DeepFrontier.WeatherStationRadioactiveTide");
+    private static readonly PropertyKey<bool> StationSignalsKey = new PropertyKey<bool>("SignalsRadioactiveTide");
+
+    private static bool? ImportStation(object nativeEntityLoader) {
+      var loader = nativeEntityLoader as IEntityLoader
+        ?? throw new InvalidOperationException("Moddable Fluids passed no native entity loader to Deep Frontier's Weather Station import");
+      return loader.TryGetComponent(StationKey, out var station) ? station.Get(StationSignalsKey) : (bool?)null;
     }
 
     // RadioactiveTideTuning's Easy, Normal and Hard points; Moddable Fluids derives every other mode with Deep Frontier's

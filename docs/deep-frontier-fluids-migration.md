@@ -66,7 +66,8 @@ The consumers inject service interfaces instead of `RadiationSimulation`. In the
 
 - **Water intakes.** Radioactive water is refused at `RadiationTuning.DetectionLimit`, with Deep Frontier's pump status and alert. Below that share, what a pump draws becomes clean water (`DeepFrontier.RadioactiveWaterDrawnAsWater`). Moddable Fluids' guard does the blocking. `RadiationIntakeGuard` stays only to describe the intake water. The sludge intake implements `IFluidCustomIntake`, so the guard leaves it alone, as before.
 - **Soil moisture.** Radioactive water blocks moisture at 0.53, the native `MaximumWaterContamination`. The moisture tasks therefore see b + r, as `RadiationSoil`'s moisture shadow showed them. Deep Frontier's own moisture hook is not installed.
-- **Tide.** The radioactive tide keeps the weather ID `RadioactiveTideWeather`, so its fog, history, Weather Station mode, Deep Well and probes are unchanged. It uses `GameModeCurve`'s Easy, Normal and Hard values, full radioactive emission, and Deep Frontier's texts, art and the badtide sound. Moddable Fluids' tide service selects it with policy C′, restores it, shows it, emits it and draws its new-game rows. With Deep Frontier's tide alone, the draws are exactly `RadioactiveTideService.Choose`'s. The facade refuses a radioactive source share rather than compete for the source composition.
+- **Tide.** The radioactive tide keeps the weather ID `RadioactiveTideWeather`, so its fog, history and Deep Well behaviour are unchanged. It uses `GameModeCurve`'s Easy, Normal and Hard values, full radioactive emission, and Deep Frontier's texts, art and the badtide sound. Moddable Fluids' tide service selects it with policy C′, restores it, shows it, emits it and draws its new-game rows. With Deep Frontier's tide alone, the draws are exactly `RadioactiveTideService.Choose`'s. The facade refuses a radioactive source share rather than compete for the source composition.
+- **Weather Station.** Moddable Fluids gives every registered tide a Weather Station mode (`FluidTideWeatherStation`, saved by tide ID). Deep Frontier's own station mode (`WeatherStationRadioactiveTide` and its patches) is neither bound nor installed. The provider is an `IFluidTideStationImporter`: a station saved with `DeepFrontier.WeatherStationRadioactiveTide` and `SignalsRadioactiveTide` true signals `DeepFrontier.RadioactiveTide`. Any other station keeps its native mode. Moddable Fluids asks once per station loaded without its own component, and the next save writes that component.
 
 Hooks in the flagged build:
 
@@ -74,9 +75,10 @@ Hooks in the flagged build:
 | --- | --- |
 | The water lockstep (`DeepFrontier.RadiationLockstep`) | Planting-spot postfix (`DeepFrontier.IrradiatedPlantingSpots`) |
 | The soil moisture prefix (`DeepFrontier.RadiationSoil`) | Zombie tint, storage and stockpile patches |
-| The tide weather patches (`DeepFrontier.RadioactiveTide`) | Weather Station patches (they read the weather ID) |
-| The new-game postfix (`DeepFrontier.RadioactiveTideNewGame`) | Contamination sensor postfix (through `IRadiationService`) |
-| `RadiationSimulation`, `RadiationSoil`, `RadiationRenderer`, `RadioactiveTideService`, its weather, settings, UI and dev method, `RadioactiveTideNewGameSettings` | The optional Sluice is Back! bridge |
+| The tide weather patches (`DeepFrontier.RadioactiveTide`) | Contamination sensor postfix (through `IRadiationService`) |
+| The new-game postfix (`DeepFrontier.RadioactiveTideNewGame`) | The optional Sluice is Back! bridge |
+| The Weather Station patches (`DeepFrontier.WeatherStation`) and `WeatherStationRadioactiveTide` | |
+| `RadiationSimulation`, `RadiationSoil`, `RadiationRenderer`, `RadioactiveTideService`, its weather, settings, UI and dev method, `RadioactiveTideNewGameSettings` | |
 
 Moddable Fluids refuses to attach, naming the owner, if any of the left-hand patches is present. The flagged build still compiles the old classes, but binds none of them. Its own code uses only `RadiationSimulation.RowRange` and `RadiationSoil`'s static kernel helpers (`KernelContamination`, `FieldRowMargin`, `RadiationSoilNative.Verify`).
 
@@ -108,7 +110,8 @@ The sludge intake keeps the native pump path, credited from native-removal losse
 | `DeepFrontier.Radiation` v2/v3 (shipped) | Moddable Fluids imports the water in the first substep through the provider's importer. Deep Frontier loads soil, sources and the hour counter. A save before that substep writes the record back unchanged, with any requests, and Moddable Fluids marks its own entry `ImportPending`. |
 | `DeepFrontier.Radiation` v4 | Holds the last soil pass, the hour counter, sources, unapplied soil requests and water added before the first fluid tick (`RadiationFacadeRecord.Capture` and `Restore`). Moddable Fluids saves the water. |
 | `DeepFrontier.RadioactiveTide`, `DeepFrontier.RadioactiveTideSettings` (shipped) | Imported once by Moddable Fluids' tide service (`IFluidTideImporter`, capability `ModdableFluids.Tides.Import`) for a loaded save without its tide state. See [Tide import](#tide-import). The next save writes Moddable Fluids' tide singletons, so the import never repeats. |
-| Sensor, sluice, Weather Station, intake buffer, exposure | Unchanged keys. |
+| Entity `DeepFrontier.WeatherStationRadioactiveTide` (`SignalsRadioactiveTide`) | Imported once per station into Moddable Fluids' `ModdableFluids.WeatherStationTide` (see Weather Station above). |
+| Sensor, sluice, intake buffer, exposure | Unchanged keys. |
 
 ### Tide import
 
@@ -131,7 +134,7 @@ The budget of a save whose tide is off draws nothing: no listed tide is on, and 
 
 ## Evidence
 
-- **.NET harness.** Run by `tools/test_fluid_transport.ps1` in a scratch mirror on 2026-11-09: 409,715 assertions in 93 scenarios, 1,188 Mono checks, 5 absence checks and 35 tide Mono checks. The flagged Deep Frontier build compiles. The Deep Frontier scenarios cover:
+- **.NET harness.** Run by `tools/test_fluid_transport.ps1` in a scratch mirror on 2026-11-09: 409,730 assertions in 94 scenarios, 1,188 Mono checks, 5 absence checks and 47 tide Mono checks. The flagged Deep Frontier build compiles. The Deep Frontier scenarios cover:
   - registration with both policies and existing localization keys;
   - the v2/v3 import and its variants;
   - the facade, including the new-game pending rule;
@@ -150,6 +153,7 @@ The budget of a save whose tide is off draws nothing: no listed tide is on, and 
     - impossible saved state.
 
     Each imported save then continues with `Choose`'s draws;
+  - the Weather Station import: the radioactive tide mode, a native mode, a station older than the mode, an unreadable station;
   - the visibility curve against `Encode`.
 - **Shipped build.** The unflagged build compiles, and the radiation content, tide content, native safety and native access checks pass.
 
@@ -243,7 +247,8 @@ Run each with the packages built from one commit, through the launcher above. Lo
    - Use Moddable Fluids' "next cycle" development method for the radioactive tide.
    - Check the banner, icons and badtide sound.
    - Check that every tide-overridable source emits radioactive water and that springs stay radioactive.
-   - Check the Weather Station's tide mode.
+   - Check the Weather Station: Moddable Fluids' radioactive tide mode switches on during the tide (and early, by its activation hours). A station saved by the shipped build in the radioactive tide mode loads in that mode: load it through `-SaveCopies` in gate 4.
+   - The all-buildings hazard probe's station part refuses to run in this build; it checks Deep Frontier's own station mode.
    - Save and reload during the tide.
    - Check that a new custom game's rows show Deep Frontier's values.
 6. **Performance.** Tick time and memory on the largest Deep Frontier map with a large irradiated area, against the shipped build. Run once with `-MoreFluids`, so that the shared tide budget and the More Fluids content run alongside.

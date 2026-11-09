@@ -47,6 +47,11 @@ namespace DeepFrontier.Scripts.WeatherStations {
     internal const string HarmonyId = "DeepFrontier.WeatherStation";
 
     public void StartMod(IModEnvironment modEnvironment) {
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+      // Moddable Fluids gives every registered tide its Weather Station mode (owner ModdableFluids.Tides, which refuses
+      // these patches as a foreign owner); a station saved with Deep Frontier's mode is imported by the provider.
+      Debug.Log("[DeepFrontier] Weather Station tide modes come from Moddable Fluids; Deep Frontier's station patches are not applied.");
+#else
       NativePatches.Install(HarmonyId, WeatherStationNative.Verify, harmony => {
         harmony.CreateClassProcessor(typeof(WeatherStationSamplePatch)).Patch();
         harmony.CreateClassProcessor(typeof(WeatherStationOutputPatch)).Patch();
@@ -54,6 +59,7 @@ namespace DeepFrontier.Scripts.WeatherStations {
         harmony.CreateClassProcessor(typeof(WeatherStationFragmentUpdatePatch)).Patch();
       });
       Debug.Log("[DeepFrontier] Weather Station radioactive tide mode patches applied (sample, output, panel).");
+#endif
     }
   }
 

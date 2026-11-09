@@ -148,6 +148,11 @@ namespace DeepFrontier.Scripts {
       public WeatherStation Tide,Early,Badtide,Temperate;
     }
     private IEnumerator<float> StationProbe(Subject s) {
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+      // The Moddable Fluids build has no Deep Frontier station mode or tide dev method (Moddable Fluids' tide service owns
+      // both); its station check is gate 5 of docs/deep-frontier-fluids-migration.md.
+      throw new NotSupportedException("The all-buildings Weather Station probe checks Deep Frontier's own tide mode, which the Moddable Fluids build does not have");
+#else
       var force=DevCommand(TideCommand);var jump=DevCommand(JumpCommand);
       string path=RadioactiveTideModStarter.ModdableWeathersLoaded?"Moddable Weathers (RadioactiveTideModdableWeather)":"vanilla (RadioactiveTideWeather)";
       var spec=Spec(StationTemplate);
@@ -200,6 +205,7 @@ namespace DeepFrontier.Scripts {
         yield return ProbeSettleHours;
       }
       Record(s,"weather station: stops after the tide",!IsTide()&&!On(st.Tide)&&!On(st.Early),WeatherState()+"; "+States(st));
+#endif
     }
     // Every station against the native weather state at this stop.
     private void CheckStations(Subject s,Stations st,string check) {
