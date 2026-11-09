@@ -26,7 +26,7 @@ Arrows point from the foundation to its consumers. Deep Frontier and More Fluids
 
 Moddable Fluids ships no extra playable liquid. It exposes the game's existing fresh water and badwater through built-in definitions. Development fixtures can register synthetic fluids in a separate test mod.
 
-Use working mod IDs `ModdableFluids` and `MoreFluids` until names and publication IDs are finalized. Give each package its own manifest, assembly, version, and official Mod Builder output. Consumer packages reference the installed API assembly; they must not embed another runtime copy. Detect conflicting loaded API versions and duplicate registration visibly instead of starting a second simulation. Verify the game loader's handling of duplicate local and Workshop installations during packaging work.
+The foundation is named **Moddable Fluids** (user decision, 2026-11-09). Its mod ID is `ModdableFluids`, which is also its assembly, namespace and capability prefix. The [contract's migration note](fluids-api-contract.md#rename-from-fluidsapi) maps the old `FluidsApi` names. More Fluids keeps `MoreFluids`. Give each package its own manifest, assembly, version, and official Mod Builder output. Consumer packages reference the installed API assembly; they must not embed another runtime copy. Detect conflicting loaded API versions and duplicate registration visibly instead of starting a second simulation. Verify the game loader's handling of duplicate local and Workshop installations during packaging work.
 
 ## Existing implementation and constraints
 
@@ -189,6 +189,15 @@ To implement D:
 
 If the user prefers constant difficulty, choose C′.
 
+**Decision (user, 2026-11-09: "define hazard chances").** Each tide's chance is defined explicitly, both in its data and as a per-save row on the new-game screen, like Deep Frontier's radioactive tide rows. The combined selection honours every defined chance with independent rolls and a weighted pick when several succeed. That is policy D, with the per-tide chances visible to the player.
+
+- Vanilla-only and single-tide games keep their current probabilities.
+- The total tide rate is the visible consequence of the chances the player sets.
+- Each tide's own cooldown, earliest cycle and duration remain per-tide settings.
+- The Moddable Weathers adapter converts the same per-tide chances to weights once, for all registered tides.
+
+If "define hazard chances" was meant as one shared hazard budget that the defined chances divide, the policy would be C′ instead. The implementation keeps the selection rule in one function, so switching it does not change tide registration.
+
 ## Saves and version compatibility
 
 The foundation owns the world-fluid save schema. Save stable fluid IDs and owning mod/schema versions with component state. Runtime numeric handles can speed up lookup but are rebuilt from the registry and never serve as persistent identity. Persist cells and column geometry sufficiently to restore reservoirs at different heights, following the existing reconciliation requirements.
@@ -219,7 +228,7 @@ Use separate `src/ModdableFluids/` and `src/MoreFluids/` roots alongside `src/De
 
 ## More Fluids content direction
 
-Start with one simple mixable liquid to prove the consumer workflow, then expand the pack. The following are candidates rather than approved balance rules:
+**Decision (user, 2026-11-09):** More Fluids' first release includes coffee, saltwater and healing water. Their designs, with proposed numbers, are in [more-fluids-design.md](more-fluids-design.md). Oil and lava stay in the later layered and reactive milestone. The original candidate table:
 
 | Fluid | Potential gameplay | Design choice to settle before implementing |
 | --- | --- | --- |
@@ -292,9 +301,15 @@ Status on 2026-11-09:
    - the synthetic consumer packages (reflection-only and compiled), built officially and kept out of the Mods folder;
    - persistent component identities;
    - save round-trip fixtures in the .NET harness and in the installed Mono;
-   - official API packaging with a verify script.
+   - official API packaging with a verify script;
+   - the game-side world saver/loader (`ModdableFluids.World`) and a native save/reload fixture (`-SaveReload`), which has not run in game yet;
+   - the CPU half of shared rendering (resolved appearance in the native texture layout).
 
-   Not built: shared rendering, the game-side saver/loader, and the in-game save/reload fixture.
-5. **Not started: Deep Frontier migration and More Fluids content.** Items 1 and 4 must pass first. Select the first finished More Fluids liquid before starting its gameplay work.
+   Not built:
+   - the GPU half of rendering (shader variants, material ownership, uploads);
+   - a last-completed-tick snapshot for exception saves.
 
-Open product decisions are the final foundation name (it fixes the assembly, namespace and the `ModdableFluids.*` capability names before a 1.0 release), the first pack liquid, the combined tide policy and its probabilities, and later oil/lava gameplay details. Storage layout, transport equations, renderer data format, and terrain solidification remain engineering decisions to resolve with the corresponding prototypes.
+   [Shared rendering](fluids-native-adapter.md#shared-rendering) has the details.
+5. **Not started: Deep Frontier migration and More Fluids content.** They wait for the in-game save/reload run and the item 4 work above. More Fluids' first release (coffee, saltwater, healing water) has a [design proposal](more-fluids-design.md) awaiting the user's numbers. That design orders the API capabilities still to build: intake conversion and refusal, tide registration, GPU rendering, exposure, then irrigation.
+
+Decided on 2026-11-09: the foundation name (Moddable Fluids), the first pack contents (coffee, saltwater and healing water), and the tide policy (explicit per-tide chances with independent rolls). Still open: the user's approval of the proposed More Fluids numbers, and later oil/lava gameplay details. Storage layout, transport equations, renderer data format, and terrain solidification remain engineering decisions to resolve with the corresponding prototypes.

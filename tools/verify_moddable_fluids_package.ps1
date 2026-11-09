@@ -1,29 +1,31 @@
 #Requires -Version 7
-# Verify the installed Moddable Fluids package and the kept fixture packages without changing either:
+# Verify the kept official packages (outputs/fluids-api-prototype/packages) without changing them:
 # manifest and DLL set, official-output hashes, then the installed-Mono probes run against copies of
-# the installed DLLs (API present) and of the fixture DLLs alone (API absent). Run from the real
-# checkout after tools/build_moddable_fluids.ps1 -SyntheticFixtures. Inputs are copied into ignored
-# folders under outputs/fluids-api-prototype; the game, its profile and the Mods folder are untouched.
+# the official API DLLs (API present) and of the fixture DLLs alone (API absent). Run from the real
+# checkout after tools/build_moddable_fluids.ps1 -SyntheticFixtures. It also requires that none of the
+# packages is installed: they belong in the Mods folder only during an acceptance run.
 param()
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
 $dev = Get-DevEnvironment 'timberbornDocuments','python'
 $output = Join-Path $root 'outputs/fluids-api-prototype'
-$installed = Join-Path $dev.timberbornDocuments 'Mods/ModdableFluids/version-1.1'
+$installed = Join-Path $output 'packages/ModdableFluids/version-1.1'
+foreach ($id in @('ModdableFluids','ModdableFluidsSyntheticReflection','ModdableFluidsSyntheticCompiled')) {
+  if (Test-Path -LiteralPath (Join-Path $dev.timberbornDocuments "Mods/$id")) { throw "$id is installed in the Mods folder outside an acceptance run." }
+}
 $package = Get-Content (Join-Path $output 'package-report.json') -Raw | ConvertFrom-Json
-if ((Get-FileHash -LiteralPath (Join-Path $installed 'manifest.json')).Hash -ne (Get-FileHash -LiteralPath (Join-Path $root 'src/ModdableFluids/manifest.json')).Hash) { throw 'Installed manifest differs from the authored source.' }
+if ((Get-FileHash -LiteralPath (Join-Path $installed 'manifest.json')).Hash -ne (Get-FileHash -LiteralPath (Join-Path $root 'src/ModdableFluids/manifest.json')).Hash) { throw 'Kept package manifest differs from the authored source.' }
 $apiNames = @('ModdableFluids.dll','ModdableFluids.TransportPrototype.dll','ModdableFluids.GamePrototype.dll','ModdableFluids.RuntimePrototype.dll')
 $files = @(Get-ChildItem -LiteralPath (Join-Path $installed 'Scripts') -File)
-if ($files.Count -ne $apiNames.Count -or @($files | Where-Object Name -notin $apiNames).Count -ne 0) { throw 'Installed package must hold exactly the four Moddable Fluids assemblies.' }
+if ($files.Count -ne $apiNames.Count -or @($files | Where-Object Name -notin $apiNames).Count -ne 0) { throw 'The package must hold exactly the four Moddable Fluids assemblies.' }
 foreach ($name in $apiNames) {
-  if ((Get-FileHash -LiteralPath (Join-Path $installed "Scripts/$name")).Hash -ne $package.assemblies.$name) { throw "Installed $name differs from the recorded official build." }
+  if ((Get-FileHash -LiteralPath (Join-Path $installed "Scripts/$name")).Hash -ne $package.assemblies.$name) { throw "Kept $name differs from the recorded official build." }
 }
 $fixtures = @('ModdableFluidsSyntheticReflection','ModdableFluidsSyntheticCompiled')
 $fixtureDlls = @()
 foreach ($id in $fixtures) {
-  if (Test-Path -LiteralPath (Join-Path $dev.timberbornDocuments "Mods/$id")) { throw "$id is installed; fixtures may only be present during an acceptance run." }
-  $dll = Join-Path $output "fixture-packages/$id/version-1.1/Scripts/$id.dll"
+  $dll = Join-Path $output "packages/$id/version-1.1/Scripts/$id.dll"
   if ((Get-FileHash -LiteralPath $dll).Hash -ne $package.fixtures.$id.assemblies."$id.dll") { throw "Kept fixture $id differs from the recorded official build." }
   $fixtureDlls += $dll
 }
@@ -48,4 +50,4 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'compile-check/fluid-absence-pro
 & $dev.python (Join-Path $PSScriptRoot 'run_fluid_native_mono.py') --absent (Join-Path $absent 'ModdableFluids.AbsenceProbe.dll') $fixtureDlls[0] $fixtureDlls[1]
 if ($LASTEXITCODE -ne 0) { throw 'Fixture absence Mono probe failed' }
 Copy-Item -LiteralPath (Join-Path $output 'mono-absence-report.json') -Destination (Join-Path $output 'package-absence-report.json') -Force
-Write-Output 'PASS: installed Moddable Fluids package, kept fixture packages, installed-Mono present and absent probes.'
+Write-Output 'PASS: kept Moddable Fluids and fixture packages, none installed, installed-Mono present and absent probes.'

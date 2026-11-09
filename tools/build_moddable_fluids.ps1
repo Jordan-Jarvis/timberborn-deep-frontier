@@ -5,9 +5,11 @@
 #
 # Timberborn enables a newly installed mod by default (ModPlayerPrefsHelper.IsModEnabled
 # returns true without a saved key), and the compiled fixture cannot even be enumerated
-# without Moddable Fluids. The fixtures are therefore moved out of the Mods folder right after
-# the official build, into outputs/fluids-api-prototype/fixture-packages/<Id>, and only
-# tools/start_fluid_worker_acceptance.ps1 installs them for a run and removes them after.
+# without Moddable Fluids. Nothing stays installed: right after the official build every
+# package, the API included, is verified and moved out of the Mods folder into
+# outputs/fluids-api-prototype/packages/<Id>. Only tools/start_fluid_worker_acceptance.ps1
+# installs them, for one run, and removes them after. The official Mod Builder shares one
+# Unity project with the Deep Frontier build; never run the two at once.
 #
 #   build_moddable_fluids.ps1 -RemoveLegacyPackage   # also delete the pre-rename "FluidsApi" development
 #                                                    # package and its staged authoring copies (2026-11-09 rename)
@@ -91,6 +93,7 @@ $api = @(
   @{Folder='GameBridge';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.GamePrototype.asmdef');Sources=@((Join-Path $source 'GameBridge'))},
   @{Folder='Runtime';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.RuntimePrototype.asmdef');Sources=@((Join-Path $source 'Runtime'))}
 )
+if (Test-Path -LiteralPath (Join-Path $mods 'ModdableFluids')) { throw 'ModdableFluids is installed in the Mods folder; packages must only be present during an acceptance run. Remove it first.' }
 Stage 'ModdableFluids' (Join-Path $source 'manifest.json') $api
 $fixtures = @(
   @{Id='ModdableFluidsSyntheticReflection';Folder=(Join-Path $source 'Examples/SyntheticReflection')},
@@ -98,7 +101,7 @@ $fixtures = @(
 )
 if ($SyntheticFixtures) {
   foreach ($fixture in $fixtures) {
-    if (Test-Path -LiteralPath (Join-Path $mods $fixture.Id)) { throw "$($fixture.Id) is installed in the Mods folder; the fixtures must only be present during an acceptance run. Remove it first." }
+    if (Test-Path -LiteralPath (Join-Path $mods $fixture.Id)) { throw "$($fixture.Id) is installed in the Mods folder; packages must only be present during an acceptance run. Remove it first." }
     Stage $fixture.Id (Join-Path $fixture.Folder 'manifest.json') @(@{Folder='Code';Asmdef=(Join-Path $fixture.Folder ($fixture.Id + '.asmdef'));Sources=@($fixture.Folder)})
   }
 }
@@ -116,21 +119,23 @@ $process = Start-Process -FilePath $dev.unity -WindowStyle Hidden -PassThru -Arg
 $process.WaitForExit()
 if ($process.ExitCode -ne 0) { throw "Official Moddable Fluids build failed. See $log" }
 $installed = Package 'ModdableFluids'
-$report = [ordered]@{ status='passed'; installed=$installed; version=(Get-Content (Join-Path $installed 'manifest.json') -Raw | ConvertFrom-Json).Version
-  assemblies=(Verify 'ModdableFluids' $installed (Join-Path $source 'manifest.json') @('ModdableFluids.dll','ModdableFluids.TransportPrototype.dll','ModdableFluids.GamePrototype.dll','ModdableFluids.RuntimePrototype.dll')) }
+function Keep([string]$id) {
+  $kept = Join-Path $output ('packages/' + $id)
+  if (Test-Path -LiteralPath $kept) { Remove-Item -LiteralPath $kept -Recurse -Force }
+  New-Item -ItemType Directory -Force -Path (Split-Path $kept) | Out-Null
+  Move-Item -LiteralPath (Join-Path $mods $id) -Destination $kept
+  if (Test-Path -LiteralPath (Join-Path $mods $id)) { throw "$id is still installed after the build." }
+  $kept
+}
+$version = (Get-Content (Join-Path $installed 'manifest.json') -Raw | ConvertFrom-Json).Version
+$apiHashes = Verify 'ModdableFluids' $installed (Join-Path $source 'manifest.json') @('ModdableFluids.dll','ModdableFluids.TransportPrototype.dll','ModdableFluids.GamePrototype.dll','ModdableFluids.RuntimePrototype.dll')
+$report = [ordered]@{ status='passed'; package=(Keep 'ModdableFluids'); version=$version; assemblies=$apiHashes }
 if ($SyntheticFixtures) {
   $report.fixtures = [ordered]@{}
   foreach ($fixture in $fixtures) {
-    $built = Package $fixture.Id
-    $hashes = Verify $fixture.Id $built (Join-Path $fixture.Folder 'manifest.json') @($fixture.Id + '.dll')
-    $kept = Join-Path $output ('fixture-packages/' + $fixture.Id)
-    if (Test-Path -LiteralPath $kept) { Remove-Item -LiteralPath $kept -Recurse -Force }
-    New-Item -ItemType Directory -Force -Path (Split-Path $kept) | Out-Null
-    Move-Item -LiteralPath (Join-Path $mods $fixture.Id) -Destination $kept
-    if (Test-Path -LiteralPath (Join-Path $mods $fixture.Id)) { throw "$($fixture.Id) is still installed after the build." }
-    $report.fixtures[$fixture.Id] = [ordered]@{ package=$kept; assemblies=$hashes }
+    $hashes = Verify $fixture.Id (Package $fixture.Id) (Join-Path $fixture.Folder 'manifest.json') @($fixture.Id + '.dll')
+    $report.fixtures[$fixture.Id] = [ordered]@{ package=(Keep $fixture.Id); assemblies=$hashes }
   }
 }
 $report | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $output 'package-report.json')
-Write-Output "Official Moddable Fluids package installed at $installed (flag-gated). Log: $log"
-if ($SyntheticFixtures) { Write-Output "Synthetic fixture packages kept out of the Mods folder under $(Join-Path $output 'fixture-packages')." }
+Write-Output "Official Moddable Fluids packages verified and kept out of the Mods folder under $(Join-Path $output 'packages'). Log: $log"

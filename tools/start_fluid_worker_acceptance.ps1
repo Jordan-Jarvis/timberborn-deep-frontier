@@ -1,8 +1,9 @@
 #Requires -Version 7
 # Launch only the flag-gated disposable fixture, then restore the user's profile.
-# The two synthetic consumer fixtures (built by build_moddable_fluids.ps1 -SyntheticFixtures and kept
-# outside the Mods folder) are installed only for this run and removed afterwards, together with
-# any enablement keys the game created for them: Timberborn enables a new mod by default.
+# The Moddable Fluids package and the two synthetic consumer fixtures (built by
+# build_moddable_fluids.ps1 -SyntheticFixtures and kept in outputs/fluids-api-prototype/packages)
+# are installed only for this run and removed afterwards, together with any enablement keys the
+# game created for them: Timberborn enables a new mod by default.
 #
 #   start_fluid_worker_acceptance.ps1             # two fresh disposable worlds (worker barriers, geometry, intakes)
 #   start_fluid_worker_acceptance.ps1 -SaveReload # one world saved natively, reloaded and compared bit for bit;
@@ -16,13 +17,12 @@ if (Get-Process Timberborn -ErrorAction SilentlyContinue) { throw 'Close Timberb
 if (-not (Test-Path (Join-Path $dev.timberbornDocuments 'Maps/Moddable Fluids Worker Fixture.timber'))) { throw 'Generate the explicit worker fixture first.' }
 $output = Join-Path $root 'outputs/fluids-api-prototype'
 $mods = Join-Path $dev.timberbornDocuments 'Mods'
-if (-not (Test-Path -LiteralPath (Join-Path $mods 'ModdableFluids/version-1.1/Scripts/ModdableFluids.dll'))) { throw 'Build Moddable Fluids first: tools/build_moddable_fluids.ps1 -SyntheticFixtures' }
 if (Test-Path -LiteralPath (Join-Path $mods 'FluidsApi')) { throw 'The pre-rename FluidsApi development package is still installed; remove it with tools/build_moddable_fluids.ps1 -RemoveLegacyPackage.' }
-$fixtureIds = @('ModdableFluidsSyntheticReflection','ModdableFluidsSyntheticCompiled')
+$fixtureIds = @('ModdableFluids','ModdableFluidsSyntheticReflection','ModdableFluidsSyntheticCompiled')
 $saveSettlements = @('Saves','ExperimentalSaves') | ForEach-Object { Join-Path $dev.timberbornDocuments "$_/Moddable Fluids Save Acceptance" }
 foreach ($settlement in $saveSettlements) { if (Test-Path -LiteralPath $settlement) { throw "$settlement already exists; the save fixture owns that settlement and must start without it." } }
 foreach ($id in $fixtureIds) {
-  if (-not (Test-Path -LiteralPath (Join-Path $output "fixture-packages/$id/version-1.1/Scripts/$id.dll"))) { throw "Missing fixture package $id; run tools/build_moddable_fluids.ps1 -SyntheticFixtures" }
+  if (-not (Test-Path -LiteralPath (Join-Path $output "packages/$id/version-1.1/Scripts/$id.dll"))) { throw "Missing kept package $id; run tools/build_moddable_fluids.ps1 -SyntheticFixtures" }
   if (Test-Path -LiteralPath (Join-Path $mods $id)) { throw "$id is already in the Mods folder; it must be installed only by this launcher." }
 }
 $backup = Join-Path $output ('profile-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
@@ -38,7 +38,7 @@ foreach ($name in $profileFiles) {
   }
 }
 $prefsPath = 'HKCU:\Software\Mechanistry\Timberborn'
-$ownedKeys = '^Mod(Enabled|Priority)\..*\.(ModdableFluidsSyntheticReflection|ModdableFluidsSyntheticCompiled)_h\d+$'
+$ownedKeys = '^Mod(Enabled|Priority)\..*\.(ModdableFluids|ModdableFluidsSyntheticReflection|ModdableFluidsSyntheticCompiled)_h\d+$'
 $prefs = Get-Item -LiteralPath $prefsPath
 $flags = @{}
 foreach ($name in $prefs.GetValueNames() | Where-Object { $_ -match '^ModEnabled\..*\.(DeepFrontier|ModdableFluids|ModdableFluidsSyntheticReflection|ModdableFluidsSyntheticCompiled)_h\d+$' }) {
@@ -56,7 +56,7 @@ try {
     Set-ItemProperty -LiteralPath $prefsPath -Name $name -Value $enabled
   }
   foreach ($id in $fixtureIds) {
-    Copy-Item -LiteralPath (Join-Path $output "fixture-packages/$id") -Destination (Join-Path $mods $id) -Recurse
+    Copy-Item -LiteralPath (Join-Path $output "packages/$id") -Destination (Join-Path $mods $id) -Recurse
     $installedFixtures += $id
   }
   if (Test-Path -LiteralPath $report) { Remove-Item -LiteralPath $report }
@@ -104,8 +104,7 @@ try {
   foreach ($name in $flags.Keys) { Set-ItemProperty -LiteralPath $prefsPath -Name $name -Value $flags[$name] }
   foreach ($name in (Get-Item -LiteralPath $prefsPath).GetValueNames()) {
     if ($flags.ContainsKey($name)) { continue }
-    if ($name -match '^ModEnabled\..*\.ModdableFluids_h\d+$') { Set-ItemProperty -LiteralPath $prefsPath -Name $name -Value 0 }
-    elseif ($name -match $ownedKeys) { Remove-ItemProperty -LiteralPath $prefsPath -Name $name }
+    if ($name -match $ownedKeys) { Remove-ItemProperty -LiteralPath $prefsPath -Name $name }
   }
   foreach ($name in $profileFiles) {
     $path = Join-Path $profile $name
@@ -114,5 +113,5 @@ try {
       if ((Get-FileHash -LiteralPath $path).Hash -ne $hashes[$name]) { throw "Profile restoration hash mismatch: $name" }
     } elseif (Test-Path -LiteralPath $path) { Remove-Item -LiteralPath $path }
   }
-  Write-Output 'Fixture packages removed; original Deep Frontier/API enablement and PlayerData files restored; hashes verified.'
+  Write-Output 'Moddable Fluids and fixture packages removed; original Deep Frontier/API enablement and PlayerData files restored; hashes verified.'
 }

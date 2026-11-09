@@ -1,6 +1,6 @@
 # Moddable Fluids 0.1 contract
 
-Implemented 2026-11-09 as item 3 of the [Moddable Fluids plan](fluids-api-plan.md), with item 4's persistent identities. The contract is experimental: its major version is 0, so any minor release may change it. It has passed the .NET 8 harness and the installed-Mono probes, including a Mono process without the API. It has not run in a game yet. Behaviour policies, public sampling, shared rendering and tide registration are not part of 0.1. Where the plan calls a definition field a behaviour or appearance, that is only data until the matching capability exists.
+Implemented 2026-11-09 as item 3 of the [Moddable Fluids plan](fluids-api-plan.md), with item 4's persistent identities. The contract is experimental: its major version is 0, so any minor release may change it. It has passed the .NET 8 harness and the installed-Mono probes, including a Mono process without the API. In game, the registry, both consumer routes and the provider scene lifecycle passed the worker fixture on 2026-11-09, under the pre-rename names. Behaviour policies, public sampling, shared rendering and tide registration are not part of 0.1. Where the plan calls a definition field a behaviour or appearance, that is only data until the matching capability exists.
 
 ## Rename from FluidsApi
 
@@ -170,7 +170,7 @@ Rules:
 - **Changed geometry.** Other columns are projected with the shared geometry rules, and geometry and pressure losses are reported explicitly.
 - **Native mismatch.** When native water disagrees with the restored state, the session faults and the load stops with the cell named.
 
-Not built yet: the game-side saver/loader singleton, the Deep Frontier importer, and in-game save/reload acceptance.
+The game-side envelope (`ModdableFluids.World`, envelope 1) is built and round-trips through the game's own persistence under Mono; see [World save in game](fluids-native-adapter.md#world-save-in-game). Not yet done: the in-game save/reload run, a last-completed-tick snapshot for exception saves, and the Deep Frontier importer.
 
 ## Optional integrations
 
@@ -187,4 +187,4 @@ The two fixture packages under `src/ModdableFluids/Examples` register only with 
 - `ModdableFluidsSyntheticReflection` registers `Juice` by reflection, with state and scenes.
 - `ModdableFluidsSyntheticCompiled` registers `Tracer` through the compiled interfaces, with a state migration.
 
-Timberborn enables a newly installed mod by default. The official build therefore moves both packages out of `Mods` into `outputs/fluids-api-prototype/fixture-packages`. `tools/start_fluid_worker_acceptance.ps1` installs them only for a run, then removes them and any preference keys created for them.
+Timberborn enables a newly installed mod by default. The official build therefore moves every package out of `Mods` into `outputs/fluids-api-prototype/packages`: both fixtures and the Moddable Fluids package itself. `tools/start_fluid_worker_acceptance.ps1` installs them only for a run, then removes them and any preference keys created for them.

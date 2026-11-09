@@ -1,5 +1,27 @@
 # Current development status
 
+## Moddable Fluids: world save, save/reload fixture, rendering CPU side, More Fluids design (2026-11-09)
+
+- **User decisions recorded** in [docs/fluids-api-plan.md](../docs/fluids-api-plan.md):
+  - The foundation name is Moddable Fluids (renamed in `e9d02a5`).
+  - More Fluids' first release includes coffee, saltwater and healing water.
+  - The tide policy is "define hazard chances", read as explicit per-tide chances in data and new-game rows, combined by independent rolls with a weighted pick (policy D). If a shared hazard budget was meant, it would be C′ instead.
+- **Game-side world save (`c83d18d`).**
+  - The flag-gated scene owner stores the fluid document in the native singleton `ModdableFluids.World`, with envelope 1 and native int, bool and string keys.
+  - On load it resolves saved fluid IDs on the main thread, then restores the components in the first native substep. Any disagreement with native water fails visibly.
+  - Saving outside a completed tick is refused with the reason. Exception saves still need a last-completed-tick snapshot before ordinary settlements may use this.
+  - The installed-Mono probe round-trips the envelope through the game's own `ObjectSaver`, JSON and `ObjectLoader` (1,166 checks).
+  - The save/reload fixture (`start_fluid_worker_acceptance.ps1 -SaveReload`) saves a world natively and reloads it. It requires a bit-identical restore, the same provider state and conservation, then deletes its settlement through the native repository. **Not yet run in game.**
+- **Shared rendering, CPU half (`117b265`).** `FluidAppearanceResolver` and `FluidAppearanceField` produce one RGBA8 tint per column in the native texture-array layout, with changed-row tracking; water and badwater keep the native look. 402,996 .NET assertions across 47 scenarios. The GPU shader variants, material ownership and uploads are not built; their contract is in [docs/fluids-native-adapter.md](../docs/fluids-native-adapter.md#shared-rendering).
+- **More Fluids design proposal.** [docs/more-fluids-design.md](../docs/more-fluids-design.md) covers coffee, saltwater and healing water, grounded in vanilla data: the `Coffee`, `Antidote`, `Injury` and `BadwaterContamination` needs and goods, and the native 0.2 volume per good. It proposes the Fluid Extractor and Desalinator, a Healing Spring map object, and the Coffee and Salt tides with per-mode chance rows. Under policy D on Normal, Deep Frontier plus More Fluids gives radioactive 18.5%, coffee 11.0% and salt 11.0%. The numbers await the user's approval.
+- **Official build and packaging.**
+  - The official Mod Builder rebuilt the renamed package and both fixtures. The same run removed the pre-rename `Mods/FluidsApi`, its staged authoring copies and its `ModEnabled` key (`-RemoveLegacyPackage`).
+  - Every package is now verified and moved out of `Mods` into `outputs/fluids-api-prototype/packages`. Only the launcher installs Moddable Fluids and the fixtures, for one run, and removes them afterwards. **Nothing Moddable Fluids–related is installed now.**
+  - `verify_moddable_fluids_package.ps1` passes against the kept official DLLs (1,166 Mono checks, plus the API-absent probe).
+  - The renamed fixture map was generated; its world is identical to the old map's, and the old map was removed.
+  - My Unity build finished before the coordinator's Deep Frontier build. From now on, official builds are agreed with the coordinator first, because both use the one Unity project.
+- **Next in game.** With Timberborn closed, run `tools/start_fluid_worker_acceptance.ps1 -SaveReload`, then the plain worker run, to establish the renamed identities.
+
 ## Native safety audit (2026-11-09; source validated in mirror `nativeaudit`, not built or run in game)
 
 - Request: inventory everything Deep Frontier does that Timberborn was not designed for, replace it with native extension points where they exist, otherwise make it robust, and propose removals. Inventory, evidence and decisions: `docs/native-safety-audit.md` (42 shipping Harmony ids patching 94 native methods, 12 reflection features, 198 compiled non-public references, 9 native asset changes, 9 simulation hooks, statics and 15 lifecycle-order dependencies). Decompiled 1.1.2.8 sources were used from a session scratch folder only.

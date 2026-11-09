@@ -105,25 +105,30 @@ The fixture requires `-moddableFluidsWorkerAcceptance -moddableFluidsReport <abs
 Use the configured PowerShell/Python executables and run from the real checkout:
 
 1. Run `tools/create_fluid_acceptance_map.py` to create the dedicated local fixture. The source is the existing `Deep Frontier - All Buildings Test.timber` map; the generated map is ignored game data.
-2. Run `tools/build_moddable_fluids.ps1 -SyntheticFixtures` with Timberborn and the Unity editor closed.
+2. Run `tools/build_moddable_fluids.ps1 -SyntheticFixtures` with Timberborn closed and no other official build running.
+   - Ask the coordinator first: Deep Frontier's build shares the Unity project and its `UnityLockfile`.
    - It stages `src/ModdableFluids` and both fixtures, and invokes the official Mod Builder for those three mods, without bundles.
-   - It verifies each installed manifest and every DLL hash against the official output, and rejects embedded dependencies.
-   - It then moves the fixtures out of `Mods` into `outputs/fluids-api-prototype/fixture-packages`. Timberborn enables a newly installed mod by default, and the compiled fixture breaks mod start whenever Moddable Fluids is disabled.
+   - It verifies each manifest and every DLL hash against the official output, and rejects embedded dependencies.
+   - It then moves all three packages out of `Mods` into `outputs/fluids-api-prototype/packages`. Timberborn enables a newly installed mod by default, and the compiled fixture breaks mod start whenever Moddable Fluids is disabled, so nothing stays installed.
    - It does not rebuild or install Deep Frontier.
-3. Run `tools/verify_moddable_fluids_package.ps1`. It re-checks the installed package and kept fixtures against `package-report.json`, then runs the installed-Mono probes against copies of the installed DLLs (API present) and of the fixture DLLs alone (API absent).
-4. With Timberborn closed and Steam running, run `tools/start_fluid_worker_acceptance.ps1`.
+3. Run `tools/verify_moddable_fluids_package.ps1`.
+   - It requires that none of the three packages is installed.
+   - It re-checks the kept packages against `package-report.json`.
+   - It runs the installed-Mono probes against copies of the official API DLLs (API present) and of the fixture DLLs alone (API absent).
+4. With Timberborn closed and Steam running, run `tools/start_fluid_worker_acceptance.ps1` (add `-SaveReload` for the save/reload fixture).
    - It backs up the native PlayerData files and the Deep Frontier, API and fixture enablement keys.
-   - It disables Deep Frontier, whose lockstep patches conflict with the shared transport, installs the two fixture packages for this run only, and starts the marked fixture.
-   - After the owned process exits, including on failure or timeout, it removes the fixtures and any keys the game created for them, restores the original profile and verifies the file hashes.
+   - It disables Deep Frontier, whose lockstep patches conflict with the shared transport.
+   - It installs Moddable Fluids and the two fixtures for this run only, and starts the marked fixture.
+   - After the owned process exits, including on failure or timeout, it removes all three packages and any keys the game created for them, restores the original profile and verifies the file hashes.
    - No existing colony is loaded. Startup dialogs may still need clicking.
 
-On 2026-11-09 the official Mod Builder rebuilt development version 0.0.1.0 with its four assemblies, including the new public `ModdableFluids.dll`, and both fixtures.
+On 2026-11-09 the official Mod Builder rebuilt development version 0.0.1.0 under the new name, with its four assemblies (including the public `ModdableFluids.dll`) and both fixtures. The same run removed the pre-rename `Mods/FluidsApi` package, its staged authoring copies and its enablement key (`-RemoveLegacyPackage`). After verification the API package was moved out of `Mods` like the fixtures, so no Moddable Fluids package is installed outside a run.
 
 - `outputs/fluids-api-prototype/package-report.json` records every DLL hash, each verified against the official build output, and the authored manifests matched byte for byte.
 - `verify_moddable_fluids_package.ps1` passed. The installed assemblies pass all **1,159 installed-Mono checks** (`package-mono-report.json`). The kept fixture DLLs pass the absence probe (`package-absence-report.json`).
 - Both probes use copies in ignored output folders and never change the installed package.
 
-The installed prototype remains experimental. Flag-gated activation keeps ordinary settlements out of a system whose saver is not yet in the game. The package has no enablement key in the user's profile, which means it is enabled. Without the acceptance flag it binds nothing.
+The prototype remains experimental and is installed only during an acceptance run. Even then, without the acceptance flag it would bind nothing.
 
 **In-game result (2026-11-09, HEAD `e597e4f`, pre-rename names).** The coordinator ran the launcher with the game closed, and the user clicked through the startup dialogs. `outputs/fluids-api-prototype/worker-report.json` passed.
 
@@ -135,6 +140,51 @@ The installed prototype remains experimental. Flag-gated activation keeps ordina
 - **Registry.** Both scenes ran the same four fluids, from both consumer routes (fingerprint `86256e57…`), with provider scene serials 1 and 2. No transport owner or provider scene survived into the menu, and the prototype disabled itself afterwards.
 
 The launcher restored the profile and verified its hashes. It then failed on an empty exit code: it had found the process by name and never held a handle, and .NET cannot read the exit code of such a process once it exits. It now takes the PID the launch reports, opens the handle at once, and fails if the exit code is ever unavailable.
+
+## World save in game
+
+The flag-gated scene owner is also the world saver (`ModdableFluidsSceneOwner`, `FluidWorldSaveFormat`, both 2026-11-09). It stores one `FluidSaveDocument` in the native singleton `ModdableFluids.World`, through native int, bool and string keys, under envelope version 1.
+
+- **Load and PostLoad.** `Load` reads the singleton. `PostLoad` resolves every saved fluid ID against the frozen registry on the main thread, so missing mods are named before any tick, and then delivers provider state.
+- **Restore.** The first native substep restores the components before geometry reconciliation. Unchanged columns are copied bit for bit; changed geometry is projected with explicit losses. Any disagreement with native water fails that tick and names the cell.
+- **Save.** `GameSaver.Save` calls `Ticker.FinishFullTick` before the singleton savers run, so the session must be `Ready`. Otherwise the save fails with the reason rather than recording a partial tick.
+  - **Exception saves.** These need a last-completed-tick snapshot, as `RadiationSimulation` keeps. That must be added before ordinary settlements may activate the system.
+  - **Before the first tick.** A save before the first fluid tick re-saves the loaded components with the current provider state. A world without saved fluid state is marked native-only.
+- **Probe evidence.** The installed-Mono probe round-trips the envelope through the game's own `ObjectSaver`, `SerializedObjectReaderWriter` JSON and `ObjectLoader`: same content digest, same provider state, and the exact hex volume strings in the JSON. A missing or unknown envelope version stops loading.
+
+The save/reload fixture runs with `-moddableFluidsSaveAcceptance` (launcher switch `-SaveReload`):
+
+1. World one runs the worker script and saves natively.
+2. The menu reloads that save.
+3. The reloaded world recaptures the restored state before its first tick advances. It requires the same content digest, an exact copy of every column, the same provider state, and conservation over the following ticks.
+4. The fixture deletes its settlement through `GameSaveRepository.DeleteSettlement`.
+
+It has not run in game yet.
+
+## Shared rendering
+
+The CPU half is built (`src/ModdableFluids/Rendering`, 2026-11-09).
+
+**`FluidAppearanceResolver`** turns a mixture into one RGBA8 tint, whatever the number of registered fluids.
+- Water and badwater keep the native shader's look: strength 0, with badwater staying on the native contamination channel.
+- Each extra fluid adds its share times its colour alpha to the strength. The colour is the same weighted mean, so the strength cannot exceed one and nothing is clamped.
+
+**`FluidAppearanceField`** lays the texels out like the native water texture arrays.
+- There is one layer per vertical column ordinal, with texels at unpadded `y * width + x`.
+- It grows layers with stacked reservoirs and clears dried or closed columns.
+- It reports changed rows for partial uploads. It reads only a completed-tick session and makes no Unity calls.
+
+The harness covers pure, diluted and blended appearance, registration-order independence, a 64-component check, an upper reservoir on layer 1, clearing, and row tracking.
+
+The GPU half is not built. Its intended contract follows Deep Frontier's working shader swap:
+
+- **Shader variants.** Variants of the native `Shader Graphs/PhysicalWaterURP_Opaque` and `_Transparent`, generated the way `tools/native_shader_variants.mjs` generates Deep Frontier's. They sample old and new appearance texture arrays and blend the native colour toward the tint by strength. They interpolate across a tick, as the native `_OldContaminations`/`_NewContaminations` textures do.
+- **Material owner.** Moddable Fluids becomes the only owner of the native water materials. Deep Frontier's radioactive water becomes a registered colour instead of its own water shader; its soil overlay stays in Deep Frontier.
+- **Startup check.** Before swapping anything, it verifies every member the swap needs at startup: `WaterMeshSpec` materials, `WaterRenderer._contaminations`, `UpdateWaterTexturesTask` fields and the texture names.
+- **Lifecycle.** It swaps and restores per scene. The restore accepts `Hidden/InternalErrorShader`, because the asset-loader reset destroys bundled variants before `Unload`.
+- **Uploads.** Only changed rows are uploaded, on the main thread at the late tick.
+
+The variants are bundle assets. They need the official Mod Builder's Windows and macOS bundles, and visual acceptance in game: pure, mixed and diluted colours, transparency, and scene unload.
 
 ## Verification
 
