@@ -96,15 +96,28 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
 
     public static RadioactiveTideValues Resolve(ISingletonLoader singletonLoader, ISceneLoader sceneLoader, ISettings settings) {
       if (singletonLoader == null) throw new ArgumentNullException(nameof(singletonLoader));
-      if (singletonLoader.TryGetSingleton(SavedKey, out var saved)) {
-        if (!saved.Has(EnabledKey) || !saved.Has(CyclesWithoutTideKey) || !saved.Has(ChancePercentKey) || !saved.Has(MinDurationKey) || !saved.Has(MaxDurationKey))
-          throw new InvalidOperationException($"Saved radioactive tide settings ({SavedKey.Name}) are incomplete");
-        var values = new RadioactiveTideValues(saved.Get(EnabledKey), saved.Get(CyclesWithoutTideKey), saved.Get(ChancePercentKey),
-          saved.Get(MinDurationKey), saved.Get(MaxDurationKey), SavedSource);
-        RadioactiveTideSettingsCheck.Validate(values, values.Source);
-        return values;
-      }
-      return ForUnsavedGame(sceneLoader, settings);
+      return TryReadSaved(singletonLoader, out var values) ? values : ForUnsavedGame(sceneLoader, settings);
+    }
+
+    // A loaded save, never a new game (steps 1 and 3): the Moddable Fluids build's tide importer reads it.
+    public static RadioactiveTideValues ForLoadedSave(ISingletonLoader singletonLoader, ISettings settings) {
+      if (singletonLoader == null) throw new ArgumentNullException(nameof(singletonLoader));
+      if (settings == null) throw new ArgumentNullException(nameof(settings));
+      if (TryReadSaved(singletonLoader, out var values)) return values;
+      values = Legacy(settings);
+      RadioactiveTideSettingsCheck.Validate(values, values.Source);
+      return values;
+    }
+
+    private static bool TryReadSaved(ISingletonLoader singletonLoader, out RadioactiveTideValues values) {
+      values = null;
+      if (!singletonLoader.TryGetSingleton(SavedKey, out var saved)) return false;
+      if (!saved.Has(EnabledKey) || !saved.Has(CyclesWithoutTideKey) || !saved.Has(ChancePercentKey) || !saved.Has(MinDurationKey) || !saved.Has(MaxDurationKey))
+        throw new InvalidOperationException($"Saved radioactive tide settings ({SavedKey.Name}) are incomplete");
+      values = new RadioactiveTideValues(saved.Get(EnabledKey), saved.Get(CyclesWithoutTideKey), saved.Get(ChancePercentKey),
+        saved.Get(MinDurationKey), saved.Get(MaxDurationKey), SavedSource);
+      RadioactiveTideSettingsCheck.Validate(values, values.Source);
+      return true;
     }
 
     public static RadioactiveTideValues ForUnsavedGame(ISceneLoader sceneLoader, ISettings settings) {
@@ -117,17 +130,19 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
         values = RadioactiveTideValues.FromSpec(spec, derivation == null ? NewGameSource
           : $"{NewGameSource} {RadioactiveTideGameModes.Name(gameMode)}, derived from its weather: {derivation}");
       } else {
-        values = new RadioactiveTideValues(
-          settings.Has(RadioactiveTideTuning.LegacyEnabledKey) ? settings.GetBool(RadioactiveTideTuning.LegacyEnabledKey) : RadioactiveTideTuning.LegacyEnabled,
-          LegacyInt(settings, RadioactiveTideTuning.LegacyMinCycleKey, RadioactiveTideTuning.LegacyMinCycle) - 1,
-          LegacyInt(settings, RadioactiveTideTuning.LegacyChancePercentKey, RadioactiveTideTuning.LegacyChancePercent),
-          LegacyInt(settings, RadioactiveTideTuning.LegacyMinDurationKey, RadioactiveTideTuning.LegacyMinDurationDays),
-          LegacyInt(settings, RadioactiveTideTuning.LegacyMaxDurationKey, RadioactiveTideTuning.LegacyMaxDurationDays),
-          LegacySource);
+        values = Legacy(settings);
       }
       RadioactiveTideSettingsCheck.Validate(values, values.Source);
       return values;
     }
+
+    private static RadioactiveTideValues Legacy(ISettings settings) => new RadioactiveTideValues(
+      settings.Has(RadioactiveTideTuning.LegacyEnabledKey) ? settings.GetBool(RadioactiveTideTuning.LegacyEnabledKey) : RadioactiveTideTuning.LegacyEnabled,
+      LegacyInt(settings, RadioactiveTideTuning.LegacyMinCycleKey, RadioactiveTideTuning.LegacyMinCycle) - 1,
+      LegacyInt(settings, RadioactiveTideTuning.LegacyChancePercentKey, RadioactiveTideTuning.LegacyChancePercent),
+      LegacyInt(settings, RadioactiveTideTuning.LegacyMinDurationKey, RadioactiveTideTuning.LegacyMinDurationDays),
+      LegacyInt(settings, RadioactiveTideTuning.LegacyMaxDurationKey, RadioactiveTideTuning.LegacyMaxDurationDays),
+      LegacySource);
 
     public static void Write(ISingletonSaver singletonSaver, IRadioactiveTideSettings values) {
       var data = singletonSaver.GetSingleton(SavedKey);

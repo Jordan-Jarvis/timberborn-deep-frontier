@@ -10,6 +10,7 @@ using Timberborn.MapIndexSystem;
 using Timberborn.ModManagerScene;
 using Timberborn.NaturalResourcesLifecycle;
 using Timberborn.Persistence;
+using Timberborn.SettingsSystem;
 using Timberborn.SingletonSystem;
 using Timberborn.TickSystem;
 using Timberborn.TimeSystem;
@@ -23,9 +24,31 @@ namespace DeepFrontier.ModdableFluidsMigration {
     internal static DeepFrontierRadioactiveWater Provider { get; private set; }
     public void StartMod(IModEnvironment modEnvironment) {
       if (Provider != null) throw new InvalidOperationException("Deep Frontier registered its radioactive water twice");
-      Provider = new DeepFrontierRadioactiveWater(Tide());
+      Provider = new DeepFrontierRadioactiveWater(Tide(), ImportTide);
       ModdableFluidsEntry.RegisterProvider(Provider);
       Debug.Log("[DeepFrontier] Radioactive water and the radioactive tide registered with Moddable Fluids " + ModdableFluidsEntry.ApiVersion + ".");
+    }
+
+    // RadioactiveTideService's singleton (same keys): the state of a save played under Deep Frontier's own tide.
+    private static readonly SingletonKey TideStateKey = new SingletonKey("DeepFrontier.RadioactiveTide");
+    private static readonly PropertyKey<bool> CurrentCycleIsTideKey = new PropertyKey<bool>("CurrentCycleIsTide");
+    private static readonly PropertyKey<int> LastTideCycleKey = new PropertyKey<int>("LastTideCycle");
+    private static readonly PropertyKey<int> LastTideDurationKey = new PropertyKey<int>("LastTideDuration");
+
+    // Moddable Fluids' tide service asks once for a loaded save without its tide state: the save's DeepFrontier.RadioactiveTide
+    // and its settings (saved copy, else the former mod settings of 0.8.3 and older), as RadioactiveTideImport maps them.
+    private static FluidTideImport ImportTide(FluidTideImportContext context) {
+      var loader = context.NativeSingletonLoader as ISingletonLoader
+        ?? throw new InvalidOperationException("Moddable Fluids passed no native singleton loader to Deep Frontier's tide import");
+      var settings = context.NativeSettings as ISettings
+        ?? throw new InvalidOperationException("Moddable Fluids passed no native settings to Deep Frontier's tide import (needed for saves from 0.8.3 and older)");
+      RadioactiveTideSavedState state = null;
+      if (loader.TryGetSingleton(TideStateKey, out var saved))
+        state = new RadioactiveTideSavedState(saved.Get(CurrentCycleIsTideKey), saved.Get(LastTideCycleKey), saved.Get(LastTideDurationKey));
+      var values = RadioactiveTideStartingValues.ForLoadedSave(loader, settings);
+      var import = RadioactiveTideImport.Map(state, values.Enabled, values.CyclesWithoutTide, values.ChancePercent, values.MinDurationDays, values.MaxDurationDays);
+      Debug.Log("[DeepFrontier] Radioactive tide imported into Moddable Fluids: settings " + values + "; " + import + ".");
+      return import;
     }
 
     // RadioactiveTideTuning's Easy, Normal and Hard points; Moddable Fluids derives every other mode with Deep Frontier's

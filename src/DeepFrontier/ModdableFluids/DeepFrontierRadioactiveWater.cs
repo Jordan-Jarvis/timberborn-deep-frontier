@@ -12,7 +12,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
   /// decay, the soil-water exchange, the 0.5% cutoff, deposition of lost radioactive water, soil spread). The rules
   /// are Deep Frontier's: nothing here is a Moddable Fluids default.
   /// </summary>
-  public sealed class DeepFrontierRadioactiveWater : IFluidProvider, IFluidSceneProvider, IFluidWorldImporter, IFluidColumnRules {
+  public sealed class DeepFrontierRadioactiveWater : IFluidProvider, IFluidSceneProvider, IFluidWorldImporter, IFluidColumnRules, IFluidTideImporter {
     public const string Owner = "DeepFrontier";
     public const string Id = Owner + ".Radiation";
     public const string FluidId = Owner + ".RadioactiveWater";
@@ -27,6 +27,8 @@ namespace DeepFrontier.ModdableFluidsMigration {
     /// SoilMoistureSimulatorSpec.MaximumWaterContamination of 1.1.2.8 (checked against the game in ModdableFluidsBankLayer).
     /// </summary>
     public const float MoistureBlockShare = 0.53f;
+    /// <summary>The water tint's visibility at the detection limit (RadioactiveWaterSurface.Encode).</summary>
+    public const float WaterVisibilityAtDetectionLimit = 0.12f;
     /// <summary>What a native pump draws of radioactive water below the refusal share becomes clean water (as in the one-fluid build).</summary>
     public const string DrawnAsWater = Owner + ".RadioactiveWaterDrawnAsWater";
 
@@ -35,15 +37,19 @@ namespace DeepFrontier.ModdableFluidsMigration {
     private RadiationMigrationResult _imported;
     private RadiationSoilField _field;
     private readonly RadioactiveTideRegistration _tide;
+    private readonly Func<FluidTideImportContext, FluidTideImport> _tideImport;
 
     /// <param name="tide">The radioactive tide to register (the game passes it; harness scenarios may leave it out).</param>
-    public DeepFrontierRadioactiveWater(RadioactiveTideRegistration tide = null) {
-      _tide = tide;
+    /// <param name="tideImport">Reads a Deep Frontier save's tide state and settings (RadioactiveTideImport); only with a tide.</param>
+    public DeepFrontierRadioactiveWater(RadioactiveTideRegistration tide = null, Func<FluidTideImportContext, FluidTideImport> tideImport = null) {
+      if (tideImport != null && tide == null) throw new ArgumentException("Deep Frontier imports tide state only for the tide it registers", nameof(tideImport));
+      _tide = tide; _tideImport = tideImport;
       var capabilities = new List<string> {
         "ModdableFluids.Policies.Irrigation", "ModdableFluids.Policies.WaterIntakes", "ModdableFluids.Registry.Definitions", "ModdableFluids.Scene.Lifecycle",
         "ModdableFluids.Sources.Types", "ModdableFluids.World.Additions", "ModdableFluids.World.Import", "ModdableFluids.World.Losses", "ModdableFluids.World.Rules",
         "ModdableFluids.World.Sampling" };
       if (tide != null) capabilities.Add(FluidTideRules.RegistrationCapability);
+      if (tideImport != null) capabilities.Add(FluidTideRules.ImportCapability);
       RequiredCapabilities = capabilities;
     }
 
@@ -68,6 +74,8 @@ namespace DeepFrontier.ModdableFluidsMigration {
       // RadiationIntakeGuard: native pumps stop at the detection limit and draw less as clean water.
       registration.SetWaterIntakePolicy("RadioactiveWater", RadiationTuning.DetectionLimit, DrawnAsWater, RadiationLoc.PumpBlocked, RadiationLoc.PumpBlockedShort);
       registration.SetBlocksMoisture("RadioactiveWater", MoistureBlockShare);
+      // RadioactiveWaterSurface.Encode: nothing below the detection limit, 0.12 there, 1 when pure, log-scaled between.
+      registration.SetVisibilityCurve("RadioactiveWater", RadiationTuning.DetectionLimit, WaterVisibilityAtDetectionLimit);
       foreach (string template in SpringTemplates) {
         registration.AddSourceType(template, "Building." + template + ".DisplayName", template, 1, SpringStrength, true, false, false);
         registration.SetSourceEmission(template, FluidId, SpringShare);
@@ -117,6 +125,9 @@ namespace DeepFrontier.ModdableFluidsMigration {
         return _imported.Document;
       }
     }
+
+    // Main thread, once for a loaded save without Moddable Fluids tide state: Deep Frontier's own tide state and settings.
+    public FluidTideImport ImportTides(FluidTideImportContext context) => _tideImport?.Invoke(context ?? throw new ArgumentNullException(nameof(context)));
 
     // Native worker thread, after every completed fluid tick.
     public void ApplyRules(FluidScene scene, IFluidColumnEditor columns) {

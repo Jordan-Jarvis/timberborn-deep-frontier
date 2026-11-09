@@ -75,6 +75,12 @@ internal static class DeepFrontierFluidsScenarios {
     check(fluid.Irrigation != null && fluid.Irrigation.Effect == FluidMoistureEffect.BlocksLikeBadwater && fluid.Irrigation.BlocksAtShare == .53f
       && .53f / fluid.Irrigation.BlocksAtShare == 1, "Irrigation policy: blocks at the native badwater limit, so the moisture tasks see b + r");
     check(registry.UndeclaredPolicies().Count == 0, "Every policy declared");
+    // RadioactiveWaterSurface.Encode's visibility, transcribed: 0 below the limit, 0.12 there, 1 at r = 1, log-scaled.
+    float Encoded(float r) => r < RadiationTuning.DetectionLimit ? 0f
+      : Mathf.Min(1f, 0.12f + 0.88f * Mathf.Log10(r / RadiationTuning.DetectionLimit) / -Mathf.Log10(RadiationTuning.DetectionLimit));
+    var shares = new[] { 0f, .001f, .00499f, RadiationTuning.DetectionLimit, .01f, .05f, .2f, .5f, .9f, 1f };
+    check(fluid.Visibility != null && shares.All(r => Math.Abs(fluid.Visibility.At(r) - Encoded(r)) < 1e-6),
+      "The water tint's visibility curve is RadioactiveWaterSurface.Encode's");
     check(fluid.DisplayNameLocKey == "Good.RadioactiveSludge.DisplayName" && registry.SourceTypes.Where(t => !t.IsNative).All(t => t.DisplayNameLocKey == "Building." + t.Template + ".DisplayName"),
       "Display names use Deep Frontier's existing localization keys");
   }

@@ -31,6 +31,7 @@ Status on 2026-11-09:
 | `ModdableFluidsBankLayer` | `RadiationSoil`'s native-kernel part with unchanged rules, fed from the published shares. It also gives the soil overlay its view. At load it checks that the native `MaximumWaterContamination` is the moisture policy's 0.53. |
 | `ModdableFluidsSoilRenderer` | `RadiationRenderer` without the water surface: Deep Frontier's terrain variant draws the irradiated ground. |
 | `RadioactiveTideRegistration` | The radioactive tide as a Moddable Fluids tide, built from `RadioactiveTideTuning`. |
+| `RadioactiveTideImport` | Maps a Deep Frontier save's tide state and settings to Moddable Fluids tide state. The flagged mod starter reads them for the provider's `IFluidTideImporter` ([Saves](#saves)). |
 
 ### Services the consumers use
 
@@ -90,7 +91,7 @@ Each difference is deliberate or forced by the shared model.
 5. **Hour counter.** It advances while soil, radioactive water, requests or deposits exist. This approximates `RadiationSimulation`'s row envelope and changes only the phase of the hourly pass.
 6. **Keys and threads.** The kill check and the bank layer use (x, y, floor) keys instead of native slots. Readers see the last completed pass, never a half-done one.
 7. **Moisture below 0.5%.** Moddable Fluids also counts shares below 0.5% toward moisture; `RadiationSoil` used `Detected(r)`.
-8. **Water tint.** Moddable Fluids' shared renderer tints by the fluid's colour. Deep Frontier's curve (nothing below 0.5%, log-scaled above) is not applied yet ([request 2](#requests-to-moddable-fluids)).
+8. **Water tint.** Moddable Fluids' shared renderer tints by the fluid's single colour, with Deep Frontier's visibility curve: nothing below 0.5%, 0.12 there, log-scaled to 1. The harness checks the curve against `RadioactiveWaterSurface.Encode`. The second base and detail colours of Deep Frontier's water variant are not used.
 9. **Early additions.** Water added before the first fluid tick waits for it, and version 4 saves keep it. Soil requests not yet applied are saved too.
 10. **Exception saves.** These write the last published pass. Requests that a running pass had already taken are lost.
 11. **Pending state.** `SavedStatePending` is true from loading a radiation record until the first completed fluid tick applies it. A new game has nothing pending.
@@ -104,12 +105,31 @@ The sludge intake keeps the native pump path, credited from native-removal losse
 | --- | --- |
 | `DeepFrontier.Radiation` v2/v3 (shipped) | Moddable Fluids imports the water in the first substep through the provider's importer. Deep Frontier loads soil, sources and the hour counter. A save before that substep writes the record back unchanged, with any requests, and Moddable Fluids marks its own entry `ImportPending`. |
 | `DeepFrontier.Radiation` v4 | Holds the last soil pass, the hour counter, sources, unapplied soil requests and water added before the first fluid tick (`RadiationFacadeRecord.Capture` and `Restore`). Moddable Fluids saves the water. |
-| `DeepFrontier.RadioactiveTide`, `DeepFrontier.RadioactiveTideSettings` (shipped) | **Not imported yet.** If the save's weather history holds `RadioactiveTideWeather`, Moddable Fluids refuses it. A save without that history loads with every tide off, so its radioactive tide settings are lost. Before the switch-over this needs [request 1](#requests-to-moddable-fluids). |
+| `DeepFrontier.RadioactiveTide`, `DeepFrontier.RadioactiveTideSettings` (shipped) | Imported once by Moddable Fluids' tide service (`IFluidTideImporter`, capability `ModdableFluids.Tides.Import`) for a loaded save without its tide state. See [Tide import](#tide-import). The next save writes Moddable Fluids' tide singletons, so the import never repeats. |
 | Sensor, sluice, Weather Station, intake buffer, exposure | Unchanged keys. |
+
+### Tide import
+
+Deep Frontier's provider is the importer. The flagged mod starter reads the save:
+
+- **State.** `DeepFrontier.RadioactiveTide`, with `RadioactiveTideService`'s keys and load checks. `SludgeEmittedThisTide` is not carried over.
+- **Settings.** `RadioactiveTideStartingValues.ForLoadedSave`: the save's `DeepFrontier.RadioactiveTideSettings`, or else, for saves from 0.8.3 and older, the former mod-setting keys through the game's settings. Keys the player never changed read as the old defaults. This is the shipped rule, now extracted so it needs no scene loader.
+
+`RadioactiveTideImport.Map` then builds the Moddable Fluids state:
+
+| Deep Frontier | Moddable Fluids |
+| --- | --- |
+| `CurrentCycleIsTide` | current tide = last tide = `DeepFrontier.RadioactiveTide` |
+| `LastTideCycle`, `LastTideDuration` | the last tide's cycle and duration; cycle 0 means no tide yet |
+| no `DeepFrontier.RadioactiveTide` singleton (a save older than the tide) | no tide yet |
+| tide on: `ChancePercent`, `CyclesWithoutTide`, `MinDurationDays`, `MaxDurationDays` | budget = weight = `ChancePercent`, and the same cycles without and durations |
+| tide off | the tide off, its values passed unchecked as Deep Frontier never checked them; budget 1, the lowest valid one |
+
+The budget of a save whose tide is off draws nothing: no listed tide is on, and unlisted tides are off. Moddable Fluids then checks that a current tide matches the native weather and duration. A vanilla save first loaded with Deep Frontier gets the former defaults, as the shipped build gives it.
 
 ## Evidence
 
-- **.NET harness.** Run by `tools/test_fluid_transport.ps1` in a scratch mirror on 2026-11-09: 409,650 assertions in 89 scenarios, 1,188 Mono checks, 5 absence checks and 28 tide Mono checks. The flagged Deep Frontier build compiles. The Deep Frontier scenarios cover:
+- **.NET harness.** Run by `tools/test_fluid_transport.ps1` in a scratch mirror on 2026-11-09: 409,715 assertions in 93 scenarios, 1,188 Mono checks, 5 absence checks and 35 tide Mono checks. The flagged Deep Frontier build compiles. The Deep Frontier scenarios cover:
   - registration with both policies and existing localization keys;
   - the v2/v3 import and its variants;
   - the facade, including the new-game pending rule;
@@ -120,28 +140,32 @@ The sludge intake keeps the native pump path, credited from native-removal losse
   - deposits and credits from every loss kind;
   - soil requests and strict or lenient loads;
   - the tide registration, parsed from `RadioactiveTideTuning.cs`, with each vanilla mode's defaults and 12,000 cycles of C′ draws matching `Choose`, random calls included;
-  - the version 4 round trip.
+  - the version 4 round trip;
+  - the tide import, through the host, for these saves:
+    - in a tide, after a tide, before any tide, and older than the tide;
+    - the tide switched off;
+    - 0.8.3 settings, default and changed by the player, using the legacy rule transcribed with keys and defaults read from `RadioactiveTideTuning.cs` and its text checked in `RadioactiveTideGameSettings.cs`;
+    - impossible saved state.
+
+    Each imported save then continues with `Choose`'s draws;
+  - the visibility curve against `Encode`.
 - **Shipped build.** The unflagged build compiles, and the radiation content, tide content, native safety and native access checks pass.
 
 Not covered by the harness: the game glue (lifecycle, kill check, bank kernels, soil renderer, policies applied by Moddable Fluids in game). It compiles; the in-game runs below cover it.
 
 ## Requests to Moddable Fluids
 
-1. **Tide state import (mf-tides; blocks the switch-over).** Add an optional provider interface, asked once when a save has no `ModdableFluids.Tides` or `ModdableFluids.TideSettings`.
-   - **Inputs.** The registered tides.
-   - **Returns.** Either nothing, or:
-     - the current cycle's tide ID or null;
-     - the last tide's cycle, ID and duration;
-     - the budget;
-     - each tide's enabled flag, weight, cycles without and duration range.
-   - **Deep Frontier's mapping.** From `DeepFrontier.RadioactiveTide` (`CurrentCycleIsTide`, `LastTideCycle`, `LastTideDuration`) and `DeepFrontier.RadioactiveTideSettings` (`Enabled`, `CyclesWithoutTide`, `ChancePercent`, `MinDurationDays`, `MaxDurationDays`): budget = weight = `ChancePercent`; the current tide is `DeepFrontier.RadioactiveTide` when `CurrentCycleIsTide`.
-   - **Legacy settings.** Saves from 0.8.3 and older have no settings singleton; their values come from the former mod-setting keys (`RadioactiveTideTuning.Legacy*`).
-   - **Reading order.** Deep Frontier must read its keys before the tide service resolves settings. The service could pass the native singleton loader to the importer as an `object`, so the API assembly stays game-free.
-   - **Refusals.** Two importers returning state should stop loading and name both.
-2. **Water appearance per fluid (mf-core).** A per-fluid visibility curve for the shared renderer. Deep Frontier hides shares below 0.5%, runs from 0.12 at 0.5% to 1 at 100% on a log scale, and has two base and two detail colours (`RadiationMaterials.WaterBaseColorA/B`, `WaterDetailColorA/B`).
-3. **Terrain overlay (mf-core, optional).** A terrain-overlay adapter on per-scene material copies. Deep Frontier could then stop putting its soil variant on the native terrain materials (native-safety audit C2).
-4. **Custom intakes (mf-core, documentation).** `IFluidCustomIntake` is documented for extraction-based intakes. Deep Frontier also uses it for a native-pump intake credited from `NativeRemoval` losses; say that this is supported.
-5. **Additions to reshaped cells (mf-core).** `QueueAddition` throws when the last published tick has no column at the cell. The native map may already have one (geometry changed this tick), and `RadiationSimulation` queued such additions natively. The change stage could resolve them instead, reporting `DroppedAddition` when the cell is closed.
+Done:
+
+- **Tide state import** (`4b7d7b7`).
+- **Visibility curve** (`92ed207`).
+- **Custom-intake documentation** (`92ed207`).
+- **Additions to reshaped cells** (`92ed207`). Deep Frontier still holds water added before the first fluid tick itself; that hold could now be dropped.
+
+Open:
+
+1. **Terrain overlay (mf-core, optional).** A terrain-overlay adapter on per-scene material copies. Deep Frontier could then stop putting its soil variant on the native terrain materials (native-safety audit C2).
+2. **Second water colour (mf-core, optional).** Deep Frontier's variant blends two base and two detail colours (`RadiationMaterials.WaterBaseColorA/B`, `WaterDetailColorA/B`); Moddable Fluids tints by one colour.
 
 ## Switch-over plan
 
@@ -161,7 +185,7 @@ Run each with the packages built from one commit. Use copies of saves in Memory 
    - Soil around the water turns yellow-green; plants there die and planters skip it.
    - Beavers wading in it gain dose; sensors read the share.
 3. **Version 4 save and reload in game.** Save mid-play and reload. Soil cells, water shares, the intake buffer and sources continue. The scene-cycle probe passes: the native water materials stay untouched and the terrain variant is restored on unload.
-4. **Shipped saves.** Load copies of v3 and v2 saves, one of them an exception save. Compare total radioactive volume and soil cells before and after the import, accounting for the reported cutoff volume. Then save and reload as v4. Saves with tide history wait for request 1.
+4. **Shipped saves.** Load copies of v3 and v2 saves, one of them an exception save. Compare total radioactive volume and soil cells before and after the import, accounting for the reported cutoff volume. Then save and reload as v4. One of the saves is in a radioactive tide. Check the import log line and that the tide continues with its cycle and duration. Also load one save from 0.8.3 or older.
 5. **Tide.**
    - Use Moddable Fluids' "next cycle" development method for the radioactive tide.
    - Check the banner, icons and badtide sound.

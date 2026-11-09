@@ -22,6 +22,7 @@ internal static partial class HarnessExtensions {
     scenario("Deep Frontier soil requests, load validation, publication and the bank layer", () => DeepFrontierSoil.RequestsAndLoad(check));
     scenario("Deep Frontier radioactive tide registers on Moddable Fluids with RadioactiveTideTuning's values and keeps its draws alone", () => DeepFrontierSoil.Tide(check, observations));
     scenario("Deep Frontier radiation record version 4 round trip: soil, hour counter, sources and unapplied requests", () => DeepFrontierSoil.RoundTrip(check));
+    scenario("Deep Frontier's tide state and settings import into Moddable Fluids, saves from 0.8.3 and older included", () => DeepFrontierSoil.TideImport(check, observations));
   }
 }
 
@@ -461,6 +462,104 @@ internal static class DeepFrontierSoil {
     check(differences == 0 && tides > 0, $"{cycles} cycles: the same tides and the same random draws as RadioactiveTideService.Choose ({differences} differences)");
     observations["deepFrontierTideCyclesCompared"] = cycles;
     _ = registry;
+  }
+
+  // ----------------------------------------------------------- tide import
+
+  /// <summary>
+  /// RadioactiveTideStartingValues' legacy rule (saves from 0.8.3 and older), transcribed: each former mod-setting key the
+  /// player changed gives its value, every other key the old default; cycles without = TideMinCycle - 1. The keys and
+  /// defaults are read from RadioactiveTideTuning.cs, and the rule's text is checked in RadioactiveTideGameSettings.cs.
+  /// </summary>
+  private static (bool Enabled, int CyclesWithout, int Chance, int Min, int Max) Legacy(Dictionary<string, object> modSettings) {
+    string root = RepositoryRoot();
+    string tuning = File.ReadAllText(Path.Combine(root, "src", "DeepFrontier", "Scripts", "RadioactiveTide", "RadioactiveTideTuning.cs"));
+    string Constant(string name) => Regex.Match(tuning, "const (?:string|bool|int) " + name + @" = ""?([^"";]+)""?;").Groups[1].Value;
+    int Int(string key, string fallback) => modSettings.TryGetValue(Constant(key), out var v) ? (int)v : int.Parse(Constant(fallback));
+    bool enabled = modSettings.TryGetValue(Constant("LegacyEnabledKey"), out var e) ? (bool)e : bool.Parse(Constant("LegacyEnabled"));
+    return (enabled, Int("LegacyMinCycleKey", "LegacyMinCycle") - 1, Int("LegacyChancePercentKey", "LegacyChancePercent"),
+      Int("LegacyMinDurationKey", "LegacyMinDurationDays"), Int("LegacyMaxDurationKey", "LegacyMaxDurationDays"));
+  }
+
+  [MethodImpl(MethodImplOptions.NoInlining)]
+  internal static void TideImport(Action<bool, string> check, Dictionary<string, object> observations) {
+    string settingsSource = File.ReadAllText(Path.Combine(RepositoryRoot(), "src", "DeepFrontier", "Scripts", "RadioactiveTide", "RadioactiveTideGameSettings.cs"));
+    check(settingsSource.Contains("public static RadioactiveTideValues ForLoadedSave(ISingletonLoader singletonLoader, ISettings settings)")
+      && settingsSource.Contains("if (TryReadSaved(singletonLoader, out var values)) return values;")
+      && settingsSource.Contains("LegacyInt(settings, RadioactiveTideTuning.LegacyMinCycleKey, RadioactiveTideTuning.LegacyMinCycle) - 1,"),
+      "The game import resolves a loaded save's settings with the shipped rule: its saved copy, else the former mod settings");
+    var registration = TideFromSource();
+    (RadioactiveTideSavedState? State, (bool Enabled, int CyclesWithout, int Chance, int Min, int Max) Settings) save = default;
+    FluidTideImport Import(FluidTideImportContext context) =>
+      RadioactiveTideImport.Map(save.State, save.Settings.Enabled, save.Settings.CyclesWithout, save.Settings.Chance, save.Settings.Min, save.Settings.Max);
+    var host = new ModdableFluidsHost();
+    var provider = new DeepFrontierRadioactiveWater(registration, Import);
+    host.RegisterProvider(provider);
+    host.Freeze();
+    check(provider.RequiredCapabilities.Contains(FluidTideRules.ImportCapability), "The provider requires the import capability");
+    Rejects<ArgumentException>(check, () => new DeepFrontierRadioactiveWater(null, Import), "An import without the tide it imports");
+    FluidTideImport Run(out string? importer) { var result = host.ImportTides(new FluidTideImportContext(host.Tides, new object(), new object()), out var id); importer = id; return result; }
+    string id = RadioactiveTideRegistration.TideId;
+    // A save in a tide: the current tide is the last one, with its cycle and duration; budget = weight = the chance.
+    save = (new RadioactiveTideSavedState(true, 17, 4), (true, 14, 25, 3, 6));
+    var during = Run(out var importer);
+    var tide = during.Settings.Get(id);
+    check(importer == DeepFrontierRadioactiveWater.Id && during.CurrentCycleTideId == id && during.LastTideId == id && during.LastTideCycle == 17 && during.LastTideDuration == 4
+      && during.Settings.BudgetPercent == 25 && tide.Enabled && tide.Weight == 25 && tide.CyclesWithoutTide == 14 && tide.MinDurationDays == 3 && tide.MaxDurationDays == 6,
+      "A save in a radioactive tide imports the tide in progress and its settings");
+    save = (new RadioactiveTideSavedState(false, 9, 5), (true, 9, 35, 5, 10));
+    var after = Run(out _);
+    check(after.CurrentCycleTideId == null && after.LastTideId == id && after.LastTideCycle == 9 && after.Settings.BudgetPercent == 35, "A save after a tide keeps the last tide for the cooldown");
+    save = (new RadioactiveTideSavedState(false, 0, 0), (true, 24, 15, 2, 4));
+    var none = Run(out _);
+    check(none.LastTideCycle == 0 && none.LastTideId == null && none.CurrentCycleTideId == null && none.Settings.BudgetPercent == 15, "A save before any tide imports no tide");
+    save = (null, (true, 24, 15, 2, 4));
+    check(Run(out _).LastTideCycle == 0, "A save without the tide singleton (older than the tide) imports no tide");
+    // A tide that is off: its values were never range-checked; the budget is the lowest and draws nothing.
+    save = (new RadioactiveTideSavedState(false, 0, 0), (false, 0, 0, 0, 0));
+    var off = Run(out _);
+    check(!off.Settings.Get(id).Enabled && off.Settings.BudgetPercent == FluidTideRules.BudgetPercentLowest, "A switched-off tide imports as off with the lowest budget");
+    var never = new TideRandom(1);
+    check(Enumerable.Range(2, 200).All(cycle => FluidTideSelection.Select(cycle, 0, off.Settings, null, never) == null) && never.Calls == 0, "A switched-off import never draws a tide");
+    // Saves from 0.8.3 and older: the former mod settings, defaults where the player never changed a key.
+    var defaults = Legacy(new Dictionary<string, object>());
+    check(defaults == (true, 14, 25, 3, 6), "0.8.3 defaults: on, from cycle 15, 25%, 3-6 days");
+    save = (null, defaults);
+    var legacy = Run(out _);
+    check(legacy.Settings.BudgetPercent == 25 && legacy.Settings.Get(id).CyclesWithoutTide == 14 && legacy.LastTideCycle == 0, "A 0.8.3 save with untouched settings imports the old defaults");
+    var changed = Legacy(new Dictionary<string, object> { ["ModSetting.DeepFrontier.RadioactiveTideSettings.TideMinCycle"] = 8,
+      ["ModSetting.DeepFrontier.RadioactiveTideSettings.TideChancePercent"] = 40, ["ModSetting.DeepFrontier.RadioactiveTideSettings.TideMaxDurationDays"] = 9 });
+    save = (new RadioactiveTideSavedState(false, 12, 6), changed);
+    var player = Run(out _);
+    check(player.Settings.BudgetPercent == 40 && player.Settings.Get(id).CyclesWithoutTide == 7 && player.Settings.Get(id).MinDurationDays == 3
+      && player.Settings.Get(id).MaxDurationDays == 9 && player.LastTideCycle == 12, "A 0.8.3 save keeps the settings the player changed");
+    var playerOff = Legacy(new Dictionary<string, object> { ["ModSetting.DeepFrontier.RadioactiveTideSettings.TideEnabled"] = false });
+    save = (null, playerOff);
+    check(!Run(out _).Settings.Get(id).Enabled, "A 0.8.3 save with the tide switched off imports it off");
+    // The imported settings draw as RadioactiveTideService.Choose did with the same settings and history.
+    int differences = 0;
+    foreach (var imported in new[] { during, after, none, legacy, player }) {
+      var settings = imported.Settings; var t = settings.Get(id);
+      var a = new TideRandom(7); var b = new TideRandom(7);
+      int lastA = imported.LastTideCycle, lastB = imported.LastTideCycle;
+      int first = Math.Max(1, imported.LastTideCycle + 1);
+      for (int cycle = first; cycle <= first + 1500; cycle++) {
+        bool selected = FluidTideSelection.Select(cycle, lastA, settings, null, a) == id;
+        bool choose = !(cycle < 2) && t.Enabled && !(cycle <= t.CyclesWithoutTide) && !(lastB > 0 && cycle - lastB <= 1) && b.CheckProbability(t.Weight / 100f);
+        if (selected != choose || a.Calls != b.Calls) differences++;
+        if (selected) lastA = cycle;
+        if (choose) lastB = cycle;
+      }
+    }
+    check(differences == 0, $"Imported saves continue with RadioactiveTideService.Choose's draws ({differences} differences)");
+    // Impossible saved state stops loading with Deep Frontier named.
+    save = (null, defaults);
+    Rejects<InvalidOperationException>(check, () => new RadioactiveTideSavedState(false, 1, 3), "A saved tide before cycle 2");
+    Rejects<InvalidOperationException>(check, () => new RadioactiveTideSavedState(true, 0, 0), "A current tide without a cycle");
+    Rejects<InvalidOperationException>(check, () => new RadioactiveTideSavedState(false, 6, 0), "A saved tide that lasted no day");
+    save = (null, (true, 0, 25, 3, 6));
+    Rejects<InvalidOperationException>(check, () => Run(out _), "Enabled settings out of range stop loading naming Deep Frontier", DeepFrontierRadioactiveWater.Id);
+    observations["deepFrontierTideImportCases"] = 9;
   }
 
   // ----------------------------------------------------------- round trip
