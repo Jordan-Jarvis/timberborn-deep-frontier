@@ -73,7 +73,7 @@ Capability `ModdableFluids.Tides.Registration`. A provider calls these on its `F
 | `AddTide(localName, nativeWeatherId, displayNameLocKey, descriptionLocKey)` | Tide `OwnerModId.localName`. `nativeWeatherId` is the `IHazardousWeather.Id` the game stores in its weather history and looks up in fog and source lists. |
 | `SetTideMode(tide, mode, chancePercent, cyclesWithoutTide, minDays, maxDays)` | Values for `Easy`, `Normal` and `Hard`; all three are required. |
 | `SetTideSourceEmission(tide, fluidId, share)` | While in progress, this share of every tide-overridable source's non-bad volume is the registered extra fluid. At least one is required, and the shares total at most 1. |
-| `SetTideSourceStrength(tide, multiplier)` | While in progress, tide-overridable sources run at this multiple of their native strength, in (0, 1]. Optional; the default is 1. |
+| `SetTideSourceStrength(tide, multiplier)` | While in progress, clean tide-overridable sources (default badwater share 0) run at this multiple of their native strength, in (0, 1]. Optional; the default is 1. |
 | `SetTideTexts(tide, approaching, inProgress, started, ended, approachingDescription, startedDescription)` | Loc keys for the native weather panels and banner. |
 | `SetTideArt(tide, iconSprite, progressSprite, notificationSprite)` | Sprite asset paths for the date panel, weather panel and banner. |
 | `SetTideStartSound(tide, "Badtide" or "Drought")` | The native alarm. |
@@ -167,9 +167,10 @@ The eight getters are small enough to inline. They rely on Harmony disabling inl
 ### Source effect
 
 - **Composition.** While a tide is in progress (`WeatherService.IsHazardousWeather` and the cycle's weather is the tide), `FluidTideService` owns the world's source composition: it calls `IFluidWorld.SetSourceComposition("ModdableFluids.Tides", tide.SourceEmission)`, and clears it when the tide ends. Content mods must not set a composition themselves; the single-owner rule would refuse them.
-- **Strength.** `FluidTideStrengthModifier` uses the native mechanism: an `IWaterStrengthModifier` on every `WaterSource`, attached by a `TemplateModule` decorator the same way the game attaches `DroughtWaterStrengthModifier`. `WaterSource` multiplies it into `CurrentStrength` every tick. While a tide is in progress, a tide-overridable source returns the tide's multiplier, for example 0.5 for coffee; otherwise it returns 1.
+- **Strength.** `FluidTideStrengthModifier` uses the native mechanism: an `IWaterStrengthModifier` on every `WaterSource`, attached by a `TemplateModule` decorator the same way the game attaches `DroughtWaterStrengthModifier`. `WaterSource` multiplies it into `CurrentStrength` every tick. While a tide is in progress, it returns `FluidTideDefinition.StrengthMultiplierFor(type)`, for example 0.5 for coffee; otherwise it returns 1.
+- **Which sources the strength applies to** (user decision 2b, 2026-11-09). A source type gets the tide's multiplier when it is tide-overridable and clean: its default badwater share is 0. That covers the native water source, water seep, aquifer and dev source, and every registered custom type. Badwater-emitting kinds (badwater source, badwater seep, badtide drain) keep their strength. The harness checks every native kind.
 - **Source types.** A source's type is found by its template name (`TemplateSpec`). A placed source whose template has no registered source type stops loading, naming the template.
-- **Badwater sources.** Every native source type is tide-overridable, including badwater sources, so the coffee tide also halves them. Their badwater stays badwater.
+- **Badwater sources.** Every native source type is tide-overridable, but a tide's composition only shares out non-bad volume, so a badwater source's emission stays badwater. Its strength is unchanged (rule above).
 - **Timing.** The composition and strength change in the tick the tide starts and ends. There is no ramp.
 
 ### Saving

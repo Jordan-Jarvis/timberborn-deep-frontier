@@ -196,6 +196,15 @@ internal static class TideScenarios {
       check(coffee.OwnerModId == "MoreFluids" && coffee.ProviderId == "MoreFluids.Liquids" && coffee.NativeWeatherId == "MoreFluids.CoffeeTide", "Coffee tide identity");
       check(coffee.SourceStrengthMultiplier == .5 && coffee.SourceEmission.Single().Key == "MoreFluids.Coffee" && coffee.SourceEmission.Single().Value == 1, "Coffee tide source effect");
       check(tides.Get(Radioactive).SourceStrengthMultiplier == 1, "Strength unchanged by default");
+      // Decision 2b: the multiplier applies to clean tide-overridable sources only.
+      var registry = new ModdableFluidsHost();
+      registry.RegisterProvider(MoreFluids());
+      var sourceTypes = registry.Freeze();
+      double Strength(string type) { check(sourceTypes.TryGetSourceType(type, out var t), "Source type " + type); return registry.Tides.Get(Coffee).StrengthMultiplierFor(t!); }
+      foreach (var clean in new[] { NativeFluidSourceTypes.WaterSource, NativeFluidSourceTypes.WaterSeep, NativeFluidSourceTypes.Aquifer, NativeFluidSourceTypes.DevWaterSource })
+        check(Strength(clean) == .5, "Coffee tide halves " + clean);
+      foreach (var bad in new[] { NativeFluidSourceTypes.BadwaterSource, NativeFluidSourceTypes.BadwaterSeep, NativeFluidSourceTypes.BadtideDrain })
+        check(Strength(bad) == 1, "Coffee tide keeps the strength of " + bad);
       var normal = coffee.GetMode(FluidTideRules.Normal);
       check(normal.ChancePercent == 15 && normal.CyclesWithoutTide == 8 && normal.MinDurationDays == 3 && normal.MaxDurationDays == 5, "Coffee Normal values");
       check(coffee.Presentation.StartSound == "Drought" && coffee.Presentation.ApproachingDescriptionLocKey == "MoreFluids.Weather.CoffeeTideApproachingDescription", "Coffee presentation");

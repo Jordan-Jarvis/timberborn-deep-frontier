@@ -130,11 +130,11 @@ namespace ModdableFluids.Tides.Prototype {
     public bool IsEmitting => _weatherService.IsHazardousWeather && IsCurrentCycleTide;
     public FluidTideWeather WeatherOf(string tideId) => _weathers.TryGetValue(tideId, out var weather) ? weather : throw new ArgumentException("Tide " + tideId + " is not registered");
 
-    /// <summary>The native strength multiplier of a source of this type: the tide's while it is in progress and the type is tide-overridable.</summary>
+    /// <summary>The native strength multiplier of a source of this type: the tide's rule while it is in progress (FluidTideDefinition.StrengthMultiplierFor), else 1.</summary>
     public float StrengthMultiplier(FluidSourceTypeDefinition type) {
       if (type == null) throw new ArgumentNullException(nameof(type));
       var tide = IsEmitting ? CurrentCycleTide : null;
-      return tide != null && type.TideOverridable ? (float)tide.SourceStrengthMultiplier : 1f;
+      return tide != null ? (float)tide.StrengthMultiplierFor(type) : 1f;
     }
 
     public void Load() {

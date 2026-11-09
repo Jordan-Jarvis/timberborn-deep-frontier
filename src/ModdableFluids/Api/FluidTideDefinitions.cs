@@ -102,7 +102,10 @@ namespace ModdableFluids {
     public IReadOnlyDictionary<string, FluidTideModeValues> Modes { get; }
     /// <summary>Extra fluid ID to its share of a tide-overridable source's non-bad emitted volume; ordinal order.</summary>
     public IReadOnlyDictionary<string, double> SourceEmission { get; }
-    /// <summary>Multiplies the native strength of every tide-overridable source while the tide is in progress; in (0, 1].</summary>
+    /// <summary>
+    /// Multiplies the native strength of clean tide-overridable sources while the tide is in progress; in (0, 1]. See
+    /// <see cref="StrengthMultiplierFor"/> for which sources.
+    /// </summary>
     public double SourceStrengthMultiplier { get; }
     public FluidTidePresentation Presentation { get; }
 
@@ -114,6 +117,17 @@ namespace ModdableFluids {
       SourceStrengthMultiplier = pending.StrengthMultiplier;
       Presentation = new FluidTidePresentation(pending.Texts[0], pending.Texts[1], pending.Texts[2], pending.Texts[3], pending.Texts[4], pending.Texts[5],
         pending.Art[0], pending.Art[1], pending.Art[2], pending.StartSound);
+    }
+
+    /// <summary>
+    /// The strength rule (user decision 2b, 2026-11-09): the tide's multiplier applies to a source type that is
+    /// tide-overridable and clean, that is, whose default badwater share is 0 (the native water source, water seep,
+    /// aquifer and dev source, and every registered custom type). Badwater-emitting kinds (badwater source and seep, the
+    /// badtide drain) keep their strength, and so does a type that is not tide-overridable. Otherwise 1.
+    /// </summary>
+    public double StrengthMultiplierFor(FluidSourceTypeDefinition type) {
+      if (type == null) throw new ArgumentNullException(nameof(type));
+      return type.TideOverridable && type.DefaultBadwaterShare == 0 ? SourceStrengthMultiplier : 1;
     }
 
     public FluidTideModeValues GetMode(string mode) =>

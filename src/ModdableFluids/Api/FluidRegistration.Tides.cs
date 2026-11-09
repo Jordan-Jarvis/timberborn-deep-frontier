@@ -58,9 +58,10 @@ namespace ModdableFluids {
     }
 
     /// <summary>
-    /// While the tide is in progress, every tide-overridable source runs at <paramref name="multiplier"/> times its native
-    /// strength, through a native water strength modifier. In (0, 1]: a larger strength would meet the game's silent cap.
-    /// Without this call the strength is unchanged.
+    /// While the tide is in progress, every clean tide-overridable source (default badwater share 0) runs at
+    /// <paramref name="multiplier"/> times its native strength, through a native water strength modifier; badwater-emitting
+    /// kinds keep their strength (<see cref="FluidTideDefinition.StrengthMultiplierFor"/>). In (0, 1]: a larger strength
+    /// would meet the game's silent cap. Without this call the strength is unchanged.
     /// </summary>
     public void SetTideSourceStrength(string tideLocalName, double multiplier) {
       RequireOpen();

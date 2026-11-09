@@ -48,8 +48,9 @@ namespace ModdableFluids.Tides.Prototype {
   /// <summary>
   /// The native way to change a source's strength: an IWaterStrengthModifier added to the WaterSource, which multiplies
   /// its specified strength into CurrentStrength every tick (WaterSource.UpdateCurrentStrength), like the game's drought
-  /// and hazardous-weather modifiers. While a tide is in progress a tide-overridable source returns the tide's multiplier;
-  /// otherwise 1. Every placed source must have a registered source type, found by its template name.
+  /// and hazardous-weather modifiers. While a tide is in progress a clean tide-overridable source returns the tide's
+  /// multiplier (FluidTideDefinition.StrengthMultiplierFor); otherwise 1. Every placed source must have a registered
+  /// source type, found by its template name.
   /// </summary>
   public sealed class FluidTideStrengthModifier : BaseComponent, IAwakableComponent, IInitializableEntity, IWaterStrengthModifier {
     private readonly FluidTideService _tides;
