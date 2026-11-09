@@ -335,6 +335,28 @@ Not implemented. With Moddable Weathers loaded and any tide registered, the conf
 - **Presentation.** Moddable Weathers draws its panels and sound from a `ModdableWeatherSpecs/<weather ID>.blueprint.json` per tide, which each content mod would ship. The native UI, sound, selection and restore patches are not installed under Moddable Weathers.
 - **Weather Station.** Moddable Weathers does not patch the station. Its `HazardousWeatherService` returns the current or next hazardous stage's weather, so the station decorator works unchanged.
 
+**Confirmed in the Moddable Weathers 11.0.0 source** (ilspycmd of Workshop 3630523180, 2026-11-09):
+
+- **Registry.** `ModdableWeatherRegistry` takes `IEnumerable<IModdableWeather>` (multi-bound) and in its `Load` orders the weathers by `Spec.Order`.
+- **Weather lifecycle.** `ModdableWeatherBase(ModdableWeatherSpecService)` is an `ILoadableSingleton`. Its `Load` reads `Spec` from `specs.SpecsById[Id]`, so every tide needs a `ModdableWeatherSpec` blueprint with its weather ID, and that `Load` must run before the registry's.
+- **Binding.** `BindWeather<T>()` binds `T` as a singleton and multi-binds it as `IModdableWeather`; it binds by type. Workable without generated types: a fixed set of weather classes (`FluidTideWeather0` … `FluidTideWeather7`) sharing one base, the first N bound for N registered tides, each taking its tide by ordinal index. More tides than classes refuse visibly.
+- **Selection.** `WeatherGenerator.DecideWeather` sums `GetChance` over the enabled hazardous weathers of a stage, and draws one in proportion. A weight of 0 leaves the weather out, and no candidates gives `EmptyHazardousWeather`.
+- **History.** `WeatherHistoryService.GetWeatherCycle(cycle)` gives a past cycle's stages, for the global cooldown.
+- **Weather service.** `ModdableHazardousWeatherService` is a `[ReplaceSingleton]` subclass of the native `HazardousWeatherService`. So the native type still resolves, but its methods are Moddable Weathers'. Under Moddable Weathers the tide service therefore needs a second binding:
+  - no native weather patches;
+  - the source effect follows the adapter weathers' `Active`;
+  - the Weather Station decorator recognises those weathers by ID;
+  - settings stay in `ModdableFluids.TideSettings`, written by the same store.
+
+**Remaining work** for 9a, not started in code:
+
+- the optional assembly and its compile-check project against the Workshop DLLs;
+- the second service binding;
+- `ModdableWeatherSpec` blueprints from each content mod;
+- staging in `tools/build_moddable_fluids.ps1`, `tools/unity/ModdableFluidsBatchBuild.cs` (Deep Frontier's `PackageOptionalAssembly` pattern) and `tools/verify_moddable_fluids_package.ps1`;
+- startup contract checks on the members above;
+- a Mono probe loading Moddable Weathers with Moddable Timberborn and TimberUi.
+
 **Risks.** Each of these is why the refusal stays for now:
 
 - **Weights.** Integer weights make the shares approximate. Deep Frontier measured under half a percentage point with the default weights.
