@@ -120,6 +120,53 @@ namespace ModdableFluids {
       fluid.Metadata.Add(key, value);
     }
 
+    /// <summary>
+    /// Gives a fluid this provider registered its water-intake policy (capability <c>ModdableFluids.Policies.WaterIntakes</c>,
+    /// see <see cref="FluidWaterIntakePolicy"/>): native water intakes stop, with the given status, while their column's
+    /// share of it is at or above <paramref name="refuseAtShare"/> (in (0, 1]); below it, what they draw of it becomes
+    /// native clean water through the transformation <paramref name="drawnAsWater"/>, an ID in this provider's mod namespace
+    /// that no other fluid uses. Every extra fluid needs this policy before Moddable Fluids attaches to a game scene.
+    /// </summary>
+    public void SetWaterIntakePolicy(string localName, double refuseAtShare, string drawnAsWater, string refusedStatusLocKey, string refusedAlertLocKey) {
+      RequireOpen();
+      var fluid = OwnFluid(localName, "water-intake policy");
+      if (fluid.WaterIntake != null) throw new ArgumentException("Fluid " + fluid.Id + " was given two water-intake policies");
+      if (double.IsNaN(refuseAtShare) || refuseAtShare <= 0 || refuseAtShare > 1)
+        throw new ArgumentOutOfRangeException(nameof(refuseAtShare), refuseAtShare, "Fluid " + fluid.Id + ": water intakes refuse at a share in (0, 1]");
+      FluidIds.RequireOwned(drawnAsWater, OwnerModId, "water-intake transformation of " + fluid.Id);
+      if (string.IsNullOrWhiteSpace(refusedStatusLocKey) || string.IsNullOrWhiteSpace(refusedAlertLocKey))
+        throw new ArgumentException("Fluid " + fluid.Id + " needs status and alert localization keys for a refused water intake");
+      fluid.WaterIntake = new FluidWaterIntakePolicy(refuseAtShare, drawnAsWater, refusedStatusLocKey, refusedAlertLocKey);
+    }
+
+    /// <summary>Gives a fluid this provider registered the irrigation policy "moistens soil like fresh water" (capability <c>ModdableFluids.Policies.Irrigation</c>).</summary>
+    public void SetIrrigatesLikeWater(string localName) {
+      RequireOpen();
+      var fluid = OwnFluid(localName, "irrigation policy");
+      if (fluid.Irrigation != null) throw new ArgumentException("Fluid " + fluid.Id + " was given two irrigation policies");
+      fluid.Irrigation = new FluidIrrigationPolicy(FluidMoistureEffect.IrrigatesLikeWater, 0);
+    }
+
+    /// <summary>
+    /// Gives a fluid this provider registered the irrigation policy "reduces moisture like badwater, to none at
+    /// <paramref name="blocksAtShare"/>" (in (0, 1]; see <see cref="FluidIrrigationPolicy"/>). Every extra fluid needs an
+    /// irrigation policy before Moddable Fluids attaches to a game scene.
+    /// </summary>
+    public void SetBlocksMoisture(string localName, double blocksAtShare) {
+      RequireOpen();
+      var fluid = OwnFluid(localName, "irrigation policy");
+      if (fluid.Irrigation != null) throw new ArgumentException("Fluid " + fluid.Id + " was given two irrigation policies");
+      if (double.IsNaN(blocksAtShare) || blocksAtShare <= 0 || blocksAtShare > 1)
+        throw new ArgumentOutOfRangeException(nameof(blocksAtShare), blocksAtShare, "Fluid " + fluid.Id + ": moisture is blocked at a share in (0, 1]");
+      fluid.Irrigation = new FluidIrrigationPolicy(FluidMoistureEffect.BlocksLikeBadwater, blocksAtShare);
+    }
+
+    private PendingFluid OwnFluid(string localName, string what) {
+      string id = OwnerModId + "." + localName;
+      return _fluids.SingleOrDefault(f => f.ProviderId == ProviderId && f.Id == id)
+        ?? throw new ArgumentException("Provider " + ProviderId + " sets a " + what + " on " + id + ", which it has not registered");
+    }
+
     internal void Close() => _closed = true;
     private void RequireOpen() {
       if (_closed) throw new InvalidOperationException("Provider " + ProviderId + " used its registration context after Register returned");
@@ -130,6 +177,8 @@ namespace ModdableFluids {
     internal readonly string Id, OwnerModId, LocalName, ProviderId, DisplayNameLocKey;
     internal readonly FluidColor Color;
     internal readonly SortedDictionary<string, string> Metadata = new SortedDictionary<string, string>(StringComparer.Ordinal);
+    internal FluidWaterIntakePolicy WaterIntake;
+    internal FluidIrrigationPolicy Irrigation;
     internal PendingFluid(string id, string owner, string local, string provider, string loc, FluidColor color) {
       Id = id; OwnerModId = owner; LocalName = local; ProviderId = provider; DisplayNameLocKey = loc; Color = color;
     }
@@ -154,6 +203,16 @@ namespace ModdableFluids {
       }
     }
     public bool HasWorld => _world != null;
+    /// <summary>
+    /// The scene's extraction service (0.1.4, see <see cref="IFluidExtraction"/>). It belongs to the world service of a scene
+    /// with native water transport; a scene without one fails here.
+    /// </summary>
+    public IFluidExtraction Extraction {
+      get {
+        var world = World;
+        return world as IFluidExtraction ?? throw new InvalidOperationException("Fluid scene " + Serial + "'s world service (" + world.GetType().FullName + ") offers no extraction");
+      }
+    }
     private readonly IFluidWorld _world;
     internal FluidScene(FluidRegistry registry, int serial, IFluidWorld world) { _registry = registry; Serial = serial; _world = world; }
   }

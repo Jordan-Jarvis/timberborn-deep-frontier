@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ModdableFluids.Native.Prototype;
 using ModdableFluids.Transport.Prototype;
 
@@ -21,6 +22,7 @@ namespace ModdableFluids.World.Prototype {
     }
     public int ColumnCount { get { Open(); return _session.ColumnCount; } }
     public int CompletedTicks { get { Open(); return _session.CompletedTicks; } }
+    public IReadOnlyList<FluidLoss> Losses => throw new NotSupportedException("Moddable Fluids loss reports are declared in the 0.1.4 API surface and not implemented yet");
     public int X(int column) => Geometry(column).CellIndex % _stride - 1;
     public int Y(int column) => Geometry(column).CellIndex / _stride - 1;
     public int Floor(int column) => Geometry(column).Floor;

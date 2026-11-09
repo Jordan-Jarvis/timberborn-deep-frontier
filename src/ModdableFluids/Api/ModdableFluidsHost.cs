@@ -165,6 +165,13 @@ namespace ModdableFluids {
             false, source.TileCount, source.DefaultStrength, 0f, source.FollowsDrought, source.BadtideContamination, null, false, new string[0], false,
             source.Emitted, source.Schedule, source.TideOverridable));
         }
+        // A transformation ID names one fluid's conversion; two fluids cannot share one.
+        var transformations = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var fluid in byId.Values.Where(f => f.WaterIntake != null).OrderBy(f => f.Id, StringComparer.Ordinal)) {
+          if (transformations.TryGetValue(fluid.WaterIntake.DrawnAsWater, out string first))
+            problems.Add("Fluids " + first + " and " + fluid.Id + " both name the water-intake transformation " + fluid.WaterIntake.DrawnAsWater + "; each fluid needs its own");
+          else transformations.Add(fluid.WaterIntake.DrawnAsWater, fluid.Id);
+        }
         ValidateExtensions(byId, problems);
         if (problems.Count > 0) {
           _fault = new FluidRegistryException(problems);
@@ -177,7 +184,7 @@ namespace ModdableFluids {
         };
         foreach (var fluid in byId.Values.OrderBy(f => f.Id, StringComparer.Ordinal))
           definitions.Add(new FluidDefinition(fluid.Id, fluid.OwnerModId, fluid.LocalName, fluid.ProviderId, fluid.DisplayNameLocKey,
-            FluidNativeRole.Extra, true, fluid.Color, fluid.Metadata));
+            FluidNativeRole.Extra, true, fluid.Color, fluid.Metadata, fluid.WaterIntake, fluid.Irrigation));
         var infos = accepted.Select(e => new FluidProviderInfo(e.Id, e.Owner, e.Provider.MinimumApiVersion, e.Route,
           e.Capabilities, e.Scene != null, e.State != null, e.State?.StateSchemaVersion ?? 0)).ToArray();
         _registry = new FluidRegistry(definitions.ToArray(), infos, sourceTypes.ToArray());
@@ -370,7 +377,10 @@ namespace ModdableFluids {
           for (int i = 0; i < _registry.Count; i++) {
             var d = _registry.Definitions[i];
             text.Append("  [").Append(i).Append("] ").Append(d.Id).Append(" role=").Append(d.NativeRole).Append(" owner=").Append(d.OwnerModId)
-              .Append(" provider=").Append(d.ProviderId).Append('\n');
+              .Append(" provider=").Append(d.ProviderId);
+            if (d.NativeRole == FluidNativeRole.Extra)
+              text.Append(" water intakes: ").Append(d.WaterIntake?.ToString() ?? "undeclared").Append("; moisture: ").Append(d.Irrigation?.ToString() ?? "undeclared");
+            text.Append('\n');
           }
           foreach (var p in _registry.Providers)
             text.Append("  provider ").Append(p.ProviderId).Append(" owner=").Append(p.OwnerModId).Append(" route=").Append(p.Route)

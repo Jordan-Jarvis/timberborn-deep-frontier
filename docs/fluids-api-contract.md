@@ -199,6 +199,57 @@ Two optional provider interfaces, for compiled providers:
 - **`IFluidWorldImporter`.** When a save has no `ModdableFluids.World` entry (or one marked `ImportPending`), Moddable Fluids asks every importer once, in the first native substep on a worker thread, with the native columns (`FluidNativeColumn`: cell, interval, capacity, physical volume, native contamination). An importer returns a `FluidSaveDocument` built from data it read in its own Load, or null. The document is validated and restored like a saved one; two importers returning documents stop loading and name both.
 - **`IFluidColumnRules`.** After every completed native water tick, before the tick is published, each provider's rules run in provider order on the worker thread with an `IFluidColumnEditor`. The editor reads columns and can only convert volume between two non-badwater fluids within one column, so native depth and contamination never change. It is valid only during the call. An exception fails the tick and names the provider.
 
+## Losses, extraction and native policies (0.1.4, in development)
+
+API surface committed 2026-11-09. The runtime still reports 0.1.3 until the release version is set; each capability below is listed only once it is implemented.
+
+### Loss reports (`ModdableFluids.World.Losses`)
+
+`IFluidColumnEditor.Losses` lists what left the world during the completed tick, on the native worker thread, while column rules run. Copy what you keep; the list is valid only during the call. Each `FluidLoss` has a kind, a place, a requester for extractions, and a volume per fluid. Entries are summed over the tick, unique per kind, place and requester, and ordered by kind, then y, x, z and requester.
+
+| Kind | Place (`X`, `Y`, `Z`; `Column`) |
+| --- | --- |
+| `Evaporation`, `Discharge` (off the map edge), `Pressure` (above a column's pressure capacity) | the column's cell and floor; its editor slot |
+| `NativeRemoval` (native queued removals: pumps, intakes, mechanical pumps, other mods) | the requested cell; the slot that held it |
+| `SourceWithdrawal` (a native source with negative strength) | the source cell; its slot |
+| `Extraction` (an `IFluidExtraction` request; `RequesterId` set) | the requested cell; its slot |
+| `Geometry` (water deleted by a solid, a shrunk or a removed column) | the old column's cell and floor; `Column` is -1 |
+| `DroppedAddition` (an addition queued to a cell with no open column; the native game drops it, so it never entered) | the requested cell; `Column` is -1 |
+
+A tick's losses run from the geometry reconciliation at its start to its change stage. A blocked source loses only its own emission (`Pressure`); geometry merges report pressure on the new column. Conversions made by column rules are not losses. Losses projected while restoring a save are not part of any tick.
+
+### Extraction (`ModdableFluids.World.Extraction`)
+
+`FluidScene.Extraction.RequestExtraction(requesterId, x, y, z, fluid, volume, minimumShare, resolved)` removes up to `volume` of one fluid, and nothing else, from the open column containing (x, y, z). It is a main-thread request, like a native water change. Requests made before a native water tick is scheduled are resolved in that tick's change stage, after the native queued changes, in request order.
+
+- **No column.** A request whose cell has no open column then removes nothing (`NoColumn`).
+- **Too dilute.** A request whose fluid share is below `minimumShare` at that moment removes nothing (`BelowMinimumShare`).
+- **Result.** Otherwise `ExtractedVolume` is what actually left: at most the request, and at most what the column held.
+- **Delivery.** The callback runs once on the main thread, after that parallel tick finished and before any save is written. A building can therefore keep the result in its own save data. Requests still queued at a save removed nothing and are not saved.
+- **Unload.** A scene unload drops unresolved requests without calling them back.
+
+`requesterId` is an ID in the requester's namespace (`MoreFluids.FluidExtractor`) and appears on the tick's `Extraction` losses. A building that draws through extraction while it has a native `WaterInput` for its pipe marks itself with a component implementing `IFluidCustomIntake`, so the water-intake guard leaves it alone.
+
+### Water-intake policy (`ModdableFluids.Policies.WaterIntakes`)
+
+`FluidRegistration.SetWaterIntakePolicy(localName, refuseAtShare, drawnAsWater, refusedStatusLocKey, refusedAlertLocKey)`:
+
+- **Refusal.** Native water intakes are entities with a native `WaterInput` and no `IFluidCustomIntake` component. Moddable Fluids' one guard blocks them through the native `BlockableObject`, with the fluid's status, while their column's share of the fluid is at or above `refuseAtShare` (in (0, 1]). The share is read at the last completed tick.
+- **Drawn as water.** Below the refusal share, the part of a native clean-water removal that is this fluid becomes native clean water: Water goods at a pump, water at a mechanical pump's outlet. `drawnAsWater` names that transformation (for example `MoreFluids.CoffeeDrunkAsWater`). It is an ID in the provider's namespace, and no two fluids may share one. The drawn volume appears in the tick's `NativeRemoval` losses.
+- **Examples.** Coffee is refused at 0.5 and drawn as `MoreFluids.CoffeeDrunkAsWater`; saltwater is refused at 0.1. Deep Frontier's radioactive water is refused at 0.005.
+
+### Irrigation policy (`ModdableFluids.Policies.Irrigation`)
+
+`SetIrrigatesLikeWater(localName)` or `SetBlocksMoisture(localName, blocksAtShare)`. Moddable Fluids owns the native soil-moisture input. The moisture tasks see a column's contamination as `b + sum(share * M / blocksAtShare)` over the fluids that block. Here `b` is the badwater share and `M` is the native `SoilMoistureSimulatorSpec.MaximumWaterContamination` (0.53 in 1.1.2.8), where badwater gives no moisture.
+
+- **Saltwater.** Blocking at 0.1 gives no moisture from a 10% saltwater column.
+- **Badwater-like.** Blocking at `M` behaves exactly like badwater.
+- **Above 1.** Native moisture readers treat values at or above 1 as no moisture.
+
+### Both policies are required in game
+
+Every extra fluid needs both policies before Moddable Fluids attaches to a game scene. `FluidRegistry.UndeclaredPolicies()` lists what is missing, and the scene stops loading with that list, naming each fluid, provider and mod. Registration, freeze and the harness do not require them, so providers built for 0.1.3 still register. `DescribeRuntime()` prints each fluid's policies.
+
 ## Optional integrations
 
 | Route | When the API is absent |

@@ -49,11 +49,16 @@ namespace ModdableFluids {
     public FluidColor Color { get; }
     /// <summary>Namespaced custom properties (<c>Owner.Key</c>), ordinal key order.</summary>
     public IReadOnlyDictionary<string, string> Metadata { get; }
+    /// <summary>How native water intakes treat this extra fluid (0.1.4); null for the game's fluids and while undeclared.</summary>
+    public FluidWaterIntakePolicy WaterIntake { get; }
+    /// <summary>What this extra fluid does to soil moisture (0.1.4); null for the game's fluids and while undeclared.</summary>
+    public FluidIrrigationPolicy Irrigation { get; }
 
     internal FluidDefinition(string id, string ownerModId, string localName, string providerId, string displayNameLocKey,
-        FluidNativeRole role, bool hasColor, FluidColor color, SortedDictionary<string, string> metadata) {
+        FluidNativeRole role, bool hasColor, FluidColor color, SortedDictionary<string, string> metadata,
+        FluidWaterIntakePolicy waterIntake = null, FluidIrrigationPolicy irrigation = null) {
       Id = id; OwnerModId = ownerModId; LocalName = localName; ProviderId = providerId; DisplayNameLocKey = displayNameLocKey;
-      NativeRole = role; HasColor = hasColor; Color = color;
+      NativeRole = role; HasColor = hasColor; Color = color; WaterIntake = waterIntake; Irrigation = irrigation;
       Metadata = new ReadOnlyDictionary<string, string>(new SortedDictionary<string, string>(metadata, StringComparer.Ordinal));
     }
 

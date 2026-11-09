@@ -85,7 +85,9 @@ namespace ModdableFluids {
   /// provider's own per-tick fluid rules, such as decay. <see cref="ApplyRules"/> runs after every completed
   /// native water tick, on the native worker thread, before the tick is published to readers; providers run
   /// in provider order. Rules can only convert volume between fluids inside one column, so native water depth
-  /// and contamination are never changed. An exception fails the tick with the provider named.
+  /// and contamination are never changed. An exception fails the tick with the provider named. From 0.1.4 the
+  /// editor also carries the tick's losses (<see cref="IFluidColumnEditor.Losses"/>), so an owner can turn lost
+  /// volume into something else (Deep Frontier deposits lost radioactive water into soil).
   /// </summary>
   public interface IFluidColumnRules {
     void ApplyRules(FluidScene scene, IFluidColumnEditor columns);
@@ -96,6 +98,12 @@ namespace ModdableFluids {
     int ColumnCount { get; }
     /// <summary>Completed native water ticks, counting this one.</summary>
     int CompletedTicks { get; }
+    /// <summary>
+    /// What left the world during this tick, per place, reason and fluid (capability <c>ModdableFluids.World.Losses</c>,
+    /// 0.1.4; see <see cref="FluidLoss"/>). Empty before the first completed tick. Valid only during the call, like the
+    /// editor; copy what you keep. Conversions made by rules are not losses and do not appear here.
+    /// </summary>
+    IReadOnlyList<FluidLoss> Losses { get; }
     int X(int column);
     int Y(int column);
     int Floor(int column);

@@ -92,6 +92,25 @@ namespace ModdableFluids {
       return _definitions[handle.Index];
     }
 
+    /// <summary>
+    /// Every extra fluid without a water-intake or irrigation policy (0.1.4), one line each naming the fluid, its provider
+    /// and mod. Moddable Fluids refuses to attach to a game scene while this is not empty.
+    /// </summary>
+    public IReadOnlyList<string> UndeclaredPolicies() {
+      var problems = new List<string>();
+      foreach (var d in _definitions) {
+        if (d.NativeRole != FluidNativeRole.Extra) continue;
+        var missing = new List<string>();
+        if (d.WaterIntake == null) missing.Add("a water-intake policy (FluidRegistration.SetWaterIntakePolicy)");
+        if (d.Irrigation == null) missing.Add("an irrigation policy (SetIrrigatesLikeWater or SetBlocksMoisture)");
+        if (missing.Count > 0) problems.Add("Fluid " + d.Id + " (provider " + d.ProviderId + ", mod " + d.OwnerModId + ") declares no " + string.Join(" and no ", missing));
+      }
+      return problems;
+    }
+
+    /// <summary>Whether any mod registered a fluid besides the game's water and badwater.</summary>
+    public bool HasExtraFluids => _definitions.Length > 2;
+
     public bool TryGet(string id, out FluidDefinition definition) {
       if (id != null && _indices.TryGetValue(id, out int index)) { definition = _definitions[index]; return true; }
       definition = null;
