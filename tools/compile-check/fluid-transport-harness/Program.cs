@@ -280,6 +280,7 @@ try {
   NativeAdapterScenarios.Run(Check, Scenario, managed, specification, observations);
   SourceRegressionScenarios.Run(Check, Scenario, managed, specification, observations);
   PersistenceScenarios.Run(Check, Scenario, managed, specification, observations);
+  RenderingScenarios.Run(Check, Scenario, managed, specification, observations);
   RegistryScenarios.Run(Check, Scenario, managed, reflectionConsumer, observations);
 
   Directory.CreateDirectory(Path.GetDirectoryName(reportPath)!);
