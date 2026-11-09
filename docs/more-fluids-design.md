@@ -32,7 +32,7 @@ The user approved these numbers on 2026-11-09, chose shared-budget tide selectio
 | Model | A volumetric component in contract 0.1: saltwater is a fluid, and mixing it with fresh water dilutes it. Evaporation removes the mixture in proportion, so it does not concentrate salt. Concentrating brine needs the later dissolved-salt model and a new contract. |
 | Drinking | Not potable. Water intakes refuse a column with 10% or more saltwater (a brackish limit). Deep Frontier's radioactive guard refuses at 0.5%. |
 | Irrigation | Saltwater does not moisten soil. A column with 10% or more saltwater blocks growth on the soil it would irrigate, like badwater. |
-| Desalination | The **Desalinator**: each `Water` good costs 0.3 saltwater volume (about 67% recovery). The remaining 0.1 leaves the world through the declared transformation `MoreFluids.DesalinationBrine`. |
+| Desalination | The **Desalinator**: each `Water` good costs 0.3 saltwater volume (about 67% recovery). The remaining 0.1 is brine and leaves the world: all 0.3 appears in the tick's extraction losses under the requester `MoreFluids.Desalinator`. |
 | Colour | (0.15, 0.45, 0.55) at alpha 0.35: a subtle teal over the native water. |
 | **Salt tide** | Sources keep their strength, and everything they emit (the non-bad part) is saltwater. The river turns salty: water pumps and irrigation fail until the salt flushes downstream or is desalinated. |
 | Tide rows (Easy / Normal / Hard) | Chance 10 / 15 / 20%, the tide's default weight. Cycles without the tide 10 / 7 / 5. Duration 2–4 / 4–8 / 10–20 days (vanilla badtide is 1–3 / 4–8 / 15–30). |
@@ -43,7 +43,7 @@ The user approved these numbers on 2026-11-09, chose shared-budget tide selectio
 | --- | --- |
 | Conditions | Exposure: a beaver standing outside buildings in a column with at least 20% healing water recovers `Injury` and `BadwaterContamination` at +0.25 a day each. Vanilla Injury recovers by itself at +0.1 a day; one `Antidote` gives +0.125 to BadwaterContamination. Bots have neither need. |
 | Mixed hazards | Healing water never removes another fluid. In a column that is also radioactive, Deep Frontier's irradiation and the healing apply independently, each from its own share. |
-| Recovery | The Folktails **Fluid Extractor**: 0.4 healing volume per vanilla `Antidote`, 2 Antidote every 2 hours, the vanilla Antidote recipe's output without its paper, dandelions and berries. |
+| Recovery | The Folktails **Fluid Extractor**: 0.4 healing volume per vanilla `Antidote`, 2 Antidote every 2 hours, the vanilla Antidote recipe's output without its paper, dandelions and berries. (The proposal said both "1 every 2 hours" and "the vanilla recipe's output, 2 per 2 hours"; the build follows the second.) |
 | Drinking and irrigation | Potable, with the same rule as coffee: drawn healing water becomes `Water` goods below 50% (`MoreFluids.HealingDrunkAsWater`). It irrigates like water. |
 | Colour | (0.55, 0.95, 0.75) at alpha 0.5. Contract 0.1 does not support emissive glow. |
 | Sources | No tide: a hazard slot should not hold a blessing. The **Healing Spring** map object (strength 0.4) for map makers, and the player-built **Healing Spring** below (strength 0.2 at full power). |
@@ -83,7 +83,7 @@ All five templates are prefixed `MoreFluids` so they cannot collide with vanilla
 | Cost | Plank 40, Gear 20, Metal Block 20 (below the Centrifuge's 60 / 40 / 30: one worker, a third of its power) |
 | Science | 600 |
 | Workers | 1 beaver (bots allowed) |
-| Power | 60 hp input |
+| Power | 60 hp input, connecting at the middle of either side wall of the working floor: (0, 1, 1) on the left, (2, 1, 1) on the right |
 | Toolbar | `Water`, order 61 (after the Centrifuge) |
 
 ### Healing Spring (building)
@@ -140,12 +140,25 @@ Art sources (Blender scenes, references, renders) go under `src/MoreFluids/Art/`
 
 ## Tides
 
-Both tides use Moddable Fluids' tide registration: per difficulty a chance (the tide's default weight, and the save's default budget when it is the largest installed chance), cycles without the tide and duration; presentation (name, notifications, weather-panel text, sprites, the native drought alarm) and the source composition and strength while active. The long-run shares with the other installed tides are in `docs/fluids-tides.md`, computed by `tools/model_tide_selection.py`.
+Both tides use Moddable Fluids' tide registration: per difficulty a chance (the tide's default weight, and the save's default budget when it is the largest installed chance), cycles without the tide and duration; presentation (name, notifications, weather-panel text, sprites, the native drought alarm for coffee and badtide alarm for salt) and the source composition and strength while active. Each tide's weather ID (`MoreFluidsCoffeeTideWeather`, `MoreFluidsSaltTideWeather`) has a fog colour in every day stage (`Data/Configurations/Sun.blueprint.json`), which the native sun needs.
 
-## API capabilities this needs
+Long-run shares on Normal under policy C′, from [fluids-tides.md](fluids-tides.md) (computed by `tools/model_tide_selection.py`, all weathers eligible):
 
-1. **Intake policies and selective removal.** Water-pump thresholds; the Fluid Extractor and Desalinator remove only their fluid. Each conversion is a declared transformation in the ledgers.
-2. **Tide registration.** Shared-budget selection, per-tide new-game rows, presentation and source composition, plus the Moddable Weathers adapter.
-3. **Custom source types in play.** Emission, schedule and drought-following for the Healing Spring, Healing Well and Geyser templates. The Geyser ignores droughts, so the native `DroughtWaterStrengthModifier` that the game adds to every `WaterSource` must be turned off for it, as the native `WaterSourceDischarger` does under a Badwater Pressurizer.
-4. **Exposure context.** Healing water reads each beaver's column, much as `RadiationExposure` does in Deep Frontier.
-5. **Irrigation policy.** Saltwater blocks growth through the native moisture input.
+| Installed | Budget | Drought | Badtide | Radioactive | Coffee | Salt |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Vanilla | – | 59.7% | 40.3% | – | – | – |
+| Deep Frontier | 25% | 48.1% | 31.9% | 20.0% | – | – |
+| More Fluids | 15% | 52.2% | 34.8% | – | 6.5% | 6.5% |
+| Deep Frontier + More Fluids | 25% | 48.1% | 31.9% | 9.1% | 5.5% | 5.5% |
+
+Installing More Fluids never raises the total hazard: its tides share the budget.
+
+## Moddable Fluids capabilities
+
+More Fluids requires `Policies.Irrigation`, `Policies.WaterIntakes`, `Registry.Definitions`, `Scene.Lifecycle`, `Sources.Types`, `Tides.Registration`, `World.Extraction` and `World.Sampling`, so Moddable Fluids rejects it, naming the missing ones, until each is listed. It uses:
+
+1. **Intake policies and selective extraction.** Water-pump thresholds through `SetWaterIntakePolicy`; the Fluid Extractor and Desalinator draw only their fluid through `FluidScene.Extraction` and mark themselves `IFluidCustomIntake`.
+2. **Irrigation policies.** `SetIrrigatesLikeWater` for coffee and healing water, `SetBlocksMoisture(0.1)` for saltwater.
+3. **Tide registration.** Both tides; Moddable Fluids owns selection, the new-game rows and the weather adapter.
+4. **Sampling.** Healing exposure reads each beaver's column, much as `RadiationExposure` does in Deep Frontier.
+5. **Custom source types in play.** Emission, schedule and drought-following for the Healing Spring, Healing Well and Geyser templates. The Geyser ignores droughts, so the native `DroughtWaterStrengthModifier` that the game adds to every `WaterSource` must be turned off for it, as the native `WaterSourceDischarger` does under a Badwater Pressurizer.
