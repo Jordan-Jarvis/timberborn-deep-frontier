@@ -226,3 +226,11 @@ The intended adapter is a Moddable Timberborn `.optional` assembly, like Deep Fr
   - the new-game patch;
   - new-game, custom-mode, partial-spec and no-settings resolution;
   - the fog check.
+
+## Not done yet
+
+- **In-game runs.** Nothing here has run in the game.
+- **Weather Station.** There is no mode per registered tide; the native station signals only drought and badtide.
+- **Moddable Weathers adapter.** Refused visibly; see above.
+- **Importing another tide system's state.** Deep Frontier's `DeepFrontier.RadioactiveTide` and `DeepFrontier.RadioactiveTideSettings` cannot be imported yet, so such a save is refused.
+- **Source composition by type.** The world service's source resolver composes every source as the native water source type. A tide's composition therefore also reaches source types that are not tide-overridable, while the strength modifier already classifies each source by its template.
