@@ -2,7 +2,8 @@
 #
 #   build_moddable_fluids.ps1                     # ModdableFluids only (flag-gated: binds nothing without -moddableFluidsWorkerAcceptance)
 #   build_moddable_fluids.ps1 -SyntheticFixtures  # also the two synthetic consumer fixtures
-#   build_moddable_fluids.ps1 -MoreFluids         # also the More Fluids package (public API only, provisional data)
+#   build_moddable_fluids.ps1 -MoreFluids         # also the More Fluids package: its code (public API and game only) and its
+#                                                 # Data (blueprints, models, icons, sprites, localization) as authored
 #
 # Timberborn enables a newly installed mod by default (ModPlayerPrefsHelper.IsModEnabled
 # returns true without a saved key), and the compiled fixture cannot even be enumerated
@@ -113,9 +114,53 @@ if ($SyntheticFixtures) {
   }
 }
 $moreFluidsSource = Join-Path $root 'src/MoreFluids'
+$moreFluidsData = Join-Path $moreFluidsSource 'Data'
+# Every model, icon and sprite More Fluids references, as Data-relative paths with their file extension. Blueprints
+# name models and icons; the tide sprites are named in code (MoreFluidsLiquids.Tide), so they are listed here, as in the
+# harness art list (tools/compile-check/fluid-transport-harness/HarnessExtensions.MoreFluids.cs).
+function MoreFluidsArt {
+  $paths = [System.Collections.Generic.SortedSet[string]]::new([StringComparer]::Ordinal)
+  foreach ($file in Get-ChildItem -LiteralPath $moreFluidsData -Filter '*.blueprint.json' -File -Recurse) {
+    foreach ($match in [regex]::Matches((Get-Content -LiteralPath $file.FullName -Raw), '"(Model|Icon)":\s*"((Buildings/Water|MapEditor/Objects)/MoreFluids[^"]+)"')) {
+      [void]$paths.Add($match.Groups[2].Value + $(if ($match.Groups[1].Value -eq 'Model') { '.timbermesh' } else { '.png' }))
+    }
+  }
+  foreach ($tide in 'Coffee','Salt') { foreach ($part in 'Icon','Progress','Notification') { [void]$paths.Add("Sprites/Weather/MoreFluids${tide}Tide$part.png") } }
+  foreach ($path in @($paths)) { if ($path.EndsWith('.png')) { [void]$paths.Add($path + '.meta.json') } }
+  @($paths)
+}
+# The authored Data, file by file (Data-relative path to SHA-256); Unity's .meta files are not part of it.
+function DataHashes([string]$folder) {
+  $hashes = [ordered]@{}
+  $full = (Resolve-Path -LiteralPath $folder).Path.TrimEnd([IO.Path]::DirectorySeparatorChar)
+  foreach ($file in Get-ChildItem -LiteralPath $folder -File -Recurse | Where-Object Extension -ne '.meta' | Sort-Object FullName) {
+    $hashes[$file.FullName.Substring($full.Length + 1).Replace([IO.Path]::DirectorySeparatorChar, '/')] = (Get-FileHash -LiteralPath $file.FullName).Hash
+  }
+  $hashes
+}
 if ($MoreFluids) {
   if (Test-Path -LiteralPath (Join-Path $mods 'MoreFluids')) { throw 'MoreFluids is installed in the Mods folder; packages must only be present during an acceptance run. Remove it first.' }
+  # More Fluids uses only native materials: it has no Unity assets, so the official build makes no bundle for it.
+  if (Test-Path -LiteralPath (Join-Path $moreFluidsSource 'AssetBundles')) { throw 'src/MoreFluids/AssetBundles exists: build its bundles in ModdableFluidsBatchBuild before packaging More Fluids.' }
+  $missingArt = @(MoreFluidsArt | Where-Object { -not (Test-Path -LiteralPath (Join-Path $moreFluidsData $_) -PathType Leaf) })
+  if ($missingArt.Count -ne 0) { throw "More Fluids references art that is not in src/MoreFluids/Data yet:`n  " + ($missingArt -join "`n  ") }
+  foreach ($meta in Get-ChildItem -LiteralPath $moreFluidsData -Filter '*.png.meta.json' -File -Recurse) {
+    if ((Get-Content -LiteralPath $meta.FullName -Raw).Trim() -ne '{"isSprite":true}') { throw "$($meta.FullName) must be {""isSprite"":true}" }
+  }
   Stage 'MoreFluids' (Join-Path $moreFluidsSource 'manifest.json') @(@{Folder='Code';Asmdef=(Join-Path $moreFluidsSource 'Scripts/MoreFluids.asmdef');Sources=@((Join-Path $moreFluidsSource 'Scripts'))})
+  # Data as authored: copy every file, then delete staged files (and their Unity .meta) that no longer have a source.
+  $stagedData = Join-Path $project 'Assets/Mods/MoreFluids/Data'
+  New-Item -ItemType Directory -Force -Path $stagedData | Out-Null
+  Copy-Item -Path (Join-Path $moreFluidsData '*') -Destination $stagedData -Recurse -Force
+  $stagedFull = (Resolve-Path -LiteralPath $stagedData).Path.TrimEnd([IO.Path]::DirectorySeparatorChar)
+  foreach ($file in Get-ChildItem -LiteralPath $stagedData -File -Recurse) {
+    $relative = $file.FullName.Substring($stagedFull.Length + 1)
+    $origin = if ($file.Extension -eq '.meta') { $relative.Substring(0, $relative.Length - 5) } else { $relative }
+    if (-not (Test-Path -LiteralPath (Join-Path $moreFluidsData $origin))) { Remove-Item -LiteralPath $file.FullName -Force; Write-Output "Removed stale staged More Fluids file: $relative" }
+  }
+  Get-ChildItem -LiteralPath $stagedData -Directory -Recurse | Sort-Object { $_.FullName.Length } -Descending |
+    Where-Object { -not (Test-Path -LiteralPath (Join-Path $moreFluidsData $_.FullName.Substring($stagedFull.Length + 1))) } |
+    ForEach-Object { Remove-Item -LiteralPath $_.FullName -Recurse -Force; if (Test-Path -LiteralPath "$($_.FullName).meta") { Remove-Item -LiteralPath "$($_.FullName).meta" -Force } }
 }
 $dependencies = Join-Path $project 'Assets/Plugins/ModDependencies'
 New-Item -ItemType Directory -Force -Path $dependencies | Out-Null
@@ -155,8 +200,16 @@ if ($SyntheticFixtures) {
   }
 }
 if ($MoreFluids) {
-  $hashes = Verify 'MoreFluids' (Package 'MoreFluids') (Join-Path $moreFluidsSource 'manifest.json') @('MoreFluids.dll')
-  $report.moreFluids = [ordered]@{ package=(Keep 'MoreFluids'); assemblies=$hashes }
+  $moreFluidsPackage = Package 'MoreFluids'
+  $hashes = Verify 'MoreFluids' $moreFluidsPackage (Join-Path $moreFluidsSource 'manifest.json') @('MoreFluids.dll')
+  # The package's Data is exactly the authored Data, art included; nothing else ships beside it.
+  $expectedData = DataHashes $moreFluidsData
+  $packagedData = DataHashes (Join-Path $moreFluidsPackage 'Data')
+  $differences = @(@($expectedData.Keys) + @($packagedData.Keys) | Sort-Object -Unique | Where-Object { $expectedData[$_] -ne $packagedData[$_] })
+  if ($differences.Count -ne 0) { throw "Official More Fluids package Data differs from src/MoreFluids/Data:`n  " + ($differences -join "`n  ") }
+  $extra = @(Get-ChildItem -LiteralPath $moreFluidsPackage | Where-Object Name -notin @('manifest.json','Scripts','Data'))
+  if ($extra.Count -ne 0) { throw "Official More Fluids package holds more than manifest, Scripts and Data: $($extra.Name -join ', ')" }
+  $report.moreFluids = [ordered]@{ package=(Keep 'MoreFluids'); assemblies=$hashes; dataFiles=$expectedData.Count; art=@(MoreFluidsArt).Count }
 }
 $report | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $output 'package-report.json')
 Write-Output "Official Moddable Fluids packages verified and kept out of the Mods folder under $(Join-Path $output 'packages'). Log: $log"

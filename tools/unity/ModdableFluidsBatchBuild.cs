@@ -19,7 +19,7 @@ namespace Timberborn.ModdingTools.ModBuilding {
     /// </summary>
     public static void BuildWithSyntheticFixtures() => BuildMods(new[] { "ModdableFluids" }.Concat(Fixtures).ToArray());
 
-    /// <summary>The API and the More Fluids package (public API only, provisional data).</summary>
+    /// <summary>The API and the More Fluids package: its code and its Data (blueprints, models, icons, sprites, localization).</summary>
     public static void BuildWithMoreFluids() => BuildMods(new[] { "ModdableFluids", "MoreFluids" });
 
     /// <summary>The API, both fixtures and More Fluids.</summary>
@@ -32,7 +32,8 @@ namespace Timberborn.ModdingTools.ModBuilding {
       var all = new ModFinder().GetAllMods().ToArray();
       foreach (string name in names) {
         var mod = all.Single(value => value.Name == name);
-        // Only the API has assets: the shared-rendering shader variants.
+        // Only the API has Unity assets: the shared-rendering shader variants. More Fluids ships its Data folder, which the
+        // official AssetsCopier copies as authored (tools/build_moddable_fluids.ps1 compares it file by file).
         bool bundles = name == "ModdableFluids";
         var settings = new ModBuilderSettings(buildCode: true, buildWindowsAssetBundle: bundles,
           buildMacAssetBundle: bundles, deleteFiles: true, buildZipArchive: false, compatibilityVersion: "1.1");
@@ -41,6 +42,8 @@ namespace Timberborn.ModdingTools.ModBuilding {
         var expected = name == "ModdableFluids" ? ApiAssemblies : new[] { name };
         foreach (string assembly in expected)
           if (!File.Exists(Path.Combine(directory, "Scripts", assembly + ".dll"))) throw new InvalidOperationException("Official package " + name + " lacks " + assembly);
+        if (name == "MoreFluids" && !File.Exists(Path.Combine(directory, "Data", "Localizations", "enUS.csv")))
+          throw new InvalidOperationException("Official package MoreFluids lacks its Data folder");
         // The official bundle builder does not propagate a failed BuildAssetBundles result.
         if (bundles)
           foreach (var platform in new[] { "win", "mac" }) {
