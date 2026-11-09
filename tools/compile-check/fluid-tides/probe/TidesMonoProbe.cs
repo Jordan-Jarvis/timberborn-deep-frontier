@@ -95,8 +95,18 @@ namespace ModdableFluids.Tides.Acceptance {
       var derivedCoffee = FluidTideModes.Derive(tides.Get("MoreFluids.CoffeeTide"), new FluidTideModeWeather(10, 10, 3, 3, 3, 3, 50), out _, out _);
       Check(partial.BudgetPercent == 30 && partial.Get("DeepFrontier.RadioactiveTide").Weight == 7 && partial.Get("MoreFluids.CoffeeTide").Enabled
         && partial.Get("MoreFluids.CoffeeTide").Weight == derivedCoffee.Weight, "a mode's own spec without a tide derives that tide from the mode's weather: " + partial);
-      var saved = FluidTideSettingsStore.Resolve(tides, new EmptyLoader(), new SceneLoader(null), out source, out _);
-      Check(saved.Tides.All(t => !t.Enabled) && source == FluidTideSettingsStore.NoSettingsSource, "a save without tide settings has every tide off");
+      // Decision 3b: a loaded save without tide settings gets its mode's defaults, the mode read from the save's own weather.
+      var hard = Weather(new MemorySave(), 5, 8, 15, 30, 15, 30, .4f);
+      var saved = FluidTideSettingsStore.Resolve(tides, hard, new SceneLoader(null), out source, out var addedNotes);
+      Check(saved.BudgetPercent == 35 && saved.Get("DeepFrontier.RadioactiveTide").Enabled && saved.Get("DeepFrontier.RadioactiveTide").Weight == 35
+        && saved.Get("MoreFluids.CoffeeTide").Weight == 20 && source == FluidTideSettingsStore.NoSettingsSource && addedNotes.Count == 2, "a save without tide settings gets the Hard defaults from its own weather: " + saved);
+      Throws(() => FluidTideSettingsStore.Resolve(tides, new MemorySave(), new SceneLoader(null), out _, out _), "TemperateWeatherDurationService", "a save without its native weather is refused");
+      // A save with settings for the radioactive tide only: coffee is added on at the save's defaults, the budget the larger.
+      var partialSave = Weather(new MemorySave(), 13, 17, 5, 9, 4, 8, .4f);
+      FluidTideSettingsStore.Write(partialSave, new FluidTideSaveSettings(10, new[] { new FluidTideSettings("DeepFrontier.RadioactiveTide", true, 10, 14, 3, 6) }));
+      var withCoffee = FluidTideSettingsStore.Resolve(tides, partialSave.RoundTrip(), new SceneLoader(null), out source, out addedNotes);
+      Check(withCoffee.BudgetPercent == 15 && withCoffee.Get("DeepFrontier.RadioactiveTide").Weight == 10 && withCoffee.Get("MoreFluids.CoffeeTide").Enabled
+        && withCoffee.Get("MoreFluids.CoffeeTide").Weight == 15 && source == FluidTideSettingsStore.SavedSource && addedNotes.Count == 2, "a tide installed later is added on, budget raised to its chance: " + withCoffee);
 
       // Scene 1: the service verifies the contract and installs its patches on construction.
       var service = NewService(weatherService, history, random, scene, settings);
@@ -227,8 +237,8 @@ namespace ModdableFluids.Tides.Acceptance {
       Check(Importer.Calls == 1 && again.ImportedBy == null && weatherService.CurrentCycleHazardousWeather is FluidTideWeather restored && restored.Definition.Id == "DeepFrontier.RadioactiveTide"
         && again.LastTideCycle == 21 && again.Settings.BudgetPercent == 30 && again.SettingsSource == FluidTideSettingsStore.SavedSource, "after a save the import is not repeated");
       again.Unload();
-      var nothing = NewService(weatherService, history, random, loaded, settings, new MemorySave());
-      Check(nothing.Settings.Tides.All(t => !t.Enabled) && Importer.Calls == 2 && nothing.ImportedBy == null, "a loaded save the importer has nothing for: every tide off");
+      var nothing = NewService(weatherService, history, random, loaded, settings, Weather(new MemorySave(), 13, 17, 5, 9, 4, 8, .4f));
+      Check(nothing.Settings.ToString() == settings.ToString() && Importer.Calls == 2 && nothing.ImportedBy == null, "a loaded save the importer has nothing for: its mode's defaults");
       nothing.Unload();
       var half = new MemorySave();
       half.Objects.Add("ModdableFluids.Tides", written.Objects["ModdableFluids.Tides"]);
@@ -279,6 +289,18 @@ namespace ModdableFluids.Tides.Acceptance {
         return new FluidTideImport("DeepFrontier.RadioactiveTide", cycle, "DeepFrontier.RadioactiveTide", 4, 30,
           new[] { new FluidTideSettings("DeepFrontier.RadioactiveTide", true, 30, 5, 3, 6) });
       }
+    }
+
+    // The native weather singletons a save keeps (TemperateWeatherDurationService, DroughtWeather, BadtideWeather).
+    private static MemorySave Weather(MemorySave save, int tMin, int tMax, int dMin, int dMax, int bMin, int bMax, float chance) {
+      var t = new ObjectSaver(save.Objects["TemperateWeatherDurationService"] = new SerializedObject());
+      t.Set(new PropertyKey<int>("MinTemperateWeatherDuration"), tMin); t.Set(new PropertyKey<int>("MaxTemperateWeatherDuration"), tMax);
+      var d = new ObjectSaver(save.Objects["DroughtWeather"] = new SerializedObject());
+      d.Set(new PropertyKey<int>("MinDroughtDuration"), dMin); d.Set(new PropertyKey<int>("MaxDroughtDuration"), dMax);
+      var b = new ObjectSaver(save.Objects["BadtideWeather"] = new SerializedObject());
+      b.Set(new PropertyKey<int>("MinBadtideWeatherDuration"), bMin); b.Set(new PropertyKey<int>("MaxBadtideWeatherDuration"), bMax);
+      b.Set(new PropertyKey<float>("ChanceBadtideWeather"), chance);
+      return save;
     }
 
     /// <summary>One entity's components kept as the game keeps them.</summary>

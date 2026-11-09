@@ -186,13 +186,29 @@ The eight getters are small enough to inline. They rely on Harmony disabling inl
 Every save writes both singletons; a save with only one of them is refused. The state and settings are read once, at first use, because the native weather may ask during the scene's Load. They come from, in order:
 
 1. **The save's own copy.**
-   - A tide registered after the save was made is off in that save.
+   - A tide registered after the save was made is added on at its defaults for the save's mode (decision 3b; rule below).
    - A saved tide that no installed mod registers stops loading, naming it.
 2. **An importer.** A loaded save (not a new game) with neither singleton asks every `IFluidTideImporter` once (see [Importing another tide system's state](#importing-another-tide-systems-state)).
 3. **A new game's mode.**
    - The custom mode's tide rows, as a `FluidTideGameModeSpec` on its blueprint.
    - Any other mode derives its values from its own weather. A mode's own spec that leaves out a tide also derives that tide.
-4. **A loaded save without tide settings that no importer reads.** Every tide is off. The mode such a save started from is not stored.
+4. **A loaded save without tide settings that no importer reads.** Every tide gets its defaults for the save's mode, as a new game of that mode would (decision 3b).
+
+**The save's mode** (decision 3b). A save does not store the mode it started from, but it stores that mode's weather. `FluidTideSettingsStore.SavedModeWeather` reads it from the native singletons every 1.1.2.8 save writes:
+
+- `TemperateWeatherDurationService`: `Min`/`MaxTemperateWeatherDuration`;
+- `DroughtWeather`: `Min`/`MaxDroughtDuration`;
+- `BadtideWeather`: `Min`/`MaxBadtideWeatherDuration`, `ChanceBadtideWeather`.
+
+These are the values the native Customize screen would show. The per-mode rule then applies to them. A save missing them is refused.
+
+**Adding tides to a saved game** (`FluidTideModes.AddMissing`, decision 3b):
+
+- Each tide the save does not list starts at its defaults for the save's mode: on when the mode has hazardous weather, with weight equal to its chance.
+- The budget becomes the larger of the save's budget and the largest chance among the added tides that are on.
+- Tides the save lists keep their settings, and each added tide is logged.
+
+The save therefore never gets a budget above both its own and the added content's own default. With 1b, no cycle's tide chance exceeds that budget. For example, More Fluids added to a Normal Deep Frontier save keeps the budget at 25%, and the long-run shares are those of a new game with both. An importer's result is unchanged: tides the import does not list stay off.
 
 A save without tide state whose native history already contains a registered tide's weather ID, and that no importer read, was played under another tide system. Its loading is refused.
 

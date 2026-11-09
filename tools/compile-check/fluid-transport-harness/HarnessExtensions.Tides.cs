@@ -312,6 +312,16 @@ internal static class TideScenarios {
         "Normal defaults: budget is the largest chance, weights the chances");
       check(FluidTideModes.Defaults(Freeze(MoreFluids()), FluidTideModeWeather.VanillaHard, out _)!.BudgetPercent == 20, "More Fluids alone, Hard: budget 20%");
       check(FluidTideModes.Defaults(Freeze(), FluidTideModeWeather.VanillaHard, out _) == null, "No tides: no settings");
+      // Decision 3b: registered tides a save does not list are added on at the save's defaults; the budget is the larger.
+      var dfOnly = new FluidTideSaveSettings(25, new[] { new FluidTideSettings(Radioactive, true, 25, 14, 3, 6) });
+      var addedMf = FluidTideModes.AddMissing(dfOnly, tides, FluidTideModeWeather.VanillaNormal, out var addedNotes);
+      check(addedMf.BudgetPercent == 25 && addedMf.Get(Coffee).Enabled && addedMf.Get(Coffee).Weight == 15 && addedMf.Get(Salt).Weight == 15 && addedNotes.Count == 2,
+        "More Fluids added to a Deep Frontier save: on at Normal defaults, budget kept");
+      var lowBudget = FluidTideModes.AddMissing(new FluidTideSaveSettings(10, new[] { new FluidTideSettings(Radioactive, true, 10, 14, 3, 6) }), tides, FluidTideModeWeather.VanillaNormal, out addedNotes);
+      check(lowBudget.BudgetPercent == 15 && lowBudget.Get(Radioactive).Weight == 10 && addedNotes.Count == 3, "A lower saved budget is raised to the largest added chance, no further");
+      var calmSave = FluidTideModes.AddMissing(new FluidTideSaveSettings(10, new[] { new FluidTideSettings(Radioactive, false, 0, 0, 0, 0) }), tides, new FluidTideModeWeather(20, 25, 0, 0, 0, 0, 0), out _);
+      check(calmSave.BudgetPercent == 10 && !calmSave.Get(Coffee).Enabled, "A mode without hazardous weather adds the tides off and keeps the budget");
+      check(FluidTideModes.AddMissing(addedMf, tides, FluidTideModeWeather.VanillaNormal, out addedNotes).ToString() == addedMf.ToString() && addedNotes.Count == 0, "A complete save is unchanged");
       // Every share in a dense grid stays in range for the three expected tides (registration checked the ends).
       foreach (var tide in tides.Tides)
         for (int t = 0; t <= 400; t += 7) for (int d = 0; d <= 60; d += 3) {

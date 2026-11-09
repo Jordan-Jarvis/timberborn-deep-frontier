@@ -50,12 +50,14 @@ namespace ModdableFluids.Tides.Prototype {
   /// <summary>
   /// Where a game's tide settings come from, in this order:
   /// <list type="number">
-  /// <item>the save's own copy (singleton <c>ModdableFluids.TideSettings</c>); a tide registered after the save was made is off
-  /// in it, and a saved tide that is no longer registered stops loading, naming it;</item>
+  /// <item>the save's own copy (singleton <c>ModdableFluids.TideSettings</c>); a tide registered after the save was made is
+  /// added on at its defaults for the save's own weather (FluidTideModes.AddMissing), and a saved tide that is no longer
+  /// registered stops loading, naming it;</item>
   /// <item>a new game: the new game's mode (GameSceneParameters.NewGameConfiguration.GameMode), as native BadtideWeather reads
   /// it: its own FluidTideGameModeSpec (the custom mode), else the values its weather gives (FluidTideModes);</item>
-  /// <item>a save made before this save had tide settings: every tide off, with the default budget of the vanilla Normal mode.
-  /// The game mode such a save started from is not stored, so nothing better can be derived without guessing.</item>
+  /// <item>a loaded save without tide settings: every tide at its defaults for the save's own weather, as a new game of
+  /// that mode would get them. The mode is not stored, but its weather is: the native TemperateWeatherDurationService,
+  /// DroughtWeather and BadtideWeather singletons (SavedModeWeather).</item>
   /// </list>
   /// Before the last two, FluidTideService asks every IFluidTideImporter for a loaded save without Moddable Fluids tide state.
   /// The settings never change during a game, as the native weather settings do not.
@@ -70,7 +72,11 @@ namespace ModdableFluids.Tides.Prototype {
     private static readonly ListKey<int> MinKey = new ListKey<int>("MinDurationDays");
     private static readonly ListKey<int> MaxKey = new ListKey<int>("MaxDurationDays");
 
-    public const string SavedSource = "this save", NewGameSource = "the new game's mode", NoSettingsSource = "a save without tide settings (every tide off)";
+    public const string SavedSource = "this save", NewGameSource = "the new game's mode",
+      NoSettingsSource = "a save without tide settings, given its mode's defaults from the save's own weather";
+    // The native weather singletons every 1.1.2.8 game saves (TemperateWeatherDurationService, DroughtWeather, BadtideWeather).
+    private static readonly SingletonKey TemperateKey = new SingletonKey("TemperateWeatherDurationService"), DroughtKey = new SingletonKey("DroughtWeather"),
+      BadtideKey = new SingletonKey("BadtideWeather");
 
     public static FluidTideSaveSettings Resolve(FluidTideRegistry tides, ISingletonLoader singletons, ISceneLoader sceneLoader, out string source, out IReadOnlyList<string> notes) {
       var list = new List<string>();
@@ -84,11 +90,11 @@ namespace ModdableFluids.Tides.Prototype {
         int n = ids.Count;
         if (enabled.Count != n || weights.Count != n || without.Count != n || min.Count != n || max.Count != n)
           throw new InvalidOperationException("Moddable Fluids tides: the saved tide settings (" + Key.Name + ") have lists of different lengths");
-        var settings = Build(tides, saved.Get(BudgetKey), Enumerable.Range(0, n).Select(i => (ids[i], enabled[i], weights[i], without[i], min[i], max[i])), SavedSource,
-          tide => new FluidTideSettings(tide.Id, false, 0, 0, 0, 0));
-        foreach (var tide in tides.Tides.Where(t => !ids.Contains(t.Id)))
-          list.Add(tide.Id + " was installed after this save was made, so it is off in this save (its settings were chosen when the game started)");
-        return settings;
+        var settings = Build(tides, saved.Get(BudgetKey), Enumerable.Range(0, n).Select(i => (ids[i], enabled[i], weights[i], without[i], min[i], max[i])), SavedSource, null);
+        if (tides.Tides.All(t => ids.Contains(t.Id))) return settings;
+        var withAdded = FluidTideModes.AddMissing(settings, tides, SavedModeWeather(singletons), out var added);
+        list.AddRange(added);
+        return withAdded;
       }
       if (sceneLoader.TryGetSceneParameters<GameSceneParameters>(out var parameters) && parameters.NewGame) {
         var mode = parameters.NewGameConfiguration.GameMode ?? throw new InvalidOperationException("Moddable Fluids tides: the new game has no game mode");
@@ -102,8 +108,30 @@ namespace ModdableFluids.Tides.Prototype {
         return defaults;
       }
       source = NoSettingsSource;
-      var normal = FluidTideModes.Defaults(tides, FluidTideModeWeather.VanillaNormal, out _);
-      return new FluidTideSaveSettings(normal.BudgetPercent, normal.Tides.Select(t => new FluidTideSettings(t.TideId, false, t.Weight, t.CyclesWithoutTide, t.MinDurationDays, t.MaxDurationDays)));
+      var savedDefaults = FluidTideModes.Defaults(tides, SavedModeWeather(singletons), out var savedDerivations);
+      list.AddRange(savedDerivations.Select(d => "added " + d));
+      return savedDefaults;
+    }
+
+    /// <summary>
+    /// The weather of the mode a loaded save started from, as the native weather services saved it (the same values the
+    /// native custom mode would show; a switched-off drought or badtide is saved as zeros). A save missing them is refused.
+    /// </summary>
+    public static FluidTideModeWeather SavedModeWeather(ISingletonLoader singletons) {
+      IObjectLoader Singleton(SingletonKey key) => singletons.TryGetSingleton(key, out var data) ? data
+        : throw new InvalidOperationException("Moddable Fluids tides: this save has no native " + key.Name + ", so its mode's tide defaults cannot be read (Timberborn " + FluidTideNative.GameVersion + " save format)");
+      int Int(IObjectLoader data, SingletonKey key, string name) => data.Has(new PropertyKey<int>(name)) ? data.Get(new PropertyKey<int>(name))
+        : throw new InvalidOperationException("Moddable Fluids tides: the save's native " + key.Name + " has no " + name + " (Timberborn " + FluidTideNative.GameVersion + " save format)");
+      var temperate = Singleton(TemperateKey); var drought = Singleton(DroughtKey); var badtide = Singleton(BadtideKey);
+      var chanceKey = new PropertyKey<float>("ChanceBadtideWeather");
+      if (!badtide.Has(chanceKey)) throw new InvalidOperationException("Moddable Fluids tides: the save's native BadtideWeather has no ChanceBadtideWeather (Timberborn " + FluidTideNative.GameVersion + " save format)");
+      float chance = badtide.Get(chanceKey);
+      if (!(chance >= 0f && chance <= 1f)) throw new InvalidOperationException("Moddable Fluids tides: the save's badtide chance is outside 0..1");
+      try {
+        return new FluidTideModeWeather(Int(temperate, TemperateKey, "MinTemperateWeatherDuration"), Int(temperate, TemperateKey, "MaxTemperateWeatherDuration"),
+          Int(drought, DroughtKey, "MinDroughtDuration"), Int(drought, DroughtKey, "MaxDroughtDuration"),
+          Int(badtide, BadtideKey, "MinBadtideWeatherDuration"), Int(badtide, BadtideKey, "MaxBadtideWeatherDuration"), (int)Math.Round(chance * 100f));
+      } catch (ArgumentException e) { throw new InvalidOperationException("Moddable Fluids tides: the save's native weather is invalid: " + e.Message, e); }
     }
 
     public static void Write(ISingletonSaver singletons, FluidTideSaveSettings settings) {
@@ -145,8 +173,8 @@ namespace ModdableFluids.Tides.Prototype {
       if (unknown.Count > 0)
         throw new InvalidOperationException("Moddable Fluids tides: " + what + " has settings for tide(s) " + string.Join(", ", unknown)
           + ", which no installed mod registers. Enable the mod that adds them; a save keeps the tides it started with.");
-      var missing = tides.Tides.Where(t => settings.All(s => s.TideId != t.Id)).ToArray();
-      try { return new FluidTideSaveSettings(budget, settings.Concat(missing.Select(unlisted))); }
+      var missing = unlisted == null ? Array.Empty<FluidTideDefinition>() : tides.Tides.Where(t => settings.All(s => s.TideId != t.Id)).ToArray();
+      try { return new FluidTideSaveSettings(budget, settings.Concat(missing.Select(unlisted ?? (_ => null)))); }
       catch (ArgumentException ex) { throw new InvalidOperationException("Moddable Fluids tides: the tide settings of " + what + " are invalid: " + ex.Message, ex); }
     }
   }

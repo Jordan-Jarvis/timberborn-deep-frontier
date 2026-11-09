@@ -157,6 +157,31 @@ namespace ModdableFluids {
       return new FluidTideSaveSettings(budget, settings);
     }
 
+    /// <summary>
+    /// A save's settings with the registered tides it does not list added (user decision 3b, 2026-11-09): each starts at
+    /// its defaults for the save's mode weather (on when the mode has hazardous weather, weight = its chance), and the
+    /// budget becomes the larger of the save's budget and the largest chance of an added tide that is on. So the save never
+    /// gets a larger budget than its own or than the added content's own default. Tides it lists keep their settings.
+    /// </summary>
+    public static FluidTideSaveSettings AddMissing(FluidTideSaveSettings saved, FluidTideRegistry tides, FluidTideModeWeather weather, out IReadOnlyList<string> added) {
+      if (saved == null) throw new ArgumentNullException(nameof(saved));
+      if (tides == null) throw new ArgumentNullException(nameof(tides));
+      if (weather == null) throw new ArgumentNullException(nameof(weather));
+      var notes = new List<string>();
+      added = notes;
+      int budget = saved.BudgetPercent;
+      var settings = new List<FluidTideSettings>(saved.Tides);
+      foreach (var tide in tides.Tides) {
+        if (saved.Tides.Any(t => t.TideId == tide.Id)) continue;
+        var derived = Derive(tide, weather, out int chance, out string derivation);
+        settings.Add(derived);
+        if (derived.Enabled) budget = Math.Max(budget, chance);
+        notes.Add(tide.Id + " was not in this save's settings: added " + derived + " (" + derivation + ")");
+      }
+      if (notes.Count > 0 && budget != saved.BudgetPercent) notes.Add("budget raised from " + saved.BudgetPercent + "% to " + budget + "%, the largest added chance");
+      return new FluidTideSaveSettings(budget, settings);
+    }
+
     /// <summary>The vanilla preset whose weather this is, or null (a mod's preset or a custom mode).</summary>
     public static string VanillaMode(FluidTideModeWeather weather) {
       if (weather == null) throw new ArgumentNullException(nameof(weather));
