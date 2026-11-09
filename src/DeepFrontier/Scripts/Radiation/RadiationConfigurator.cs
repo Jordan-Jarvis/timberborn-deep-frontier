@@ -13,14 +13,22 @@ namespace DeepFrontier.Scripts.Radiation {
   public sealed class RadiationConfigurator : Configurator {
     protected override void Configure() {
 #if DEEP_FRONTIER_MODDABLE_FLUIDS
-      // Migration groundwork: Moddable Fluids carries and renders the water; the facade serves IRadiationService.
-      // Not runnable yet: the consumers that still inject RadiationSimulation are listed in docs/fluids-native-adapter.md.
+      // Moddable Fluids carries and renders the water; the facade serves the radiation services
+      // (docs/deep-frontier-fluids-migration.md).
       Bind<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>().AsSingleton();
       Bind<IRadiationService>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();
+      Bind<IIrradiatedGround>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();
+      Bind<IRadiationWaterCells>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();
+      Bind<IRadioactiveIntakes>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();
+      Bind<IRadioactiveSprings>().ToExisting<DeepFrontier.ModdableFluidsMigration.ModdableFluidsRadiation>();
 #else
       Bind<RadiationSoil>().AsSingleton();
       Bind<RadiationSimulation>().AsSingleton();
       Bind<IRadiationService>().ToExisting<RadiationSimulation>();
+      Bind<IIrradiatedGround>().ToExisting<RadiationSimulation>();
+      Bind<IRadiationWaterCells>().ToExisting<RadiationSimulation>();
+      Bind<IRadioactiveIntakes>().ToExisting<RadiationSimulation>();
+      Bind<IRadioactiveSprings>().ToExisting<RadiationSimulation>();
       Bind<RadiationRenderer>().AsSingleton();
 #endif
       Bind<RadiationStorageService>().AsSingleton();

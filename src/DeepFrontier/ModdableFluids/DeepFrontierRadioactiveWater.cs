@@ -20,6 +20,8 @@ namespace DeepFrontier.ModdableFluidsMigration {
     /// <summary>The springs' native strength: RadioactiveSpring and RadioactiveSpringSource blueprints.</summary>
     public const float SpringStrength = 0.026041666666666668f;
     public static readonly string[] SpringTemplates = { "RadioactiveSpring", "RadioactiveSpringSource" };
+    /// <summary>The springs' radioactive share of their non-bad water (RadioactiveWaterSourceSpec.RadioactiveShare in both blueprints).</summary>
+    public const float SpringShare = 1f;
 
     private readonly object _gate = new object();
     private RadiationLegacyRecord _pendingImport;
@@ -48,7 +50,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
       registration.AddMetadata("RadioactiveWater", "DeepFrontier.WaterHalfLifeDays", "365");
       foreach (string template in SpringTemplates) {
         registration.AddSourceType(template, "DeepFrontier." + template + ".DisplayName", template, 1, SpringStrength, true, false, false);
-        registration.SetSourceEmission(template, FluidId, 1);
+        registration.SetSourceEmission(template, FluidId, SpringShare);
       }
     }
 

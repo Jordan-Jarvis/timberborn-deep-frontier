@@ -31,8 +31,13 @@ namespace DeepFrontier.Scripts.Radiation {
   public sealed class WaterShadingProbeConfigurator : Configurator {
     protected override void Configure() {
       if (WaterShadingProbe.Label() == null) return;
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+      // The probe compares Deep Frontier's own water shader variants with the native shaders; Moddable Fluids draws the water here.
+      throw new InvalidOperationException(WaterShadingProbe.Flag + " checks Deep Frontier's water shader variants, which the Moddable Fluids build does not use");
+#else
       if (MemoryLoadProbe.SavePath() == null) throw new InvalidOperationException(WaterShadingProbe.Flag + " requires -deepFrontierLoadAcceptance with -deepFrontierLoadSave");
       Bind<WaterShadingProbe>().AsSingleton();
+#endif
     }
   }
 
@@ -41,7 +46,6 @@ namespace DeepFrontier.Scripts.Radiation {
     private const string Tag = "[DeepFrontier WaterShading]";
     private const int StartFrame = 300, SettleFrames = 120, StateFrames = 10;
     private readonly RadiationRenderer _renderer;
-    private readonly RadiationSimulation _simulation;
     private readonly IRadiationService _radiation;
     private readonly IThreadSafeWaterMap _waterMap;
     private readonly MapIndexService _mapIndex;
@@ -53,9 +57,9 @@ namespace DeepFrontier.Scripts.Radiation {
     private int _frame, _next;
     private bool _waterKeyword, _soilKeyword, _done;
 
-    public WaterShadingProbe(RadiationRenderer renderer, RadiationSimulation simulation, IRadiationService radiation, IThreadSafeWaterMap waterMap,
+    public WaterShadingProbe(RadiationRenderer renderer, IRadiationService radiation, IThreadSafeWaterMap waterMap,
         MapIndexService mapIndex, CameraService camera, UIVisibilityManager ui, IDayNightCycle clock) {
-      _renderer = renderer; _simulation = simulation; _radiation = radiation; _waterMap = waterMap; _mapIndex = mapIndex;
+      _renderer = renderer; _radiation = radiation; _waterMap = waterMap; _mapIndex = mapIndex;
       _camera = camera; _ui = ui; _clock = clock;
     }
 
@@ -156,7 +160,7 @@ namespace DeepFrontier.Scripts.Radiation {
 
     private void LogState(string when) {
       var global = Shader.enabledGlobalKeywords.Select(k => k.name).OrderBy(n => n);
-      Debug.Log($"{Tag} {when}: global keywords [{string.Join(" ", global)}]; total water radiation {_simulation.TotalWaterRadiation:F3}");
+      Debug.Log($"{Tag} {when}: global keywords [{string.Join(" ", global)}]; total water radiation {_radiation.TotalWaterRadiation:F3}");
       foreach (var swap in _renderer.Swaps) {
         var m = swap.Material;
         Debug.Log($"{Tag} {when}: {m.name} shader {m.shader.name} queue {m.renderQueue} (shader {m.shader.renderQueue}) MotionVectors pass {(m.GetShaderPassEnabled("MotionVectors") ? "enabled" : "disabled")} keywords [{string.Join(" ", m.enabledKeywords.Select(k => k.name))}]");

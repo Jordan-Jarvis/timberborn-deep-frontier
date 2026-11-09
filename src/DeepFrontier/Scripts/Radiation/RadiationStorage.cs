@@ -28,12 +28,12 @@ namespace DeepFrontier.Scripts.Radiation {
   // good, and native stockpile visuals look up every stored good.
   public sealed class RadiationStorageService : ITickableSingleton, ILateTickable {
     private readonly EntityComponentRegistry _registry;
-    private readonly RadiationSimulation _radiation;
+    private readonly IRadiationService _radiation;
     private readonly IDayNightCycle _dayNightCycle;
     private readonly FactionService _factions;
     private float _hours;
 
-    public RadiationStorageService(EntityComponentRegistry registry, RadiationSimulation radiation, IDayNightCycle dayNightCycle,
+    public RadiationStorageService(EntityComponentRegistry registry, IRadiationService radiation, IDayNightCycle dayNightCycle,
         FactionService factions) {
       _registry = registry; _radiation = radiation; _dayNightCycle = dayNightCycle; _factions = factions;
     }

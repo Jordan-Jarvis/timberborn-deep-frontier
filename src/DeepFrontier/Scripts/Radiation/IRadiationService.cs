@@ -59,6 +59,23 @@ namespace DeepFrontier.Scripts.Radiation {
     bool SavedStatePending { get; }
   }
 
+  // Irradiated ground: soil radiation or the bank layer at or above
+  // RadiationTuning.IrradiatedGroundThreshold. Plants there die at once and
+  // planters skip it (IrradiatedPlantWarning.cs, IrradiatedPlantingSpots.cs).
+  // Nothing reads as irradiated before a loaded save is applied.
+  public interface IIrradiatedGround {
+    bool IsIrradiatedGround(Vector3Int cell);
+  }
+
+  // The water at a building's cell (outfalls and pump intakes).
+  public interface IRadiationWaterCells {
+    // Whether the cell lies inside an open fluid column (native geometry).
+    bool IsOpenCell(Vector3Int cell);
+    // Radioactive share of the column containing the cell, reported as 0
+    // below DetectionLimit and outside every column.
+    float ColumnRadiation(Vector3Int cell);
+  }
+
   public readonly struct RadiationSample {
     public readonly bool HasColumn;
     public readonly float WaterRadiation;   // radioactive share r of the column water

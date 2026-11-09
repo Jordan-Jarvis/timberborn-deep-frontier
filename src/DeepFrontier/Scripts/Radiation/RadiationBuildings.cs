@@ -71,7 +71,8 @@ namespace DeepFrontier.Scripts.Radiation {
   }
 
   internal sealed class RadioactiveSludgeOutfall : BaseComponent, IAwakableComponent, IInitializableEntity, IManufactoryLimiter {
-    private readonly RadiationSimulation _radiation;
+    private readonly IRadiationService _radiation;
+    private readonly IRadiationWaterCells _cells;
     private readonly ILoc _loc;
     private RadioactiveSludgeOutfallSpec _spec;
     private BlockObject _block;
@@ -79,7 +80,7 @@ namespace DeepFrontier.Scripts.Radiation {
     private BlockableObject _blockable;
     private StatusToggle _blockedStatus;
 
-    public RadioactiveSludgeOutfall(RadiationSimulation radiation, ILoc loc) { _radiation = radiation; _loc = loc; }
+    public RadioactiveSludgeOutfall(IRadiationService radiation, IRadiationWaterCells cells, ILoc loc) { _radiation = radiation; _cells = cells; _loc = loc; }
 
     private Vector3Int Outlet => _block.TransformCoordinates(_spec.OutputCoordinates);
 
@@ -102,7 +103,7 @@ namespace DeepFrontier.Scripts.Radiation {
     // no recipe progress, so the outfall releases nothing.
     public float ProductionEfficiency() {
       if (!_blockable.IsUnblocked) return 0f;
-      bool open = _radiation.IsOpenCell(Outlet);
+      bool open = _cells.IsOpenCell(Outlet);
       if (open) _blockedStatus.Deactivate(); else _blockedStatus.Activate();
       return open ? 1f : 0f;
     }
@@ -118,7 +119,7 @@ namespace DeepFrontier.Scripts.Radiation {
   // the native pump path: DemandCleanWaterAmount removes non-bad water and
   // WaterInputService credits what was removed) and turns the radioactive part
   // into RadioactiveSludge goods, RadioactiveVolumePerCycle per good. Fresh
-  // water pumped with it is used up. RadiationSimulation credits the
+  // water pumped with it is used up. RadiationSimulation (IRadioactiveIntakes) credits the
   // radioactive volume the replayed native water change actually removed at
   // the intake cell to a saved buffer; recipe progress consumes the buffer, so
   // world radioactive volume + buffer + progress * RadioactiveVolumePerCycle is
@@ -133,7 +134,8 @@ namespace DeepFrontier.Scripts.Radiation {
     private static readonly ComponentKey IntakeKey = new ComponentKey("DeepFrontier.RadioactiveSludgeIntake");
     private static readonly PropertyKey<float> BufferKey = new PropertyKey<float>("Buffer");
 
-    private readonly RadiationSimulation _radiation;
+    private readonly IRadiationService _radiation;
+    private readonly IRadioactiveIntakes _intakes;
     private readonly ILoc _loc;
     private RadioactiveSludgeIntakeSpec _spec;
     private WaterInput _intake;
@@ -146,7 +148,7 @@ namespace DeepFrontier.Scripts.Radiation {
     // Read-only, for the all-buildings acceptance's radiation balance (AllBuildingsSites.cs).
     internal float BufferedVolume => _buffer;
 
-    public RadioactiveSludgeIntake(RadiationSimulation radiation, ILoc loc) { _radiation = radiation; _loc = loc; }
+    public RadioactiveSludgeIntake(IRadiationService radiation, IRadioactiveIntakes intakes, ILoc loc) { _radiation = radiation; _intakes = intakes; _loc = loc; }
 
     public void Awake() {
       _spec = GetComponent<RadioactiveSludgeIntakeSpec>();
@@ -167,7 +169,7 @@ namespace DeepFrontier.Scripts.Radiation {
 
     public void OnEnterFinishedState() {
       _registeredAt = _intake.Coordinates;
-      _radiation.RegisterIntake(_registeredAt, this);
+      _intakes.RegisterIntake(_registeredAt, this);
       _registered = true;
     }
 
@@ -175,7 +177,7 @@ namespace DeepFrontier.Scripts.Radiation {
 
     private void Unregister() {
       if (!_registered) return;
-      _radiation.UnregisterIntake(_registeredAt, this);
+      _intakes.UnregisterIntake(_registeredAt, this);
       _registered = false;
     }
 
@@ -206,7 +208,7 @@ namespace DeepFrontier.Scripts.Radiation {
       return possible < expectedProductionProgressChange ? possible : expectedProductionProgressChange;
     }
 
-    // Main thread, RadiationSimulation's late tick.
+    // Main thread, the radiation service's late tick (IRadioactiveIntakes).
     internal void OnRadioactiveRemoved(float volume) {
       if (!(volume >= 0f) || float.IsInfinity(volume)) throw new ArgumentOutOfRangeException(nameof(volume), volume, "Removed radioactive volume must be finite and non-negative");
       _buffer += volume;

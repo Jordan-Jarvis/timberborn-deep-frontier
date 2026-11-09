@@ -37,8 +37,8 @@ namespace DeepFrontier.Scripts.Radiation {
   // publicized ModsBuild assemblies. Timberborn's Mono 6.13 allows that only
   // because DeepFrontier.asmdef has "allowUnsafeCode": true (SkipVerification;
   // outputs/radiation-mono-access-probe).
-  public sealed class RadiationSimulation : IRadiationService, ILoadableSingleton, ITickableSingleton, ILateTickable,
-      ISaveableSingleton, IUnloadableSingleton, IUpdatableSingleton {
+  public sealed class RadiationSimulation : IRadiationService, IIrradiatedGround, IRadiationWaterCells, IRadioactiveIntakes, IRadioactiveSprings,
+      ILoadableSingleton, ITickableSingleton, ILateTickable, ISaveableSingleton, IUnloadableSingleton, IUpdatableSingleton {
     private static readonly SingletonKey RadiationKey = new SingletonKey("DeepFrontier.Radiation");
     private static readonly PropertyKey<int> VersionKey = new PropertyKey<int>("Version");
     private static readonly ListKey<Vector3Int> CellsKey = new ListKey<Vector3Int>("Cells");
@@ -667,6 +667,15 @@ namespace DeepFrontier.Scripts.Radiation {
       int idx = Slot(cell);
       return idx < 0 ? 0f : RadiationTuning.Detected(_radiation[idx]);
     }
+
+    // The narrow services consumers inject (IRadiationService.cs, RadiationServices.cs).
+    bool IIrradiatedGround.IsIrradiatedGround(Vector3Int cell) => IsIrradiatedGround(cell);
+    bool IRadiationWaterCells.IsOpenCell(Vector3Int cell) => IsOpenCell(cell);
+    float IRadiationWaterCells.ColumnRadiation(Vector3Int cell) => ColumnRadiation(cell);
+    void IRadioactiveIntakes.RegisterIntake(Vector3Int cell, RadioactiveSludgeIntake intake) => RegisterIntake(cell, intake);
+    void IRadioactiveIntakes.UnregisterIntake(Vector3Int cell, RadioactiveSludgeIntake intake) => UnregisterIntake(cell, intake);
+    void IRadioactiveSprings.RegisterSpring(IWaterSource source, float share) => RegisterSpring(source, share);
+    void IRadioactiveSprings.UnregisterSpring(IWaterSource source) => UnregisterSpring(source);
 
     // ------------------------------------------------------------ persistence
 

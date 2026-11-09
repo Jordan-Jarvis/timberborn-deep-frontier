@@ -14,18 +14,20 @@ namespace DeepFrontier.Scripts.Radiation {
   // WaterSourceContaminationSpec at 0) whose water is radioactive. Two
   // templates share this spec: RadioactiveSpring (in-game dev tool) and
   // RadioactiveSpringSource (map editor). The native UpdateWaterSourcesTask
-  // adds the water; RadiationSimulation mixes RadioactiveShare of it into r.
+  // adds the water; RadiationSimulation mixes RadioactiveShare of it into r
+  // (IRadioactiveSprings; in the Moddable Fluids build both templates are
+  // registered source types and the facade checks the share against them).
   internal record RadioactiveWaterSourceSpec : ComponentSpec {
     [Serialize] public float RadioactiveShare { get; init; }
   }
 
   // Game only (RadiationConfigurator).
   internal sealed class RadioactiveWaterSource : BaseComponent, IAwakableComponent, IInitializableEntity, IDeletableEntity {
-    private readonly RadiationSimulation _radiation;
+    private readonly IRadioactiveSprings _radiation;
     private WaterSource _source;
     private float _share;
 
-    public RadioactiveWaterSource(RadiationSimulation radiation) { _radiation = radiation; }
+    public RadioactiveWaterSource(IRadioactiveSprings radiation) { _radiation = radiation; }
 
     public void Awake() {
       _source = GetComponent<WaterSource>();

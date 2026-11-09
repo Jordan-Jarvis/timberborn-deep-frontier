@@ -243,6 +243,25 @@ internal static class DeepFrontierFluidsScenarios {
     public void SetSourceComposition(string ownerId, IReadOnlyDictionary<string, double> composition) => State.SetSourceComposition(ownerId, composition);
   }
 
+  /// <summary>Native geometry for the facade, as the game's thread-safe water map reports it: (x, y, floor, ceiling, depth, badwater).</summary>
+  private sealed class TestCells : IRadiationCellMap {
+    private readonly List<(int X, int Y, int Floor, int Ceiling, float Depth, float Bad)> _columns;
+    public TestCells(params (int, int, int, int, float, float)[] columns) { _columns = columns.ToList(); }
+    public Vector2Int Size => new Vector2Int(NativeWaterFixture.Width, NativeWaterFixture.Height);
+    private (int X, int Y, int Floor, int Ceiling, float Depth, float Bad)? Column(Vector3Int c) =>
+      _columns.Where(k => k.X == c.x && k.Y == c.y && c.z >= k.Floor && c.z < k.Ceiling).Select(k => ((int, int, int, int, float, float)?)k).FirstOrDefault();
+    public bool IsOpenCell(Vector3Int cell) => Column(cell) != null;
+    public bool IsSubmerged(Vector3Int cell) => Column(cell) is { } k && Mathf.CeilToInt(k.Floor + k.Depth) > cell.z;
+    public float BadwaterShare(Vector3Int cell) => Column(cell) is { } k && k.Floor + k.Depth > cell.z ? k.Bad : 0f;
+    public bool TryFindOpenCell(Vector2Int xy, int z, out Vector3Int cell) {
+      var at = _columns.Where(k => k.X == xy.x && k.Y == xy.y).OrderBy(k => k.Floor).ToList();
+      foreach (var k in at) if (z >= k.Floor && z < k.Ceiling) { cell = new Vector3Int(xy.x, xy.y, z); return true; }
+      foreach (var k in at) if (k.Floor > z) { cell = new Vector3Int(xy.x, xy.y, k.Floor); return true; }
+      cell = default;
+      return false;
+    }
+  }
+
   [MethodImpl(MethodImplOptions.NoInlining)]
   private static void Facade(Action<bool, string> check, NativeWaterFixture native, Dictionary<string, object> observations) {
     int bad = native.AddColumn(0, 0, 2f, 0, 4); native.SetContamination(bad, .25);
@@ -257,10 +276,14 @@ internal static class DeepFrontierFluidsScenarios {
     var scene = host.ActivateScene(world);
     check(ReferenceEquals(scene.World, world) && scene.HasWorld, "The scene carries its world service");
     var soil = new RadiationSoilLedger();
-    var facade = new ModdableFluidsRadiationService(provider, soil, () => 3f, () => new Vector2Int(NativeWaterFixture.Width, NativeWaterFixture.Height));
+    var cells = new TestCells((0, 0, 0, 4, 2f, .25f), (1, 0, 0, 3, 1f, 0f), (1, 1, 0, 2, .5f, 0f), (1, 1, 4, 12, 1f, 0f));
+    var facade = new ModdableFluidsRadiationService(provider, soil, cells, () => 3f);
     provider.PrepareScene(Hours, Record(3, false, new[] { (0, 0, 0, .5f, .2f, 0f) }));
-    // Before the first fluid tick: pending, nothing to sample, requests wait.
-    check(facade.SavedStatePending && !facade.Sample(new Vector3Int(0, 0, 1)).HasColumn && !facade.TryFindOpenCell(new Vector2Int(0, 0), 0, out _), "Before the first tick");
+    // Before the first fluid tick: pending, nothing to sample, requests wait; native geometry already answers.
+    check(facade.SavedStatePending && !facade.Sample(new Vector3Int(0, 0, 1)).HasColumn && facade.ColumnRadiation(new Vector3Int(0, 0, 1)) == 0
+      && !facade.IsIrradiatedGround(new Vector3Int(0, 0, 0)), "Before the first tick");
+    check(facade.TryFindOpenCell(new Vector2Int(0, 0), 0, out var early) && early == new Vector3Int(0, 0, 0) && facade.IsOpenCell(new Vector3Int(1, 1, 5)), "Native geometry before the first tick");
+    Rejects<ArgumentException>(check, () => facade.AddSoilRadiation(new Vector3Int(1, 1, 3), .1f), "Soil under a solid cell is refused at once, as RadiationSimulation refuses it");
     facade.AddRadioactiveWater(new Vector3Int(1, 0, 0), .25f);
     facade.AddSoilRadiation(new Vector3Int(1, 1, 5), .05f);
     check(facade.EarlyAdditions == 2 && world.Additions.Count == 0, "Requests before the first tick are kept");
@@ -280,6 +303,9 @@ internal static class DeepFrontierFluidsScenarios {
     check(!facade.Sample(new Vector3Int(0, 0, 3)).Submerged && facade.Sample(new Vector3Int(0, 0, 3)).HasColumn, "Above the surface in an open column");
     check(Math.Abs(facade.GetRadiation(new Vector3Int(0, 0, 1)) - .5f) < 1e-6 && Math.Abs(facade.GetRadiation(new Vector3Int(0, 0, 3)) - .2f * RadiationTuning.SoilHazardWeight) < 1e-7, "GetRadiation");
     check(facade.IsColumnContaminated(new Vector3Int(0, 0, 2)) && !facade.IsColumnContaminated(new Vector3Int(1, 0, 0)), "IsColumnContaminated");
+    check(Math.Abs(facade.ColumnRadiation(new Vector3Int(0, 0, 3)) - .5f) < 1e-6 && facade.ColumnRadiation(new Vector3Int(1, 1, 3)) == 0, "ColumnRadiation in the column, 0 in a solid cell");
+    check(facade.IsIrradiatedGround(new Vector3Int(0, 0, 0)) && facade.IsIrradiatedGround(new Vector3Int(0, 0, 2)) && !facade.IsIrradiatedGround(new Vector3Int(1, 0, 0)),
+      "Irradiated ground at or above the threshold, by the column containing the cell");
     check(facade.TryFindOpenCell(new Vector2Int(1, 1), 1, out var inside) && inside == new Vector3Int(1, 1, 1), "Open cell containing the height");
     check(facade.TryFindOpenCell(new Vector2Int(1, 1), 2, out var above) && above == new Vector3Int(1, 1, 4), "Lowest column above a solid height");
     check(!facade.TryFindOpenCell(new Vector2Int(1, 1), 12, out _) && !facade.TryFindOpenCell(new Vector2Int(2, 2), 0, out _), "No column above or none at all");

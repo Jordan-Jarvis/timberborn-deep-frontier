@@ -61,7 +61,7 @@ namespace DeepFrontier.Scripts.Radiation {
     private static readonly PropertyKey<float> UntreatedHoursKey = new PropertyKey<float>("UntreatedHours");
     private static readonly PropertyKey<float> LastCareHourKey = new PropertyKey<float>("LastCareHour");
 
-    private readonly RadiationSimulation _radiation;
+    private readonly IRadiationService _radiation;
     private readonly IDayNightCycle _dayNightCycle;
     private readonly ILoc _loc;
     private readonly IRandomNumberGenerator _random;
@@ -86,7 +86,7 @@ namespace DeepFrontier.Scripts.Radiation {
     // grace period, so UpdateSickness adds no untreated time.
     public bool SicknessClockPaused => IsIrradiated && _dayNightCycle.PartialDayNumber * 24f - _lastCareHour <= RadiationTuning.CareGraceHours;
 
-    public RadiationExposure(RadiationSimulation radiation, IDayNightCycle dayNightCycle, ILoc loc,
+    public RadiationExposure(IRadiationService radiation, IDayNightCycle dayNightCycle, ILoc loc,
         IRandomNumberGenerator random, NotificationBus notifications, IGoodService goods, FactionService factions) {
       _radiation = radiation; _dayNightCycle = dayNightCycle; _loc = loc;
       _random = random; _notifications = notifications; _goods = goods; _factions = factions;

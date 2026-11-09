@@ -32,7 +32,10 @@ namespace DeepFrontier.Scripts {
       // Explicit checks that ran only when a game loaded.
       ("Radiation shading", RadiationShading.Verify),
       ("Radiation soil", RadiationSoilNative.Verify),
+#if !DEEP_FRONTIER_MODDABLE_FLUIDS
+      // RadiationSimulation's exception-save check; the Moddable Fluids build does not use RadiationSimulation.
       ("Radiation simulation", RadiationSimulation.VerifyNative),
+#endif
     };
 
     internal static void VerifyAll() {

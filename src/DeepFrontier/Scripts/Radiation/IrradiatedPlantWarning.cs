@@ -12,8 +12,8 @@ using UnityEngine;
 
 namespace DeepFrontier.Scripts.Radiation {
   // Irradiated ground kills plants at once (user rule 2026-10-22). "Irradiated"
-  // is RadiationSimulation.SoilAt (stored soil or the bank layer) at or above
-  // RadiationTuning.IrradiatedGroundThreshold, the level where the yellow-green
+  // (IIrradiatedGround) is RadiationSimulation.SoilAt (stored soil or the bank
+  // layer) at or above RadiationTuning.IrradiatedGroundThreshold, the level where the yellow-green
   // ground tint appears, so what the player sees is what kills.
   //
   // Native death path (Timberborn 1.1.2.8): LivingNaturalResource.Die, where
@@ -65,11 +65,11 @@ namespace DeepFrontier.Scripts.Radiation {
   internal sealed class IrradiatedGroundDeath : BaseComponent, IAwakableComponent, IPostInitializableEntity, IPersistentEntity {
     private static readonly ComponentKey LegacyFloraDoseKey = new ComponentKey("DeepFrontier.RadiationFloraDose");
     private static readonly PropertyKey<float> LegacyDoseKey = new PropertyKey<float>("Dose");
-    private readonly RadiationSimulation _simulation;
+    private readonly IIrradiatedGround _simulation;
     private LivingNaturalResource _living;
     private BlockObject _block;
 
-    public IrradiatedGroundDeath(RadiationSimulation simulation) { _simulation = simulation; }
+    public IrradiatedGroundDeath(IIrradiatedGround simulation) { _simulation = simulation; }
 
     public void Awake() {
       _living = GetComponent<LivingNaturalResource>();
@@ -96,8 +96,8 @@ namespace DeepFrontier.Scripts.Radiation {
   // Native natural spreading (SpawnValidationService, MultiBind<ISpawnValidator>)
   // does not seed irradiated ground.
   internal sealed class IrradiatedGroundSpawnValidator : ISpawnValidator {
-    private readonly RadiationSimulation _simulation;
-    public IrradiatedGroundSpawnValidator(RadiationSimulation simulation) { _simulation = simulation; }
+    private readonly IIrradiatedGround _simulation;
+    public IrradiatedGroundSpawnValidator(IIrradiatedGround simulation) { _simulation = simulation; }
     public bool CanSpawn(Vector3Int coordinates, string resourceTemplateName) => !_simulation.IsIrradiatedGround(coordinates);
   }
 }

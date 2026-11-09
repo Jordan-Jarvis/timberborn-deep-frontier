@@ -21,7 +21,8 @@ namespace DeepFrontier.Scripts.Radiation {
   internal sealed class RadiationIntakeGuard : TickableComponent, IAwakableComponent, IInitializableEntity, IFinishedStateListener,
       IEntityDescriber {
     private const int DescriptionOrder = 130;
-    private readonly RadiationSimulation _radiation;
+    private readonly IRadiationService _radiation;
+    private readonly IRadiationWaterCells _cells;
     private readonly ILoc _loc;
     private WaterInput _waterInput;
     private BlockableObject _blockable;
@@ -30,7 +31,7 @@ namespace DeepFrontier.Scripts.Radiation {
 
     public bool IsBlockedByRadiation => _blocked;
 
-    public RadiationIntakeGuard(RadiationSimulation radiation, ILoc loc) { _radiation = radiation; _loc = loc; }
+    public RadiationIntakeGuard(IRadiationService radiation, IRadiationWaterCells cells, ILoc loc) { _radiation = radiation; _cells = cells; _loc = loc; }
 
     public void Awake() {
       _inert = GetComponent<RadioactiveSludgeIntake>() != null;
@@ -63,7 +64,7 @@ namespace DeepFrontier.Scripts.Radiation {
     public override void Tick() => Evaluate();
 
     private void Evaluate() {
-      float radiation = _radiation.ColumnRadiation(_waterInput.Coordinates);
+      float radiation = _cells.ColumnRadiation(_waterInput.Coordinates);
       // One threshold, no hysteresis: below DetectionLimit the share reads 0
       // (RadiationTuning.Detected) and the late tick removes it once it stops rising.
       SetBlocked(radiation >= RadiationTuning.DetectionLimit);

@@ -31,9 +31,9 @@ namespace DeepFrontier.Scripts.Radiation {
   // the irradiated-ground test next to the native soil test
   // (IrradiatedPlantingSpotsPatch below).
   //
-  // The test is RadiationSimulation.IsIrradiatedGround, the same call that
-  // kills a plant planted there (IrradiatedGroundDeath.PostInitializeEntity),
-  // so a spot is skipped exactly when its plant would die at once: one
+  // The test is IIrradiatedGround.IsIrradiatedGround (RadiationSimulation, or
+  // the Moddable Fluids facade), the same call that kills a plant planted
+  // there (IrradiatedGroundDeath.PostInitializeEntity), so a spot is skipped exactly when its plant would die at once: one
   // threshold (RadiationTuning.IrradiatedGroundThreshold), soil and bank
   // layer, Radioactive Tide water included.
   //
@@ -41,9 +41,9 @@ namespace DeepFrontier.Scripts.Radiation {
   // is decorated on, so every entity with a PlantingSpotFinder has one. The
   // postfix reaches it through the planter building; nothing static.
   internal sealed class IrradiatedPlantingSpots : BaseComponent {
-    private readonly RadiationSimulation _simulation;
+    private readonly IIrradiatedGround _simulation;
 
-    public IrradiatedPlantingSpots(RadiationSimulation simulation) { _simulation = simulation; }
+    public IrradiatedPlantingSpots(IIrradiatedGround simulation) { _simulation = simulation; }
 
     internal bool CanPlantAt(Vector3Int coordinates) => !_simulation.IsIrradiatedGround(coordinates);
   }
