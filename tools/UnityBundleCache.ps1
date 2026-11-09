@@ -25,6 +25,14 @@ $script:BundleTargetSupport = @(
   'MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll', 'MacStandaloneSupport/modules.asset'
 )
 
+# Not bundle inputs: PlayerBuildShaderStripping acts only while the Mod Builder's throwaway player builds (a Player
+# build to ModsBuild/TimberbornModExamples), which ModBuilder finishes before any bundle build. A fault there could only
+# leave a freshly built bundle without variants, which check_bundle_shaders.py rejects before anything is cached; it
+# cannot change a cached bundle. Leaving it out keeps changes to it from rebuilding every mod's bundles.
+$script:BundleInputExclusions = @(
+  'Assets/Tools/Editor/Scripts/ModBuilding/PlayerBuildShaderStripping.cs', 'Assets/Tools/Editor/Scripts/ModBuilding/PlayerBuildShaderStripping.cs.meta'
+)
+
 $script:BundleInputRoots = @(
   'Assets/Rendering', 'Assets/Rendering.meta', 'Assets/Tools', 'Assets/Tools.meta',
   'Assets/Plugins/Timberborn', 'Assets/Plugins/Timberborn.meta',
@@ -62,7 +70,10 @@ function Get-BundleInputs([string]$Project, [string]$Mod, [string]$Variant, [str
     }
   }
   $files = [Collections.Generic.SortedDictionary[string, string]]::new([StringComparer]::Ordinal)
-  foreach ($path in $paths) { $files[$path.Substring($projectFull.Length + 1).Replace('\', '/')] = Get-BundleFileHash $path }
+  foreach ($path in $paths) {
+    $relative = $path.Substring($projectFull.Length + 1).Replace('\', '/')
+    if ($script:BundleInputExclusions -notcontains $relative) { $files[$relative] = Get-BundleFileHash $path }
+  }
   $unityVersion = (Get-Item -LiteralPath $Unity).VersionInfo.ProductVersion
   $engines = Join-Path (Split-Path -Parent $Unity) 'Data\PlaybackEngines'
   foreach ($relative in $script:BundleTargetSupport) {
@@ -227,13 +238,16 @@ function Assert-BundlesMatchCache([string]$Entry, [string]$Directory, $Inputs) {
   return $record
 }
 
-# Per shader and graphics API, the variants ModShaderVariantStripping saw and kept (tools/unity), from a Unity log.
-# A player build and the bundle build for the same API log identical lines; each distinct line counts once.
+# Per shader and graphics API, the variants ModShaderVariantStripping saw and kept in the bundle builds (tools/unity),
+# from a Unity log; identical lines count once. Then PlayerBuildShaderStripping's lines about the throwaway player
+# build(s), as logged.
 function Get-ShaderStrippingSummary([string]$Log) {
   $pattern = '^\[ModShaderVariantStripping\] (?<shader>\S+) \| .+ \| (?<stage>\S+) \| (?<api>\S+): (?<before>\d+) -> (?<after>\d+)'
   $totals = [ordered]@{}
   $seen = @{}
+  $player = [Collections.Generic.List[string]]::new()
   foreach ($line in Get-Content -LiteralPath $Log) {
+    if ($line.StartsWith('[PlayerBuildShaderStripping] ')) { $player.Add('  ' + $line); continue }
     if ($line -notmatch $pattern -or $seen.ContainsKey($line)) { continue }
     $seen[$line] = $true
     $key = "$($Matches.shader) ($($Matches.api))"
@@ -241,4 +255,5 @@ function Get-ShaderStrippingSummary([string]$Log) {
     $totals[$key] = @(($totals[$key][0] + [int]$Matches.before), ($totals[$key][1] + [int]$Matches.after))
   }
   foreach ($key in $totals.Keys) { "  $key`: $($totals[$key][0]) -> $($totals[$key][1]) variants" }
+  $player
 }

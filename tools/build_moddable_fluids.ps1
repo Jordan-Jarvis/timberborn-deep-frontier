@@ -196,6 +196,8 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/0Harmony.dll.meta') -Dest
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/ModdableFluidsBatchBuild.cs') -Destination (Join-Path $project 'Assets/Tools/Editor/Scripts/ModBuilding') -Force
 # Strips variants of our own shaders that the game never draws (docs/unity-build-performance.md).
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/ModShaderVariantStripping.cs') -Destination (Join-Path $project 'Assets/Tools/Editor/Scripts/ModBuilding') -Force
+# The Mod Builder's throwaway player builds (used only for their DLLs) compile no shader under Assets/Mods.
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/PlayerBuildShaderStripping.cs') -Destination (Join-Path $project 'Assets/Tools/Editor/Scripts/ModBuilding') -Force
 $log = Join-Path $output 'official-build.log'
 New-Item -ItemType Directory -Force -Path $output | Out-Null
 $method = if ($SyntheticFixtures -and $MoreFluids) { 'BuildWithSyntheticFixturesAndMoreFluids' } elseif ($SyntheticFixtures) { 'BuildWithSyntheticFixtures' } elseif ($MoreFluids) { 'BuildWithMoreFluids' } else { 'Build' }

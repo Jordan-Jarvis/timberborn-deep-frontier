@@ -75,4 +75,6 @@ foreach ($entry in @('Data', 'Scripts', 'Editor', 'AssetBundles')) {
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\DeepFrontierBatchBuild.cs') -Destination (Join-Path $projectRoot 'Assets\Tools\Editor\Scripts\ModBuilding\DeepFrontierBatchBuild.cs') -Force
 # Strips variants of our own shaders that the game never draws (docs/unity-build-performance.md).
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\ModShaderVariantStripping.cs') -Destination (Join-Path $projectRoot 'Assets\Tools\Editor\Scripts\ModBuilding\ModShaderVariantStripping.cs') -Force
+# The Mod Builder's throwaway player build (used only for its DLLs) compiles no shader under Assets/Mods.
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity\PlayerBuildShaderStripping.cs') -Destination (Join-Path $projectRoot 'Assets\Tools\Editor\Scripts\ModBuilding\PlayerBuildShaderStripping.cs') -Force
 Write-Output "Staged Deep Frontier authoring files at $destinationRoot"

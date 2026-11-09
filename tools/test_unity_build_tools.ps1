@@ -111,6 +111,11 @@ try {
   Assert-Throws { Get-BundleInputs -Project $project -Mod 'TestMod' -Variant 'default' -Unity $fakeUnity } 'macOS build support' 'missing macOS build support was not refused'
   [IO.File]::WriteAllText($macSupport, 'MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll')
   Assert-True ((Get-BundleInputs -Project $project -Mod 'TestMod' -Variant 'default' -Unity $fakeUnity).fingerprint -eq $first.fingerprint) 'restoring the inputs did not restore the fingerprint'
+  # PlayerBuildShaderStripping acts only in the throwaway player build: not a bundle input.
+  Write-TestFile 'Assets/Tools/Editor/Scripts/ModBuilding/PlayerBuildShaderStripping.cs' 'player build'
+  Write-TestFile 'Assets/Tools/Editor/Scripts/ModBuilding/PlayerBuildShaderStripping.cs.meta' 'guid: 3'
+  $withPlayer = Get-BundleInputs -Project $project -Mod 'TestMod' -Variant 'default' -Unity $fakeUnity
+  Assert-True ($withPlayer.fingerprint -eq $first.fingerprint -and $withPlayer.files.Count -eq $first.files.Count) 'PlayerBuildShaderStripping.cs changed the bundle fingerprint'
 
   $entry = Get-BundleCacheEntry -Root $temp -Mod 'TestMod' -Variant 'default'
   Assert-True (-not (Test-BundleCacheHit -Entry $entry -Inputs $first 6>$null)) 'an empty cache reported a hit'
@@ -143,9 +148,11 @@ try {
     '[ModShaderVariantStripping] DeepFrontier/IrradiatedTerrainURP | ForwardLit (UniversalForward) | Fragment | D3D: 256 -> 192',
     '[ModShaderVariantStripping] DeepFrontier/IrradiatedTerrainURP | Universal 2D (Universal2D) | Vertex | D3D: 16 -> 0 (pass drawn only by the 2D renderer)',
     '[ModShaderVariantStripping] DeepFrontier/IrradiatedTerrainURP | ForwardLit (UniversalForward) | Fragment | Metal: 256 -> 192',
+    '[PlayerBuildShaderStripping] player build: stripped 1136 variants of mod shaders (3: a, b, c)',
     'unrelated line'))
   $summary = @(Get-ShaderStrippingSummary $log)
-  Assert-True ($summary.Count -eq 2 -and $summary[0] -eq '  DeepFrontier/IrradiatedTerrainURP (D3D): 272 -> 192 variants' -and $summary[1] -eq '  DeepFrontier/IrradiatedTerrainURP (Metal): 256 -> 192 variants') "stripping summary: $($summary -join ' / ')"
+  Assert-True ($summary.Count -eq 3 -and $summary[0] -eq '  DeepFrontier/IrradiatedTerrainURP (D3D): 272 -> 192 variants' -and $summary[1] -eq '  DeepFrontier/IrradiatedTerrainURP (Metal): 256 -> 192 variants' -and
+    $summary[2] -eq '  [PlayerBuildShaderStripping] player build: stripped 1136 variants of mod shaders (3: a, b, c)') "stripping summary: $($summary -join ' / ')"
 } finally {
   if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Recurse -Force }
 }

@@ -27,7 +27,7 @@
     <!-- The official sources the batch builds call (one assembly here; ModBuilder is internal to ModBuilding). Staged
          copies of our scripts in the project are compiled from tools/unity instead. -->
     <Compile Include="$(Vendor)/Common/*.cs" />
-    <Compile Include="$(Vendor)/ModBuilding/*.cs" Exclude="$(Vendor)/ModBuilding/DeepFrontierBatchBuild.cs;$(Vendor)/ModBuilding/ModdableFluidsBatchBuild.cs;$(Vendor)/ModBuilding/FluidsApiBatchBuild.cs;$(Vendor)/ModBuilding/ModShaderVariantStripping.cs" />
+    <Compile Include="$(Vendor)/ModBuilding/*.cs" Exclude="$(Vendor)/ModBuilding/DeepFrontierBatchBuild.cs;$(Vendor)/ModBuilding/ModdableFluidsBatchBuild.cs;$(Vendor)/ModBuilding/FluidsApiBatchBuild.cs;$(Vendor)/ModBuilding/ModShaderVariantStripping.cs;$(Vendor)/ModBuilding/PlayerBuildShaderStripping.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="$(UnityEditorData)/NetStandard/ref/2.1.0/netstandard.dll" Private="false" />
