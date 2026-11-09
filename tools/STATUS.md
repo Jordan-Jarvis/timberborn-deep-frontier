@@ -1,5 +1,38 @@
 # Current development status
 
+## Review of recent changes (2026-11-09; source fixes committed, not built or installed)
+
+- Reviewed every change from `7090abb` (0.8.6) through the queued-meltdown fix, plus the features they touch. Findings, evidence and open items: `docs/review-2026-11-09.md`. Evidence is static only, from decompiled 1.1.2.8 code. The game was not launched; no build or install was made, and the version stays 0.10.3.
+- Non-Iron Teeth games still crashed after 0.10.3 (`ee27a3d`):
+  - every bot (`ReactorBot` need switches);
+  - every beaver's first tick (`RadiationExposure`);
+  - selecting a mineral source or Human Record Cache (`GetGood` of Iron Teeth goods);
+  - irradiated water tanks (conversion to `ContaminatedWater`).
+
+  Built-in map setup also wrote negative mineral stock there, and the Reactor Bot worker-type option sold a useless unlock. One rule, `DeepFrontierFaction.Applies` (native `FactionService.Current`), now gates these points; Iron Teeth stays strict. The `reactor-faction` gate makes 29 compiled checks across Folktails, Whitepaws, Emberpelts and Iron Teeth; negative controls with the gates removed fail it.
+- A hospital without medicine admitted and held beavers needing only decontamination or radiation care, because native `AttractionNeedBehavior` offers its static effect list and keeps visitors until every SatisfyToMaxValue need is full. Postfixes on `ActionPosition` and `MaxValueNeedsAreActive` now filter both while medical treatment is unavailable (`d8f93bc`, moved onto `NativePatches` in `2dce084`).
+- Two smaller fixes:
+  - a migrated empty 0.8.x ore source no longer starts a second recovery clock (`f7b0e83`);
+  - stale DeepDrill/DeepOreDeposit references in comments, validators and docs are corrected (`30adb9c`).
+- The building-passage statics that survived a scene were fixed concurrently by the native-safety audit (`432e696`). The meltdown queue fix, Teleporter recovery, radiation source mixing and the Iron Teeth mineral lifecycle were checked and found sound. The build-288 "Negative unemployment investigation (unresolved trigger)" below is explained by the Teleporter dead-character restore (builds 292/293).
+- Not fixed, recorded in the review:
+  - hospital supply bar counts medicine;
+  - warehouse capacity split over five slots even when slots are empty (owner decision);
+  - Teleporter/zipline stations now linkable by passages (needs an in-game check);
+  - picker anchor;
+  - net-positive radioactive-water recycling (user decision);
+  - stale "46 goods and 68 recipes" description.
+- Checks:
+  - incremental compile: 0 errors, the three existing warnings;
+  - focused gates (`reactor-faction`, `meltdown-queue`, `super_bots`, `reactor_bot_workplaces`, `map_setup`, `radiation_content`, `narrative_content`, `vertical_slice_content`, `deadlocks`, `component_lifecycle`, `editor_guards`, `load_order`, `preview_components`): all pass;
+  - full scratch `validate_all -SkipBlender` at `2dce084`: 77 passes, the item-use report (0 issues among 52 goods) and the expected mirror-only failure of the Git-only asset guard;
+  - the Git-only asset guard passes in the checkout;
+  - the skill update passes `quick_validate`.
+- In-game checks still needed:
+  - a Folktails new game with a bot, saved and reloaded;
+  - an Iron Teeth hospital without medicine, with contaminated-only and injured-plus-contaminated beavers;
+  - optionally, a Teleporter placed against a workplace.
+
 ## Simultaneous reactor meltdown crash (2026-11-07; build 298 installed)
 
 - Workshop reproduction: two back-to-back reactors, partially submerged by 1–2 blocks, forced to melt down together. The first blast removes the second reactor from the block map, but `EntityService.Delete` defers Unity object destruction. `if (core)` was still true when the batch reached the second request, causing the strict own-blast membership check to fail.

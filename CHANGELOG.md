@@ -3,6 +3,10 @@
 ## Unreleased
 
 - Fixed a crash when two nearby reactors were queued to melt down together. A reactor already destroyed by the preceding blast no longer executes a second meltdown while its Unity object awaits destruction. Separate surviving reactors still melt down normally.
+- Fixed crashes in games of factions other than Iron Teeth, which 0.10.3 only partly addressed: every bot, every beaver's first tick, selecting a Deep Frontier mineral source or Human Record Cache, and irradiated water tanks. Deep Frontier's needs and goods belong to Iron Teeth, so these systems now stay inactive for other factions, built-in maps receive no Deep Frontier objects there and the Reactor Bot worker-type option cannot be unlocked. Iron Teeth play is unchanged.
+- Hospitals without medicine no longer admit or keep beavers that only need decontamination or radiation care, so those beavers use Decontamination Pods instead of waiting untreated in a bed. Injury and chipped-teeth care continue without medicine.
+- Fixed a rare second recovery timer on empty Deep Ore Sources migrated from 0.8.x saves.
+- Review of all changes since 0.8.6, with remaining open items and needed in-game checks: `docs/review-2026-11-09.md`.
 
 ## 0.10.3 (2026-11-07)
 
