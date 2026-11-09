@@ -1,0 +1,11 @@
+{
+  "MaterialCollectionSpec": {
+    "CollectionId": "Common",
+    "Materials": [
+      "Materials/UberAtlas/Materials/IronTeeth/Plaster_White.IronTeeth",
+      "Materials/UberAtlas/Materials/IronTeeth/Plaster_Orange.IronTeeth",
+      "Materials/UberAtlas/Materials/Folktails/Details.Folktails",
+      "Materials/UberAtlas/Materials/Folktails/Moss.Folktails"
+    ]
+  }
+}

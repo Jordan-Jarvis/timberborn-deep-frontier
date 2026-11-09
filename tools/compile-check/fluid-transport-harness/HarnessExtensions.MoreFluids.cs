@@ -140,7 +140,7 @@ internal static class MoreFluidsContent {
       var problems = new List<string>();
       foreach (var (path, doc) in corpus.Ours) Blueprint(schema, doc, path, corpus.Vanilla.ContainsKey(path), corpus, problems);
       check(problems.Count == 0, "More Fluids blueprint schema problems (" + problems.Count + "): " + string.Join("; ", problems));
-      check(corpus.Ours.Count == 15, "More Fluids blueprint files (6 buildings, 2 map objects, 3 recipes, 3 collections, Sun): " + corpus.Ours.Count);
+      check(corpus.Ours.Count == 16, "More Fluids blueprint files (6 buildings, 2 map objects, 3 recipes, 3 collections, Sun, map-object materials): " + corpus.Ours.Count);
       observations["moreFluidsBlueprints"] = corpus.Ours.Keys.OrderBy(k => k, StringComparer.Ordinal).ToArray();
     });
   }
