@@ -211,8 +211,10 @@ Every Unity launch in the repository goes through it:
 in PowerShell 7 and in Windows PowerShell 5.1. `cmd.exe` starts `ping.exe` at once, both run at BelowNormal on
 `0xFFC`, and the exit code comes back.
 
-Not yet verified: whether Unity starts `UnityShaderCompiler.exe` with an explicit priority class. The affinity holds
-either way. Check it in Task Manager during the next build.
+Confirmed in a real build (Moddable Fluids official build, 2026-11-09, checked in Task Manager by the coordinator):
+`Unity.exe`, `UnityShaderCompiler.exe`, `bee_backend`, the ILPP runner and the package manager all ran at BelowNormal on
+`0xFFC` (12 logical CPUs, two left free). Only `UnityCrashHandler64.exe` ran at Normal, which is harmless: it does no
+build work.
 
 ## 4. The flagged build leaves out the radioactive-water shaders
 
