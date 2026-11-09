@@ -39,7 +39,7 @@ The pre-rename development package must be removed from an installation. Its old
 | `ModdableFluids.GamePrototype` | Native scheduler hooks and their startup contract | Harmony, `Timberborn.Multithreading` |
 | `ModdableFluids.RuntimePrototype` | Flag-gated scene owner and worker fixture | Game assemblies |
 
-The three prototype assemblies keep their experimental `*.Prototype` namespaces. The package activates nothing unless the game is started with `-moddableFluidsWorkerAcceptance`.
+The three prototype assemblies keep their experimental `*.Prototype` namespaces. From 0.1.4 the package attaches to a game scene when another mod registered a fluid besides water and badwater; with none it binds nothing and native water stays untouched (see [Ordinary play](#ordinary-play-and-exception-saves-014)).
 
 ## Identity
 
@@ -55,7 +55,7 @@ The three prototype assemblies keep their experimental `*.Prototype` namespaces.
 
 ## Registration and load order
 
-Register providers from an `IModStarter.StartMod`. The flag-gated runtime freezes the registry once, before the first game world. After that, registering throws an error that points back to `StartMod`.
+Register providers from an `IModStarter.StartMod`. The runtime freezes the registry once, when the first game scene is configured. After that, registering throws an error that points back to `StartMod`.
 
 The freeze runs each provider's `Register` in ordinal `ProviderId` order, then validates everything together. Every problem is reported in one `FluidRegistryException` that names the provider, the mod and the fluid. A failed freeze leaves the host faulted with that report.
 
@@ -130,6 +130,10 @@ A reflected provider then goes through the same validation and lifecycle as a co
 | `ModdableFluids.World.SourceComposition` | One owner at a time overrides what tide-overridable sources emit (0.1.2) |
 | `ModdableFluids.World.Import` | Import another save format once (0.1.3) |
 | `ModdableFluids.World.Rules` | Provider rules after every completed tick (0.1.3) |
+| `ModdableFluids.World.Losses` | Per-tick losses by place, reason and fluid, read by rules (0.1.4) |
+| `ModdableFluids.World.Extraction` | Remove one fluid at a cell, with a per-request result (0.1.4) |
+| `ModdableFluids.Policies.WaterIntakes` | Per-fluid water-intake refusal and drawn-as-water transformation (0.1.4) |
+| `ModdableFluids.Policies.Irrigation` | Per-fluid soil-moisture effect (0.1.4) |
 
 The current runtime is 0.1.3. Each patch release only added capabilities; a provider built for 0.1.1 loads on 0.1.3.
 
@@ -178,7 +182,7 @@ Rules:
 - **Changed geometry.** Other columns are projected with the shared geometry rules, and geometry and pressure losses are reported explicitly.
 - **Native mismatch.** When native water disagrees with the restored state, the session faults and the load stops with the cell named.
 
-The game-side envelope (`ModdableFluids.World`) is built and round-trips through the game's own persistence under Mono; see [World save in game](fluids-native-adapter.md#world-save-in-game). Envelope 2 adds `ImportPending`: a native-only save written before the first fluid substep of a world whose importers have not run, so the next load imports again. Envelope 1 (0.1.2) is still read, as written. Not yet done: the in-game save/reload run and a last-completed-tick snapshot for exception saves.
+The game-side envelope (`ModdableFluids.World`) is built and round-trips through the game's own persistence under Mono; see [World save in game](fluids-native-adapter.md#world-save-in-game). Envelope 2 adds `ImportPending`: a native-only save written before the first fluid substep of a world whose importers have not run, so the next load imports again. Envelope 3 (0.1.4) adds `LastCompletedTickSnapshot` (see [exception saves](#ordinary-play-and-exception-saves-014)). Envelopes 1 and 2 are still read, as written. Not yet done: the in-game save/reload run.
 
 ## Source types (0.1.1)
 
@@ -201,7 +205,11 @@ Two optional provider interfaces, for compiled providers:
 
 ## Losses, extraction and native policies (0.1.4, in development)
 
-API surface committed 2026-11-09. The runtime still reports 0.1.3 until the release version is set; each capability below is listed only once it is implemented.
+Built 2026-11-09. All four capabilities below are implemented and listed: `ModdableFluids.World.Losses`, `.World.Extraction`, `.Policies.WaterIntakes` and `.Policies.Irrigation`. The runtime still reports 0.1.3 until the lead sets the release version.
+
+**Verified.** The .NET harness covers the pure parts: the loss ledger and its report, the extraction queue and its resolution, policy registration on both routes, the guard's decision, the moisture shadow, and the exception-save snapshot. The installed-Mono probe checks every native contract below against the installed assemblies. It also runs the moisture prefix on the actual native `StartTask`.
+
+**Still needs a game.** The guard on real pumps, the moisture effect on real crops, extraction from real buildings, and ordinary-play attachment.
 
 ### Loss reports (`ModdableFluids.World.Losses`)
 
@@ -237,6 +245,7 @@ A tick's losses run from the geometry reconciliation at its start to its change 
 - **Refusal.** Native water intakes are entities with a native `WaterInput` and no `IFluidCustomIntake` component. Moddable Fluids' one guard blocks them through the native `BlockableObject`, with the fluid's status, while their column's share of the fluid is at or above `refuseAtShare` (in (0, 1]). The share is read at the last completed tick.
 - **Drawn as water.** Below the refusal share, the part of a native clean-water removal that is this fluid becomes native clean water: Water goods at a pump, water at a mechanical pump's outlet. `drawnAsWater` names that transformation (for example `MoreFluids.CoffeeDrunkAsWater`). It is an ID in the provider's namespace, and no two fluids may share one. The drawn volume appears in the tick's `NativeRemoval` losses.
 - **Examples.** Coffee is refused at 0.5 and drawn as `MoreFluids.CoffeeDrunkAsWater`; saltwater is refused at 0.1. Deep Frontier's radioactive water is refused at 0.005.
+- **Scope.** Like Deep Frontier's guard, it blocks every native intake, badwater pumps and mechanical pumps included. It has one status per refusing fluid and no hysteresis. Before a scene's first completed fluid tick it decides nothing.
 
 ### Irrigation policy (`ModdableFluids.Policies.Irrigation`)
 
@@ -246,9 +255,30 @@ A tick's losses run from the geometry reconciliation at its start to its change 
 - **Badwater-like.** Blocking at `M` behaves exactly like badwater.
 - **Above 1.** Native moisture readers treat values at or above 1 as no moisture.
 
+### Placed source types (0.1.4)
+
+Every placed native water source is classified once, when its entity wakes, by its blueprint's template name and native specs (`NativeSourceClassifier`):
+
+- **Matching.** A blueprint without a registered source type, or one that no longer matches its type (tiles, default strength, badtide controller, and for native kinds contamination, depth limit, drill, weathers, direction), stops loading with both named.
+- **Emission.** Each source emits its own type's fluids. An active tide composition replaces them only for tide-overridable types.
+- **Schedule.** A type's schedule (a geyser) is applied as a native `IWaterStrengthModifier` on the source.
+- **Drought.** A type that does not follow droughts removes the source's native drought modifier, as the Badwater Pressurizer's `UnderlyingWaterSource.DisableDroughtInfluence` does.
+- **Badtide.** Badtide behaviour stays the blueprint's own native controller; the classification checks that it agrees with the type.
+
 ### Both policies are required in game
 
 Every extra fluid needs both policies before Moddable Fluids attaches to a game scene. `FluidRegistry.UndeclaredPolicies()` lists what is missing, and the scene stops loading with that list, naming each fluid, provider and mod. Registration, freeze and the harness do not require them, so providers built for 0.1.3 still register. `DescribeRuntime()` prints each fluid's policies.
+
+## Ordinary play and exception saves (0.1.4)
+
+- **Attaching.** The `Game` configurator freezes the registry. When a mod registered at least one extra fluid, it binds the scene owner, shared rendering, the water-intake guard, the moisture input and placed-source classification. With none it binds nothing. The worker fixture stays behind `-moddableFluidsWorkerAcceptance`.
+- **Refusing.** Before anything changes, the scene stops loading with one message per problem:
+  - a fluid without both policies;
+  - a changed native contract (intake guard, moisture input, placed sources, scheduler, exception-save flag);
+  - another mod's Harmony patch on a native method Moddable Fluids replaces or skips. The shipped Deep Frontier's `DeepFrontier.RadiationLockstep` and `DeepFrontier.RadiationSoil` are refused this way, by owner and method.
+- **Exception saves.** The native exception saver (`GameSceneExceptionStateSaver`, marked by `TickOnlyArrayService._forceAllowAccess`) can arrive while a fluid tick runs.
+  - **Writing.** Moddable Fluids writes the last published completed tick, rules included, marked `LastCompletedTickSnapshot` in envelope 3. This mirrors Deep Frontier's `RadiationSimulation.Save`. Normal saves still require a completed tick and fail otherwise.
+  - **Loading.** Such a save keeps each column's native physical volume and badwater share, because those arrays were saved mid-tick. The non-bad volume takes the snapshot's non-bad composition, or fresh water where the snapshot had none. Every adjusted column and the change per fluid go to the log.
 
 ## Optional integrations
 

@@ -11,6 +11,8 @@ Implemented 2026-11-06 on top of the [transport prototype](fluids-transport-prot
 | [NativeTransportHooks.cs](../src/ModdableFluids/GameBridge/NativeTransportHooks.cs) | Attach to one native starter, schedule dependent substep/change jobs, bind native sources and change queues, publish actual removal results, and remove owned patches |
 | [ModdableFluidsSceneOwner.cs](../src/ModdableFluids/Runtime/ModdableFluidsSceneOwner.cs) | Attach in native PostLoad and wait for native jobs before removing the scene's patches |
 | [FluidWorkerAcceptance.cs](../src/ModdableFluids/Runtime/FluidWorkerAcceptance.cs) | Flag-gated two-settlement fixture for real workers, geometry growth, pressure, native pump results and scene cleanup |
+| [FluidWaterIntakeGuard.cs](../src/ModdableFluids/Runtime/FluidWaterIntakeGuard.cs), [FluidMoistureInput.cs](../src/ModdableFluids/Runtime/FluidMoistureInput.cs), [FluidPlacedSources.cs](../src/ModdableFluids/Runtime/FluidPlacedSources.cs) | The 0.1.4 native hooks: water-intake guard, soil-moisture input, placed-source classification (see [Native hooks in ordinary play](#native-hooks-in-ordinary-play-014)) |
+| [FluidLossLedger.cs](../src/ModdableFluids/Native/FluidLossLedger.cs), [FluidExtractionQueue.cs](../src/ModdableFluids/World/FluidExtractionQueue.cs), [FluidNativePolicies.cs](../src/ModdableFluids/World/FluidNativePolicies.cs) | Pure parts: per-tick losses, extraction requests, the guard's decision and the moisture shadow |
 | [FluidColumnGeometry.cs](../src/ModdableFluids/Transport/FluidColumnGeometry.cs) | Project wet intervals and pressure storage across splits, merges, solid displacement, and removed columns |
 | [NativeAdapterScenarios.cs](../tools/compile-check/fluid-transport-harness/NativeAdapterScenarios.cs) | Native task, generated full-drain, pressure, ordering, geometry, and failure fixtures |
 | [SourceRegressionScenarios.cs](../tools/compile-check/fluid-transport-harness/SourceRegressionScenarios.cs) | Deep Frontier source reproducer, native signed-source controls, generated withdrawals and blocked-emission accounting |
@@ -186,6 +188,26 @@ The GPU half is not built. Its intended contract follows Deep Frontier's working
 
 The variants are bundle assets. They need the official Mod Builder's Windows and macOS bundles, and visual acceptance in game: pure, mixed and diluted colours, transparency, and scene unload.
 
+## Native hooks in ordinary play (0.1.4)
+
+Built 2026-11-09. The scene owner attaches in every game scene where a mod registered a fluid besides water and badwater. With none, nothing is bound. Every hook follows the same rules:
+
+- its native contract is checked before anything is bound or patched, with one message listing every difference;
+- it is installed per scene and removed at unload, after the parallelizer's `Wait`;
+- another Harmony owner on a replaced method is refused before simulation starts, with the owner named.
+
+| Hook | Target | Kind | Installed when |
+| --- | --- | --- | --- |
+| Transport | `WaterSimulationTaskStarter.ScheduleSimulationSteps`, `ScheduleUpdateWaterChanges`; skipped tasks `UpdateContaminationTask`, `UpdateWaterSourcesTask`, `UpdateWaterChangesTask` | Harmony prefixes (`ModdableFluids.Prototype.NativeTransport`) | Always, in an attached scene |
+| Soil moisture | `SoilMoistureSimulationTaskStarter.StartTask(..., in waterColumns, ...)` | Harmony prefix (`ModdableFluids.SoilMoisture`) replacing the argument for that call | Only when a fluid blocks moisture |
+| Water-intake guard | every native `WaterInput` | Template decorator; native `BlockableObject` and `StatusToggle` | Always, in an attached scene |
+| Placed sources | every native `WaterSource` | Template decorator; native `IWaterStrengthModifier`; removes the native drought modifier where the type says so | Always, in an attached scene |
+
+- **Losses.** The session keeps a per-tick ledger. A tick runs from the geometry reconciliation at its start (in its first substep) through its change stage. `EndTick` completes it, and the column rules read it through `IFluidColumnEditor.Losses` before the tick is published. An addition queued to a closed cell now consumes its fluid record and is reported as dropped; before, that record stayed queued.
+- **Extraction.** Requests queue on the main thread. The change job's scheduling prefix, also on the main thread, takes the batch, so a request is resolved in the tick scheduled after it. Requests are resolved after the native changes. They stay out of the native `RemovedWater` dictionary, so no native `WaterInput` is credited with them. Results are delivered at the owner's singleton tick, or from `ForcedParallelTickFinished` when a save finishes the tick, so a building stores them before the save is written.
+- **Moisture timing.** The moisture input captures the published tick at its singleton tick, after the previous parallel tick finished and before `StartParallelTick`. Water jobs scheduled earlier in `StartParallelTick` may already be running, so the live snapshot is not used. Columns the main thread reshaped since that tick take their cell's shares by wet-interval overlap. The contamination value is written into a copy through the backing field of the boxed native struct; the installed-Mono probe confirms this works.
+- **Exception saves.** See the [contract](fluids-api-contract.md#ordinary-play-and-exception-saves-014).
+
 ## Verification
 
 As of 2026-11-09 the combined .NET 8 harness passes **402,478 assertions across 45 scenarios**. The 14 new scenarios cover the registry, providers, reflection binding, scene lifecycle, provider state, discovery, duplicate copies, optional consumers with the API present and absent, and save documents and round trips.
@@ -230,8 +252,9 @@ The flagged build compiles but is not runnable, and is not on the in-game run li
 
 ## Remaining work before a playable foundation
 
+0. 0.1.4 (2026-11-09): ordinary-play attachment, loss reports, extraction, intake and irrigation policies with their native hooks, placed source types and the exception-save snapshot are built; none has run in game. As of 2026-11-09 the harness passes 409,590 assertions in 87 scenarios, the installed-Mono probe 1,188 checks (17 new: the 0.1.4 contracts and the moisture prefix on the actual native method), the tides probe 28 and the absence probe 5. Mixed builds of other areas were isolated to HEAD for these counts.
 1. ~~Run the two-settlement fixture~~ Passed in game on 2026-11-09 (see above). Rerun it after the rename build to establish the renamed identities in game.
-2. Bind the 0.1 registry ([contract](fluids-api-contract.md)) to source composition, intake conversion and native weather. Source composition (0.1.2) and source types (0.1.1) are bound; intake conversion is still a prototype delegate.
+2. Bind the 0.1 registry ([contract](fluids-api-contract.md)) to source composition, intake conversion and native weather. Source composition, placed source types, intake policies and extraction are bound (0.1.4); native weather belongs to the tides area.
 3. ~~Add the game-side saver and loader~~ Built, with the disposable save/reload fixture (in game: pending). The Deep Frontier importer exists as flagged groundwork (above).
 4. Measure active-area work and memory on real maps, then finish shared rendering. The current reflected full-buffer prototype has no production performance acceptance yet.
-5. Per-column loss reports (evaporation, geometry, intake) for owners that turn lost fluid into something else, such as Deep Frontier's soil deposition.
+5. ~~Per-column loss reports~~ Built in 0.1.4 (`IFluidColumnEditor.Losses`).
