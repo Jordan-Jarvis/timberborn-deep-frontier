@@ -68,6 +68,10 @@ namespace DeepFrontier.Scripts {
       Yielder.YieldDecreased += OnYieldDecreased;
       if (_savedProgress.HasValue) {
         if (Amount != 0) throw new InvalidOperationException($"{Name}: recovery progress on a nonempty deposit");
+        // A migrated empty deposit's SetAmount(0) has already resumed the clock;
+        // native FastForwardProgress resumes a running trigger after it finishes,
+        // which would start a second recovery on the refilled deposit.
+        _recharge.Pause();
         _recharge.FastForwardProgress(_savedProgress.Value);
       }
       if (IsRecharging && !_editor.IsMapEditor) _recharge.Resume();
