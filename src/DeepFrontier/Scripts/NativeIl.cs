@@ -42,6 +42,25 @@ namespace DeepFrontier.Scripts {
     public static bool Calls(MethodBase caller, MethodBase callee) =>
       callee != null && Callees(caller).Any(method => method.Module == callee.Module && method.MetadataToken == callee.MetadataToken);
 
+    // SHA-256 (lower-case hex) of the method's IL bytes: the same digest as
+    // System.Reflection.Metadata MethodBodyBlock.GetILBytes on the shipped DLL.
+    public static string Sha256(MethodBase method) {
+      var il = method.GetMethodBody()?.GetILAsByteArray()
+        ?? throw new InvalidOperationException($"{method.DeclaringType?.Name}.{method.Name} has no IL body");
+      using var sha = System.Security.Cryptography.SHA256.Create();
+      return string.Concat(sha.ComputeHash(il).Select(b => b.ToString("x2")));
+    }
+
+    // A prefix that replaces a native method's body (returns false) is a copy
+    // of that body plus one change; it stays valid only while the native
+    // body is the one it was written from. Throws if the IL differs.
+    public static void RequireBody(string feature, MethodBase method, string sha256) {
+      if (method == null) throw new InvalidOperationException($"{feature}: native method missing");
+      string actual = Sha256(method);
+      if (actual != sha256)
+        throw new InvalidOperationException($"{feature}: native {method.DeclaringType?.FullName}.{method.Name} differs from Timberborn 1.1.2.8 (IL {actual}); the replacement must be re-derived from the new body");
+    }
+
     // String literals loaded by ldstr (0x72, user-string token table 0x70).
     public static bool LoadsString(MethodBase caller, string literal) {
       var il = caller.GetMethodBody()?.GetILAsByteArray()

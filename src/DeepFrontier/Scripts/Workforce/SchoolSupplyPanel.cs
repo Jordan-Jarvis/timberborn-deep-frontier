@@ -35,10 +35,7 @@ namespace DeepFrontier.Scripts {
   // Verify() resolves every member first and throws if the game changed them.
   internal sealed class SchoolSupplyPanelModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
-      SchoolSupplyPanel.Verify();
-      var harmony = new Harmony(SchoolSupplyPanel.HarmonyId);
-      harmony.CreateClassProcessor(typeof(SchoolSupplyFragmentPatch)).Patch();
-      harmony.CreateClassProcessor(typeof(SchoolSupplyDescriberPatch)).Patch();
+      NativePatches.Install(SchoolSupplyPanel.HarmonyId, SchoolSupplyPanel.Verify, typeof(SchoolSupplyFragmentPatch), typeof(SchoolSupplyDescriberPatch));
       Debug.Log("[DeepFrontier] Technical School supply panel patches applied (GoodConsumingBuildingFragment.UpdateFragment, GoodConsumingBuildingDescriber.DescribeEntity).");
     }
   }

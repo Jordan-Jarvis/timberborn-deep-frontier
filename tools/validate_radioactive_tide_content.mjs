@@ -293,7 +293,7 @@ if (patches) {
   check(patches.trimStart().startsWith('#if !UNITY_EDITOR') && patches.trimEnd().endsWith('#endif'), 'Harmony patches must be excluded from the Unity editor compile');
   for (const patch of ['RadioactiveTideSelectionPatch', 'RadioactiveTideRestorePatch', 'RadioactiveTideUiSpecificationPatch', 'RadioactiveTideUiTextPatch', 'RadioactiveTideStartSoundPatch'])
     check(new RegExp(`CreateClassProcessor\\(typeof\\(${patch}\\)\\)\\.Patch\\(\\)`).test(patches) && patches.includes(`class ${patch}`), `patch ${patch} is not defined and applied`);
-  check(/RadioactiveTidePatchTargets\.Verify\(\);\s*RadioactiveTideNative\.Verify\(\);\s*var harmony/.test(patches), 'native members must be verified before patching');
+  check(/NativePatches\.Install\(HarmonyId, \(\) => \{ RadioactiveTidePatchTargets\.Verify\(\); RadioactiveTideNative\.Verify\(\); \}, harmony => \{/.test(patches), 'native members must be verified (NativePatches startup check) before patching');
 }
 check(!(await readdir(scripts)).includes('RadioactiveTideSettings.cs'), 'the eMka.ModSettings tide options (RadioactiveTideSettings.cs) are replaced by the per-game settings');
 for (const path of await csFiles(scripts)) {
@@ -302,7 +302,7 @@ for (const path of await csFiles(scripts)) {
 }
 if (newGamePatch) {
   check(newGamePatch.trimStart().startsWith('#if !UNITY_EDITOR') && newGamePatch.trimEnd().endsWith('#endif'), 'the new-game Harmony patch must be excluded from the Unity editor compile');
-  check(/RadioactiveTideNewGameNative\.Verify\(\);\s*new Harmony\(HarmonyId\)\.Patch\(RadioactiveTideNewGameNative\.CustomTryGetValidatedGameMode\(\)/.test(newGamePatch),
+  check(/NativePatches\.Install\(HarmonyId, RadioactiveTideNewGameNative\.Verify, harmony => harmony\.Patch\(RadioactiveTideNewGameNative\.CustomTryGetValidatedGameMode\(\)/.test(newGamePatch),
     'the new-game patch must verify the native members, then postfix CustomNewGameModeController.TryGetValidatedGameMode');
   check(/class RadioactiveTideNewGameModStarter : IModStarter/.test(newGamePatch) && !/ModdableWeathersLoaded/.test(newGamePatch), 'the new-game patch applies at mod start with or without Moddable Weathers');
 }

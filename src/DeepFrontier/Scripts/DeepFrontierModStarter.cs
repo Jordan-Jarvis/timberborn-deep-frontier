@@ -5,9 +5,10 @@ namespace DeepFrontier.Scripts {
   internal sealed class DeepFrontierModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
 #if !UNITY_EDITOR
+      // Every Harmony patch is installed through NativePatches (startup check
+      // first, once per process); docs/native-safety-audit.md lists them all.
       RawOreScavenging.Apply();
-      new HarmonyLib.Harmony("DeepFrontier.RestaurantKitchen").CreateClassProcessor(typeof(RestaurantKitchenInventory)).Patch();
-      new HarmonyLib.Harmony("DeepFrontier.RestaurantKitchen").CreateClassProcessor(typeof(RestaurantKitchenRecipeCompatibility)).Patch();
+      RestaurantKitchenInventory.Apply();
       // Hatchery deck paths/shafts/platforms must load after the deck slabs
       // they stand on (Waterside/StackableBaseLoadOrder.cs); buildings whose
       // footprint changed load before paths and objects that now overlap them

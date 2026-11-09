@@ -13,11 +13,21 @@ namespace DeepFrontier.Scripts {
   // shared DeepFrontierModStarter.
   internal sealed class WorkforceModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
-      var harmony=new Harmony("DeepFrontier.Workforce");
-      harmony.CreateClassProcessor(typeof(BotWearDeteriorationPatch)).Patch();
-      harmony.CreateClassProcessor(typeof(SpecialistWorkplaceRegistrationPatch)).Patch();
-      harmony.CreateClassProcessor(typeof(SpecialistWorkplaceUnregistrationPatch)).Patch();
+      NativePatches.Install("DeepFrontier.Workforce",Verify,
+        typeof(BotWearDeteriorationPatch),typeof(SpecialistWorkplaceRegistrationPatch),typeof(SpecialistWorkplaceUnregistrationPatch));
       Debug.Log("[DeepFrontier] Workforce risk patches applied (bot wear, specialist staffing).");
+    }
+
+    // Deteriorable.Tick is reached through the tickable component interface
+    // and the assigner's handlers through district events (delegates): no
+    // call is inlined. The prefixes bind the native parameter names.
+    private static void Verify() {
+      const string feature="Workforce";
+      NativeMember.Method(feature,typeof(Deteriorable),nameof(Deteriorable.Tick),typeof(void));
+      NativeMember.Field(feature,typeof(Deteriorable),"_currentDeterioration",typeof(float));
+      NativeMember.Field(feature,typeof(Deteriorable),"_fixedDeltaTimeInDays",typeof(float));
+      NativeMember.Parameters(feature,NativeWorkplaceAssigner.Method("OnFinishedBuildingRegistered"),"sender","finishedBuildingRegisteredEventArgs");
+      NativeMember.Parameters(feature,NativeWorkplaceAssigner.Method("OnFinishedBuildingUnregistered"),"sender","finishedBuildingUnregisteredEventArgs");
     }
   }
 

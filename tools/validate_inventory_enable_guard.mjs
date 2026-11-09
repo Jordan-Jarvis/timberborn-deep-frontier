@@ -40,7 +40,7 @@ if(!guardPrefix||compact(guardPrefix[1])!=='if(!__instance.Enabled)returntrue;Sk
 for(const needle of ['AccessTools.Method(typeof(Inventory),nameof(Inventory.Enable),Type.EmptyTypes)',
                      'AccessTools.PropertyGetter(typeof(Inventory),"Enabled")',
                      'throw new InvalidOperationException("Timberborn 1.1.2.8 instance void Inventory.Enable() changed")',
-                     'new Harmony(HarmonyId).CreateClassProcessor(typeof(InventoryEnableGuard)).Patch()'])
+                     'NativePatches.Install(HarmonyId,Verify,typeof(InventoryEnableGuard))'])
   if(!has(guardInside,needle))failures.push(`InventoryEnableGuard: missing inside #if !UNITY_EDITOR: ${needle}`);
 if(/Postfix\(|Transpiler\(|Finalizer\(/.test(guardPart))failures.push('InventoryEnableGuard: only the Enable prefix is allowed');
 
@@ -57,7 +57,7 @@ if(!restorePostfix||compact(restorePostfix[1])!=='if(__state!=false)return;varin
 for(const needle of ['AccessTools.Method(typeof(ModdableRecipes.Patches.ManufactoryPatches),nameof(ModdableRecipes.Patches.ManufactoryPatches.InitInventoryForRecipe),new[]{typeof(Manufactory),typeof(RecipeSpec)})',
                      'AccessTools.Method(typeof(RestaurantKitchenRecipeCompatibility),"Prefix")',
                      'AccessTools.Method(typeof(BotMaintenanceRecipeCompatibility),"Postfix")',
-                     'new Harmony(HarmonyId).CreateClassProcessor(typeof(ModdableRecipesEnabledState)).Patch()'])
+                     'NativePatches.Install(HarmonyId,Verify,typeof(ModdableRecipesEnabledState))'])
   if(!has(restoreInside,needle))failures.push(`ModdableRecipesEnabledState: missing inside #if !UNITY_EDITOR: ${needle}`);
 
 // --- The other Deep Frontier hooks on the MR method keep the shapes the restore is ordered against.

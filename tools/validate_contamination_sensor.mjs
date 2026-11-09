@@ -93,9 +93,8 @@ if (lines[0].trim() !== '#if !UNITY_EDITOR' || lines.at(-1).trim() !== '#endif')
 require(patches, 'Method("GetContamination", typeof(float), BindingFlags.Instance | BindingFlags.NonPublic,', 'the patch must target the private ContaminationSensor.GetContamination(int) : float');
 require(patches, 'private static MethodBase TargetMethod() => ContaminationSensorNative.Measurement();', 'the patch target must be the verified measurement method');
 const start = /public void StartMod\([^)]*\) \{([\s\S]*?)\r?\n    \}/.exec(patches)?.[1] ?? '';
-const verifyAt = start.indexOf('ContaminationSensorNative.Verify();');
-const patchAt = start.indexOf('.Patch();');
-if (verifyAt < 0 || patchAt < 0 || verifyAt > patchAt) errors.push('StartMod must call ContaminationSensorNative.Verify() before applying the patch');
+if (!start.includes('NativePatches.Install(HarmonyId, ContaminationSensorNative.Verify, typeof(ContaminationSensorMeasurementPatch));'))
+  errors.push('StartMod must install the patch through NativePatches with ContaminationSensorNative.Verify as its startup check');
 if (!/\[HarmonyPatch\]\s*internal static class ContaminationSensorMeasurementPatch/.test(patches)) errors.push('ContaminationSensorMeasurementPatch must be a [HarmonyPatch] class');
 
 if (panel.split(/\r?\n/)[0].trim() !== '#if !UNITY_EDITOR') errors.push('ContaminationSensorPanel.cs uses TimberUi and must be wrapped in #if !UNITY_EDITOR');

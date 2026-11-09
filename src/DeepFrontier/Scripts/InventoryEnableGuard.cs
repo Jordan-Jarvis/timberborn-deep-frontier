@@ -34,11 +34,10 @@ namespace DeepFrontier.Scripts {
     internal static int Skipped { get; private set; }
 
 #if !UNITY_EDITOR
-    private static bool _patched;
-
     // Called once per process from DeepFrontierModStarter, before any game scene creates inventories.
-    internal static void Apply() {
-      if(_patched)return;
+    internal static void Apply()=>NativePatches.Install(HarmonyId,Verify,typeof(InventoryEnableGuard));
+
+    private static void Verify() {
       var method=AccessTools.Method(typeof(Inventory),nameof(Inventory.Enable),Type.EmptyTypes);
       if(method==null||method.IsStatic||method.ReturnType!=typeof(void)||method.DeclaringType!=typeof(Inventory))
         throw new InvalidOperationException("Timberborn 1.1.2.8 instance void Inventory.Enable() changed");
@@ -47,8 +46,6 @@ namespace DeepFrontier.Scripts {
         throw new InvalidOperationException("Timberborn 1.1.2.8 BaseComponent.Enabled (bool) on Inventory changed");
       if(AccessTools.Method(typeof(Inventory),nameof(Inventory.Disable),Type.EmptyTypes)==null)
         throw new InvalidOperationException("Timberborn 1.1.2.8 Inventory.Disable() changed");
-      new Harmony(HarmonyId).CreateClassProcessor(typeof(InventoryEnableGuard)).Patch();
-      _patched=true;
     }
 
     private static bool Prefix(Inventory __instance) {
@@ -82,10 +79,9 @@ namespace DeepFrontier.Scripts {
     internal static int Restored { get; private set; }
 
 #if !UNITY_EDITOR
-    private static bool _patched;
+    internal static void Apply()=>NativePatches.Install(HarmonyId,Verify,typeof(ModdableRecipesEnabledState));
 
-    internal static void Apply() {
-      if(_patched)return;
+    private static void Verify() {
       var method=AccessTools.Method(typeof(ModdableRecipes.Patches.ManufactoryPatches),
         nameof(ModdableRecipes.Patches.ManufactoryPatches.InitInventoryForRecipe),new[]{typeof(Manufactory),typeof(RecipeSpec)});
       if(method==null||!method.IsStatic||method.ReturnType!=typeof(void))
@@ -99,8 +95,6 @@ namespace DeepFrontier.Scripts {
         throw new InvalidOperationException("BotMaintenanceRecipeCompatibility.Postfix(Manufactory, RecipeSpec) changed");
       if(AccessTools.PropertyGetter(typeof(Manufactory),nameof(Manufactory.Inventory))==null)
         throw new InvalidOperationException("Timberborn 1.1.2.8 Manufactory.Inventory changed");
-      new Harmony(HarmonyId).CreateClassProcessor(typeof(ModdableRecipesEnabledState)).Patch();
-      _patched=true;
     }
 
     [HarmonyPriority(Priority.First)]

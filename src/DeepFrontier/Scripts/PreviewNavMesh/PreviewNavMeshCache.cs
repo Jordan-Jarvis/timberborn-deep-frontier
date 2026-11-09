@@ -142,7 +142,15 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
       "CanAddBlockingEdge dc3e2fa202b8ab8d0b2d333e203cf47966818be442f2e1876613996358dce643",
     };
 
-    public static void Patch() {
+    public static void Patch()=>NativePatches.Install("DeepFrontier.PreviewNavMesh",Verify,harmony=>{
+      harmony.Patch(Method(_previewNavMeshType,"AddToPreviewService"),prefix:new HarmonyMethod(typeof(PreviewNavMeshCache),nameof(AddPrefix)));
+      harmony.Patch(Method(_previewNavMeshType,"RemoveFromPreviewService"),prefix:new HarmonyMethod(typeof(PreviewNavMeshCache),nameof(RemovePrefix)));
+      harmony.Patch(Method(typeof(PreviewPlacer),"PopulateBuildablePreviewsAndAddToBlockServices"),
+        prefix:new HarmonyMethod(typeof(PreviewNavMeshCache),nameof(PopulatePrefix)),
+        finalizer:new HarmonyMethod(typeof(PreviewNavMeshCache),nameof(PopulateFinalizer)));
+    });
+
+    private static void Verify() {
       Require(Type.GetType("Timberborn.Navigation.NavMeshObject, Timberborn.Navigation")==typeof(NavMeshObject),"NavMeshObject moved");
       foreach(var (type,method,sha) in NativeIl) {
         var actual=Il(Method(Resolve(type),method));
@@ -166,13 +174,6 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
       _added=AccessTools.FieldRefAccess<NavMeshObject,bool>("_addedToPreviewNavMesh");
       _addingChanges=AccessTools.FieldRefAccess<NavMeshObject,List<NavMeshChangeSpecification>>("_addingChanges");
       _placerPreviews=AccessTools.FieldRefAccess<PreviewPlacer,Lazy<Preview[]>>("_previews");
-
-      var harmony=new Harmony("DeepFrontier.PreviewNavMesh");
-      harmony.Patch(Method(_previewNavMeshType,"AddToPreviewService"),prefix:new HarmonyMethod(typeof(PreviewNavMeshCache),nameof(AddPrefix)));
-      harmony.Patch(Method(_previewNavMeshType,"RemoveFromPreviewService"),prefix:new HarmonyMethod(typeof(PreviewNavMeshCache),nameof(RemovePrefix)));
-      harmony.Patch(Method(typeof(PreviewPlacer),"PopulateBuildablePreviewsAndAddToBlockServices"),
-        prefix:new HarmonyMethod(typeof(PreviewNavMeshCache),nameof(PopulatePrefix)),
-        finalizer:new HarmonyMethod(typeof(PreviewNavMeshCache),nameof(PopulateFinalizer)));
     }
 
     internal static void Load(NavMeshGroupService groups) {_groups=groups;}

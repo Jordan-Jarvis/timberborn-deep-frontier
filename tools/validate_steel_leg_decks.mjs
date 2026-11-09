@@ -146,8 +146,8 @@ for (const what of ['internal sealed class SteelStructuresModStarter : IModStart
   'postfix:new HarmonyMethod(typeof(SteelDeckPlacerClaim),nameof(CanHandlePostfix))',
   'if(__result&&__0.HasSpec<SteelDeckToolSpec>())__result=false;', 'nameof(BlockObjectPlacerService.GetMatchingPlacer)', '#if !UNITY_EDITOR'])
   need(claim, what, 'SteelDeckPlacerClaim.cs');
-const patches = [...(cs + claim).matchAll(/new Harmony\(/g)].length;
-if (patches !== 1) fail(`steel structures use ${patches} Harmony instances; the design allows exactly one (BuildingPlacer.CanHandle)`);
+const patches = [...(cs + claim).matchAll(/NativePatches\.Install\(/g)].length + [...(cs + claim).matchAll(/new Harmony\(/g)].length;
+if (patches !== 1) fail(`steel structures install ${patches} Harmony patches; the design allows exactly one (BuildingPlacer.CanHandle, through NativePatches)`);
 
 if (failures.length) {
   console.log(failures.map((f) => 'FAIL ' + f).join('\n'));

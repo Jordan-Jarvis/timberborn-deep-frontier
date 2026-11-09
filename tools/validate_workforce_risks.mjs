@@ -254,7 +254,7 @@ if (design) {
   need(inventory, /initializer\.AddGoodDisallower\(school\);/, 'SchoolSupplyInventory must make the school its inventory\'s IGoodDisallower');
   if (!(panelPatch.trimStart().startsWith('#if !UNITY_EDITOR') && panelPatch.trimEnd().endsWith('#endif')))
     errors.push('school supplies: SchoolSupplyPanel.cs must be wrapped in #if !UNITY_EDITOR');
-  need(panelPatch, /class SchoolSupplyPanelModStarter : IModStarter \{\s*public void StartMod\(IModEnvironment modEnvironment\) \{\s*SchoolSupplyPanel\.Verify\(\);[\s\S]*?CreateClassProcessor\(typeof\(SchoolSupplyFragmentPatch\)\)\.Patch\(\);\s*harmony\.CreateClassProcessor\(typeof\(SchoolSupplyDescriberPatch\)\)\.Patch\(\);/,
+  need(panelPatch, /class SchoolSupplyPanelModStarter : IModStarter \{\s*public void StartMod\(IModEnvironment modEnvironment\) \{\s*NativePatches\.Install\(SchoolSupplyPanel\.HarmonyId, SchoolSupplyPanel\.Verify, typeof\(SchoolSupplyFragmentPatch\), typeof\(SchoolSupplyDescriberPatch\)\);/,
     'SchoolSupplyPanel must verify the native contract, then apply both patches at mod start');
   need(panelPatch, /\[HarmonyPatch\(typeof\(GoodConsumingBuildingFragment\), nameof\(GoodConsumingBuildingFragment\.UpdateFragment\)\)\]\s*internal static class SchoolSupplyFragmentPatch \{\s*private static void Postfix\(/,
     'the supply panel patch is a postfix on GoodConsumingBuildingFragment.UpdateFragment');

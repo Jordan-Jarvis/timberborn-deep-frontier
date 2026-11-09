@@ -29,9 +29,8 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
     private const string HarmonyId = "DeepFrontier.RadioactiveTideNewGame";
 
     public void StartMod(IModEnvironment modEnvironment) {
-      RadioactiveTideNewGameNative.Verify();
-      new Harmony(HarmonyId).Patch(RadioactiveTideNewGameNative.CustomTryGetValidatedGameMode(),
-        postfix: new HarmonyMethod(typeof(RadioactiveTideNewGamePatch), nameof(RadioactiveTideNewGamePatch.Postfix)));
+      NativePatches.Install(HarmonyId, RadioactiveTideNewGameNative.Verify, harmony => harmony.Patch(RadioactiveTideNewGameNative.CustomTryGetValidatedGameMode(),
+        postfix: new HarmonyMethod(typeof(RadioactiveTideNewGamePatch), nameof(RadioactiveTideNewGamePatch.Postfix))));
       Debug.Log("[DeepFrontier] Radioactive tide new-game settings applied (CustomNewGameModeController.TryGetValidatedGameMode postfix).");
     }
   }

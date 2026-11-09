@@ -1,6 +1,7 @@
 #if !UNITY_EDITOR
 using System;
 using System.Linq;
+using System.Reflection;
 using HarmonyLib;
 using Timberborn.BlockObjectTools;
 using Timberborn.BlockSystem;
@@ -36,10 +37,12 @@ namespace DeepFrontier.Scripts.SteelStructures {
   }
 
   internal static class SteelDeckPlacerClaim {
-    private static bool _patched;
+    private static MethodInfo _canHandle;
 
-    internal static void Apply() {
-      if(_patched)return;
+    internal static void Apply()=>NativePatches.Install("DeepFrontier.SteelDeckPlacerClaim",Verify,harmony=>harmony.Patch(_canHandle,
+      postfix:new HarmonyMethod(typeof(SteelDeckPlacerClaim),nameof(CanHandlePostfix))));
+
+    private static void Verify() {
       const string prefix="[DeepFrontier SteelDeckPlacerClaim] ";
       var canHandle=AccessTools.Method(typeof(BuildingPlacer),nameof(BuildingPlacer.CanHandle),new[] {typeof(BlockObjectSpec)});
       if(canHandle==null||canHandle.ReturnType!=typeof(bool)||canHandle.IsStatic)
@@ -52,9 +55,7 @@ namespace DeepFrontier.Scripts.SteelStructures {
       if(match==null||match.ReturnType!=typeof(IBlockObjectPlacer)||
          !NativeIl.Callees(match).Any(m=>m.Name=="SingleOrDefault"&&m.DeclaringType==typeof(Enumerable)))
         throw new InvalidOperationException(prefix+"BlockObjectPlacerService.GetMatchingPlacer no longer selects one placer with SingleOrDefault");
-      new Harmony("DeepFrontier.SteelDeckPlacerClaim").Patch(canHandle,
-        postfix:new HarmonyMethod(typeof(SteelDeckPlacerClaim),nameof(CanHandlePostfix)));
-      _patched=true;
+      _canHandle=canHandle;
     }
 
     private static void CanHandlePostfix(BlockObjectSpec __0,ref bool __result) {

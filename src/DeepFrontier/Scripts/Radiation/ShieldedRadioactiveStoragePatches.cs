@@ -10,10 +10,21 @@ using Timberborn.Stockpiles;
 
 namespace DeepFrontier.Scripts.Radiation {
   internal sealed class ShieldedRadioactiveStorageModStarter : IModStarter {
-    public void StartMod(IModEnvironment modEnvironment) {
-      var harmony = new Harmony("DeepFrontier.ShieldedRadioactiveStorage");
-      harmony.CreateClassProcessor(typeof(ShieldedStorageInventoryPatch)).Patch();
-      harmony.CreateClassProcessor(typeof(ShieldedStorageSelectionPatch)).Patch();
+    public void StartMod(IModEnvironment modEnvironment) =>
+      NativePatches.Install("DeepFrontier.ShieldedRadioactiveStorage", Verify, typeof(ShieldedStorageInventoryPatch), typeof(ShieldedStorageSelectionPatch));
+
+    // Every private field the two patches bind by name, and their targets.
+    private static void Verify() {
+      const string feature = "Shielded radioactive storage";
+      var initializer = typeof(InventoryInitializer);
+      NativeMember.NotInlined(feature, NativeMember.Method(feature, initializer, nameof(InventoryInitializer.Initialize), typeof(void)));
+      NativeMember.Field(feature, initializer, "_inventory", typeof(Inventory));
+      NativeMember.Field(feature, initializer, "_storableGoodAmounts", typeof(List<StorableGoodAmount>));
+      NativeMember.Field(feature, initializer, "_capacity", typeof(int));
+      NativeMember.Field(feature, initializer, "_componentName", typeof(string));
+      var dropdown = ShieldedStorageSelectionPatch.Target();
+      NativeMember.Field(feature, dropdown.DeclaringType, "_inventory", typeof(Inventory));
+      NativeMember.Field(feature, dropdown.DeclaringType, "_items", typeof(List<string>));
     }
   }
 
@@ -36,9 +47,11 @@ namespace DeepFrontier.Scripts.Radiation {
   // it cannot be delivered; the saved contents remain in the inventory panel.
   [HarmonyPatch]
   internal static class ShieldedStorageSelectionPatch {
-    private static MethodBase TargetMethod() => AccessTools.Method(
+    internal static MethodBase Target() => AccessTools.Method(
       "Timberborn.StockpilesUI.StockpileDropdownProvider:InitializeEntity")
       ?? throw new InvalidOperationException("Timberborn 1.1 StockpileDropdownProvider.InitializeEntity missing");
+
+    private static MethodBase TargetMethod() => Target();
 
     private static void Postfix(Inventory ____inventory, List<string> ____items) {
       if (!____inventory.Takes(RadiationTuning.SludgeGoodId))

@@ -29,8 +29,7 @@ namespace DeepFrontier.Scripts.Sensors {
     internal const string HarmonyId = "DeepFrontier.ContaminationSensor";
 
     public void StartMod(IModEnvironment modEnvironment) {
-      ContaminationSensorNative.Verify();
-      new Harmony(HarmonyId).CreateClassProcessor(typeof(ContaminationSensorMeasurementPatch)).Patch();
+      NativePatches.Install(HarmonyId, ContaminationSensorNative.Verify, typeof(ContaminationSensorMeasurementPatch));
       Debug.Log("[DeepFrontier] Contamination sensor measurement patch applied (badwater, radiation, any contamination).");
     }
   }

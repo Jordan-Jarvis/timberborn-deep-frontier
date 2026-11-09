@@ -11,15 +11,30 @@ namespace DeepFrontier.Scripts {
   // night for sleep. Only WorkerWorkingHours.AreWorkingHours changes, the
   // native value WorkerRootBehavior and Restaurant.StaffOnDuty read; bots,
   // which ignore working hours, are unchanged.
+  // The getter is 22 IL bytes, above the Mono inline limit of 20; Verify
+  // keeps it there, so callers cannot inline past the postfix.
   [HarmonyPatch(typeof(WorkerWorkingHours),nameof(WorkerWorkingHours.AreWorkingHours),MethodType.Getter)]
   internal static class RestaurantLateShift {
-    private static readonly AccessTools.FieldRef<WorkerWorkingHours,WorkingHoursManager> Manager=
-      AccessTools.FieldRefAccess<WorkerWorkingHours,WorkingHoursManager>("_workingHoursManager");
-    private static readonly AccessTools.FieldRef<WorkingHoursManager,IDayNightCycle> Clock=
-      AccessTools.FieldRefAccess<WorkingHoursManager,IDayNightCycle>("_dayNightCycle");
+    private const string Feature="Restaurant late shift";
+    // 1.1.2.8 WorkingHoursManager.AreWorkingHours, which IsLateShift extends.
+    private const string ManagerHoursIl="30a6f14c866b0828c34caf0d63c9980c28e8a70a4f568e15e47676a73d0f463f";
+    // Resolved by Verify at mod start, before the postfix can run.
+    private static AccessTools.FieldRef<WorkerWorkingHours,WorkingHoursManager> Manager;
+    private static AccessTools.FieldRef<WorkingHoursManager,IDayNightCycle> Clock;
 
     // Called once per process from DeepFrontierModStarter.
-    internal static void Apply()=>new Harmony("DeepFrontier.RestaurantLateShift").CreateClassProcessor(typeof(RestaurantLateShift)).Patch();
+    internal static void Apply()=>NativePatches.Install("DeepFrontier.RestaurantLateShift",Verify,typeof(RestaurantLateShift));
+
+    private static void Verify() {
+      var getter=AccessTools.PropertyGetter(typeof(WorkerWorkingHours),nameof(WorkerWorkingHours.AreWorkingHours))
+        ??throw NativePatches.Changed(Feature,"WorkerWorkingHours.AreWorkingHours getter");
+      NativeMember.NotInlined(Feature,getter);
+      NativeMember.Field(Feature,typeof(WorkerWorkingHours),"_workingHoursManager",typeof(WorkingHoursManager));
+      NativeMember.Field(Feature,typeof(WorkingHoursManager),"_dayNightCycle",typeof(IDayNightCycle));
+      NativeIl.RequireBody(Feature,AccessTools.PropertyGetter(typeof(WorkingHoursManager),nameof(WorkingHoursManager.AreWorkingHours)),ManagerHoursIl);
+      Manager=AccessTools.FieldRefAccess<WorkerWorkingHours,WorkingHoursManager>("_workingHoursManager");
+      Clock=AccessTools.FieldRefAccess<WorkingHoursManager,IDayNightCycle>("_dayNightCycle");
+    }
 
     private static void Postfix(WorkerWorkingHours __instance,ref bool __result) {
       if(__result)return;

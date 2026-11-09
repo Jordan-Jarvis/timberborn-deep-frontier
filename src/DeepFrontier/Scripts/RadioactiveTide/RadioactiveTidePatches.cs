@@ -47,14 +47,13 @@ namespace DeepFrontier.Scripts.RadioactiveTide {
         Debug.Log("[DeepFrontier] Moddable Weathers owns hazardous weather; the vanilla radioactive tide patches are not applied.");
         return;
       }
-      RadioactiveTidePatchTargets.Verify();
-      RadioactiveTideNative.Verify();
-      var harmony = new Harmony(HarmonyId);
-      harmony.CreateClassProcessor(typeof(RadioactiveTideSelectionPatch)).Patch();
-      harmony.CreateClassProcessor(typeof(RadioactiveTideRestorePatch)).Patch();
-      harmony.CreateClassProcessor(typeof(RadioactiveTideUiSpecificationPatch)).Patch();
-      harmony.CreateClassProcessor(typeof(RadioactiveTideUiTextPatch)).Patch();
-      harmony.CreateClassProcessor(typeof(RadioactiveTideStartSoundPatch)).Patch();
+      NativePatches.Install(HarmonyId, () => { RadioactiveTidePatchTargets.Verify(); RadioactiveTideNative.Verify(); }, harmony => {
+        harmony.CreateClassProcessor(typeof(RadioactiveTideSelectionPatch)).Patch();
+        harmony.CreateClassProcessor(typeof(RadioactiveTideRestorePatch)).Patch();
+        harmony.CreateClassProcessor(typeof(RadioactiveTideUiSpecificationPatch)).Patch();
+        harmony.CreateClassProcessor(typeof(RadioactiveTideUiTextPatch)).Patch();
+        harmony.CreateClassProcessor(typeof(RadioactiveTideStartSoundPatch)).Patch();
+      });
       Debug.Log("[DeepFrontier] Radioactive tide weather patches applied (selection, restore, UI helper, start sound).");
     }
   }

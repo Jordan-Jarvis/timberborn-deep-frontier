@@ -61,7 +61,7 @@ for (const line of ['[Context("Game")]', 'Bind<CryogenicTank>().AsTransient()', 
 const patches = sources['CryogenicsPatches.cs'] ?? '';
 for (const line of ['#if !UNITY_EDITOR', '[HarmonyPatch(typeof(InventoryInitializer), nameof(InventoryInitializer.Initialize))]',
   'Prefix(ref IGoodDisallower ____goodDisallower)', 'allower.GetComponent<CryogenicTankSpec>()', 'CryogenicIntakeGate.Install(allower, spec)',
-  ': IModStarter', 'CreateClassProcessor(typeof(CryogenicIntakeGatePatch)).Patch()'])
+  ': IModStarter', 'NativePatches.Install("DeepFrontier.Cryogenics", CryogenicIntakeGatePatch.Verify, typeof(CryogenicIntakeGatePatch))'])
   check(patches.includes(line), `C#: CryogenicsPatches lacks ${line}`);
 const tank = sources['CryogenicTank.cs'] ?? '';
 for (const line of ['bool powered = _power.ActiveAndPowered;', '_gate.SetAccepting(powered);', 'inventory.TakeExisting(new GoodAmount(good, amount));',

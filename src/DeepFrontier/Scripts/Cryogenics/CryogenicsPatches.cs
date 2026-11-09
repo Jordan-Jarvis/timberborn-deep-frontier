@@ -9,7 +9,7 @@ namespace DeepFrontier.Scripts.Cryogenics {
   // 1.1.2.8), so this patch registers without touching DeepFrontierModStarter.
   internal sealed class CryogenicsModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
-      new Harmony("DeepFrontier.Cryogenics").CreateClassProcessor(typeof(CryogenicIntakeGatePatch)).Patch();
+      NativePatches.Install("DeepFrontier.Cryogenics", CryogenicIntakeGatePatch.Verify, typeof(CryogenicIntakeGatePatch));
       Debug.Log("[DeepFrontier] Cryogenic intake gate patch applied (InventoryInitializer.Initialize).");
     }
   }
@@ -25,6 +25,13 @@ namespace DeepFrontier.Scripts.Cryogenics {
   // which Mono may inline into its caller.
   [HarmonyPatch(typeof(InventoryInitializer), nameof(InventoryInitializer.Initialize))]
   internal static class CryogenicIntakeGatePatch {
+    internal static void Verify() {
+      const string feature = "Cryogenic intake gate";
+      var initialize = NativeMember.Method(feature, typeof(InventoryInitializer), nameof(InventoryInitializer.Initialize), typeof(void));
+      NativeMember.NotInlined(feature, initialize);
+      NativeMember.Field(feature, typeof(InventoryInitializer), "_goodDisallower", typeof(IGoodDisallower));
+    }
+
     private static void Prefix(ref IGoodDisallower ____goodDisallower) {
       if (!(____goodDisallower is SingleGoodAllower allower)) return;
       var spec = allower.GetComponent<CryogenicTankSpec>();

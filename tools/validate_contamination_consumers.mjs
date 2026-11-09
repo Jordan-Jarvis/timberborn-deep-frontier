@@ -136,8 +136,8 @@ require(tide, 'Bind<WeatherStationRadioactiveTide>().AsTransient();', 'the Weath
 if (/ModdableWeathersLoaded|return;\s*\}\s*Bind</.test(code(tide))) errors.push('the Weather Station decorator must be bound on both tide paths (vanilla and Moddable Weathers)');
 if (!guarded(stationPatches)) errors.push('WeatherStationPatches.cs must be wrapped in #if !UNITY_EDITOR');
 const stationStart = /public void StartMod\([^)]*\) \{([\s\S]*?)\r?\n    \}/.exec(stationPatches)?.[1] ?? '';
-if (!(stationStart.indexOf('WeatherStationNative.Verify();') >= 0 && stationStart.indexOf('WeatherStationNative.Verify();') < stationStart.indexOf('.Patch();')))
-  errors.push('WeatherStationModStarter must call WeatherStationNative.Verify() before patching');
+if (!stationStart.includes('NativePatches.Install(HarmonyId, WeatherStationNative.Verify, harmony => {'))
+  errors.push('WeatherStationModStarter must install its patches through NativePatches with WeatherStationNative.Verify as the startup check');
 for (const patch of ['WeatherStationSamplePatch', 'WeatherStationOutputPatch', 'WeatherStationFragmentInitializePatch', 'WeatherStationFragmentUpdatePatch'])
   if (!stationStart.includes(`CreateClassProcessor(typeof(${patch})).Patch();`) || !new RegExp(`\\[HarmonyPatch\\]\\s*internal static class ${patch}\\b`).test(stationPatches))
     errors.push(`${patch} must be a [HarmonyPatch] class applied at mod start`);
@@ -188,8 +188,8 @@ require(substance, 'sample.BadwaterShare + sample.WaterRadiation', 'Any must sum
 require(substance, 'builder.AddDecorator<Sluice, SluiceContaminationSubstance>();', 'the sluice decorator must decorate the mod\'s Sluice');
 if (!/\[Context\("Game"\)\]\s*public sealed class SluiceContaminationConfigurator\b/.test(substance)) errors.push('SluiceContaminationConfigurator must be [Context("Game")]');
 const sluiceStart = /public void StartMod\([^)]*\) \{([\s\S]*?)\r?\n    \}/.exec(sluicePatches)?.[1] ?? '';
-if (!(sluiceStart.indexOf('SluiceIsBackNative.Verify();') >= 0 && sluiceStart.indexOf('SluiceIsBackNative.Verify();') < sluiceStart.indexOf('.Patch();')))
-  errors.push('SluiceContaminationModStarter must call SluiceIsBackNative.Verify() before patching');
+if (!sluiceStart.includes('NativePatches.Install(HarmonyId, SluiceIsBackNative.Verify, harmony => {'))
+  errors.push('SluiceContaminationModStarter must install its patches through NativePatches with SluiceIsBackNative.Verify as the startup check');
 for (const patch of ['SluiceMeasurementPatch', 'SluiceStateSynchronizationPatch'])
   if (!sluiceStart.includes(`CreateClassProcessor(typeof(${patch})).Patch();`)) errors.push(`${patch} must be applied at mod start`);
 require(sluicePatches, 'Method(typeof(Sluice), "GetContamination", typeof(float))', 'the measurement patch must target the private Sluice.GetContamination() : float');

@@ -47,12 +47,12 @@ namespace DeepFrontier.Scripts.WeatherStations {
     internal const string HarmonyId = "DeepFrontier.WeatherStation";
 
     public void StartMod(IModEnvironment modEnvironment) {
-      WeatherStationNative.Verify();
-      var harmony = new Harmony(HarmonyId);
-      harmony.CreateClassProcessor(typeof(WeatherStationSamplePatch)).Patch();
-      harmony.CreateClassProcessor(typeof(WeatherStationOutputPatch)).Patch();
-      harmony.CreateClassProcessor(typeof(WeatherStationFragmentInitializePatch)).Patch();
-      harmony.CreateClassProcessor(typeof(WeatherStationFragmentUpdatePatch)).Patch();
+      NativePatches.Install(HarmonyId, WeatherStationNative.Verify, harmony => {
+        harmony.CreateClassProcessor(typeof(WeatherStationSamplePatch)).Patch();
+        harmony.CreateClassProcessor(typeof(WeatherStationOutputPatch)).Patch();
+        harmony.CreateClassProcessor(typeof(WeatherStationFragmentInitializePatch)).Patch();
+        harmony.CreateClassProcessor(typeof(WeatherStationFragmentUpdatePatch)).Patch();
+      });
       Debug.Log("[DeepFrontier] Weather Station radioactive tide mode patches applied (sample, output, panel).");
     }
   }

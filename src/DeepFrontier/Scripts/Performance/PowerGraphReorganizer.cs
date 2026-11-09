@@ -1,6 +1,7 @@
 #if !UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
 using Timberborn.MechanicalSystem;
 using Timberborn.ModManagerScene;
@@ -33,7 +34,12 @@ namespace DeepFrontier.Scripts.Performance {
     // 1.1.2.8: every method of MechanicalGraphReorganizer (PreviewAccessCache.TypeDigest).
     private const string TypeIl = "30a67fda9e63b34077aa177efc457c15a6263252a0df0e5bf1656988a52d6e9b";
 
-    internal static void Patch() {
+    private static MethodInfo _visit;
+
+    internal static void Patch() => NativePatches.Install("DeepFrontier.PowerGraphReorganizer", Verify, harmony => harmony.Patch(_visit,
+      prefix: new HarmonyMethod(typeof(PowerGraphReorganizer), nameof(VisitConnectedNodesPrefix))));
+
+    private static void Verify() {
       var type = typeof(MechanicalGraphReorganizer);
       var digest = PreviewNavMesh.PreviewAccessCache.TypeDigest(type);
       if (digest != TypeIl) throw new InvalidOperationException($"[DeepFrontier PowerGraphReorganizer] MechanicalGraphReorganizer differs from 1.1.2.8 (IL digest {digest})");
@@ -43,8 +49,7 @@ namespace DeepFrontier.Scripts.Performance {
       var visit = AccessTools.Method(type, "VisitConnectedNodes", new[] { typeof(MechanicalNode) });
       if (visit == null || NativeIl.Inlinable(visit))
         throw new InvalidOperationException("[DeepFrontier PowerGraphReorganizer] MechanicalGraphReorganizer.VisitConnectedNodes(MechanicalNode) is missing or inlinable");
-      new Harmony("DeepFrontier.PowerGraphReorganizer").Patch(visit,
-        prefix: new HarmonyMethod(typeof(PowerGraphReorganizer), nameof(VisitConnectedNodesPrefix)));
+      _visit = visit;
     }
 
     private static bool VisitConnectedNodesPrefix(MechanicalNode node, HashSet<MechanicalNode> ____oldGraphNodes,

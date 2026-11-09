@@ -31,10 +31,10 @@ namespace DeepFrontier.SluiceIsBackContamination {
     internal const string HarmonyId = "DeepFrontier.SluiceIsBack";
 
     public void StartMod(IModEnvironment modEnvironment) {
-      SluiceIsBackNative.Verify();
-      var harmony = new Harmony(HarmonyId);
-      harmony.CreateClassProcessor(typeof(SluiceMeasurementPatch)).Patch();
-      harmony.CreateClassProcessor(typeof(SluiceStateSynchronizationPatch)).Patch();
+      NativePatches.Install(HarmonyId, SluiceIsBackNative.Verify, harmony => {
+        harmony.CreateClassProcessor(typeof(SluiceMeasurementPatch)).Patch();
+        harmony.CreateClassProcessor(typeof(SluiceStateSynchronizationPatch)).Patch();
+      });
       Debug.Log($"[DeepFrontier] Sluice is Back! {typeof(Sluice).Assembly.GetName().Version} contamination measurement patch applied (badwater, radiation, any contamination).");
     }
   }

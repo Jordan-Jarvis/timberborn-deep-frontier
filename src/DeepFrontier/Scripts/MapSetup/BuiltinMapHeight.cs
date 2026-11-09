@@ -7,6 +7,7 @@ using Timberborn.GameSceneLoading;
 using Timberborn.MapStateSystem;
 using Timberborn.Persistence;
 using Timberborn.SceneLoading;
+using Timberborn.WorldPersistence;
 using Timberborn.WorldSerialization;
 using UnityEngine;
 
@@ -41,10 +42,29 @@ namespace DeepFrontier.Scripts.MapSetup {
     private static PendingNewGame _pending;
 
     // Called once per process from DeepFrontierModStarter.
-    internal static void Apply() {
-      var harmony = new Harmony("DeepFrontier.BuiltinMapHeight");
-      harmony.CreateClassProcessor(typeof(CaptureNewGameWorld)).Patch();
-      harmony.CreateClassProcessor(typeof(WriteMapHeight)).Patch();
+    internal static void Apply() =>
+      NativePatches.Install("DeepFrontier.BuiltinMapHeight", Verify, typeof(CaptureNewGameWorld), typeof(WriteMapHeight));
+
+    // The two patches hand the new game's world from one native Load to the
+    // next. Native order puts the supplier's Load first: MapSize's constructor
+    // takes ISingletonLoader, bound to WorldSingletonLoader, whose constructor
+    // takes ISerializedWorldSupplier, so the supplier is constructed, and
+    // loaded, before MapSize (SingletonLifecycleService loads in construction
+    // order). Checked here with every field the patches read.
+    private static void Verify() {
+      const string feature = "Built-in map height";
+      var supplier = typeof(GameSceneSerializedWorldSupplier);
+      NativeMember.Method(feature, supplier, nameof(GameSceneSerializedWorldSupplier.Load), typeof(void));
+      NativeMember.Field(feature, supplier, "_sceneLoader", typeof(ISceneLoader));
+      NativeMember.Field(feature, supplier, "_serializedWorld", typeof(SerializedWorld));
+      NativeMember.Method(feature, typeof(MapSize), nameof(MapSize.Load), typeof(void));
+      NativeMember.Field(feature, typeof(MapSize), "_specService", typeof(ISpecService));
+      if (typeof(MapSize).GetConstructor(new[] { typeof(ISingletonLoader), typeof(ISpecService) }) == null)
+        throw NativePatches.Changed(feature, "MapSize(ISingletonLoader, ISpecService)");
+      var worldLoader = NativeMember.Type(feature, typeof(ISingletonSaver), "Timberborn.WorldPersistence.WorldSingletonLoader");
+      if (worldLoader.GetConstructor(new[] { typeof(ISerializedWorldSupplier) }) == null || !typeof(ISingletonLoader).IsAssignableFrom(worldLoader))
+        throw NativePatches.Changed(feature, "WorldSingletonLoader(ISerializedWorldSupplier) : ISingletonLoader");
+      if (!typeof(ISerializedWorldSupplier).IsAssignableFrom(supplier)) throw NativePatches.Changed(feature, "GameSceneSerializedWorldSupplier : ISerializedWorldSupplier");
     }
 
     [HarmonyPatch(typeof(GameSceneSerializedWorldSupplier), nameof(GameSceneSerializedWorldSupplier.Load))]

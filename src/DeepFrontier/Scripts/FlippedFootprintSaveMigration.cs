@@ -11,6 +11,7 @@ using Timberborn.GameSaveRepositorySystem;
 using Timberborn.GameSceneLoading;
 using Timberborn.SaveMetadataSystem;
 using Timberborn.SceneLoading;
+using Timberborn.SingletonSystem;
 using Timberborn.TemplateSystem;
 using UnityEngine;
 
@@ -94,11 +95,8 @@ namespace DeepFrontier.Scripts {
     private static MethodInfo _updateValues;
 
     // Called once per process from DeepFrontierModStarter.
-    internal static void Apply() {
-      _updateValues = AccessTools.Method(typeof(BlockObject), "UpdateValues", new[] { typeof(Placement) })
-        ?? throw new InvalidOperationException("BlockObject.UpdateValues(Placement) not found; the flipped footprint save migration needs it");
-      new Harmony("DeepFrontier.FlippedFootprintSaveMigration").CreateClassProcessor(typeof(FlippedFootprintSaveMigration)).Patch();
-    }
+    internal static void Apply() => NativePatches.Install("DeepFrontier.FlippedFootprintSaveMigration",
+      () => _updateValues = FootprintSaveMigrationNative.Verify("Flipped footprint save migration"), typeof(FlippedFootprintSaveMigration));
 
     private static void Prefix(BlockObject __instance) {
       if (__instance.AddedToService || __instance.IsPreview) return;
@@ -128,13 +126,34 @@ namespace DeepFrontier.Scripts {
     }
   }
 
+  // The native members both footprint save migrations rely on (Timberborn
+  // 1.1.2.8): their prefixes run before native AddToServiceAfterLoad, which
+  // validates the (possibly moved) placement with IsValid and deletes the
+  // object with a loading issue when it fails; the move goes through the
+  // private UpdateValues(Placement) that Load and Reposition call. No native
+  // save-migration hook exists for block object placement.
+  internal static class FootprintSaveMigrationNative {
+    internal static MethodInfo Verify(string feature) {
+      var type = typeof(BlockObject);
+      var add = NativeMember.Method(feature, type, nameof(BlockObject.AddToServiceAfterLoad), typeof(void));
+      var isValid = NativeMember.Method(feature, type, nameof(BlockObject.IsValid), typeof(bool));
+      if (!NativeIl.Calls(add, isValid)) throw NativePatches.Changed(feature, "BlockObject.AddToServiceAfterLoad validates with IsValid()");
+      var update = NativeMember.Method(feature, type, "UpdateValues", typeof(void), typeof(Placement));
+      if (update.IsPublic) throw NativePatches.Changed(feature, "private BlockObject.UpdateValues(Placement)");
+      return update;
+    }
+  }
+
   // The Deep Frontier version recorded in the loaded save's native metadata.
   [Context("Game")]
   public sealed class SavedFootprintVersionConfigurator : Configurator {
     protected override void Configure() => Bind<SavedFootprintVersion>().AsSingleton();
   }
 
-  internal sealed class SavedFootprintVersion {
+  // The Game scene's instance, for the load-time prefix above: set when the
+  // scene's container constructs it (before any singleton or entity loads)
+  // and cleared on unload, so a later scene never reads a finished game's save.
+  internal sealed class SavedFootprintVersion : IUnloadableSingleton {
     internal const string ModId = "DeepFrontier";
     internal static SavedFootprintVersion Current { get; private set; }
     private readonly ISceneLoader _sceneLoader;
@@ -145,7 +164,12 @@ namespace DeepFrontier.Scripts {
 
     public SavedFootprintVersion(ISceneLoader sceneLoader, GameSaveDeserializer deserializer, SaveMetadataSerializer metadata) {
       _sceneLoader = sceneLoader; _deserializer = deserializer; _metadata = metadata;
+      if (Current != null) throw new InvalidOperationException("A saved footprint version is already active; the previous Game scene was not unloaded");
       Current = this;
+    }
+
+    public void Unload() {
+      if (Current == this) Current = null;
     }
 
     // Null for a new game or a save without Deep Frontier.

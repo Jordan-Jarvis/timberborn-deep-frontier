@@ -22,8 +22,7 @@ namespace DeepFrontier.Scripts {
   // member first and throws if the game changed them.
   internal sealed class HospitalPantryModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
-      HospitalPantryInventory.Verify();
-      new Harmony(HospitalPantryInventory.HarmonyId).CreateClassProcessor(typeof(HospitalPantryInventory)).Patch();
+      NativePatches.Install(HospitalPantryInventory.HarmonyId, HospitalPantryInventory.Verify, typeof(HospitalPantryInventory));
       Debug.Log("[DeepFrontier] Hospital patient-meal inventory patch applied (GoodConsumingBuildingInventoryInitializer.Initialize).");
     }
   }
@@ -36,10 +35,15 @@ namespace DeepFrontier.Scripts {
     private static readonly AccessTools.FieldRef<InventoryInitializerFactory, IGoodService> FactoryGoods =
       AccessTools.FieldRefAccess<InventoryInitializerFactory, IGoodService>("_goodService");
 
+    // 1.1.2.8 GoodConsumingBuildingInventoryInitializer.Initialize, the body the
+    // prefix rebuilds (shared with SchoolSupplyInventory).
+    internal const string InitializeIl = "c6235334fa3a6242b4fb5d2c4622b1598a3a7cf165afbebfcbc3755f69cb7dec";
+
     internal static void Verify() {
       var method = AccessTools.Method(typeof(GoodConsumingBuildingInventoryInitializer), nameof(GoodConsumingBuildingInventoryInitializer.Initialize),
         new[] { typeof(GoodConsumingBuilding), typeof(Inventory) });
       Require(method != null && method.ReturnType == typeof(void), "GoodConsumingBuildingInventoryInitializer.Initialize(GoodConsumingBuilding, Inventory) : void");
+      NativeIl.RequireBody("Hospital pantry inventory", method, InitializeIl);
       Require(AccessTools.Field(typeof(GoodConsumingBuildingInventoryInitializer), "_inventoryInitializerFactory")?.FieldType == typeof(InventoryInitializerFactory),
         "GoodConsumingBuildingInventoryInitializer._inventoryInitializerFactory : InventoryInitializerFactory");
       Require(AccessTools.Field(typeof(GoodConsumingBuildingInventoryInitializer), "InventoryComponentName")?.GetValue(null) as string == NativeInventoryName,

@@ -21,6 +21,11 @@ namespace DeepFrontier.Scripts {
   // them; injury and tooth care, and every native rule, are unchanged.
   internal sealed class HospitalMedicalVisitsModStarter : IModStarter {
     public void StartMod(IModEnvironment environment) {
+      NativePatches.Install("DeepFrontier.HospitalMedicalVisits", Verify, typeof(HospitalMedicalOffer), typeof(HospitalMedicalStay));
+      Debug.Log("[DeepFrontier] Hospital medical-visit patches applied (AttractionNeedBehavior.ActionPosition, MaxValueNeedsAreActive).");
+    }
+
+    private static void Verify() {
       var type = typeof(AttractionNeedBehavior);
       Require(AccessTools.DeclaredMethod(type, nameof(AttractionNeedBehavior.ActionPosition), new[] { typeof(NeedManager) })?.ReturnType == typeof(Vector3?),
         "AttractionNeedBehavior.ActionPosition(NeedManager)");
@@ -28,10 +33,6 @@ namespace DeepFrontier.Scripts {
       Require(stay?.ReturnType == typeof(bool), "AttractionNeedBehavior.MaxValueNeedsAreActive(BehaviorAgent)");
       // A private callee small enough for Mono to inline would bypass the postfix.
       Require(!NativeIl.Inlinable(stay), "AttractionNeedBehavior.MaxValueNeedsAreActive is small enough to be inlined");
-      var harmony = new Harmony("DeepFrontier.HospitalMedicalVisits");
-      harmony.CreateClassProcessor(typeof(HospitalMedicalOffer)).Patch();
-      harmony.CreateClassProcessor(typeof(HospitalMedicalStay)).Patch();
-      Debug.Log("[DeepFrontier] Hospital medical-visit patches applied (AttractionNeedBehavior.ActionPosition, MaxValueNeedsAreActive).");
     }
 
     private static void Require(bool condition, string member) {

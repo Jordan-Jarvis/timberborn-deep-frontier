@@ -119,12 +119,23 @@ namespace DeepFrontier.Scripts {
     }
   }
 
+  // No native alternative (Timberborn 1.1.2.8): WorkshopsUIConfigurator adds
+  // both fragments to every entity panel and each shows itself for any
+  // Manufactory; there is no per-template fragment filter. The postfixes read
+  // the fragments' private _manufactory and _root directly (publicized
+  // reference assemblies), so Verify checks those fields at mod start.
   internal static class RestaurantNativeFragmentHider {
+    private const string Feature="Restaurant panel";
+
     // Called once per process from DeepFrontierModStarter.
-    internal static void Apply() {
-      var harmony=new Harmony("DeepFrontier.RestaurantPanel");
-      harmony.CreateClassProcessor(typeof(InventoryList)).Patch();
-      harmony.CreateClassProcessor(typeof(Progress)).Patch();
+    internal static void Apply()=>NativePatches.Install("DeepFrontier.RestaurantPanel",Verify,typeof(InventoryList),typeof(Progress));
+
+    private static void Verify() {
+      foreach(var type in new[]{typeof(ManufactoryInventoryFragment),typeof(ProductionProgressFragment)}) {
+        NativeMember.Method(Feature,type,"UpdateFragment",typeof(void));
+        NativeMember.Field(Feature,type,"_manufactory",typeof(Manufactory));
+        NativeMember.Field(Feature,type,"_root",typeof(VisualElement));
+      }
     }
     [HarmonyPatch(typeof(ManufactoryInventoryFragment),nameof(ManufactoryInventoryFragment.UpdateFragment))]
     private static class InventoryList {

@@ -27,11 +27,13 @@ namespace DeepFrontier.Scripts.Radiation {
   internal static class RadioactiveZombieTint {
     internal const string HarmonyId = "DeepFrontier.RadioactiveZombieTint";
 
-    internal static void Patch() {
+    internal static void Patch() => NativePatches.Install(HarmonyId, Verify, typeof(CitizenTintUpdatePatch));
+
+    private static void Verify() {
       var method = AccessTools.Method(typeof(CitizenTint), nameof(CitizenTint.UpdateTint), Type.EmptyTypes);
       if (method == null || method.ReturnType != typeof(void))
         throw new InvalidOperationException("Timberborn 1.1.2.8 contract changed: CitizenTint.UpdateTint() : void not found");
-      new Harmony(HarmonyId).CreateClassProcessor(typeof(CitizenTintUpdatePatch)).Patch();
+      NativeMember.NotInlined("Radioactive zombie tint", method);
     }
 
     internal static void RestoreNative(BaseComponent beaver) {

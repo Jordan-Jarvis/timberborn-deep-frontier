@@ -14,6 +14,25 @@ namespace DeepFrontier.Scripts {
   // inventory definition; production, recipe selection and saves remain native.
   [HarmonyPatch(typeof(ManufactoryInventoryInitializer),nameof(ManufactoryInventoryInitializer.Initialize))]
   internal static class RestaurantKitchenInventory {
+    private const string Feature="Restaurant kitchen inventory";
+    // 1.1.2.8 ManufactoryInventoryInitializer.Initialize, the body the prefix replaces for the Restaurant.
+    internal const string InitializeIl="f5e236012079d105317c7a8cc50733d63bc4f67239d682efee3edb6c6a4aa416";
+
+    // Called once per process from DeepFrontierModStarter.
+    internal static void Apply()=>NativePatches.Install("DeepFrontier.RestaurantKitchen",Verify,
+      typeof(RestaurantKitchenInventory),typeof(RestaurantKitchenRecipeCompatibility));
+
+    private static void Verify() {
+      var type=typeof(ManufactoryInventoryInitializer);
+      var initialize=NativeMember.Method(Feature,type,nameof(ManufactoryInventoryInitializer.Initialize),typeof(void),typeof(Manufactory),typeof(Inventory));
+      NativeMember.Parameters(Feature,initialize,"subject","decorator");
+      NativeIl.RequireBody(Feature,initialize,InitializeIl);
+      NativeMember.Field(Feature,type,"_inventoryInitializerFactory",typeof(InventoryInitializerFactory));
+      var recipes=NativeMember.Method(Feature,typeof(ModdableRecipes.Patches.ManufactoryPatches),
+        nameof(ModdableRecipes.Patches.ManufactoryPatches.InitInventoryForRecipe),typeof(void),typeof(Manufactory),typeof(RecipeSpec));
+      if(!recipes.IsStatic)throw NativePatches.Changed(Feature,"Moddable Recipes static ManufactoryPatches.InitInventoryForRecipe(Manufactory, RecipeSpec)");
+    }
+
     private static bool Prefix(Manufactory subject,Inventory decorator,InventoryInitializerFactory ____inventoryInitializerFactory) {
       var restaurant=subject.GetComponent<Restaurant>();
       if(!restaurant)return true;
@@ -44,17 +63,22 @@ namespace DeepFrontier.Scripts {
   internal sealed class RestaurantKitchenStock : IGoodDisallower {
     private readonly Manufactory _kitchen;
     private readonly RestaurantSpec _spec;
+    // Stock entries by good id: AllowedAmount is asked for every good by
+    // every hauler scan, so it must not allocate.
+    private readonly Dictionary<string,RestaurantStockSpec> _stock;
     private HashSet<string> _ingredients;
     // Allowed amounts never change at runtime; the event is required by IGoodDisallower.
 #pragma warning disable CS0067
     public event EventHandler<DisallowedGoodsChangedEventArgs> DisallowedGoodsChanged;
 #pragma warning restore CS0067
-    public RestaurantKitchenStock(Manufactory kitchen,RestaurantSpec spec) {_kitchen=kitchen;_spec=spec;}
+    public RestaurantKitchenStock(Manufactory kitchen,RestaurantSpec spec) {
+      _kitchen=kitchen;_spec=spec;
+      _stock=spec.Stock.ToDictionary(s=>s.GoodId,StringComparer.Ordinal);
+    }
     public int AllowedAmount(string id) {
       // Native IGoodDisallower contract: any good id may be asked (haulers of a
       // recovered goods stack query every inventory); unstocked goods are disallowed.
-      var stock=_spec.Stock.SingleOrDefault(s=>s.GoodId==id);
-      if(stock==null)return 0;
+      if(id==null||!_stock.TryGetValue(id,out var stock))return 0;
       if(stock.AlwaysStocked)return stock.Capacity;
       if(_ingredients==null) {
         // Queried only once the Manufactory has woken (inventory use starts at the finished state).

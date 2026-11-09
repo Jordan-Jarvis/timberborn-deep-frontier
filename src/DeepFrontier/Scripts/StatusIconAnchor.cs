@@ -31,10 +31,10 @@ namespace DeepFrontier.Scripts {
   // value. Verify() resolves the members first and throws if 1.1.2.8 changed them.
   internal sealed class StatusIconAnchorModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
-      StatusIconAnchor.Verify();
-      var harmony=new Harmony(StatusIconAnchor.HarmonyId);
-      var postfix=new HarmonyMethod(typeof(StatusIconAnchor).GetMethod("Postfix",BindingFlags.Static|BindingFlags.NonPublic));
-      foreach(var method in StatusIconAnchor.Targets())harmony.Patch(method,postfix:postfix);
+      NativePatches.Install(StatusIconAnchor.HarmonyId,StatusIconAnchor.Verify,harmony=>{
+        var postfix=new HarmonyMethod(typeof(StatusIconAnchor).GetMethod("Postfix",BindingFlags.Static|BindingFlags.NonPublic));
+        foreach(var method in StatusIconAnchor.Targets())harmony.Patch(method,postfix:postfix);
+      });
       Debug.Log("[DeepFrontier] Status icon anchor patch applied (BuildingStatusIconOffsetter top bounds, StatusIconAnchorSpec only).");
     }
   }

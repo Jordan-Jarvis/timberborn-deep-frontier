@@ -53,7 +53,9 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
     private static AccessTools.FieldRef<ConstructionSiteAccessible,BlockObject> _block;
     private static AccessTools.FieldRef<ConstructionSiteAccessible,BlockObjectAccessGenerator> _generator;
     private static FieldInfo _provider;
-    private static MethodInfo _minZ,_maxZ;
+    // Typed delegates: OnPreviewSelect runs every frame while a preview is shown,
+    // and MethodInfo.Invoke would box both ints and allocate its argument array.
+    private static Func<ConstructionSiteAccessible,int> _minZ,_maxZ;
     private static bool _loaded,_enabled=true;
     private static int _version,_epoch;
     public static long Generated,Reused,WorldChanges;
@@ -73,7 +75,10 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
       (typeof(NeighborCalculator),"2b7c38fe3c44222f1916f72eb782815effa4f193345ffb1d2ff058a929307cac"),
     };
 
-    public static void Patch() {
+    public static void Patch()=>NativePatches.Install("DeepFrontier.PreviewAccess",Verify,harmony=>
+      harmony.Patch(Single(typeof(ConstructionSiteAccessible),"OnPreviewSelect"),prefix:new HarmonyMethod(typeof(PreviewAccessCache),nameof(OnPreviewSelectPrefix))));
+
+    private static void Verify() {
       foreach(var (type,method,sha) in NativeIl) {
         var actual=Il(Single(type,method));
         Require(actual==sha,$"{type.FullName}.{method} differs from 1.1.2.8 (IL {actual})");
@@ -87,10 +92,8 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
       _generator=AccessTools.FieldRefAccess<ConstructionSiteAccessible,BlockObjectAccessGenerator>("_blockObjectAccessGenerator");
       _provider=AccessTools.Field(typeof(ConstructionSiteAccessible),"_constructionSiteAccessProvider");
       Require(_provider!=null&&_provider.FieldType==typeof(IConstructionSiteAccessProvider),"ConstructionSiteAccessible._constructionSiteAccessProvider changed");
-      _minZ=Single(typeof(ConstructionSiteAccessible),"get_MinZ");
-      _maxZ=Single(typeof(ConstructionSiteAccessible),"get_MaxZ");
-      new Harmony("DeepFrontier.PreviewAccess").Patch(Single(typeof(ConstructionSiteAccessible),"OnPreviewSelect"),
-        prefix:new HarmonyMethod(typeof(PreviewAccessCache),nameof(OnPreviewSelectPrefix)));
+      _minZ=AccessTools.MethodDelegate<Func<ConstructionSiteAccessible,int>>(Single(typeof(ConstructionSiteAccessible),"get_MinZ"));
+      _maxZ=AccessTools.MethodDelegate<Func<ConstructionSiteAccessible,int>>(Single(typeof(ConstructionSiteAccessible),"get_MaxZ"));
     }
 
     internal static void Load() {_loaded=true;_version++;}
@@ -109,7 +112,7 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
       if(!(state.Valid&&state.Version==_version&&state.Placement.Equals(block.Placement))) {
         int version=_version;
         state.Accesses.Clear();
-        state.Accesses.AddRange(_generator(__instance).GenerateAccesses((int)_minZ.Invoke(__instance,null),(int)_maxZ.Invoke(__instance,null)));
+        state.Accesses.AddRange(_generator(__instance).GenerateAccesses(_minZ(__instance),_maxZ(__instance)));
         Require(version==_version,"World changed while generating construction accesses");
         state.Version=version;state.Placement=block.Placement;state.Valid=block.Positioned;
         Generated++;

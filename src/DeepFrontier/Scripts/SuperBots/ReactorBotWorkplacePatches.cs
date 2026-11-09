@@ -54,7 +54,6 @@ namespace DeepFrontier.Scripts.SuperBots {
   internal static class ReactorBotWorkplacePatches {
     private const string Tag="[DeepFrontier ReactorBotWorkplacePatches] ";
     private const BindingFlags All=BindingFlags.Instance|BindingFlags.Static|BindingFlags.Public|BindingFlags.NonPublic;
-    private static bool _patched;
 
     // WorkerTypeToggle members.
     private static FieldInfo _toggleSlider, _toggleFactory, _toggleWorkerType;
@@ -66,12 +65,21 @@ namespace DeepFrontier.Scripts.SuperBots {
     // PriorityOrderedWorkplaces._workplaces (a SortedList keyed by a private struct).
     private static FieldInfo _orderedWorkplaces;
     private static PropertyInfo _orderedValues;
+    // The patch targets, resolved and checked by Verify before any is patched.
+    private static MethodInfo _initialize, _initializeFragment, _update, _toDistrict;
+    private static readonly List<(MethodInfo Target, string Postfix)> _ordered=new();
 
-    internal static void Apply() {
-      if(_patched)return;
-      NativeWorkerTypeAccess.Verify();
-      var harmony=new Harmony("DeepFrontier.ReactorBotWorkplaces");
+    internal static void Apply()=>NativePatches.Install("DeepFrontier.ReactorBotWorkplaces",Verify,harmony=>{
       var self=typeof(ReactorBotWorkplacePatches);
+      harmony.Patch(_initialize,postfix:new HarmonyMethod(self,nameof(WorkerTypeTogglePostfix)));
+      harmony.Patch(_initializeFragment,postfix:new HarmonyMethod(self,nameof(DistrictCenterFragmentPostfix)));
+      harmony.Patch(_update,prefix:new HarmonyMethod(self,nameof(UpdateUnemployedStatePrefix)));
+      foreach(var (target,postfix) in _ordered)harmony.Patch(target,postfix:new HarmonyMethod(self,postfix));
+      harmony.Patch(_toDistrict,prefix:new HarmonyMethod(self,nameof(SetWorkerTypeToDistrictPrefix)),postfix:new HarmonyMethod(self,nameof(SetWorkerTypeToDistrictPostfix)));
+    });
+
+    private static void Verify() {
+      NativeWorkerTypeAccess.Verify();
 
       // 1. WorkerTypeToggle.
       var toggle=typeof(WorkerTypeToggle);
@@ -93,7 +101,7 @@ namespace DeepFrontier.Scripts.SuperBots {
       _setBeaver=Returning(toggle,"SetBeaverWorkerType",typeof(void));
       _beaverClass=StaticString(toggle,"BeaverClass");
       _botClass=StaticString(toggle,"BotClass");
-      harmony.Patch(initialize,postfix:new HarmonyMethod(self,nameof(WorkerTypeTogglePostfix)));
+      _initialize=initialize;
 
       // 2. DistrictCenterFragment (internal).
       // Internal types are taken from their assembly through a public type of it, so it is loaded.
@@ -112,7 +120,7 @@ namespace DeepFrontier.Scripts.SuperBots {
       _fragmentBotTooltip=Returning(fragment,"GetBotWorkerTooltip",typeof(string));
       Require(StaticString(fragment,"BeaverClass")==_beaverClass&&StaticString(fragment,"BotClass")==_botClass,
         "DistrictCenterFragment and WorkerTypeToggle no longer share their icon classes");
-      harmony.Patch(initializeFragment,postfix:new HarmonyMethod(self,nameof(DistrictCenterFragmentPostfix)));
+      _initializeFragment=initializeFragment;
 
       // 3. UnemployedWorkers (internal).
       var unemployed=Internal(typeof(Workplace),"Timberborn.WorkSystem.UnemployedWorkers");
@@ -123,7 +131,7 @@ namespace DeepFrontier.Scripts.SuperBots {
         Require(NativeIl.Calls(Method(unemployed,caller,caller=="AddWorker"?new[] {typeof(Worker)}:new[] {typeof(object),typeof(EventArgs)}),update),
           $"UnemployedWorkers.{caller} no longer calls UpdateUnemployedState");
       Require(update.GetParameters().Select(p=>p.Name).SequenceEqual(new[] {"worker","workRefuser"}),"UnemployedWorkers.UpdateUnemployedState parameters renamed");
-      harmony.Patch(update,prefix:new HarmonyMethod(self,nameof(UpdateUnemployedStatePrefix)));
+      _update=update;
 
       // 4. PriorityOrderedWorkplaces.
       var ordered=typeof(PriorityOrderedWorkplaces);
@@ -132,10 +140,11 @@ namespace DeepFrontier.Scripts.SuperBots {
         &&_orderedWorkplaces.FieldType.GetGenericArguments()[1]==typeof(WorkplacePriority),"PriorityOrderedWorkplaces._workplaces is no longer a SortedList of WorkplacePriority");
       _orderedValues=_orderedWorkplaces.FieldType.GetProperty(nameof(SortedList<int,int>.Values));
       Require(_orderedValues!=null&&_orderedValues.PropertyType==typeof(IList<WorkplacePriority>),"SortedList.Values is no longer an IList of WorkplacePriority");
+      _ordered.Clear();
       foreach(var name in new[] {nameof(PriorityOrderedWorkplaces.GetHighestPriorityUnderstaffedWorkplace),nameof(PriorityOrderedWorkplaces.GetLowestPriorityStaffedWorkplace)}) {
         var method=Returning(ordered,name,typeof(WorkplacePriority));
         Require(!NativeIl.Inlinable(method),$"PriorityOrderedWorkplaces.{name} is small enough to be inlined");
-        harmony.Patch(method,postfix:new HarmonyMethod(self,name==nameof(PriorityOrderedWorkplaces.GetHighestPriorityUnderstaffedWorkplace)?nameof(HighestUnderstaffedPostfix):nameof(LowestStaffedPostfix)));
+        _ordered.Add((method,name==nameof(PriorityOrderedWorkplaces.GetHighestPriorityUnderstaffedWorkplace)?nameof(HighestUnderstaffedPostfix):nameof(LowestStaffedPostfix)));
       }
 
       // 5. WorkplaceWorkerType.SetWorkerTypeToDistrict.
@@ -145,9 +154,7 @@ namespace DeepFrontier.Scripts.SuperBots {
         "WorkplaceWorkerType.SetWorkerTypeToDistrict no longer calls SetWorkerType");
       Require(toDistrict.GetParameters().Single().Name=="districtCenter","WorkplaceWorkerType.SetWorkerTypeToDistrict parameter renamed");
       Field(typeof(WorkplaceWorkerType),"_wasSet",typeof(bool));
-      harmony.Patch(toDistrict,prefix:new HarmonyMethod(self,nameof(SetWorkerTypeToDistrictPrefix)),postfix:new HarmonyMethod(self,nameof(SetWorkerTypeToDistrictPostfix)));
-
-      _patched=true;
+      _toDistrict=toDistrict;
     }
 
     // Initialization. Native EntityPanel.Load builds the entity-panel toggles

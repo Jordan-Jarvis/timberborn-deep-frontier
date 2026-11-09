@@ -47,11 +47,8 @@ namespace DeepFrontier.Scripts {
     private static MethodInfo _updateValues;
 
     // Called once per process from DeepFrontierModStarter.
-    internal static void Apply() {
-      _updateValues = AccessTools.Method(typeof(BlockObject), "UpdateValues", new[] { typeof(Placement) })
-        ?? throw new InvalidOperationException("BlockObject.UpdateValues(Placement) not found; the mine footprint save migration needs it");
-      new Harmony("DeepFrontier.MineFootprintSaveMigration").CreateClassProcessor(typeof(MineFootprintSaveMigration)).Patch();
-    }
+    internal static void Apply() => NativePatches.Install("DeepFrontier.MineFootprintSaveMigration",
+      () => _updateValues = FootprintSaveMigrationNative.Verify("Mine footprint save migration"), typeof(MineFootprintSaveMigration));
 
     private static void Prefix(BlockObject __instance) {
       if (__instance.AddedToService) return;

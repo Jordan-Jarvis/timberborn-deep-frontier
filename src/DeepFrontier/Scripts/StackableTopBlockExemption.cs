@@ -25,19 +25,24 @@ namespace DeepFrontier.Scripts {
     private static AccessTools.FieldRef<BlockObjectBelowBlocker,IBlockService> _blockService;
     private static AccessTools.FieldRef<BlockObjectBelowBlocker,BlockObject> _blockObject;
     private static AccessTools.FieldRef<BlockObjectBelowBlocker,List<BlockableObject>> _below;
-    private static bool _patched;
+    // 1.1.2.8 FillBlockableObjectsBelow, the body the prefix replaces (plus the stackable skip).
+    private const string FillIl="8ada16400b7b2dee12dfc860198d81b3361717a7e42b7c63a466f1d37c6b56bb";
 
     // Called once per process from DeepFrontierModStarter.
-    internal static void Apply() {
-      if(_patched)return;
-      var fill=AccessTools.Method(typeof(BlockObjectBelowBlocker),"FillBlockableObjectsBelow",Type.EmptyTypes);
-      if(fill==null||fill.IsStatic||fill.ReturnType!=typeof(void))
-        throw new InvalidOperationException("Timberborn 1.1.2.8 BlockObjectBelowBlocker.FillBlockableObjectsBelow() changed");
+    internal static void Apply()=>NativePatches.Install(HarmonyId,Verify,typeof(StackableTopBlockExemption));
+
+    private static void Verify() {
+      const string feature="Stackable top block exemption";
+      var type=typeof(BlockObjectBelowBlocker);
+      var fill=NativeMember.Method(feature,type,"FillBlockableObjectsBelow",typeof(void));
+      if(fill.IsStatic)throw NativePatches.Changed(feature,"instance BlockObjectBelowBlocker.FillBlockableObjectsBelow()");
+      NativeIl.RequireBody(feature,fill,FillIl);
+      NativeMember.Field(feature,type,"_blockService",typeof(IBlockService));
+      NativeMember.Field(feature,type,"_blockObject",typeof(BlockObject));
+      NativeMember.Field(feature,type,"_blockableObjectsBelow",typeof(List<BlockableObject>));
       _blockService=AccessTools.FieldRefAccess<BlockObjectBelowBlocker,IBlockService>("_blockService");
       _blockObject=AccessTools.FieldRefAccess<BlockObjectBelowBlocker,BlockObject>("_blockObject");
       _below=AccessTools.FieldRefAccess<BlockObjectBelowBlocker,List<BlockableObject>>("_blockableObjectsBelow");
-      new Harmony(HarmonyId).CreateClassProcessor(typeof(StackableTopBlockExemption)).Patch();
-      _patched=true;
     }
 
     private static bool Prefix(BlockObjectBelowBlocker __instance) {

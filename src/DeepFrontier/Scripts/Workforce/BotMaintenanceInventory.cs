@@ -34,12 +34,8 @@ namespace DeepFrontier.Scripts {
   // Recipes update changed one.
   internal sealed class BotMaintenanceInventoryModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
-      BotMaintenanceInventory.Verify();
-      WorkplaceInventoryRows.Verify();
-      var harmony=new Harmony(BotMaintenanceInventory.HarmonyId);
-      harmony.CreateClassProcessor(typeof(BotMaintenanceInventory)).Patch();
-      harmony.CreateClassProcessor(typeof(BotMaintenanceRecipeCompatibility)).Patch();
-      harmony.CreateClassProcessor(typeof(WorkplaceInventoryRows)).Patch();
+      NativePatches.Install(BotMaintenanceInventory.HarmonyId,()=>{BotMaintenanceInventory.Verify();WorkplaceInventoryRows.Verify();},
+        typeof(BotMaintenanceInventory),typeof(BotMaintenanceRecipeCompatibility),typeof(WorkplaceInventoryRows));
       Debug.Log("[DeepFrontier] Bot maintenance and workplace upkeep inventory patches applied (ManufactoryInventoryInitializer.Initialize, ModdableRecipes InitInventoryForRecipe).");
     }
   }
@@ -57,6 +53,8 @@ namespace DeepFrontier.Scripts {
       var type=typeof(ManufactoryInventoryInitializer);
       Require(AccessTools.Method(type,nameof(ManufactoryInventoryInitializer.Initialize),new[]{typeof(Manufactory),typeof(Inventory)})?.ReturnType==typeof(void),
         "ManufactoryInventoryInitializer.Initialize(Manufactory, Inventory) : void");
+      NativeIl.RequireBody("Bot maintenance inventory",AccessTools.Method(type,nameof(ManufactoryInventoryInitializer.Initialize),new[]{typeof(Manufactory),typeof(Inventory)}),
+        RestaurantKitchenInventory.InitializeIl);
       Require(AccessTools.Field(type,"_inventoryInitializerFactory")?.FieldType==typeof(InventoryInitializerFactory),"ManufactoryInventoryInitializer._inventoryInitializerFactory");
       Require(AccessTools.Field(type,"_inventoryNeedBehaviorInitializer")?.FieldType==typeof(InventoryNeedBehaviorInitializer),"ManufactoryInventoryInitializer._inventoryNeedBehaviorInitializer");
       Require(AccessTools.Field(type,"_recipeGoodsProcessor")?.FieldType==typeof(RecipeGoodsProcessor),"ManufactoryInventoryInitializer._recipeGoodsProcessor");

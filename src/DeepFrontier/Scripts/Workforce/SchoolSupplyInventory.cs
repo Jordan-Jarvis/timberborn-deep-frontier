@@ -22,8 +22,7 @@ namespace DeepFrontier.Scripts {
   // game changed them.
   internal sealed class SchoolSupplyInventoryModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
-      SchoolSupplyInventory.Verify();
-      new Harmony(SchoolSupplyInventory.HarmonyId).CreateClassProcessor(typeof(SchoolSupplyInventory)).Patch();
+      NativePatches.Install(SchoolSupplyInventory.HarmonyId, SchoolSupplyInventory.Verify, typeof(SchoolSupplyInventory));
       Debug.Log("[DeepFrontier] Technical School supply inventory patch applied (GoodConsumingBuildingInventoryInitializer.Initialize).");
     }
   }
@@ -38,6 +37,7 @@ namespace DeepFrontier.Scripts {
       var method = AccessTools.Method(typeof(GoodConsumingBuildingInventoryInitializer), nameof(GoodConsumingBuildingInventoryInitializer.Initialize),
         new[] { typeof(GoodConsumingBuilding), typeof(Inventory) });
       Require(method != null && method.ReturnType == typeof(void), "GoodConsumingBuildingInventoryInitializer.Initialize(GoodConsumingBuilding, Inventory) : void");
+      NativeIl.RequireBody("Technical School supply inventory", method, HospitalPantryInventory.InitializeIl);
       Require(AccessTools.Field(typeof(GoodConsumingBuildingInventoryInitializer), "_inventoryInitializerFactory")?.FieldType == typeof(InventoryInitializerFactory),
         "GoodConsumingBuildingInventoryInitializer._inventoryInitializerFactory : InventoryInitializerFactory");
       Require(AccessTools.Field(typeof(GoodConsumingBuildingInventoryInitializer), "InventoryComponentName")?.GetValue(null) as string == NativeInventoryName,

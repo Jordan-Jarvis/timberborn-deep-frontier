@@ -38,20 +38,22 @@ namespace DeepFrontier.Scripts.PreviewNavMesh {
     // 1.1.2.8: every method of PositionedBlocks and its iterators.
     private const string TypeIl="1290a3afda847ee3ca6bb88eca13959a0e53f860f355e00acbd5593eb4f8d241";
 
-    public static void Patch() {
-      var digest=PreviewAccessCache.TypeDigest(typeof(PositionedBlocks));
-      if(digest!=TypeIl)throw new InvalidOperationException("[DeepFrontier PositionedBlocksIndex] PositionedBlocks differs from 1.1.2.8 (IL digest "+digest+")");
-      var field=AccessTools.Field(typeof(PositionedBlocks),"_all");
-      if(field==null||field.FieldType!=typeof(ImmutableArray<Block>)||!field.IsInitOnly)
-        throw new InvalidOperationException("[DeepFrontier PositionedBlocksIndex] PositionedBlocks._all changed");
-      _all=AccessTools.FieldRefAccess<PositionedBlocks,ImmutableArray<Block>>("_all");
-      var harmony=new Harmony("DeepFrontier.PositionedBlocksIndex");
+    public static void Patch()=>NativePatches.Install("DeepFrontier.PositionedBlocksIndex",Verify,harmony=>{
       harmony.Patch(AccessTools.Method(typeof(PositionedBlocks),nameof(PositionedBlocks.TryGetBlock)),
         prefix:new HarmonyMethod(typeof(PositionedBlocksIndex),nameof(TryGetBlockPrefix)));
       harmony.Patch(AccessTools.Method(typeof(PositionedBlocks),nameof(PositionedBlocks.HasBlockAt)),
         prefix:new HarmonyMethod(typeof(PositionedBlocksIndex),nameof(HasBlockAtPrefix)));
       harmony.Patch(AccessTools.Method(typeof(PositionedBlocks),nameof(PositionedBlocks.HasStackableBlockAt)),
         prefix:new HarmonyMethod(typeof(PositionedBlocksIndex),nameof(HasStackableBlockAtPrefix)));
+    });
+
+    private static void Verify() {
+      var digest=PreviewAccessCache.TypeDigest(typeof(PositionedBlocks));
+      if(digest!=TypeIl)throw new InvalidOperationException("[DeepFrontier PositionedBlocksIndex] PositionedBlocks differs from 1.1.2.8 (IL digest "+digest+")");
+      var field=AccessTools.Field(typeof(PositionedBlocks),"_all");
+      if(field==null||field.FieldType!=typeof(ImmutableArray<Block>)||!field.IsInitOnly)
+        throw new InvalidOperationException("[DeepFrontier PositionedBlocksIndex] PositionedBlocks._all changed");
+      _all=AccessTools.FieldRefAccess<PositionedBlocks,ImmutableArray<Block>>("_all");
     }
 
     // Measurement only (PreviewCostAcceptance): native scans.

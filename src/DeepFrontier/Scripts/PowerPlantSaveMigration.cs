@@ -22,7 +22,18 @@ namespace DeepFrontier.Scripts {
     private static readonly ComponentKey Key=new("GoodConsumingBuilding");
 
     // Called once per process from DeepFrontierModStarter.
-    internal static void Apply()=>new Harmony("DeepFrontier.PowerPlantSaveMigration").CreateClassProcessor(typeof(PowerPlantSaveMigration)).Patch();
+    internal static void Apply()=>NativePatches.Install("DeepFrontier.PowerPlantSaveMigration",Verify,typeof(PowerPlantSaveMigration));
+
+    // The prefix skips native Load only where the component is absent from the
+    // save, under the native component key.
+    private static void Verify() {
+      const string feature="Power plant save migration";
+      var load=NativeMember.Method(feature,typeof(GoodConsumingBuilding),nameof(GoodConsumingBuilding.Load),typeof(void),typeof(IEntityLoader));
+      NativeMember.Parameters(feature,load,"entityLoader");
+      var key=NativeMember.Field(feature,typeof(GoodConsumingBuilding),"GoodConsumingBuildingKey",typeof(ComponentKey));
+      if(!key.IsStatic||((ComponentKey)key.GetValue(null)).Name!=Key.Name)
+        throw NativePatches.Changed(feature,"GoodConsumingBuilding.GoodConsumingBuildingKey = \"GoodConsumingBuilding\"");
+    }
 
     private static bool Prefix(GoodConsumingBuilding __instance,IEntityLoader entityLoader) {
       if(entityLoader.TryGetComponent(Key,out _))return true;

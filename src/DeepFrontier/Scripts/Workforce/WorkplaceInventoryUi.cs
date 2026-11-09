@@ -26,12 +26,17 @@ namespace DeepFrontier.Scripts {
   // visibility, stock/capacity updates and handling of genuine leftovers.
   [HarmonyPatch(typeof(InventoryRowUpdater), "AddRecipeRows")]
   internal static class WorkplaceInventoryRows {
+    // 1.1.2.8 InventoryRowUpdater.AddRecipeRows, the body the prefix replaces for workplaces with extra supplies.
+    private const string AddRecipeRowsIl = "8773fc747e11b23df3f657d50c77bcd97dd7a1b590f509b916035e9c96b43c0e";
+
     internal static void Verify() {
       var type = typeof(InventoryRowUpdater);
-      if (AccessTools.Method(type, "AddRecipeRows", new[] { typeof(ScrollView), typeof(Inventory),
-          typeof(List<InformationalRow>), typeof(List<StorableGoodAmount>), typeof(RecipeSpec) })?.ReturnType != typeof(void)
+      var addRecipeRows = AccessTools.Method(type, "AddRecipeRows", new[] { typeof(ScrollView), typeof(Inventory),
+          typeof(List<InformationalRow>), typeof(List<StorableGoodAmount>), typeof(RecipeSpec) });
+      if (addRecipeRows?.ReturnType != typeof(void)
           || AccessTools.Field(type, "_informationalRowsFactory")?.FieldType != typeof(InformationalRowsFactory))
         throw new InvalidOperationException("Timberborn 1.1.2.8 inventory UI contract changed: InventoryRowUpdater.AddRecipeRows");
+      NativeIl.RequireBody("Workplace inventory rows", addRecipeRows, AddRecipeRowsIl);
     }
 
     private static bool Prefix(ScrollView inventoryContent, Inventory inventory, List<InformationalRow> rows,

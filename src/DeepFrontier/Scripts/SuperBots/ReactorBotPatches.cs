@@ -24,15 +24,16 @@ namespace DeepFrontier.Scripts.SuperBots {
   // Every IModStarter in the mod assembly runs at mod start (ModCodeStarter).
   internal sealed class ReactorBotModStarter : IModStarter {
     public void StartMod(IModEnvironment modEnvironment) {
+      NativePatches.Install("DeepFrontier.ReactorBots",Verify,typeof(ReactorBotSpeedPatch),typeof(ReactorBotLifespanPatch));
+      Debug.Log("[DeepFrontier] Reactor Bot patches applied (speed, lifespan).");
+    }
+
+    private static void Verify() {
       Require(AccessTools.Method(typeof(WalkerSpeedManager),nameof(WalkerSpeedManager.Tick)),"WalkerSpeedManager.Tick");
       Require(AccessTools.Field(typeof(WalkerSpeedManager),"_baseSpeed"),"WalkerSpeedManager._baseSpeed");
       Require(AccessTools.Method(typeof(Deteriorable),nameof(Deteriorable.Tick)),"Deteriorable.Tick");
       Require(AccessTools.Field(typeof(Deteriorable),"_currentDeterioration"),"Deteriorable._currentDeterioration");
       Require(AccessTools.Field(typeof(Deteriorable),"_fixedDeltaTimeInDays"),"Deteriorable._fixedDeltaTimeInDays");
-      var harmony=new Harmony("DeepFrontier.ReactorBots");
-      harmony.CreateClassProcessor(typeof(ReactorBotSpeedPatch)).Patch();
-      harmony.CreateClassProcessor(typeof(ReactorBotLifespanPatch)).Patch();
-      Debug.Log("[DeepFrontier] Reactor Bot patches applied (speed, lifespan).");
     }
 
     private static void Require(object member, string name) {

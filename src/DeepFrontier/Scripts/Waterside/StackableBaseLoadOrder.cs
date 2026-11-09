@@ -57,17 +57,16 @@ namespace DeepFrontier.Scripts {
     }
 
 #if !UNITY_EDITOR
-    private static bool _patched;
-
     // Called once per process from DeepFrontierModStarter, before any game
     // scene loads entities.
-    internal static void Apply() {
-      if(_patched)return;
-      var method=AccessTools.Method(typeof(BlockObjectBatchLoader),nameof(BlockObjectBatchLoader.GetHighestOccupation),new[]{typeof(BlockObject)});
-      if(method==null||!method.IsStatic||method.ReturnType!=typeof(int))
-        throw new InvalidOperationException("Timberborn 1.1.2.8 static BlockObjectBatchLoader.GetHighestOccupation(BlockObject) : int changed");
-      new Harmony(HarmonyId).CreateClassProcessor(typeof(StackableBaseLoadOrder)).Patch();
-      _patched=true;
+    internal static void Apply()=>NativePatches.Install(HarmonyId,Verify,typeof(StackableBaseLoadOrder));
+
+    private static void Verify() {
+      const string feature="Stackable deck load order";
+      var method=NativeMember.Method(feature,typeof(BlockObjectBatchLoader),nameof(BlockObjectBatchLoader.GetHighestOccupation),typeof(int),typeof(BlockObject));
+      if(!method.IsStatic)throw NativePatches.Changed(feature,"static BlockObjectBatchLoader.GetHighestOccupation(BlockObject) : int");
+      NativeMember.Parameters(feature,method,"blockObject");
+      NativeMember.NotInlined(feature,method);
     }
 
     // One postfix on GetHighestOccupation for both load-order rules: deck

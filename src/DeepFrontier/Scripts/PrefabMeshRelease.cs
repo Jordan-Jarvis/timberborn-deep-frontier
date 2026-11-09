@@ -69,15 +69,26 @@ namespace DeepFrontier.Scripts {
       public readonly Dictionary<Transform, GameObject[]> Imported = new Dictionary<Transform, GameObject[]>();
     }
 
-    internal static void Apply() {
-      var harmony = new Harmony(HarmonyId);
-      harmony.Patch(ProcessPrefab(), prefix: new HarmonyMethod(Method(nameof(ProcessPrefix))), finalizer: new HarmonyMethod(Method(nameof(ProcessFinalizer))));
-      foreach (var optimize in Optimizers())
+    private static MethodInfo _processPrefab, _processModel;
+    private static List<MethodInfo> _optimizers;
+
+    internal static void Apply() => NativePatches.Install(HarmonyId, Verify, harmony => {
+      harmony.Patch(_processPrefab, prefix: new HarmonyMethod(Method(nameof(ProcessPrefix))), finalizer: new HarmonyMethod(Method(nameof(ProcessFinalizer))));
+      foreach (var optimize in _optimizers)
         harmony.Patch(optimize, new HarmonyMethod(Method(nameof(OptimizePrefix))), new HarmonyMethod(Method(nameof(OptimizePostfix))));
-      var processModel = typeof(TimbermeshImporter).GetMethod(nameof(TimbermeshImporter.ProcessModel), BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+      harmony.Patch(_processModel, postfix: new HarmonyMethod(Method(nameof(ImportPostfix))));
+    });
+
+    // Every target, resolved and checked before the first patch is applied.
+    private static void Verify() {
+      _processPrefab = ProcessPrefab();
+      _optimizers = Optimizers().ToList();
+      _processModel = typeof(TimbermeshImporter).GetMethod(nameof(TimbermeshImporter.ProcessModel), BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
         null, new[] { typeof(Timberborn.TimbermeshDTO.Model), typeof(HideFlags), typeof(ImportDetails) }, null)
         ?? throw new InvalidOperationException("Prefab mesh release: TimbermeshImporter.ProcessModel(Model, HideFlags, ImportDetails) not found (Timberborn 1.1.2.8)");
-      harmony.Patch(processModel, postfix: new HarmonyMethod(Method(nameof(ImportPostfix))));
+      // ShareIdenticalModels reads these two private fields directly (publicized reference assemblies).
+      NativeMember.Field("Prefab mesh release", typeof(PrefabOptimizationChain), "_prefabProcessors", typeof(List<IPrefabOptimizer>));
+      NativeMember.Field("Prefab mesh release", typeof(TimbermeshPrefabOptimizer), "_assetLoader", typeof(IAssetLoader));
     }
 
     // TimbermeshImporter.ProcessModel: CreateMeshes made one GameObject per model node under details.Root.
