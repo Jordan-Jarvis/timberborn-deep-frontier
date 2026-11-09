@@ -15,7 +15,7 @@ internal static class MoreFluidsScenarios {
         "ModdableFluids.Sources.Types", "ModdableFluids.Tides.Registration", "ModdableFluids.World.Extraction", "ModdableFluids.World.Sampling" };
       var provider = new MoreFluidsLiquids();
       check(provider.RequiredCapabilities.OrderBy(c => c, StringComparer.Ordinal).SequenceEqual(expected), "More Fluids capabilities: " + string.Join(", ", provider.RequiredCapabilities));
-      check(provider.MinimumApiVersion == "0.1.3", "More Fluids keeps MinimumApiVersion 0.1.3 until the release is set");
+      check(provider.MinimumApiVersion == "0.1.4", "More Fluids requires Moddable Fluids 0.1.4, the release with its policies, extraction and tides");
       var unlisted = expected.Where(c => !ModdableFluidsEntry.Capabilities.Contains(c)).ToArray();
       check(unlisted.Length == 0, "Moddable Fluids does not list " + string.Join(", ", unlisted) + ", so it would reject More Fluids");
       var host = new ModdableFluidsHost();

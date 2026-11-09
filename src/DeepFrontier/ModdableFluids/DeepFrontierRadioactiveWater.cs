@@ -55,7 +55,7 @@ namespace DeepFrontier.ModdableFluidsMigration {
 
     public string ProviderId => Id;
     public string OwnerModId => Owner;
-    public string MinimumApiVersion => "0.1.3";
+    public string MinimumApiVersion => "0.1.4";
     public IReadOnlyCollection<string> RequiredCapabilities { get; }
     public bool RegistersTide => _tide != null;
 

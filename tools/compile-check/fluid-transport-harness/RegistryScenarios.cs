@@ -302,7 +302,7 @@ internal static class RegistryScenarios {
       var provider = Activator.CreateInstance(reflection.GetType("ModdableFluidsSyntheticReflection.JuiceProvider", true)!)!;
       var register = discovery.GetMethod("Register")!;
       string result = (string)register.Invoke(null, new[] { AppDomain.CurrentDomain.GetAssemblies(), provider })!;
-      check(result.StartsWith("registered ModdableFluidsSyntheticReflection.Juice with Moddable Fluids 0.1.3", StringComparison.Ordinal), "Reflection discovery: " + result);
+      check(result.StartsWith("registered ModdableFluidsSyntheticReflection.Juice with Moddable Fluids 0.1.4", StringComparison.Ordinal), "Reflection discovery: " + result);
       ModdableFluidsEntry.RegisterProvider((IFluidProvider)Activator.CreateInstance(compiled.GetType("ModdableFluidsSyntheticCompiled.TracerProvider", true)!)!);
       var registry = ModdableFluidsEntry.Host.Freeze();
       check(registry.Definitions.Select(d => d.Id).SequenceEqual(new[] { FluidIds.Water, FluidIds.Badwater, "ModdableFluidsSyntheticCompiled.Tracer", "ModdableFluidsSyntheticReflection.Juice" }),
@@ -334,8 +334,8 @@ internal static class RegistryScenarios {
     });
 
     scenario("discovery entry reports version and capabilities and refuses duplicate copies", () => {
-      check(ModdableFluidsEntry.ApiVersion == "0.1.3" && ModdableFluidsEntry.ContractMajor == 0, "API version");
-      check(typeof(ModdableFluidsEntry).Assembly.GetName().Version == new Version(0, 1, 3, 0), "Assembly version matches the contract version");
+      check(ModdableFluidsEntry.ApiVersion == "0.1.4" && ModdableFluidsEntry.ContractMajor == 0, "API version");
+      check(typeof(ModdableFluidsEntry).Assembly.GetName().Version == new Version(0, 1, 4, 0), "Assembly version matches the contract version");
       // Core capabilities here; each feature area (tides) checks its own in its scenario file.
       var core = new[] { "ModdableFluids.Discovery.Reflection", "ModdableFluids.Persistence.ComponentIdentity", "ModdableFluids.Persistence.ProviderState",
         "ModdableFluids.Policies.Irrigation", "ModdableFluids.Policies.WaterIntakes",

@@ -39,7 +39,7 @@ namespace MoreFluids {
 
     public string ProviderId => Id;
     public string OwnerModId => Owner;
-    public string MinimumApiVersion => "0.1.3";
+    public string MinimumApiVersion => "0.1.4";
     public IReadOnlyCollection<string> RequiredCapabilities { get; } = new[] {
       "ModdableFluids.Policies.Irrigation", "ModdableFluids.Policies.WaterIntakes", "ModdableFluids.Registry.Definitions", "ModdableFluids.Scene.Lifecycle",
       "ModdableFluids.Sources.Types", "ModdableFluids.Tides.Registration", "ModdableFluids.World.Extraction", "ModdableFluids.World.Sampling" };

@@ -13,7 +13,7 @@ namespace ModdableFluids {
   /// and unload one at a time. A failed freeze leaves the host Faulted with its report.
   /// </summary>
   public sealed partial class ModdableFluidsHost {
-    public const int ApiMajor = 0, ApiMinor = 1, ApiPatch = 3;
+    public const int ApiMajor = 0, ApiMinor = 1, ApiPatch = 4;
     public static string ApiVersion => ApiMajor + "." + ApiMinor + "." + ApiPatch;
 
     /// <summary>Capabilities implemented by this contract, in ordinal order. Nothing unimplemented is listed.</summary>
