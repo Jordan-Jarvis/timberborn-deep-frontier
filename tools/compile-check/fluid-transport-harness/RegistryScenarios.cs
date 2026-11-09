@@ -336,8 +336,8 @@ internal static class RegistryScenarios {
     scenario("discovery entry reports version and capabilities and refuses duplicate copies", () => {
       check(ModdableFluidsEntry.ApiVersion == "0.1.3" && ModdableFluidsEntry.ContractMajor == 0, "API version");
       check(typeof(ModdableFluidsEntry).Assembly.GetName().Version == new Version(0, 1, 3, 0), "Assembly version matches the contract version");
-      check(ModdableFluidsEntry.Capabilities.SequenceEqual(ModdableFluidsEntry.Capabilities.OrderBy(c => c, StringComparer.Ordinal)) && ModdableFluidsEntry.Capabilities.Count == 12, "Capability list");
-      check(!ModdableFluidsEntry.Capabilities.Any(c => c.Contains("Rendering") || c.Contains("Transport") || c.Contains("Tide")), "Unimplemented capability advertised");
+      check(ModdableFluidsEntry.Capabilities.SequenceEqual(ModdableFluidsEntry.Capabilities.OrderBy(c => c, StringComparer.Ordinal)) && ModdableFluidsEntry.Capabilities.Count == 13, "Capability list");
+      check(!ModdableFluidsEntry.Capabilities.Any(c => c.Contains("Rendering") || c.Contains("Transport")), "Unimplemented capability advertised");
       ModdableFluidsEntry.RequireSingleLoadedCopy(AppDomain.CurrentDomain.GetAssemblies());
       check(typeof(ModdableFluidsEntry).FullName == ModdableFluidsEntry.EntryTypeName && typeof(ModdableFluidsEntry).Assembly.GetName().Name == ModdableFluidsEntry.AssemblyName, "Documented entry names");
       var second = new AssemblyLoadContext("second Moddable Fluids copy", isCollectible: true);

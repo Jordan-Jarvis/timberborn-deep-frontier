@@ -1,12 +1,16 @@
-"""Long-run hazardous-weather shares for the proposed combined tide-selection policies.
+"""Long-run hazardous-weather shares for the combined tide-selection policies.
 
 Exact Markov model of the installed Timberborn 1.1.2.8 selection, not a simulation:
 - native HazardousWeatherRandomizer: badtide chance from ChanceForBadtide and the current
   streak (StreakChanceDecreaseThreshold 0.05, StreakChanceResetThreshold 0.025, DecreaseRatio 0.5);
   a tide in the history is a non-badtide streak, exactly as the native history records its ID;
 - Deep Frontier RadioactiveTideService.Choose: one tide chance per eligible cycle and
-  CooldownCycles = 1 (a tide never follows the same tide).
-Long-run shares assume every weather is past its first eligible cycle. Writes
+  CooldownCycles = 1 (a tide never follows the same tide);
+- the implemented policy C' (ModdableFluids FluidTideSelection.Select, policy 'budget-global'):
+  the budget is the largest installed chance, split by weight (default: each tide's chance)
+  over the eligible tides, and no tide in the cycle after any tide.
+Long-run shares assume every weather is past its first eligible cycle. Probabilities are the
+exact decimals (0.4, 15%), not the game's float values. Writes
 outputs/fluids-api-prototype/tide-policy-model.json and prints the Markdown tables.
 """
 import itertools
@@ -15,8 +19,18 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 BADTIDE, DROUGHT = 'Badtide', 'Drought'
-MODES = {  # vanilla GameMode blueprints and Deep Frontier RadioactiveTideTuning.GameModeCurve
-    'Easy': {'badtide': 0.4, 'df': 0.15}, 'Normal': {'badtide': 0.4, 'df': 0.25}, 'Hard': {'badtide': 0.4, 'df': 0.35},
+MODES = {  # vanilla GameMode blueprints, Deep Frontier RadioactiveTideTuning.GameModeCurve, docs/more-fluids-design.md
+    'Easy': {'badtide': 0.4, 'df': 0.15, 'coffee': 0.10, 'salt': 0.10},
+    'Normal': {'badtide': 0.4, 'df': 0.25, 'coffee': 0.15, 'salt': 0.15},
+    'Hard': {'badtide': 0.4, 'df': 0.35, 'coffee': 0.20, 'salt': 0.20},
+}
+# Tide IDs as registered, so ordinal order matches FluidTideSelection.
+RADIOACTIVE, COFFEE, SALT = 'DeepFrontier.RadioactiveTide', 'MoreFluids.CoffeeTide', 'MoreFluids.SaltTide'
+INSTALLS = {  # installed content -> tide chances per mode
+    'Vanilla only': {},
+    'Deep Frontier': {RADIOACTIVE: 'df'},
+    'More Fluids': {COFFEE: 'coffee', SALT: 'salt'},
+    'Deep Frontier + More Fluids': {RADIOACTIVE: 'df', COFFEE: 'coffee', SALT: 'salt'},
 }
 
 
@@ -123,15 +137,40 @@ def main():
         for policy in ('load-order', 'additive', 'budget', 'budget-global', 'independent'):
             rows.append({'mode': 'Normal', 'case': f'DF + More Fluids (MF chance {mf:.0%})', 'policy': policy,
                          'shares': stationary(normal['badtide'], tides, policy)})
+    implemented = []
+    for mode, values in MODES.items():
+        for install, tides in INSTALLS.items():
+            chances = {tide: values[key] for tide, key in tides.items()}
+            shares = stationary(values['badtide'], chances, 'budget-global' if chances else 'single')
+            if len(chances) == 1:  # C' with one tide is today's Deep Frontier rule
+                single = stationary(values['badtide'], chances, 'single')
+                assert all(abs(shares[k] - single[k]) < 1e-12 for k in shares), (mode, install)
+            implemented.append({'mode': mode, 'installed': install, 'policy': "C'", 'budget': max(chances.values(), default=0),
+                                'shares': shares})
     output = ROOT / 'outputs' / 'fluids-api-prototype' / 'tide-policy-model.json'
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps({'source': __doc__.strip().splitlines()[0], 'rows': rows}, indent=2) + '\n', encoding='utf-8')
+    output.write_text(json.dumps({'source': __doc__.strip().splitlines()[0], 'rows': rows, 'implemented': implemented}, indent=2) + '\n',
+                      encoding='utf-8')
     print('| Mode | Case | Policy | Drought | Badtide | DF tide | MF tide |')
     print('| --- | --- | --- | ---: | ---: | ---: | ---: |')
     for row in rows:
         s = row['shares']
         cells = [f"{100 * s.get(k, 0):.1f}%" if k in s else '-' for k in (DROUGHT, BADTIDE, 'DF tide', 'MF tide')]
         print(f"| {row['mode']} | {row['case']} | {row['policy']} | " + ' | '.join(cells) + ' |')
+    print()
+    print("Implemented policy C' (budget = largest chance, weights = chances, global one-cycle cooldown):")
+    print()
+    print('| Mode | Installed | Budget | Drought | Badtide | Radioactive | Coffee | Salt |')
+    print('| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |')
+    for row in implemented:
+        s = row['shares']
+        cells = [f"{100 * s[k]:.1f}%" if k in s else '-' for k in (DROUGHT, BADTIDE, RADIOACTIVE, COFFEE, SALT)]
+        budget = f"{100 * row['budget']:.0f}%" if row['budget'] else '-'
+        print(f"| {row['mode']} | {row['installed']} | {budget} | " + ' | '.join(cells) + ' |')
+    print()
+    print('Exact values for the C# harness (HarnessExtensions.Tides.cs):')
+    for row in implemented:
+        print(row['mode'], row['installed'], ' '.join(f"{k}={v!r}" for k, v in row['shares'].items()))
     print(f'Report: {output}')
 
 
