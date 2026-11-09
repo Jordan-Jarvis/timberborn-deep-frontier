@@ -346,7 +346,7 @@ check(!/FindOldContaining\(oldCount, floor\)/.test(reconcile) && /_oldSoilMoved\
   const guard = spots.indexOf('#if !UNITY_EDITOR');
   check(guard > 0 && !/Harmony/.test(spots.slice(0, guard).replace(/\/\/.*$/gm, '')) && spots.trimEnd().endsWith('#endif'),
     'the planting patch must sit inside #if !UNITY_EDITOR (the component stays outside for the configurator)');
-  check(/IrradiatedPlantingNative\.Verify\(\);\s*new Harmony\(HarmonyId\)\.CreateClassProcessor\(typeof\(IrradiatedPlantingSpotsPatch\)\)\.Patch\(\);/.test(spots)
+  check(/NativePatches\.Install\(HarmonyId, IrradiatedPlantingNative\.Verify, typeof\(IrradiatedPlantingSpotsPatch\)\);/.test(spots)
     && /internal sealed class IrradiatedPlantingModStarter : IModStarter/.test(spots), 'the planting patch is applied at mod start after the native contract is verified');
   const verify = methodBody('IrradiatedPlantingSpots.cs', 'public static void Verify()') ?? '';
   check(/NativeIl\.Inlinable\(canPlantAt\)/.test(verify) && /Require\(canPlantAt, soilValidate\)/.test(verify) && /Require\(closestOrDefault, canPlantAt\)/.test(verify)
@@ -396,7 +396,7 @@ if (check(soilCs.length > 0, 'RadiationSoil.cs missing')) {
   check(/\[HarmonyPatch\(typeof\(SoilMoistureSimulationTaskStarter\), nameof\(SoilMoistureSimulationTaskStarter\.StartTask\)\)\]/.test(patches)
     && /Prefix\(ref ReadOnlyArray<ReadOnlyWaterColumn> waterColumns\)/.test(patches), 'moisture prefix on SoilMoistureSimulationTaskStarter.StartTask(ref waterColumns) missing or outside #if !UNITY_EDITOR');
   check(!/HarmonyPatch|new Harmony\(/.test(soilCs.slice(0, Math.max(0, patchStart)) + soilCs.slice(patchEnd)), 'RadiationSoil Harmony code must stay inside #if !UNITY_EDITOR');
-  check(/parameter\.ParameterType == typeof\(ReadOnlyArray<ReadOnlyWaterColumn>\)\.MakeByRefType\(\)/.test(patches) && /Verify\(\);\s*new Harmony\(HarmonyId\)/.test(patches),
+  check(/parameter\.ParameterType == typeof\(ReadOnlyArray<ReadOnlyWaterColumn>\)\.MakeByRefType\(\)/.test(patches) && /NativePatches\.Install\(HarmonyId, Verify, typeof\(MoisturePatch\)\)/.test(patches),
     'moisture patch target must be verified before patching');
   const moisture = methodBody('RadiationSoil.cs', 'private void BuildMoistureShadow(') ?? '';
   check(/RadiationMixing\.RequireShares\(column\.Contamination, r,/.test(moisture) && /column\.Contamination \+= r;/.test(moisture) && /native\.CopyTo\(_moistureWater\)/.test(moisture),

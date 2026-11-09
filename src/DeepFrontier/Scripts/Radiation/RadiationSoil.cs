@@ -560,18 +560,17 @@ namespace DeepFrontier.Scripts.Radiation {
 #if !UNITY_EDITOR
   // Harmony: the native soil moisture tasks see b + r as the water's
   // contamination (RadiationSoil.SubstituteMoistureColumns).
+  // Installed once at mod start (RadiationPatchesModStarter); the Game
+  // scene's RadiationSoil attaches in Load and detaches in Unload.
   internal static class RadiationSoilPatches {
     internal const string HarmonyId = "DeepFrontier.RadiationSoil";
-    private static bool _patched;
     private static RadiationSoil _soil;
+
+    internal static void Install() => NativePatches.Install(HarmonyId, Verify, typeof(MoisturePatch));
 
     internal static void Attach(RadiationSoil soil) {
       if (_soil != null) throw new InvalidOperationException("A radiation soil is already attached to the soil moisture simulation");
-      if (!_patched) {
-        Verify();
-        new Harmony(HarmonyId).CreateClassProcessor(typeof(MoisturePatch)).Patch();
-        _patched = true;
-      }
+      if (!NativePatches.IsInstalled(HarmonyId)) throw new InvalidOperationException("Radiation soil moisture hook was not installed at mod start");
       _soil = soil;
     }
 

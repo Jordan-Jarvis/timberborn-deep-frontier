@@ -66,8 +66,7 @@ namespace DeepFrontier.Scripts.Radiation {
     internal const string HarmonyId = "DeepFrontier.IrradiatedPlantingSpots";
 
     public void StartMod(IModEnvironment modEnvironment) {
-      IrradiatedPlantingNative.Verify();
-      new Harmony(HarmonyId).CreateClassProcessor(typeof(IrradiatedPlantingSpotsPatch)).Patch();
+      NativePatches.Install(HarmonyId, IrradiatedPlantingNative.Verify, typeof(IrradiatedPlantingSpotsPatch));
       Debug.Log("[DeepFrontier] Irradiated planting patch applied (PlantingSpotFinder.CanPlantAt postfix: planters skip irradiated ground).");
     }
   }

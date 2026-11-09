@@ -105,12 +105,12 @@ namespace DeepFrontier.Scripts {
       if(_frame==1200) {
         Debug.Log(Tag+" passages at frame 1200");
         int both=0,oneWay=0,none=0;
-        foreach(var p in BuildingPassages.Passages) {
+        foreach(var p in BuildingPassages.Current.Passages) {
           bool ab=_navigation.FindRoadPath(NavigationCoordinateSystem.GridToWorld(p.A.PositionedEntrance.Coordinates),NavigationCoordinateSystem.GridToWorld(p.B.PositionedEntrance.DoorstepCoordinates),out _);
           bool ba=_navigation.FindRoadPath(NavigationCoordinateSystem.GridToWorld(p.B.PositionedEntrance.Coordinates),NavigationCoordinateSystem.GridToWorld(p.A.PositionedEntrance.DoorstepCoordinates),out _);
           if(ab&&ba)both++;else if(ab||ba)oneWay++;else none++;
         }
-        Debug.Log(Tag+" passages recheck: "+BuildingPassages.Passages.Count+" walkableBothWays="+both+" oneWay="+oneWay+" notWalkable="+none);
+        Debug.Log(Tag+" passages recheck: "+BuildingPassages.Current.Passages.Count+" walkableBothWays="+both+" oneWay="+oneWay+" notWalkable="+none);
         // Per linked building, from its district centre over roads: its own entrance (native) and its doorstep (now its access).
         var centre=_entities.Entities.Select(e=>e.GetComponent<DistrictCenter>()).FirstOrDefault(d=>d);
         if(centre) {
@@ -118,7 +118,7 @@ namespace DeepFrontier.Scripts {
           int kept=0,gained=0,lost=0,neither=0;
           // Hooman Stairs' top buildings instead when that mod is on (reference for the same measurement).
           var hooman=AppDomain.CurrentDomain.GetAssemblies().Select(a=>a.GetType("Calloatti.HoomanStairs.HoomanStairsRegistry")).FirstOrDefault(t=>t!=null);
-          var measured=hooman!=null?((IEnumerable)hooman.GetField("TopBuildings").GetValue(null)).Cast<BlockObject>().ToList():BuildingPassages.Linked.Keys.ToList();
+          var measured=hooman!=null?((IEnumerable)hooman.GetField("TopBuildings").GetValue(null)).Cast<BlockObject>().ToList():BuildingPassages.Current.Linked.Keys.ToList();
           Debug.Log(Tag+" passages reach measuring "+(hooman!=null?"Hooman Stairs top buildings":"Deep Frontier linked buildings")+": "+measured.Count);
           int instantDoor=0;
           foreach(var b in measured) {
@@ -131,7 +131,7 @@ namespace DeepFrontier.Scripts {
           }
           Debug.Log(Tag+" passages reach from district centre: kept="+kept+" gained="+gained+" lost="+lost+" neither="+neither+" doorstepInstant="+instantDoor);
         }
-        foreach(var p in BuildingPassages.Passages.Take(8))
+        foreach(var p in BuildingPassages.Current.Passages.Take(8))
           Debug.Log(Tag+" passage "+p.A.GetComponent<TemplateSpec>()?.TemplateName+" "+Xyz(p.A.Coordinates)+" <-> "+p.B.GetComponent<TemplateSpec>()?.TemplateName+" "+Xyz(p.B.Coordinates)
             +" steps="+p.Path.Count+" walk="+_navigation.FindRoadPath(NavigationCoordinateSystem.GridToWorld(p.A.PositionedEntrance.Coordinates),NavigationCoordinateSystem.GridToWorld(p.B.PositionedEntrance.DoorstepCoordinates),out _));
       }
@@ -158,8 +158,8 @@ namespace DeepFrontier.Scripts {
       if(_done||_frame<240)return;
       _done=true;
       // Building passages (BuildingPassages.cs): count and kinds now; real road paths are checked at frame 1200.
-      Debug.Log(Tag+" passages: "+BuildingPassages.Passages.Count+" linkedBuildings="+BuildingPassages.Linked.Count
-        +" stacked="+BuildingPassages.Passages.Count(p=>p.Path.Any(c=>c.z!=p.Path[0].z))+" hoomanStairs="+BuildingPassagesHoomanStairs.Enabled);
+      Debug.Log(Tag+" passages: "+BuildingPassages.Current.Passages.Count+" linkedBuildings="+BuildingPassages.Current.Linked.Count
+        +" stacked="+BuildingPassages.Current.Passages.Count(p=>p.Path.Any(c=>c.z!=p.Path[0].z))+" hoomanStairs="+BuildingPassagesHoomanStairs.Enabled);
       // Top-bar good tooltip (crashed on a good type without a stockpile, build 190): build it for every good.
       foreach(var id in _goods.Goods)_tooltips.Create(id);
       Debug.Log(Tag+" good tooltips built for "+_goods.Goods.Count+" goods");

@@ -26,23 +26,32 @@ namespace DeepFrontier.Scripts.Radiation {
   //   native water change queue they were enqueued with.
   // The native simulation's data is never written. Verify() resolves every
   // native member used and throws if 1.1.2.8's signatures changed.
+  //
+  // The hooks are installed once at mod start (RadiationPatchesModStarter);
+  // they do nothing while no game is loaded. A Game scene's
+  // RadiationSimulation attaches in its Load, once its arrays exist, and
+  // detaches in Unload; only these hooks read Simulation.
 #if !UNITY_EDITOR
+  internal sealed class RadiationPatchesModStarter : Timberborn.ModManagerScene.IModStarter {
+    public void StartMod(Timberborn.ModManagerScene.IModEnvironment modEnvironment) {
+      RadiationLockstep.Install();
+      RadiationSoilPatches.Install();
+      UnityEngine.Debug.Log("[DeepFrontier] Radiation water lockstep and soil moisture hooks applied.");
+    }
+  }
+
   internal static class RadiationLockstep {
     internal const string HarmonyId = "DeepFrontier.RadiationLockstep";
     private const BindingFlags Fields = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-    private static bool _patched;
 
     internal static RadiationSimulation Simulation { get; private set; }
 
+    internal static void Install() =>
+      NativePatches.Install(HarmonyId, Verify, typeof(SubstepPatch), typeof(SourcesPatch), typeof(ChangesPatch), typeof(ChangeQueuePatch));
+
     internal static void Attach(RadiationSimulation simulation) {
       if (Simulation != null) throw new InvalidOperationException("A radiation simulation is already attached to the water lockstep");
-      if (!_patched) {
-        Verify();
-        var harmony = new Harmony(HarmonyId);
-        foreach (var patch in new[] { typeof(SubstepPatch), typeof(SourcesPatch), typeof(ChangesPatch), typeof(ChangeQueuePatch) })
-          harmony.CreateClassProcessor(patch).Patch();
-        _patched = true;
-      }
+      if (!NativePatches.IsInstalled(HarmonyId)) throw new InvalidOperationException("Radiation lockstep hooks were not installed at mod start");
       Simulation = simulation;
     }
 

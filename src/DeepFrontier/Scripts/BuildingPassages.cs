@@ -51,19 +51,22 @@ namespace DeepFrontier.Scripts {
     public BlockObject Other(BlockObject building) => A == building ? B : A;
   }
 
-  internal sealed class BuildingPassages : IPostLoadableSingleton {
+  internal sealed class BuildingPassages : IPostLoadableSingleton, IUnloadableSingleton {
     private const string GroupName = "DeepFrontierPassages";
     private static readonly Vector3Int[] Steps = {
       Vector3Int.up, Vector3Int.down, Vector3Int.left, Vector3Int.right, new(0, 0, 1), new(0, 0, -1) };
-    // Read by the Harmony patches below and by SaveInspectionProbe.
-    internal static int GroupId = -1;
-    internal static readonly Dictionary<int, int> Nodes = new();
-    internal static readonly Dictionary<BlockObject, int> Linked = new();
-    internal static readonly List<Passage> Passages = new();
-    private static Func<Vector3Int, int> _nodeId;
-    private static Func<Vector3Int, bool> _inNavMesh;
-    private static readonly Action<BuildingAccessible> EnableNativeAccesses = AccessTools.MethodDelegate<Action<BuildingAccessible>>(
-      AccessTools.Method(typeof(BuildingAccessible), "EnableAccesses") ?? throw new InvalidOperationException("BuildingAccessible.EnableAccesses changed"));
+    // The Game scene's passages, read by the Harmony patches below (which run in
+    // every scene) and by the acceptance and inspection probes. Set when the
+    // scene's container constructs this singleton, before any singleton or
+    // entity loads, and cleared on unload: no patch ever sees a previous game's
+    // group id, nodes or links. Null in other scenes and with Hooman Stairs.
+    internal static BuildingPassages Current { get; private set; }
+    internal int GroupId { get; private set; } = -1;
+    internal readonly Dictionary<int, int> Nodes = new();
+    internal readonly Dictionary<BlockObject, int> Linked = new();
+    internal readonly List<Passage> Passages = new();
+    private Func<Vector3Int, int> _nodeId;
+    private Func<Vector3Int, bool> _inNavMesh;
 
     private readonly IBlockService _blocks;
     private readonly EventBus _events;
@@ -76,19 +79,22 @@ namespace DeepFrontier.Scripts {
     public BuildingPassages(IBlockService blocks, EventBus events, EntityComponentRegistry registry, INavMeshService navMesh,
         INavigationCachingService caching, NavMeshGroupService groups) {
       _blocks = blocks; _events = events; _registry = registry; _navMesh = navMesh; _caching = caching; _groups = groups;
+      if (Current != null) throw new InvalidOperationException("Building passages are already active; the previous Game scene was not unloaded");
+      Current = this;
     }
 
     public void PostLoad() {
-      Passages.Clear(); Nodes.Clear(); Linked.Clear();
       GroupId = _groups.GetOrAddGroupId(GroupName);
-      // Native node ids (internal NodeIdService, held by NavMeshService).
-      var service = _navMesh.GetType().GetField("_nodeIdService", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(_navMesh)
-        ?? throw new InvalidOperationException("NavMeshService._nodeIdService changed");
-      _nodeId = (Func<Vector3Int, int>)Delegate.CreateDelegate(typeof(Func<Vector3Int, int>), service,
-        service.GetType().GetMethod("GridToId", new[] { typeof(Vector3Int) }) ?? throw new InvalidOperationException("NodeIdService.GridToId changed"));
-      _inNavMesh = (Func<Vector3Int, bool>)Delegate.CreateDelegate(typeof(Func<Vector3Int, bool>), service,
-        service.GetType().GetMethod("Contains", new[] { typeof(Vector3Int) }) ?? throw new InvalidOperationException("NodeIdService.Contains changed"));
+      // Native node ids (internal NodeIdService, held by NavMeshService;
+      // resolved and checked at mod start by BuildingPassagesPatches).
+      var service = BuildingPassagesPatches.NodeIdService.GetValue(_navMesh);
+      _nodeId = (Func<Vector3Int, int>)Delegate.CreateDelegate(typeof(Func<Vector3Int, int>), service, BuildingPassagesPatches.GridToId);
+      _inNavMesh = (Func<Vector3Int, bool>)Delegate.CreateDelegate(typeof(Func<Vector3Int, bool>), service, BuildingPassagesPatches.Contains);
       _events.Register(this);
+    }
+
+    public void Unload() {
+      if (Current == this) Current = null;
     }
 
     // Every building is in place once the game shows its UI; from then on each
@@ -192,7 +198,7 @@ namespace DeepFrontier.Scripts {
       if (building.HasComponent<BuildingWithTerrainRange>()) _caching.StopCachingTerrainFlowField(doorstep);
       // ExitedFinishedStateEvent runs while IsFinished is still true. Its native
       // listener has already cleared access; do not re-enable the deleted entity.
-      if (building != exiting && building.IsFinished) EnableNativeAccesses(building.GetComponent<BuildingAccessible>());
+      if (building != exiting && building.IsFinished) BuildingPassagesPatches.EnableNativeAccesses(building.GetComponent<BuildingAccessible>());
     }
 
     // Breadth-first, unit steps (6 directions), through the cells of both buildings.
@@ -219,30 +225,30 @@ namespace DeepFrontier.Scripts {
   // Passage steps are never blocked by a building's native nav-mesh blocking.
   [HarmonyPatch]
   internal static class PassageEdgeBlocking {
-    private static IEnumerable<MethodBase> TargetMethods() {
-      var source = AccessTools.TypeByName("Timberborn.Navigation.NavMeshSource") ?? throw new InvalidOperationException("NavMeshSource changed");
-      yield return AccessTools.Method(source, "BlockEdge", new[] { typeof(int), typeof(int), typeof(int) }) ?? throw new InvalidOperationException("NavMeshSource.BlockEdge changed");
-      yield return AccessTools.Method(source, "UnblockEdge", new[] { typeof(int), typeof(int), typeof(int) }) ?? throw new InvalidOperationException("NavMeshSource.UnblockEdge changed");
+    private static IEnumerable<MethodBase> TargetMethods() => BuildingPassagesPatches.EdgeBlocking();
+    private static bool Prefix(int groupId) {
+      var passages = BuildingPassages.Current;
+      return passages == null || passages.GroupId < 0 || groupId != passages.GroupId;
     }
-    private static bool Prefix(int groupId) => groupId != BuildingPassages.GroupId || BuildingPassages.GroupId < 0;
   }
 
   // Passage nodes are inside buildings, which are district obstacles.
   [HarmonyPatch]
   internal static class PassageObstacles {
-    private static MethodBase TargetMethod() {
-      var service = AccessTools.TypeByName("Timberborn.Navigation.DistrictObstacleService") ?? throw new InvalidOperationException("DistrictObstacleService changed");
-      return AccessTools.Method(service, "IsSetObstacle", new[] { typeof(int) }) ?? throw new InvalidOperationException("DistrictObstacleService.IsSetObstacle changed");
+    private static MethodBase TargetMethod() => BuildingPassagesPatches.IsSetObstacle();
+    private static void Postfix(int nodeId, ref bool __result) {
+      if (__result && BuildingPassages.Current is { } passages && passages.Nodes.ContainsKey(nodeId)) __result = false;
     }
-    private static void Postfix(int nodeId, ref bool __result) { if (__result && BuildingPassages.Nodes.ContainsKey(nodeId)) __result = false; }
   }
 
   // A linked building is reached at its doorstep, through its passages.
   [HarmonyPatch(typeof(Accessible), nameof(Accessible.SetAccesses))]
   internal static class PassageAccess {
     private static void Prefix(Accessible __instance, ref IEnumerable<Vector3> accesses) {
+      var passages = BuildingPassages.Current;
+      if (passages == null || passages.Linked.Count == 0) return;
       var building = __instance.GetComponent<BlockObject>();
-      if (building && BuildingPassages.Linked.ContainsKey(building))
+      if (building && passages.Linked.ContainsKey(building))
         accesses = new[] { CoordinateSystem.GridToWorldCentered(building.PositionedEntrance.DoorstepCoordinates) };
     }
   }
@@ -256,14 +262,47 @@ namespace DeepFrontier.Scripts {
       "Deep Frontier is incompatible with Hooman Stairs.\n\nDeep Frontier now links touching buildings itself, stacked and side by side, so beavers walk through one building to reach the next. With Hooman Stairs enabled the two would link the same buildings twice, so Deep Frontier's building links are off.\n\nDisable Hooman Stairs in the Mods screen to use Deep Frontier's building links.";
   }
 
+  // No native alternative (Timberborn 1.1.2.8): a building's native nav-mesh
+  // blocking closes every edge inside it, internal NavMeshSource has no
+  // per-group exemption, buildings are district obstacles, and Accessible has
+  // no access provider for a doorstep reached through another building. The
+  // native members (internal or private) are resolved and checked at mod
+  // start; the passage singleton uses the handles resolved here.
   internal static class BuildingPassagesPatches {
+    private const string Feature = "Building passages";
+    internal static FieldInfo NodeIdService { get; private set; }
+    internal static MethodInfo GridToId { get; private set; }
+    internal static MethodInfo Contains { get; private set; }
+    internal static Action<BuildingAccessible> EnableNativeAccesses { get; private set; }
+
     // Called once per process from DeepFrontierModStarter.
-    internal static void Apply() {
-      var harmony = new Harmony("DeepFrontier.BuildingPassages");
-      harmony.CreateClassProcessor(typeof(PassageEdgeBlocking)).Patch();
-      harmony.CreateClassProcessor(typeof(PassageObstacles)).Patch();
-      harmony.CreateClassProcessor(typeof(PassageAccess)).Patch();
+    internal static void Apply() => NativePatches.Install("DeepFrontier.BuildingPassages", Verify,
+      typeof(PassageEdgeBlocking), typeof(PassageObstacles), typeof(PassageAccess));
+
+    private static void Verify() {
+      foreach (var method in EdgeBlocking()) NativeMember.Parameters(Feature, method, "startNodeId", "endNodeId", "groupId");
+      NativeMember.Parameters(Feature, IsSetObstacle(), "nodeId");
+      var setAccesses = NativeMember.Method(Feature, typeof(Accessible), nameof(Accessible.SetAccesses), typeof(void), typeof(IEnumerable<Vector3>), typeof(Vector3?));
+      NativeMember.Parameters(Feature, setAccesses, "accesses", "finalAccess");
+      var navMeshService = NativeMember.Type(Feature, typeof(INavMeshService), "Timberborn.Navigation.NavMeshService");
+      var nodeIdService = NativeMember.Type(Feature, typeof(INavMeshService), "Timberborn.Navigation.NodeIdService");
+      NodeIdService = NativeMember.Field(Feature, navMeshService, "_nodeIdService", nodeIdService);
+      GridToId = NativeMember.Method(Feature, nodeIdService, "GridToId", typeof(int), typeof(Vector3Int));
+      Contains = NativeMember.Method(Feature, nodeIdService, "Contains", typeof(bool), typeof(Vector3Int));
+      EnableNativeAccesses = AccessTools.MethodDelegate<Action<BuildingAccessible>>(
+        NativeMember.Method(Feature, typeof(BuildingAccessible), "EnableAccesses", typeof(void)));
     }
+
+    internal static IEnumerable<MethodBase> EdgeBlocking() {
+      var source = NativeMember.Type(Feature, typeof(INavMeshService), "Timberborn.Navigation.NavMeshSource");
+      return new MethodBase[] {
+        NativeMember.Method(Feature, source, "BlockEdge", typeof(void), typeof(int), typeof(int), typeof(int)),
+        NativeMember.Method(Feature, source, "UnblockEdge", typeof(void), typeof(int), typeof(int), typeof(int)),
+      };
+    }
+
+    internal static MethodBase IsSetObstacle() => NativeMember.Method(Feature,
+      NativeMember.Type(Feature, typeof(INavMeshService), "Timberborn.Navigation.DistrictObstacleService"), "IsSetObstacle", typeof(bool), typeof(int));
   }
 
   [Context("Game")]
