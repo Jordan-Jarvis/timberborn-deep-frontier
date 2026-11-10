@@ -1,8 +1,12 @@
+using System.Collections.Immutable;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Loader;
 using System.Text.RegularExpressions;
 using DeepFrontier.ModdableFluidsMigration;
 using DeepFrontier.Scripts.Radiation;
 using ModdableFluids;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -24,6 +28,8 @@ internal static partial class HarnessExtensions {
     scenario("Deep Frontier radiation record version 4 round trip: soil, hour counter, sources and unapplied requests", () => DeepFrontierSoil.RoundTrip(check));
     scenario("Deep Frontier's tide state and settings import into Moddable Fluids, saves from 0.8.3 and older included", () => DeepFrontierSoil.TideImport(check, observations));
     scenario("A Weather Station saved with Deep Frontier's tide mode imports as Moddable Fluids' station mode", () => DeepFrontierSoil.StationImport(check));
+    scenario("A save played with Deep Frontier's Moddable Weathers weather imports its history's tide and its Moddable Weathers settings",
+      () => DeepFrontierSoil.WithGameAssemblies(managed, () => DeepFrontierSoil.ModdableWeathersImport(check, observations)));
     scenario("Deep Frontier's irradiated ground is a Moddable Fluids terrain overlay with IrradiatedSoilSurface's encoding and colour", () => DeepFrontierSoil.SoilOverlay(check));
   }
 }
@@ -648,6 +654,173 @@ internal static class DeepFrontierSoil {
     plain.RegisterProvider(new DeepFrontierRadioactiveWater(registration));
     plain.Freeze();
     check(plain.ImportStationTide(new SavedStation { SignalsRadioactiveTide = true }, out _) == null, "Without the station reader the provider answers nothing");
+  }
+
+  // ------------------------------------------- Moddable Weathers bridge import
+
+  /// <summary>Runs <paramref name="body"/> with the game's Managed folder resolving assemblies (Newtonsoft.Json, as the game ships it).</summary>
+  internal static void WithGameAssemblies(string managed, Action body) {
+    Func<AssemblyLoadContext, AssemblyName, Assembly?> resolver = (context, name) => {
+      string path = Path.Combine(managed, name.Name + ".dll");
+      return File.Exists(path) ? context.LoadFromAssemblyPath(path) : null;
+    };
+    AssemblyLoadContext.Default.Resolving += resolver;
+    try { body(); } finally { AssemblyLoadContext.Default.Resolving -= resolver; }
+  }
+
+  /// <summary>
+  /// Moddable Weathers 11.0.0's Historical/WeatherCycleStage and WeatherCycle (records with TotalDurationInDays), written as
+  /// WeatherCycle.Serialize writes them (JsonConvert.SerializeObject). The Mono probe of the Moddable Weathers adapter writes
+  /// the same kind of history with the real types and checks the import against the adapter.
+  /// </summary>
+  private sealed record MwStage(int Index, bool IsBenign, string WeatherId, ImmutableArray<string> WeatherModifierIds, int Days);
+  private sealed record MwCycle(int Cycle, ImmutableArray<MwStage> Stages) { public int TotalDurationInDays => Stages.Sum(s => s.Days); }
+
+  /// <summary>The settings JSON of BaseWeatherSettingsService.SerializeSettings: per settings type (full name), its [Description] properties.</summary>
+  private static string MwSettings(params (string Type, JObject Values)[] entries) {
+    var root = new JObject();
+    foreach (var (type, values) in entries) root[type] = values;
+    return root.ToString();
+  }
+
+  private static JObject BridgeValues(bool enabled, int startCycle, int chance, int min, int max) => new JObject {
+    ["Enabled"] = JToken.FromObject(enabled), ["StartCycle"] = JToken.FromObject(startCycle), ["ChancePercent"] = JToken.FromObject(chance),
+    ["MinDurationDays"] = JToken.FromObject(min), ["MaxDurationDays"] = JToken.FromObject(max) };
+
+  [MethodImpl(MethodImplOptions.NoInlining)]
+  internal static void ModdableWeathersImport(Action<bool, string> check, Dictionary<string, object> observations) {
+    string root = RepositoryRoot();
+    string bridgeDir = Path.Combine(root, "src", "DeepFrontier", "Scripts", "RadioactiveTide", "ModdableWeathers");
+    string bridgeSettings = File.ReadAllText(Path.Combine(bridgeDir, "RadioactiveTideModdableWeatherSettings.cs"));
+    string bridgeWeather = File.ReadAllText(Path.Combine(bridgeDir, "RadioactiveTideModdableWeather.cs"));
+    string glue = File.ReadAllText(Path.Combine(root, "src", "DeepFrontier", "ModdableFluids", "ModdableFluidsRadiationGame.cs"));
+    // The bridge's settings key and properties, as Moddable Weathers saves them (type full name; [Description] read/write properties).
+    string fullName = Regex.Match(bridgeSettings, @"namespace ([\w.]+) \{").Groups[1].Value + "." + Regex.Match(bridgeSettings, @"public sealed class (\w+) : IModdableWeatherSettings").Groups[1].Value;
+    check(fullName == RadioactiveTideModdableWeathersSave.BridgeSettingsType, "The bridge's settings type is the key the import reads: " + fullName);
+    var described = Regex.Matches(bridgeSettings, @"\[Description\([\w.]+\)\]\s*public (\w+) (\w+) \{ get; set; \}").Select(m => m.Groups[1].Value + " " + m.Groups[2].Value).ToArray();
+    check(described.SequenceEqual(new[] { "bool Enabled", "int StartCycle", "int ChancePercent", "int MinDurationDays", "int MaxDurationDays" }),
+      "The bridge saves exactly Enabled, StartCycle, ChancePercent, MinDurationDays and MaxDurationDays: " + string.Join(", ", described));
+    check(bridgeSettings.Contains("StartCycle = values.CyclesWithoutTide + 1;") && bridgeWeather.Contains("public override string Id => RadioactiveTideTuning.WeatherId;"),
+      "StartCycle is cycles without tide + 1, and the bridge's weather is the tide's native weather ID");
+    check(glue.Contains("RadioactiveTideModdableWeathersSave.Read(RadioactiveTideTuning.WeatherId, hasState || loader.TryGetSingleton(RadioactiveTideStartingValues.SavedKey, out _),")
+      && glue.Contains("RadioactiveTideSettingsCheck.Validate(bridgeValues, bridgeValues.Source);") && glue.Contains("RadioactiveTideImport.Map(bridge.State, bridgeValues.Enabled,"),
+      "The game import reads the bridge's save first, validates its settings with the shipped rule and maps them as Deep Frontier's own");
+
+    var registration = TideFromSource();
+    string weather = registration.WeatherId, id = RadioactiveTideRegistration.TideId;
+    const string Temperate = "TemperateWeather", Drought = "DroughtWeather", Badtide = "BadtideWeather";
+    MwStage Benign(int index, int days) => new MwStage(index, true, Temperate, ImmutableArray<string>.Empty, days);
+    MwStage Hazard(int index, string w, int days) => new MwStage(index, false, w, w == weather ? ImmutableArray<string>.Empty : ImmutableArray.Create(w == Drought ? "Drought" : "Badtide"), days);
+    // Cycles 1-19 as the bridge leaves them: tides in 7 (stage 1), 13 (between two benign stages), 15 (after a drought stage)
+    // and 18 (after a skipped stage: indices 0, 2, 3); Moddable Weathers has also generated the cycle after the last one played.
+    var cycles = new List<MwCycle> { new MwCycle(0, ImmutableArray<MwStage>.Empty) };
+    for (int c = 1; c <= 19; c++) cycles.Add(c switch {
+      7 => new MwCycle(c, ImmutableArray.Create(Benign(0, 12), Hazard(1, weather, 5))),
+      13 => new MwCycle(c, ImmutableArray.Create(Benign(0, 10), Hazard(1, weather, 6), Benign(2, 3))),
+      15 => new MwCycle(c, ImmutableArray.Create(Benign(0, 9), Hazard(1, Drought, 3), Benign(2, 2), Hazard(3, weather, 4))),
+      18 => new MwCycle(c, ImmutableArray.Create(Benign(0, 5), Benign(2, 4), Hazard(3, weather, 3))),
+      _ => new MwCycle(c, ImmutableArray.Create(Benign(0, 12), Hazard(1, c % 3 == 0 ? Badtide : Drought, 4))),
+    });
+    List<string> Serialized(IEnumerable<MwCycle> list) => list.Select(c => Newtonsoft.Json.JsonConvert.SerializeObject(c)).ToList();
+    var history = Serialized(cycles);
+    check(history[7].Contains("\"Stages\":[{\"Index\":0,\"IsBenign\":true,\"WeatherId\":\"TemperateWeather\",\"WeatherModifierIds\":[],\"Days\":12}") && history[7].Contains("\"TotalDurationInDays\":17"),
+      "The history entries are WeatherCycle's JSON: " + history[7]);
+    string normal = MwSettings(("ModdableWeathers.Weathers.GameBuiltIns.GameDroughtWeatherSettings", new JObject { ["Enabled"] = true, ["StartCycle"] = 0, ["Chance"] = 60 }),
+      (RadioactiveTideModdableWeathersSave.BridgeSettingsType, BridgeValues(true, 15, 25, 3, 6)));
+
+    // Where the game stands decides the cycle's tide (Moddable Weathers' current or next hazardous stage) and the last tide.
+    var cases = new (int Cycle, int Day, bool Current, int Last, int Days, string What)[] {
+      (6, 5, false, 0, 0, "before any tide"),
+      (7, 3, true, 7, 5, "the tide forecast after the cycle's benign stage"),
+      (7, 13, true, 7, 5, "on the tide's first day"),
+      (7, 40, true, 7, 5, "a day past the cycle's stages: the last stage"),
+      (9, 14, false, 7, 5, "two cycles after a tide"),
+      (13, 11, true, 13, 6, "inside a tide followed by a benign stage"),
+      (13, 18, false, 13, 6, "in the benign stage after the tide: no hazardous stage left this cycle"),
+      (15, 5, false, 15, 4, "before a drought stage that precedes this cycle's tide"),
+      (15, 11, false, 15, 4, "in that drought stage"),
+      (15, 13, true, 15, 4, "in the benign stage between the drought and the tide"),
+      (15, 16, true, 15, 4, "in the tide after the drought"),
+      (17, 2, false, 15, 4, "two cycles after the tide after the drought"),
+      (18, 3, true, 18, 3, "before a tide that follows a skipped stage"),
+      (18, 7, false, 18, 3, "in the benign stage with Index 2 at position 1: Moddable Weathers looks from position 3 and finds no hazardous stage"),
+    };
+    foreach (var (cycle, day, current, last, days, what) in cases) {
+      var read = RadioactiveTideModdableWeathersSave.Read(weather, false, normal, history, (cycle, day));
+      check(read != null && read.State.CurrentCycleIsTide == current && read.State.LastTideCycle == last && read.State.LastTideDuration == days,
+        $"Cycle {cycle} day {day}, {what}: {read}");
+    }
+
+    // Through Moddable Fluids' host, as the game asks: settings mapped as Deep Frontier's own (budget = weight = chance).
+    (string? Settings, List<string>? History, (int, int)? Cycle, bool Own) save = (normal, history, (15, 16), false);
+    FluidTideImport Import(FluidTideImportContext context) {
+      var read = RadioactiveTideModdableWeathersSave.Read(weather, save.Own, save.Settings, save.History, save.Cycle)
+        ?? throw new InvalidOperationException("The harness save is not one of the bridge's");
+      return RadioactiveTideImport.Map(read.State, read.Enabled, read.CyclesWithoutTide, read.ChancePercent, read.MinDurationDays, read.MaxDurationDays);
+    }
+    var host = new ModdableFluidsHost();
+    host.RegisterProvider(new DeepFrontierRadioactiveWater(registration, Import));
+    host.Freeze();
+    FluidTideImport Run() => host.ImportTides(new FluidTideImportContext(host.Tides, new object(), new object()), out _);
+    var during = Run();
+    var tide = during.Settings.Get(id);
+    check(during.CurrentCycleTideId == id && during.LastTideId == id && during.LastTideCycle == 15 && during.LastTideDuration == 4 && during.Settings.BudgetPercent == 25
+      && tide.Enabled && tide.Weight == 25 && tide.CyclesWithoutTide == 14 && tide.MinDurationDays == 3 && tide.MaxDurationDays == 6,
+      "A save in the bridge's tide imports the tide in progress, from cycle 15 = 14 cycles without, 25%, 3-6 days: " + during);
+    save = (normal, history, (9, 14), false);
+    var after = Run();
+    check(after.CurrentCycleTideId == null && after.LastTideId == id && after.LastTideCycle == 7 && after.LastTideDuration == 5, "A save after the bridge's tide keeps it for the cooldown: " + after);
+    save = (normal, history, (6, 5), false);
+    check(Run().LastTideCycle == 0, "A save before the bridge's first tide imports no tide");
+    save = (MwSettings((RadioactiveTideModdableWeathersSave.BridgeSettingsType, BridgeValues(true, 9, 35, 5, 10))), history, (17, 2), false);
+    var hard = Run();
+    check(hard.Settings.BudgetPercent == 35 && hard.Settings.Get(id).CyclesWithoutTide == 8 && hard.Settings.Get(id).MaxDurationDays == 10 && hard.LastTideCycle == 15,
+      "Changed settings import as saved: " + hard);
+    // Switched off: imported off with the lowest budget, its values unchecked (StartCycle 0 never passed Validate).
+    save = (MwSettings((RadioactiveTideModdableWeathersSave.BridgeSettingsType, BridgeValues(false, 0, 0, 0, 0))), history, (9, 14), false);
+    var off = Run();
+    check(!off.Settings.Get(id).Enabled && off.Settings.BudgetPercent == FluidTideRules.BudgetPercentLowest && off.LastTideCycle == 7, "A switched-off bridge tide imports off, keeping its history");
+    save = (MwSettings((RadioactiveTideModdableWeathersSave.BridgeSettingsType, BridgeValues(true, 15, 0, 3, 6))), history, (9, 14), false);
+    Rejects<InvalidOperationException>(check, () => Run(), "Enabled bridge settings out of range stop loading naming Deep Frontier", DeepFrontierRadioactiveWater.Id);
+
+    // Not a bridge save: the save's own keys apply (null). A history with tides but without the bridge's settings is refused.
+    check(RadioactiveTideModdableWeathersSave.Read(weather, false, null, null, null) == null, "A save without Moddable Weathers is not read here");
+    var tideless = Serialized(cycles.Select(c => c with { Stages = c.Stages.Select(s => s.WeatherId == weather ? s with { WeatherId = Drought } : s).ToImmutableArray() }));
+    string droughtOnly = MwSettings(("ModdableWeathers.Weathers.GameBuiltIns.GameDroughtWeatherSettings", new JObject { ["Enabled"] = true }));
+    check(RadioactiveTideModdableWeathersSave.Read(weather, true, droughtOnly, tideless, (15, 16)) == null, "A Moddable Weathers save Deep Frontier never ran in is not read here");
+    Rejects<InvalidOperationException>(check, () => RadioactiveTideModdableWeathersSave.Read(weather, false, droughtOnly, history, (15, 16)),
+      "A history with radioactive tides but no bridge settings", "no longer has the radioactive tide settings");
+
+    // Refusals: every value is required with its type; the two tide systems never share a save.
+    void Refused(string what, string contains, string? settings, IReadOnlyList<string>? list, (int, int)? cycle, bool own = false) =>
+      Rejects<InvalidOperationException>(check, () => RadioactiveTideModdableWeathersSave.Read(weather, own, settings, list, cycle), what, contains);
+    Refused("Deep Frontier's own tide keys beside the bridge's", "holds both", normal, history, (9, 14), own: true);
+    Refused("Bridge settings without Moddable Weathers' history", "no Moddable Weathers history", normal, null, (9, 14));
+    Refused("Bridge settings without GameCycleService", "no GameCycleService", normal, history, null);
+    Refused("A cycle beyond the history", "outside Moddable Weathers' history", normal, history, (20, 1));
+    Refused("Cycle 0", "outside Moddable Weathers' history", normal, history, (0, 1));
+    Refused("History entries out of order", "entry i is cycle i", normal, history.Take(7).Append(history[8]).Append(history[7]).Concat(history.Skip(9)).ToList(), (9, 14));
+    Refused("Settings without StartCycle", "has no StartCycle",
+      MwSettings((RadioactiveTideModdableWeathersSave.BridgeSettingsType, new JObject { ["Enabled"] = true, ["ChancePercent"] = 25, ["MinDurationDays"] = 3, ["MaxDurationDays"] = 6 })), history, (9, 14));
+    var asText = BridgeValues(true, 15, 25, 3, 6); asText["ChancePercent"] = "25";
+    Refused("A chance saved as text", "not an integer", MwSettings((RadioactiveTideModdableWeathersSave.BridgeSettingsType, asText)), history, (9, 14));
+    var asNumber = BridgeValues(true, 15, 25, 3, 6); asNumber["Enabled"] = 1;
+    Refused("Enabled saved as a number", "not a boolean", MwSettings((RadioactiveTideModdableWeathersSave.BridgeSettingsType, asNumber)), history, (9, 14));
+    Refused("Bridge settings that are not an object", "not an object", "{\"" + RadioactiveTideModdableWeathersSave.BridgeSettingsType + "\": []}", history, (9, 14));
+    Refused("Settings that are not JSON", "not valid JSON", "{\"" + RadioactiveTideModdableWeathersSave.BridgeSettingsType + "\": {", history, (9, 14));
+    List<string> Edited(int cycle, Func<JObject, JObject> edit) {
+      var copy = history.ToList();
+      copy[cycle] = edit(JObject.Parse(copy[cycle])).ToString(Newtonsoft.Json.Formatting.None);
+      return copy;
+    }
+    Refused("A stage without Days", "has no Days", normal, Edited(7, o => { ((JObject)o["Stages"]![1]!).Remove("Days"); return o; }), (9, 14));
+    Refused("A stage with negative days", "lasts -1 days", normal, Edited(4, o => { o["Stages"]![0]!["Days"] = -1; return o; }), (9, 14));
+    Refused("A stage with a negative index", "has index -1", normal, Edited(4, o => { o["Stages"]![1]!["Index"] = -1; return o; }), (9, 14));
+    Refused("A benign stage naming the tide", "benign stage of the radioactive tide", normal, Edited(4, o => { o["Stages"]![0]!["WeatherId"] = weather; return o; }), (9, 14));
+    Refused("A cycle without its Stages", "has no Stages list", normal, Edited(4, o => { o.Remove("Stages"); return o; }), (9, 14));
+    Refused("The current cycle without stages", "no stages for the current cycle 9", normal, Edited(9, o => { o["Stages"] = new JArray(); return o; }), (9, 14));
+    Refused("A tide stage of no days", "is impossible", normal, Edited(7, o => { o["Stages"]![1]!["Days"] = 0; return o; }), (9, 14));
+    observations["deepFrontierModdableWeathersImportCases"] = cases.Length;
   }
 
   // ----------------------------------------------------------- round trip

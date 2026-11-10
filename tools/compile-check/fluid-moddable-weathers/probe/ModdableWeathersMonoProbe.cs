@@ -36,7 +36,7 @@ namespace ModdableFluids.Tides.ModdableWeathersAdapter.Acceptance {
   /// of the station patches. WeatherGenerator itself draws with UnityEngine.Random (an engine call), so its loop is
   /// mirrored here, not run. No engine call: nothing here logs through UnityEngine.
   /// </summary>
-  public static class ModdableWeathersMonoProbe {
+  public static partial class ModdableWeathersMonoProbe {
     private const BindingFlags Any = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
     private const string Radioactive = "DeepFrontier.RadioactiveTide", Coffee = "MoreFluids.CoffeeTide", Salt = "MoreFluids.SaltTide";
     private const string RadioactiveWeather = "RadioactiveTideWeather", CoffeeWeather = "MoreFluidsCoffeeTideWeather", SaltWeather = "MoreFluidsSaltTideWeather";
@@ -75,7 +75,7 @@ namespace ModdableFluids.Tides.ModdableWeathersAdapter.Acceptance {
 
       // Three tides as Deep Frontier and More Fluids register them (Normal: 25/14, 15/8, 15/7).
       var host = ModdableFluidsEntry.Host;
-      host.RegisterProvider(new Provider("DeepFrontier.Radiation", "DeepFrontier", "RadioactiveWater", "RadioactiveTide", RadioactiveWeather, new[] { (15, 24, 2, 4), (25, 14, 3, 6), (35, 9, 5, 10) }));
+      host.RegisterProvider(new DeepFrontierProvider(new Provider("DeepFrontier.Radiation", "DeepFrontier", "RadioactiveWater", "RadioactiveTide", RadioactiveWeather, new[] { (15, 24, 2, 4), (25, 14, 3, 6), (35, 9, 5, 10) })));
       host.RegisterProvider(new Provider("MoreFluids.Liquids", "MoreFluids", "Coffee", "CoffeeTide", CoffeeWeather, new[] { (10, 12, 2, 4), (15, 8, 3, 5), (20, 6, 4, 7) }, "Saltwater", "SaltTide", SaltWeather,
         new[] { (10, 10, 2, 4), (15, 7, 4, 8), (20, 5, 10, 20) }));
       host.Freeze();
@@ -266,6 +266,9 @@ namespace ModdableFluids.Tides.ModdableWeathersAdapter.Acceptance {
       Throws(() => foreign.PostLoad(), "played with another tide system", "a history with tides but no tide state is refused");
       foreign.Unload();
       Check(stationTargets.All(t => Owners(t).Length == 0) && FluidTideScenes.Current == null, "every scene left nothing behind");
+      // Deep Frontier's import of a save played with its own Moddable Weathers bridge (ModdableWeathersMonoProbe.DeepFrontier.cs).
+      DeepFrontierBridgeSaves(Check, Throws, specs, random, container, cycles, SetCurrent);
+      Check(stationTargets.All(t => Owners(t).Length == 0) && FluidTideScenes.Current == null, "Deep Frontier's bridge saves left nothing behind");
 
       // The specs a tide needs: a missing one and a mismatched name are named.
       SetProperty(typeof(ModdableWeatherSpecService), "SpecsById", specs, allSpecs.Where(s => s.Id != SaltWeather).ToFrozenDictionary(s => s.Id));

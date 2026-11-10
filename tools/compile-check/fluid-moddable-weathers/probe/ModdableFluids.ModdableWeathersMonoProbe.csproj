@@ -10,6 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../ModdableFluids.ModdableWeathers.csproj" />
+    <!-- Deep Frontier's import of saves played with its own Moddable Weathers bridge (ModdableWeathersMonoProbe.DeepFrontier.cs). -->
+    <ProjectReference Include="../../deep-frontier-fluids/DeepFrontier.FluidsGroundwork.csproj" />
     <GameReference Include="$(TimberbornManaged)/Timberborn.*.dll;$(TimberbornManaged)/Bindito*.dll;$(TimberbornManaged)/UnityEngine.CoreModule.dll;$(TimberbornManaged)/UnityEngine.UIElementsModule.dll;$(TimberbornManaged)/System.Collections.Immutable.dll;$(TimberbornManaged)/Newtonsoft.Json.dll" />
     <Reference Include="@(GameReference)" Private="false" />
     <Reference Include="0Harmony" HintPath="$(ModsBuildManaged)/0Harmony.dll" Private="false" />

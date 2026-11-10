@@ -14,5 +14,7 @@
     <Compile Include="../../../src/DeepFrontier/Scripts/Radiation/IRadiationService.cs" />
     <ProjectReference Include="../fluid-api/ModdableFluids.csproj" />
     <Reference Include="UnityEngine.CoreModule" HintPath="$(TimberbornManaged)/UnityEngine.CoreModule.dll" Private="false" />
+    <!-- The game's copy: Moddable Weathers' saved settings and history are its JSON (RadioactiveTideModdableWeathersSave). -->
+    <Reference Include="Newtonsoft.Json" HintPath="$(TimberbornManaged)/Newtonsoft.Json.dll" Private="false" />
   </ItemGroup>
 </Project>

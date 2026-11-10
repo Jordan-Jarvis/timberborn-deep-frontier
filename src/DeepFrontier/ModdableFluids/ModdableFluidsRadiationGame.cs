@@ -57,15 +57,42 @@ namespace DeepFrontier.ModdableFluidsMigration {
     private static readonly PropertyKey<int> LastTideCycleKey = new PropertyKey<int>("LastTideCycle");
     private static readonly PropertyKey<int> LastTideDurationKey = new PropertyKey<int>("LastTideDuration");
 
+    // A save played with Deep Frontier's Moddable Weathers bridge keeps the tide in Moddable Weathers' singletons (Moddable
+    // Weathers 11.0.0 BaseWeatherSettingsService and WeatherHistoryRegistry) and the game's position in GameCycleService.
+    private static readonly SingletonKey ModdableWeathersSettingsKey = new SingletonKey(RadioactiveTideModdableWeathersSave.SettingsSingleton);
+    private static readonly PropertyKey<string> ModdableWeathersSettingsJsonKey = new PropertyKey<string>(RadioactiveTideModdableWeathersSave.SettingsProperty);
+    private static readonly SingletonKey ModdableWeathersHistoryKey = new SingletonKey(RadioactiveTideModdableWeathersSave.HistorySingleton);
+    private static readonly ListKey<string> ModdableWeathersCyclesKey = new ListKey<string>(RadioactiveTideModdableWeathersSave.HistoryList);
+    private static readonly SingletonKey GameCycleKey = new SingletonKey("GameCycleService");
+    private static readonly PropertyKey<int> GameCycleCycleKey = new PropertyKey<int>("Cycle");
+    private static readonly PropertyKey<int> GameCycleDayKey = new PropertyKey<int>("CycleDay");
+
     // Moddable Fluids' tide service asks once for a loaded save without its tide state: the save's DeepFrontier.RadioactiveTide
-    // and its settings (saved copy, else the former mod settings of 0.8.3 and older), as RadioactiveTideImport maps them.
+    // and its settings (saved copy, else the former mod settings of 0.8.3 and older), as RadioactiveTideImport maps them; or,
+    // for a save played with Deep Frontier's Moddable Weathers bridge, the state its Moddable Weathers history gives and the
+    // bridge's settings (RadioactiveTideModdableWeathersSave), checked by the same rules.
     private static FluidTideImport ImportTide(FluidTideImportContext context) {
       var loader = context.NativeSingletonLoader as ISingletonLoader
         ?? throw new InvalidOperationException("Moddable Fluids passed no native singleton loader to Deep Frontier's tide import");
       var settings = context.NativeSettings as ISettings
         ?? throw new InvalidOperationException("Moddable Fluids passed no native settings to Deep Frontier's tide import (needed for saves from 0.8.3 and older)");
+      bool hasState = loader.TryGetSingleton(TideStateKey, out var saved);
+      var bridge = RadioactiveTideModdableWeathersSave.Read(RadioactiveTideTuning.WeatherId, hasState || loader.TryGetSingleton(RadioactiveTideStartingValues.SavedKey, out _),
+        loader.TryGetSingleton(ModdableWeathersSettingsKey, out var weatherSettings) ? weatherSettings.Get(ModdableWeathersSettingsJsonKey) : null,
+        loader.TryGetSingleton(ModdableWeathersHistoryKey, out var weatherHistory) ? weatherHistory.Get(ModdableWeathersCyclesKey) : null,
+        loader.TryGetSingleton(GameCycleKey, out var gameCycle) ? (gameCycle.Get(GameCycleCycleKey), gameCycle.Get(GameCycleDayKey)) : ((int, int)?)null);
+      if (bridge != null) {
+        var bridgeValues = new RadioactiveTideValues(bridge.Enabled, bridge.CyclesWithoutTide, bridge.ChancePercent, bridge.MinDurationDays, bridge.MaxDurationDays,
+          RadioactiveTideModdableWeathersSave.Source);
+        RadioactiveTideSettingsCheck.Validate(bridgeValues, bridgeValues.Source);
+        var bridgeImport = RadioactiveTideImport.Map(bridge.State, bridgeValues.Enabled, bridgeValues.CyclesWithoutTide, bridgeValues.ChancePercent,
+          bridgeValues.MinDurationDays, bridgeValues.MaxDurationDays);
+        Debug.Log("[DeepFrontier] Radioactive tide of Deep Frontier's Moddable Weathers weather imported into Moddable Fluids: " + bridge + "; settings " + bridgeValues + "; "
+          + bridgeImport + ".");
+        return bridgeImport;
+      }
       RadioactiveTideSavedState state = null;
-      if (loader.TryGetSingleton(TideStateKey, out var saved))
+      if (hasState)
         state = new RadioactiveTideSavedState(saved.Get(CurrentCycleIsTideKey), saved.Get(LastTideCycleKey), saved.Get(LastTideDurationKey));
       var values = RadioactiveTideStartingValues.ForLoadedSave(loader, settings);
       var import = RadioactiveTideImport.Map(state, values.Enabled, values.CyclesWithoutTide, values.ChancePercent, values.MinDurationDays, values.MaxDurationDays);
