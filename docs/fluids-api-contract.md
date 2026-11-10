@@ -134,6 +134,7 @@ A reflected provider then goes through the same validation and lifecycle as a co
 | `ModdableFluids.World.Extraction` | Remove one fluid at a cell, with a per-request result (0.1.4) |
 | `ModdableFluids.Policies.WaterIntakes` | Per-fluid water-intake refusal and drawn-as-water transformation (0.1.4) |
 | `ModdableFluids.Policies.Irrigation` | Per-fluid soil-moisture effect (0.1.4) |
+| `ModdableFluids.Rendering.TerrainOverlays` | Per-cell ground tints drawn by the native soil-contamination look on per-scene terrain material copies ([below](#terrain-overlays-moddablefluidsrenderingterrainoverlays)) |
 
 The current runtime is 0.1.3. Each patch release only added capabilities; a provider built for 0.1.1 loads on 0.1.3.
 
@@ -286,9 +287,40 @@ Not covered: Deep Frontier's two base and two detail colours. A fluid has one co
 
 Every extra fluid needs both policies before Moddable Fluids attaches to a game scene. `FluidRegistry.UndeclaredPolicies()` lists what is missing, and the scene stops loading with that list, naming each fluid, provider and mod. Registration, freeze and the harness do not require them, so providers built for 0.1.3 still register. `DescribeRuntime()` prints each fluid's policies.
 
+## Terrain overlays (`ModdableFluids.Rendering.TerrainOverlays`)
+
+Built 2026-11-09, at the user's decision 8a, so that no mod has to change the game's terrain materials. It has passed the .NET harness and the installed-Mono probe; nothing of it has run in game, and its shader has not been built by Unity yet. The capability is listed; the API version stays 0.1.4 until the lead sets the release version.
+
+**Registering.** Call `ModdableFluidsEntry.Host.RegisterTerrainOverlay(id, ownerModId, color, curve)` from `IModStarter.StartMod` and keep the returned `FluidTerrainOverlay`. Registration closes with the provider registrations, when the registry freezes before the first game scene. Afterwards `Host.TerrainOverlays` lists the overlays in ordinal ID order, and that order is each overlay's `Index`.
+
+- **ID.** `<OwnerModId>.<LocalName>`, inside the owner's namespace. The `Timberborn` owner is reserved, and a second registration of one ID is refused.
+- **Curve.** `FluidTerrainOverlayCurve(visibleFrom, full, levelAtZero)` maps a value to a level the way the game maps soil contamination (`SoilContaminationService.GetMapSoilContamination`):
+  - nothing below `visibleFrom`, which is in (0, `full`];
+  - from there, the straight line from `levelAtZero` (in [0, 1)) at 0 to 1 at `full`;
+  - 1 above `full`.
+
+  The level is stored as the native `PixelData` stores it, `byte(255 * level)`, truncated. `Encode(value)` returns that byte. Values must be finite and at least 0.
+- **Colour.** `FluidTerrainOverlayColor(red, green, blue)` gives the factors the native soil-contamination texture (the veins the game draws on contaminated soil) is multiplied by. It is a material colour, as `Material.SetColor` takes the native Contamination Color: in the game's gamma colour space the shader multiplies by the values as they are. A linear project would linearise them as SetColor does. Channels may exceed 1, because the veins are dark; each is finite and in [0, 64], the headroom of the half-float colour map.
+
+**Writing.** `overlay.Set(x, y, z, value)` sets the value at the ground surface of terrain cell (x, y) drawn at floor z. `GetLevel(x, y, z)` reads the stored level.
+
+- **Thread and scene.** Only on the main thread, and only while a game scene's surface is attached (`IsAttached`). The surface attaches when Moddable Fluids' terrain renderer loads, before any `PostLoad`, and detaches at unload. Each scene starts with every cell at 0.
+- **Size.** `Width`, `Height` and `Depth` are the native `TerrainService.Size`. A cell outside it is refused.
+- **Cost.** A value whose level did not change changes nothing.
+
+**What is drawn.** Several overlays on one cell draw the highest level, in the level-weighted mean of their colours. Levels follow the native soil-contamination update rule. A change shows during the next tick, interpolated from old to new by the native tick progress, and settles at the tick after. A loaded scene's values, written before its first tick, show at once. A colour changes at the tick, not interpolated. A cell fading out keeps its colour until its level settles at 0.
+
+**Rendering.** Moddable Fluids makes per-scene copies of the game's terrain materials on its own shader variant and assigns them only to the scene's terrain tiles, as it does for water. The game's materials are never changed. See [Shared rendering](fluids-native-adapter.md#shared-rendering).
+
+**What is not covered.**
+
+- Only terrain tiles get the overlay. Any other renderer drawn with a native terrain material keeps the native look. In 1.1.2.8 the terrain block models (`Environment/Land`, read from the game data) use only Cliff and CliffEdge; Grass, SlopeCliff and SlopeCliffEdge are drawn by other models.
+- There is no reflection route: the overlay types are compiled API.
+
 ## Ordinary play and exception saves (0.1.4)
 
-- **Attaching.** The `Game` configurator freezes the registry. When a mod registered at least one extra fluid, it binds the scene owner, shared rendering, the water-intake guard, the moisture input and placed-source classification. With none it binds nothing. The worker fixture stays behind `-moddableFluidsWorkerAcceptance`.
+- **Attaching.** The `Game` configurator freezes the registry. When a mod registered at least one extra fluid, it binds the scene owner, shared rendering, the water-intake guard, the moisture input and placed-source classification. With none it binds none of these. The worker fixture stays behind `-moddableFluidsWorkerAcceptance`.
+  - **Terrain overlays.** When a mod registered at least one terrain overlay, the configurator checks the terrain renderer's native contract and binds it, whether or not a fluid was registered. With none, the native terrain stays untouched.
 - **Refusing.** Before anything changes, the scene stops loading with one message per problem:
   - a fluid without both policies;
   - a changed native contract (intake guard, moisture input, placed sources, scheduler, exception-save flag);

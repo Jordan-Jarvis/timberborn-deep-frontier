@@ -178,15 +178,45 @@ The CPU half is built (`src/ModdableFluids/Rendering`, 2026-11-09).
 
 The harness covers pure, diluted and blended appearance, registration-order independence, a 64-component check, an upper reservoir on layer 1, clearing, and row tracking.
 
-The GPU half is not built. Its intended contract follows Deep Frontier's working shader swap:
+The GPU half of both renderers never changes a game material (native-safety audit C2). Each makes per-scene copies of the native materials on Moddable Fluids' own shader variants (`tools/moddable_fluids_shader_variants.mjs`, bundled from `src/ModdableFluids/AssetBundles`) and assigns the copies only to the scene's own renderers. Every frame, each renderer slot that holds a native material gets that material's copy, and the copies are refreshed from the native materials. Any other material on such a renderer fails visibly. The variants are the native graphs plus one more instance of the graph's own contamination subgraph, behind a global multi_compile keyword, so with nothing to draw they compile to the native code.
 
-- **Shader variants.** Variants of the native `Shader Graphs/PhysicalWaterURP_Opaque` and `_Transparent`, generated the way `tools/native_shader_variants.mjs` generates Deep Frontier's. They sample old and new appearance texture arrays and blend the native colour toward the tint by strength. They interpolate across a tick, as the native `_OldContaminations`/`_NewContaminations` textures do.
-- **Material owner.** Moddable Fluids becomes the only owner of the native water materials. Deep Frontier's radioactive water becomes a registered colour instead of its own water shader; its soil overlay stays in Deep Frontier.
-- **Startup check.** Before swapping anything, it verifies every member the swap needs at startup: `WaterMeshSpec` materials, `WaterRenderer._contaminations`, `UpdateWaterTexturesTask` fields and the texture names.
-- **Lifecycle.** It swaps and restores per scene. The restore accepts `Hidden/InternalErrorShader`, because the asset-loader reset destroys bundled variants before `Unload`.
-- **Uploads.** Only changed rows are uploaded, on the main thread at the late tick.
+**Water (`FluidWaterRendering`).**
 
-The variants are bundle assets. They need the official Mod Builder's Windows and macOS bundles, and visual acceptance in game: pure, mixed and diluted colours, transparency, and scene unload.
+- **Variants.** `ModdableFluids/FluidWaterURP_Opaque` and `_Transparent` copy `PhysicalWater_Opaque` and `_Transparent` (from `WaterMeshSpec`) for the tiles of the native `WaterMesh._createdTiles`.
+- **Encoding.** At each completed tick the appearance field is encoded per channel, through the inverse of the native visibility curve, into old and new R8 texture arrays with the native layout and update order.
+- **Deep Frontier.** Its radioactive water is a registered colour; its own water variants are not used.
+
+**Terrain overlays (`FluidTerrainRendering`, capability `ModdableFluids.Rendering.TerrainOverlays`, [contract](fluids-api-contract.md#terrain-overlays-moddablefluidsrenderingterrainoverlays)).** Bound only when a mod registered a terrain overlay.
+
+- **Native contract.** It is checked when the scene is configured, before binding (`FluidTerrainRendering.CheckContract`):
+  - `TerrainMeshManager` (internal) is an `ILateUpdatableSingleton`, and its `_tiles : Dictionary<Vector3Int, TileComponents>` holds `TileComponents._meshRenderer : MeshRenderer`;
+  - the soil-contamination map layout the overlay mirrors: `TerrainMaterialMap._textureSize`, `_contaminationMapTexture : Texture2DArray`, `_contaminations : PixelData[][]`, and a two-byte `PixelData`;
+  - `ITerrainService.Size`, `MaterialCollectionSpec.CollectionId` and `.Materials`, and `ISingletonRepository.GetSingletons<T>()`.
+
+  The installed-Mono probe runs the same check against the installed assemblies. It also reads a native tile dictionary through the boxed private struct, and refuses a tile without its renderer.
+- **Startup in `PostLoad`.** Everything that can refuse runs before anything is created:
+  - the one `TerrainMeshManager` comes from the native `ISingletonRepository`, and its tile renderers are read once (the manager creates the tiles only while it loads);
+  - the native map's size must equal the terrain's;
+  - the native materials are every `MaterialCollection.Common` material on `Shader Graphs/TerrainURP` (five in 1.1.2.8);
+  - the variant must exist, be supported and declare every native property with its type, and every keyword a native material enables must be compiled;
+  - RG16, RGBAHalf and `Graphics.CopyTexture` must be supported;
+  - every active tile must hold only native terrain materials.
+- **Variant.** `ModdableFluids/FluidTerrainURP` adds a second `SoilContaminationVisualization` to `TerrainURP`, fed from the overlay level map `_MFTerrainOverlayMap` instead of `_ContaminationMap`. Its colour input comes from another `SoilContaminationMapSampler`, copied from the native subgraph, on the colour map `_MFTerrainOverlayColors`. The blended colour sum divided by the blended level sum (floored at 0.0001) is the level-weighted mean colour, also where cells of different overlays or empty cells meet. The result is lerped over the native, already contaminated albedo behind `_MODDABLE_FLUIDS_TERRAIN_OVERLAY`. Noise, nonlinearity, blending margin, tick interpolation and the vein texture are the native ones.
+- **Maps (`FluidTerrainOverlayField`, CPU, harness-tested).** The level map is RG16 in the native `TerrainMaterialMap` layout: one layer per terrain z, texel x + y * width, R old and G new. Each cell takes the highest of its overlays' levels. The colour map is RGBAHalf: sum(level * colour) and sum(level). Writes mark their rows. Layers are allocated on first use, and every GPU layer is cleared once at load.
+- **Publishing.** Once per frame in which ticks ran, at `LateUpdateSingleton` after the frame's ticks, the native update rule applies:
+  - a changed cell takes R = previous G and G = the new level, and the next publish settles R = G;
+  - before the scene's first tick, writes show at once (R = G), as the native `PostLoad` settles a loaded map;
+  - a cell fading to 0 keeps its colour until it settles, then the colour texel is cleared.
+- **Uploads.** Only rows whose texels changed are uploaded, layer by layer. The band goes through a staging texture of the next power-of-two height and `Graphics.CopyTexture`; the native renderer copies whole layers through one buffer texture.
+- **Keyword.** The keyword is on while any texel is non-zero.
+- **Tiles.** A tile the native mesh rebuilds after this pass draws with the native material for that frame. A change in the number of tiles, or a destroyed tile, fails visibly.
+- **Unload.** It detaches the surface, puts the native materials back on every tile that still exists, and destroys its copies, maps and staging textures. Any unexpected material is reported after everything is restored.
+- **Deep Frontier (flagged build).** Its irradiated soil is the overlay `DeepFrontier.IrradiatedSoil`. Its terrain variant is no longer in the flagged package.
+
+Both renderers' variants are bundle assets. They need the official Mod Builder's Windows and macOS bundles (the terrain variant: 336 variants per graphics API after stripping, as Deep Frontier's [IrradiatedTerrainURP](unity-build-performance.md)), and visual acceptance in game:
+
+- water: pure, mixed and diluted colours, transparency, and scene unload;
+- terrain: irradiated soil on cliff tops, sides and edges at several heights, layer view, both factions, and no pink or black surfaces.
 
 ## Native hooks in ordinary play (0.1.4)
 
@@ -202,6 +232,7 @@ Built 2026-11-09. The scene owner attaches in every game scene where a mod regis
 | Soil moisture | `SoilMoistureSimulationTaskStarter.StartTask(..., in waterColumns, ...)` | Harmony prefix (`ModdableFluids.SoilMoisture`) replacing the argument for that call | Only when a fluid blocks moisture |
 | Water-intake guard | every native `WaterInput` | Template decorator; native `BlockableObject` and `StatusToggle` | Always, in an attached scene |
 | Placed sources | every native `WaterSource` | Template decorator; native `IWaterStrengthModifier`; removes the native drought modifier where the type says so | Always, in an attached scene |
+| Terrain overlay | the native terrain tiles' materials (`TerrainMeshManager._tiles`) | Per-scene copies of the native terrain materials, assigned to the tile renderers; no patch | When a mod registered a terrain overlay, with or without an extra fluid |
 
 - **Losses.** The session keeps a per-tick ledger. A tick runs from the geometry reconciliation at its start (in its first substep) through its change stage. `EndTick` completes it, and the column rules read it through `IFluidColumnEditor.Losses` before the tick is published. An addition queued to a closed cell now consumes its fluid record and is reported as dropped; before, that record stayed queued.
 - **Extraction.** Requests queue on the main thread. The change job's scheduling prefix, also on the main thread, takes the batch, so a request is resolved in the tick scheduled after it. Requests are resolved after the native changes. They stay out of the native `RemovedWater` dictionary, so no native `WaterInput` is credited with them. Results are delivered at the owner's singleton tick, or from `ForcedParallelTickFinished` when a save finishes the tick, so a building stores them before the save is written.
@@ -226,6 +257,8 @@ A separate Mono process with no `ModdableFluids.dll` passes the 5-check absence 
 Repository coverage includes the full suite with 80 passing checks and the item-use report, followed by the final static suite with 74 passing checks and the report. The fluid gate is rerun after the last fault-handling changes. The mirror's Git-only asset guard passes separately in the real checkout. Logs are `native-adapter-full-validation.log`, `native-hooks-final-validation.log`, and `native-adapter-acceptance.log` under `outputs/fluids-api-prototype/`.
 
 After scene integration, the static suite again passes 74 checks plus the item-use report, with the same Git-metadata limitation covered in the real checkout. The final fluid gate passes after the padded-index fixture correction, including the fifth runtime project. Evidence: `lifecycle-full-validation.log`, `lifecycle-final-fluid-gate.log`, and the official-package reports described above. Real worker results remain separate and pending.
+
+Terrain overlay (2026-11-09): the fluid gate, in a scratch mirror with the overlay, passed 409,850 assertions in 99 scenarios (four new: registration and scenes, the curve, the field's layout, update order and rows, half floats against `System.Half`; one Deep Frontier scenario for its encoding and colour), 1,198 installed-Mono checks (10 new: the terrain contract, the tile dictionary through the boxed struct, the field, half floats, and the curve against `IrradiatedSoilSurface.Encode` under Mono's JIT), 5 absence checks and 49 tide checks. The gate now also runs `node tools/moddable_fluids_shader_variants.mjs --check`.
 
 Run `tools/test_fluid_transport.ps1` in a freshly synchronized scratch mirror, or run the `fluid-transport` gate through `tools/validate_all.ps1`. Reports are `outputs/fluids-api-prototype/transport-report.json` and `mono-report.json`. The probe host reads machine paths from `tools/dev-environment.json` and runs in its own Python process. It does not load code into a running game or modify an installed mod or player save.
 

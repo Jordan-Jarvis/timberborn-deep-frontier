@@ -8,7 +8,7 @@ day; sections 4 and 5 have not run in Unity yet.
 
 ## Where the CPU time goes
 
-Deep Frontier ships three shader graphs, and Moddable Fluids two. Each is a variant of a native Timberborn graph
+Deep Frontier ships three shader graphs, and Moddable Fluids three. Each is a variant of a native Timberborn graph
 (`tools/native_shader_variants.mjs`, `tools/moddable_fluids_shader_variants.mjs`):
 
 | Shader | Native graph | Own keyword |
@@ -16,6 +16,7 @@ Deep Frontier ships three shader graphs, and Moddable Fluids two. Each is a vari
 | `DeepFrontier/IrradiatedTerrainURP` | `Shader Graphs/TerrainURP` | `_DEEP_FRONTIER_IRRADIATED_SOIL` |
 | `DeepFrontier/RadioactiveWaterURP_Opaque`, `_Transparent` | `Shader Graphs/PhysicalWaterURP_Opaque`, `_Transparent` | `_DEEP_FRONTIER_RADIOACTIVE_WATER` |
 | `ModdableFluids/FluidWaterURP_Opaque`, `_Transparent` | the same two water graphs | `_MODDABLE_FLUIDS_APPEARANCE` |
+| `ModdableFluids/FluidTerrainURP` (terrain overlay, added 2026-11-09, not yet built by Unity) | `Shader Graphs/TerrainURP` | `_MODDABLE_FLUIDS_TERRAIN_OVERLAY` |
 
 One official build compiles each variant up to three times:
 
@@ -140,9 +141,9 @@ variant counts come from our graphs' material keywords and our own keyword.
 
 | Rule | Shaders | Evidence |
 | --- | --- | --- |
-| Every variant of the pass tagged `LightMode=Universal2D` (Shader Graph's "Universal 2D") | all five | The game data has one `UniversalRenderPipelineAsset` and one `UniversalRendererData` (`globalgamemanagers.assets`), and no `Renderer2DData` among the MonoBehaviours of `globalgamemanagers.assets`, `resources.assets` and the `sharedassets` files. Only URP's 2D renderer draws this pass. URP means to strip it in that case (`ShaderScriptableStripper.StripUnusedPass_2D`), but it compares the pass *name* with `Universal2D`, and Shader Graph names the pass `Universal 2D` (`UniversalLitSubTarget.cs`: displayName "Universal 2D", lightMode "Universal2D"). So the pass survives in the game's own build and in ours. |
+| Every variant of the pass tagged `LightMode=Universal2D` (Shader Graph's "Universal 2D") | all six | The game data has one `UniversalRenderPipelineAsset` and one `UniversalRendererData` (`globalgamemanagers.assets`), and no `Renderer2DData` among the MonoBehaviours of `globalgamemanagers.assets`, `resources.assets` and the `sharedassets` files. Only URP's 2D renderer draws this pass. URP means to strip it in that case (`ShaderScriptableStripper.StripUnusedPass_2D`), but it compares the pass *name* with `Universal2D`, and Shader Graph names the pass `Universal 2D` (`UniversalLitSubTarget.cs`: displayName "Universal 2D", lightMode "Universal2D"). So the pass survives in the game's own build and in ours. |
 | Variants without `_CALCULATE_OUTFLOWS` (applied only where a pass declares the keyword) | both water shaders of each mod | Both native water materials, `PhysicalWater_Opaque` and `PhysicalWater_Transparent` (`resources.assets`), enable it. No game assembly contains the string, so the game never toggles it. Deep Frontier's `ShaderSwap` keeps the native material's keywords, and Moddable Fluids' scene copies take them from the native materials. Our graphs compile it as multi_compile only because a bundle holds no material that would keep a shader_feature variant. |
-| Variants with `_USE_TRIPLANAR_SPLATMAP` but without `_SAMPLE_SPLATMAP` | IrradiatedTerrainURP | The game's own compiled TerrainURP has six material-keyword combinations, none of them triplanar without the splatmap. The five native terrain materials it is swapped onto don't use that combination either: Grass (`_USELAYERTOOL`), Cliff (all three), CliffEdge (splatmap, layer tool), SlopeCliff (splatmap, triplanar) and SlopeCliffEdge (splatmap). No game assembly names these keywords. |
+| Variants with `_USE_TRIPLANAR_SPLATMAP` but without `_SAMPLE_SPLATMAP` | IrradiatedTerrainURP, FluidTerrainURP | The game's own compiled TerrainURP has six material-keyword combinations, none of them triplanar without the splatmap. The five native terrain materials don't use that combination either: Grass (`_USELAYERTOOL`), Cliff (all three), CliffEdge (splatmap, layer tool), SlopeCliff (splatmap, triplanar) and SlopeCliffEdge (splatmap). IrradiatedTerrainURP is swapped onto them; FluidTerrainURP draws on scene copies that take their keywords. No game assembly names these keywords. |
 
 Not stripped:
 
@@ -162,6 +163,7 @@ Variants per graphics API, before and after (the same on Direct3D 11 and Metal):
 | DeepFrontier/RadioactiveWaterURP_Transparent | 208 | 96 | 128 -> 64 |
 | ModdableFluids/FluidWaterURP_Opaque | 448 | 208 | 256 -> 128 |
 | ModdableFluids/FluidWaterURP_Transparent | 208 | 96 | 128 -> 64 |
+| ModdableFluids/FluidTerrainURP (expected: the same keywords as IrradiatedTerrainURP) | 480 | 336 | 256 -> 192 |
 
 ### The check: `tools/asset-pipeline/check_bundle_shaders.py`
 
@@ -214,23 +216,26 @@ Confirmed in a real build (Moddable Fluids official build, 2026-11-09, checked i
 `0xFFC` (12 logical CPUs, two left free). Only `UnityCrashHandler64.exe` ran at Normal, which is harmless: it does no
 build work.
 
-## 4. The flagged build leaves out the radioactive-water shaders
+## 4. The flagged build leaves out Deep Frontier's shaders
 
-Moddable Fluids draws the water in the flagged build. Nothing in that build loads Deep Frontier's water variants:
+Moddable Fluids draws the water in the flagged build, and since 2026-11-09 the irradiated ground too (its terrain
+overlay). Nothing in that build loads Deep Frontier's water or terrain variants:
 
 - **`RadiationRenderer`** is the only loader of `RadiationShading.WaterOpaqueVariant`/`WaterTransparentVariant`.
   `RadiationConfigurator` binds it only in the `#else` of `DEEP_FRONTIER_MODDABLE_FLUIDS`.
 - **`RadioactiveWaterSurface`** is constructed only by `RadiationRenderer`.
 - **`WaterShadingProbe`** refuses to run under the flag.
 - **`SceneCycleAcceptance`** expects the native water shaders under the flag.
-- **`ModdableFluidsSoilRenderer`** loads only `TerrainVariant`.
-- **No bundled material** references the two graphs. Only the graphs themselves exist to use them.
+- **`ModdableFluidsSoilRenderer`** writes Moddable Fluids' terrain overlay and loads no shader. `IrradiatedSoilSurface`
+  is constructed only by `RadiationRenderer`.
+- **No bundled material** references the three graphs. Only the graphs themselves exist to use them.
 
-`tools/build_deep_frontier_moddable_fluids.ps1` therefore moves the two `.shadergraph` files and their `.meta` files
-out of the staging into its backup folder for the build. It restores them byte for byte in its finally block, before
-the default staging, and a failed restore keeps the backup and stops later flagged builds. The irradiated-soil
-variant stays. The package check runs `check_bundle_shaders.py --expect DeepFrontier/IrradiatedTerrainURP`, which
-fails if either water shader is in either bundle.
+`tools/build_deep_frontier_moddable_fluids.ps1` therefore moves the three `.shadergraph` files and their `.meta` files
+out of the staging into its backup folder for the build, and requires that no `.shadergraph` is left in the staged
+folder. It restores them byte for byte in its finally block, before the default staging, and a failed restore keeps
+the backup and stops later flagged builds. The package check runs `check_bundle_shaders.py --expect` with no names,
+which fails if any Deep Frontier or Moddable Fluids shader is in either bundle. So the flagged build compiles no shader
+of its own at all.
 
 ## 5. The throwaway player build compiles no mod shader (`tools/unity/PlayerBuildShaderStripping.cs`)
 
@@ -309,11 +314,22 @@ Wall-clock time assumes the shader compilers keep 10 logical processors busy, as
 | Build | First run after this change | Cold cost if the shader cache misses |
 | --- | --- | --- |
 | Deep Frontier default | No cache entry, so it builds both bundles. The kept variants are a subset of the old ones with the same cache keys, so a warm cache compiles nothing new. Then it stores `DeepFrontier/default`. | About 2,780 s on Direct3D 11 plus 2,900 s on Metal (was about 10,150 s). That is about 10 minutes on 10 logical processors. The player build compiles no mod shader (section 5). |
-| Flagged Deep Frontier | No cache entry, so it builds the bundles with IrradiatedTerrainURP alone, then stores `DeepFrontier/moddable-fluids`. | About 2,100 s (was about 10,150 s). The player build compiles no mod shader. |
-| Moddable Fluids | Built and stored `ModdableFluids/default` on 2026-11-09. The next build reuses it (code only). | About 3,570 s (was about 7,300 s). The player builds compile no mod shader. |
+| Flagged Deep Frontier | Its bundle inputs no longer hold any shader graph (section 4), so it builds its bundles once without any shader, then stores `DeepFrontier/moddable-fluids`. | No mod shader at all (was about 2,100 s with IrradiatedTerrainURP). |
+| Moddable Fluids | Built and stored `ModdableFluids/default` on 2026-11-09. Since the terrain overlay its bundle inputs differ (`FluidTerrainURP.shadergraph` and the `.meta` Unity gives it), so the next build builds both bundles once. The two water variants were compiled for Direct3D 11 and Metal by that build, so they should be cache hits; FluidTerrainURP compiles cold on both (336 variants per API, see below). | About 5,700 to 6,100 s with the terrain variant (was about 7,300 s for the two water variants before stripping). The player builds compile no mod shader. |
 | Any later build with unchanged bundle inputs | Code only, with the cached bundles installed. | No mod shader at all. Unity's own shaders in the player build are cache hits. |
 
-**What the next flagged Deep Frontier build (build 2) will log, and what it proves.**
+**The terrain overlay's first Moddable Fluids build.** FluidTerrainURP is TerrainURP with the same keywords and
+stripping as IrradiatedTerrainURP: 480 variants per graphics API before stripping, 336 after, 192 of them ForwardLit
+fragment programs. IrradiatedTerrainURP compiled cold in 1,377 s (Direct3D 11) and 1,459 s (Metal) for its 480
+variants, about 2,100 s for both APIs once stripped. FluidTerrainURP's keyword-on fragment programs carry one more
+native map sampler (four more texture-array reads), a division and a lerp, so expect about 2,100 to 2,500 s of CPU
+for both APIs, about 4 minutes on 10 logical processors. Unity's shader cache has never seen this shader, so the
+cost is paid once whatever the cache holds. The water variants should be cache hits. If they miss, add their cold
+cost from the table above (about 3,570 s).
+
+**What the next flagged Deep Frontier build (build 2) will log, and what it proves.** (Written before the flagged
+build left out IrradiatedTerrainURP: items 1 and 4 now name no Deep Frontier shader, and item 5 passes with no
+shader expected.)
 
 1. **The stripping messages.** One `[PlayerBuildShaderStripping] player build: stripping ...` line at the start of the
    player build. At its end, `... stripped 1136 variants of mod shaders (3: DeepFrontier/IrradiatedTerrainURP,
@@ -340,8 +356,15 @@ and at night, with shadows on, and in level-visibility (layer) view:
 - **Shipped build: irradiated soil.** Every terrain material is drawn by the variant: grass, cliff, cliff edge, slope
   cliff and slope cliff edge. Check each on irradiated and on clean ground.
 - **Flagged build: Moddable Fluids water.** Radioactive water tinted by Moddable Fluids, plain water and badwater on
-  the scene copies. Also the More Fluids coffee, salt and healing waters when it is installed. Irradiated soil comes
-  from the Deep Frontier variant.
+  the scene copies. Also the More Fluids coffee, salt and healing waters when it is installed.
+- **Flagged build: Moddable Fluids terrain overlay.** Irradiated soil comes from Moddable Fluids' FluidTerrainURP on
+  scene copies of the terrain materials. In 1.1.2.8 the terrain tiles use only Cliff and CliffEdge, so check:
+  - flat tops, cliff sides and cliff edges, on irradiated and on clean ground, at several heights;
+  - the yellow-green veins against the shipped build;
+  - the tint fading in and out over a tick;
+  - layer view and both factions.
+
+  Grass, SlopeCliff and SlopeCliffEdge models must stay native everywhere.
 
 Look for pink, black or missing surfaces, and for missing shadows, fog or flow on these surfaces. A failure there
 means a rule above is wrong. macOS is checked only statically (the Metal bundle's variant sets).

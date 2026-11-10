@@ -31,7 +31,8 @@ Status on 2026-11-09:
 | `ModdableFluidsRadiationService` | The facade. It serves `IRadiationService`, `IIrradiatedGround` and `IRadiationWaterCells` from the world state of the last completed fluid tick. Open cells, submerged and badwater readings come from the native thread-safe water map, exactly as `RadiationSimulation` read them, so they work before the first fluid tick. |
 | `ModdableFluidsRadiation` | The game singleton (flagged). It handles the lifecycle and the `DeepFrontier.Radiation` version 4 save. It also serves `IRadioactiveIntakes` and `IRadioactiveSprings`. Its late tick emits timed sources, credits sludge intakes, updates the bank layer, kills plants on newly irradiated ground and prepares the kernels. |
 | `ModdableFluidsBankLayer` | `RadiationSoil`'s native-kernel part with unchanged rules, fed from the published shares. It also gives the soil overlay its view. At load it checks that the native `MaximumWaterContamination` is the moisture policy's 0.53. |
-| `ModdableFluidsSoilRenderer` | `RadiationRenderer` without the water surface: Deep Frontier's terrain variant draws the irradiated ground. |
+| `IrradiatedSoilOverlay` | The irradiated ground as a Moddable Fluids terrain overlay, `DeepFrontier.IrradiatedSoil`, with `IrradiatedSoilSurface`'s curve (0.05, 0.5, 0.1) and colour. The flagged mod starter registers it. |
+| `ModdableFluidsSoilRenderer` | Writes the bank layer's view (soil field and bank layer) into that overlay (`IrradiatedSoilOverlayWriter`, `IrradiatedSoilSurface.Update`'s cell loop), when a new soil pass is published. Moddable Fluids draws it; no Deep Frontier shader touches a native material. |
 | `RadioactiveTideRegistration` | The radioactive tide as a Moddable Fluids tide, built from `RadioactiveTideTuning`. |
 | `RadioactiveTideImport` | Maps a Deep Frontier save's tide state and settings to Moddable Fluids tide state. The flagged mod starter reads them for the provider's `IFluidTideImporter` ([Saves](#saves)). |
 
@@ -47,7 +48,7 @@ The consumers inject service interfaces instead of `RadiationSimulation`. In the
 | `RadiationIntakeGuard` | `IRadiationService`, `IRadiationWaterCells.ColumnRadiation` |
 | `RadiationExposure`, `RadiationStorageService` | `IRadiationService` |
 | `RadioactiveWaterSource` (springs) | `IRadioactiveSprings`. The facade checks the spring's share against the registered emission; Moddable Fluids classifies placed sources by blueprint. |
-| `IrradiatedSoilSurface` | `IIrradiatedSoilView` |
+| `IrradiatedSoilSurface` (shipped), `IrradiatedSoilOverlayWriter` (flagged) | `IIrradiatedSoilView` |
 | `WaterShadingProbe` | `IRadiationService`. The flagged build refuses the probe: it compares Deep Frontier's water shader variants, which that build does not use. |
 | `NativeContracts` | The `RadiationSimulation` exception-save check runs in the shipped build only. |
 
@@ -82,7 +83,7 @@ Hooks in the flagged build:
 
 Moddable Fluids refuses to attach, naming the owner, if any of the left-hand patches is present. The flagged build still compiles the old classes, but binds none of them. Its own code uses only `RadiationSimulation.RowRange` and `RadiationSoil`'s static kernel helpers (`KernelContamination`, `FieldRowMargin`, `RadiationSoilNative.Verify`).
 
-Materials: Deep Frontier's terrain variant still goes on the native terrain materials while a game is loaded, as in the shipped build. The water materials stay native, because Moddable Fluids draws with per-scene copies. The scene-cycle probe expects this in the flagged build.
+Materials: no Deep Frontier shader goes on a native material in the flagged build. Moddable Fluids draws the water and the irradiated ground with per-scene copies of the native water and terrain materials ([Shared rendering](fluids-native-adapter.md#shared-rendering)). The scene-cycle probe expects the native water and terrain materials on their native shaders in every game of the flagged build.
 
 ## Differences from the one-fluid simulation
 
@@ -100,6 +101,11 @@ Each difference is deliberate or forced by the shared model.
 10. **Exception saves.** These write the last published pass. Requests that a running pass had already taken are lost.
 11. **Pending state.** `SavedStatePending` is true from loading a radiation record until the first completed fluid tick applies it. A new game has nothing pending.
 12. **Tide accounting.** `SludgeEmittedThisTide` is gone. It was only ever saved.
+13. **Irradiated ground.** Moddable Fluids' terrain overlay draws it, with `IrradiatedSoilSurface.Encode`'s bytes (the harness checks every soil value it tries, in .NET and under Mono) and its colour. Four things differ:
+    - **Where.** Only terrain tiles show the tint. The shipped variant sat on the five native terrain materials themselves, so other models drawn with them on irradiated ground could show it too. In 1.1.2.8 the terrain blocks use only Cliff and CliffEdge; Grass, SlopeCliff and SlopeCliffEdge are drawn by other models.
+    - **Colour precision.** The colour reaches the shader through a half-float map instead of a material property: within 0.05% of the material colour.
+    - **Settling.** Moddable Fluids applies the native update rule once per frame in which ticks ran. At high game speeds, several ticks in one frame settle as one.
+    - **Writes.** Deep Frontier writes only when a new soil pass is published; it no longer re-runs its loop each tick to settle pixels.
 
 The sludge intake keeps the native pump path, credited from native-removal losses at its cell. This is the shipped mechanism. It does not use `IFluidExtraction`, which would stop it from using up the fresh water it pumps.
 
@@ -134,7 +140,7 @@ The budget of a save whose tide is off draws nothing: no listed tide is on, and 
 
 ## Evidence
 
-- **.NET harness.** Run by `tools/test_fluid_transport.ps1` in a scratch mirror on 2026-11-09: 409,730 assertions in 94 scenarios, 1,188 Mono checks, 5 absence checks and 47 tide Mono checks. The flagged Deep Frontier build compiles. The Deep Frontier scenarios cover:
+- **.NET harness.** Run by `tools/test_fluid_transport.ps1` in a scratch mirror on 2026-11-09, with the terrain overlay: 409,850 assertions in 99 scenarios, 1,198 Mono checks, 5 absence checks and 49 tide Mono checks. The flagged Deep Frontier build compiles. The Deep Frontier scenarios cover:
   - registration with both policies and existing localization keys;
   - the v2/v3 import and its variants;
   - the facade, including the new-game pending rule;
@@ -155,9 +161,10 @@ The budget of a save whose tide is off draws nothing: no listed tide is on, and 
     Each imported save then continues with `Choose`'s draws;
   - the Weather Station import: the radioactive tide mode, a native mode, a station older than the mode, an unreadable station;
   - the visibility curve against `Encode`.
+  - the irradiated-soil overlay: `IrradiatedSoilSurface`'s constants, `Encode` and `SoilColor` source text; its curve against `Encode` for every soil value from 0 to 1.2 in steps of 1e-6, every float near both ends of the line, and 200,000 random floats; its registration and colour.
 - **Shipped build.** The unflagged build compiles, and the radiation content, tide content, native safety and native access checks pass.
 
-Not covered by the harness: the game glue (lifecycle, kill check, bank kernels, soil renderer, policies applied by Moddable Fluids in game). It compiles; the in-game runs below cover it.
+Not covered by the harness: the game glue (lifecycle, kill check, bank kernels, the soil writer, policies applied by Moddable Fluids in game) and Moddable Fluids' terrain renderer. It compiles; the in-game runs below cover it.
 
 ## Requests to Moddable Fluids
 
@@ -167,11 +174,11 @@ Done:
 - **Visibility curve** (`92ed207`).
 - **Custom-intake documentation** (`92ed207`).
 - **Additions to reshaped cells** (`92ed207`). Deep Frontier still holds water added before the first fluid tick itself; that hold could now be dropped.
+- **Terrain overlay** (user decision 8a, 2026-11-09). Moddable Fluids' terrain overlays (`ModdableFluids.Rendering.TerrainOverlays`) on per-scene terrain material copies. Deep Frontier's flagged build draws its irradiated ground with it and no longer puts its soil variant on the native terrain materials (native-safety audit C2); the flagged package leaves out `IrradiatedTerrainURP`.
 
 Open:
 
-1. **Terrain overlay (mf-core, optional).** A terrain-overlay adapter on per-scene material copies. Deep Frontier could then stop putting its soil variant on the native terrain materials (native-safety audit C2).
-2. **Second water colour (mf-core, optional).** Deep Frontier's variant blends two base and two detail colours (`RadiationMaterials.WaterBaseColorA/B`, `WaterDetailColorA/B`); Moddable Fluids tints by one colour.
+1. **Second water colour (mf-core, optional).** Deep Frontier's variant blends two base and two detail colours (`RadiationMaterials.WaterBaseColorA/B`, `WaterDetailColorA/B`); Moddable Fluids tints by one colour.
 
 ## Switch-over plan
 
@@ -192,7 +199,7 @@ pwsh tools/build_deep_frontier.ps1 -ModdableFluids  # the flagged Deep Frontier 
 - The staged `DeepFrontier.asmdef` defines `DEEP_FRONTIER_MODDABLE_FLUIDS` for that assembly only (`versionDefines` on the editor version).
 - That asmdef references the `ModdableFluids` assembly definition, which `build_moddable_fluids.ps1` stages from `src/ModdableFluids/Api`. More Fluids compiles against it the same way. A precompiled `ModdableFluids.dll` would collide with that assembly definition.
 - The manifest requires `ModdableFluids` at the kept package's version, leaves out `ModdableWeathers`, and has " (Moddable Fluids test build)" added to its name.
-- Deep Frontier's radioactive-water shader variants (`RadioactiveWaterURP_Opaque`/`_Transparent`, with their `.meta` files) are set aside for the build, because Moddable Fluids draws the water. Only `RadiationRenderer` loads them, and it is bound only without the flag. The irradiated-soil variant stays.
+- All three of Deep Frontier's shader variants (`RadioactiveWaterURP_Opaque`/`_Transparent` and `IrradiatedTerrainURP`, with their `.meta` files) are set aside for the build, because Moddable Fluids draws the water and the irradiated ground. Only `RadiationRenderer` loads them, and it is bound only without the flag.
 
 The official builder only writes into `Mods/DeepFrontier`. The script therefore:
 
@@ -203,7 +210,7 @@ The official builder only writes into `Mods/DeepFrontier`. The script therefore:
    - `DeepFrontier.dll` is the official output, defines the flagged types, and references `ModdableFluids` at the package's assembly version.
    - The builder's `ModdableFluids.dll` is byte-identical to the kept package's.
    - The data and both bundles are in place.
-   - The bundles hold `DeepFrontier/IrradiatedTerrainURP` with exactly the variants the game draws, and no radioactive-water variant (`tools/asset-pipeline/check_bundle_shaders.py`).
+   - The bundles hold no Deep Frontier shader (`tools/asset-pipeline/check_bundle_shaders.py --expect` with no names).
 3. **Moves the package out** to `outputs/deep-frontier-moddable-fluids/package/DeepFrontier`.
 4. **Restores everything byte for byte**, then puts the default staging back. A restore that does not match stops with its backup named.
 
@@ -241,9 +248,9 @@ Run each with the packages built from one commit, through the launcher above. Lo
    - Pumps in it block at 0.5% with Deep Frontier's status.
    - The sludge intake fills its buffer and makes sludge.
    - The outfall adds water.
-   - Soil around the water turns yellow-green; plants there die and planters skip it.
+   - Soil around the water turns yellow-green; plants there die and planters skip it. The tint is Moddable Fluids' terrain overlay: the log shows its line "Terrain overlays drawn on scene copies of ...". Check cliff tops, sides and edges at several heights, in layer view, with both factions, for pink, black or missing surfaces.
    - Beavers wading in it gain dose; sensors read the share.
-3. **Version 4 save and reload in game.** In the same run, save mid-play and reload. Soil cells, water shares, the intake buffer and sources continue. The scene-cycle probe (its launcher with the test packages installed) passes: the native water materials stay untouched and the terrain variant is restored on unload.
+3. **Version 4 save and reload in game.** In the same run, save mid-play and reload. Soil cells, water shares, the intake buffer and sources continue, and the loaded soil shows at once. The scene-cycle probe (its launcher with the test packages installed) passes: the native water and terrain materials stay untouched in every game.
 4. **Shipped saves.** Run `pwsh tools/start_deep_frontier_moddable_fluids.ps1 -SaveCopies <v3.timber>,<v2.timber>,<exception.timber>,<in-tide.timber>,<0.8.3.timber>` and load each copy. One of them is an exception save. Compare total radioactive volume and soil cells before and after the import, accounting for the reported cutoff volume. Then save and reload as v4. One of the saves is in a radioactive tide. Check the import log line and that the tide continues with its cycle and duration. Also load one save from 0.8.3 or older.
 5. **Tide.**
    - Use Moddable Fluids' "next cycle" development method for the radioactive tide.
@@ -259,7 +266,7 @@ Run each with the packages built from one commit, through the launcher above. Lo
 
 1. **Package.**
    - Make the test build's flagged staging the default. That is the staged `Scripts/ModdableFluids`, the asmdef with its define and reference, and the manifest.
-   - Delete the radioactive-water shader variants from `src/DeepFrontier/AssetBundles/Resources/Shaders/DeepFrontier`, which the test build already leaves out, with `RadiationRenderer` and its water surface.
+   - Delete all three shader variants from `src/DeepFrontier/AssetBundles/Resources/Shaders/DeepFrontier`, which the test build already leaves out, with `RadiationRenderer`, both of its surfaces and `tools/native_shader_variants.mjs`.
    - Fold its package checks into `tools/verify_deep_frontier_package.ps1`. That script then compares the installed package with the builder output, as it does now.
 2. **Manifest.**
    - Add `{ "Id": "ModdableFluids", "MinimumVersion": "<first release>" }` to `RequiredMods` and bump the version.
