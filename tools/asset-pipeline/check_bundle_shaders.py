@@ -8,7 +8,8 @@ ModdableFluids/...) in each given bundle this requires, pass by pass and stage b
 the keyword sets of its native counterpart in the installed game (resources.assets) that the
 stripping keeps, each with and without the shader's own keyword: nothing the game can draw is
 stripped, nothing the stripping removes is left. --expect lists our shaders the bundles must hold;
-any other DeepFrontier/ or ModdableFluids/ shader fails (so it also proves a shader's absence).
+any other DeepFrontier/ or ModdableFluids/ shader fails (so it also proves a shader's absence); --expect
+with no names requires that the bundles hold none of our shaders.
 
 It re-checks, in the installed game, the evidence the stripping relies on:
   - the game's only render pipeline asset uses only UniversalRendererData (no Renderer2DData), so
@@ -18,7 +19,7 @@ It re-checks, in the installed game, the evidence the stripping relies on:
     _SAMPLE_SPLATMAP;
   - no game assembly names those material keywords, so the game never toggles them at runtime.
 
-  python tools/asset-pipeline/check_bundle_shaders.py --win <name>_win --mac <name>_mac --expect <shader> ...
+  python tools/asset-pipeline/check_bundle_shaders.py --win <name>_win --mac <name>_mac --expect [<shader> ...]
 Exit code 1 with FAIL lines on any difference; otherwise one JSON summary line.
 """
 import argparse
@@ -55,6 +56,7 @@ SHADERS = {
     'DeepFrontier/RadioactiveWaterURP_Transparent': (WATER_NATIVE[1], '_DEEP_FRONTIER_RADIOACTIVE_WATER', keep_water),
     'ModdableFluids/FluidWaterURP_Opaque': (WATER_NATIVE[0], '_MODDABLE_FLUIDS_APPEARANCE', keep_water),
     'ModdableFluids/FluidWaterURP_Transparent': (WATER_NATIVE[1], '_MODDABLE_FLUIDS_APPEARANCE', keep_water),
+    'ModdableFluids/FluidTerrainURP': (TERRAIN_NATIVE, '_MODDABLE_FLUIDS_TERRAIN_OVERLAY', keep_terrain),
 }
 
 
@@ -188,7 +190,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--win', required=True, help='built <mod>_win asset bundle')
     parser.add_argument('--mac', required=True, help='built <mod>_mac asset bundle')
-    parser.add_argument('--expect', nargs='+', required=True, help='every DeepFrontier/ or ModdableFluids/ shader the bundles hold')
+    parser.add_argument('--expect', nargs='*', required=True,
+                        help='every DeepFrontier/ or ModdableFluids/ shader the bundles hold (none: the bundles hold no shader of ours)')
     cli = parser.parse_args()
     unknown = [name for name in cli.expect if name not in SHADERS]
     if unknown:

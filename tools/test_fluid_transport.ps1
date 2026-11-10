@@ -5,7 +5,10 @@ param()
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
-$dev = Get-DevEnvironment 'gameManaged','python'
+$dev = Get-DevEnvironment 'gameManaged','python','node'
+# Moddable Fluids' shader variants (shared water and terrain overlay) are current for the native graphs.
+& $dev.node (Join-Path $PSScriptRoot 'moddable_fluids_shader_variants.mjs') --check
+if ($LASTEXITCODE -ne 0) { throw 'Moddable Fluids shader variants are stale; run node tools/moddable_fluids_shader_variants.mjs' }
 $project = Join-Path $PSScriptRoot 'compile-check/fluid-transport-harness/FluidTransportHarness.csproj'
 $specification = Join-Path $root 'vendor/timberborn-modding/Assets/Tools/ImportedAssets/Editor/Resources/Configurations/WaterSimulator.blueprint.json'
 $report = Join-Path $root 'outputs/fluids-api-prototype/transport-report.json'

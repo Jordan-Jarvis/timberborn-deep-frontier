@@ -67,8 +67,9 @@ namespace Timberborn.ModdingTools.ModBuilding {
         case "ModdableFluids/FluidWaterURP_Transparent":
           return (keywords, declared) => !declared.Contains(Outflows) || keywords.Contains(Outflows);
         // No native terrain material, and no variant of the game's own TerrainURP, has triplanar splatmapping without
-        // the splatmap.
+        // the splatmap. Moddable Fluids' terrain overlay draws on scene copies of those materials, with their keywords.
         case "DeepFrontier/IrradiatedTerrainURP":
+        case "ModdableFluids/FluidTerrainURP":
           return (keywords, declared) => !keywords.Contains(Triplanar) || keywords.Contains(Splatmap);
         default:
           throw new InvalidOperationException($"{Tag} {shader} has no stripping rule: add one with its evidence "
