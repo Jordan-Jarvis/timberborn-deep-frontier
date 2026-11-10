@@ -35,6 +35,7 @@ Status on 2026-11-09:
 | `ModdableFluidsSoilRenderer` | Writes the bank layer's view (soil field and bank layer) into that overlay (`IrradiatedSoilOverlayWriter`, `IrradiatedSoilSurface.Update`'s cell loop), when a new soil pass is published. Moddable Fluids draws it; no Deep Frontier shader touches a native material. |
 | `RadioactiveTideRegistration` | The radioactive tide as a Moddable Fluids tide, built from `RadioactiveTideTuning`. |
 | `RadioactiveTideImport` | Maps a Deep Frontier save's tide state and settings to Moddable Fluids tide state. The flagged mod starter reads them for the provider's `IFluidTideImporter` ([Saves](#saves)). |
+| `RadioactiveTideModdableWeathersSave` | Reads the radioactive tide of a save played with Moddable Weathers, from its settings and history, as `RadioactiveTideImport` then maps it ([Saves played with Moddable Weathers](#saves-played-with-moddable-weathers)). |
 
 ### Services the consumers use
 
@@ -116,6 +117,7 @@ The sludge intake keeps the native pump path, credited from native-removal losse
 | `DeepFrontier.Radiation` v2/v3 (shipped) | Moddable Fluids imports the water in the first substep through the provider's importer. Deep Frontier loads soil, sources and the hour counter. A save before that substep writes the record back unchanged, with any requests, and Moddable Fluids marks its own entry `ImportPending`. |
 | `DeepFrontier.Radiation` v4 | Holds the last soil pass, the hour counter, sources, unapplied soil requests and water added before the first fluid tick (`RadiationFacadeRecord.Capture` and `Restore`). Moddable Fluids saves the water. |
 | `DeepFrontier.RadioactiveTide`, `DeepFrontier.RadioactiveTideSettings` (shipped) | Imported once by Moddable Fluids' tide service (`IFluidTideImporter`, capability `ModdableFluids.Tides.Import`) for a loaded save without its tide state. See [Tide import](#tide-import). The next save writes Moddable Fluids' tide singletons, so the import never repeats. |
+| Moddable Weathers' `ModdableWeatherSettingsService` and `WeatherHistoryRegistry` (shipped with Moddable Weathers) | Imported once by the same importer: the bridge's settings and the state its history gives. See [Saves played with Moddable Weathers](#saves-played-with-moddable-weathers). |
 | Entity `DeepFrontier.WeatherStationRadioactiveTide` (`SignalsRadioactiveTide`) | Imported once per station into Moddable Fluids' `ModdableFluids.WeatherStationTide` (see Weather Station above). |
 | Sensor, sluice, intake buffer, exposure | Unchanged keys. |
 
@@ -138,9 +140,45 @@ Deep Frontier's provider is the importer. The flagged mod starter reads the save
 
 The budget of a save whose tide is off draws nothing: no listed tide is on, and unlisted tides are off. Moddable Fluids then checks that a current tide matches the native weather and duration. A vanilla save first loaded with Deep Frontier gets the former defaults, as the shipped build gives it.
 
+#### Saves played with Moddable Weathers
+
+With Moddable Weathers, the shipped build runs the tide through its optional bridge `DeepFrontier.ModdableWeathers`: the Moddable Weathers weather `RadioactiveTideWeather`. The bridge saves nothing of its own. `RadioactiveTideConfigurator` binds neither `RadioactiveTideService` nor `RadioactiveTideGameSettings` then, and a save holds only the singletons bound when it was made (`SerializedWorldFactory`). Such a save therefore has no `DeepFrontier.RadioactiveTide` or `DeepFrontier.RadioactiveTideSettings`. Before this import it read as a save with no tide and the former mod settings. Under Moddable Weathers, Moddable Fluids refused it once its history held a tide, because that imported state disagreed with the history. Before any tide it took the former mod settings instead of the bridge's.
+
+What the save holds instead (Moddable Weathers 11.0.0):
+
+| Key | Contents |
+| --- | --- |
+| Singleton `ModdableWeatherSettingsService`, property `Settings` | One JSON object, an entry per settings type keyed by its full name (`BaseWeatherSettingsService.SerializeSettings`). The bridge's entry is `DeepFrontier.RadioactiveTideModdableWeathers.RadioactiveTideModdableWeatherSettings`, with its `[Description]` properties `Enabled`, `StartCycle`, `ChancePercent`, `MinDurationDays`, `MaxDurationDays`. |
+| Singleton `WeatherHistoryRegistry`, list `WeatherCycles` | Entry i is cycle i, entry 0 the empty cycle. Each is a `WeatherCycle` as Newtonsoft JSON, with `Stages` of `Index`, `IsBenign`, `WeatherId`, `WeatherModifierIds` and `Days`. Moddable Weathers generates one cycle ahead. |
+| Native `GameCycleService` | `Cycle`, `CycleDay` |
+
+`RadioactiveTideModdableWeathersSave.Read` (groundwork, with the game's Newtonsoft) maps it. The importer reads it first: it applies when the settings hold the bridge's entry.
+
+| Moddable Weathers | Moddable Fluids |
+| --- | --- |
+| The latest non-benign stage with `RadioactiveTideWeather` in this or an earlier cycle | the last tide, with that cycle and the stage's `Days`; none means no tide yet |
+| Moddable Weathers' current or next hazardous stage in this cycle is the tide | current tide = last tide |
+| `Enabled`, `StartCycle`, `ChancePercent`, `MinDurationDays`, `MaxDurationDays` | as Deep Frontier's own settings, with cycles without = `StartCycle` − 1: budget = weight = chance, by the rules of the table above |
+
+Moddable Fluids' Moddable Weathers adapter derives its state from the same history in the same way (`FluidTideModdableWeathersService.Derive`), so its load check accepts the import. The current stage follows `WeatherCycleService` as written:
+
+- **The current stage** is the first stage, in list order, whose last day is at or after the cycle day. A day past the last stage takes the last stage.
+- **The next hazardous stage** is searched from list position `Index` + 1 of the current stage, and only when the current stage lasts more than 0 days. A skipped stage leaves a gap in the indices, so Moddable Weathers can miss a hazardous stage that follows. The import misses it too.
+
+The settings are checked by Deep Frontier's own rule (`RadioactiveTideSettingsCheck.Validate`, only when on), and the state by `RadioactiveTideSavedState`. The import refuses, naming Deep Frontier:
+
+- a missing key, or a value of the wrong JSON type (nothing is defaulted);
+- a save with both Deep Frontier's own tide keys and the bridge's settings;
+- bridge settings without the history or without `GameCycleService`;
+- a game cycle outside the history, or entries out of cycle order;
+- a benign stage naming the tide, or a stage with a negative index or days;
+- a history with the tide but no bridge settings: the save was played on without Deep Frontier, and Moddable Weathers dropped the bridge's settings.
+
+A Moddable Weathers save that never ran Deep Frontier is not read here: it gets the former mod settings, as a vanilla save does.
+
 ## Evidence
 
-- **.NET harness.** Run by `tools/test_fluid_transport.ps1` in a scratch mirror on 2026-11-09, with the terrain overlay: 409,850 assertions in 99 scenarios, 1,198 Mono checks, 5 absence checks and 49 tide Mono checks. The flagged Deep Frontier build compiles. The Deep Frontier scenarios cover:
+- **.NET harness.** Run by `tools/test_fluid_transport.ps1` in a scratch mirror on 2026-11-09, with the terrain overlay and the Moddable Weathers save import: 410,287 assertions in 102 scenarios, 1,198 Mono checks, 5 absence checks, 49 tide Mono checks and 83 Moddable Weathers adapter Mono checks. The flagged Deep Frontier build compiles. The Deep Frontier scenarios cover:
   - registration with both policies and existing localization keys;
   - the v2/v3 import and its variants;
   - the facade, including the new-game pending rule;
@@ -160,8 +198,19 @@ The budget of a save whose tide is off draws nothing: no listed tide is on, and 
 
     Each imported save then continues with `Choose`'s draws;
   - the Weather Station import: the radioactive tide mode, a native mode, a station older than the mode, an unreadable station;
+  - the import of a save played with Moddable Weathers (the bridge):
+    - the bridge's settings type and properties, read from its source;
+    - 14 positions in a history with tides at a cycle's end, between benign stages, after a drought stage and after a skipped stage;
+    - the settings through the host, switched off and out of range;
+    - every refusal listed above;
   - the visibility curve against `Encode`.
   - the irradiated-soil overlay: `IrradiatedSoilSurface`'s constants, `Encode` and `SoilColor` source text; its curve against `Encode` for every soil value from 0 to 1.2 in steps of 1e-6, every float near both ends of the line, and 200,000 random floats; its registration and colour.
+- **Mono, against Moddable Weathers 11.0.0.** The Moddable Weathers adapter probe (`ModdableWeathersMonoProbe.DeepFrontier.cs`) writes a bridge save with the real `WeatherHistoryRegistry`, `ModdableWeatherSettingsService` and `GameCycleService`, through the game's JSON writer and reader. For the same 14 positions:
+  - Deep Frontier's parse of every stage equals Moddable Weathers' own reading of the save;
+  - the cycle's tide agrees with the stage the real `WeatherCycleService` finds;
+  - the adapter's load check accepts the import.
+
+  A save with both tide systems' keys is refused.
 - **Shipped build.** The unflagged build compiles, and the radiation content, tide content, native safety and native access checks pass.
 
 Not covered by the harness: the game glue (lifecycle, kill check, bank kernels, the soil writer, policies applied by Moddable Fluids in game) and Moddable Fluids' terrain renderer. It compiles; the in-game runs below cover it.
@@ -227,7 +276,7 @@ Before the game starts, the launcher copies aside, with hashes:
 - the PlayerData files;
 - every `ModEnabled` and `ModPriority` preference value, with its registry type.
 
-It then installs the packages and enables them. It switches Moddable Weathers off for the run, and refuses to start while Moddable Weathers is enabled only by default. `-SaveCopies` puts copies of the given saves into a settlement named "Deep Frontier Moddable Fluids Test". Click through the startup dialogs, and quit the game to end the run.
+It then installs the packages and enables them. It switches Moddable Weathers off for the run, so the tides run on the native weather, and refuses to start while Moddable Weathers is enabled only by default. `-ModdableWeathers` keeps Moddable Weathers on instead, with the mods it requires (Moddable Timberborn, TimberUi, Harmony). The tides then run through Moddable Fluids' optional Moddable Weathers adapter, which the kept Moddable Fluids package must carry. `-SaveCopies` puts copies of the given saves into a settlement named "Deep Frontier Moddable Fluids Test". Click through the startup dialogs, and quit the game to end the run.
 
 Afterwards, also after a crash:
 
@@ -252,6 +301,12 @@ Run each with the packages built from one commit, through the launcher above. Lo
    - Beavers wading in it gain dose; sensors read the share.
 3. **Version 4 save and reload in game.** In the same run, save mid-play and reload. Soil cells, water shares, the intake buffer and sources continue, and the loaded soil shows at once. The scene-cycle probe (its launcher with the test packages installed) passes: the native water and terrain materials stay untouched in every game.
 4. **Shipped saves.** Run `pwsh tools/start_deep_frontier_moddable_fluids.ps1 -SaveCopies <v3.timber>,<v2.timber>,<exception.timber>,<in-tide.timber>,<0.8.3.timber>` and load each copy. One of them is an exception save. Compare total radioactive volume and soil cells before and after the import, accounting for the reported cutoff volume. Then save and reload as v4. One of the saves is in a radioactive tide. Check the import log line and that the tide continues with its cycle and duration. Also load one save from 0.8.3 or older.
+
+   Then load saves played with the shipped build and Moddable Weathers: `pwsh tools/start_deep_frontier_moddable_fluids.ps1 -ModdableWeathers -SaveCopies <mw-in-tide.timber>,<mw-after-tide.timber>`. One is inside a radioactive tide stage, one after it.
+   - The log shows "Radioactive tide of Deep Frontier's Moddable Weathers weather imported into Moddable Fluids" with the bridge's settings, then "Tides run as Moddable Weathers weathers".
+   - Nothing is refused: the adapter's history check accepts the import.
+   - The tide in progress runs to its stage's end and emits radioactive water.
+   - Save, quit and reload: the save now loads from Moddable Fluids' own keys.
 5. **Tide.**
    - Use Moddable Fluids' "next cycle" development method for the radioactive tide.
    - Check the banner, icons and badtide sound.
@@ -259,6 +314,7 @@ Run each with the packages built from one commit, through the launcher above. Lo
    - Check the Weather Station: Moddable Fluids' radioactive tide mode switches on during the tide (and early, by its activation hours). A station saved by the shipped build in the radioactive tide mode loads in that mode: load it through `-SaveCopies` in gate 4.
    - The all-buildings hazard probe's station part refuses to run in this build; it checks Deep Frontier's own station mode.
    - Save and reload during the tide.
+   - Repeat the development method, the banner and the emission once with `-ModdableWeathers`. The tide is then a Moddable Weathers weather drawn from Deep Frontier's spec.
    - Check that a new custom game's rows show Deep Frontier's values.
 6. **Performance.** Tick time and memory on the largest Deep Frontier map with a large irradiated area, against the shipped build. Run once with `-MoreFluids`, so that the shared tide budget and the More Fluids content run alongside.
 
@@ -270,7 +326,7 @@ Run each with the packages built from one commit, through the launcher above. Lo
    - Fold its package checks into `tools/verify_deep_frontier_package.ps1`. That script then compares the installed package with the builder output, as it does now.
 2. **Manifest.**
    - Add `{ "Id": "ModdableFluids", "MinimumVersion": "<first release>" }` to `RequiredMods` and bump the version.
-   - Moddable Fluids refuses Moddable Weathers together with tides. Remove `ModdableWeathers` from `OptionalMods`, or wait for Moddable Fluids' Moddable Weathers adapter. The `DeepFrontier.ModdableWeathers` bridge leaves the package with it.
+   - Remove `ModdableWeathers` from `OptionalMods`, and the `DeepFrontier.ModdableWeathers` bridge from the package, as the test build does. Moddable Fluids' own Moddable Weathers adapter registers the radioactive tide under the same weather ID, `RadioactiveTideWeather`. `ModdableWeatherSpecs/RadioactiveTideWeather` stays: the adapter draws the tide with it. Saves played with the bridge are imported ([Saves played with Moddable Weathers](#saves-played-with-moddable-weathers)).
 3. **Validators.**
    - `tools/validate_radiation_content.mjs` and `validate_radioactive_tide_content.mjs` read the shipped `RadiationSimulation`, `RadiationSoil` and tide files. Point them at the flagged equivalents.
    - Remove `DeepFrontier.RadiationLockstep`, `.RadiationSoil`, `.RadioactiveTide` and `.RadioactiveTideNewGame` from the native-safety audit.

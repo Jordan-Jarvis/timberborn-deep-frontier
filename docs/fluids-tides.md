@@ -272,6 +272,7 @@ Both native services are passed as `object`, so the API assembly stays free of g
 | `DeepFrontier.RadioactiveTide`: `CurrentCycleIsTide`, `LastTideCycle`, `LastTideDuration` | current and last tide `DeepFrontier.RadioactiveTide` |
 | `DeepFrontier.RadioactiveTideSettings`: `Enabled`, `CyclesWithoutTide`, `ChancePercent`, `MinDurationDays`, `MaxDurationDays` | settings, with budget = weight = `ChancePercent` |
 | Saves from 0.8.3 and older | the former mod-setting keys, through `NativeSettings` |
+| Saves played with Moddable Weathers (Deep Frontier's bridge weather `RadioactiveTideWeather`) | the bridge's entry in `ModdableWeatherSettingsService`; the state the adapter's `Derive` gives from `WeatherHistoryRegistry` and `GameCycleService` ([details](deep-frontier-fluids-migration.md#saves-played-with-moddable-weathers)) |
 
 ### New-game screen
 
@@ -441,10 +442,11 @@ Nothing here has run in game. In order:
    - Save inside the tide and reload: the tide is still active and emitting.
    - Let a few cycles run: tides appear only from their cycles without, never two cycles in a row.
    - Disable Moddable Weathers and load that save: the native binding takes over without refusal.
-2. **The same with flagged Deep Frontier** (`tools/build_deep_frontier_moddable_fluids.ps1`, which leaves out Deep Frontier's own Moddable Weathers bridge).
+2. **The same with flagged Deep Frontier** (`tools/build_deep_frontier_moddable_fluids.ps1`, which leaves out Deep Frontier's own Moddable Weathers bridge; run with `tools/start_deep_frontier_moddable_fluids.ps1 -ModdableWeathers -MoreFluids`).
    - All three tides are listed.
    - The radioactive tide from its dev method shows Deep Frontier's spec.
    - A save from unflagged Deep Frontier played without Moddable Weathers loads (imported).
+   - A save from unflagged Deep Frontier played with Moddable Weathers (its bridge) loads: Deep Frontier imports the state from Moddable Weathers' history and the bridge's settings, and the history check accepts it.
    - Unflagged Deep Frontier with its own bridge plus More Fluids must stop the load, naming `RadioactiveTideWeather`.
 
 ### Development
