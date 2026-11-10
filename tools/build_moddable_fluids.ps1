@@ -21,6 +21,12 @@
 # Unity runs through tools/UnityProcess.ps1 (below-normal priority, two logical processors left free). The API's
 # shader bundles are built only when their inputs changed since the last verified build; otherwise that build's
 # bundles are installed and Unity builds the code alone (tools/UnityBundleCache.ps1, docs/unity-build-performance.md).
+#
+# The tides' Moddable Weathers adapter (src/ModdableFluids/ModdableWeathers, assembly ModdableFluids.ModdableWeathers)
+# compiles against the installed Workshop Moddable Weathers 11.0.0, Moddable Timberborn and TimberUi, staged as
+# precompiled references like Deep Frontier's, and ships as Scripts/ModdableFluids.ModdableWeathers.dll.ModdableWeathers.optional
+# (ModdableFluidsBatchBuild.PackageOptionalAssembly), which only Moddable Timberborn's OptionalModsLoader loads, and only
+# while Moddable Weathers is enabled. No other Moddable Fluids assembly references them.
 param([switch]$SyntheticFixtures, [switch]$MoreFluids, [switch]$RemoveLegacyPackage)
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
@@ -89,7 +95,9 @@ function Verify([string]$id, [string]$installed, [string]$manifest, [string[]]$e
   $hashes = @{}
   foreach ($name in $expected) {
     $actual = (Get-FileHash -LiteralPath (Join-Path $installed ('Scripts/' + $name))).Hash
-    if ($actual -ne (Get-FileHash -LiteralPath (Join-Path $managed $name)).Hash) { throw "Official $id package differs from its compiled output: $name" }
+    # An optional assembly X.dll.<ModId>.optional is the builder's compiled X.dll, renamed.
+    $compiled = if ($name -match '^(.+\.dll)\.[^.]+\.optional$') { $Matches[1] } else { $name }
+    if ($actual -ne (Get-FileHash -LiteralPath (Join-Path $managed $compiled)).Hash) { throw "Official $id package differs from its compiled output: $name" }
     $hashes[$name] = $actual
   }
   $hashes
@@ -99,8 +107,12 @@ $api = @(
   @{Folder='Api';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.asmdef');Sources=@((Join-Path $source 'Api'))},
   @{Folder='Core';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.TransportPrototype.asmdef');Sources=@((Join-Path $source 'Transport'),(Join-Path $source 'Native'),(Join-Path $source 'Persistence'),(Join-Path $source 'Rendering'),(Join-Path $source 'Sources'),(Join-Path $source 'World'))},
   @{Folder='GameBridge';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.GamePrototype.asmdef');Sources=@((Join-Path $source 'GameBridge'))},
-  @{Folder='Runtime';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.RuntimePrototype.asmdef');Sources=@((Join-Path $source 'Runtime'),(Join-Path $source 'Tides'))}
+  @{Folder='Runtime';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.RuntimePrototype.asmdef');Sources=@((Join-Path $source 'Runtime'),(Join-Path $source 'Tides'))},
+  @{Folder='ModdableWeathers';Asmdef=(Join-Path $source 'Authoring/ModdableFluids.ModdableWeathers.asmdef');Sources=@((Join-Path $source 'ModdableWeathers'))}
 )
+# The package's Scripts: the four assemblies and the optional adapter, never as a plain DLL.
+$apiScripts = @('ModdableFluids.dll','ModdableFluids.TransportPrototype.dll','ModdableFluids.GamePrototype.dll','ModdableFluids.RuntimePrototype.dll',
+  'ModdableFluids.ModdableWeathers.dll.ModdableWeathers.optional')
 if (Test-Path -LiteralPath (Join-Path $mods 'ModdableFluids')) { throw 'ModdableFluids is installed in the Mods folder; packages must only be present during an acceptance run. Remove it first.' }
 Stage 'ModdableFluids' (Join-Path $source 'manifest.json') $api
 # Shared-rendering shader variants (tools/moddable_fluids_shader_variants.mjs) go into the API's bundles.
@@ -193,6 +205,13 @@ $dependencies = Join-Path $project 'Assets/Plugins/ModDependencies'
 New-Item -ItemType Directory -Force -Path $dependencies | Out-Null
 Copy-Item -LiteralPath (Join-Path $dev.workshopContent '3284904751/0Harmony.dll') -Destination $dependencies -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/0Harmony.dll.meta') -Destination $dependencies -Force
+# The Moddable Weathers adapter's compile references (Workshop version-1.1 copies; tools/unity/*.dll.meta as Deep Frontier stages them).
+foreach ($reference in @(@{Item='3630523180';Name='ModdableWeathers.dll'}, @{Item='3578009707';Name='ModdableTimberborn.dll'}, @{Item='3430626620';Name='TimberUi.dll'})) {
+  $workshopDll = Join-Path $dev.workshopContent "$($reference.Item)/version-1.1/$($reference.Name)"
+  if (-not (Test-Path -LiteralPath $workshopDll -PathType Leaf)) { throw "The Moddable Weathers adapter compiles against the installed $($reference.Name); subscribe to Workshop item $($reference.Item) first." }
+  Copy-Item -LiteralPath $workshopDll -Destination $dependencies -Force
+  Copy-Item -LiteralPath (Join-Path $PSScriptRoot "unity/$($reference.Name).meta") -Destination $dependencies -Force
+}
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/ModdableFluidsBatchBuild.cs') -Destination (Join-Path $project 'Assets/Tools/Editor/Scripts/ModBuilding') -Force
 # Strips variants of our own shaders that the game never draws (docs/unity-build-performance.md).
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'unity/ModShaderVariantStripping.cs') -Destination (Join-Path $project 'Assets/Tools/Editor/Scripts/ModBuilding') -Force
@@ -243,14 +262,14 @@ function Keep([string]$id) {
   $kept
 }
 $version = (Get-Content (Join-Path $installed 'manifest.json') -Raw | ConvertFrom-Json).Version
-$apiHashes = Verify 'ModdableFluids' $installed (Join-Path $source 'manifest.json') @('ModdableFluids.dll','ModdableFluids.TransportPrototype.dll','ModdableFluids.GamePrototype.dll','ModdableFluids.RuntimePrototype.dll')
+$apiHashes = Verify 'ModdableFluids' $installed (Join-Path $source 'manifest.json') $apiScripts
 foreach ($platform in 'win','mac') {
   $bundle = Join-Path $installed "AssetBundles/moddablefluids_$platform"
   if (-not (Test-Path -LiteralPath $bundle) -or (Get-Item -LiteralPath $bundle).Length -eq 0) { throw "The official build produced no $platform shader bundle." }
   $apiHashes["moddablefluids_$platform"] = (Get-FileHash -LiteralPath $bundle).Hash
 }
 & $dev.python (Join-Path $root 'tools/asset-pipeline/check_bundle_shaders.py') --win (Join-Path $installed 'AssetBundles/moddablefluids_win') `
-  --mac (Join-Path $installed 'AssetBundles/moddablefluids_mac') --expect 'ModdableFluids/FluidWaterURP_Opaque' 'ModdableFluids/FluidWaterURP_Transparent'
+  --mac (Join-Path $installed 'AssetBundles/moddablefluids_mac') --expect 'ModdableFluids/FluidWaterURP_Opaque' 'ModdableFluids/FluidWaterURP_Transparent' 'ModdableFluids/FluidTerrainURP'
 if ($LASTEXITCODE -ne 0) { throw 'The shader bundles do not hold exactly the variants the game can draw (tools/asset-pipeline/check_bundle_shaders.py).' }
 $packagedLocalization = @(Get-ChildItem -LiteralPath $installed -Recurse -File -Filter 'enUS.csv' | Where-Object { $_.Directory.Name -eq 'Localizations' })
 if ($packagedLocalization.Count -ne 1 -or (Get-FileHash -LiteralPath $packagedLocalization[0].FullName).Hash -ne (Get-FileHash -LiteralPath $tideLocalization).Hash) {
