@@ -21,7 +21,8 @@ namespace ModdableFluids.Tides.Prototype {
   /// While a tide is chosen the native Mode keeps the player's previous native choice (removing the tide system leaves a
   /// working station), and the output is (the cycle's hazardous weather is that tide) and the native
   /// WithinActivationTimeHazardous, exactly as the native Drought and Badtide modes, early activation included. The tide is
-  /// sampled from the cycle's weather just before the native Sample (FluidTidePatches).
+  /// sampled from the cycle's weather just before the native Sample (FluidTidePatches, IFluidTideScene.CurrentCycleTide);
+  /// under Moddable Weathers the cycle's weather is the adapter weather, recognised by its weather ID.
   /// </para>
   /// A station saved without this component asks the IFluidTideStationImporter providers once (another tide system's mode).
   /// </summary>
@@ -29,7 +30,7 @@ namespace ModdableFluids.Tides.Prototype {
     private static readonly ComponentKey Key = new ComponentKey("ModdableFluids.WeatherStationTide");
     private static readonly PropertyKey<string> TideKey = new PropertyKey<string>("Tide");
 
-    private readonly FluidTideService _tides;
+    private readonly IFluidTideScene _tides;
     private WeatherStation _station;
     private Automator _automator;
 
@@ -40,7 +41,7 @@ namespace ModdableFluids.Tides.Prototype {
     /// <summary>The provider whose IFluidTideStationImporter supplied the loaded choice, or null.</summary>
     public string ImportedBy { get; private set; }
 
-    public FluidTideWeatherStation(FluidTideService tides) { _tides = tides; }
+    public FluidTideWeatherStation(IFluidTideScene tides) { _tides = tides; }
 
     public void Awake() {
       _station = GetComponent<WeatherStation>();

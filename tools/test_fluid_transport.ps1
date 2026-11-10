@@ -45,3 +45,11 @@ if ($LASTEXITCODE -ne 0) { throw 'Moddable Fluids tides Mono probe build failed'
 $tidesProbe = Join-Path $PSScriptRoot 'compile-check/fluid-tides/probe/bin/Release/netstandard2.1/ModdableFluids.TidesMonoProbe.dll'
 & $dev.python (Join-Path $PSScriptRoot 'compile-check/fluid-tides/run_tides_mono.py') $tidesProbe (Join-Path $root 'outputs/fluids-api-prototype/tides-mono-report.json')
 if ($LASTEXITCODE -ne 0) { throw 'Moddable Fluids tides Mono probe failed' }
+# The tides' Moddable Weathers adapter (optional assembly ModdableFluids.ModdableWeathers, compiled against the installed
+# Workshop Moddable Weathers 11.0.0, Moddable Timberborn and TimberUi): its installed-Mono probe in a separate process.
+$weathersProject = Join-Path $PSScriptRoot 'compile-check/fluid-moddable-weathers/probe/ModdableFluids.ModdableWeathersMonoProbe.csproj'
+& dotnet build $weathersProject --configuration Release --nologo
+if ($LASTEXITCODE -ne 0) { throw 'Moddable Fluids Moddable Weathers adapter probe build failed' }
+$weathersProbe = Join-Path $PSScriptRoot 'compile-check/fluid-moddable-weathers/probe/bin/Release/netstandard2.1/ModdableFluids.ModdableWeathersMonoProbe.dll'
+& $dev.python (Join-Path $PSScriptRoot 'compile-check/fluid-moddable-weathers/run_moddable_weathers_mono.py') $weathersProbe (Join-Path $root 'outputs/fluids-api-prototype/moddable-weathers-mono-report.json')
+if ($LASTEXITCODE -ne 0) { throw 'Moddable Fluids Moddable Weathers adapter Mono probe failed' }

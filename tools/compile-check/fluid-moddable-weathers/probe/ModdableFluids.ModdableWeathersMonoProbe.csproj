@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Runs the Moddable Weathers adapter (ModdableFluids.ModdableWeathers) against the installed Moddable Weathers 11.0.0,
+       Moddable Timberborn and TimberUi from the Workshop and the installed game assemblies, inside the game's own Mono in a
+       separate process (../run_moddable_weathers_mono.py). No game process, scene or Unity engine call is involved. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>ModdableFluids.ModdableWeathersMonoProbe</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../ModdableFluids.ModdableWeathers.csproj" />
+    <GameReference Include="$(TimberbornManaged)/Timberborn.*.dll;$(TimberbornManaged)/Bindito*.dll;$(TimberbornManaged)/UnityEngine.CoreModule.dll;$(TimberbornManaged)/UnityEngine.UIElementsModule.dll;$(TimberbornManaged)/System.Collections.Immutable.dll;$(TimberbornManaged)/Newtonsoft.Json.dll" />
+    <Reference Include="@(GameReference)" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(ModsBuildManaged)/0Harmony.dll" Private="false" />
+    <Reference Include="ModdableWeathers" HintPath="$(Workshop)/3630523180/version-1.1/ModdableWeathers.dll" Private="false" />
+    <Reference Include="ModdableTimberborn" HintPath="$(Workshop)/3578009707/version-1.1/ModdableTimberborn.dll" Private="false" />
+    <Reference Include="TimberUi" HintPath="$(Workshop)/3430626620/version-1.1/TimberUi.dll" Private="false" />
+  </ItemGroup>
+</Project>

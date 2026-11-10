@@ -1,0 +1,1 @@
+{"name":"ModdableFluids.ModdableWeathers","references":["ModdableFluids","ModdableFluids.TransportPrototype","ModdableFluids.GamePrototype","ModdableFluids.RuntimePrototype"],"autoReferenced":false,"excludePlatforms":["Editor"]}

@@ -3,7 +3,8 @@ using ModdableFluids;
 
 /// <summary>
 /// Moddable Fluids tides (docs/fluids-tides.md): registration and freeze validation, per-mode values, the C′ selection
-/// rule and its exact long-run shares against tools/model_tide_selection.py.
+/// rule and its exact long-run shares against tools/model_tide_selection.py, the rule as Moddable Weathers' integer stage
+/// weights (FluidTideSelection.StageWeights) with its error bounds, and the content mods' Moddable Weathers specs.
 /// </summary>
 internal static partial class HarnessExtensions {
   static partial void RunTides(Action<bool, string> check, Action<string, Action> scenario, string managed, string specification, Dictionary<string, object> observations) {
@@ -498,6 +499,141 @@ internal static class TideScenarios {
         table.Add(new { mode, installed = install == "" ? "vanilla" : install, budget = settings?.BudgetPercent ?? 0, shares = actual });
       }
       observations["tideLongRunShares"] = table;
+    });
+
+    scenario("tides: Moddable Weathers integer stage weights (StageWeights) and their error bound", () => {
+      FluidTideSettings T(string id, int weight, int without = 1, bool enabled = true) => new(id, enabled, weight, without, 1, 3);
+      string W(int[] weights) => "[" + string.Join(", ", weights) + "]";
+      // Ordinal order: DeepFrontier.RadioactiveTide, MoreFluids.CoffeeTide, MoreFluids.SaltTide.
+      var all = new FluidTideSaveSettings(25, new[] { T(Salt, 15, 7), T(Radioactive, 25, 14), T(Coffee, 15, 8) });
+      // Normal, Deep Frontier + More Fluids, Moddable Weathers' default drought (60) + badtide (40).
+      foreach (var (cycle, last, expected) in new[] { (15, 0, new[] { 15, 9, 9 }), (9, 0, new[] { 0, 8, 8 }), (8, 0, new[] { 0, 0, 7 }), (7, 0, new[] { 0, 0, 0 }),
+          (16, 15, new[] { 0, 0, 0 }), (17, 15, new[] { 15, 9, 9 }), (15, 15, new[] { 0, 0, 0 }), (1, 0, new[] { 0, 0, 0 }) }) {
+        var weights = FluidTideSelection.StageWeights(cycle, last, all, null, 100);
+        check(weights.SequenceEqual(expected), "Cycle " + cycle + " after a tide in cycle " + last + ": " + W(weights) + ", expected " + W(expected));
+      }
+      check(FluidTideSelection.StageWeights(15, 0, all, null, 60).SequenceEqual(new[] { 9, 6, 5 }), "Drought alone (60): 20 split 9/6/5, the remainder tie to the earlier tide");
+      var df = new FluidTideSaveSettings(25, new[] { T(Radioactive, 25, 14) });
+      check(FluidTideSelection.StageWeights(15, 0, df, null, 100)[0] == 33 && FluidTideSelection.StageWeights(15, 0, df, null, 60)[0] == 20, "One tide: K nearest to O x 25 / 75");
+      check(FluidTideSelection.StageWeights(15, 0, all, null, 0).SequenceEqual(new[] { 25, 15, 15 }), "No other hazardous weather: the tides' own weights, a tide is certain");
+      check(FluidTideSelection.StageWeights(9, 0, all, null, 0).SequenceEqual(new[] { 0, 15, 15 }), "No other hazardous weather: only the eligible tides");
+      var certain = FluidTideSelection.StageWeights(15, 0, new FluidTideSaveSettings(100, new[] { T(Radioactive, 25), T(Coffee, 15), T(Salt, 15) }), null, 100);
+      check(certain.Sum(w => (long)w) == int.MaxValue - 100L && certain.All(w => w > 0), "Budget 100%, every tide eligible: the tides take int.MaxValue - O: " + W(certain));
+      check(FluidTideSelection.StageWeights(3, 2, all, Coffee, 100).SequenceEqual(new[] { 0, int.MaxValue - 100, 0 }), "A forced tide ignores cycles without and the cooldown");
+      check(FluidTideSelection.StageWeights(1, 0, all, Coffee, 100).All(w => w == 0), "Cycle 1 never, even forced");
+      Rejects(() => FluidTideSelection.StageWeights(3, 3, all, Coffee, 100), "forcing a tide into a cycle that has one");
+      Rejects(() => FluidTideSelection.StageWeights(3, 0, new FluidTideSaveSettings(25, new[] { T(Coffee, 15, enabled: false) }), Coffee, 100), "forcing a disabled tide");
+      Rejects(() => FluidTideSelection.StageWeights(3, 0, all, "Other.Tide", 100), "forcing an unknown tide");
+      Rejects(() => FluidTideSelection.StageWeights(15, 0, all, null, -1), "a negative other weight");
+      Rejects(() => FluidTideSelection.StageWeights(15, 0, all, null, int.MaxValue), "other weights filling the integer roll");
+      Rejects(() => FluidTideSelection.StageWeights(15, 0, new FluidTideSaveSettings(99, new[] { T(Radioactive, 25) }), null, int.MaxValue / 2), "tide weights beyond the integer roll");
+      Rejects(() => FluidTideSelection.StageWeights(5, 6, all, null, 100), "a last tide after the cycle");
+      check(FluidTideSelection.StageWeights(15, 0, new FluidTideSaveSettings(1, new[] { T("A.Big", 100), T("B.One", 1), T("C.One", 1), T("D.One", 1) }), null, 300).SequenceEqual(new[] { 1, 1, 1, 1 }),
+        "Every eligible tide keeps at least one unit");
+
+      // Eligibility is Select's: a tide has weight exactly when Select could pick it.
+      var sets = new[] { all, df, new FluidTideSaveSettings(25, new[] { T(Radioactive, 25, 14), T(Coffee, 15, 8, enabled: false) }),
+        new FluidTideSaveSettings(50, new[] { T("Big.Tide", 50, 20), T(Coffee, 10, 1), T(Salt, 10, 1) }) };
+      int parity = 0;
+      foreach (var settings in sets)
+        for (int cycle = 1; cycle <= 30; cycle++)
+          foreach (int last in new[] { 0, cycle - 1, cycle - 2 }.Where(l => l == 0 || l >= FluidTideRules.EarliestCycle).Distinct()) {
+            var weights = FluidTideSelection.StageWeights(cycle, last, settings, null, 100);
+            var possible = Distribution(r => FluidTideSelection.Select(cycle, last, settings, null, r)).Where(o => o.Key != "native" && o.Value > 0).Select(o => o.Key).ToHashSet();
+            var weighted = settings.Tides.Where((t, i) => weights[i] > 0).Select(t => t.TideId).ToHashSet();
+            check(possible.SetEquals(weighted), "Cycle " + cycle + ", last tide " + last + ": Select can pick {" + string.Join(", ", possible) + "}, weighted {" + string.Join(", ", weighted) + "}");
+            parity++;
+          }
+
+      // The bound, exhaustively: K = Σk, every eligible tide at least 1, each share within 1 + z units of K·w/We
+      // (z: tides whose exact share is under one unit), and with X ≥ n − ½ the stage's tide chance within (1 − p)² / (2O − (1 − p)).
+      var weightSets = new[] { new[] { 25 }, new[] { 25, 15, 15 }, new[] { 50, 10, 10 }, new[] { 1, 100 }, new[] { 15, 15 }, new[] { 100, 1, 1, 1 } };
+      int cases = 0; double worstTotal = 0;
+      foreach (int other in Enumerable.Range(1, 300).Concat(new[] { 500, 1000, 10000, 1000000 }))
+        foreach (int budget in new[] { 1, 5, 10, 15, 20, 25, 35, 50, 75, 99 })
+          foreach (var weightSet in weightSets)
+            for (int mask = 1; mask < 1 << weightSet.Length; mask++) {
+              var settings = new FluidTideSaveSettings(budget, weightSet.Select((w, i) => T("T" + i + ".Tide", w, (mask & (1 << i)) != 0 ? 1 : 50)));
+              var weights = FluidTideSelection.StageWeights(10, 0, settings, null, other);
+              var eligible = Enumerable.Range(0, weightSet.Length).Where(i => (mask & (1 << i)) != 0).ToArray();
+              int n = eligible.Length, wTotal = weightSet.Sum(), m = weightSet.Max(), we = eligible.Sum(i => weightSet[i]), me = eligible.Max(i => weightSet[i]);
+              double p = budget * (double)Math.Min((long)we * m, (long)me * wTotal) / (100.0 * wTotal * m);
+              double x = other * p / (1 - p);
+              long k = weights.Sum(w => (long)w);
+              bool ok = Enumerable.Range(0, weightSet.Length).All(i => eligible.Contains(i) ? weights[i] >= 1 : weights[i] == 0)
+                && (x >= n - .5 ? Math.Abs(k - x) <= .5 + 1e-9 : k == n);
+              int small = eligible.Count(i => k * weightSet[i] < we);
+              ok &= eligible.All(i => Math.Abs(weights[i] - (double)k * weightSet[i] / we) < 1 + small);
+              double total = Math.Abs((double)k / (other + k) - p);
+              if (x >= n - .5) { ok &= total <= (1 - p) * (1 - p) / (2.0 * other - (1 - p)) + 1e-12; worstTotal = Math.Max(worstTotal, total * other); }
+              if (!ok) check(false, "Stage weights outside the bound: O " + other + ", budget " + budget + ", weights " + W(weightSet) + ", eligible " + W(eligible) + ": " + W(weights));
+              cases++;
+            }
+      check(cases > 100000, "Bound cases: " + cases);
+
+      // The shipped tides under Moddable Weathers' default weights: drought alone (60, before badtides start) or drought +
+      // badtide (100), for every mode, install and eligibility phase.
+      var installs = new Dictionary<string, TideSpec[]> { ["DF"] = new[] { RadioactiveSpec }, ["MF"] = new[] { CoffeeSpec, SaltSpec }, ["DF+MF"] = new[] { RadioactiveSpec, CoffeeSpec, SaltSpec } };
+      double shippedTotal = 0, shippedTide = 0;
+      var rows = new List<object>();
+      for (int mode = 0; mode < 3; mode++)
+        foreach (var (install, specs) in installs)
+          foreach (int other in new[] { 60, 100 })
+            foreach (int from in specs.Select(t => t.Modes[mode].Without + 1).Distinct().OrderBy(c => c)) {
+              var settings = new FluidTideSaveSettings(specs.Max(t => t.Modes[mode].Chance),
+                specs.Select(t => T(t.Owner + "." + t.Local, t.Modes[mode].Chance, t.Modes[mode].Without)));
+              var weights = FluidTideSelection.StageWeights(from, 0, settings, null, other);
+              long k = weights.Sum(w => (long)w);
+              // The exact rule's chances (Select, branch by branch) against the integer weights' k / (O + K).
+              var exact = Distribution(r => FluidTideSelection.Select(from, 0, settings, null, r));
+              double total = Math.Abs((double)k / (other + k) - (1 - exact.GetValueOrDefault("native")));
+              double tide = settings.Tides.Select((t, i) => Math.Abs((double)weights[i] / (other + k) - exact.GetValueOrDefault(t.TideId))).Max();
+              shippedTotal = Math.Max(shippedTotal, total); shippedTide = Math.Max(shippedTide, tide);
+              rows.Add(new { mode = FluidTideRules.Modes[mode], install, other, fromCycle = from, weights, totalErrorPp = Math.Round(total * 100, 3), worstTideErrorPp = Math.Round(tide * 100, 3) });
+            }
+      check(shippedTotal <= .006 && shippedTide <= .0105, "Shipped tides: stage tide chance within 0.6 pp (" + shippedTotal * 100 + "), each tide within 1.05 pp (" + shippedTide * 100 + ")");
+      observations["moddableWeathersStageWeights"] = new { boundCases = cases, parityCases = parity, shippedWorstTotalPp = Math.Round(shippedTotal * 100, 3), shippedWorstTidePp = Math.Round(shippedTide * 100, 3), shipped = rows };
+    });
+
+    scenario("tides: every shipped tide has a Moddable Weathers spec matching its registration", () => {
+      var root = Path.GetDirectoryName(Path.GetFullPath(specification));
+      while (root != null && !File.Exists(Path.Combine(root, "src", "MoreFluids", "manifest.json"))) root = Path.GetDirectoryName(root);
+      if (root == null) throw new DirectoryNotFoundException("No repository root above " + specification);
+      var builtIns = Directory.GetFiles(Path.Combine(Path.GetDirectoryName(MoreFluidsContent.ModdableWeathersAssembly(root))!, "ModdableWeatherSpecs"), "*.blueprint.json")
+        .Select(f => JsonDocument.Parse(File.ReadAllText(f)).RootElement.GetProperty("ModdableWeatherSpec").Clone()).ToArray();
+      var blinks = builtIns.Where(b => b.TryGetProperty("WeatherPanelBlinkBackground", out _)).Select(b => b.GetProperty("WeatherPanelBlinkBackground").GetString()).ToHashSet();
+      var orders = builtIns.Select(b => b.GetProperty("Order").GetInt32()).ToList();
+      var radioactive = DeepFrontierSoil.TideFromSource();
+      var shipped = new List<(string Mod, string Weather, string Name, string Description, IReadOnlyList<string> Art, string Sound)> {
+        ("DeepFrontier", radioactive.WeatherId, radioactive.NameLocKey, radioactive.DescriptionLocKey, radioactive.Art, radioactive.StartSound) };
+      foreach (var tide in MoreFluidsScenarios.Freeze().Tides.Tides) {
+        var art = tide.Presentation;
+        shipped.Add(("MoreFluids", tide.NativeWeatherId, tide.DisplayNameLocKey, tide.DescriptionLocKey, new[] { art.IconSprite, art.ProgressSprite, art.NotificationSprite }, art.StartSound));
+      }
+      foreach (var (mod, weather, name, description, art, sound) in shipped) {
+        string path = Path.Combine(root, "src", mod, "Data", "ModdableWeatherSpecs", weather + ".blueprint.json");
+        check(File.Exists(path), mod + " ships ModdableWeatherSpecs/" + weather + ".blueprint.json");
+        if (!File.Exists(path)) continue;
+        var spec = JsonDocument.Parse(File.ReadAllText(path)).RootElement.GetProperty("ModdableWeatherSpec");
+        string S(string key) => spec.GetProperty(key).GetString()!;
+        check(S("Id") == weather && S("DisplayLoc") == name && S("DescLoc") == description, weather + ": spec ID, name and description are the registered tide's");
+        check(S("DatePanelIcon") == art[0] && S("WeatherPanelProgressBackground") == art[1] && S("WeatherNotification") == art[2], weather + ": spec sprites are the registered tide's art");
+        check(S("StartSound") == "UI.Weather." + sound + "Started", weather + ": spec start sound is the native " + sound + " alarm");
+        check(blinks.Contains(S("WeatherPanelBlinkBackground")), weather + ": blink background " + S("WeatherPanelBlinkBackground") + " is one Moddable Weathers' own weathers use");
+        int order = spec.GetProperty("Order").GetInt32();
+        check(!orders.Contains(order), weather + ": spec order " + order + " is not taken");
+        orders.Add(order);
+      }
+      // More Fluids' Moddable Weathers sky is its native Sun fog, stage by stage.
+      var sun = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "src", "MoreFluids", "Data", "Configurations", "Sun.blueprint.json"))).RootElement.GetProperty("SunSpec");
+      foreach (var (_, weather, _, _, _, _) in shipped.Where(t => t.Mod == "MoreFluids")) {
+        var sky = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "src", "MoreFluids", "Data", "ModdableWeatherSpecs", weather + ".blueprint.json"))).RootElement.GetProperty("ModdableWeatherSkySpec");
+        foreach (var (stage, colors) in new[] { ("Sunrise", "SunriseColors"), ("Day", "DayColors"), ("Sunset", "SunsetColors"), ("Night", "NightColors") }) {
+          var fog = sun.GetProperty(colors).GetProperty("HazardousWeatherFogs#append").EnumerateArray().Single(f => f.GetProperty("HazardousWeatherId").GetString() == weather).GetProperty("FogSettings");
+          check(JsonSerializer.Serialize(sky.GetProperty(stage)) == JsonSerializer.Serialize(fog), weather + " " + stage + " sky equals its Sun fog");
+        }
+      }
+      observations["moddableWeathersSpecs"] = shipped.Select(t => t.Mod + "/" + t.Weather).ToArray();
     });
   }
 

@@ -124,6 +124,13 @@ namespace ModdableFluids.Tides.Prototype {
       return targets.Concat(getters).ToArray();
     }
 
+    /// <summary>The Weather Station targets alone (the Moddable Weathers binding), after the same checks as <see cref="VerifyGame"/>.</summary>
+    internal static MethodInfo[] VerifyStationGame() {
+      var targets = VerifyStation();
+      foreach (var target in targets) RequireNotInlinable(target);
+      return targets;
+    }
+
     /// <summary>The main menu's patch target, after checking that every custom game starts through it.</summary>
     internal static MethodInfo VerifyNewGame() {
       NewGamePanelRootField();
