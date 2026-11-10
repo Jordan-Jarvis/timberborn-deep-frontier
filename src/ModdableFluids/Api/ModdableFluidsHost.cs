@@ -25,6 +25,7 @@ namespace ModdableFluids {
       "ModdableFluids.Policies.WaterIntakes",
       "ModdableFluids.Registry.Definitions",
       "ModdableFluids.Registry.Providers",
+      "ModdableFluids.Rendering.TerrainOverlays",
       "ModdableFluids.Scene.Lifecycle",
       "ModdableFluids.Sources.Types",
       "ModdableFluids.World.Additions",

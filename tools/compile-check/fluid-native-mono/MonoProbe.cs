@@ -74,7 +74,8 @@ namespace ModdableFluids.Native.Acceptance {
       Check(backend.LastUnfulfilledFlowDemand > 0, "Mono demand accounting");
       checks += SchedulerProbe.Run(managed);
       checks += HooksProbe.Run();
-      return "PASS " + checks + " Mono checks: native scheduler hooks, ordered signed sources, pressure admission, physical pump results, owner cleanup, producer budget, reflection, registry consumers, exact save round trip, the native save envelope, the 0.1.4 native contracts and the soil-moisture input on the actual native method. " + RegistryProbe.Note;
+      checks += TerrainOverlayProbe.Run();
+      return "PASS " + checks + " Mono checks: native scheduler hooks, ordered signed sources, pressure admission, physical pump results, owner cleanup, producer budget, reflection, registry consumers, exact save round trip, the native save envelope, the 0.1.4 native contracts, the soil-moisture input on the actual native method and the terrain overlay's native contract and encoding. " + RegistryProbe.Note;
     }
   }
 }

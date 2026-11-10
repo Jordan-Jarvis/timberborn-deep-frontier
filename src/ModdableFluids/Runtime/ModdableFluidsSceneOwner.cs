@@ -27,7 +27,15 @@ namespace ModdableFluids.Runtime.Prototype {
       // Providers registered from their IModStarter; the registry freezes once, before the first world, and a
       // rejected registration stops this scene here with every problem named.
       var registry = ModdableFluidsEntry.Host.Freeze();
-      // With no fluid besides water and badwater nothing is bound: native water stays completely untouched.
+      // Terrain overlays (registered with the providers) are drawn whether or not a mod registered a fluid; with none,
+      // the native terrain stays completely untouched.
+      if (ModdableFluidsEntry.Host.TerrainOverlays.Count > 0) {
+        var terrain = FluidTerrainRendering.CheckContract();
+        if (terrain.Count > 0)
+          throw new InvalidOperationException("Moddable Fluids cannot draw terrain overlays in this game (expected Timberborn 1.1.2.8). Changed native contract:\n- " + string.Join("\n- ", terrain));
+        Bind<FluidTerrainRendering>().AsSingleton();
+      }
+      // With no fluid besides water and badwater nothing else is bound: native water stays completely untouched.
       // The worker-acceptance fixture stays behind its flag (its synthetic fluids register only with it).
       if (!WorkerAcceptanceRun.Enabled && !registry.HasExtraFluids) return;
       // The native members the intake guard and the moisture input compile against, before either is bound.

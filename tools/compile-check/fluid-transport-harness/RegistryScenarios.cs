@@ -339,13 +339,14 @@ internal static class RegistryScenarios {
       // Core capabilities here; each feature area (tides) checks its own in its scenario file.
       var core = new[] { "ModdableFluids.Discovery.Reflection", "ModdableFluids.Persistence.ComponentIdentity", "ModdableFluids.Persistence.ProviderState",
         "ModdableFluids.Policies.Irrigation", "ModdableFluids.Policies.WaterIntakes",
-        "ModdableFluids.Registry.Definitions", "ModdableFluids.Registry.Providers", "ModdableFluids.Scene.Lifecycle", "ModdableFluids.Sources.Types",
+        "ModdableFluids.Registry.Definitions", "ModdableFluids.Registry.Providers", "ModdableFluids.Rendering.TerrainOverlays", "ModdableFluids.Scene.Lifecycle", "ModdableFluids.Sources.Types",
         "ModdableFluids.World.Additions", "ModdableFluids.World.Extraction", "ModdableFluids.World.Import", "ModdableFluids.World.Losses", "ModdableFluids.World.Rules",
         "ModdableFluids.World.Sampling", "ModdableFluids.World.SourceComposition" };
       check(ModdableFluidsEntry.Capabilities.SequenceEqual(ModdableFluidsEntry.Capabilities.OrderBy(c => c, StringComparer.Ordinal))
         && ModdableFluidsEntry.Capabilities.Distinct().Count() == ModdableFluidsEntry.Capabilities.Count
         && core.All(ModdableFluidsEntry.Capabilities.Contains) && ModdableFluidsEntry.Capabilities.All(c => c.StartsWith("ModdableFluids.", StringComparison.Ordinal)), "Capability list");
-      check(!ModdableFluidsEntry.Capabilities.Any(c => c.Contains("Rendering") || c.Contains("Transport")), "Unimplemented capability advertised");
+      // Shared water rendering has no capability of its own; the terrain overlay is the one rendering capability.
+      check(!ModdableFluidsEntry.Capabilities.Any(c => (c.Contains("Rendering") && c != FluidTerrainOverlays.Capability) || c.Contains("Transport")), "Unimplemented capability advertised");
       ModdableFluidsEntry.RequireSingleLoadedCopy(AppDomain.CurrentDomain.GetAssemblies());
       check(typeof(ModdableFluidsEntry).FullName == ModdableFluidsEntry.EntryTypeName && typeof(ModdableFluidsEntry).Assembly.GetName().Name == ModdableFluidsEntry.AssemblyName, "Documented entry names");
       var second = new AssemblyLoadContext("second Moddable Fluids copy", isCollectible: true);

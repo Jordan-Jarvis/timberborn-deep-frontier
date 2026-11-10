@@ -1,5 +1,6 @@
 using ModdableFluids;
 using ModdableFluids.Native.Prototype;
+using ModdableFluids.Rendering.Prototype;
 using ModdableFluids.Transport.Prototype;
 using ModdableFluids.World.Prototype;
 using static RegistryScenarios;
@@ -400,6 +401,219 @@ internal static partial class HarnessExtensions {
       Close(session.Sample(fixture.Indices[1]).GetVolume(coffee.Index), .25, "Coffee reached the column that appeared this tick");
       var report = new FluidColumnEditor(session, registry, NativeWaterFixture.Stride).Losses.Single(l => l.Kind == FluidLossKind.DroppedAddition);
       check(report.X == 2 && report.Y == 2 && Math.Abs(report.GetVolume(coffee) - .5) < 1e-15, "Dropped coffee reported at its cell");
+    });
+
+    RunTerrainOverlays(check, scenario);
+  }
+
+  /// <summary>
+  /// The shared terrain overlay, CPU side: registration with the providers and its closing at the freeze, one scene's
+  /// surface at a time, the curve, level and colour encoding, the native update rule and row tracking for uploads.
+  /// </summary>
+  private static void RunTerrainOverlays(Action<bool, string> check, Action<string, Action> scenario) {
+    void Rejects<T>(Action action, string name, string? message = null) where T : Exception {
+      Exception? caught = null;
+      try { action(); } catch (Exception e) { caught = e; }
+      check(caught is T && (message == null || caught.Message.Contains(message)),
+        name + $": expected {typeof(T).Name}{(message == null ? "" : " containing '" + message + "'")}, got {caught?.GetType().Name ?? "no exception"}: {caught?.Message}");
+    }
+    int main = Environment.CurrentManagedThreadId;
+    var curve = new FluidTerrainOverlayCurve(.05f, .5f, .1f);
+
+    scenario("terrain overlays register with the providers, close at the freeze and write to one scene's surface at a time", () => {
+      check(ModdableFluidsHost.Capabilities.Contains(FluidTerrainOverlays.Capability), "Terrain overlay capability listed");
+      var host = new ModdableFluidsHost();
+      var mud = host.RegisterTerrainOverlay("Zed.Mud", "Zed", new FluidTerrainOverlayColor(1, 1, 1), curve);
+      var ash = host.RegisterTerrainOverlay("Alpha.Ash", "Alpha", new FluidTerrainOverlayColor(2, 3, 4), curve);
+      Rejects<ArgumentException>(() => host.RegisterTerrainOverlay("Zed.Mud", "Zed", new FluidTerrainOverlayColor(1, 1, 1), curve), "Duplicate overlay ID", "registered twice");
+      Rejects<ArgumentException>(() => host.RegisterTerrainOverlay("Other.Mud", "Zed", new FluidTerrainOverlayColor(1, 1, 1), curve), "Overlay outside its owner's namespace", "namespace");
+      Rejects<ArgumentException>(() => host.RegisterTerrainOverlay("Timberborn.Soot", "Timberborn", new FluidTerrainOverlayColor(1, 1, 1), curve), "Reserved owner", "reserved");
+      Rejects<ArgumentNullException>(() => host.RegisterTerrainOverlay("Zed.Silt", "Zed", new FluidTerrainOverlayColor(1, 1, 1), null!), "Overlay without a curve");
+      Rejects<InvalidOperationException>(() => _ = host.TerrainOverlays, "Overlays listed before the freeze", "froze");
+      check(mud.Index == -1 && !mud.IsAttached, "No slot and no surface before the freeze");
+      Rejects<InvalidOperationException>(() => mud.Set(0, 0, 0, 1), "Write before any scene", "no loaded game scene");
+      host.Freeze();
+      Rejects<InvalidOperationException>(() => host.RegisterTerrainOverlay("Zed.Silt", "Zed", new FluidTerrainOverlayColor(1, 1, 1), curve), "Registration after the freeze", "closed");
+      var overlays = host.TerrainOverlays;
+      check(overlays.Count == 2 && overlays[0] == ash && overlays[1] == mud && ash.Index == 0 && mud.Index == 1, "Overlays in ordinal ID order, slots fixed");
+      var field = new FluidTerrainOverlayField(4, 3, 2, overlays.Select(o => o.Color).ToArray(), main);
+      host.AttachTerrainOverlays(field);
+      check(host.TerrainOverlaysAttached && mud.IsAttached && mud.Width == 4 && mud.Height == 3 && mud.Depth == 2, "Attached surface and its size");
+      mud.Set(3, 2, 1, .5f);
+      check(mud.GetLevel(3, 2, 1) == 255 && ash.GetLevel(3, 2, 1) == 0 && field.GetLevel(1, 3, 2, 1) == 255, "A write reaches the overlay's own slot");
+      Rejects<InvalidOperationException>(() => host.AttachTerrainOverlays(new FluidTerrainOverlayField(4, 3, 2, overlays.Select(o => o.Color).ToArray(), main)), "Second surface", "still attached");
+      Rejects<ArgumentOutOfRangeException>(() => mud.Set(4, 0, 0, 1), "Cell outside the terrain", "outside the terrain");
+      Rejects<ArgumentOutOfRangeException>(() => mud.Set(0, 0, 2, 1), "Layer above the terrain", "outside the terrain");
+      Rejects<ArgumentOutOfRangeException>(() => mud.Set(0, 0, 0, float.NaN), "NaN value", "finite");
+      Rejects<ArgumentOutOfRangeException>(() => mud.Set(0, 0, 0, -.1f), "Negative value", "at least 0");
+      Exception? worker = null;
+      System.Threading.Tasks.Task.Run(() => { try { mud.Set(0, 0, 0, 1); } catch (Exception e) { worker = e; } }).Wait();
+      check(worker is InvalidOperationException && worker.Message.Contains("main thread"), "A write from a worker thread is refused: " + worker?.Message);
+      Rejects<InvalidOperationException>(() => host.DetachTerrainOverlays(new FluidTerrainOverlayField(1, 1, 1, Array.Empty<FluidTerrainOverlayColor>(), main)), "Detach of another surface");
+      host.DetachTerrainOverlays(field);
+      check(!host.TerrainOverlaysAttached && !mud.IsAttached, "Detached");
+      Rejects<InvalidOperationException>(() => mud.Set(0, 0, 0, 1), "Write after the scene unloaded", "no loaded game scene");
+      // The next scene starts empty.
+      var next = new FluidTerrainOverlayField(4, 3, 2, overlays.Select(o => o.Color).ToArray(), main);
+      host.AttachTerrainOverlays(next);
+      check(mud.GetLevel(3, 2, 1) == 0, "A new scene's surface starts at 0");
+      host.DetachTerrainOverlays(next);
+      // A provider-less host lists none, and a faulted registry fails the listing with its report.
+      var empty = new ModdableFluidsHost();
+      empty.Freeze();
+      check(empty.TerrainOverlays.Count == 0, "No overlay registered");
+    });
+
+    scenario("the terrain overlay curve maps values like the native soil-contamination map, truncated like PixelData", () => {
+      Rejects<ArgumentOutOfRangeException>(() => new FluidTerrainOverlayCurve(0, .5f, .1f), "Visible from 0", "VisibleFrom");
+      Rejects<ArgumentOutOfRangeException>(() => new FluidTerrainOverlayCurve(.6f, .5f, .1f), "Visible above full", "VisibleFrom");
+      Rejects<ArgumentOutOfRangeException>(() => new FluidTerrainOverlayCurve(.05f, 0, .1f), "Full at 0", "Full");
+      Rejects<ArgumentOutOfRangeException>(() => new FluidTerrainOverlayCurve(.05f, float.PositiveInfinity, .1f), "Infinite full", "Full");
+      Rejects<ArgumentOutOfRangeException>(() => new FluidTerrainOverlayCurve(.05f, .5f, 1), "Level 1 at 0", "LevelAtZero");
+      Rejects<ArgumentOutOfRangeException>(() => new FluidTerrainOverlayColor(65, 1, 1), "Colour beyond the half-float headroom", "[0, 64]");
+      Rejects<ArgumentOutOfRangeException>(() => new FluidTerrainOverlayColor(1, float.NaN, 1), "NaN colour");
+      check(curve.Encode(0) == 0 && curve.Encode(.0499f) == 0, "Nothing below VisibleFrom");
+      check(curve.Encode(.05f) == (byte)(255f * (1f - .9f * (1f - .05f / .5f))), "VisibleFrom shows at its level");
+      check(curve.Encode(.5f) == 255 && curve.Encode(1) == 255 && curve.Encode(1000) == 255, "Full and above");
+      byte previous = 0;
+      bool monotone = true;
+      for (int k = 0; k <= 20000; k++) { byte level = curve.Encode(k / 20000f); monotone &= level >= previous; previous = level; }
+      check(monotone, "The level never falls as the value rises (so the level of the highest value is the highest level)");
+      // The native GetMapSoilContamination with a 0.9 range: 1 - 0.9 * (1 - c / threshold), then PixelData's byte.
+      var native = new FluidTerrainOverlayCurve(1e-6f, .25f, .1f);
+      int largest = 0;
+      for (int k = 1; k <= 4000; k++) {
+        float c = k / 4000f;
+        byte expected = (byte)(255f * (c <= .25f ? 1f - .9f * (1f - c / .25f) : 1f));
+        largest = Math.Max(largest, Math.Abs(expected - native.Encode(c)));
+      }
+      check(largest == 0, "The native soil-contamination map curve, byte for byte (largest difference " + largest + ")");
+    });
+
+    scenario("the terrain overlay field resolves levels and colours in the native layout and update order, row by row", () => {
+      var colors = new[] { new FluidTerrainOverlayColor(2, 4, 6), new FluidTerrainOverlayColor(1, .5f, .25f) };
+      var field = new FluidTerrainOverlayField(5, 4, 3, colors, main);
+      void Uploads(int z, (int Lo, int Hi)? levels, (int Lo, int Hi)? colorRows, string name) {
+        bool hasLevels = field.TakeLevelUpload(z, out int lo, out int hi);
+        check(levels == null ? !hasLevels : hasLevels && (lo, hi) == levels.Value, name + $": level rows {(hasLevels ? lo + ".." + hi : "none")}");
+        bool hasColors = field.TakeColorUpload(z, out lo, out hi);
+        check(colorRows == null ? !hasColors : hasColors && (lo, hi) == colorRows.Value, name + $": colour rows {(hasColors ? lo + ".." + hi : "none")}");
+      }
+      void Color(int x, int y, int z, double red, double green, double blue, double sum, string name) {
+        var c = field.ColorTexel(x, y, z);
+        bool close(double a, double b) => Math.Abs(a - b) <= 1e-3 * Math.Max(1, Math.Abs(b));
+        check(close(c.Red, red) && close(c.Green, green) && close(c.Blue, blue) && close(c.LevelSum, sum), name + $": colour texel ({c.Red}, {c.Green}, {c.Blue}; {c.LevelSum})");
+      }
+      check(field.LevelLayer(0) == null && field.ColorLayer(0) == null && !field.HasPendingWork, "Nothing allocated before a write");
+      field.SetLevel(0, 1, 2, 0, 0);
+      check(!field.HasPendingWork && field.LevelLayer(0) == null, "Writing 0 to an empty layer allocates nothing");
+      // Loaded state, before the first tick: drawn at once (R = G).
+      field.SetLevel(0, 1, 2, 0, 100);
+      field.SetLevel(1, 4, 0, 2, 50);
+      field.Publish(interpolate: false);
+      check(field.Texel(1, 2, 0) == (100, 100) && field.Texel(4, 0, 2) == (50, 50) && field.NonZeroTexels == 2, "Settled publish: R = G");
+      Color(1, 2, 0, 100 / 255.0 * 2, 100 / 255.0 * 4, 100 / 255.0 * 6, 100 / 255.0, "One overlay's colour weighted by its level");
+      Uploads(0, (2, 2), (2, 2), "Layer 0 uploads the written row");
+      Uploads(1, null, null, "Layer 1 untouched");
+      Uploads(2, (0, 0), (0, 0), "Layer 2 uploads its row");
+      check(field.LevelLayer(1) == null && !field.HasPendingWork, "An untouched layer stays unallocated; nothing pending");
+      // A tick: the change moves G to R and the new level to G, the next tick settles it.
+      field.SetLevel(0, 1, 2, 0, 200);
+      field.SetLevel(0, 1, 2, 0, 180);
+      field.Publish(interpolate: true);
+      check(field.Texel(1, 2, 0) == (100, 180), "Interpolated publish: R = previous G, G = new level (last write of the tick)");
+      Uploads(0, (2, 2), (2, 2), "Changed level and colour rows");
+      field.Publish(interpolate: true);
+      check(field.Texel(1, 2, 0) == (180, 180), "The next tick settles R = G");
+      Uploads(0, (2, 2), null, "Settling uploads levels only");
+      field.Publish(interpolate: true);
+      Uploads(0, null, null, "A quiet tick uploads nothing");
+      // Two overlays on one cell: the higher level is drawn, the colour is the level-weighted sum.
+      field.SetLevel(1, 1, 2, 0, 255);
+      field.Publish(interpolate: true);
+      check(field.Texel(1, 2, 0) == (180, 255), "Highest level drawn");
+      Color(1, 2, 0, 180 / 255.0 * 2 + 1, 180 / 255.0 * 4 + .5, 180 / 255.0 * 6 + .25, 180 / 255.0 + 1, "Two overlays' colours by level");
+      field.Publish(interpolate: true);
+      // Rows: writes on rows 0 and 3 of one layer upload 0..3; a write that changes nothing marks nothing.
+      field.TakeLevelUpload(0, out _, out _); field.TakeColorUpload(0, out _, out _);
+      field.SetLevel(0, 0, 0, 0, 30); field.SetLevel(0, 4, 3, 0, 40); field.SetLevel(1, 1, 2, 0, 255);
+      field.Publish(interpolate: true);
+      Uploads(0, (0, 3), (0, 3), "Rows 0 to 3");
+      field.Publish(interpolate: true);
+      field.TakeLevelUpload(0, out _, out _);
+      // Fading out: the level falls to 0 over a tick with its colour, then the colour is cleared.
+      field.SetLevel(0, 1, 2, 0, 0); field.SetLevel(1, 1, 2, 0, 0);
+      field.Publish(interpolate: true);
+      check(field.Texel(1, 2, 0) == (255, 0), "Fading texel");
+      Color(1, 2, 0, 180 / 255.0 * 2 + 1, 180 / 255.0 * 4 + .5, 180 / 255.0 * 6 + .25, 180 / 255.0 + 1, "The colour stays while the level fades");
+      Uploads(0, (2, 2), null, "Fading uploads levels only");
+      field.Publish(interpolate: true);
+      check(field.Texel(1, 2, 0) == (0, 0), "Faded");
+      Color(1, 2, 0, 0, 0, 0, 0, "Colour cleared once settled at 0");
+      Uploads(0, (2, 2), (2, 2), "Settling at 0 uploads both");
+      int before = field.NonZeroTexels;
+      check(before == 3, "Non-zero texels: (0, 0), (4, 3) on layer 0 and (4, 0) on layer 2, got " + before);
+      field.SetLevel(0, 0, 0, 0, 0); field.SetLevel(0, 4, 3, 0, 0); field.SetLevel(1, 4, 0, 2, 0);
+      field.Publish(interpolate: true); field.Publish(interpolate: true);
+      check(field.NonZeroTexels == 0 && !field.HasPendingWork, "Everything back to 0: the keyword can go");
+      // A settled publish cannot cut a tick's interpolation short.
+      field.SetLevel(0, 2, 1, 1, 9);
+      field.Publish(interpolate: true);
+      Rejects<InvalidOperationException>(() => field.Publish(interpolate: false), "Settled publish while cells settle", "settling");
+      Rejects<ArgumentOutOfRangeException>(() => field.SetLevel(2, 0, 0, 0, 1), "Overlay slot out of range", "slot");
+      Exception? worker = null;
+      System.Threading.Tasks.Task.Run(() => { try { field.Publish(interpolate: true); } catch (Exception e) { worker = e; } }).Wait();
+      check(worker is InvalidOperationException, "Publishing from a worker thread is refused");
+      // Many overlays on a large surface: the drawn level is the maximum and the colour the weighted sum, for random writes.
+      var random = new Random(7731);
+      var many = Enumerable.Range(0, 9).Select(_ => new FluidTerrainOverlayColor((float)random.NextDouble() * 8, (float)random.NextDouble() * 8, (float)random.NextDouble() * 8)).ToArray();
+      var large = new FluidTerrainOverlayField(23, 17, 6, many, main);
+      var levels = new byte[9, 23, 17, 6];
+      bool ok = true;
+      for (int round = 0; round < 40; round++) {
+        for (int w = 0; w < 60; w++) {
+          int k = random.Next(9), x = random.Next(23), y = random.Next(17), z = random.Next(6);
+          byte level = random.Next(3) == 0 ? (byte)0 : (byte)random.Next(256);
+          levels[k, x, y, z] = level; large.SetLevel(k, x, y, z, level);
+        }
+        large.Publish(interpolate: round > 0);
+        for (int z = 0; z < 6; z++) for (int y = 0; y < 17; y++) for (int x = 0; x < 23; x++) {
+          byte top = 0; double r = 0, g = 0, b = 0, s = 0;
+          for (int k = 0; k < 9; k++) { byte l = levels[k, x, y, z]; if (l > top) top = l; double wgt = l / 255.0; r += wgt * many[k].Red; g += wgt * many[k].Green; b += wgt * many[k].Blue; s += wgt; }
+          ok &= large.Texel(x, y, z).New == top;
+          if (top > 0) {
+            var c = large.ColorTexel(x, y, z);
+            ok &= Math.Abs(c.Red - r) <= 2e-3 * Math.Max(1, r) && Math.Abs(c.Green - g) <= 2e-3 * Math.Max(1, g) && Math.Abs(c.Blue - b) <= 2e-3 * Math.Max(1, b) && Math.Abs(c.LevelSum - s) <= 2e-3 * Math.Max(1, s);
+          }
+        }
+      }
+      check(ok, "40 rounds of random writes by 9 overlays: drawn level and colour sums match the direct resolution");
+    });
+
+    scenario("half floats for the colour map round to nearest even exactly like System.Half", () => {
+      int mismatches = 0;
+      string first = "";
+      void Compare(float value) {
+        ushort expected = BitConverter.HalfToUInt16Bits((Half)value), actual = FluidHalf.FromFloat(value);
+        if (expected != actual && !(float.IsNaN(value) && (actual & 0x7C00) == 0x7C00 && (actual & 0x3FF) != 0)) { mismatches++; if (first.Length == 0) first = value.ToString("R") + $": {actual:X4}, expected {expected:X4}"; }
+      }
+      var random = new Random(9001);
+      foreach (float special in new[] { 0f, -0f, 1f, -1f, 65504f, 65519.99f, 65520f, 1e9f, -1e9f, 6.1035156E-05f, 6.097555E-05f, 5.9604645E-08f, 2.9802322E-08f, 2.9802326E-08f, 1e-9f, float.Epsilon,
+          float.PositiveInfinity, float.NegativeInfinity, 0.1f, 1f / 3, 2.15686274f, 5.69230747f, 6f })
+        Compare(special);
+      for (int i = 0; i < 400000; i++) Compare(BitConverter.Int32BitsToSingle(random.Next() ^ (random.Next(2) << 31)));
+      for (int i = 0; i < 200000; i++) Compare((float)(random.NextDouble() * 70));
+      // Every half: exact ties between neighbouring halves round to even, and every half decodes exactly.
+      int decodeMismatches = 0;
+      for (int h = 0; h < 0x10000; h++) {
+        float exact = (float)BitConverter.UInt16BitsToHalf((ushort)h);
+        if (float.IsNaN(exact)) { if (!float.IsNaN(FluidHalf.ToFloat((ushort)h))) decodeMismatches++; continue; }
+        if (BitConverter.SingleToInt32Bits(FluidHalf.ToFloat((ushort)h)) != BitConverter.SingleToInt32Bits(exact)) decodeMismatches++;
+        Compare(exact);
+        if ((h & 0x7C00) != 0x7C00 && (h & 0x7FFF) != 0x7BFF) Compare((float)(((double)exact + (double)(float)BitConverter.UInt16BitsToHalf((ushort)(h + 1))) / 2));
+      }
+      check(mismatches == 0, $"Encoding mismatches: {mismatches} ({first})");
+      check(decodeMismatches == 0, $"Decoding mismatches: {decodeMismatches}");
     });
   }
 
