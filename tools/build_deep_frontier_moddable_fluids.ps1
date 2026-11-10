@@ -15,10 +15,11 @@
 #   byte-identical to the official Moddable Fluids package's, before and after the build;
 # - the staged manifest requires ModdableFluids (the official package's version) and drops ModdableWeathers, which
 #   Moddable Fluids refuses together with tides; the Moddable Weathers bridge is left out of the package;
-# - Moddable Fluids draws the water, so Deep Frontier's radioactive-water shader variants
-#   (RadioactiveWaterURP_Opaque/_Transparent) are set aside with their .meta files for the build and left out of the
-#   bundles; only RadiationRenderer loads them, and RadiationConfigurator binds it only without the flag. The
-#   irradiated-soil variant stays (ModdableFluidsSoilRenderer). They are restored byte for byte afterwards.
+# - Moddable Fluids draws the water and the irradiated ground (its shared water renderer and terrain overlay, on
+#   per-scene copies of the native materials), so all three of Deep Frontier's shader variants
+#   (RadioactiveWaterURP_Opaque/_Transparent, IrradiatedTerrainURP) are set aside with their .meta files for the build
+#   and left out of the bundles; only RadiationRenderer loads them, and RadiationConfigurator binds it only without the
+#   flag. They are restored byte for byte afterwards.
 # Unity runs through tools/UnityProcess.ps1, and the bundles are rebuilt only when this variant's bundle inputs
 # changed since its last verified build (tools/UnityBundleCache.ps1, variant moddable-fluids).
 #
@@ -48,10 +49,10 @@ $log = Join-Path $output 'official-build.log'
 $mfPackage = Join-Path $root 'outputs/fluids-api-prototype/packages/ModdableFluids/version-1.1'
 $mfDll = Join-Path $mfPackage 'Scripts/ModdableFluids.dll'
 $flaggedTypes = @('DeepFrontier.ModdableFluidsMigration.ModdableFluidsBankLayer', 'DeepFrontier.ModdableFluidsMigration.DeepFrontierFluidsModStarter')
-# Left out of this package: Moddable Fluids draws the water.
+# Left out of this package: Moddable Fluids draws the water and the irradiated ground.
 $stagedShaders = Join-Path $staged 'AssetBundles/Resources/Shaders/DeepFrontier'
-$waterShaders = @('RadioactiveWaterURP_Opaque.shadergraph', 'RadioactiveWaterURP_Transparent.shadergraph')
-$setAside = Join-Path $backup 'WaterShaders'
+$leftOutShaders = @('RadioactiveWaterURP_Opaque.shadergraph', 'RadioactiveWaterURP_Transparent.shadergraph', 'IrradiatedTerrainURP.shadergraph')
+$setAside = Join-Path $backup 'Shaders'
 $setAsideTree = [ordered]@{}
 $cache = Get-BundleCacheEntry -Root $root -Mod 'DeepFrontier' -Variant 'moddable-fluids'
 
@@ -145,9 +146,9 @@ try {
   $manifestVariant = Join-Path $output 'manifest.json'
   $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifestVariant -Encoding utf8NoBOM
   Copy-Item -LiteralPath $manifestVariant -Destination (Join-Path $staged 'manifest.json') -Force
-  # The radioactive-water shader variants with their .meta files (GUIDs), restored byte for byte in the finally block.
+  # Deep Frontier's shader variants with their .meta files (GUIDs), restored byte for byte in the finally block.
   New-Item -ItemType Directory -Force -Path $setAside | Out-Null
-  foreach ($name in $waterShaders | ForEach-Object { $_, "$_.meta" }) {
+  foreach ($name in $leftOutShaders | ForEach-Object { $_, "$_.meta" }) {
     $path = Join-Path $stagedShaders $name
     if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
       if ($name.EndsWith('.meta')) { continue }
@@ -157,8 +158,9 @@ try {
     Move-Item -LiteralPath $path -Destination (Join-Path $setAside $name)
     $setAsideTree[$name] = $hash
   }
-  if (-not (Test-Path -LiteralPath (Join-Path $stagedShaders 'IrradiatedTerrainURP.shadergraph') -PathType Leaf)) { throw 'The irradiated-soil shader variant is not staged.' }
-  Write-Output "Staged the flagged variant: Scripts/ModdableFluids, DEEP_FRONTIER_MODDABLE_FLUIDS on the DeepFrontier assembly, manifest requiring ModdableFluids $mfVersion, no radioactive-water shader variants"
+  $leftShaders = @(Get-ChildItem -LiteralPath $stagedShaders -Filter '*.shadergraph' -File)
+  if ($leftShaders.Count -ne 0) { throw "Deep Frontier shader graphs are still staged for the flagged bundles: $($leftShaders.Name -join ', ')" }
+  Write-Output "Staged the flagged variant: Scripts/ModdableFluids, DEEP_FRONTIER_MODDABLE_FLUIDS on the DeepFrontier assembly, manifest requiring ModdableFluids $mfVersion, no Deep Frontier shader variant"
   $inputs = Get-BundleInputs -Project $project -Mod 'DeepFrontier' -Variant 'moddable-fluids' -Unity $dev.unity
   $reuse = Test-BundleCacheHit -Entry $cache -Inputs $inputs
 
@@ -209,10 +211,10 @@ try {
     $bundle = Join-Path $package "AssetBundles/deepfrontier_$platform"
     if (-not (Test-Path -LiteralPath $bundle -PathType Leaf) -or (Get-Item -LiteralPath $bundle).Length -eq 0) { throw "The package has no $platform asset bundle." }
   }
-  # The bundles hold the irradiated-soil variant, with exactly the variants the game draws, and no radioactive-water variant.
+  # The bundles hold no shader of Deep Frontier's (or Moddable Fluids'): Moddable Fluids draws the water and the irradiated ground.
   & $dev.python (Join-Path $root 'tools/asset-pipeline/check_bundle_shaders.py') --win (Join-Path $package 'AssetBundles/deepfrontier_win') `
-    --mac (Join-Path $package 'AssetBundles/deepfrontier_mac') --expect 'DeepFrontier/IrradiatedTerrainURP'
-  if ($LASTEXITCODE -ne 0) { throw 'The flagged bundles must hold the irradiated-soil shader variant alone, stripped as the game draws it (tools/asset-pipeline/check_bundle_shaders.py).' }
+    --mac (Join-Path $package 'AssetBundles/deepfrontier_mac') --expect
+  if ($LASTEXITCODE -ne 0) { throw 'The flagged bundles must hold no Deep Frontier shader variant (tools/asset-pipeline/check_bundle_shaders.py).' }
   $data = Join-Path $source 'Data'
   $dataFull = (Resolve-Path -LiteralPath $data).Path.TrimEnd([IO.Path]::DirectorySeparatorChar)
   $dataFiles = 0
@@ -232,7 +234,7 @@ try {
     deepFrontierDll = (Get-FileHash -LiteralPath $dll).Hash; moddableFluidsDll = (Get-FileHash -LiteralPath $mfDll).Hash; moddableFluidsVersion = $mfVersion
     referencesModdableFluids = "$($apiReference[0].Version)"; flaggedTypes = $flaggedTypes; dataFiles = $dataFiles
     scripts = @(Get-ChildItem -LiteralPath $scripts -File | ForEach-Object { [ordered]@{ name = $_.Name; sha256 = (Get-FileHash -LiteralPath $_.FullName).Hash } })
-    bundles = [ordered]@{ reused = [bool]$reuse; fingerprint = $bundleRecord.fingerprint; cache = $cache; files = $bundleRecord.bundles; leftOut = $waterShaders }
+    bundles = [ordered]@{ reused = [bool]$reuse; fingerprint = $bundleRecord.fingerprint; cache = $cache; files = $bundleRecord.bundles; leftOut = $leftOutShaders }
   }
   $built = $true
 } catch {
@@ -262,14 +264,14 @@ try {
       if ((Get-FileHash -LiteralPath (Join-Path $managed $name)).Hash -ne $managedTree[$name]) { throw "$name differs after the restore" }
     }
   } catch { $problems.Add("Restoring the builder's Managed DLLs from $backup/ModsBuild: $($_.Exception.Message)") }
-  # 4. The radioactive-water shader variants with their original .meta files (GUIDs), so the default bundles' inputs
-  #    are what they were.
+  # 4. Deep Frontier's shader variants with their original .meta files (GUIDs), so the default bundles' inputs are what
+  #    they were.
   try {
     foreach ($name in $setAsideTree.Keys) {
       Move-Item -LiteralPath (Join-Path $setAside $name) -Destination (Join-Path $stagedShaders $name) -Force
       if ((Get-FileHash -LiteralPath (Join-Path $stagedShaders $name)).Hash -ne $setAsideTree[$name]) { throw "$name differs after the restore" }
     }
-  } catch { $problems.Add("Restoring the radioactive-water shader variants from $setAside into $($stagedShaders): $($_.Exception.Message)") }
+  } catch { $problems.Add("Restoring Deep Frontier's shader variants from $setAside into $($stagedShaders): $($_.Exception.Message)") }
   # 5. The default staging, so the next default build starts from src as always.
   try {
     & (Join-Path $PSScriptRoot 'stage_deep_frontier.ps1') | Out-Null

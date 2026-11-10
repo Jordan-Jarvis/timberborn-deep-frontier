@@ -19,14 +19,36 @@ using Timberborn.WorldPersistence;
 using UnityEngine;
 
 namespace DeepFrontier.ModdableFluidsMigration {
-  /// <summary>Registers Deep Frontier's radioactive water with Moddable Fluids at mod start (flagged build only).</summary>
+  /// <summary>
+  /// Registers Deep Frontier's radioactive water and its irradiated-soil terrain overlay with Moddable Fluids at mod start
+  /// (flagged build only).
+  /// </summary>
   internal sealed class DeepFrontierFluidsModStarter : IModStarter {
     internal static DeepFrontierRadioactiveWater Provider { get; private set; }
+    internal static FluidTerrainOverlay SoilOverlay { get; private set; }
     public void StartMod(IModEnvironment modEnvironment) {
       if (Provider != null) throw new InvalidOperationException("Deep Frontier registered its radioactive water twice");
+      if (!ModdableFluidsEntry.Capabilities.Contains(FluidTerrainOverlays.Capability))
+        throw new InvalidOperationException("Deep Frontier draws irradiated ground with Moddable Fluids' terrain overlay (" + FluidTerrainOverlays.Capability
+          + "), which Moddable Fluids " + ModdableFluidsEntry.ApiVersion + " does not offer; update Moddable Fluids");
       Provider = new DeepFrontierRadioactiveWater(Tide(), ImportTide, ImportStation);
       ModdableFluidsEntry.RegisterProvider(Provider);
-      Debug.Log("[DeepFrontier] Radioactive water and the radioactive tide registered with Moddable Fluids " + ModdableFluidsEntry.ApiVersion + ".");
+      var color = SoilColor();
+      SoilOverlay = IrradiatedSoilOverlay.Register(ModdableFluidsEntry.Host, new FluidTerrainOverlayColor(color.r, color.g, color.b));
+      Debug.Log("[DeepFrontier] Radioactive water, the radioactive tide and the irradiated-soil overlay (" + SoilOverlay + ") registered with Moddable Fluids "
+        + ModdableFluidsEntry.ApiVersion + ".");
+    }
+
+    // IrradiatedSoilSurface.SoilColor (RadiationShading.cs), unchanged; the harness compares the two bodies. The native soil
+    // contamination texture (veins, sRGB mean NativeSoilVeinColor) times this material colour gives SoilVeinColor.
+    private static Color SoilColor() {
+      var target = RadiationMaterials.SoilVeinColor; var native = RadiationMaterials.NativeSoilVeinColor;
+      if (QualitySettings.activeColorSpace == ColorSpace.Gamma)
+        return new Color(target.r / native.r, target.g / native.g, target.b / native.b, 1f);
+      var linear = new Color(Mathf.GammaToLinearSpace(target.r) / Mathf.GammaToLinearSpace(native.r),
+        Mathf.GammaToLinearSpace(target.g) / Mathf.GammaToLinearSpace(native.g),
+        Mathf.GammaToLinearSpace(target.b) / Mathf.GammaToLinearSpace(native.b), 1f);
+      return linear.gamma;   // Material.SetColor linearises colours in a linear project
     }
 
     // RadioactiveTideService's singleton (same keys): the state of a save played under Deep Frontier's own tide.
@@ -253,54 +275,100 @@ namespace DeepFrontier.ModdableFluidsMigration {
   }
 
   /// <summary>
-  /// Irradiated ground in the Moddable Fluids build: RadiationRenderer without the water surface (Moddable Fluids' shared
-  /// renderer draws radioactive water from the fluid's colour). Deep Frontier's terrain variant draws the soil map from
-  /// the bank layer's view (soil field and bank layer), in the late tick after ModdableFluidsRadiation (bound and created
-  /// after it). Like RadiationRenderer it puts the variant on the native terrain materials while a game is loaded.
+  /// Irradiated ground in the Moddable Fluids build. Moddable Fluids draws it: Deep Frontier's irradiated-soil terrain
+  /// overlay (<see cref="IrradiatedSoilOverlay"/>, registered at mod start) on Moddable Fluids' per-scene copies of the
+  /// native terrain materials, so no Deep Frontier shader touches a native material. This writes the bank layer's view
+  /// (soil field and bank layer) into the overlay when a new soil pass is published, in the late tick after
+  /// ModdableFluidsRadiation (bound and created after it); before the first pass, the loaded soil is written from the
+  /// update. Moddable Fluids applies the native update rule (a change interpolates over the next tick, then settles).
   /// </summary>
-  public sealed class ModdableFluidsSoilRenderer : ILoadableSingleton, IPostLoadableSingleton, ITickableSingleton, ILateTickable,
-      IUnloadableSingleton, IUpdatableSingleton {
+  public sealed class ModdableFluidsSoilRenderer : IPostLoadableSingleton, ITickableSingleton, ILateTickable, IUpdatableSingleton {
     private readonly ModdableFluidsRadiation _radiation;
     private readonly ModdableFluidsBankLayer _bank;
-    private readonly Timberborn.AssetSystem.IAssetLoader _assetLoader;
-    private readonly Timberborn.Timbermesh.IMaterialRepository _materialRepository;
-    private readonly Timberborn.TerrainSystem.ITerrainService _terrainService;
-    private readonly List<RadiationShading.ShaderSwap> _swaps = new List<RadiationShading.ShaderSwap>();
-    private IrradiatedSoilSurface _soil;
+    private IrradiatedSoilOverlayWriter _soil;
     private int _lastPass = -1;
 
-    public ModdableFluidsSoilRenderer(ModdableFluidsRadiation radiation, ModdableFluidsBankLayer bank, Timberborn.AssetSystem.IAssetLoader assetLoader,
-        Timberborn.Timbermesh.IMaterialRepository materialRepository, Timberborn.TerrainSystem.ITerrainService terrainService) {
-      _radiation = radiation; _bank = bank; _assetLoader = assetLoader; _materialRepository = materialRepository; _terrainService = terrainService;
+    public ModdableFluidsSoilRenderer(ModdableFluidsRadiation radiation, ModdableFluidsBankLayer bank) {
+      _radiation = radiation; _bank = bank;
     }
 
-    public void Load() => RadiationShading.Verify();
-
+    // Moddable Fluids attaches the scene's overlay surface in its terrain renderer's Load.
     public void PostLoad() {
-      var terrainVariant = _assetLoader.Load<Shader>(RadiationShading.TerrainVariant);
-      var terrain = Array.ConvertAll(RadiationShading.TerrainMaterials, _materialRepository.GetMaterial);
-      _soil = new IrradiatedSoilSurface(terrain, terrainVariant, _terrainService.Size, _swaps);
+      var overlay = DeepFrontierFluidsModStarter.SoilOverlay ?? throw new InvalidOperationException("Deep Frontier's irradiated-soil overlay was not registered at mod start");
+      if (!overlay.IsAttached) throw new InvalidOperationException("Moddable Fluids attached no terrain overlay surface to this scene; irradiated ground cannot be drawn");
+      _soil = new IrradiatedSoilOverlayWriter(overlay);
     }
 
-    public void Unload() {
-      _soil?.Unload();
-      _soil = null;
-      RadiationShading.ShaderSwap.RestoreAll(_swaps);
-    }
+    public void Tick() => Refresh();
 
-    public void Tick() => Refresh(settle: true);
-
-    // A loaded game starts paused: until the first soil pass the loaded soil is drawn from here.
+    // A loaded game starts paused: until the first soil pass the loaded soil is written from here.
     public void UpdateSingleton() {
-      if (!_radiation.Soil.HasPass) Refresh(settle: false);
+      if (!_radiation.Soil.HasPass) Refresh();
     }
 
-    private void Refresh(bool settle) {
+    private void Refresh() {
       if (_soil == null) throw new InvalidOperationException("Irradiated soil renderer refreshed before PostLoad");
       int pass = _radiation.Soil.Published.Pass;
-      if (pass == _lastPass && !(settle && _soil.Pending)) return;
+      if (pass == _lastPass) return;
       _lastPass = pass;
       _soil.Update(_bank);
+    }
+  }
+
+  /// <summary>
+  /// IrradiatedSoilSurface.Update's cell loop with the overlay as its target: per cell, the highest soil of the columns
+  /// standing on each terrain floor (building tops, at or above the terrain height, are not terrain), written to that
+  /// floor; cells that had soil and lost it are written back to 0. Rows visited: the view's visible rows and the rows
+  /// that held soil at the last update. The overlay curve is Encode's, and the level of the highest soil is the highest
+  /// level, so what is drawn is what IrradiatedSoilSurface drew.
+  /// </summary>
+  internal sealed class IrradiatedSoilOverlayWriter {
+    private readonly FluidTerrainOverlay _overlay;
+    private readonly int _width, _height, _depth;
+    private readonly bool[] _hasData;    // per cell: soil written at the last update
+    private readonly float[] _target;    // per terrain z, scratch
+    private RadiationSimulation.RowRange _rowsWithData = RadiationSimulation.RowRange.None;
+
+    internal IrradiatedSoilOverlayWriter(FluidTerrainOverlay overlay) {
+      _overlay = overlay; _width = overlay.Width; _height = overlay.Height; _depth = overlay.Depth;
+      _hasData = new bool[_width * _height];
+      _target = new float[_depth];
+    }
+
+    internal void Update(IIrradiatedSoilView view) {
+      if (view.XSize != _width || view.YSize != _height)
+        throw new InvalidOperationException("Moddable Fluids' terrain overlay and the radiation soil disagree on the map size");
+      var rows = RadiationSimulation.RowRange.Union(view.VisibleRows, _rowsWithData).Clamp(0, _height - 1);
+      var withData = RadiationSimulation.RowRange.None;
+      var curve = _overlay.Curve;
+      int stride = view.Stride, vs = view.VerticalStride;
+      for (int y = rows.Lo; y <= rows.Hi; y++) {
+        bool rowData = false;
+        int rowStart = (y + 1) * stride + 1;
+        for (int x = 0; x < _width; x++) {
+          int i = rowStart + x, p = x + y * _width, count = view.ColumnCount(i);
+          bool any = false;
+          for (int j = 0; j < count; j++) {
+            int idx = j * vs + i;
+            // Persistent soil or the bank layer (RadiationSimulation.SoilAt).
+            float soil = view.SoilAt(idx);
+            if (curve.Encode(soil) == 0) continue;
+            int z = view.ColumnFloor(idx);
+            if (z >= _depth) continue;
+            if (soil > _target[z]) _target[z] = soil;
+            any = true;
+          }
+          if (!any && !_hasData[p]) continue;
+          for (int z = 0; z < _depth; z++) {
+            _overlay.Set(x, y, z, _target[z]);
+            _target[z] = 0f;
+          }
+          _hasData[p] = any;
+          rowData |= any;
+        }
+        if (rowData) withData.Include(y);
+      }
+      _rowsWithData = withData;
     }
   }
 

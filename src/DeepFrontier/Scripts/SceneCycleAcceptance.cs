@@ -131,7 +131,12 @@ namespace DeepFrontier.Scripts {
         foreach (var name in RadiationShading.TerrainMaterials) {
           var matches = common.Where(m => m.name == name).Distinct().ToList();
           if (matches.Count != 1) throw new InvalidOperationException(Tag + " MaterialCollection Common has " + matches.Count + " materials named " + name);
+#if DEEP_FRONTIER_MODDABLE_FLUIDS
+          // Moddable Fluids draws the irradiated ground with per-scene copies of these materials: the native ones keep their shader.
+          list.Add(Read(matches[0], RadiationShading.TerrainNative, RadiationShading.TerrainNative, game));
+#else
           list.Add(Read(matches[0], RadiationShading.TerrainNative, RadiationShading.TerrainVariantName, game));
+#endif
         }
         return list;
       }

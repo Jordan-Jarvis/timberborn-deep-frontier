@@ -24,6 +24,7 @@ internal static partial class HarnessExtensions {
     scenario("Deep Frontier radiation record version 4 round trip: soil, hour counter, sources and unapplied requests", () => DeepFrontierSoil.RoundTrip(check));
     scenario("Deep Frontier's tide state and settings import into Moddable Fluids, saves from 0.8.3 and older included", () => DeepFrontierSoil.TideImport(check, observations));
     scenario("A Weather Station saved with Deep Frontier's tide mode imports as Moddable Fluids' station mode", () => DeepFrontierSoil.StationImport(check));
+    scenario("Deep Frontier's irradiated ground is a Moddable Fluids terrain overlay with IrradiatedSoilSurface's encoding and colour", () => DeepFrontierSoil.SoilOverlay(check));
   }
 }
 
@@ -120,6 +121,63 @@ internal static class DeepFrontierSoil {
       check(Member(shipped, declaration) == Member(copy, declaration), "RadiationSoilFormulas" + declaration.Split(' ').Last().TrimEnd('(') + " is RadiationSoil's text");
     // The comments above each formula are copied too; a changed formula changes its member text.
     check(RadiationSoilFormulas.VolumePerSoil == 1f / RadiationTuning.SoilPerDepositedVolume && RadiationSoilFormulas.RinseShareCap == .5f * RadiationTuning.DetectionLimit, "Constants");
+  }
+
+  /// <summary>
+  /// The flagged build draws irradiated ground through Moddable Fluids' terrain overlay (IrradiatedSoilOverlay) instead of
+  /// IrradiatedSoilSurface on the native terrain materials. Its constants, Encode and SoilColor are the shipped ones (source
+  /// text), and the overlay curve encodes every soil value to the byte IrradiatedSoilSurface.Encode wrote.
+  /// </summary>
+  internal static void SoilOverlay(Action<bool, string> check) {
+    string root = RepositoryRoot();
+    string shading = File.ReadAllText(Path.Combine(root, "src", "DeepFrontier", "Scripts", "Radiation", "RadiationShading.cs"));
+    string glue = File.ReadAllText(Path.Combine(root, "src", "DeepFrontier", "ModdableFluids", "ModdableFluidsRadiationGame.cs"));
+    string overlay = File.ReadAllText(Path.Combine(root, "src", "DeepFrontier", "ModdableFluids", "IrradiatedSoilOverlay.cs"));
+    foreach (var constant in new[] { "const float MinRenderedSoil", "const float FullSoil", "const float MinMapValue" })
+      check(Member(shading, constant) == Member(overlay, constant), "IrradiatedSoilOverlay" + constant.Substring(11) + " is IrradiatedSoilSurface's text");
+    // IrradiatedSoilSurface.Encode, transcribed with the overlay's (equal) constants.
+    const string encode = "static byte Encode(float soil) {\n if (soil < MinRenderedSoil) return 0;\n"
+      + " float value = 1f - (1f - MinMapValue) * (1f - Mathf.Min(soil, FullSoil) / FullSoil);\n return (byte)(255f * value);\n }";
+    check(Member(shading, "static byte Encode(float soil)") == encode, "IrradiatedSoilSurface.Encode is the transcribed text");
+    static byte Encoded(float soil) {
+      if (soil < IrradiatedSoilOverlay.MinRenderedSoil) return 0;
+      float value = 1f - (1f - IrradiatedSoilOverlay.MinMapValue) * (1f - Mathf.Min(soil, IrradiatedSoilOverlay.FullSoil) / IrradiatedSoilOverlay.FullSoil);
+      return (byte)(255f * value);
+    }
+    var curve = IrradiatedSoilOverlay.Curve();
+    check(curve.VisibleFrom == IrradiatedSoilOverlay.MinRenderedSoil && curve.Full == IrradiatedSoilOverlay.FullSoil && curve.LevelAtZero == IrradiatedSoilOverlay.MinMapValue
+      && IrradiatedSoilOverlay.MinRenderedSoil == RadiationTuning.IrradiatedGroundThreshold, "The overlay curve is (IrradiatedGroundThreshold, 0.5, 0.1): the tint starts where plants die");
+    int differences = 0, compared = 0;
+    string first = "";
+    void Compare(float soil) {
+      compared++;
+      if (curve.Encode(soil) == Encoded(soil)) return;
+      if (differences++ == 0) first = soil.ToString("R") + ": overlay " + curve.Encode(soil) + ", Encode " + Encoded(soil);
+    }
+    for (int k = 0; k <= 1_200_000; k++) Compare(k / 1_000_000f);
+    // Every float from just below the threshold to just above full, around both ends of the line.
+    foreach (float edge in new[] { IrradiatedSoilOverlay.MinRenderedSoil, IrradiatedSoilOverlay.FullSoil }) {
+      int bits = BitConverter.SingleToInt32Bits(edge);
+      for (int d = -20000; d <= 20000; d++) Compare(BitConverter.Int32BitsToSingle(bits + d));
+    }
+    var random = new System.Random(5113);
+    for (int k = 0; k < 200000; k++) Compare(BitConverter.Int32BitsToSingle(random.Next(0, 0x3F800000)));
+    check(differences == 0, $"The overlay encodes {compared} soil values to IrradiatedSoilSurface.Encode's bytes ({differences} differ{(first.Length > 0 ? ", first " + first : "")})");
+    check(Member(shading, "static Color SoilColor()") == Member(glue, "static Color SoilColor()"), "The flagged mod starter's SoilColor is IrradiatedSoilSurface's text");
+    // The colour it registers: the game is in gamma colour space, where SoilColor is SoilVeinColor / NativeSoilVeinColor per channel.
+    string materials = File.ReadAllText(Path.Combine(root, "src", "DeepFrontier", "Scripts", "Radiation", "RadiationMaterials.cs"));
+    float[] Color(string name) {
+      var match = Regex.Match(materials, "static readonly Color " + name + @" = new Color\(([0-9.]+)f, ([0-9.]+)f, ([0-9.]+)f, 1f\);");
+      check(match.Success, "RadiationMaterials." + name + " is a constant colour");
+      return Enumerable.Range(1, 3).Select(g => float.Parse(match.Groups[g].Value, System.Globalization.CultureInfo.InvariantCulture)).ToArray();
+    }
+    float[] target = Color("SoilVeinColor"), native = Color("NativeSoilVeinColor");
+    var host = new ModdableFluidsHost();
+    var registered = IrradiatedSoilOverlay.Register(host, new FluidTerrainOverlayColor(target[0] / native[0], target[1] / native[1], target[2] / native[2]));
+    host.Freeze();
+    check(host.TerrainOverlays.Single() == registered && registered.Id == "DeepFrontier.IrradiatedSoil" && registered.OwnerModId == "DeepFrontier" && registered.Index == 0,
+      "Registered as DeepFrontier.IrradiatedSoil, Deep Frontier's own overlay");
+    check(Math.Abs(registered.Color.Red - .66f / .306f) < 1e-6 && Math.Abs(registered.Color.Blue - 6f) < 1e-5, "Gamma-space colour " + registered.Color + " within the overlay's half-float headroom");
   }
 
   // ------------------------------------------------------------ water rules
