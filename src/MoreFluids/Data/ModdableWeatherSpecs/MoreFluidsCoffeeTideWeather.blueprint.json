@@ -1,0 +1,51 @@
+{
+  "ModdableWeatherSpec": {
+    "Id": "MoreFluidsCoffeeTideWeather",
+    "Order": 36,
+    "DisplayLoc": "MoreFluids.Weather.CoffeeTide",
+    "DescLoc": "MoreFluids.Weather.CoffeeTideDescription",
+    "WeatherPanelProgressBackground": "Sprites/Weather/MoreFluidsCoffeeTideProgress",
+    "WeatherPanelBlinkBackground": "UI/Images/Backgrounds/bg-striped-6",
+    "DatePanelIcon": "Sprites/Weather/MoreFluidsCoffeeTideIcon",
+    "WeatherNotification": "Sprites/Weather/MoreFluidsCoffeeTideNotification",
+    "StartSound": "UI.Weather.DroughtStarted"
+  },
+  "ModdableWeatherSkySpec": {
+    "Sunrise": {
+      "FogColor": {
+        "r": 0.78,
+        "g": 0.62,
+        "b": 0.48,
+        "a": 1
+      },
+      "FogDensity": 0.003
+    },
+    "Day": {
+      "FogColor": {
+        "r": 0.62,
+        "g": 0.48,
+        "b": 0.36,
+        "a": 1
+      },
+      "FogDensity": 0.003
+    },
+    "Sunset": {
+      "FogColor": {
+        "r": 0.8,
+        "g": 0.62,
+        "b": 0.52,
+        "a": 1
+      },
+      "FogDensity": 0.003
+    },
+    "Night": {
+      "FogColor": {
+        "r": 0.4,
+        "g": 0.35,
+        "b": 0.32,
+        "a": 1
+      },
+      "FogDensity": 0.003
+    }
+  }
+}

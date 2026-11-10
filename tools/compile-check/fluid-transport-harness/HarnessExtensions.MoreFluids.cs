@@ -120,29 +120,44 @@ internal static class MoreFluidsContent {
       assemblies.Add(typeof(MoreFluidsLiquids).Assembly);
       schema.ComponentSpec = assemblies.Single(a => a.GetName().Name == "Timberborn.BlueprintSystem").GetType("Timberborn.BlueprintSystem.ComponentSpec", true)!;
       var unloadable = new List<string>();
-      foreach (var assembly in assemblies) {
+      void AddSpecs(Schema_ target, Assembly assembly) {
         Type?[] types;
         try { types = assembly.GetTypes(); }
         catch (ReflectionTypeLoadException e) { types = e.Types; unloadable.Add(assembly.GetName().Name + ": " + e.LoaderExceptions.Length + " types"); }
         foreach (var type in types) {
           if (type == null || !type.IsClass || type.IsAbstract || !schema.ComponentSpec.IsAssignableFrom(type)) continue;
           foreach (var key in new[] { type.Name }.Concat(Aliases(type))) {
-            if (schema.Specs.TryGetValue(key, out var other) && other != type) throw new InvalidOperationException("Two spec types for key " + key + ": " + other.FullName + " and " + type.FullName);
-            schema.Specs[key] = type;
+            if (target.Specs.TryGetValue(key, out var other) && other != type) throw new InvalidOperationException("Two spec types for key " + key + ": " + other.FullName + " and " + type.FullName);
+            target.Specs[key] = type;
           }
         }
       }
+      foreach (var assembly in assemblies) AddSpecs(schema, assembly);
       observations["moreFluidsSpecTypes"] = schema.Specs.Count;
+      // Moddable Weathers' own spec types (the installed 11.0.0), for the ModdableWeatherSpecs blueprints alone: only that
+      // optional mod reads them (without it the game logs their two unknown keys and never deserializes them).
+      var weatherSchema = new Schema_ { ComponentSpec = schema.ComponentSpec };
+      foreach (var (key, type) in schema.Specs) weatherSchema.Specs[key] = type;
+      AddSpecs(weatherSchema, AssemblyLoadContext.Default.LoadFromAssemblyPath(ModdableWeathersAssembly(corpus.Root)));
       if (unloadable.Count > 0) observations["moreFluidsSpecAssembliesPartlyLoaded"] = unloadable.ToArray();
       var vanillaProblems = new List<string>();
       foreach (var (path, doc) in corpus.Vanilla) Blueprint(schema, doc, path, false, corpus, vanillaProblems);
       check(vanillaProblems.Count == 0, "The schema check rejects vanilla blueprints (" + vanillaProblems.Count + "): " + string.Join("; ", vanillaProblems.Take(8)));
       var problems = new List<string>();
-      foreach (var (path, doc) in corpus.Ours) Blueprint(schema, doc, path, corpus.Vanilla.ContainsKey(path), corpus, problems);
+      foreach (var (path, doc) in corpus.Ours)
+        Blueprint(path.StartsWith("ModdableWeatherSpecs/", StringComparison.Ordinal) ? weatherSchema : schema, doc, path, corpus.Vanilla.ContainsKey(path), corpus, problems);
       check(problems.Count == 0, "More Fluids blueprint schema problems (" + problems.Count + "): " + string.Join("; ", problems));
-      check(corpus.Ours.Count == 16, "More Fluids blueprint files (6 buildings, 2 map objects, 3 recipes, 3 collections, Sun, map-object materials): " + corpus.Ours.Count);
+      check(corpus.Ours.Count == 18, "More Fluids blueprint files (6 buildings, 2 map objects, 3 recipes, 3 collections, Sun, map-object materials, 2 Moddable Weathers specs): " + corpus.Ours.Count);
       observations["moreFluidsBlueprints"] = corpus.Ours.Keys.OrderBy(k => k, StringComparer.Ordinal).ToArray();
     });
+  }
+
+  /// <summary>The installed Moddable Weathers 11.0.0 assembly (Workshop item 3630523180), from this machine's tools/dev-environment.json.</summary>
+  internal static string ModdableWeathersAssembly(string root) {
+    using var environment = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "tools", "dev-environment.json")));
+    string path = Path.Combine(environment.RootElement.GetProperty("workshopContent").GetString()!, "3630523180", "version-1.1", "ModdableWeathers.dll");
+    if (!File.Exists(path)) throw new FileNotFoundException("Moddable Weathers 11.0.0 is not installed from the Workshop (item 3630523180); the More Fluids Moddable Weathers specs are checked against it", path);
+    return path;
   }
 
   private static IEnumerable<string> Aliases(Type type) {

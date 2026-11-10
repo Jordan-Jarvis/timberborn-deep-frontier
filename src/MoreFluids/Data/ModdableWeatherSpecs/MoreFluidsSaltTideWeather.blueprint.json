@@ -1,0 +1,51 @@
+{
+  "ModdableWeatherSpec": {
+    "Id": "MoreFluidsSaltTideWeather",
+    "Order": 37,
+    "DisplayLoc": "MoreFluids.Weather.SaltTide",
+    "DescLoc": "MoreFluids.Weather.SaltTideDescription",
+    "WeatherPanelProgressBackground": "Sprites/Weather/MoreFluidsSaltTideProgress",
+    "WeatherPanelBlinkBackground": "UI/Images/Backgrounds/bg-striped-4",
+    "DatePanelIcon": "Sprites/Weather/MoreFluidsSaltTideIcon",
+    "WeatherNotification": "Sprites/Weather/MoreFluidsSaltTideNotification",
+    "StartSound": "UI.Weather.BadtideStarted"
+  },
+  "ModdableWeatherSkySpec": {
+    "Sunrise": {
+      "FogColor": {
+        "r": 0.74,
+        "g": 0.8,
+        "b": 0.8,
+        "a": 1
+      },
+      "FogDensity": 0.003
+    },
+    "Day": {
+      "FogColor": {
+        "r": 0.6,
+        "g": 0.7,
+        "b": 0.72,
+        "a": 1
+      },
+      "FogDensity": 0.003
+    },
+    "Sunset": {
+      "FogColor": {
+        "r": 0.78,
+        "g": 0.76,
+        "b": 0.74,
+        "a": 1
+      },
+      "FogDensity": 0.003
+    },
+    "Night": {
+      "FogColor": {
+        "r": 0.36,
+        "g": 0.42,
+        "b": 0.44,
+        "a": 1
+      },
+      "FogDensity": 0.003
+    }
+  }
+}
