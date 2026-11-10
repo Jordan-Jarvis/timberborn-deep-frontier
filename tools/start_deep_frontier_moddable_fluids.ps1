@@ -7,6 +7,8 @@
 #   start_deep_frontier_moddable_fluids.ps1 -MoreFluids          # also More Fluids (its tides share the budget)
 #   start_deep_frontier_moddable_fluids.ps1 -SaveCopies a.timber,b.timber
 #                                                                # copies of saves to load, in a test settlement
+#   start_deep_frontier_moddable_fluids.ps1 -ModdableWeathers    # keep Moddable Weathers on: the tides run as its
+#                                                                # weathers through Moddable Fluids' optional adapter
 #
 # Before the game starts it copies aside, with SHA-256 hashes of every file:
 # - the installed (shipped) Mods/DeepFrontier, which the test package replaces for the run;
@@ -14,8 +16,11 @@
 # - the PlayerData files, as start_fluid_worker_acceptance.ps1 does;
 # - every ModEnabled/ModPriority preference value, with its registry type.
 # It then installs Moddable Fluids (and More Fluids) from outputs/fluids-api-prototype/packages and the test package from
-# outputs/deep-frontier-moddable-fluids/package, enables them, and disables Moddable Weathers (Moddable Fluids refuses
-# it together with tides). The game shows its startup dialogs; click through them. Quit the game to end the run.
+# outputs/deep-frontier-moddable-fluids/package, and enables them. Moddable Weathers is switched off for the run, so the
+# tides run on the native weather (the binding most gates describe); -ModdableWeathers keeps it and its required mods
+# (Moddable Timberborn, TimberUi, Harmony) on instead, so Moddable Fluids' optional adapter runs the tides as Moddable
+# Weathers weathers, for example to load a save played with the shipped Deep Frontier and Moddable Weathers. The game
+# shows its startup dialogs; click through them. Quit the game to end the run.
 #
 # Afterwards (also after a crash or a stopped run) it removes the test packages, restores Mods/DeepFrontier, puts
 # every preference value back with its type and deletes the ones the game created, restores PlayerData, and returns
@@ -23,7 +28,7 @@
 # into the run folder (outputs/deep-frontier-moddable-fluids/runs/<time>/evidence), so its saves stay available
 # as evidence. Steam's steam_autocloud.vdf is left as Steam keeps it. Every restore is hash-verified; a mismatch
 # stops with the run folder named, which then also holds the backups and a restore-pending marker.
-param([switch]$MoreFluids, [string[]]$SaveCopies = @(), [int]$TimeoutSeconds = 6 * 3600)
+param([switch]$MoreFluids, [switch]$ModdableWeathers, [string[]]$SaveCopies = @(), [int]$TimeoutSeconds = 6 * 3600)
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'DevEnvironment.ps1')
 $dev = Get-DevEnvironment 'timberbornDocuments'
@@ -58,16 +63,22 @@ if (-not $required -or $required.MinimumVersion -ne $apiVersion) { throw "The te
 foreach ($copy in $SaveCopies) { if (-not (Test-Path -LiteralPath $copy -PathType Leaf) -or [IO.Path]::GetExtension($copy) -ne '.timber') { throw "Not a save file: $copy" } }
 $settlementPath = Join-Path $documents "Saves/$testSettlement"
 if (Test-Path -LiteralPath $settlementPath) { throw "$settlementPath exists; this launcher creates that settlement for the save copies and moves it out afterwards." }
-# Moddable Fluids refuses Moddable Weathers together with tides. The launch skips the mod screen, so a Moddable Weathers
-# that is enabled only by default (no preference value yet) cannot be switched off for the run here.
+# Moddable Weathers stays off unless -ModdableWeathers. The launch skips the mod screen, so a Moddable Weathers that is
+# enabled only by default (no preference value yet) cannot be switched off for the run here.
 $workshop = (Get-DevEnvironment 'workshopContent').workshopContent
 $weathersInstalled = (Test-Path -LiteralPath (Join-Path $mods 'ModdableWeathers')) -or (Test-Path -LiteralPath (Join-Path $workshop '3630523180'))
 $probe = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($prefsPath)
 if (-not $probe) { throw "HKCU\$prefsPath is missing; start Timberborn once normally first." }
 $weathersKey = @($probe.GetValueNames() | Where-Object { $_ -match '^ModEnabled\..*\.ModdableWeathers_h\d+$' })
 $probe.Dispose()
-if ($weathersInstalled -and $weathersKey.Count -eq 0) {
-  throw 'Moddable Weathers is installed without a preference value (enabled by default), and the launch skips the mod screen. Switch it off and on once in the game''s mod screen so the value exists, then rerun; the launcher disables it for the run and puts the value back afterwards.'
+# Moddable Weathers and the mods it requires (Moddable Timberborn, which requires TimberUi and Harmony).
+$weathersChain = '\.(ModdableWeathers|ModdableTimberborn|TimberUi|Harmony)_h\d+$'
+if ($ModdableWeathers) {
+  if (-not $weathersInstalled) { throw '-ModdableWeathers: Moddable Weathers is not installed (Workshop item 3630523180 or Mods/ModdableWeathers).' }
+  $adapter = Join-Path $apiPackages 'ModdableFluids/version-1.1/Scripts/ModdableFluids.ModdableWeathers.dll.ModdableWeathers.optional'
+  if (-not (Test-Path -LiteralPath $adapter)) { throw "-ModdableWeathers: the kept Moddable Fluids package has no Moddable Weathers adapter ($adapter); rebuild it with tools/build_moddable_fluids.ps1." }
+} elseif ($weathersInstalled -and $weathersKey.Count -eq 0) {
+  throw 'Moddable Weathers is installed without a preference value (enabled by default), and the launch skips the mod screen. Switch it off and on once in the game''s mod screen so the value exists, then rerun; the launcher disables it for the run and puts the value back afterwards. To run with Moddable Weathers, pass -ModdableWeathers.'
 }
 
 function Tree([string]$folder, [string[]]$skip = @()) {
@@ -143,6 +154,7 @@ try {
     foreach ($name in $values.Keys | Where-Object { $_ -match '^ModEnabled\.' }) {
       # Local mods are keyed by folder and id (ModEnabled.Local.<folder>.<id>); only the folders this run installs.
       if ($name -match ('^ModEnabled\.Local\.(' + ((@('DeepFrontier') + $packageIds) -join '|') + ')\.\1_h\d+$')) { $prefs.SetValue($name, 1, [Microsoft.Win32.RegistryValueKind]::DWord) }
+      elseif ($ModdableWeathers -and $name -match $weathersChain) { $prefs.SetValue($name, 1, [Microsoft.Win32.RegistryValueKind]::DWord) }
       elseif ($name -match '\.ModdableWeathers_h\d+$') { $prefs.SetValue($name, 0, [Microsoft.Win32.RegistryValueKind]::DWord) }
     }
   } finally { $prefs.Dispose() }

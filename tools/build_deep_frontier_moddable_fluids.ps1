@@ -13,8 +13,11 @@
 #   compiles against it; a precompiled ModdableFluids.dll there would collide with that assembly definition. This
 #   script therefore requires the staged API to be src/ModdableFluids/Api and its compiled ModdableFluids.dll to be
 #   byte-identical to the official Moddable Fluids package's, before and after the build;
-# - the staged manifest requires ModdableFluids (the official package's version) and drops ModdableWeathers, which
-#   Moddable Fluids refuses together with tides; the Moddable Weathers bridge is left out of the package;
+# - the staged manifest requires ModdableFluids (the official package's version) and drops ModdableWeathers, and the
+#   Moddable Weathers bridge (DeepFrontier.ModdableWeathers) is left out of the package: under Moddable Weathers,
+#   Moddable Fluids' own adapter (ModdableFluids.ModdableWeathers) registers the radioactive tide as the Moddable
+#   Weathers weather with the same ID, RadioactiveTideWeather, so the bridge would register it a second time. The
+#   tide's ModdableWeatherSpecs/RadioactiveTideWeather blueprint stays, since the adapter draws the tide with it;
 # - Moddable Fluids draws the water and the irradiated ground (its shared water renderer and terrain overlay, on
 #   per-scene copies of the native materials), so all three of Deep Frontier's shader variants
 #   (RadioactiveWaterURP_Opaque/_Transparent, IrradiatedTerrainURP) are set aside with their .meta files for the build
@@ -185,7 +188,7 @@ try {
   if (Test-Path -LiteralPath $packageRoot) { Remove-Item -LiteralPath $packageRoot -Recurse -Force }
   New-Item -ItemType Directory -Force -Path $packageRoot | Out-Null
   Move-Item -LiteralPath $installedVersion -Destination $package
-  # The bridge for Moddable Weathers, which this manifest no longer lists (Moddable Fluids refuses it with tides).
+  # The bridge for Moddable Weathers: Moddable Fluids' own adapter registers the same weather ID (RadioactiveTideWeather).
   $bridge = Join-Path $package 'Scripts/DeepFrontier.ModdableWeathers.dll.ModdableWeathers.optional'
   if (Test-Path -LiteralPath $bridge) { Remove-Item -LiteralPath $bridge }
   $packagedManifest = Get-Content -LiteralPath (Join-Path $package 'manifest.json') -Raw | ConvertFrom-Json
